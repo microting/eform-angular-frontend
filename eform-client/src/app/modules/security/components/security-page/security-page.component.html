@@ -1,10 +1,10 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       class="btn-success btn-small-height"
       [routerLink]="['create-group']"
-      mdbTooltip="{{ 'Create Group' | translate }}"
+      matTooltip="{{ 'Create Group' | translate }}"
       id="newSecurityGroupBtn"
     >
       {{ 'New Group' | translate }}
@@ -56,20 +56,20 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mat-button
                 class="btn-accent text-black-50 btn-icon mb-2"
                 [routerLink]="['update-group', securityGroup.id]"
-                mdbTooltip="{{ 'Edit Group' | translate }}"
+                matTooltip="{{ 'Edit Group' | translate }}"
               >
                 <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-success btn-icon mb-2"
                 [routerLink]="[
                   'group/' + securityGroup.id + '/eforms-permissions'
                 ]"
-                mdbTooltip="{{ 'eForms permissions' | translate }}"
+                matTooltip="{{ 'eForms permissions' | translate }}"
               >
                 <fa-icon
                   icon="clipboard-list"
@@ -78,12 +78,12 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-success btn-icon mb-2"
                 [routerLink]="[
                   'group/' + securityGroup.id + '/general-permissions'
                 ]"
-                mdbTooltip="{{ 'General Permissions' | translate }}"
+                matTooltip="{{ 'General Permissions' | translate }}"
               >
                 <fa-icon
                   icon="lock-open"
@@ -92,17 +92,17 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-accent text-black-50 btn-icon mb-2"
-                mdbTooltip="{{ 'Group settings' | translate }}"
+                matTooltip="{{ 'Group settings' | translate }}"
                 (click)="openSettingsModal(securityGroup)"
               >
                 <fa-icon icon="cog" [fixedWidth]="true" size="lg"></fa-icon>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-danger btn-icon mb-2"
-                mdbTooltip="{{ 'Delete Group' | translate }}"
+                matTooltip="{{ 'Delete Group' | translate }}"
                 (click)="openDeleteModal(securityGroup)"
               >
                 <fa-icon

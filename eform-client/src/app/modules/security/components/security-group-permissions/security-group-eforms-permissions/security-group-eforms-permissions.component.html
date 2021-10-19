@@ -17,10 +17,10 @@
     </div>
     <div class="p-3">
       <button
-        mdbBtn
+        mat-button
         class="btn-success btn-small-height"
         (click)="openEformBindModal()"
-        mdbTooltip="{{ 'Add Eform to Group' | translate }}"
+        matTooltip="{{ 'Add Eform to Group' | translate }}"
         id="newSecurityGroupBtn"
       >
         + {{ 'Bind Eform' | translate }}
@@ -56,19 +56,19 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mat-button
                 class="btn-success btn-icon mb-2"
                 (click)="openEformEditPermissionsModal(eform)"
-                mdbTooltip="{{ 'Eform Permissions' | translate }}"
+                matTooltip="{{ 'Eform Permissions' | translate }}"
               >
                 <i class="material-icons"> lock_open </i>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-danger btn-icon mb-2"
                 id="delete-eform-btn"
                 (click)="openEformDeleteFromGroupModal(eform)"
-                mdbTooltip="{{ 'Delete eForm' | translate }}"
+                matTooltip="{{ 'Delete eForm' | translate }}"
               >
                 <i class="material-icons"> delete_forever </i>
               </button>

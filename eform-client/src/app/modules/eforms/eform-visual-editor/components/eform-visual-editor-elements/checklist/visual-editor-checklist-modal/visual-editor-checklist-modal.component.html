@@ -18,7 +18,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <mdb-card
+        <mat-card
           *ngFor="
             let translation of recursionModel.checklist.translations;
             let translationIndex = index
@@ -26,10 +26,10 @@
           class="mb-3"
         >
           <ng-container *ngIf="isLanguageSelected(translation.languageId)">
-            <mdb-card-header>{{
+            <mat-card-title >{{
               getLanguage(translation.languageId) | translate
-            }}</mdb-card-header>
-            <mdb-card-body>
+            }}</mat-card-title >
+            <mat-card-content>
               <div class="row">
                 <div class="col-12">
                   <div class="md-form">
@@ -70,13 +70,13 @@
                   </div>
                 </div>
               </div>
-            </mdb-card-body>
+            </mat-card-content>
           </ng-container>
-        </mdb-card>
+        </mat-card>
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
+          mat-button
           class="btn-success btn-small-height"
           (click)="
             isChecklistSelected ? onUpdateChecklist() : onCreateChecklist()
@@ -86,7 +86,7 @@
           {{ (isChecklistSelected ? 'Save' : 'Create') | translate }}
         </button>
         <button
-          mdbBtn
+          mat-button
           class="btn-accent text-black-50 btn-small-height"
           (click)="frame.hide()"
           id="changeChecklistSaveCancelBtn"

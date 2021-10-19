@@ -45,12 +45,12 @@
         </ng-container>
         <td>
           <button
-            mdbBtn
+            mat-button
             class="btn-success btn-icon mb-2"
             [routerLink]="[
               '/cases/edit/' + item.microtingSdkCaseId + '/' + item.eFormId
             ]"
-            mdbTooltip="{{ 'Edit Case' | translate }}"
+            matTooltip="{{ 'Edit Case' | translate }}"
           >
             <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
           </button>

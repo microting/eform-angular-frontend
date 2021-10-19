@@ -44,10 +44,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height" id="saveEditBtn"
+        <button mat-button class="btn-success btn-small-height" id="saveEditBtn"
                 [disabled]="!selectedDeviceUser.userFirstName || !selectedDeviceUser.userLastName"
                 (click)="updateSingle()">{{'Save' | translate}}</button>
-        <button mdbBtn id="cancelEditBtn" class="btn btn-accent text-black-50 btn-small-height" (click)="frame.hide()">
+        <button mat-button id="cancelEditBtn" class="btn btn-accent text-black-50 btn-small-height" (click)="frame.hide()">
           {{'Cancel' | translate}}</button>
       </div>
     </div>

@@ -5,10 +5,10 @@
 >
   <div class="p-2">
     <button
-      mdbBtn
+      mat-button
       class="btn-success btn-small-height"
       id="save"
-      mdbTooltip="Save settings"
+      matTooltip="Save settings"
       [disabled]="!settingsForm.form.valid"
       (click)="updateConnectionString()"
     >

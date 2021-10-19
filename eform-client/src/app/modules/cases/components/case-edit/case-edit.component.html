@@ -9,18 +9,17 @@
       ></app-case-edit-element>
     </div>
     <div class="col-md-3">
-      <mdb-card class="sticky-top mb-4 mt-4" style="width: 100%; z-index: 1">
-        <mdb-card-header>
+      <mat-card class="sticky-top mb-4 mt-4" style="width: 100%; z-index: 1">
+        <mat-card-title >
           {{ replyElement.label }}
-        </mdb-card-header>
-        <mdb-card-body>
+        </mat-card-title >
+        <mat-card-content>
           <ul class="list-group list-group-flush">
             <li
               *ngFor="let element of replyElement.elementList"
               style="cursor: pointer"
               class="list-group-item list-group-item-action waves-light"
               routerLinkActive="active"
-              mdbWavesEffect
             >
               <a (click)="goToSection('#section' + element.id)">
                 {{ element.label }}
@@ -30,7 +29,7 @@
               </ng-container>
             </li>
           </ul>
-        </mdb-card-body>
+        </mat-card-content>
         <mdb-card-footer>
           <div
             class="d-flex justify-content-center align-items-center flex-column mt-2"
@@ -38,7 +37,7 @@
           >
             <div>
               <button
-                mdbBtn
+                mat-button
                 class="btn-success btn-small-height"
                 (click)="saveCase(true); this.isSaveClicked = true"
                 id="submit_for_with_post"
@@ -47,7 +46,7 @@
                 <i class="fa fa-spinner fa-spin"></i>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-success btn-small-height"
                 (click)="saveCase(); this.isSaveClicked = true"
                 id="submit_form"
@@ -57,7 +56,7 @@
             </div>
           </div>
         </mdb-card-footer>
-      </mdb-card>
+      </mat-card>
     </div>
   </div>
 </div>

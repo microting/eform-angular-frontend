@@ -77,24 +77,24 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mat-button
                 class="btn-success btn-icon mb-2"
                 *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
                 [routerLink]="[
                   '/cases/edit/' + caseModel.id + '/' + currentTemplate.id
                 ]"
-                mdbTooltip="{{ 'Edit Case' | translate }}"
+                matTooltip="{{ 'Edit Case' | translate }}"
               >
                 <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-success btn-icon mb-2"
                 *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
                 [routerLink]="[
                   '/cases/posts/' + caseModel.id + '/' + currentTemplate.id
                 ]"
-                mdbTooltip="{{ 'Posts' | translate }}"
+                matTooltip="{{ 'Posts' | translate }}"
               >
                 <fa-icon
                   icon="sticky-note"
@@ -103,7 +103,7 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-success btn-icon mb-2"
                 *ngIf="
                   checkEformPermissions(userClaimsEnum.caseGetPdf) &&
@@ -111,7 +111,7 @@
                     currentTemplate.docxExportEnabled)
                 "
                 (click)="downloadFile(caseModel.id, 'pdf')"
-                mdbTooltip="{{ 'Download PDF' | translate }}"
+                matTooltip="{{ 'Download PDF' | translate }}"
               >
                 <fa-icon
                   icon="file-pdf"
@@ -120,14 +120,14 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-info btn-icon mb-2"
                 *ngIf="
                   checkEformPermissions(userClaimsEnum.caseGetPdf) &&
                   currentTemplate.docxExportEnabled
                 "
                 (click)="downloadFile(caseModel.id, 'docx')"
-                mdbTooltip="{{ 'Download Docx' | translate }}"
+                matTooltip="{{ 'Download Docx' | translate }}"
               >
                 <fa-icon
                   icon="file-word"
@@ -136,10 +136,10 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-danger btn-icon mb-2"
                 *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
-                mdbTooltip="{{ 'Delete Case' | translate }}"
+                matTooltip="{{ 'Delete Case' | translate }}"
                 (click)="onDeleteClicked(caseModel)"
               >
                 <fa-icon

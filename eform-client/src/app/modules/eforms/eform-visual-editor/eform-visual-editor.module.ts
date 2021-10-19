@@ -25,6 +25,8 @@ import {
   VisualEditorAdditionalFieldOptionsComponent,
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { EformVisualEditorRouting } from './eform-visual-editor.routing';
     EformImportedModule,
     FontAwesomeModule,
     EformSharedTagsModule,
+    MatTooltipModule,
+    MatCardModule,
   ],
 })
 export class EformVisualEditorModule {}

@@ -1,7 +1,7 @@
 <eform-subheader [title]="'Plugins marketplace' | translate">
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       class="btn-success btn-small-height"
       id="managementPageButton"
       [routerLink]="['/plugins-management-settings']"
@@ -32,11 +32,10 @@
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button
-              mdbBtn
+              mat-button
               class="btn-accent text-black-50 btn-icon mb-2"
-              mdbTooltip="{{ 'Edit Settings' | translate }}"
+              matTooltip="{{ 'Edit Settings' | translate }}"
               (click)="showEditModal(plugin)"
-              mdbWavesEffect
               id="editSettingsBtn"
               id="plugin-settings-btn"
             >

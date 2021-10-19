@@ -15,7 +15,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <mdb-card
+        <mat-card
           *ngFor="
             let translation of recursionModel.field.translations;
             let translationIndex = index
@@ -23,10 +23,10 @@
           class="mb-3"
         >
           <ng-container *ngIf="isLanguageSelected(translation.languageId)">
-            <mdb-card-header>{{
+            <mat-card-title >{{
               getLanguage(translation.languageId) | translate
-            }}</mdb-card-header>
-            <mdb-card-body>
+            }}</mat-card-title >
+            <mat-card-content>
               <div class="row">
                 <div class="col-12">
                   <div class="md-form">
@@ -63,11 +63,11 @@
                   </div>
                 </div>
               </div>
-            </mdb-card-body>
+            </mat-card-content>
           </ng-container>
-        </mdb-card>
-        <mdb-card>
-          <mdb-card-body>
+        </mat-card>
+        <mat-card>
+          <mat-card-content>
             <div class="row">
               <div class="col">
                 <div class="ng-select-wrapper">
@@ -165,8 +165,8 @@
                 </div>
               </div>
             </div>
-          </mdb-card-body>
-        </mdb-card>
+          </mat-card-content>
+        </mat-card>
         <app-visual-editor-additional-field-number
           *ngIf="
             recursionModel.field.fieldType == eformFieldTypesEnum.Number ||
@@ -200,7 +200,7 @@
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
+          mat-button
           class="btn-success btn-small-height"
           (click)="isFieldSelected ? onUpdateField() : onCreateField()"
           id="changeFieldSaveBtn"
@@ -208,7 +208,7 @@
           {{ 'Save' | translate }}
         </button>
         <button
-          mdbBtn
+          mat-button
           class="btn-accent text-black-50 btn-small-height"
           (click)="frame.hide()"
           id="changeFieldSaveCancelBtn"

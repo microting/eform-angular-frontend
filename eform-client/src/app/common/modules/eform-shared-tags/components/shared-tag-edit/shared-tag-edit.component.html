@@ -29,7 +29,7 @@
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
+          mat-button
           id="tagEditSaveBtn"
           class="btn-success btn-small-height"
           [disabled]="!tagModel.name"
@@ -38,7 +38,7 @@
           {{ 'Save' | translate }}
         </button>
         <button
-          mdbBtn
+          mat-button
           id="tagEditSaveCancelBtn"
           class="btn-accent text-black-50 btn-small-height"
           (click)="cancelEdit()"

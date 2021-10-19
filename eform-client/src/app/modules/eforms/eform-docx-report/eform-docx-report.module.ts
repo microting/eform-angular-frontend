@@ -17,6 +17,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EformDocxReportRouting} from './eform-docx-report.routing';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -26,24 +27,25 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     EformDocxReportImagesComponent,
     EformDocxReportHeaderEditorComponent,
   ],
-  imports: [
-    CommonModule,
-    TranslateModule,
-    EformSharedModule,
-    FontAwesomeModule,
-    ButtonsModule,
-    RouterModule,
-    TooltipModule,
-    TableModule,
-    ReactiveFormsModule,
-    // OwlDateTimeModule,
-    InputsModule,
-    CardsModule,
-    EformDocxReportRouting,
-    ModalModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        EformSharedModule,
+        FontAwesomeModule,
+        ButtonsModule,
+        RouterModule,
+        TooltipModule,
+        TableModule,
+        ReactiveFormsModule,
+        // OwlDateTimeModule,
+        InputsModule,
+        CardsModule,
+        EformDocxReportRouting,
+        ModalModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatCardModule,
+    ],
 })
 export class EformDocxReportModule {}

@@ -1,11 +1,11 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       class="btn-success btn-small-height"
       id="ProfileSettingsSaveBtn"
       (click)="updateUserProfileSettings()"
-      mdbTooltip="Save settings"
+      matTooltip="Save settings"
     >
       {{ 'Save' | translate }}
     </button>
@@ -15,11 +15,11 @@
 <div class="container-fluid mt-4">
   <div class="row mb-4">
     <div class="col-md-6" *ngIf="authStateService.isAdmin">
-      <mdb-card>
-        <mdb-card-header>
+      <mat-card>
+        <mat-card-title >
           {{ 'Google Authenticator' | translate }}
-        </mdb-card-header>
-        <mdb-card-body>
+        </mat-card-title >
+        <mat-card-content>
           <div class="mat-checkbox mb-1">
             <input
               id="2fauthForsed"
@@ -46,10 +46,10 @@
             </div>
             <div class="p-0">
               <button
-                mdbBtn
+                mat-button
                 class="btn-ar btn-danger"
                 id="deleteGoogleAuthenticatorInfo"
-                mdbTooltip="{{
+                matTooltip="{{
                   'Remove google authenticator secret key' | translate
                 }}"
                 (click)="deleteGoogleAuthenticatorInfo()"
@@ -58,15 +58,15 @@
               </button>
             </div>
           </ng-container>
-        </mdb-card-body>
-      </mdb-card>
+        </mat-card-content>
+      </mat-card>
     </div>
     <div class="col-md-6">
-      <mdb-card class="card">
-        <mdb-card-header>
+      <mat-card class="card">
+        <mat-card-title >
           {{ 'General' | translate }}
-        </mdb-card-header>
-        <mdb-card-body>
+        </mat-card-title >
+        <mat-card-content>
           <div class="container-fluid">
             <div class="row">
               <ng-select
@@ -115,8 +115,8 @@
               </div>
             </div>
           </div>
-        </mdb-card-body>
-      </mdb-card>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

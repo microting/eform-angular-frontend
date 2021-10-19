@@ -28,6 +28,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DragulaModule } from 'ng2-dragula';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
     WavesModule,
     ModalModule,
     ReactiveFormsModule,
+    MatTooltipModule,
+    MatCardModule,
   ],
 })
 export class NavigationMenuModule {}

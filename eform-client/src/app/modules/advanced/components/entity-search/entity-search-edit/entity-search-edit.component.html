@@ -1,7 +1,7 @@
 <eform-subheader [title]="'Edit searchable list' | translate">
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       id="entitySearchUpdateSaveBtn"
       class="btn btn-success btn-small-height"
       (click)="updateEntitySearchableGroup()"
@@ -9,7 +9,7 @@
       {{ 'Save' | translate }}
     </button>
     <button
-      mdbBtn
+      mat-button
       id="entitySearchUpdateCancelBtn"
       class="btn btn-accent text-black-50 btn-small-height"
       (click)="goBack()"
@@ -22,8 +22,8 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 col-xs-12" role="main">
-      <mdb-card>
-        <mdb-card-body>
+      <mat-card>
+        <mat-card-content>
           <div class="row">
             <div class="col-md-12">
               <div class="md-form">
@@ -108,7 +108,7 @@
                           size="lg"
                           [fixedWidth]="true"
                           *ngIf="!entityItem.name"
-                          mdbTooltip="{{ 'Name is required' | translate }}!"
+                          matTooltip="{{ 'Name is required' | translate }}!"
                         ></fa-icon>
                         <a class="pull-right">
                           <fa-icon
@@ -137,8 +137,8 @@
               </div>
             </div>
           </div>
-        </mdb-card-body>
-      </mdb-card>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

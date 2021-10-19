@@ -24,24 +24,26 @@ import { persistProvider } from 'src/app/modules/eforms/store';
 import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    EformsRouting,
-    NgSelectModule,
-    MDBBootstrapModule,
-    EformSharedModule,
-    ReactiveFormsModule,
-    FileUploadModule,
-    FormsModule,
-    TranslateModule.forChild(),
-    FontAwesomeModule,
-    // OwlDateTimeModule,
-    EformSharedTagsModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-  ],
+    imports: [
+        CommonModule,
+        EformsRouting,
+        NgSelectModule,
+        MDBBootstrapModule,
+        EformSharedModule,
+        ReactiveFormsModule,
+        FileUploadModule,
+        FormsModule,
+        TranslateModule.forChild(),
+        FontAwesomeModule,
+        // OwlDateTimeModule,
+        EformSharedTagsModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatTooltipModule,
+    ],
   declarations: [
     EformsPageComponent,
     EformEditParingModalComponent,

@@ -20,25 +20,27 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
 import { CasesRoutingModule } from './cases.routing';
 import { CaseEditComponent, CasesTableComponent } from './components';
 import { casesPersistProvider } from './components/store';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
-  imports: [
-    TranslateModule,
-    MDBBootstrapModule,
-    EformSharedModule,
-    CasesRoutingModule,
-    CommonModule,
-    NgSelectModule,
-    EformImportedModule,
-    GallerizeModule,
-    LightboxModule,
-    GalleryModule,
-    // OwlDateTimeModule,
-    // OwlNativeDateTimeModule,
-    FormsModule,
-    FontAwesomeModule,
-    EformCasesModule,
-  ],
+    imports: [
+        TranslateModule,
+        MDBBootstrapModule,
+        EformSharedModule,
+        CasesRoutingModule,
+        CommonModule,
+        NgSelectModule,
+        EformImportedModule,
+        GallerizeModule,
+        LightboxModule,
+        GalleryModule,
+        // OwlDateTimeModule,
+        // OwlNativeDateTimeModule,
+        FormsModule,
+        FontAwesomeModule,
+        EformCasesModule,
+        MatCardModule,
+    ],
   declarations: [CasesTableComponent, CaseEditComponent],
   providers: [
     // { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },

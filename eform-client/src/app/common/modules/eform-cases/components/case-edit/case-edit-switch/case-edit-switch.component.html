@@ -1,15 +1,15 @@
 <ng-container *ngIf="dataItemList">
   <ng-container *ngFor="let dataItem of dataItemList; let i = index">
-    <mdb-card class="mb-3" style="width: 100%"
+    <mat-card class="mb-3" style="width: 100%"
          *ngIf="dataItem.fieldType != 'SaveButton' ">
-      <mdb-card-header
+      <mat-card-title
            [ngStyle]="{'background-color': dataItem.fieldValues.length > 0 ? (dataItem.fieldValues[0].color ? '#' + dataItem.fieldValues[0].color : '') : ''}"
            *ngIf="dataItem.fieldType != 'FieldContainer' && dataItem.fieldType != 'SaveButton'">
         {{dataItem.label}}
         <br>
         <i><div [innerHtml]="dataItem.description.inderValue"></div></i>
-      </mdb-card-header>
-      <mdb-card-body>
+      </mat-card-title >
+      <mat-card-content>
         <ng-container [ngSwitch]="dataItem.fieldType">
           <ng-container *ngSwitchCase="'Picture'">
             <element-picture [fieldValues]="dataItem.fieldValues"></element-picture>
@@ -64,8 +64,8 @@
           </ng-container>
           <div *ngSwitchDefault></div>
         </ng-container>
-      </mdb-card-body>
-    </mdb-card>
+      </mat-card-content>
+    </mat-card>
   </ng-container>
 </ng-container>
 

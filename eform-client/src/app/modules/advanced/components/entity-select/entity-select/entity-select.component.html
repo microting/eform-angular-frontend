@@ -1,12 +1,12 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       id="entitySelectCreateBtn"
       class="btn btn-success btn-small-height"
       *ngIf="userClaims.entitySelectCreate"
       placement="left"
-      mdbTooltip="{{ 'Create new selectable list' | translate }}"
+      matTooltip="{{ 'Create new selectable list' | translate }}"
       [routerLink]="['/advanced/entity-select/create']"
     >
       {{ 'New list' | translate }}
@@ -67,7 +67,7 @@
           >
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mat-button
                 id="entitySelectEditBtn"
                 class="btn btn-accent btn-icon text-black-50 mb-2"
                 *ngIf="
@@ -75,7 +75,7 @@
                   (!advEntitySelectableGroup.isLocked ||
                     advEntitySelectableGroup.name.includes('editable'))
                 "
-                mdbTooltip="{{ 'Edit' | translate }}"
+                matTooltip="{{ 'Edit' | translate }}"
                 [routerLink]="[
                   '/advanced/entity-select/edit/' +
                     advEntitySelectableGroup.microtingUUID
@@ -84,14 +84,14 @@
                 <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
               </button>
               <button
-                mdbBtn
+                mat-button
                 id="entitySelectDeleteBtn"
                 class="btn btn-danger btn-icon mb-2"
                 *ngIf="
                   userClaims.entitySelectDelete &&
                   !advEntitySelectableGroup.isLocked
                 "
-                mdbTooltip="{{ 'Remove' | translate }}"
+                matTooltip="{{ 'Remove' | translate }}"
                 (click)="openModalSelectRemove(advEntitySelectableGroup)"
               >
                 <fa-icon

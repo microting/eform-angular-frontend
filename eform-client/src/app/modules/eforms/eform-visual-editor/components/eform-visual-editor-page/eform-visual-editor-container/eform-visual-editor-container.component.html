@@ -1,23 +1,21 @@
 <eform-subheader [title]="'Eform visual editor' | translate">
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       class="btn-accent text-black-50 btn-icon"
       (click)="openTagsModal()"
-      mdbTooltip="{{ 'Manage tags' | translate }}"
-      mdbWavesEffect
+      matTooltip="{{ 'Manage tags' | translate }}"
       id="manageTags"
     >
       <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
     <button
-      mdbBtn
+      mat-button
       class="btn-success btn-small-height"
       (click)="
         selectedTemplateId ? updateVisualTemplate() : createVisualTemplate()
       "
-      mdbTooltip="{{ (selectedTemplateId ? 'Save' : 'Create') | translate }}"
-      mdbWavesEffect
+      matTooltip="{{ (selectedTemplateId ? 'Save' : 'Create') | translate }}"
       id="saveCreateEformBtn"
       [disabled]="isAllNamesEmpty"
     >
@@ -50,9 +48,9 @@
                 "
               >
                 <button
-                  mdbBtn
+                  mat-button
                   class="btn-icon mb-2 float-right text-black-50"
-                  mdbTooltip="{{
+                  matTooltip="{{
                     (isItemsCollapsed ? 'Expand all' : 'Collapse all')
                       | translate
                   }}"
@@ -71,9 +69,9 @@
                 </button>
 
                 <!--                <button-->
-                <!--                  mdbBtn-->
+                <!--                  mat-button-->
                 <!--                  class="btn-icon mb-2 float-right text-black-50"-->
-                <!--                  mdbTooltip="{{ 'Collapse all' | translate }}"-->
+                <!--                  matTooltip="{{ 'Collapse all' | translate }}"-->
                 <!--                  (click)="toggleCollapse()"-->
                 <!--                  *ngIf="!isItemsCollapsed"-->
                 <!--                  id="collapseAllBtn"-->
@@ -152,9 +150,9 @@
             <div class="col d-flex justify-content-end">
               <button
                 *ngIf="visualEditorTemplateModel.checkLists.length === 0"
-                mdbBtn
+                mat-button
                 id="initialFieldCreateBtn"
-                [mdbTooltip]="'Add field' | translate"
+                [matTooltip]="'Add field' | translate"
                 class="btn-success btn-icon"
                 (click)="showFieldModal()"
               >
@@ -162,9 +160,9 @@
               </button>
               <button
                 *ngIf="visualEditorTemplateModel.fields.length === 0"
-                mdbBtn
+                mat-button
                 id="initialChecklistCreateBtn"
-                [mdbTooltip]="'Add sub eForm' | translate"
+                [matTooltip]="'Add sub eForm' | translate"
                 class="btn-success btn-icon"
                 (click)="showChecklistModal()"
               >

@@ -17,19 +17,21 @@ import { AccountManagementRouting } from './account-management.routing';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { usersPersistProvider } from './components/users/store/users.store';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AccountManagementRouting,
-    NgSelectModule,
-    MDBBootstrapModule,
-    EformSharedModule,
-    TranslateModule,
-    ReactiveFormsModule,
-    FormsModule,
-    FontAwesomeModule,
-  ],
+    imports: [
+        CommonModule,
+        AccountManagementRouting,
+        NgSelectModule,
+        MDBBootstrapModule,
+        EformSharedModule,
+        TranslateModule,
+        ReactiveFormsModule,
+        FormsModule,
+        FontAwesomeModule,
+        MatCardModule,
+    ],
   declarations: [
     ChangePasswordComponent,
     ProfileSettingsComponent,

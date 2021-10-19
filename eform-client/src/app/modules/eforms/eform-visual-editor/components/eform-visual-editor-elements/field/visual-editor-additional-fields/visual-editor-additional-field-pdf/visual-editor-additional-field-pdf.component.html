@@ -1,5 +1,5 @@
-<mdb-card class="mt-3">
-  <mdb-card-body>
+<mat-card class="mt-3">
+  <mat-card-content>
     <div class="row">
       <div class="col">
         <div class="md-form">
@@ -7,11 +7,11 @@
             *ngFor="let selectedLanguage of selectedLanguages; let i = index"
           >
             <ng-container *ngIf="isLanguageSelected(selectedLanguage)">
-              <mdb-card class="mb-3">
-                <mdb-card-header>{{
+              <mat-card class="mb-3">
+                <mat-card-title >{{
                   getLanguage(selectedLanguage) | translate
-                }}</mdb-card-header>
-                <mdb-card-body>
+                }}</mat-card-title >
+                <mat-card-content>
                   <input
                     type="file"
                     hidden
@@ -26,19 +26,19 @@
                         'No file uploaded yet.' | translate
                     }}
                     <button
-                      mdbBtn
+                      mat-button
                       class="btn-primary btn-small-height"
                       (click)="fileUpload.click()"
                     >
                       {{ 'Upload' | translate }}
                     </button>
                   </div>
-                </mdb-card-body>
-              </mdb-card>
+                </mat-card-content>
+              </mat-card>
             </ng-container>
           </div>
         </div>
       </div>
     </div>
-  </mdb-card-body>
-</mdb-card>
+  </mat-card-content>
+</mat-card>

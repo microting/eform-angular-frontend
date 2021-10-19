@@ -1,10 +1,10 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       id="createEntitySearchBtn"
       class="btn btn-success btn-small-height"
-      mdbTooltip="{{ 'Create new searchable list' | translate }}"
+      matTooltip="{{ 'Create new searchable list' | translate }}"
       *ngIf="userClaims.entitySearchCreate"
       placement="left"
       [routerLink]="['/advanced/entity-search/create']"
@@ -70,7 +70,7 @@
                 [disabled]="!userClaims.entitySearchUpdate ||
                   (advEntitySearchableGroup.isLocked &&
                     !advEntitySearchableGroup.name.includes('editable'))"
-                mdbTooltip="{{ 'Edit' | translate }}"
+                matTooltip="{{ 'Edit' | translate }}"
                 [routerLink]="[
                   '/advanced/entity-search/edit/' +
                     advEntitySearchableGroup.microtingUUID
@@ -81,7 +81,7 @@
               <button
                 id="entitySearchDeleteBtn"
                 class="btn btn-danger btn-icon mb-2"
-                mdbTooltip="{{ 'Remove' | translate }}"
+                matTooltip="{{ 'Remove' | translate }}"
                 (click)="openModalSearchRemove(advEntitySearchableGroup)"
                 [disabled]="!userClaims.entitySearchDelete ||
                   advEntitySearchableGroup.isLocked"

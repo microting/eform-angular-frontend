@@ -48,6 +48,8 @@ import {
 import { casePostsPersistProvider } from './components/case-posts/store';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   imports: [
@@ -67,6 +69,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     RouterModule,
     MatFormFieldModule,
     MatDatepickerModule,
+    MatTooltipModule,
+    MatCardModule,
   ],
   declarations: [
     CaseEditNavComponent,

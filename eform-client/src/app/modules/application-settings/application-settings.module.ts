@@ -9,19 +9,21 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
 import { ApplicationSettingsRouting } from './application-settings.routing';
 import { AdminSettingsComponent, ConnectionSetupComponent } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    NgSelectModule,
-    ApplicationSettingsRouting,
-    MDBBootstrapModule,
-    EformSharedModule,
-    FormsModule,
-    TranslateModule,
-    FileUploadModule,
-    FontAwesomeModule,
-  ],
+    imports: [
+        CommonModule,
+        NgSelectModule,
+        ApplicationSettingsRouting,
+        MDBBootstrapModule,
+        EformSharedModule,
+        FormsModule,
+        TranslateModule,
+        FileUploadModule,
+        FontAwesomeModule,
+        MatTooltipModule,
+    ],
   declarations: [AdminSettingsComponent, ConnectionSetupComponent],
 })
 export class ApplicationSettingsModule {}

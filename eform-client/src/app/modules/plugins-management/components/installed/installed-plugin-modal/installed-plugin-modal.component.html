@@ -29,7 +29,7 @@
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
+          mat-button
           class="btn-danger btn-small-height"
           (click)="updatePluginStatus(installedPluginModel.status)"
           id="pluginOKBtn"
@@ -37,7 +37,7 @@
           {{ 'OK' | translate }}
         </button>
         <button
-          mdbBtn
+          mat-button
           class="btn-accent text-black-50 btn-small-height"
           (click)="frame.hide()"
           id="pluginCancelBtn"

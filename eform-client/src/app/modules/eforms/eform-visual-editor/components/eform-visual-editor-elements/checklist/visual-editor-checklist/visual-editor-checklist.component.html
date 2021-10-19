@@ -16,7 +16,7 @@
         <div class="d-flex align-items-center">
           <fa-icon
             *ngIf="!isChecklistComplete"
-            [mdbTooltip]="'eForm is not complete' | translate"
+            [matTooltip]="'eForm is not complete' | translate"
             icon="info-circle"
             [fixedWidth]="true"
             size="lg"
@@ -24,8 +24,8 @@
           ></fa-icon>
           <button
             *ngIf="checklist.fields.length == 0"
-            mdbBtn
-            [mdbTooltip]="'New sub eForm' | translate"
+            mat-button
+            [matTooltip]="'New sub eForm' | translate"
             class="btn-success btn-icon"
             id="addNewNestedChecklist{{ checklistIndex }}"
             (click)="onAddNewNestedChecklist()"
@@ -34,8 +34,8 @@
           </button>
           <button
             *ngIf="checklist.checkLists.length == 0"
-            mdbBtn
-            [mdbTooltip]="'New nested field' | translate"
+            mat-button
+            [matTooltip]="'New nested field' | translate"
             class="btn-success btn-icon"
             id="addNewNestedField{{ checklistIndex }}"
             (click)="onAddNewNestedField()"
@@ -43,8 +43,8 @@
             <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
           </button>
           <button
-            mdbBtn
-            [mdbTooltip]="'Edit eForm' | translate"
+            mat-button
+            [matTooltip]="'Edit eForm' | translate"
             class="btn-neutral btn-icon"
             id="editChecklistBtn{{ checklistIndex }}"
             (click)="onEditChecklist()"
@@ -52,8 +52,8 @@
             <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
           </button>
           <button
-            mdbBtn
-            [mdbTooltip]="'Delete eForm' | translate"
+            mat-button
+            [matTooltip]="'Delete eForm' | translate"
             class="btn-danger btn-icon"
             id="deleteChecklistBtn{{ checklistIndex }}"
             (click)="onDeleteChecklist()"

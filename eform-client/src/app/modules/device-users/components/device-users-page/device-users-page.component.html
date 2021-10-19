@@ -1,11 +1,11 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       class="btn-success btn-small-height"
       id="newDeviceUserBtn"
       *ngIf="userClaims.deviceUsersCreate"
-      mdbTooltip="{{ 'Create Device User' | translate }}"
+      matTooltip="{{ 'Create Device User' | translate }}"
       (click)="createNewUserModal.show()"
     >
       {{ 'New Device User' | translate }}
@@ -49,10 +49,10 @@
               </ng-container>
               <ng-container *ngIf="siteDto.otpCode == 0">
                 <button
-                  mdbBtn
+                  mat-button
                   class="btn-danger btn-icon mb-2"
                   *ngIf="userClaims.deviceUsersUpdate"
-                  mdbTooltip="{{ 'New OTP' | translate }}"
+                  matTooltip="{{ 'New OTP' | translate }}"
                   (click)="openOtpModal(siteDto)"
                 >
                   <fa-icon icon="key" size="lg" [fixedWidth]="true"></fa-icon>
@@ -66,10 +66,10 @@
           >
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mat-button
                 class="btn-accent text-black-50 btn-icon mb-2"
                 *ngIf="userClaims.deviceUsersUpdate"
-                mdbTooltip="{{ 'Edit Device User' | translate }}"
+                matTooltip="{{ 'Edit Device User' | translate }}"
                 mdbWavesEffect
                 id="editDeviceUserBtn"
                 (click)="openEditModal(siteDto)"
@@ -77,10 +77,10 @@
                 <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-danger btn-icon mb-2"
                 *ngIf="userClaims.deviceUsersDelete"
-                mdbTooltip="{{ 'Delete Device User' | translate }}"
+                matTooltip="{{ 'Delete Device User' | translate }}"
                 id="deleteDeviceUserBtn"
                 (click)="openDeleteDeviceUserModal(siteDto)"
               >

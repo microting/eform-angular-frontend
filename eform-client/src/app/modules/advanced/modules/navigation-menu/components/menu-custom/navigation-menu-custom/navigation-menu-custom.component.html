@@ -1,5 +1,5 @@
-<mdb-card class="mb-3" id="menuTemplate">
-  <mdb-card-header>
+<mat-card class="mb-3" id="menuTemplate">
+  <mat-card-title >
     <div class="d-flex justify-content-between align-items-center">
       <div>
         {{ 'Custom' | translate }}
@@ -10,11 +10,11 @@
         (collapseUpdate)="collapsed = $event"
       ></app-eform-collapse-toggle>
     </div>
-  </mdb-card-header>
+  </mat-card-title >
   <div mdbCollapse #collapse="bs-collapse">
     <div class="card-body">
-      <mdb-card class="mb-2">
-        <mdb-card-header>
+      <mat-card class="mb-2">
+        <mat-card-title >
           <div class="d-flex justify-content-between align-items-center">
             <div>
               {{ 'Dropdown' | translate }}
@@ -24,13 +24,13 @@
               (click)="showDropdownAddModal()"
               icon="plus"
               style="cursor: pointer"
-              mdbTooltip="{{ 'Add to menu' | translate }}"
+              matTooltip="{{ 'Add to menu' | translate }}"
             ></fa-icon>
           </div>
-        </mdb-card-header>
-      </mdb-card>
-      <mdb-card class="mb-3">
-        <mdb-card-header>
+        </mat-card-title >
+      </mat-card>
+      <mat-card class="mb-3">
+        <mat-card-title >
           <div class="d-flex justify-content-between align-items-center">
             <div>
               {{ 'Link' | translate }}
@@ -40,14 +40,14 @@
               (click)="showCustomLinkAddModal()"
               icon="plus"
               style="cursor: pointer"
-              mdbTooltip="{{ 'Add to menu' | translate }}"
+              matTooltip="{{ 'Add to menu' | translate }}"
             ></fa-icon>
           </div>
-        </mdb-card-header>
-      </mdb-card>
+        </mat-card-title >
+      </mat-card>
     </div>
   </div>
-</mdb-card>
+</mat-card>
 
 <app-navigation-menu-custom-dropdown
   #customDropdownModal

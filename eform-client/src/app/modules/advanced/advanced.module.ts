@@ -41,6 +41,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EformImportedModule } from '../../common/modules/eform-imported/eform-imported.module';
 import { advancedPersistProviders } from './components/advansed-persist-providers';
 import { EformSharedTagsModule } from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   imports: [
@@ -57,6 +59,8 @@ import { EformSharedTagsModule } from '../../common/modules/eform-shared-tags/ef
     EformImportedModule,
     ReactiveFormsModule,
     EformSharedTagsModule,
+    MatTooltipModule,
+    MatCardModule,
   ],
   declarations: [
     EntitySearchComponent,

@@ -1,10 +1,10 @@
 <section id="section{{element.id}}">
 <!--<section id="section{{element.id}}" *ngIf="element.dataItemList">-->
-  <mdb-card class="mb-4 mt-4" style="width: 100%">
-    <mdb-card-header>
+  <mat-card class="mb-4 mt-4" style="width: 100%">
+    <mat-card-title >
       <p class="h4">{{element.label}}</p>
-    </mdb-card-header>
-    <mdb-card-body>
+    </mat-card-title >
+    <mat-card-content>
       <div>
         <div *ngIf="element.approvalEnabled" (click)="element.status = 'not_checked'">
           <label class="md-radio block">
@@ -38,31 +38,31 @@
       </div>
       <app-case-edit-switch [dataItemList]="element.dataItemList"></app-case-edit-switch>
       <div class="mt-1 mb-1" *ngIf="element.extraFieldsEnabled">
-        <mdb-card class="mb-4 mt-4" style="width: 100%">
-          <mdb-card-header>{{ 'Extra comment' | translate}}</mdb-card-header>
-          <mdb-card-body>
+        <mat-card class="mb-4 mt-4" style="width: 100%">
+          <mat-card-title >{{ 'Extra comment' | translate}}</mat-card-title >
+          <mat-card-content>
             <ng-container *ngFor="let fieldValueDto of element.extraComments; let i = index">
               <element-comment [fieldValue]="fieldValueDto"></element-comment>
             </ng-container>
-          </mdb-card-body>
-        </mdb-card>
-        <mdb-card class="mb-4 mt-4" style="width: 100%">
-          <mdb-card-header>{{ 'Extra picture' | translate}}</mdb-card-header>
-          <mdb-card-body>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="mb-4 mt-4" style="width: 100%">
+          <mat-card-title >{{ 'Extra picture' | translate}}</mat-card-title >
+          <mat-card-content>
             <element-picture [fieldValues]="element.extraPictures"></element-picture>
-          </mdb-card-body>
-        </mdb-card>
-        <mdb-card class="mb-4 mt-4" style="width: 100%">
-          <mdb-card-header>{{ 'Extra recording' | translate}}</mdb-card-header>
-          <mdb-card-body></mdb-card-body>
-        </mdb-card>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="mb-4 mt-4" style="width: 100%">
+          <mat-card-title >{{ 'Extra recording' | translate}}</mat-card-title >
+          <mat-card-content></mat-card-content>
+        </mat-card>
       </div>
 
       <ng-container *ngIf="element.elementList">
           <app-case-edit-element [element]="elem" *ngFor="let elem of element.elementList"></app-case-edit-element>
       </ng-container>
-    </mdb-card-body>
-  </mdb-card>
+    </mat-card-content>
+  </mat-card>
 </section>
 
 

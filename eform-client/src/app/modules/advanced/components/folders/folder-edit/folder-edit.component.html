@@ -13,8 +13,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <mdb-card class="mb-3">
-          <mdb-card-body>
+        <mat-card class="mb-3">
+          <mat-card-content>
             <div class="row">
               <div
                 class="ng-select-wrapper"
@@ -52,10 +52,10 @@
                 </div>
               </div>
             </div>
-          </mdb-card-body>
-        </mdb-card>
-        <mdb-card>
-          <mdb-card-body>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content>
             <ng-container
               *ngFor="
                 let translation of folderUpdateModel.translations;
@@ -105,12 +105,12 @@
                 </div>
               </ng-container>
             </ng-container>
-          </mdb-card-body>
-        </mdb-card>
+          </mat-card-content>
+        </mat-card>
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
+          mat-button
           class="btn-success btn-small-height"
           id="saveEditBtn"
           (click)="updateFolder()"
@@ -118,7 +118,7 @@
           {{ 'Save' | translate }}
         </button>
         <button
-          mdbBtn
+          mat-button
           id="cancelEditBtn"
           class="btn-accent text-black-50 btn-small-height"
           (click)="frame.hide()"

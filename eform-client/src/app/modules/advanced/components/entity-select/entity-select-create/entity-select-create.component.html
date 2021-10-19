@@ -1,7 +1,7 @@
 <eform-subheader [title]="'Create selectable list' | translate">
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       id="createEntitySelectSaveBtn"
       class="btn-success btn-small-height"
       (click)="createEntitySelectableGroup()"
@@ -9,7 +9,7 @@
       {{ 'Create' | translate }}
     </button>
     <button
-      mdbBtn
+      mat-button
       id="createEntitySelectCancelBtn"
       class="btn-accent text-black-50 btn-small-height"
       (click)="goBack()"
@@ -22,8 +22,8 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 col-xs-12" role="main">
-      <mdb-card>
-        <mdb-card-body>
+      <mat-card>
+        <mat-card-content>
           <div class="row">
             <div class="col-md-12">
               <div class="md-form">
@@ -66,7 +66,7 @@
                 <fa-icon icon="list-ul" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
               <button
-                mdbBtn
+                mat-button
                 class="btn-success btn-icon"
                 (click)="addNewAdvEntitySelectableItem()"
                 id="addSingleEntitySelectableItem"
@@ -111,7 +111,7 @@
                           size="lg"
                           [fixedWidth]="true"
                           *ngIf="!entityItem.name"
-                          mdbTooltip="{{ 'Name is required' | translate }}!"
+                          matTooltip="{{ 'Name is required' | translate }}!"
                         ></fa-icon>
                         <a id="entitySelectCreateSingleItemEdit">
                           <fa-icon
@@ -140,8 +140,8 @@
               </div>
             </div>
           </div>
-        </mdb-card-body>
-      </mdb-card>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

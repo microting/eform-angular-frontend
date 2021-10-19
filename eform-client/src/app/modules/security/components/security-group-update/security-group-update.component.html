@@ -1,11 +1,11 @@
 <eform-subheader [title]="'Update security group' | translate">
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       class="btn-success btn-small-height"
       [disabled]="!securityGroupModel.groupName"
       (click)="updateSecurityGroup()"
-      mdbTooltip="{{ 'Update Group' | translate }}"
+      matTooltip="{{ 'Update Group' | translate }}"
       id="newSecurityGroupBtn"
     >
       {{ 'Save' | translate }}
@@ -41,10 +41,10 @@
     </div>
     <div class="col-md-3 col-xs-4 col-sm-4 mt-3 pt-1">
       <button
-        mdbBtn
+        mat-button
         class="btn-success btn-small-height"
         (click)="addUserToGroup(usersSelector)"
-        mdbTooltip="{{ 'Add user to group' | translate }}"
+        matTooltip="{{ 'Add user to group' | translate }}"
       >
         + {{ 'Bind to Group' | translate }}
       </button>
@@ -84,9 +84,9 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mat-button
                 class="btn-danger btn-icon mb-2"
-                mdbTooltip="{{ 'Remove user from group' | translate }}"
+                matTooltip="{{ 'Remove user from group' | translate }}"
                 (click)="deleteUserFromGroup(securityGroupUser)"
               >
                 <i class="material-icons"> delete_forever </i>

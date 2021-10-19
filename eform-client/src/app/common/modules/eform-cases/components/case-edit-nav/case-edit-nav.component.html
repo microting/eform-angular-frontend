@@ -2,8 +2,7 @@
   <li *ngFor="let elm of element.elementList" style="cursor: pointer;"
       (click)="goToSection('#section' + elm.id)"
       class="list-group-item list-group-item-action waves-light"
-      routerLinkActive="active"
-      mdbWavesEffect>
+      routerLinkActive="active">
     <a >
       {{elm.label}}
     </a>

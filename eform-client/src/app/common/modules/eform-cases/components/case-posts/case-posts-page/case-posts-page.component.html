@@ -1,16 +1,15 @@
 <eform-subheader [title]="'Case posts' | translate" [forceStaticTitle]="true">
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       class="btn-accent text-black-50 btn-icon"
       [routerLink]="['../../../', selectedEformId]"
-      mdbTooltip="{{ 'Back to overview' | translate }}"
-      mdbWavesEffect
+      matTooltip="{{ 'Back to overview' | translate }}"
     >
       <fa-icon icon="arrow-left" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
     <button
-      mdbBtn
+      mat-button
       id="createEmailRecipientBtn"
       class="btn-success btn-small-height"
       (click)="openCreateModal()"
@@ -93,7 +92,7 @@
               <button
                 id="casePostViewBtn"
                 class="btn btn-success btn-icon mb-2"
-                mdbTooltip="{{ 'View Post' | translate }}"
+                matTooltip="{{ 'View Post' | translate }}"
                 (click)="openViewModal(post.id)"
               >
                 <fa-icon icon="eye" [fixedWidth]="true" size="lg"></fa-icon>

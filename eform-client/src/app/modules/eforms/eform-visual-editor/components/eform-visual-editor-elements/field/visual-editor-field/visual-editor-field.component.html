@@ -23,9 +23,9 @@
         <div class="row" id="colors">
           <div *ngFor="let color of fieldColors">
             <div
-              mdbBtn
+              mat-button
               [style]="'background-color: #' + color.name + ';'"
-              [mdbTooltip]="color.description"
+              [matTooltip]="color.description"
               style="border-radius: 10em; padding: 1em 1em"
               (click)="onChangeColor(color.name)"
             ></div>
@@ -35,7 +35,7 @@
       <div class="col-3 d-flex justify-content-end align-items-center">
         <fa-icon
           *ngIf="!isFieldComplete"
-          [mdbTooltip]="'Field is not complete' | translate"
+          [matTooltip]="'Field is not complete' | translate"
           icon="info-circle"
           [fixedWidth]="true"
           size="lg"
@@ -47,7 +47,7 @@
           id="addNewNestedField"
           class="btn btn-success btn-icon mr-2"
           (click)="onAddNewField()"
-          [mdbTooltip]="'Add new nested field' | translate"
+          [matTooltip]="'Add new nested field' | translate"
         >
           <fa-icon icon="plus" [fixedWidth]="true"></fa-icon>
         </button>
@@ -55,7 +55,7 @@
           id="copyBtn"
           class="btn btn-success btn-icon mr-2"
           (click)="onCopyField(field)"
-          [mdbTooltip]="'Copy field' | translate"
+          [matTooltip]="'Copy field' | translate"
         >
           <fa-icon icon="copy" [fixedWidth]="true"></fa-icon>
         </button>
@@ -63,7 +63,7 @@
           id="editBtn"
           class="btn btn-neutral btn-icon mr-2"
           (click)="onEditField()"
-          [mdbTooltip]="'Edit field' | translate"
+          [matTooltip]="'Edit field' | translate"
         >
           <fa-icon icon="pen" [fixedWidth]="true"></fa-icon>
         </button>
@@ -71,7 +71,7 @@
           id="deleteBtn"
           class="btn btn-danger btn-icon mr-2"
           (click)="onDeleteField()"
-          [mdbTooltip]="'Delete field' | translate"
+          [matTooltip]="'Delete field' | translate"
         >
           <fa-icon icon="trash-alt" [fixedWidth]="true"></fa-icon>
         </button>
@@ -79,7 +79,7 @@
           *ngIf="field.fieldType == fieldTypes.FieldGroup"
           id="collapseToggleBtn"
           class="btn btn-neutral btn-icon mr-2"
-          [mdbTooltip]="
+          [matTooltip]="
             (field.collapsed ? 'Expand field' : 'Collapse field') | translate
           "
           (click)="toggleCollapse(field)"

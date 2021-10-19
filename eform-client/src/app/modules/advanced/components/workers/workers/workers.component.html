@@ -1,7 +1,7 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mat-button
       class="btn-success btn-small-height"
       id="workerCreateBtn"
       *ngIf="userClaims.workersCreate"
@@ -52,7 +52,7 @@
                 id="workerEditBtn"
                 class="btn btn-accent text-black-50 btn-icon mb-2"
                 *ngIf="userClaims.workersUpdate"
-                mdbTooltip="{{ 'Edit Worker' | translate }}"
+                matTooltip="{{ 'Edit Worker' | translate }}"
                 (click)="openEditModal(workerDto)"
               >
                 <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
@@ -61,7 +61,7 @@
                 id="workerDeleteBtn"
                 class="btn btn-danger btn-icon mb-2"
                 *ngIf="userClaims.workersDelete"
-                mdbTooltip="{{ 'Delete Worker' | translate }}"
+                matTooltip="{{ 'Delete Worker' | translate }}"
                 (click)="openDeleteModal(workerDto)"
               >
                 <fa-icon

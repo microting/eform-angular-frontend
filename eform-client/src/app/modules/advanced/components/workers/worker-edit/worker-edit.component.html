@@ -34,10 +34,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height" id="workerEditSaveBtn"
+        <button mat-button class="btn-success btn-small-height" id="workerEditSaveBtn"
                 [disabled]="!selectedWorkerDto.firstName || !selectedWorkerDto.lastName"
                 (click)="updateSingle()">{{'Save' | translate}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height"
+        <button mat-button class="btn-accent text-black-50 btn-small-height"
                 (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
