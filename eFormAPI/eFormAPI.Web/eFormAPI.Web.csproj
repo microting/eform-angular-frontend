@@ -60,7 +60,7 @@
     <PackageReference Include="Microting.eFormApi.BasePn" Version="3.0.61" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.2" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="1.4.0" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="sendgrid" Version="9.24.4" />
