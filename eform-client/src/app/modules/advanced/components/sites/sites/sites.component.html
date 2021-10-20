@@ -16,13 +16,7 @@
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid mt-4">
   <div class="row p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-    >
+    <table class="z-depth-1 text-center table table-striped table-hover table-sm">
       <thead table-headers [tableHeaders]="tableHeaders"></thead>
       <tbody id="sitesTableBody">
         <tr *ngFor="let siteDto of sitesDto">

@@ -43,25 +43,27 @@ import { advancedPersistProviders } from './components/advansed-persist-provider
 import { EformSharedTagsModule } from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
-  imports: [
-    AdvancedRoutingModule,
-    CommonModule,
-    MDBBootstrapModule,
-    TranslateModule,
-    EformSharedModule,
-    NgSelectModule,
-    FormsModule,
-    DragulaModule,
-    FontAwesomeModule,
-    MDBBootstrapModule,
-    EformImportedModule,
-    ReactiveFormsModule,
-    EformSharedTagsModule,
-    MatTooltipModule,
-    MatCardModule,
-  ],
+    imports: [
+        AdvancedRoutingModule,
+        CommonModule,
+        MDBBootstrapModule,
+        TranslateModule,
+        EformSharedModule,
+        NgSelectModule,
+        FormsModule,
+        DragulaModule,
+        FontAwesomeModule,
+        MDBBootstrapModule,
+        EformImportedModule,
+        ReactiveFormsModule,
+        EformSharedTagsModule,
+        MatTooltipModule,
+        MatCardModule,
+        MatButtonModule,
+    ],
   declarations: [
     EntitySearchComponent,
     EntitySelectComponent,

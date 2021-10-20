@@ -25,25 +25,29 @@ import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatInputModule} from '@angular/material/input';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        EformsRouting,
-        NgSelectModule,
-        MDBBootstrapModule,
-        EformSharedModule,
-        ReactiveFormsModule,
-        FileUploadModule,
-        FormsModule,
-        TranslateModule.forChild(),
-        FontAwesomeModule,
-        // OwlDateTimeModule,
-        EformSharedTagsModule,
-        MatFormFieldModule,
-        MatDatepickerModule,
-        MatTooltipModule,
-    ],
+  imports: [
+    CommonModule,
+    EformsRouting,
+    NgSelectModule,
+    MDBBootstrapModule,
+    EformSharedModule,
+    ReactiveFormsModule,
+    FileUploadModule,
+    FormsModule,
+    TranslateModule.forChild(),
+    FontAwesomeModule,
+    // OwlDateTimeModule,
+    EformSharedTagsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatTooltipModule,
+    MatInputModule,
+    MatTableModule,
+  ],
   declarations: [
     EformsPageComponent,
     EformEditParingModalComponent,

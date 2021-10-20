@@ -49,17 +49,17 @@
 <div class="container-fluid">
   <div class="row pl-1">
     <div class="col-md-2">
-      <div class="md-form">
+      <mat-form-field appearance="legacy">
         <input
-          mdbInput
+          matInput
           type="text"
           [ngModel]="eformsStateService.getNameFilter() | async"
           (ngModelChange)="onLabelInputChanged($event)"
           class="form-control input-sm"
           id="labelInput"
         />
-        <label for="labelInput">{{ 'Label' | translate }}</label>
-      </div>
+        <mat-label for="labelInput">{{ 'Label' | translate }}</mat-label>
+      </mat-form-field>
     </div>
     <div class="col-md-4 ng-select-wrapper" *ngIf="userClaims.eformsReadTags">
       <ng-select
@@ -79,13 +79,7 @@
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-    >
+    <table class="z-depth-1 text-center table table-striped table-hover table-sm">
       <thead
         table-headers
         [tableHeaders]="tableHeaders"

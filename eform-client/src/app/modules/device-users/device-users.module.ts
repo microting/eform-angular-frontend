@@ -14,18 +14,20 @@ import {
 import { DeviceUsersRouting } from './device-users.routing';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    DeviceUsersRouting,
-    NgSelectModule,
-    MDBBootstrapModule,
-    EformSharedModule,
-    TranslateModule,
-    FormsModule,
-    FontAwesomeModule,
-  ],
+    imports: [
+        CommonModule,
+        DeviceUsersRouting,
+        NgSelectModule,
+        MDBBootstrapModule,
+        EformSharedModule,
+        TranslateModule,
+        FormsModule,
+        FontAwesomeModule,
+        MatTooltipModule,
+    ],
   declarations: [
     DeviceUsersPageComponent,
     NewOtpModalComponent,
