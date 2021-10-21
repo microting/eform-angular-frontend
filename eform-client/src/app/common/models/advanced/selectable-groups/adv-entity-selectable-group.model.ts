@@ -9,5 +9,6 @@ export class AdvEntitySelectableGroupModel {
   updatedAt: Date;
   entityGroupItemLst: Array<AdvEntitySelectableItemModel> = [];
   isLocked: boolean;
+  isEditable: boolean;
   description: string;
 }

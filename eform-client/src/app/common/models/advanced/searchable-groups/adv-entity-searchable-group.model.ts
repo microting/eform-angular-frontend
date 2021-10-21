@@ -9,5 +9,6 @@ export class AdvEntitySearchableGroupModel {
   updatedAt: Date;
   entityGroupItemLst: Array<AdvEntitySearchableItemModel> = [];
   isLocked: boolean;
+  isEditable: boolean;
   description: string;
 }
