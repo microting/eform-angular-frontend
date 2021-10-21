@@ -55,9 +55,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.11" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="5.2.53" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="1.0.36" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.0.61" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.2" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.2" />
@@ -70,6 +67,12 @@
 
   <ItemGroup>
     <Folder Include="Plugins" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\eform-angular-frontend-base\Microting.EformAngularFrontendBase\Microting.EformAngularFrontendBase.csproj" />
+    <ProjectReference Include="..\..\..\eform-sdk\eFormCore\Microting.eForm.csproj" />
+    <ProjectReference Include="..\..\..\eFormApi.BasePn\eFormApi.BasePn\eFormApi.BasePn.csproj" />
   </ItemGroup>
 
 </Project>
