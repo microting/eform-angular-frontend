@@ -23,8 +23,10 @@ namespace eFormAPI.Web.Infrastructure.Models
         public DateTime? CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
-        
+
         public bool IsLocked { get; set; }
+
+        public bool IsEditable { get; set; }
 
         public static implicit operator EntityGroup(Microting.eForm.Infrastructure.Models.EntityGroup entityGroup)
         {
@@ -38,7 +40,8 @@ namespace eFormAPI.Web.Infrastructure.Models
                 WorkflowState = entityGroup.WorkflowState,
                 CreatedAt = entityGroup.CreatedAt,
                 UpdatedAt = entityGroup.UpdatedAt,
-                IsLocked = false,
+                IsLocked = entityGroup.Locked,
+                IsEditable = entityGroup.Editable,
                 Description = entityGroup.Description
             };
         }
