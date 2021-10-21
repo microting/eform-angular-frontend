@@ -70,10 +70,10 @@
                 mdbBtn
                 id="entitySelectEditBtn"
                 class="btn btn-accent btn-icon text-black-50 mb-2"
-                *ngIf="
-                  userClaims.entitySelectUpdate &&
-                  (!advEntitySelectableGroup.isLocked ||
-                    advEntitySelectableGroup.name.includes('editable'))
+                [disabled]="
+                  !userClaims.entitySelectUpdate ||
+                  (advEntitySelectableGroup.isLocked ||
+                    !advEntitySelectableGroup.name.includes('editable'))
                 "
                 mdbTooltip="{{ 'Edit' | translate }}"
                 [routerLink]="[
@@ -87,9 +87,9 @@
                 mdbBtn
                 id="entitySelectDeleteBtn"
                 class="btn btn-danger btn-icon mb-2"
-                *ngIf="
-                  userClaims.entitySelectDelete &&
-                  !advEntitySelectableGroup.isLocked
+                [disabled]="
+                  !userClaims.entitySelectDelete ||
+                  advEntitySelectableGroup.isLocked
                 "
                 mdbTooltip="{{ 'Remove' | translate }}"
                 (click)="openModalSelectRemove(advEntitySelectableGroup)"

@@ -173,6 +173,7 @@ namespace eFormAPI.Web.Services.Security
                     AuthConsts.EformClaims.EformsClaims.GetCsv,
                     AuthConsts.EformClaims.EformsClaims.ReadJasperReport,
                     AuthConsts.EformClaims.EformsClaims.UpdateJasperReport,
+                    AuthConsts.EformClaims.EformsClaims.ExportEformExcel
                 };
 
                 List<EformPermissionsModel> eformsInGroup = await _dbContext.EformInGroups

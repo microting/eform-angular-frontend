@@ -90,7 +90,7 @@
               <button
                 mdbBtn
                 class="btn-success btn-icon mb-2"
-                *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
+                *ngIf="authStateService.isAdmin"
                 [routerLink]="[
                   '/cases/posts/' + caseModel.id + '/' + currentTemplate.id
                 ]"

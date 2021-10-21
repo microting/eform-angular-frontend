@@ -48,7 +48,7 @@ namespace eFormAPI.Web.Services.Eform
             IEFormCoreService coreHelper,
             ILogger<TemplateVisualEditorService> logger,
             ILocalizationService localizationService
-            )
+        )
         {
             _coreHelper = coreHelper;
             _logger = logger;
@@ -63,7 +63,7 @@ namespace eFormAPI.Web.Services.Eform
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
                 // if checklist have cases or pair - read not approve
                 if (!await sdkDbContext.Cases.Where(x => x.CheckListId == id).Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).AnyAsync()
-                || !await sdkDbContext.CheckListSites.Where(x => x.CheckListId == id).Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).AnyAsync())
+                    || !await sdkDbContext.CheckListSites.Where(x => x.CheckListId == id).Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).AnyAsync())
                 {
                     var count = await sdkDbContext.CheckLists
                         .Where(x => x.Id == id)
@@ -455,92 +455,100 @@ namespace eFormAPI.Web.Services.Eform
                 switch (fieldFromDb.FieldType.Type) // todo add specific behaviour for some fields
                 {
                     case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
-                        {
-                            foreach (var fieldOption in fieldFromDb.FieldOptions
-                                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                                .Where(x => fieldForUpdate.Options.Where(y => y.Id != null).Any(y => y.Id != x.Id)))
+                    {
+                        var currentOptionIds = await sdkDbContext.FieldOptions.Where(x => x.FieldId == fieldFromDb.Id).Select(x => x.Id).ToListAsync();
+
+                        var optionsForCreate = fieldForUpdate.Options
+                            .Where(x => x.Id == null)
+                            .Select(x => new FieldOption
                             {
-                                await fieldOption.Delete(sdkDbContext);
-                            }
+                                FieldId = fieldFromDb.Id,
+                                Selected = x.Selected,
+                                DisplayOrder = x.DisplayOrder.ToString(),
+                                Key = x.Key.ToString(),
+                                FieldOptionTranslations = x.Translates
+                                    .Select(y =>
+                                        new FieldOptionTranslation
+                                        {
+                                            LanguageId = y.LanguageId,
+                                            Text = y.Name
+                                        })
+                                    .ToList(),
+                            })
+                            .ToList();
 
-                            var optionsForCreate = fieldForUpdate.Options
-                                .Where(x => x.Id == null)
-                                .Select(x => new FieldOption
-                                {
-                                    FieldId = fieldFromDb.Id,
-                                    Selected = x.Selected,
-                                    DisplayOrder = x.DisplayOrder.ToString(),
-                                    Key = x.Key.ToString(),
-                                    FieldOptionTranslations = x.Translates
-                                            .Select(y =>
-                                                new FieldOptionTranslation
-                                                {
-                                                    LanguageId = y.LanguageId,
-                                                    Text = y.Name
-                                                })
-                                            .ToList(),
-                                })
-                                .ToList();
-
-                            var optionsForUpdate = fieldForUpdate.Options
-                                .Where(y => y.Id != null)
-                                .Select(x => new FieldOption
-                                {
-                                    FieldId = fieldFromDb.Id,
-                                    Selected = x.Selected,
-                                    DisplayOrder = x.DisplayOrder.ToString(),
-                                    Key = x.Key.ToString(),
-                                    FieldOptionTranslations = x.Translates
+                        var optionsForUpdate = fieldForUpdate.Options
+                            .Where(y => y.Id != null)
+                            .Select(x => new FieldOption
+                            {
+                                FieldId = fieldFromDb.Id,
+                                Id = (int)x.Id,
+                                Selected = x.Selected,
+                                DisplayOrder = x.DisplayOrder.ToString(),
+                                Key = x.Key.ToString(),
+                                FieldOptionTranslations = x.Translates
                                     .Select(y => new FieldOptionTranslation
                                     {
                                         LanguageId = y.LanguageId,
-                                        Text = y.Name
+                                        Text = y.Name,
+                                        Id = (int)y.Id
                                     })
                                     .ToList(),
-                                });
+                            });
 
-                            foreach (var fieldOption in optionsForUpdate)
-                            {
-                                await fieldOption.Update(sdkDbContext);
-                            }
-
-                            foreach (var dbOption in optionsForCreate)
-                            {
-                                await dbOption.Create(sdkDbContext);
-                                foreach (var optionTranslation in dbOption.FieldOptionTranslations)
-                                {
-                                    optionTranslation.FieldOptionId = dbOption.Id;
-                                    await optionTranslation.Create(sdkDbContext);
-                                }
-                            }
-                            break;
-                        }
-                    case Constants.FieldTypes.ShowPdf:
+                        foreach (var fieldOption in optionsForUpdate)
                         {
-                            if (fieldForUpdate.PdfFiles.Any())
+                            foreach (var optionTranslation in fieldOption.FieldOptionTranslations)
                             {
-                                var folder = Path.Combine(Path.GetTempPath(), "templates",
-                                    Path.Combine("fields-pdf-files", fieldFromDb.CheckListId.ToString()));
-                                Directory.CreateDirectory(folder);
-                                foreach (var pdfFile in fieldForUpdate.PdfFiles)
-                                {
-                                    if (pdfFile.File != null)
-                                    {
-                                        var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{fieldFromDb.CheckListId}.pdf");
-                                        using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
-                                        {
-                                            await pdfFile.File.CopyToAsync(stream);
-                                        }
+                                var dbOptionTranslation =
+                                    await sdkDbContext.FieldOptionTranslations.SingleOrDefaultAsync(x =>
+                                        x.Id == optionTranslation.Id);
+                                dbOptionTranslation.Text = optionTranslation.Text;
+                                await dbOptionTranslation.Update(sdkDbContext);
+                            }
 
-                                        await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
-                                        hashAndLanguageIdList.Add(
-                                            new KeyValuePair<string, int>(await core.PdfUpload(filePath),
-                                                pdfFile.LanguageId));
+                            currentOptionIds.Remove(fieldOption.Id);
+                        }
+
+                        foreach (var dbOption in optionsForCreate)
+                        {
+                            await dbOption.Create(sdkDbContext);
+                        }
+
+                        foreach (int currentOptionId in currentOptionIds)
+                        {
+                            FieldOption fieldOption =
+                                await sdkDbContext.FieldOptions.SingleOrDefaultAsync(x => x.Id == currentOptionId);
+                            await fieldOption.Delete(sdkDbContext);
+                        }
+                        break;
+                    }
+                    case Constants.FieldTypes.ShowPdf:
+                    {
+                        if (fieldForUpdate.PdfFiles.Any())
+                        {
+                            var folder = Path.Combine(Path.GetTempPath(), "templates",
+                                Path.Combine("fields-pdf-files", fieldFromDb.CheckListId.ToString()));
+                            Directory.CreateDirectory(folder);
+                            foreach (var pdfFile in fieldForUpdate.PdfFiles)
+                            {
+                                if (pdfFile.File != null)
+                                {
+                                    var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{fieldFromDb.CheckListId}.pdf");
+                                    using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
+                                    {
+                                        await pdfFile.File.CopyToAsync(stream);
                                     }
+
+                                    await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
+                                    hashAndLanguageIdList.Add(
+                                        new KeyValuePair<string, int>(await core.PdfUpload(filePath),
+                                            pdfFile.LanguageId));
                                 }
                             }
-                            break;
                         }
+                        break;
+                    }
                 }
 
                 await fieldFromDb.Update(sdkDbContext);
@@ -628,38 +636,38 @@ namespace eFormAPI.Web.Services.Eform
                 switch (fieldType)
                 {
                     case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
+                    {
+                        var options = sdkDbContext.FieldOptions
+                            .Where(x => x.FieldId == fieldId)
+                            .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Include(x => x.FieldOptionTranslations)
+                            .ToList();
+                        foreach (var optionTranslation in options.SelectMany(x => x.FieldOptionTranslations).ToList())
                         {
-                            var options = sdkDbContext.FieldOptions
-                                .Where(x => x.FieldId == fieldId)
-                                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                                .Include(x => x.FieldOptionTranslations)
-                                .ToList();
-                            foreach (var optionTranslation in options.SelectMany(x => x.FieldOptionTranslations).ToList())
-                            {
-                                await optionTranslation.Delete(sdkDbContext);
-                            }
-
-                            foreach (var fieldOption in options)
-                            {
-                                await fieldOption.Delete(sdkDbContext);
-                            }
-
-                            break;
+                            await optionTranslation.Delete(sdkDbContext);
                         }
+
+                        foreach (var fieldOption in options)
+                        {
+                            await fieldOption.Delete(sdkDbContext);
+                        }
+
+                        break;
+                    }
                     case Constants.FieldTypes.FieldGroup:
-                        {
-                            var fieldIds = await sdkDbContext.Fields
-                                .Where(x => x.ParentFieldId == fieldForDelete.Id)
-                                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                                .Select(x => x.Id)
-                                .ToListAsync();
-                            await DeleteFields(fieldIds, sdkDbContext);
-                            break;
-                        }
+                    {
+                        var fieldIds = await sdkDbContext.Fields
+                            .Where(x => x.ParentFieldId == fieldForDelete.Id)
+                            .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Select(x => x.Id)
+                            .ToListAsync();
+                        await DeleteFields(fieldIds, sdkDbContext);
+                        break;
+                    }
                     default:
-                        {
-                            break;
-                        }
+                    {
+                        break;
+                    }
                 }
 
                 await fieldForDelete.Delete(sdkDbContext);
@@ -710,65 +718,65 @@ namespace eFormAPI.Web.Services.Eform
                 switch (field.FieldType.Type)
                 {
                     case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
-                        {
-                            editorField.DecimalCount = field.DecimalCount;
-                            editorField.MinValue = field.MinValue; //== null ? field.MinValue : long.Parse(field.MinValue);
-                            editorField.MaxValue = field.MaxValue; //== null ? field.MaxValue : long.Parse(field.MaxValue);
-                            editorField.Value = field.DefaultValue; //== null ? field.DefaultValue : long.Parse(field.DefaultValue);
-                            findFields.Add(editorField);
-                            break;
-                        }
+                    {
+                        editorField.DecimalCount = field.DecimalCount;
+                        editorField.MinValue = field.MinValue; //== null ? field.MinValue : long.Parse(field.MinValue);
+                        editorField.MaxValue = field.MaxValue; //== null ? field.MaxValue : long.Parse(field.MaxValue);
+                        editorField.Value = field.DefaultValue; //== null ? field.DefaultValue : long.Parse(field.DefaultValue);
+                        findFields.Add(editorField);
+                        break;
+                    }
                     case Constants.FieldTypes.SaveButton:
-                        {
-                            editorField.Value = field.DefaultValue;
-                            findFields.Add(editorField);
-                            break;
-                        }
+                    {
+                        editorField.Value = field.DefaultValue;
+                        findFields.Add(editorField);
+                        break;
+                    }
                     case Constants.FieldTypes.FieldGroup:
-                        {
-                            var fieldsInGroups = await FindFields(eformId, sdkDbContext, field.Id);
-                            editorField.Fields = fieldsInGroups;
-                            findFields.Add(editorField);
-                            break;
-                        }
+                    {
+                        var fieldsInGroups = await FindFields(eformId, sdkDbContext, field.Id);
+                        editorField.Fields = fieldsInGroups;
+                        findFields.Add(editorField);
+                        break;
+                    }
                     case Constants.FieldTypes.Date:
-                        {
-                            editorField.MinValue = field.MinValue;// == null ? field.MinValue : DateTime.Parse(field.MinValue);
-                            editorField.MaxValue = field.MaxValue;// == null ? field.MaxValue : DateTime.Parse(field.MaxValue);
-                            findFields.Add(editorField);
-                            break;
-                        }
+                    {
+                        editorField.MinValue = field.MinValue;// == null ? field.MinValue : DateTime.Parse(field.MinValue);
+                        editorField.MaxValue = field.MaxValue;// == null ? field.MaxValue : DateTime.Parse(field.MaxValue);
+                        findFields.Add(editorField);
+                        break;
+                    }
                     case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
-                        {
-                            editorField.Options = sdkDbContext.FieldOptions
-                                .Where(x => x.FieldId == field.Id)
-                                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                                .Include(x => x.FieldOptionTranslations)
-                                .Select(x =>
-                                    new FieldOptions
-                                    {
-                                        DisplayOrder = int.Parse(x.DisplayOrder),
-                                        Id = x.Id,
-                                        Key = int.Parse(x.Key),
-                                        Selected = x.Selected,
-                                        Translates = x.FieldOptionTranslations
-                                            .Select(y =>
-                                                new CommonTranslationsModel
-                                                {
-                                                    Id = y.Id,
-                                                    Name = y.Text,
-                                                    LanguageId = y.LanguageId
-                                                }).ToList()
-                                    })
-                                .ToList();
-                            findFields.Add(editorField);
-                            break;
-                        }
+                    {
+                        editorField.Options = sdkDbContext.FieldOptions
+                            .Where(x => x.FieldId == field.Id)
+                            .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Include(x => x.FieldOptionTranslations)
+                            .Select(x =>
+                                new FieldOptions
+                                {
+                                    DisplayOrder = int.Parse(x.DisplayOrder),
+                                    Id = x.Id,
+                                    Key = int.Parse(x.Key),
+                                    Selected = x.Selected,
+                                    Translates = x.FieldOptionTranslations
+                                        .Select(y =>
+                                            new CommonTranslationsModel
+                                            {
+                                                Id = y.Id,
+                                                Name = y.Text,
+                                                LanguageId = y.LanguageId
+                                            }).ToList()
+                                })
+                            .ToList();
+                        findFields.Add(editorField);
+                        break;
+                    }
                     default:
-                        {
-                            findFields.Add(editorField);
-                            break;
-                        }
+                    {
+                        findFields.Add(editorField);
+                        break;
+                    }
                 }
             }
 
@@ -804,66 +812,66 @@ namespace eFormAPI.Web.Services.Eform
                 switch (fieldType)
                 {
                     case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
-                        {
-                            var optionsForCreate = field.Options.Select(x =>
-                                    new FieldOption
-                                    {
-                                        FieldId = dbField.Id,
-                                        Selected = x.Selected,
-                                        DisplayOrder = x.DisplayOrder.ToString(),
-                                        Key = x.Key.ToString(),
-                                        FieldOptionTranslations = x.Translates
-                                            .Select(y =>
-                                                new FieldOptionTranslation
-                                                {
-                                                    LanguageId = y.LanguageId,
-                                                    Text = y.Name
-                                                })
-                                            .ToList(),
-                                    })
-                                .ToList();
-                            foreach (var dbOption in optionsForCreate)
-                            {
-                                await dbOption.Create(sdkDbContext);
-                                foreach (var optionTranslation in dbOption.FieldOptionTranslations)
+                    {
+                        var optionsForCreate = field.Options.Select(x =>
+                                new FieldOption
                                 {
-                                    optionTranslation.FieldOptionId = dbOption.Id;
-                                    await optionTranslation.Create(sdkDbContext);
-                                }
-                            }
-                            break;
+                                    FieldId = dbField.Id,
+                                    Selected = x.Selected,
+                                    DisplayOrder = x.DisplayOrder.ToString(),
+                                    Key = x.Key.ToString(),
+                                    FieldOptionTranslations = x.Translates
+                                        .Select(y =>
+                                            new FieldOptionTranslation
+                                            {
+                                                LanguageId = y.LanguageId,
+                                                Text = y.Name
+                                            })
+                                        .ToList(),
+                                })
+                            .ToList();
+                        foreach (var dbOption in optionsForCreate)
+                        {
+                            await dbOption.Create(sdkDbContext);
+                            // foreach (var optionTranslation in dbOption.FieldOptionTranslations)
+                            // {
+                            //     optionTranslation.FieldOptionId = dbOption.Id;
+                            //     await optionTranslation.Create(sdkDbContext);
+                            // }
                         }
+                        break;
+                    }
                     case Constants.FieldTypes.FieldGroup:
-                        {
-                            await CreateFields(eformId, sdkDbContext, field.Fields, core, dbField.Id);
-                            break;
-                        }
+                    {
+                        await CreateFields(eformId, sdkDbContext, field.Fields, core, dbField.Id);
+                        break;
+                    }
                     case Constants.FieldTypes.ShowPdf:
+                    {
+                        if (field.PdfFiles.Any())
                         {
-                            if (field.PdfFiles.Any())
+                            var folder = Path.Combine(Path.GetTempPath(), "templates",
+                                Path.Combine("fields-pdf-files", eformId.ToString()));
+                            Directory.CreateDirectory(folder);
+                            foreach (var pdfFile in field.PdfFiles)
                             {
-                                var folder = Path.Combine(Path.GetTempPath(), "templates",
-                                    Path.Combine("fields-pdf-files", eformId.ToString()));
-                                Directory.CreateDirectory(folder);
-                                foreach (var pdfFile in field.PdfFiles)
+                                if (pdfFile.File != null)
                                 {
-                                    if (pdfFile.File != null)
+                                    var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{eformId}.pdf");
+                                    using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
                                     {
-                                        var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{eformId}.pdf");
-                                        using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
-                                        {
-                                            await pdfFile.File.CopyToAsync(stream);
-                                        }
-
-                                        await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
-                                        hashAndLanguageIdList.Add(
-                                            new KeyValuePair<string, int>(await core.PdfUpload(filePath),
-                                                pdfFile.LanguageId));
+                                        await pdfFile.File.CopyToAsync(stream);
                                     }
+
+                                    await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
+                                    hashAndLanguageIdList.Add(
+                                        new KeyValuePair<string, int>(await core.PdfUpload(filePath),
+                                            pdfFile.LanguageId));
                                 }
                             }
-                            break;
                         }
+                        break;
+                    }
                     //case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
                     //{
                     //    dbField.MaxValue = field.MaxValue == null ? field.MaxValue : long.Parse(field.MaxValue);
@@ -879,9 +887,9 @@ namespace eFormAPI.Web.Services.Eform
                     //        break;
                     //}
                     default:
-                        {
-                            break;
-                        }
+                    {
+                        break;
+                    }
                 }
 
                 var translates = field.Translations

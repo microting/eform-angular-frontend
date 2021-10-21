@@ -378,24 +378,17 @@ export class FoldersRowObject {
     description?: string | { description: string; language: string }[],
     clickCancel = false
   ) {
-    console.log('1a');
     // await browser.pause(10000);
     // console.log(this.createFolderChildBtn);
     if (this.createFolderChildBtn.error != null) {
-      console.log('1b');
       await this.folderElement.click();
       await this.createFolderChildBtn.waitForDisplayed({ timeout: 40000 });
       await this.getRow(this.rowNumber);
     }
-    console.log('1c');
     await this.createFolderChildBtn.click();
-    console.log('1d');
     await (await foldersPage.cancelCreateBtn()).waitForDisplayed({ timeout: 10000 });
-    console.log('1e');
     if (name) {
-      console.log('1f');
       if (typeof name === typeof '') {
-        console.log('1g');
         const nameConverted = name as string;
         const da = applicationLanguages[0];
         await (await (await foldersPage.createLanguageSelector()).$('input')).setValue(da.text);
@@ -410,7 +403,6 @@ export class FoldersRowObject {
           ))
           .setValue(nameConverted);
       }
-      console.log('1h');
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
         for (let i = 0; i > nameConverted.length; i++) {
@@ -431,11 +423,8 @@ export class FoldersRowObject {
         }
       }
     }
-    console.log('1i');
     if (description != null) {
-      console.log('1j');
       if (typeof description === typeof '') {
-        console.log('1k');
         const descriptionConvert = description as string;
         const da = applicationLanguages[0];
         await (await (await foldersPage.createLanguageSelector()).$('input')).setValue(da.text);
@@ -451,7 +440,6 @@ export class FoldersRowObject {
           .setValue(descriptionConvert);
       }
       if (typeof description === typeof []) {
-        console.log('1k');
         const descriptionConvert = description as {
           description: string;
           language: string;
@@ -474,9 +462,7 @@ export class FoldersRowObject {
         }
       }
     }
-    console.log('1a');
     if (!clickCancel) {
-      console.log('1a');
       await (await foldersPage.saveCreateBtn()).click();
       await (await $('#spinner-animation')).waitForDisplayed({
         timeout: 90000,
@@ -681,7 +667,7 @@ export class FoldersTreeRowObject {
         `.ng-option=${language.text}`
       );
       value.waitForDisplayed({ timeout: 40000 });
-      value.click();
+      await value.click();
       descriptions.push({
         description: await (await foldersPage
           .editDescriptionInput(
@@ -696,15 +682,12 @@ export class FoldersTreeRowObject {
   }
 
   async delete(clickCancel = false) {
-    console.log('delete 1');
     console.log(this.deleteTreeBtn);
     if (this.deleteTreeBtn.error != null) {
-      console.log('delete 2');
       await this.folderTreeElement.click();
       await this.deleteTreeBtn.waitForDisplayed({ timeout: 40000 });
     }
     await this.deleteTreeBtn.click();
-    console.log('delete 3');
     if (!clickCancel) {
       await (await foldersPage.saveDeleteBtn()).waitForClickable({ timeout: 40000 });
       await (await foldersPage.saveDeleteBtn()).click();
@@ -713,7 +696,6 @@ export class FoldersTreeRowObject {
         reverse: true,
       });
     } else {
-      console.log('delete 4');
       await (await foldersPage.cancelDeleteBtn()).waitForClickable({ timeout: 40000 });
       await (await foldersPage.cancelDeleteBtn()).click();
     }

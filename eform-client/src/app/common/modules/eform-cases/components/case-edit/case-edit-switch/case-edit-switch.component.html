@@ -3,7 +3,7 @@
     <mdb-card class="mb-3" style="width: 100%"
          *ngIf="dataItem.fieldType != 'SaveButton' ">
       <mdb-card-header
-           [ngStyle]="{'background-color': dataItem.fieldValues.length > 0 ? (dataItem.fieldValues[0].color ? '#' + dataItem.fieldValues[0].color : '') : ''}"
+           [ngStyle]="{'background-color': dataItem.color ? '#' + dataItem.color : ''}"
            *ngIf="dataItem.fieldType != 'FieldContainer' && dataItem.fieldType != 'SaveButton'">
         {{dataItem.label}}
         <br>

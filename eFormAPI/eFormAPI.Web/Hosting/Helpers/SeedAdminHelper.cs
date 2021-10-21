@@ -88,7 +88,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                 LastName = adminSetupModel.LastName,
                 Locale = string.IsNullOrEmpty(defaultLocale) ? LocaleNames.English : defaultLocale,
                 TimeZone = timeZoneString,
-                DarkTheme = adminSetupModel.DarkTheme,
+                DarkTheme = true,
                 Formats = LocaleNames.German,
                 EmailConfirmed = true,
                 TwoFactorEnabled = false,
