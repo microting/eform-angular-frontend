@@ -73,7 +73,7 @@
                 [disabled]="
                   !userClaims.entitySelectUpdate ||
                   (advEntitySelectableGroup.isLocked ||
-                    !advEntitySelectableGroup.name.includes('editable'))
+                    !advEntitySelectableGroup.isEditable)
                 "
                 mdbTooltip="{{ 'Edit' | translate }}"
                 [routerLink]="[
