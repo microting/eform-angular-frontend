@@ -48,7 +48,7 @@ namespace eFormAPI.Web.Services
         private readonly ILocalizationService _localizationService;
 
         public EntitySearchService(BaseDbContext dbContext,
-            IEFormCoreService coreHelper, 
+            IEFormCoreService coreHelper,
             ILocalizationService localizationService)
         {
             _dbContext = dbContext;
@@ -124,7 +124,7 @@ namespace eFormAPI.Web.Services
                         }
                     }
                 }
-                
+
                 return new OperationDataResult<Paged<EntityGroup>>(true, entityGroupList);
             }
             catch (Exception)
@@ -139,10 +139,10 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                var groupCreate = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name, editModel.Description);
+                var groupCreate = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name, editModel.Description, false, true);
                 if (editModel.AdvEntitySearchableItemModels.Any())
                 {
-                    var entityGroup = await core.EntityGroupRead(groupCreate.MicrotingUUID);
+                    var entityGroup = await core.EntityGroupRead(groupCreate.MicrotingUid);
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
                     foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
                     {
@@ -158,7 +158,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 return new OperationResult(true,
-                    _localizationService.GetStringWithFormat("ParamCreatedSuccessfully", groupCreate.MicrotingUUID));
+                    _localizationService.GetStringWithFormat("ParamCreatedSuccessfully", groupCreate.MicrotingUid));
             }
             catch (Exception)
             {
@@ -221,7 +221,7 @@ namespace eFormAPI.Web.Services
                 EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid);
 
                 List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
-                
+
                 foreach (string plugin in plugins)
                 {
                     if (entityGroup.Name.Contains(plugin))
@@ -229,7 +229,7 @@ namespace eFormAPI.Web.Services
                         entityGroup.IsLocked = true;
                     }
                 }
-                
+
                 return new OperationDataResult<EntityGroup>(true, entityGroup);
             }
             catch (Exception)
