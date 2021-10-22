@@ -264,6 +264,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
                 // Create tags
                 if (eFormXmlModel.NewTag != null)
                 {
@@ -287,7 +288,10 @@ namespace eFormAPI.Web.Services
 
                 if (newTemplate == null) throw new Exception(_localizationService.GetString("eFormCouldNotBeCreated"));
                 // Set tags to eform
-                await core.TemplateCreate(newTemplate);
+                var clId = await core.TemplateCreate(newTemplate);
+                var cl = await sdkDbContext.CheckLists.SingleOrDefaultAsync(x => x.Id == clId);
+                cl.IsEditable = true;
+                await cl.Update(sdkDbContext);
                 if (eFormXmlModel.TagIds != null)
                 {
                     await core.TemplateSetTags(newTemplate.Id, eFormXmlModel.TagIds);
