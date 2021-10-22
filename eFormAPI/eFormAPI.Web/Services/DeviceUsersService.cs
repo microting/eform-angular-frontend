@@ -30,9 +30,7 @@ using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.DeviceUsers;
 using Microsoft.EntityFrameworkCore;
-using Microting.eForm.Infrastructure;
 using Microting.eForm.Infrastructure.Constants;
-using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -52,71 +50,63 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationDataResult<List<DeviceUser>>> Index()
         {
-            var core = await _coreHelper.GetCore().ConfigureAwait(false);;
-            await using MicrotingDbContext db = core.DbContextHelper.GetDbContext();
-            List<DeviceUser> deviceUsers = new List<DeviceUser>();
-
-            List<Site> matches = await db.Sites.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).ToListAsync().ConfigureAwait(false);
-            foreach (Site aSite in matches)
+            try
             {
-                Unit unit = null;
-                Worker worker = null;
-                int? unitCustomerNo = null;
-                int? unitOptCode = null;
-                int? unitMicrotingUid = null;
-                int? workerMicrotingUid = null;
-                string workerFirstName = null;
-                string workerLastName = null;
-                try
+                var core = await _coreHelper.GetCore().ConfigureAwait(false);
+                await using var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var deviceUsers = new List<DeviceUser>();
+
+                var sites = await sdkDbContext.Sites
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .ToListAsync();
+                foreach (var site in sites)
                 {
-                    unit = await db.Units.FirstAsync(x => x.SiteId == aSite.Id).ConfigureAwait(false);;
-                    unitCustomerNo = unit.CustomerNo;
-                    unitOptCode = unit.OtpCode ?? 0;
-                    unitMicrotingUid = (int) unit.MicrotingUid;
-                }
-                catch
-                {
+                    var language = sdkDbContext.Languages.Single(x => x.Id == site.LanguageId);
+                    var unit = await sdkDbContext.Units
+                        .Where(x => x.SiteId == site.Id)
+                        .Select(x => new { x.CustomerNo, x.OtpCode, x.MicrotingUid })
+                        .FirstOrDefaultAsync();
+                    var siteWorkerId = await sdkDbContext.SiteWorkers
+                        .Where(x => x.SiteId == site.Id)
+                        .Select(x => x.WorkerId)
+                        .FirstAsync();
+                    var worker = await sdkDbContext.Workers
+                        .Where(x => x.Id == siteWorkerId)
+                        .Select(x => new { x.MicrotingUid, x.FirstName, x.LastName })
+                        .FirstOrDefaultAsync();
+
+                    if (site.LanguageId == 0) // set default language id to danish
+                    {
+                        site.LanguageId = sdkDbContext.Languages
+                            .Single(x => x.Name == "Danish").Id;
+                        await site.Update(sdkDbContext);
+                    }
+
+                    deviceUsers.Add(
+                        new DeviceUser
+                        {
+                            CustomerNo = unit.CustomerNo,
+                            FirstName = worker.FirstName,
+                            LastName = worker.LastName,
+                            LanguageId = site.LanguageId,
+                            OtpCode = unit.OtpCode,
+                            SiteId = site.Id,
+                            SiteUid = site.MicrotingUid,
+                            SiteName = site.Name,
+                            UnitId = unit.MicrotingUid,
+                            WorkerUid = worker.MicrotingUid,
+                            Language = language.Name,
+                            LanguageCode = language.LanguageCode,
+                        });
                 }
 
-                try
-                {
-                    SiteWorker siteWorker = await db.SiteWorkers.FirstAsync(x => x.SiteId == aSite.Id).ConfigureAwait(false);;
-                    worker = await db.Workers.SingleAsync(x => x.Id == siteWorker.WorkerId).ConfigureAwait(false);;
-                    workerMicrotingUid = worker.MicrotingUid;
-                    workerFirstName = worker.FirstName;
-                    workerLastName = worker.LastName;
-                }
-                catch
-                {
-                }
-
-                if (aSite.LanguageId == 0)
-                {
-                    aSite.LanguageId = db.Languages.Single(x => x.Name == "Danish").Id;
-                    await aSite.Update(db).ConfigureAwait(false);;
-                }
-
-                Language language = db.Languages.Single(x => x.Id == aSite.LanguageId);
-                DeviceUser deviceUser = new DeviceUser()
-                {
-                    CustomerNo = unitCustomerNo,
-                    FirstName = workerFirstName,
-                    LastName = workerLastName,
-                    LanguageId = aSite.LanguageId,
-                    OtpCode = unitOptCode,
-                    SiteId = aSite.Id,
-                    SiteUid = aSite.MicrotingUid,
-                    SiteName = aSite.Name,
-                    UnitId = unitMicrotingUid,
-                    WorkerUid = workerMicrotingUid,
-                    Language = language.Name,
-                    LanguageCode = language.LanguageCode,
-                };
-                deviceUsers.Add(deviceUser);
+                // var siteDto = await core.SiteReadAll(false);
+                return new OperationDataResult<List<DeviceUser>>(true, deviceUsers);
             }
-
-            // var siteDto = await core.SiteReadAll(false);
-            return new OperationDataResult<List<DeviceUser>>(true, deviceUsers);
+            catch (Exception)
+            {
+                return new OperationDataResult<List<DeviceUser>>(false, _localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers"));
+            }
         }
 
         public async Task<OperationDataResult<int>> Create(DeviceUserModel deviceUserModel)
@@ -173,19 +163,19 @@ namespace eFormAPI.Web.Services
 
             //var siteDto = await core.SiteRead(id);
             DeviceUser deviceUser = null;
-            Site site = await db.Sites.SingleOrDefaultAsync(x => x.MicrotingUid == id);
+            var site = await db.Sites.SingleOrDefaultAsync(x => x.MicrotingUid == id);
             if (site == null)
                 return null;
 
-            SiteWorker siteWorker = db.SiteWorkers.Where(x => x.SiteId == site.Id).ToList().First();
-            Worker worker = await db.Workers.SingleAsync(x => x.Id == siteWorker.WorkerId);
-            List<Unit> units = db.Units.Where(x => x.SiteId == site.Id).ToList();
+            var siteWorker = db.SiteWorkers.Where(x => x.SiteId == site.Id).ToList().First();
+            var worker = await db.Workers.SingleAsync(x => x.Id == siteWorker.WorkerId);
+            var units = db.Units.Where(x => x.SiteId == site.Id).ToList();
 
             if (units.Any() && worker != null)
             {
-                Unit unit = units.First();
-                Language language = db.Languages.Single(x => x.Id == site.LanguageId);
-                deviceUser = new DeviceUser()
+                var unit = units.First();
+                var language = db.Languages.Single(x => x.Id == site.LanguageId);
+                deviceUser = new DeviceUser
                 {
                     CustomerNo = unit.CustomerNo,
                     FirstName = worker.FirstName,
@@ -215,11 +205,11 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 await using var db = core.DbContextHelper.GetDbContext();
-                Language language = db.Languages.Single(x => x.LanguageCode == deviceUserModel.LanguageCode);
+                var language = db.Languages.Single(x => x.LanguageCode == deviceUserModel.LanguageCode);
                 var siteDto = await core.SiteRead(deviceUserModel.Id);
                 if (siteDto.WorkerUid != null)
                 {
-                    var workerDto = await core.Advanced_WorkerRead((int) siteDto.WorkerUid);
+                    var workerDto = await core.Advanced_WorkerRead((int)siteDto.WorkerUid);
                     if (workerDto != null)
                     {
                         var fullName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
@@ -227,15 +217,15 @@ namespace eFormAPI.Web.Services
                             deviceUserModel.UserLastName, workerDto.Email, deviceUserModel.LanguageCode);
 
                         if (isUpdated)
-                        // {
-                        //     Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == deviceUserModel.Id);
-                        //     site.LanguageId = language.Id;
-                        //     await site.Update(db);
-                        // }
-                        return isUpdated
-                            ? new OperationResult(true, _localizationService.GetString("DeviceUserUpdatedSuccessfully"))
-                            : new OperationResult(false,
-                                _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated", deviceUserModel.Id));
+                            // {
+                            //     Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == deviceUserModel.Id);
+                            //     site.LanguageId = language.Id;
+                            //     await site.Update(db);
+                            // }
+                            return isUpdated
+                                ? new OperationResult(true, _localizationService.GetString("DeviceUserUpdatedSuccessfully"))
+                                : new OperationResult(false,
+                                    _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated", deviceUserModel.Id));
                     }
 
                     return new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeObtained"));
