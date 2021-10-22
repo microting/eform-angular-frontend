@@ -11,11 +11,11 @@ namespace eFormAPI.Web.Infrastructure.Models
     public class TemplateDto
     {
         public int Id { get; set; }
-        
+
         public DateTime? CreatedAt { get; set; }
-        
+
         public DateTime? UpdatedAt { get; set; }
-        
+
         public string Label { get; set; }
 
         public string Description { get; set; }
@@ -58,8 +58,10 @@ namespace eFormAPI.Web.Infrastructure.Models
         public bool ExcelExportEnabled { get; set; }
 
         public List<KeyValuePair<int, string>> Tags { get; set; }
-        
+
         public bool IsLocked { get; set; }
+
+        public bool IsEditable { get; set; }
 
         public int? FolderId { get; set; }
 
@@ -92,7 +94,9 @@ namespace eFormAPI.Web.Infrastructure.Models
                 DocxExportEnabled = templateDto.DocxExportEnabled,
                 ExcelExportEnabled = templateDto.ExcelExportEnabled,
                 Tags = templateDto.Tags,
-                FolderId = templateDto.FolderId
+                FolderId = templateDto.FolderId,
+                IsLocked = templateDto.IsLocked,
+                IsEditable = templateDto.IsEditable
             };
         }
 
@@ -107,7 +111,10 @@ namespace eFormAPI.Web.Infrastructure.Models
             }
             else
             {
-                IsLocked = pluginIds.Any(x => x.Contains(Label));
+                if (!IsLocked)
+                {
+                    IsLocked = pluginIds.Any(x => x.Contains(Label));
+                }
             }
         }
     }

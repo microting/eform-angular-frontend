@@ -140,6 +140,8 @@ namespace eFormAPI.Web.Services.Eform
                     FastNavigation = 0,
                     DownloadEntities = 0,
                     QuickSyncEnabled = 0,
+                    IsEditable = true,
+                    IsLocked = false
                 };
                 await newCheckList.Create(sdkDbContext);
 
@@ -152,6 +154,8 @@ namespace eFormAPI.Web.Services.Eform
                     ExtraFieldsEnabled = 0,
                     DoneButtonEnabled = 0,
                     ApprovalEnabled = 0,
+                    IsEditable = true,
+                    IsLocked = false
                 };
                 if (!model.CheckLists.Any())
                 {
@@ -980,6 +984,8 @@ namespace eFormAPI.Web.Services.Eform
                     ExtraFieldsEnabled = 0,
                     DoneButtonEnabled = 0,
                     ApprovalEnabled = 0,
+                    IsEditable = true,
+                    IsLocked = false
                 };
                 await newCheckList.Create(sdkDbContext);
 
@@ -1023,6 +1029,8 @@ namespace eFormAPI.Web.Services.Eform
                     ExtraFieldsEnabled = 0,
                     DoneButtonEnabled = 0,
                     ApprovalEnabled = 0,
+                    IsLocked = false,
+                    IsEditable = true
                 };
                 await checkList.Create(sdkDbContext);
 
