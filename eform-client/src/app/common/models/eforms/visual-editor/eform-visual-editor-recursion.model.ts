@@ -22,4 +22,5 @@ export class EformVisualEditorRecursionChecklistModel extends EformVisualEditorR
 
 export class EformVisualEditorFieldsDnDRecursionModel extends EformVisualEditorRecursionModel {
   fields: EformVisualEditorFieldModel[] = [];
+  parentFieldId?: number;
 }

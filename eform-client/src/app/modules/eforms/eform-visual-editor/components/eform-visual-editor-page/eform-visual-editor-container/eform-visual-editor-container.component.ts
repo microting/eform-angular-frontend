@@ -237,18 +237,20 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         this.visualEditorTemplateModel
       );
     } else {
-      const parentField =
-        this.visualEditorTemplateModel.fields[model.fieldIndex] ||
-        this.visualEditorTemplateModel.fields[model.fieldIndex - 1];
-      if (parentField.fieldType !== EformFieldTypesEnum.FieldGroup) {
+      const parentField = this.visualEditorTemplateModel.fields.find(
+        (x) => x.id === model.parentFieldId || x.tempId === model.parentFieldId
+      );
+      if (
+        parentField.fieldType === EformFieldTypesEnum.FieldGroup &&
+        !model.fields.some(
+          (x) => x.fieldType === EformFieldTypesEnum.FieldGroup
+        ) // CAN'T nested field group in field group
+      ) {
         model.fields.forEach(
           (x) => (x.parentFieldId = parentField.id ?? parentField.tempId)
         );
         model.fields = this.checkPosition(model.fields);
-        (
-          this.visualEditorTemplateModel.fields[model.fieldIndex] ||
-          this.visualEditorTemplateModel.fields[model.fieldIndex - 1]
-        ).fields = [...model.fields];
+        parentField.fields = [...model.fields];
       }
     }
   }
