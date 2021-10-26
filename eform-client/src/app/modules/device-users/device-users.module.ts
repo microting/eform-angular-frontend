@@ -13,7 +13,7 @@ import {
 } from './components';
 import { DeviceUsersRouting } from './device-users.routing';
 import { TranslateModule } from '@ngx-translate/core';
-import { DeviceUsersPersistProvider } from 'src/app/modules/device-users/components/store';
+import { DeviceUsersPersistProvider } from './components/store';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({

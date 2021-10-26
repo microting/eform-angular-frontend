@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { DeviceUserService } from 'src/app/common/services/device-users';
-import {
-  OperationDataResult,
-  SiteDto
-} from 'src/app/common/models';
+import { DeviceUserService } from 'src/app/common/services';
+import { OperationDataResult, SiteDto } from 'src/app/common/models';
 import { Observable } from 'rxjs';
 import { DeviceUsersQuery, DeviceUsersStore } from '../store';
 import { map } from 'rxjs/operators';

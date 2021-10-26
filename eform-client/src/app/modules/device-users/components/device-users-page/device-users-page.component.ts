@@ -43,7 +43,7 @@ export class DeviceUsersPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadAllSimpleSites();
+    this.getDeviceUsersFiltered();
   }
 
   openEditModal(simpleSiteDto: SiteDto) {
@@ -55,13 +55,11 @@ export class DeviceUsersPageComponent implements OnInit {
   }
 
   getDeviceUsersFiltered() {
-    this.deviceUsersStateService
-      .getDeviceUsersFiltered()
-      .subscribe((data) => {
-        if (data && data.model) {
-          this.sitesDto = data.model;
-        }
-      });
+    this.deviceUsersStateService.getDeviceUsersFiltered().subscribe((data) => {
+      if (data && data.model) {
+        this.sitesDto = data.model;
+      }
+    });
   }
 
   openOtpModal(siteDto: SiteDto) {
@@ -82,11 +80,11 @@ export class DeviceUsersPageComponent implements OnInit {
     this.getDeviceUsersFiltered();
   }
 
-  loadAllSimpleSites() {
-    this.deviceUsersService.getAllDeviceUsers().subscribe((operation) => {
-      if (operation && operation.success) {
-        this.sitesDto = operation.model;
-      }
-    });
-  }
+  // loadAllSimpleSites() {
+  //   this.deviceUsersService.getAllDeviceUsers().subscribe((operation) => {
+  //     if (operation && operation.success) {
+  //       this.sitesDto = operation.model;
+  //     }
+  //   });
+  // }
 }

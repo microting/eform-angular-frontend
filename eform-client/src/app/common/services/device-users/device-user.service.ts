@@ -3,7 +3,8 @@ import { Observable } from 'rxjs';
 import {
   OperationDataResult,
   OperationResult,
-  DeviceUserModel, AdvEntitySearchableGroupListRequestModel, Paged, AdvEntitySearchableGroupModel, DeviceUserRequestModel,
+  DeviceUserModel,
+  DeviceUserRequestModel,
 } from 'src/app/common/models';
 import { SiteDto } from 'src/app/common/models/dto';
 import { ApiBaseService } from 'src/app/common/services';
@@ -27,7 +28,10 @@ export class DeviceUserService {
   getDeviceUsersFiltered(
     model: DeviceUserRequestModel
   ): Observable<OperationDataResult<Array<SiteDto>>> {
-    return this.apiBaseService.post<Array<SiteDto>>(DeviceUsersMethods.GetAll, model);
+    return this.apiBaseService.post<Array<SiteDto>>(
+      DeviceUsersMethods.GetAll,
+      model
+    );
   }
 
   getSingleSimpleSite(id: number): Observable<OperationDataResult<SiteDto>> {
