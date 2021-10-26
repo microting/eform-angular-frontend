@@ -148,6 +148,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
       fields: fieldModel,
       fieldIndex: this.fieldIndex,
       checklistRecursionIndexes: this.checklistRecursionIndexes,
+      parentFieldId: this.field.id ? this.field.id : this.field.tempId,
     });
   }
 

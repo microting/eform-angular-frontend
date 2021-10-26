@@ -126,7 +126,9 @@ class MyEformsPage extends PageWithNavbarPage {
     return await result.getRow(1);
   }
 
-  async getEformsRowObjByNameEForm(nameEform: string): Promise<MyEformsRowObject> {
+  async getEformsRowObjByNameEForm(
+    nameEform: string
+  ): Promise<MyEformsRowObject> {
     await browser.pause(500);
     const rowNum = await this.rowNum();
     for (let i = 1; i < rowNum + 1; i++) {
@@ -138,28 +140,47 @@ class MyEformsPage extends PageWithNavbarPage {
     return null;
   }
 
-    async getLastMyEformsRowObj(): Promise<MyEformsRowObject> {
-      await browser.pause(500);
-      const obj = new MyEformsRowObject();
-      return await obj.getRow(await this.rowNum());
-    }
+  async getLastMyEformsRowObj(): Promise<MyEformsRowObject> {
+    await browser.pause(500);
+    const obj = new MyEformsRowObject();
+    return await obj.getRow(await this.rowNum());
+  }
 
-  async getEformRowObj(num, pause: boolean = false): Promise<MyEformsRowObject> {
+  async getEformRowObj(
+    num,
+    pause: boolean = false
+  ): Promise<MyEformsRowObject> {
     if (pause) {
       await browser.pause(500);
     }
-    const result =  new MyEformsRowObject();
+    const result = new MyEformsRowObject();
     return await result.getRow(num);
   }
 
-  async clearEFormTable() {
-    const rowNum = await this.rowNum();
-    for (let i = rowNum - 1; i > 0; i--) {
-      await (await this.getEformRowObj(i, false)).deleteEForm();
+  public async clearEFormTable() {
+    await browser.pause(500);
+    const rowCount = await this.rowNum();
+    let indexForDelete = 1;
+    for (let i = 1; i <= rowCount; i++) {
+      const eformsRowObject = await this.getEformRowObj(i, false);
+      if (
+        eformsRowObject &&
+        eformsRowObject.deleteBtn &&
+        (await eformsRowObject.deleteBtn.isDisplayed())
+      ) {
+        await eformsRowObject.deleteEForm();
+      } else {
+        indexForDelete += 1;
+      }
     }
   }
 
-  async createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0, xml = '') {
+  async createNewEform(
+    eFormLabel,
+    newTagsList = [],
+    tagAddedNum = 0,
+    xml = ''
+  ) {
     const spinnerAnimation = await $('#spinner-animation');
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.newEformBtn()).click();
@@ -175,13 +196,21 @@ class MyEformsPage extends PageWithNavbarPage {
     // Create new tags
     const addedTags: string[] = newTagsList;
     if (newTagsList.length > 0) {
-      await (await this.createEformNewTagInput()).setValue(newTagsList.join(','));
-      await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
+      await (await this.createEformNewTagInput()).setValue(
+        newTagsList.join(',')
+      );
+      await spinnerAnimation.waitForDisplayed({
+        timeout: 50000,
+        reverse: true,
+      });
     }
     // Add existing tags
     const selectedTags: string[] = [];
     if (tagAddedNum > 0) {
-      await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
+      await spinnerAnimation.waitForDisplayed({
+        timeout: 50000,
+        reverse: true,
+      });
       for (let i = 0; i < tagAddedNum; i++) {
         await (await this.createEformTagSelector()).click();
         const selectedTag = await $('.ng-option:not(.ng-option-selected)');
@@ -189,7 +218,10 @@ class MyEformsPage extends PageWithNavbarPage {
         await selectedTag.waitForDisplayed({ timeout: 40000 });
         await selectedTag.waitForClickable({ timeout: 40000 });
         await selectedTag.click();
-        await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
+        await spinnerAnimation.waitForDisplayed({
+          timeout: 50000,
+          reverse: true,
+        });
         (await $('#createEformBtn')).waitForDisplayed({ timeout: 10000 });
         // browser.pause(5000);
       }
@@ -207,7 +239,9 @@ class MyEformsPage extends PageWithNavbarPage {
 
   async createNewTags(nameTags: string[]) {
     await (await this.eformsManageTagsBtn()).click();
-    await (await tagsModalPage.tagsModalCloseBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await tagsModalPage.tagsModalCloseBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
     for (let i = 0; i < nameTags.length; i++) {
       await tagsModalPage.createTag(nameTags[i]);
     }
@@ -237,7 +271,10 @@ class MyEformsPage extends PageWithNavbarPage {
     await option.waitForDisplayed({ timeout: 10000 });
     await option.waitForClickable({ timeout: 10000 });
     await option.click();
-    await $('#spinner-animation').waitForDisplayed({ timeout: 40000, reverse: true });
+    await $('#spinner-animation').waitForDisplayed({
+      timeout: 40000,
+      reverse: true,
+    });
   }
 }
 
@@ -246,7 +283,6 @@ export default myEformsPage;
 
 class MyEformsRowObject {
   constructor() {}
-
 
   element: WebdriverIO.Element;
   id: number;
@@ -264,12 +300,10 @@ class MyEformsRowObject {
   async getRow(rowNum: number) {
     const currentPosition = rowNum - 1;
     this.element = $$('#mainPageEFormsTableBody tr')[currentPosition];
-    this.id = +await (await $$('#eform-id-' + (rowNum - 1)))[0].getText();
+    this.id = +(await (await $$('#eform-id-' + (rowNum - 1)))[0].getText());
     try {
       const val = (await $$('#eform-created-at-' + (rowNum - 1)))[0];
-      this.createdAt = new Date(
-        await val.getText()
-      );
+      this.createdAt = new Date(await val.getText());
     } catch (e) {}
     try {
       const val = (await $$('#eform-label-' + (rowNum - 1)))[0];
@@ -279,12 +313,18 @@ class MyEformsRowObject {
     this.tags = await val2.$$(`#eform-tag-` + (rowNum - 1));
     // this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
     this.editTagsBtn = (await $$('#eform-edit-btn-' + (rowNum - 1)))[0];
-    this.editPairEformBtn = await ((await $$(`#mainPageEFormsTableBody tr`))[rowNum - 1]).$('#eform-pairing-btn-' + (rowNum - 1));
-    this.addPairEformBtn = await ((await $$(`#mainPageEFormsTableBody tr`))[rowNum - 1]).$('#eform-add-btn-' + (rowNum - 1));
+    this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr`))[
+      rowNum - 1
+    ].$('#eform-pairing-btn-' + (rowNum - 1));
+    this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr`))[
+      rowNum - 1
+    ].$('#eform-add-btn-' + (rowNum - 1));
     this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (rowNum - 1)))[0];
     this.deleteBtn = (await $$('#delete-eform-btn-' + (rowNum - 1)))[0];
     this.uploadZipArchiveBtn = (await $$('#upload-zip-btn-' + (rowNum - 1)))[0];
-    this.goVisualEditorBtn = await this.element.$(`#edit-eform-btn-${currentPosition}`);
+    this.goVisualEditorBtn = await this.element.$(
+      `#edit-eform-btn-${currentPosition}`
+    );
     return this;
   }
 
@@ -295,7 +335,10 @@ class MyEformsRowObject {
     await eFormDeleteDeleteBtn.waitForDisplayed({ timeout: 40000 });
     await eFormDeleteDeleteBtn.waitForClickable({ timeout: 40000 });
     await eFormDeleteDeleteBtn.click();
-    await $('#spinner-animation').waitForDisplayed({ timeout: 40000, reverse: true });
+    await $('#spinner-animation').waitForDisplayed({
+      timeout: 40000,
+      reverse: true,
+    });
     await browser.pause(500);
   }
 
@@ -309,7 +352,10 @@ class MyEformsRowObject {
     await ngDropdownPanel.waitForClickable({ timeout: 40000 });
     await ngDropdownPanel.click();
     await (await myEformsPage.tagEditSaveBtn()).click();
-    await $('#spinner-animation').waitForDisplayed({ timeout: 40000, reverse: true });
+    await $('#spinner-animation').waitForDisplayed({
+      timeout: 40000,
+      reverse: true,
+    });
   }
 
   async deleteTags(tags: string[]) {
@@ -322,14 +368,19 @@ class MyEformsRowObject {
       'app-eform-edit-tags-modal #tagSelector .ng-value'
     );
     for (let i = 0; i < tagSelectorValues.length; i++) {
-      const tagName = await (await tagSelectorValues[i].$('span.ng-value-label')).getText();
+      const tagName = await (
+        await tagSelectorValues[i].$('span.ng-value-label')
+      ).getText();
       const deleteTagButton = tagSelectorValues[i].$('span');
       if (tags.includes(tagName)) {
         deleteTagButton.click();
       }
     }
     await (await myEformsPage.tagEditSaveBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 40000, reverse: true });
+    await (await $('#spinner-animation')).waitForDisplayed({
+      timeout: 40000,
+      reverse: true,
+    });
   }
 
   async pair(folder: FoldersRowObject, users: DeviceUsersRowObject[]) {
@@ -340,11 +391,17 @@ class MyEformsRowObject {
       await this.addPairEformBtn.click();
     }
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
-    await (await myEformsPage.cancelParingBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.cancelParingBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
     await browser.pause(500);
     const folders = await $$('tree-node');
     for (let i = 0; i < folders.length; i++) {
-      if ((await (await folders[i].$('#folderTreeName')).getText()).includes(folder.name)) {
+      if (
+        (await (await folders[i].$('#folderTreeName')).getText()).includes(
+          folder.name
+        )
+      ) {
         await (await folders[i].$('#folderTreeName')).click();
       }
     }
@@ -361,8 +418,13 @@ class MyEformsRowObject {
   async unPair(users: DeviceUsersRowObject[]) {
     const spinnerAnimation = $('#spinner-animation');
     this.editPairEformBtn.click();
-    await (await spinnerAnimation).waitForDisplayed({ timeout: 40000, reverse: true });
-    (await (await myEformsPage.cancelParingBtn())).waitForDisplayed({ timeout: 40000 });
+    await (await spinnerAnimation).waitForDisplayed({
+      timeout: 40000,
+      reverse: true,
+    });
+    (await await myEformsPage.cancelParingBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
     for (let i = 0; i < users.length; i++) {
       const checkbox = await $(`#checkbox${users[i].siteId}`);
       await checkbox.scrollIntoView();

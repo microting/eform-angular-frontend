@@ -75,7 +75,7 @@ namespace eFormAPI.Web.Services
             var actualMenu = await _dbContext.MenuItems.ToListAsync();
 
             _dbContext.MenuItems.RemoveRange(actualMenu);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
             // Step 2. Traversal collection and add to database depend on menu item type 
             for (int i = 0; i < menuItemModels.Count; i++)
@@ -173,7 +173,6 @@ namespace eFormAPI.Web.Services
                 }
 
                 var securityGroupsIds = await _dbContext.MenuItemSecurityGroups
-                    .Select(p => p.SecurityGroupId)
                     .ToListAsync();
 
                 var actualMenu = menuItems
@@ -200,7 +199,7 @@ namespace eFormAPI.Web.Services
                             })
                             .ToList(),
                         SecurityGroupsIds = securityGroupsIds
-                            .Where(p => p == x.Id)
+                            .Where(p => p.MenuItemId == x.Id).Select(j => j.SecurityGroupId)
                             .ToList(),
                         Children = menuItems.Where(p => p.ParentId == x.Id)
                             .OrderBy(p => p.Position)
