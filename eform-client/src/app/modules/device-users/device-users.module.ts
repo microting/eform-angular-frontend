@@ -13,6 +13,7 @@ import {
 } from './components';
 import { DeviceUsersRouting } from './device-users.routing';
 import { TranslateModule } from '@ngx-translate/core';
+import { DeviceUsersPersistProvider } from 'src/app/modules/device-users/components/store';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
@@ -33,5 +34,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CreateNewUserModalComponent,
     EditDeviceUserModalComponent,
   ],
+  providers: [DeviceUsersPersistProvider],
 })
 export class DeviceUsersModule {}

@@ -31,7 +31,7 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IDeviceUsersService
     {
-        Task<OperationDataResult<List<DeviceUser>>> Index();
+        Task<OperationDataResult<List<DeviceUser>>> Index(DeviceUserSearchRequestModel requestModel);
 
         Task<OperationDataResult<int>> Create(DeviceUserModel deviceUserModel);
 

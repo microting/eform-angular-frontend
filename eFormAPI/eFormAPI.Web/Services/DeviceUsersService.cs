@@ -48,7 +48,7 @@ namespace eFormAPI.Web.Services
             _coreHelper = coreHelper;
         }
 
-        public async Task<OperationDataResult<List<DeviceUser>>> Index()
+        public async Task<OperationDataResult<List<DeviceUser>>> Index(DeviceUserSearchRequestModel requestModel)
         {
             try
             {
@@ -56,16 +56,13 @@ namespace eFormAPI.Web.Services
                 await using var sdkDbContext = core.DbContextHelper.GetDbContext();
                 var deviceUsers = new List<DeviceUser>();
 
-                var sites = await sdkDbContext.Sites
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .ToListAsync();
-                foreach (var site in sites)
+                var sitesQuery = await sdkDbContext.Sites
+                   .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                   .ToListAsync();
+
+               foreach (var site in sitesQuery)
                 {
                     var language = sdkDbContext.Languages.Single(x => x.Id == site.LanguageId);
-                    var unit = await sdkDbContext.Units
-                        .Where(x => x.SiteId == site.Id)
-                        .Select(x => new { x.CustomerNo, x.OtpCode, x.MicrotingUid })
-                        .FirstOrDefaultAsync();
                     var siteWorkerId = await sdkDbContext.SiteWorkers
                         .Where(x => x.SiteId == site.Id)
                         .Select(x => x.WorkerId)
@@ -74,6 +71,17 @@ namespace eFormAPI.Web.Services
                         .Where(x => x.Id == siteWorkerId)
                         .Select(x => new { x.MicrotingUid, x.FirstName, x.LastName })
                         .FirstOrDefaultAsync();
+                    var unit = await sdkDbContext.Units
+                        .Where(x => x.SiteId == site.Id)
+                        .Select(x => new { x.CustomerNo, x.OtpCode, x.MicrotingUid })
+                        .FirstOrDefaultAsync();
+
+                    if (!string.IsNullOrEmpty(requestModel.NameFilter) && !worker.FirstName.ToLower().Contains(requestModel.NameFilter.ToLower())
+                        && !worker.LastName.ToLower().Contains(requestModel.NameFilter.ToLower())
+                        && !unit.MicrotingUid.ToString().ToLower().Contains(requestModel.NameFilter.ToLower()))
+                    {
+                        continue;
+                    }
 
                     if (site.LanguageId == 0) // set default language id to danish
                     {

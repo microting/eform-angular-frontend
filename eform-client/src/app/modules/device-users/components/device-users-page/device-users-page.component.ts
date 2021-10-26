@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DeviceUserModel } from 'src/app/common/models/device-users';
 import { SiteDto } from 'src/app/common/models/dto';
 import { DeviceUserService } from 'src/app/common/services/device-users';
+import { DeviceUsersStateService } from '../store';
 import { TableHeaderElementModel } from 'src/app/common/models';
 import { AuthStateService } from 'src/app/common/store';
 
@@ -37,7 +38,8 @@ export class DeviceUsersPageComponent implements OnInit {
 
   constructor(
     private deviceUsersService: DeviceUserService,
-    private authStateService: AuthStateService
+    private authStateService: AuthStateService,
+    public deviceUsersStateService: DeviceUsersStateService
   ) {}
 
   ngOnInit() {
@@ -52,6 +54,16 @@ export class DeviceUsersPageComponent implements OnInit {
     this.editDeviceUserModal.show();
   }
 
+  getDeviceUsersFiltered() {
+    this.deviceUsersStateService
+      .getDeviceUsersFiltered()
+      .subscribe((data) => {
+        if (data && data.model) {
+          this.sitesDto = data.model;
+        }
+      });
+  }
+
   openOtpModal(siteDto: SiteDto) {
     if (!siteDto.unitId) {
       return;
@@ -63,6 +75,11 @@ export class DeviceUsersPageComponent implements OnInit {
   openDeleteDeviceUserModal(simpleSiteDto: SiteDto) {
     this.selectedSimpleSiteDto = simpleSiteDto;
     this.deleteDeviceUserModal.show();
+  }
+
+  onSearchChanged(name: string) {
+    this.deviceUsersStateService.updateNameFilter(name);
+    this.getDeviceUsersFiltered();
   }
 
   loadAllSimpleSites() {
