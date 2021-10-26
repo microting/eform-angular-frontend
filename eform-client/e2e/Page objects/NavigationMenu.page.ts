@@ -208,10 +208,10 @@ class NavigationMenuPage {
 
   public async setSecurityGroupCustomLinkSelector(textSecurityGroup) {
     await (await this.securityGroupsCustomLinkSelector()).click();
-    $(
+    await (await $(
       `//*[@id="securityGroupsCustomLinkSelector"]//*[text()="${textSecurityGroup}"]`
-    ).click();
-    browser.pause(500);
+    )).click();
+    await browser.pause(500);
   }
 
   public async setSecurityGroupCustomDropdownSelector(textSecurityGroup) {

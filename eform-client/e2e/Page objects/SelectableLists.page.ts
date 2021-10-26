@@ -360,6 +360,7 @@ export class SelectableListRowObject {
       await (await selectableLists.entitySelectEditCancelBtn()).click();
     }
     await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
   async edit(
