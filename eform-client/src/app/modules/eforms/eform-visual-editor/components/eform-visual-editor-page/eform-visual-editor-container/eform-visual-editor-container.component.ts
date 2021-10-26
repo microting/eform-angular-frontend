@@ -237,10 +237,39 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         this.visualEditorTemplateModel
       );
     } else {
-      const parentField =
-        this.visualEditorTemplateModel.fields[model.fieldIndex] ||
-        this.visualEditorTemplateModel.fields[model.fieldIndex - 1];
-      if (parentField.fieldType !== EformFieldTypesEnum.FieldGroup) {
+      if (model.fieldIndex < 0) {
+        model.fieldIndex = 0;
+      }
+      let parentField = new EformVisualEditorFieldModel();
+      if (
+        this.visualEditorTemplateModel.fields[model.fieldIndex] &&
+        this.visualEditorTemplateModel.fields[model.fieldIndex].fieldType ===
+          EformFieldTypesEnum.FieldGroup
+      ) {
+        parentField = this.visualEditorTemplateModel.fields[model.fieldIndex];
+      } else if (
+        this.visualEditorTemplateModel.fields[model.fieldIndex - 1] &&
+        this.visualEditorTemplateModel.fields[model.fieldIndex - 1]
+          .fieldType === EformFieldTypesEnum.FieldGroup
+      ) {
+        parentField = this.visualEditorTemplateModel.fields[
+          model.fieldIndex - 1
+        ];
+      } else if (
+        this.visualEditorTemplateModel.fields[model.fieldIndex + 1] &&
+        this.visualEditorTemplateModel.fields[model.fieldIndex + 1]
+          .fieldType === EformFieldTypesEnum.FieldGroup
+      ) {
+        parentField = this.visualEditorTemplateModel.fields[
+          model.fieldIndex + 1
+        ];
+      }
+      if (
+        parentField.fieldType === EformFieldTypesEnum.FieldGroup &&
+        !model.fields.some(
+          (x) => x.fieldType === EformFieldTypesEnum.FieldGroup
+        ) // CAN'T nested field group in field group
+      ) {
         model.fields.forEach(
           (x) => (x.parentFieldId = parentField.id ?? parentField.tempId)
         );
