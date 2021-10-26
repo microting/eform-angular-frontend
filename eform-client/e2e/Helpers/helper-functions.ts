@@ -51,3 +51,25 @@ export function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
+
+export async function selectDateOnDatePicker(
+  year: number,
+  month: number,
+  day: number
+) {
+  await browser.pause(1000);
+  await (await $(`.owl-dt-calendar-control-content span`)).click();
+  await browser.pause(1000);
+  await (
+    await $$(`tbody span.owl-dt-calendar-cell-content`)[year - 2016]
+  ).click();
+  await browser.pause(1000);
+  await (await $$(`span.owl-dt-calendar-cell-content`)[month - 1]).click();
+  await browser.pause(1000);
+  await (
+    await $$(
+      `span.owl-dt-calendar-cell-content:not(.owl-dt-calendar-cell-out)`
+    )[day - 1]
+  ).click();
+  await browser.pause(1000);
+}
