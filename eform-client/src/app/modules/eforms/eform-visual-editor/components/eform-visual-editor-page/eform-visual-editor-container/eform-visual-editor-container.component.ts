@@ -237,33 +237,9 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         this.visualEditorTemplateModel
       );
     } else {
-      if (model.fieldIndex < 0) {
-        model.fieldIndex = 0;
-      }
-      let parentField = new EformVisualEditorFieldModel();
-      if (
-        this.visualEditorTemplateModel.fields[model.fieldIndex] &&
-        this.visualEditorTemplateModel.fields[model.fieldIndex].fieldType ===
-          EformFieldTypesEnum.FieldGroup
-      ) {
-        parentField = this.visualEditorTemplateModel.fields[model.fieldIndex];
-      } else if (
-        this.visualEditorTemplateModel.fields[model.fieldIndex - 1] &&
-        this.visualEditorTemplateModel.fields[model.fieldIndex - 1]
-          .fieldType === EformFieldTypesEnum.FieldGroup
-      ) {
-        parentField = this.visualEditorTemplateModel.fields[
-          model.fieldIndex - 1
-        ];
-      } else if (
-        this.visualEditorTemplateModel.fields[model.fieldIndex + 1] &&
-        this.visualEditorTemplateModel.fields[model.fieldIndex + 1]
-          .fieldType === EformFieldTypesEnum.FieldGroup
-      ) {
-        parentField = this.visualEditorTemplateModel.fields[
-          model.fieldIndex + 1
-        ];
-      }
+      const parentField = this.visualEditorTemplateModel.fields.find(
+        (x) => x.id === model.parentFieldId || x.tempId === model.parentFieldId
+      );
       if (
         parentField.fieldType === EformFieldTypesEnum.FieldGroup &&
         !model.fields.some(
@@ -274,10 +250,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
           (x) => (x.parentFieldId = parentField.id ?? parentField.tempId)
         );
         model.fields = this.checkPosition(model.fields);
-        (
-          this.visualEditorTemplateModel.fields[model.fieldIndex] ||
-          this.visualEditorTemplateModel.fields[model.fieldIndex - 1]
-        ).fields = [...model.fields];
+        parentField.fields = [...model.fields];
       }
     }
   }
