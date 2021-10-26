@@ -722,74 +722,74 @@ describe('Visual editor page', function () {
       `nested checklist[0] fields type not valid`
     ).eq(checklistObj.checklists[0].fields[0].type);
   });
-  // it('should create visual template and change order field (not nested)', async () => {
-  //   let checklist: MainChecklistObj = {
-  //     translations: [
-  //       {
-  //         name: generateRandmString(),
-  //         description: generateRandmString(),
-  //         languageId: 1,
-  //         id: null,
-  //       },
-  //     ],
-  //     fields: [
-  //       {
-  //         type: EformFieldTypesEnum.None,
-  //         translations: [
-  //           {
-  //             name: generateRandmString(),
-  //             description: generateRandmString(),
-  //             languageId: 1,
-  //             id: null,
-  //           },
-  //         ],
-  //         mandatory: false,
-  //       },
-  //       {
-  //         type: EformFieldTypesEnum.None,
-  //         translations: [
-  //           {
-  //             name: generateRandmString(),
-  //             description: generateRandmString(),
-  //             languageId: 1,
-  //             id: null,
-  //           },
-  //         ],
-  //         mandatory: false,
-  //       },
-  //     ],
-  //   };
-  //   await eformVisualEditorPage.createVisualTemplate(checklist);
-  //   let mainChecklist = new MainCheckListRowObj();
-  //   await mainChecklist.getAllFields();
-  //   await mainChecklist.fields[1].changePosition(mainChecklist.fields[0]);
-  //   checklist = {
-  //     ...checklist,
-  //     fields: [checklist.fields[1], checklist.fields[0]],
-  //   };
-  //   await eformVisualEditorPage.clickSave();
-  //
-  //   const eform = await myEformsPage.getLastMyEformsRowObj();
-  //
-  //   await eform.goToVisualEditor();
-  //   mainChecklist = new MainCheckListRowObj();
-  //   await mainChecklist.getAllFields();
-  //   expect(
-  //     mainChecklist.translations[0].name,
-  //     'name main checklist not valid'
-  //   ).eq(checklist.translations[0].name);
-  //   expect(
-  //     mainChecklist.translations[0].description,
-  //     'description main checklist not valid'
-  //   ).eq(checklist.translations[0].description);
-  //   expect(
-  //     mainChecklist.fields[0].name,
-  //     'field[0] name not valid(maybe DnD not work)'
-  //   ).eq(checklist.fields[0].translations[0].name);
-  //   expect(mainChecklist.fields[1].name, 'field[1] name not valid').eq(
-  //     checklist.fields[1].translations[0].name
-  //   );
-  // });
+  it('should create visual template and change order field (not nested)', async () => {
+    let checklist: MainChecklistObj = {
+      translations: [
+        {
+          name: generateRandmString(),
+          description: generateRandmString(),
+          languageId: 1,
+          id: null,
+        },
+      ],
+      fields: [
+        {
+          type: EformFieldTypesEnum.None,
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+          mandatory: false,
+        },
+        {
+          type: EformFieldTypesEnum.None,
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+          mandatory: false,
+        },
+      ],
+    };
+    await eformVisualEditorPage.createVisualTemplate(checklist);
+    let mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
+    await mainChecklist.fields[1].changePosition(mainChecklist.fields[0]);
+    checklist = {
+      ...checklist,
+      fields: [checklist.fields[1], checklist.fields[0]],
+    };
+    await eformVisualEditorPage.clickSave();
+
+    const eform = await myEformsPage.getLastMyEformsRowObj();
+
+    await eform.goToVisualEditor();
+    mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
+    expect(
+      mainChecklist.translations[0].name,
+      'name main checklist not valid'
+    ).eq(checklist.translations[0].name);
+    expect(
+      mainChecklist.translations[0].description,
+      'description main checklist not valid'
+    ).eq(checklist.translations[0].description);
+    expect(
+      mainChecklist.fields[0].name,
+      'field[0] name not valid(maybe DnD not work)'
+    ).eq(checklist.fields[0].translations[0].name);
+    expect(mainChecklist.fields[1].name, 'field[1] name not valid').eq(
+      checklist.fields[1].translations[0].name
+    );
+  });
   it('should create visual template and change order nested field', async () => {
     let checklist: MainChecklistObj = {
       translations: [
