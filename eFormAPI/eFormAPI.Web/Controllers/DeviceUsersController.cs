@@ -49,12 +49,12 @@ namespace eFormAPI.Web.Controllers
             _localizationService = localizationService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("index")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Read)]
-        public async Task<OperationDataResult<List<DeviceUser>>> Index()
+        public async Task<OperationDataResult<List<DeviceUser>>> Index([FromBody] DeviceUserSearchRequestModel requestModel)
         {
-            return await _deviceUsersService.Index();
+            return await _deviceUsersService.Index(requestModel);
         }
 
         [HttpPut]

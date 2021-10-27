@@ -14,7 +14,22 @@
 </eform-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<div class="container-fluid mt-4">
+<div class="container-fluid">
+  <div class="row pl-1">
+    <div class="col-md-2">
+      <div class="md-form">
+        <input
+          mdbInput
+          (ngModelChange)="onSearchChanged($event)"
+          [ngModel]="deviceUsersStateService.getNameFilter() | async"
+          type="text"
+          class="form-control"
+          id="labelInput"
+        />
+        <label for="labelInput">{{ 'Search' | translate }}</label>
+      </div>
+    </div>
+  </div>
   <div class="row p-1 table-responsive no-gutters">
     <table
       mdbTable
@@ -98,21 +113,21 @@
   </div>
 
   <app-new-otp-modal
-    (onNewOtpRequested)="loadAllSimpleSites()"
+    (onNewOtpRequested)="getDeviceUsersFiltered()"
     [selectedSimpleSite]="selectedSimpleSiteDto"
     #newOtpModal
   ></app-new-otp-modal>
   <app-delete-device-user-modal
     [selectedDeviceUser]="selectedSimpleSiteDto"
-    (onUserDeleted)="loadAllSimpleSites()"
+    (onUserDeleted)="getDeviceUsersFiltered()"
     #deleteDeviceUserModal
   ></app-delete-device-user-modal>
   <app-create-new-user-modal
-    (onDeviceUserCreated)="loadAllSimpleSites()"
+    (onDeviceUserCreated)="getDeviceUsersFiltered()"
     #createNewUserModal
   ></app-create-new-user-modal>
   <app-edit-device-user-modal
-    (onUserEdited)="loadAllSimpleSites()"
+    (onUserEdited)="getDeviceUsersFiltered()"
     [selectedDeviceUser]="selectedSimpleSite"
     #editDeviceUserModal
   ></app-edit-device-user-modal>
