@@ -148,6 +148,9 @@
                 (changeColor)="onFieldUpdate($event)"
                 (copyField)="onFieldCreate($event)"
                 (addNewField)="showFieldModal($event)"
+                [class]="
+                  field.fieldType == fieldTypes.FieldGroup ? 'field-group' : ''
+                "
               ></app-visual-editor-field>
             </section>
           </div>

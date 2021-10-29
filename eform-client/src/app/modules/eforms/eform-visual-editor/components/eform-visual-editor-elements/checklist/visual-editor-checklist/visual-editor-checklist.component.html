@@ -11,7 +11,7 @@
           >
             drag_handle
           </i>
-          {{ 'eForm' | translate }}
+          {{ ('eForm' | translate) + ' - ' + translationChecklistName }}
         </div>
         <div class="d-flex align-items-center">
           <fa-icon
@@ -85,6 +85,9 @@
             (editField)="onEditNestedFieldInNestedChecklist($event)"
             (changeColor)="onChangeColorInNestedFieldInNestedChecklist($event)"
             (copyField)="onCopyNestedFieldInNestedChecklist($event)"
+            [class]="
+              field.fieldType == fieldTypes.FieldGroup ? 'field-group' : ''
+            "
           ></app-visual-editor-field>
         </ng-container>
       </div>
