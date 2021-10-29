@@ -17,6 +17,11 @@ import {
   EformVisualEditorRecursionChecklistModel,
 } from 'src/app/common/models';
 import { DragulaService } from 'ng2-dragula';
+import { AuthStateService } from 'src/app/common/store';
+import {
+  applicationLanguages,
+  EformFieldTypesEnum,
+} from 'src/app/common/const';
 
 @Component({
   selector: 'app-visual-editor-checklist',
@@ -57,7 +62,23 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
     return this.checklist.translations.find((x) => x.name !== '');
   }
 
-  constructor(private dragulaService: DragulaService) {
+  get translationChecklistName(): string {
+    const language = applicationLanguages.find(
+      (x) => x.locale === this.authStateService.currentUserLocale
+    );
+    const index = this.checklist.translations.findIndex(
+      (x) => x.languageId === language.id
+    );
+    if (index !== -1) {
+      return this.checklist.translations[index].name;
+    }
+    return '';
+  }
+
+  constructor(
+    private dragulaService: DragulaService,
+    private authStateService: AuthStateService
+  ) {
     this.dragulaService.createGroup(this.dragulaElementContainerName, {
       moves: (el, container, handle) => {
         return handle.classList.contains('dragula-handle');
@@ -69,6 +90,10 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
         );
       },
     });
+  }
+
+  get fieldTypes() {
+    return EformFieldTypesEnum;
   }
 
   ngOnInit() {}

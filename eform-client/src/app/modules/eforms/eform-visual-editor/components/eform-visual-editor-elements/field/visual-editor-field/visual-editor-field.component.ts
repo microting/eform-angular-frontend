@@ -46,6 +46,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   changeColor: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   @Output()
   copyField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
+  dragulaElementContainerName = 'FIELDS';
 
   get fieldTypes() {
     return EformFieldTypesEnum;
