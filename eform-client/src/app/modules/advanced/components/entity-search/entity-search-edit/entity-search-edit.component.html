@@ -5,6 +5,7 @@
       id="entitySearchUpdateSaveBtn"
       class="btn btn-success btn-small-height"
       (click)="updateEntitySearchableGroup()"
+      [disabled]="advEntitySearchableGroupEditModel.isLocked && !advEntitySearchableGroupEditModel.isEditable"
     >
       {{ 'Save' | translate }}
     </button>
@@ -43,6 +44,7 @@
                   mdbInput
                   required
                   [(ngModel)]="advEntitySearchableGroupEditModel.description"
+                  [disabled]="advEntitySearchableGroupEditModel.isLocked && !advEntitySearchableGroupEditModel.isEditable"
                   id="editName"
                   type="text"
                   class="form-control"
@@ -59,6 +61,7 @@
                 id="editEntitySearchImportBtn"
                 class="btn btn-success btn-icon"
                 (click)="modalSearchImportList.show()"
+                [disabled]="advEntitySearchableGroupEditModel.isLocked && !advEntitySearchableGroupEditModel.isEditable"
               >
                 <i class="material-icons">format_list_bulleted</i>
               </button>
@@ -66,6 +69,8 @@
                 id="editEntitySearchCreateItem"
                 class="btn btn-success btn-icon"
                 (click)="addNewAdvEntitySelectableItem()"
+                [disabled]="advEntitySearchableGroupEditModel.isLocked && !advEntitySearchableGroupEditModel.isEditable"
+
               >
                 <i class="material-icons">add</i>
               </button>
@@ -93,7 +98,7 @@
                   >
                     <div class="row">
                       <div class="col-md-1">
-                        <a>
+                        <a *ngIf="advEntitySearchableGroupEditModel.isEditable">
                           <fa-icon
                             icon="grip-lines"
                             size="lg"
@@ -110,15 +115,19 @@
                           *ngIf="!entityItem.name"
                           mdbTooltip="{{ 'Name is required' | translate }}!"
                         ></fa-icon>
-                        <a class="pull-right">
+                        <button mdbBtn
+                                class="btn btn-accent btn-icon text-black-50 mb-2 pull-right"
+                                [disabled]="!advEntitySearchableGroupEditModel.isEditable">
                           <fa-icon
                             icon="pen"
                             size="lg"
                             [fixedWidth]="true"
                             (click)="openModalSearchEditName(entityItem)"
                           ></fa-icon>
-                        </a>
-                        <a class="pull-right">
+                        </button>
+                        <button mdbBtn
+                                class="btn btn-danger btn-icon mb-2 pull-right"
+                                [disabled]="!advEntitySearchableGroupEditModel.isEditable">
                           <fa-icon
                             icon="trash-alt"
                             size="lg"
@@ -129,7 +138,7 @@
                               )
                             "
                           ></fa-icon>
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </li>

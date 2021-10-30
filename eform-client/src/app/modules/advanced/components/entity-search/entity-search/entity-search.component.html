@@ -67,9 +67,7 @@
               <button
                 id="entitySearchUpdateBtn"
                 class="btn btn-accent btn-icon text-black-50 mb-2"
-                [disabled]="!userClaims.entitySearchUpdate ||
-                  (advEntitySearchableGroup.isLocked &&
-                    !advEntitySearchableGroup.isEditable)"
+                [disabled]="!userClaims.entitySearchUpdate"
                 mdbTooltip="{{ 'Edit' | translate }}"
                 [routerLink]="[
                   '/advanced/entity-search/edit/' +
