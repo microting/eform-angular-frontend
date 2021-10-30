@@ -5,6 +5,7 @@
       id="editEntitySelectSaveBtn"
       class="btn btn-success btn-small-height"
       (click)="updateEntitySelectableGroup()"
+      [disabled]="advEntitySelectableGroupEditModel.isLocked && !advEntitySelectableGroupEditModel.isEditable"
     >
       {{ 'Save' | translate }}
     </button>
@@ -43,6 +44,7 @@
                   mdbInput
                   required
                   [(ngModel)]="advEntitySelectableGroupEditModel.description"
+                  [disabled]="advEntitySelectableGroupEditModel.isLocked && !advEntitySelectableGroupEditModel.isEditable"
                   id="editDescription"
                   type="text"
                   class="form-control"
@@ -60,6 +62,7 @@
                 class="btn-success btn-icon"
                 (click)="modalSelectImportList.show()"
                 id="editEntitySelectImportBtn"
+                [disabled]="advEntitySelectableGroupEditModel.isLocked && !advEntitySelectableGroupEditModel.isEditable"
               >
                 <i class="material-icons">format_list_bulleted</i>
               </button>
@@ -68,6 +71,7 @@
                 class="btn-success btn-icon"
                 (click)="addNewAdvEntitySelectableItem()"
                 id="editEntitySelectCreateItem"
+                [disabled]="advEntitySelectableGroupEditModel.isLocked && !advEntitySelectableGroupEditModel.isEditable"
               >
                 <i class="material-icons">add</i>
               </button>
@@ -95,7 +99,7 @@
                   >
                     <div class="row">
                       <div class="col-md-1">
-                        <a>
+                        <a *ngIf="advEntitySelectableGroupEditModel.isEditable">
                           <fa-icon
                             icon="grip-lines"
                             size="lg"
@@ -117,9 +121,10 @@
                           *ngIf="!entityItem.name"
                           mdbTooltip="{{ 'Name is required' | translate }}!"
                         ></fa-icon>
-                        <a
-                          class="pull-right"
+                        <button mdbBtn
+                                class="btn btn-accent btn-icon text-black-50 mb-2 pull-right"
                           id="entitySelectEditItemEditBtn_{{ i }}"
+                          [disabled]="!advEntitySelectableGroupEditModel.isEditable"
                         >
                           <fa-icon
                             icon="pen"
@@ -127,10 +132,11 @@
                             [fixedWidth]="true"
                             (click)="openModalSelectEditName(entityItem)"
                           ></fa-icon>
-                        </a>
-                        <a
-                          class="pull-right"
+                        </button>
+                        <button mdbBtn
+                                class="btn btn-danger btn-icon mb-2 pull-right"
                           id="entitySelectEditItemDeleteBtn_{{ i }}"
+                          [disabled]="!advEntitySelectableGroupEditModel.isEditable"
                         >
                           <fa-icon
                             icon="trash-alt"
@@ -142,7 +148,7 @@
                               )
                             "
                           ></fa-icon>
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </li>
