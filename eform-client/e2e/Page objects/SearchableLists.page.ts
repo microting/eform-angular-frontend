@@ -133,10 +133,10 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return $('#editEntitySearchCreateItem');
   }
   public async entitySearchItemEditBtn(): Promise<WebdriverIO.Element> {
-    return $(`//app-entity-search-edit//ul//li[1]//div[3]//a[1]`);
+    return $(`//app-entity-search-edit//ul//li[1]//div[3]//button[1]`);
   }
   public async entitySearchItemDeleteBtn(): Promise<WebdriverIO.Element> {
-    return $(`//app-entity-search-edit//ul//li[1]//div[3]//a[2]`);
+    return $(`//app-entity-search-edit//ul//li[1]//div[3]//button[2]`);
   }
   public async entitySearchEditItemNameBox(): Promise<WebdriverIO.Element> {
     const ele = await $(

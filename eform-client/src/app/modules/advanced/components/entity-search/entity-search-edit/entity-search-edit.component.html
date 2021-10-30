@@ -117,6 +117,7 @@
                         ></fa-icon>
                         <button mdbBtn
                                 class="btn btn-accent btn-icon text-black-50 mb-2 pull-right"
+                                id="entitySelectEditItemEditBtn_{{ i }}"
                                 [disabled]="!advEntitySearchableGroupEditModel.isEditable">
                           <fa-icon
                             icon="pen"
@@ -127,6 +128,7 @@
                         </button>
                         <button mdbBtn
                                 class="btn btn-danger btn-icon mb-2 pull-right"
+                                id="entitySelectEditItemDeleteBtn_{{ i }}"
                                 [disabled]="!advEntitySearchableGroupEditModel.isEditable">
                           <fa-icon
                             icon="trash-alt"
