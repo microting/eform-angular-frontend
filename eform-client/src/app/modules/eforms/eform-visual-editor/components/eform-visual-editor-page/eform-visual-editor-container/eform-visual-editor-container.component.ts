@@ -80,6 +80,12 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         );
       },
       accepts: (el, target) => {
+        if (el.classList.contains('field-group')) {
+          return (
+            (target.id === 'editorFields' || target.id === 'nestedFields') &&
+            !target.classList.contains('field-group-container')
+          );
+        }
         return target.id === 'editorFields' || target.id === 'nestedFields';
       },
     });
@@ -89,6 +95,10 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     return !this.visualEditorTemplateModel.translations.find(
       (x) => x.name !== ''
     );
+  }
+
+  get fieldTypes() {
+    return EformFieldTypesEnum;
   }
 
   ngOnInit(): void {

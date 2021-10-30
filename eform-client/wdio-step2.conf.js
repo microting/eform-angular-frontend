@@ -66,9 +66,7 @@ exports.config = {
     // 'e2e/Tests/profile-settings/profile-settings.language.spec.ts'
   ],
   suites: {
-    settings: [
-      'e2e/Tests/application-settings/**/*.spec.ts'
-    ],
+    settings: ['e2e/Tests/application-settings/**/*.spec.ts'],
   },
   // Patterns to exclude.
   exclude: [
@@ -259,7 +257,6 @@ exports.config = {
   // afterTest: function(test, context, { error, result, duration, passed, retries }) {
   // },
 
-
   /**
    * Hook that gets executed after the suite has ended
    * @param {Object} suite suite details
@@ -309,4 +306,4 @@ exports.config = {
    */
   //onReload: function(oldSessionId, newSessionId) {
   //}
-}
+};

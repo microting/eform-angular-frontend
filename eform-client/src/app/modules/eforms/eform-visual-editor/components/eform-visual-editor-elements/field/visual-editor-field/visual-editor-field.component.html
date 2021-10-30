@@ -97,8 +97,13 @@
       #nestedFields="bs-collapse"
       *ngIf="field.fieldType == fieldTypes.FieldGroup"
       class="card-body"
-      [class]="field.collapsed ? 'p-0' : 'p-1 pt-3'"
-      dragula="FIELDS"
+      [class]="
+        (field.collapsed ? 'p-0' : 'p-1 pt-3') +
+        (field.fieldType == fieldTypes.FieldGroup
+          ? ' field-group-container'
+          : '')
+      "
+      dragula="{{ dragulaElementContainerName }}"
       [dragulaModel]="field.fields"
       id="nestedFields"
       (dragulaModelChange)="onFieldPositionChangedOnNestedField($event)"
