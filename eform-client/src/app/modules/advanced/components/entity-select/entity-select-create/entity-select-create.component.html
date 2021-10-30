@@ -113,15 +113,19 @@
                           *ngIf="!entityItem.name"
                           mdbTooltip="{{ 'Name is required' | translate }}!"
                         ></fa-icon>
-                        <a id="entitySelectCreateSingleItemEdit">
+                        <button mdbBtn
+                                class="btn btn-accent btn-icon text-black-50 mb-2 pull-right"
+                                id="entitySelectCreateSingleItemEdit">
                           <fa-icon
                             icon="pen"
                             size="lg"
                             [fixedWidth]="true"
                             (click)="openModalSelectEditName(entityItem)"
                           ></fa-icon>
-                        </a>
-                        <a id="entitySelectCreateSingleItemDelete">
+                        </button>
+                        <button mdbBtn
+                                class="btn btn-danger btn-icon mb-2 pull-right"
+                                id="entitySelectCreateSingleItemDelete">
                           <fa-icon
                             icon="trash-alt"
                             size="lg"
@@ -132,7 +136,7 @@
                               )
                             "
                           ></fa-icon>
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </li>
