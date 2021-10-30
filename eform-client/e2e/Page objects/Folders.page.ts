@@ -631,27 +631,21 @@ export class FoldersTreeRowObject {
       rowNumberFolderChildren - 1
         ]
     ) {
-      console.log('a');
       const baseElement = await $$('.tree-node-level-1');
       const subElement = baseElement[rowNumFolderParent - 1];
       const element = (await subElement.$$('.tree-node-level-2'))[rowNumberFolderChildren - 1];
-      console.log('b');
       try {
         this.folderTreeElement = await element.$('#folderTreeId');
       } catch (e) {}
-      console.log('c');
       try {
         this.nameTree = await (await element.$('#folderTreeName')).getText();
       } catch (e) {}
-      console.log('d');
       // try {
       //   this.descriptionTree = element.$$('#folderTreeDescription')[rowNumberFolderChildren - 1].getText();
       // } catch (e) {
       // }
       this.editTreeBtn = await element.$('#editFolderTreeBtn');
-      console.log('e');
       this.deleteTreeBtn = await element.$('#deleteFolderTreeBtn');
-      console.log('f');
     }
     return this;
   }
@@ -682,7 +676,6 @@ export class FoldersTreeRowObject {
   }
 
   async delete(clickCancel = false) {
-    console.log(this.deleteTreeBtn);
     if (this.deleteTreeBtn.error != null) {
       await this.folderTreeElement.click();
       await this.deleteTreeBtn.waitForDisplayed({ timeout: 40000 });
