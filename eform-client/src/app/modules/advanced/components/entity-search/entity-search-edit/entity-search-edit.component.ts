@@ -54,6 +54,7 @@ export class EntitySearchEditComponent implements OnInit {
         this.actualizeAdvEntitySelectableItemPositions();
         this.advEntitySearchableGroupEditModel.groupUid = this.selectedGroupId;
         this.advEntitySearchableGroupEditModel.isLocked = data.model.isLocked;
+        this.advEntitySearchableGroupEditModel.isEditable = data.model.isEditable;
         this.advEntitySearchableGroupEditModel.description = data.model.description;
       }
     });

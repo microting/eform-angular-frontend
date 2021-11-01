@@ -62,7 +62,11 @@ namespace eFormAPI.Web.Services
 
                foreach (var site in sitesQuery)
                 {
-                    var language = sdkDbContext.Languages.Single(x => x.Id == site.LanguageId);
+                    var language = await sdkDbContext.Languages.SingleOrDefaultAsync(x => x.Id == site.LanguageId);
+                    if (language == null)
+                    {
+                        language = sdkDbContext.Languages.Single(x => x.LanguageCode == "da");
+                    }
                     var siteWorkerId = await sdkDbContext.SiteWorkers
                         .Where(x => x.SiteId == site.Id)
                         .Select(x => x.WorkerId)
@@ -111,9 +115,9 @@ namespace eFormAPI.Web.Services
                 // var siteDto = await core.SiteReadAll(false);
                 return new OperationDataResult<List<DeviceUser>>(true, deviceUsers);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new OperationDataResult<List<DeviceUser>>(false, _localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers"));
+                return new OperationDataResult<List<DeviceUser>>(false, _localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers") + " " + ex.Message);
             }
         }
 
