@@ -35,6 +35,7 @@ import {
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from 'src/environments/environment';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { environment } from 'src/environments/environment';
     EformSharedModule,
     AkitaNgDevtools,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
+    NgxMaskModule.forRoot(),
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],
