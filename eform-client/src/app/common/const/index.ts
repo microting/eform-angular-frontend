@@ -7,3 +7,4 @@ export * from './application-languages.const';
 export * from './eforms-permissions.const';
 export * from './enums/days-of-week.enum';
 export * from './date-formats';
+export * from './hours-picker-array.const';
