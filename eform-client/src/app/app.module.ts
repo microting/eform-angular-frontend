@@ -7,7 +7,7 @@ import { GallerizeModule } from '@ngx-gallery/gallerize';
 import { TranslateModule } from '@ngx-translate/core';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import { DragulaModule } from 'ng2-dragula';
-import {NgxMaskModule} from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
 import { ToastrModule } from 'ngx-toastr';
 import {
   FaIconLibrary,
@@ -36,7 +36,6 @@ import {
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from 'src/environments/environment';
-import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -73,7 +72,6 @@ import { NgxMaskModule } from 'ngx-mask';
     EformSharedModule,
     AkitaNgDevtools,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
-    NgxMaskModule.forRoot(),
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],
