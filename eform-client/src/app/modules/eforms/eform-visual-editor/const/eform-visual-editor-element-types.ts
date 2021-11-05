@@ -48,12 +48,6 @@ export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = 
       '../../../../../../../assets/images/visual-editor-preview/audio-screenshot.png',
   },
   {
-    id: EformFieldTypesEnum.Movie,
-    name: 'Movie',
-    description: 'Simple movie field',
-    previewImage: '',
-  },
-  {
     id: EformFieldTypesEnum.SingleSelect,
     name: 'SingleSelect',
     description: 'Single selection list',
