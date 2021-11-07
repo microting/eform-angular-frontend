@@ -45,13 +45,20 @@ export class VisualEditorAdditionalFieldPdfComponent
   }
 
   getFileNameByLanguage(languageId: number): string {
-    const index = this.field.pdfFiles.findIndex(
-      (x) => x.languageId === languageId
-    );
-    if (index !== -1) {
-      const file = this.field.pdfFiles[index].file;
-      if (file) {
-        return file.name;
+    if (this.field.pdfFiles[0].id) {
+      const index = this.field.pdfFiles.findIndex((x) => x.id === languageId);
+      if (index !== -1) {
+        return this.field.pdfFiles[index].name;
+      }
+    } else {
+      const index = this.field.pdfFiles.findIndex(
+        (x) => x.languageId === languageId
+      );
+      if (index !== -1) {
+        const file = this.field.pdfFiles[index].file;
+        if (file) {
+          return file.name;
+        }
       }
     }
   }
