@@ -462,6 +462,16 @@ namespace eFormAPI.Web.Services.Eform
                 var hashAndLanguageIdList = new List<KeyValuePair<string, int>>();
                 switch (fieldFromDb.FieldType.Type) // todo add specific behaviour for some fields
                 {
+                    case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
+                        fieldFromDb.DecimalCount = fieldForUpdate.DecimalCount ?? 2;
+                        fieldFromDb.MaxValue = string.IsNullOrEmpty(fieldForUpdate.MaxValue) ? "0" : fieldForUpdate.MaxValue;
+                        fieldFromDb.MinValue = string.IsNullOrEmpty(fieldForUpdate.MinValue) ? "0" : fieldForUpdate.MinValue;
+                        break;
+                    case Constants.FieldTypes.Date:
+                        fieldFromDb.MaxValue = string.IsNullOrEmpty(fieldForUpdate.MaxValue) ? DateTime.MaxValue.ToString("yyyy-MM-dd") : fieldForUpdate.MaxValue;
+                        fieldFromDb.MinValue = string.IsNullOrEmpty(fieldForUpdate.MinValue) ? DateTime.MinValue.ToString("yyyy-MM-dd") : fieldForUpdate.MinValue;
+                        break;
+
                     case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
                     {
                         var currentOptionIds = await sdkDbContext.FieldOptions.Where(x => x.FieldId == fieldFromDb.Id).Select(x => x.Id).ToListAsync();
@@ -617,6 +627,10 @@ namespace eFormAPI.Web.Services.Eform
                                 fieldTranslation.DefaultValue = hash; // for pdf
                             }
                         }
+                        if (fieldFromDb.FieldType.Type == Constants.FieldTypes.Number || fieldFromDb.FieldType.Type == Constants.FieldTypes.Number)
+                        {
+                            fieldTranslation.DefaultValue = string.IsNullOrEmpty(fieldTranslation.DefaultValue) ? "0" : fieldTranslation.DefaultValue;
+                        }
                         await fieldTranslation.Update(sdkDbContext);
                     }
                 }
@@ -735,10 +749,10 @@ namespace eFormAPI.Web.Services.Eform
                 {
                     case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
                     {
-                        editorField.DecimalCount = field.DecimalCount;
-                        editorField.MinValue = field.MinValue; //== null ? field.MinValue : long.Parse(field.MinValue);
-                        editorField.MaxValue = field.MaxValue; //== null ? field.MaxValue : long.Parse(field.MaxValue);
-                        editorField.Value = field.DefaultValue; //== null ? field.DefaultValue : long.Parse(field.DefaultValue);
+                        editorField.DecimalCount = field.DecimalCount ?? 2;
+                        editorField.MinValue = string.IsNullOrEmpty(field.MinValue) ? int.MinValue.ToString() : field.MinValue; //== null ? field.MinValue : long.Parse(field.MinValue);
+                        editorField.MaxValue = string.IsNullOrEmpty(field.MaxValue) ? int.MaxValue.ToString() : field.MaxValue; //== null ? field.MaxValue : long.Parse(field.MaxValue);
+                        editorField.Value = string.IsNullOrEmpty(field.DefaultValue) ? "0" : field.DefaultValue; //== null ? field.DefaultValue : long.Parse(field.DefaultValue);
                         findFields.Add(editorField);
                         break;
                     }
@@ -755,10 +769,9 @@ namespace eFormAPI.Web.Services.Eform
                         findFields.Add(editorField);
                         break;
                     }
-                    case Constants.FieldTypes.Date:
-                    {
-                        editorField.MinValue = field.MinValue;// == null ? field.MinValue : DateTime.Parse(field.MinValue);
-                        editorField.MaxValue = field.MaxValue;// == null ? field.MaxValue : DateTime.Parse(field.MaxValue);
+                    case Constants.FieldTypes.Date: {
+                        editorField.MaxValue = string.IsNullOrEmpty(editorField.MaxValue) ? DateTime.MaxValue.ToString("yyyy-MM-dd") : editorField.MaxValue;
+                        editorField.MinValue = string.IsNullOrEmpty(editorField.MinValue) ? DateTime.MinValue.ToString("yyyy-MM-dd") : editorField.MinValue;
                         findFields.Add(editorField);
                         break;
                         }
@@ -845,6 +858,17 @@ namespace eFormAPI.Web.Services.Eform
 
                 switch (fieldType)
                 {
+                    case Constants.FieldTypes.Date:
+                    {
+                        dbField.MaxValue = string.IsNullOrEmpty(dbField.MaxValue)
+                            ? DateTime.MaxValue.ToString("yyyy-MM-dd")
+                            : dbField.MaxValue;
+                        dbField.MinValue = string.IsNullOrEmpty(dbField.MinValue)
+                            ? DateTime.MinValue.ToString("yyyy-MM-dd")
+                            : dbField.MinValue;
+                        await dbField.Update(sdkDbContext);
+                        break;
+                    }
                     case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
                     {
                         var optionsForCreate = field.Options.Select(x =>
@@ -915,13 +939,14 @@ namespace eFormAPI.Web.Services.Eform
                         }
                         break;
                     }
-                    //case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
-                    //{
-                    //    dbField.MaxValue = field.MaxValue == null ? field.MaxValue : long.Parse(field.MaxValue);
-                    //    dbField.MinValue = field.MinValue == null ? field.MinValue : long.Parse(field.MinValue);
-                    //    await dbField.Update(sdkDbContext);
-                    //        break;
-                    //}
+                    case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
+                    {
+                        dbField.MaxValue = string.IsNullOrEmpty(field.MaxValue) ? int.MaxValue.ToString() : field.MaxValue;
+                        dbField.MinValue = string.IsNullOrEmpty(field.MinValue) ? int.MinValue.ToString() : field.MinValue;
+                        dbField.DecimalCount = field.DecimalCount ?? 0;
+                        await dbField.Update(sdkDbContext);
+                        break;
+                    }
                     //case Constants.FieldTypes.Date:
                     //{
                     //    dbField.MaxValue = field.MaxValue == null ? field.MaxValue : DateTime.Parse(field.MaxValue);
@@ -956,6 +981,14 @@ namespace eFormAPI.Web.Services.Eform
                         if (!string.IsNullOrEmpty(hash))
                         {
                             fieldTranslation.DefaultValue = hash; // for pdf
+                        }
+                    }
+
+                    if (fieldType == Constants.FieldTypes.Number || fieldType == Constants.FieldTypes.NumberStepper)
+                    {
+                        if (string.IsNullOrEmpty(fieldTranslation.DefaultValue))
+                        {
+                            fieldTranslation.DefaultValue = "0";
                         }
                     }
                     await fieldTranslation.Create(sdkDbContext);
