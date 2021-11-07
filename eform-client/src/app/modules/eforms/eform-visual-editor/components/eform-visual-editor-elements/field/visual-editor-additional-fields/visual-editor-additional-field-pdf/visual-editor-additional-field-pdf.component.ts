@@ -18,6 +18,7 @@ export class VisualEditorAdditionalFieldPdfComponent
   ngOnInit() {
     if (this.field) {
       applicationLanguages.forEach((x) =>
+        // @ts-ignore
         this.field.pdfFiles.push({ languageId: x.id, file: null })
       );
     }
