@@ -88,5 +88,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         public int? TempId { get; set; }
 
         public int? ParentFieldId { get; set; }
+
+        public string UnitName { get; set; }
     }
 }
