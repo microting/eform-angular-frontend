@@ -466,6 +466,7 @@ namespace eFormAPI.Web.Services.Eform
                         fieldFromDb.DecimalCount = fieldForUpdate.DecimalCount ?? 2;
                         fieldFromDb.MaxValue = string.IsNullOrEmpty(fieldForUpdate.MaxValue) ? "0" : fieldForUpdate.MaxValue;
                         fieldFromDb.MinValue = string.IsNullOrEmpty(fieldForUpdate.MinValue) ? "0" : fieldForUpdate.MinValue;
+                        fieldFromDb.UnitName = string.IsNullOrEmpty(fieldForUpdate.UnitName) ? " " : fieldForUpdate.UnitName;
                         break;
                     case Constants.FieldTypes.Date:
                         fieldFromDb.MaxValue = string.IsNullOrEmpty(fieldForUpdate.MaxValue) ? DateTime.MaxValue.ToString("yyyy-MM-dd") : fieldForUpdate.MaxValue;
@@ -631,6 +632,10 @@ namespace eFormAPI.Web.Services.Eform
                         {
                             fieldTranslation.DefaultValue = string.IsNullOrEmpty(fieldTranslation.DefaultValue) ? "0" : fieldTranslation.DefaultValue;
                         }
+                        if (fieldFromDb.FieldType.Type == Constants.FieldTypes.SaveButton)
+                        {
+                            fieldTranslation.DefaultValue = string.IsNullOrEmpty(fieldTranslation.DefaultValue) ? "Save" : fieldTranslation.DefaultValue;
+                        }
                         await fieldTranslation.Update(sdkDbContext);
                     }
                 }
@@ -753,6 +758,7 @@ namespace eFormAPI.Web.Services.Eform
                         editorField.MinValue = string.IsNullOrEmpty(field.MinValue) ? int.MinValue.ToString() : field.MinValue; //== null ? field.MinValue : long.Parse(field.MinValue);
                         editorField.MaxValue = string.IsNullOrEmpty(field.MaxValue) ? int.MaxValue.ToString() : field.MaxValue; //== null ? field.MaxValue : long.Parse(field.MaxValue);
                         editorField.Value = string.IsNullOrEmpty(field.DefaultValue) ? "0" : field.DefaultValue; //== null ? field.DefaultValue : long.Parse(field.DefaultValue);
+                        editorField.UnitName = string.IsNullOrEmpty(field.UnitName) ? " " : field.UnitName;
                         findFields.Add(editorField);
                         break;
                     }
@@ -944,6 +950,7 @@ namespace eFormAPI.Web.Services.Eform
                         dbField.MaxValue = string.IsNullOrEmpty(field.MaxValue) ? int.MaxValue.ToString() : field.MaxValue;
                         dbField.MinValue = string.IsNullOrEmpty(field.MinValue) ? int.MinValue.ToString() : field.MinValue;
                         dbField.DecimalCount = field.DecimalCount ?? 0;
+                        dbField.UnitName = string.IsNullOrEmpty(field.UnitName) ? " " : field.UnitName;
                         await dbField.Update(sdkDbContext);
                         break;
                     }
@@ -989,6 +996,14 @@ namespace eFormAPI.Web.Services.Eform
                         if (string.IsNullOrEmpty(fieldTranslation.DefaultValue))
                         {
                             fieldTranslation.DefaultValue = "0";
+                        }
+                    }
+
+                    if (fieldType == Constants.FieldTypes.SaveButton)
+                    {
+                        if (string.IsNullOrEmpty(fieldTranslation.DefaultValue))
+                        {
+                            fieldTranslation.DefaultValue = "Save";
                         }
                     }
                     await fieldTranslation.Create(sdkDbContext);
