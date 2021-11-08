@@ -70,7 +70,7 @@ namespace eFormAPI.Web.Services
                     var siteWorkerId = await sdkDbContext.SiteWorkers
                         .Where(x => x.SiteId == site.Id)
                         .Select(x => x.WorkerId)
-                        .FirstAsync();
+                        .FirstOrDefaultAsync();
                     var worker = await sdkDbContext.Workers
                         .Where(x => x.Id == siteWorkerId)
                         .Select(x => new { x.MicrotingUid, x.FirstName, x.LastName })
@@ -98,15 +98,15 @@ namespace eFormAPI.Web.Services
                         new DeviceUser
                         {
                             CustomerNo = unit.CustomerNo,
-                            FirstName = worker.FirstName,
-                            LastName = worker.LastName,
+                            FirstName = worker?.FirstName,
+                            LastName = worker?.LastName,
                             LanguageId = site.LanguageId,
                             OtpCode = unit.OtpCode,
                             SiteId = site.Id,
                             SiteUid = site.MicrotingUid,
                             SiteName = site.Name,
                             UnitId = unit.MicrotingUid,
-                            WorkerUid = worker.MicrotingUid,
+                            WorkerUid = worker?.MicrotingUid,
                             Language = language.Name,
                             LanguageCode = language.LanguageCode,
                         });
