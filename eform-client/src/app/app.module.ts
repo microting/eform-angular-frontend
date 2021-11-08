@@ -7,6 +7,7 @@ import { GallerizeModule } from '@ngx-gallery/gallerize';
 import { TranslateModule } from '@ngx-translate/core';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import { DragulaModule } from 'ng2-dragula';
+import { NgxMaskModule } from 'ngx-mask';
 import { ToastrModule } from 'ngx-toastr';
 import {
   FaIconLibrary,
@@ -58,6 +59,7 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     ToastrModule.forRoot({ preventDuplicates: true }),
     DragulaModule.forRoot(),
+    NgxMaskModule.forRoot(),
     GalleryModule,
     LightboxModule,
     GallerizeModule,

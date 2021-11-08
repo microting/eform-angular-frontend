@@ -28,7 +28,7 @@ namespace eFormAPI.Web.Abstractions.Eforms
     {
         Task<OperationDataResult<EformVisualEditorModel>> ReadVisualTemplate(int id);
 
-        Task<OperationResult> CreateVisualTemplate(EformVisualEditorModel model);
+        Task<OperationResult> CreateVisualTemplate(EformVisualEditorCreateModel model);
 
         Task<OperationResult> UpdateVisualTemplate(EformVisualEditorUpdateModel model);
     }
