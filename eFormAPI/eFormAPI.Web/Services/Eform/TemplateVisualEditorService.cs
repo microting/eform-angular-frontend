@@ -62,10 +62,13 @@ namespace eFormAPI.Web.Services.Eform
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
                 // if checklist have cases or pair - read not approve
+                // ReSharper disable once AccessToModifiedClosure
                 if (!await sdkDbContext.Cases.Where(x => x.CheckListId == id).Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).AnyAsync()
+                    // ReSharper disable once AccessToModifiedClosure
                     || !await sdkDbContext.CheckListSites.Where(x => x.CheckListId == id).Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).AnyAsync())
                 {
                     var count = await sdkDbContext.CheckLists
+                        // ReSharper disable once AccessToModifiedClosure
                         .Where(x => x.Id == id)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Include(x => x.Children)
@@ -103,6 +106,7 @@ namespace eFormAPI.Web.Services.Eform
                             .ToList();
                         eform.TagIds = checklist?.Taggings
                             .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                            // ReSharper disable once PossibleInvalidOperationException
                             .Select(x => (int)x.TagId).ToList();
                     }
 
@@ -119,7 +123,7 @@ namespace eFormAPI.Web.Services.Eform
             }
         }
 
-        public async Task<OperationResult> CreateVisualTemplate(EformVisualEditorModel model)
+        public async Task<OperationResult> CreateVisualTemplate(EformVisualEditorCreateModel model)
         {
             try
             {
@@ -497,6 +501,7 @@ namespace eFormAPI.Web.Services.Eform
                             .Select(x => new FieldOption
                             {
                                 FieldId = fieldFromDb.Id,
+                                // ReSharper disable once PossibleInvalidOperationException
                                 Id = (int)x.Id,
                                 Selected = x.Selected,
                                 DisplayOrder = x.DisplayOrder.ToString(),
@@ -506,6 +511,7 @@ namespace eFormAPI.Web.Services.Eform
                                     {
                                         LanguageId = y.LanguageId,
                                         Text = y.Name,
+                                        // ReSharper disable once PossibleInvalidOperationException
                                         Id = (int)y.Id
                                     })
                                     .ToList(),
@@ -550,6 +556,7 @@ namespace eFormAPI.Web.Services.Eform
                                 if (pdfFile.File != null)
                                 {
                                     var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{fieldFromDb.CheckListId}.pdf");
+                                    // ReSharper disable once UseAwaitUsing
                                     using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
                                     {
                                         await pdfFile.File.CopyToAsync(stream);
@@ -687,6 +694,7 @@ namespace eFormAPI.Web.Services.Eform
                         await DeleteFields(fieldIds, sdkDbContext);
                         break;
                     }
+                    // ReSharper disable once RedundantEmptySwitchSection
                     default:
                     {
                         break;
@@ -697,9 +705,9 @@ namespace eFormAPI.Web.Services.Eform
             }
         }
 
-        private static async Task<List<VisualEditorFields>> FindFields(int eformId, MicrotingDbContext sdkDbContext, int parentFieldId = -1)
+        private static async Task<List<VisualEditorFieldModel>> FindFields(int eformId, MicrotingDbContext sdkDbContext, int parentFieldId = -1)
         {
-            var findFields = new List<VisualEditorFields>();
+            var findFields = new List<VisualEditorFieldModel>();
             var fieldQuery = sdkDbContext.Fields
                 .Where(x => x.CheckListId == eformId)
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -707,6 +715,7 @@ namespace eFormAPI.Web.Services.Eform
                 .Include(x => x.Translations)
                 .OrderBy(x => x.DisplayIndex)
                 .AsNoTracking();
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (parentFieldId != -1)
             {
                 fieldQuery = fieldQuery.Where(x => x.ParentFieldId == parentFieldId);
@@ -720,11 +729,13 @@ namespace eFormAPI.Web.Services.Eform
 
             foreach (var field in fields)
             {
-                var editorField = new VisualEditorFields
+                var editorField = new VisualEditorFieldModel
                 {
                     Id = field.Id,
                     Color = field.Color,
+                    // ReSharper disable once PossibleInvalidOperationException
                     FieldType = (int)field.FieldTypeId,
+                    // ReSharper disable once PossibleInvalidOperationException
                     Position = (int)field.DisplayIndex,
                     Translations = field.Translations.Select(x =>
                         new Microting.eForm.Infrastructure.Models.CommonTranslationsModel
@@ -735,6 +746,7 @@ namespace eFormAPI.Web.Services.Eform
                             LanguageId = x.LanguageId,
                         }).ToList(),
                     Mandatory = Convert.ToBoolean(field.Mandatory),
+                    // ReSharper disable once PossibleInvalidOperationException
                     ChecklistId = (int)field.CheckListId,
                 };
 
@@ -768,7 +780,7 @@ namespace eFormAPI.Web.Services.Eform
                         editorField.MinValue = string.IsNullOrEmpty(editorField.MinValue) ? DateTime.MinValue.ToString("yyyy-MM-dd") : editorField.MinValue;
                         findFields.Add(editorField);
                         break;
-                    }
+                        }
                     case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
                     {
                         editorField.Options = sdkDbContext.FieldOptions
@@ -792,6 +804,24 @@ namespace eFormAPI.Web.Services.Eform
                                             }).ToList()
                                 })
                             .ToList();
+                        findFields.Add(editorField);
+                        break;
+                    }
+                    case Constants.FieldTypes.ShowPdf:
+                    {
+                        var hashList = field.Translations
+                            .Where(x => x.DefaultValue != null)
+                            .Select(x => new { x.DefaultValue, x.LanguageId })
+                            .ToList();
+                        foreach (var hash in hashList)
+                        {
+                            var uploadData = await sdkDbContext.UploadedDatas
+                                .Where(x => x.Checksum == hash.DefaultValue)
+                                .FirstAsync();
+
+                            //var fileStream = File.OpenRead(uploadData.FileLocation);
+                            editorField.PdfFiles.Add(new CommonDictionaryModel() { Name = uploadData.FileName, Id = hash.LanguageId });
+                        }
                         findFields.Add(editorField);
                         break;
                     }
@@ -892,6 +922,7 @@ namespace eFormAPI.Web.Services.Eform
                                 if (pdfFile.File != null)
                                 {
                                     var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{eformId}.pdf");
+                                    // ReSharper disable once UseAwaitUsing
                                     using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
                                     {
                                         await pdfFile.File.CopyToAsync(stream);
@@ -901,6 +932,14 @@ namespace eFormAPI.Web.Services.Eform
                                     hashAndLanguageIdList.Add(
                                         new KeyValuePair<string, int>(await core.PdfUpload(filePath),
                                             pdfFile.LanguageId));
+
+                                    var uploadData = new UploadedData
+                                    {
+                                        Checksum = hashAndLanguageIdList.Last().Key,
+                                        FileName = pdfFile.File.FileName,
+                                        FileLocation = filePath,
+                                    };
+                                    await uploadData.Create(sdkDbContext);
                                 }
                             }
                         }
@@ -922,6 +961,7 @@ namespace eFormAPI.Web.Services.Eform
                     //    await dbField.Update(sdkDbContext);
                     //        break;
                     //}
+                    // ReSharper disable once RedundantEmptySwitchSection
                     default:
                     {
                         break;
@@ -994,7 +1034,7 @@ namespace eFormAPI.Web.Services.Eform
                             })
                         .ToList(),
                     TagIds = x.Taggings.Select(y => (int)y.TagId).ToList(),
-                    Fields = new List<VisualEditorFields>(),
+                    Fields = new List<VisualEditorFieldModel>(),
                 })
                 .FirstOrDefaultAsync();
             if (eform == null)
@@ -1050,9 +1090,9 @@ namespace eFormAPI.Web.Services.Eform
                     await newCheckListTranslation.Create(sdkDbContext);
                 }
 
-                var fieldsForCreate = model.FieldForCreate
-                    .Where(x => x.ChecklistId == checklistForCreate.TempId)
-                    .ToList();
+                //var fieldsForCreate = model.FieldForCreate
+                //    .Where(x => x.ChecklistId == checklistForCreate.TempId)
+                //    .ToList();
 
                 await CreateWhenUpdateFields(newCheckList.Id, sdkDbContext, model, core);
 
@@ -1063,7 +1103,7 @@ namespace eFormAPI.Web.Services.Eform
             }
         }
 
-        private static async Task CreateChecklist(List<EformVisualEditorModel> model, MicrotingDbContext sdkDbContext,
+        private static async Task CreateChecklist(List<EformVisualEditorCreateModel> model, MicrotingDbContext sdkDbContext,
             int parentId, Core core)
         {
             foreach (var visualEditorModel in model)

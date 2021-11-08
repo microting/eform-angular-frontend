@@ -21,8 +21,6 @@ SOFTWARE.
 namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 {
     using System.Collections.Generic;
-    using Microting.eForm.Infrastructure.Models;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     public class VisualEditorFields
     {
@@ -34,7 +32,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         /// Translates for label and description
         /// </summary>
         public List<Microting.eForm.Infrastructure.Models.CommonTranslationsModel> Translations { get; set; }
-            = new List<Microting.eForm.Infrastructure.Models.CommonTranslationsModel>();
+            = new();
 
         public string Color { get; set; }
 
@@ -46,13 +44,13 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         /// for GroupOpenClose field
         /// </summary>
         public List<VisualEditorFields> Fields { get; set; }
-            = new List<VisualEditorFields>();
+            = new();
 
         /// <summary>
         /// for List field
         /// </summary>
         public List<FieldOptions> Options { get; set; }
-            = new List<FieldOptions>();
+            = new();
 
         /// <summary>
         /// for Number field - long. for Date - Date
@@ -78,7 +76,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         /// for PDF field
         /// </summary>
         public List<UploadPdfFileForFieldModel> PdfFiles { get; set; }
-            = new List<UploadPdfFileForFieldModel>();
+            = new();
 
         public int ChecklistId { get; set; }
 

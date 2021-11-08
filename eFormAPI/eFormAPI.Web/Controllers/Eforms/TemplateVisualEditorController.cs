@@ -20,10 +20,6 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Abstractions.Eforms;
     using Infrastructure.Helpers;
@@ -50,7 +46,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpPost]
-        public async Task<OperationResult> Create([FromForm]EformVisualEditorModel model)
+        public async Task<OperationResult> Create([FromForm]EformVisualEditorCreateModel model)
         {
             // set files with help reflection. for some unknown reason, the field with the file in a deeply nested object is not set,
             // unlike the adjacent fields. if you know what it can be replaced,
