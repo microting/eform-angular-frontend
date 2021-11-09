@@ -18,26 +18,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Eforms;
+using eFormAPI.Web.Infrastructure.Models.VisualEformEditor;
+using eFormCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microting.eForm.Infrastructure;
+using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Data.Entities;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
 namespace eFormAPI.Web.Services.Eform
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Abstractions;
-    using Abstractions.Eforms;
-    using eFormCore;
-    using Infrastructure.Models.VisualEformEditor;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Logging;
-    using Microting.eForm.Infrastructure;
-    using Microting.eForm.Infrastructure.Constants;
-    using Microting.eForm.Infrastructure.Data.Entities;
-    using Microting.eFormApi.BasePn.Abstractions;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-
     public class TemplateVisualEditorService : ITemplateVisualEditorService
     {
         private readonly IEFormCoreService _coreHelper;
@@ -130,6 +130,17 @@ namespace eFormAPI.Web.Services.Eform
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
 
+                short doneButtonEnabled = 1;
+
+                foreach (var visualEditorFields in model.Fields)
+                {
+                    var fieldType = await sdkDbContext.FieldTypes
+                        .Where(x => x.Id == visualEditorFields.FieldType)
+                        .Select(x => x.Type)
+                        .FirstAsync();
+                    if (fieldType == Constants.FieldTypes.SaveButton) doneButtonEnabled = 0;
+                }
+
                 // create main checkList
                 var newCheckList = new CheckList
                 {
@@ -138,7 +149,7 @@ namespace eFormAPI.Web.Services.Eform
                     ReviewEnabled = 0,
                     ManualSync = 0,
                     ExtraFieldsEnabled = 0,
-                    DoneButtonEnabled = 0,
+                    DoneButtonEnabled = doneButtonEnabled,
                     ApprovalEnabled = 0,
                     MultiApproval = 0,
                     FastNavigation = 0,
@@ -156,7 +167,7 @@ namespace eFormAPI.Web.Services.Eform
                     ParentId = newCheckList.Id,
                     ReviewEnabled = 0,
                     ExtraFieldsEnabled = 0,
-                    DoneButtonEnabled = 0,
+                    DoneButtonEnabled = doneButtonEnabled,
                     ApprovalEnabled = 0,
                     IsEditable = true,
                     IsLocked = false
@@ -224,6 +235,7 @@ namespace eFormAPI.Web.Services.Eform
             {
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
+
                 CheckList parentEform = null;
                 var dbEform = await sdkDbContext.CheckLists
                     .Where(x => x.Id == model.Checklist.Id)
@@ -233,10 +245,31 @@ namespace eFormAPI.Web.Services.Eform
                     .FirstOrDefaultAsync();
 
                 if (dbEform == null)
-                {
                     return new OperationDataResult<EformVisualEditorModel>(false,
                         _localizationService.GetString("EformNotFound"));
+
+                var doneButtonEnabled = (short) dbEform.DoneButtonEnabled;
+
+                foreach (var visualEditorFields in model.FieldForCreate)
+                {
+                    var fieldType = await sdkDbContext.FieldTypes
+                        .Where(x => x.Id == visualEditorFields.FieldType)
+                        .Select(x => x.Type)
+                        .FirstAsync();
+                    if (fieldType == Constants.FieldTypes.SaveButton) doneButtonEnabled = 0;
                 }
+
+                foreach (var visualEditorFields in model.FieldForUpdate)
+                {
+                    var fieldType = await sdkDbContext.FieldTypes
+                        .Where(x => x.Id == visualEditorFields.FieldType)
+                        .Select(x => x.Type)
+                        .FirstAsync();
+                    if (fieldType == Constants.FieldTypes.SaveButton) doneButtonEnabled = 0;
+                }
+
+                dbEform.DoneButtonEnabled = doneButtonEnabled;
+                await dbEform.Update(sdkDbContext);
 
                 if (dbEform.ParentId != null)
                 {
@@ -1061,6 +1094,17 @@ namespace eFormAPI.Web.Services.Eform
 
         private static async Task CreateChecklist(EformVisualEditorUpdateModel model, MicrotingDbContext sdkDbContext, Core core)
         {
+            short doneButtonEnabled = 1;
+
+            foreach (var visualEditorFields in model.FieldForCreate)
+            {
+                var fieldType = await sdkDbContext.FieldTypes
+                    .Where(x => x.Id == visualEditorFields.FieldType)
+                    .Select(x => x.Type)
+                    .FirstAsync();
+                if (fieldType == Constants.FieldTypes.SaveButton) doneButtonEnabled = 0;
+            }
+
             foreach (var checklistForCreate in model.ChecklistForCreate)
             {
                 // create checkList
@@ -1070,7 +1114,7 @@ namespace eFormAPI.Web.Services.Eform
                     ParentId = checklistForCreate.ParentChecklistId,
                     ReviewEnabled = 0,
                     ExtraFieldsEnabled = 0,
-                    DoneButtonEnabled = 0,
+                    DoneButtonEnabled = doneButtonEnabled,
                     ApprovalEnabled = 0,
                     IsEditable = true,
                     IsLocked = false
