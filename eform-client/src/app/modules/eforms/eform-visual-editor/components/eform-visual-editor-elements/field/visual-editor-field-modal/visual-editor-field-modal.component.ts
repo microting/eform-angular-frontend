@@ -14,6 +14,7 @@ import {
   EformVisualEditorFieldModel,
   EformVisualEditorFieldTypeModel,
   EformVisualEditorRecursionFieldModel,
+  EformVisualEditorTranslationWithDefaultValue,
 } from 'src/app/common/models';
 import { eformVisualEditorElementTypes } from '../../../../const/eform-visual-editor-element-types';
 import { fixTranslations } from 'src/app/common/helpers';
@@ -90,7 +91,12 @@ export class VisualEditorFieldModalComponent implements OnInit {
       // if there are not enough translations
       this.recursionModel.field.translations = fixTranslations(
         this.recursionModel.field.translations
-      );
+      ).map((x, i) => {
+        // @ts-ignore
+        x.defaultValue =
+          this.recursionModel.field.translations[i].defaultValue ?? '';
+        return x as EformVisualEditorTranslationWithDefaultValue;
+      });
     } else {
       if (!model) {
         this.recursionModel = new EformVisualEditorRecursionFieldModel();
@@ -105,7 +111,11 @@ export class VisualEditorFieldModalComponent implements OnInit {
     this.recursionModel.field = new EformVisualEditorFieldModel();
     this.recursionModel.field.translations = fixTranslations(
       this.recursionModel.field.translations
-    ); // create translations
+    ).map((x) => {
+      // @ts-ignore
+      x.defaultValue = '';
+      return x as EformVisualEditorTranslationWithDefaultValue;
+    }); // create translations
   }
 
   onCreateField() {

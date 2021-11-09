@@ -248,7 +248,7 @@ namespace eFormAPI.Web.Services.Eform
                     return new OperationDataResult<EformVisualEditorModel>(false,
                         _localizationService.GetString("EformNotFound"));
 
-                var doneButtonEnabled = (short) dbEform.DoneButtonEnabled;
+                var doneButtonEnabled = dbEform.DoneButtonEnabled ?? 0;
 
                 foreach (var visualEditorFields in model.FieldForCreate)
                 {
@@ -256,7 +256,10 @@ namespace eFormAPI.Web.Services.Eform
                         .Where(x => x.Id == visualEditorFields.FieldType)
                         .Select(x => x.Type)
                         .FirstAsync();
-                    if (fieldType == Constants.FieldTypes.SaveButton) doneButtonEnabled = 0;
+                    if (fieldType == Constants.FieldTypes.SaveButton)
+                    {
+                        doneButtonEnabled = 0;
+                    }
                 }
 
                 foreach (var visualEditorFields in model.FieldForUpdate)
@@ -265,7 +268,10 @@ namespace eFormAPI.Web.Services.Eform
                         .Where(x => x.Id == visualEditorFields.FieldType)
                         .Select(x => x.Type)
                         .FirstAsync();
-                    if (fieldType == Constants.FieldTypes.SaveButton) doneButtonEnabled = 0;
+                    if (fieldType == Constants.FieldTypes.SaveButton)
+                    {
+                        doneButtonEnabled = 0;
+                    }
                 }
 
                 dbEform.DoneButtonEnabled = doneButtonEnabled;
@@ -490,22 +496,34 @@ namespace eFormAPI.Web.Services.Eform
                 fieldFromDb.DisplayIndex = fieldForUpdate.Position;
                 fieldFromDb.MaxValue = fieldForUpdate.MaxValue;
                 fieldFromDb.MinValue = fieldForUpdate.MinValue;
-                fieldFromDb.DefaultValue = fieldForUpdate.Value;
 
                 var hashAndLanguageIdList = new List<KeyValuePair<string, int>>();
                 switch (fieldFromDb.FieldType.Type) // todo add specific behaviour for some fields
                 {
                     case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
+                    {
                         fieldFromDb.DecimalCount = fieldForUpdate.DecimalCount ?? 2;
-                        fieldFromDb.MaxValue = string.IsNullOrEmpty(fieldForUpdate.MaxValue) ? "0" : fieldForUpdate.MaxValue;
-                        fieldFromDb.MinValue = string.IsNullOrEmpty(fieldForUpdate.MinValue) ? "0" : fieldForUpdate.MinValue;
-                        fieldFromDb.UnitName = string.IsNullOrEmpty(fieldForUpdate.UnitName) ? " " : fieldForUpdate.UnitName;
+                        fieldFromDb.MaxValue = string.IsNullOrEmpty(fieldForUpdate.MaxValue)
+                            ? "0"
+                            : fieldForUpdate.MaxValue;
+                        fieldFromDb.MinValue = string.IsNullOrEmpty(fieldForUpdate.MinValue)
+                            ? "0"
+                            : fieldForUpdate.MinValue;
+                        fieldFromDb.UnitName = string.IsNullOrEmpty(fieldForUpdate.UnitName)
+                            ? " "
+                            : fieldForUpdate.UnitName;
                         break;
+                    }
                     case Constants.FieldTypes.Date:
-                        fieldFromDb.MaxValue = string.IsNullOrEmpty(fieldForUpdate.MaxValue) ? DateTime.MaxValue.ToString("yyyy-MM-dd") : fieldForUpdate.MaxValue;
-                        fieldFromDb.MinValue = string.IsNullOrEmpty(fieldForUpdate.MinValue) ? DateTime.MinValue.ToString("yyyy-MM-dd") : fieldForUpdate.MinValue;
+                    {
+                        fieldFromDb.MaxValue = string.IsNullOrEmpty(fieldForUpdate.MaxValue)
+                            ? DateTime.MaxValue.ToString("yyyy-MM-dd")
+                            : fieldForUpdate.MaxValue;
+                        fieldFromDb.MinValue = string.IsNullOrEmpty(fieldForUpdate.MinValue)
+                            ? DateTime.MinValue.ToString("yyyy-MM-dd")
+                            : fieldForUpdate.MinValue;
                         break;
-
+                    }
                     case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
                     {
                         var currentOptionIds = await sdkDbContext.FieldOptions.Where(x => x.FieldId == fieldFromDb.Id).Select(x => x.Id).ToListAsync();
@@ -623,6 +641,7 @@ namespace eFormAPI.Web.Services.Eform
                         LanguageId = x.LanguageId,
                         Text = x.Name,
                         Description = x.Description,
+                        DefaultValue = x.DefaultValue,
                     })
                     .ToList())
                 {
@@ -645,10 +664,12 @@ namespace eFormAPI.Web.Services.Eform
                 {
                     var translation = fieldForUpdate.Translations.First(x => x.LanguageId == fieldTranslation.LanguageId);
                     if (translation.Name != fieldTranslation.Text ||
-                        translation.Description != fieldTranslation.Description) // check if update is need
+                        translation.Description != fieldTranslation.Description ||
+                        translation.DefaultValue != fieldTranslation.DefaultValue) // check if update is need
                     {
                         fieldTranslation.Description = translation.Description;
                         fieldTranslation.Text = translation.Name;
+                        fieldTranslation.DefaultValue = translation.DefaultValue;
 
                         if (fieldFromDb.FieldType.Type == Constants.FieldTypes.ShowPdf)
                         {
@@ -771,12 +792,13 @@ namespace eFormAPI.Web.Services.Eform
                     // ReSharper disable once PossibleInvalidOperationException
                     Position = (int)field.DisplayIndex,
                     Translations = field.Translations.Select(x =>
-                        new Microting.eForm.Infrastructure.Models.CommonTranslationsModel
+                        new TranslationWithDefaultValue
                         {
                             Id = x.LanguageId,
                             Description = x.Description,
                             Name = x.Text,
                             LanguageId = x.LanguageId,
+                            DefaultValue = x.DefaultValue,
                         }).ToList(),
                     Mandatory = Convert.ToBoolean(field.Mandatory),
                     // ReSharper disable once PossibleInvalidOperationException
@@ -790,17 +812,16 @@ namespace eFormAPI.Web.Services.Eform
                         editorField.DecimalCount = field.DecimalCount ?? 2;
                         editorField.MinValue = string.IsNullOrEmpty(field.MinValue) ? int.MinValue.ToString() : field.MinValue; //== null ? field.MinValue : long.Parse(field.MinValue);
                         editorField.MaxValue = string.IsNullOrEmpty(field.MaxValue) ? int.MaxValue.ToString() : field.MaxValue; //== null ? field.MaxValue : long.Parse(field.MaxValue);
-                        editorField.Value = string.IsNullOrEmpty(field.DefaultValue) ? "0" : field.DefaultValue; //== null ? field.DefaultValue : long.Parse(field.DefaultValue);
                         editorField.UnitName = string.IsNullOrEmpty(field.UnitName) ? " " : field.UnitName;
                         findFields.Add(editorField);
                         break;
                     }
-                    case Constants.FieldTypes.SaveButton:
-                    {
-                        editorField.Value = field.DefaultValue;
-                        findFields.Add(editorField);
-                        break;
-                    }
+                    //case Constants.FieldTypes.SaveButton:
+                    //{
+                    //    editorField.Value = field.DefaultValue;
+                    //    findFields.Add(editorField);
+                    //    break;
+                    //}
                     case Constants.FieldTypes.FieldGroup:
                     {
                         var fieldsInGroups = await FindFields(eformId, sdkDbContext, field.Id);
@@ -880,7 +901,6 @@ namespace eFormAPI.Web.Services.Eform
                     Color = field.Color,
                     FieldTypeId = field.FieldType,
                     DecimalCount = field.DecimalCount,
-                    DefaultValue = field.Value ?? null,
                     DisplayIndex = field.Position,
                     MaxValue = field.MaxValue ?? null,
                     MinValue = field.MinValue ?? null,
@@ -1009,6 +1029,7 @@ namespace eFormAPI.Web.Services.Eform
                             LanguageId = x.LanguageId,
                             Text = x.Name,
                             Description = x.Description,
+                            DefaultValue = x.DefaultValue,
                         }).ToList();
                 foreach (var fieldTranslation in translates)
                 {
@@ -1206,7 +1227,6 @@ namespace eFormAPI.Web.Services.Eform
                     Color = fieldGroup.Color,
                     FieldTypeId = fieldGroup.FieldType,
                     DecimalCount = fieldGroup.DecimalCount,
-                    DefaultValue = fieldGroup.Value,
                     DisplayIndex = fieldGroup.Position,
                     MaxValue = fieldGroup.MaxValue,
                     MinValue = fieldGroup.MinValue,
@@ -1222,6 +1242,7 @@ namespace eFormAPI.Web.Services.Eform
                             LanguageId = x.LanguageId,
                             Text = x.Name,
                             Description = x.Description,
+                            DefaultValue = x.DefaultValue,
                         }).ToList();
                 foreach (var fieldTranslation in translates)
                 {

@@ -35,8 +35,9 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 
         /// <summary>
         /// Translates for label and description
+        /// for Number field - def value long. for saveButton - def value string
         /// </summary>
-        public List<Microting.eForm.Infrastructure.Models.CommonTranslationsModel> Translations { get; set; }
+        public List<TranslationWithDefaultValue> Translations { get; set; }
             = new();
 
         public string Color { get; set; }
@@ -66,11 +67,6 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         /// for Number field - long. for Date - Date
         /// </summary>
         public string MaxValue { get; set; }
-
-        /// <summary>
-        /// for Number field - long. for saveButton - string
-        /// </summary>
-        public string Value { get; set; }
 
         /// <summary>
         /// for Number field
