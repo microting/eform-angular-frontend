@@ -327,7 +327,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
         await (await $('#maxValueEdit')).setValue(checklistFieldObj.maxValue);
       }
       if (checklistFieldObj.defaultValue) {
-        await (await $('#defaultValueEdit1')).setValue(
+        await (await $('#defaultValueEdit0')).setValue(
           checklistFieldObj.defaultValue
         );
       }
