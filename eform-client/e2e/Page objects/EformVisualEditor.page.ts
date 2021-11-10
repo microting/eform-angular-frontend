@@ -59,14 +59,14 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   async initialFieldCreateBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#initialFieldCreateBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
-    // await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   async initialChecklistCreateBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#initialChecklistCreateBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
-    // await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
