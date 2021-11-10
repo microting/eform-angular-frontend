@@ -1,6 +1,7 @@
 import {
   CommonTranslationsModel,
   EformVisualEditorOptionsModel,
+  EformVisualEditorTranslationWithDefaultValue,
   EformVisualEditorUploadPdfFileForFieldModel,
 } from 'src/app/common/models';
 import { getRandomInt } from 'src/app/common/helpers';
@@ -11,14 +12,13 @@ export class EformVisualEditorFieldModel {
   checklistId: number;
   fieldType: number;
   position: number;
-  translations: CommonTranslationsModel[] = [];
+  translations: EformVisualEditorTranslationWithDefaultValue[] = [];
   color = 'e8eaf6'; // set default color for field
   collapsed = true;
   mandatory = false;
   maxValue: number;
   minValue: number;
   decimalCount: number;
-  value: string;
   parentFieldId?: number;
   fields: EformVisualEditorFieldModel[] = [];
   pdfFiles: EformVisualEditorUploadPdfFileForFieldModel[] = [];

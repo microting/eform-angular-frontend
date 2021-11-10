@@ -501,8 +501,6 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationResult> Deploy(DeployModel deployModel)
         {
-            var deployedSiteIds = new List<int>();
-
             var sitesToBeRetractedFrom = new List<int>();
             var sitesToBeDeployedTo = new List<int>();
 
@@ -512,10 +510,7 @@ namespace eFormAPI.Web.Services
             var language = await _userService.GetCurrentUserLanguage();
             var templateDto = await core.TemplateItemRead(deployModel.Id, language);
 
-            foreach (var site in templateDto.DeployedSites)
-            {
-                deployedSiteIds.Add(site.SiteUId);
-            }
+            var deployedSiteIds = templateDto.DeployedSites.Select(site => site.SiteUId).ToList();
 
             var requestedSiteIds = deployModel
                 .DeployCheckboxes
