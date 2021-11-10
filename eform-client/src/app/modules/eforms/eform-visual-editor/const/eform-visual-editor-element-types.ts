@@ -93,13 +93,15 @@ export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = 
     id: EformFieldTypesEnum.EntitySearch,
     name: 'EntitySearch',
     description: 'Autofilled searchable items field',
-    previewImage: '',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/entity-search.png',
   },
   {
     id: EformFieldTypesEnum.EntitySelect,
     name: 'EntitySelect',
     description: 'Autofilled single selection list',
-    previewImage: '',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/entity-select.png',
   },
   {
     id: EformFieldTypesEnum.ShowPdf,

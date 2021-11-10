@@ -33,21 +33,6 @@
         <div class="md-form">
           <input
             mdbInput
-            [(ngModel)]="field.value"
-            [required]="true"
-            type="number"
-            class="form-control"
-            id="defaultValueEdit"
-          />
-          <label>{{ 'Default value' | translate }}</label>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class="md-form">
-          <input
-            mdbInput
             [(ngModel)]="field.decimalCount"
             [required]="true"
             type="number"
@@ -58,5 +43,35 @@
         </div>
       </div>
     </div>
+    <mdb-card
+      class="mt-3"
+      *ngFor="
+        let translation of field.translations;
+        let translationIndex = index
+      "
+    >
+      <ng-container *ngIf="isLanguageSelected(translation.languageId)">
+        <mdb-card-header>{{
+          getLanguage(translation.languageId) | translate
+        }}</mdb-card-header>
+        <mdb-card-body>
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="translation.defaultValue"
+                  [required]="true"
+                  type="number"
+                  class="form-control"
+                  id="defaultValueEdit{{ translationIndex }}"
+                />
+                <label>{{ 'Default value' | translate }}</label>
+              </div>
+            </div>
+          </div>
+        </mdb-card-body>
+      </ng-container>
+    </mdb-card>
   </mdb-card-body>
 </mdb-card>
