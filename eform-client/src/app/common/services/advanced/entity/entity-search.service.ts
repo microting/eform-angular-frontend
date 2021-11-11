@@ -4,6 +4,7 @@ import {
   AdvEntitySearchableGroupEditModel,
   AdvEntitySearchableGroupListRequestModel,
   AdvEntitySearchableGroupModel,
+  CommonDictionaryModel,
   CommonDictionaryTextModel,
   OperationDataResult,
   OperationResult,
@@ -18,6 +19,7 @@ const AdvSearchableEntityMethods = {
   CreateSingle: '/api/searchable-groups/create',
   UpdateSingle: '/api/searchable-groups/update',
   ImportGroup: '/api/searchable-groups/import',
+  GetGroupsDictionary: '/api/searchable-groups/dict',
 };
 
 @Injectable()
@@ -70,11 +72,16 @@ export class EntitySearchService {
     searchString: string
   ): Observable<OperationDataResult<Array<CommonDictionaryTextModel>>> {
     return this.apiBaseService.get<Array<CommonDictionaryTextModel>>(
-      AdvSearchableEntityMethods.GetAll +
-        '/dict/' +
-        entityGroupUid +
-        '?searchString=' +
-        searchString
+      `${AdvSearchableEntityMethods.GetGroupsDictionary}/${entityGroupUid}?searchString=${searchString}`
+    );
+  }
+
+  getEntitySearchableGroupsInDictionary(
+    searchString: string
+  ): Observable<OperationDataResult<Array<CommonDictionaryModel>>> {
+    return this.apiBaseService.get(
+      AdvSearchableEntityMethods.GetGroupsDictionary,
+      { searchString: searchString }
     );
   }
 }

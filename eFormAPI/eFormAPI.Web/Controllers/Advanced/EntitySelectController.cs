@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2021 Microting A/S
@@ -36,6 +36,7 @@ namespace eFormAPI.Web.Controllers.Advanced
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     [Authorize]
+    [Route("api/selectable-groups")]
     public class EntitySelectController : Controller
     {
         private readonly IEntitySelectService _entitySelectService;
@@ -46,7 +47,6 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
 
         [HttpPost]
-        [Route("api/selectable-groups")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
         public Task<OperationDataResult<Paged<EntityGroup>>> Index(
             [FromBody] AdvEntitySelectableGroupListRequestModel requestModel)
@@ -55,7 +55,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
 
         [HttpPost]
-        [Route("api/selectable-groups/create")]
+        [Route("create")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Create)]
         public Task<OperationResult> Create([FromBody] AdvEntitySelectableGroupEditModel editModel)
         {
@@ -63,7 +63,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
         
         [HttpGet]
-        [Route("api/selectable-groups/get/{entityGroupUid}")]
+        [Route("get/{entityGroupUid}")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
         public Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
         {
@@ -71,7 +71,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
 
         [HttpPost]
-        [Route("api/selectable-groups/update")]
+        [Route("update")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Update)]
         public Task<OperationResult> Update([FromBody] AdvEntitySelectableGroupEditModel editModel)
         {
@@ -79,7 +79,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
         
         [HttpGet]
-        [Route("api/selectable-groups/delete/{entityGroupUid}")]
+        [Route("delete/{entityGroupUid}")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Delete)]
         public Task<OperationResult> Delete(string entityGroupUid)
         {
@@ -87,12 +87,19 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
 
         [HttpGet]
-        [Route("api/selectable-groups/dict/{entityGroupUid}")]
+        [Route("dict/{entityGroupUid}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
         public Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid)
         {
             return _entitySelectService.GetEntityGroupDictionary(entityGroupUid);
         }
 
+
+        [HttpGet]
+        [Route("dict")]
+        public Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary([FromQuery] string searchString)
+        {
+            return _entitySelectService.GetEntityGroupsInDictionary(searchString);
+        }
     }
 }

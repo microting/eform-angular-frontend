@@ -805,6 +805,7 @@ namespace eFormAPI.Web.Services.Eform
                     Mandatory = Convert.ToBoolean(field.Mandatory),
                     // ReSharper disable once PossibleInvalidOperationException
                     ChecklistId = (int)field.CheckListId,
+                    EntityGroupId = field.EntityGroupId,
                 };
 
                 switch (field.FieldType.Type)
@@ -1016,6 +1017,11 @@ namespace eFormAPI.Web.Services.Eform
                     //    await dbField.Update(sdkDbContext);
                     //        break;
                     //}
+                    case Constants.FieldTypes.EntitySearch or Constants.FieldTypes.EntitySelect:
+                    {
+                        dbField.EntityGroupId = field.EntityGroupId;
+                        break;
+                    }
                     // ReSharper disable once RedundantEmptySwitchSection
                     default:
                     {

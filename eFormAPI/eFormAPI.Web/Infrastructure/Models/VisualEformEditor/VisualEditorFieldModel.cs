@@ -86,5 +86,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         public int? ParentFieldId { get; set; }
 
         public string UnitName { get; set; }
+
+        public int? EntityGroupId { get; set; }
     }
 }
