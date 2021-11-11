@@ -59,14 +59,14 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   async initialFieldCreateBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#initialFieldCreateBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
-    // await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   async initialChecklistCreateBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#initialChecklistCreateBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
-    // await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -282,7 +282,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       if (!addNewNestedFieldBtn) {
         await (await this.initialFieldCreateBtn()).click();
       } else {
-        addNewNestedFieldBtn.click();
+        await addNewNestedFieldBtn.click();
       }
       await (await this.changeFieldSaveCancelBtn()).waitForClickable({
         timeout: 40000,
@@ -539,7 +539,7 @@ export class ChecklistFieldRowObj {
       this.color = eformVisualEditorElementColors.find(
         (x) => x.name === backgroundColor.replace('#', '')
       );
-      const colorMas = this.element.$$('#colors >*');
+      const colorMas = await this.element.$$('#colors >*');
       this.colorsBtn = {
         standard: colorMas[0],
         green: colorMas[1],

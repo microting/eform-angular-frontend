@@ -671,7 +671,9 @@ namespace eFormAPI.Web.Services.Eform
                         fieldTranslation.Text = translation.Name;
                         fieldTranslation.DefaultValue = translation.DefaultValue;
 
-                        if (fieldFromDb.FieldType.Type == Constants.FieldTypes.ShowPdf)
+                        var fieldType = await sdkDbContext.FieldTypes
+                            .FirstOrDefaultAsync(x => x.Id == fieldFromDb.FieldTypeId);
+                        if (fieldType.Type == Constants.FieldTypes.ShowPdf)
                         {
                             var hash = hashAndLanguageIdList
                                 .Where(x => x.Value == fieldTranslation.LanguageId)
@@ -682,11 +684,11 @@ namespace eFormAPI.Web.Services.Eform
                                 fieldTranslation.DefaultValue = hash; // for pdf
                             }
                         }
-                        if (fieldFromDb.FieldType.Type == Constants.FieldTypes.Number || fieldFromDb.FieldType.Type == Constants.FieldTypes.Number)
+                        if (fieldType.Type == Constants.FieldTypes.Number || fieldType.Type == Constants.FieldTypes.Number)
                         {
                             fieldTranslation.DefaultValue = string.IsNullOrEmpty(fieldTranslation.DefaultValue) ? "0" : fieldTranslation.DefaultValue;
                         }
-                        if (fieldFromDb.FieldType.Type == Constants.FieldTypes.SaveButton)
+                        if (fieldType.Type == Constants.FieldTypes.SaveButton)
                         {
                             fieldTranslation.DefaultValue = string.IsNullOrEmpty(fieldTranslation.DefaultValue) ? "Save" : fieldTranslation.DefaultValue;
                         }
