@@ -24,6 +24,7 @@ import {
   VisualEditorAdditionalFieldPdfComponent,
   VisualEditorAdditionalFieldOptionsComponent,
   VisualEditorAdditionalFieldEntitySearchComponent,
+  VisualEditorAdditionalFieldEntitySelectComponent,
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
 
@@ -43,6 +44,7 @@ import { EformVisualEditorRouting } from './eform-visual-editor.routing';
     VisualEditorAdditionalFieldPdfComponent,
     VisualEditorAdditionalFieldOptionsComponent,
     VisualEditorAdditionalFieldEntitySearchComponent,
+    VisualEditorAdditionalFieldEntitySelectComponent,
   ],
   imports: [
     CommonModule,

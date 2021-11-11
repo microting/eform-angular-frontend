@@ -78,7 +78,8 @@
                     [clearable]="false"
                     [bindLabel]="'name'"
                     [bindValue]="'id'"
-                    [(ngModel)]="recursionModel.field.fieldType"
+                    [ngModel]="recursionModel.field.fieldType"
+                    (ngModelChange)="updateFieldType($event)"
                     id="fieldTypeSelector"
                     [items]="fieldTypes"
                   >
@@ -163,6 +164,13 @@
           [field]="recursionModel.field"
         >
         </app-visual-editor-additional-field-entity-search>
+        <app-visual-editor-additional-field-entity-select
+          *ngIf="
+            recursionModel.field.fieldType == eformFieldTypesEnum.EntitySelect
+          "
+          [field]="recursionModel.field"
+        >
+        </app-visual-editor-additional-field-entity-select>
       </div>
       <div class="modal-footer">
         <button

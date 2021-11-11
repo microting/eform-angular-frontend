@@ -141,4 +141,14 @@ export class VisualEditorFieldModalComponent implements OnInit {
   getLanguage(languageId: number): string {
     return this.languages.find((x) => x.id === languageId).text;
   }
+
+  updateFieldType(type: number) {
+    if (
+      type === EformFieldTypesEnum.EntitySearch ||
+      type === EformFieldTypesEnum.EntitySelect
+    ) {
+      this.recursionModel.field.entityGroupId = null;
+    }
+    this.recursionModel.field.fieldType = type;
+  }
 }

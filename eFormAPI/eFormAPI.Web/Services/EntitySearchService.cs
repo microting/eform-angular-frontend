@@ -299,7 +299,6 @@ namespace eFormAPI.Web.Services
             }
         }
 
-
         public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary(string searchString)
         {
             try
