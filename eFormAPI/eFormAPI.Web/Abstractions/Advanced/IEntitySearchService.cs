@@ -48,5 +48,7 @@ namespace eFormAPI.Web.Abstractions.Advanced
         Task<OperationResult> Delete(string entityGroupUid);
 
         Task<OperationResult> SendSearchableGroup(string entityGroupUid);
+
+        Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary(string searchString);
     }
 }

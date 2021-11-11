@@ -221,14 +221,11 @@ namespace eFormAPI.Web.Services
 
                 EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid);
 
-                List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
 
-                foreach (string plugin in plugins)
+                foreach (var _ in plugins.Where(plugin => entityGroup.Name.Contains(plugin)))
                 {
-                    if (entityGroup.Name.Contains(plugin))
-                    {
-                        entityGroup.IsLocked = true;
-                    }
+                    entityGroup.IsLocked = true;
                 }
 
                 return new OperationDataResult<EntityGroup>(true, entityGroup);
@@ -299,6 +296,40 @@ namespace eFormAPI.Web.Services
             catch (Exception)
             {
                 return new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
+            }
+        }
+
+
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary(string searchString)
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+
+                var query = sdkDbContext.EntityGroups
+                    .Where(x => x.Type == Constants.FieldTypes.EntitySearch);
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    query = query.Where(x => x.Name.ToUpper().Contains(searchString.ToUpper()));
+                }
+
+                var entityGroups = await query
+                    .OrderBy(x => x.Name)
+                    .Select(x => new CommonDictionaryModel
+                    {
+                        Name = x.Name,
+                        Id = int.Parse(x.MicrotingUid),
+                    })
+                    .ToListAsync();
+                
+                return new OperationDataResult<List<CommonDictionaryModel>>(true, entityGroups);
+            }
+            catch (Exception)
+            {
+                return new OperationDataResult<List<CommonDictionaryModel>>(false,
+                    _localizationService.GetString("ErrorWhenObtainingSearchableList"));
             }
         }
     }

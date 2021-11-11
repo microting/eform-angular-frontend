@@ -23,4 +23,5 @@ export class EformVisualEditorFieldModel {
   fields: EformVisualEditorFieldModel[] = [];
   pdfFiles: EformVisualEditorUploadPdfFileForFieldModel[] = [];
   options: EformVisualEditorOptionsModel[] = [];
+  entityGroupId: number;
 }
