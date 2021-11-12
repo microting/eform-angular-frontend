@@ -454,6 +454,7 @@ namespace eFormAPI.Web.Services
                         MainTextVisible = _loginPageSettings.Value.MainTextVisible,
                         SecondaryText = _loginPageSettings.Value.SecondaryText,
                         SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
+                        IsSendGridExists = !_emailSettings.Value.SendGridKey.IsNullOrEmpty(),
                     },
                     SwiftSettingsModel = new SwiftSettingsModel()
                     {
