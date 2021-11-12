@@ -15,7 +15,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     let searching = true;
     while (searching) {
       const id = '#entitySelectItemEditNameentityItemUId_' + i;
-      const exists = await $(id).isExisting();
+      const exists = await (await $(id)).isExisting();
       if (exists) {
         searching = false;
       } else {
