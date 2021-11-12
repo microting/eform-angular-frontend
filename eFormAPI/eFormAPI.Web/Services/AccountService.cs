@@ -36,12 +36,14 @@ namespace eFormAPI.Web.Services
     using Infrastructure.Models.Settings;
     using Infrastructure.Models.Settings.User;
     using Infrastructure.Models.Users;
+    using Mailing.EmailService;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Microting.eForm.Dto;
+    using Microting.EformAngularFrontendBase.Infrastructure.Const;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
@@ -58,6 +60,7 @@ namespace eFormAPI.Web.Services
         private readonly ILocalizationService _localizationService;
         private readonly UserManager<EformUser> _userManager;
         private readonly BaseDbContext _dbContext;
+        private readonly IEmailService _emailService;
 
         public AccountService(IEFormCoreService coreHelper,
             UserManager<EformUser> userManager,
@@ -66,7 +69,8 @@ namespace eFormAPI.Web.Services
             ILogger<AccountService> logger,
             ILocalizationService localizationService,
             IEmailSender emailSender,
-            BaseDbContext dbContext)
+            BaseDbContext dbContext,
+            IEmailService emailService)
         {
             _coreHelper = coreHelper;
             _userManager = userManager;
@@ -76,6 +80,7 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
             _emailSender = emailSender;
             _dbContext = dbContext;
+            _emailService = emailService;
         }
 
         public async Task<UserInfoViewModel> GetUserInfo()
@@ -195,8 +200,16 @@ namespace eFormAPI.Web.Services
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             var link = await core.GetSdkSetting(Settings.httpServerAddress);
             link = $"{link}/auth/restore-password-confirmation?userId={user.Id}&code={code}";
-            await _emailSender.SendEmailAsync(user.Email, "EForm Password Reset",
-                "Please reset your password by clicking <a href=\"" + link + "\">here</a>");
+/*            await _emailSender.SendEmailAsync(user.Email, "EForm Password Reset",
+                "Please reset your password by clicking <a href=\"" + link + "\">here</a>");*/
+
+            await _emailService.SendAsync(
+                EformEmailConst.FromEmail,
+                "no-reply@microting.com",
+                "EForm Password Reset",
+                user.Email,
+                html: "Please reset your password by clicking <a href=\"" + link + "\">here</a>");
+
             return new OperationResult(true);
         }
 
