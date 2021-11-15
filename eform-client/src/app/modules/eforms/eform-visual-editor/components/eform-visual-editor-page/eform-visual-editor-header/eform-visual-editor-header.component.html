@@ -62,19 +62,14 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <div class="md-form">
-                      <p class="text-black-50">
-                        {{ 'Description' | translate }}
-                      </p>
-                      <pell-editor
-                        mdbInput
-                        [(value)]="translation.description"
-                        required
-                        id="mainCheckListDescriptionTranslation_{{
-                          translationIndex
-                        }}"
-                      ></pell-editor>
-                    </div>
+                    <formatting-text-editor
+                      [(value)]="translation.description"
+                      [placeholder]="'Description' | translate"
+                      id="mainCheckListDescriptionTranslation_{{
+                        translationIndex
+                      }}"
+                    >
+                    </formatting-text-editor>
                   </div>
                 </div>
               </mdb-card-body>
