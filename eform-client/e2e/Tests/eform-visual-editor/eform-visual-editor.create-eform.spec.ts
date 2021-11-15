@@ -893,7 +893,7 @@ describe('Visual editor page', function () {
   });
   it('should correct read created eform from xml', async () => {
     await myEformsPage.Navbar.goToMyEForms();
-    const eformName = await generateRandmString();
+    const eformName = generateRandmString();
     const eformFromXml: MainChecklistObj = {
       translations: [
         { name: eformName, description: '', languageId: 1, id: null },

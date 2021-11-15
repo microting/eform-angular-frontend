@@ -18,7 +18,9 @@ describe('Create folder', function () {
     await loginPage.open('/');
     await loginPage.login();
     await myEformsPage.Navbar.goToFolderPage();
-    await (await foldersPage.newFolderBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await foldersPage.newFolderBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
   });
   it('With name and with description', async () => {
     const description = generateRandmString();
@@ -34,7 +36,8 @@ describe('Create folder', function () {
       folderName[0]
     );
     expect(
-      (await folder.getDescription()).find((x) => x.language === 'Danish').description,
+      (await folder.getDescription()).find((x) => x.language === 'Danish')
+        .description,
       'Description of created folder is incorrect'
     ).equal(description);
   });
@@ -106,37 +109,47 @@ describe('Create folder', function () {
     const description = generateRandmString();
 
     const da = applicationLanguages[0];
-    await (await (await foldersPage.createLanguageSelector()).$('input')).setValue(da.text);
-    let value = await (await foldersPage.createLanguageSelector()).$(`.ng-option=${da.text}`);
+    await (
+      await (await foldersPage.createLanguageSelector()).$('input')
+    ).setValue(da.text);
+    let value = await (await foldersPage.createLanguageSelector()).$(
+      `.ng-option=${da.text}`
+    );
     value.waitForDisplayed({ timeout: 40000 });
     await value.click();
-    await (await foldersPage
-      .createDescriptionInput(
+    await (
+      await foldersPage.createDescriptionInput(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .addValue(description);
+      )
+    ).addValue(description);
 
     await browser.keys(['Control', 'KeyA', 'Control']);
-    await (await foldersPage
-      .createDescriptionInputPellBold(
+    await (
+      await foldersPage.createDescriptionInputPellBold(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .click();
+      )
+    ).click();
     await foldersPage.closeCreateFolder();
     const foldersRowObject = await foldersPage.getFolderByName(folderName[1]);
     await foldersRowObject.openEditModal();
 
-    await (await (await foldersPage.editLanguageSelector()).$('input')).setValue(da.text);
-    value = await (await foldersPage.editLanguageSelector()).$(`.ng-option=${da.text}`);
+    await (
+      await (await foldersPage.editLanguageSelector()).$('input')
+    ).setValue(da.text);
+    value = await (await foldersPage.editLanguageSelector()).$(
+      `.ng-option=${da.text}`
+    );
     await value.waitForDisplayed({ timeout: 40000 });
     await value.click();
-    const html = await (await foldersPage
-      .editDescriptionInput(
+    const html = await (
+      await foldersPage.editDescriptionInput(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .getHTML(false);
+      )
+    ).getHTML(false);
 
-    expect(html, 'save description incorrect').eq(`<b>${description}</b>`);
+    expect(html, 'save description incorrect').eq(
+      `<div><b>${description}</b></div>`
+    );
     await foldersRowObject.closeEditModal(true);
   });
   it('should create new folder with underline description', async () => {
@@ -144,37 +157,47 @@ describe('Create folder', function () {
     const description = generateRandmString();
 
     const da = applicationLanguages[0];
-    await (await foldersPage.createLanguageSelector()).$('input').setValue(da.text);
-    let value = await (await foldersPage.createLanguageSelector()).$(`.ng-option=${da.text}`);
+    await (await foldersPage.createLanguageSelector())
+      .$('input')
+      .setValue(da.text);
+    let value = await (await foldersPage.createLanguageSelector()).$(
+      `.ng-option=${da.text}`
+    );
     await value.waitForDisplayed({ timeout: 40000 });
     await value.click();
-    await (await foldersPage
-      .createDescriptionInput(
+    await (
+      await foldersPage.createDescriptionInput(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .addValue(description);
+      )
+    ).addValue(description);
 
     await browser.keys(['Control', 'KeyA', 'Control']);
-    await (await foldersPage
-      .createDescriptionInputPellUnderline(
+    await (
+      await foldersPage.createDescriptionInputPellUnderline(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .click();
+      )
+    ).click();
     await foldersPage.closeCreateFolder();
     const foldersRowObject = await foldersPage.getFolderByName(folderName[2]);
     await foldersRowObject.openEditModal();
 
-    await (await (await foldersPage.editLanguageSelector()).$('input')).setValue(da.text);
-    value = await (await foldersPage.editLanguageSelector()).$(`.ng-option=${da.text}`);
+    await (
+      await (await foldersPage.editLanguageSelector()).$('input')
+    ).setValue(da.text);
+    value = await (await foldersPage.editLanguageSelector()).$(
+      `.ng-option=${da.text}`
+    );
     await value.waitForDisplayed({ timeout: 40000 });
     await value.click();
-    const html = await (await foldersPage
-      .editDescriptionInput(
+    const html = await (
+      await foldersPage.editDescriptionInput(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .getHTML(false);
+      )
+    ).getHTML(false);
 
-    expect(html, 'save description incorrect').eq(`<u>${description}</u>`);
+    expect(html, 'save description incorrect').eq(
+      `<div><u>${description}</u></div>`
+    );
     await foldersRowObject.closeEditModal(true);
   });
   it('should create new folder with italic description', async () => {
@@ -182,37 +205,47 @@ describe('Create folder', function () {
     const description = generateRandmString();
 
     const da = applicationLanguages[0];
-    await (await (await foldersPage.createLanguageSelector()).$('input')).setValue(da.text);
-    let value = await (await foldersPage.createLanguageSelector()).$(`.ng-option=${da.text}`);
+    await (
+      await (await foldersPage.createLanguageSelector()).$('input')
+    ).setValue(da.text);
+    let value = await (await foldersPage.createLanguageSelector()).$(
+      `.ng-option=${da.text}`
+    );
     await value.waitForDisplayed({ timeout: 40000 });
     await value.click();
-    await (await foldersPage
-      .createDescriptionInput(
+    await (
+      await foldersPage.createDescriptionInput(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .addValue(description);
+      )
+    ).addValue(description);
 
     await browser.keys(['Control', 'KeyA', 'Control']);
-    await (await foldersPage
-      .createDescriptionInputPellItalic(
+    await (
+      await foldersPage.createDescriptionInputPellItalic(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .click();
+      )
+    ).click();
     await foldersPage.closeCreateFolder();
     const foldersRowObject = await foldersPage.getFolderByName(folderName[3]);
     await foldersRowObject.openEditModal();
 
-    await (await (await foldersPage.editLanguageSelector()).$('input')).setValue(da.text);
-    value = await (await foldersPage.editLanguageSelector()).$(`.ng-option=${da.text}`);
+    await (
+      await (await foldersPage.editLanguageSelector()).$('input')
+    ).setValue(da.text);
+    value = await (await foldersPage.editLanguageSelector()).$(
+      `.ng-option=${da.text}`
+    );
     await value.waitForDisplayed({ timeout: 40000 });
     await value.click();
-    const html = await (await foldersPage
-      .editDescriptionInput(
+    const html = await (
+      await foldersPage.editDescriptionInput(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .getHTML(false);
+      )
+    ).getHTML(false);
 
-    expect(html, 'save description incorrect').eq(`<i>${description}</i>`);
+    expect(html, 'save description incorrect').eq(
+      `<div><i>${description}</i></div>`
+    );
     await foldersRowObject.closeEditModal(true);
   });
   it('should create new folder with strike-through description', async () => {
@@ -220,38 +253,46 @@ describe('Create folder', function () {
     const description = generateRandmString();
 
     const da = applicationLanguages[0];
-    await (await (await foldersPage.createLanguageSelector()).$('input')).setValue(da.text);
-    let value = await (await foldersPage.createLanguageSelector()).$(`.ng-option=${da.text}`);
+    await (
+      await (await foldersPage.createLanguageSelector()).$('input')
+    ).setValue(da.text);
+    let value = await (await foldersPage.createLanguageSelector()).$(
+      `.ng-option=${da.text}`
+    );
     await value.waitForDisplayed({ timeout: 40000 });
     await value.click();
-    await (await foldersPage
-      .createDescriptionInput(
+    await (
+      await foldersPage.createDescriptionInput(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .addValue(description);
+      )
+    ).addValue(description);
 
     await browser.keys(['Control', 'KeyA', 'Control']);
-    await (await foldersPage
-      .createDescriptionInputPellStrikeThrough(
+    await (
+      await foldersPage.createDescriptionInputPellStrikeThrough(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .click();
+      )
+    ).click();
     await foldersPage.closeCreateFolder();
     const foldersRowObject = await foldersPage.getFolderByName(folderName[4]);
     await foldersRowObject.openEditModal();
 
-    await (await (await foldersPage.editLanguageSelector()).$('input')).setValue(da.text);
-    value = await (await foldersPage.editLanguageSelector()).$(`.ng-option=${da.text}`);
+    await (
+      await (await foldersPage.editLanguageSelector()).$('input')
+    ).setValue(da.text);
+    value = await (await foldersPage.editLanguageSelector()).$(
+      `.ng-option=${da.text}`
+    );
     await value.waitForDisplayed({ timeout: 40000 });
     await value.click();
-    const html = await (await foldersPage
-      .editDescriptionInput(
+    const html = await (
+      await foldersPage.editDescriptionInput(
         applicationLanguages.findIndex((x) => x.text === da.text)
-      ))
-      .getHTML(false);
+      )
+    ).getHTML(false);
 
     expect(html, 'save description incorrect').eq(
-      `<strike>${description}</strike>`
+      `<div><s>${description}</s></div>`
     );
     await foldersRowObject.closeEditModal(true);
   });

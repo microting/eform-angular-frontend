@@ -325,8 +325,8 @@ namespace eFormAPI.Web.Services.Eform
                 var eformWithTags = parentEform ?? dbEform;
 
                 var tagsIdForDelete = eformWithTags.Taggings
-                    .Select(x => x.Id)
-                    .Where(id => !model.Checklist.TagIds.Contains(id))
+                    .Select(x => x.TagId)
+                    .Where(id => !model.Checklist.TagIds.Contains((int)id))
                     .ToList();
 
                 // remove tags from eform
@@ -344,7 +344,7 @@ namespace eFormAPI.Web.Services.Eform
 
                 // create tags for eform
                 var tagsForCreate = model.Checklist.TagIds
-                    .Where(id => !eformWithTags.Taggings.Select(x => x.Id).Contains(id))
+                    .Where(id => !eformWithTags.Taggings.Select(x => x.TagId).Contains(id))
                     .ToList();
 
                 foreach (var tagId in tagsForCreate)

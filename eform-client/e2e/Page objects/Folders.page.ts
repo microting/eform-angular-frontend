@@ -10,48 +10,64 @@ class FoldersPage extends PageWithNavbarPage {
     return $('#newFolderBtn');
   }
 
-  public async createNameInput(translationIndex: number): Promise<WebdriverIO.Element> {
+  public async createNameInput(
+    translationIndex: number
+  ): Promise<WebdriverIO.Element> {
     return $(`#createFolderNameTranslation_${translationIndex}`);
   }
 
-  public async createDescription(translationIndex: number): Promise<WebdriverIO.Element> {
+  public async createDescription(
+    translationIndex: number
+  ): Promise<WebdriverIO.Element> {
     return $(`#createFolderDescriptionTranslation_${translationIndex}`);
   }
 
-  public async createDescriptionInput(translationIndex: number): Promise<WebdriverIO.Element> {
-    return await (await this.createDescription(translationIndex)).$('.pell-content');
+  public async createDescriptionInput(
+    translationIndex: number
+  ): Promise<WebdriverIO.Element> {
+    return await (await this.createDescription(translationIndex)).$(
+      '.NgxEditor__Content'
+    );
   }
 
-  public async createDescriptionInputPellBold(translationIndex: number): Promise<WebdriverIO.Element> {
+  public async createDescriptionInputPellBold(
+    translationIndex: number
+  ): Promise<WebdriverIO.Element> {
     const ele = await (await this.createDescription(translationIndex)).$(
-      'button[title="Bold"]'
+      'div[title="Bold"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public async createDescriptionInputPellUnderline(translationIndex: number): Promise<WebdriverIO.Element> {
+  public async createDescriptionInputPellUnderline(
+    translationIndex: number
+  ): Promise<WebdriverIO.Element> {
     const ele = await (await this.createDescription(translationIndex)).$(
-      'button[title="Underline"]'
+      'div[title="Underline"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public async createDescriptionInputPellItalic(translationIndex: number): Promise<WebdriverIO.Element> {
+  public async createDescriptionInputPellItalic(
+    translationIndex: number
+  ): Promise<WebdriverIO.Element> {
     const ele = await (await this.createDescription(translationIndex)).$(
-      'button[title="Italic"]'
+      'div[title="Italic"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public async createDescriptionInputPellStrikeThrough(translationIndex: number): Promise<WebdriverIO.Element> {
+  public async createDescriptionInputPellStrikeThrough(
+    translationIndex: number
+  ): Promise<WebdriverIO.Element> {
     const ele = await (await this.createDescription(translationIndex)).$(
-      'button[title="Strike-through"]'
+      'div[title="Strike"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -60,7 +76,7 @@ class FoldersPage extends PageWithNavbarPage {
 
   public async editDescriptionInputPellBold(translationIndex: number) {
     const ele = await (await this.editDescription(translationIndex)).$(
-      'button[title="Bold"]'
+      'div[title="Bold"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -69,7 +85,7 @@ class FoldersPage extends PageWithNavbarPage {
 
   public async editDescriptionInputPellUnderline(translationIndex: number) {
     const ele = await (await this.editDescription(translationIndex)).$(
-      'button[title="Underline"]'
+      'div[title="Underline"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -78,7 +94,7 @@ class FoldersPage extends PageWithNavbarPage {
 
   public async editDescriptionInputPellItalic(translationIndex: number) {
     const ele = await (await this.editDescription(translationIndex)).$(
-      'button[title="Italic"]'
+      'div[title="Italic"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -87,7 +103,7 @@ class FoldersPage extends PageWithNavbarPage {
 
   public async editDescriptionInputPellStrikeThrough(translationIndex: number) {
     const ele = await (await this.editDescription(translationIndex)).$(
-      'button[title="Strike-through"]'
+      'div[title="Strike"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -121,20 +137,30 @@ class FoldersPage extends PageWithNavbarPage {
     return ele;
   }
 
-  public async editNameInput(translationIndex: number): Promise<WebdriverIO.Element> {
+  public async editNameInput(
+    translationIndex: number
+  ): Promise<WebdriverIO.Element> {
     const ele = await $(`#editFolderNameTranslation_${translationIndex}`);
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
-  public async editDescription(translationIndex: number): Promise<WebdriverIO.Element> {
-    const ele = await $(`#editFolderDescriptionTranslation_${translationIndex}`);
+  public async editDescription(
+    translationIndex: number
+  ): Promise<WebdriverIO.Element> {
+    const ele = await $(
+      `#editFolderDescriptionTranslation_${translationIndex}`
+    );
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
-  public async editDescriptionInput(translationIndex: number): Promise<WebdriverIO.Element> {
-    const ele = await (await this.editDescription(translationIndex)).$('.pell-content');
+  public async editDescriptionInput(
+    translationIndex: number
+  ): Promise<WebdriverIO.Element> {
+    const ele = await (await this.editDescription(translationIndex)).$(
+      '.NgxEditor__Content'
+    );
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
@@ -155,7 +181,7 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   public async rowNum(): Promise<number> {
-    if (!await (await $('#folderTreeId')).isExisting()) {
+    if (!(await (await $('#folderTreeId')).isExisting())) {
       await browser.pause(500);
     }
     return (await $$('#folderTreeId')).length;
@@ -178,13 +204,13 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   async getFolder(num): Promise<FoldersRowObject> {
-    const folderObj =  new FoldersRowObject();
+    const folderObj = new FoldersRowObject();
     return await folderObj.getRow(num);
   }
 
   async getFolderByName(nameFolder: string): Promise<FoldersRowObject> {
     await browser.pause(500);
-    for (let i = 1; i < await this.rowNum() + 1; i++) {
+    for (let i = 1; i < (await this.rowNum()) + 1; i++) {
       const folderObj = new FoldersRowObject();
       const folder = await folderObj.getRow(i);
       if (folder.name === nameFolder) {
@@ -195,7 +221,7 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   async getFolderRowNumByName(nameFolder: string): Promise<number> {
-    for (let i = 1; i < await this.rowNum() + 1; i++) {
+    for (let i = 1; i < (await this.rowNum()) + 1; i++) {
       const folderObj = new FoldersRowObject();
       const folder = await folderObj.getRow(i);
       if (folder.name === nameFolder) {
@@ -229,13 +255,19 @@ class FoldersPage extends PageWithNavbarPage {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
         const da = applicationLanguages[0];
-        await (await this.createLanguageSelector()).$('input').setValue(da.text);
-        const value = (await this.createLanguageSelector()).$(`.ng-option=${da.text}`);
+        await (await this.createLanguageSelector())
+          .$('input')
+          .setValue(da.text);
+        const value = (await this.createLanguageSelector()).$(
+          `.ng-option=${da.text}`
+        );
         value.waitForDisplayed({ timeout: 40000 });
         value.click();
-        (await this.createNameInput(
-          applicationLanguages.findIndex((x) => x.text === da.text)
-        )).setValue(nameConverted);
+        (
+          await this.createNameInput(
+            applicationLanguages.findIndex((x) => x.text === da.text)
+          )
+        ).setValue(nameConverted);
       }
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
@@ -243,15 +275,19 @@ class FoldersPage extends PageWithNavbarPage {
           const language = await applicationLanguages.find(
             (x) => x.text === nameConverted[i].language
           );
-          (await this.createLanguageSelector()).$('input').setValue(language.text);
+          (await this.createLanguageSelector())
+            .$('input')
+            .setValue(language.text);
           const value = (await this.createLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           value.waitForDisplayed({ timeout: 40000 });
           value.click();
-          (await this.createNameInput(
-            applicationLanguages.findIndex((x) => x.text === language.text)
-          )).setValue(nameConverted[i].name);
+          (
+            await this.createNameInput(
+              applicationLanguages.findIndex((x) => x.text === language.text)
+            )
+          ).setValue(nameConverted[i].name);
         }
       }
     }
@@ -260,13 +296,19 @@ class FoldersPage extends PageWithNavbarPage {
         const descriptionConvert = description as string;
         const da = applicationLanguages[0];
 
-        await (await (await foldersPage.createLanguageSelector()).$('input')).setValue(da.text);
-        const value = await (await this.createLanguageSelector()).$(`.ng-option=${da.text}`);
+        await (
+          await (await foldersPage.createLanguageSelector()).$('input')
+        ).setValue(da.text);
+        const value = await (await this.createLanguageSelector()).$(
+          `.ng-option=${da.text}`
+        );
         value.waitForDisplayed({ timeout: 40000 });
         value.click();
-        (await this.createDescriptionInput(
-          applicationLanguages.findIndex((x) => x.text === da.text)
-        )).setValue(descriptionConvert);
+        (
+          await this.createDescriptionInput(
+            applicationLanguages.findIndex((x) => x.text === da.text)
+          )
+        ).setValue(descriptionConvert);
       }
       if (typeof description === typeof []) {
         const descriptionConvert = description as {
@@ -277,15 +319,19 @@ class FoldersPage extends PageWithNavbarPage {
           const language = applicationLanguages.find(
             (x) => x.text === descriptionConvert[i].language
           );
-          (await this.createLanguageSelector()).$('input').setValue(language.text);
+          (await this.createLanguageSelector())
+            .$('input')
+            .setValue(language.text);
           const value = (await this.createLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           value.waitForDisplayed({ timeout: 40000 });
           value.click();
-          (await this.createDescriptionInput(
-            applicationLanguages.findIndex((x) => x.text === language.text)
-          )).setValue(descriptionConvert[i].description);
+          (
+            await this.createDescriptionInput(
+              applicationLanguages.findIndex((x) => x.text === language.text)
+            )
+          ).setValue(descriptionConvert[i].description);
         }
       }
     }
@@ -302,7 +348,9 @@ class FoldersPage extends PageWithNavbarPage {
     } else {
       await (await this.cancelCreateBtn()).click();
     }
-    await (await foldersPage.newFolderBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await foldersPage.newFolderBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
   }
 }
 
@@ -310,8 +358,7 @@ const foldersPage = new FoldersPage();
 export default foldersPage;
 
 export class FoldersRowObject {
-  constructor() {
-  }
+  constructor() {}
 
   folderElement;
   name;
@@ -343,7 +390,9 @@ export class FoldersRowObject {
       this.folderTreeOpenClose = await element.$('#folderTreeOpenClose');
       this.editBtn = await this.folderElement.$('#editFolderTreeBtn');
       this.deleteBtn = await this.folderElement.$('#deleteFolderTreeBtn');
-      this.createFolderChildBtn = await this.folderElement.$('#createFolderChildBtn');
+      this.createFolderChildBtn = await this.folderElement.$(
+        '#createFolderChildBtn'
+      );
     }
     return this;
   }
@@ -354,18 +403,20 @@ export class FoldersRowObject {
 
     for (let i = 0; i < applicationLanguages.length; i++) {
       const language = applicationLanguages[i];
-      await (await (await foldersPage.editLanguageSelector()).$('input')).setValue(language.text);
+      await (
+        await (await foldersPage.editLanguageSelector()).$('input')
+      ).setValue(language.text);
       const value = await (await foldersPage.editLanguageSelector()).$(
         `.ng-option=${language.text}`
       );
       await value.waitForDisplayed({ timeout: 40000 });
       await value.click();
       descriptions.push({
-        description: await (await foldersPage
-          .editDescriptionInput(
+        description: await (
+          await foldersPage.editDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === language.text)
-          ))
-          .getText(),
+          )
+        ).getText(),
         language: language.text,
       });
     }
@@ -386,22 +437,26 @@ export class FoldersRowObject {
       await this.getRow(this.rowNumber);
     }
     await this.createFolderChildBtn.click();
-    await (await foldersPage.cancelCreateBtn()).waitForDisplayed({ timeout: 10000 });
+    await (await foldersPage.cancelCreateBtn()).waitForDisplayed({
+      timeout: 10000,
+    });
     if (name) {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
         const da = applicationLanguages[0];
-        await (await (await foldersPage.createLanguageSelector()).$('input')).setValue(da.text);
+        await (
+          await (await foldersPage.createLanguageSelector()).$('input')
+        ).setValue(da.text);
         const value = await (await foldersPage.createLanguageSelector()).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
-        (await foldersPage
-          .createNameInput(
+        (
+          await foldersPage.createNameInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
-          ))
-          .setValue(nameConverted);
+          )
+        ).setValue(nameConverted);
       }
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
@@ -409,17 +464,19 @@ export class FoldersRowObject {
           const language = applicationLanguages.find(
             (x) => x.text === nameConverted[i].language
           );
-          await (await (await foldersPage.createLanguageSelector()).$('input')).setValue(language.text);
+          await (
+            await (await foldersPage.createLanguageSelector()).$('input')
+          ).setValue(language.text);
           const value = await (await foldersPage.createLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
-          (await foldersPage
-            .createNameInput(
+          (
+            await foldersPage.createNameInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
-            ))
-            .setValue(nameConverted[i].name);
+            )
+          ).setValue(nameConverted[i].name);
         }
       }
     }
@@ -427,17 +484,19 @@ export class FoldersRowObject {
       if (typeof description === typeof '') {
         const descriptionConvert = description as string;
         const da = applicationLanguages[0];
-        await (await (await foldersPage.createLanguageSelector()).$('input')).setValue(da.text);
+        await (
+          await (await foldersPage.createLanguageSelector()).$('input')
+        ).setValue(da.text);
         const value = await (await foldersPage.createLanguageSelector()).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
-        (await foldersPage
-          .createDescriptionInput(
+        (
+          await foldersPage.createDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
-          ))
-          .setValue(descriptionConvert);
+          )
+        ).setValue(descriptionConvert);
       }
       if (typeof description === typeof []) {
         const descriptionConvert = description as {
@@ -448,17 +507,19 @@ export class FoldersRowObject {
           const language = applicationLanguages.find(
             (x) => x.text === descriptionConvert[i].language
           );
-          await (await (await foldersPage.createLanguageSelector()).$('input')).setValue(language.text);
+          await (
+            await (await foldersPage.createLanguageSelector()).$('input')
+          ).setValue(language.text);
           const value = await (await foldersPage.createLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
-          (await foldersPage
-            .createDescriptionInput(
+          (
+            await foldersPage.createDescriptionInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
-            ))
-            .setValue(descriptionConvert[i].description);
+            )
+          ).setValue(descriptionConvert[i].description);
         }
       }
     }
@@ -471,7 +532,9 @@ export class FoldersRowObject {
     } else {
       (await foldersPage.cancelCreateBtn()).click();
     }
-    await (await foldersPage.newFolderBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await foldersPage.newFolderBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
   }
 
   async delete(clickCancel = false) {
@@ -484,7 +547,9 @@ export class FoldersRowObject {
       await this.deleteBtn.click();
     }
     if (!clickCancel) {
-      await (await foldersPage.saveDeleteBtn()).waitForClickable({ timeout: 40000 });
+      await (await foldersPage.saveDeleteBtn()).waitForClickable({
+        timeout: 40000,
+      });
       await (await foldersPage.saveDeleteBtn()).click();
       await (await $('#spinner-animation')).waitForDisplayed({
         timeout: 2000,
@@ -493,7 +558,9 @@ export class FoldersRowObject {
     } else {
       await (await foldersPage.cancelDeleteBtn()).click();
     }
-    await await (await foldersPage.newFolderBtn()).waitForDisplayed({ timeout: 40000 });
+    await await (await foldersPage.newFolderBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
   }
 
   async openEditModal() {
@@ -502,7 +569,9 @@ export class FoldersRowObject {
       this.editBtn.waitForDisplayed({ timeout: 40000 });
     }
     await this.editBtn.click();
-    await (await foldersPage.cancelEditBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await foldersPage.cancelEditBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
   }
 
   async editFolder(
@@ -511,22 +580,26 @@ export class FoldersRowObject {
     clickCancel = false
   ) {
     await this.openEditModal();
-    await (await foldersPage.cancelEditBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await foldersPage.cancelEditBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
     if (name) {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
         const da = applicationLanguages[0];
-        await (await (await foldersPage.editLanguageSelector()).$('input')).setValue(da.text);
+        await (
+          await (await foldersPage.editLanguageSelector()).$('input')
+        ).setValue(da.text);
         const value = await (await foldersPage.editLanguageSelector()).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
-        await (await foldersPage
-          .editNameInput(
+        await (
+          await foldersPage.editNameInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
-          ))
-          .setValue(nameConverted);
+          )
+        ).setValue(nameConverted);
       }
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
@@ -534,17 +607,19 @@ export class FoldersRowObject {
           const language = applicationLanguages.find(
             (x) => x.text === nameConverted[i].language
           );
-          await (await (await foldersPage.editLanguageSelector()).$('input')).setValue(language.text);
+          await (
+            await (await foldersPage.editLanguageSelector()).$('input')
+          ).setValue(language.text);
           const value = await (await foldersPage.editLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
-          await (await foldersPage
-            .editNameInput(
+          await (
+            await foldersPage.editNameInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
-            ))
-            .setValue(nameConverted[i].name);
+            )
+          ).setValue(nameConverted[i].name);
         }
       }
     }
@@ -552,17 +627,19 @@ export class FoldersRowObject {
       if (typeof description === typeof '') {
         const descriptionConvert = description as string;
         const da = applicationLanguages[0];
-        await (await (await foldersPage.editLanguageSelector()).$('input')).setValue(da.text);
+        await (
+          await (await foldersPage.editLanguageSelector()).$('input')
+        ).setValue(da.text);
         const value = await (await foldersPage.editLanguageSelector()).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
-        await (await foldersPage
-          .editDescriptionInput(
+        await (
+          await foldersPage.editDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
-          ))
-          .setValue(descriptionConvert);
+          )
+        ).setValue(descriptionConvert);
       }
       if (typeof description === typeof []) {
         const descriptionConvert = description as {
@@ -573,17 +650,19 @@ export class FoldersRowObject {
           const language = applicationLanguages.find(
             (x) => x.text === descriptionConvert[i].language
           );
-          await (await (await foldersPage.editLanguageSelector()).$('input')).setValue(language.text);
+          await (
+            await (await foldersPage.editLanguageSelector()).$('input')
+          ).setValue(language.text);
           const value = (await foldersPage.editLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
-          await (await foldersPage
-            .editDescriptionInput(
+          await (
+            await foldersPage.editDescriptionInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
-            ))
-            .setValue(descriptionConvert[i].description);
+            )
+          ).setValue(descriptionConvert[i].description);
         }
       }
     }
@@ -600,7 +679,9 @@ export class FoldersRowObject {
     } else {
       await (await foldersPage.cancelEditBtn()).click();
     }
-    await (await foldersPage.newFolderBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await foldersPage.newFolderBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
   }
 
   async collapseChildren() {
@@ -617,7 +698,7 @@ export class FoldersRowObject {
 }
 
 export class FoldersTreeRowObject {
-  constructor() { }
+  constructor() {}
 
   folderTreeElement;
   nameTree;
@@ -625,15 +706,22 @@ export class FoldersTreeRowObject {
   editTreeBtn;
   deleteTreeBtn;
 
-  async getRow(rowNumFolderParent, rowNumberFolderChildren): Promise<FoldersTreeRowObject> {
+  async getRow(
+    rowNumFolderParent,
+    rowNumberFolderChildren
+  ): Promise<FoldersTreeRowObject> {
     if (
-      (await (await (await $$('.tree-node-level-1'))[rowNumFolderParent - 1]).$$('.tree-node-level-2'))[
-      rowNumberFolderChildren - 1
-        ]
+      (
+        await (
+          await (await $$('.tree-node-level-1'))[rowNumFolderParent - 1]
+        ).$$('.tree-node-level-2')
+      )[rowNumberFolderChildren - 1]
     ) {
       const baseElement = await $$('.tree-node-level-1');
       const subElement = baseElement[rowNumFolderParent - 1];
-      const element = (await subElement.$$('.tree-node-level-2'))[rowNumberFolderChildren - 1];
+      const element = (await subElement.$$('.tree-node-level-2'))[
+        rowNumberFolderChildren - 1
+      ];
       try {
         this.folderTreeElement = await element.$('#folderTreeId');
       } catch (e) {}
@@ -656,18 +744,20 @@ export class FoldersTreeRowObject {
 
     for (let i = 0; i < applicationLanguages.length; i++) {
       const language = applicationLanguages[i];
-      await (await foldersPage.editLanguageSelector()).$('input').setValue(language.text);
+      await (await foldersPage.editLanguageSelector())
+        .$('input')
+        .setValue(language.text);
       const value = await (await foldersPage.editLanguageSelector()).$(
         `.ng-option=${language.text}`
       );
       value.waitForDisplayed({ timeout: 40000 });
       await value.click();
       descriptions.push({
-        description: await (await foldersPage
-          .editDescriptionInput(
+        description: await (
+          await foldersPage.editDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === language.text)
-          ))
-          .getText(),
+          )
+        ).getText(),
         language: language.text,
       });
     }
@@ -682,17 +772,23 @@ export class FoldersTreeRowObject {
     }
     await this.deleteTreeBtn.click();
     if (!clickCancel) {
-      await (await foldersPage.saveDeleteBtn()).waitForClickable({ timeout: 40000 });
+      await (await foldersPage.saveDeleteBtn()).waitForClickable({
+        timeout: 40000,
+      });
       await (await foldersPage.saveDeleteBtn()).click();
       await (await $('#spinner-animation')).waitForDisplayed({
         timeout: 2000,
         reverse: true,
       });
     } else {
-      await (await foldersPage.cancelDeleteBtn()).waitForClickable({ timeout: 40000 });
+      await (await foldersPage.cancelDeleteBtn()).waitForClickable({
+        timeout: 40000,
+      });
       await (await foldersPage.cancelDeleteBtn()).click();
     }
-    await (await foldersPage.newFolderBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await foldersPage.newFolderBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
   }
 
   async openEditModal() {
@@ -701,7 +797,9 @@ export class FoldersTreeRowObject {
       await this.editTreeBtn.waitForDisplayed({ timeout: 40000 });
     }
     await this.editTreeBtn.click();
-    await (await foldersPage.saveEditBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await foldersPage.saveEditBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
   }
 
   async editFolderChild(
@@ -714,17 +812,19 @@ export class FoldersTreeRowObject {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
         const da = applicationLanguages[0];
-        await (await (await foldersPage.editLanguageSelector()).$('input')).setValue(da.text);
+        await (
+          await (await foldersPage.editLanguageSelector()).$('input')
+        ).setValue(da.text);
         const value = await (await foldersPage.editLanguageSelector()).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
-        await (await foldersPage
-          .editNameInput(
+        await (
+          await foldersPage.editNameInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
-          ))
-          .setValue(nameConverted);
+          )
+        ).setValue(nameConverted);
       }
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
@@ -732,17 +832,19 @@ export class FoldersTreeRowObject {
           const language = applicationLanguages.find(
             (x) => x.text === nameConverted[i].language
           );
-          await (await foldersPage.editLanguageSelector()).$('input').setValue(language.text);
+          await (await foldersPage.editLanguageSelector())
+            .$('input')
+            .setValue(language.text);
           const value = await (await foldersPage.editLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
-          await (await foldersPage
-            .editNameInput(
+          await (
+            await foldersPage.editNameInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
-            ))
-            .setValue(nameConverted[i].name);
+            )
+          ).setValue(nameConverted[i].name);
         }
       }
     }
@@ -750,17 +852,19 @@ export class FoldersTreeRowObject {
       if (typeof description === typeof '') {
         const descriptionConvert = description as string;
         const da = applicationLanguages[0];
-        await (await (await foldersPage.editLanguageSelector()).$('input')).setValue(da.text);
+        await (
+          await (await foldersPage.editLanguageSelector()).$('input')
+        ).setValue(da.text);
         const value = await (await foldersPage.editLanguageSelector()).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
-        await (await foldersPage
-          .editDescriptionInput(
+        await (
+          await foldersPage.editDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
-          ))
-          .setValue(descriptionConvert);
+          )
+        ).setValue(descriptionConvert);
       }
       if (typeof description === typeof []) {
         const descriptionConvert = description as {
@@ -771,17 +875,19 @@ export class FoldersTreeRowObject {
           const language = applicationLanguages.find(
             (x) => x.text === descriptionConvert[i].language
           );
-          await (await foldersPage.editLanguageSelector()).$('input').setValue(language.text);
+          await (await foldersPage.editLanguageSelector())
+            .$('input')
+            .setValue(language.text);
           const value = await (await foldersPage.editLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
-          await (await foldersPage
-            .editDescriptionInput(
+          await (
+            await foldersPage.editDescriptionInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
-            ))
-            .setValue(descriptionConvert[i].description);
+            )
+          ).setValue(descriptionConvert[i].description);
         }
       }
     }
@@ -794,6 +900,8 @@ export class FoldersTreeRowObject {
     } else {
       await (await foldersPage.cancelEditBtn()).click();
     }
-    await (await foldersPage.newFolderBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await foldersPage.newFolderBtn()).waitForDisplayed({
+      timeout: 40000,
+    });
   }
 }

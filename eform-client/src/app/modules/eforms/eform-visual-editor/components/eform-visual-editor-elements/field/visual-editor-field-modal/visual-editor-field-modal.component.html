@@ -46,21 +46,12 @@
               </div>
               <div class="row">
                 <div class="col-12">
-                  <div class="md-form">
-                    <p class="text-black-50">
-                      {{ 'Description' | translate }}
-                    </p>
-                    <pell-editor
-                      mdbInput
-                      [(value)]="translation.description"
-                      name="newFieldDescriptionTranslation_{{
-                        translationIndex
-                      }}"
-                      required
-                      id="newFieldDescriptionTranslation_{{ translationIndex }}"
-                      rows="10"
-                    ></pell-editor>
-                  </div>
+                  <formatting-text-editor
+                    [(value)]="translation.description"
+                    [placeholder]="'Description' | translate"
+                    id="newFieldDescriptionTranslation_{{ translationIndex }}"
+                  >
+                  </formatting-text-editor>
                 </div>
               </div>
             </mdb-card-body>

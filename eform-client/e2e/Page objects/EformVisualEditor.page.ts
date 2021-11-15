@@ -192,7 +192,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
           await (
             await (
               await this.mainCheckListDescriptionTranslationByLanguageId(i)
-            ).$(`.pell-content`)
+            ).$(`.NgxEditor__Content`)
           ).setValue(checklist.translations[i].description);
         }
       }
@@ -240,7 +240,9 @@ class EformVisualEditorPage extends PageWithNavbarPage {
             checklist.translations[i].name
           );
           await (
-            await $(`#newChecklistDescriptionTranslation_${i} .pell-content`)
+            await $(
+              `#newChecklistDescriptionTranslation_${i} .NgxEditor__Content`
+            )
           ).setValue(checklist.translations[i].description);
         }
       }
@@ -293,7 +295,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
             checklistFieldObj.translations[i].name
           );
           await (
-            await $(`#newFieldDescriptionTranslation_${i} .pell-content`)
+            await $(`#newFieldDescriptionTranslation_${i} .NgxEditor__Content`)
           ).setValue(checklistFieldObj.translations[i].description);
         }
       }
@@ -417,7 +419,9 @@ export class MainCheckListRowObj {
             await $(`#mainCheckListNameTranslation_${i}`)
           ).getValue(),
           description: await (
-            await $(`#mainCheckListDescriptionTranslation_${i} .pell-content`)
+            await $(
+              `#mainCheckListDescriptionTranslation_${i} .NgxEditor__Content`
+            )
           ).getText(),
           id: null,
         });
@@ -437,7 +441,9 @@ export class MainCheckListRowObj {
             checklist.translations[i].name
           );
           await (
-            await $(`#mainCheckListDescriptionTranslation_${i} .pell-content`)
+            await $(
+              `#mainCheckListDescriptionTranslation_${i} .NgxEditor__Content`
+            )
           ).setValue(checklist.translations[i].description);
         }
       }
@@ -694,7 +700,7 @@ export class ChecklistRowObj {
         ).getValue();
         translation.description = await (
           await $(
-            `#newChecklistDescriptionTranslation_${selectedLanguages[i]} .pell-content`
+            `#newChecklistDescriptionTranslation_${selectedLanguages[i]} .NgxEditor__Content`
           )
         ).getText();
         this.translations.push(translation);
@@ -747,7 +753,9 @@ export class ChecklistRowObj {
           translations[i].name
         );
         await (
-          await $(`#newChecklistDescriptionTranslation_${i} .pell-content`)
+          await $(
+            `#newChecklistDescriptionTranslation_${i} .NgxEditor__Content`
+          )
         ).setValue(translations[i].description);
       }
     }
