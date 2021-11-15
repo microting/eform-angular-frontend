@@ -56,7 +56,7 @@ export const da = {
   'New sub eForm': 'Ny under eForm',
   'New field': 'Nyt felt',
   'Field is not complete': 'Feltet mangler påkrævede informationer',
-  'Add new nested field': 'Tilføj underfelter',
+  'Add new nested field': 'Tilføj felt til gruppe',
   'Copy field': 'Kopier',
   'Edit field': 'Redigér',
   'Delete field': 'Slet',
@@ -381,5 +381,6 @@ export const da = {
   'Generate report': 'Generer {{value}} rapport',
   'Select date range': 'Vælg periode',
   'Edit headers': 'Redigér overskrifter',
-  'Generate': 'Vis rapport'
+  'Generate': 'Vis rapport',
+  'Edit eForm': 'Rediger eForm',
 };
