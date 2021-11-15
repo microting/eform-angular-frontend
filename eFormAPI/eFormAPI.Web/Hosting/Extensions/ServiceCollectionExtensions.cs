@@ -28,7 +28,6 @@ namespace eFormAPI.Web.Hosting.Extensions
     using System.Linq;
     using Helpers.DbOptions;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -84,8 +83,7 @@ namespace eFormAPI.Web.Hosting.Extensions
         {
             var mvcBuilder = services.AddMvc()
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver =
-                    new CamelCasePropertyNamesContractResolver())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                    new CamelCasePropertyNamesContractResolver());
 
             foreach (var plugin in plugins)
             {
@@ -131,7 +129,7 @@ namespace eFormAPI.Web.Hosting.Extensions
             var pluginPermissions = permissionsManager.GetPluginPermissions().Result;
             permissionsManager.SetPluginGroupPermissions(new List<PluginGroupPermissionsListModel>
                 {
-                    new PluginGroupPermissionsListModel
+                    new()
                     {
                         GroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins,
                         Permissions = pluginPermissions.Select(pp => new PluginGroupPermissionModel
