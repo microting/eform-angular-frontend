@@ -63,7 +63,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Route("getcase")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
         public async Task<IActionResult> Read(int id, int templateId)
         {
@@ -76,8 +75,8 @@ namespace eFormAPI.Web.Controllers.Eforms
             return Ok(await _casesService.Read(id));
         }
 
-        [HttpPost]
-        [Route("update/{templateId}")]
+        [HttpPut]
+        [Route("{templateId}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
         public async Task<IActionResult> Update([FromBody] ReplyRequest model, int templateId)
         {
@@ -90,8 +89,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             return Ok(await _casesService.Update(model));
         }
         
-        [HttpGet]
-        [Route("delete")]
+        [HttpDelete]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseDelete)]
         public async Task<IActionResult> Delete(int id, int templateId)
         {
@@ -105,7 +103,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpPut]
-        [Route("archive/{caseId}")]
+        [Route("archive")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
         public async Task<OperationResult> Delete(int caseId)
         {
