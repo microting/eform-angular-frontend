@@ -565,8 +565,8 @@ export class FoldersRowObject {
 
   async openEditModal() {
     if (this.editBtn.error !== null) {
-      this.folderElement.click();
-      this.editBtn.waitForDisplayed({ timeout: 40000 });
+      await this.folderElement.click();
+      await this.editBtn.waitForDisplayed({ timeout: 40000 });
     }
     await this.editBtn.click();
     await (await foldersPage.cancelEditBtn()).waitForDisplayed({
