@@ -8,7 +8,7 @@
   border-bottom: 1px solid #ced4da !important;
   position: relative !important;
 
-  &:focus:not([readonly]) {
+  &:focus-within:not([readonly]) {
     box-shadow: 0 1px 0 0 var(--theme-button-primary-background-color) !important;
     border-bottom: 1px solid var(--theme-button-primary-background-color) !important;
   }
