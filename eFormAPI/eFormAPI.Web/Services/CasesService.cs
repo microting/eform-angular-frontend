@@ -26,11 +26,13 @@ namespace eFormAPI.Web.Services
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Abstractions;
     using Abstractions.Eforms;
     using Infrastructure.Models.Cases.Request;
     using Infrastructure.Models.Cases.Response;
+    using Microsoft.EntityFrameworkCore;
     using Microting.eForm.Infrastructure.Constants;
     using Microting.eForm.Infrastructure.Models;
     using Microting.eFormApi.BasePn.Abstractions;
@@ -63,7 +65,7 @@ namespace eFormAPI.Web.Services
                 var caseList = await core.CaseReadAll(requestModel.TemplateId, null, null,
                     Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
                     requestModel.IsSortDsc, requestModel.Sort, requestModel.Offset, requestModel.PageSize, timeZoneInfo);
-                var model = new CaseListModel()
+                var model = new CaseListModel
                 {
                     NumOfElements = caseList.NumOfElements,
                     PageNum = caseList.PageNum,
@@ -165,6 +167,44 @@ namespace eFormAPI.Web.Services
                 Log.LogException(ex.Message);
                 Log.LogException(ex.StackTrace);
                 return new OperationResult(false, _localizationService.GetString("CaseCouldNotBeUpdated") + $" Exception: {ex.Message}");
+            }
+        }
+
+        public async Task<OperationResult> Archive(int caseId)
+        {
+            var core = await _coreHelper.GetCore();
+            var sdkDbContext = core.DbContextHelper.GetDbContext();
+            try
+            {
+                var caseDb = await sdkDbContext.Cases
+                    .Where(x => x.Id == caseId)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => !x.IsArchived)
+                    .FirstOrDefaultAsync();
+                if (caseDb == null)
+                {
+                    return new OperationResult(false, _localizationService.GetString("CaseNotFound"));
+                }
+
+                caseDb.IsArchived = true;
+                await caseDb.Update(sdkDbContext);
+
+                if (CaseUpdateDelegates.CaseUpdateDelegate != null)
+                {
+                    var invocationList = CaseUpdateDelegates.CaseUpdateDelegate
+                        .GetInvocationList();
+                    foreach (var func in invocationList)
+                    {
+                        func.DynamicInvoke(caseId);
+                    }
+                }
+                return new OperationResult(true, _localizationService.GetString("CaseHasBeenArchived"));
+            }
+            catch (Exception ex)
+            {
+                Log.LogException(ex.Message);
+                Log.LogException(ex.StackTrace);
+                return new OperationResult(false, $"{_localizationService.GetString("CaseCouldNotBeArchived")} Exception: {ex.Message}");
             }
         }
     }
