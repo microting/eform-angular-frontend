@@ -14,7 +14,6 @@ export class EformSubheaderComponent implements OnInit, OnDestroy {
   @Input() subtitle = '';
   @Input() heandingSizeRem = 2.5;
   @Input() forceStaticTitle = false;
-  @Input() prioritizeMenuTitle = false;
   href = this.router.url;
 
   // internalTitle = '';

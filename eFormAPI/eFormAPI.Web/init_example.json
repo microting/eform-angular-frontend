@@ -37,17 +37,17 @@
   //},
   "swiftSettingsModel": {
     "swiftEnabled": false,
-    "swiftUserName": "eformsdk",
-    "swiftPassword": "eformsdktosecretpassword",
-    "swiftEndpoint": "http://172.16.4.4:8080/swift/v1",
-    "keystoneEndpoint": "http://172.16.4.4:5000/v2.0"
+    "swiftUserName": "XXX",
+    "swiftPassword": "XXX",
+    "swiftEndpoint": "http://XXX",
+    "keystoneEndpoint": "http://XXX"
   },
   "s3SettingsModel": {
     "s3Enabled": false,
     "s3AccessKeyId": "XXX",
     "s3SecrectAccessKey": "XXX",
-    "s3Endpoint": "https://s3.eu-central-1.amazonaws.com",
-    "s3BucketName": "microting-uploaded-data"
+    "s3Endpoint": "https://XXX",
+    "s3BucketName": "XXX"
   },
   "sdkSettingsModel": {
     "customerNo": "420",
@@ -59,7 +59,7 @@
     "httpServerAddress": "http://localhost:3000"
   },
   "sendGridSettingsModel": {
-    "apiKey": "qwerty"
+    "apiKey": "XXX"
   },
   "pluginsList": [ "eform-angular-items-planning-plugin" ]
 }

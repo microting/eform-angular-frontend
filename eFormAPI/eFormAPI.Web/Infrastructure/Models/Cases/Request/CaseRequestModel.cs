@@ -23,21 +23,14 @@ SOFTWARE.
 */
 namespace eFormAPI.Web.Infrastructure.Models.Cases.Request
 {
-    public class CaseRequestModel
-    {
-        public string Sort { get; set; }
-        public string NameFilter { get; set; }
-        public int PageSize { get; set; }
-        public int? TemplateId { get; set; }
-        public bool IsSortDsc { get; set; }
-        public int Offset { get; set; }
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-        public CaseRequestModel()
-        {
-            Sort = "";
-            NameFilter = "";
-            PageSize = 10;
-            Offset = 0;
-        }
+    public class CaseRequestModel: FilterAndSortModel
+    {
+        public int PageSize { get; set; }
+
+        public int? TemplateId { get; set; }
+
+        public int Offset { get; set; }
     }
 }

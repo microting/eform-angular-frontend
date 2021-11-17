@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2021 Microting A/S
@@ -26,11 +26,14 @@ namespace eFormAPI.Web.Services
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Abstractions;
     using Abstractions.Eforms;
     using Infrastructure.Models.Cases.Request;
     using Infrastructure.Models.Cases.Response;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.eForm.Dto;
     using Microting.eForm.Infrastructure.Constants;
     using Microting.eForm.Infrastructure.Models;
     using Microting.eFormApi.BasePn.Abstractions;
@@ -58,16 +61,67 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
                 var core = await _coreHelper.GetCore();
-                var caseList = await core.CaseReadAll(requestModel.TemplateId, null, null,
-                    Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
-                    requestModel.IsSortDsc, requestModel.Sort, requestModel.Offset, requestModel.PageSize, timeZoneInfo);
-                var model = new CaseListModel()
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+
+                // get base query
+                var query = sdkDbContext.Cases
+                    .Include(x => x.Site)
+                    .Include(x => x.Worker)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.CheckListId == requestModel.TemplateId);
+
+                // add sort and filtering
+                var nameFields = new List<string> { "FieldValue1", "FieldValue2", "FieldValue3", "FieldValue4", "FieldValue5", "FieldValue6", "FieldValue7", "FieldValue8", "FieldValue9", "FieldValue10", "Id", "DoneAt", };
+                query = QueryHelper.AddFilterAndSortToQuery(query, requestModel, nameFields);
+
+                //get total
+                var total = await query.Select(x => x.Id).CountAsync();
+
+                // pagination
+                query = query
+                        .Skip(requestModel.Offset)
+                        .Take(requestModel.PageSize);
+
+                // select cases
+                var cases = await query.Select(x => new Case
                 {
-                    NumOfElements = caseList.NumOfElements,
-                    PageNum = caseList.PageNum,
-                    Cases = caseList.Cases
+                    FieldValue1 = x.FieldValue1,
+                    FieldValue2 = x.FieldValue2,
+                    FieldValue3 = x.FieldValue3,
+                    FieldValue4 = x.FieldValue4,
+                    FieldValue5 = x.FieldValue5,
+                    FieldValue6 = x.FieldValue6,
+                    FieldValue7 = x.FieldValue7,
+                    FieldValue8 = x.FieldValue8,
+                    FieldValue9 = x.FieldValue9,
+                    FieldValue10 = x.FieldValue10,
+                    CaseType = x.Type,
+                    CaseUId = x.CaseUid,
+                    CheckUIid = x.MicrotingCheckUid,
+                    CreatedAt = x.CreatedAt,
+                    Custom = x.Custom,
+                    DoneAt = x.DoneAt,
+                    DoneAtUserModifiable = x.DoneAtUserModifiable,
+                    Id = x.Id,
+                    IsArchived = x.IsArchived,
+                    MicrotingUId = x.MicrotingUid,
+                    SiteId = x.SiteId,
+                    Status = x.Status,
+                    TemplatId = x.CheckListId,
+                    UnitId = x.UnitId,
+                    UpdatedAt = x.UpdatedAt,
+                    Version = x.Version,
+                    WorkflowState = x.WorkflowState,
+                    SiteName = x.SiteId == null ? "" : x.Site.Name,
+                    WorkerName = x.WorkerId == null ? "" : x.Worker.full_name(),
+                })
+                    .ToListAsync();
+
+                var model = new CaseListModel
+                {
+                    NumOfElements = total,
+                    Cases = cases,
                 };
 
                 return new OperationDataResult<CaseListModel>(true, model);
@@ -165,6 +219,44 @@ namespace eFormAPI.Web.Services
                 Log.LogException(ex.Message);
                 Log.LogException(ex.StackTrace);
                 return new OperationResult(false, _localizationService.GetString("CaseCouldNotBeUpdated") + $" Exception: {ex.Message}");
+            }
+        }
+
+        public async Task<OperationResult> Archive(int caseId)
+        {
+            var core = await _coreHelper.GetCore();
+            var sdkDbContext = core.DbContextHelper.GetDbContext();
+            try
+            {
+                var caseDb = await sdkDbContext.Cases
+                    .Where(x => x.Id == caseId)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => !x.IsArchived)
+                    .FirstOrDefaultAsync();
+                if (caseDb == null)
+                {
+                    return new OperationResult(false, _localizationService.GetString("CaseNotFound"));
+                }
+
+                caseDb.IsArchived = true;
+                await caseDb.Update(sdkDbContext);
+
+                if (CaseUpdateDelegates.CaseUpdateDelegate != null)
+                {
+                    var invocationList = CaseUpdateDelegates.CaseUpdateDelegate
+                        .GetInvocationList();
+                    foreach (var func in invocationList)
+                    {
+                        func.DynamicInvoke(caseId);
+                    }
+                }
+                return new OperationResult(true, _localizationService.GetString("CaseHasBeenArchived"));
+            }
+            catch (Exception ex)
+            {
+                Log.LogException(ex.Message);
+                Log.LogException(ex.StackTrace);
+                return new OperationResult(false, $"{_localizationService.GetString("CaseCouldNotBeArchived")} Exception: {ex.Message}");
             }
         }
     }

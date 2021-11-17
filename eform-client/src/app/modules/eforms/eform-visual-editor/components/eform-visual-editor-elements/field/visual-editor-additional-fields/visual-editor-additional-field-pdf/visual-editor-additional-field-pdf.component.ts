@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { EformVisualEditorFieldModel } from 'src/app/common/models';
 import { applicationLanguages } from 'src/app/common/const';
 import * as R from 'ramda';
@@ -9,18 +16,32 @@ import * as R from 'ramda';
   styleUrls: ['./visual-editor-additional-field-pdf.component.scss'],
 })
 export class VisualEditorAdditionalFieldPdfComponent
-  implements OnInit, OnDestroy {
+  implements OnChanges, OnDestroy {
   @Input() field: EformVisualEditorFieldModel;
   @Input() selectedLanguages: number[];
 
   constructor() {}
 
-  ngOnInit() {
-    if (this.field) {
-      applicationLanguages.forEach((x) =>
-        // @ts-ignore
-        this.field.pdfFiles.push({ languageId: x.id, file: null })
-      );
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.field) {
+      const sortByFn = R.sortBy(R.prop('id'));
+      applicationLanguages.forEach((x) => {
+        const index = this.field.pdfFiles.findIndex(
+          (y) => y.languageId === x.id || y.id === x.id
+        );
+        if (index === -1) {
+          this.field.pdfFiles.push({
+            id: x.id,
+            name: '',
+            languageId: x.id,
+            file: null,
+          });
+        }
+        if (index !== -1) {
+          this.field.pdfFiles[index].languageId = x.id;
+        }
+        this.field.pdfFiles = sortByFn(this.field.pdfFiles);
+      });
     }
   }
 
@@ -38,28 +59,21 @@ export class VisualEditorAdditionalFieldPdfComponent
     // @ts-ignore
     const files: File[] = event.target.files;
     const filesIndexByLanguage = this.field.pdfFiles.findIndex(
-      (x) => x.languageId === selectedLanguage
+      (x) => x.languageId === selectedLanguage || x.id === selectedLanguage
     );
     if (filesIndexByLanguage !== -1) {
       this.field.pdfFiles[filesIndexByLanguage].file = R.last(files);
+      this.field.pdfFiles[filesIndexByLanguage].name = R.last(files).name;
     }
   }
 
   getFileNameByLanguage(languageId: number): string {
-    if (this.field.pdfFiles[0].id) {
-      const index = this.field.pdfFiles.findIndex((x) => x.id === languageId);
-      if (index !== -1) {
-        return this.field.pdfFiles[index].name;
-      }
+    if (this.field.pdfFiles[languageId - 1].id) {
+      return this.field.pdfFiles[languageId - 1].name;
     } else {
-      const index = this.field.pdfFiles.findIndex(
-        (x) => x.languageId === languageId
-      );
-      if (index !== -1) {
-        const file = this.field.pdfFiles[index].file;
-        if (file) {
-          return file.name;
-        }
+      const file = this.field.pdfFiles[languageId - 1].file;
+      if (file) {
+        return file.name;
       }
     }
   }
