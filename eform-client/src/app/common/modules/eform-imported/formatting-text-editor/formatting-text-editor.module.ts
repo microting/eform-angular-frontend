@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormattingTextEditorComponent } from './formatting-text-editor.component';
 import { NgxEditorModule } from 'ngx-editor';
-import { EformSharedModule } from '../../eform-shared/eform-shared.module';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule, NgxEditorModule, EformSharedModule, FormsModule],
+  imports: [NgxEditorModule, ReactiveFormsModule],
   declarations: [FormattingTextEditorComponent],
   exports: [FormattingTextEditorComponent],
 })
