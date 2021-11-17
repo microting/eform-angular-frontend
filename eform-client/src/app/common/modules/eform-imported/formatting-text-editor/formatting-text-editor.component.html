@@ -1,8 +1,10 @@
-<ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
-<ngx-editor
-  [editor]="editor"
-  [ngModel]="value | toDoc | async"
-  (ngModelChange)="onValueChanged($event)"
-  [disabled]="false"
-  [placeholder]="placeholder"
-></ngx-editor>
+<form [formGroup]="form">
+  <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" [disabled]="disabled">
+  </ngx-editor-menu>
+  <ngx-editor
+    [editor]="editor"
+    formControlName="editorContent"
+    [placeholder]="placeholder"
+  >
+  </ngx-editor>
+</form>

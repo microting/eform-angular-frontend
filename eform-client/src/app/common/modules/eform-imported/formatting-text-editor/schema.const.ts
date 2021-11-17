@@ -1,37 +1,23 @@
 import { nodes as basicNodes, marks as basicMarkers } from 'ngx-editor';
-import { Schema, NodeSpec } from 'prosemirror-model';
+import { Schema, NodeSpec, MarkSpec } from 'prosemirror-model';
 
-const text: NodeSpec = {
+const paragraph: NodeSpec = {
+  content: 'inline*',
   group: 'block',
-  content: 'text*',
   marks: 'strong em s u',
   parseDOM: [
     {
       tag: 'div',
+      preserveWhitespace: 'full',
     },
   ],
-  toDOM(): any {
+  toDOM() {
     return ['div', 0];
   },
 };
 
-const hardBreak: NodeSpec = {
-  group: 'block',
-  content: 'text*',
-  marks: '',
-  parseDOM: [
-    {
-      tag: 'br',
-    },
-  ],
-  toDOM(): any {
-    return ['br', 0];
-  },
-};
-
 const nodes = Object.assign({}, basicNodes, {
-  paragraph: text,
-  hard_break: hardBreak,
+  paragraph,
 });
 
 const markes = {

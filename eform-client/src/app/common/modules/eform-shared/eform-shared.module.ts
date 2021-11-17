@@ -19,13 +19,11 @@ import {
   AuthImagePipe,
   AuthAudioPipe,
   SafeHtmlPipe,
-  NgxEditorToDocPipe,
 } from 'src/app/common/pipes';
 import { TreeModule } from '@circlon/angular-tree-component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { WavesModule } from 'angular-bootstrap-md';
-import { EformTableHeadersComponent } from 'src/app/common/modules/eform-shared/components';
-import { NgxEditorModule } from 'ngx-editor';
+import { EformTableHeadersComponent } from './components';
 
 @NgModule({
   imports: [
@@ -36,7 +34,6 @@ import { NgxEditorModule } from 'ngx-editor';
     TreeModule,
     FontAwesomeModule,
     WavesModule,
-    NgxEditorModule,
   ],
   declarations: [
     EformPaginationComponent,
@@ -47,7 +44,6 @@ import { NgxEditorModule } from 'ngx-editor';
     AuthImagePipe,
     AuthAudioPipe,
     SafeHtmlPipe,
-    NgxEditorToDocPipe,
     EformTreeViewPickerComponent,
     EformCollapseToggleComponent,
     EformTableHeaderSortableComponent,
@@ -67,7 +63,6 @@ import { NgxEditorModule } from 'ngx-editor';
     SafeHtmlPipe,
     EformSubheaderComponent,
     StatusBarCompactComponent,
-    NgxEditorToDocPipe,
   ],
 })
 export class EformSharedModule {}
