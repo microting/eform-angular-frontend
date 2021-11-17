@@ -11,10 +11,8 @@ import {
 import { ApiBaseService } from 'src/app/common/services';
 
 const CasesMethods = {
-  EditById: '/api/cases/getcase',
-  GetCases: '/api/cases/index',
-  UpdateCase: '/api/cases/update',
-  DeleteCase: '/api/cases/delete',
+  GetCases: '/api/cases',
+  ArchiveCase: '/api/cases/archive',
 };
 
 @Injectable()
@@ -25,9 +23,10 @@ export class CasesService {
     id: number,
     templateId: number
   ): Observable<OperationDataResult<ReplyElementDto>> {
-    return this.apiBaseService.get<ReplyElementDto>(
-      CasesMethods.EditById + '?id=' + id + '&templateId=' + templateId
-    );
+    return this.apiBaseService.get<ReplyElementDto>(CasesMethods.GetCases, {
+      id: id,
+      templateId: templateId,
+    });
   }
 
   getCases(
@@ -40,15 +39,22 @@ export class CasesService {
     model: ReplyRequest,
     templateId: number
   ): Observable<OperationResult> {
-    return this.apiBaseService.post<ReplyRequest>(
-      CasesMethods.UpdateCase + '/' + templateId,
+    return this.apiBaseService.put<ReplyRequest>(
+      CasesMethods.GetCases + '/' + templateId,
       model
     );
   }
 
   deleteCase(id: number, templateId: number): Observable<OperationResult> {
-    return this.apiBaseService.get(
-      CasesMethods.DeleteCase + '?id=' + id + '&templateId=' + templateId
-    );
+    return this.apiBaseService.delete(CasesMethods.GetCases, {
+      id: id,
+      templateId: templateId,
+    });
+  }
+
+  archiveCase(caseId: number): Observable<OperationResult> {
+    return this.apiBaseService.put(CasesMethods.ArchiveCase, {
+      caseId: caseId,
+    });
   }
 }

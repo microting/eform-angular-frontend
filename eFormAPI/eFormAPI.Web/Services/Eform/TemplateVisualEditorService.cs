@@ -594,34 +594,43 @@ namespace eFormAPI.Web.Services.Eform
                             await fieldOption.Delete(sdkDbContext);
                         }
                         break;
-                    }
+                        }
                     case Constants.FieldTypes.ShowPdf:
-                    {
-                        if (fieldForUpdate.PdfFiles.Any())
                         {
-                            var folder = Path.Combine(Path.GetTempPath(), "templates",
-                                Path.Combine("fields-pdf-files", fieldFromDb.CheckListId.ToString()));
-                            Directory.CreateDirectory(folder);
-                            foreach (var pdfFile in fieldForUpdate.PdfFiles)
+                            if (fieldForUpdate.PdfFiles.Any())
                             {
-                                if (pdfFile.File != null)
+                                var folder = Path.Combine(Path.GetTempPath(), "templates",
+                                    Path.Combine("fields-pdf-files", fieldFromDb.CheckListId.ToString()));
+                                Directory.CreateDirectory(folder);
+                                foreach (var pdfFile in fieldForUpdate.PdfFiles)
                                 {
-                                    var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{fieldFromDb.CheckListId}.pdf");
-                                    // ReSharper disable once UseAwaitUsing
-                                    using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
+                                    if (pdfFile.File != null)
                                     {
-                                        await pdfFile.File.CopyToAsync(stream);
-                                    }
+                                        var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{fieldFromDb.CheckListId}.pdf");
+                                        // ReSharper disable once UseAwaitUsing
+                                        using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
+                                        {
+                                            await pdfFile.File.CopyToAsync(stream);
+                                        }
 
-                                    await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
-                                    hashAndLanguageIdList.Add(
-                                        new KeyValuePair<string, int>(await core.PdfUpload(filePath),
-                                            pdfFile.LanguageId));
+                                        await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
+                                        hashAndLanguageIdList.Add(
+                                            new KeyValuePair<string, int>(await core.PdfUpload(filePath),
+                                                pdfFile.LanguageId));
+
+
+                                        var uploadData = new UploadedData
+                                        {
+                                            Checksum = hashAndLanguageIdList.Last().Key,
+                                            FileName = pdfFile.File.FileName,
+                                            FileLocation = filePath,
+                                        };
+                                        await uploadData.Create(sdkDbContext);
+                                    }
                                 }
                             }
+                            break;
                         }
-                        break;
-                    }
                 }
 
                 await fieldFromDb.Update(sdkDbContext);
@@ -663,16 +672,17 @@ namespace eFormAPI.Web.Services.Eform
                 foreach (var fieldTranslation in translations)
                 {
                     var translation = fieldForUpdate.Translations.First(x => x.LanguageId == fieldTranslation.LanguageId);
+                        var fieldType = await sdkDbContext.FieldTypes
+                            .FirstOrDefaultAsync(x => x.Id == fieldFromDb.FieldTypeId);
                     if (translation.Name != fieldTranslation.Text ||
                         translation.Description != fieldTranslation.Description ||
-                        translation.DefaultValue != fieldTranslation.DefaultValue) // check if update is need
+                        translation.DefaultValue != fieldTranslation.DefaultValue || // check if update is need
+                        fieldType.Type == Constants.FieldTypes.ShowPdf)
                     {
                         fieldTranslation.Description = translation.Description;
                         fieldTranslation.Text = translation.Name;
                         fieldTranslation.DefaultValue = translation.DefaultValue;
 
-                        var fieldType = await sdkDbContext.FieldTypes
-                            .FirstOrDefaultAsync(x => x.Id == fieldFromDb.FieldTypeId);
                         if (fieldType.Type == Constants.FieldTypes.ShowPdf)
                         {
                             var hash = hashAndLanguageIdList

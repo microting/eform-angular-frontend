@@ -35,8 +35,13 @@ namespace eFormAPI.Web.Abstractions.Eforms
     public interface ICasesService
     {
         Task<OperationDataResult<CaseListModel>> Index(CaseRequestModel requestModel);
+
         Task<OperationDataResult<ReplyElement>> Read(int id);
+
         Task<OperationResult> Delete(int id);
+
         Task<OperationResult> Update(ReplyRequest model);
+
+        Task<OperationResult> Archive(int caseId);
     }
 }

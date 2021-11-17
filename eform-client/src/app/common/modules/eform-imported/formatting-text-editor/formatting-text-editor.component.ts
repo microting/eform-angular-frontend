@@ -14,6 +14,7 @@ import { Editor, toHTML, Toolbar } from 'ngx-editor';
   // tslint:disable-next-line:component-selector
   selector: 'formatting-text-editor',
   templateUrl: './formatting-text-editor.component.html',
+  styleUrls: ['./formatting-text-editor.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class FormattingTextEditorComponent implements OnInit, OnDestroy {
