@@ -538,14 +538,12 @@ export class FoldersRowObject {
   }
 
   async delete(clickCancel = false) {
-    if (this.deleteBtn.error !== undefined) {
+    if (!await this.deleteBtn.isDisplayed()) {
       await this.folderElement.click();
       await this.getRow(this.rowNumber);
       await this.deleteBtn.waitForDisplayed({ timeout: 40000 });
-      await this.deleteBtn.click();
-    } else {
-      await this.deleteBtn.click();
     }
+    await this.deleteBtn.click();
     if (!clickCancel) {
       await (await foldersPage.saveDeleteBtn()).waitForClickable({
         timeout: 40000,
@@ -564,10 +562,18 @@ export class FoldersRowObject {
   }
 
   async openEditModal() {
-    if (this.editBtn.error !== null) {
-      this.folderElement.click();
-      this.editBtn.waitForDisplayed({ timeout: 40000 });
+    if (!await this.editBtn.isDisplayed()) {
+      await this.folderElement.click();
+      await this.getRow(this.rowNumber);
     }
+    // if (this.editBtn.error !== null) {
+      // await this.folderElement.click();
+      await this.editBtn.waitForDisplayed({ timeout: 40000 });
+    // }
+    // if (!await this.editBtn.isDisplayed()) {
+    //   await this.folderElement.click();
+    //   await this.getRow(this.rowNumber);
+    // }
     await this.editBtn.click();
     await (await foldersPage.cancelEditBtn()).waitForDisplayed({
       timeout: 40000,
