@@ -323,6 +323,10 @@ namespace eFormAPI.Web
             var port = defaultConfig.GetValue("port", 5000);
             var connectionString = defaultConfig.GetValue("ConnectionString", "");
             return WebHost.CreateDefaultBuilder(args)
+                .ConfigureKestrel(serverOptions =>
+                {
+                    serverOptions.Limits.MaxRequestBodySize = 100 * 1024 * 1024;// 100Mb
+                })
                 .UseUrls($"http://0.0.0.0:{port}")
                 .UseIISIntegration()
                 .ConfigureAppConfiguration((hostContext, config) =>
