@@ -126,8 +126,10 @@ namespace eFormAPI.Web.Hosting.Extensions
         {
             // Set all plugin permissions for EformAdmins security group
             var permissionsManager = plugin.GetPermissionsManager(connectionString);
-            var pluginPermissions = permissionsManager.GetPluginPermissions().Result;
-            permissionsManager.SetPluginGroupPermissions(new List<PluginGroupPermissionsListModel>
+            if (permissionsManager != null)
+            {
+                var pluginPermissions = permissionsManager.GetPluginPermissions().Result;
+                permissionsManager.SetPluginGroupPermissions(new List<PluginGroupPermissionsListModel>
                 {
                     new()
                     {
@@ -141,8 +143,8 @@ namespace eFormAPI.Web.Hosting.Extensions
                             }
                         ).ToList()
                     }
-                }
-            );
+                });
+            }
         }
     }
 }
