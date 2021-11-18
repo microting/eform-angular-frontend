@@ -34,6 +34,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalUploadZip', { static: true }) modalUploadZip;
   @ViewChild('modalEformsImport', { static: true }) modalEformsImport;
   @ViewChild('modalTags', { static: true }) modalTags;
+  @ViewChild('duplicateConfirm', { static: true }) duplicateConfirm;
 
   searchSubject = new Subject();
   templateListModel: TemplateListModel = new TemplateListModel();
@@ -43,6 +44,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   get userClaims() {
     return this.authStateService.currentUserClaims;
   }
+
   get userClaimsEnum() {
     return UserClaimsEnum;
   }
@@ -218,5 +220,9 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   openTagsModal() {
     this.modalTags.show();
+  }
+
+  openDuplicateConfirmModal(templateDto: TemplateDto) {
+    this.duplicateConfirm.show(templateDto);
   }
 }
