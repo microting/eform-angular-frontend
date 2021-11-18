@@ -65,6 +65,10 @@ namespace eFormAPI.Web.Infrastructure.Models
 
         public int? FolderId { get; set; }
 
+        public bool IsAchievable { get; set; }
+
+        public bool IsDoneAtEditable { get; set; }
+
         public static implicit operator TemplateDto(Template_Dto templateDto)
         {
             return new TemplateDto()
@@ -96,7 +100,9 @@ namespace eFormAPI.Web.Infrastructure.Models
                 Tags = templateDto.Tags,
                 FolderId = templateDto.FolderId,
                 IsLocked = templateDto.IsLocked,
-                IsEditable = templateDto.IsEditable
+                IsEditable = templateDto.IsEditable,
+                IsAchievable = templateDto.IsAchievable,
+                IsDoneAtEditable = templateDto.IsDoneAtEditable,
             };
         }
 
