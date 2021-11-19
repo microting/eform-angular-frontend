@@ -21,28 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
 
 namespace eFormAPI.Web.Infrastructure.Models.Templates
 {
-    public class TemplateRequestModel
-    {
-        public string Sort { get; set; }
-        public string NameFilter { get; set; }
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
-        public bool IsSortDsc { get; set; }
-        public int Offset { get; set; }
-        public List<int> TagIds { get; set; }
+    using System.Collections.Generic;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-        public TemplateRequestModel()
-        {
-            Sort = "";
-            NameFilter = "";
-            PageSize = 10;
-            PageIndex = 0;
-            Offset = 0;
-            TagIds = new List<int>();
-        }
+    public class TemplateRequestModel: FilterAndSortModel
+    {
+        //public int PageIndex { get; set; }
+        //public int PageSize { get; set; }
+        //public int Offset { get; set; }
+        public List<int> TagIds { get; set; }
     }
 }
