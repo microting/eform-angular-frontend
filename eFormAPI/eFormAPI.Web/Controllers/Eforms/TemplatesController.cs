@@ -76,6 +76,14 @@ namespace eFormAPI.Web.Controllers.Eforms
             return await _templatesService.Import(uploadModel.File.OpenReadStream());
         }
 
+        [HttpPost]
+        [Route("api/templates/duplicate")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
+        public async Task<OperationDataResult<int>> Duplicate([FromBody]TemplateDuplicateRequestModel requestModel)
+        {
+            return await _templatesService.Duplicate(requestModel);
+        }
+
         [HttpGet]
         [Route("api/templates/get/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]

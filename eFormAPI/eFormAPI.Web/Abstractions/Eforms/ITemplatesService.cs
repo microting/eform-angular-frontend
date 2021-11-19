@@ -45,6 +45,8 @@ namespace eFormAPI.Web.Abstractions.Eforms
 
         Task<OperationResult> Deploy(DeployModel deployModel);
 
+        Task<OperationDataResult<int>> Duplicate(TemplateDuplicateRequestModel requestModel);
+
         Task<OperationDataResult<DeployToModel>> DeployTo(int id);
 
         Task<OperationDataResult<Template_Dto>> Get(int id);

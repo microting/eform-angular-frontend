@@ -135,7 +135,7 @@ namespace eFormAPI.Web.Services
                             TemplateDto templateLocalDto = templateDto;
                             await templateLocalDto.CheckForLock(_dbContext);
                             templateLocalDto.CreatedAt =
-                                TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateLocalDto.CreatedAt, timeZoneInfo);
+                                TimeZoneInfo.ConvertTimeFromUtc((DateTime)templateLocalDto.CreatedAt, timeZoneInfo);
                             model.Templates.Add(templateLocalDto);
                         }
                     }
@@ -145,7 +145,7 @@ namespace eFormAPI.Web.Services
                         {
                             await templateDto.CheckForLock(_dbContext, pluginIds);
                             templateDto.CreatedAt =
-                                TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
+                                TimeZoneInfo.ConvertTimeFromUtc((DateTime)templateDto.CreatedAt, timeZoneInfo);
                             model.Templates.Add(templateDto);
                         }
                     }
@@ -156,7 +156,7 @@ namespace eFormAPI.Web.Services
                     {
                         await templateDto.CheckForLock(_dbContext, pluginIds);
                         templateDto.CreatedAt =
-                            TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
+                            TimeZoneInfo.ConvertTimeFromUtc((DateTime)templateDto.CreatedAt, timeZoneInfo);
                         model.Templates.Add(templateDto);
                     }
                 }
@@ -570,6 +570,197 @@ namespace eFormAPI.Web.Services
 
             return new OperationResult(true,
                 _localizationService.GetStringWithFormat("ParamPairedSuccessfully", templateDto.Label));
+        }
+
+        public async Task<OperationDataResult<int>> Duplicate(TemplateDuplicateRequestModel requestModel)
+        {
+            var core = await _coreHelper.GetCore();
+            await using var sdkDbContext = core.DbContextHelper.GetDbContext();
+
+            var foundCheckListIds = new List<int>();
+            var foundFieldIds = new List<int>();
+
+            var foundCheckLists = new List<CheckList>();
+            var tempCheckListIds = new List<int>();
+
+            var foundCheckListTranslations = new List<CheckListTranslation>();
+            var foundFields = new List<Microting.eForm.Infrastructure.Data.Entities.Field>();
+            var foundFieldTranslations = new List<FieldTranslation>();
+            var foundFieldOptions = new List<FieldOption>();
+            var foundFieldOptionTranslations = new List<FieldOptionTranslation>();
+
+            bool isAnotherCheckList = false;
+
+            var parentCase = sdkDbContext.CheckLists
+                .Where(x => x.Id == requestModel.TemplateId)
+                .FirstOrDefault();
+
+            foundCheckLists.Add(parentCase);
+            tempCheckListIds.Add(parentCase.Id);
+
+            do
+            {
+                isAnotherCheckList = false;
+
+                var inheritorCheckLists = await sdkDbContext.CheckLists
+                    .Where(x => tempCheckListIds.Contains(x.ParentId.Value))
+                    .ToListAsync();
+
+                if(inheritorCheckLists.Count > 0)
+                {
+                    isAnotherCheckList = true;
+                    foundCheckLists.AddRange(inheritorCheckLists);
+                    tempCheckListIds.Clear();
+                    tempCheckListIds.AddRange(inheritorCheckLists.Select(x => x.Id));
+                }
+            }
+            while (isAnotherCheckList);
+
+            foundCheckListIds = foundCheckLists.Select(y => y.Id).ToList();
+
+            foundCheckListTranslations = await sdkDbContext.CheckListTranslations
+                .Where(x => foundCheckListIds.Contains(x.CheckListId))
+                .ToListAsync();
+            foundFields = await sdkDbContext.Fields
+                .Where(x => foundCheckListIds.Contains(x.CheckListId.Value))
+                .ToListAsync();
+
+            foundFieldIds = foundFields.Select(x => x.Id).ToList();
+
+            foundFieldTranslations = await sdkDbContext.FieldTranslations
+                .Where(x => foundFieldIds.Contains(x.FieldId))
+                .ToListAsync();
+            foundFieldOptions = await sdkDbContext.FieldOptions
+                .Where(x => foundFieldIds.Contains(x.FieldId))
+                .ToListAsync();
+            foundFieldOptionTranslations = await sdkDbContext.FieldOptionTranslations
+                .Where(x => foundFieldOptions.Select(x => x.Id).Contains(x.FieldOptionId))
+                .ToListAsync();
+
+            var createdCheckLists = new List<(CheckList,int)>();
+            var createdCheckListTranslations = new List<(CheckListTranslation, int)>();
+            var createdFields = new List<(Microting.eForm.Infrastructure.Data.Entities.Field, int)>();
+            var createdFieldTranslations = new List<(FieldTranslation, int)>();
+            var createdFieldOptions = new List<(FieldOption, int)>();
+            var createdFieldOptionTranslations = new List<(FieldOptionTranslation, int)>();
+
+            foreach (var checkList in foundCheckLists.OrderBy(x => x.Id))
+            {
+
+                var newCheckList = checkList;
+                newCheckList.Id = 0;
+                newCheckList.WorkflowState = null;
+                newCheckList.Version = null;
+                newCheckList.CreatedAt = null;
+                newCheckList.UpdatedAt = null;
+
+                await newCheckList.Create(sdkDbContext);
+
+                createdCheckLists.Add((newCheckList, checkList.Id));
+            }
+
+            foreach(var checkListTranslation in foundCheckListTranslations.OrderBy(x => x.Id))
+            {
+                var newCheckListTranslation = checkListTranslation;
+                newCheckListTranslation.Id = 0;
+                newCheckListTranslation.WorkflowState = null;
+                newCheckListTranslation.Version = null;
+                newCheckListTranslation.CreatedAt = null;
+                newCheckListTranslation.UpdatedAt = null;
+
+                var requiredId = createdCheckLists.Where(x => x.Item2 == checkListTranslation.CheckListId)
+                    .Select(x => x.Item1.Id)
+                    .FirstOrDefault();
+
+                newCheckListTranslation.CheckListId = requiredId;
+
+                await newCheckListTranslation.Create(sdkDbContext);
+
+                createdCheckListTranslations.Add((newCheckListTranslation, checkListTranslation.Id));
+            }
+
+            foreach (var field in foundFields.OrderBy(x => x.Id))
+            {
+                var newField = field;
+                newField.Id = 0;
+                newField.WorkflowState = null;
+                newField.Version = null;
+                newField.CreatedAt = null;
+                newField.UpdatedAt = null;
+
+                var requiredId = createdCheckLists.Where(x => x.Item2 == field.CheckListId)
+                    .Select(x => x.Item1.Id)
+                    .FirstOrDefault();
+
+                newField.CheckListId = requiredId;
+
+                await newField.Create(sdkDbContext);
+
+                createdFields.Add((newField, field.Id));
+            }
+
+            foreach (var fieldTranslation in foundFieldTranslations.OrderBy(x => x.Id))
+            {
+                var newFieldTranslation = fieldTranslation;
+                newFieldTranslation.Id = 0;
+                newFieldTranslation.WorkflowState = null;
+                newFieldTranslation.Version = null;
+                newFieldTranslation.CreatedAt = null;
+                newFieldTranslation.UpdatedAt = null;
+
+                var requiredId = createdFields.Where(x => x.Item2 == fieldTranslation.FieldId)
+                    .Select(x => x.Item1.Id)
+                    .FirstOrDefault();
+
+                newFieldTranslation.FieldId = requiredId;
+
+                await newFieldTranslation.Create(sdkDbContext);
+
+                createdFieldTranslations.Add((newFieldTranslation, fieldTranslation.Id));
+            }
+
+            foreach (var fieldOption in foundFieldOptions.OrderBy(x => x.Id))
+            {
+                var newFieldOption = fieldOption;
+                newFieldOption.Id = 0;
+                newFieldOption.WorkflowState = null;
+                newFieldOption.Version = null;
+                newFieldOption.CreatedAt = null;
+                newFieldOption.UpdatedAt = null;
+
+                var requiredId = createdFields.Where(x => x.Item2 == fieldOption.FieldId)
+                    .Select(x => x.Item1.Id)
+                    .FirstOrDefault();
+
+                newFieldOption.FieldId = requiredId;
+
+                await newFieldOption.Create(sdkDbContext);
+
+                createdFieldOptions.Add((newFieldOption, fieldOption.Id));
+            }
+
+            foreach (var fieldOptionTranslation in foundFieldOptionTranslations.OrderBy(x => x.Id))
+            {
+                var newFieldOptionTranslation = fieldOptionTranslation;
+                newFieldOptionTranslation.Id = 0;
+                newFieldOptionTranslation.WorkflowState = null;
+                newFieldOptionTranslation.Version = null;
+                newFieldOptionTranslation.CreatedAt = null;
+                newFieldOptionTranslation.UpdatedAt = null;
+
+                var requiredId = createdFieldOptions.Where(x => x.Item2 == fieldOptionTranslation.FieldOptionId)
+                    .Select(x => x.Item1.Id)
+                    .FirstOrDefault();
+
+                newFieldOptionTranslation.FieldOptionId = requiredId;
+
+                await newFieldOptionTranslation.Create(sdkDbContext);
+
+                createdFieldOptionTranslations.Add((newFieldOptionTranslation, fieldOptionTranslation.Id));
+            }
+
+
+            return new OperationDataResult<int>(true, createdCheckLists.First().Item1.Id);
         }
 
         public async Task<OperationDataResult<List<Field>>> GetFields(int id)
