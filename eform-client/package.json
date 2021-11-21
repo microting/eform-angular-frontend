@@ -74,7 +74,7 @@
     "ngx-mask": "^12.0.0",
     "ngx-papaparse": "5.0.0",
     "ngx-slimscroll": "12.2.0",
-    "ngx-toastr": "14.2.0",
+    "ngx-toastr": "14.2.1",
     "ngx-ui-switch": "^12.0.1",
     "ramda": "^0.27.1",
     "rxjs": "6.6.7",
