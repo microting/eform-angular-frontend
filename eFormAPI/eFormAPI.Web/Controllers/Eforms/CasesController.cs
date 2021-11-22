@@ -105,7 +105,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpPut]
         [Route("archive")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
-        public async Task<OperationResult> Delete(int caseId)
+        public async Task<OperationResult> Archive([FromBody]int caseId)
         {
             return await _casesService.Archive(caseId);
         }
