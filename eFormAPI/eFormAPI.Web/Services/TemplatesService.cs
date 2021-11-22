@@ -160,7 +160,7 @@ namespace eFormAPI.Web.Services
                         .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
                         .Select(y => new KeyValuePair<int,string>(y.Tag.Id, y.Tag.Name))
                         .ToList(),
-                    FolderId = x.CheckList.Cases
+                    FolderId = x.CheckList.CheckListSites
                         .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
                         .Select(y => y.FolderId)
                         .FirstOrDefault(),
