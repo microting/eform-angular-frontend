@@ -299,7 +299,7 @@ class MyEformsRowObject {
 
   async getRow(rowNum: number) {
     const currentPosition = rowNum - 1;
-    this.element = $$('#mainPageEFormsTableBody tr')[currentPosition];
+    this.element = (await $$('#mainPageEFormsTableBody tr'))[currentPosition];
     this.id = +(await (await $$('#eform-id-' + (rowNum - 1)))[0].getText());
     try {
       const val = (await $$('#eform-created-at-' + (rowNum - 1)))[0];
