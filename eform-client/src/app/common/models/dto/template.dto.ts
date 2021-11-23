@@ -11,6 +11,7 @@ export class TemplateDto {
   repeated: Number;
   folderName: String;
   workflowState: String;
+  isDoneAtEditable: boolean;
   hasCases: Boolean;
   deployedSites: Array<SiteNameDto>;
   tags: Array<KeyValueModel> = [];

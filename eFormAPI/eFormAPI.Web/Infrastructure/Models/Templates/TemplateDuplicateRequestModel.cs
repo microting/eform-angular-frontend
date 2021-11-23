@@ -24,14 +24,8 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Infrastructure.Models.Templates
 {
-    using System.Collections.Generic;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-
-    public class TemplateRequestModel: FilterAndSortModel
+    public class TemplateDuplicateRequestModel
     {
-        //public int PageIndex { get; set; }
-        //public int PageSize { get; set; }
-        //public int Offset { get; set; }
-        public List<int> TagIds { get; set; }
+        public int TemplateId { get; set; }
     }
 }

@@ -25,6 +25,7 @@ const TemplatesMethods = {
   DeploySingle: '/api/templates/deploy',
   ImportEforms: '/api/templates/import',
   CommonDictionaryModelTemplates: 'api/templates/common-dictionary-templates',
+  Duplicate: 'api/templates/duplicate',
 };
 
 const TemplateFilesMethods = {
@@ -128,7 +129,10 @@ export class EFormService {
 
   downloadCSVFile(templateId: number): Observable<any> {
     return this.apiBaseService.getBlobData(
-      TemplateFilesMethods.GetCsv + '/' + templateId + '?start=&end=&utcTime=false&gpsCoordinates=false&includeCheckListText=true'
+      TemplateFilesMethods.GetCsv +
+        '/' +
+        templateId +
+        '?start=&end=&utcTime=false&gpsCoordinates=false&includeCheckListText=true'
     );
   }
 
@@ -145,4 +149,8 @@ export class EFormService {
   // importEFormsFromExcel(excelFile: File): Observable<OperationResult> {
   //   return this.apiBaseService.uploadFile(TemplatesMethods.ImportEforms, excelFile);
   // }
+
+  duplicateEForms(templateId: number): Observable<OperationResult> {
+    return this.apiBaseService.post(TemplatesMethods.Duplicate, { templateId });
+  }
 }

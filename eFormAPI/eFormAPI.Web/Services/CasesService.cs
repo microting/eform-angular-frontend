@@ -202,6 +202,26 @@ namespace eFormAPI.Web.Services
                 await core.CaseUpdate(model.Id, fieldValueList, checkListValueList);
                 await core.CaseUpdateFieldValues(model.Id, language);
 
+                if(model.IsDoneAtEditable)
+                {
+                    var sdkDbContext = core.DbContextHelper.GetDbContext();
+
+                    var foundCase = await sdkDbContext.Cases
+                        .Where(x => x.Id == model.Id
+                        && x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .FirstOrDefaultAsync();
+
+                    if(foundCase != null)
+                    {
+                        foundCase.DoneAtUserModifiable = model.DoneUserEditable;
+                        await foundCase.Update(sdkDbContext);
+                    }
+                    else
+                    {
+                        return new OperationResult(false, _localizationService.GetString("CaseNotFound"));
+                    }
+                }
+
                 if (CaseUpdateDelegates.CaseUpdateDelegate != null)
                 {
                     var invocationList = CaseUpdateDelegates.CaseUpdateDelegate
