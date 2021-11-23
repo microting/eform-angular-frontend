@@ -53,8 +53,6 @@ export class CasesService {
   }
 
   archiveCase(caseId: number): Observable<OperationResult> {
-    return this.apiBaseService.put(CasesMethods.ArchiveCase, {
-      caseId: caseId,
-    });
+    return this.apiBaseService.put(CasesMethods.ArchiveCase, caseId);
   }
 }

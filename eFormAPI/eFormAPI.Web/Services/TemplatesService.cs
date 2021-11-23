@@ -35,9 +35,7 @@ namespace eFormAPI.Web.Services
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Microting.eForm.Dto;
-    using Microting.eForm.Infrastructure;
     using Microting.eForm.Infrastructure.Constants;
-    using Microting.eForm.Infrastructure.Data.Entities;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Helpers;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -47,9 +45,13 @@ namespace eFormAPI.Web.Services
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using Infrastructure.Models.VisualEformEditor;
+    using Microting.eForm.Infrastructure;
+    using Microting.eForm.Infrastructure.Extensions;
     using Microting.EformAngularFrontendBase.Infrastructure.Data;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
     using Field = Microting.eForm.Infrastructure.Models.Field;
+    using Microting.eForm.Infrastructure.Data.Entities;
 
     public class TemplatesService : ITemplatesService
     {
@@ -84,9 +86,10 @@ namespace eFormAPI.Web.Services
             Log.LogEvent("TemplateService.Index: called");
             try
             {
-                Log.LogEvent("TemplateService.Index: try section");
                 var core = await _coreHelper.GetCore();
                 await using var sdkDbContext = core.DbContextHelper.GetDbContext();
+                Log.LogEvent("TemplateService.Index: try section");
+
                 var language = await _userService.GetCurrentUserLanguage();
                 if (language == null)
                 {
@@ -98,18 +101,90 @@ namespace eFormAPI.Web.Services
                     }
                 }
 
-                var templatesDto = await core.TemplateItemReadAll(false,
-                    "",
-                    templateRequestModel.NameFilter,
-                    templateRequestModel.IsSortDsc,
-                    templateRequestModel.Sort,
-                    templateRequestModel.TagIds,
-                    timeZoneInfo, language);
+                var query = sdkDbContext.CheckListTranslations
+                    .Include(x => x.CheckList)
+                    .ThenInclude(x => x.Taggings)
+                    .ThenInclude(x => x.Tag)
+                    .Include(x => x.CheckList.CheckListSites)
+                    .ThenInclude(x => x.Site)
+                    .Include(x => x.CheckList.Cases)
+                    .Where(x => x.CheckList.ParentId == null)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.CheckList.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.LanguageId == language.Id);
+
+                query = QueryHelper.AddFilterAndSortToQuery(query, templateRequestModel, new List<string> { "Text" },
+                    new List<string> { "Id", "CreatedAt" });
+
+                if (templateRequestModel.Sort is "Id" or "CreatedAt")
+                {
+                    if (templateRequestModel.IsSortDsc)
+                    {
+                        query = query
+                            .CustomOrderByDescending(templateRequestModel.Sort);
+                    }
+                    else
+                    {
+                        query = query
+                            .CustomOrderBy(templateRequestModel.Sort);
+                    }
+                }
+
+                if (templateRequestModel.TagIds.Any())
+                {
+                    query = query.Where(x => x.CheckList.Taggings
+                        .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Any(y => templateRequestModel.TagIds.Contains((int)y.TagId)));
+                }
+
+                var templatesDto = await query.Select(x => new TemplateDto
+                {
+                    Id = x.CheckListId,
+                    CreatedAt =
+                        TimeZoneInfo.ConvertTimeFromUtc((DateTime)x.CheckList.CreatedAt, timeZoneInfo),
+                    DeployedSites = x.CheckList.CheckListSites
+                        .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Select(y => new SiteNameDto((int)y.Site.MicrotingUid, y.Site.Name, y.Site.CreatedAt, y.Site.UpdatedAt))
+                        .ToList(),
+                    Description = x.Description,
+                    Label = x.Text,
+                    Repeated = (int)x.CheckList.Repeated,
+                    FolderName = x.CheckList.FolderName,
+                    WorkflowState = x.CheckList.WorkflowState,
+                    HasCases = x.CheckList.Cases
+                        .Any(y => y.WorkflowState != Constants.WorkflowStates.Removed),
+                    DisplayIndex = x.CheckList.DisplayIndex,
+                    Tags = x.CheckList.Taggings
+                        .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Select(y => new KeyValuePair<int,string>(y.Tag.Id, y.Tag.Name))
+                        .ToList(),
+                    FolderId = x.CheckList.CheckListSites
+                        .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Select(y => y.FolderId)
+                        .FirstOrDefault(),
+                    IsLocked = x.CheckList.IsLocked,
+                    IsEditable = x.CheckList.IsEditable,
+                    DocxExportEnabled = x.CheckList.DocxExportEnabled,
+                    JasperExportEnabled = x.CheckList.JasperExportEnabled,
+                    ExcelExportEnabled = x.CheckList.ExcelExportEnabled,
+                    IsAchievable = x.CheckList.IsAchievable,
+                    IsDoneAtEditable = x.CheckList.IsDoneAtEditable
+                }).ToListAsync();
+
+                //var templatesDto = await core.TemplateItemReadAll(false,
+                //    "",
+                //    templateRequestModel.NameFilter,
+                //    templateRequestModel.IsSortDsc,
+                //    templateRequestModel.Sort,
+                //    templateRequestModel.TagIds,
+                //    timeZoneInfo, language);
 
                 var model = new TemplateListModel
                 {
-                    NumOfElements = await sdkDbContext.CheckLists.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.ParentId != null).CountAsync(),
-                    PageNum = templateRequestModel.PageIndex,
+                    NumOfElements = await query.Where(y => y.CheckList.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.CheckListId).CountAsync(),
+                    //PageNum = templateRequestModel.PageIndex,
                     Templates = new List<TemplateDto>()
                 };
 
@@ -132,53 +207,46 @@ namespace eFormAPI.Web.Services
 
                         foreach (var templateDto in templatesDto.Where(templateDto => eformIds.Contains(templateDto.Id)))
                         {
-                            TemplateDto templateLocalDto = templateDto;
-                            await templateLocalDto.CheckForLock(_dbContext);
-                            templateLocalDto.CreatedAt =
-                                TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateLocalDto.CreatedAt, timeZoneInfo);
-                            model.Templates.Add(templateLocalDto);
+                            await templateDto.CheckForLock(_dbContext);
+                            model.Templates.Add(templateDto);
                         }
                     }
                     else
                     {
-                        foreach (TemplateDto templateDto in templatesDto)
+                        foreach (var templateDto in templatesDto)
                         {
                             await templateDto.CheckForLock(_dbContext, pluginIds);
-                            templateDto.CreatedAt =
-                                TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
                             model.Templates.Add(templateDto);
                         }
                     }
                 }
                 else
                 {
-                    foreach (TemplateDto templateDto in templatesDto)
+                    foreach (var templateDto in templatesDto)
                     {
                         await templateDto.CheckForLock(_dbContext, pluginIds);
-                        templateDto.CreatedAt =
-                            TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
                         model.Templates.Add(templateDto);
                     }
                 }
 
-                foreach (var template in model.Templates)
-                {
-                    var tagsForRemove = new List<KeyValuePair<int, string>>();
-                    foreach (var tag in template.Tags)
-                    {
-                        if (await sdkDbContext.Tags
-                            .Where(y => y.WorkflowState == Constants.WorkflowStates.Removed)
-                            .AnyAsync(x => x.Id == tag.Key))
-                        {
-                            tagsForRemove.Add(tag);
-                        }
-                    }
+                //foreach (var template in model.Templates)
+                //{
+                //    var tagsForRemove = new List<KeyValuePair<int, string>>();
+                //    foreach (var tag in template.Tags)
+                //    {
+                //        if (await sdkDbContext.Tags
+                //            .Where(y => y.WorkflowState == Constants.WorkflowStates.Removed)
+                //            .AnyAsync(x => x.Id == tag.Key))
+                //        {
+                //            tagsForRemove.Add(tag);
+                //        }
+                //    }
 
-                    foreach (var tag in tagsForRemove)
-                    {
-                        template.Tags.Remove(tag);
-                    }
-                }
+                //    foreach (var tag in tagsForRemove)
+                //    {
+                //        template.Tags.Remove(tag);
+                //    }
+                //}
 
                 return new OperationDataResult<TemplateListModel>(true, model);
             }
@@ -312,7 +380,7 @@ namespace eFormAPI.Web.Services
             {
                 var result = new ExcelParseResult();
                 var core = await _coreHelper.GetCore();
-                await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
+                await using var dbContext = core.DbContextHelper.GetDbContext();
                 var language = await _userService.GetCurrentUserLanguage();
 
                 var timeZone = await _userService.GetCurrentUserTimeZoneInfo();
@@ -419,7 +487,7 @@ namespace eFormAPI.Web.Services
                             throw new Exception(_localizationService.GetString("eFormCouldNotBeCreated"));
 
                         // Set tags to eform
-                        int eFormId = await core.TemplateCreate(newTemplate);
+                        var eFormId = await core.TemplateCreate(newTemplate);
                         var eForm = await dbContext.CheckLists.SingleAsync(x => x.Id == eFormId);
 
                         eForm.ReportH1 = importExcelModel.ReportH1;
@@ -454,14 +522,14 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
 
                 await using var dbContext = core.DbContextHelper.GetDbContext();
-                List<CheckListSite> checkListSites =
+                var checkListSites =
                     await dbContext.CheckListSites.Where(x => x.CheckListId == id).ToListAsync();
                 foreach (var checkListSite in checkListSites)
                 {
                     await core.CaseDelete(checkListSite.MicrotingUid);
                 }
 
-                CheckList checkList = await dbContext.CheckLists.SingleAsync(x => x.Id == id);
+                var checkList = await dbContext.CheckLists.SingleAsync(x => x.Id == id);
                 await checkList.Delete(dbContext);
 
                 var eformReport = _dbContext.EformReports
@@ -491,7 +559,7 @@ namespace eFormAPI.Web.Services
             var templateDto = await core.TemplateItemRead(id, language);
             var siteNamesDto = await core.Advanced_SiteItemReadAll();
 
-            var deployToMode = new DeployToModel()
+            var deployToMode = new DeployToModel
             {
                 SiteNamesDto = siteNamesDto,
                 TemplateDto = templateDto
@@ -506,7 +574,7 @@ namespace eFormAPI.Web.Services
 
             var core = await _coreHelper.GetCore();
 
-            await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
+            await using var dbContext = core.DbContextHelper.GetDbContext();
             var language = await _userService.GetCurrentUserLanguage();
             var templateDto = await core.TemplateItemRead(deployModel.Id, language);
 
@@ -542,9 +610,9 @@ namespace eFormAPI.Web.Services
 
             if (sitesToBeDeployedTo.Any())
             {
-                foreach (int i in sitesToBeDeployedTo)
+                foreach (var i in sitesToBeDeployedTo)
                 {
-                    Site site = await dbContext.Sites.SingleAsync(x => x.MicrotingUid == i);
+                    var site = await dbContext.Sites.SingleAsync(x => x.MicrotingUid == i);
                     language = await dbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
                     var mainElement = await core.ReadeForm(deployModel.Id, language);
                     mainElement.Repeated = 0;
@@ -570,6 +638,25 @@ namespace eFormAPI.Web.Services
 
             return new OperationResult(true,
                 _localizationService.GetStringWithFormat("ParamPairedSuccessfully", templateDto.Label));
+        }
+
+        public async Task<OperationDataResult<int>> Duplicate(TemplateDuplicateRequestModel requestModel)
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                await using var sdkDbContext = core.DbContextHelper.GetDbContext();
+
+                var duplicateEform = await FindTemplates(requestModel.TemplateId, sdkDbContext);
+                await CreateCheckList(sdkDbContext, duplicateEform);
+
+                return new OperationDataResult<int>(true, duplicateEform.Id);
+            }
+            catch (Exception)
+            {
+                return new OperationDataResult<int>(false,
+                    _localizationService.GetStringWithFormat("ErrorWhileDuplicateEform"));
+            }
         }
 
         public async Task<OperationDataResult<List<Field>>> GetFields(int id)
@@ -614,6 +701,249 @@ namespace eFormAPI.Web.Services
                 .ToListAsync();
 
             return new OperationDataResult<List<CommonDictionaryModel>>(true, templates);
+        }
+
+        private static async Task<CheckList> FindTemplates(int idEform, MicrotingDbContext sdkDbContext)
+        {
+            var query = sdkDbContext.CheckLists
+                .Include(x => x.Translations)
+                .Include(x => x.Taggings)
+                .Where(x => x.Id == idEform)
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .AsNoTracking();
+
+            var eform = await query
+                .Select(x => new CheckList
+                {
+                    Version = 1,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
+                    WorkflowState = Constants.WorkflowStates.Created,
+                    Label = x.Label,
+                    Description = x.Description,
+                    Custom = x.Custom,
+                    ParentId = x.ParentId,
+                    Repeated = x.Repeated,
+                    DisplayIndex = x.DisplayIndex,
+                    CaseType = x.CaseType,
+                    FolderName = x.FolderName,
+                    ReviewEnabled = x.ReviewEnabled,
+                    ManualSync = x.ManualSync,
+                    ExtraFieldsEnabled = x.ExtraFieldsEnabled,
+                    DoneButtonEnabled = x.DoneButtonEnabled,
+                    ApprovalEnabled = x.ApprovalEnabled,
+                    MultiApproval = x.MultiApproval,
+                    FastNavigation = x.FastNavigation,
+                    DownloadEntities = x.DownloadEntities,
+                    Field1 = x.Field1,
+                    Field2 = x.Field2,
+                    Field3 = x.Field3,
+                    Field4 = x.Field4,
+                    Field5 = x.Field5,
+                    Field6 = x.Field6,
+                    Field7 = x.Field7,
+                    Field8 = x.Field8,
+                    Field9 = x.Field9,
+                    Field10 = x.Field10,
+                    QuickSyncEnabled = x.QuickSyncEnabled,
+                    Color = x.Color,
+                    JasperExportEnabled = x.JasperExportEnabled,
+                    DocxExportEnabled = x.DocxExportEnabled,
+                    ExcelExportEnabled = x.ExcelExportEnabled,
+                    //ReportH1 = x.ReportH1,
+                    //ReportH2 = x.ReportH2,
+                    //ReportH3 = x.ReportH3,
+                    //ReportH4 = x.ReportH4,
+                    //ReportH5 = x.ReportH5,
+                    IsLocked = false,
+                    IsEditable = true,
+                    IsHidden = false,
+                    IsAchievable = x.IsAchievable,
+                    IsDoneAtEditable = x.IsDoneAtEditable,
+                    Taggings = x.Taggings.Select(y => new Tagging
+                    {
+                        Version = 1,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
+                        WorkflowState = Constants.WorkflowStates.Created,
+                        TagId = y.TagId,
+                    }).ToList(),
+                    Translations = x.Translations.Select(y => new CheckListTranslation
+                    {
+                        Version = 1,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
+                        WorkflowState = Constants.WorkflowStates.Created,
+                        LanguageId = y.LanguageId,
+                        Text = y.Text,
+                        Description = y.Description,
+                    }).ToList(),
+                    Children = new List<CheckList>(),
+                })
+                .FirstOrDefaultAsync();
+            if (eform == null)
+            {
+                throw new Exception("EformNotFound");
+            }
+            
+            // add fields
+            eform.Fields = await FindFields(idEform, sdkDbContext);
+
+            // add eforms
+            var childrenCheckListIds = await query
+                .Include(x => x.Children)
+                .Select(x => x.Children.Select(y => y.Id).ToList())
+                .FirstAsync();
+
+            foreach (var checkListId in childrenCheckListIds)
+            {
+                eform.Children.Add(await FindTemplates(checkListId, sdkDbContext));
+            }
+            
+            return eform;
+        }
+
+        private static async Task<List<Microting.eForm.Infrastructure.Data.Entities.Field>> FindFields(int eformId, MicrotingDbContext sdkDbContext, int parentFieldId = -1)
+        {
+            var findFields = new List<Microting.eForm.Infrastructure.Data.Entities.Field>();
+            var fieldQuery = sdkDbContext.Fields
+                .Where(x => x.CheckListId == eformId)
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Include(x => x.FieldType)
+                .Include(x => x.Translations)
+                .Include(x => x.FieldOptions)
+                .ThenInclude(x => x.FieldOptionTranslations)
+                .AsNoTracking();
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+            if (parentFieldId != -1)
+            {
+                fieldQuery = fieldQuery.Where(x => x.ParentFieldId == parentFieldId);
+            }
+            else
+            {
+                fieldQuery = fieldQuery.Where(x => x.ParentFieldId == null);
+            }
+            var fields = await fieldQuery
+                .ToListAsync();
+
+            foreach (var field in fields)
+            {
+                var editorField = new Microting.eForm.Infrastructure.Data.Entities.Field
+                {
+                    Color = field.Color,
+                    FieldTypeId = field.FieldTypeId,
+                    DisplayIndex = field.DisplayIndex,
+                    Translations = field.Translations.Select(x =>
+                        new FieldTranslation
+                        {
+                            Description = x.Description,
+                            Text = x.Text,
+                            LanguageId = x.LanguageId,
+                            DefaultValue = x.DefaultValue,
+                            UploadedDataId = x.UploadedDataId,
+                            Version = 1,
+                            CreatedAt = DateTime.UtcNow,
+                            UpdatedAt = DateTime.UtcNow,
+                            WorkflowState = Constants.WorkflowStates.Created,
+                        }).ToList(),
+                    Mandatory = field.Mandatory,
+                    EntityGroupId = field.EntityGroupId,
+                    BarcodeEnabled = field.BarcodeEnabled,
+                    BarcodeType = field.BarcodeType,
+                    Custom = field.Custom,
+                    DecimalCount = field.DecimalCount,
+                    DefaultValue = field.DefaultValue,
+                    Description = field.Description,
+                    Dummy = field.Dummy,
+                    MinValue = field.MinValue,
+                    MaxValue = field.MaxValue,
+                    UnitName = field.UnitName,
+                    FieldOptions = field.FieldOptions.Select(x =>
+                    new FieldOption
+                    {
+                        DisplayOrder = x.DisplayOrder,
+                        Key = x.Key,
+                        Selected = x.Selected,
+                        FieldOptionTranslations = x.FieldOptionTranslations
+                        .Select(y =>
+                            new FieldOptionTranslation
+                            {
+                                Text = y.Text,
+                                LanguageId = y.LanguageId,
+                                Version = 1,
+                                CreatedAt = DateTime.UtcNow,
+                                UpdatedAt = DateTime.UtcNow,
+                                WorkflowState = Constants.WorkflowStates.Created,
+                            }).ToList(),
+                        Version = 1,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
+                        WorkflowState = Constants.WorkflowStates.Created,
+                    }).ToList(),
+                    GeolocationEnabled = field.GeolocationEnabled,
+                    GeolocationForced = field.GeolocationForced,
+                    GeolocationHidden = field.GeolocationHidden,
+                    IsNum = field.IsNum,
+                    StopOnSave = field.StopOnSave,
+                    Multi = field.Multi,
+                    MaxLength = field.MaxLength,
+                    Label = field.Label,
+                    Optional = field.Optional,
+                    QueryType = field.QueryType,
+                    KeyValuePairList = field.KeyValuePairList,
+                    Split = field.Split,
+                    Selected = field.Selected,
+                    ReadOnly = field.ReadOnly,
+                    Version = 1,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
+                    WorkflowState = Constants.WorkflowStates.Created,
+                };
+
+
+                if (field.FieldType.Type == Constants.FieldTypes.FieldGroup)
+                {
+                    editorField.Children = await FindFields(eformId, sdkDbContext, field.Id);
+                }
+
+                findFields.Add(editorField);
+            }
+
+            return findFields;
+        }
+
+        private static async Task CreateFields(int eformId, MicrotingDbContext sdkDbContext,
+            List<Microting.eForm.Infrastructure.Data.Entities.Field> fieldsList)
+        {
+            foreach (var field in fieldsList)
+            {
+                field.CheckListId = eformId;
+                if (field.FieldTypeId == 17) // field group
+                {
+                    foreach (var fieldChild in field.Children)
+                    {
+                        fieldChild.CheckListId = eformId;
+                    }
+                }
+
+                await field.Create(sdkDbContext);
+            }
+        }
+
+        private static async Task CreateCheckList(MicrotingDbContext sdkDbContext,
+            CheckList checkList, int? parentId = null)
+        {
+                checkList.ParentId = parentId;
+                var children = checkList.Children.ToList();
+                var fields = checkList.Fields.ToList();
+                checkList.Children = new List<CheckList>();
+                checkList.Fields = new List<Microting.eForm.Infrastructure.Data.Entities.Field>();
+                await checkList.Create(sdkDbContext);
+                await CreateFields(checkList.Id, sdkDbContext, fields);
+                foreach (var childCheckList in children)
+                {
+                    await CreateCheckList(sdkDbContext, childCheckList, checkList.Id);
+                }
         }
     }
 }

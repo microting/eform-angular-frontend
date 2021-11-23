@@ -1,7 +1,8 @@
-import {ElementDto} from '../../../dto/element.dto';
+import { ElementDto } from 'src/app/common/models';
 
 export class ReplyElementDto {
   id: number;
   label: string;
-  elementList: Array<ElementDto> = [];
+  doneUserEditable: Date;
+  elementList: ElementDto[] = [];
 }
