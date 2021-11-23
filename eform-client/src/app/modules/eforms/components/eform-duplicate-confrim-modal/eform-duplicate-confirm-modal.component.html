@@ -1,0 +1,70 @@
+<div
+  [config]="{ ignoreBackdropClick: true }"
+  mdbModal
+  class="modal fade"
+  #frame="mdbModal"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Are you sure you want to duplicate eForm' | translate }}?</h3>
+        <button class="close" data-dismiss="modal" (click)="frame.hide()">
+          <span>×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>ID</h6>
+            </div>
+            <div class="col-md-6">
+              <strong>{{ selectedTemplateDto.id }}</strong>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h6>{{ 'Creation Date' | translate }}</h6>
+            </div>
+            <div class="col-md-6">
+              <strong>
+                <date-formatter
+                  [date]="selectedTemplateDto.createdAt"
+                  [Format]="'datetime'"
+                ></date-formatter>
+              </strong>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h6>{{ 'Name' | translate }}</h6>
+            </div>
+            <div class="col-md-6">
+              <strong>{{ selectedTemplateDto.label }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          mdbBtn
+          class="btn-success btn-icon mb-2"
+          id="eFormDuplicateDuplicateBtn"
+          (click)="duplicateEfrom()"
+        >
+          {{ 'Duplicate' | translate }}
+        </button>
+        <button
+          mdbBtn
+          class="btn-accent text-black-50 btn-small-height"
+          id="eFormDuplicateCancelBtn"
+          (click)="frame.hide()"
+        >
+          {{ 'Close' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

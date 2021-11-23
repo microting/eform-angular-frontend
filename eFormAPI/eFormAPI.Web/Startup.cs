@@ -350,7 +350,10 @@ namespace eFormAPI.Web
                         if (plugin != null)
                         {
                             var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
-                            permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
+                            if(permissionsManager != null)
+                            {
+                                permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
+                            }
                         }
                     }
                 }

@@ -2,6 +2,12 @@ export function getOffset(pageSize, offset, total): number {
   while (getCurrentPage(pageSize, offset) > getTotalPages(pageSize, total)) {
     offset -= pageSize;
   }
+  if (
+    getCurrentPage(pageSize, offset) === 1 &&
+    getTotalPages(pageSize, total) === 1
+  ) {
+    offset = 0;
+  }
   return offset;
 }
 
