@@ -526,7 +526,7 @@ export class ChecklistFieldRowObj {
     }
     if (this.element) {
       const str: string[] = (
-        await (await (await this.element).$('.col-6')).getText()
+        await (await this.element.$('.col-6')).getText()
       )
         .replace('drag_handle ', '') // delete not need word
         .split('; '); // split name and type
@@ -536,7 +536,7 @@ export class ChecklistFieldRowObj {
       this.editBtn = await this.element.$('#editBtn');
       this.copyBtn = await this.element.$('#copyBtn');
       this.moveFieldBtn = await this.element.$('#moveFieldBtn');
-      this.fieldIsNotComplete = !!this.element.$('#isNotFieldComplete');
+      this.fieldIsNotComplete = !!(await this.element.$('#isNotFieldComplete'));
       const backgroundColor = (
         await (await this.element.$('div>div')).getCSSProperty(
           'background-color'
