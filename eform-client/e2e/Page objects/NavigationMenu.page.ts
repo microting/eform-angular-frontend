@@ -106,7 +106,7 @@ class NavigationMenuPage {
     return $('#mainMenu');
   }
 
-  public async dragHandleOnItemInMainMenu(numberItem) {
+  public async dragHandleOnItemInMainMenu(numberItem): Promise<WebdriverIO.Element> {
     return await (await this.mainMenu()).$(`#dragHandle0_${numberItem}`);
   }
 
