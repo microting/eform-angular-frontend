@@ -43,5 +43,7 @@ namespace eFormAPI.Web.Abstractions.Eforms
         Task<OperationResult> Update(ReplyRequest model);
 
         Task<OperationResult> Archive(int caseId);
+
+        Task<OperationResult> Unarchive(int caseId);
     }
 }
