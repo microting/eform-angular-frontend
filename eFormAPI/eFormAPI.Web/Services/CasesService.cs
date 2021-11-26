@@ -279,5 +279,34 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false, $"{_localizationService.GetString("CaseCouldNotBeArchived")} Exception: {ex.Message}");
             }
         }
+
+        public async Task<OperationResult> Unarchive(int caseId)
+        {
+            var core = await _coreHelper.GetCore();
+            var sdkDbContext = core.DbContextHelper.GetDbContext();
+            try
+            {
+                var caseDb = await sdkDbContext.Cases
+                    .Where(x => x.Id == caseId)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.IsArchived)
+                    .FirstOrDefaultAsync();
+                if (caseDb == null)
+                {
+                    return new OperationResult(false, _localizationService.GetString("CaseNotFound"));
+                }
+
+                caseDb.IsArchived = false;
+                await caseDb.Update(sdkDbContext);
+
+                return new OperationResult(true, _localizationService.GetString("CaseHasBeenUnarchived"));
+            }
+            catch (Exception ex)
+            {
+                Log.LogException(ex.Message);
+                Log.LogException(ex.StackTrace);
+                return new OperationResult(false, $"{_localizationService.GetString("CaseCouldNotBeUnarchived")} Exception: {ex.Message}");
+            }
+        }
     }
 }

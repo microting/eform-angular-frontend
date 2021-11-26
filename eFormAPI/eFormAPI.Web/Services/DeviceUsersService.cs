@@ -21,21 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Advanced;
-using eFormAPI.Web.Infrastructure.Models;
-using eFormAPI.Web.Infrastructure.Models.DeviceUsers;
-using Microsoft.EntityFrameworkCore;
-using Microting.eForm.Infrastructure.Constants;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
 {
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using Abstractions.Advanced;
+    using Infrastructure.Models;
+    using Infrastructure.Models.DeviceUsers;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.eForm.Infrastructure.Constants;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
     public class DeviceUsersService : IDeviceUsersService
     {
         private readonly IEFormCoreService _coreHelper;
@@ -52,65 +54,95 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = await _coreHelper.GetCore().ConfigureAwait(false);
-                await using var sdkDbContext = core.DbContextHelper.GetDbContext();
-                var deviceUsers = new List<DeviceUser>();
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                // var deviceUsers = new List<DeviceUser>();
 
-                var sitesQuery = await sdkDbContext.Sites
-                   .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                   .ToListAsync();
+                var sitesQuery = sdkDbContext.Sites
+                    .Include(x => x.Units)
+                    .Include(x => x.SiteWorkers)
+                    .ThenInclude(x => x.Worker)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed);
 
-               foreach (var site in sitesQuery)
-                {
-                    var language = await sdkDbContext.Languages.SingleOrDefaultAsync(x => x.Id == site.LanguageId);
-                    if (language == null)
+                sitesQuery = QueryHelper.AddFilterAndSortToQuery(sitesQuery, requestModel, new List<string> { "Name" });
+
+                var deviceUsers = await sitesQuery
+                    .Select(x => new DeviceUser
                     {
-                        language = sdkDbContext.Languages.Single(x => x.LanguageCode == "da");
-                    }
-                    var siteWorkerId = await sdkDbContext.SiteWorkers
-                        .Where(x => x.SiteId == site.Id)
-                        .Select(x => x.WorkerId)
-                        .FirstOrDefaultAsync();
-                    var worker = await sdkDbContext.Workers
-                        .Where(x => x.Id == siteWorkerId)
-                        .Select(x => new { x.MicrotingUid, x.FirstName, x.LastName })
-                        .FirstOrDefaultAsync();
-                    var unit = await sdkDbContext.Units
-                        .Where(x => x.SiteId == site.Id)
-                        .Select(x => new { x.CustomerNo, x.OtpCode, x.MicrotingUid })
-                        .FirstOrDefaultAsync();
+                        CustomerNo = x.Units
+                            .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Select(y => y.CustomerNo)
+                            .FirstOrDefault(),
+                        FirstName = x.SiteWorkers.FirstOrDefault(y => y.WorkflowState != Constants.WorkflowStates.Removed).Worker.FirstName,
+                        LastName = x.SiteWorkers.FirstOrDefault(y => y.WorkflowState != Constants.WorkflowStates.Removed).Worker.LastName,
+                        LanguageId = x.LanguageId,
+                        OtpCode = x.Units
+                            .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Select(y => y.OtpCode)
+                            .FirstOrDefault(),
+                        SiteId = x.Id,
+                        SiteUid = x.MicrotingUid,
+                        SiteName = x.Name,
+                        UnitId = x.Units
+                            .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Select(y => y.MicrotingUid)
+                            .FirstOrDefault(),
+                        WorkerUid = x.SiteWorkers.FirstOrDefault(y => y.WorkflowState != Constants.WorkflowStates.Removed).Worker.MicrotingUid,
+                        Language = sdkDbContext.Languages.Where(y => y.Id == x.LanguageId).Select(y => y.Name).SingleOrDefault() ?? "Danish",
+                        LanguageCode = sdkDbContext.Languages.Where(y => y.Id == x.LanguageId).Select(y => y.LanguageCode).SingleOrDefault() ?? "da",
+                    })
+                    .ToListAsync();
 
-                    if (!string.IsNullOrEmpty(requestModel.NameFilter) && !worker.FirstName.ToLower().Contains(requestModel.NameFilter.ToLower())
-                        && !worker.LastName.ToLower().Contains(requestModel.NameFilter.ToLower())
-                        && !unit.MicrotingUid.ToString().ToLower().Contains(requestModel.NameFilter.ToLower()))
-                    {
-                        continue;
-                    }
 
-                    if (site.LanguageId == 0) // set default language id to danish
-                    {
-                        site.LanguageId = sdkDbContext.Languages
-                            .Single(x => x.Name == "Danish").Id;
-                        await site.Update(sdkDbContext);
-                    }
-
-                    deviceUsers.Add(
-                        new DeviceUser
-                        {
-                            CustomerNo = unit.CustomerNo,
-                            FirstName = worker?.FirstName,
-                            LastName = worker?.LastName,
-                            LanguageId = site.LanguageId,
-                            OtpCode = unit.OtpCode,
-                            SiteId = site.Id,
-                            SiteUid = site.MicrotingUid,
-                            SiteName = site.Name,
-                            UnitId = unit.MicrotingUid,
-                            WorkerUid = worker?.MicrotingUid,
-                            Language = language.Name,
-                            LanguageCode = language.LanguageCode,
-                        });
-                }
+                // foreach (var site in sites)
+                // {
+                //     var language = await sdkDbContext.Languages.SingleOrDefaultAsync(x => x.Id == site.LanguageId) ?? sdkDbContext.Languages.Single(x => x.LanguageCode == "da");
+                //     var siteWorkerId = await sdkDbContext.SiteWorkers
+                //         .Where(x => x.SiteId == site.Id)
+                //         .Include(x => x.Site)
+                //         .Include(x => x.Worker)
+                //         .Select(x => x.WorkerId)
+                //         .FirstOrDefaultAsync();
+                //     var worker = await sdkDbContext.Workers
+                //         .Where(x => x.Id == siteWorkerId)
+                //         .Select(x => new { x.MicrotingUid, x.FirstName, x.LastName })
+                //         .FirstOrDefaultAsync();
+                //     var unit = await sdkDbContext.Units
+                //         .Where(x => x.SiteId == site.Id)
+                //         .Select(x => new { x.CustomerNo, x.OtpCode, x.MicrotingUid })
+                //         .FirstOrDefaultAsync();
+                //
+                //     if (!string.IsNullOrEmpty(requestModel.NameFilter) && !worker.FirstName.ToLower().Contains(requestModel.NameFilter.ToLower())
+                //         && !worker.LastName.ToLower().Contains(requestModel.NameFilter.ToLower())
+                //         && !unit.MicrotingUid.ToString().ToLower().Contains(requestModel.NameFilter.ToLower()))
+                //     {
+                //         continue;
+                //     }
+                //
+                //     if (site.LanguageId == 0) // set default language id to danish
+                //     {
+                //         site.LanguageId = sdkDbContext.Languages
+                //             .Single(x => x.Name == "Danish").Id;
+                //         await site.Update(sdkDbContext);
+                //     }
+                //
+                //     deviceUsers.Add(
+                //         new DeviceUser
+                //         {
+                //             CustomerNo = unit.CustomerNo,
+                //             FirstName = worker?.FirstName,
+                //             LastName = worker?.LastName,
+                //             LanguageId = site.LanguageId,
+                //             OtpCode = unit.OtpCode,
+                //             SiteId = site.Id,
+                //             SiteUid = site.MicrotingUid,
+                //             SiteName = site.Name,
+                //             UnitId = unit.MicrotingUid,
+                //             WorkerUid = worker?.MicrotingUid,
+                //             Language = language.Name,
+                //             LanguageCode = language.LanguageCode,
+                //         });
+                // }
 
                 // var siteDto = await core.SiteReadAll(false);
                 return new OperationDataResult<List<DeviceUser>>(true, deviceUsers);

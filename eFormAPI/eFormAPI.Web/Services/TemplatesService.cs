@@ -45,7 +45,6 @@ namespace eFormAPI.Web.Services
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using Infrastructure.Models.VisualEformEditor;
     using Microting.eForm.Infrastructure;
     using Microting.eForm.Infrastructure.Extensions;
     using Microting.EformAngularFrontendBase.Infrastructure.Data;

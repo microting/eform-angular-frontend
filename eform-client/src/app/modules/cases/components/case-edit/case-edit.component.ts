@@ -112,7 +112,9 @@ export class CaseEditComponent implements OnInit, OnDestroy {
         if (operation && operation.success) {
           this.replyElement = new ReplyElementDto();
           this.isNoSaveExitAllowed = true;
-          if (navigateToPosts) {
+          if (this.reverseRoute) {
+            this.navigateToReverse();
+          } else if (navigateToPosts) {
             this.router
               .navigate([
                 '/cases/posts/',

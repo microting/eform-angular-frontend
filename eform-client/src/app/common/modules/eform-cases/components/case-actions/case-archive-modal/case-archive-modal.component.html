@@ -7,7 +7,14 @@
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>{{ 'Are you sure you want to archive this case' | translate }}?</h3>
+        <h3>
+          {{
+            (caseArchiveModel.isArchived
+              ? 'Are you sure you want to unarchive this case'
+              : 'Are you sure you want to archive this case'
+            ) | translate
+          }}?
+        </h3>
         <button class="close" data-dismiss="modal" (click)="frame.hide()">
           <span>×</span>
         </button>
@@ -59,7 +66,9 @@
           class="btn-danger btn-small-height"
           (click)="submitCaseToArchive()"
         >
-          {{ 'Archive' | translate }}
+          {{
+            (caseArchiveModel.isArchived ? 'Unarchive' : 'Archive') | translate
+          }}
         </button>
         <button
           mdbBtn
