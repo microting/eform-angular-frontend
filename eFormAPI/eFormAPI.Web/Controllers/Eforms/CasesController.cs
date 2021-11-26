@@ -109,5 +109,13 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             return await _casesService.Archive(caseId);
         }
+
+        [HttpPut]
+        [Route("unarchive")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
+        public async Task<OperationResult> Unarchive([FromBody] int caseId)
+        {
+            return await _casesService.Unarchive(caseId);
+        }
     }
 }
