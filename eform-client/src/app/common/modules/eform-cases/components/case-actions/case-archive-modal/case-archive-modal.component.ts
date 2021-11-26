@@ -32,14 +32,23 @@ export class CaseArchiveModalComponent implements OnInit, OnDestroy {
   }
 
   submitCaseToArchive() {
-    this.casesService
-      .archiveCase(this.caseArchiveModel.id)
-      .subscribe((data) => {
-        if (data && data.success) {
-          this.caseArchived.emit();
-          this.frame.hide();
-        }
-      });
+    this.caseArchiveModel.isArchived
+      ? this.casesService
+          .unArchiveCase(this.caseArchiveModel.id)
+          .subscribe((data) => {
+            if (data && data.success) {
+              this.caseArchived.emit();
+              this.frame.hide();
+            }
+          })
+      : this.casesService
+          .archiveCase(this.caseArchiveModel.id)
+          .subscribe((data) => {
+            if (data && data.success) {
+              this.caseArchived.emit();
+              this.frame.hide();
+            }
+          });
   }
 
   ngOnDestroy(): void {}

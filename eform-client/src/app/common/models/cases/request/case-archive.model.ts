@@ -3,4 +3,5 @@ export class CaseArchiveModel {
   workerName: string;
   doneAt: Date;
   templateId: number;
+  isArchived: boolean;
 }

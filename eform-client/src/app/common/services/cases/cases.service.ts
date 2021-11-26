@@ -13,6 +13,7 @@ import { ApiBaseService } from 'src/app/common/services';
 const CasesMethods = {
   GetCases: '/api/cases',
   ArchiveCase: '/api/cases/archive',
+  UnarchiveCase: '/api/cases/unarchive',
 };
 
 @Injectable()
@@ -54,5 +55,9 @@ export class CasesService {
 
   archiveCase(caseId: number): Observable<OperationResult> {
     return this.apiBaseService.put(CasesMethods.ArchiveCase, caseId);
+  }
+
+  unArchiveCase(caseId: number): Observable<OperationResult> {
+    return this.apiBaseService.put(CasesMethods.UnarchiveCase, caseId);
   }
 }
