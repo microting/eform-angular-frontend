@@ -22,8 +22,9 @@ import {
 } from 'src/app/common/pipes';
 import { TreeModule } from '@circlon/angular-tree-component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { WavesModule } from 'angular-bootstrap-md';
+import { BreadcrumbModule, WavesModule } from 'angular-bootstrap-md';
 import { EformTableHeadersComponent } from './components';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -34,6 +35,8 @@ import { EformTableHeadersComponent } from './components';
     TreeModule,
     FontAwesomeModule,
     WavesModule,
+    BreadcrumbModule,
+    RouterModule,
   ],
   declarations: [
     EformPaginationComponent,
