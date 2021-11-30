@@ -1,6 +1,6 @@
 class NavigationMenuPage {
   public async menuItemsChilds(): Promise<WebdriverIO.ElementArray> {
-    await browser.pause(500);
+    await browser.pause(1000);
     return $$('#menuItems>*');
   }
 
