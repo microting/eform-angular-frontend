@@ -14,7 +14,7 @@ describe('Device users page should add new device user', function () {
     await loginPage.open('/');
     await loginPage.login();
     await myEformsPage.Navbar.goToDeviceUsersPage();
-    await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 41000 });
     // browser.pause(8000);
   });
   it('with first name and last name', async () => {
