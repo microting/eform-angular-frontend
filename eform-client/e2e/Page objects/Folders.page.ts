@@ -181,6 +181,7 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   public async rowNum(): Promise<number> {
+    await browser.pause(500);
     if (!(await (await $('#folderTreeId')).isExisting())) {
       await browser.pause(500);
     }
