@@ -65,14 +65,44 @@ namespace eFormAPI.Web.Services
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
 
                 // get base query
-                var query = sdkDbContext.Cases
-                    .Include(x => x.Site)
-                    .Include(x => x.Worker)
+                var query = sdkDbContext.Cases.Join(sdkDbContext.Sites, c => c.SiteId, s => s.Id, (
+                        (c, s) => new
+                        {
+                            c.Id,
+                            c.DoneAt,
+                            SiteName = s.Name,
+                            SiteId = s.Id,
+                            c.WorkflowState,
+                            c.CheckListId,
+                            c.FieldValue1,
+                            c.FieldValue2,
+                            c.FieldValue3,
+                            c.FieldValue4,
+                            c.FieldValue5,
+                            c.FieldValue6,
+                            c.FieldValue7,
+                            c.FieldValue8,
+                            c.FieldValue9,
+                            c.FieldValue10,
+                            c.Type,
+                            c.Status,
+                            c.IsArchived,
+                            c.CaseUid,
+                            c.MicrotingUid,
+                            c.MicrotingCheckUid,
+                            c.CreatedAt,
+                            c.DoneAtUserModifiable,
+                            c.Custom,
+                            c.Version,
+                            c.UpdatedAt,
+                            c.UnitId
+                        }))
+                    //.Include(x => x.Worker)
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Where(x => x.CheckListId == requestModel.TemplateId);
 
                 // add sort and filtering
-                var nameFields = new List<string> { "FieldValue1", "FieldValue2", "FieldValue3", "FieldValue4", "FieldValue5", "FieldValue6", "FieldValue7", "FieldValue8", "FieldValue9", "FieldValue10", "Id", "DoneAt", };
+                var nameFields = new List<string> { "FieldValue1", "FieldValue2", "FieldValue3", "FieldValue4", "FieldValue5", "FieldValue6", "FieldValue7", "FieldValue8", "FieldValue9", "FieldValue10", "Id", "DoneAt", "SiteName"};
                 query = QueryHelper.AddFilterAndSortToQuery(query, requestModel, nameFields);
 
                 //get total
@@ -113,8 +143,8 @@ namespace eFormAPI.Web.Services
                     UpdatedAt = x.UpdatedAt,
                     Version = x.Version,
                     WorkflowState = x.WorkflowState,
-                    SiteName = x.SiteId == null ? "" : x.Site.Name,
-                    WorkerName = x.WorkerId == null ? "" : x.Worker.full_name(),
+                    SiteName = x.SiteName,
+                    WorkerName = x.SiteName,
                 })
                     .ToListAsync();
 

@@ -162,11 +162,11 @@ export class CasesTableComponent implements OnInit, OnDestroy {
   private setTableHeaders() {
     this.tableHeaders = [
       { name: 'Id', elementId: '', sortable: true },
-      { name: 'done_at', elementId: '', sortable: true },
+      { name: 'DoneAt', elementId: '', sortable: true },
       this.authStateService.isAdmin
-          ? { name: 'created_at', elementId: '', sortable: true }
+          ? { name: 'CreatedAt', elementId: '', sortable: true }
           : null,
-      { name: 'worker_name', elementId: '', sortable: true },
+      { name: 'SiteId', elementId: '', sortable: true },
       this.currentTemplate.field1 && this.currentTemplate.field1.label
           ? {
             name: 'FieldValue1',
