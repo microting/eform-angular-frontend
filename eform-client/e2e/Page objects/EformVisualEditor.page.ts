@@ -18,6 +18,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   }
 
   async checkListCountAll(): Promise<number> {
+    await browser.pause(1000);
     return (await $$('[id^="checkListSection"]')).length;
   }
   async checkListCountOnFirsLevel(): Promise<number> {
@@ -25,6 +26,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   }
 
   async fieldsCountOnFirsLevel(): Promise<number> {
+    await browser.pause(1000);
     return (await $$('[id*=field_]')).length;
   }
 

@@ -6,12 +6,15 @@ export class TagsModalPage extends Page {
   }
 
   public async rowNum(): Promise<number> {
+    await browser.pause(500);
     return (await $$('#tagRow')).length;
   }
 
   // Create page elements
   public async newTagBtn(): Promise<WebdriverIO.Element> {
-    await (await $('#newTagBtn')).waitForDisplayed({ timeout: 40000 });
+    const ele = await $('#newTagBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return $('#newTagBtn');
   }
 

@@ -8,8 +8,8 @@ class DeviceUsersPage extends PageWithNavbarPage {
 
   public async newDeviceUserBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#newDeviceUserBtn');
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({ timeout: 40100 });
+    await ele.waitForClickable({ timeout: 40200 });
     return ele;
   }
 

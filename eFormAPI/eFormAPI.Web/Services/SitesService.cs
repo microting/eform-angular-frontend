@@ -179,7 +179,8 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
                 }
 
-                var language = await dbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+                var language = await dbContext.Languages.SingleAsync(x => x.Id ==
+                                                                          (site.LanguageId == 0 ? 1 : site.LanguageId));
 
                 await core.Advanced_SiteItemUpdate((int)site.MicrotingUid, updateModel.SiteName, language.LanguageCode);
 
