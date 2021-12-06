@@ -7,7 +7,7 @@ import {
 export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = [
   {
     id: EformFieldTypesEnum.Text,
-    name: 'Text',
+    name: 'Text (TextSingleLine)',
     description: 'Simple text field',
     previewImage:
       '../../../../../../../assets/images/visual-editor-preview/text.png',
@@ -105,7 +105,7 @@ export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = 
   },
   {
     id: EformFieldTypesEnum.ShowPdf,
-    name: 'ShowPdf',
+    name: 'ShowPDF',
     description: 'Show PDF',
     previewImage:
       '../../../../../../../assets/images/visual-editor-preview/show-pdf-screenshot.png',
@@ -120,7 +120,7 @@ export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = 
   {
     id: EformFieldTypesEnum.SaveButton,
     name: 'SaveButton',
-    description: 'Save eForm',
+    description: 'Save eForm.',
     previewImage:
       '../../../../../../../assets/images/visual-editor-preview/save-screenshot.png',
   },
