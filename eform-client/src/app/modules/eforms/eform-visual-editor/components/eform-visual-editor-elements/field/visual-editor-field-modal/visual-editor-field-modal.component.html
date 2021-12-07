@@ -80,7 +80,7 @@
                       let-search="searchTerm"
                     >
                       <ng-template #popTemplate>
-                        <p>{{ item.description }}</p>
+                        <p>{{ item.description | translate }}</p>
                         <img
                           [src]="item.previewImage"
                           alt=""
@@ -93,7 +93,7 @@
                         placement="right"
                         [triggers]="'hover'"
                       >
-                        {{ item.name }}
+                        {{ item.name | translate }}
                       </div>
                     </ng-template>
                   </ng-select>
