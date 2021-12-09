@@ -90,8 +90,7 @@ export class EntitySearchEditComponent implements OnInit {
   goBack() {
     // window.history.back();
     this.location.back();
-
-    console.log('goBack()...');
+    console.debug('goBack()...');
   }
 
   addNewAdvEntitySelectableItem() {
@@ -109,6 +108,7 @@ export class EntitySearchEditComponent implements OnInit {
   }
 
   deleteAdvEntitySelectableItem(itemId: string) {
+    // eslint-disable-next-line max-len
     this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels = this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.filter(
       (x) => x.entityItemUId !== itemId
     );

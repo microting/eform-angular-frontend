@@ -165,7 +165,7 @@
                     type="button"
                     color="primary"
                     size="sm"
-                    *ngIf="loginPageImageUploader?.queue?.length == 0"
+                    *ngIf="loginPageImageUploader?.queue?.length === 0"
                     id="loginPageImageUploadBtn"
                     (click)="loginPagefileInput.click()"
                   >
@@ -369,7 +369,7 @@
                     type="button"
                     color="primary"
                     size="sm"
-                    *ngIf="headerImageUploader?.queue?.length == 0"
+                    *ngIf="headerImageUploader?.queue?.length === 0"
                     id="siteHeaderUploadBtn"
                     (click)="headerImageUploaderInput.click()"
                   >

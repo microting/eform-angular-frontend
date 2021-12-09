@@ -1,15 +1,21 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   AdvEntitySelectableGroupEditModel,
-  AdvEntitySelectableItemModel
+  AdvEntitySelectableItemModel,
 } from 'src/app/common/models/advanced';
-import {EntitySelectService} from 'src/app/common/services/advanced';
-import {Location} from '@angular/common';
+import { EntitySelectService } from 'src/app/common/services/advanced';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-entity-select-create',
   templateUrl: './entity-select-create.component.html',
-  styleUrls: ['./entity-select-create.component.scss']
+  styleUrls: ['./entity-select-create.component.scss'],
 })
 export class EntitySelectCreateComponent implements OnInit {
   advEntitySelectableGroupCreateModel: AdvEntitySelectableGroupEditModel = new AdvEntitySelectableGroupEditModel();
@@ -20,11 +26,12 @@ export class EntitySelectCreateComponent implements OnInit {
 
   items = [];
 
-  constructor(private entitySelectService: EntitySelectService,
-              private location: Location) { }
+  constructor(
+    private entitySelectService: EntitySelectService,
+    private location: Location
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   show() {
     this.frame.show();
@@ -38,39 +45,51 @@ export class EntitySelectCreateComponent implements OnInit {
   }
 
   createEntitySelectableGroup() {
-    this.entitySelectService.createEntitySelectableGroup(this.advEntitySelectableGroupCreateModel).subscribe((data) => {
-      if (data && data.success) {
-        this.onEntityGroupCreated.emit();
-        // this.frame.hide();
-        this.advEntitySelectableGroupCreateModel = new AdvEntitySelectableGroupEditModel();
-        this.location.back();
-      }
-    });
+    this.entitySelectService
+      .createEntitySelectableGroup(this.advEntitySelectableGroupCreateModel)
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.onEntityGroupCreated.emit();
+          // this.frame.hide();
+          this.advEntitySelectableGroupCreateModel = new AdvEntitySelectableGroupEditModel();
+          this.location.back();
+        }
+      });
   }
 
   goBack() {
     // window.history.back();
     this.location.back();
-
-    console.log( 'goBack()...' );
+    console.debug('goBack()...');
   }
 
   addNewAdvEntitySelectableItem() {
     const item = new AdvEntitySelectableItemModel();
     item.entityItemUId = this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.length.toString();
-    this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.push(item);
+    this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.push(
+      item
+    );
   }
 
   deleteAdvEntitySelectableItem(itemId: string) {
-    this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels =
-      this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels
-        .filter(x => x.entityItemUId != itemId);
+    // eslint-disable-next-line max-len
+    this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels = this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.filter(
+      (x) => x.entityItemUId !== itemId
+    );
     this.actualizeAdvEntitySelectableItemPositions();
   }
 
   actualizeAdvEntitySelectableItemPositions() {
-    for (let i = 0; i < this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.length; i++) {
-      this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels[i].entityItemUId = i.toString();
+    for (
+      let i = 0;
+      i <
+      this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels
+        .length;
+      i++
+    ) {
+      this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels[
+        i
+      ].entityItemUId = i.toString();
     }
   }
 
@@ -79,18 +98,22 @@ export class EntitySelectCreateComponent implements OnInit {
   }
 
   updateItem(itemModel: AdvEntitySelectableItemModel) {
-    this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels
-      .find(x => x.entityItemUId == itemModel.entityItemUId).name = itemModel.name;
+    this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.find(
+      (x) => x.entityItemUId === itemModel.entityItemUId
+    ).name = itemModel.name;
   }
 
   importAdvEntitySelectableGroup(importString: string) {
     if (importString) {
       const lines = importString.split('\n');
       for (let i = 0; i < lines.length; i++) {
-        this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.push(new AdvEntitySelectableItemModel(lines[i]));
+        this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.push(
+          new AdvEntitySelectableItemModel(lines[i])
+        );
       }
     }
   }
+
   closeFrame() {
     this.frame.hide();
   }

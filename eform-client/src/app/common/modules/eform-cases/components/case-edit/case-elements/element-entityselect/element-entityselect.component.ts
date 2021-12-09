@@ -1,13 +1,13 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {FieldValueDto} from 'src/app/common/models';
-import {CommonDictionaryTextModel} from 'src/app/common/models/common';
-import {EntitySelectService} from 'src/app/common/services/advanced';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { FieldValueDto } from 'src/app/common/models';
+import { CommonDictionaryTextModel } from 'src/app/common/models/common';
+import { EntitySelectService } from 'src/app/common/services/advanced';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'element-entityselect',
   templateUrl: './element-entityselect.component.html',
-  styleUrls: ['./element-entityselect.component.scss']
+  styleUrls: ['./element-entityselect.component.scss'],
 })
 export class ElementEntityselectComponent implements OnInit, AfterViewInit {
   items: Array<CommonDictionaryTextModel> = [];
@@ -23,15 +23,16 @@ export class ElementEntityselectComponent implements OnInit, AfterViewInit {
     this.fieldValueObj = val;
   }
 
-  constructor(private entitySelectService: EntitySelectService) {
-  }
+  constructor(private entitySelectService: EntitySelectService) {}
 
   ngOnInit() {
-    this.entitySelectService.getEntitySelectableGroupDictionary(this.entityGroupUid).subscribe((operation => {
-      if (operation && operation.success) {
-        this.items  = operation.model;
-      }
-    }));
+    this.entitySelectService
+      .getEntitySelectableGroupDictionary(this.entityGroupUid)
+      .subscribe((operation) => {
+        if (operation && operation.success) {
+          this.items = operation.model;
+        }
+      });
   }
 
   onSelectedChanged(e: any) {

@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 
 @AutoUnsubscribe()
 @Component({
-  // tslint:disable-next-line:component-selector
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'formatting-text-editor',
   templateUrl: './formatting-text-editor.component.html',
   styleUrls: ['./formatting-text-editor.component.scss'],

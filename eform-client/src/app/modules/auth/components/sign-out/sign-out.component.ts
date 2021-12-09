@@ -1,14 +1,9 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'sign-out',
   template: '',
 })
@@ -22,7 +17,7 @@ export class SignOutComponent implements OnInit, AfterViewChecked {
 
   signOut() {
     this.authStateService.logout();
-    console.log('Let\'s kick the user out sign-out.component');
+    console.debug(`Let's kick the user out sign-out.component`);
     // this.cookieService.delete('.AspNetCore.Identity.Application');
     this.router.navigate(['/auth']).then();
   }

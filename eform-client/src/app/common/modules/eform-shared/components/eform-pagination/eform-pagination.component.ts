@@ -12,13 +12,13 @@ import { filter, map, toArray } from 'rxjs/operators';
 import { PaginationModel } from 'src/app/common/models';
 
 @Component({
-  // tslint:disable-next-line:component-selector
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'eform-pagination',
   templateUrl: './eform-pagination.component.html',
   styleUrls: ['./eform-pagination.component.scss'],
 })
 export class EformPaginationComponent implements OnInit, OnChanges {
-  // tslint:disable-next-line:no-output-on-prefix
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() onPageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() offset = 0;
   @Input() limit = 1;

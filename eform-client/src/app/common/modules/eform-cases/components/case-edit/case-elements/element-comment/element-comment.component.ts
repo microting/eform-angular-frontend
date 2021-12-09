@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FieldValueDto} from 'src/app/common/models';
+import { Component, Input, OnInit } from '@angular/core';
+import { FieldValueDto } from 'src/app/common/models';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'element-comment',
   templateUrl: './element-comment.component.html',
-  styleUrls: ['./element-comment.component.scss']
+  styleUrls: ['./element-comment.component.scss'],
 })
 export class ElementCommentComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();
@@ -25,7 +26,5 @@ export class ElementCommentComponent {
     this.fieldValueObj = e;
   }
 
-  constructor() {
-  }
-
+  constructor() {}
 }
