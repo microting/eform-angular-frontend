@@ -1,4 +1,4 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
+import {Component, HostBinding, OnInit, Renderer2} from '@angular/core';
 import {Router} from '@angular/router';
 import {SettingsModel} from 'src/app/common/models/settings';
 import {AppSettingsService} from 'src/app/common/services/settings';
@@ -22,10 +22,13 @@ export class ConnectionSetupComponent implements OnInit {
     {id: 'mssql', text: 'MS SQL'}
   ];
 
-  constructor(private settingsService: AppSettingsService, private router: Router) {
+  constructor(
+    private renderer: Renderer2,
+    private settingsService: AppSettingsService, private router: Router) {
   }
 
   ngOnInit() {
+    this.renderer.addClass(document.body, 'theme-dark');
     this.settingsModel.generalAppSetupSettingsModel.defaultLocale = 'en-US';
     this.settingsService.getApplicationHostOs().subscribe(operation => {
       if (operation && operation.success) {
