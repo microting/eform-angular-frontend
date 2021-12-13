@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  // tslint:disable-next-line:component-selector
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[table-header-sortable]',
   templateUrl: './eform-table-header-sortable.component.html',
   styleUrls: ['./eform-table-header-sortable.component.scss'],

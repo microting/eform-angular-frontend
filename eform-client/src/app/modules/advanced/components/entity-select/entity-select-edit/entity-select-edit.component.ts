@@ -1,16 +1,22 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   AdvEntitySelectableGroupEditModel,
   AdvEntitySelectableItemModel,
 } from 'src/app/common/models/advanced';
-import {EntitySelectService} from 'src/app/common/services/advanced';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
+import { EntitySelectService } from 'src/app/common/services/advanced';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-entity-select-edit',
   templateUrl: './entity-select-edit.component.html',
-  styleUrls: ['./entity-select-edit.component.scss']
+  styleUrls: ['./entity-select-edit.component.scss'],
 })
 export class EntitySelectEditComponent implements OnInit {
   advEntitySelectableGroupEditModel: AdvEntitySelectableGroupEditModel = new AdvEntitySelectableGroupEditModel();
@@ -22,10 +28,12 @@ export class EntitySelectEditComponent implements OnInit {
 
   items = [];
 
-  constructor(private activateRoute: ActivatedRoute,
-              private entitySelectService: EntitySelectService,
-              private location: Location) {
-    const activatedRouteSub = this.activateRoute.params.subscribe(params => {
+  constructor(
+    private activateRoute: ActivatedRoute,
+    private entitySelectService: EntitySelectService,
+    private location: Location
+  ) {
+    const activatedRouteSub = this.activateRoute.params.subscribe((params) => {
       this.selectedGroupId = +params['id'];
     });
   }
@@ -47,53 +55,77 @@ export class EntitySelectEditComponent implements OnInit {
   }
 
   loadEntityGroup() {
-    this.entitySelectService.getEntitySelectableGroup(this.selectedGroupId).subscribe((data) => {
-      if (data && data.success) {
-        this.advEntitySelectableGroupEditModel.name = data.model.name;
-        this.advEntitySelectableGroupEditModel.description = data.model.description;
-        this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels = data.model.entityGroupItemLst;
-        this.actualizeAdvEntitySelectableItemPositions();
-        this.advEntitySelectableGroupEditModel.groupUid = this.selectedGroupId;
-        this.advEntitySelectableGroupEditModel.isLocked = data.model.isLocked;
-        this.advEntitySelectableGroupEditModel.isEditable = data.model.isEditable;
-      }
-    });
+    this.entitySelectService
+      .getEntitySelectableGroup(this.selectedGroupId)
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.advEntitySelectableGroupEditModel.name = data.model.name;
+          this.advEntitySelectableGroupEditModel.description =
+            data.model.description;
+          this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels =
+            data.model.entityGroupItemLst;
+          this.actualizeAdvEntitySelectableItemPositions();
+          this.advEntitySelectableGroupEditModel.groupUid = this.selectedGroupId;
+          this.advEntitySelectableGroupEditModel.isLocked = data.model.isLocked;
+          this.advEntitySelectableGroupEditModel.isEditable =
+            data.model.isEditable;
+        }
+      });
   }
 
   updateEntitySelectableGroup() {
-    this.entitySelectService.updateEntitySelectableGroup(this.advEntitySelectableGroupEditModel).subscribe((data) => {
-      if (data && data.success) {
-        this.onEntityGroupEdited.emit();
-        this.location.back();
-      }
-    });
+    this.entitySelectService
+      .updateEntitySelectableGroup(this.advEntitySelectableGroupEditModel)
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.onEntityGroupEdited.emit();
+          this.location.back();
+        }
+      });
   }
 
   goBack() {
     // window.history.back();
     this.location.back();
-
-    console.log( 'goBack()...' );
+    console.debug('goBack()...');
   }
 
   addNewAdvEntitySelectableItem() {
     const item = new AdvEntitySelectableItemModel();
-    item.entityItemUId = (this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length + 1).toString();
-    item.displayIndex = this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length + 1;
-    this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.push(item);
+    item.entityItemUId = (
+      this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels
+        .length + 1
+    ).toString();
+    item.displayIndex =
+      this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels
+        .length + 1;
+    this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.push(
+      item
+    );
   }
 
   deleteAdvEntitySelectableItem(itemId: string) {
-    this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels =
-      this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels
-        .filter(x => x.entityItemUId !== itemId);
+    // eslint-disable-next-line max-len
+    this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels = this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.filter(
+      (x) => x.entityItemUId !== itemId
+    );
     this.actualizeAdvEntitySelectableItemPositions();
   }
 
   actualizeAdvEntitySelectableItemPositions() {
-    for (let i = 0; i < this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length; i++) {
-      this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels[i].entityItemUId = i.toString();
-      this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels[i].displayIndex = i;
+    for (
+      let i = 0;
+      i <
+      this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels
+        .length;
+      i++
+    ) {
+      this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels[
+        i
+      ].entityItemUId = i.toString();
+      this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels[
+        i
+      ].displayIndex = i;
     }
   }
 
@@ -102,21 +134,25 @@ export class EntitySelectEditComponent implements OnInit {
   }
 
   updateItem(itemModel: AdvEntitySelectableItemModel) {
-    this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels
-      .find(x => x.entityItemUId === itemModel.entityItemUId).name = itemModel.name;
+    this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.find(
+      (x) => x.entityItemUId === itemModel.entityItemUId
+    ).name = itemModel.name;
   }
 
   importAdvEntitySelectableGroup(importString: string) {
     if (importString) {
       const lines = importString.split('\n');
-      const startPosition = this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length;
+      const startPosition = this.advEntitySelectableGroupEditModel
+        .advEntitySelectableItemModels.length;
       const endPosition = startPosition + lines.length;
       let j = 0;
       for (let i = startPosition; i < endPosition; i++) {
         const item = new AdvEntitySelectableItemModel(lines[j]);
         item.displayIndex = i;
         item.entityItemUId = String(i);
-        this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.push(item);
+        this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.push(
+          item
+        );
         j++;
       }
     }

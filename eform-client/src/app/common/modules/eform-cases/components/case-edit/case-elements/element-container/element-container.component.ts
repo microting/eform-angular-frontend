@@ -1,12 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {DataItemDto} from 'src/app/common/models';
+import { Component, Input, OnInit } from '@angular/core';
+import { DataItemDto } from 'src/app/common/models';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'element-container',
   templateUrl: './element-container.component.html',
-  styleUrls: ['./element-container.component.scss']
+  styleUrls: ['./element-container.component.scss'],
 })
-export class ElementContainerComponent  {
+export class ElementContainerComponent {
   dataItemList: Array<DataItemDto> = [];
   isCollapsed = true;
   @Input() dataItemLabel: string;
@@ -18,7 +19,5 @@ export class ElementContainerComponent  {
     this.dataItemList = val;
   }
 
-  constructor() {
-  }
-
+  constructor() {}
 }

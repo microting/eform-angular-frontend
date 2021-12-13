@@ -9,7 +9,7 @@ import {
 import { SortModel, TableHeaderElementModel } from 'src/app/common/models';
 
 @Component({
-  // tslint:disable-next-line:component-selector
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[table-headers]',
   templateUrl: './eform-table-headers.component.html',
   styleUrls: ['./eform-table-headers.component.scss'],

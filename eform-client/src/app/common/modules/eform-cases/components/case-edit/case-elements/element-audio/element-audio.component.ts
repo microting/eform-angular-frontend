@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FieldValueDto} from 'src/app/common/models';
+import { Component, Input, OnInit } from '@angular/core';
+import { FieldValueDto } from 'src/app/common/models';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'element-audio',
   templateUrl: './element-audio.component.html',
-  styleUrls: ['./element-audio.component.scss']
+  styleUrls: ['./element-audio.component.scss'],
 })
 export class ElementAudioComponent {
   fieldValueObjects: Array<FieldValueDto> = [];
@@ -18,7 +19,5 @@ export class ElementAudioComponent {
     this.fieldValueObjects = val;
   }
 
-  constructor() {
-  }
-
+  constructor() {}
 }

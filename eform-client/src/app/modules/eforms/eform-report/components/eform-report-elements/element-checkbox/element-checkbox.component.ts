@@ -1,10 +1,11 @@
-import {Component, Input} from '@angular/core';
-import {FieldValueDto} from 'src/app/common/models';
+import { Component, Input } from '@angular/core';
+import { FieldValueDto } from 'src/app/common/models';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'report-element-checkbox',
   templateUrl: './element-checkbox.component.html',
-  styleUrls: ['./element-checkbox.component.scss']
+  styleUrls: ['./element-checkbox.component.scss'],
 })
 export class ElementCheckboxComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();
@@ -18,18 +19,13 @@ export class ElementCheckboxComponent {
   set fieldValue(val) {
     this.fieldValueObj = val;
     if (val) {
-      if (val.value == 'checked' || val.value == '1') {
-        this.isChecked = true;
-      } else {
-        this.isChecked = false;
-      }
+      this.isChecked = val.value === 'checked' || val.value === '1';
     } else {
       this.isChecked = false;
     }
   }
 
-  constructor() {
-  }
+  constructor() {}
 
   checkBoxChanged(e: any) {
     if (e.target && e.target.checked) {
@@ -43,5 +39,4 @@ export class ElementCheckboxComponent {
     }
     this.fieldValue = this.fieldValueObj;
   }
-
 }

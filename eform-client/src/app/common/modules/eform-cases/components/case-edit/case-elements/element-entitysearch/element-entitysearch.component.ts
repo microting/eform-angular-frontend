@@ -1,14 +1,20 @@
-import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {debounceTime, switchMap} from 'rxjs/operators';
-import {FieldValueDto} from 'src/app/common/models';
-import {CommonDictionaryTextModel} from 'src/app/common/models/common';
-import {EntitySearchService} from 'src/app/common/services/advanced';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+} from '@angular/core';
+import { debounceTime, switchMap } from 'rxjs/operators';
+import { FieldValueDto } from 'src/app/common/models';
+import { CommonDictionaryTextModel } from 'src/app/common/models/common';
+import { EntitySearchService } from 'src/app/common/services/advanced';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'element-entitysearch',
   templateUrl: './element-entitysearch.component.html',
-  styleUrls: ['./element-entitysearch.component.scss']
+  styleUrls: ['./element-entitysearch.component.scss'],
 })
 export class ElementEntitysearchComponent implements AfterViewInit {
   items: Array<CommonDictionaryTextModel> = [];
@@ -25,21 +31,31 @@ export class ElementEntitysearchComponent implements AfterViewInit {
     this.fieldValueObj = val;
   }
 
-  constructor(private entitySearchService: EntitySearchService, private cd: ChangeDetectorRef) {
+  constructor(
+    private entitySearchService: EntitySearchService,
+    private cd: ChangeDetectorRef
+  ) {
     this.typeahead
       .pipe(
         debounceTime(200),
-        switchMap(searchString =>
-          this.entitySearchService.getEntitySearchableGroupDictionary(this.entityGroupUid, searchString))
+        switchMap((searchString) =>
+          this.entitySearchService.getEntitySearchableGroupDictionary(
+            this.entityGroupUid,
+            searchString
+          )
+        )
       )
-      .subscribe(items => {
-        this.items = items.model;
-        this.cd.markForCheck();
-      }, (err) => {
-        console.log('error', err);
-        this.items = [];
-        this.cd.markForCheck();
-      });
+      .subscribe(
+        (items) => {
+          this.items = items.model;
+          this.cd.markForCheck();
+        },
+        (err) => {
+          console.debug('error', err);
+          this.items = [];
+          this.cd.markForCheck();
+        }
+      );
   }
 
   onSelectedChanged(e: any) {

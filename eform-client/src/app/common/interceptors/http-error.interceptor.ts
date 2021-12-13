@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Injectable } from '@angular/core';
 import {
   HttpEvent,
@@ -44,12 +45,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           }
           return throwError(error);
         }
-        // Handle 401 - Unauthorized
+        // Handle 401 — Unauthorized
         if (error.status === 401) {
           this.toastrService.warning('401 - Unauthorized');
           console.error('401 - Unauthorized');
-          this.authStateService.logout();
           console.error(error);
+          this.authStateService.logout();
           return throwError(errorMessage);
         } else if (error.status === 403) {
           this.toastrService.warning('403 - Forbidden');

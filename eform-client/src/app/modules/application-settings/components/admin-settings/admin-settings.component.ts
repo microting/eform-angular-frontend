@@ -1,17 +1,9 @@
-import {
-  Component,
-  HostBinding,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UUID } from 'angular2-uuid';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { EventBrokerService } from 'src/app/common/helpers';
-import { AdminSettingsModel } from 'src/app/common/models/settings';
-import { AppSettingsService } from 'src/app/common/services/settings';
-import { AuthService } from 'src/app/common/services/auth';
+import { AdminSettingsModel } from 'src/app/common/models';
+import { AppSettingsService } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
@@ -75,14 +67,14 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   initializeUploaders() {
     // TODO: REWORK
     const re = /(?:\.([^.]+))?$/;
-    this.loginPageImageUploader.onAfterAddingFile = (f) => {
+    this.loginPageImageUploader.onAfterAddingFile = (_) => {
       if (this.loginPageImageUploader.queue.length > 1) {
         this.loginPageImageUploader.removeFromQueue(
           this.loginPageImageUploader.queue[0]
         );
       }
     };
-    this.headerImageUploader.onAfterAddingFile = (f) => {
+    this.headerImageUploader.onAfterAddingFile = (_) => {
       if (this.headerImageUploader.queue.length > 1) {
         this.headerImageUploader.removeFromQueue(
           this.headerImageUploader.queue[0]
@@ -125,7 +117,6 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
         } else {
           this.loginPageImageLink = '../../../assets/images/eform-phone.jpg';
         }
-      } else {
       }
     });
   }
@@ -146,7 +137,6 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
           this.headerImageUploader.clearQueue();
           this.loginPageImageUploader.clearQueue();
           this.eventBrokerService.emit<void>('get-header-settings', null);
-        } else {
         }
       });
   }
@@ -155,7 +145,6 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
     this.settingsService.resetLoginPageSettings().subscribe((operation) => {
       if (operation && operation.success) {
         this.getAdminSettings();
-      } else {
       }
     });
   }
@@ -164,7 +153,6 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
     this.settingsService.resetHeaderSettings().subscribe((operation) => {
       if (operation && operation.success) {
         this.getAdminSettings();
-      } else {
       }
     });
   }

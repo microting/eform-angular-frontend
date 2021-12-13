@@ -5,7 +5,7 @@ import { AppMenuStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
-  // tslint:disable-next-line:component-selector
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'eform-subheader',
   templateUrl: './eform-subheader.component.html',
   styleUrls: ['./eform-subheader.component.scss'],

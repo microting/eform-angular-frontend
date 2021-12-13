@@ -1,0 +1,100 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*",
+    "src/assets/i18n/*",
+    "src/app/plugins/modules/*/i18n/*"
+  ],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json" //,
+          //          "e2e/tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "@angular-eslint/component-selector": [
+          "warn",
+          {
+            "prefix": "app",
+            "style": "kebab-case",
+            "type": "element"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "prefix": "app",
+            "style": "camelCase",
+            "type": "attribute"
+          }
+        ],
+        "@angular-eslint/no-empty-lifecycle-method": "off",
+        "@angular-eslint/no-output-on-prefix": "warn",
+        "eqeqeq": ["error", "always", { "null": "ignore" }],
+        "max-len": [
+          "error",
+          {
+            "code": 140, // (default 80) enforces a maximum line length
+            "tabWidth": 2, // (default 4) specifies the character width for tab characters
+            "ignoreUrls": true, // ignores lines that contain a URL
+            "comments": 140, // enforces a maximum line length for comments; defaults to value of code
+            // "ignorePattern": "", // ignores lines matching a regular expression; can only match a single line and need to be double escaped when written in YAML or JSON
+            "ignoreTrailingComments": true, // ignores only trailing comments
+            "ignoreStrings": true, // ignores lines that contain a double-quoted or single-quoted string
+            "ignoreTemplateLiterals": true, // ignores lines that contain a template literal
+            "ignoreRegExpLiterals": true // ignores lines that contain a RegExp literal
+          }
+        ],
+        "no-debugger": "off",
+        "no-console": [
+          "error",
+          {
+            "allow": ["debug", "info", "time", "timeEnd", "trace"]
+          }
+        ],
+        "curly": "error",
+        "no-empty": ["warn", { "allowEmptyCatch": true }],
+        "no-empty-function": [
+          // https://eslint.org/docs/rules/no-empty-function
+          "error",
+          {
+            "allow": ["functions", "arrowFunctions", "constructors", "methods"]
+          }
+        ],
+        "no-var": "error",
+        // "semi": ["error", "always"]
+        "no-whitespace-before-property": "warn",
+        "no-trailing-spaces": "error",
+        "radix": "error",
+        "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+        "eol-last": ["error", "always"],
+        "guard-for-in": "error",
+        "no-restricted-imports": ["error", "rxjs/Rx"],
+        "no-bitwise": "error",
+        "no-dupe-args": "error",
+        "no-caller": "error",
+        "no-eval": "error"
+//        "indent": ["error", 2]
+//        "no-use-before-define": [
+//          "error",
+//          { "functions": true, "classes": true, "variables": true }
+//        ]
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {
+        "@angular-eslint/template/eqeqeq": "off"
+      }
+    }
+  ]
+}
