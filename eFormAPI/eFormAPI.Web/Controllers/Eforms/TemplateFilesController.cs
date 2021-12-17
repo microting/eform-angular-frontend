@@ -419,7 +419,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 Directory.CreateDirectory(zipArchiveFolder);
                 if (uploadModel.File.Length > 0)
                 {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    await using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await uploadModel.File.CopyToAsync(stream);
                     }
@@ -505,19 +505,19 @@ namespace eFormAPI.Web.Controllers.Eforms
             var result =  await core.GetFileFromSwiftStorage(fileName);
             var filePath = Path.Combine("tmp",fileName);
             var fileStream = System.IO.File.Create(filePath);
-            result.ObjectStreamContent.CopyTo(fileStream);
+            await result.ObjectStreamContent.CopyToAsync(fileStream);
 
             fileStream.Close();
-            fileStream.Dispose();
+            await fileStream.DisposeAsync();
 
             result.ObjectStreamContent.Close();
-            result.ObjectStreamContent.Dispose();
+            await result.ObjectStreamContent.DisposeAsync();
             try
             {
                 using (var image = new MagickImage(filePath))
                 {
                     image.Rotate(90);
-                    image.Write(filePath);
+                    await image.WriteAsync(filePath);
                 }
                 await core.PutFileToStorageSystem(filePath, fileName);
             }
@@ -544,19 +544,19 @@ namespace eFormAPI.Web.Controllers.Eforms
             var result =  await core.GetFileFromS3Storage(fileName);
             var filePath = Path.Combine("tmp",fileName);
             var fileStream = System.IO.File.Create(filePath);
-            result.ResponseStream.CopyTo(fileStream);
+            await result.ResponseStream.CopyToAsync(fileStream);
 
             fileStream.Close();
-            fileStream.Dispose();
+            await fileStream.DisposeAsync();
 
             result.ResponseStream.Close();
-            result.ResponseStream.Dispose();
+            await result.ResponseStream.DisposeAsync();
             try
             {
                 using (var image = new MagickImage(filePath))
                 {
                     image.Rotate(90);
-                    image.Write(filePath);
+                    await image.WriteAsync(filePath);
                 }
                 await core.PutFileToStorageSystem(filePath, fileName);
             }
