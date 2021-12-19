@@ -348,7 +348,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                     var filePath = await core.CaseToJasperXml(caseDto, replyElement, (int)caseId,
                         DateTime.Now.ToString("yyyyMMddHHmmssffff"),
                         $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/",
-                        "");
+                        "", language);
                     if (!System.IO.File.Exists(filePath))
                     {
                         return NotFound();
