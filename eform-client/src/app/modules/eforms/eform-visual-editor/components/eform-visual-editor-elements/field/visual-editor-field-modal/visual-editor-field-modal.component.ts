@@ -19,6 +19,7 @@ import {
 import { eformVisualEditorElementTypes } from '../../../../const/eform-visual-editor-element-types';
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
+import {AuthStateService} from 'src/app/common/store';
 
 @Component({
   selector: 'app-visual-editor-field-modal',
@@ -42,6 +43,12 @@ export class VisualEditorFieldModalComponent implements OnInit {
   }
 
   setFieldTypes() {
+    const typesForAdminOnly = [
+      EformFieldTypesEnum.Text,
+      EformFieldTypesEnum.Audio,
+      EformFieldTypesEnum.Movie,
+      EformFieldTypesEnum.MultiSelect
+    ];
     if (this.recursionModel.fieldIsNested) {
       this.fieldTypes = [
         ...eformVisualEditorElementTypes.filter(
@@ -50,6 +57,9 @@ export class VisualEditorFieldModalComponent implements OnInit {
       ];
     } else {
       this.fieldTypes = [...eformVisualEditorElementTypes];
+    }
+    if(!this.authStateService.isAdmin){
+      this.fieldTypes = this.fieldTypes.filter(x => !typesForAdminOnly.includes(x.id));
     }
   }
 
@@ -75,7 +85,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   //   return !this.recursionModel.field.translations.find((x) => x.name !== '');
   // }
 
-  constructor() {}
+  constructor(private authStateService: AuthStateService) {}
 
   ngOnInit() {
     // this.setSelectedLanguage();
