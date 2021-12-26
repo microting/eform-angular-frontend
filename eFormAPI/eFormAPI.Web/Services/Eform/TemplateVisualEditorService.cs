@@ -230,6 +230,11 @@ namespace eFormAPI.Web.Services.Eform
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
 
+                var fieldTypeSaveButton = await sdkDbContext.FieldTypes
+                        .Where(x => x.Type == Constants.FieldTypes.SaveButton)
+                        .Select(x => x.Id)
+                        .FirstAsync();
+
                 CheckList parentEform = null;
                 var dbEform = await sdkDbContext.CheckLists
                     .Where(x => x.Id == model.Checklist.Id)
@@ -242,33 +247,10 @@ namespace eFormAPI.Web.Services.Eform
                     return new OperationDataResult<EformVisualEditorModel>(false,
                         _localizationService.GetString("EformNotFound"));
 
-                var doneButtonEnabled = dbEform.DoneButtonEnabled ?? 0;
-
-                foreach (var visualEditorFields in model.FieldForCreate)
-                {
-                    var fieldType = await sdkDbContext.FieldTypes
-                        .Where(x => x.Id == visualEditorFields.FieldType)
-                        .Select(x => x.Type)
-                        .FirstAsync();
-                    if (fieldType == Constants.FieldTypes.SaveButton)
-                    {
-                        doneButtonEnabled = 0;
-                    }
-                }
-
-                foreach (var visualEditorFields in model.FieldForUpdate)
-                {
-                    var fieldType = await sdkDbContext.FieldTypes
-                        .Where(x => x.Id == visualEditorFields.FieldType)
-                        .Select(x => x.Type)
-                        .FirstAsync();
-                    if (fieldType == Constants.FieldTypes.SaveButton)
-                    {
-                        doneButtonEnabled = 0;
-                    }
-                }
-
-                dbEform.DoneButtonEnabled = doneButtonEnabled;
+                var doneButtonEnabled = dbEform.DoneButtonEnabled ??
+                                        (model.FieldForUpdate.Any(visualEditorFields => visualEditorFields.FieldType == fieldTypeSaveButton) ||
+                                         model.FieldForCreate.Any(visualEditorFields => visualEditorFields.FieldType == fieldTypeSaveButton) ? 1 : 0);
+                dbEform.DoneButtonEnabled = (short?)doneButtonEnabled;
                 await dbEform.Update(sdkDbContext);
 
                 if (dbEform.ParentId != null)
@@ -307,9 +289,10 @@ namespace eFormAPI.Web.Services.Eform
 
                     var translationForUpdate = parentEform?.Translations
                         .FirstOrDefault(x =>
-                            x.LanguageId == translationsModel.LanguageId && (x.Text != translationsModel.Name ||
-                                                                             x.Description !=
-                                                                             translationsModel.Description));
+                            x.LanguageId == translationsModel.LanguageId &&
+                            (x.Text != translationsModel.Name ||
+                             x.Description !=
+                             translationsModel.Description));
                     if (translationForUpdate != null)
                     {
                         translationForUpdate.Text = translationsModel.Name;
@@ -344,13 +327,12 @@ namespace eFormAPI.Web.Services.Eform
                     .Where(id => !eformWithTags.Taggings.Select(x => x.TagId).Contains(id))
                     .ToList();
 
-                foreach (var tagId in tagsForCreate)
+                foreach (var tagging in tagsForCreate.Select(tagId => new Tagging
+                         {
+                             CheckListId = eformWithTags.Id,
+                             TagId = tagId,
+                         }))
                 {
-                    var tagging = new Tagging
-                    {
-                        CheckListId = eformWithTags.Id,
-                        TagId = tagId,
-                    };
                     await tagging.Create(sdkDbContext);
                 }
 
@@ -638,6 +620,11 @@ namespace eFormAPI.Web.Services.Eform
                             }
                         }
 
+                        break;
+                    }
+                    case Constants.FieldTypes.EntitySearch or Constants.FieldTypes.EntitySelect:
+                    {
+                        fieldFromDb.EntityGroupId = fieldForUpdate.EntityGroupId;
                         break;
                     }
                 }
@@ -948,7 +935,7 @@ namespace eFormAPI.Web.Services.Eform
                     MaxValue = field.MaxValue ?? null,
                     MinValue = field.MinValue ?? null,
                     Mandatory = Convert.ToInt16(field.Mandatory),
-                    ParentFieldId = parentFieldId,
+                    ParentFieldId = parentFieldId ?? field.ParentFieldId,
                 };
                 await dbField.Create(sdkDbContext);
 
