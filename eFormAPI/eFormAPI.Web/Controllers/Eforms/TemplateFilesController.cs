@@ -191,14 +191,22 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"{fileType}"));
             }
 
-            if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+            try
             {
-                var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
+                if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+                {
+                    var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
 
-                Response.ContentLength = ss.ContentLength;
+                    Response.ContentLength = ss.ContentLength;
 
-                return File(ss.ResponseStream, ss.Headers["Content-Type"]);
+                    return File(ss.ResponseStream, ss.Headers["Content-Type"]);
+                }
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return NotFound($"Trying to find file at location: {filePath}");
             }
+
 
             if (!System.IO.File.Exists(filePath))
             {
