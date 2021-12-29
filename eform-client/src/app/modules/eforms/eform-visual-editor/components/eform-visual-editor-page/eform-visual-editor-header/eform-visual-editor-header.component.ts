@@ -4,6 +4,7 @@ import {
   CommonDictionaryModel,
   EformVisualEditorModel,
 } from 'src/app/common/models';
+import {AuthStateService} from 'src/app/common/store';
 
 @Component({
   selector: 'app-eform-visual-editor-header',
@@ -24,7 +25,7 @@ export class EformVisualEditorHeaderComponent implements OnInit {
     return applicationLanguages;
   }
 
-  constructor() {}
+  constructor(private authStateService: AuthStateService) {}
 
   ngOnInit() {}
 
@@ -38,5 +39,13 @@ export class EformVisualEditorHeaderComponent implements OnInit {
 
   isLanguageSelected(languageId: number): boolean {
     return this.selectedLanguages.some((x) => x === languageId);
+  }
+
+  displayCheckbox(languageId: number): boolean {
+    const languageIdsForDisplayCheckboxOnlyAdmins = [applicationLanguages.find(x => x.text === 'German').id];
+    if(languageIdsForDisplayCheckboxOnlyAdmins.includes(languageId)){
+      return this.authStateService.isAdmin;
+    }
+    return true;
   }
 }

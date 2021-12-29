@@ -8,7 +8,7 @@
               class="col"
               *ngFor="let language of languages; let index = index"
             >
-              <div class="mat-checkbox mr-3">
+              <div class="mat-checkbox mr-3" *ngIf="displayCheckbox(language.id)">
                 <input
                   id="languageCheckbox{{ index }}"
                   name="languageCheckbox{{ index }}"
