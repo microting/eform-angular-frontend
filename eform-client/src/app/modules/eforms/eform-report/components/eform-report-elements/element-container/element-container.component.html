@@ -1,6 +1,6 @@
 <div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
 
-  <div class="card-header" style="cursor: pointer" (click)="collapse.toggle(); isCollapsed = !isCollapsed">
+  <div class="card-header" style="cursor: pointer" mdbCollapse (click)="basicCollapse.toggle()">
     <div class="d-flex justify-content-between">
       <h6>{{dataItemLabel}}</h6>
       <i class="material-icons material-icon-danger" *ngIf="isCollapsed"> keyboard_arrow_right </i>
@@ -9,7 +9,7 @@
 
   </div>
 
-  <div mdbCollapse #collapse="bs-collapse">
+  <div mdbCollapse #basicCollapse="mdbCollapse">
     <div class="card-body">
       <app-eform-report-switch [dragulaContainerName]="dataItemLabel + '-container'" [dataItemList]="dataItemList">
       </app-eform-report-switch>

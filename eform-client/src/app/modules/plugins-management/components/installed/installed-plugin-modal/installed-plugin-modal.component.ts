@@ -15,7 +15,7 @@ import { AuthStateService } from 'src/app/common/store';
 export class InstalledPluginModalComponent implements OnInit {
   @Input()
   installedPluginModel: InstalledPluginModel = new InstalledPluginModel();
-  @ViewChild('frame', { static: true }) editInstalledPluginModal;
+  @ViewChild('frame') frame;
 
   constructor(
     private authStateService: AuthStateService,
@@ -29,7 +29,7 @@ export class InstalledPluginModalComponent implements OnInit {
   ngOnInit() {}
 
   show() {
-    this.editInstalledPluginModal.show();
+    this.frame.show();
   }
 
   updatePluginStatus(status: number) {

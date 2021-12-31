@@ -1,6 +1,6 @@
 <div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
 
-  <div class="card-header" style="cursor: pointer" (click)="collapse.toggle(); isCollapsed = !isCollapsed">
+  <div class="card-header" style="cursor: pointer" mdbCollapse (click)="basicCollapse.toggle()">
     <div class="d-flex justify-content-between">
       <h6>{{dataItemLabel}}</h6>
       <fa-icon icon="angle-right" size="lg" [fixedWidth]="true" *ngIf="isCollapsed"></fa-icon>
@@ -9,7 +9,7 @@
 
   </div>
 
-  <div mdbCollapse #collapse="bs-collapse">
+  <div mdbCollapse #basicCollapse="mdbCollapse" >
     <div class="card-body">
       <app-case-edit-switch [dataItemList]="dataItemList"></app-case-edit-switch>
     </div>

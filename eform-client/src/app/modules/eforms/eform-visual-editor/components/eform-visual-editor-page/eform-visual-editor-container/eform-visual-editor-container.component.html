@@ -90,8 +90,8 @@
           </div>
           <div
             mdbCollapse
-            #collapse="bs-collapse"
-            [isCollapsed]="isItemsCollapsed"
+            #basicCollapse="mdbCollapse"
+            (click)="basicCollapse.toggle()"
           >
             <section
               dragula="CHECK_LISTS"

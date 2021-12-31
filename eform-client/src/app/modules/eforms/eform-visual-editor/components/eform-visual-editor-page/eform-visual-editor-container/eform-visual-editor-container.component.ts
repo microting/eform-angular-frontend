@@ -187,10 +187,10 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     this.tagsModal.show();
   }
 
-  toggleCollapse() {
-    this.isItemsCollapsed = !this.isItemsCollapsed;
-    this.collapse.toggle();
-  }
+  // toggleCollapse() {
+  //   this.isItemsCollapsed = !this.isItemsCollapsed;
+  //   this..toggle();
+  // }
 
   dragulaPositionChecklistChanged(model: EformVisualEditorModel[]) {
     model = this.checkPosition(model, true);

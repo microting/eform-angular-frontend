@@ -4,7 +4,7 @@
       <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-12" *ngFor="let image of images; let i = index">
         <div class="card">
           <!--Card content-->
-          <img (click)="openPicture(i)" [src]="image.value.src | authImage | async" alt="Card image cap" ></img>
+          <img (click)="openPicture(i)" [src]="image.value.src | authImage | async" alt="Card image cap" />
           <div class="card-body">
 
             <!--Title-->

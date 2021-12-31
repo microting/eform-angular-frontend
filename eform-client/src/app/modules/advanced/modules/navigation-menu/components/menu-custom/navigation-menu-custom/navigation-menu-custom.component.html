@@ -5,13 +5,13 @@
         {{ 'Custom' | translate }}
       </div>
       <app-eform-collapse-toggle
-        [collapse]="collapse"
+        [collapse]="basicCollapse.toggle()"
         [collapsed]="collapsed"
         (collapseUpdate)="collapsed = $event"
       ></app-eform-collapse-toggle>
     </div>
   </div>
-  <div mdbCollapse #collapse="bs-collapse">
+  <div mdbCollapse #basicCollapse="mdbCollapse">
     <div class="card-body">
       <div class="card mb-2">
         <div class="card-header">

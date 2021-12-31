@@ -121,10 +121,10 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
     });
   }
 
-  toggleCollapse(field: EformVisualEditorFieldModel) {
-    field.collapsed = !field.collapsed;
-    this.nestedFields.toggle();
-  }
+  // toggleCollapse(field: EformVisualEditorFieldModel) {
+  //   field.collapsed = !field.collapsed;
+  //   this.nestedFields.toggle();
+  // }
 
   onChangeColorOnNestedField(fieldModel: EformVisualEditorRecursionFieldModel) {
     this.changeColor.emit(fieldModel);
