@@ -1,7 +1,7 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       class="btn-success btn-small-height"
       id="ProfileSettingsSaveBtn"
       (click)="updateUserProfileSettings()"
@@ -46,7 +46,7 @@
             </div>
             <div class="p-0">
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-ar btn-danger"
                 id="deleteGoogleAuthenticatorInfo"
                 mdbTooltip="{{
@@ -62,7 +62,7 @@
       </div>
     </div>
     <div class="col-md-6">
-      <mdb-card class="card">
+      <div class="card">
         <div class="card-header">
           {{ 'General' | translate }}
         </div>

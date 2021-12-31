@@ -1,7 +1,7 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       class="btn-accent text-black-50 btn-icon"
       id="importEformsBtn"
       mdbTooltip="{{ 'Import eforms' | translate }}"
@@ -11,7 +11,7 @@
       <fa-icon icon="file-import" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
     <button
-      mdbBtn
+      mdbRipple
       class="btn-accent text-black-50 btn-icon"
       id="eformsManageTagsBtn"
       (click)="openTagsModal()"
@@ -21,7 +21,7 @@
       <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
     <a
-      mdbBtn
+      mdbRipple
       class="btn-success btn-icon"
       id="eformsVisualEditor"
       *ngIf="authStateService.isAdmin"
@@ -31,7 +31,7 @@
       <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
     </a>
     <button
-      mdbBtn
+      mdbRipple
       class="btn-success btn-icon"
       mdbTooltip="
       {{ 'New eForm from XML' | translate }}"
@@ -108,7 +108,7 @@
             <div class="d-flex justify-content-center">
               <div>
                 <a
-                  mdbBtn
+                  mdbRipple
                   type="button"
                   color="success"
                   class="btn-icon btn-success"
@@ -159,7 +159,7 @@
                     !templateDto.isLocked
                   "
                   id="eform-pairing-btn-{{ i }}"
-                  mdbBtn
+                  mdbRipple
                   type="button"
                   class="btn-success btn-icon"
                   (click)="openPairingModal(templateDto)"
@@ -180,7 +180,7 @@
                     !templateDto.isLocked
                   "
                   id="eform-add-btn-{{ i }}"
-                  mdbBtn
+                  mdbRipple
                   type="button"
                   class="btn-accent text-black-50 btn-icon mb-2 btn"
                   (click)="openPairingModal(templateDto)"
@@ -202,7 +202,7 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-success btn-icon mb-2"
                 *ngIf="
                   templateDto.hasCases &&
@@ -222,7 +222,7 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-success btn-icon mb-2"
                 id="edit-columnts-btn-{{ i }}"
                 *ngIf="
@@ -237,7 +237,7 @@
                 <fa-icon icon="table" [fixedWidth]="true" size="lg"></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-danger btn-icon mb-2"
                 id="delete-eform-btn-{{ i }}"
                 (click)="openEformDeleteModal(templateDto)"
@@ -261,7 +261,7 @@
                     userClaimsEnum.eformsDelete
                   ) && (!templateDto.isLocked && templateDto.isEditable)
                 "
-                mdbBtn
+                mdbRipple
                 mdbWavesEffect
                 class="btn-success btn-icon"
                 id="edit-eform-btn-{{ i }}"
@@ -277,7 +277,7 @@
             </div>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-accent text-black-50 btn-icon mb-2"
                 *ngIf="
                   templateDto.hasCases &&
@@ -297,7 +297,7 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-accent text-black-50 btn-icon mb-2"
                 *ngIf="
                   templateDto.hasCases &&
@@ -317,7 +317,7 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-accent text-black-50 btn-icon mb-2"
                 *ngIf="
                   templateDto.hasCases &&
@@ -337,7 +337,7 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-accent text-black-50 btn-icon mb-2"
                 *ngIf="
                   templateDto.excelExportEnabled &&
@@ -358,7 +358,7 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-accent text-black-50 btn-icon mb-2"
                 id="upload-zip-btn"
                 (click)="uploadZipFile(templateDto)"
@@ -376,7 +376,7 @@
                   size="lg"
                 ></fa-icon>
               </button>
-              <!--            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"-->
+              <!--            <button mdbRipple class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"-->
               <!--                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"-->
               <!--                    [routerLink]="['./report', templateDto.id]"-->
               <!--                    mdbTooltip="{{ 'Jasper Report' | translate }}">-->

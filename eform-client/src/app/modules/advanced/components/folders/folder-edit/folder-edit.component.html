@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <mdb-card class="mb-3">
+        <div class="card mb-3">
           <div class="card-body">
             <div class="row">
               <div
@@ -106,7 +106,7 @@
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
+          mdbRipple
           class="btn-success btn-small-height"
           id="saveEditBtn"
           (click)="updateFolder()"
@@ -114,7 +114,7 @@
           {{ 'Save' | translate }}
         </button>
         <button
-          mdbBtn
+          mdbRipple
           id="cancelEditBtn"
           class="btn-accent text-black-50 btn-small-height"
           (click)="frame.hide()"

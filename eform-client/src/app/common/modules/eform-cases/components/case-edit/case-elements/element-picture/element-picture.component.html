@@ -6,7 +6,7 @@
       <div class="card-body">
         <div class="card-text">
           <div class="d-flex justify-content-center">
-            <button mdbBtn class="btn-icon btn-accent text-black-50"
+            <button mdbRipple class="btn-icon btn-accent text-black-50"
                     mdbTooltip="{{'Rotate on 90' | translate}}"
                     [disabled]="buttonsLocked"
                     (click)="rotatePicture(image)">
@@ -14,7 +14,7 @@
               <fa-icon icon="undo" flip="vertical" size="lg" [fixedWidth]="true" style="transform: rotate(180deg);"></fa-icon>
 
             </button>
-            <button mdbBtn class="btn-icon btn-danger"
+            <button mdbRipple class="btn-icon btn-danger"
                     [disabled]="buttonsLocked"
                     mdbTooltip="{{'Delete picture' | translate}}"
                     (click)="deletePicture(image)">

@@ -11,7 +11,7 @@
       <div class="modal-body">
         <div class="container-fluid">
           <div class="row">
-            <button mdbBtn class="btn-success btn-icon btn-sm m-0 ml-auto"
+            <button mdbRipple class="btn-success btn-icon btn-sm m-0 ml-auto"
                     id="newTagBtn"
                     (click)="showCreateTagModal()"
                     type="button">
@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()"
+        <button mdbRipple class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()"
                 id="tagsModalCloseBtn">
           {{ 'Close' | translate }}
         </button>

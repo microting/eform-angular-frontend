@@ -1,7 +1,7 @@
 <eform-subheader [title]="'Edit searchable list' | translate">
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       id="entitySearchUpdateSaveBtn"
       class="btn btn-success btn-small-height"
       (click)="updateEntitySearchableGroup()"
@@ -10,7 +10,7 @@
       {{ 'Save' | translate }}
     </button>
     <button
-      mdbBtn
+      mdbRipple
       id="entitySearchUpdateCancelBtn"
       class="btn btn-accent text-black-50 btn-small-height"
       (click)="goBack()"
@@ -115,7 +115,7 @@
                           *ngIf="!entityItem.name"
                           mdbTooltip="{{ 'Name is required' | translate }}!"
                         ></fa-icon>
-                        <button mdbBtn
+                        <button mdbRipple
                                 class="btn btn-accent btn-icon text-black-50 mb-2 pull-right"
                                 id="entitySelectEditItemEditBtn_{{ i }}"
                                 [disabled]="!advEntitySearchableGroupEditModel.isEditable">
@@ -126,7 +126,7 @@
                             (click)="openModalSearchEditName(entityItem)"
                           ></fa-icon>
                         </button>
-                        <button mdbBtn
+                        <button mdbRipple
                                 class="btn btn-danger btn-icon mb-2 pull-right"
                                 id="entitySelectEditItemDeleteBtn_{{ i }}"
                                 [disabled]="!advEntitySearchableGroupEditModel.isEditable">

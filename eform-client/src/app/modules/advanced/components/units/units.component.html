@@ -4,7 +4,7 @@
     <!--      class="btn btn-neutral" id="unitMoveBtn" *ngIf="userClaims.workersCreate"-->
     <!--      (click)="openMoveModal()">{{ 'Move unit' | translate }}</button>-->
     <button
-      mdbBtn
+      mdbRipple
       class="btn-success btn-small-height"
       id="unitCreateBtn"
       *ngIf="userClaims.workersCreate"
@@ -68,7 +68,7 @@
           </td>
           <td>
             <button
-              mdbBtn
+              mdbRipple
               *ngIf="!unitModel.syncDelayEnabled"
               mdbTooltip="{{ 'Activate sync delay' | translate }}"
               class="btn-accent text-black-50 btn-icon mb-2"
@@ -76,7 +76,7 @@
               <fa-icon icon="toggle-on"></fa-icon>
             </button>
             <button
-              mdbBtn
+              mdbRipple
               *ngIf="unitModel.syncDelayEnabled"
               mdbTooltip="{{ 'Deactivate sync delay' | translate }}"
               class="btn-success text-white btn-icon mb-2"
@@ -86,7 +86,7 @@
           </td>
           <td>
             <button
-              mdbBtn
+              mdbRipple
               *ngIf="!unitModel.syncDialog"
               mdbTooltip="{{ 'Activate sync dialog' | translate }}"
               class="btn-accent text-black-50 btn-icon mb-2"
@@ -94,7 +94,7 @@
               <fa-icon icon="toggle-on"></fa-icon>
             </button>
             <button
-              mdbBtn
+              mdbRipple
               *ngIf="unitModel.syncDialog"
               mdbTooltip="{{ 'Deactivate sync dialog' | translate }}"
               class="btn-success text-white btn-icon mb-2"
@@ -104,7 +104,7 @@
           </td>
           <td>
             <button
-              mdbBtn
+              mdbRipple
               *ngIf="!unitModel.pushEnabled"
               mdbTooltip="{{ 'Activate push' | translate }}"
               class="btn-accent text-black-50 btn-icon mb-2"
@@ -112,7 +112,7 @@
               <fa-icon icon="toggle-on"></fa-icon>
             </button>
             <button
-              mdbBtn
+              mdbRipple
               *ngIf="unitModel.pushEnabled"
               mdbTooltip="{{ 'Deactivate push' | translate }}"
               class="btn-success text-white btn-icon mb-2"
@@ -122,7 +122,7 @@
           </td>
           <td>
             <button
-              mdbBtn
+              mdbRipple
               class="btn-danger btn-icon mb-2 btn-small-height"
               id="moveBtn_{{ i }}"
               *ngIf="userClaims.sitesDelete"
@@ -131,7 +131,7 @@
             >
               <fa-icon icon="dolly" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <!--          <button mdbBtn class="btn-danger btn-icon mb-2 " id="deleteBtn_{{i}}" *ngIf="userClaims.sitesDelete"-->
+            <!--          <button mdbRipple class="btn-danger btn-icon mb-2 " id="deleteBtn_{{i}}" *ngIf="userClaims.sitesDelete"-->
             <!--                  mdbTooltip="{{'Delete site' | translate}}"-->
             <!--                  (click)="openDeleteModal(siteDto)">-->
             <!--            <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>-->

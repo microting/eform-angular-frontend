@@ -1,7 +1,7 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       class="btn btn-success btn-small-height"
       id="newSecurityGroupBtn"
       [routerLink]="['marketplace']"
@@ -39,7 +39,7 @@
                 id="plugin-status"
               >
                 <button
-                  mdbBtn
+                  mdbRipple
                   *ngIf="plugin.status == statusEnum.Disabled"
                   mdbTooltip="{{ 'Activate plugin' | translate }}"
                   class="btn-accent text-black-50 btn-icon mb-2"
@@ -48,7 +48,7 @@
                   <fa-icon icon="toggle-on"></fa-icon>
                 </button>
                 <button
-                  mdbBtn
+                  mdbRipple
                   *ngIf="plugin.status == statusEnum.Enabled"
                   mdbTooltip="{{ 'Deactivate plugin' | translate }}"
                   class="btn-success text-white btn-icon mb-2"
@@ -59,14 +59,14 @@
 
                 <!--          {{statusEnum[plugin.status] | translate}}-->
               </div>
-              <!--            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"-->
+              <!--            <button mdbRipple class="btn-accent text-black-50 btn-icon mb-2"-->
               <!--                    mdbTooltip="{{'Edit Settings' | translate}}"-->
               <!--                    (click)="showEditModal(plugin)"-->
               <!--                    mdbWavesEffect id="plugin-settings-btn">-->
               <!--              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>-->
               <!--            </button>-->
               <button
-                mdbBtn
+                mdbRipple
                 *ngIf="plugin.status == statusEnum.Enabled"
                 class="btn-success text-white btn-icon mb-2"
                 mdbTooltip="{{ 'Edit Plugin Permissions' | translate }}"
@@ -81,7 +81,7 @@
                 ></fa-icon>
               </button>
               <a
-                mdbBtn
+                mdbRipple
                 *ngIf="plugin.status == statusEnum.Enabled"
                 class="btn-accent text-black-50 btn-icon mb-2"
                 mdbTooltip="{{ 'Plugin Settings Page' | translate }}"

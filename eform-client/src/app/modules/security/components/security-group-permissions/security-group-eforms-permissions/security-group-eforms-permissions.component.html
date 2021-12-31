@@ -17,7 +17,7 @@
     </div>
     <div class="p-3">
       <button
-        mdbBtn
+        mdbRipple
         class="btn-success btn-small-height"
         (click)="openEformBindModal()"
         mdbTooltip="{{ 'Add Eform to Group' | translate }}"
@@ -56,7 +56,7 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-success btn-icon mb-2"
                 (click)="openEformEditPermissionsModal(eform)"
                 mdbTooltip="{{ 'Eform Permissions' | translate }}"
@@ -64,7 +64,7 @@
                 <i class="material-icons"> lock_open </i>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-danger btn-icon mb-2"
                 id="delete-eform-btn"
                 (click)="openEformDeleteFromGroupModal(eform)"

@@ -1,7 +1,7 @@
 <eform-subheader [title]="'Create selectable list' | translate">
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       id="createEntitySelectSaveBtn"
       class="btn-success btn-small-height"
       (click)="createEntitySelectableGroup()"
@@ -9,7 +9,7 @@
       {{ 'Create' | translate }}
     </button>
     <button
-      mdbBtn
+      mdbRipple
       id="createEntitySelectCancelBtn"
       class="btn-accent text-black-50 btn-small-height"
       (click)="goBack()"
@@ -66,7 +66,7 @@
                 <fa-icon icon="list-ul" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-success btn-icon"
                 (click)="addNewAdvEntitySelectableItem()"
                 id="addSingleEntitySelectableItem"
@@ -113,7 +113,7 @@
                           *ngIf="!entityItem.name"
                           mdbTooltip="{{ 'Name is required' | translate }}!"
                         ></fa-icon>
-                        <button mdbBtn
+                        <button mdbRipple
                                 class="btn btn-accent btn-icon text-black-50 mb-2 pull-right"
                                 id="entitySelectCreateSingleItemEdit">
                           <fa-icon
@@ -123,7 +123,7 @@
                             (click)="openModalSelectEditName(entityItem)"
                           ></fa-icon>
                         </button>
-                        <button mdbBtn
+                        <button mdbRipple
                                 class="btn btn-danger btn-icon mb-2 pull-right"
                                 id="entitySelectCreateSingleItemDelete">
                           <fa-icon

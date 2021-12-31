@@ -12,9 +12,9 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-xs-12 col-md-12">
-                  <button mdbBtn class="btn-primary btn-small-height" *ngIf="zipFileUploader?.queue?.length == 0"
+                  <button mdbRipple class="btn-primary btn-small-height" *ngIf="zipFileUploader?.queue?.length == 0"
                           (click)="zipInput.click()">{{'Upload' | translate}}</button>
-                  <button mdbBtn class="btn-warning btn-small-height" *ngIf="zipFileUploader?.queue?.length > 0"
+                  <button mdbRipple class="btn-warning btn-small-height" *ngIf="zipFileUploader?.queue?.length > 0"
                           (click)="zipInput.click()">{{'Pending' | translate}}</button>
                   <input class="input-invisible"
                          type="file" ng2FileSelect [uploader]="zipFileUploader" #zipInput
@@ -35,8 +35,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height" (click)="uploadTemplateZIP()">{{'Upload' | translate}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="hideZipModal()">{{'Close' | translate}}</button>
+        <button mdbRipple class="btn-success btn-small-height" (click)="uploadTemplateZIP()">{{'Upload' | translate}}</button>
+        <button mdbRipple class="btn-accent text-black-50 btn-small-height" (click)="hideZipModal()">{{'Close' | translate}}</button>
       </div>
     </div>
   </div>

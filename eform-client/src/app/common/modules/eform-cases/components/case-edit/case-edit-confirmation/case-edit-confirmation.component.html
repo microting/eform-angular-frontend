@@ -9,13 +9,13 @@
         <h4>{{'If you leave before saving your changes will be lost' | translate}}.</h4>
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button mdbBtn class="btn-success btn-small-height" (click)="confirmationClicked(true)">
+        <button mdbRipple class="btn-success btn-small-height" (click)="confirmationClicked(true)">
           {{ 'Save & Leave' | translate }}
         </button>
-        <button mdbBtn class="btn-danger btn-small-height" (click)="confirmationClicked(false)">
+        <button mdbRipple class="btn-danger btn-small-height" (click)="confirmationClicked(false)">
           {{ 'Leave' | translate }}
         </button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="cancelExit()">{{'Cancel' | translate}}</button>
+        <button mdbRipple class="btn-accent text-black-50 btn-small-height" (click)="cancelExit()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

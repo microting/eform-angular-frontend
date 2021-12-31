@@ -1,7 +1,7 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       class="btn-accent text-black-50 btn-icon"
       (click)="openTagsModal()"
       mdbTooltip="{{ 'Manage tags' | translate }}"
@@ -9,7 +9,7 @@
       <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
     <button
-      mdbBtn
+      mdbRipple
       id="createEmailRecipientBtn"
       class="btn-success btn-small-height"
       (click)="openCreateModal()"
@@ -84,7 +84,7 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-accent text-black-50 btn-icon mb-2"
                 id="emailRecipientEditBtn"
                 mdbTooltip="{{ 'Edit email recipient' | translate }}"

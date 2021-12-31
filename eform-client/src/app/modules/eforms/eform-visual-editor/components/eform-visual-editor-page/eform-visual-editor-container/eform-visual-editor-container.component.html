@@ -4,7 +4,7 @@
 >
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       class="btn-accent text-black-50 btn-icon"
       (click)="openTagsModal()"
       mdbTooltip="{{ 'Manage tags' | translate }}"
@@ -13,7 +13,7 @@
       <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
     <button
-      mdbBtn
+      mdbRipple
       class="btn-success btn-small-height"
       (click)="
         selectedTemplateId ? updateVisualTemplate() : createVisualTemplate()
@@ -51,7 +51,7 @@
                 "
               >
                 <button
-                  mdbBtn
+                  mdbRipple
                   class="btn-icon mb-2 float-right text-black-50"
                   mdbTooltip="{{
                     (isItemsCollapsed ? 'Expand all' : 'Collapse all')
@@ -72,7 +72,7 @@
                 </button>
 
                 <!--                <button-->
-                <!--                  mdbBtn-->
+                <!--                  mdbRipple-->
                 <!--                  class="btn-icon mb-2 float-right text-black-50"-->
                 <!--                  mdbTooltip="{{ 'Collapse all' | translate }}"-->
                 <!--                  (click)="toggleCollapse()"-->
@@ -156,7 +156,7 @@
             <div class="col d-flex justify-content-end">
               <button
                 *ngIf="visualEditorTemplateModel.checkLists.length === 0"
-                mdbBtn
+                mdbRipple
                 id="initialFieldCreateBtn"
                 [mdbTooltip]="'Add field' | translate"
                 class="btn-success btn-icon"
@@ -166,7 +166,7 @@
               </button>
               <button
                 *ngIf="visualEditorTemplateModel.fields.length === 0"
-                mdbBtn
+                mdbRipple
                 id="initialChecklistCreateBtn"
                 [mdbTooltip]="'Add sub eForm' | translate"
                 class="btn-success btn-icon"

@@ -1,7 +1,7 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       class="btn-danger btn-icon mb-2"
       id="resetBtn"
       mdbTooltip="{{ 'Reset' | translate }}"
@@ -10,7 +10,7 @@
       <fa-icon icon="undo" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
     <button
-      mdbBtn
+      mdbRipple
       class="btn-success btn-small-height"
       id="navigationMenuSaveBtn"
       (click)="updateNavigationMenu()"
@@ -23,8 +23,8 @@
 <div class="container-fluid">
   <div class="row mt-4">
     <div class="col-3">
-      <mdb-card
-        class="mb-3"
+      <div
+        class="card mb-3"
         id="menuTemplate"
         *ngFor="
           let menuTemplate of navigationMenuModel.menuTemplates;

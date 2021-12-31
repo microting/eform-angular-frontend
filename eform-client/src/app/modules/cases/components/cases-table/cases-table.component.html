@@ -77,7 +77,7 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-success btn-icon mb-2"
                 *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
                 [routerLink]="[
@@ -88,7 +88,7 @@
                 <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
 <!--              <button-->
-<!--                mdbBtn-->
+<!--                mdbRipple-->
 <!--                class="btn-success btn-icon mb-2"-->
 <!--                *ngIf="authStateService.isAdmin"-->
 <!--                [routerLink]="[-->
@@ -103,7 +103,7 @@
 <!--                ></fa-icon>-->
 <!--              </button>-->
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-success btn-icon mb-2"
                 *ngIf="
                   checkEformPermissions(userClaimsEnum.caseGetPdf) &&
@@ -120,7 +120,7 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-info btn-icon mb-2"
                 *ngIf="
                   checkEformPermissions(userClaimsEnum.caseGetPdf) &&
@@ -136,7 +136,7 @@
                 ></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-danger btn-icon mb-2"
                 *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
                 mdbTooltip="{{ 'Delete Case' | translate }}"

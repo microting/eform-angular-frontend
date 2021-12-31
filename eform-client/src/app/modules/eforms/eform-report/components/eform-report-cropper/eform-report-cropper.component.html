@@ -37,10 +37,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-success" id="saveCreateBtn" (click)="saveImage()"
+        <button mdbRipple class="btn-success" id="saveCreateBtn" (click)="saveImage()"
                 [disabled]="!croppedImage">
           {{ 'Save' | translate }}</button>
-        <button mdbBtn class="btn-neutral text-black-50" id="cancelCreateBtn" (click)="frame.hide()">
+        <button mdbRipple class="btn-neutral text-black-50" id="cancelCreateBtn" (click)="frame.hide()">
           {{ 'Cancel' | translate }}</button>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       class="btn-accent text-black-50 btn-icon"
       id="sitesManageTagsBtn"
       (click)="openEditTagsModal()"
@@ -64,7 +64,7 @@
           <td *ngIf="userClaims.sitesDelete || userClaims.sitesUpdate">
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-accent text-black-50 btn-icon mb-2"
                 id="editSiteBtn"
                 *ngIf="userClaims.sitesUpdate"
@@ -75,7 +75,7 @@
                 <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-danger btn-icon mb-2"
                 id="deleteSiteBtn"
                 *ngIf="userClaims.sitesDelete"

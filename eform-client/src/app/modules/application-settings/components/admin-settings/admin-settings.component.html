@@ -1,7 +1,7 @@
 <eform-subheader [subtitle]="adminSettingsModel.assemblyVersion">
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       class="btn-success btn-small-height"
       id="applicationSettingsSaveBtn"
       [disabled]="!settingsForm.form.valid"
@@ -22,7 +22,7 @@
             <div class="d-flex justify-content-between align-items-center">
               {{ 'Login Page' | translate }}
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-neutral btn-icon"
                 id="loginPageReset"
                 (click)="resetLoginPageSettings()"
@@ -161,7 +161,7 @@
                 </div>
                 <div class="align-self-center align-self-end mb-3">
                   <button
-                    mdbBtn
+                    mdbRipple
                     type="button"
                     color="primary"
                     size="sm"
@@ -172,7 +172,7 @@
                     {{ 'Upload' | translate }}
                   </button>
                   <button
-                    mdbBtn
+                    mdbRipple
                     type="button"
                     color="warning"
                     size="sm"
@@ -236,7 +236,7 @@
             <div class="d-flex justify-content-between align-items-center">
               {{ 'Site header' | translate }}
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-neutral btn-icon"
                 id="siteHeaderReset"
                 mdbTooltip="{{ 'Reset' | translate }}"
@@ -365,7 +365,7 @@
                 </div>
                 <div class="align-self-center align-self-end">
                   <button
-                    mdbBtn
+                    mdbRipple
                     type="button"
                     color="primary"
                     size="sm"
@@ -376,7 +376,7 @@
                     {{ 'Upload' | translate }}
                   </button>
                   <button
-                    mdbBtn
+                    mdbRipple
                     type="button"
                     color="warning"
                     size="sm"

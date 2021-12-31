@@ -48,6 +48,7 @@ import {
 import { casePostsPersistProvider } from './components/case-posts/store';
 import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
 import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
+import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
 
 @NgModule({
   imports: [
@@ -67,6 +68,7 @@ import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
     RouterModule,
     MdbTooltipModule,
     MdbCollapseModule,
+    MdbRippleModule,
   ],
   declarations: [
     CaseEditNavComponent,

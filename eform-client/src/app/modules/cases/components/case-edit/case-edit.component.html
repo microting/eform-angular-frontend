@@ -9,7 +9,7 @@
       ></app-case-edit-element>
     </div>
     <div class="col-md-3">
-      <mdb-card class="sticky-top mb-4 mt-4" style="width: 100%; z-index: 1">
+      <div class="card sticky-top mb-4 mt-4" style="width: 100%; z-index: 1">
         <div class="card-header">
           {{ replyElement.label }}
         </div>
@@ -31,14 +31,14 @@
             </li>
           </ul>
         </div>
-        <mdb-card-footer>
+        <div class="card-footer">
           <div
             class="d-flex justify-content-center align-items-center flex-column mt-2"
             *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)"
           >
             <div>
 <!--              <button-->
-<!--                mdbBtn-->
+<!--                mdbRipple-->
 <!--                class="btn-success btn-small-height"-->
 <!--                (click)="saveCase(true); this.isSaveClicked = true"-->
 <!--                id="submit_for_with_post"-->
@@ -47,7 +47,7 @@
 <!--                <i class="fa fa-spinner fa-spin"></i>-->
 <!--              </button>-->
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-success btn-small-height"
                 (click)="saveCase(); this.isSaveClicked = true"
                 id="submit_form"
@@ -56,7 +56,7 @@
               </button>
             </div>
           </div>
-        </mdb-card-footer>
+        </div>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       class="btn-success btn-small-height"
       (click)="openNewUserModal()"
       *ngIf="userClaims.usersCreate"
@@ -69,7 +69,7 @@
                 <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-danger btn-icon mb-2"
                 *ngIf="userClaims.usersDelete"
                 mdbTooltip="{{ 'Delete user' | translate }}"

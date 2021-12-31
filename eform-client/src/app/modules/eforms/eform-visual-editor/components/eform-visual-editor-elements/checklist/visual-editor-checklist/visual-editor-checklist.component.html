@@ -24,7 +24,7 @@
           ></fa-icon>
           <button
             *ngIf="checklist.fields.length == 0"
-            mdbBtn
+            mdbRipple
             [mdbTooltip]="'New sub eForm' | translate"
             class="btn-success btn-icon"
             id="addNewNestedChecklist{{ checklistIndex }}"
@@ -34,7 +34,7 @@
           </button>
           <button
             *ngIf="checklist.checkLists.length == 0"
-            mdbBtn
+            mdbRipple
             [mdbTooltip]="'New nested field' | translate"
             class="btn-success btn-icon"
             id="addNewNestedField{{ checklistIndex }}"
@@ -43,7 +43,7 @@
             <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
           </button>
           <button
-            mdbBtn
+            mdbRipple
             [mdbTooltip]="'Edit eForm' | translate"
             class="btn-neutral btn-icon"
             id="editChecklistBtn{{ checklistIndex }}"
@@ -52,7 +52,7 @@
             <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
           </button>
           <button
-            mdbBtn
+            mdbRipple
             [mdbTooltip]="'Delete eForm' | translate"
             class="btn-danger btn-icon"
             id="deleteChecklistBtn{{ checklistIndex }}"

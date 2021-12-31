@@ -1,7 +1,7 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
+      mdbRipple
       id="entitySelectCreateBtn"
       class="btn btn-success btn-small-height"
       *ngIf="userClaims.entitySelectCreate"
@@ -67,7 +67,7 @@
           >
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
+                mdbRipple
                 id="entitySelectEditBtn"
                 class="btn btn-accent btn-icon text-black-50 mb-2"
                 [disabled]="!userClaims.entitySelectUpdate"
@@ -80,7 +80,7 @@
                 <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 id="entitySelectDeleteBtn"
                 class="btn btn-danger btn-icon mb-2"
                 [disabled]="

@@ -14,10 +14,10 @@
       </div>
     </div>
     <div class="col-md-3 text-center pt-3">
-      <button mdbBtn class="btn-success btn-small-height" [disabled]="generateForm.invalid" (click)="onSubmit()">
+      <button mdbRipple class="btn-success btn-small-height" [disabled]="generateForm.invalid" (click)="onSubmit()">
         {{'Generate' | translate}}
       </button>
-      <button mdbBtn class="btn-info btn-icon mb-2" [disabled]="generateForm.invalid" (click)="onSave()">
+      <button mdbRipple class="btn-info btn-icon mb-2" [disabled]="generateForm.invalid" (click)="onSave()">
         <fa-icon icon="file-word" size="lg" [fixedWidth]="true"></fa-icon>
       </button>
     </div>

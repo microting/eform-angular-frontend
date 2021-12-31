@@ -13,7 +13,7 @@
           <div class="row">
             <div class="col-xs-12 col-md-12">
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-primary btn-small-height"
                 *ngIf="xlsxEformsFileUploader?.queue?.length == 0"
                 (click)="xlsxEforms.click()"
@@ -21,7 +21,7 @@
                 {{ 'Upload' | translate }}
               </button>
               <button
-                mdbBtn
+                mdbRipple
                 class="btn-warning btn-small-height"
                 *ngIf="xlsxEformsFileUploader?.queue?.length > 0"
                 (click)="xlsxEforms.click()"
@@ -99,7 +99,7 @@
       </div>
       <div class="modal-footer">
         <!--        <button-->
-        <!--          mdbBtn-->
+        <!--          mdbRipple-->
         <!--          class="btn-success btn-small-height"-->
         <!--          (click)="uploadExcelEformsFile()"-->
         <!--          id="uploadExcelEformsFileBtn"-->
@@ -107,7 +107,7 @@
         <!--          {{ 'Upload' | translate }}-->
         <!--        </button>-->
         <button
-          mdbBtn
+          mdbRipple
           class="btn-accent text-black-50 btn-small-height"
           (click)="excelEformsModal()"
         >
