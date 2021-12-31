@@ -6,7 +6,7 @@
   <div class="p-2">
     <button
       mdbRipple
-      class="btn-success btn-small-height"
+      class="btn btn-success btn-small-height"
       id="save"
       mdbTooltip="Save settings"
       [disabled]="!settingsForm.form.valid"
@@ -29,7 +29,7 @@
         <!--Admin block-->
         <div class="row">
           <div class="col-md-6">
-            <div class="md-form input-group">
+            <mdb-form-control>
               <input
                 mdbInput
                 [(ngModel)]="settingsModel.adminSetupModel.firstName"
@@ -40,8 +40,8 @@
                 class="form-control"
               />
               <label for="firstName">First name</label>
-            </div>
-            <div class="md-form input-group">
+            </mdb-form-control>
+            <mdb-form-control>
               <input
                 mdbInput
                 [(ngModel)]="settingsModel.adminSetupModel.lastName"
@@ -52,10 +52,10 @@
                 class="form-control"
               />
               <label for="lastName">Last name</label>
-            </div>
+            </mdb-form-control>
           </div>
           <div class="col-md-6">
-            <div class="md-form input-group">
+            <mdb-form-control>
               <input
                 mdbInput
                 [(ngModel)]="settingsModel.adminSetupModel.email"
@@ -66,8 +66,8 @@
                 class="form-control"
               />
               <label for="email">Email</label>
-            </div>
-            <div class="md-form input-group">
+            </mdb-form-control>
+            <mdb-form-control>
               <input
                 mdbInput
                 [(ngModel)]="settingsModel.adminSetupModel.password"
@@ -81,7 +81,7 @@
               <label for="password"
                 >Password<span class="text-danger">*</span>
               </label>
-            </div>
+            </mdb-form-control>
           </div>
         </div>
         <!--SDK Connection-->
@@ -95,7 +95,7 @@
 
             <div class="row">
               <div class="col-md-12">
-                <div class="md-form input-group">
+                <mdb-form-control>
                   <input
                     mdbInput
                     [(ngModel)]="settingsModel.connectionStringSDK.token"
@@ -111,8 +111,8 @@
                   <label for="token"
                     >Token<span class="text-danger">*</span></label
                   >
-                </div>
-                <div class="md-form input-group">
+                </mdb-form-control>
+                <mdb-form-control>
                   <input
                     mdbInput
                     [(ngModel)]="
@@ -130,8 +130,8 @@
                   <label for="customerNo"
                     >Customer no<span class="text-danger">*</span></label
                   >
-                </div>
-                <div class="md-form input-group">
+                </mdb-form-control>
+                <mdb-form-control>
                   <input
                     mdbInput
                     [(ngModel)]="settingsModel.connectionStringSDK.host"
@@ -145,8 +145,8 @@
                   <label for="host2"
                     >Server<span class="text-danger">*</span></label
                   >
-                </div>
-                <div class="md-form input-group">
+                </mdb-form-control>
+                <mdb-form-control>
                   <input
                     mdbInput
                     [(ngModel)]="settingsModel.connectionStringSDK.port"
@@ -159,8 +159,8 @@
                   <label for="port"
                     >Port<span class="text-danger">*</span></label
                   >
-                </div>
-                <div class="md-form input-group">
+                </mdb-form-control>
+                <mdb-form-control>
                   <input
                     mdbInput
                     [(ngModel)]="settingsModel.connectionStringSDK.auth"
@@ -175,7 +175,7 @@
                       >*</span
                     ></label
                   >
-                </div>
+                </mdb-form-control>
               </div>
             </div>
           </div>

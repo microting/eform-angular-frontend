@@ -10,6 +10,7 @@ import { ApplicationSettingsRouting } from './application-settings.routing';
 import { AdminSettingsComponent, ConnectionSetupComponent } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
+import {MdbFormsModule} from 'mdb-angular-ui-kit/forms';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
     FileUploadModule,
     FontAwesomeModule,
     MdbTooltipModule,
+    MdbFormsModule,
   ],
   declarations: [AdminSettingsComponent, ConnectionSetupComponent],
 })
