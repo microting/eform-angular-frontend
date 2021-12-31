@@ -15,11 +15,11 @@
 <div class="container-fluid mt-4">
   <div class="row mb-4">
     <div class="col-md-6" *ngIf="authStateService.isAdmin">
-      <mdb-card>
-        <mdb-card-header>
+      <div class="card">
+        <div class="card-header">
           {{ 'Google Authenticator' | translate }}
-        </mdb-card-header>
-        <mdb-card-body>
+        </div>
+        <div class="card-body">
           <div class="mat-checkbox mb-1">
             <input
               id="2fauthForsed"
@@ -58,15 +58,15 @@
               </button>
             </div>
           </ng-container>
-        </mdb-card-body>
-      </mdb-card>
+        </div>
+      </div>
     </div>
     <div class="col-md-6">
       <mdb-card class="card">
-        <mdb-card-header>
+        <div class="card-header">
           {{ 'General' | translate }}
-        </mdb-card-header>
-        <mdb-card-body>
+        </div>
+        <div class="card-body">
           <div class="container-fluid">
             <div class="row">
               <ng-select
@@ -115,8 +115,8 @@
               </div>
             </div>
           </div>
-        </mdb-card-body>
-      </mdb-card>
+        </div>
+      </div>
     </div>
   </div>
 </div>

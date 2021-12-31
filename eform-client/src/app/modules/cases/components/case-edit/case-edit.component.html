@@ -10,10 +10,10 @@
     </div>
     <div class="col-md-3">
       <mdb-card class="sticky-top mb-4 mt-4" style="width: 100%; z-index: 1">
-        <mdb-card-header>
+        <div class="card-header">
           {{ replyElement.label }}
-        </mdb-card-header>
-        <mdb-card-body>
+        </div>
+        <div class="card-body">
           <ul class="list-group list-group-flush">
             <li
               *ngFor="let element of replyElement.elementList"
@@ -30,7 +30,7 @@
               </ng-container>
             </li>
           </ul>
-        </mdb-card-body>
+        </div>
         <mdb-card-footer>
           <div
             class="d-flex justify-content-center align-items-center flex-column mt-2"
@@ -57,7 +57,7 @@
             </div>
           </div>
         </mdb-card-footer>
-      </mdb-card>
+      </div>
     </div>
   </div>
 </div>

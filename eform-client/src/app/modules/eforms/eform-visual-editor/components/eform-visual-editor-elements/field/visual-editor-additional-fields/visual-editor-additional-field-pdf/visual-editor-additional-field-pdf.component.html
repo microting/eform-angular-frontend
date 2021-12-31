@@ -1,5 +1,5 @@
 <mdb-card class="mt-3">
-  <mdb-card-body>
+  <div class="card-body">
     <div class="row">
       <div class="col">
         <div class="md-form">
@@ -8,10 +8,10 @@
           >
             <ng-container *ngIf="isLanguageSelected(selectedLanguage)">
               <mdb-card class="mb-3">
-                <mdb-card-header>{{
+                <div class="card-header">{{
                   getLanguage(selectedLanguage) | translate
-                }}</mdb-card-header>
-                <mdb-card-body>
+                }}</div>
+                <div class="card-body">
                   <input
                     type="file"
                     hidden
@@ -33,12 +33,12 @@
                       {{ 'Upload' | translate }}
                     </button>
                   </div>
-                </mdb-card-body>
-              </mdb-card>
+                </div>
+              </div>
             </ng-container>
           </div>
         </div>
       </div>
     </div>
-  </mdb-card-body>
-</mdb-card>
+  </div>
+</div>

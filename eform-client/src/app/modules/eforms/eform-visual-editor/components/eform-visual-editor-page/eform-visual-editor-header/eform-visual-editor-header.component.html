@@ -1,8 +1,8 @@
 <section>
   <div class="card z-depth-3 mt-4" style="width: 100%">
     <div class="card-body">
-      <mdb-card>
-        <mdb-card-body>
+      <div class="card">
+        <div class="card-body">
           <div class="row mb-3 mt-3">
             <div
               class="col"
@@ -33,10 +33,10 @@
               class="mb-3"
               *ngIf="isLanguageSelected(translation.languageId)"
             >
-              <mdb-card-header>{{
+              <div class="card-header">{{
                 getLanguage(translation.languageId) | translate
-              }}</mdb-card-header>
-              <mdb-card-body>
+              }}</div>
+              <div class="card-body">
                 <div class="row">
                   <div class="col-12">
                     <div class="md-form">
@@ -77,8 +77,8 @@
                     </div>
                   </div>
                 </div>
-              </mdb-card-body>
-            </mdb-card>
+              </div>
+            </div>
           </ng-container>
           <div class="row">
             <div class="col">
@@ -98,8 +98,8 @@
               </div>
             </div>
           </div>
-        </mdb-card-body>
-      </mdb-card>
+        </div>
+      </div>
     </div>
   </div>
 </section>

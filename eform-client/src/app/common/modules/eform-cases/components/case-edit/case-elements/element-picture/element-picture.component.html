@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-md-3 col-sm-4 col-xs-12" *ngFor="let image of images; let i = index">
-    <mdb-card>
-      <mdb-card-img (click)="openPicture(i)" [src]="image.src | authImage | async" alt="Card image cap" ></mdb-card-img>
+    <div class="card">
+      <img (click)="openPicture(i)" [src]="image.src | authImage | async" alt="Card image cap" ></img>
       <!--Card content-->
-      <mdb-card-body>
+      <div class="card-body">
         <mdb-card-text>
           <div class="d-flex justify-content-center">
             <button mdbBtn class="btn-icon btn-accent text-black-50"
@@ -28,9 +28,9 @@
 
             </button>
           </div>
-        </mdb-card-text>
-      </mdb-card-body>
-    </mdb-card>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

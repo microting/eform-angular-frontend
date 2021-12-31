@@ -3,10 +3,10 @@
   *ngFor="let translation of field.translations; let translationIndex = index"
 >
   <ng-container *ngIf="isLanguageSelected(translation.languageId)">
-    <mdb-card-header>{{
+    <div class="card-header">{{
       getLanguage(translation.languageId) | translate
-    }}</mdb-card-header>
-    <mdb-card-body>
+    }}</div>
+    <div class="card-body">
       <div class="row">
         <div class="col">
           <div class="md-form">
@@ -22,6 +22,6 @@
           </div>
         </div>
       </div>
-    </mdb-card-body>
+    </div>
   </ng-container>
-</mdb-card>
+</div>

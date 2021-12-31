@@ -1,11 +1,11 @@
 <mdb-card class="mb-3 pl-1 mt-3" style="width: 100%;">
-  <mdb-card-body>
+  <div class="card-body">
     <div class="row">
       <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-12" *ngFor="let image of images; let i = index">
-        <mdb-card>
+        <div class="card">
           <mdb-card-img (click)="openPicture(i)" [src]="image.value.src | authImage | async" alt="Card image cap" ></mdb-card-img>
           <!--Card content-->
-          <mdb-card-body>
+          <div class="card-body">
 
             <!--Title-->
             <mdb-card-title>
@@ -26,10 +26,10 @@
 
                 </button>
               </div>
-            </mdb-card-text>
-          </mdb-card-body>
-        </mdb-card>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </mdb-card-body>
-</mdb-card>
+  </div>
+</div>

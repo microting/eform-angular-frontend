@@ -1,9 +1,4 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade overflow-auto"
-  #frame="mdbModal"
->
+<div [config]="{ ignoreBackdropClick: true }" mdbModal class="modal fade overflow-auto" #frame="mdbModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -26,10 +21,10 @@
           class="mb-3"
         >
           <ng-container *ngIf="isLanguageSelected(translation.languageId)">
-            <mdb-card-header>{{
+            <div class="card-header">{{
               getLanguage(translation.languageId) | translate
-            }}</mdb-card-header>
-            <mdb-card-body>
+            }}</div>
+            <div class="card-body">
               <div class="row">
                 <div class="col-12">
                   <div class="md-form">
@@ -70,9 +65,9 @@
                   </div>
                 </div>
               </div>
-            </mdb-card-body>
+            </div>
           </ng-container>
-        </mdb-card>
+        </div>
       </div>
       <div class="modal-footer">
         <button

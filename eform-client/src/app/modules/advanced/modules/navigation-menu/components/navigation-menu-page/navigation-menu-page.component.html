@@ -31,7 +31,7 @@
           let templateIndex = index
         "
       >
-        <mdb-card-header>
+        <div class="card-header">
           <div class="d-flex justify-content-between align-items-center">
             <div>
               {{ menuTemplate.name }}
@@ -42,7 +42,7 @@
               (collapseUpdate)="menuTemplate.collapsed = $event"
             ></app-eform-collapse-toggle>
           </div>
-        </mdb-card-header>
+        </div>
         <div mdbCollapse #collapse="bs-collapse">
           <div
             class="card-body dragula-template"
@@ -64,7 +64,7 @@
             </ng-container>
           </div>
         </div>
-      </mdb-card>
+      </div>
       <app-navigation-menu-custom
         [availableSecurityGroups]="securityGroups"
         (addCustomLinkToMenu)="manualAddItemToMenu($event)"

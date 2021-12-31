@@ -1,5 +1,5 @@
 <mdb-card class="mb-3" id="menuTemplate">
-  <mdb-card-header>
+  <div class="card-header">
     <div class="d-flex justify-content-between align-items-center">
       <div>
         {{ 'Custom' | translate }}
@@ -10,11 +10,11 @@
         (collapseUpdate)="collapsed = $event"
       ></app-eform-collapse-toggle>
     </div>
-  </mdb-card-header>
+  </div>
   <div mdbCollapse #collapse="bs-collapse">
     <div class="card-body">
       <mdb-card class="mb-2">
-        <mdb-card-header>
+        <div class="card-header">
           <div class="d-flex justify-content-between align-items-center">
             <div>
               {{ 'Dropdown' | translate }}
@@ -27,10 +27,10 @@
               mdbTooltip="{{ 'Add to menu' | translate }}"
             ></fa-icon>
           </div>
-        </mdb-card-header>
-      </mdb-card>
+        </div>
+      </div>
       <mdb-card class="mb-3">
-        <mdb-card-header>
+        <div class="card-header">
           <div class="d-flex justify-content-between align-items-center">
             <div>
               {{ 'Link' | translate }}
@@ -43,11 +43,11 @@
               mdbTooltip="{{ 'Add to menu' | translate }}"
             ></fa-icon>
           </div>
-        </mdb-card-header>
-      </mdb-card>
+        </div>
+      </div>
     </div>
   </div>
-</mdb-card>
+</div>
 
 <app-navigation-menu-custom-dropdown
   #customDropdownModal
