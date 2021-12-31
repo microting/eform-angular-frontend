@@ -1,6 +1,6 @@
 <ng-container *ngIf="dataItemList">
   <ng-container *ngFor="let dataItem of dataItemList; let i = index">
-    <mdb-card class="mb-3" style="width: 100%"
+    <div class="card mb-3" style="width: 100%"
          *ngIf="dataItem.fieldType != 'SaveButton' ">
       <div class="card-header"
            [ngStyle]="{'background-color': dataItem.color ? '#' + dataItem.color : ''}"

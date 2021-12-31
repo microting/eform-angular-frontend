@@ -16,6 +16,7 @@ import {
 } from './components';
 import { EformSharedTagsModule } from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
 import { emailRecipientsPersistProvider } from './components/store/email-recipients.store';
+import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { emailRecipientsPersistProvider } from './components/store/email-recipie
     FontAwesomeModule,
     EmailRecipientsRouting,
     EformSharedTagsModule,
+    MdbTooltipModule,
   ],
   providers: [emailRecipientsPersistProvider],
 })

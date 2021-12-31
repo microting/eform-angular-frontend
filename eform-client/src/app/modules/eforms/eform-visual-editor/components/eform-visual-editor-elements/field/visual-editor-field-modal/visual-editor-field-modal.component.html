@@ -1,4 +1,9 @@
-<div [config]="{ ignoreBackdropClick: true }" mdbModal class="modal fade overflow-auto" #frame="mdbModal">
+<!--<div [config]="{ ignoreBackdropClick: true }" mdbModal class="modal fade overflow-auto" #frame="mdbModal">-->
+<div class="modal-header">
+    <h4 class="modal-title">{{field.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -10,7 +15,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <mdb-card
+        <div class="card"
           *ngFor="
             let translation of recursionModel.field.translations;
             let translationIndex = index
@@ -94,7 +99,7 @@
                         [mdbPopover]="popTemplate"
                         container="body"
                         placement="right"
-                        [triggers]="'hover'"
+                        trigger="'hover'"
                       >
                         {{ item.name }}
                       </div>

@@ -26,6 +26,8 @@ import {
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
 import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
+import {MdbPopoverModule} from 'mdb-angular-ui-kit/popover';
+import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
     FontAwesomeModule,
     EformSharedTagsModule,
     MdbTooltipModule,
+    MdbPopoverModule,
+    MdbCollapseModule,
   ],
 })
 export class EformVisualEditorModule {}

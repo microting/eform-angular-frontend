@@ -25,6 +25,7 @@ import {
   EformReportPageComponent,
   EformReportSwitchComponent,
 } from './components';
+import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import {
     FormsModule,
     DragulaModule,
     ImageCropperModule,
+    MdbCollapseModule,
   ],
   declarations: [
     EformReportPageComponent,

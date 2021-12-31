@@ -1,4 +1,4 @@
-<mdb-card class="mt-3">
+<div class="card mt-3">
   <div class="card-header">{{ 'Options' | translate }}</div>
   <div class="card-body">
     <div class="row">
@@ -34,7 +34,7 @@
         <div class="md-form">
           <div *ngFor="let selectedLanguage of selectedLanguages">
             <ng-container *ngIf="isLanguageSelected(selectedLanguage)">
-              <mdb-card class="mb-3">
+              <div class="card mb-3">
                 <div class="card-header">{{
                   getLanguage(selectedLanguage) | translate
                 }}</div>
@@ -73,7 +73,7 @@
                               (click)="
                                 openEditOptionTranslate(i, selectedLanguage)
                               "
-                              [triggers]="'none'"
+                              trigger="'none'"
                               #buttonWithPopoverEdit="bs-mdbPopover"
                             >
                               <fa-icon
@@ -91,7 +91,7 @@
                               [mdbPopover]="popoverDeleteOptionTranslate"
                               mdbWavesEffect
                               (click)="openDeleteOptionTranslate(i)"
-                              [triggers]="'none'"
+                              trigger="'none'"
                               #buttonWithPopoverDelete="bs-mdbPopover"
                             >
                               <fa-icon

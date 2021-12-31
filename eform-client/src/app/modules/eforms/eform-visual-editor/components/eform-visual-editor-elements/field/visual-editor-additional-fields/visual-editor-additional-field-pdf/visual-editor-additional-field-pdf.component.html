@@ -1,4 +1,4 @@
-<mdb-card class="mt-3">
+<div class="card mt-3">
   <div class="card-body">
     <div class="row">
       <div class="col">
@@ -7,7 +7,7 @@
             *ngFor="let selectedLanguage of selectedLanguages; let i = index"
           >
             <ng-container *ngIf="isLanguageSelected(selectedLanguage)">
-              <mdb-card class="mb-3">
+              <div class="card mb-3">
                 <div class="card-header">{{
                   getLanguage(selectedLanguage) | translate
                 }}</div>

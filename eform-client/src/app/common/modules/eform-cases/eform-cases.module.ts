@@ -47,6 +47,7 @@ import {
 
 import { casePostsPersistProvider } from './components/case-posts/store';
 import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
+import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
 
 @NgModule({
   imports: [
@@ -65,6 +66,7 @@ import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
     FontAwesomeModule,
     RouterModule,
     MdbTooltipModule,
+    MdbCollapseModule,
   ],
   declarations: [
     CaseEditNavComponent,

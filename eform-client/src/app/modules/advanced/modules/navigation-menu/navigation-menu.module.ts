@@ -29,6 +29,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
+import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
 // TODO    ModalModule,
     ReactiveFormsModule,
     MdbTooltipModule,
+    MdbCollapseModule,
   ],
 })
 export class NavigationMenuModule {}

@@ -8,7 +8,6 @@
       class="btn-accent text-black-50 btn-icon"
       (click)="openTagsModal()"
       mdbTooltip="{{ 'Manage tags' | translate }}"
-      mdbWavesEffect
       id="manageTags"
     >
       <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
@@ -20,7 +19,6 @@
         selectedTemplateId ? updateVisualTemplate() : createVisualTemplate()
       "
       mdbTooltip="{{ (selectedTemplateId ? 'Save' : 'Create') | translate }}"
-      mdbWavesEffect
       id="saveCreateEformBtn"
       [disabled]="isAllNamesEmpty"
     >
