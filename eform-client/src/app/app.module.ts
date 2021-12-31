@@ -14,7 +14,7 @@ import {
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
 import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+// TODO import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { providers } from 'src/app/app.declarations';
 import { AppRoutingModule } from 'src/app/app.routing';
 import { translateConfig } from 'src/app/common/helpers';
@@ -53,7 +53,7 @@ import { environment } from 'src/environments/environment';
     // Libs
     AppRoutingModule,
     BrowserModule,
-    MDBBootstrapModule.forRoot(),
+// TODO    MDBBootstrapModule.forRoot(),
     TranslateModule.forRoot(translateConfig),
     HttpClientModule,
     BrowserAnimationsModule,

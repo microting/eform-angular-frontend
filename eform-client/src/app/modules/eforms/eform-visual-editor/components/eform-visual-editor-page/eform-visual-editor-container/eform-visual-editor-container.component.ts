@@ -24,7 +24,7 @@ import {
 import { fixTranslations } from 'src/app/common/helpers';
 import { VisualEditorFieldModalComponent } from '../../';
 import { DragulaService } from 'ng2-dragula';
-import { CollapseComponent } from 'angular-bootstrap-md';
+// TODO import { CollapseComponent } from 'angular-bootstrap-md';
 import { AuthStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
@@ -34,7 +34,7 @@ import { AuthStateService } from 'src/app/common/store';
   styleUrls: ['./eform-visual-editor-container.component.scss'],
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
-  @ViewChild('collapse') collapse: CollapseComponent;
+// TODO   @ViewChild('collapse') collapse: CollapseComponent;
   @ViewChild('tagsModal') tagsModal: SharedTagsComponent;
   @ViewChild('fieldModal') fieldModal: VisualEditorFieldModalComponent;
   @ViewChild('fieldDeleteModal') fieldDeleteModal: any;

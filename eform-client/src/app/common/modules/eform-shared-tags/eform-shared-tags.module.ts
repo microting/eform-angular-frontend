@@ -9,7 +9,7 @@ import {
 } from './components';
 import {TreeModule} from '@circlon/angular-tree-component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {ButtonsModule, InputsModule, ModalModule, WavesModule} from 'angular-bootstrap-md';
+// TODO import {ButtonsModule, InputsModule, ModalModule, WavesModule} from 'angular-bootstrap-md';
 
 @NgModule({
   imports: [
@@ -19,10 +19,10 @@ import {ButtonsModule, InputsModule, ModalModule, WavesModule} from 'angular-boo
     FormsModule,
     TreeModule,
     FontAwesomeModule,
-    WavesModule,
-    ModalModule,
-    ButtonsModule,
-    InputsModule,
+// TODO    WavesModule,
+// TODO    ModalModule,
+// TODO    ButtonsModule,
+// TODO    InputsModule,
   ],
   declarations: [
     SharedTagDeleteComponent,

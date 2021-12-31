@@ -7,14 +7,14 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {
-  ButtonsModule,
-  CardsModule,
-  InputsModule,
-  ModalModule,
-  TableModule,
-  TooltipModule,
-} from 'angular-bootstrap-md';
+// TODO import {
+//   ButtonsModule,
+//   CardsModule,
+//   InputsModule,
+//   ModalModule,
+//   TableModule,
+//   TooltipModule,
+// } from 'angular-bootstrap-md';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
@@ -30,16 +30,16 @@ import { EformXlsxReportRouting } from './eform-xlsx-report.routing';
     TranslateModule,
     EformSharedModule,
     FontAwesomeModule,
-    ButtonsModule,
+// TODO     ButtonsModule,
     RouterModule,
-    TooltipModule,
-    TableModule,
+// TODO     TooltipModule,
+// TODO     TableModule,
     ReactiveFormsModule,
     OwlDateTimeModule,
-    InputsModule,
-    CardsModule,
+// TODO     InputsModule,
+// TODO     CardsModule,
     EformXlsxReportRouting,
-    ModalModule,
+// TODO     ModalModule,
     FormsModule,
   ],
 })

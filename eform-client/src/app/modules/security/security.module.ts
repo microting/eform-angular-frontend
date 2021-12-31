@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+// TODO import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { SecurityGroupGeneralPermissionsService } from 'src/app/common/services';
 import { SecurityRouting } from './security.routing';
@@ -21,6 +21,7 @@ import {
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { securityPersistProvider } from './components/store/security.store';
+import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
 
 @NgModule({
   imports: [
@@ -29,9 +30,10 @@ import { securityPersistProvider } from './components/store/security.store';
     SecurityRouting,
     NgSelectModule,
     TranslateModule,
-    MDBBootstrapModule,
+// TODO     MDBBootstrapModule,
     FormsModule,
     FontAwesomeModule,
+    MdbTooltipModule,
   ],
   declarations: [
     SecurityPageComponent,

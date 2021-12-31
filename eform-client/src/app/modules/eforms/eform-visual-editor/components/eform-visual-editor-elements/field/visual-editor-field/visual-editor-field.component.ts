@@ -19,7 +19,7 @@ import {
 import { eformVisualEditorElementColors } from 'src/app/modules/eforms/eform-visual-editor/const/eform-visual-editor-element-types';
 import { LocaleService } from 'src/app/common/services';
 import * as R from 'ramda';
-import { CollapseComponent } from 'angular-bootstrap-md';
+// TODO import { CollapseComponent } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-visual-editor-field',
@@ -27,7 +27,7 @@ import { CollapseComponent } from 'angular-bootstrap-md';
   styleUrls: ['./visual-editor-field.component.scss'],
 })
 export class VisualEditorFieldComponent implements OnInit, OnDestroy {
-  @ViewChild('nestedFields') nestedFields: CollapseComponent;
+// TODO   @ViewChild('nestedFields') nestedFields: CollapseComponent;
   @Input() field: EformVisualEditorFieldModel;
   @Input() fieldIndex: number;
   @Input() checklistRecursionIndexes = [];

@@ -12,22 +12,23 @@ import {
   NavigationMenuResetComponent,
 } from './components';
 import { NavigationMenuRouting } from './navigation-menu.routing';
-import {
-  ButtonsModule,
-  CardsModule,
-  CollapseModule,
-  InputsModule,
-  ModalModule,
-  TableModule,
-  TooltipModule,
-  WavesModule,
-} from 'angular-bootstrap-md';
+// TODO import {
+//   ButtonsModule,
+//   CardsModule,
+//   CollapseModule,
+//   InputsModule,
+//   ModalModule,
+//   TableModule,
+//   TooltipModule,
+//   WavesModule,
+// } from 'angular-bootstrap-md';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DragulaModule } from 'ng2-dragula';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
+import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
 
 @NgModule({
   declarations: [
@@ -44,21 +45,22 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
   imports: [
     CommonModule,
     NavigationMenuRouting,
-    ButtonsModule,
+// TODO    ButtonsModule,
     TranslateModule,
     FontAwesomeModule,
     NgSelectModule,
-    InputsModule,
-    TableModule,
-    CardsModule,
+// TODO    InputsModule,
+// TODO    TableModule,
+// TODO    CardsModule,
     DragulaModule,
-    TooltipModule,
+// TODO    TooltipModule,
     FormsModule,
-    CollapseModule,
+// TODO    CollapseModule,
     EformSharedModule,
-    WavesModule,
-    ModalModule,
+// TODO    WavesModule,
+// TODO    ModalModule,
     ReactiveFormsModule,
+    MdbTooltipModule,
   ],
 })
 export class NavigationMenuModule {}

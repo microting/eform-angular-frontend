@@ -10,11 +10,12 @@ import {
 import {TranslateModule} from '@ngx-translate/core';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {ButtonsModule, CardsModule, InputsModule, ModalModule, TableModule, TooltipModule,} from 'angular-bootstrap-md';
+// TODO import {ButtonsModule, CardsModule, InputsModule, ModalModule, TableModule, TooltipModule,} from 'angular-bootstrap-md';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
 import {EformDocxReportRouting} from './eform-docx-report.routing';
+import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
 
 @NgModule({
   declarations: [
@@ -29,17 +30,18 @@ import {EformDocxReportRouting} from './eform-docx-report.routing';
     TranslateModule,
     EformSharedModule,
     FontAwesomeModule,
-    ButtonsModule,
+// TODO     ButtonsModule,
     RouterModule,
-    TooltipModule,
-    TableModule,
+// TODO     TooltipModule,
+// TODO     TableModule,
     ReactiveFormsModule,
     OwlDateTimeModule,
-    InputsModule,
-    CardsModule,
+// TODO     InputsModule,
+// TODO     CardsModule,
     EformDocxReportRouting,
-    ModalModule,
+// TODO     ModalModule,
     FormsModule,
+    MdbTooltipModule,
   ],
 })
 export class EformDocxReportModule {}

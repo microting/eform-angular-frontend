@@ -13,7 +13,7 @@ import { GalleryModule } from '@ngx-gallery/core';
 import { GallerizeModule } from '@ngx-gallery/gallerize';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import { TranslateModule } from '@ngx-translate/core';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+// TODO import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { MY_MOMENT_FORMATS } from 'src/app/common/helpers';
 import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
@@ -46,11 +46,12 @@ import {
 } from './components';
 
 import { casePostsPersistProvider } from './components/case-posts/store';
+import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
 
 @NgModule({
   imports: [
     TranslateModule,
-    MDBBootstrapModule,
+// TODO     MDBBootstrapModule,
     EformSharedModule,
     CommonModule,
     NgSelectModule,
@@ -63,6 +64,7 @@ import { casePostsPersistProvider } from './components/case-posts/store';
     FormsModule,
     FontAwesomeModule,
     RouterModule,
+    MdbTooltipModule,
   ],
   declarations: [
     CaseEditNavComponent,

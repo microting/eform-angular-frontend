@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+// TODO import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { DragulaModule } from 'ng2-dragula';
 import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
 import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
@@ -25,6 +25,7 @@ import {
   VisualEditorAdditionalFieldOptionsComponent,
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
+import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
 
 @NgModule({
   declarations: [
@@ -48,13 +49,14 @@ import { EformVisualEditorRouting } from './eform-visual-editor.routing';
     CommonModule,
     EformSharedModule,
     TranslateModule,
-    MDBBootstrapModule,
+// TODO     MDBBootstrapModule,
     NgSelectModule,
     FormsModule,
     DragulaModule,
     EformImportedModule,
     FontAwesomeModule,
     EformSharedTagsModule,
+    MdbTooltipModule,
   ],
 })
 export class EformVisualEditorModule {}

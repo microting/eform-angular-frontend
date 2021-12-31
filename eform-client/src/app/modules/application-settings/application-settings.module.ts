@@ -4,23 +4,25 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 import { FileUploadModule } from 'ng2-file-upload';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+// TODO import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { ApplicationSettingsRouting } from './application-settings.routing';
 import { AdminSettingsComponent, ConnectionSetupComponent } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
 
 @NgModule({
   imports: [
     CommonModule,
     NgSelectModule,
     ApplicationSettingsRouting,
-    MDBBootstrapModule,
+// TODO    MDBBootstrapModule,
     EformSharedModule,
     FormsModule,
     TranslateModule,
     FileUploadModule,
     FontAwesomeModule,
+    MdbTooltipModule,
   ],
   declarations: [AdminSettingsComponent, ConnectionSetupComponent],
 })

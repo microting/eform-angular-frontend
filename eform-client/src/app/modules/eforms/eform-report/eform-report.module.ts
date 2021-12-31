@@ -5,7 +5,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {TranslateModule} from '@ngx-translate/core';
 import {DragulaModule} from 'ng2-dragula';
 import {ImageCropperModule} from 'ngx-image-cropper';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
+// TODO import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
 import {PellModule} from 'src/app/common/modules/eform-imported/pell/pell.module';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
@@ -33,7 +33,7 @@ import {
     EformSharedModule,
     TranslateModule,
     PellModule,
-    MDBBootstrapModule,
+// TODO     MDBBootstrapModule,
     NgSelectModule,
     EformImportedModule,
     FormsModule,

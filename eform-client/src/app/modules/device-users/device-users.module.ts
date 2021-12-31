@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+// import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {
   CreateNewUserModalComponent,
@@ -21,7 +21,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CommonModule,
     DeviceUsersRouting,
     NgSelectModule,
-    MDBBootstrapModule,
+// TODO    MDBBootstrapModule,
     EformSharedModule,
     TranslateModule,
     FormsModule,

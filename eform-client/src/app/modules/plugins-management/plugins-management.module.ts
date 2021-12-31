@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EformSharedModule } from '../../common/modules/eform-shared/eform-shared.module';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+// TODO import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { PluginsManagementRouting } from './plugins-management.routing';
 import {
@@ -20,7 +20,7 @@ import { InstalledPluginPermissionsComponent } from './components/installed/inst
   imports: [
     CommonModule,
     EformSharedModule,
-    MDBBootstrapModule,
+// TODO     MDBBootstrapModule,
     FormsModule,
     TranslateModule,
     NgSelectModule,
