@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2021 Microting A/S
@@ -25,21 +25,21 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using Abstractions;
     using Abstractions.Advanced;
     using Infrastructure.Models.SelectableList;
     using Microsoft.EntityFrameworkCore;
     using Microting.eForm.Infrastructure.Constants;
-    using Microting.eFormApi.BasePn.Abstractions;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
     using Microting.eForm.Infrastructure.Models;
     using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using EntityGroup = Infrastructure.Models.EntityGroup;
 
     public class EntitySelectService : IEntitySelectService
@@ -56,7 +56,6 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
             _coreHelper = coreHelper;
         }
-
 
         public async Task<OperationDataResult<Paged<EntityGroup>>> Index(
             AdvEntitySelectableGroupListRequestModel requestModel)
@@ -277,6 +276,39 @@ namespace eFormAPI.Web.Services
             catch (Exception)
             {
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileDeletingSelectableList"));
+            }
+        }
+
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary(string searchString)
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+
+                var query = sdkDbContext.EntityGroups
+                    .Where(x => x.Type == Constants.FieldTypes.EntitySelect);
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    query = query.Where(x => x.Name.ToUpper().Contains(searchString.ToUpper()));
+                }
+
+                var entityGroups = await query
+                    .OrderBy(x => x.Name)
+                    .Select(x => new CommonDictionaryModel
+                    {
+                        Name = x.Name,
+                        Id = int.Parse(x.MicrotingUid),
+                    })
+                    .ToListAsync();
+
+                return new OperationDataResult<List<CommonDictionaryModel>>(true, entityGroups);
+            }
+            catch (Exception)
+            {
+                return new OperationDataResult<List<CommonDictionaryModel>>(false,
+                    _localizationService.GetString("ErrorWhenObtainingSearchableList"));
             }
         }
     }

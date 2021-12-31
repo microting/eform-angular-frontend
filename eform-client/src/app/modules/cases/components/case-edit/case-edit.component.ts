@@ -12,17 +12,21 @@ import { UserClaimsEnum } from 'src/app/common/const';
 import {
   CaseEditRequest,
   ReplyElementDto,
+  EformPermissionsSimpleModel,
   ReplyRequest,
-} from 'src/app/common/models/cases';
-import { TemplateDto } from 'src/app/common/models/dto';
-import { EformPermissionsSimpleModel } from 'src/app/common/models/security/group-permissions/eform';
+  TemplateDto,
+} from 'src/app/common/models';
 import { CaseEditElementComponent } from 'src/app/common/modules/eform-cases/components';
-import { AuthService } from 'src/app/common/services/auth';
-import { CasesService } from 'src/app/common/services/cases';
-import { EFormService } from 'src/app/common/services/eform';
-import { SecurityGroupEformsPermissionsService } from 'src/app/common/services/security';
+import {
+  AuthService,
+  CasesService,
+  EFormService,
+  SecurityGroupEformsPermissionsService,
+} from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-case-edit',
   templateUrl: './case-edit.component.html',
@@ -45,6 +49,10 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   isSaveClicked = false;
   reverseRoute: string;
 
+  activatedRouteSub$: Subscription;
+  queryParamsSun$: Subscription;
+  getSingleEformSun$: Subscription;
+
   get userClaims() {
     return this.authStateService.currentUserClaims;
   }
@@ -54,19 +62,18 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private activateRoute: ActivatedRoute,
+    activateRoute: ActivatedRoute,
     private casesService: CasesService,
     private eFormService: EFormService,
     private router: Router,
-    private authService: AuthService,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
     private authStateService: AuthStateService
   ) {
-    const activatedRouteSub = this.activateRoute.params.subscribe((params) => {
+    this.activatedRouteSub$ = activateRoute.params.subscribe((params) => {
       this.id = +params['id'];
       this.templateId = +params['templateId'];
     });
-    this.activateRoute.queryParams.subscribe((params) => {
+    this.queryParamsSun$ = activateRoute.queryParams.subscribe((params) => {
       this.reverseRoute = params['reverseRoute'];
     });
   }
@@ -105,7 +112,9 @@ export class CaseEditComponent implements OnInit, OnDestroy {
         if (operation && operation.success) {
           this.replyElement = new ReplyElementDto();
           this.isNoSaveExitAllowed = true;
-          if (navigateToPosts) {
+          if (this.reverseRoute) {
+            this.navigateToReverse();
+          } else if (navigateToPosts) {
             this.router
               .navigate([
                 '/cases/posts/',
@@ -123,14 +132,16 @@ export class CaseEditComponent implements OnInit, OnDestroy {
 
   loadTemplateInfo() {
     if (this.templateId) {
-      this.eFormService.getSingle(this.templateId).subscribe((operation) => {
-        if (operation && operation.success) {
-          this.currentTemplate = operation.model;
-          this.loadEformPermissions(this.currentTemplate.id);
-          this.loadCase();
-        }
-        // // This is commented as loadCase is in 99% of the time the slowest
-      });
+      this.getSingleEformSun$ = this.eFormService
+        .getSingle(this.templateId)
+        .subscribe((operation) => {
+          if (operation && operation.success) {
+            this.currentTemplate = operation.model;
+            this.loadEformPermissions(this.currentTemplate.id);
+            this.loadCase();
+          }
+          // // This is commented as loadCase is in 99% of the time the slowest
+        });
     }
   }
 

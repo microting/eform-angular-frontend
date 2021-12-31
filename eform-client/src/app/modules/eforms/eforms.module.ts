@@ -18,6 +18,7 @@ import {
   EformsPageComponent,
   EformUploadZipModalComponent,
   EformsTagsComponent,
+  EformDuplicateConfirmModalComponent,
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
@@ -52,6 +53,7 @@ import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
     EformExcelReportModalComponent,
     EformsBulkImportModalComponent,
     EformsTagsComponent,
+    EformDuplicateConfirmModalComponent,
   ],
   providers: [persistProvider],
 })

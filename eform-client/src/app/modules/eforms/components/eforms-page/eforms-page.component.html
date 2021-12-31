@@ -255,24 +255,32 @@
                   size="lg"
                 ></fa-icon>
               </button>
+              <button
+                mdbBtn
+                class="btn-success btn-icon mb-2"
+                id="duplicate-btn"
+                (click)="openDuplicateConfirmModal(templateDto)"
+                mdbTooltip="{{ 'Duplicate eForm' | translate }}"
+              >
+                <fa-icon icon="clone" [fixedWidth]="true" size="lg"></fa-icon>
+              </button>
               <a
-                *ngIf="checkEformPermissions(
+                *ngIf="
+                  checkEformPermissions(
                     templateDto.id,
                     userClaimsEnum.eformsDelete
-                  ) && (!templateDto.isLocked && templateDto.isEditable)
+                  ) &&
+                  !templateDto.isLocked &&
+                  templateDto.isEditable
                 "
                 mdbRipple
                 mdbWavesEffect
                 class="btn-success btn-icon"
                 id="edit-eform-btn-{{ i }}"
                 [routerLink]="['visual-editor/' + templateDto.id]"
-                mdbTooltip="{{ 'Edit eform with visual editor' | translate }}"
+                mdbTooltip="{{ 'Edit eForm' | translate }}"
               >
-                <fa-icon
-                  icon="pen"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
+                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
               </a>
             </div>
             <div class="d-flex flex-row justify-content-center">
@@ -422,3 +430,8 @@
   (tagsChanged)="loadAllTags()"
 >
 </app-eforms-tags>
+<app-eform-duplicate-confirm-modal
+  #duplicateConfirm
+  (eFormDuplicated)="loadAllTemplates()"
+>
+</app-eform-duplicate-confirm-modal>

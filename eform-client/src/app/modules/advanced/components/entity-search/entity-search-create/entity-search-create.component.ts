@@ -1,16 +1,25 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   AdvEntitySearchableGroupEditModel,
   AdvEntitySearchableItemModel,
-  AdvEntitySelectableItemModel
+  AdvEntitySelectableItemModel,
 } from 'src/app/common/models/advanced';
-import {EntitySearchService, EntitySelectService} from 'src/app/common/services/advanced';
-import {Location} from '@angular/common';
+import {
+  EntitySearchService,
+  EntitySelectService,
+} from 'src/app/common/services/advanced';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-entity-search-create',
   templateUrl: './entity-search-create.component.html',
-  styleUrls: ['./entity-search-create.component.scss']
+  styleUrls: ['./entity-search-create.component.scss'],
 })
 export class EntitySearchCreateComponent implements OnInit {
   advEntitySearchableGroupCreateModel: AdvEntitySearchableGroupEditModel = new AdvEntitySearchableGroupEditModel();
@@ -21,11 +30,12 @@ export class EntitySearchCreateComponent implements OnInit {
 
   items = [];
 
-  constructor(private entitySearchService: EntitySearchService,
-              private location: Location) { }
+  constructor(
+    private entitySearchService: EntitySearchService,
+    private location: Location
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   show() {
     this.frame.show();
@@ -39,39 +49,51 @@ export class EntitySearchCreateComponent implements OnInit {
   }
 
   createEntitySearchableGroup() {
-    this.entitySearchService.createEntitySearchableGroup(this.advEntitySearchableGroupCreateModel).subscribe((data) => {
-      if (data && data.success) {
-        this.onEntityGroupCreated.emit();
-        this.advEntitySearchableGroupCreateModel = new AdvEntitySearchableGroupEditModel();
-        // this.frame.hide();
-        this.location.back();
-      }
-    });
+    this.entitySearchService
+      .createEntitySearchableGroup(this.advEntitySearchableGroupCreateModel)
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.onEntityGroupCreated.emit();
+          this.advEntitySearchableGroupCreateModel = new AdvEntitySearchableGroupEditModel();
+          // this.frame.hide();
+          this.location.back();
+        }
+      });
   }
 
   goBack() {
     // window.history.back();
     this.location.back();
-
-    console.log( 'goBack()...' );
+    console.debug('goBack()...');
   }
 
   addNewAdvEntitySelectableItem() {
     const item = new AdvEntitySelectableItemModel();
     item.entityItemUId = this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels.length.toString();
-    this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels.push(item);
+    this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels.push(
+      item
+    );
   }
 
   deleteAdvEntitySelectableItem(itemId: string) {
-    this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels =
-      this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels
-        .filter(x => x.entityItemUId != itemId);
+    // eslint-disable-next-line max-len
+    this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels = this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels.filter(
+      (x) => x.entityItemUId !== itemId
+    );
     this.actualizeAdvEntitySelectableItemPositions();
   }
 
   actualizeAdvEntitySelectableItemPositions() {
-    for (let i = 0; i < this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels.length; i++) {
-      this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels[i].entityItemUId = i.toString();
+    for (
+      let i = 0;
+      i <
+      this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels
+        .length;
+      i++
+    ) {
+      this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels[
+        i
+      ].entityItemUId = i.toString();
     }
   }
 
@@ -80,15 +102,18 @@ export class EntitySearchCreateComponent implements OnInit {
   }
 
   updateItem(itemModel: AdvEntitySearchableItemModel) {
-    this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels
-      .find(x => x.entityItemUId == itemModel.entityItemUId).name = itemModel.name;
+    this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels.find(
+      (x) => x.entityItemUId === itemModel.entityItemUId
+    ).name = itemModel.name;
   }
 
   importAdvEntitySelectableGroup(importString: string) {
     if (importString) {
       const lines = importString.split('\n');
       for (let i = 0; i < lines.length; i++) {
-        this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels.push(new AdvEntitySelectableItemModel(lines[i]));
+        this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels.push(
+          new AdvEntitySelectableItemModel(lines[i])
+        );
       }
     }
   }

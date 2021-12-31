@@ -1,0 +1,19 @@
+.NgxEditor {
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  background: var(--theme-background-color) !important;
+  color: var(--theme-body-font-color) !important;
+  background-clip: padding-box !important;
+  border-radius: 0 !important;
+  border: none !important;
+  border-bottom: 1px solid #ced4da !important;
+  position: relative !important;
+
+  &:focus-within:not([readonly]) {
+    box-shadow: 0 1px 0 0 var(--theme-button-primary-background-color) !important;
+    border-bottom: 1px solid var(--theme-button-primary-background-color) !important;
+  }
+
+  b{
+    font-weight: 600;
+  }
+}

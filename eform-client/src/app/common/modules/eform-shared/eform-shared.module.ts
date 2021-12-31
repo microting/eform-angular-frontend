@@ -5,14 +5,15 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 
 import {
-    DateFormatterComponent,
-    EformCollapseToggleComponent,
-    EformPageSizeComponent,
-    EformPaginationComponent,
-    EformSubheaderComponent,
-    EformTreeViewPickerComponent,
-    StatusBarComponent,
-    EformTableHeaderSortableComponent, StatusBarCompactComponent,
+  DateFormatterComponent,
+  EformCollapseToggleComponent,
+  EformPageSizeComponent,
+  EformPaginationComponent,
+  EformSubheaderComponent,
+  EformTreeViewPickerComponent,
+  StatusBarComponent,
+  EformTableHeaderSortableComponent,
+  StatusBarCompactComponent,
 } from './components';
 import {
   AuthImagePipe,
@@ -21,8 +22,9 @@ import {
 } from 'src/app/common/pipes';
 import { TreeModule } from '@circlon/angular-tree-component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-// TODO import { WavesModule } from 'angular-bootstrap-md';
-import { EformTableHeadersComponent } from 'src/app/common/modules/eform-shared/components';
+import { BreadcrumbModule, WavesModule } from 'angular-bootstrap-md';
+import { EformTableHeadersComponent } from './components';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -32,36 +34,38 @@ import { EformTableHeadersComponent } from 'src/app/common/modules/eform-shared/
     FormsModule,
     TreeModule,
     FontAwesomeModule,
-// TODO     WavesModule,
+    WavesModule,
+    BreadcrumbModule,
+    RouterModule,
   ],
-    declarations: [
-        EformPaginationComponent,
-        EformPageSizeComponent,
-        EformSubheaderComponent,
-        StatusBarComponent,
-        DateFormatterComponent,
-        AuthImagePipe,
-        AuthAudioPipe,
-        SafeHtmlPipe,
-        EformTreeViewPickerComponent,
-        EformCollapseToggleComponent,
-        EformTableHeaderSortableComponent,
-        EformTableHeadersComponent,
-        StatusBarCompactComponent,
-    ],
-    exports: [
-        EformPaginationComponent,
-        EformPageSizeComponent,
-        StatusBarComponent,
-        DateFormatterComponent,
-        EformTreeViewPickerComponent,
-        EformTableHeadersComponent,
-        AuthImagePipe,
-        EformCollapseToggleComponent,
-        AuthAudioPipe,
-        SafeHtmlPipe,
-        EformSubheaderComponent,
-        StatusBarCompactComponent,
-    ],
+  declarations: [
+    EformPaginationComponent,
+    EformPageSizeComponent,
+    EformSubheaderComponent,
+    StatusBarComponent,
+    DateFormatterComponent,
+    AuthImagePipe,
+    AuthAudioPipe,
+    SafeHtmlPipe,
+    EformTreeViewPickerComponent,
+    EformCollapseToggleComponent,
+    EformTableHeaderSortableComponent,
+    EformTableHeadersComponent,
+    StatusBarCompactComponent,
+  ],
+  exports: [
+    EformPaginationComponent,
+    EformPageSizeComponent,
+    StatusBarComponent,
+    DateFormatterComponent,
+    EformTreeViewPickerComponent,
+    EformTableHeadersComponent,
+    AuthImagePipe,
+    EformCollapseToggleComponent,
+    AuthAudioPipe,
+    SafeHtmlPipe,
+    EformSubheaderComponent,
+    StatusBarCompactComponent,
+  ],
 })
 export class EformSharedModule {}

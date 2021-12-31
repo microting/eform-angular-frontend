@@ -1,32 +1,41 @@
-import { Component, OnInit, OnChanges, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
-import { ElementRef, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  AfterViewInit,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
+import { ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import * as pell from './pell-pn';
 
-
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'pell-pn-editor',
   templateUrl: './pell-pn.component.html',
   encapsulation: ViewEncapsulation.None,
-  styles: [`div p {
-    margin: 0;
-    padding: 0;
-  }`]
+  styles: [
+    `
+      div p {
+        margin: 0;
+        padding: 0;
+      }
+    `,
+  ],
 })
 export class PellPnComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() actions: Array<Object> = [];
   @Input() value: String = '';
   @Output() valueChange = new EventEmitter();
-  pell = pell;
+  // pell = pell;
   html;
   editor;
 
-  constructor(
-    private rd: Renderer2
+  constructor() // private rd: Renderer2
+  {}
 
-  ) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   @ViewChild('wysiwyg', { static: true }) wysiwyg: ElementRef;
 
@@ -37,30 +46,23 @@ export class PellPnComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: any) {
     try {
-      if (this.editor.content.innerHTML != this.value) {
+      if (this.editor.content.innerHTML !== this.value) {
         this.editor.content.innerHTML = this.value;
       }
-    } catch (err) {
-
-    }
+    } catch (err) {}
   }
 
   wysiwygInit(elm, actions) {
     this.editor = pell.init({
       element: elm,
-      onChange: html => {
+      onChange: (html) => {
         this.html = html;
         this.valueChange.emit(this.html);
       },
       defaultParagraphSeparator: 'br',
       styleWithCSS: false,
-      actions: [
-        'bold',
-        'underline',
-        'italic',
-        'strikethrough',
-      ].concat(actions),
-      classes: {}
+      actions: ['bold', 'underline', 'italic', 'strikethrough'].concat(actions),
+      classes: {},
     });
   }
 }

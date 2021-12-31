@@ -23,6 +23,8 @@ import {
   VisualEditorAdditionalFieldSaveButtonComponent,
   VisualEditorAdditionalFieldPdfComponent,
   VisualEditorAdditionalFieldOptionsComponent,
+  VisualEditorAdditionalFieldEntitySearchComponent,
+  VisualEditorAdditionalFieldEntitySelectComponent,
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
 import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
@@ -44,6 +46,8 @@ import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
     VisualEditorAdditionalFieldSaveButtonComponent,
     VisualEditorAdditionalFieldPdfComponent,
     VisualEditorAdditionalFieldOptionsComponent,
+    VisualEditorAdditionalFieldEntitySearchComponent,
+    VisualEditorAdditionalFieldEntitySelectComponent,
   ],
   imports: [
     CommonModule,

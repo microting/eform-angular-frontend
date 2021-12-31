@@ -1,5 +1,6 @@
 class NavigationMenuPage {
   public async menuItemsChilds(): Promise<WebdriverIO.ElementArray> {
+    await browser.pause(1000);
     return $$('#menuItems>*');
   }
 
@@ -12,7 +13,10 @@ class NavigationMenuPage {
   }
 
   public async createCustomLinkInput(): Promise<WebdriverIO.Element> {
-    return $('#customLinkLink');
+    const ele = $('#customLinkLink');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
+    return ele;
   }
 
   public async editItemSaveBtn(): Promise<WebdriverIO.Element> {
@@ -41,11 +45,11 @@ class NavigationMenuPage {
   }
 
   public async dropdownBody(index: number) {
-    return (await this.menuItemsChilds())[index].$('#dropdownBody');
+    return await (await this.menuItemsChilds())[index].$('#dropdownBody');
   }
 
   public async dropdownBodyChilds(indexDropdown: number) {
-    return (await this.menuItemsChilds())[indexDropdown].$$('#dropdownBody>*');
+    return await (await this.menuItemsChilds())[indexDropdown].$$('#dropdownBody>*');
   }
 
   public async editTranslationsOnDropdownBodyChilds(data: {
@@ -102,7 +106,7 @@ class NavigationMenuPage {
     return $('#mainMenu');
   }
 
-  public async dragHandleOnItemInMainMenu(numberItem) {
+  public async dragHandleOnItemInMainMenu(numberItem): Promise<WebdriverIO.Element> {
     return await (await this.mainMenu()).$(`#dragHandle0_${numberItem}`);
   }
 
@@ -229,8 +233,10 @@ class NavigationMenuPage {
   }
 
   public async selectCustomDropdown() {
-    // $('#customDropdownCreateBtn').waitForExist({timeout: 2000, reverse: true});
-    await (await $('#addCustomDropdown')).click();
+    const el = await $('#addCustomDropdown');
+    await el.waitForDisplayed({ timeout: 40000 });
+    await el.waitForClickable({ timeout: 40000 });
+    await el.click();
   }
 
   public async createCustomLink(data: {

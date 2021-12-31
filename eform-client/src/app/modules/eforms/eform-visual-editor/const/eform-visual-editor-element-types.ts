@@ -6,46 +6,11 @@ import {
 
 export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = [
   {
-    id: EformFieldTypesEnum.Text,
-    name: 'Text',
-    description: 'Simple text field',
-    previewImage:
-      '../../../../../../../assets/images/visual-editor-preview/text.png',
-  },
-  {
-    id: EformFieldTypesEnum.Number,
-    name: 'Number',
-    description: 'Simple number field',
-    previewImage:
-      '../../../../../../../assets/images/visual-editor-preview/number.png',
-  },
-  {
-    id: EformFieldTypesEnum.None,
-    name: 'None',
-    description: 'Simple text to be displayed',
-    previewImage:
-      '../../../../../../../assets/images/visual-editor-preview/infobox.png',
-  },
-  {
     id: EformFieldTypesEnum.CheckBox,
     name: 'CheckBox',
     description: 'Simple check box field',
     previewImage:
       '../../../../../../../assets/images/visual-editor-preview/checkbox-screenshot.png',
-  },
-  {
-    id: EformFieldTypesEnum.Picture,
-    name: 'Picture',
-    description: 'Simple picture field',
-    previewImage:
-      '../../../../../../../assets/images/visual-editor-preview/picture-screenshot.png',
-  },
-  {
-    id: EformFieldTypesEnum.Audio,
-    name: 'Audio',
-    description: 'Simple audio field',
-    previewImage:
-      '../../../../../../../assets/images/visual-editor-preview/audio-screenshot.png',
   },
   {
     id: EformFieldTypesEnum.SingleSelect,
@@ -62,11 +27,25 @@ export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = 
       '../../../../../../../assets/images/visual-editor-preview/comment.png',
   },
   {
-    id: EformFieldTypesEnum.MultiSelect,
-    name: 'MultiSelect',
-    description: 'Simple multi select list',
+    id: EformFieldTypesEnum.Number,
+    name: 'Number',
+    description: 'Simple number field',
     previewImage:
-      '../../../../../../../assets/images/visual-editor-preview/multi-select.png',
+      '../../../../../../../assets/images/visual-editor-preview/number.png',
+  },
+  {
+    id: EformFieldTypesEnum.Picture,
+    name: 'Picture',
+    description: 'Simple picture field',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/picture-screenshot.png',
+  },
+  {
+    id: EformFieldTypesEnum.None,
+    name: 'None',
+    description: 'Simple text to be displayed',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/infobox.png',
   },
   {
     id: EformFieldTypesEnum.Date,
@@ -74,6 +53,33 @@ export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = 
     description: 'Date selection',
     previewImage:
       '../../../../../../../assets/images/visual-editor-preview/date.png',
+  },
+  {
+    id: EformFieldTypesEnum.SaveButton,
+    name: 'SaveButton',
+    description: 'Save eForm.',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/save-screenshot.png',
+  },
+  {
+    id: EformFieldTypesEnum.ShowPdf,
+    name: 'ShowPDF',
+    description: 'Show PDF',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/show-pdf-screenshot.png',
+  },
+  {
+    id: EformFieldTypesEnum.FieldGroup,
+    name: 'FieldGroup',
+    description: 'Field group',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/group.png',
+  },
+  {
+    id: EformFieldTypesEnum.NumberStepper,
+    name: 'NumberStepper',
+    description: 'Number stepper field',
+    previewImage: '',
   },
   {
     id: EformFieldTypesEnum.Signature,
@@ -104,31 +110,32 @@ export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = 
       '../../../../../../../assets/images/visual-editor-preview/entity-select.png',
   },
   {
-    id: EformFieldTypesEnum.ShowPdf,
-    name: 'ShowPdf',
-    description: 'Show PDF',
+    id: EformFieldTypesEnum.Text,
+    name: 'Text (TextSingleLine)',
+    description: 'Simple text field',
     previewImage:
-      '../../../../../../../assets/images/visual-editor-preview/show-pdf-screenshot.png',
+      '../../../../../../../assets/images/visual-editor-preview/text.png',
   },
   {
-    id: EformFieldTypesEnum.FieldGroup,
-    name: 'FieldGroup',
-    description: 'Field group',
+    id: EformFieldTypesEnum.Audio,
+    name: 'Audio',
+    description: 'Simple audio field',
     previewImage:
-      '../../../../../../../assets/images/visual-editor-preview/group.png',
+      '../../../../../../../assets/images/visual-editor-preview/audio-screenshot.png',
   },
   {
-    id: EformFieldTypesEnum.SaveButton,
-    name: 'SaveButton',
-    description: 'Save eForm',
+    id: EformFieldTypesEnum.Movie,
+    name: 'Movie',
+    description: 'Simple movie field',
     previewImage:
-      '../../../../../../../assets/images/visual-editor-preview/save-screenshot.png',
+      '',
   },
   {
-    id: EformFieldTypesEnum.NumberStepper,
-    name: 'NumberStepper',
-    description: 'Number stepper field',
-    previewImage: '',
+    id: EformFieldTypesEnum.MultiSelect,
+    name: 'MultiSelect',
+    description: 'Simple multi select list',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/multi-select.png',
   },
 ];
 

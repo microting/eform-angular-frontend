@@ -10,13 +10,13 @@ import { Observable, range } from 'rxjs';
 import { filter, map, toArray } from 'rxjs/operators';
 
 @Component({
-  // tslint:disable-next-line:component-selector
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'pagination-pn',
   templateUrl: './pagination-pn.component.html',
   styleUrls: ['./pagination-pn.component.scss'],
 })
 export class PaginationPnComponent implements OnInit, OnChanges {
-  // tslint:disable-next-line:no-output-on-prefix
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() onPageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() offset = 0;
   @Input() limit = 1;

@@ -125,6 +125,10 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.visualEditorTemplateModel = data.model;
+          this.selectedLanguages =
+            R.dropRepeats([...this.selectedLanguages, ...this.visualEditorTemplateModel.translations
+              .map(x => x.name ? x.languageId : null)
+              .filter(x => x != null)])
           this.visualEditorTemplateModel.translations = fixTranslations(
             this.visualEditorTemplateModel.translations
           );

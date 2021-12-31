@@ -162,14 +162,14 @@ export class CasesTableComponent implements OnInit, OnDestroy {
   private setTableHeaders() {
     this.tableHeaders = [
       { name: 'Id', elementId: '', sortable: true },
-      { name: 'done_at', elementId: '', sortable: true },
+      { name: 'DoneAt', elementId: '', sortable: true },
       this.authStateService.isAdmin
-          ? { name: 'created_at', elementId: '', sortable: true }
+          ? { name: 'CreatedAt', elementId: '', sortable: true }
           : null,
-      { name: 'worker_name', elementId: '', sortable: true },
+      { name: 'SiteId', elementId: '', sortable: true },
       this.currentTemplate.field1 && this.currentTemplate.field1.label
           ? {
-            name: 'field1',
+            name: 'FieldValue1',
             elementId: '',
             sortable: true,
             visibleName: this.currentTemplate.field1.label,
@@ -177,7 +177,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
           : null,
       this.currentTemplate.field2 && this.currentTemplate.field2.label
           ? {
-            name: 'field2',
+            name: 'FieldValue2',
             elementId: '',
             sortable: true,
             visibleName: this.currentTemplate.field2.label,
@@ -185,7 +185,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
           : null,
       this.currentTemplate.field3 && this.currentTemplate.field3.label
           ? {
-            name: 'field3',
+            name: 'FieldValue3',
             elementId: '',
             sortable: true,
             visibleName: this.currentTemplate.field3.label,
@@ -193,7 +193,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
           : null,
       this.currentTemplate.field4 && this.currentTemplate.field4.label
           ? {
-            name: 'field4',
+            name: 'FieldValue4',
             elementId: '',
             sortable: true,
             visibleName: this.currentTemplate.field4.label,
@@ -201,7 +201,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
           : null,
       this.currentTemplate.field5 && this.currentTemplate.field5.label
           ? {
-            name: 'field5',
+            name: 'FieldValue5',
             elementId: '',
             sortable: true,
             visibleName: this.currentTemplate.field5.label,
@@ -209,7 +209,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
           : null,
       this.currentTemplate.field6 && this.currentTemplate.field6.label
           ? {
-            name: 'field6',
+            name: 'FieldValue6',
             elementId: '',
             sortable: true,
             visibleName: this.currentTemplate.field6.label,
@@ -217,7 +217,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
           : null,
       this.currentTemplate.field7 && this.currentTemplate.field7.label
           ? {
-            name: 'field7',
+            name: 'FieldValue7',
             elementId: '',
             sortable: true,
             visibleName: this.currentTemplate.field7.label,
@@ -225,7 +225,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
           : null,
       this.currentTemplate.field8 && this.currentTemplate.field8.label
           ? {
-            name: 'field8',
+            name: 'FieldValue8',
             elementId: '',
             sortable: true,
             visibleName: this.currentTemplate.field8.label,
@@ -233,7 +233,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
           : null,
       this.currentTemplate.field9 && this.currentTemplate.field9.label
           ? {
-            name: 'field9',
+            name: 'FieldValue9',
             elementId: '',
             sortable: true,
             visibleName: this.currentTemplate.field9.label,

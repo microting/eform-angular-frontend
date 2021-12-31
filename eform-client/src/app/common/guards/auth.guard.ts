@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
     if (!this.authStateService.isAuth) {
-      console.log(`Let's kick the user out auth.guard`);
+      console.debug(`Let's kick the user out auth.guard`);
       this.router.navigate(['/auth']).then();
       return false;
     }

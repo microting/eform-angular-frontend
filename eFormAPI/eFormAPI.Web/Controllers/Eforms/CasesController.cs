@@ -32,7 +32,9 @@ namespace eFormAPI.Web.Controllers.Eforms
     using Infrastructure.Models.Cases.Request;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
+    [Route("api/cases")]
     [Authorize]
     public class CasesController : Controller
     {
@@ -61,7 +63,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Route("api/cases/getcase")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
         public async Task<IActionResult> Read(int id, int templateId)
         {
@@ -74,8 +75,8 @@ namespace eFormAPI.Web.Controllers.Eforms
             return Ok(await _casesService.Read(id));
         }
 
-        [HttpPost]
-        [Route("/api/cases/update/{templateId}")]
+        [HttpPut]
+        [Route("{templateId}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
         public async Task<IActionResult> Update([FromBody] ReplyRequest model, int templateId)
         {
@@ -88,8 +89,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             return Ok(await _casesService.Update(model));
         }
         
-        [HttpGet]
-        [Route("/api/cases/delete")]
+        [HttpDelete]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseDelete)]
         public async Task<IActionResult> Delete(int id, int templateId)
         {
@@ -102,5 +102,20 @@ namespace eFormAPI.Web.Controllers.Eforms
             return Ok(await _casesService.Delete(id));
         }
 
+        [HttpPut]
+        [Route("archive")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
+        public async Task<OperationResult> Archive([FromBody]int caseId)
+        {
+            return await _casesService.Archive(caseId);
+        }
+
+        [HttpPut]
+        [Route("unarchive")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
+        public async Task<OperationResult> Unarchive([FromBody] int caseId)
+        {
+            return await _casesService.Unarchive(caseId);
+        }
     }
 }

@@ -28,7 +28,7 @@ export class LocaleService {
 
   initLocale() {
     const arrayTranslate = [];
-    // tslint:disable-next-line:forin
+    // eslint-disable-next-line guard-for-in
     for (const translate in translates) {
       arrayTranslate.push(translate);
     }

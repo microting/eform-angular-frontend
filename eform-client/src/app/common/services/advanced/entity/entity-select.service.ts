@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import {
   AdvEntitySelectableGroupEditModel,
   AdvEntitySelectableGroupModel,
+  CommonDictionaryModel,
   CommonDictionaryTextModel,
   OperationDataResult,
   OperationResult,
@@ -18,6 +19,7 @@ const AdvSelectableEntityMethods = {
   CreateSingle: '/api/selectable-groups/create',
   UpdateSingle: '/api/selectable-groups/update',
   ImportGroup: '/api/selectable-groups/import',
+  GetGroupsDictionary: '/api/selectable-groups/dict',
 };
 
 @Injectable()
@@ -69,7 +71,16 @@ export class EntitySelectService {
     entityGroupUid: string
   ): Observable<OperationDataResult<Array<CommonDictionaryTextModel>>> {
     return this.apiBaseService.get<Array<CommonDictionaryTextModel>>(
-      AdvSelectableEntityMethods.GetAll + '/dict/' + entityGroupUid
+      `${AdvSelectableEntityMethods.GetGroupsDictionary}/${entityGroupUid}`
+    );
+  }
+
+  getEntitySelectableGroupsInDictionary(
+    searchString: string
+  ): Observable<OperationDataResult<Array<CommonDictionaryModel>>> {
+    return this.apiBaseService.get(
+      AdvSelectableEntityMethods.GetGroupsDictionary,
+      { searchString: searchString }
     );
   }
 }

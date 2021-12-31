@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 import {
   OWL_DATE_TIME_FORMATS,
   OwlDateTimeModule,
@@ -43,6 +43,7 @@ import {
   ElementSingleselectComponent,
   ElementTextComponent,
   ElementTimerComponent,
+  CaseArchiveModalComponent,
 } from './components';
 
 import { casePostsPersistProvider } from './components/case-posts/store';
@@ -96,6 +97,7 @@ import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
     CasePostNewComponent,
     CasePostViewComponent,
     CasePostsPageComponent,
+    CaseArchiveModalComponent,
   ],
   providers: [
     { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
@@ -127,6 +129,7 @@ import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
     CasePostNewComponent,
     CasePostViewComponent,
     CasePostsPageComponent,
+    CaseArchiveModalComponent,
   ],
 })
 export class EformCasesModule {}

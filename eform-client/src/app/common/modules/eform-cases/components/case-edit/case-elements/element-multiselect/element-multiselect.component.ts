@@ -39,6 +39,9 @@ export class ElementMultiselectComponent implements OnInit {
 
   initCheckBoxes() {
     const str = this.fieldValueObj.value;
+    if (!str) {
+      return;
+    }
     const res = str.split('|');
     this.fieldValueObj.keyValuePairList.forEach(x => {
       if (this.arrayContains(x.key.toString(), res)) {

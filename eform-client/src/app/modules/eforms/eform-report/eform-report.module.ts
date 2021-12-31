@@ -7,7 +7,7 @@ import {DragulaModule} from 'ng2-dragula';
 import {ImageCropperModule} from 'ngx-image-cropper';
 // TODO import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
-import {PellModule} from 'src/app/common/modules/eform-imported/pell/pell.module';
+// import {PellModule} from 'src/app/common/modules/eform-imported/pell/pell.module';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {
   ElementCheckboxComponent,
@@ -17,7 +17,7 @@ import {
   ElementMultiselectComponent,
   ElementTextComponent,
 } from './components/eform-report-elements';
-import {EformReportRouting} from './eform-report.routing';
+import { EformReportRouting } from './eform-report.routing';
 import {
   EformReportBlockComponent,
   EformReportCropperComponent,
@@ -33,7 +33,6 @@ import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
     EformReportRouting,
     EformSharedModule,
     TranslateModule,
-    PellModule,
 // TODO     MDBBootstrapModule,
     NgSelectModule,
     EformImportedModule,

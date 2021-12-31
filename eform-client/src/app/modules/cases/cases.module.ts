@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {
   OWL_DATE_TIME_FORMATS,
   OwlDateTimeModule,
-  OwlNativeDateTimeModule,
+  OwlMomentDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -35,7 +35,7 @@ import {MdbTooltipModule} from 'mdb-angular-ui-kit/tooltip';
     LightboxModule,
     GalleryModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    OwlMomentDateTimeModule,
     FormsModule,
     FontAwesomeModule,
     EformCasesModule,

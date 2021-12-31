@@ -5,6 +5,7 @@ import { AppMenuStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'eform-subheader',
   templateUrl: './eform-subheader.component.html',
   styleUrls: ['./eform-subheader.component.scss'],
@@ -14,7 +15,7 @@ export class EformSubheaderComponent implements OnInit, OnDestroy {
   @Input() subtitle = '';
   @Input() heandingSizeRem = 2.5;
   @Input() forceStaticTitle = false;
-  @Input() prioritizeMenuTitle = false;
+  @Input() breadcrumbs: { name: string; href?: string }[] = null;
   href = this.router.url;
 
   // internalTitle = '';

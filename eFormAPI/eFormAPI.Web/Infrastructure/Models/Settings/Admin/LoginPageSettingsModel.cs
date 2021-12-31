@@ -32,5 +32,6 @@ namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
         public string ImageLink { get; set; }
         public bool ImageLinkVisible { get; set; }
         public bool IsSMTPExists { get; set; }
+        public bool IsSendGridExists { get; set; }
     }
 }

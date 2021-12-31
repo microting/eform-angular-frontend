@@ -80,23 +80,14 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <div class="md-form">
-                      <p class="text-black-50">
-                        {{ 'Description' | translate }}
-                      </p>
-                      <pell-editor
-                        mdbInput
-                        [(value)]="translation.description"
-                        name="editFolderDescriptionTranslation_{{
-                          translationIndex
-                        }}"
-                        required
-                        id="editFolderDescriptionTranslation_{{
-                          translationIndex
-                        }}"
-                        rows="10"
-                      ></pell-editor>
-                    </div>
+                    <formatting-text-editor
+                      [(value)]="translation.description"
+                      [placeholder]="'Description' | translate"
+                      id="editFolderDescriptionTranslation_{{
+                        translationIndex
+                      }}"
+                    >
+                    </formatting-text-editor>
                   </div>
                 </div>
               </ng-container>

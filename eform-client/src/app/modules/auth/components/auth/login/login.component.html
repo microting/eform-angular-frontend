@@ -1,29 +1,50 @@
 <div class="mb-2">
   <form [formGroup]="formLogin" (ngSubmit)="submitLoginForm()">
     <div class="md-form">
+      <fa-icon
+        class="prefix"
+        icon="user"
+        size="1x"
+        [fixedWidth]="true"
+      ></fa-icon>
 
-      <fa-icon class="prefix" icon="user" size="1x" [fixedWidth]="true"></fa-icon>
-
-      <input mdbInput
-             formControlName="username"
-             type="text" id="username" name="username" class="form-control">
-      <label for="username">{{'Username' | translate}}</label>
+      <input
+        mdbInput
+        formControlName="username"
+        type="text"
+        id="username"
+        name="username"
+        class="form-control"
+      />
+      <label for="username">{{ 'Username' | translate }}</label>
     </div>
     <div class="md-form">
-      <fa-icon class="prefix" icon="lock" size="1x" [fixedWidth]="true"></fa-icon>
+      <fa-icon
+        class="prefix"
+        icon="lock"
+        size="1x"
+        [fixedWidth]="true"
+      ></fa-icon>
 
-      <input mdbInput
-             formControlName="password"
-             type="password" id="password" name="password" class="form-control">
-      <label for="password">{{'Password' | translate}}</label>
+      <input
+        mdbInput
+        formControlName="password"
+        type="password"
+        id="password"
+        name="password"
+        class="form-control"
+      />
+      <label for="password">{{ 'Password' | translate }}</label>
     </div>
     <button mdbRipple type="submit"  class="btn btn-success btn-lg btn-block" id="loginBtn">
       {{'Login' | translate}}
     </button>
   </form>
 </div>
-<a class="link-primary" [routerLink]="['restore-password']" *ngIf="settingsService.loginPageSettingsModel.isSMTPExists">
-  {{'Forgot password' | translate}}?
+<a
+  class="link-primary"
+  [routerLink]="['restore-password']"
+  *ngIf="settingsService.loginPageSettingsModel.isSendGridExists"
+>
+  {{ 'Forgot password' | translate }}?
 </a>
-
-

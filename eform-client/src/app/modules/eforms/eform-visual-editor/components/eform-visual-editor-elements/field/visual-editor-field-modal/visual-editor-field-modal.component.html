@@ -15,12 +15,75 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="card"
+        <div class="card">
+          <div class="card-header">{{
+            "Type" | translate
+            }}</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <div class="ng-select-wrapper">
+                  <ng-select
+                    class="custom"
+                    dropdownPosition="'bottom'"
+                    [placeholder]="'Type' | translate"
+                    [clearable]="false"
+                    [bindLabel]="'name'"
+                    [bindValue]="'id'"
+                    [ngModel]="recursionModel.field.fieldType"
+                    (ngModelChange)="updateFieldType($event)"
+                    id="fieldTypeSelector"
+                    [items]="fieldTypes"
+                  >
+                    <ng-template
+                      ng-option-tmp
+                      let-item="item"
+                      let-search="searchTerm"
+                    >
+                      <ng-template #popTemplate>
+                        <p>{{ item.description | translate }}</p>
+                        <img
+                          [src]="item.previewImage"
+                          alt=""
+                          class="img-fluid"
+                        />
+                      </ng-template>
+                      <div
+                        [mdbPopover]="popTemplate"
+                        container="body"
+                        placement="right"
+                        trigger="'hover'"
+                      >
+                        {{ item.name | translate }}
+                      </div>
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="!mandatoryIsNotNeed">
+              <div class="col">
+                <div class="mat-checkbox">
+                  <input
+                    id="isChecked"
+                    [(ngModel)]="recursionModel.field.mandatory"
+                    color="primary"
+                    type="checkbox"
+                  />
+                  <label for="isChecked">{{ 'Mandatory' | translate }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div
           *ngFor="
             let translation of recursionModel.field.translations;
             let translationIndex = index
           "
-          class="mb-3"
+          class="card mb-3"
         >
           <ng-container *ngIf="isLanguageSelected(translation.languageId)">
             <div class="card-header">{{
@@ -46,83 +109,16 @@
               </div>
               <div class="row">
                 <div class="col-12">
-                  <div class="md-form">
-                    <p class="text-black-50">
-                      {{ 'Description' | translate }}
-                    </p>
-                    <pell-editor
-                      mdbInput
-                      [(value)]="translation.description"
-                      name="newFieldDescriptionTranslation_{{
-                        translationIndex
-                      }}"
-                      required
-                      id="newFieldDescriptionTranslation_{{ translationIndex }}"
-                      rows="10"
-                    ></pell-editor>
-                  </div>
+                  <formatting-text-editor
+                    [(value)]="translation.description"
+                    [placeholder]="'Description' | translate"
+                    id="newFieldDescriptionTranslation_{{ translationIndex }}"
+                  >
+                  </formatting-text-editor>
                 </div>
               </div>
             </div>
           </ng-container>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <div class="ng-select-wrapper">
-                  <ng-select
-                    class="custom"
-                    dropdownPosition="'bottom'"
-                    [placeholder]="'Type' | translate"
-                    [clearable]="false"
-                    [bindLabel]="'name'"
-                    [bindValue]="'id'"
-                    [(ngModel)]="recursionModel.field.fieldType"
-                    id="fieldTypeSelector"
-                    [items]="fieldTypes"
-                  >
-                    <ng-template
-                      ng-option-tmp
-                      let-item="item"
-                      let-search="searchTerm"
-                    >
-                      <ng-template #popTemplate>
-                        <p>{{ item.description }}</p>
-                        <img
-                          [src]="item.previewImage"
-                          alt=""
-                          class="img-fluid"
-                        />
-                      </ng-template>
-                      <div
-                        [mdbPopover]="popTemplate"
-                        container="body"
-                        placement="right"
-                        trigger="'hover'"
-                      >
-                        {{ item.name }}
-                      </div>
-                    </ng-template>
-                  </ng-select>
-                </div>
-              </div>
-            </div>
-
-            <div class="row" *ngIf="!mandatoryIsNotNeed">
-              <div class="col">
-                <div class="mat-checkbox">
-                  <input
-                    id="isChecked"
-                    [(ngModel)]="recursionModel.field.mandatory"
-                    color="primary"
-                    type="checkbox"
-                  />
-                  <label for="isChecked">{{ 'Mandatory' | translate }}</label>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <app-visual-editor-additional-field-number
           *ngIf="
@@ -156,6 +152,20 @@
           [selectedLanguages]="selectedLanguages"
         >
         </app-visual-editor-additional-field-options>
+        <app-visual-editor-additional-field-entity-search
+          *ngIf="
+            recursionModel.field.fieldType == eformFieldTypesEnum.EntitySearch
+          "
+          [field]="recursionModel.field"
+        >
+        </app-visual-editor-additional-field-entity-search>
+        <app-visual-editor-additional-field-entity-select
+          *ngIf="
+            recursionModel.field.fieldType == eformFieldTypesEnum.EntitySelect
+          "
+          [field]="recursionModel.field"
+        >
+        </app-visual-editor-additional-field-entity-select>
       </div>
       <div class="modal-footer">
         <button

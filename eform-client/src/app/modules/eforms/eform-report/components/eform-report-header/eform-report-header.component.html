@@ -5,7 +5,8 @@
         <div class="card-body">
           <div class="card z-depth-2 mb-3" style="width: 100%">
             <div class="card-header">
-              <pell-editor [(value)]="reportModel.description"></pell-editor>
+              <formatting-text-editor [(value)]="reportModel.description">
+              </formatting-text-editor>
             </div>
           </div>
         </div>
@@ -13,8 +14,19 @@
       <div class="col-md-3 text-center">
         <div class="card-body">
           <div class="card z-depth-2 mb-3" style="width: 100%">
-            <div class="card-header hoverable" (click)="showCropper()" style="border: 2px dashed #c5c5c5; cursor: pointer">
-              <img [src]="reportModel.headerImage || '../../../../../../assets/images/img-placeholder.png'" width="200" height="70"/>
+            <div
+              class="card-header hoverable"
+              (click)="showCropper()"
+              style="border: 2px dashed #c5c5c5; cursor: pointer"
+            >
+              <img
+                [src]="
+                  reportModel.headerImage ||
+                  '../../../../../../assets/images/img-placeholder.png'
+                "
+                width="200"
+                height="70"
+              />
             </div>
           </div>
         </div>
@@ -25,18 +37,24 @@
         <div class="card-header">
           <div class="row align-items-center">
             <div class="col">
-              {{'Deliver the date and time' | translate}}
+              {{ 'Deliver the date and time' | translate }}
             </div>
-            <div class="col">
-              yyyy-mm-dd; tt:mm:ss
-            </div>
+            <div class="col">yyyy-mm-dd; tt:mm:ss</div>
             <div class="col-md-1 text-center">
-              <i class="material-icons material-icon-success material-icon-pointer align-middle"
-                 *ngIf="reportModel.isDateVisible"
-                 (click)="reportModel.isDateVisible = !reportModel.isDateVisible"> visibility </i>
-              <i class="material-icons material-icon-danger material-icon-pointer align-middle"
-                 *ngIf="!reportModel.isDateVisible"
-                 (click)="reportModel.isDateVisible = !reportModel.isDateVisible"> visibility_off </i>
+              <i
+                class="material-icons material-icon-success material-icon-pointer align-middle"
+                *ngIf="reportModel.isDateVisible"
+                (click)="reportModel.isDateVisible = !reportModel.isDateVisible"
+              >
+                visibility
+              </i>
+              <i
+                class="material-icons material-icon-danger material-icon-pointer align-middle"
+                *ngIf="!reportModel.isDateVisible"
+                (click)="reportModel.isDateVisible = !reportModel.isDateVisible"
+              >
+                visibility_off
+              </i>
             </div>
           </div>
         </div>
@@ -45,18 +63,28 @@
         <div class="card-header">
           <div class="row align-items-center">
             <div class="col">
-              {{'Performed by' | translate}}
+              {{ 'Performed by' | translate }}
             </div>
-            <div class="col">
-              WorkerName
-            </div>
+            <div class="col">WorkerName</div>
             <div class="col-md-1 text-center">
-              <i class="material-icons material-icon-success material-icon-pointer align-middle"
-                 *ngIf="reportModel.isWorkerNameVisible"
-                 (click)="reportModel.isWorkerNameVisible = !reportModel.isWorkerNameVisible"> visibility </i>
-              <i class="material-icons material-icon-danger material-icon-pointer align-middle"
-                 *ngIf="!reportModel.isWorkerNameVisible"
-                 (click)="reportModel.isWorkerNameVisible = !reportModel.isWorkerNameVisible"> visibility_off </i>
+              <i
+                class="material-icons material-icon-success material-icon-pointer align-middle"
+                *ngIf="reportModel.isWorkerNameVisible"
+                (click)="
+                  reportModel.isWorkerNameVisible = !reportModel.isWorkerNameVisible
+                "
+              >
+                visibility
+              </i>
+              <i
+                class="material-icons material-icon-danger material-icon-pointer align-middle"
+                *ngIf="!reportModel.isWorkerNameVisible"
+                (click)="
+                  reportModel.isWorkerNameVisible = !reportModel.isWorkerNameVisible
+                "
+              >
+                visibility_off
+              </i>
             </div>
           </div>
         </div>
@@ -65,4 +93,7 @@
   </div>
 </section>
 
-<app-eform-report-cropper #reportCropperModal (onImageCropped)="updateHeaderImage($event)"></app-eform-report-cropper>
+<app-eform-report-cropper
+  #reportCropperModal
+  (onImageCropped)="updateHeaderImage($event)"
+></app-eform-report-cropper>

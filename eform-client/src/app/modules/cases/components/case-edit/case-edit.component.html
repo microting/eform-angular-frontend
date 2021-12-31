@@ -1,13 +1,50 @@
-<eform-subheader [title]="currentTemplate.label" [prioritizeMenuTitle]="true"></eform-subheader>
+<eform-subheader
+  [title]="currentTemplate.label"
+  [forceStaticTitle]="true"
+></eform-subheader>
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-9 col-xs-12" role="main">
+      <!-- Done at user editable -->
+      <div
+        class="card mt-4"
+        style="width: 100%"
+        *ngIf="currentTemplate.isDoneAtEditable"
+      >
+        <div class="card-header">
+          <p class="h4">{{ 'Done at' | translate }}</p>
+        </div>
+        <div class="card-body">
+          <div class="md-form md-form-case-elem" [owlDateTimeTrigger]="dt1">
+            <div class="md-form" [owlDateTimeTrigger]="dt1">
+              <i class="material-icons prefix">calendar_today</i>
+              <input
+                mdbInput
+                [owlDateTime]="dt1"
+                [(ngModel)]="replyElement.doneUserEditable"
+                type="text"
+                id="doneUserEditable"
+                name="doneUserEditable"
+                class="form-control"
+              />
+              <label for="doneUserEditable">{{
+                'Select date' | translate
+              }}</label>
+              <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elements loop -->
       <app-case-edit-element
         [element]="elem"
         *ngFor="let elem of replyElement.elementList"
       ></app-case-edit-element>
     </div>
+
+    <!-- Right section with navigation -->
     <div class="col-md-3">
       <div class="card sticky-top mb-4 mt-4" style="width: 100%; z-index: 1">
         <div class="card-header">
@@ -33,7 +70,13 @@
         </div>
         <div class="card-footer">
           <div
-            class="d-flex justify-content-center align-items-center flex-column mt-2"
+            class="
+              d-flex
+              justify-content-center
+              align-items-center
+              flex-column
+              mt-2
+            "
             *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)"
           >
             <div>

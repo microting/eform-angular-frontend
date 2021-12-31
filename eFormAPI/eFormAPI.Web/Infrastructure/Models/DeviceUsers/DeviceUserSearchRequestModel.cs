@@ -23,8 +23,10 @@ SOFTWARE.
 */
 namespace eFormAPI.Web.Infrastructure.Models.DeviceUsers
 {
-    public class DeviceUserSearchRequestModel
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+    public class DeviceUserSearchRequestModel: FilterAndSortModel
     {
-        public string NameFilter { get; set; }
+        //public string NameFilter { get; set; }
     }
 }

@@ -36,7 +36,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   @Output()
   addNewField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   @Output()
-  // tslint:disable-next-line:max-line-length
+  // eslint-disable-next-line max-len
   fieldPositionChanged: EventEmitter<EformVisualEditorFieldsDnDRecursionModel> = new EventEmitter<EformVisualEditorFieldsDnDRecursionModel>();
   @Output()
   deleteField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();

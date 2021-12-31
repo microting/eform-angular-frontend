@@ -13,3 +13,31 @@
   </div>
   <ng-content></ng-content>
 </div>
+<div class="heading-bg" *ngIf="breadcrumbs">
+  <!--  <div>-->
+  <!--    <ol class="breadcrumb">-->
+  <!--      <li-->
+  <!--        class="breadcrumb-item"-->
+  <!--        [class]="isLast ? 'active' : ''"-->
+  <!--        *ngFor="let breadcrumbItem of breadcrumbs; last as isLast"-->
+  <!--      >-->
+  <!--        <a *ngIf="breadcrumbItem.href" [href]="breadcrumbItem.href">{{-->
+  <!--          breadcrumbItem.name-->
+  <!--        }}</a>-->
+  <!--        <div *ngIf="!breadcrumbItem.href">{{ breadcrumbItem.name }}</div>-->
+  <!--      </li>-->
+  <!--    </ol>-->
+  <!--  </div>-->
+
+  <mdb-breadcrumb>
+    <mdb-breadcrumb-item
+      [class]="isLast ? 'active' : ''"
+      *ngFor="let breadcrumbItem of breadcrumbs; last as isLast"
+    >
+      <a *ngIf="breadcrumbItem.href" [routerLink]="breadcrumbItem.href">{{
+        breadcrumbItem.name
+      }}</a>
+      <div *ngIf="!breadcrumbItem.href">{{ breadcrumbItem.name }}</div>
+    </mdb-breadcrumb-item>
+  </mdb-breadcrumb>
+</div>

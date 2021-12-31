@@ -1,0 +1,10 @@
+<form [formGroup]="form">
+  <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" [disabled]="disabled">
+  </ngx-editor-menu>
+  <ngx-editor
+    [editor]="editor"
+    formControlName="editorContent"
+    [placeholder]="placeholder"
+  >
+  </ngx-editor>
+</form>

@@ -5,5 +5,5 @@ export class LoginPageSettingsModel {
   secondaryTextVisible: boolean;
   imageLink: string;
   imageLinkVisible: boolean;
-  isSMTPExists: boolean;
+  isSendGridExists: boolean;
 }

@@ -18,6 +18,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   }
 
   async checkListCountAll(): Promise<number> {
+    await browser.pause(1000);
     return (await $$('[id^="checkListSection"]')).length;
   }
   async checkListCountOnFirsLevel(): Promise<number> {
@@ -25,6 +26,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   }
 
   async fieldsCountOnFirsLevel(): Promise<number> {
+    await browser.pause(1000);
     return (await $$('[id*=field_]')).length;
   }
 
@@ -59,14 +61,14 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   async initialFieldCreateBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#initialFieldCreateBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
-    // await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   async initialChecklistCreateBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#initialChecklistCreateBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
-    // await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -192,7 +194,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
           await (
             await (
               await this.mainCheckListDescriptionTranslationByLanguageId(i)
-            ).$(`.pell-content`)
+            ).$(`.NgxEditor__Content`)
           ).setValue(checklist.translations[i].description);
         }
       }
@@ -240,7 +242,9 @@ class EformVisualEditorPage extends PageWithNavbarPage {
             checklist.translations[i].name
           );
           await (
-            await $(`#newChecklistDescriptionTranslation_${i} .pell-content`)
+            await $(
+              `#newChecklistDescriptionTranslation_${i} .NgxEditor__Content`
+            )
           ).setValue(checklist.translations[i].description);
         }
       }
@@ -282,7 +286,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       if (!addNewNestedFieldBtn) {
         await (await this.initialFieldCreateBtn()).click();
       } else {
-        addNewNestedFieldBtn.click();
+        await addNewNestedFieldBtn.click();
       }
       await (await this.changeFieldSaveCancelBtn()).waitForClickable({
         timeout: 40000,
@@ -293,7 +297,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
             checklistFieldObj.translations[i].name
           );
           await (
-            await $(`#newFieldDescriptionTranslation_${i} .pell-content`)
+            await $(`#newFieldDescriptionTranslation_${i} .NgxEditor__Content`)
           ).setValue(checklistFieldObj.translations[i].description);
         }
       }
@@ -417,7 +421,9 @@ export class MainCheckListRowObj {
             await $(`#mainCheckListNameTranslation_${i}`)
           ).getValue(),
           description: await (
-            await $(`#mainCheckListDescriptionTranslation_${i} .pell-content`)
+            await $(
+              `#mainCheckListDescriptionTranslation_${i} .NgxEditor__Content`
+            )
           ).getText(),
           id: null,
         });
@@ -437,7 +443,9 @@ export class MainCheckListRowObj {
             checklist.translations[i].name
           );
           await (
-            await $(`#mainCheckListDescriptionTranslation_${i} .pell-content`)
+            await $(
+              `#mainCheckListDescriptionTranslation_${i} .NgxEditor__Content`
+            )
           ).setValue(checklist.translations[i].description);
         }
       }
@@ -520,7 +528,7 @@ export class ChecklistFieldRowObj {
     }
     if (this.element) {
       const str: string[] = (
-        await (await (await this.element).$('.col-6')).getText()
+        await (await this.element.$('.col-6')).getText()
       )
         .replace('drag_handle ', '') // delete not need word
         .split('; '); // split name and type
@@ -530,7 +538,7 @@ export class ChecklistFieldRowObj {
       this.editBtn = await this.element.$('#editBtn');
       this.copyBtn = await this.element.$('#copyBtn');
       this.moveFieldBtn = await this.element.$('#moveFieldBtn');
-      this.fieldIsNotComplete = !!this.element.$('#isNotFieldComplete');
+      this.fieldIsNotComplete = !!(await this.element.$('#isNotFieldComplete'));
       const backgroundColor = (
         await (await this.element.$('div>div')).getCSSProperty(
           'background-color'
@@ -539,7 +547,7 @@ export class ChecklistFieldRowObj {
       this.color = eformVisualEditorElementColors.find(
         (x) => x.name === backgroundColor.replace('#', '')
       );
-      const colorMas = this.element.$$('#colors >*');
+      const colorMas = await this.element.$$('#colors >*');
       this.colorsBtn = {
         standard: colorMas[0],
         green: colorMas[1],
@@ -694,7 +702,7 @@ export class ChecklistRowObj {
         ).getValue();
         translation.description = await (
           await $(
-            `#newChecklistDescriptionTranslation_${selectedLanguages[i]} .pell-content`
+            `#newChecklistDescriptionTranslation_${selectedLanguages[i]} .NgxEditor__Content`
           )
         ).getText();
         this.translations.push(translation);
@@ -747,7 +755,9 @@ export class ChecklistRowObj {
           translations[i].name
         );
         await (
-          await $(`#newChecklistDescriptionTranslation_${i} .pell-content`)
+          await $(
+            `#newChecklistDescriptionTranslation_${i} .NgxEditor__Content`
+          )
         ).setValue(translations[i].description);
       }
     }

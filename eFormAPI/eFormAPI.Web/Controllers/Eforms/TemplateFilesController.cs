@@ -23,6 +23,10 @@ SOFTWARE.
 */
 
 
+using System.Collections.Generic;
+using System.Linq;
+using eFormCore;
+
 namespace eFormAPI.Web.Controllers.Eforms
 {
     using Abstractions;
@@ -187,14 +191,22 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"{fileType}"));
             }
 
-            if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+            try
             {
-                var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
+                if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+                {
+                    var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
 
-                Response.ContentLength = ss.ContentLength;
+                    Response.ContentLength = ss.ContentLength;
 
-                return File(ss.ResponseStream, ss.Headers["Content-Type"]);
+                    return File(ss.ResponseStream, ss.Headers["Content-Type"]);
+                }
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return NotFound($"Trying to find file at location: {filePath}");
             }
+
 
             if (!System.IO.File.Exists(filePath))
             {
@@ -225,7 +237,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 }
                 else
                 {
-                    return RotateImageLocal(filePath);
+                    return await RotateImageLocal(filePath);
                 }
             }
 
@@ -348,7 +360,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                     var filePath = await core.CaseToJasperXml(caseDto, replyElement, (int)caseId,
                         DateTime.Now.ToString("yyyyMMddHHmmssffff"),
                         $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/",
-                        "");
+                        "", language);
                     if (!System.IO.File.Exists(filePath))
                     {
                         return NotFound();
@@ -419,7 +431,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 Directory.CreateDirectory(zipArchiveFolder);
                 if (uploadModel.File.Length > 0)
                 {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    await using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await uploadModel.File.CopyToAsync(stream);
                     }
@@ -505,79 +517,71 @@ namespace eFormAPI.Web.Controllers.Eforms
             var result =  await core.GetFileFromSwiftStorage(fileName);
             var filePath = Path.Combine("tmp",fileName);
             var fileStream = System.IO.File.Create(filePath);
-            result.ObjectStreamContent.CopyTo(fileStream);
+            await result.ObjectStreamContent.CopyToAsync(fileStream);
 
             fileStream.Close();
-            fileStream.Dispose();
+            await fileStream.DisposeAsync();
 
             result.ObjectStreamContent.Close();
-            result.ObjectStreamContent.Dispose();
-            try
-            {
-                using (var image = new MagickImage(filePath))
-                {
-                    image.Rotate(90);
-                    image.Write(filePath);
-                }
-                await core.PutFileToStorageSystem(filePath, fileName);
-            }
-            catch (Exception e)
-            {
-                if (e.Message == "A generic error occurred in GDI+.")
-                {
-                    return new OperationResult(false);
-                }
-
-                return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
-            }
-            finally
-            {
-                System.IO.File.Delete(filePath);
-            }
-
-            return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
+            await result.ObjectStreamContent.DisposeAsync();
+            return await RotateFileAndPutToStorage(filePath, core, fileName);
         }
 
         private async Task<OperationResult> RotateImageS3(string fileName)
         {
+            var fileId = int.Parse(fileName.Split('_').First());
             var core = await _coreHelper.GetCore();
+            var dbContext = core.DbContextHelper.GetDbContext();
+            Microting.eForm.Infrastructure.Data.Entities.UploadedData uploadedDataObj = await dbContext.UploadedDatas.SingleAsync(x => x.Id == fileId);
             var result =  await core.GetFileFromS3Storage(fileName);
-            var filePath = Path.Combine("tmp",fileName);
+            var filePath = Path.Combine(Path.GetTempPath(),fileName);
             var fileStream = System.IO.File.Create(filePath);
-            result.ResponseStream.CopyTo(fileStream);
+            await result.ResponseStream.CopyToAsync(fileStream);
 
             fileStream.Close();
-            fileStream.Dispose();
+            await fileStream.DisposeAsync();
 
             result.ResponseStream.Close();
-            result.ResponseStream.Dispose();
-            try
+            await result.ResponseStream.DisposeAsync();
+            string smallFilename = $"{uploadedDataObj.Id}_300_{uploadedDataObj.Checksum}{uploadedDataObj.Extension}"; //uploadedDataObj.Id + "_300_" + uploadedDataObj.Checksum;
+            string bigFilename = $"{uploadedDataObj.Id}_700_{uploadedDataObj.Checksum}{uploadedDataObj.Extension}";//uploadedDataObj.Id + "_700_" + urlStr.Remove(0, index);
+            System.IO.File.Copy(filePath, Path.Combine(Path.GetTempPath(), smallFilename));
+            System.IO.File.Copy(filePath, Path.Combine(Path.GetTempPath(), bigFilename));
+            string filePathResized = Path.Combine(Path.GetTempPath(), smallFilename);
+            using (var image = new MagickImage(filePathResized))
             {
-                using (var image = new MagickImage(filePath))
-                {
-                    image.Rotate(90);
-                    image.Write(filePath);
-                }
-                await core.PutFileToStorageSystem(filePath, fileName);
-            }
-            catch (Exception e)
-            {
-                if (e.Message == "A generic error occurred in GDI+.")
-                {
-                    return new OperationResult(false);
-                }
+                decimal currentRation = image.Height / (decimal) image.Width;
+                int newWidth = 300;
+                int newHeight = (int) Math.Round((currentRation * newWidth));
 
-                return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
-            }
-            finally
-            {
-                System.IO.File.Delete(filePath);
-            }
+                image.Resize(newWidth, newHeight);
+                image.Crop(newWidth, newHeight);
+                await image.WriteAsync(filePathResized);
+                image.Dispose();
+                await RotateFileAndPutToStorage(Path.Combine(Path.GetTempPath(), smallFilename), core, smallFilename);
 
-            return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
+            }
+            System.IO.File.Delete(filePathResized);
+            filePathResized = Path.Combine(Path.GetTempPath(), bigFilename);
+            using (var image = new MagickImage(filePathResized))
+            {
+                decimal currentRation = image.Height / (decimal) image.Width;
+                int newWidth = 700;
+                int newHeight = (int) Math.Round((currentRation * newWidth));
+
+                image.Resize(newWidth, newHeight);
+                image.Crop(newWidth, newHeight);
+                await image.WriteAsync(filePathResized);
+                image.Dispose();
+                await RotateFileAndPutToStorage(Path.Combine(Path.GetTempPath(), bigFilename), core, bigFilename);
+            }
+            System.IO.File.Delete(filePathResized);
+            // await RotateFileAndPutToStorage(Path.Combine(Path.GetTempPath(), smallFilename), core, smallFilename);
+            // await RotateFileAndPutToStorage(Path.Combine(Path.GetTempPath(), bigFilename), core, bigFilename);
+            return await RotateFileAndPutToStorage(filePath, core, fileName);
         }
 
-        private OperationResult RotateImageLocal(string filePath)
+        private async Task<OperationResult> RotateImageLocal(string filePath)
         {
             if (!System.IO.File.Exists(filePath))
             {
@@ -587,11 +591,9 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             try
             {
-                using (var image = new MagickImage(filePath))
-                {
-                    image.Rotate(90);
-                    image.Write(filePath);
-                }
+                using var image = new MagickImage(filePath);
+                image.Rotate(90);
+                await image.WriteAsync(filePath);
             }
             catch (Exception e)
             {
@@ -603,6 +605,33 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
             }
 
+            return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
+        }
+
+        private async Task<OperationResult> RotateFileAndPutToStorage(string filePath, Core core, string fileName)
+        {
+            try
+            {
+                using (var image = new MagickImage(filePath))
+                {
+                    image.Rotate(90);
+                    await image.WriteAsync(filePath);
+                }
+                await core.PutFileToStorageSystem(filePath, fileName);
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "A generic error occurred in GDI+.")
+                {
+                    return new OperationResult(false);
+                }
+
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
+            }
+            finally
+            {
+                System.IO.File.Delete(filePath);
+            }
             return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
         }
 

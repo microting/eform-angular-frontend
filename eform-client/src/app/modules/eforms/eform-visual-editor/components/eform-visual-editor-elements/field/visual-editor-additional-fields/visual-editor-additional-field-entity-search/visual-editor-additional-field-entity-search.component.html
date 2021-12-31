@@ -1,0 +1,20 @@
+<div class="card mt-3">
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <div class="md-form ng-select-wrapper">
+          <ng-select
+            [items]="entitySearchableGroups"
+            bindLabel="name"
+            [placeholder]="'Selected entity group search' | translate"
+            bindValue="id"
+            [typeahead]="typeahead"
+            [(ngModel)]="field.entityGroupId"
+            id="createPlanningSelector"
+          >
+          </ng-select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
