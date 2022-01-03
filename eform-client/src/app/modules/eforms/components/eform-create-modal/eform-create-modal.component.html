@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3>{{ 'Create eForm' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
+        <button class="close" data-dismiss="modal" (click)="modalRef.close()">
           <span>×</span>
         </button>
       </div>
@@ -54,7 +54,7 @@
                 [disabled]="!eFormCreateModel.eFormXml"
                 (click)="createTemplate()">{{'Create' | translate}}
         </button>
-        <button mdbRipple id="cancelCreateEformBtn" class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Close' |
+        <button mdbRipple id="cancelCreateEformBtn" class="btn-light text-black-50 btn-small-height" (click)="frame.hide()">{{'Close' |
           translate}}
         </button>
       </div>

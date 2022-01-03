@@ -2,7 +2,7 @@
   <div class="p-3">
     <button
       mdbRipple
-      class="btn-accent text-black-50 btn-icon"
+      class="btn btn-light text-black-50 btn-icon"
       id="importEformsBtn"
       mdbTooltip="{{ 'Import eforms' | translate }}"
       *ngIf="userClaims.eformsCreate"
@@ -12,7 +12,7 @@
     </button>
     <button
       mdbRipple
-      class="btn-accent text-black-50 btn-icon"
+      class="btn btn-light text-black-50 btn-icon"
       id="eformsManageTagsBtn"
       (click)="openTagsModal()"
       mdbTooltip="{{ 'Manage tags' | translate }}"
@@ -22,7 +22,7 @@
     </button>
     <a
       mdbRipple
-      class="btn-success btn-icon"
+      class="btn btn-success btn-icon"
       id="eformsVisualEditor"
       *ngIf="authStateService.isAdmin"
       [routerLink]="['visual-editor']"
@@ -32,7 +32,7 @@
     </a>
     <button
       mdbRipple
-      class="btn-success btn-icon"
+      class="btn btn-success btn-icon"
       mdbTooltip="
       {{ 'New eForm from XML' | translate }}"
       id="newEFormBtn"
@@ -182,7 +182,7 @@
                   id="eform-add-btn-{{ i }}"
                   mdbRipple
                   type="button"
-                  class="btn-accent text-black-50 btn-icon mb-2 btn"
+                  class="btn-light text-black-50 btn-icon mb-2 btn"
                   (click)="openPairingModal(templateDto)"
                   mdbTooltip="{{
                     'Click to pair eForm with user(s)' | translate
@@ -286,7 +286,7 @@
             <div class="d-flex flex-row justify-content-center">
               <button
                 mdbRipple
-                class="btn-accent text-black-50 btn-icon mb-2"
+                class="btn-light text-black-50 btn-icon mb-2"
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -306,7 +306,7 @@
               </button>
               <button
                 mdbRipple
-                class="btn-accent text-black-50 btn-icon mb-2"
+                class="btn-light text-black-50 btn-icon mb-2"
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -326,7 +326,7 @@
               </button>
               <button
                 mdbRipple
-                class="btn-accent text-black-50 btn-icon mb-2"
+                class="btn-light text-black-50 btn-icon mb-2"
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -346,7 +346,7 @@
               </button>
               <button
                 mdbRipple
-                class="btn-accent text-black-50 btn-icon mb-2"
+                class="btn-light text-black-50 btn-icon mb-2"
                 *ngIf="
                   templateDto.excelExportEnabled &&
                   templateDto.hasCases &&
@@ -367,7 +367,7 @@
               </button>
               <button
                 mdbRipple
-                class="btn-accent text-black-50 btn-icon mb-2"
+                class="btn-light text-black-50 btn-icon mb-2"
                 id="upload-zip-btn"
                 (click)="uploadZipFile(templateDto)"
                 *ngIf="
@@ -384,7 +384,7 @@
                   size="lg"
                 ></fa-icon>
               </button>
-              <!--            <button mdbRipple class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"-->
+              <!--            <button mdbRipple class="btn-light text-black-50 btn-icon mb-2" id="eform-report-button"-->
               <!--                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"-->
               <!--                    [routerLink]="['./report', templateDto.id]"-->
               <!--                    mdbTooltip="{{ 'Jasper Report' | translate }}">-->
@@ -400,38 +400,38 @@
   <!--pagination(if required)-->
 </div>
 
-<app-eform-create-modal
-  [availableTags]="availableTags"
-  (onEformCreated)="loadAllTags()"
-  #modalNewEform
-></app-eform-create-modal>
-<app-eform-column-modal #modalCasesColumns></app-eform-column-modal>
-<app-eform-edit-paring-modal
-  (deploymentFinished)="loadAllTemplates()"
-  #modalParing
-></app-eform-edit-paring-modal>
-<app-eform-edit-tags-modal
-  [availableTags]="availableTags"
-  (onEFormTagsUpdated)="loadAllTemplates()"
-  #modalEditTags
-></app-eform-edit-tags-modal>
-<app-eform-remove-eform-modal
-  (onEFormDeleted)="loadAllTemplates()"
-  #modalRemoveEform
-></app-eform-remove-eform-modal>
-<app-eform-upload-zip-modal #modalUploadZip></app-eform-upload-zip-modal>
-<app-eforms-bulk-import-modal
-  (importFinished)="loadAllTags()"
-  #modalEformsImport
-></app-eforms-bulk-import-modal>
-<app-eforms-tags
-  #modalTags
-  [availableTags]="availableTags"
-  (tagsChanged)="loadAllTags()"
->
-</app-eforms-tags>
-<app-eform-duplicate-confirm-modal
-  #duplicateConfirm
-  (eFormDuplicated)="loadAllTemplates()"
->
-</app-eform-duplicate-confirm-modal>
+<!--<app-eform-create-modal-->
+<!--  [availableTags]="availableTags"-->
+<!--  (onEformCreated)="loadAllTags()"-->
+<!--  #modalNewEform-->
+<!--&gt;</app-eform-create-modal>-->
+<!--<app-eform-column-modal #modalCasesColumns></app-eform-column-modal>-->
+<!--<app-eform-edit-paring-modal-->
+<!--  (deploymentFinished)="loadAllTemplates()"-->
+<!--  #modalParing-->
+<!--&gt;</app-eform-edit-paring-modal>-->
+<!--<app-eform-edit-tags-modal-->
+<!--  [availableTags]="availableTags"-->
+<!--  (onEFormTagsUpdated)="loadAllTemplates()"-->
+<!--  #modalEditTags-->
+<!--&gt;</app-eform-edit-tags-modal>-->
+<!--<app-eform-remove-eform-modal-->
+<!--  (onEFormDeleted)="loadAllTemplates()"-->
+<!--  #modalRemoveEform-->
+<!--&gt;</app-eform-remove-eform-modal>-->
+<!--<app-eform-upload-zip-modal #modalUploadZip></app-eform-upload-zip-modal>-->
+<!--<app-eforms-bulk-import-modal-->
+<!--  (importFinished)="loadAllTags()"-->
+<!--  #modalEformsImport-->
+<!--&gt;</app-eforms-bulk-import-modal>-->
+<!--<app-eforms-tags-->
+<!--  #modalTags-->
+<!--  [availableTags]="availableTags"-->
+<!--  (tagsChanged)="loadAllTags()"-->
+<!--&gt;-->
+<!--</app-eforms-tags>-->
+<!--<app-eform-duplicate-confirm-modal-->
+<!--  #duplicateConfirm-->
+<!--  (eFormDuplicated)="loadAllTemplates()"-->
+<!--&gt;-->
+<!--</app-eform-duplicate-confirm-modal>-->

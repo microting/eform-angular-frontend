@@ -19,6 +19,8 @@ import {
 import { saveAs } from 'file-saver';
 import { EformsStateService } from '../../store';
 import { AuthStateService } from 'src/app/common/store';
+import {MdbModalRef, MdbModalService} from 'mdb-angular-ui-kit/modal';
+import {EformCreateModalComponent} from 'src/app/modules/eforms/components';
 
 @Component({
   selector: 'app-eform-page',
@@ -36,6 +38,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalTags', { static: true }) modalTags;
   @ViewChild('duplicateConfirm', { static: true }) duplicateConfirm;
 
+  modalRef: MdbModalRef<EformCreateModalComponent>;
   searchSubject = new Subject();
   templateListModel: TemplateListModel = new TemplateListModel();
   eformPermissionsSimpleModel: Array<EformPermissionsSimpleModel> = [];
@@ -69,7 +72,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
     public eformsStateService: EformsStateService,
-    public authStateService: AuthStateService
+    public authStateService: AuthStateService,
+    private modalService: MdbModalService
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe((val: string) => {
       this.eformsStateService.updateNameFilter(val);
@@ -164,7 +168,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   openNewEformModal() {
-    this.newEformModal.show();
+    this.modalRef = this.modalService.open(EformCreateModalComponent);
+    // this.newEformModal.show();
   }
 
   openEditColumnsModal(templateDto: TemplateDto) {

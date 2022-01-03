@@ -42,7 +42,7 @@
                   mdbRipple
                   *ngIf="plugin.status == statusEnum.Disabled"
                   mdbTooltip="{{ 'Activate plugin' | translate }}"
-                  class="btn-accent text-black-50 btn-icon mb-2"
+                  class="btn-light text-black-50 btn-icon mb-2"
                   (click)="openPluginModal(plugin, statusEnum.Enabled)"
                 >
                   <fa-icon icon="toggle-on"></fa-icon>
@@ -59,7 +59,7 @@
 
                 <!--          {{statusEnum[plugin.status] | translate}}-->
               </div>
-              <!--            <button mdbRipple class="btn-accent text-black-50 btn-icon mb-2"-->
+              <!--            <button mdbRipple class="btn-light text-black-50 btn-icon mb-2"-->
               <!--                    mdbTooltip="{{'Edit Settings' | translate}}"-->
               <!--                    (click)="showEditModal(plugin)"-->
               <!--                    mdbWavesEffect id="plugin-settings-btn">-->
@@ -83,7 +83,7 @@
               <a
                 mdbRipple
                 *ngIf="plugin.status == statusEnum.Enabled"
-                class="btn-accent text-black-50 btn-icon mb-2"
+                class="btn-light text-black-50 btn-icon mb-2"
                 mdbTooltip="{{ 'Plugin Settings Page' | translate }}"
                 routerLink="/plugins/{{ plugin.baseUrl }}/settings"
                 style="margin: 0.375rem"

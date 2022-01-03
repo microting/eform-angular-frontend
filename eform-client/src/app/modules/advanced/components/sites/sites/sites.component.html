@@ -2,7 +2,7 @@
   <div class="p-3">
     <button
       mdbRipple
-      class="btn-accent text-black-50 btn-icon"
+      class="btn-light text-black-50 btn-icon"
       id="sitesManageTagsBtn"
       (click)="openEditTagsModal()"
       mdbTooltip="{{ 'Manage tags' | translate }}"
@@ -65,7 +65,7 @@
             <div class="d-flex flex-row justify-content-center">
               <button
                 mdbRipple
-                class="btn-accent text-black-50 btn-icon mb-2"
+                class="btn-light text-black-50 btn-icon mb-2"
                 id="editSiteBtn"
                 *ngIf="userClaims.sitesUpdate"
                 mdbTooltip="{{ 'Edit site' | translate }}"

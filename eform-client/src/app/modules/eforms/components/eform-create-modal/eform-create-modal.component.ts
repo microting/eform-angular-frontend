@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {EFormCreateModel} from 'src/app/common/models/eforms';
 import {EFormService} from 'src/app/common/services/eform';
+import {MdbModalRef} from 'mdb-angular-ui-kit/modal';
 
 @Component({
   selector: 'app-eform-create-modal',
@@ -14,7 +15,8 @@ export class EformCreateModalComponent implements OnInit {
   @Output() onEformCreated: EventEmitter<void> = new EventEmitter<void>();
   eFormCreateModel: EFormCreateModel = new EFormCreateModel();
 
-  constructor(private eFormService: EFormService) {
+  constructor(private eFormService: EFormService,
+              public modalRef: MdbModalRef<EformCreateModalComponent>) {
   }
 
   ngOnInit() {
@@ -32,7 +34,7 @@ export class EformCreateModalComponent implements OnInit {
       if (operation && operation.success) {
         this.onEformCreated.emit();
         this.eFormCreateModel = new EFormCreateModel;
-        this.frame.hide();
+        this.modalRef.close();
       }
     }));
   }
