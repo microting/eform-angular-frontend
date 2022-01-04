@@ -25,7 +25,7 @@
       mdbBtn
       class="btn-success btn-icon"
       id="eformsVisualEditor"
-      *ngIf="authStateService.isAdmin"
+      *ngIf="userClaims.eformsCreate"
       [routerLink]="['visual-editor']"
       mdbTooltip="{{ 'New eForm' | translate }}"
       mdbWavesEffect
