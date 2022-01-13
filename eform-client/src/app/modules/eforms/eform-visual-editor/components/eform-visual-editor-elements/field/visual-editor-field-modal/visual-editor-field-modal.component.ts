@@ -102,10 +102,12 @@ export class VisualEditorFieldModalComponent implements OnInit {
       this.recursionModel.field.translations = fixTranslations(
         this.recursionModel.field.translations
       ).map((x, i) => {
-        // @ts-ignore
-        x.defaultValue =
-          this.recursionModel.field.translations[i].defaultValue ?? '';
-        return x as EformVisualEditorTranslationWithDefaultValue;
+        if (this.recursionModel.field.translations.length > i) {
+          // @ts-ignore
+          x.defaultValue =
+            this.recursionModel.field.translations[i].defaultValue ?? '';
+          return x as EformVisualEditorTranslationWithDefaultValue;
+        }
       });
     } else {
       if (!model) {
