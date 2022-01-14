@@ -99,7 +99,7 @@
     "@types/node": "17.0.8",
     "@typescript-eslint/eslint-plugin": "5.9.0",
     "@typescript-eslint/parser": "5.9.0",
-    "@wdio/cli": "7.16.12",
+    "@wdio/cli": "7.16.13",
     "@wdio/local-runner": "7.16.13",
     "@wdio/mocha-framework": "7.16.11",
     "@wdio/spec-reporter": "7.16.11",
