@@ -3,6 +3,16 @@ import {
   CommonDictionaryModel,
   EformVisualEditorFieldTypeModel,
 } from 'src/app/common/models';
+import {TranslateService} from '@ngx-translate/core';
+
+export function getTranslatedTypes(translateService: TranslateService): EformVisualEditorFieldTypeModel[] {
+  let translatedTypes: EformVisualEditorFieldTypeModel[] = [];
+  eformVisualEditorElementTypes.map((x) => {
+    translateService.get(x.name).
+    subscribe(y => translatedTypes = [...translatedTypes, {...x, name: y}])
+  })
+  return translatedTypes;
+}
 
 export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = [
   {

@@ -16,10 +16,11 @@ import {
   EformVisualEditorRecursionFieldModel,
   EformVisualEditorTranslationWithDefaultValue,
 } from 'src/app/common/models';
-import { eformVisualEditorElementTypes } from '../../../../const/eform-visual-editor-element-types';
+import {getTranslatedTypes} from '../../../../const/eform-visual-editor-element-types';
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
 import {AuthStateService} from 'src/app/common/store';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-visual-editor-field-modal',
@@ -51,12 +52,12 @@ export class VisualEditorFieldModalComponent implements OnInit {
     ];
     if (this.recursionModel.fieldIsNested) {
       this.fieldTypes = [
-        ...eformVisualEditorElementTypes.filter(
+        ...getTranslatedTypes(this.translateService).filter(
           (x) => x.id !== EformFieldTypesEnum.FieldGroup
         ),
       ];
     } else {
-      this.fieldTypes = [...eformVisualEditorElementTypes];
+      this.fieldTypes = [...getTranslatedTypes(this.translateService)];
     }
     if(!this.authStateService.isAdmin){
       this.fieldTypes = this.fieldTypes.filter(x => !typesForAdminOnly.includes(x.id));
@@ -85,7 +86,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   //   return !this.recursionModel.field.translations.find((x) => x.name !== '');
   // }
 
-  constructor(private authStateService: AuthStateService) {}
+  constructor(private authStateService: AuthStateService, private translateService: TranslateService,) {}
 
   ngOnInit() {
     // this.setSelectedLanguage();
