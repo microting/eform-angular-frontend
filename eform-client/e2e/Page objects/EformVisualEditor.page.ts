@@ -303,7 +303,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       }
       if (checklistFieldObj.type) {
         await (await (await this.fieldTypeSelector()).$('input')).setValue(
-          EformFieldTypesEnum[checklistFieldObj.type]
+          DanishEformFieldTypesEnum[checklistFieldObj.type]
         );
         const option = await (await this.fieldTypeSelector()).$('.ng-option');
         await option.waitForDisplayed({ timeout: 40000 });
@@ -386,6 +386,28 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       await (await checkbox.$('..')).click();
     }
   }
+}
+
+export enum DanishEformFieldTypesEnum {
+  Text = 1,
+  'Numerisk',
+  'Infoboks',
+  'Afkrysning',
+  'Billede',
+  Audio,
+  Movie,
+  'Rullemenu',
+  'Tekst',
+  'Rullemenu multi',
+  'Dato',
+  'Underskrift',
+  'Start/Stop-tid',
+  'Rullemenu søgbar',
+  'Rullemenu liste',
+  'PDF',
+  'Gruppe',
+  'GemKnap',
+  'Tæller',
 }
 
 const eformVisualEditorPage = new EformVisualEditorPage();
@@ -580,6 +602,7 @@ export class ChecklistFieldRowObj {
   }
 
   async makeCopy() {
+    await this.copyBtn.scrollIntoView();
     await this.copyBtn.click();
   }
 
