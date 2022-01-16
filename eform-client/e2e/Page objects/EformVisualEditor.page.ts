@@ -555,7 +555,7 @@ export class ChecklistFieldRowObj {
         .replace('drag_handle ', '') // delete not need word
         .split('; '); // split name and type
       this.name = str[0];
-      this.type = EformFieldTypesEnum[str[1]];
+      this.type = DanishEformFieldTypesEnum[str[1]];
       this.deleteBtn = await this.element.$('#deleteBtn');
       this.editBtn = await this.element.$('#editBtn');
       this.copyBtn = await this.element.$('#copyBtn');
