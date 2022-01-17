@@ -303,7 +303,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       }
       if (checklistFieldObj.type) {
         await (await (await this.fieldTypeSelector()).$('input')).setValue(
-          EformFieldTypesEnum[checklistFieldObj.type]
+          DanishEformFieldTypesEnum[checklistFieldObj.type]
         );
         const option = await (await this.fieldTypeSelector()).$('.ng-option');
         await option.waitForDisplayed({ timeout: 40000 });
@@ -386,6 +386,28 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       await (await checkbox.$('..')).click();
     }
   }
+}
+
+export enum DanishEformFieldTypesEnum {
+  Text = 1,
+  'Numerisk',
+  'Infoboks',
+  'Afkrysning',
+  'Billede',
+  Audio,
+  Movie,
+  'Rullemenu',
+  'Tekst',
+  'Rullemenu multi',
+  'Dato',
+  'Underskrift',
+  'Start/Stop-tid',
+  'Rullemenu søgbar',
+  'Rullemenu liste',
+  'PDF',
+  'Gruppe',
+  'GemKnap',
+  'Tæller',
 }
 
 const eformVisualEditorPage = new EformVisualEditorPage();
@@ -533,7 +555,7 @@ export class ChecklistFieldRowObj {
         .replace('drag_handle ', '') // delete not need word
         .split('; '); // split name and type
       this.name = str[0];
-      this.type = EformFieldTypesEnum[str[1]];
+      this.type = DanishEformFieldTypesEnum[str[1]];
       this.deleteBtn = await this.element.$('#deleteBtn');
       this.editBtn = await this.element.$('#editBtn');
       this.copyBtn = await this.element.$('#copyBtn');
@@ -580,6 +602,7 @@ export class ChecklistFieldRowObj {
   }
 
   async makeCopy() {
+    await this.copyBtn.scrollIntoView();
     await this.copyBtn.click();
   }
 

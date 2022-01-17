@@ -3,6 +3,7 @@ import {UnitModel} from '../../../../../common/models/advanced';
 import {SiteDto, UnitDto} from '../../../../../common/models/dto';
 import {UnitsService} from '../../../../../common/services/advanced';
 import {DeviceUserService} from 'src/app/common/services/device-users';
+import {DeviceUserRequestModel} from 'src/app/common/models';
 
 @Component({
   selector: 'app-unit-move',
@@ -35,7 +36,7 @@ export class UnitMoveComponent implements OnInit, AfterContentInit {
   }
 
   loadAllSimpleSites() {
-    this.simpleSitesService.getAllDeviceUsers().subscribe((data => {
+    this.simpleSitesService.getDeviceUsersFiltered(new DeviceUserRequestModel).subscribe((data => {
       this.simpleSites = data.model.map((i) => { i.fullName = i.siteName; return i; });
     }));
   }
