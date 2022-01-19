@@ -73,6 +73,7 @@
         </div>
       </div>
       <app-case-edit-switch
+        (needUpdate)="emitNeedUpdate()"
         [dataItemList]="element.dataItemList"
       ></app-case-edit-switch>
       <div class="mt-1 mb-1" *ngIf="element.extraFieldsEnabled">
@@ -90,6 +91,7 @@
           <mdb-card-header>{{ 'Extra picture' | translate }}</mdb-card-header>
           <mdb-card-body>
             <element-picture
+              (pictureUpdated)="emitNeedUpdate()"
               [fieldValues]="element.extraPictures"
             ></element-picture>
           </mdb-card-body>

@@ -12,7 +12,7 @@
       <mdb-card-body>
         <ng-container [ngSwitch]="dataItem.fieldType">
           <ng-container *ngSwitchCase="'Picture'">
-            <element-picture [fieldValues]="dataItem.fieldValues"></element-picture>
+            <element-picture [fieldValues]="dataItem.fieldValues" (pictureUpdated)="emitNeedUpdate()"></element-picture>
           </ng-container>
           <ng-container *ngSwitchCase="'CheckBox'">
             <element-checkbox [(fieldValue)]="dataItem.fieldValues[0]"></element-checkbox>

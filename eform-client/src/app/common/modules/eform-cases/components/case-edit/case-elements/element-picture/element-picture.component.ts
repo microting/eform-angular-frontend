@@ -1,26 +1,41 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {Gallery, GalleryItem, ImageItem} from '@ngx-gallery/core';
 import {Lightbox} from '@ngx-gallery/lightbox';
 import {FieldValueDto} from 'src/app/common/models';
 import {TemplateFilesService} from 'src/app/common/services/cases';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
+import * as R from 'ramda';
 
 @AutoUnsubscribe()
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'element-picture',
   templateUrl: './element-picture.component.html',
   styleUrls: ['./element-picture.component.scss']
 })
 export class ElementPictureComponent implements OnChanges, OnDestroy {
+  @ViewChild('frame', {static: false}) frame;
   @Input() fieldValues: Array<FieldValueDto> = [];
+  @Output() pictureUpdated: EventEmitter<void> = new EventEmitter<void>();
   buttonsLocked = false;
   geoObjects = [];
   images = [];
   galleryImages: GalleryItem[] = [];
-  imageSub$: Subscription;
+  imageIdForUpdate: number;
+  newImageForUpdate: File;
 
-  constructor(private imageService: TemplateFilesService, public gallery: Gallery, public lightbox: Lightbox) {
+  imageSub$: Subscription;
+  rotateImageSub$: Subscription;
+  deleteImageSub$: Subscription;
+  getImageSub$: Subscription;
+  updateImageSub$: Subscription;
+
+  constructor(
+    private imageService: TemplateFilesService,
+    public gallery: Gallery,
+    public lightbox: Lightbox
+  ) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -59,7 +74,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
     this.galleryImages = [];
     this.images = this.images.sort((a, b) => a.fileName.localeCompare(b.fileName));
     this.images.forEach(value => {
-      this.galleryImages.push( new ImageItem({ src: value.src, thumb: value.thumbnail }));
+      this.galleryImages.push(new ImageItem({src: value.src, thumb: value.thumbnail}));
     });
   }
 
@@ -69,19 +84,20 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
 
   deletePicture(image: any) {
     this.buttonsLocked = true;
-    this.imageService.deleteImage(image.fileName, image.fieldId, image.uploadedObjId).subscribe((data) => {
+    this.deleteImageSub$ = this.imageService.deleteImage(image.fileName, image.fieldId, image.uploadedObjId).subscribe((data) => {
       if (data.success) {
         this.images = this.images.filter(x => x.fileName !== image.fileName);
-      } this.buttonsLocked = false;
+      }
+      this.buttonsLocked = false;
     });
   }
 
   rotatePicture(image: any) {
     this.buttonsLocked = true;
-    this.imageService.rotateImage(image.fileName).subscribe((operation) => {
+    this.rotateImageSub$ = this.imageService.rotateImage(image.fileName).subscribe((operation) => {
       if (operation && operation.success) {
         const fileName = image.fileName + '?noCache=' + Math.floor(Math.random() * 1000).toString();
-        this.imageService.getImage(fileName).subscribe(blob => {
+        this.getImageSub$ = this.imageService.getImage(fileName).subscribe(blob => {
           const imageUrl = URL.createObjectURL(blob);
           const currentImage = this.images.find(x => x.fileName === image.fileName);
           this.images = this.images.filter(x => x.fileName !== image.fileName);
@@ -106,6 +122,24 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
       this.gallery.ref('lightbox', {counter: false, loadingMode: 'indeterminate'}).load(this.galleryImages);
       this.lightbox.open(i);
     }
+  }
+
+  updatePicture() {
+    this.updateImageSub$ = this.imageService
+      .updateImage(this.imageIdForUpdate, this.newImageForUpdate)
+      .subscribe(data => {
+        if (data && data.success) {
+          this.frame.hide();
+          this.imageIdForUpdate = undefined;
+          this.newImageForUpdate = null;
+          this.pictureUpdated.emit();
+        }
+      });
+  }
+
+  onFileSelected(event: Event) {
+    // @ts-ignore
+    this.newImageForUpdate = R.last(event.target.files);
   }
 
   ngOnDestroy(): void {

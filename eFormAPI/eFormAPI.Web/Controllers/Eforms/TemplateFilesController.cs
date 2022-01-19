@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2021 Microting A/S
+Copyright (c) 2007 - 2022 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-
-using System.Collections.Generic;
 using System.Linq;
 using eFormCore;
 
@@ -41,15 +39,17 @@ namespace eFormAPI.Web.Controllers.Eforms
     using Microting.eForm.Dto;
     using Microting.eForm.Infrastructure.Models;
     using Microting.eFormApi.BasePn.Abstractions;
-    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using OpenStack.NetCoreSwiftClient.Extensions;
     using Services.Export;
     using System;
     using System.Globalization;
     using System.IO;
+    using System.Security.Cryptography;
     using System.Threading.Tasks;
     using System.Xml.Linq;
+    using Microsoft.AspNetCore.Http;
+    using Microting.eForm.Infrastructure.Constants;
     using Microting.EformAngularFrontendBase.Infrastructure.Const;
     using Settings = Microting.eForm.Dto.Settings;
 
@@ -229,18 +229,77 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 return await RotateImageSwift(fileName);
             }
-            else
+            if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
             {
-                if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-                {
-                    return await RotateImageS3(fileName);
-                }
-                else
-                {
-                    return await RotateImageLocal(filePath);
-                }
+                return await RotateImageS3(fileName);
             }
+            return await RotateImageLocal(filePath);
 
+        }
+
+        [HttpPut]
+        [Route("api/template-files/image")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
+        public async Task<OperationResult> UpdateImage([FromForm]int uploadedObjId)
+        {
+            try
+            {
+                var newFile = HttpContext.Request.Form.Files.Last();
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var uploadData = await sdkDbContext.UploadedDatas
+                    .Where(x => x.Id == uploadedObjId)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .FirstOrDefaultAsync();
+
+                var fieldValue = await sdkDbContext.FieldValues
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.UploadedDataId == uploadedObjId)
+                    .FirstOrDefaultAsync();
+
+                if (uploadData == null || fieldValue == null)
+                {
+                    return new OperationResult(false, _localizationService.GetString("ImageNotFound"));
+                }
+
+                // delete old image
+                await core.Advanced_DeleteUploadedData((int)fieldValue.FieldId, uploadedObjId);
+
+                var folder = Path.Combine(Path.GetTempPath(), "cases-temp-files");
+                Directory.CreateDirectory(folder);
+
+                var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}.{newFile.FileName.Split(".").Last()}");
+                var hash = "";
+                using (var md5 = MD5.Create())
+                {
+                    await using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await newFile.CopyToAsync(stream);
+                        var grr = await md5.ComputeHashAsync(stream);
+                        hash = BitConverter.ToString(grr).Replace("-", "").ToLower();
+                    }
+                }
+
+                await core.PutFileToStorageSystem(filePath, newFile.FileName);
+
+                var newUploadData = new Microting.eForm.Infrastructure.Data.Entities.UploadedData
+                {
+                    Checksum = hash,
+                    FileName = newFile.FileName,
+                    FileLocation = filePath,
+                };
+                await newUploadData.Create(sdkDbContext);
+
+                fieldValue.UploadedDataId = newUploadData.Id;
+                await fieldValue.Update(sdkDbContext);
+
+                return new OperationResult(true, _localizationService.GetString("ImageUpdatedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdateImage"));
+            }
         }
 
         [HttpGet]
