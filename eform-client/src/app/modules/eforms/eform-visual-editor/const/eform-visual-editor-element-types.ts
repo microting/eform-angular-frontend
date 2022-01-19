@@ -9,8 +9,8 @@ export function getTranslatedTypes(translateService: TranslateService): EformVis
   let translatedTypes: EformVisualEditorFieldTypeModel[] = [];
   eformVisualEditorElementTypes.map((x) => {
     translateService.get(x.name).
-    subscribe(y => translatedTypes = [...translatedTypes, {...x, name: y}])
-  })
+    subscribe(y => translatedTypes = [...translatedTypes, {...x, name: y}]);
+  });
   return translatedTypes;
 }
 

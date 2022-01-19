@@ -64,7 +64,14 @@ namespace eFormAPI.Web.Services
                     .ThenInclude(x => x.Worker)
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed);
 
-                sitesQuery = QueryHelper.AddFilterAndSortToQuery(sitesQuery, requestModel, new List<string> { "Name" });
+                try
+                {
+                    sitesQuery = QueryHelper.AddFilterAndSortToQuery(sitesQuery, requestModel, new List<string> { "Name" });
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
 
                 var deviceUsers = await sitesQuery
                     .Select(x => new DeviceUser

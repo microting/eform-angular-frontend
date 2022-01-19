@@ -58,6 +58,12 @@ export class EformsPageComponent implements OnInit, OnDestroy {
       elementId: 'nameEFormSort',
       sortable: true,
     },
+    {
+      name: 'Description',
+      visibleName: 'Description',
+      elementId: 'descriptionEFormSort',
+      sortable: true,
+    },
     { name: 'Tags', elementId: 'tagsEForm', sortable: false },
     { name: 'Pairing', elementId: 'pairingEForm', sortable: false },
     { name: 'Actions', elementId: '', sortable: false },

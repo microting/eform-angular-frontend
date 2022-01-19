@@ -99,6 +99,7 @@ namespace eFormAPI.Web.Services
                         }))
                     //.Include(x => x.Worker)
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.DoneAtUserModifiable != null)
                     .Where(x => x.CheckListId == requestModel.TemplateId);
 
                 // add sort and filtering
@@ -243,7 +244,12 @@ namespace eFormAPI.Web.Services
 
                     if(foundCase != null)
                     {
-                        foundCase.DoneAtUserModifiable = model.DoneUserEditable;
+                        if (foundCase.DoneAt != null)
+                        {
+                            var newDoneAt = new DateTime(model.DoneAt.Year, model.DoneAt.Month, model.DoneAt.AddDays(1).Day, foundCase.DoneAt.Value.Hour, foundCase.DoneAt.Value.Minute, foundCase.DoneAt.Value.Second);
+                            foundCase.DoneAtUserModifiable = newDoneAt;
+                        }
+
                         await foundCase.Update(sdkDbContext);
                     }
                     else

@@ -59,7 +59,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
     } else {
       this.fieldTypes = [...getTranslatedTypes(this.translateService)];
     }
-    if(!this.authStateService.isAdmin){
+    if (!this.authStateService.isAdmin) {
       this.fieldTypes = this.fieldTypes.filter(x => !typesForAdminOnly.includes(x.id));
     }
   }
@@ -86,7 +86,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   //   return !this.recursionModel.field.translations.find((x) => x.name !== '');
   // }
 
-  constructor(private authStateService: AuthStateService, private translateService: TranslateService,) {}
+  constructor(private authStateService: AuthStateService, private translateService: TranslateService) {}
 
   ngOnInit() {
     // this.setSelectedLanguage();
@@ -103,10 +103,12 @@ export class VisualEditorFieldModalComponent implements OnInit {
       this.recursionModel.field.translations = fixTranslations(
         this.recursionModel.field.translations
       ).map((x, i) => {
-        // @ts-ignore
-        x.defaultValue =
-          this.recursionModel.field.translations[i].defaultValue ?? '';
-        return x as EformVisualEditorTranslationWithDefaultValue;
+        if (this.recursionModel.field.translations.length > i) {
+          // @ts-ignore
+          x.defaultValue =
+            this.recursionModel.field.translations[i].defaultValue ?? '';
+          return x as EformVisualEditorTranslationWithDefaultValue;
+        }
       });
     } else {
       if (!model) {

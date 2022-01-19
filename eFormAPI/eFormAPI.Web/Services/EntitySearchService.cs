@@ -71,6 +71,7 @@ namespace eFormAPI.Web.Services
                 var entitySelectableGroupQuery = sdkDbContext.EntityGroups
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Where(x => x.Type == Constants.FieldTypes.EntitySearch)
+                    .Where(x => x.MicrotingUid != null)
                     .AsNoTracking()
                     .AsQueryable();
 
@@ -128,10 +129,10 @@ namespace eFormAPI.Web.Services
 
                 return new OperationDataResult<Paged<EntityGroup>>(true, entityGroupList);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new OperationDataResult<Paged<EntityGroup>>(false,
-                    _localizationService.GetString("SearchableListLoadingFailed"));
+                    _localizationService.GetString("SearchableListLoadingFailed") + ex.Message);
             }
         }
 
@@ -322,7 +323,7 @@ namespace eFormAPI.Web.Services
                         Id = int.Parse(x.MicrotingUid),
                     })
                     .ToListAsync();
-                
+
                 return new OperationDataResult<List<CommonDictionaryModel>>(true, entityGroups);
             }
             catch (Exception)

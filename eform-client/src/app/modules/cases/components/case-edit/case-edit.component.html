@@ -22,13 +22,13 @@
               <input
                 mdbInput
                 [owlDateTime]="dt1"
-                [(ngModel)]="replyElement.doneUserEditable"
+                [(ngModel)]="replyElement.doneAt"
                 type="text"
-                id="doneUserEditable"
-                name="doneUserEditable"
+                id="doneAt"
+                name="doneAt"
                 class="form-control"
               />
-              <label for="doneUserEditable">{{
+              <label for="doneAt">{{
                 'Select date' | translate
               }}</label>
               <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>

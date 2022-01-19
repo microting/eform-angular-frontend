@@ -106,6 +106,8 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     this.replyRequest.id = this.replyElement.id;
     this.replyRequest.label = this.replyElement.label;
     this.replyRequest.elementList = this.requestModels;
+    this.replyRequest.doneAt = this.replyElement.doneAt;
+    this.replyRequest.isDoneAtEditable = this.currentTemplate.isDoneAtEditable;
     this.casesService
       .updateCase(this.replyRequest, this.currentTemplate.id)
       .subscribe((operation) => {

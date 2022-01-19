@@ -16,10 +16,14 @@ import {
   EformVisualEditorFieldsDnDRecursionModel,
   EformVisualEditorRecursionFieldModel,
 } from 'src/app/common/models';
-import { eformVisualEditorElementColors } from 'src/app/modules/eforms/eform-visual-editor/const/eform-visual-editor-element-types';
+import {
+  eformVisualEditorElementColors,
+  getTranslatedTypes
+} from 'src/app/modules/eforms/eform-visual-editor/const/eform-visual-editor-element-types';
 import { LocaleService } from 'src/app/common/services';
 import * as R from 'ramda';
 import { CollapseComponent } from 'angular-bootstrap-md';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-visual-editor-field',
@@ -70,7 +74,12 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
       .name;
   }
 
-  constructor(private localeService: LocaleService) {}
+  fieldTypeTranslation(fieldType: number): string {
+    const types = [...getTranslatedTypes(this.translateService)];
+    return types.find(x => x.id === fieldType).name;
+  }
+
+  constructor(private localeService: LocaleService, private translateService: TranslateService) {}
 
   ngOnInit() {}
 
@@ -154,7 +163,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   }
 
   get fieldTranslationAndType() {
-    const type: string = EformFieldTypesEnum[this.field.fieldType];
+    const type = this.fieldTypeTranslation(this.field.fieldType);
     let strForReturn = this.getTranslation;
     if (type) {
       strForReturn += `; ${type}`;

@@ -438,5 +438,10 @@ class MyEformsRowObject {
   async goToVisualEditor() {
     await this.goVisualEditorBtn.click();
     await (await $('#manageTags')).waitForClickable({ timeout: 40000 });
+    const spinnerAnimation = $('#spinner-animation');
+    await (await spinnerAnimation).waitForDisplayed({
+      timeout: 40000,
+      reverse: true,
+    });
   }
 }
