@@ -64,7 +64,7 @@ export class ApiBaseService {
     return this.http
       .get(method, {
         headers: this.setHeaders(),
-        params: this.setParams(params),
+        params: ApiBaseService.setParams(params),
       })
       .pipe(map((response) => this.extractData<T>(response)));
   }
@@ -104,7 +104,7 @@ export class ApiBaseService {
     return this.http
       .delete(method, {
         headers: this.setHeaders(),
-        params: this.setParams(params),
+        params: ApiBaseService.setParams(params),
       })
       .pipe(map((response) => this.extractData<T>(response)));
   }
@@ -120,7 +120,7 @@ export class ApiBaseService {
     return this.http
       .get(method, {
         headers: this.setHeaders(),
-        params: this.setParams(params),
+        params: ApiBaseService.setParams(params),
         responseType: 'blob',
       })
       .pipe(map((response) => response));
@@ -139,7 +139,7 @@ export class ApiBaseService {
     return this.http
       .post(method, formData, {
         headers: this.setHeaders('formData'),
-        params: this.setParams(params),
+        params: ApiBaseService.setParams(params),
         responseType: responseType,
       })
       .pipe(
@@ -159,7 +159,7 @@ export class ApiBaseService {
     return this.http
       .post(method, formData, {
         headers: this.setHeaders('formData'),
-        params: this.setParams(params),
+        params: ApiBaseService.setParams(params),
         responseType: responseType,
       })
       .pipe(
@@ -185,7 +185,7 @@ export class ApiBaseService {
     return headers;
   }
 
-  private setParams(params: any) {
+  private static setParams(params: any) {
     let httpParams = new HttpParams();
     if (!params) {
       return httpParams;

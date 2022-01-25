@@ -7,6 +7,7 @@ import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { EFormService } from 'src/app/common/services';
 import { EformDocxReportGenerateModel } from 'src/app/common/models';
 import { AppMenuStateService } from 'src/app/common/store';
+import {ToastrService} from 'ngx-toastr';
 
 @AutoUnsubscribe()
 @Component({
@@ -30,6 +31,7 @@ export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
     private activateRoute: ActivatedRoute,
     private router: Router,
     private appMenuStateService: AppMenuStateService,
+    private toastrService: ToastrService,
     private eFormService: EFormService
   ) {
     this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
@@ -75,16 +77,21 @@ export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   onDownloadReport(model: EformDocxReportGenerateModel) {
     this.generateReportSub$ = this.eFormService
       .downloadEformExcel(model)
       .subscribe((data) => {
-        const blob = new Blob([data]);
-        saveAs(blob, `template_${this.selectedTemplateId}.xlsx`);
-      });
+          const blob = new Blob([data]);
+          saveAs(blob, `template_${this.selectedTemplateId}.xlsx`);
+        },
+        (_) => {
+          this.toastrService.error('Error downloading report');
+        });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+  }
 }
