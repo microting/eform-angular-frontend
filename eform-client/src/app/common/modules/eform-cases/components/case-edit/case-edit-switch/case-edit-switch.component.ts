@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DataItemDto} from 'src/app/common/models';
 
 @Component({
@@ -8,9 +8,14 @@ import {DataItemDto} from 'src/app/common/models';
 })
 export class CaseEditSwitchComponent implements OnInit {
   @Input() dataItemList: Array<DataItemDto> = [];
+  @Output() needUpdate: EventEmitter<void> = new EventEmitter<void>();
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  emitNeedUpdate(){
+    this.needUpdate.emit()
+  }
 }

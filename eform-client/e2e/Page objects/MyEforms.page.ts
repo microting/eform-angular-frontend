@@ -329,17 +329,19 @@ class MyEformsRowObject {
   }
 
   async deleteEForm() {
-    (await this.deleteBtn).scrollIntoView();
-    (await this.deleteBtn).click();
-    const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');
-    await eFormDeleteDeleteBtn.waitForDisplayed({ timeout: 40000 });
-    await eFormDeleteDeleteBtn.waitForClickable({ timeout: 40000 });
-    await eFormDeleteDeleteBtn.click();
-    await $('#spinner-animation').waitForDisplayed({
-      timeout: 40000,
-      reverse: true,
-    });
-    await browser.pause(500);
+    if(await (await this.deleteBtn).isExisting()) {
+      (await this.deleteBtn).scrollIntoView();
+      (await this.deleteBtn).click();
+      const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');
+      await eFormDeleteDeleteBtn.waitForDisplayed({timeout: 40000});
+      await eFormDeleteDeleteBtn.waitForClickable({timeout: 40000});
+      await eFormDeleteDeleteBtn.click();
+      await $('#spinner-animation').waitForDisplayed({
+        timeout: 40000,
+        reverse: true,
+      });
+      await browser.pause(500);
+    }
   }
 
   async addTag(tag: string) {

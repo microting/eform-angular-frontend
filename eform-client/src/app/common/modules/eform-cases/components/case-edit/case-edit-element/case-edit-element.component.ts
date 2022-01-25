@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
 import {
   DataItemDto,
   CaseEditRequest,
@@ -15,6 +15,7 @@ import {
 export class CaseEditElementComponent implements OnInit {
   @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
   @Input() element: ElementDto = new ElementDto();
+  @Output() needUpdate: EventEmitter<void> = new EventEmitter<void>();
   requestModel: CaseEditRequest = new CaseEditRequest();
   requestModels: Array<CaseEditRequest> = [];
   constructor() { }
@@ -64,4 +65,7 @@ export class CaseEditElementComponent implements OnInit {
     this.requestModel.elementList = this.requestModels;
   }
 
+  emitNeedUpdate(){
+    this.needUpdate.emit()
+  }
 }
