@@ -104,7 +104,7 @@
     "@wdio/mocha-framework": "7.16.13",
     "@wdio/spec-reporter": "7.16.13",
     "angular-mocks": "1.8.2",
-    "chai": "4.3.4",
+    "chai": "4.3.5",
     "chromedriver": "97.0.2",
     "codelyzer": "^6.0.2",
     "eslint": "^8.7.0",
