@@ -85,39 +85,41 @@
           "
           class="mb-3"
         >
-          <ng-container *ngIf="isLanguageSelected(translation.languageId)">
-            <mdb-card-header>{{
-              getLanguage(translation.languageId) | translate
-            }}</mdb-card-header>
-            <mdb-card-body>
-              <div class="row">
-                <div class="col-12">
-                  <div class="md-form">
-                    <input
-                      mdbInput
-                      type="text"
-                      id="fieldNameTranslation_{{ translationIndex }}"
-                      name="fieldNameTranslation_{{ translationIndex }}"
-                      [(ngModel)]="translation.name"
-                      class="form-control"
-                    />
-                    <label for="fieldNameTranslation_{{ translationIndex }}">
-                      {{ 'Name' | translate }}
-                    </label>
+          <ng-container *ngIf="translation !== undefined">
+            <ng-container *ngIf="isLanguageSelected(translation.languageId)">
+              <mdb-card-header>{{
+                getLanguage(translation.languageId) | translate
+              }}</mdb-card-header>
+              <mdb-card-body>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="md-form">
+                      <input
+                        mdbInput
+                        type="text"
+                        id="fieldNameTranslation_{{ translationIndex }}"
+                        name="fieldNameTranslation_{{ translationIndex }}"
+                        [(ngModel)]="translation.name"
+                        class="form-control"
+                      />
+                      <label for="fieldNameTranslation_{{ translationIndex }}">
+                        {{ 'Name' | translate }}
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <formatting-text-editor
-                    [(value)]="translation.description"
-                    [placeholder]="'Description' | translate"
-                    id="newFieldDescriptionTranslation_{{ translationIndex }}"
-                  >
-                  </formatting-text-editor>
+                <div class="row">
+                  <div class="col-12">
+                    <formatting-text-editor
+                      [(value)]="translation.description"
+                      [placeholder]="'Description' | translate"
+                      id="newFieldDescriptionTranslation_{{ translationIndex }}"
+                    >
+                    </formatting-text-editor>
+                  </div>
                 </div>
-              </div>
-            </mdb-card-body>
+              </mdb-card-body>
+            </ng-container>
           </ng-container>
         </mdb-card>
         <app-visual-editor-additional-field-number
