@@ -23,6 +23,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   spinnerStatus: boolean;
   latestVersion: string;
   adminSettingsModel: AdminSettingsModel = new AdminSettingsModel();
+  othersSettings: { isEnableWidget: boolean } = {isEnableWidget: false};
 
   constructor(
     private settingsService: AppSettingsService,
@@ -119,6 +120,24 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
         }
       }
     });
+    this.getOtherSettings();
+  }
+
+  getOtherSettings() {
+    this.settingsService.getUserbackWidgetIsEnabled()
+      .subscribe((operation) => {
+        if (operation && operation.success) {
+          this.othersSettings = {...this.othersSettings, isEnableWidget: operation.model};
+        }
+    });
+  }
+
+  updateOtherSettings() {
+    this.settingsService.updateUserbackWidgetIsEnabled(this.othersSettings.isEnableWidget)
+      .subscribe((operation) => {
+        if (operation && operation.success) {
+        }
+    });
   }
 
   updateAdminSettings() {
@@ -139,6 +158,8 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
           this.eventBrokerService.emit<void>('get-header-settings', null);
         }
       });
+
+    this.updateOtherSettings();
   }
 
   resetLoginPageSettings() {

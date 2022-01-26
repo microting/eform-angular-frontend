@@ -411,5 +411,33 @@ namespace eFormAPI.Web.Services
 
             return new OperationResult(true);
         }
+
+        public async Task<OperationResult> UpdateUserbackWidget(bool isEnableWidget)
+        {
+            try
+            {
+                await _appSettings.UpdateDb((options) => { options.IsUserbackWidgetEnabled = isEnableWidget; }, _dbContext);
+            }
+            catch (Exception)
+            {
+                return new OperationResult(false);
+            }
+
+            return new OperationResult(true);
+        }
+
+        public async Task<OperationDataResult<bool>> GetUserbackWidget()
+        {
+            try
+            {
+                var isEnableWidget = _appSettings.Value.IsUserbackWidgetEnabled;
+
+                return new OperationDataResult<bool>(true, isEnableWidget);
+            }
+            catch (Exception)
+            {
+                return new OperationDataResult<bool>(false);
+            }
+        }
     }
 }

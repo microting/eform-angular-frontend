@@ -1,30 +1,51 @@
 import {
-  Component,
+  Component, OnDestroy,
   OnInit
 } from '@angular/core';
-import {AuthQuery, AuthStateService} from 'src/app/common/store';
+import { AuthStateService} from 'src/app/common/store';
+import {AppSettingsService} from 'src/app/common/services';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {Subscription} from 'rxjs';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-userback-widget',
   templateUrl: './userback-widget.component.html',
   styleUrls: ['./userback-widget.component.scss'],
 })
-export class UserbackWidgetComponent implements OnInit {
+export class UserbackWidgetComponent implements OnInit, OnDestroy {
   private scriptElement: HTMLScriptElement;
   private isShowing: boolean = false;
 
+  isAuthSub$: Subscription;
+  getUserbackWidgetIsEnabledSub$: Subscription;
+
   constructor(
+    private settingsService: AppSettingsService,
     private authStateService: AuthStateService,) {
+    this.isAuthSub$ = this.authStateService.isAuthAsync.subscribe(isAuth => {
+      this.getUserbackWidgetIsEnabledSub$ = this.settingsService.getUserbackWidgetIsEnabled()
+      .subscribe((isEnableWidget) => {
+        if (isEnableWidget && isEnableWidget.success) {
+          if(isEnableWidget.model) {
+            if (isAuth && !this.isShowing) {
+              this.show();
+            } else if (!isAuth && this.isShowing) {
+              this.hide();
+            }
+          }
+          if(!isEnableWidget.model && this.isShowing){
+            this.hide();
+          }
+        }
+      });
+    })
+  }
+
+  ngOnDestroy(): void {
   }
 
   ngOnInit(): void {
-    this.authStateService.isAuthAsync.subscribe(isAuth => {
-      if (isAuth && !this.isShowing) {
-        this.show();
-      } else if(!isAuth && this.isShowing) {
-        this.hide();
-      }
-    })
   }
 
   hide(): void {
