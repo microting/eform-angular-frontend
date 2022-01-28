@@ -6,6 +6,7 @@ import {TemplateFilesService} from 'src/app/common/services/cases';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 import * as R from 'ramda';
+import {ActivatedRoute} from '@angular/router';
 
 @AutoUnsubscribe()
 @Component({
@@ -24,14 +25,18 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
   galleryImages: GalleryItem[] = [];
   imageIdForUpdate: number;
   newImageForUpdate: File;
+  caseId: number;
 
   imageSub$: Subscription;
   rotateImageSub$: Subscription;
   deleteImageSub$: Subscription;
   getImageSub$: Subscription;
   updateImageSub$: Subscription;
+  addImageSub$: Subscription;
+  activatedRouteSub$: Subscription;
 
   constructor(
+    private activateRoute: ActivatedRoute,
     private imageService: TemplateFilesService,
     public gallery: Gallery,
     public lightbox: Lightbox
@@ -40,6 +45,9 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.fieldValues) {
+      this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
+        this.caseId = +params['id'];
+      });
       this.fieldValues.forEach(value => {
         if (value.uploadedDataObj) {
           this.geoObjects.push({
@@ -142,7 +150,19 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
     this.newImageForUpdate = R.last(event.target.files);
   }
 
-  ngOnDestroy(): void {
+  addPicture() {
+    const fieldId = this.fieldValues.map(x => x.fieldId)[0];
+    this.addImageSub$ = this.imageService
+      .addNewImage(fieldId, this.caseId, this.newImageForUpdate)
+      .subscribe(data => {
+        if (data && data.success) {
+          this.frame.hide();
+          this.newImageForUpdate = null;
+          this.pictureUpdated.emit();
+        }
+      });
   }
 
+  ngOnDestroy(): void {
+  }
 }

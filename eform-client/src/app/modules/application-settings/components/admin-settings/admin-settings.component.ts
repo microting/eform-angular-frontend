@@ -127,7 +127,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
     this.settingsService.getUserbackWidgetIsEnabled()
       .subscribe((operation) => {
         if (operation && operation.success) {
-          this.othersSettings = {...this.othersSettings, isEnableWidget: operation.model};
+          this.othersSettings = {...this.othersSettings, isEnableWidget: operation.model.isUserbackWidgetEnabled};
         }
     });
   }

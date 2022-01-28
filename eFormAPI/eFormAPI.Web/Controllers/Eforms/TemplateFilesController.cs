@@ -27,8 +27,15 @@ using eFormCore;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Xml.Linq;
     using Abstractions;
-    using eFormAPI.Web.Abstractions.Security;
+    using Abstractions.Security;
     using ICSharpCode.SharpZipLib.Zip;
     using ImageMagick;
     using Infrastructure.Models;
@@ -37,22 +44,14 @@ namespace eFormAPI.Web.Controllers.Eforms
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microting.eForm.Dto;
+    using Microting.eForm.Infrastructure.Constants;
+    using Microting.eForm.Infrastructure.Data.Entities;
     using Microting.eForm.Infrastructure.Models;
+    using Microting.EformAngularFrontendBase.Infrastructure.Const;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using OpenStack.NetCoreSwiftClient.Extensions;
     using Services.Export;
-    using System;
-    using System.Globalization;
-    using System.IO;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Xml.Linq;
-    using Microsoft.AspNetCore.Http;
-    using Microting.eForm.Infrastructure.Constants;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
-    using Settings = Microting.eForm.Dto.Settings;
 
     [Authorize]
     public class TemplateFilesController : Controller
@@ -135,7 +134,9 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/template-files/download-eform-excel")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
+#pragma warning disable CS1998
         public async Task DownloadExcelEform(EformDownloadExcelModel excelModel)
+#pragma warning restore CS1998
         {
             const int bufferSize = 4086;
             var buffer = new byte[bufferSize];
@@ -312,6 +313,73 @@ namespace eFormAPI.Web.Controllers.Eforms
 
                 fieldValue.UploadedDataId = newUploadData.Id;
                 await fieldValue.Update(sdkDbContext);
+
+                return new OperationResult(true, _localizationService.GetString("ImageUpdatedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdateImage"));
+            }
+        }
+
+        [HttpPost]
+        [Route("api/template-files/image")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
+        public async Task<OperationResult> AddNewImage([FromForm] int fieldId, [FromForm] int caseId)
+        {
+            try
+            {
+                var newFile = HttpContext.Request.Form.Files.Last();
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var caseDb = await sdkDbContext.Cases
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Id == caseId)
+                    .FirstOrDefaultAsync();
+                var field = await sdkDbContext.Fields
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Id == fieldId)
+                    .FirstOrDefaultAsync();
+                if (caseDb == null || field == null)
+                {
+                    return new OperationResult(false, _localizationService.GetString("CaseNotFound"));
+                }
+                var folder = Path.Combine(Path.GetTempPath(), "cases-temp-files");
+                Directory.CreateDirectory(folder);
+
+                var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}.{newFile.FileName.Split(".").Last()}");
+                string hash;
+                using (var md5 = MD5.Create())
+                {
+                    await using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await newFile.CopyToAsync(stream);
+                        var grr = await md5.ComputeHashAsync(stream);
+                        hash = BitConverter.ToString(grr).Replace("-", "").ToLower();
+                    }
+                }
+
+                await core.PutFileToStorageSystem(filePath, newFile.FileName);
+
+                var newUploadData = new Microting.eForm.Infrastructure.Data.Entities.UploadedData
+                {
+                    Checksum = hash,
+                    FileName = newFile.FileName,
+                    FileLocation = filePath,
+                };
+                await newUploadData.Create(sdkDbContext);
+                var fieldValue = new Microting.eForm.Infrastructure.Data.Entities.FieldValue
+                {
+                    FieldId = field.Id,
+                    CaseId = caseDb.Id,
+                    CheckListId = field.CheckListId,
+                    WorkerId = caseDb.WorkerId,
+                    DoneAt = DateTime.UtcNow,
+                    UploadedDataId = newUploadData.Id
+                };
+                
+                await fieldValue.Create(sdkDbContext);
 
                 return new OperationResult(true, _localizationService.GetString("ImageUpdatedSuccessfully"));
             }

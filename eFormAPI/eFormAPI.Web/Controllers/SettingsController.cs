@@ -166,7 +166,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Route("userback-widget")]
         //[Authorize(Roles = EformRole.Admin)]
-        public Task<OperationDataResult<bool>> IsUserbackWidget()
+        public Task<OperationDataResult<UserbackWidgetModel>> IsUserbackWidget()
         {
             return _adminService.GetUserbackWidget();
         }

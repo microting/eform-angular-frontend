@@ -5,7 +5,7 @@ import {
   HeaderSettingsModel,
   LoginPageSettingsModel,
   OperationDataResult,
-  OperationResult,
+  OperationResult, UserbackWidgetSettingModel,
 } from 'src/app/common/models';
 import { SettingsModel } from 'src/app/common/models/settings';
 import { ApiBaseService } from 'src/app/common/services';
@@ -86,7 +86,7 @@ export class AppSettingsService {
     return this.apiBaseService.get<string>(SettingsMethods.GetLatestVersion);
   }
 
-  getUserbackWidgetIsEnabled(): Observable<OperationDataResult<boolean>> {
+  getUserbackWidgetIsEnabled(): Observable<OperationDataResult<UserbackWidgetSettingModel>> {
     return this.apiBaseService.get(SettingsMethods.UserbackWidget);
   }
 
