@@ -22,24 +22,26 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
 
   constructor(
     private settingsService: AppSettingsService,
-    private authStateService: AuthStateService,) {
+    private authStateService: AuthStateService) {
     this.isAuthSub$ = this.authStateService.isAuthAsync.subscribe(isAuth => {
-      this.getUserbackWidgetIsEnabledSub$ = this.settingsService.getUserbackWidgetIsEnabled()
-      .subscribe((isEnableWidget) => {
-        if (isEnableWidget && isEnableWidget.success) {
-          if(isEnableWidget.model) {
-            if (isAuth && !this.isShowing) {
-              this.show();
-            } else if (!isAuth && this.isShowing) {
-              this.hide();
+      if (isAuth) {
+        this.getUserbackWidgetIsEnabledSub$ = this.settingsService.getUserbackWidgetIsEnabled()
+          .subscribe((isEnableWidget) => {
+            if (isEnableWidget && isEnableWidget.success) {
+              if (isEnableWidget.model) {
+                if (isAuth && !this.isShowing) {
+                  this.show();
+                } else if (!isAuth && this.isShowing) {
+                  this.hide();
+                }
+              }
+              if (!isEnableWidget.model && this.isShowing){
+                this.hide();
+              }
             }
-          }
-          if(!isEnableWidget.model && this.isShowing){
-            this.hide();
-          }
-        }
-      });
-    })
+          });
+      }
+    });
   }
 
   ngOnDestroy(): void {
