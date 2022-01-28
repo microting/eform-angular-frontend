@@ -33,18 +33,21 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 namespace eFormAPI.Web.Controllers
 {
     [Authorize]
+    [Route("api/settings")]
     public class SettingsController : Controller
     {
         private readonly ISettingsService _settingsService;
+        private readonly IAdminService _adminService;
 
-        public SettingsController(ISettingsService settingsService)
+        public SettingsController(ISettingsService settingsService, IAdminService adminService)
         {
             _settingsService = settingsService;
+            _adminService = adminService;
         }
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/settings/connection-string-exist")]
+        [Route("connection-string-exist")]
         public OperationResult ConnectionStringExist()
         {
             return _settingsService.ConnectionStringExist();
@@ -52,7 +55,7 @@ namespace eFormAPI.Web.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/settings/default-locale")]
+        [Route("default-locale")]
         public OperationDataResult<string> GetDefaultLocale()
         {
             return _settingsService.GetDefaultLocale();
@@ -60,7 +63,7 @@ namespace eFormAPI.Web.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("api/settings/connection-string")]
+        [Route("connection-string")]
         public async Task<OperationResult> UpdateConnectionString([FromBody] InitialSettingsModel initialSettingsModel)
         {
             return await _settingsService.UpdateConnectionString(initialSettingsModel);
@@ -68,7 +71,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("api/settings/login-page")]
+        [Route("login-page")]
         public OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings()
         {
             return _settingsService.GetLoginPageSettings();
@@ -76,7 +79,7 @@ namespace eFormAPI.Web.Controllers
 
 
         [HttpGet]
-        [Route("api/settings/page-header")]
+        [Route("page-header")]
         public OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings()
         {
             return _settingsService.GetPageHeaderSettings();
@@ -85,7 +88,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
-        [Route("api/settings/admin")]
+        [Route("admin")]
         public async Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings()
         {
             return await _settingsService.GetAdminSettings();
@@ -94,7 +97,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Authorize(Roles = EformRole.Admin)]
-        [Route("api/settings/admin")]
+        [Route("admin")]
         public async Task<OperationResult> UpdateAdminSettings([FromBody] AdminSettingsModel adminSettingsModel)
         {
             await _settingsService.IntegrityCheck();
@@ -105,7 +108,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
-        [Route("api/settings/reset-login-page")]
+        [Route("reset-login-page")]
         public async Task<OperationResult> ResetLoginPageSettings()
         {
             return await _settingsService.ResetLoginPageSettings();
@@ -113,7 +116,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
-        [Route("api/settings/reset-page-header")]
+        [Route("reset-page-header")]
         public async Task<OperationResult> ResetPageHeaderSettings()
         {
             return await _settingsService.ResetPageHeaderSettings();
@@ -123,7 +126,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("api/settings/version")]
+        [Route("version")]
         public OperationDataResult<string> GetApplicationVersion()
         {
             return _settingsService.GetAssemblyVersion();
@@ -131,7 +134,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("api/settings/hostos")]
+        [Route("hostos")]
         public OperationDataResult<string> GetApplicationHostOs()
         {
             return _settingsService.GetApplicationHostOs();
@@ -139,17 +142,33 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("api/settings/latest-version")]
+        [Route("latest-version")]
         public OperationDataResult<string> GetLatestVersion()
         {
             return _settingsService.GetLatestVersion();
         }
 
         [HttpGet]
-        [Route(("api/settings/integrity-test"))]
+        [Route(("integrity-test"))]
         public async Task<OperationResult> IntegrityCheck()
         {
             return await _settingsService.IntegrityCheck();
+        }
+
+        [HttpPut]
+        [Route("userback-widget")]
+        [Authorize(Roles = EformRole.Admin)]
+        public Task<OperationResult> UpdateUserbackWidget([FromBody] bool isEnableWidget)
+        {
+            return _adminService.UpdateUserbackWidget(isEnableWidget);
+        }
+
+        [HttpGet]
+        [Route("userback-widget")]
+        //[Authorize(Roles = EformRole.Admin)]
+        public Task<OperationDataResult<bool>> IsUserbackWidget()
+        {
+            return _adminService.GetUserbackWidget();
         }
     }
 }

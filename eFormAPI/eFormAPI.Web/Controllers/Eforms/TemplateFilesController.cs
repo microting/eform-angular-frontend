@@ -46,6 +46,7 @@ namespace eFormAPI.Web.Controllers.Eforms
     using System.Globalization;
     using System.IO;
     using System.Security.Cryptography;
+    using System.Text;
     using System.Threading.Tasks;
     using System.Xml.Linq;
     using Microsoft.AspNetCore.Http;
@@ -134,24 +135,43 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/template-files/download-eform-excel")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
-        public async Task<IActionResult> DownloadExcelEform(EformDownloadExcelModel excelModel)
+        public async Task DownloadExcelEform(EformDownloadExcelModel excelModel)
         {
-            if (!await _permissionsService.CheckEform(excelModel.TemplateId,
-                AuthConsts.EformClaims.EformsClaims.ExportEformExcel))
+            const int bufferSize = 4086;
+            var buffer = new byte[bufferSize];
+            Response.OnStarting(async () =>
             {
-                return Forbid();
-            }
+                if (!await _permissionsService.CheckEform(excelModel.TemplateId,
+                    AuthConsts.EformClaims.EformsClaims.ExportEformExcel))
+                {
+                    Forbid();
+                }
+                var result = await _eformExcelExportService.EformExport(excelModel);
+                if (result.Model == null)
+                {
+                    var message = _localizationService.GetString("NoDataInSelectedPeriod");
+                    Response.ContentLength = message.Length;
+                    Response.ContentType = "text/plain";
+                    Response.StatusCode = 400;
+                    var bytes = Encoding.UTF8.GetBytes(message);
+                    await Response.Body.WriteAsync(bytes, 0, message.Length);
+                    await Response.Body.FlushAsync();
+                }
+                else
+                {
+                    await using var fileStream = result.Model;
+                    int bytesRead;
+                    Response.ContentLength = fileStream.Length;
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-            var result = await _eformExcelExportService.EformExport(excelModel);
-            if (result.Model == null)
-            {
-                return new NotFoundResult();
-            }
-            else
-            {
-                return new FileStreamResult(result.Model,
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            }
+                    while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0 &&
+                           !HttpContext.RequestAborted.IsCancellationRequested)
+                    {
+                        await Response.Body.WriteAsync(buffer, 0, bytesRead);
+                        await Response.Body.FlushAsync();
+                    }
+                }
+            });
         }
 
         private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache")

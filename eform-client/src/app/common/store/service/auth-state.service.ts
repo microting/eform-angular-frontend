@@ -101,6 +101,10 @@ export class AuthStateService {
     return !!this.query.currentSetting.token.accessToken;
   }
 
+  get isAuthAsync(): Observable<boolean> {
+    return this.query.selectIsAuth$;
+  }
+
   get bearerToken(): string {
     return 'Bearer ' + this.query.currentSetting.token.accessToken;
   }
