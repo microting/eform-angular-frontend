@@ -27,15 +27,8 @@ using eFormCore;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
-    using System;
-    using System.Globalization;
-    using System.IO;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Xml.Linq;
     using Abstractions;
-    using Abstractions.Security;
+    using eFormAPI.Web.Abstractions.Security;
     using ICSharpCode.SharpZipLib.Zip;
     using ImageMagick;
     using Infrastructure.Models;
@@ -44,14 +37,22 @@ namespace eFormAPI.Web.Controllers.Eforms
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microting.eForm.Dto;
-    using Microting.eForm.Infrastructure.Constants;
-    using Microting.eForm.Infrastructure.Data.Entities;
     using Microting.eForm.Infrastructure.Models;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using OpenStack.NetCoreSwiftClient.Extensions;
     using Services.Export;
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Xml.Linq;
+    using Microsoft.AspNetCore.Http;
+    using Microting.eForm.Infrastructure.Constants;
+    using Microting.EformAngularFrontendBase.Infrastructure.Const;
+    using Settings = Microting.eForm.Dto.Settings;
 
     [Authorize]
     public class TemplateFilesController : Controller
@@ -116,11 +117,19 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        //[AllowAnonymous]
+        // [AllowAnonymous]
         [Route("api/template-files/get-image/{fileName}.{ext}")]
         public async Task<IActionResult> GetImage(string fileName, string ext, string noCache = "noCache")
         {
             return await GetFile(fileName, ext,"image", noCache);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/template-files/get-report-image/{fileName}.{ext}&token={token}")]
+        public async Task<IActionResult> GetReportImage(string fileName, string ext, string noCache = "noCache", string token = "")
+        {
+            return await GetFile(fileName, ext,"image", noCache, token);
         }
 
         [HttpGet]
@@ -134,9 +143,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/template-files/download-eform-excel")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
-#pragma warning disable CS1998
         public async Task DownloadExcelEform(EformDownloadExcelModel excelModel)
-#pragma warning restore CS1998
         {
             const int bufferSize = 4086;
             var buffer = new byte[bufferSize];
@@ -175,9 +182,13 @@ namespace eFormAPI.Web.Controllers.Eforms
             });
         }
 
-        private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache")
+        private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache", string token = "")
         {
             var core = await _coreHelper.GetCore();
+            if (!string.IsNullOrEmpty(token) && token != core.GetSdkSetting(Settings.token).Result)
+            {
+                return Unauthorized();
+            }
             var fullFileName = $"{fileName}.{ext}";
             var filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),fullFileName);
             if (fileType == "pdf")
@@ -378,7 +389,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                     DoneAt = DateTime.UtcNow,
                     UploadedDataId = newUploadData.Id
                 };
-                
+
                 await fieldValue.Create(sdkDbContext);
 
                 return new OperationResult(true, _localizationService.GetString("ImageUpdatedSuccessfully"));
@@ -468,7 +479,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
                 var filePath = await core.CaseToPdf(caseId, templateId.ToString(),
                     DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", fileType, customXmlContent, language);
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-report-image/", fileType, customXmlContent, language);
                 //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!System.IO.File.Exists(filePath))
                 {
