@@ -1,3 +1,11 @@
+<div class="row pl-2">
+  <button mdbBtn class="btn-success btn-small-height"
+          [disabled]="buttonsLocked"
+          (click)="frame.show()">
+    {{'Add new image' | translate}}
+    <fa-icon icon="plus" size="lg" [fixedWidth]="true"></fa-icon>
+  </button>
+</div>
 <div class="row">
   <div class="col-md-3 col-sm-4 col-xs-12" *ngFor="let image of images; let i = index">
     <mdb-card>
@@ -66,10 +74,10 @@
         </div>
       </div>
       <div class="modal-footer d-flex justify-content-around">
-        <button mdbBtn class="btn-success btn-small-height" (click)="updatePicture()" [disabled]="!newImageForUpdate">
-          {{ 'Update' | translate }}
+        <button mdbBtn class="btn-success btn-small-height" (click)="!!imageIdForUpdate ? updatePicture() : addPicture()" [disabled]="!newImageForUpdate">
+          {{ (!!imageIdForUpdate ? 'Update' : 'Add') | translate }}
         </button>
-        <button mdbBtn class="btn-danger btn-small-height" (click)="frame.hide()">
+        <button mdbBtn class="btn-danger btn-small-height" (click)="imageIdForUpdate = undefined; frame.hide()">
           {{ 'Cancel' | translate }}
         </button>
       </div>
