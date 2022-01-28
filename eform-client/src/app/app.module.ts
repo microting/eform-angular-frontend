@@ -36,6 +36,7 @@ import {
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from 'src/environments/environment';
+import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,7 @@ import { environment } from 'src/environments/environment';
     TranslateModule.forRoot(translateConfig),
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot({ preventDuplicates: true }),
+    ToastrModule.forRoot({preventDuplicates: true}),
     DragulaModule.forRoot(),
     NgxMaskModule.forRoot(),
     GalleryModule,
@@ -72,6 +73,7 @@ import { environment } from 'src/environments/environment';
     EformSharedModule,
     AkitaNgDevtools,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
+    SharedPnModule,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],

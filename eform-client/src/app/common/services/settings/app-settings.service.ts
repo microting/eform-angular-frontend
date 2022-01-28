@@ -23,6 +23,7 @@ const SettingsMethods = {
   GetHeaderSettings: '/api/settings/page-header',
   GetAnonymousImage: 'api/images/login-page-images',
   GetAuthorizedImage: 'api/images/eform-images',
+  UserbackWidget: 'api/settings/userback-widget',
 };
 
 @Injectable()
@@ -78,12 +79,18 @@ export class AppSettingsService {
   }
 
   getApplicationHostOs(): Observable<OperationDataResult<string>> {
-    return this.apiBaseService.get<string>(
-      SettingsMethods.GetApplicationHostOs
-    );
+    return this.apiBaseService.get<string>(SettingsMethods.GetApplicationHostOs);
   }
 
   getLatestVersion(): Observable<OperationDataResult<string>> {
     return this.apiBaseService.get<string>(SettingsMethods.GetLatestVersion);
+  }
+
+  getUserbackWidgetIsEnabled(): Observable<OperationDataResult<boolean>> {
+    return this.apiBaseService.get(SettingsMethods.UserbackWidget);
+  }
+
+  updateUserbackWidgetIsEnabled(isEnableWidget: boolean): Observable<OperationResult> {
+    return this.apiBaseService.put(SettingsMethods.UserbackWidget, isEnableWidget);
   }
 }

@@ -43,5 +43,9 @@ namespace eFormAPI.Web.Abstractions
         Task<OperationResult> DisableTwoFactorAuthForce();
 
         Task<OperationResult> EnableTwoFactorAuthForce();
+
+        Task<OperationResult> UpdateUserbackWidget(bool isEnableWidget);
+
+        Task<OperationDataResult<bool>> GetUserbackWidget();
     }
 }

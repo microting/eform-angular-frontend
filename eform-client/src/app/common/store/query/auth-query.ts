@@ -21,6 +21,9 @@ export class AuthQuery extends Query<AuthState> {
   selectFullName$ = this.select(
     (store) => `${store.currentUser.firstName} ${store.currentUser.lastName}`
   );
+  selectIsAuth$ = this.select(
+    (store) => !!store.token.accessToken
+  );
 
   get isAuth() {
     return !!this.getValue().token.accessToken;

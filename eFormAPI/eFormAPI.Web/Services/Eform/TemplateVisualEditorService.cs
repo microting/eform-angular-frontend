@@ -625,6 +625,12 @@ namespace eFormAPI.Web.Services.Eform
                     case Constants.FieldTypes.EntitySearch or Constants.FieldTypes.EntitySelect:
                     {
                         fieldFromDb.EntityGroupId = fieldForUpdate.EntityGroupId;
+                        fieldFromDb.DefaultValue = "0";
+                        fieldFromDb.Dummy = 0;
+                        fieldFromDb.MinValue = "0";
+                        fieldFromDb.MaxValue = "0";
+                        fieldFromDb.IsNum = 0;
+                        fieldFromDb.ReadOnly = 0;
                         break;
                     }
                 }
