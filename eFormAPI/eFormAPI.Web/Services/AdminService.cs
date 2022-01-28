@@ -33,6 +33,7 @@ namespace eFormAPI.Web.Services
     using System.Threading.Tasks;
     using Abstractions;
     using Hosting.Helpers.DbOptions;
+    using Infrastructure.Models.Settings.Admin;
     using Infrastructure.Models.Users;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -426,17 +427,19 @@ namespace eFormAPI.Web.Services
             return new OperationResult(true);
         }
 
-        public async Task<OperationDataResult<bool>> GetUserbackWidget()
+#pragma warning disable CS1998
+        public async Task<OperationDataResult<UserbackWidgetModel>> GetUserbackWidget()
+#pragma warning restore CS1998
         {
             try
             {
-                var isEnableWidget = _appSettings.Value.IsUserbackWidgetEnabled;
+                var userbackWidgetModel = new UserbackWidgetModel { IsUserbackWidgetEnabled = _appSettings.Value.IsUserbackWidgetEnabled, UserbackToken = _appSettings.Value.UserbackToken };
 
-                return new OperationDataResult<bool>(true, isEnableWidget);
+                return new OperationDataResult<UserbackWidgetModel>(true, userbackWidgetModel);
             }
             catch (Exception)
             {
-                return new OperationDataResult<bool>(false);
+                return new OperationDataResult<UserbackWidgetModel>(false);
             }
         }
     }

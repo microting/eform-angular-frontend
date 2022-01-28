@@ -135,7 +135,9 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/template-files/download-eform-excel")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
+#pragma warning disable CS1998
         public async Task DownloadExcelEform(EformDownloadExcelModel excelModel)
+#pragma warning restore CS1998
         {
             const int bufferSize = 4086;
             var buffer = new byte[bufferSize];

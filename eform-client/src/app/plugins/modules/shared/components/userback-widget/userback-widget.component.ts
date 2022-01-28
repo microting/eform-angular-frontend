@@ -16,6 +16,7 @@ import {Subscription} from 'rxjs';
 export class UserbackWidgetComponent implements OnInit, OnDestroy {
   private scriptElement: HTMLScriptElement;
   private isShowing: boolean = false;
+  private userbackToken: string;
 
   isAuthSub$: Subscription;
   getUserbackWidgetIsEnabledSub$: Subscription;
@@ -28,7 +29,8 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
         this.getUserbackWidgetIsEnabledSub$ = this.settingsService.getUserbackWidgetIsEnabled()
           .subscribe((isEnableWidget) => {
             if (isEnableWidget && isEnableWidget.success) {
-              if (isEnableWidget.model) {
+              if (isEnableWidget.model.isUserbackWidgetEnabled) {
+                this.userbackToken = isEnableWidget.model.userbackToken;
                 if (isAuth && !this.isShowing) {
                   this.show();
                 } else if (!isAuth && this.isShowing) {
@@ -60,7 +62,7 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
     // @ts-ignore
     window.Userback = {...window, Userback: window.Userback || {}};
     // @ts-ignore
-    window.Userback.access_token = '33542|62605|dEaGb7GN0RoGEOMwEEWGh1pnh';
+    window.Userback.access_token = this.userbackToken;
     this.scriptElement = document.createElement('script');
     this.scriptElement.async = true;
     this.scriptElement.src = 'https://static.userback.io/widget/v1.js';

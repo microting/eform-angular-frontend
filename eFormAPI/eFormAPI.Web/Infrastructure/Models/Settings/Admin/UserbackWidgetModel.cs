@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2021 Microting A/S
+Copyright (c) 2007 - 2022 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,33 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Threading.Tasks;
-using eFormAPI.Web.Infrastructure.Models.Users;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+
+public class UserbackWidgetModel
 {
-    using Infrastructure.Models.Settings.Admin;
+    public bool IsUserbackWidgetEnabled { get; set; }
 
-    public interface IAdminService
-    {
-        Task<OperationDataResult<Paged<UserInfoViewModel>>> Index(UserInfoRequest paginationModel);
-
-        Task<OperationResult> Create(UserRegisterModel userRegisterModel);
-
-        Task<OperationDataResult<UserRegisterModel>> Read(int userId);
-
-        Task<OperationResult> Update(UserRegisterModel userRegisterModel);
-
-        Task<OperationResult> Delete(int userId);
-
-        Task<OperationResult> DisableTwoFactorAuthForce();
-
-        Task<OperationResult> EnableTwoFactorAuthForce();
-
-        Task<OperationResult> UpdateUserbackWidget(bool isEnableWidget);
-
-        Task<OperationDataResult<UserbackWidgetModel>> GetUserbackWidget();
-    }
+    public string UserbackToken { get; set; }
 }
