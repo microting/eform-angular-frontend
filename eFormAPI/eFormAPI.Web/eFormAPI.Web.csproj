@@ -55,9 +55,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="5.4.3" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="1.1.20" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.1.21" />
+    <PackageReference Include="Microting.eForm" Version="5.4.4" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="1.1.21" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.1.22" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
