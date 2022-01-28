@@ -25,6 +25,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BreadcrumbModule, WavesModule } from 'angular-bootstrap-md';
 import { EformTableHeadersComponent } from './components';
 import { RouterModule } from '@angular/router';
+import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 
 @NgModule({
   imports: [
@@ -36,36 +37,36 @@ import { RouterModule } from '@angular/router';
     FontAwesomeModule,
     WavesModule,
     BreadcrumbModule,
-    RouterModule,
+    RouterModule
   ],
-  declarations: [
-    EformPaginationComponent,
-    EformPageSizeComponent,
-    EformSubheaderComponent,
-    StatusBarComponent,
-    DateFormatterComponent,
-    AuthImagePipe,
-    AuthAudioPipe,
-    SafeHtmlPipe,
-    EformTreeViewPickerComponent,
-    EformCollapseToggleComponent,
-    EformTableHeaderSortableComponent,
-    EformTableHeadersComponent,
-    StatusBarCompactComponent,
-  ],
-  exports: [
-    EformPaginationComponent,
-    EformPageSizeComponent,
-    StatusBarComponent,
-    DateFormatterComponent,
-    EformTreeViewPickerComponent,
-    EformTableHeadersComponent,
-    AuthImagePipe,
-    EformCollapseToggleComponent,
-    AuthAudioPipe,
-    SafeHtmlPipe,
-    EformSubheaderComponent,
-    StatusBarCompactComponent,
-  ],
+    declarations: [
+        EformPaginationComponent,
+        EformPageSizeComponent,
+        EformSubheaderComponent,
+        StatusBarComponent,
+        DateFormatterComponent,
+        AuthImagePipe,
+        AuthAudioPipe,
+        SafeHtmlPipe,
+        EformTreeViewPickerComponent,
+        EformCollapseToggleComponent,
+        EformTableHeaderSortableComponent,
+        EformTableHeadersComponent,
+        StatusBarCompactComponent,
+    ],
+    exports: [
+        EformPaginationComponent,
+        EformPageSizeComponent,
+        StatusBarComponent,
+        DateFormatterComponent,
+        EformTreeViewPickerComponent,
+        EformTableHeadersComponent,
+        AuthImagePipe,
+        EformCollapseToggleComponent,
+        AuthAudioPipe,
+        SafeHtmlPipe,
+        EformSubheaderComponent,
+        StatusBarCompactComponent,
+    ],
 })
 export class EformSharedModule {}

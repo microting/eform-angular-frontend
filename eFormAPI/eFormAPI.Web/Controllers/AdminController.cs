@@ -35,6 +35,7 @@ namespace eFormAPI.Web.Controllers
     using Microting.EformAngularFrontendBase.Infrastructure.Const;
 
     [Authorize]
+    [Route("api/admin")]
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;
@@ -45,7 +46,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        [Route("api/admin/get-users")]
+        [Route("get-users")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
         public async Task<OperationDataResult<Paged<UserInfoViewModel>>> Index([FromBody] UserInfoRequest paginationModel)
         {
@@ -53,7 +54,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        [Route("api/admin/create-user")]
+        [Route("create-user")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Create)]
         public async Task<OperationResult> Create([FromBody] UserRegisterModel userRegisterModel)
         {
@@ -61,7 +62,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [Route("api/admin/user/{userId}")]
+        [Route("user/{userId}")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
         public Task<OperationDataResult<UserRegisterModel>> Read(int userId)
         {
@@ -69,7 +70,7 @@ namespace eFormAPI.Web.Controllers
         }
         
         [HttpPost]
-        [Route("api/admin/update-user")]
+        [Route("update-user")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Update)]
         public async Task<OperationResult> Update([FromBody] UserRegisterModel userRegisterModel)
         {
@@ -77,7 +78,7 @@ namespace eFormAPI.Web.Controllers
         }
         
         [HttpGet]
-        [Route("api/admin/delete-user/{userId}")]
+        [Route("delete-user/{userId}")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Delete)]
         public Task<OperationResult> Delete(int userId)
         {
@@ -85,7 +86,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [Route("api/admin/enable-two-factor")]
+        [Route("enable-two-factor")]
         [Authorize(Roles = EformRole.Admin)]
         public Task<OperationResult> EnableTwoFactorAuthForce()
         {
@@ -93,7 +94,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [Route("api/admin/disable-two-factor")]
+        [Route("disable-two-factor")]
         [Authorize(Roles = EformRole.Admin)]
         public Task<OperationResult> DisableTwoFactorAuthForce()
         {
