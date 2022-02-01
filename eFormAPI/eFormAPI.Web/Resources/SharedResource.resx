@@ -738,4 +738,7 @@
   <data name="ErrorWhileUpdateTag" xml:space="preserve">
     <value>Error while update tag</value>
   </data>
+  <data name="ImageUpdatedSuccessfully" xml:space="preserve">
+    <value>Image updated successfully</value>
+  </data>
 </root>

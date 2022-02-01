@@ -720,4 +720,19 @@
   <data name="ErrorWhileUpdateTag" xml:space="preserve">
     <value>Fehler beim update tag</value>
   </data>
+  <data name="ImageUpdatedSuccessfully" xml:space="preserve">
+    <value>Bild erfolgreich aktualisiert</value>
+  </data>
+  <data name="ErrorWhileUpdatingReport" xml:space="preserve">
+    <value>Fehler beim Aktualisieren des Berichts</value>
+  </data>
+  <data name="ErrorWhileObtainingReportInfo" xml:space="preserve">
+    <value>Fehler beim Abrufen der Berichtsinformationen</value>
+  </data>
+  <data name="ElementListNotProvided" xml:space="preserve">
+    <value>ElementList nicht bereitgestellt</value>
+  </data>
+  <data name="EformReportNotFound" xml:space="preserve">
+    <value>Eform-Bericht nicht gefunden</value>
+  </data>
 </root>

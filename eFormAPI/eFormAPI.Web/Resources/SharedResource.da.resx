@@ -738,4 +738,7 @@
   <data name="ErrorWhileUpdateTag" xml:space="preserve">
     <value>Fejl under opdatering tag</value>
   </data>
+  <data name="ImageUpdatedSuccessfully" xml:space="preserve">
+    <value>Billedet er blever uploadet</value>
+  </data>
 </root>

@@ -740,4 +740,7 @@
   <data name="ErrorWhileUpdateTag" xml:space="preserve">
     <value>Помилка при оновленні тега</value>
   </data>
+  <data name="ImageUpdatedSuccessfully" xml:space="preserve">
+    <value>Зображення успішно оновлено</value>
+  </data>
 </root>
