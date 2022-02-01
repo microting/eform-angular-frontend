@@ -24,7 +24,7 @@
                     [disabled]="buttonsLocked"
                     mdbTooltip="{{'Delete picture' | translate}}"
                     (click)="deletePicture(image)">
-              <fa-icon icon="trash-restore-alt" size="lg" [fixedWidth]="true"></fa-icon>
+              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
             </button>
             <button [disabled]="!image.googleMapsLat && !image.googleMapsLon || buttonsLocked"
                     mdbTooltip="{{'Open location' | translate}}"
