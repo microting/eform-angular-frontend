@@ -122,8 +122,8 @@ export const da = {
   'Site ID': 'Lokations ID',
   'Device ID': 'Enheds ID',
   Customer: 'Kunde',
-  'Customer no & OTP': 'Kunde nr og engangskode',
-  'New OTP': 'Ny OTP',
+  'Customer no & OTP': 'Kundenummer / Engangskode',
+  'New OTP': 'Ny engangskode',
   'Delete Device User': 'Slet enhedsbruger',
   WARNING: 'ADVARSEL',
   'When pressing OK, you will deactivate the current device paired with this location':
