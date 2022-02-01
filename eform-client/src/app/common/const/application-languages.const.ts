@@ -15,3 +15,15 @@ export const applicationLanguages2: {
   locale: string;
   text: string;
 }[] = applicationLanguages.filter((x) => x.locale !== 'de-DE');
+
+
+export const applicationLanguagesTranslated: {
+  id: number;
+  locale: string;
+  text: string;
+}[] = [
+  { id: 1, locale: 'da', text: 'Dansk' },
+  { id: 2, locale: 'en-US', text: 'Engelsk' },
+  { id: 3, locale: 'de-DE', text: 'Tysk' },
+  // { id: 4, locale: 'uk-UA', text: 'Ukrainian' },
+];
