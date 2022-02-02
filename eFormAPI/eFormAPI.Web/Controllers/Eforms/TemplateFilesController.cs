@@ -371,15 +371,18 @@ namespace eFormAPI.Web.Controllers.Eforms
                     }
                 }
 
-                await core.PutFileToStorageSystem(filePath, newFile.FileName);
-
                 var newUploadData = new Microting.eForm.Infrastructure.Data.Entities.UploadedData
                 {
                     Checksum = hash,
-                    FileName = newFile.FileName,
+                    FileName = $"{hash}.{newFile.FileName.Split(".").Last()}",
                     FileLocation = filePath,
+                    Extension = newFile.FileName.Split(".").Last()
                 };
                 await newUploadData.Create(sdkDbContext);
+                newUploadData.FileName =  $"{newUploadData.Id}_{newUploadData.FileName}";
+                await newUploadData.Update(sdkDbContext);
+
+                await core.PutFileToStorageSystem(filePath, newUploadData.FileName);
                 var fieldValue = new Microting.eForm.Infrastructure.Data.Entities.FieldValue
                 {
                     FieldId = field.Id,
@@ -391,6 +394,39 @@ namespace eFormAPI.Web.Controllers.Eforms
                 };
 
                 await fieldValue.Create(sdkDbContext);
+                string smallFilename = $"{newUploadData.Id}_300_{newUploadData.Checksum}{newUploadData.Extension}"; //uploadedDataObj.Id + "_300_" + uploadedDataObj.Checksum;
+                string bigFilename = $"{newUploadData.Id}_700_{newUploadData.Checksum}{newUploadData.Extension}";//uploadedDataObj.Id + "_700_" + urlStr.Remove(0, index);
+                System.IO.File.Copy(filePath, Path.Combine(Path.GetTempPath(), smallFilename));
+                System.IO.File.Copy(filePath, Path.Combine(Path.GetTempPath(), bigFilename));
+                string filePathResized = Path.Combine(Path.GetTempPath(), smallFilename);
+                using (var image = new MagickImage(filePathResized))
+                {
+                    decimal currentRation = image.Height / (decimal) image.Width;
+                    int newWidth = 300;
+                    int newHeight = (int) Math.Round((currentRation * newWidth));
+
+                    image.Resize(newWidth, newHeight);
+                    image.Crop(newWidth, newHeight);
+                    await image.WriteAsync(filePathResized);
+                    image.Dispose();
+                    await core.PutFileToStorageSystem(Path.Combine(Path.GetTempPath(), filePathResized), smallFilename);
+
+                }
+                System.IO.File.Delete(filePathResized);
+                filePathResized = Path.Combine(Path.GetTempPath(), bigFilename);
+                using (var image = new MagickImage(filePathResized))
+                {
+                    decimal currentRation = image.Height / (decimal) image.Width;
+                    int newWidth = 700;
+                    int newHeight = (int) Math.Round((currentRation * newWidth));
+
+                    image.Resize(newWidth, newHeight);
+                    image.Crop(newWidth, newHeight);
+                    await image.WriteAsync(filePathResized);
+                    image.Dispose();
+                    await core.PutFileToStorageSystem(Path.Combine(Path.GetTempPath(), filePathResized), bigFilename);
+                }
+                System.IO.File.Delete(filePathResized);
 
                 return new OperationResult(true, _localizationService.GetString("ImageUpdatedSuccessfully"));
             }
@@ -687,6 +723,10 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         private async Task<OperationResult> RotateImageS3(string fileName)
         {
+            Console.WriteLine(@"Memory used before collection:       {0:N0}",
+                GC.GetTotalMemory(false));
+            Console.WriteLine(@"Environment.ProcessorCount:          {0}",
+                Environment.ProcessorCount);
             var fileId = int.Parse(fileName.Split('_').First());
             var core = await _coreHelper.GetCore();
             var dbContext = core.DbContextHelper.GetDbContext();
@@ -736,6 +776,11 @@ namespace eFormAPI.Web.Controllers.Eforms
             System.IO.File.Delete(filePathResized);
             // await RotateFileAndPutToStorage(Path.Combine(Path.GetTempPath(), smallFilename), core, smallFilename);
             // await RotateFileAndPutToStorage(Path.Combine(Path.GetTempPath(), bigFilename), core, bigFilename);
+            Console.WriteLine(@"Memory used before collection:       {0:N0}",
+                GC.GetTotalMemory(false));
+            GC.Collect();
+            Console.WriteLine(@"Memory used after full collection:   {0:N0}",
+                GC.GetTotalMemory(true));
             return await RotateFileAndPutToStorage(filePath, core, fileName);
         }
 
