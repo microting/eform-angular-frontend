@@ -89,7 +89,7 @@ namespace eFormAPI.Web
             services.AddOptions();
             services.AddLogging(loggingBuilder =>
             {
-                loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
+                // loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
                 loggingBuilder.AddConsole();
                 loggingBuilder.AddDebug();
             });
