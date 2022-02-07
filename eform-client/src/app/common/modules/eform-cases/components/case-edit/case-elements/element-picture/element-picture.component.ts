@@ -7,6 +7,7 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 import * as R from 'ramda';
 import {ActivatedRoute} from '@angular/router';
+import {ModalDirective} from 'angular-bootstrap-md';
 
 @AutoUnsubscribe()
 @Component({
@@ -16,7 +17,8 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./element-picture.component.scss']
 })
 export class ElementPictureComponent implements OnChanges, OnDestroy {
-  @ViewChild('frame', {static: false}) frame;
+  @ViewChild('updateAddNewImageModal', {static: false}) updateAddNewImageModal: ModalDirective;
+  @ViewChild('confirmDeleteImageModal', {static: false}) confirmDeleteImageModal: ModalDirective;
   @Input() fieldValues: Array<FieldValueDto> = [];
   @Output() pictureUpdated: EventEmitter<void> = new EventEmitter<void>();
   buttonsLocked = false;
@@ -34,6 +36,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
   updateImageSub$: Subscription;
   addImageSub$: Subscription;
   activatedRouteSub$: Subscription;
+  imageForDelete: any;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -92,10 +95,14 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
 
   deletePicture(image: any) {
     this.buttonsLocked = true;
-    this.deleteImageSub$ = this.imageService.deleteImage(image.fileName, image.fieldId, image.uploadedObjId).subscribe((data) => {
+    this.deleteImageSub$ = this.imageService
+      .deleteImage(image.fileName, image.fieldId, image.uploadedObjId)
+      .subscribe((data) => {
       if (data.success) {
         this.images = this.images.filter(x => x.fileName !== image.fileName);
       }
+      this.imageForDelete = undefined;
+      this.confirmDeleteImageModal.hide()
       this.buttonsLocked = false;
     });
   }
@@ -137,7 +144,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
       .updateImage(this.imageIdForUpdate, this.newImageForUpdate)
       .subscribe(data => {
         if (data && data.success) {
-          this.frame.hide();
+          this.updateAddNewImageModal.hide();
           this.imageIdForUpdate = undefined;
           this.newImageForUpdate = null;
           this.pictureUpdated.emit();
@@ -156,7 +163,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
       .addNewImage(fieldId, this.caseId, this.newImageForUpdate)
       .subscribe(data => {
         if (data && data.success) {
-          this.frame.hide();
+          this.updateAddNewImageModal.hide();
           this.newImageForUpdate = null;
           this.pictureUpdated.emit();
         }
