@@ -328,7 +328,7 @@ namespace eFormAPI.Web
                     serverOptions.Limits.MaxRequestBodySize = 100 * 1024 * 1024;// 100Mb
                 })
                 .UseUrls($"http://0.0.0.0:{port}")
-                .UseIISIntegration()
+                // .UseIISIntegration()
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
                     Log.LogEvent("Delete all default configuration providers");
@@ -359,17 +359,15 @@ namespace eFormAPI.Web
                     var contextFactory = new BaseDbContextFactory();
                     if (_defaultConnectionString != "...")
                     {
-                        using (var dbContext = contextFactory.CreateDbContext(new[] {_defaultConnectionString}))
+                        using var dbContext = contextFactory.CreateDbContext(new[] {_defaultConnectionString});
+                        foreach (var plugin in EnabledPlugins)
                         {
-                            foreach (var plugin in EnabledPlugins)
-                            {
-                                var pluginEntity = dbContext.EformPlugins
-                                    .FirstOrDefault(x => x.PluginId == plugin.PluginId);
+                            var pluginEntity = dbContext.EformPlugins
+                                .FirstOrDefault(x => x.PluginId == plugin.PluginId);
 
-                                if (pluginEntity != null && !string.IsNullOrEmpty(pluginEntity.ConnectionString))
-                                {
-                                    plugin.AddPluginConfig(config, pluginEntity.ConnectionString);
-                                }
+                            if (pluginEntity != null && !string.IsNullOrEmpty(pluginEntity.ConnectionString))
+                            {
+                                plugin.AddPluginConfig(config, pluginEntity.ConnectionString);
                             }
                         }
                     }

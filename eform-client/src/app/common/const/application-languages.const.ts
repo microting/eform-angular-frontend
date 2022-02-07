@@ -24,6 +24,6 @@ export const applicationLanguagesTranslated: {
 }[] = [
   { id: 1, locale: 'da', text: 'Dansk' },
   { id: 2, locale: 'en-US', text: 'Engelsk' },
-  { id: 3, locale: 'de-DE', text: 'Tysk' },
+  // { id: 3, locale: 'de-DE', text: 'Tysk' },
   // { id: 4, locale: 'uk-UA', text: 'Ukrainian' },
 ];
