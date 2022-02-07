@@ -51,7 +51,7 @@
               <button
                 id="workerEditBtn"
                 class="btn btn-accent text-black-50 btn-icon mb-2"
-                *ngIf="userClaims.workersUpdate"
+                *ngIf="userClaims.workersUpdate && !workerDto.isLocked"
                 mdbTooltip="{{ 'Edit Worker' | translate }}"
                 (click)="openEditModal(workerDto)"
               >
@@ -60,7 +60,7 @@
               <button
                 id="workerDeleteBtn"
                 class="btn btn-danger btn-icon mb-2"
-                *ngIf="userClaims.workersDelete"
+                *ngIf="userClaims.workersDelete && !workerDto.isLocked"
                 mdbTooltip="{{ 'Delete Worker' | translate }}"
                 (click)="openDeleteModal(workerDto)"
               >

@@ -9,4 +9,5 @@ export class SiteNameDto {
   siteUId: number;
   tags: Array<number> = [];
   units: Array<UnitModel> = [];
+  isLocked: boolean;
 }

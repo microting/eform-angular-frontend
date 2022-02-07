@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Data.Entities;
+
 namespace eFormAPI.Web.Services
 {
     using Microting.EformAngularFrontendBase.Infrastructure.Data;
@@ -51,13 +54,14 @@ namespace eFormAPI.Web.Services
         private readonly ILocalizationService _localizationService;
         private readonly BaseDbContext _dbContext;
         private readonly UserManager<EformUser> _userManager;
+        private readonly IEFormCoreService _coreHelper;
 
         public AdminService(ILogger<AdminService> logger,
             UserManager<EformUser> userManager,
             IDbOptions<ApplicationSettings> appSettings,
             IUserService userService,
             ILocalizationService localizationService,
-            BaseDbContext dbContext)
+            BaseDbContext dbContext, IEFormCoreService coreHelper)
         {
             _logger = logger;
             _userManager = userManager;
@@ -65,12 +69,15 @@ namespace eFormAPI.Web.Services
             _userService = userService;
             _localizationService = localizationService;
             _dbContext = dbContext;
+            _coreHelper = coreHelper;
         }
 
         public async Task<OperationDataResult<Paged<UserInfoViewModel>>> Index(UserInfoRequest requestModel)
         {
             try
             {
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
                 var userQuery = _userManager.Users
                     .AsNoTracking()
                     .AsQueryable();
@@ -118,6 +125,49 @@ namespace eFormAPI.Web.Services
                 // get from db
                 var userResult = await userQueryWithSelect.ToListAsync();
 
+                foreach (UserInfoViewModel userInfoViewModel in userResult)
+                {
+                    if (!userInfoViewModel.Email.Contains("microting.com"))
+                    {
+                        if (sdkDbContext.Workers.Any(x =>
+                                x.FirstName == userInfoViewModel.FirstName
+                                && x.LastName == userInfoViewModel.LastName
+                                && x.WorkflowState != Constants.WorkflowStates.Removed))
+                        {
+                        }
+                        else
+                        {
+
+                            await core.SiteCreate($"{userInfoViewModel.FirstName} {userInfoViewModel.LastName}", userInfoViewModel.FirstName, userInfoViewModel.LastName,
+                                null, "da");
+
+                            // var id = await sdkDbContext.Sites.Where(x => x.MicrotingUid == siteDto.SiteId).Select(x => x.Id).FirstAsync();
+                        }
+
+                        var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userInfoViewModel.FirstName + " " + userInfoViewModel.LastName
+                            && x.WorkflowState != Constants.WorkflowStates.Removed);
+                        if (site != null)
+                        {
+                            site.IsLocked = true;
+                            await site.Update(sdkDbContext);
+                            var units = await sdkDbContext.Units.Where(x => x.SiteId == site.Id).ToListAsync();
+                            foreach (Unit unit in units)
+                            {
+                                unit.IsLocked = true;
+                                await unit.Update(sdkDbContext);
+                            }
+                            var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.FirstName == userInfoViewModel.FirstName
+                                && x.LastName == userInfoViewModel.LastName
+                                && x.WorkflowState != Constants.WorkflowStates.Removed);
+                            if (worker != null)
+                            {
+                                worker.IsLocked = true;
+                                await worker.Update(sdkDbContext);
+                            }
+                        }
+                    }
+                }
+
                 return new OperationDataResult<Paged<UserInfoViewModel>>(true, new Paged<UserInfoViewModel>
                 {
                     Total = totalUsers,
@@ -136,6 +186,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
                 if (userRegisterModel.Role != EformRole.Admin && userRegisterModel.Role != EformRole.User)
                 {
                     return new OperationResult(false,
@@ -162,6 +214,7 @@ namespace eFormAPI.Web.Services
                     UserName = userRegisterModel.Email,
                     FirstName = userRegisterModel.FirstName,
                     LastName = userRegisterModel.LastName,
+                    Locale = "da",
                     EmailConfirmed = true,
                     TwoFactorEnabled = false,
                     IsGoogleAuthenticatorEnabled = false
@@ -185,6 +238,32 @@ namespace eFormAPI.Web.Services
                     };
                     _dbContext.SecurityGroupUsers.Add(securityGroupUser);
                     await _dbContext.SaveChangesAsync();
+                }
+
+                var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userRegisterModel.FirstName + " " + userRegisterModel.LastName
+                                                                              && x.WorkflowState != Constants.WorkflowStates.Removed);
+                if (site == null) {
+                    await core.SiteCreate($"{userRegisterModel.FirstName} {userRegisterModel.LastName}", userRegisterModel.FirstName, userRegisterModel.LastName,
+                        null, "da");
+                }
+                if (site != null)
+                {
+                    site.IsLocked = true;
+                    await site.Update(sdkDbContext);
+                    var units = await sdkDbContext.Units.Where(x => x.SiteId == site.Id).ToListAsync();
+                    foreach (Unit unit in units)
+                    {
+                        unit.IsLocked = true;
+                        await unit.Update(sdkDbContext);
+                    }
+                    var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.FirstName == userRegisterModel.FirstName
+                        && x.LastName == userRegisterModel.LastName
+                        && x.WorkflowState != Constants.WorkflowStates.Removed);
+                    if (worker != null)
+                    {
+                        worker.IsLocked = true;
+                        await worker.Update(sdkDbContext);
+                    }
                 }
 
                 return new OperationResult(true,
@@ -239,6 +318,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
                 if (userRegisterModel.Id == 1 && _userService.UserId != 1)
                 {
                     return new OperationResult(false, _localizationService.GetString("CantEditPrimaryAdminUser"));
@@ -274,6 +355,23 @@ namespace eFormAPI.Web.Services
                 if (isAdmin && _userService.Role != EformRole.Admin)
                 {
                     return new OperationResult(false, _localizationService.GetString("YouCantViewChangeOrDeleteAdmin"));
+                }
+
+                var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
+                                                                              && x.WorkflowState != Constants.WorkflowStates.Removed);
+                if (site != null)
+                {
+                    site.Name = $"{userRegisterModel.FirstName} {userRegisterModel.LastName}";;
+                    await site.Update(sdkDbContext);
+                    var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.FirstName == user.FirstName
+                        && x.LastName == user.LastName
+                        && x.WorkflowState != Constants.WorkflowStates.Removed);
+                    if (worker != null)
+                    {
+                        worker.FirstName = userRegisterModel.FirstName;
+                        worker.LastName = userRegisterModel.LastName;
+                        await worker.Update(sdkDbContext);
+                    }
                 }
 
                 user.Email = userRegisterModel.Email;
@@ -353,6 +451,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
                 if (userId == 1)
                 {
                     return new OperationResult(false, _localizationService.GetString("CantDeletePrimaryAdminUser"));
@@ -368,6 +468,28 @@ namespace eFormAPI.Web.Services
                 if (user == null)
                 {
                     return new OperationResult(false, _localizationService.GetStringWithFormat("UserUserNameNotFound", userId));
+                }
+
+                var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
+                                                                              && x.WorkflowState != Constants.WorkflowStates.Removed);
+                if (site != null)
+                {
+                    site.IsLocked = false;
+                    await site.Update(sdkDbContext);
+                    var units = await sdkDbContext.Units.Where(x => x.SiteId == site.Id).ToListAsync();
+                    foreach (Unit unit in units)
+                    {
+                        unit.IsLocked = false;
+                        await unit.Update(sdkDbContext);
+                    }
+                    var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.FirstName == user.FirstName
+                        && x.LastName == user.LastName
+                        && x.WorkflowState != Constants.WorkflowStates.Removed);
+                    if (worker != null)
+                    {
+                        worker.IsLocked = false;
+                        await worker.Update(sdkDbContext);
+                    }
                 }
 
                 var result = await _userManager.DeleteAsync(user);

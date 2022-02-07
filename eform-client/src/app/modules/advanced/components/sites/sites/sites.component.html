@@ -68,7 +68,7 @@
                 mdbBtn
                 class="btn-accent text-black-50 btn-icon mb-2"
                 id="editSiteBtn"
-                *ngIf="userClaims.sitesUpdate"
+                *ngIf="userClaims.sitesUpdate && !siteDto.isLocked"
                 mdbTooltip="{{ 'Edit site' | translate }}"
                 mdbWavesEffect
                 (click)="openEditModal(siteDto)"
@@ -79,7 +79,7 @@
                 mdbBtn
                 class="btn-danger btn-icon mb-2"
                 id="deleteSiteBtn"
-                *ngIf="userClaims.sitesDelete"
+                *ngIf="userClaims.sitesDelete && !siteDto.isLocked"
                 mdbTooltip="{{ 'Delete site' | translate }}"
                 (click)="openDeleteModal(siteDto)"
               >

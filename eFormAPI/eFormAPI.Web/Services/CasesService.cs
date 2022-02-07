@@ -170,11 +170,14 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                var caseDto = await core.CaseReadByCaseId(id);
-                var microtingUId = caseDto.MicrotingUId;
-                var microtingCheckUId = caseDto.CheckUId;
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var caseDto = await sdkDbContext.Cases.SingleOrDefaultAsync(x => x.Id == id);
+                if (caseDto == null)
+                {
+                    return new OperationDataResult<ReplyElement>(false, _localizationService.GetString("CaseNotFound"));
+                }
                 var language = await _userService.GetCurrentUserLanguage();
-                var theCase = await core.CaseRead((int)microtingUId, (int)microtingCheckUId, language);
+                var theCase = await core.CaseRead(caseDto.Id, language);
                 theCase.Id = id;
 
                 return !theCase.Equals(null)

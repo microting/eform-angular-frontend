@@ -97,6 +97,7 @@ namespace eFormAPI.Web.Services
                         WorkerUid = x.SiteWorkers.FirstOrDefault(y => y.WorkflowState != Constants.WorkflowStates.Removed).Worker.MicrotingUid,
                         Language = sdkDbContext.Languages.Where(y => y.Id == x.LanguageId).Select(y => y.Name).SingleOrDefault() ?? "Danish",
                         LanguageCode = sdkDbContext.Languages.Where(y => y.Id == x.LanguageId).Select(y => y.LanguageCode).SingleOrDefault() ?? "da",
+                        IsLocked = x.IsLocked
                     })
                     .ToListAsync();
 
@@ -172,12 +173,6 @@ namespace eFormAPI.Web.Services
                 var siteDto = await core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
                     null, deviceUserModel.LanguageCode);
 
-                // if (siteDto != null)
-                // {
-                //     Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == siteDto.SiteId);
-                //     site.LanguageId = language.Id;
-                //     await site.Update(db);
-                // }
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
                 var id = await sdkDbContext.Sites.Where(x => x.MicrotingUid == siteDto.SiteId).Select(x => x.Id).FirstAsync();
 

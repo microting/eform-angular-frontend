@@ -144,7 +144,13 @@ namespace eFormAPI.Web.Services
                         TimeZoneInfo.ConvertTimeFromUtc((DateTime)x.CheckList.CreatedAt, timeZoneInfo),
                     DeployedSites = x.CheckList.CheckListSites
                         .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Select(y => new SiteNameDto((int)y.Site.MicrotingUid, y.Site.Name, y.Site.CreatedAt, y.Site.UpdatedAt))
+                        .Select(y => new SiteNameDto
+                        {
+                            SiteUId = (int)y.Site.MicrotingUid,
+                            SiteName = y.Site.Name,
+                            CreatedAt = y.Site.CreatedAt,
+                            UpdatedAt = y.Site.UpdatedAt
+                        })
                         .ToList(),
                     Description = x.Description,
                     Label = x.Text,
@@ -784,7 +790,7 @@ namespace eFormAPI.Web.Services
             {
                 throw new Exception("EformNotFound");
             }
-            
+
             // add fields
             eform.Fields = await FindFields(idEform, sdkDbContext);
 
@@ -798,7 +804,7 @@ namespace eFormAPI.Web.Services
             {
                 eform.Children.Add(await FindTemplates(checkListId, sdkDbContext));
             }
-            
+
             return eform;
         }
 
