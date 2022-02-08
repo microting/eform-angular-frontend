@@ -4,4 +4,5 @@ export class WorkerDto {
   firstName: string;
   lastName: string;
   workerUId: number;
+  isLocked: boolean;
 }

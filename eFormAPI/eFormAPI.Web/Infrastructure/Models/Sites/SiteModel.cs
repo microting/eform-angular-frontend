@@ -19,7 +19,9 @@ namespace eFormAPI.Web.Infrastructure.Models.Sites
 
         public List<int> Tags { get; set; }
             = new List<int>();
-        
+
         public List<UnitModel> Units { get; set; } = new List<UnitModel>();
+
+        public bool IsLocked { get; set; }
     }
 }

@@ -125,7 +125,7 @@
               mdbBtn
               class="btn-danger btn-icon mb-2 btn-small-height"
               id="moveBtn_{{ i }}"
-              *ngIf="userClaims.sitesDelete"
+              *ngIf="userClaims.sitesDelete && !unitModel.isLocked"
               mdbTooltip="{{ 'Move unit' | translate }}"
               (click)="openMoveModal(unitModel)"
             >

@@ -22,5 +22,5 @@ export class UnitDto {
   syncDefaultDelay: number;
   syncDelayPrCheckList: number;
   pushEnabled: boolean;
-
+  isLocked: boolean;
 }

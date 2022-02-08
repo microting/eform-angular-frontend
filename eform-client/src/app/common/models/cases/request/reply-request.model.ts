@@ -6,4 +6,5 @@ export class ReplyRequest {
   elementList: Array<CaseEditRequest> = [];
   doneAt: Date;
   isDoneAtEditable: boolean;
+  extraId: number;
 }

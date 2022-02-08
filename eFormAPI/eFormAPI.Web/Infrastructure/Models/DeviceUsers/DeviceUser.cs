@@ -38,5 +38,6 @@ namespace eFormAPI.Web.Infrastructure.Models.DeviceUsers
         public int LanguageId { get; set; }
         public string Language { get; set; }
         public string LanguageCode { get; set; }
+        public bool IsLocked { get; set; }
     }
 }

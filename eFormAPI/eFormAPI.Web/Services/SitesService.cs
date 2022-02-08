@@ -109,6 +109,7 @@ namespace eFormAPI.Web.Services
                             .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
                             .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
                             .Select(t => (int)t.TagId).ToList(),
+                        IsLocked = x.IsLocked,
                     }).ToListAsync();
 
                 return new OperationDataResult<List<SiteModel>>(true, sites);

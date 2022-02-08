@@ -11,4 +11,5 @@ export class SiteDto {
   languageId: number;
   language: string;
   languageCode: string;
+  isLocked: boolean;
 }
