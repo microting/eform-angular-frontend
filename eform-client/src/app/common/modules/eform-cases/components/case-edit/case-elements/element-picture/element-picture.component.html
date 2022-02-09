@@ -1,11 +1,11 @@
-<div class="row pl-2">
-  <button mdbBtn class="btn-success btn-small-height"
-          [disabled]="buttonsLocked"
-          (click)="updateAddNewImageModal.show()">
-    {{'Add new image' | translate}}
-    <fa-icon icon="plus" size="lg" [fixedWidth]="true"></fa-icon>
-  </button>
-</div>
+<!--<div class="row pl-2">-->
+<!--  <button mdbBtn class="btn-success btn-small-height"-->
+<!--          [disabled]="buttonsLocked"-->
+<!--          (click)="updateAddNewImageModal.show()">-->
+<!--    {{'Add new image' | translate}}-->
+<!--    <fa-icon icon="plus" size="lg" [fixedWidth]="true"></fa-icon>-->
+<!--  </button>-->
+<!--</div>-->
 <div class="row">
   <div class="col-md-3 col-sm-4 col-xs-12" *ngFor="let image of images; let i = index">
     <mdb-card>

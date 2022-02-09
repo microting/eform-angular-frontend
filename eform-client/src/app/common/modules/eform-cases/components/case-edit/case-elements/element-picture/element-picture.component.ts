@@ -165,7 +165,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
         if (data && data.success) {
           this.updateAddNewImageModal.hide();
           this.newImageForUpdate = null;
-          this.pictureUpdated.emit();
+          // TODO add code, which fetch the new image
         }
       });
   }

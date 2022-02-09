@@ -39,7 +39,6 @@
 
       <!-- Elements loop -->
       <app-case-edit-element
-        (needUpdate)="loadCase()"
         [element]="elem"
         *ngFor="let elem of replyElement.elementList"
       ></app-case-edit-element>
