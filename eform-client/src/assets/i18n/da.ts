@@ -164,7 +164,7 @@ export const da = {
     'Tving brugere til at bruge tofaktorautentisering (2-f-auth)',
   'Old password': 'Gammel adgangskode',
   'New password': 'Ny adgangskode',
-  'New password confirmation': 'Ny adgangskode bekræftelse',
+  'New password confirmation': 'Gentag ny adgangskode',
   'Confirm new password': 'Bekræft ny adgangskode',
   'Enter new password': 'Indtast ny adgangskode',
   'Enter old password': 'Indtast gammel adgangskode',
