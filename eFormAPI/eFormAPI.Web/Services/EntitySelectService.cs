@@ -71,6 +71,7 @@ namespace eFormAPI.Web.Services
                 var entitySelectableGroupQuery = sdkDbContext.EntityGroups
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Where(x => x.Type == Constants.FieldTypes.EntitySelect)
+                    .Where(x => x.MicrotingUid != null)
                     .AsNoTracking()
                     .AsQueryable();
 
@@ -287,7 +288,9 @@ namespace eFormAPI.Web.Services
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
 
                 var query = sdkDbContext.EntityGroups
-                    .Where(x => x.Type == Constants.FieldTypes.EntitySelect);
+                    .Where(x => x.Type == Constants.FieldTypes.EntitySelect)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.MicrotingUid != null);
 
                 if (!string.IsNullOrEmpty(searchString))
                 {
