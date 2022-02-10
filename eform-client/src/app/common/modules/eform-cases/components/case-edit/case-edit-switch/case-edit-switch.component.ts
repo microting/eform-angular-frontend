@@ -15,7 +15,7 @@ export class CaseEditSwitchComponent implements OnInit {
   ngOnInit() {
   }
 
-  emitNeedUpdate(){
-    this.needUpdate.emit()
+  emitNeedUpdate() {
+    this.needUpdate.emit();
   }
 }

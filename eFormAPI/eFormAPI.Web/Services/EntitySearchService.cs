@@ -308,7 +308,9 @@ namespace eFormAPI.Web.Services
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
 
                 var query = sdkDbContext.EntityGroups
-                    .Where(x => x.Type == Constants.FieldTypes.EntitySearch);
+                    .Where(x => x.Type == Constants.FieldTypes.EntitySearch)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.MicrotingUid != null);
 
                 if (!string.IsNullOrEmpty(searchString))
                 {
@@ -326,10 +328,10 @@ namespace eFormAPI.Web.Services
 
                 return new OperationDataResult<List<CommonDictionaryModel>>(true, entityGroups);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 return new OperationDataResult<List<CommonDictionaryModel>>(false,
-                    _localizationService.GetString("ErrorWhenObtainingSearchableList"));
+                    _localizationService.GetString("ErrorWhenObtainingSearchableList") + $" {exception.Message}");
             }
         }
     }
