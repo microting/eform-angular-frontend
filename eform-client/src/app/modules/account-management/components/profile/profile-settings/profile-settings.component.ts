@@ -9,7 +9,7 @@ import {
   UserSettingsService,
 } from 'src/app/common/services/auth';
 import { TimezonesModel } from 'src/app/common/models/common/timezones.model';
-import { applicationLanguages } from 'src/app/common/const/application-languages.const';
+import {applicationLanguages, applicationLanguagesTranslated} from 'src/app/common/const/application-languages.const';
 import { countries } from 'src/app/common/const/application-countries.const';
 import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
 
@@ -20,7 +20,7 @@ import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
 })
 export class ProfileSettingsComponent implements OnInit {
   get languages() {
-    return applicationLanguages;
+    return applicationLanguagesTranslated;
   }
 
   get countries() {
