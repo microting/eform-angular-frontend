@@ -80,7 +80,7 @@
               ></ng-select>
             </div>
             <div class="row">
-              <ng-select
+              <ng-select *ngIf="authStateService.isAdmin"
                 id="ProfileFormatSelector"
                 [placeholder]="'Formats' | translate"
                 [bindLabel]="'text'"
@@ -91,7 +91,7 @@
               ></ng-select>
             </div>
             <div class="row">
-              <ng-select
+              <ng-select *ngIf="authStateService.isAdmin"
                 id="ProfileTimeZoneSelector"
                 [placeholder]="'Timezone' | translate"
                 [bindLabel]="'name'"
