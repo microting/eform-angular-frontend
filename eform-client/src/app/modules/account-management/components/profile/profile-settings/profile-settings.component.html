@@ -69,7 +69,7 @@
         <mdb-card-body>
           <div class="container-fluid">
             <div class="row">
-              <ng-select
+              <ng-select *ngIf="authStateService.isAdmin"
                 id="ProfileLanguageSelector"
                 [placeholder]="'Language' | translate"
                 [bindLabel]="'text'"
