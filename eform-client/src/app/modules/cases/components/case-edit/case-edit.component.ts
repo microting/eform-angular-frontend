@@ -25,6 +25,7 @@ import {
 } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
 
 @AutoUnsubscribe()
 @Component({
@@ -62,6 +63,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    dateTimeAdapter: DateTimeAdapter<any>,
     activateRoute: ActivatedRoute,
     private casesService: CasesService,
     private eFormService: EFormService,
@@ -76,6 +78,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     this.queryParamsSun$ = activateRoute.queryParams.subscribe((params) => {
       this.reverseRoute = params['reverseRoute'];
     });
+    dateTimeAdapter.setLocale(authStateService.currentUserLocale);
   }
 
   ngOnInit() {
