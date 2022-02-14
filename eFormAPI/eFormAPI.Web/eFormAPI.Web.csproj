@@ -50,7 +50,7 @@
     <PackageReference Include="AWSSDK.S3" Version="3.7.7.21" />
     <PackageReference Include="ClosedXML" Version="0.95.4" />
     <PackageReference Include="HtmlToOpenXml.dll" Version="2.2.0" />
-    <PackageReference Include="Magick.NET-Q16-x64" Version="9.1.1" />
+    <PackageReference Include="Magick.NET-Q16-x64" Version="9.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.2" />
