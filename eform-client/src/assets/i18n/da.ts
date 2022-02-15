@@ -422,5 +422,5 @@ export const da = {
   'Add new image': 'Tilføj nyt billede',
   'Select file': 'Vælg fil',
   'No file uploaded yet.': 'Ingen fil er blevet uploadet endnu.',
-  'Dark theme': 'Natte tilstand'
+  'Dark theme': 'Mørk tilstand'
 };

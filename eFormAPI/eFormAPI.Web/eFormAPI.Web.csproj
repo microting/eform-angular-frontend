@@ -50,15 +50,15 @@
     <PackageReference Include="AWSSDK.S3" Version="3.7.7.21" />
     <PackageReference Include="ClosedXML" Version="0.95.4" />
     <PackageReference Include="HtmlToOpenXml.dll" Version="2.2.0" />
-    <PackageReference Include="Magick.NET-Q16-x64" Version="9.1.1" />
+    <PackageReference Include="Magick.NET-Q16-x64" Version="9.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.2" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="5.4.27" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="1.1.30" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.1.31" />
+    <PackageReference Include="Microting.eForm" Version="5.4.28" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="1.1.31" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.1.32" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
