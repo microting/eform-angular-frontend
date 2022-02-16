@@ -58,7 +58,7 @@
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microting.eForm" Version="5.4.30" />
     <PackageReference Include="Microting.EformAngularFrontendBase" Version="1.1.32" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.1.33" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.1.34" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
