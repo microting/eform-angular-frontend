@@ -46,5 +46,6 @@ namespace eFormAPI.Web.Services.NavigationMenu
         public List<NavigationMenuTranslationModel> Translations { get; set; }
             = new List<NavigationMenuTranslationModel>();
 
+        public bool IsInternalLink { get; set; }
     }
 }

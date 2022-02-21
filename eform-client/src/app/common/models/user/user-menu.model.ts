@@ -8,7 +8,7 @@ export class MenuItemModel {
   link: string;
   e2EId: string;
   position: number;
-
+  isInternalLink: boolean;
   menuItems: Array<MenuItemModel> = [];
   guards: Array<string> = [];
 }
