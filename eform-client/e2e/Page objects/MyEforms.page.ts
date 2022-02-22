@@ -289,13 +289,13 @@ class MyEformsRowObject {
   createdAt: Date;
   eFormName: string;
   tags: Array<any>;
-  editTagsBtn;
-  addPairEformBtn;
-  editPairEformBtn;
-  editColumnsBtn;
-  deleteBtn;
-  uploadZipArchiveBtn;
-  goVisualEditorBtn;
+  editTagsBtn: WebdriverIO.Element;
+  addPairEformBtn: WebdriverIO.Element;
+  editPairEformBtn: WebdriverIO.Element;
+  editColumnsBtn: WebdriverIO.Element;
+  deleteBtn: WebdriverIO.Element;
+  uploadZipArchiveBtn: WebdriverIO.Element;
+  goVisualEditorBtn: WebdriverIO.Element;
 
   async getRow(rowNum: number) {
     const currentPosition = rowNum - 1;
@@ -329,7 +329,7 @@ class MyEformsRowObject {
   }
 
   async deleteEForm() {
-    if(await (await this.deleteBtn).isExisting()) {
+    if(await this.deleteBtn) {
       (await this.deleteBtn).scrollIntoView();
       (await this.deleteBtn).click();
       const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');

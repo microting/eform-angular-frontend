@@ -24,7 +24,7 @@
               ></ng-select>
             </div>
           </div>
-          <div class="row">
+          <div class="row align-items-center">
             <div class="col">
               <div class="md-form">
                 <input
@@ -36,6 +36,17 @@
                   class="form-control"
                 />
                 <label for="customLinkLink">{{ 'Link' | translate }}</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="mat-checkbox">
+                <input
+                  type="checkbox"
+                  id="customLinkIsInternalLink"
+                  name="customLinkIsInternalLink"
+                  [(ngModel)]="customLinkModel.isInternalLink"
+                />
+                <label for="customLinkIsInternalLink">{{ 'Is internal link' | translate }}</label>
               </div>
             </div>
           </div>

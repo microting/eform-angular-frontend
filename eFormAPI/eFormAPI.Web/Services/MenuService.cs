@@ -78,7 +78,7 @@ namespace eFormAPI.Web.Services
             await _dbContext.SaveChangesAsync();
 
             // Step 2. Traversal collection and add to database depend on menu item type 
-            for (int i = 0; i < menuItemModels.Count; i++)
+            for (var i = 0; i < menuItemModels.Count; i++)
             {
                 var menuItemBuilder = new MenuItemBuilder(_dbContext, menuItemModels[i], i);
 
@@ -188,6 +188,7 @@ namespace eFormAPI.Web.Services
                         RelatedTemplateItemId = x.MenuTemplateId,
                         ParentId = x.ParentId,
                         Position = x.Position,
+                        IsInternalLink = x.IsInternalLink,
                         Translations = _dbContext.MenuItemTranslations
                             .Where(p => p.MenuItemId == x.Id)
                             .Select(p => new NavigationMenuTranslationModel
@@ -227,8 +228,9 @@ namespace eFormAPI.Web.Services
                                     .Where(k => k.MenuItemId == p.Id)
                                     .Select(k => k.SecurityGroupId)
                                     .ToList(),
+                                IsInternalLink = p.IsInternalLink,
                             })
-                            .ToList()
+                            .ToList(),
                     })
                     .ToList();
 
@@ -289,6 +291,7 @@ namespace eFormAPI.Web.Services
                                     .ToList()
                             : new List<string>(),
                         Position = x.Position,
+                        IsInternalLink = x.IsInternalLink,
                         MenuItems = _dbContext.MenuItems
                         .Include(p => p.MenuTemplate)
                         .Where(p => p.ParentId == x.Id)
@@ -308,6 +311,7 @@ namespace eFormAPI.Web.Services
                                     .ToList()
                             : new List<string>(),
                             Position = p.Position,
+                            IsInternalLink = p.IsInternalLink,
                         })
                         .ToList()
                     })
@@ -333,8 +337,10 @@ namespace eFormAPI.Web.Services
                             ? d.MenuTemplate.Permissions.Select(y => y.ClaimName).ToList()
                             : new List<string>(),
                         Position = d.Position,
+                        IsInternalLink = d.IsInternalLink,
                     })
-                        .ToList()
+                        .ToList(),
+                    IsInternalLink = x.IsInternalLink,
                 }).ToList();
 
                 // Add user first and last name
@@ -383,7 +389,7 @@ namespace eFormAPI.Web.Services
             {
                 var pluginMenu = plugin.GetNavigationMenu(_serviceProvider);
 
-                int currentPosition = _dbContext.MenuItems.Where(x => x.ParentId == null).Max(x => x.Position) + 1;
+                var currentPosition = _dbContext.MenuItems.Where(x => x.ParentId == null).Max(x => x.Position) + 1;
                 foreach (var pluginMenuItem in pluginMenu)
                 {
                     AddToDatabase(pluginMenuItem, null, currentPosition);
@@ -412,16 +418,14 @@ namespace eFormAPI.Web.Services
                 _dbContext.MenuItems.Add(newMenuItem);
                 _dbContext.SaveChanges();
 
-                foreach (var menuItemTranslation in pluginMenuItem.Translations)
+                foreach (var translation in pluginMenuItem.Translations.Select(menuItemTranslation => new MenuItemTranslation
+                         {
+                             Language = menuItemTranslation.Language,
+                             LocaleName = menuItemTranslation.LocaleName,
+                             Name = menuItemTranslation.Name,
+                             MenuItemId = newMenuItem.Id,
+                         }))
                 {
-                    var translation = new MenuItemTranslation
-                    {
-                        Language = menuItemTranslation.Language,
-                        LocaleName = menuItemTranslation.LocaleName,
-                        Name = menuItemTranslation.Name,
-                        MenuItemId = newMenuItem.Id,
-                    };
-
                     _dbContext.MenuItemTranslations.Add(translation);
                     _dbContext.SaveChanges();
                 }
@@ -442,23 +446,21 @@ namespace eFormAPI.Web.Services
                 _dbContext.MenuItems.Add(newMenuItem);
                 _dbContext.SaveChanges();
 
-                foreach (var menuItemTranslation in pluginMenuItem.Translations)
+                foreach (var translation in pluginMenuItem.Translations.Select(menuItemTranslation => new MenuItemTranslation
+                         {
+                             Language = menuItemTranslation.Language,
+                             LocaleName = menuItemTranslation.LocaleName,
+                             Name = menuItemTranslation.Name,
+                             MenuItemId = newMenuItem.Id,
+                         }))
                 {
-                    var translation = new MenuItemTranslation
-                    {
-                        Language = menuItemTranslation.Language,
-                        LocaleName = menuItemTranslation.LocaleName,
-                        Name = menuItemTranslation.Name,
-                        MenuItemId = newMenuItem.Id,
-                    };
-
                     _dbContext.MenuItemTranslations.Add(translation);
                     _dbContext.SaveChanges();
                 }
 
                 if (pluginMenuItem.ChildItems.Any())
                 {
-                    int childPosition = 0;
+                    var childPosition = 0;
                     foreach (var childMenuItem in pluginMenuItem.ChildItems)
                     {
                         AddToDatabase(childMenuItem, newMenuItem.Id, childPosition);

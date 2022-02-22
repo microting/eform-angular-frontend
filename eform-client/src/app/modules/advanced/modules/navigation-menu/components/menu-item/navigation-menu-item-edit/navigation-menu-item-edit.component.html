@@ -31,7 +31,7 @@
             </div>
           </div>
           <div
-            class="row"
+            class="row align-items-center"
             *ngIf="
               item.type === menuItemType.CustomLink ||
               item.type === menuItemType.Link
@@ -48,6 +48,17 @@
                   class="form-control"
                 />
                 <label for="editLinkInput">{{ 'Link' | translate }}</label>
+              </div>
+            </div>
+            <div class="col" *ngIf="item.type === menuItemType.CustomLink">
+              <div class="mat-checkbox">
+                <input
+                  type="checkbox"
+                  id="editLinkIsInternalLink"
+                  name="editLinkIsInternalLink"
+                  [(ngModel)]="item.isInternalLink"
+                />
+                <label for="editLinkIsInternalLink">{{ 'Is internal link' | translate }}</label>
               </div>
             </div>
           </div>

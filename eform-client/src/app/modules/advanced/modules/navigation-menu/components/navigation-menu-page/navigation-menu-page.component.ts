@@ -63,7 +63,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
         return source.id === 'mainMenu' || source.id === 'pluginMenu';
       },
       copyItem: (data: NavigationMenuItemModel) => {
-        return { ...data, type: NavigationMenuItemTypeEnum.Link };
+        return { ...data, type: NavigationMenuItemTypeEnum.Link, isInternalLink: true, };
       },
       accepts: (el, target) => {
         // To avoid dragging from right to left container
