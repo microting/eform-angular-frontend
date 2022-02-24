@@ -25,6 +25,7 @@ SOFTWARE.
 namespace eFormAPI.Web.Services.NavigationMenu.Builder
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Microting.EformAngularFrontendBase.Infrastructure.Data;
     using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 
@@ -58,14 +59,12 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
                 Type = MenuItemModel.Type,
                 Link = MenuItemModel.Link,
                 E2EId = MenuItemModel.E2EId,
+                IsInternalLink = MenuItemModel.IsInternalLink,
             };
 
-            foreach (var behavior in _behaviors)
+            foreach (var behavior in _behaviors.Where(behavior => behavior.IsExecute()))
             {
-                if (behavior.IsExecute())
-                {
-                    behavior.Setup(menuItemParent);
-                }
+                behavior.Setup(menuItemParent);
             }
 
             return menuItemParent;

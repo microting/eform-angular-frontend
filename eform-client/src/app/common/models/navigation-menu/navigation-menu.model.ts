@@ -33,6 +33,7 @@ export class NavigationMenuItemModel {
   isVirtual: boolean;
   securityGroupsIds: number[];
   translations: NavigationMenuTranslationModel[];
+  isInternalLink: boolean = true;
 }
 
 export class NavigationMenuTranslationModel {
