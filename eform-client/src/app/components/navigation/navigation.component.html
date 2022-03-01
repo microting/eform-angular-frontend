@@ -55,7 +55,7 @@
                   >
                     <ng-container *ngFor="let subMenu of menu.menuItems">
                       <a
-                        *ngIf="checkGuards(subMenu.guards) && menu.isInternalLink"
+                        *ngIf="checkGuards(subMenu.guards) && subMenu.isInternalLink"
                         class="dropdown-item waves-light"
                         routerLink="{{ subMenu.link }}"
                         routerLinkActive="active"
@@ -64,7 +64,7 @@
                         {{ subMenu.name }}
                       </a>
                       <a
-                        *ngIf="checkGuards(subMenu.guards) && !menu.isInternalLink"
+                        *ngIf="checkGuards(subMenu.guards) && !subMenu.isInternalLink"
                         class="dropdown-item waves-light"
                         [href]="subMenu.link"
                         target="_blank"
