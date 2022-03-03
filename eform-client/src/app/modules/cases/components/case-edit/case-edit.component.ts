@@ -14,11 +14,10 @@ import {
   ReplyElementDto,
   EformPermissionsSimpleModel,
   ReplyRequest,
-  TemplateDto,
+  TemplateDto, ElementDto, DataItemDto,
 } from 'src/app/common/models';
 import { CaseEditElementComponent } from 'src/app/common/modules/eform-cases/components';
 import {
-  AuthService,
   CasesService,
   EFormService,
   SecurityGroupEformsPermissionsService,
@@ -26,6 +25,7 @@ import {
 import { AuthStateService } from 'src/app/common/store';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
+import * as R from 'ramda';
 
 @AutoUnsubscribe()
 @Component({
@@ -96,6 +96,54 @@ export class CaseEditComponent implements OnInit, OnDestroy {
       .subscribe((operation) => {
         if (operation && operation.success) {
           this.replyElement = operation.model;
+        }
+      });
+  }
+
+  partialLoadCase() {
+    if (!this.id || this.id === 0) {
+      return;
+    }
+    this.casesService
+      .getById(this.id, this.currentTemplate.id)
+      .subscribe((operation) => {
+        if (operation && operation.success) {
+          const fn = (pathForLens: Array<number | string>) => {
+            const lens = R.lensPath(pathForLens);
+            let dataItem: (ElementDto | DataItemDto) = R.view(lens, operation.model);
+            // @ts-ignore
+            if (dataItem.elementList !== undefined || dataItem.dataItemList !== undefined) {
+              dataItem = dataItem as ElementDto;
+              // R.set(R.lensPath([...pathForLens, 'extraPictures']), dataItem.extraPictures, this.replyElement);
+              if(dataItem.elementList) {
+                for (let i = 0; i < dataItem.elementList.length; i++) {
+                  fn([...pathForLens, 'elementList', i]);
+                }
+              }
+              if(dataItem.dataItemList) {
+                for (let i = 0; i < dataItem.dataItemList.length; i++) {
+                  fn([...pathForLens, 'dataItemList', i]);
+                }
+              }
+            } else { // @ts-ignore
+              if(dataItem.fieldType !== undefined){
+                dataItem = dataItem as DataItemDto;
+                if (dataItem.fieldType === 'FieldContainer') {
+                  for (let i = 0; i < dataItem.dataItemList.length; i++) {
+                    fn([...pathForLens, 'dataItemList', i]);
+                  }
+                }
+                if (dataItem.fieldType === 'Picture') {
+                  // let oldDataItem = R.view(lens, this.replyElement);
+                  // oldDataItem = {...oldDataItem, ...dataItem};
+                  this.replyElement = R.set(lens, dataItem, this.replyElement);
+                }
+              }
+            }
+          }
+          for (let i = 0; i < operation.model.elementList.length; i++){
+            fn(['elementList', i]);
+          }
         }
       });
   }
