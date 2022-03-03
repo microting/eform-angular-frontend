@@ -44,6 +44,7 @@
       <app-case-edit-element
         [element]="elem"
         *ngFor="let elem of replyElement.elementList"
+        (needUpdate)="partialLoadCase()"
       ></app-case-edit-element>
     </div>
 
