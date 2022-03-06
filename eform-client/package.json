@@ -79,7 +79,7 @@
     "ramda": "^0.28.0",
     "rxjs": "7.5.4",
     "tslib": "^2.3.1",
-    "zone.js": "^0.11.3"
+    "zone.js": "^0.11.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^12.2.12",
