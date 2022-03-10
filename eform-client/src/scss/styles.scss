@@ -10,6 +10,8 @@ html {
   height: 100%;
 }
 body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   height: 100%;
   color: var(--theme-body-font-color);
   background-color: var(--theme-background-color);
@@ -525,4 +527,3 @@ body, .theme-light__forced {
   --highlight-deletion: #c02d2e;
   --theme-body-font-color: var(--black-800);
 }
-

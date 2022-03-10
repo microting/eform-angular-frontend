@@ -41,6 +41,7 @@
               }
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
               "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
@@ -111,6 +112,7 @@
             "karmaConfig": "src/karma.conf.js",
             "sourceMap": false,
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.scss"
             ],
             "scripts": [],
