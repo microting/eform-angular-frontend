@@ -379,7 +379,7 @@ export const da = {
   Dropdown: 'Dropdown',
   'Security groups': 'Sikkerhedsgrupper',
   Custom: 'Brugerdefinerede',
-  Add: 'Tilføje',
+  Add: 'Tilføj',
   'Generate report': 'Generer {{value}} rapport',
   'Select date range': 'Vælg periode',
   'Edit headers': 'Redigér overskrifter',
@@ -421,6 +421,8 @@ export const da = {
   'Number stepper field': 'Tæl op/ned',
   'Add new image': 'Tilføj nyt billede',
   'Select file': 'Vælg fil',
-  'No file uploaded yet.': 'Ingen fil er blevet uploadet endnu.',
-  'Dark theme': 'Mørk tilstand'
+  'No file uploaded yet.': 'Ingen valgt',
+  'Dark theme': 'Mørk tilstand',
+  'Select new image': 'Vælg billede',
+  'Select image': 'Vælg billede',
 };
