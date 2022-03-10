@@ -24,12 +24,22 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     this.isDarkThemeAsync$ = this.authStateService.isDarkThemeAsync.subscribe(
       (isDarkTheme) => {
         isDarkTheme
-          ? this.renderer.addClass(document.body, 'theme-dark')
-          : this.renderer.removeClass(document.body, 'theme-dark');
+          ? this.switchToDarkTheme()
+          : this.switchToLightTheme();
       }
     );
 
     this.localeService.initLocale();
+  }
+
+  switchToDarkTheme(){
+    this.renderer.addClass(document.body, 'theme-dark');
+    this.renderer.removeClass(document.body, 'theme-light');
+  }
+
+  switchToLightTheme(){
+    this.renderer.addClass(document.body, 'theme-light');
+    this.renderer.removeClass(document.body, 'theme-dark');
   }
 
   ngOnDestroy() {}
