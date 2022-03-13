@@ -70,7 +70,7 @@ export class FolderCreateComponent implements OnInit {
   createFolder() {
     // Validate if at least one translation is filled correctly
     const translationExists = this.newFolderModel.translations.find(
-      (x) => x.name && x.description
+      (x) => x.name
     );
     if (translationExists) {
       this.foldersService
