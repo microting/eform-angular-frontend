@@ -310,7 +310,7 @@
     <value>"{0}" paired successfully</value>
   </data>
   <data name="ParamUpdatedSuccessfully" xml:space="preserve">
-    <value>{0} updated successfully</value>
+    <value>{0} updated</value>
   </data>
   <data name="PleaseSetupSecurityCode" xml:space="preserve">
     <value>Please setup security code on server</value>

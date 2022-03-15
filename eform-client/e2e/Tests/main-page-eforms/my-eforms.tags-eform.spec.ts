@@ -34,7 +34,7 @@ describe('Main page', function () {
     await elem.waitForDisplayed({ timeout: 40000, reverse: true });
     await myEformsPage.createNewTag(testTag);
     await elem.waitForDisplayed({ timeout: 40000 });
-    expect(await elem.getText()).eq(`Tag "${testTag}" oprettet med succes`);
+    expect(await elem.getText()).eq(`Tag "${testTag}" oprettet`);
   });
   it('should add already prepared tag to eform', async () => {
     await (await myEformsPage.getEformsRowObjByNameEForm(newEformLabel)).addTag(testTag);

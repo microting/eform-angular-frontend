@@ -203,7 +203,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 return new OperationResult(true,
-                    _localizationService.GetStringWithFormat("ParamUpdatedSuccessfully", editModel.GroupUid));
+                    _localizationService.GetStringWithFormat("ParamUpdatedSuccessfully", editModel.Name));
             }
             catch (Exception exception)
             {
