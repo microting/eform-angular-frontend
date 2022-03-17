@@ -18,6 +18,8 @@ const paragraph: NodeSpec = {
 
 const nodes = Object.assign({}, basicNodes, {
   paragraph,
+  ordered_list: {},
+  bullet_list: {},
 });
 
 const markes = {
