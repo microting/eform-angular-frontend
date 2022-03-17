@@ -89,7 +89,7 @@ export class FolderEditComponent implements OnInit, OnDestroy {
   updateFolder() {
     // Validate if at least one translation is filled correctly
     const translationExists = this.folderUpdateModel.translations.find(
-      (x) => x.name && x.description
+      (x) => x.name
     );
 
     if (translationExists) {

@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -298,19 +298,19 @@
     <value>Hovedforbindelsestrengen er ugyldig</value>
   </data>
   <data name="NewOTPCreatedSuccessfully" xml:space="preserve">
-    <value>Ny OTP oprettet med succes</value>
+    <value>Ny OTP oprettet</value>
   </data>
   <data name="ParamCreatedSuccessfully" xml:space="preserve">
-    <value>{0} oprettet med succes</value>
+    <value>{0} oprettet</value>
   </data>
   <data name="ParamDeletedSuccessfully" xml:space="preserve">
     <value>{0} slettet korrekt</value>
   </data>
   <data name="ParamPairedSuccessfully" xml:space="preserve">
-    <value>{0} parret med succes</value>
+    <value>{0} parret</value>
   </data>
   <data name="ParamUpdatedSuccessfully" xml:space="preserve">
-    <value>{0} opdateret med succes</value>
+    <value>{0} opdateret</value>
   </data>
   <data name="PleaseSetupSecurityCode" xml:space="preserve">
     <value>Indstil venligst sikkerhedskoden på serveren</value>
@@ -358,16 +358,16 @@
     <value>Tag slettet korrekt</value>
   </data>
   <data name="TagParamCreatedSuccessfully" xml:space="preserve">
-    <value>Tag "{0}" oprettet med succes</value>
+    <value>Tag "{0}" oprettet</value>
   </data>
   <data name="TemplateTagUpdatedSuccessfully" xml:space="preserve">
-    <value>Skabelonetiketter blev opdateret med succes</value>
+    <value>Skabelonetiketter blev opdateret</value>
   </data>
   <data name="UnitParamOTPCouldNotCompleted" xml:space="preserve">
     <value>Enhed "{0}" OTP-anmodning kunne ikke udføres</value>
   </data>
   <data name="UnitWasSuccessfullyCreated" xml:space="preserve">
-    <value>Enheden blev oprettet med succes</value>
+    <value>Enheden blev oprettet</value>
   </data>
   <data name="ErrorWhileCreatingUnit" xml:space="preserve">
     <value>Fejl under oprettelse af enhed</value>
@@ -406,7 +406,7 @@
     <value>Medarbejder med id {0} blev opdateret</value>
   </data>
   <data name="WorkerWasSuccessfullyCreated" xml:space="preserve">
-    <value>Medarbejderen blev oprettet med succes</value>
+    <value>Medarbejderen blev oprettet</value>
   </data>
   <data name="YouNeedToBuyMoreLicenses" xml:space="preserve">
     <value>Du skal købe flere licenser til yderligere enheder, kontakt Microting.</value>
@@ -427,7 +427,7 @@
     <value>Fejl under opdatering af tilladelser</value>
   </data>
   <data name="PermissionsUpdatedSuccessfully" xml:space="preserve">
-    <value>Tilladelser opdateret med succes</value>
+    <value>Tilladelser opdateret</value>
   </data>
   <data name="ConnectionStringDoesNotExist" xml:space="preserve">
     <value>Forbindelsesstrengen findes ikke</value>
@@ -475,16 +475,16 @@
     <value>Tilladelse til eform er blevet opdateret</value>
   </data>
   <data name="SecurityGroupCreatedSuccessfully" xml:space="preserve">
-    <value>Sikkerhedsgruppe oprettes med succes</value>
+    <value>Sikkerhedsgruppe oprettes</value>
   </data>
   <data name="SecurityGroupNameIsEmpty" xml:space="preserve">
     <value>Sikkerhedsgruppens navn er tomt</value>
   </data>
   <data name="SecurityGroupRemovedSuccessfully" xml:space="preserve">
-    <value>Sikkerhedsgruppe fjernet med succes</value>
+    <value>Sikkerhedsgruppe fjernet</value>
   </data>
   <data name="SecurityGroupUpdatedSuccessfully" xml:space="preserve">
-    <value>Sikkerhedsgruppe opdateret med succes</value>
+    <value>Sikkerhedsgruppe opdateret</value>
   </data>
   <data name="ErrorWhileObtainingSavedTags" xml:space="preserve">
     <value>Fejl under opnåelse af gemte tags</value>
@@ -565,7 +565,7 @@
     <value>Fejl under opdatering af rapport</value>
   </data>
   <data name="ReportUpdatedSuccessfully" xml:space="preserve">
-    <value>Rapport opdateret med succes</value>
+    <value>Rapport opdateret</value>
   </data>
   <data name="TemplateNotFound" xml:space="preserve">
     <value>Skabelon blev ikke fundet</value>
@@ -610,7 +610,7 @@
     <value>E-mail-modtagere</value>
   </data>
   <data name="EmailRecipientCreatedSuccessfully" xml:space="preserve">
-    <value>E-mail-modtager oprettet med succes</value>
+    <value>E-mail-modtager oprettet</value>
   </data>
   <data name="EmailRecipientNotFound" xml:space="preserve">
     <value>E-mail-modtager ikke fundet</value>
@@ -622,7 +622,7 @@
     <value>E-mail-modtager blev opdateret</value>
   </data>
   <data name="EmailTagCreatedSuccessfully" xml:space="preserve">
-    <value>E-mail-tag oprettet med succes</value>
+    <value>E-mail-tag oprettet</value>
   </data>
   <data name="EmailTagNotFound" xml:space="preserve">
     <value>E-mail-tag ikke fundet</value>
@@ -709,7 +709,7 @@
     <value>Navigationsmenuen blev opdateret.</value>
   </data>
   <data name="ImportFinishedSuccessfully" xml:space="preserve">
-    <value>Importen afsluttet med succes</value>
+    <value>Importen afsluttet</value>
   </data>
   <data name="EFormWithNameAlreadyExists" xml:space="preserve">
     <value>eForm med navnet {0} findes allerede</value>

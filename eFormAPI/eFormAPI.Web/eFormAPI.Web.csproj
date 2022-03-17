@@ -46,25 +46,25 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.7.8.7" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.8.5" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.8.9" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.8.7" />
     <PackageReference Include="ClosedXML" Version="0.95.4" />
-    <PackageReference Include="HtmlToOpenXml.dll" Version="2.3.0" />
     <PackageReference Include="Magick.NET-Q16-x64" Version="10.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.3" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="5.5.0" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="1.1.40" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.1.40" />
+    <PackageReference Include="Microting.eForm" Version="5.5.1" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="1.1.41" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.1.41" />
+    <PackageReference Include="Microting.HtmlToOpenXml.dll" Version="2.3.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="1.4.0" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
-    <PackageReference Include="sendgrid" Version="9.25.3" />
+    <PackageReference Include="sendgrid" Version="9.26.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     <PackageReference Include="System.Threading.AccessControl" Version="6.0.0" />
   </ItemGroup>
