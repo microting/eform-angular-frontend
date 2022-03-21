@@ -50,6 +50,9 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
     if (changes && changes.fieldValues) {
       this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
         this.caseId = +params['id'];
+        if (isNaN(this.caseId)) {
+          this.caseId = +params['sdkCaseId'];
+        }
       });
       this.fieldValues.forEach(value => {
         if (value.uploadedDataObj) {

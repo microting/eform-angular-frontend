@@ -139,7 +139,7 @@
     <value>Sag kunne ikke opdateres</value>
   </data>
   <data name="CaseHasBeenUpdated" xml:space="preserve">
-    <value>Sag er blevet opdateret</value>
+    <value>Ændringer gemt</value>
   </data>
   <data name="CaseLoadingFailed" xml:space="preserve">
     <value>Case loading mislykkedes</value>
@@ -277,7 +277,7 @@
     <value>Mappefejl</value>
   </data>
   <data name="ImageDeletedSuccessfully" xml:space="preserve">
-    <value>Billede slettet korrekt</value>
+    <value>Billede slettet</value>
   </data>
   <data name="ImageNotDeleted" xml:space="preserve">
     <value>Billedet blev ikke slettet</value>
