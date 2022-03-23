@@ -43,7 +43,7 @@
     "@danielmoncada/angular-datetime-picker": "^13.0.0",
     "@fortawesome/angular-fontawesome": "0.10.2",
     "@fortawesome/fontawesome-svg-core": "6.1.1",
-    "@fortawesome/free-solid-svg-icons": "5.15.4",
+    "@fortawesome/free-solid-svg-icons": "6.1.1",
     "@ng-select/ng-select": "8.1.1",
     "@ngx-gallery/core": "4.0.3",
     "@ngx-gallery/gallerize": "4.0.3",
