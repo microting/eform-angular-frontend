@@ -144,7 +144,8 @@ namespace eFormAPI.Web.Services
                             // var id = await sdkDbContext.Sites.Where(x => x.MicrotingUid == siteDto.SiteId).Select(x => x.Id).FirstAsync();
                         }
 
-                        var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userInfoViewModel.FirstName + " " + userInfoViewModel.LastName
+                        var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => 
+                            x.Name == userInfoViewModel.FirstName + " " + userInfoViewModel.LastName
                             && x.WorkflowState != Constants.WorkflowStates.Removed);
                         if (site != null)
                         {
