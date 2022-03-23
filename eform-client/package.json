@@ -41,7 +41,7 @@
     "@angular/router": "^12.2.12",
     "@circlon/angular-tree-component": "^11.0.1",
     "@danielmoncada/angular-datetime-picker": "^13.0.0",
-    "@fortawesome/angular-fontawesome": "0.10.1",
+    "@fortawesome/angular-fontawesome": "0.10.2",
     "@fortawesome/fontawesome-svg-core": "1.2.36",
     "@fortawesome/free-solid-svg-icons": "5.15.4",
     "@ng-select/ng-select": "8.1.1",
