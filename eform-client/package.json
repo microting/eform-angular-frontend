@@ -102,7 +102,7 @@
     "@wdio/cli": "7.19.0",
     "@wdio/local-runner": "7.18.1",
     "@wdio/mocha-framework": "7.18.0",
-    "@wdio/spec-reporter": "7.18.0",
+    "@wdio/spec-reporter": "7.19.1",
     "angular-mocks": "1.8.2",
     "chai": "4.3.6",
     "chromedriver": "98.0.1",
