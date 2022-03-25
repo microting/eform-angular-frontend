@@ -1,8 +1,6 @@
 import {
   Component,
-  EventEmitter,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
 import {
@@ -19,10 +17,8 @@ import { Location } from '@angular/common';
 })
 export class EntitySelectCreateComponent implements OnInit {
   advEntitySelectableGroupCreateModel: AdvEntitySelectableGroupEditModel = new AdvEntitySelectableGroupEditModel();
-  @ViewChild('frame', { static: true }) frame;
   @ViewChild('modalSelectEditName', { static: true }) modalSelectEditName;
-  @Output() onEntityGroupCreated: EventEmitter<void> = new EventEmitter<void>();
-  seletctedItem: AdvEntitySelectableItemModel = new AdvEntitySelectableItemModel();
+  selectedItem: AdvEntitySelectableItemModel = new AdvEntitySelectableItemModel();
 
   items = [];
 
@@ -34,13 +30,12 @@ export class EntitySelectCreateComponent implements OnInit {
   ngOnInit() {}
 
   show() {
-    this.frame.show();
     this.advEntitySelectableGroupCreateModel.name = '';
     this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels = [];
   }
 
   openModalSelectEditName(itemModel: AdvEntitySelectableItemModel) {
-    this.seletctedItem = itemModel;
+    this.selectedItem = itemModel;
     this.modalSelectEditName.show();
   }
 
@@ -49,8 +44,6 @@ export class EntitySelectCreateComponent implements OnInit {
       .createEntitySelectableGroup(this.advEntitySelectableGroupCreateModel)
       .subscribe((data) => {
         if (data && data.success) {
-          this.onEntityGroupCreated.emit();
-          // this.frame.hide();
           this.advEntitySelectableGroupCreateModel = new AdvEntitySelectableGroupEditModel();
           this.location.back();
         }
@@ -71,32 +64,6 @@ export class EntitySelectCreateComponent implements OnInit {
     );
   }
 
-  deleteAdvEntitySelectableItem(itemId: string) {
-    // eslint-disable-next-line max-len
-    this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels = this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.filter(
-      (x) => x.entityItemUId !== itemId
-    );
-    this.actualizeAdvEntitySelectableItemPositions();
-  }
-
-  actualizeAdvEntitySelectableItemPositions() {
-    for (
-      let i = 0;
-      i <
-      this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels
-        .length;
-      i++
-    ) {
-      this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels[
-        i
-      ].entityItemUId = i.toString();
-    }
-  }
-
-  dragulaPositionChanged() {
-    this.actualizeAdvEntitySelectableItemPositions();
-  }
-
   updateItem(itemModel: AdvEntitySelectableItemModel) {
     this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.find(
       (x) => x.entityItemUId === itemModel.entityItemUId
@@ -106,15 +73,18 @@ export class EntitySelectCreateComponent implements OnInit {
   importAdvEntitySelectableGroup(importString: string) {
     if (importString) {
       const lines = importString.split('\n');
+      const lengthBeforeImport = this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.length;
       for (let i = 0; i < lines.length; i++) {
         this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.push(
-          new AdvEntitySelectableItemModel(lines[i])
+          {
+            description: '',
+            displayIndex: lengthBeforeImport + i,
+            workflowState: '',
+            name: lines[i],
+            entityItemUId: (lengthBeforeImport + i).toString()
+          }
         );
       }
     }
-  }
-
-  closeFrame() {
-    this.frame.hide();
   }
 }

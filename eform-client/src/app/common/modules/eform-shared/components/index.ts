@@ -6,4 +6,5 @@ export * from './status-bar-compact/status-bar-compact.component';
 export * from './date-formatter/date-formatter.component';
 export * from './eform-tree-view-picker/eform-tree-view-picker.component';
 export * from './eform-collapse-toggler/eform-collapse-toggle.component';
+export * from './entity-list-elements/entity-list-elements.component';
 export * from './eform-table';

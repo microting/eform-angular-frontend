@@ -1,4 +1,4 @@
-<eform-subheader [title]="'Create selectable list' | translate">
+<eform-subheader [forceStaticTitle]="true" [title]="'Create selectable list' | translate">
   <div class="p-3">
     <button
       mdbBtn
@@ -75,75 +75,12 @@
               </button>
             </div>
           </div>
-
-          <div class="row">
-            <div class="panel panel-default w-100 pt-2">
-              <div class="panel-body">
-                <ul
-                  class="list-group"
-                  dragula="ITEMS"
-                  [(dragulaModel)]="
-                    advEntitySelectableGroupCreateModel.advEntitySelectableItemModels
-                  "
-                  (dragulaModelChange)="dragulaPositionChanged()"
-                >
-                  <!--list item-->
-                  <li
-                    class="list-group-item"
-                    *ngFor="
-                      let entityItem of advEntitySelectableGroupCreateModel.advEntitySelectableItemModels
-                    "
-                  >
-                    <div class="d-flex justify-content-between">
-                      <div>
-                        <a>
-                          <fa-icon
-                            icon="grip-lines"
-                            size="lg"
-                            [fixedWidth]="true"
-                          ></fa-icon>
-                        </a>
-                      </div>
-                      <div id="createEntityItemName">{{ entityItem.name }}</div>
-                      <div>
-                        <fa-icon
-                          icon="exclamation-triangle"
-                          size="lg"
-                          [fixedWidth]="true"
-                          *ngIf="!entityItem.name"
-                          mdbTooltip="{{ 'Name is required' | translate }}!"
-                        ></fa-icon>
-                        <button mdbBtn
-                                class="btn btn-accent btn-icon text-black-50 mb-2 pull-right"
-                                id="entitySelectCreateSingleItemEdit">
-                          <fa-icon
-                            icon="pen"
-                            size="lg"
-                            [fixedWidth]="true"
-                            (click)="openModalSelectEditName(entityItem)"
-                          ></fa-icon>
-                        </button>
-                        <button mdbBtn
-                                class="btn btn-danger btn-icon mb-2 pull-right"
-                                id="entitySelectCreateSingleItemDelete">
-                          <fa-icon
-                            icon="trash-alt"
-                            size="lg"
-                            [fixedWidth]="true"
-                            (click)="
-                              deleteAdvEntitySelectableItem(
-                                entityItem.entityItemUId
-                              )
-                            "
-                          ></fa-icon>
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <app-entity-list-elements
+          [entityItemModels]="advEntitySelectableGroupCreateModel.advEntitySelectableItemModels"
+          (entityItemModelsChanged)="advEntitySelectableGroupCreateModel.advEntitySelectableItemModels = $event"
+          (openModalEditName)="openModalSelectEditName($event)"
+          >
+          </app-entity-list-elements>
         </mdb-card-body>
       </mdb-card>
     </div>
@@ -155,7 +92,7 @@
   #modalSelectImportList
 ></app-entity-select-import-list>
 <app-entity-select-edit-name
-  [selectedAdvEntitySelectableItemModel]="seletctedItem"
+  [selectedAdvEntitySelectableItemModel]="selectedItem"
   (onItemUpdated)="updateItem($event)"
   #modalSelectEditName
 ></app-entity-select-edit-name>
