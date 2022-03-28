@@ -78,7 +78,6 @@
           <app-entity-list-elements
           [entityItemModels]="advEntitySelectableGroupCreateModel.advEntitySelectableItemModels"
           (entityItemModelsChanged)="advEntitySelectableGroupCreateModel.advEntitySelectableItemModels = $event"
-          (openModalEditName)="openModalSelectEditName($event)"
           >
           </app-entity-list-elements>
         </mdb-card-body>
@@ -91,8 +90,8 @@
   (onImportSubmitted)="importAdvEntitySelectableGroup($event)"
   #modalSelectImportList
 ></app-entity-select-import-list>
-<app-entity-select-edit-name
-  [selectedAdvEntitySelectableItemModel]="selectedItem"
-  (onItemUpdated)="updateItem($event)"
-  #modalSelectEditName
-></app-entity-select-edit-name>
+
+<app-entity-item-edit-name
+  (itemUpdated)="onItemUpdated($event)"
+  #modalNameEdit>
+</app-entity-item-edit-name>

@@ -4,11 +4,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
+  AdvEntitySearchableItemModel,
   AdvEntitySelectableGroupEditModel,
   AdvEntitySelectableItemModel,
 } from 'src/app/common/models/advanced';
 import { EntitySelectService } from 'src/app/common/services/advanced';
 import { Location } from '@angular/common';
+import {EntityItemEditNameComponent} from 'src/app/common/modules/eform-shared/components';
 
 @Component({
   selector: 'app-entity-select-create',
@@ -17,8 +19,7 @@ import { Location } from '@angular/common';
 })
 export class EntitySelectCreateComponent implements OnInit {
   advEntitySelectableGroupCreateModel: AdvEntitySelectableGroupEditModel = new AdvEntitySelectableGroupEditModel();
-  @ViewChild('modalSelectEditName', { static: true }) modalSelectEditName;
-  selectedItem: AdvEntitySelectableItemModel = new AdvEntitySelectableItemModel();
+  @ViewChild('modalNameEdit', { static: true }) modalNameEdit: EntityItemEditNameComponent;
 
   items = [];
 
@@ -32,11 +33,6 @@ export class EntitySelectCreateComponent implements OnInit {
   show() {
     this.advEntitySelectableGroupCreateModel.name = '';
     this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels = [];
-  }
-
-  openModalSelectEditName(itemModel: AdvEntitySelectableItemModel) {
-    this.selectedItem = itemModel;
-    this.modalSelectEditName.show();
   }
 
   createEntitySelectableGroup() {
@@ -64,12 +60,6 @@ export class EntitySelectCreateComponent implements OnInit {
     );
   }
 
-  updateItem(itemModel: AdvEntitySelectableItemModel) {
-    this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.find(
-      (x) => x.entityItemUId === itemModel.entityItemUId
-    ).name = itemModel.name;
-  }
-
   importAdvEntitySelectableGroup(importString: string) {
     if (importString) {
       const lines = importString.split('\n');
@@ -85,6 +75,14 @@ export class EntitySelectCreateComponent implements OnInit {
           }
         );
       }
+    }
+  }
+
+  onItemUpdated(model: AdvEntitySelectableItemModel) {
+    const index = this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels
+      .findIndex(x => x.entityItemUId === model.entityItemUId);
+    if (index !== -1) {
+      this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels[index] = model;
     }
   }
 }

@@ -3,12 +3,13 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output,
+  Output, ViewChild,
 } from '@angular/core';
 import {
   AdvEntitySearchableItemModel,
   AdvEntitySelectableItemModel
 } from 'src/app/common/models';
+import {EntityItemEditNameComponent} from '../';
 
 @Component({
   selector: 'app-entity-list-elements',
@@ -19,7 +20,7 @@ export class EntityListElementsComponent implements OnInit {
   @Input() entityItemModels: Array<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel> = [];
   @Output() entityItemModelsChanged: EventEmitter<Array<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel>> =
     new EventEmitter<Array<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel>>();
-  @Output() openModalEditName: EventEmitter<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel> =
+  @Output() openEditNameModal: EventEmitter<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel> =
     new EventEmitter<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel>();
   constructor() {
   }
@@ -47,6 +48,6 @@ export class EntityListElementsComponent implements OnInit {
   }
 
   onOpenModalEditName(entityItem: AdvEntitySelectableItemModel | AdvEntitySearchableItemModel) {
-    this.openModalEditName.emit(entityItem);
+    this.openEditNameModal.emit(entityItem);
   }
 }

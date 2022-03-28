@@ -7,15 +7,14 @@ import {
 } from '@angular/core';
 import {
   AdvEntitySearchableGroupEditModel,
-  AdvEntitySearchableItemModel,
   AdvEntitySelectableItemModel,
 } from 'src/app/common/models/advanced';
 import {
   EntitySearchService,
-  EntitySelectService,
 } from 'src/app/common/services/advanced';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { EntityItemEditNameComponent } from 'src/app/common/modules/eform-shared/components';
 
 @Component({
   selector: 'app-entity-search-edit',
@@ -25,9 +24,8 @@ import { ActivatedRoute } from '@angular/router';
 export class EntitySearchEditComponent implements OnInit {
   advEntitySearchableGroupEditModel: AdvEntitySearchableGroupEditModel = new AdvEntitySearchableGroupEditModel();
   @ViewChild('frame', { static: true }) frame;
-  @ViewChild('modalSearchEditName', { static: true }) modalSearchEditName;
-  @Output() onEntityGroupEdited: EventEmitter<void> = new EventEmitter<void>();
-  selectedItem: AdvEntitySearchableItemModel = new AdvEntitySearchableItemModel();
+  @ViewChild('modalNameEdit', { static: true }) modalNameEdit: EntityItemEditNameComponent;
+  @Output() entityGroupEdited: EventEmitter<void> = new EventEmitter<void>();
   selectedGroupId: number;
 
   items = [];
@@ -37,23 +35,13 @@ export class EntitySearchEditComponent implements OnInit {
     private entitySearchService: EntitySearchService,
     private location: Location
   ) {
-    const activatedRouteSub = this.activateRoute.params.subscribe((params) => {
+    this.activateRoute.params.subscribe((params) => {
       this.selectedGroupId = +params['id'];
     });
   }
 
   ngOnInit() {
-    // this.selectedGroupId = groupId;
-    this.selectedItem = new AdvEntitySearchableItemModel();
-    // this.frame.show();
     this.loadEntityGroup();
-  }
-
-  show(groupId: number) {}
-
-  openModalSearchEditName(itemModel: AdvEntitySearchableItemModel) {
-    this.selectedItem = itemModel;
-    this.modalSearchEditName.show(this.selectedItem.name);
   }
 
   loadEntityGroup() {
@@ -80,7 +68,7 @@ export class EntitySearchEditComponent implements OnInit {
       .updateEntitySearchableGroup(this.advEntitySearchableGroupEditModel)
       .subscribe((data) => {
         if (data && data.success) {
-          this.onEntityGroupEdited.emit();
+          this.entityGroupEdited.emit();
           this.location.back();
           // this.frame.hide();
         }
@@ -107,39 +95,11 @@ export class EntitySearchEditComponent implements OnInit {
     );
   }
 
-  deleteAdvEntitySelectableItem(itemId: string) {
-    // eslint-disable-next-line max-len
-    this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels = this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.filter(
-      (x) => x.entityItemUId !== itemId
-    );
-    this.actualizeAdvEntitySelectableItemPositions();
-  }
-
   actualizeAdvEntitySelectableItemPositions() {
-    for (
-      let i = 0;
-      i <
-      this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels
-        .length;
-      i++
-    ) {
-      this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[
-        i
-      ].entityItemUId = i.toString();
-      this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[
-        i
-      ].displayIndex = i;
+    for (let i = 0; i < this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.length; i++) {
+      this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[i].entityItemUId = i.toString();
+      this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[i].displayIndex = i;
     }
-  }
-
-  dragulaPositionChanged() {
-    this.actualizeAdvEntitySelectableItemPositions();
-  }
-
-  updateItem(itemModel: AdvEntitySearchableItemModel) {
-    this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.find(
-      (x) => x.entityItemUId === itemModel.entityItemUId
-    ).name = itemModel.name;
   }
 
   importAdvEntitySelectableGroup(importString: string) {
@@ -158,6 +118,14 @@ export class EntitySearchEditComponent implements OnInit {
         );
         j++;
       }
+    }
+  }
+
+  onItemUpdated(model: AdvEntitySelectableItemModel) {
+    const index = this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels
+      .findIndex(x => x.entityItemUId === model.entityItemUId);
+    if (index !== -1) {
+      this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[index] = model;
     }
   }
 }

@@ -15,6 +15,7 @@ import {
   EformTableHeaderSortableComponent,
   StatusBarCompactComponent,
   EntityListElementsComponent,
+  EntityItemEditNameComponent,
 } from './components';
 import {
   AuthImagePipe,
@@ -55,6 +56,7 @@ import {DragulaModule} from 'ng2-dragula';
     EformTableHeadersComponent,
     StatusBarCompactComponent,
     EntityListElementsComponent,
+    EntityItemEditNameComponent,
   ],
   exports: [
     EformPaginationComponent,
@@ -69,7 +71,8 @@ import {DragulaModule} from 'ng2-dragula';
     SafeHtmlPipe,
     EformSubheaderComponent,
     StatusBarCompactComponent,
-    EntityListElementsComponent
+    EntityListElementsComponent,
+    EntityItemEditNameComponent,
   ],
 })
 export class EformSharedModule {

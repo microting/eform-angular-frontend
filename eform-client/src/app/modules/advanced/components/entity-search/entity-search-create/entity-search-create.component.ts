@@ -4,14 +4,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  AdvEntitySearchableGroupEditModel,
-  AdvEntitySearchableItemModel,
+  AdvEntitySearchableGroupEditModel, AdvEntitySearchableItemModel,
   AdvEntitySelectableItemModel,
 } from 'src/app/common/models';
 import {
   EntitySearchService,
 } from 'src/app/common/services';
 import { Location } from '@angular/common';
+import {EntityItemEditNameComponent} from 'src/app/common/modules/eform-shared/components';
 
 @Component({
   selector: 'app-entity-search-create',
@@ -20,8 +20,7 @@ import { Location } from '@angular/common';
 })
 export class EntitySearchCreateComponent implements OnInit {
   advEntitySearchableGroupCreateModel: AdvEntitySearchableGroupEditModel = new AdvEntitySearchableGroupEditModel();
-  @ViewChild('modalSearchEditName', { static: true }) modalSearchEditName;
-  selectedItem: AdvEntitySearchableItemModel = new AdvEntitySearchableItemModel();
+  @ViewChild('modalNameEdit', { static: true }) modalNameEdit: EntityItemEditNameComponent;
 
   items = [];
 
@@ -35,11 +34,6 @@ export class EntitySearchCreateComponent implements OnInit {
   show() {
     this.advEntitySearchableGroupCreateModel.name = '';
     this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels = [];
-  }
-
-  openModalSearchEditName(itemModel: AdvEntitySearchableItemModel) {
-    this.selectedItem = itemModel;
-    this.modalSearchEditName.show();
   }
 
   createEntitySearchableGroup() {
@@ -68,12 +62,6 @@ export class EntitySearchCreateComponent implements OnInit {
     );
   }
 
-  updateItem(itemModel: AdvEntitySearchableItemModel) {
-    this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels.find(
-      (x) => x.entityItemUId === itemModel.entityItemUId
-    ).name = itemModel.name;
-  }
-
   importAdvEntitySelectableGroup(importString: string) {
     if (importString) {
       const lines = importString.split('\n');
@@ -89,6 +77,13 @@ export class EntitySearchCreateComponent implements OnInit {
           }
         );
       }
+    }
+  }
+  onItemUpdated(model: AdvEntitySearchableItemModel) {
+    const index = this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels
+      .findIndex(x => x.entityItemUId === model.entityItemUId);
+    if (index !== -1) {
+      this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels[index] = model;
     }
   }
 }

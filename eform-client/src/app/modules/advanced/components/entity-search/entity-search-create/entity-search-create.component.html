@@ -79,7 +79,6 @@
           <app-entity-list-elements
             [entityItemModels]="advEntitySearchableGroupCreateModel.advEntitySearchableItemModels"
             (entityItemModelsChanged)="advEntitySearchableGroupCreateModel.advEntitySearchableItemModels = $event"
-            (openModalEditName)="openModalSearchEditName($event)"
           >
           </app-entity-list-elements>
         </mdb-card-body>
@@ -92,8 +91,8 @@
   (onImportSubmitted)="importAdvEntitySelectableGroup($event)"
   #modalSearchImportList
 ></app-entity-search-import-list>
-<app-entity-search-edit-name
-  [selectedAdvEntitySearchableItemModel]="selectedItem"
-  (onItemUpdated)="updateItem($event)"
-  #modalSearchEditName
-></app-entity-search-edit-name>
+
+<app-entity-item-edit-name
+  (itemUpdated)="onItemUpdated($event)"
+  #modalNameEdit>
+</app-entity-item-edit-name>
