@@ -221,12 +221,9 @@ namespace eFormAPI.Web.Services
 
                 var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
 
-                foreach (var plugin in plugins)
+                foreach (var _ in plugins.Where(plugin => entityGroup.Name.Contains(plugin)))
                 {
-                    if (entityGroup.Name.Contains(plugin))
-                    {
-                        entityGroup.IsLocked = true;
-                    }
+                    entityGroup.IsLocked = true;
                 }
 
                 return new OperationDataResult<EntityGroup>(true, entityGroup);

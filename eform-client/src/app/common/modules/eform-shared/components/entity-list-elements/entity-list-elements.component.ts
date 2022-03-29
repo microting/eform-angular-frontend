@@ -3,13 +3,13 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output, ViewChild,
+  Output,
 } from '@angular/core';
 import {
   AdvEntitySearchableItemModel,
   AdvEntitySelectableItemModel
 } from 'src/app/common/models';
-import {EntityItemEditNameComponent} from '../';
+import {getRandomInt} from 'src/app/common/helpers';
 
 @Component({
   selector: 'app-entity-list-elements',
@@ -28,9 +28,9 @@ export class EntityListElementsComponent implements OnInit {
   ngOnInit() {
   }
 
-  deleteAdvEntitySelectableItem(itemId: string) {
+  deleteAdvEntitySelectableItem(tempId: number) {
     this.entityItemModels = this.entityItemModels.filter(
-      (x) => x.entityItemUId !== itemId
+      (x) => x.tempId !== tempId
     );
     this.actualizeAdvEntitySelectableItemPositions();
     this.entityItemModelsChanged.emit(this.entityItemModels);
@@ -39,6 +39,10 @@ export class EntityListElementsComponent implements OnInit {
   actualizeAdvEntitySelectableItemPositions() {
     for (let i = 0; i < this.entityItemModels.length; i++) {
       this.entityItemModels[i].entityItemUId = i.toString();
+      if(!this.entityItemModels[i].tempId)
+      {
+        this.entityItemModels[i].tempId = this.getRandId();
+      }
     }
   }
 
@@ -49,5 +53,13 @@ export class EntityListElementsComponent implements OnInit {
 
   onOpenModalEditName(entityItem: AdvEntitySelectableItemModel | AdvEntitySearchableItemModel) {
     this.openEditNameModal.emit(entityItem);
+  }
+
+  getRandId(): number{
+    const randId = getRandomInt(1, 1000);
+    if(this.entityItemModels.findIndex(x => x.tempId === randId) !== -1){
+      return this.getRandId();
+    }
+    return randId;
   }
 }
