@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  AdvEntitySearchableGroupEditModel,
+  AdvEntitySearchableGroupEditModel, AdvEntitySearchableItemModel,
   AdvEntitySelectableItemModel,
 } from 'src/app/common/models/advanced';
 import {
@@ -15,6 +15,7 @@ import {
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { EntityItemEditNameComponent } from 'src/app/common/modules/eform-shared/components';
+import {getRandomInt} from 'src/app/common/helpers';
 
 @Component({
   selector: 'app-entity-search-edit',
@@ -99,6 +100,9 @@ export class EntitySearchEditComponent implements OnInit {
     for (let i = 0; i < this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.length; i++) {
       this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[i].entityItemUId = i.toString();
       this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[i].displayIndex = i;
+      if(!this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[i].tempId){
+        this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[i].tempId = this.getRandId();
+      }
     }
   }
 
@@ -113,6 +117,7 @@ export class EntitySearchEditComponent implements OnInit {
         const obj = new AdvEntitySelectableItemModel(lines[j]);
         obj.displayIndex = i;
         obj.entityItemUId = String(i);
+        obj.tempId = this.getRandId();
         this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.push(
           obj
         );
@@ -127,5 +132,17 @@ export class EntitySearchEditComponent implements OnInit {
     if (index !== -1) {
       this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[index] = model;
     }
+  }
+
+  onOpenEditNameModal(model: AdvEntitySearchableItemModel) {
+    this.modalNameEdit.show(model);
+  }
+
+  getRandId(): number{
+    const randId = getRandomInt(1, 1000);
+    if(this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.findIndex(x => x.tempId === randId) !== -1){
+      return this.getRandId();
+    }
+    return randId;
   }
 }

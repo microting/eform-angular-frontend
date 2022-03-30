@@ -6,6 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
+  AdvEntitySearchableItemModel,
   AdvEntitySelectableGroupEditModel,
   AdvEntitySelectableItemModel,
 } from 'src/app/common/models/advanced';
@@ -13,6 +14,7 @@ import { EntitySelectService } from 'src/app/common/services/advanced';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import {EntityItemEditNameComponent} from 'src/app/common/modules/eform-shared/components';
+import {getRandomInt} from 'src/app/common/helpers';
 
 @Component({
   selector: 'app-entity-select-edit',
@@ -95,6 +97,9 @@ export class EntitySelectEditComponent implements OnInit {
     for (let i = 0; i < this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length; i++) {
       this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels[i].entityItemUId = i.toString();
       this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels[i].displayIndex = i;
+      if(!this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels[i].tempId){
+        this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels[i].tempId = this.getRandId();
+      }
     }
   }
 
@@ -108,6 +113,7 @@ export class EntitySelectEditComponent implements OnInit {
         const item = new AdvEntitySelectableItemModel(lines[j]);
         item.displayIndex = i;
         item.entityItemUId = i.toString();
+        item.tempId = this.getRandId();
         this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.push(
           item
         );
@@ -122,5 +128,17 @@ export class EntitySelectEditComponent implements OnInit {
     if (index !== -1) {
       this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels[index] = model;
     }
+  }
+
+  onOpenEditNameModal(model: AdvEntitySearchableItemModel) {
+    this.modalNameEdit.show(model);
+  }
+
+  getRandId(): number{
+    const randId = getRandomInt(1, 1000);
+    if(this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.findIndex(x => x.tempId === randId) !== -1){
+      return this.getRandId();
+    }
+    return randId;
   }
 }

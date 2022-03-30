@@ -31,7 +31,7 @@ describe('Entity Select', function () {
     const selectableListObject = await selectableLists.getFirstSelectableListObject();
     expect(selectableListObject.name).equal(data.name);
     await selectableListObject.openEdit();
-    expect(await ((await selectableLists.getFirstEntityItemOnEdit()).name)).equal(data.items[0]);
+    expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
     await selectableListObject.closeEdit(true);
   });
   it('should not make a new list with one item', async () => {
@@ -47,7 +47,7 @@ describe('Entity Select', function () {
     const selectableListRowObject = await selectableLists.getLastSelectableListObject();
     await selectableListRowObject.openEdit();
     for (let i = 0; i < data.items.length; i++) {
-      expect(await (await selectableLists.getEntitySelectItemEditRowObjectByIndex(i + 1)).name).eq(data.items[i]);
+      expect((await selectableLists.getEntitySelectItemEditRowObjectByIndex(i + 1)).name).eq(data.items[i]);
     }
     await selectableListRowObject.closeEdit(true);
     await selectableLists.cleanupList();

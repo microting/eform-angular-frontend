@@ -12,6 +12,7 @@ import {
 } from 'src/app/common/services';
 import { Location } from '@angular/common';
 import {EntityItemEditNameComponent} from 'src/app/common/modules/eform-shared/components';
+import {getRandomInt} from 'src/app/common/helpers';
 
 @Component({
   selector: 'app-entity-search-create',
@@ -73,7 +74,8 @@ export class EntitySearchCreateComponent implements OnInit {
             displayIndex: lengthBeforeImport + i,
             workflowState: '',
             name: lines[i],
-            entityItemUId: (lengthBeforeImport + i).toString()
+            entityItemUId: (lengthBeforeImport + i).toString(),
+            tempId: this.getRandId(),
           }
         );
       }
@@ -85,5 +87,17 @@ export class EntitySearchCreateComponent implements OnInit {
     if (index !== -1) {
       this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels[index] = model;
     }
+  }
+
+  onOpenEditNameModal(model: AdvEntitySearchableItemModel) {
+    this.modalNameEdit.show(model);
+  }
+
+  getRandId(): number{
+    const randId = getRandomInt(1, 1000);
+    if(this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels.findIndex(x => x.tempId === randId) !== -1){
+      return this.getRandId();
+    }
+    return randId;
   }
 }

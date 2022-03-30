@@ -35,7 +35,7 @@ describe('Entity Select', function () {
     const selectableListRowObject = await selectableLists.getFirstSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
     await selectableListRowObject.openEdit();
-    expect((await (await selectableLists.getFirstEntityItemOnEdit()).name)).equal(data.items[0]);
+    expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
     await selectableListRowObject.closeEdit();
   });
   it('should only edit item name', async () => {
@@ -43,7 +43,7 @@ describe('Entity Select', function () {
     const data = { items: [generateRandmString()] };
     await selectableListRowObject.edit(data, false, false, false, true);
     await selectableListRowObject.openEdit();
-    expect((await (await selectableLists.getFirstEntityItemOnEdit()).name)).equal(data.items[0]);
+    expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
     await selectableListRowObject.closeEdit();
     // selectableLists.cleanupList();
   });
@@ -71,7 +71,7 @@ describe('Entity Select', function () {
     selectableListRowObject = await selectableLists.getFirstSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
     await selectableListRowObject.openEdit();
-    expect((await (await selectableLists.getFirstEntityItemOnEdit()).name)).equal(data.items[0]);
+    expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
     await selectableListRowObject.closeEdit();
     await selectableListRowObject.delete();
   });
@@ -97,7 +97,7 @@ describe('Entity Select', function () {
     await selectableListRowObject.openEdit();
     for (let i = 0; i < data.items.length; i++) {
       expect(
-        (await (await selectableLists.getEntitySelectItemEditRowObjectByIndex(i + 1)).name)
+        ((await selectableLists.getEntitySelectItemEditRowObjectByIndex(i + 1)).name)
       ).equal(data.items[i]);
     }
     await selectableListRowObject.closeEdit();

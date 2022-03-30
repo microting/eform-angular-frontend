@@ -79,6 +79,7 @@
           <app-entity-list-elements
             [entityItemModels]="advEntitySearchableGroupEditModel.advEntitySearchableItemModels"
             (entityItemModelsChanged)="advEntitySearchableGroupEditModel.advEntitySearchableItemModels = $event"
+            (openEditNameModal)="onOpenEditNameModal($event)"
           >
           </app-entity-list-elements>
         </mdb-card-body>

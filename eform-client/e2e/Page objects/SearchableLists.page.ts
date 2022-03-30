@@ -28,7 +28,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return await obj.getRow(1);
   }
   public async firstEntityItemName(): Promise<WebdriverIO.Element> {
-    const ele = await $(`//app-entity-search-edit//ul//li[1]//div[2]`);
+    const ele = await $(`#createEntityItemName`);
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -52,52 +52,40 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return $('#addSingleEntitySearchableItem');
   }
   public async entitySearchCreateSingleItemEditBtn(): Promise<WebdriverIO.Element> {
-    return $('#entitySearchCreateSingleItemEdit');
+    return $('#entityItemEditBtn');
   }
   public async entitySearchCreateItemNameBox(): Promise<WebdriverIO.Element> {
-    const ele = await $(
-      `//app-entity-search-create//app-entity-search-edit-name//input[@id= 'entityItemEditNameBox']`
-    );
+    const ele = await $('#entityItemEditNameBox');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchCreateItemSaveBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $(
-      `//app-entity-search-create//app-entity-search-edit-name//button[@id= 'entityItemSaveBtn']`
-    );
+    const ele = await $('#entityItemSaveBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchCreateItemCancelBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $(
-      `//app-entity-search-create//app-entity-search-edit-name//button[@id= 'entityItemCancelBtn']`
-    );
+    const ele = await $('#entityItemCancelBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchCreateImportItemTextArea(): Promise<WebdriverIO.Element> {
-    const ele = await $(
-      `//app-entity-search-create//app-entity-search-import-list//textarea`
-    );
+    const ele = await $('#entitySearchImportTextArea');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchCreateImportItemSaveBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $(
-      `//app-entity-search-create//app-entity-search-import-list//button[@id= 'entitySearchImportSaveBtn']`
-    );
+    const ele = await $('#entitySearchImportSaveBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchCreateImportItemCancelBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $(
-      `//app-entity-search-create//app-entity-search-import-list//button[@id= 'entitySearchImportCancelBtn']`
-    );
+    const ele = await $(`#entitySearchImportCancelBtn`);
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -114,8 +102,8 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
-  public async entitySearchEditBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySearchUpdateBtn');
+  public async entitySearchEditBtn(i = 0): Promise<WebdriverIO.Element> {
+    const ele = await $$('#entitySearchUpdateBtn')[i];
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -133,14 +121,14 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return $('#editEntitySearchCreateItem');
   }
   public async entitySearchItemEditBtn(): Promise<WebdriverIO.Element> {
-    return $(`//app-entity-search-edit//ul//li[1]//div[3]//button[1]`);
+    return $(`#entityItemEditBtn`);
   }
   public async entitySearchItemDeleteBtn(): Promise<WebdriverIO.Element> {
-    return $(`//app-entity-search-edit//ul//li[1]//div[3]//button[2]`);
+    return $(`#entityItemDeleteBtn`);
   }
   public async entitySearchEditItemNameBox(): Promise<WebdriverIO.Element> {
     const ele = await $(
-      `//app-entity-search-edit//app-entity-search-edit-name//input[@id= 'entityItemEditNameBox']`
+      `#entityItemEditNameBox`
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -148,7 +136,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public async entitySearchEditItemSaveBtn(): Promise<WebdriverIO.Element> {
     const ele = await $(
-      `//app-entity-search-edit//app-entity-search-edit-name//button[@id= 'entityItemSaveBtn']`
+      `#entityItemSaveBtn`
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -156,32 +144,26 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public async entitySearchEditItemCancelBtn(): Promise<WebdriverIO.Element> {
     const ele = await $(
-      `//app-entity-search-edit//app-entity-search-edit-name//button[@id= 'entityItemCancelBtn']`
+      `#entityItemCancelBtn`
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchEditImportItemTextArea(): Promise<WebdriverIO.Element> {
-    const ele = await $(
-      `//app-entity-search-edit//app-entity-search-import-list//textarea`
-    );
+    const ele = await $(`#entitySearchImportTextArea`);
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchEditImportItemSaveBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $(
-      `//app-entity-search-edit//app-entity-search-import-list//button[@id= 'entitySearchImportSaveBtn']`
-    );
+    const ele = await $(`#entitySearchImportSaveBtn`);
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchEditImportItemCancelBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $(
-      `//app-entity-search-edit//app-entity-search-import-list//button[@id= 'entitySearchImportCancelBtn']`
-    );
+    const ele = await $('#entitySearchImportCancelBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
