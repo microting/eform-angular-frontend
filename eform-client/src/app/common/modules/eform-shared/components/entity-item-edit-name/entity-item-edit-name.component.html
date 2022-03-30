@@ -11,16 +11,21 @@
         <div class="container-fluid">
           <div class="md-form">
             <input mdbInput
-                   [(ngModel)]="name"
-                   type="text" class="form-control"
-            id="entitySelectItemEditNameBox">
-            <label>{{'Name' | translate}}</label>
+                   [(ngModel)]="selectedEntityItemModel.name"
+                   type="text"
+                   class="form-control"
+                   id="entityItemEditNameBox">
+            <label for="entityItemEditNameBox">
+              {{'Name' | translate}}
+            </label>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn id="entitySelectItemSaveBtn" class="btn-success btn-small-height" (click)="updateItem()">{{'Save' | translate}}</button>
-        <button mdbBtn id="entitySelectItemCancelBtn" class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Close' | translate}}</button>
+        <button mdbBtn id="entityItemSaveBtn" class="btn-success btn-small-height"
+                (click)="updateItem()">{{'Save' | translate}}</button>
+        <button mdbBtn id="entityItemCancelBtn" class="btn-accent text-black-50 btn-small-height"
+                (click)="hide()">{{'Close' | translate}}</button>
       </div>
     </div>
   </div>
