@@ -148,19 +148,19 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async entitySelectEditItemNameBox(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySelectItemEditNameBox');
+    const ele = await $('#entityItemEditNameBox');
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async entitySelectEditItemSaveBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySelectItemSaveBtn');
+    const ele = await $('#entityItemSaveBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async entitySelectEditItemCancelBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySelectItemCancelBtn');
+    const ele = await $('#entityItemCancelBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
