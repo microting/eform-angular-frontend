@@ -24,6 +24,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { persistProvider } from 'src/app/modules/eforms/store';
 import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {EformMatDateFnsDateModule} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
 
 @NgModule({
   imports: [
@@ -39,6 +42,9 @@ import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/
     FontAwesomeModule,
     OwlDateTimeModule,
     EformSharedTagsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    EformMatDateFnsDateModule
   ],
   declarations: [
     EformsPageComponent,
