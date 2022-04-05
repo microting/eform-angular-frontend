@@ -12,7 +12,6 @@ import {
   EformSubheaderComponent,
   EformTreeViewPickerComponent,
   StatusBarComponent,
-  EformTableHeaderSortableComponent,
   StatusBarCompactComponent,
   EntityListElementsComponent,
   EntityItemEditNameComponent,
@@ -28,6 +27,7 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {EformTableHeadersComponent} from './components';
 import {RouterModule} from '@angular/router';
 import {DragulaModule} from 'ng2-dragula';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   imports: [
@@ -39,7 +39,8 @@ import {DragulaModule} from 'ng2-dragula';
     FontAwesomeModule,
     RouterModule,
     DragulaModule,
-    MDBBootstrapModule
+    MDBBootstrapModule,
+    MatSortModule
   ],
   declarations: [
     EformPaginationComponent,
@@ -52,7 +53,6 @@ import {DragulaModule} from 'ng2-dragula';
     SafeHtmlPipe,
     EformTreeViewPickerComponent,
     EformCollapseToggleComponent,
-    EformTableHeaderSortableComponent,
     EformTableHeadersComponent,
     StatusBarCompactComponent,
     EntityListElementsComponent,

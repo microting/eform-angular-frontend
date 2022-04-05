@@ -19,6 +19,7 @@ import {
 import { saveAs } from 'file-saver';
 import { EformsStateService } from '../../store';
 import { AuthStateService } from 'src/app/common/store';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-eform-page',
@@ -164,8 +165,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     this.searchSubject.next(label);
   }
 
-  sortTable(sort: string) {
-    this.eformsStateService.onSortTable(sort);
+  sortTable(sort: Sort) {
+    this.eformsStateService.onSortTable(sort.active);
     this.loadAllTemplates();
   }
 

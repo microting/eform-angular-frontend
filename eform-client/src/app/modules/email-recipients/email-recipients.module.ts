@@ -16,6 +16,7 @@ import {
 } from './components';
 import { EformSharedTagsModule } from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
 import { emailRecipientsPersistProvider } from './components/store/email-recipients.store';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -25,18 +26,19 @@ import { emailRecipientsPersistProvider } from './components/store/email-recipie
     EmailRecipientsTagsComponent,
     EmailRecipientDeleteComponent,
   ],
-  imports: [
-    CommonModule,
-    EformSharedModule,
-    CommonModule,
-    NgSelectModule,
-    TranslateModule,
-    MDBBootstrapModule,
-    FormsModule,
-    FontAwesomeModule,
-    EmailRecipientsRouting,
-    EformSharedTagsModule,
-  ],
+    imports: [
+        CommonModule,
+        EformSharedModule,
+        CommonModule,
+        NgSelectModule,
+        TranslateModule,
+        MDBBootstrapModule,
+        FormsModule,
+        FontAwesomeModule,
+        EmailRecipientsRouting,
+        EformSharedTagsModule,
+        MatSortModule,
+    ],
   providers: [emailRecipientsPersistProvider],
 })
 export class EmailRecipientsModule {}

@@ -12,6 +12,7 @@ import {
 } from 'src/app/common/services';
 import { UsersStateService } from '../store';
 import { AuthStateService } from 'src/app/common/store';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-users-page',
@@ -130,8 +131,8 @@ export class UsersPageComponent implements OnInit {
     }
   }
 
-  onSortTable(sort: string) {
-    this.usersStateService.onSortTable(sort);
+  onSortTable(sort: Sort) {
+    this.usersStateService.onSortTable(sort.active);
     this.getUserInfoList();
   }
 

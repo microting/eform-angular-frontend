@@ -4,7 +4,6 @@ import {
   OperationDataResult,
   Paged,
   PaginationModel,
-  SortModel,
   UserInfoModel,
 } from 'src/app/common/models';
 import { UsersQuery, UsersStore } from './';
@@ -40,8 +39,16 @@ export class UsersStateService {
   //   return this.query.selectIsSortDsc$;
   // }
 
-  getSort(): Observable<SortModel> {
-    return this.query.selectSort$;
+  // getSort(): Observable<SortModel> {
+  //   return this.query.selectSort$;
+  // }
+
+  getActiveSort(): Observable<string> {
+    return this.query.selectActiveSort$;
+  }
+
+  getActiveSortDirection(): Observable<'asc' | 'desc'> {
+    return this.query.selectActiveSortDirection$;
   }
 
   // getOffset(): Observable<number> {

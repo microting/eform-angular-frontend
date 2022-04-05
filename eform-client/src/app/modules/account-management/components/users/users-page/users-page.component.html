@@ -40,12 +40,15 @@
       hover="true"
       small="true"
       class="z-depth-1 text-center"
+      matSort
+      [matSortActive]="usersStateService.getActiveSort() | async"
+      [matSortDirection]="usersStateService.getActiveSortDirection() | async"
+      [matSortDisableClear]="true"
+      (matSortChange)="onSortTable($event)"
     >
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [sort]="usersStateService.getSort() | async"
-        (sortChanged)="onSortTable($event)"
       ></thead>
       <tbody id="userInfoTable">
         <tr *ngFor="let userInfoModel of userInfoModelList.entities">

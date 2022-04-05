@@ -16,6 +16,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { CasePostsStateService } from '../store';
 import { AuthStateService } from 'src/app/common/store';
+import {Sort} from '@angular/material/sort';
 
 @AutoUnsubscribe()
 @Component({
@@ -107,8 +108,8 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  sortTable(sort: string) {
-    this.casePostsStateService.onSortTable(sort);
+  sortTable(sort: Sort) {
+    this.casePostsStateService.onSortTable(sort.active);
     this.getCasePosts();
   }
 

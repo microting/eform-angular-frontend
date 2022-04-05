@@ -7,7 +7,6 @@ import {
   Paged,
   PaginationModel,
   SecurityGroupModel,
-  SortModel,
 } from 'src/app/common/models';
 import { updateTableSort, getOffset } from 'src/app/common/helpers';
 import { map } from 'rxjs/operators';
@@ -64,8 +63,16 @@ export class SecurityStateService {
     return this.query.selectPageSize$;
   }
 
-  getSort(): Observable<SortModel> {
-    return this.query.selectSort$;
+  // getSort(): Observable<SortModel> {
+  //   return this.query.selectSort$;
+  // }
+
+  getActiveSort(): Observable<string> {
+    return this.query.selectActiveSort$;
+  }
+
+  getActiveSortDirection(): Observable<'asc' | 'desc'> {
+    return this.query.selectActiveSortDirection$;
   }
 
   getNameFilter(): Observable<string> {

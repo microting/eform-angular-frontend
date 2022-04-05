@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import { EformsState, EformsStore } from './';
-import { SortModel } from 'src/app/common/models';
 
 @Injectable({ providedIn: 'root' })
 export class EformsQuery extends Query<EformsState> {
@@ -15,7 +14,10 @@ export class EformsQuery extends Query<EformsState> {
 
   selectTagIds$ = this.select((state) => state.filters.tagIds);
   selectNameFilter$ = this.select((state) => state.filters.nameFilter);
-  selectSort$ = this.select(
+  /*selectSort$ = this.select(
     (state) => new SortModel(state.pagination.sort, state.pagination.isSortDsc)
-  );
+  );*/
+  selectActiveSort$ = this.select((state) => state.pagination.sort);
+  selectActiveSortDirection$ = this.select((state) => state.pagination.isSortDsc ? 'desc' : 'asc');
+
 }

@@ -20,6 +20,7 @@ import { CasesStateService } from '../store';
 import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
+import {Sort} from '@angular/material/sort';
 
 @AutoUnsubscribe()
 @Component({
@@ -73,8 +74,8 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     this.modalRemoveCase.show(caseModel, this.currentTemplate.id);
   }
 
-  sortTable(sort: string) {
-    this.caseStateService.onSortTable(sort);
+  sortTable(sort: Sort) {
+    this.caseStateService.onSortTable(sort.active);
     this.loadAllCases();
   }
 

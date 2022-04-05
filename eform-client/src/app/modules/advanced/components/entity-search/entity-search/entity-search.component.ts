@@ -7,6 +7,7 @@ import {
 import { EntitySearchService } from 'src/app/common/services';
 import { EntitySearchStateService } from '../store';
 import { AuthStateService } from 'src/app/common/store';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-searchable-list',
@@ -68,8 +69,8 @@ export class EntitySearchComponent implements OnInit {
     this.getEntitySearchableGroupList();
   }
 
-  sortTable(sort: string) {
-    this.entitySearchStateService.onSortTable(sort);
+  sortTable(sort: Sort) {
+    this.entitySearchStateService.onSortTable(sort.active);
     this.getEntitySearchableGroupList();
   }
 

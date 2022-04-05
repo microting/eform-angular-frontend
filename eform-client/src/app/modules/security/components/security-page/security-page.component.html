@@ -35,12 +35,15 @@
       hover="true"
       small="true"
       class="z-depth-1 text-center"
+      matSort
+      [matSortActive]="securityStateService.getActiveSort() | async"
+      [matSortDirection]="securityStateService.getActiveSortDirection() | async"
+      [matSortDisableClear]="true"
+      (matSortChange)="onSortTable($event)"
     >
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [sort]="securityStateService.getSort() | async"
-        (sortChanged)="onSortTable($event)"
       ></thead>
       <tbody>
         <tr *ngFor="let securityGroup of securityGroups.entities">

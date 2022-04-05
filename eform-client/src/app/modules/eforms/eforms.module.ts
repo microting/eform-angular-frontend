@@ -27,25 +27,27 @@ import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {EformMatDateFnsDateModule} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    EformsRouting,
-    NgSelectModule,
-    MDBBootstrapModule,
-    EformSharedModule,
-    ReactiveFormsModule,
-    FileUploadModule,
-    FormsModule,
-    TranslateModule.forChild(),
-    FontAwesomeModule,
-    OwlDateTimeModule,
-    EformSharedTagsModule,
-    MatDatepickerModule,
-    MatInputModule,
-    EformMatDateFnsDateModule
-  ],
+    imports: [
+        CommonModule,
+        EformsRouting,
+        NgSelectModule,
+        MDBBootstrapModule,
+        EformSharedModule,
+        ReactiveFormsModule,
+        FileUploadModule,
+        FormsModule,
+        TranslateModule.forChild(),
+        FontAwesomeModule,
+        OwlDateTimeModule,
+        EformSharedTagsModule,
+        MatDatepickerModule,
+        MatInputModule,
+        EformMatDateFnsDateModule,
+        MatSortModule
+    ],
   declarations: [
     EformsPageComponent,
     EformEditParingModalComponent,

@@ -7,6 +7,7 @@ import {
 } from 'src/app/common/models';
 import { AuthStateService } from 'src/app/common/store';
 import { EntitySelectStateService } from '../store';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-selectable-list',
@@ -68,8 +69,8 @@ export class EntitySelectComponent implements OnInit {
     this.getEntitySelectableGroupList();
   }
 
-  sortTable(sort: string) {
-    this.entitySelectStateService.onSortTable(sort);
+  sortTable(sort: Sort) {
+    this.entitySelectStateService.onSortTable(sort.active);
     this.getEntitySelectableGroupList();
   }
 

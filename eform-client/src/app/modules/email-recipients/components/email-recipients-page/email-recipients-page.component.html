@@ -46,12 +46,15 @@
       hover="true"
       small="true"
       class="z-depth-1 text-center"
+      matSort
+      [matSortActive]="emailRecipientsStateService.getActiveSort() | async"
+      [matSortDirection]="emailRecipientsStateService.getActiveSortDirection() | async"
+      [matSortDisableClear]="true"
+      (matSortChange)="onSortTable($event)"
     >
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [sort]="this.emailRecipientsStateService.getSort() | async"
-        (sortChanged)="onSortTable($event)"
       ></thead>
       <tbody id="tableBody">
         <tr

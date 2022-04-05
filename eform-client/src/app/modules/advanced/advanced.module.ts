@@ -39,23 +39,25 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EformImportedModule } from '../../common/modules/eform-imported/eform-imported.module';
 import { advancedPersistProviders } from './components/advansed-persist-providers';
 import { EformSharedTagsModule } from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
-  imports: [
-    AdvancedRoutingModule,
-    CommonModule,
-    MDBBootstrapModule,
-    TranslateModule,
-    EformSharedModule,
-    NgSelectModule,
-    FormsModule,
-    DragulaModule,
-    FontAwesomeModule,
-    MDBBootstrapModule,
-    EformImportedModule,
-    ReactiveFormsModule,
-    EformSharedTagsModule,
-  ],
+    imports: [
+        AdvancedRoutingModule,
+        CommonModule,
+        MDBBootstrapModule,
+        TranslateModule,
+        EformSharedModule,
+        NgSelectModule,
+        FormsModule,
+        DragulaModule,
+        FontAwesomeModule,
+        MDBBootstrapModule,
+        EformImportedModule,
+        ReactiveFormsModule,
+        EformSharedTagsModule,
+        MatSortModule,
+    ],
   declarations: [
     EntitySearchComponent,
     EntitySelectComponent,

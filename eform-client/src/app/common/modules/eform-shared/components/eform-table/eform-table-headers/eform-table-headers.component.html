@@ -6,14 +6,21 @@
         class="table-header-sortable {{
           header.name.toLowerCase() === 'id' ? 'text-uppercase' : ''
         }} {{ stickyHeader ? 'sticky-top' : '' }}"
-        table-header-sortable
-        [currentSortName]="!sort ? currentSortName : sort.sort"
-        (sortClick)="onSortClick($event)"
-        [isSortDsc]="!sort ? isSortDsc : sort.isSortDsc"
-        [name]="header.name"
+        mat-sort-header="{{header.name}}"
+        [arrowPosition]="isSortDsc ? 'after' : 'before'"
         [id]="header.elementId ? header.elementId : getElementId(header.name)"
-        [visibleName]="header.visibleName"
-      ></th>
+      >
+        <div>
+          <ng-container *ngIf="needTranslateHeader">
+            {{
+            header.visibleName ? (header.visibleName | translate) : (header.name | translate)
+            }}</ng-container
+          >
+          <ng-container *ngIf="!needTranslateHeader">
+            {{ header.visibleName ? header.visibleName : header.name }}</ng-container
+          >
+        </div>
+      </th>
     </ng-container>
     <ng-container *ngIf="header && !header.sortable">
       <th
@@ -22,9 +29,16 @@
         }}"
         scope="col"
       >
-        {{
-          (header.visibleName ? header.visibleName : header.name) | translate
-        }}
+        <div>
+          <ng-container *ngIf="needTranslateHeader">
+            {{
+            header.visibleName ? (header.visibleName | translate) : (header.name | translate)
+            }}</ng-container
+          >
+          <ng-container *ngIf="!needTranslateHeader">
+            {{ header.visibleName ? header.visibleName : header.name }}</ng-container
+          >
+        </div>
       </th>
     </ng-container>
   </ng-container>

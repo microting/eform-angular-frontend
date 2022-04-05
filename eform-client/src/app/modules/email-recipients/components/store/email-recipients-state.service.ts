@@ -5,7 +5,6 @@ import {
   OperationDataResult,
   Paged,
   PaginationModel,
-  SortModel,
 } from 'src/app/common/models';
 import { Observable } from 'rxjs';
 import { EmailRecipientsQuery, EmailRecipientsStore } from './';
@@ -53,8 +52,16 @@ export class EmailRecipientsStateService {
     return this.query.selectPageSize$;
   }
 
-  getSort(): Observable<SortModel> {
-    return this.query.selectSort$;
+  // getSort(): Observable<SortModel> {
+  //   return this.query.selectSort$;
+  // }
+
+  getActiveSort(): Observable<string> {
+    return this.query.selectActiveSort$;
+  }
+
+  getActiveSortDirection(): Observable<'asc' | 'desc'> {
+    return this.query.selectActiveSortDirection$;
   }
 
   addOrRemoveTagIds(id: number) {

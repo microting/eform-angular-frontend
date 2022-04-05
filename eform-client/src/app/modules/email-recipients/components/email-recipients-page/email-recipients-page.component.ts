@@ -18,6 +18,7 @@ import {
   EmailRecipientsTagsService,
 } from '../../../../common/services';
 import { EmailRecipientsStateService } from '../store';
+import {Sort} from '@angular/material/sort';
 
 @AutoUnsubscribe()
 @Component({
@@ -86,8 +87,8 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSortTable(sort: string) {
-    this.emailRecipientsStateService.onSortTable(sort);
+  onSortTable(sort: Sort) {
+    this.emailRecipientsStateService.onSortTable(sort.active);
     this.getEmailRecipients();
   }
 

@@ -38,12 +38,15 @@
       hover="true"
       small="true"
       class="z-depth-1 text-center"
+      matSort
+      [matSortActive]="entitySelectStateService.getActiveSort() | async"
+      [matSortDirection]="entitySelectStateService.getActiveSortDirection() | async"
+      [matSortDisableClear]="true"
+      (matSortChange)="sortTable($event)"
     >
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [sort]="entitySelectStateService.getSort() | async"
-        (sortChanged)="sortTable($event)"
       ></thead>
       <tbody id="tableBodyEntitySelect">
         <tr

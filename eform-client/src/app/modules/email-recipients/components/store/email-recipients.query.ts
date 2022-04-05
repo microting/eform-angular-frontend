@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import { EmailRecipientsStore, EmailRecipientsState } from './';
-import { PaginationModel, SortModel } from 'src/app/common/models';
+import { PaginationModel } from 'src/app/common/models';
 
 @Injectable({ providedIn: 'root' })
 export class EmailRecipientsQuery extends Query<EmailRecipientsState> {
@@ -24,7 +24,9 @@ export class EmailRecipientsQuery extends Query<EmailRecipientsState> {
         state.pagination.offset
       )
   );
-  selectSort$ = this.select(
+  /*selectSort$ = this.select(
     (state) => new SortModel(state.pagination.sort, state.pagination.isSortDsc)
-  );
+  );*/
+  selectActiveSort$ = this.select((state) => state.pagination.sort);
+  selectActiveSortDirection$ = this.select((state) => state.pagination.isSortDsc ? 'desc' : 'asc');
 }
