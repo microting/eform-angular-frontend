@@ -26,6 +26,7 @@ import { AuthStateService } from 'src/app/common/store';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
 import * as R from 'ramda';
+import {ToastrService} from 'ngx-toastr';
 
 @AutoUnsubscribe()
 @Component({
@@ -69,7 +70,8 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     private eFormService: EFormService,
     private router: Router,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-    private authStateService: AuthStateService
+    private authStateService: AuthStateService,
+    private toastrService: ToastrService,
   ) {
     this.activatedRouteSub$ = activateRoute.params.subscribe((params) => {
       this.id = +params['id'];
@@ -149,6 +151,10 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   }
 
   saveCase(navigateToPosts?: boolean) {
+    if(this.currentTemplate.isDoneAtEditable && !this.replyElement.doneAt){
+      this.toastrService.error('Date is required.', 'Error');
+      return;
+    }
     this.requestModels = [];
     this.editElements.forEach((x) => {
       x.extractData();

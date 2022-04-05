@@ -4,6 +4,7 @@ export class AdvEntitySelectableItemModel {
   entityItemUId: string;
   workflowState: string;
   displayIndex: number;
+  tempId?: number;
 
   constructor(name?: string) {
     this.name = name;

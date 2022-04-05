@@ -249,7 +249,7 @@ namespace eFormAPI.Web.Services
                     {
                         if (foundCase.DoneAt != null)
                         {
-                            var newDoneAt = new DateTime(model.DoneAt.Year, model.DoneAt.Month, model.DoneAt.AddDays(1).Day, foundCase.DoneAt.Value.Hour, foundCase.DoneAt.Value.Minute, foundCase.DoneAt.Value.Second);
+                            var newDoneAt = new DateTime(model.DoneAt.Year, model.DoneAt.Month, model.DoneAt.Day, foundCase.DoneAt.Value.Hour, foundCase.DoneAt.Value.Minute, foundCase.DoneAt.Value.Second);
                             foundCase.DoneAtUserModifiable = newDoneAt;
                         }
 

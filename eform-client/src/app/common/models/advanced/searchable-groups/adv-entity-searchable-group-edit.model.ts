@@ -1,4 +1,5 @@
-import {AdvEntitySearchableItemModel} from './adv-entity-searchable-item.model';
+import { AdvEntitySearchableItemModel } from 'src/app/common/models';
+
 export class AdvEntitySearchableGroupEditModel {
   name: string;
   advEntitySearchableItemModels: Array<AdvEntitySearchableItemModel> = [];

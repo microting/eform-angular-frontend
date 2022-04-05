@@ -76,78 +76,12 @@
               </button>
             </div>
           </div>
-
-          <div class="row">
-            <div class="panel panel-default w-100 pt-2">
-              <div class="panel-body">
-                <ul
-                  class="list-group"
-                  dragula="ITEMS"
-                  [(dragulaModel)]="
-                    advEntitySearchableGroupEditModel.advEntitySearchableItemModels
-                  "
-                  (dragulaModelChange)="dragulaPositionChanged()"
-                >
-                  <!--list item-->
-                  <li
-                    class="list-group-item"
-                    *ngFor="
-                      let entityItem of advEntitySearchableGroupEditModel.advEntitySearchableItemModels;
-                      let i = index
-                    "
-                  >
-                    <div class="row">
-                      <div class="col-md-1">
-                        <a *ngIf="advEntitySearchableGroupEditModel.isEditable">
-                          <fa-icon
-                            icon="grip-lines"
-                            size="lg"
-                            [fixedWidth]="true"
-                          ></fa-icon>
-                        </a>
-                      </div>
-                      <div class="col-md-9">{{ entityItem.name }}</div>
-                      <div class="col-md-2">
-                        <fa-icon
-                          icon="exclamation-triangle"
-                          size="lg"
-                          [fixedWidth]="true"
-                          *ngIf="!entityItem.name"
-                          mdbTooltip="{{ 'Name is required' | translate }}!"
-                        ></fa-icon>
-                        <button mdbBtn
-                                class="btn btn-accent btn-icon text-black-50 mb-2 pull-right"
-                                id="entitySelectEditItemEditBtn_{{ i }}"
-                                [disabled]="!advEntitySearchableGroupEditModel.isEditable">
-                          <fa-icon
-                            icon="pen"
-                            size="lg"
-                            [fixedWidth]="true"
-                            (click)="openModalSearchEditName(entityItem)"
-                          ></fa-icon>
-                        </button>
-                        <button mdbBtn
-                                class="btn btn-danger btn-icon mb-2 pull-right"
-                                id="entitySelectEditItemDeleteBtn_{{ i }}"
-                                [disabled]="!advEntitySearchableGroupEditModel.isEditable">
-                          <fa-icon
-                            icon="trash-alt"
-                            size="lg"
-                            [fixedWidth]="true"
-                            (click)="
-                              deleteAdvEntitySelectableItem(
-                                entityItem.entityItemUId
-                              )
-                            "
-                          ></fa-icon>
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <app-entity-list-elements
+            [entityItemModels]="advEntitySearchableGroupEditModel.advEntitySearchableItemModels"
+            (entityItemModelsChanged)="advEntitySearchableGroupEditModel.advEntitySearchableItemModels = $event"
+            (openEditNameModal)="onOpenEditNameModal($event)"
+          >
+          </app-entity-list-elements>
         </mdb-card-body>
       </mdb-card>
     </div>
@@ -158,8 +92,8 @@
   (onImportSubmitted)="importAdvEntitySelectableGroup($event)"
   #modalSearchImportList
 ></app-entity-search-import-list>
-<app-entity-search-edit-name
-  [selectedAdvEntitySearchableItemModel]="selectedItem"
-  (onItemUpdated)="updateItem($event)"
-  #modalSearchEditName
-></app-entity-search-edit-name>
+
+<app-entity-item-edit-name
+  (itemUpdated)="onItemUpdated($event)"
+  #modalNameEdit>
+</app-entity-item-edit-name>

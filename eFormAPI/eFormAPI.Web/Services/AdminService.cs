@@ -144,7 +144,8 @@ namespace eFormAPI.Web.Services
                             // var id = await sdkDbContext.Sites.Where(x => x.MicrotingUid == siteDto.SiteId).Select(x => x.Id).FirstAsync();
                         }
 
-                        var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userInfoViewModel.FirstName + " " + userInfoViewModel.LastName
+                        var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x =>
+                            x.Name == userInfoViewModel.FirstName + " " + userInfoViewModel.LastName
                             && x.WorkflowState != Constants.WorkflowStates.Removed);
                         if (site != null)
                         {
@@ -359,20 +360,9 @@ namespace eFormAPI.Web.Services
 
                 var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
                                                                               && x.WorkflowState != Constants.WorkflowStates.Removed);
-                if (site != null)
-                {
-                    site.Name = $"{userRegisterModel.FirstName} {userRegisterModel.LastName}";;
-                    await site.Update(sdkDbContext);
-                    var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.FirstName == user.FirstName
-                        && x.LastName == user.LastName
-                        && x.WorkflowState != Constants.WorkflowStates.Removed);
-                    if (worker != null)
-                    {
-                        worker.FirstName = userRegisterModel.FirstName;
-                        worker.LastName = userRegisterModel.LastName;
-                        await worker.Update(sdkDbContext);
-                    }
-                }
+                var language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+
+                await core.SiteUpdate((int)site.MicrotingUid, $"{userRegisterModel.FirstName} {userRegisterModel.LastName}", userRegisterModel.FirstName, userRegisterModel.LastName, userRegisterModel.Email, language.LanguageCode);
 
                 user.Email = userRegisterModel.Email;
                 user.EmailConfirmed = true;

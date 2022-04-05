@@ -148,19 +148,19 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async entitySelectEditItemNameBox(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySelectItemEditNameBox');
+    const ele = await $('#entityItemEditNameBox');
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async entitySelectEditItemSaveBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySelectItemSaveBtn');
+    const ele = await $('#entityItemSaveBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async entitySelectEditItemCancelBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySelectItemCancelBtn');
+    const ele = await $('#entityItemCancelBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
@@ -424,22 +424,21 @@ export class EntitySelectItemEditRowObject {
   constructor() {
   }
 
-  name;
-  editBtn;
-  deleteBtn;
+  name: string;
+  editBtn: WebdriverIO.Element;
+  deleteBtn: WebdriverIO.Element;
 
   async getRow(rowNum: number): Promise<EntitySelectItemEditRowObject> {
-    const id = '#entitySelectItemEditNameentityItemUId_' + (rowNum - 1);
-    const name = await $(id);
-    if (name) {
+    const row = await $$('li.list-group-item')[rowNum - 1];
+    if (row) {
       try {
-        this.name = name.getText();
+        this.name = await row.$('#createEntityItemName').getText();
       } catch (e) {}
       try {
-        this.editBtn = await $('#entitySelectEditItemEditBtn_' + (rowNum - 1));
+        this.editBtn = await row.$('#entityItemEditBtn');
       } catch (e) {}
       try {
-        this.deleteBtn = await $('#entitySelectEditItemDeleteBtn_' + (rowNum - 1));
+        this.deleteBtn = await row.$('#entityItemDeleteBtn');
       } catch (e) {}
     } else {
       return null;
@@ -478,10 +477,10 @@ export class EntitySelectItemCreateRowObject {
         this.name = await (await (await $$('#createEntityItemName'))[rowNum - 1]).getText();
       } catch (e) {}
       try {
-        this.editBtn = (await $$('#entitySelectCreateSingleItemEdit'))[rowNum - 1];
+        this.editBtn = (await $$('#entityItemEditBtn'))[rowNum - 1];
       } catch (e) {}
       try {
-        this.deleteBtn = (await $$('#entitySelectCreateSingleItemDelete'))[
+        this.deleteBtn = (await $$('#entityItemDeleteBtn'))[
         rowNum - 1
           ];
       } catch (e) {}
