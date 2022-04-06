@@ -739,6 +739,6 @@
     <value>Fejl under opdatering tag</value>
   </data>
   <data name="ImageUpdatedSuccessfully" xml:space="preserve">
-    <value>Billedet er blever uploadet</value>
+    <value>Nyt billede tilføjet</value>
   </data>
 </root>
