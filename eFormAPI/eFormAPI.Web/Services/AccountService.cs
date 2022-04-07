@@ -23,6 +23,8 @@ SOFTWARE.
 */
 
 
+using System.Web;
+
 namespace eFormAPI.Web.Services
 {
     using Microsoft.EntityFrameworkCore;
@@ -197,7 +199,7 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false, $"User with {model.Email} not found");
             }
 
-            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var code = HttpUtility.UrlEncode(await _userManager.GeneratePasswordResetTokenAsync(user));
             var link = await core.GetSdkSetting(Settings.httpServerAddress);
             link = $"{link}/auth/restore-password-confirmation?userId={user.Id}&code={code}";
 /*            await _emailSender.SendEmailAsync(user.Email, "EForm Password Reset",
