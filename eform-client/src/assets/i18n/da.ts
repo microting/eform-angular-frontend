@@ -425,4 +425,5 @@ export const da = {
   'Dark theme': 'Mørk tilstand',
   'Select new image': 'Vælg billede',
   'Select image': 'Vælg billede',
+  'Date is required': 'Dato er påkrævet',
 };
