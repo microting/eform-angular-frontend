@@ -205,12 +205,22 @@ namespace eFormAPI.Web.Services
 /*            await _emailSender.SendEmailAsync(user.Email, "EForm Password Reset",
                 "Please reset your password by clicking <a href=\"" + link + "\">here</a>");*/
 
+            var html = $"Hej {user.FirstName} {user.LastName}<br><br>" +
+                "Du har valgt at nulstille din adgangskode til Microting.<br>" +
+                "Klik på nedenstående link for at angive en ny adgangskode.<br><br>" +
+                $"<a href=\" {link}\">Angiv ny adgangskode</a><br><br>" +
+                "Hvis du ikke har anmodet om dette, så se venligst bort fra denne mail.<br><br>" +
+                "Din adgangskode forbliver uændret, indtil du laver en ny via linket herover.<br><br>" +
+                "Med venlig hilsen<br><br>" +
+                "Microting<br><br>" +
+                "Support: 66 11 10 66";
+
             await _emailService.SendAsync(
                 EformEmailConst.FromEmail,
                 "no-reply@microting.com",
-                "EForm Password Reset",
+                "Nulstilling af adgangskode",
                 user.Email,
-                html: "Please reset your password by clicking <a href=\"" + link + "\">here</a>");
+                html: html);
 
             return new OperationResult(true);
         }

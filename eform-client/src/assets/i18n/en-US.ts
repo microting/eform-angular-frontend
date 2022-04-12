@@ -174,7 +174,7 @@ export const enUS = {
   'Edit User': 'Edit User',
   'Left empty if want to keep old': 'Left empty if want to keep old',
   Username: 'Username',
-  Email: 'Email',
+  Email: 'E-mail',
   Status: 'Status',
   'change will logout you from the application':
     'change will logout you from the application',
