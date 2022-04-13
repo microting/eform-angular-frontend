@@ -56,7 +56,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.4" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microting.eForm" Version="5.5.12" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="1.1.49" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="1.1.50" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="3.1.50" />
     <PackageReference Include="Microting.HtmlToOpenXml.dll" Version="2.3.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
