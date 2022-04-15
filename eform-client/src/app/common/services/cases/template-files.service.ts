@@ -58,9 +58,8 @@ export class TemplateFilesService {
   }
 
   addNewImage(fieldId: number, caseId: number, file: File): Observable<OperationResult> {
-    const formData = ApiBaseService.objectToFormData({fieldId, caseId, file}, true);
     return this.apiBaseService.postFormData(
-      ImageMethods.Image, formData
+      ImageMethods.Image, {fieldId, caseId, file}
     );
   }
 }
