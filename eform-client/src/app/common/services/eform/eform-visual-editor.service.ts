@@ -29,10 +29,9 @@ export class EformVisualEditorService {
   createVisualEditorTemplate(
     model: EformVisualEditorModel
   ): Observable<OperationResult> {
-    const formData = ApiBaseService.objectToFormData(model, true);
     return this.apiBaseService.postFormData(
       TemplateVisualEditorMethods.VisualEditor,
-      formData
+      model
     );
   }
 

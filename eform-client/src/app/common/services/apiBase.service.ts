@@ -85,8 +85,9 @@ export class ApiBaseService {
   }
 
   public postFormData<T>(url: string, body: any): Observable<any> {
+    const formData = ApiBaseService.objectToFormData(body, true);
     return this.http
-      .post(url, body, {
+      .post(url, formData, {
         headers: this.setHeaders('formData'),
       })
       .pipe(map((response) => this.extractData<T>(response)));
