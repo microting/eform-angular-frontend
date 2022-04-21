@@ -73,3 +73,12 @@ export async function selectDateOnDatePicker(
   ).click();
   await browser.pause(1000);
 }
+
+export async function selectValueInNgSelector(selector: WebdriverIO.Element, value: string,) {
+  await (await selector.$('input')).setValue(value);
+  const valueForClick = await (await this.propertyId()).$(
+    `.ng-option=${value}`
+  );
+  valueForClick.waitForDisplayed({ timeout: 40000 });
+  await valueForClick.click();
+}
