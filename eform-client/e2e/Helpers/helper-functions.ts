@@ -18,7 +18,7 @@ export async function testSorting(
 ) {
   //     this.tags = await Promise.all(list.map(element => element.getText()));
   if (!mapFunc) {
-    mapFunc = (ele) => ele.getText();
+    mapFunc = async (ele) => await ele.getText();
   }
   await browser.pause(1000);
   const elementsForSorting = await $$(htmlIdElementsForSorting);
