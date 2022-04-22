@@ -74,6 +74,18 @@ export async function selectDateOnDatePicker(
   await browser.pause(1000);
 }
 
+export async function selectDateRangeOnDatePicker(
+  yearFrom: number,
+  monthFrom: number,
+  dayFrom: number,
+  yearTo: number,
+  monthTo: number,
+  dayTo: number,
+) {
+  await selectDateOnDatePicker(yearFrom, monthFrom, dayFrom);
+  await selectDateOnDatePicker(yearTo, monthTo, dayTo);
+}
+
 export async function selectValueInNgSelector(selector: WebdriverIO.Element, value: string,) {
   await (await selector.$('input')).setValue(value);
   const valueForClick = await (await this.propertyId()).$(
