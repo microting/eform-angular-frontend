@@ -18,7 +18,7 @@ export async function testSorting(
 ) {
   //     this.tags = await Promise.all(list.map(element => element.getText()));
   if (!mapFunc) {
-    mapFunc = (ele) => ele.getText();
+    mapFunc = async (ele) => await ele.getText();
   }
   await browser.pause(1000);
   const elementsForSorting = await $$(htmlIdElementsForSorting);
@@ -72,4 +72,25 @@ export async function selectDateOnDatePicker(
     )[day - 1]
   ).click();
   await browser.pause(1000);
+}
+
+export async function selectDateRangeOnDatePicker(
+  yearFrom: number,
+  monthFrom: number,
+  dayFrom: number,
+  yearTo: number,
+  monthTo: number,
+  dayTo: number,
+) {
+  await selectDateOnDatePicker(yearFrom, monthFrom, dayFrom);
+  await selectDateOnDatePicker(yearTo, monthTo, dayTo);
+}
+
+export async function selectValueInNgSelector(selector: WebdriverIO.Element, value: string,) {
+  await (await selector.$('input')).setValue(value);
+  const valueForClick = await selector.$(
+    `.ng-option=${value}`
+  );
+  valueForClick.waitForDisplayed({ timeout: 40000 });
+  await valueForClick.click();
 }
