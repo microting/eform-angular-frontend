@@ -40,7 +40,7 @@ export class RestorePasswordComponent implements OnInit {
         if (result && result.success) {
           this.formRestore.patchValue({ email: '' });
           this.toastrService.success(
-            'Successfully, check your email for instructions'
+            'Tjek din indbakke for yderligere instruktioner' // TODO Translate this 'Check your inbox for further instructions'
           );
         }
       });

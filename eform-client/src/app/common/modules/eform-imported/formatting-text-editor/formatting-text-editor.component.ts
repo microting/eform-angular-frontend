@@ -5,11 +5,18 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 import schema from './schema.const';
 import { Editor, toDoc, toHTML, Toolbar } from 'ngx-editor';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+  ControlContainer,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+} from '@angular/forms';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
 
@@ -21,7 +28,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./formatting-text-editor.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class FormattingTextEditorComponent implements OnInit, OnDestroy {
+export class FormattingTextEditorComponent implements OnInit, OnDestroy, OnChanges{
   @Input() toolbar?: Toolbar = [['bold', 'italic', 'underline', 'strike']];
   @Input() placeholder = '';
   @Input() value = '';
@@ -51,5 +58,22 @@ export class FormattingTextEditorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.editor.destroy();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.value && !changes.value.firstChange ||
+      changes.disabled && !changes.disabled.firstChange
+      ) {
+      if(changes.value && !changes.value.firstChange) {
+        this.form.get('editorContent').setValue(toDoc(this.value, schema), {emitEvent: false});
+      }
+      if(changes.disabled && !changes.disabled.firstChange) {
+        if(this.disabled){
+          this.form.get('editorContent').disable({emitEvent: false});
+        } else {
+          this.form.get('editorContent').enable({emitEvent: false});
+        }
+      }
+    }
   }
 }

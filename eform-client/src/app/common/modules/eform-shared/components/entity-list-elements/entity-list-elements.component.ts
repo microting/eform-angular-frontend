@@ -39,6 +39,7 @@ export class EntityListElementsComponent implements OnInit {
   actualizeAdvEntitySelectableItemPositions() {
     for (let i = 0; i < this.entityItemModels.length; i++) {
       this.entityItemModels[i].entityItemUId = i.toString();
+      this.entityItemModels[i].displayIndex = i;
       if(!this.entityItemModels[i].tempId)
       {
         this.entityItemModels[i].tempId = this.getRandId();
