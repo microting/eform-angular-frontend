@@ -7,7 +7,6 @@ import {TranslateModule} from '@ngx-translate/core';
 import {
   DateFormatterComponent,
   EformCollapseToggleComponent,
-  EformPageSizeComponent,
   EformPaginationComponent,
   EformSubheaderComponent,
   EformTreeViewPickerComponent,
@@ -28,6 +27,11 @@ import {EformTableHeadersComponent} from './components';
 import {RouterModule} from '@angular/router';
 import {DragulaModule} from 'ng2-dragula';
 import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
+
+const matPaginatorIntl = {
+  itemsPerPageLabel: 'Number of rows'
+};
 
 @NgModule({
   imports: [
@@ -40,11 +44,11 @@ import {MatSortModule} from '@angular/material/sort';
     RouterModule,
     DragulaModule,
     MDBBootstrapModule,
-    MatSortModule
+    MatSortModule,
+    MatPaginatorModule
   ],
   declarations: [
     EformPaginationComponent,
-    EformPageSizeComponent,
     EformSubheaderComponent,
     StatusBarComponent,
     DateFormatterComponent,
@@ -60,7 +64,6 @@ import {MatSortModule} from '@angular/material/sort';
   ],
   exports: [
     EformPaginationComponent,
-    EformPageSizeComponent,
     StatusBarComponent,
     DateFormatterComponent,
     EformTreeViewPickerComponent,
@@ -74,6 +77,7 @@ import {MatSortModule} from '@angular/material/sort';
     EntityListElementsComponent,
     EntityItemEditNameComponent,
   ],
+  providers: [{useValue: matPaginatorIntl, provide: MatPaginatorIntl, multi: true}],
 })
 export class EformSharedModule {
 }

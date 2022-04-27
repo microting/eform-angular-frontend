@@ -12,6 +12,7 @@ import {
   CasePostsListModel,
   CommonDictionaryModel,
   TableHeaderElementModel,
+  PaginationModel,
 } from 'src/app/common/models';
 import { ActivatedRoute } from '@angular/router';
 import { CasePostsStateService } from '../store';
@@ -113,11 +114,6 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
     this.getCasePosts();
   }
 
-  changePage(newOffset: any) {
-    this.casePostsStateService.changePage(newOffset);
-    this.getCasePosts();
-  }
-
   openCreateModal() {
     this.newPostModal.show();
   }
@@ -128,8 +124,8 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-  onPageSizeChanged(pageSize: number) {
-    this.casePostsStateService.updatePageSize(pageSize);
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.casePostsStateService.updatePagination(paginationModel);
     this.getCasePosts();
   }
 }

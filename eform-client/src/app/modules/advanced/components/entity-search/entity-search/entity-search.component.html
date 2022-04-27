@@ -49,70 +49,61 @@
         [tableHeaders]="tableHeaders"
       ></thead>
       <tbody id="tableBody">
-        <tr
-          *ngFor="
+      <tr
+        *ngFor="
             let advEntitySearchableGroup of advEntitySearchableGroupListModel.entities
           "
-        >
-          <td id="entitySearchMUid">
-            {{ advEntitySearchableGroup.microtingUUID }}
-          </td>
-          <td id="entitySearchName">{{ advEntitySearchableGroup.name }}</td>
-          <td id="entitySearchDescription">
-            {{ advEntitySearchableGroup.description }}
-          </td>
-          <td
-            *ngIf="
+      >
+        <td id="entitySearchMUid">
+          {{ advEntitySearchableGroup.microtingUUID }}
+        </td>
+        <td id="entitySearchName">{{ advEntitySearchableGroup.name }}</td>
+        <td id="entitySearchDescription">
+          {{ advEntitySearchableGroup.description }}
+        </td>
+        <td
+          *ngIf="
               userClaims.entitySearchDelete || userClaims.entitySearchUpdate
             "
-          >
-            <div class="d-flex flex-row justify-content-center">
-              <button
-                id="entitySearchUpdateBtn"
-                class="btn btn-accent btn-icon text-black-50 mb-2"
-                [disabled]="!userClaims.entitySearchUpdate"
-                mdbTooltip="{{ 'Edit' | translate }}"
-                [routerLink]="[
+        >
+          <div class="d-flex flex-row justify-content-center">
+            <button
+              id="entitySearchUpdateBtn"
+              class="btn btn-accent btn-icon text-black-50 mb-2"
+              [disabled]="!userClaims.entitySearchUpdate"
+              mdbTooltip="{{ 'Edit' | translate }}"
+              [routerLink]="[
                   '/advanced/entity-search/edit/' +
                     advEntitySearchableGroup.microtingUUID
                 ]"
-              >
-                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-              </button>
-              <button
-                id="entitySearchDeleteBtn"
-                class="btn btn-danger btn-icon mb-2"
-                mdbTooltip="{{ 'Remove' | translate }}"
-                (click)="openModalSearchRemove(advEntitySearchableGroup)"
-                [disabled]="!userClaims.entitySearchDelete ||
+            >
+              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
+            <button
+              id="entitySearchDeleteBtn"
+              class="btn btn-danger btn-icon mb-2"
+              mdbTooltip="{{ 'Remove' | translate }}"
+              (click)="openModalSearchRemove(advEntitySearchableGroup)"
+              [disabled]="!userClaims.entitySearchDelete ||
                   advEntitySearchableGroup.isLocked"
-              >
-                <fa-icon
-                  icon="trash-alt"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
+            >
+              <fa-icon
+                icon="trash-alt"
+                [fixedWidth]="true"
+                size="lg"
+              ></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>
-  <div class="row justify-content-between mr-2 ml-2">
-    <div class="col-md-1">
-      <eform-page-size
-        [pageSize]="entitySearchStateService.getPageSize() | async"
-        (onPageSizeChanged)="onPageSizeChanged($event)"
-      >
-      </eform-page-size>
-    </div>
-    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <eform-pagination
-        [pagination]="entitySearchStateService.getPagination() | async"
-        (onPageChanged)="changePage($event)"
-      ></eform-pagination>
-    </div>
+  <div class="mr-2 ml-2">
+    <eform-pagination
+      [pagination]="entitySearchStateService.getPagination() | async"
+      (paginationChanged)="onPaginationChanged($event)"
+    ></eform-pagination>
   </div>
 </div>
 

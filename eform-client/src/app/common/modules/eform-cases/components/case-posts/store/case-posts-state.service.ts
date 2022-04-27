@@ -5,10 +5,8 @@ import {
   CasePostsListModel,
   OperationDataResult,
   PaginationModel,
-  SortModel,
 } from 'src/app/common/models';
 import {
-  updateTablePage,
   updateTableSort,
   getOffset,
 } from 'src/app/common/helpers';
@@ -67,16 +65,16 @@ export class CasePostsStateService {
     }));
   }
 
-  updatePageSize(pageSize: number) {
+  /*updatePageSize(pageSize: number) {
     this.store.update((state) => ({
       pagination: { ...state.pagination, pageSize: pageSize },
     }));
     this.checkOffset();
-  }
+  }*/
 
-  getPageSize(): Observable<number> {
+  /*getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
-  }
+  }*/
 
   /*  getSort(): Observable<SortModel> {
       return this.query.selectSort$;
@@ -94,7 +92,7 @@ export class CasePostsStateService {
     return this.query.selectNameFilter$;
   }
 
-  changePage(offset: number) {
+  /*changePage(offset: number) {
     const updatedPageSetting = updateTablePage(offset, {
       ...this.query.pageSetting.pagination,
     });
@@ -104,7 +102,7 @@ export class CasePostsStateService {
         offset: updatedPageSetting.offset,
       },
     }));
-  }
+  }*/
 
   onDelete() {
     this.store.update((state) => ({
@@ -146,5 +144,16 @@ export class CasePostsStateService {
 
   getPagination(): Observable<PaginationModel> {
     return this.query.selectPagination$;
+  }
+
+  updatePagination(pagination: PaginationModel) {
+    this.store.update((state) => ({
+      pagination: {
+        ...state.pagination,
+        pageSize: pagination.pageSize,
+        offset: pagination.offset,
+      },
+    }));
+    // this.checkOffset();
   }
 }

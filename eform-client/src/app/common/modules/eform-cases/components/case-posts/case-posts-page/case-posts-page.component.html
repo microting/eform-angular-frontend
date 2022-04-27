@@ -110,16 +110,10 @@
   <!--  <div class="row p-1 my-4 mx-2" *ngIf="casePostsListModel.total === 0">-->
   <!--    <span>{{ 'No posts found' | translate }}</span>-->
   <!--  </div>-->
-  <div class="row justify-content-between mr-2 ml-2">
-    <div class="col-md-1">
-      <eform-page-size
-        [pageSize]="casePostsStateService.getPageSize() | async"
-        (onPageSizeChanged)="onPageSizeChanged($event)"
-      ></eform-page-size>
-    </div>
+  <div class="mr-2 ml-2">
     <eform-pagination
       [pagination]="casePostsStateService.getPagination() | async"
-      (onPageChanged)="changePage($event)"
+      (paginationChanged)="onPaginationChanged($event)"
     ></eform-pagination>
   </div>
 </div>

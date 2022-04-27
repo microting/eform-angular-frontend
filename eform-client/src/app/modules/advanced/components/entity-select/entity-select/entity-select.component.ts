@@ -4,6 +4,7 @@ import {
   Paged,
   TableHeaderElementModel,
   AdvEntitySelectableGroupModel,
+  PaginationModel,
 } from 'src/app/common/models';
 import { AuthStateService } from 'src/app/common/store';
 import { EntitySelectStateService } from '../store';
@@ -64,23 +65,18 @@ export class EntitySelectComponent implements OnInit {
     this.getEntitySelectableGroupList();
   }
 
-  changePage(offset: number) {
-    this.entitySelectStateService.changePage(offset);
-    this.getEntitySelectableGroupList();
-  }
-
   sortTable(sort: Sort) {
     this.entitySelectStateService.onSortTable(sort.active);
     this.getEntitySelectableGroupList();
   }
 
-  onPageSizeChanged(pageSize: number) {
-    this.entitySelectStateService.updatePageSize(pageSize);
+  onEntityRemoved() {
+    this.entitySelectStateService.onDelete();
     this.getEntitySelectableGroupList();
   }
 
-  onEntityRemoved() {
-    this.entitySelectStateService.onDelete();
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.entitySelectStateService.updatePagination(paginationModel);
     this.getEntitySelectableGroupList();
   }
 }

@@ -1,4 +1,4 @@
-<eform-subheader [title]="title" [forceStaticTitle]="true"> </eform-subheader>
+<eform-subheader [title]="title" [forceStaticTitle]="true"></eform-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid">
@@ -35,142 +35,133 @@
         [tableHeaders]="tableHeaders"
       ></thead>
       <tbody>
-        <tr *ngFor="let caseModel of caseListModel.cases">
-          <td>{{ caseModel.id }}</td>
-          <td>
-            <date-formatter
-              [date]="caseModel.doneAtUserModifiable"
-              [Format]="'datetime'"
-            ></date-formatter>
-          </td>
-          <td *ngIf="authStateService.isAdmin">
-            <date-formatter
-              [date]="caseModel.createdAt"
-              [Format]="'datetime'"
-            ></date-formatter>
-          </td>
-          <td>{{ caseModel.workerName }}</td>
-          <td *ngIf="currentTemplate.field1" class="text-center">
-            <div class="max-lines" [innerHTML]="caseModel.fieldValue1"></div>
-          </td>
-          <td *ngIf="currentTemplate.field2" class="text-center">
-            <div class="max-lines" [innerHTML]="caseModel.fieldValue2"></div>
-          </td>
-          <td *ngIf="currentTemplate.field3" class="text-center">
-            <div class="max-lines" [innerHTML]="caseModel.fieldValue3"></div>
-          </td>
-          <td *ngIf="currentTemplate.field4" class="text-center">
-            <div class="max-lines" [innerHTML]="caseModel.fieldValue4"></div>
-          </td>
-          <td *ngIf="currentTemplate.field5" class="text-center">
-            <div class="max-lines" [innerHTML]="caseModel.fieldValue5"></div>
-          </td>
-          <td *ngIf="currentTemplate.field6" class="text-center">
-            <div class="max-lines" [innerHTML]="caseModel.fieldValue6"></div>
-          </td>
-          <td *ngIf="currentTemplate.field7" class="text-center">
-            <div class="max-lines" [innerHTML]="caseModel.fieldValue7"></div>
-          </td>
-          <td *ngIf="currentTemplate.field8" class="text-center">
-            <div class="max-lines" [innerHTML]="caseModel.fieldValue8"></div>
-          </td>
-          <td *ngIf="currentTemplate.field9" class="text-center">
-            <div class="max-lines" [innerHTML]="caseModel.fieldValue9"></div>
-          </td>
-          <td>
-            <div class="d-flex flex-row justify-content-center">
-              <button
-                mdbBtn
-                class="btn-success btn-icon mb-2"
-                *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
-                [routerLink]="[
+      <tr *ngFor="let caseModel of caseListModel.cases">
+        <td>{{ caseModel.id }}</td>
+        <td>
+          <date-formatter
+            [date]="caseModel.doneAtUserModifiable"
+            [Format]="'datetime'"
+          ></date-formatter>
+        </td>
+        <td *ngIf="authStateService.isAdmin">
+          <date-formatter
+            [date]="caseModel.createdAt"
+            [Format]="'datetime'"
+          ></date-formatter>
+        </td>
+        <td>{{ caseModel.workerName }}</td>
+        <td *ngIf="currentTemplate.field1" class="text-center">
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue1"></div>
+        </td>
+        <td *ngIf="currentTemplate.field2" class="text-center">
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue2"></div>
+        </td>
+        <td *ngIf="currentTemplate.field3" class="text-center">
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue3"></div>
+        </td>
+        <td *ngIf="currentTemplate.field4" class="text-center">
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue4"></div>
+        </td>
+        <td *ngIf="currentTemplate.field5" class="text-center">
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue5"></div>
+        </td>
+        <td *ngIf="currentTemplate.field6" class="text-center">
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue6"></div>
+        </td>
+        <td *ngIf="currentTemplate.field7" class="text-center">
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue7"></div>
+        </td>
+        <td *ngIf="currentTemplate.field8" class="text-center">
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue8"></div>
+        </td>
+        <td *ngIf="currentTemplate.field9" class="text-center">
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue9"></div>
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button
+              mdbBtn
+              class="btn-success btn-icon mb-2"
+              *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
+              [routerLink]="[
                   '/cases/edit/' + caseModel.id + '/' + currentTemplate.id
                 ]"
-                mdbTooltip="{{ 'Edit Case' | translate }}"
-              >
-                <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
-              </button>
-<!--              <button-->
-<!--                mdbBtn-->
-<!--                class="btn-success btn-icon mb-2"-->
-<!--                *ngIf="authStateService.isAdmin"-->
-<!--                [routerLink]="[-->
-<!--                  '/cases/posts/' + caseModel.id + '/' + currentTemplate.id-->
-<!--                ]"-->
-<!--                mdbTooltip="{{ 'Posts' | translate }}"-->
-<!--              >-->
-<!--                <fa-icon-->
-<!--                  icon="sticky-note"-->
-<!--                  size="lg"-->
-<!--                  [fixedWidth]="true"-->
-<!--                ></fa-icon>-->
-<!--              </button>-->
-              <button
-                mdbBtn
-                class="btn-success btn-icon mb-2"
-                *ngIf="
+              mdbTooltip="{{ 'Edit Case' | translate }}"
+            >
+              <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
+            </button>
+            <!--<button
+              mdbBtn
+              class="btn-success btn-icon mb-2"
+              *ngIf="authStateService.isAdmin"
+              [routerLink]="[
+                              '/cases/posts/' + caseModel.id + '/' + currentTemplate.id
+                            ]"
+              mdbTooltip="{{ 'Posts' | translate }}"
+            >
+              <fa-icon
+                icon="sticky-note"
+                size="lg"
+                [fixedWidth]="true"
+              ></fa-icon>
+            </button>-->
+            <button
+              mdbBtn
+              class="btn-success btn-icon mb-2"
+              *ngIf="
                   checkEformPermissions(userClaimsEnum.caseGetPdf) &&
                   (currentTemplate.jasperExportEnabled ||
                     currentTemplate.docxExportEnabled)
                 "
-                (click)="downloadFile(caseModel.id, 'pdf')"
-                mdbTooltip="{{ 'Download PDF' | translate }}"
-              >
-                <fa-icon
-                  icon="file-pdf"
-                  size="lg"
-                  [fixedWidth]="true"
-                ></fa-icon>
-              </button>
-              <button
-                mdbBtn
-                class="btn-info btn-icon mb-2"
-                *ngIf="
+              (click)="downloadFile(caseModel.id, 'pdf')"
+              mdbTooltip="{{ 'Download PDF' | translate }}"
+            >
+              <fa-icon
+                icon="file-pdf"
+                size="lg"
+                [fixedWidth]="true"
+              ></fa-icon>
+            </button>
+            <button
+              mdbBtn
+              class="btn-info btn-icon mb-2"
+              *ngIf="
                   checkEformPermissions(userClaimsEnum.caseGetPdf) &&
                   currentTemplate.docxExportEnabled
                 "
-                (click)="downloadFile(caseModel.id, 'docx')"
-                mdbTooltip="{{ 'Download Docx' | translate }}"
-              >
-                <fa-icon
-                  icon="file-word"
-                  size="lg"
-                  [fixedWidth]="true"
-                ></fa-icon>
-              </button>
-              <button
-                mdbBtn
-                class="btn-danger btn-icon mb-2"
-                *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
-                mdbTooltip="{{ 'Delete Case' | translate }}"
-                (click)="onDeleteClicked(caseModel)"
-              >
-                <fa-icon
-                  icon="trash-alt"
-                  size="lg"
-                  [fixedWidth]="true"
-                ></fa-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
+              (click)="downloadFile(caseModel.id, 'docx')"
+              mdbTooltip="{{ 'Download Docx' | translate }}"
+            >
+              <fa-icon
+                icon="file-word"
+                size="lg"
+                [fixedWidth]="true"
+              ></fa-icon>
+            </button>
+            <button
+              mdbBtn
+              class="btn-danger btn-icon mb-2"
+              *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
+              mdbTooltip="{{ 'Delete Case' | translate }}"
+              (click)="onDeleteClicked(caseModel)"
+            >
+              <fa-icon
+                icon="trash-alt"
+                size="lg"
+                [fixedWidth]="true"
+              ></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>
-  <div class="row justify-content-between mr-2 ml-2">
-    <div class="col-md-1">
-      <eform-page-size
-        [pageSize]="caseStateService.getPageSize() | async"
-        (onPageSizeChanged)="onPageSizeChanged($event)"
-      >
-      </eform-page-size>
-    </div>
-    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <eform-pagination
-        [pagination]="caseStateService.getPagination() | async"
-        (onPageChanged)="changePage($event)"
-      ></eform-pagination>
-    </div>
+  <div class="mr-2 ml-2">
+    <eform-pagination
+      [pagination]="caseStateService.getPagination() | async"
+      (paginationChanged)="onPaginationChanged($event)"
+    ></eform-pagination>
   </div>
 </div>
 

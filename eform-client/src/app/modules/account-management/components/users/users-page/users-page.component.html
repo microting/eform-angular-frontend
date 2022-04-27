@@ -28,7 +28,7 @@
           />
           <label for="isChecked">{{
             'Force users to use 2-f-auth' | translate
-          }}</label>
+            }}</label>
         </div>
       </div>
     </div>
@@ -51,61 +51,52 @@
         [tableHeaders]="tableHeaders"
       ></thead>
       <tbody id="userInfoTable">
-        <tr *ngFor="let userInfoModel of userInfoModelList.entities">
-          <td id="userAdministrationId">{{ userInfoModel.id }}</td>
-          <td id="userAdministrationEmail">{{ userInfoModel.email }}</td>
-          <td id="userAdministrationFullName">
-            {{ userInfoModel.firstName }} {{ userInfoModel.lastName }}
-          </td>
-          <td id="userAdministrationRole">
-            {{ userInfoModel.role }}
-          </td>
-          <td *ngIf="userClaims.usersUpdate || userClaims.usersDelete">
-            <div class="d-flex flex-row justify-content-center">
-              <button
-                id="userAdministrationEditBtn"
-                class="btn btn-accent text-black-50 btn-icon mb-2"
-                *ngIf="userClaims.usersUpdate"
-                mdbTooltip="{{ 'Edit User' | translate }}"
-                (click)="openEditModal(userInfoModel.id)"
-              >
-                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-              </button>
-              <button
-                mdbBtn
-                class="btn-danger btn-icon mb-2"
-                *ngIf="userClaims.usersDelete"
-                mdbTooltip="{{ 'Delete user' | translate }}"
-                (click)="openRemoveUserModal(userInfoModel)"
-                id="userAdministrationDeleteBtn"
-              >
-                <fa-icon
-                  icon="trash-alt"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
+      <tr *ngFor="let userInfoModel of userInfoModelList.entities">
+        <td id="userAdministrationId">{{ userInfoModel.id }}</td>
+        <td id="userAdministrationEmail">{{ userInfoModel.email }}</td>
+        <td id="userAdministrationFullName">
+          {{ userInfoModel.firstName }} {{ userInfoModel.lastName }}
+        </td>
+        <td id="userAdministrationRole">
+          {{ userInfoModel.role }}
+        </td>
+        <td *ngIf="userClaims.usersUpdate || userClaims.usersDelete">
+          <div class="d-flex flex-row justify-content-center">
+            <button
+              id="userAdministrationEditBtn"
+              class="btn btn-accent text-black-50 btn-icon mb-2"
+              *ngIf="userClaims.usersUpdate"
+              mdbTooltip="{{ 'Edit User' | translate }}"
+              (click)="openEditModal(userInfoModel.id)"
+            >
+              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
+            <button
+              mdbBtn
+              class="btn-danger btn-icon mb-2"
+              *ngIf="userClaims.usersDelete"
+              mdbTooltip="{{ 'Delete user' | translate }}"
+              (click)="openRemoveUserModal(userInfoModel)"
+              id="userAdministrationDeleteBtn"
+            >
+              <fa-icon
+                icon="trash-alt"
+                [fixedWidth]="true"
+                size="lg"
+              ></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="row justify-content-between mr-2 ml-2">
-    <div class="col-md-1">
-      <eform-page-size
-        [pageSize]="usersStateService.getPageSize() | async"
-        (onPageSizeChanged)="onPageSizeChanged($event)"
-      >
-      </eform-page-size>
-    </div>
-    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <eform-pagination
-        [pagination]="usersStateService.getPagination() | async"
-        (onPageChanged)="changePage($event)"
-      ></eform-pagination>
-    </div>
+  <div class="mr-2 ml-2">
+    <eform-pagination
+      [pagination]="usersStateService.getPagination() | async"
+      (paginationChanged)="onPaginationChanged($event)"
+    ></eform-pagination>
   </div>
 </div>
 

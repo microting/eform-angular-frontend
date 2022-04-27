@@ -7,9 +7,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Observable, range } from 'rxjs';
-import { filter, map, toArray } from 'rxjs/operators';
 import { PaginationModel } from 'src/app/common/models';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -19,33 +18,11 @@ import { PaginationModel } from 'src/app/common/models';
 })
 export class EformPaginationComponent implements OnInit, OnChanges {
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() onPageChanged: EventEmitter<number> = new EventEmitter<number>();
-  @Input() offset = 0;
-  @Input() limit = 1;
-  @Input() size = 1;
-  @Input() range = 3;
+  @Output() paginationChanged: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
+  @Input() pageSizeOptions: number[] = [5, 10, 100, 1000, 100000];
   @Input() pagination: PaginationModel;
-  currentPage: number;
-  totalPages: number;
-  pages: Observable<number[]>;
 
-  selectPage(page: number) {
-    if (this.isValidPageNumber(page, this.totalPages)) {
-      this.onPageChanged.emit((page - 1) * this.limit);
-    } else {
-      return;
-    }
-  }
-
-  getPages(offset: number, limit: number, size: number) {
-    this.currentPage = this.getCurrentPage(offset, limit);
-    this.totalPages = this.getTotalPages(limit, size);
-    this.pages = range(-this.range, this.range * 2 + 1).pipe(
-      map((offsetLocal) => this.currentPage + offsetLocal),
-      filter((page) => this.isValidPageNumber(page, this.totalPages)),
-      toArray()
-    );
-  }
+  // totalPages: number;
 
   getCurrentPage(offset: number, limit: number): number {
     return Math.floor(offset / limit) + 1;
@@ -60,22 +37,26 @@ export class EformPaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.pagination && !changes.pagination.firstChange) {
-      if (this.pagination) {
-        this.offset = this.pagination.offset;
-        this.limit = this.pagination.pageSize;
-        this.size = this.pagination.total;
-      }
-      this.getPages(this.offset, this.limit, this.size);
-    }
+    // if (changes.pagination && !changes.pagination.firstChange) {
+    //   if (this.pagination) {
+    //     this.totalPages = this.getTotalPages(this.pagination.pageSize, this.pagination.total);
+    //   }
+    // }
   }
 
   ngOnInit() {
-    if (this.pagination) {
-      this.offset = this.pagination.offset;
-      this.limit = this.pagination.pageSize;
-      this.size = this.pagination.total;
-    }
-    this.getPages(this.offset, this.limit, this.size);
+    // if (this.pagination) {
+    //   this.totalPages = this.getTotalPages(this.pagination.pageSize, this.pagination.total);
+    // }
+  }
+
+  changePage(pageEvent: PageEvent) {
+    // if(this.isValidPageNumber(pageEvent.pageIndex, this.getTotalPages(pageEvent.pageSize, this.pagination.total))) {
+      this.paginationChanged.emit({
+        pageSize: pageEvent.pageSize,
+        offset: pageEvent.pageIndex * pageEvent.pageSize,
+        total: this.pagination.total,
+      });
+    // }
   }
 }

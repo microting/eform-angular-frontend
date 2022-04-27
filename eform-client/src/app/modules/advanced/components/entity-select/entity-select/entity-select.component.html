@@ -49,77 +49,68 @@
         [tableHeaders]="tableHeaders"
       ></thead>
       <tbody id="tableBodyEntitySelect">
-        <tr
-          *ngFor="
+      <tr
+        *ngFor="
             let advEntitySelectableGroup of advEntitySelectableGroupListModel.entities
           "
-        >
-          <td id="entitySelectMicrotingUUID">
-            {{ advEntitySelectableGroup.microtingUUID }}
-          </td>
-          <td id="entitySelectName">
-            {{ advEntitySelectableGroup.name }}
-          </td>
-          <td id="entitySelectDescription">
-            {{ advEntitySelectableGroup.description }}
-          </td>
-          <td
-            *ngIf="
+      >
+        <td id="entitySelectMicrotingUUID">
+          {{ advEntitySelectableGroup.microtingUUID }}
+        </td>
+        <td id="entitySelectName">
+          {{ advEntitySelectableGroup.name }}
+        </td>
+        <td id="entitySelectDescription">
+          {{ advEntitySelectableGroup.description }}
+        </td>
+        <td
+          *ngIf="
               userClaims.entitySelectUpdate || userClaims.entitySelectDelete
             "
-          >
-            <div class="d-flex flex-row justify-content-center">
-              <button
-                mdbBtn
-                id="entitySelectEditBtn"
-                class="btn btn-accent btn-icon text-black-50 mb-2"
-                [disabled]="!userClaims.entitySelectUpdate"
-                mdbTooltip="{{ 'Edit' | translate }}"
-                [routerLink]="[
+        >
+          <div class="d-flex flex-row justify-content-center">
+            <button
+              mdbBtn
+              id="entitySelectEditBtn"
+              class="btn btn-accent btn-icon text-black-50 mb-2"
+              [disabled]="!userClaims.entitySelectUpdate"
+              mdbTooltip="{{ 'Edit' | translate }}"
+              [routerLink]="[
                   '/advanced/entity-select/edit/' +
                     advEntitySelectableGroup.microtingUUID
                 ]"
-              >
-                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-              </button>
-              <button
-                mdbBtn
-                id="entitySelectDeleteBtn"
-                class="btn btn-danger btn-icon mb-2"
-                [disabled]="
+            >
+              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
+            <button
+              mdbBtn
+              id="entitySelectDeleteBtn"
+              class="btn btn-danger btn-icon mb-2"
+              [disabled]="
                   !userClaims.entitySelectDelete ||
                   advEntitySelectableGroup.isLocked
                 "
-                mdbTooltip="{{ 'Remove' | translate }}"
-                (click)="openModalSelectRemove(advEntitySelectableGroup)"
-              >
-                <fa-icon
-                  icon="trash-alt"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
+              mdbTooltip="{{ 'Remove' | translate }}"
+              (click)="openModalSelectRemove(advEntitySelectableGroup)"
+            >
+              <fa-icon
+                icon="trash-alt"
+                [fixedWidth]="true"
+                size="lg"
+              ></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="row justify-content-between mr-2 ml-2">
-    <div class="col-md-1">
-      <eform-page-size
-        [pageSize]="entitySelectStateService.getPageSize() | async"
-        (onPageSizeChanged)="onPageSizeChanged($event)"
-      >
-      </eform-page-size>
-    </div>
-    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <eform-pagination
-        [pagination]="entitySelectStateService.getPagination() | async"
-        (onPageChanged)="changePage($event)"
-      ></eform-pagination>
-    </div>
+  <div class="mr-2 ml-2">
+    <eform-pagination
+      [pagination]="entitySelectStateService.getPagination() | async"
+      (paginationChanged)="onPaginationChanged($event)"
+    ></eform-pagination>
   </div>
 </div>
 

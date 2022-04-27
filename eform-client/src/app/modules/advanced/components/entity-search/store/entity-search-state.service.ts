@@ -47,7 +47,7 @@ export class EntitySearchStateService {
     }));
   }
 
-  updatePageSize(pageSize: number) {
+  /*updatePageSize(pageSize: number) {
     this.store.update((state) => ({
       pagination: {
         ...state.pagination,
@@ -55,15 +55,15 @@ export class EntitySearchStateService {
       },
     }));
     this.checkOffset();
-  }
+  }*/
 
   getPagination(): Observable<PaginationModel> {
     return this.query.selectPagination$;
   }
 
-  getPageSize(): Observable<number> {
+  /*getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
-  }
+  }*/
 
   // getSort(): Observable<SortModel> {
   //   return this.query.selectSort$;
@@ -119,12 +119,23 @@ export class EntitySearchStateService {
     }
   }
 
-  changePage(offset: number) {
+  /*changePage(offset: number) {
     this.store.update((state) => ({
       pagination: {
         ...state.pagination,
         offset: offset,
       },
     }));
+  }*/
+
+  updatePagination(pagination: PaginationModel) {
+    this.store.update((state) => ({
+      pagination: {
+        ...state.pagination,
+        pageSize: pagination.pageSize,
+        offset: pagination.offset,
+      },
+    }));
+    // this.checkOffset();
   }
 }

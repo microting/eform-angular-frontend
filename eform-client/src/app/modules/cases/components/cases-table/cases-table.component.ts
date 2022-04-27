@@ -8,7 +8,7 @@ import {
   TemplateDto,
   CaseListModel,
   CaseModel,
-  TableHeaderElementModel,
+  TableHeaderElementModel, PaginationModel,
 } from 'src/app/common/models';
 import {
   EFormService,
@@ -145,16 +145,6 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  changePage(offset: number) {
-    this.caseStateService.changePage(offset);
-    this.loadAllCases();
-  }
-
-  onPageSizeChanged(newPageSize: number) {
-    this.caseStateService.updatePageSize(newPageSize);
-    this.loadAllCases();
-  }
-
   onCaseDeleted() {
     this.caseStateService.onDelete();
     this.loadAllCases();
@@ -256,5 +246,10 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.caseStateService.updatePagination(paginationModel);
+    this.loadAllCases();
   }
 }

@@ -4,6 +4,7 @@ import {
   Paged,
   SecurityGroupModel,
   TableHeaderElementModel,
+  PaginationModel,
 } from 'src/app/common/models';
 import {
   SecurityGroupsService,
@@ -69,10 +70,11 @@ export class UsersPageComponent implements OnInit {
   }
 
   getUserInfoList() {
-    this.usersStateService.getAllUsers().subscribe((data) => {
-      if (data && data.model) {
-        this.userInfoModelList = data.model;
-      }
+    this.usersStateService.getAllUsers()
+      .subscribe((data) => {
+        if (data && data.model) {
+          this.userInfoModelList = data.model;
+        }
     });
   }
 
@@ -106,11 +108,6 @@ export class UsersPageComponent implements OnInit {
     this.removeUserModal.show();
   }
 
-  changePage(offset: number) {
-    this.usersStateService.changePage(offset);
-    this.getUserInfoList();
-  }
-
   checked(e: any) {
     if (e.target && e.target.checked) {
       this.adminService.enableTwoFactorAuth().subscribe(
@@ -136,11 +133,6 @@ export class UsersPageComponent implements OnInit {
     this.getUserInfoList();
   }
 
-  onPageSizeChanged(pageSize: number) {
-    this.usersStateService.updatePageSize(pageSize);
-    this.getUserInfoList();
-  }
-
   onUserDeleted() {
     this.adminService.deleteUser(this.selectedUser.id).subscribe((data) => {
       if (data.success) {
@@ -148,5 +140,10 @@ export class UsersPageComponent implements OnInit {
         this.getUserInfoList();
       }
     });
+  }
+
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.usersStateService.updatePagination(paginationModel);
+    this.getUserInfoList();
   }
 }

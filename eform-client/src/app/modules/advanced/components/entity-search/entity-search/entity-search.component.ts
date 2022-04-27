@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   AdvEntitySearchableGroupModel,
   Paged,
+  PaginationModel,
   TableHeaderElementModel,
 } from 'src/app/common/models';
 import { EntitySearchService } from 'src/app/common/services';
@@ -54,11 +55,6 @@ export class EntitySearchComponent implements OnInit {
       });
   }
 
-  changePage(offset: number) {
-    this.entitySearchStateService.changePage(offset);
-    this.getEntitySearchableGroupList();
-  }
-
   openModalSearchRemove(selectedSearchModel: AdvEntitySearchableGroupModel) {
     this.selectedAdvGroup = selectedSearchModel;
     this.modalSearchRemove.show(this.selectedAdvGroup);
@@ -74,13 +70,13 @@ export class EntitySearchComponent implements OnInit {
     this.getEntitySearchableGroupList();
   }
 
-  onPageSizeChanged(pageSize: number) {
-    this.entitySearchStateService.updatePageSize(pageSize);
+  onEntityRemoved() {
+    this.entitySearchStateService.onDelete();
     this.getEntitySearchableGroupList();
   }
 
-  onEntityRemoved() {
-    this.entitySearchStateService.onDelete();
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.entitySearchStateService.updatePagination(paginationModel);
     this.getEntitySearchableGroupList();
   }
 }
