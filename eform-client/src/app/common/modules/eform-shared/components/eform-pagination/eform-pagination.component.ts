@@ -24,8 +24,8 @@ export class EformPaginationComponent implements OnInit, OnChanges {
 
   // totalPages: number;
 
-  getCurrentPage(offset: number, limit: number): number {
-    return Math.floor(offset / limit) + 1;
+  getCurrentPage(): number {
+    return Math.floor(this.pagination.offset / this.pagination.pageSize);
   }
 
   isValidPageNumber(page: number, totalPages: number): boolean {

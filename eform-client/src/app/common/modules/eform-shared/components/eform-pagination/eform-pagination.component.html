@@ -2,7 +2,7 @@
   [length]="pagination.total"
   [pageSize]="pagination.pageSize"
   [pageSizeOptions]="pageSizeOptions"
-  [pageIndex]="getCurrentPage(pagination.offset, pagination.pageSize)"
+  [pageIndex]="getCurrentPage()"
   (page)="changePage($event)"
 
   >

@@ -27,11 +27,7 @@ import {EformTableHeadersComponent} from './components';
 import {RouterModule} from '@angular/router';
 import {DragulaModule} from 'ng2-dragula';
 import {MatSortModule} from '@angular/material/sort';
-import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
-
-const matPaginatorIntl = {
-  itemsPerPageLabel: 'Number of rows'
-};
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   imports: [
@@ -77,7 +73,6 @@ const matPaginatorIntl = {
     EntityListElementsComponent,
     EntityItemEditNameComponent,
   ],
-  providers: [{useValue: matPaginatorIntl, provide: MatPaginatorIntl, multi: true}],
 })
 export class EformSharedModule {
 }
