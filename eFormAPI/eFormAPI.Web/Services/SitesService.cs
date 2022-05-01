@@ -65,12 +65,13 @@ namespace eFormAPI.Web.Services
                 var sites = await dbContext.Sites
                     .AsNoTracking()
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .OrderBy(x => x.Name)
                     .Select(x => new CommonDictionaryModel
                     {
                         Id = x.Id,
                         Name = x.Name,
-                    }).ToListAsync();
+                    })
+                    .OrderBy(x => x.Name)
+                    .ToListAsync();
 
                 return new OperationDataResult<List<CommonDictionaryModel>>(true, sites);
             }
