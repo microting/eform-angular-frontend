@@ -48,6 +48,7 @@ import {
 
 import { casePostsPersistProvider } from './components/case-posts/store';
 import {MatSortModule} from '@angular/material/sort';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
     imports: [
@@ -66,6 +67,7 @@ import {MatSortModule} from '@angular/material/sort';
         FontAwesomeModule,
         RouterModule,
         MatSortModule,
+        MatCheckboxModule,
     ],
   declarations: [
     CaseEditNavComponent,

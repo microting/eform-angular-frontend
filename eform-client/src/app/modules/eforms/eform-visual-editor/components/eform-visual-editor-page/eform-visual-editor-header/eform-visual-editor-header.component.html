@@ -8,18 +8,15 @@
               class="col"
               *ngFor="let language of languages; let index = index"
             >
-              <div class="mat-checkbox mr-3" *ngIf="displayCheckbox(language.id)">
-                <input
+              <div class="mr-3" *ngIf="displayCheckbox(language.id)">
+                <mat-checkbox
                   id="languageCheckbox{{ index }}"
                   name="languageCheckbox{{ index }}"
                   [ngModel]="isLanguageSelected(language.id)"
-                  [value]="isLanguageSelected(language.id)"
                   (ngModelChange)="onAddOrDeleteLanguage($event, language.id)"
-                  type="checkbox"
-                />
-                <label for="languageCheckbox{{ index }}">{{
-                  language.text | translate
-                }}</label>
+                >
+                  {{ language.text | translate }}
+                </mat-checkbox>
               </div>
             </div>
           </div>

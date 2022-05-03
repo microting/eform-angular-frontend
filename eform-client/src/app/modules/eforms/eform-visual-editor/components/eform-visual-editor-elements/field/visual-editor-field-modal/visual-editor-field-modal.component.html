@@ -64,15 +64,13 @@
 
             <div class="row" *ngIf="!mandatoryIsNotNeed">
               <div class="col">
-                <div class="mat-checkbox">
-                  <input
+                  <mat-checkbox
                     id="isChecked"
                     [(ngModel)]="recursionModel.field.mandatory"
                     color="primary"
-                    type="checkbox"
-                  />
-                  <label for="isChecked">{{ 'Mandatory' | translate }}</label>
-                </div>
+                    type="checkbox">
+                    {{ 'Mandatory' | translate }}
+                  </mat-checkbox>
               </div>
             </div>
           </mdb-card-body>

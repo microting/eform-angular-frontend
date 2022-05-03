@@ -44,7 +44,8 @@
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
               "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
-              "src/scss/styles.scss"
+              "src/scss/styles.scss",
+              "src/scss/theme.scss"
             ],
             "scripts": [
               "node_modules/hammerjs/hammer.min.js"

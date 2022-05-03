@@ -14,22 +14,21 @@
 
 <div class="container-fluid mt-4">
   <div class="row mb-4">
-    <div class="col-md-6" *ngIf="authStateService.isAdmin">
+    <div class="col-md-6 mb-3" *ngIf="authStateService.isAdmin">
       <mdb-card>
         <mdb-card-header>
           {{ 'Google Authenticator' | translate }}
         </mdb-card-header>
         <mdb-card-body>
-          <div class="mat-checkbox mb-1">
-            <input
+          <div class="mb-1">
+            <mat-checkbox
               id="2fauthForsed"
               (change)="isTwoFactorEnabledCheckBoxChanged($event)"
-              [checked]="googleAuthInfoModel.isTwoFactorEnabled"
-              [value]="googleAuthInfoModel.isTwoFactorEnabled"
+              [(ngModel)]="googleAuthInfoModel.isTwoFactorEnabled"
               color="primary"
-              type="checkbox"
-            />
-            <label for="2fauthForsed">{{ 'Status' | translate }}</label>
+            >
+              {{ 'Status' | translate }}
+            </mat-checkbox>
           </div>
           <p class="text-danger">
             ({{ 'change will logout you from the application' | translate }})
@@ -69,7 +68,8 @@
         <mdb-card-body>
           <div class="container-fluid">
             <div class="row">
-              <ng-select *ngIf="authStateService.isAdmin"
+              <ng-select
+                *ngIf="authStateService.isAdmin"
                 id="ProfileLanguageSelector"
                 [placeholder]="'Language' | translate"
                 [bindLabel]="'text'"
@@ -80,7 +80,8 @@
               ></ng-select>
             </div>
             <div class="row">
-              <ng-select *ngIf="authStateService.isAdmin"
+              <ng-select
+                *ngIf="authStateService.isAdmin"
                 id="ProfileFormatSelector"
                 [placeholder]="'Formats' | translate"
                 [bindLabel]="'text'"
@@ -91,7 +92,8 @@
               ></ng-select>
             </div>
             <div class="row">
-              <ng-select *ngIf="authStateService.isAdmin"
+              <ng-select
+                *ngIf="authStateService.isAdmin"
                 id="ProfileTimeZoneSelector"
                 [placeholder]="'Timezone' | translate"
                 [bindLabel]="'name'"
@@ -101,18 +103,15 @@
                 [items]="timeZones.timeZoneModels"
               ></ng-select>
             </div>
-            <div class="row">
-              <div class="mat-checkbox mb-1">
-                <input
-                  id="darkTheme"
-                  [checked]="userSettingsModel.darkTheme"
-                  [value]="userSettingsModel.darkTheme"
-                  [(ngModel)]="userSettingsModel.darkTheme"
-                  color="primary"
-                  type="checkbox"
-                />
-                <label for="darkTheme">{{ 'Dark theme' | translate }}</label>
-              </div>
+            <div class="row mb-1">
+              <mat-checkbox
+                id="darkTheme"
+                [checked]="userSettingsModel.darkTheme"
+                [(ngModel)]="userSettingsModel.darkTheme"
+                color="primary"
+              >
+                {{ 'Dark theme' | translate }}
+              </mat-checkbox>
             </div>
           </div>
         </mdb-card-body>

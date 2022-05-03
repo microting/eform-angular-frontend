@@ -28,6 +28,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {EformMatDateFnsDateModule} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
 import {MatSortModule} from '@angular/material/sort';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import {MatSortModule} from '@angular/material/sort';
         MatDatepickerModule,
         MatInputModule,
         EformMatDateFnsDateModule,
-        MatSortModule
+        MatSortModule,
+        MatCheckboxModule
     ],
   declarations: [
     EformsPageComponent,

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 
 import {
@@ -18,20 +17,23 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { usersPersistProvider } from './components/users/store/users.store';
 import {MatSortModule} from '@angular/material/sort';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        AccountManagementRouting,
-        NgSelectModule,
-        MDBBootstrapModule,
-        EformSharedModule,
-        TranslateModule,
-        ReactiveFormsModule,
-        FormsModule,
-        FontAwesomeModule,
-        MatSortModule,
-    ],
+  imports: [
+    CommonModule,
+    AccountManagementRouting,
+    NgSelectModule,
+    EformSharedModule,
+    TranslateModule,
+    ReactiveFormsModule,
+    FormsModule,
+    FontAwesomeModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MDBBootstrapModule,
+  ],
   declarations: [
     ChangePasswordComponent,
     ProfileSettingsComponent,

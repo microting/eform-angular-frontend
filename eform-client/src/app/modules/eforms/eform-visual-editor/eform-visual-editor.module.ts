@@ -27,6 +27,7 @@ import {
   VisualEditorAdditionalFieldEntitySelectComponent,
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -46,19 +47,20 @@ import { EformVisualEditorRouting } from './eform-visual-editor.routing';
     VisualEditorAdditionalFieldEntitySearchComponent,
     VisualEditorAdditionalFieldEntitySelectComponent,
   ],
-  imports: [
-    CommonModule,
-    EformVisualEditorRouting,
-    CommonModule,
-    EformSharedModule,
-    TranslateModule,
-    MDBBootstrapModule,
-    NgSelectModule,
-    FormsModule,
-    DragulaModule,
-    EformImportedModule,
-    FontAwesomeModule,
-    EformSharedTagsModule,
-  ],
+    imports: [
+        CommonModule,
+        EformVisualEditorRouting,
+        CommonModule,
+        EformSharedModule,
+        TranslateModule,
+        MDBBootstrapModule,
+        NgSelectModule,
+        FormsModule,
+        DragulaModule,
+        EformImportedModule,
+        FontAwesomeModule,
+        EformSharedTagsModule,
+        MatCheckboxModule,
+    ],
 })
 export class EformVisualEditorModule {}

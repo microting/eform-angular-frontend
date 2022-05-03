@@ -15,13 +15,14 @@
                 {{permissionType.name | translate}}
               </div>
               <div class="card-body">
-                <div class="mat-checkbox mb-2 col-md-4" *ngFor="let permission of permissionType.permissions">
-                  <input id="{{permission.name}}_{{permission.claimName}}"
-                         [checked]="permission.isEnabled" [value]="permission.isEnabled"
-                         [(ngModel)]="permission.isEnabled"
-                         color="primary" type="checkbox">
-                  <label for="{{permission.name}}_{{permission.claimName}}">{{permission.permissionName |
-                    translate}}</label>
+                <div class="mb-2 col-md-4" *ngFor="let permission of permissionType.permissions">
+                  <mat-checkbox
+                    id="{{permission.name}}_{{permission.claimName}}"
+                    [(ngModel)]="permission.isEnabled"
+                    color="primary"
+                  >
+                    {{permission.permissionName | translate}}
+                  </mat-checkbox>
                 </div>
               </div>
             </div>
@@ -29,8 +30,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height" (click)="updateEformGroupPermissions()">{{'Save' | translate}}</button>
-        <button mdbBtn id="cancelCreateEformBtn" class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Close' |
+        <button mdbBtn class="btn-success btn-small-height"
+                (click)="updateEformGroupPermissions()">{{'Save' | translate}}</button>
+        <button mdbBtn id="cancelCreateEformBtn" class="btn-accent text-black-50 btn-small-height"
+                (click)="frame.hide()">{{'Close' |
           translate}}
         </button>
       </div>

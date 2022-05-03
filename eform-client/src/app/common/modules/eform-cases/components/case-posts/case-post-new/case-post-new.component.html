@@ -28,7 +28,7 @@
                 />
                 <label for="newPostCreatedBy">{{
                   'Created by' | translate
-                }}</label>
+                  }}</label>
               </div>
             </div>
           </div>
@@ -36,7 +36,7 @@
             <div class="col ng-select-wrapper">
               <ng-select
                 class="custom"
-                dropdownPosition="'bottom'"
+                [dropdownPosition]="'bottom'"
                 [placeholder]="'To' | translate"
                 [items]="availableRecipientsAndTags"
                 [ngModel]="selectedTagsAndRecipientsIds"
@@ -78,36 +78,30 @@
                 ></textarea>
                 <label for="newPostEmailText">{{
                   'Email text' | translate
-                }}</label>
+                  }}</label>
               </div>
             </div>
           </div>
           <div class="row mb-2">
             <div class="col">
-              <div class="mat-checkbox">
-                <input
-                  id="attachLinkToCase"
-                  name="attachLinkToCase"
-                  [(ngModel)]="postCreateModel.attachLinkToCase"
-                  type="checkbox"
-                />
-                <label for="attachLinkToCase">{{
-                  'Link to case' | translate
-                }}</label>
-              </div>
+              <mat-checkbox
+                id="attachLinkToCase"
+                name="attachLinkToCase"
+                [(ngModel)]="postCreateModel.attachLinkToCase"
+              >
+                {{ 'Link to case' | translate }}
+              </mat-checkbox>
             </div>
           </div>
           <div class="row" *ngIf="pdfReportAvailable">
             <div class="col">
-              <div class="mat-checkbox">
-                <input
-                  id="attachReport"
-                  name="attachReport"
-                  [(ngModel)]="postCreateModel.attachReport"
-                  type="checkbox"
-                />
-                <label for="attachReport">{{ 'Attach PDF' | translate }}</label>
-              </div>
+              <mat-checkbox
+                id="attachReport"
+                name="attachReport"
+                [(ngModel)]="postCreateModel.attachReport"
+              >
+                {{ 'Attach PDF' | translate }}
+              </mat-checkbox>
             </div>
           </div>
         </div>

@@ -41,11 +41,13 @@
             <td id="deviceUserFullName" class="align-middle">{{siteDto.siteName}}</td>
             <td class="align-middle">
               <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
-                <div class="mat-checkbox" *ngIf="checkboxModel.id == siteDto.siteUId">
-                  <input id="checkbox{{checkboxModel.id}}" (change)="addToArray($event, checkboxModel.id)"
-                         [checked]="checkboxModel.isChecked" [value]="checkboxModel.isChecked" color="primary"
-                         type="checkbox">
-                  <label id="checkboxLabel{{checkboxModel.id}}" for="checkbox{{checkboxModel.id}}"></label>
+                <div *ngIf="checkboxModel.id == siteDto.siteUId">
+                  <mat-checkbox
+                    id="checkbox{{checkboxModel.id}}"
+                    (change)="addToArray($event, checkboxModel.id)"
+                    [ngModel]="checkboxModel.isChecked"
+                    color="primary">
+                  </mat-checkbox>
                 </div>
               </ng-container>
             </td>
@@ -56,7 +58,8 @@
       <div class="modal-footer">
         <button mdbBtn class="btn-success btn-small-height" (click)="submitDeployment()"
                 [disabled]="saveButtonDisabled" id="saveParingBtn">{{'Save' | translate }}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" id="cancelParingBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height" id="cancelParingBtn"
+                (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

@@ -24,20 +24,22 @@ import {
   EformReportPageComponent,
   EformReportSwitchComponent,
 } from './components';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    EformReportRouting,
-    EformSharedModule,
-    TranslateModule,
-    MDBBootstrapModule,
-    NgSelectModule,
-    EformImportedModule,
-    FormsModule,
-    DragulaModule,
-    ImageCropperModule,
-  ],
+    imports: [
+        CommonModule,
+        EformReportRouting,
+        EformSharedModule,
+        TranslateModule,
+        MDBBootstrapModule,
+        NgSelectModule,
+        EformImportedModule,
+        FormsModule,
+        DragulaModule,
+        ImageCropperModule,
+        MatCheckboxModule,
+    ],
   declarations: [
     EformReportPageComponent,
     EformReportSwitchComponent,

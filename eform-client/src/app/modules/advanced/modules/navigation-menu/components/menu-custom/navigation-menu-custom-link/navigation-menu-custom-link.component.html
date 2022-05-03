@@ -39,15 +39,13 @@
               </div>
             </div>
             <div class="col">
-              <div class="mat-checkbox">
-                <input
-                  type="checkbox"
-                  id="customLinkIsInternalLink"
-                  name="customLinkIsInternalLink"
-                  [(ngModel)]="customLinkModel.isInternalLink"
-                />
-                <label for="customLinkIsInternalLink">{{ 'Is internal link' | translate }}</label>
-              </div>
+              <mat-checkbox
+                id="customLinkIsInternalLink"
+                name="customLinkIsInternalLink"
+                [(ngModel)]="customLinkModel.isInternalLink"
+              >
+                {{ 'Is internal link' | translate }}
+              </mat-checkbox>
             </div>
           </div>
           <div
@@ -69,7 +67,7 @@
                 />
                 <label for="linkTranslation{{ i }}">{{
                   translation.language
-                }}</label>
+                  }}</label>
               </div>
             </div>
           </div>

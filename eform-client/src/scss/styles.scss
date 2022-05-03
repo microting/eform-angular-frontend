@@ -64,6 +64,11 @@ b, strong {
   font-weight: 500;
 }
 
+/*.mat-checkbox label:before {
+  border: none;
+  background: none;
+}*/
+
 body.theme-dark {
   --white: #2d2d2d;
   --black: #fff;
