@@ -69,7 +69,9 @@ namespace eFormAPI.Web.Services
                     {
                         Id = x.Id,
                         Name = x.Name,
-                    }).ToListAsync();
+                    })
+                    .OrderBy(x => x.Name)
+                    .ToListAsync();
 
                 return new OperationDataResult<List<CommonDictionaryModel>>(true, sites);
             }
