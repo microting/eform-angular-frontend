@@ -51,8 +51,12 @@ export class FormattingTextEditorComponent implements OnInit, OnDestroy, OnChang
     });
     this.valueChangesSub$ = this.form
       .get('editorContent')
-      .valueChanges.subscribe((value) =>
-        this.valueChange.emit(toHTML(value, schema))
+      .valueChanges.subscribe((value) => {
+          this.valueChange.emit(toHTML(value, schema)
+            .replace('<div>', '')
+            .replace(/<div>/ig, '<br>')
+            .replace(/<\/div>/ig, ''));
+        }
       );
   }
 
