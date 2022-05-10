@@ -32,7 +32,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^12.2.10",
-    "@angular/cdk": "13.3.5",
+    "@angular/cdk": "13.3.6",
     "@angular/common": "^12.2.12",
     "@angular/compiler": "^12.2.6",
     "@angular/core": "^12.2.7",
@@ -100,11 +100,11 @@
     "@types/mocha": "9.1.1",
     "@types/node": "17.0.31",
     "@typescript-eslint/eslint-plugin": "5.22.0",
-    "@typescript-eslint/parser": "5.22.0",
-    "@wdio/cli": "7.19.6",
-    "@wdio/local-runner": "7.19.5",
-    "@wdio/mocha-framework": "7.19.5",
-    "@wdio/spec-reporter": "7.19.5",
+    "@typescript-eslint/parser": "5.23.0",
+    "@wdio/cli": "7.19.7",
+    "@wdio/local-runner": "7.19.7",
+    "@wdio/mocha-framework": "7.19.7",
+    "@wdio/spec-reporter": "7.19.7",
     "angular-mocks": "1.8.3",
     "chai": "4.3.6",
     "chromedriver": "100.0.0",
@@ -118,7 +118,7 @@
     "tsconfig-paths": "^4.0.0",
     "typescript": "4.3.5",
     "wdio-chromedriver-service": "^7.3.2",
-    "webdriverio": "7.19.5"
+    "webdriverio": "7.19.7"
   },
   "browserslist": [
     "defaults",
