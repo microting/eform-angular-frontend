@@ -271,7 +271,7 @@ namespace eFormAPI.Web.Services.Eform
                         CheckListId = dbEform.Id,
                         LanguageId = translation.LanguageId,
                         Text = translation.Name,
-                        Description = translation.Description
+                        Description = translation.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
                     }))
                 {
                     await newCheckListTranslation.Create(sdkDbContext);
@@ -284,7 +284,7 @@ namespace eFormAPI.Web.Services.Eform
                     var translation = dbEform.Translations.First(x => x.LanguageId == translationsModel.LanguageId);
 
                     translation.Text = translationsModel.Name;
-                    translation.Description = translationsModel.Description;
+                    translation.Description = translationsModel.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", "");
                     await translation.Update(sdkDbContext);
 
                     var translationForUpdate = parentEform?.Translations
@@ -434,7 +434,7 @@ namespace eFormAPI.Web.Services.Eform
                             CheckListId = eform.Id,
                             LanguageId = translation.LanguageId,
                             Text = translation.Name,
-                            Description = translation.Description
+                            Description = translation.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", "")
                         }))
                     {
                         await newCheckListTranslation.Create(sdkDbContext);
@@ -448,10 +448,10 @@ namespace eFormAPI.Web.Services.Eform
                             eform.Translations.FirstOrDefault(x => x.LanguageId == translationsModel.LanguageId);
                         if (translation != null &&
                             (translation.Text != translationsModel.Name ||
-                             translation.Description != translationsModel.Description)) // check if update is need
+                             translation.Description != translationsModel.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""))) // check if update is need
                         {
                             translation.Text = translationsModel.Name;
-                            translation.Description = translationsModel.Description;
+                            translation.Description = translationsModel.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", "");
                             await translation.Update(sdkDbContext);
                         }
                     }
@@ -651,7 +651,7 @@ namespace eFormAPI.Web.Services.Eform
                         FieldId = fieldFromDb.Id,
                         LanguageId = x.LanguageId,
                         Text = x.Name,
-                        Description = x.Description,
+                        Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
                         DefaultValue = x.DefaultValue,
                     })
                     .ToList())
@@ -683,7 +683,8 @@ namespace eFormAPI.Web.Services.Eform
                         translation.DefaultValue != fieldTranslation.DefaultValue || // check if update is need
                         fieldType.Type == Constants.FieldTypes.ShowPdf)
                     {
-                        fieldTranslation.Description = translation.Description;
+                        fieldTranslation.Description = translation.Description?.Replace("</div><div>", "<br>")
+                            .Replace("</div>", "").Replace("<div>", "");
                         fieldTranslation.Text = translation.Name;
                         fieldTranslation.DefaultValue = translation.DefaultValue;
 
@@ -1078,7 +1079,7 @@ namespace eFormAPI.Web.Services.Eform
                             FieldId = dbField.Id,
                             LanguageId = x.LanguageId,
                             Text = x.Name,
-                            Description = x.Description,
+                            Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
                             DefaultValue = x.DefaultValue,
                         }).ToList();
                 foreach (var fieldTranslation in translates)
@@ -1201,7 +1202,7 @@ namespace eFormAPI.Web.Services.Eform
                         CheckListId = newCheckList.Id,
                         LanguageId = translation.LanguageId,
                         Text = translation.Name,
-                        Description = translation.Description
+                        Description = translation.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", "")
                     }))
                 {
                     await newCheckListTranslation.Create(sdkDbContext);
@@ -1245,7 +1246,7 @@ namespace eFormAPI.Web.Services.Eform
                     CheckListId = checkList.Id,
                     LanguageId = x.LanguageId,
                     Text = x.Name,
-                    Description = x.Description,
+                    Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
                 }))
                 {
                     await translation.Create(sdkDbContext);
@@ -1296,7 +1297,7 @@ namespace eFormAPI.Web.Services.Eform
                             FieldId = dbField.Id,
                             LanguageId = x.LanguageId,
                             Text = x.Name,
-                            Description = x.Description,
+                            Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
                             DefaultValue = x.DefaultValue,
                         }).ToList();
                 foreach (var fieldTranslation in translates)

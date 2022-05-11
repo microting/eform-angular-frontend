@@ -10,8 +10,12 @@ exports.config = {
   // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
-   specs: [
-    'e2e/Tests/eform-visual-editor/eform-visual-editor.create-eform.spec.ts',
+  specs: [
+    'e2e/Tests/navigation-menu/navigation-menu.create-item.spec.ts',
+    'e2e/Tests/navigation-menu/navigation-menu.edit-item.spec.ts',
+    'e2e/Tests/navigation-menu/navigation-menu.drag-item.spec.ts',
+    'e2e/Tests/navigation-menu/navigation-menu.delete-item.spec.ts',
+    'e2e/Tests/navigation-menu/subheader.spec.ts',
   ],
   suites: {
     settings: ['e2e/Tests/application-settings/**/*.spec.ts'],
@@ -54,8 +58,7 @@ exports.config = {
         args: [
           'headless',
           'window-size=1920,1080',
-          'disable-gpu'
-        ],
+          'disable-gpu'],
       },
       // If outputDir is provided WebdriverIO can capture driver session logs
       // it is possible to configure which logTypes to include/exclude.

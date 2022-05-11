@@ -17,11 +17,6 @@ exports.config = {
     'e2e/Tests/folders/folder-tree/folder-tree.add.spec.ts',
     'e2e/Tests/folders/folder-tree/folder-tree.delete.spec.ts',
     'e2e/Tests/folders/folder-tree/folder-tree.edit.spec.ts',
-    'e2e/Tests/navigation-menu/navigation-menu.create-item.spec.ts',
-    'e2e/Tests/navigation-menu/navigation-menu.edit-item.spec.ts',
-    'e2e/Tests/navigation-menu/navigation-menu.drag-item.spec.ts',
-    'e2e/Tests/navigation-menu/navigation-menu.delete-item.spec.ts',
-    'e2e/Tests/navigation-menu/subheader.spec.ts',
   ],
   suites: {
     settings: ['e2e/Tests/application-settings/**/*.spec.ts'],
