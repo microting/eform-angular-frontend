@@ -15,6 +15,10 @@ import {
   SignOutComponent
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -26,7 +30,11 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     AuthRouting,
     ReactiveFormsModule,
     EformSharedModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule
   ],
   declarations: [
     LoginComponent,

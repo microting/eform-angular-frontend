@@ -1,20 +1,28 @@
-<div class="d-flex justify-content-center align-items-center p-5">
-  <div class="card z-depth-2" style="width: 27rem;">
-    <div class="card-body">
-      <div class="row align-items-center"
+<div class="d-flex flex-column justify-content-center align-items-center h-100">
+  <mat-card style="padding: 1.9rem">
+    <mat-card-header class="d-flex flex-column align-content-center justify-content-center align-items-center">
+      <div class="d-flex flex-column align-content-center justify-content-center align-items-center"
            *ngIf="loginPageSettings.mainTextVisible
-                 || loginPageSettings.secondaryTextVisible
-                 || loginPageSettings.imageLinkVisible">
-        <div class="col-md-8 col-xs-12">
-          <h4 id="loginMainText" *ngIf="loginPageSettings.mainTextVisible">{{loginPageSettings.mainText}}</h4>
-          <p id="loginSecondaryText" *ngIf="loginPageSettings.secondaryTextVisible">{{loginPageSettings.secondaryText}}</p>
+                   || loginPageSettings.secondaryTextVisible
+                   || loginPageSettings.imageLinkVisible">
+        <div class="d-flex flex-column" style="margin-bottom: 1rem;" *ngIf="loginPageSettings.imageLinkVisible">
+          <img id="loginImage" class="img-fluid" [src]="loginImage" style="max-width: 110px" alt="login image"/>
         </div>
-        <div class="col-md-4 col-xs-12" align="center" *ngIf="loginPageSettings.imageLinkVisible">
-          <img id="loginImage" class="img-fluid" [src]="loginImage" style="max-width: 110px" />
+        <div class="d-flex flex-column align-content-center justify-content-center align-items-center" style="margin-bottom: 1rem;">
+          <h2 id="loginMainText" *ngIf="loginPageSettings.mainTextVisible"><b>{{loginPageSettings.mainText}}</b></h2>
+          <div id="loginSecondaryText" *ngIf="loginPageSettings.secondaryTextVisible">{{loginPageSettings.secondaryText}}</div>
         </div>
       </div>
+    </mat-card-header>
+    <mat-card-content>
       <router-outlet></router-outlet>
-    </div>
-  </div>
-  <br>
+    </mat-card-content>
+  </mat-card>
+  <a
+    class="link-primary mt-2"
+    [routerLink]="['restore-password']"
+    *ngIf="settingsService.loginPageSettingsModel.isSendGridExists"
+  >
+    {{ 'Forgot password' | translate }}?
+  </a>
 </div>

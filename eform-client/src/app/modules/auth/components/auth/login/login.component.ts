@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private googleAuthService: GoogleAuthService,
-    public settingsService: AppSettingsService,
     private fb: FormBuilder,
     private toastrService: ToastrService,
     private localeService: LocaleService,
