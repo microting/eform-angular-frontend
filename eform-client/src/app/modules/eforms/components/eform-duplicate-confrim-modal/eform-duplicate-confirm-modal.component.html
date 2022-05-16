@@ -49,16 +49,16 @@
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
-          class="btn-success btn-icon mb-2"
+          mat-raised-button
+          color="accent"
+          class="mr-2"
           id="eFormDuplicateDuplicateBtn"
           (click)="duplicateEfrom()"
         >
           {{ 'Duplicate' | translate }}
         </button>
         <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
+          mat-raised-button
           id="eFormDuplicateCancelBtn"
           (click)="frame.hide()"
         >

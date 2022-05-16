@@ -29,18 +29,18 @@
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
+          mat-raised-button
+          color="accent"
           id="tagEditSaveBtn"
-          class="btn-success btn-small-height"
+          class="mr-2"
           [disabled]="!tagModel.name"
           (click)="updateItem()"
         >
           {{ 'Save' | translate }}
         </button>
         <button
-          mdbBtn
+          mat-raised-button
           id="tagEditSaveCancelBtn"
-          class="btn-accent text-black-50 btn-small-height"
           (click)="cancelEdit()"
         >
           {{ 'Close' | translate }}

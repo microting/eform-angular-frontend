@@ -1,47 +1,43 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
-      class="btn-accent text-black-50 btn-icon"
+      mat-icon-button
       id="importEformsBtn"
       mdbTooltip="{{ 'Import eforms' | translate }}"
       *ngIf="userClaims.eformsCreate"
       (click)="openEformsImportModal()"
     >
-      <fa-icon icon="file-import" [fixedWidth]="true" size="lg"></fa-icon>
+      <mat-icon>file_upload</mat-icon>
     </button>
     <button
-      mdbBtn
-      class="btn-accent text-black-50 btn-icon"
+      mat-icon-button
       id="eformsManageTagsBtn"
       (click)="openTagsModal()"
       mdbTooltip="{{ 'Manage tags' | translate }}"
       mdbWavesEffect
       *ngIf="authStateService.checkClaim('eformAllowManagingEformTags')"
     >
-      <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
+      <mat-icon>discount</mat-icon>
     </button>
     <a
-      mdbBtn
-      class="btn-success btn-icon"
+      mat-mini-fab
+      color="accent"
       id="eformsVisualEditor"
       *ngIf="userClaims.eformsCreate"
       [routerLink]="['visual-editor']"
       mdbTooltip="{{ 'New eForm' | translate }}"
-      mdbWavesEffect
     >
-      <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+      <mat-icon>edit</mat-icon>
     </a>
     <button
-      mdbBtn
-      class="btn-success btn-icon"
-      mdbTooltip="
-      {{ 'New eForm from XML' | translate }}"
+      mat-mini-fab
+      color="accent"
+      mdbTooltip="{{ 'New eForm from XML' | translate }}"
       id="newEFormBtn"
       *ngIf="userClaims.eformsCreate"
       (click)="openNewEformModal()"
     >
-      <fa-icon icon="code" size="lg" [fixedWidth]="true"></fa-icon>
+      <mat-icon>code</mat-icon>
     </button>
   </div>
 </eform-subheader>
@@ -122,10 +118,9 @@
             <div class="d-flex justify-content-center">
               <div>
                 <a
-                  mdbBtn
+                  mat-mini-fab
                   type="button"
-                  color="success"
-                  class="btn-icon btn-success"
+                  color="accent"
                   *ngIf="
                     checkEformPermissions(
                       templateDto.id,
@@ -135,9 +130,9 @@
                   id="eform-edit-btn-{{ i }}"
                   mdbTooltip="{{ 'Edit tags' | translate }}"
                   (click)="openEditTagsModal(templateDto)"
+                  style="margin-bottom: 0.3rem;"
                 >
-                  <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
-                  <!--                {{ 'Edit tags' | translate }}-->
+                  <mat-icon>edit</mat-icon>
                 </a>
                 <br />
                 <ng-container
@@ -173,16 +168,15 @@
                     !templateDto.isLocked
                   "
                   id="eform-pairing-btn-{{ i }}"
-                  mdbBtn
+                  mat-mini-fab
+                  color="accent"
                   type="button"
-                  class="btn-success btn-icon"
                   (click)="openPairingModal(templateDto)"
                   mdbTooltip="{{
                     'Click to edit eForm pairing with user(s)' | translate
                   }}"
                 >
-                  <!--                {{ 'Edit pairing' | translate }}-->
-                  <fa-icon icon="link" size="lg" [fixedWidth]="true"></fa-icon>
+                  <mat-icon>link</mat-icon>
                 </button>
                 <button
                   *ngIf="
@@ -194,16 +188,15 @@
                     !templateDto.isLocked
                   "
                   id="eform-add-btn-{{ i }}"
-                  mdbBtn
+                  mat-icon-button
                   type="button"
-                  class="btn-accent text-black-50 btn-icon mb-2 btn"
                   (click)="openPairingModal(templateDto)"
                   mdbTooltip="{{
                     'Click to pair eForm with user(s)' | translate
                   }}"
                 >
                   <!--                {{ 'Pair eForm' | translate }}-->
-                  <fa-icon icon="link" size="lg" [fixedWidth]="true"></fa-icon>
+                  <mat-icon>link</mat-icon>
                 </button>
                 <!--              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">-->
                 <!--                <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">-->
@@ -216,8 +209,7 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
-                class="btn-success btn-icon mb-2"
+                mat-mini-fab
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -229,15 +221,10 @@
                 [routerLink]="['/cases', templateDto.id]"
                 mdbTooltip="{{ 'Show cases' | translate }}"
               >
-                <fa-icon
-                  icon="briefcase"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
+                <mat-icon>cases</mat-icon>
               </button>
               <button
-                mdbBtn
-                class="btn-success btn-icon mb-2"
+                mat-mini-fab
                 id="edit-columnts-btn-{{ i }}"
                 *ngIf="
                   checkEformPermissions(
@@ -248,11 +235,11 @@
                 (click)="openEditColumnsModal(templateDto)"
                 mdbTooltip="{{ 'Edit columns' | translate }}"
               >
-                <fa-icon icon="table" [fixedWidth]="true" size="lg"></fa-icon>
+                <mat-icon>table_chart</mat-icon>
               </button>
               <button
-                mdbBtn
-                class="btn-danger btn-icon mb-2"
+                mat-mini-fab
+                color="warn"
                 id="delete-eform-btn-{{ i }}"
                 (click)="openEformDeleteModal(templateDto)"
                 *ngIf="
@@ -263,20 +250,15 @@
                 "
                 mdbTooltip="{{ 'Delete eForm' | translate }}"
               >
-                <fa-icon
-                  icon="trash-alt"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
+                <mat-icon>delete</mat-icon>
               </button>
               <button
-                mdbBtn
-                class="btn-success btn-icon mb-2"
+                mat-mini-fab
                 id="duplicate-btn"
                 (click)="openDuplicateConfirmModal(templateDto)"
                 mdbTooltip="{{ 'Duplicate eForm' | translate }}"
               >
-                <fa-icon icon="clone" [fixedWidth]="true" size="lg"></fa-icon>
+                <mat-icon>content_copy</mat-icon>
               </button>
               <a
                 *ngIf="
@@ -287,20 +269,17 @@
                   !templateDto.isLocked &&
                   templateDto.isEditable
                 "
-                mdbBtn
-                mdbWavesEffect
-                class="btn-success btn-icon"
+                mat-mini-fab
                 id="edit-eform-btn-{{ i }}"
                 [routerLink]="['visual-editor/' + templateDto.id]"
                 mdbTooltip="{{ 'Edit eForm' | translate }}"
               >
-                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+                <mat-icon>edit</mat-icon>
               </a>
             </div>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mdbBtn
-                class="btn-accent text-black-50 btn-icon mb-2"
+                mat-icon-button
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -312,15 +291,10 @@
                 (click)="downloadItem('CSV', templateDto.id)"
                 mdbTooltip="{{ 'Download' | translate }} CSV"
               >
-                <fa-icon
-                  icon="file-csv"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
+                <mat-icon svgIcon="file-csv"></mat-icon>
               </button>
               <button
-                mdbBtn
-                class="btn-accent text-black-50 btn-icon mb-2"
+                mat-icon-button
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -332,16 +306,10 @@
                 (click)="downloadItem('XML', templateDto.id)"
                 mdbTooltip="{{ 'Download' | translate }} XML"
               >
-                <fa-icon
-                  icon="file-code"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
+                <mat-icon svgIcon="file-code"></mat-icon>
               </button>
               <button
-                mdbBtn
-                color="info"
-                class="btn-icon mb-2"
+                mat-mini-fab
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -353,16 +321,10 @@
                 [routerLink]="['/docx-report', templateDto.id]"
                 mdbTooltip="{{ 'Word Report' | translate }}"
               >
-                <fa-icon
-                  icon="file-word"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
+                <mat-icon svgIcon="file-word"></mat-icon>
               </button>
               <button
-                mdbBtn
-                color="success"
-                class="btn-icon mb-2"
+                mat-mini-fab
                 *ngIf="
                   templateDto.excelExportEnabled &&
                   templateDto.hasCases &&
@@ -375,15 +337,10 @@
                 [routerLink]="['/xlsx-report', templateDto.id]"
                 mdbTooltip="{{ 'Download' | translate }} XLSX"
               >
-                <fa-icon
-                  icon="file-excel"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
+                <mat-icon svgIcon="file-excel"></mat-icon>
               </button>
               <button
-                mdbBtn
-                class="btn-accent text-black-50 btn-icon mb-2"
+                mat-icon-button
                 id="upload-zip-btn"
                 (click)="uploadZipFile(templateDto)"
                 *ngIf="
@@ -394,11 +351,7 @@
                 "
                 mdbTooltip="{{ 'Upload ZIP archive' | translate }}"
               >
-                <fa-icon
-                  icon="file-upload"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
+                <mat-icon svgIcon="file-upload"></mat-icon>
               </button>
               <!--            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"-->
               <!--                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"-->

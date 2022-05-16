@@ -19,21 +19,23 @@ import { usersPersistProvider } from './components/users/store/users.store';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AccountManagementRouting,
-    NgSelectModule,
-    EformSharedModule,
-    TranslateModule,
-    ReactiveFormsModule,
-    FormsModule,
-    FontAwesomeModule,
-    MatSortModule,
-    MatCheckboxModule,
-    MDBBootstrapModule,
-  ],
+    imports: [
+        CommonModule,
+        AccountManagementRouting,
+        NgSelectModule,
+        EformSharedModule,
+        TranslateModule,
+        ReactiveFormsModule,
+        FormsModule,
+        FontAwesomeModule,
+        MatSortModule,
+        MatCheckboxModule,
+        MDBBootstrapModule,
+        MatButtonModule,
+    ],
   declarations: [
     ChangePasswordComponent,
     ProfileSettingsComponent,

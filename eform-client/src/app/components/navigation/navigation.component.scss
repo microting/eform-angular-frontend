@@ -8,6 +8,14 @@
 .nav-item {
   & a {
     padding: 0.5rem 0.8rem !important;
+    color: white !important;
+    background-color: $eform-gray;
+  }
+  & a.active {
+     background-color: $eform-red;
+   }
+  & a:hover {
+    color: $eform-gray-light !important;
   }
 }
 
@@ -21,14 +29,6 @@
 }
 
 .nav-item a {
-  color: white !important;
-  background-color: $eform-gray;
-  &.active {
-    background-color: $eform-red;
-  }
-  &:hover {
-    color: $eform-gray-light !important;
-  }
 }
 
 .outbounds-fix {

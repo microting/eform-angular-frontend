@@ -62,8 +62,8 @@
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
-          class="btn-danger btn-small-height"
+          mat-raised-button
+          color="accent"
           (click)="submitCaseToArchive()"
         >
           {{
@@ -71,8 +71,7 @@
           }}
         </button>
         <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
+          mat-raised-button
           (click)="frame.hide()"
         >
           {{ 'Cancel' | translate }}

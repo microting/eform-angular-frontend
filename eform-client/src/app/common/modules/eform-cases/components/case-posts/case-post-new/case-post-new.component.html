@@ -108,18 +108,17 @@
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
+          mat-raised-button
           id="newTagSaveBtn"
-          class="btn-success btn-small-height"
+          color="accent"
           [disabled]="!postCreateModel.subject"
           (click)="createPost()"
         >
           {{ 'Save' | translate }}
         </button>
         <button
-          mdbBtn
+          mat-raised-button
           id="newTagSaveCancelBtn"
-          class="btn-accent text-black-50 btn-small-height"
           (click)="frame.hide()"
         >
           {{ 'Close' | translate }}

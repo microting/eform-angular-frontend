@@ -56,10 +56,23 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height" (click)="submitDeployment()"
-                [disabled]="saveButtonDisabled" id="saveParingBtn">{{'Save' | translate }}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" id="cancelParingBtn"
-                (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button
+          mat-raised-button
+          color="accent"
+          class="mr-2"
+          (click)="submitDeployment()"
+          [disabled]="saveButtonDisabled"
+          id="saveParingBtn"
+        >
+          {{'Save' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          id="cancelParingBtn"
+          (click)="frame.hide()"
+        >
+          {{'Cancel' | translate}}
+        </button>
       </div>
     </div>
   </div>

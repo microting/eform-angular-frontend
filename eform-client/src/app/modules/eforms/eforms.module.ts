@@ -29,27 +29,31 @@ import {MatInputModule} from '@angular/material/input';
 import {EformMatDateFnsDateModule} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        EformsRouting,
-        NgSelectModule,
-        MDBBootstrapModule,
-        EformSharedModule,
-        ReactiveFormsModule,
-        FileUploadModule,
-        FormsModule,
-        TranslateModule.forChild(),
-        FontAwesomeModule,
-        OwlDateTimeModule,
-        EformSharedTagsModule,
-        MatDatepickerModule,
-        MatInputModule,
-        EformMatDateFnsDateModule,
-        MatSortModule,
-        MatCheckboxModule
-    ],
+  imports: [
+    CommonModule,
+    EformsRouting,
+    NgSelectModule,
+    MDBBootstrapModule,
+    EformSharedModule,
+    ReactiveFormsModule,
+    FileUploadModule,
+    FormsModule,
+    TranslateModule.forChild(),
+    FontAwesomeModule,
+    OwlDateTimeModule,
+    EformSharedTagsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    EformMatDateFnsDateModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   declarations: [
     EformsPageComponent,
     EformEditParingModalComponent,

@@ -17,16 +17,16 @@
           <div class="row">
             <div class="col-xs-12 col-md-12">
               <button
-                mdbBtn
-                class="btn-primary btn-small-height"
+                mat-raised-button
+                color="primary"
                 *ngIf="xlsxEformsFileUploader?.queue?.length == 0"
                 (click)="xlsxEforms.click()"
               >
                 {{ 'Upload' | translate }}
               </button>
               <button
-                mdbBtn
-                class="btn-warning btn-small-height"
+                mat-raised-button
+                color="warn"
                 *ngIf="xlsxEformsFileUploader?.queue?.length > 0"
                 (click)="xlsxEforms.click()"
               >
@@ -111,8 +111,7 @@
         <!--          {{ 'Upload' | translate }}-->
         <!--        </button>-->
         <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
+          mat-raised-button
           (click)="excelEformsModal()"
         >
           {{ 'Close' | translate }}

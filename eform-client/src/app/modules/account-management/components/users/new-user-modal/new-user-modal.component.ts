@@ -19,7 +19,7 @@ import { AdminService } from 'src/app/common/services/users';
 export class NewUserModalComponent implements OnInit {
   @Input()
   availableGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
-  @Output() onUserCreated: EventEmitter<void> = new EventEmitter<void>();
+  @Output() userCreated: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
   newUserModel: UserRegisterModel = new UserRegisterModel();
 
@@ -34,10 +34,14 @@ export class NewUserModalComponent implements OnInit {
   createUser() {
     this.adminService.createUser(this.newUserModel).subscribe((data) => {
       if (data && data.success) {
-        this.newUserModel = new UserRegisterModel();
-        this.onUserCreated.emit();
-        this.frame.hide();
+        this.userCreated.emit();
+        this.hide();
       }
     });
+  }
+
+  hide() {
+    this.newUserModel = new UserRegisterModel();
+    this.frame.hide();
   }
 }

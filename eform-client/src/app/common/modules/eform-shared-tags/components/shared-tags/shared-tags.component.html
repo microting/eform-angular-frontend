@@ -10,11 +10,14 @@
       <div class="modal-body">
         <div class="container-fluid">
           <div class="row">
-            <button mdbBtn class="btn-success btn-icon btn-sm m-0 ml-auto"
-                    id="newTagBtn"
-                    (click)="showCreateTagModal()"
-                    type="button">
-              <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
+            <button
+              mat-raised-button
+              color="accent"
+              class="m-0 ml-auto"
+              id="newTagBtn"
+              (click)="showCreateTagModal()"
+              type="button">
+              <mat-icon>add</mat-icon>
               {{'Add new' | translate}}
             </button>
             <div class="panel panel-default w-100 pt-2">
@@ -49,8 +52,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()"
-                id="tagsModalCloseBtn">
+        <button
+          mat-raised-button
+          (click)="frame.hide()"
+          id="tagsModalCloseBtn">
           {{ 'Close' | translate }}
         </button>
       </div>

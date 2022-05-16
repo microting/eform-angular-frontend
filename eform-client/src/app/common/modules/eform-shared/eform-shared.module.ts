@@ -28,6 +28,8 @@ import {RouterModule} from '@angular/router';
 import {DragulaModule} from 'ng2-dragula';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -41,7 +43,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     DragulaModule,
     MDBBootstrapModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatButtonModule,
+    MatIconModule
   ],
   declarations: [
     EformPaginationComponent,

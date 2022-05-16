@@ -8,7 +8,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3>{{ 'New User' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
+        <button class="close" data-dismiss="modal" (click)="hide()">
           <span>×</span>
         </button>
       </div>
@@ -118,8 +118,9 @@
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
-          class="btn-success btn-small-height"
+          mat-raised-button
+          color="accent"
+          class="mr-2"
           [disabled]="!createForm.form.valid"
           type="submit"
           (click)="createUser()"
@@ -128,9 +129,8 @@
           {{ 'Create' | translate }}
         </button>
         <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
-          (click)="frame.hide()"
+          mat-raised-button
+          (click)="hide()"
           type="button"
           id="createAdministrationUserCancelBtn"
         >

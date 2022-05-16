@@ -11,13 +11,29 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-xs-12 col-md-12">
-                  <button mdbBtn class="btn-primary btn-small-height" *ngIf="zipFileUploader?.queue?.length == 0"
-                          (click)="zipInput.click()">{{'Upload' | translate}}</button>
-                  <button mdbBtn class="btn-warning btn-small-height" *ngIf="zipFileUploader?.queue?.length > 0"
-                          (click)="zipInput.click()">{{'Pending' | translate}}</button>
-                  <input class="input-invisible"
-                         type="file" ng2FileSelect [uploader]="zipFileUploader" #zipInput
-                         id="zipInput"/>
+              <button
+                mat-raised-button
+                color="primary"
+                *ngIf="zipFileUploader?.queue?.length == 0"
+                (click)="zipInput.click()"
+              >
+                {{'Upload' | translate}}
+              </button>
+              <button
+                mat-raised-button
+                color="warn"
+                *ngIf="zipFileUploader?.queue?.length > 0"
+                (click)="zipInput.click()"
+              >
+                {{'Pending' | translate}}
+              </button>
+              <input
+                class="input-invisible"
+                type="file"
+                ng2FileSelect
+                [uploader]="zipFileUploader"
+                #zipInput
+                id="zipInput"/>
             </div>
           </div>
           <div class="row">
@@ -34,8 +50,20 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height" (click)="uploadTemplateZIP()">{{'Upload' | translate}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="hideZipModal()">{{'Close' | translate}}</button>
+        <button
+          mat-raised-button
+          color="accent"
+          class="mr-2"
+          (click)="uploadTemplateZIP()"
+        >
+          {{'Upload' | translate}}
+        </button>
+        <button
+          mat-raised-button
+          (click)="hideZipModal()"
+        >
+          {{'Close' | translate}}
+        </button>
       </div>
     </div>
   </div>

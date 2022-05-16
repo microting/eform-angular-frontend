@@ -1,11 +1,11 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
-      class="btn-success btn-small-height"
+      mat-raised-button
+      color="accent"
+      mdbTooltip="Save settings"
       id="ProfileSettingsSaveBtn"
       (click)="updateUserProfileSettings()"
-      mdbTooltip="Save settings"
     >
       {{ 'Save' | translate }}
     </button>
@@ -45,8 +45,8 @@
             </div>
             <div class="p-0">
               <button
-                mdbBtn
-                class="btn-ar btn-danger"
+                mat-raised-button
+                color="warn"
                 id="deleteGoogleAuthenticatorInfo"
                 mdbTooltip="{{
                   'Remove google authenticator secret key' | translate
@@ -106,9 +106,7 @@
             <div class="row mb-1">
               <mat-checkbox
                 id="darkTheme"
-                [checked]="userSettingsModel.darkTheme"
                 [(ngModel)]="userSettingsModel.darkTheme"
-                color="primary"
               >
                 {{ 'Dark theme' | translate }}
               </mat-checkbox>

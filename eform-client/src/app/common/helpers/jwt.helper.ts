@@ -1,5 +1,3 @@
-import {escape} from 'querystring';
-
 export class JwtHelper {
   private urlBase64Decode(str: string) {
     let output = str.replace(/-/g, '+').replace(/_/g, '/');

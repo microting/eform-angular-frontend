@@ -97,7 +97,7 @@
   #userEditModal
 ></app-user-edit-modal>
 <app-new-user-modal
-  (onUserCreated)="getUserInfoList()"
+  (userCreated)="getUserInfoList()"
   [availableGroups]="securityGroups"
   #newUserModal
 ></app-new-user-modal>

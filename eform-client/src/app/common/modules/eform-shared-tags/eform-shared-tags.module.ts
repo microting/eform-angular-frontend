@@ -10,6 +10,8 @@ import {
 import {TreeModule} from '@circlon/angular-tree-component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ButtonsModule, InputsModule, ModalModule, WavesModule} from 'angular-bootstrap-md';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -23,6 +25,8 @@ import {ButtonsModule, InputsModule, ModalModule, WavesModule} from 'angular-boo
     ModalModule,
     ButtonsModule,
     InputsModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   declarations: [
     SharedTagDeleteComponent,
