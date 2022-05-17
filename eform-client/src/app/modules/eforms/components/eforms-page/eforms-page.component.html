@@ -20,7 +20,7 @@
       <mat-icon>discount</mat-icon>
     </button>
     <a
-      mat-mini-fab
+      mat-icon-button
       color="accent"
       id="eformsVisualEditor"
       *ngIf="userClaims.eformsCreate"
@@ -30,7 +30,7 @@
       <mat-icon>edit</mat-icon>
     </a>
     <button
-      mat-mini-fab
+      mat-icon-button
       color="accent"
       mdbTooltip="{{ 'New eForm from XML' | translate }}"
       id="newEFormBtn"
@@ -118,7 +118,7 @@
             <div class="d-flex justify-content-center">
               <div>
                 <a
-                  mat-mini-fab
+                  mat-icon-button
                   type="button"
                   color="accent"
                   *ngIf="
@@ -168,7 +168,7 @@
                     !templateDto.isLocked
                   "
                   id="eform-pairing-btn-{{ i }}"
-                  mat-mini-fab
+                  mat-icon-button
                   color="accent"
                   type="button"
                   (click)="openPairingModal(templateDto)"
@@ -209,7 +209,7 @@
           <td>
             <div class="d-flex flex-row justify-content-center">
               <button
-                mat-mini-fab
+                mat-icon-button
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -224,7 +224,7 @@
                 <mat-icon>cases</mat-icon>
               </button>
               <button
-                mat-mini-fab
+                mat-icon-button
                 id="edit-columnts-btn-{{ i }}"
                 *ngIf="
                   checkEformPermissions(
@@ -238,7 +238,7 @@
                 <mat-icon>table_chart</mat-icon>
               </button>
               <button
-                mat-mini-fab
+                mat-icon-button
                 color="warn"
                 id="delete-eform-btn-{{ i }}"
                 (click)="openEformDeleteModal(templateDto)"
@@ -253,7 +253,7 @@
                 <mat-icon>delete</mat-icon>
               </button>
               <button
-                mat-mini-fab
+                mat-icon-button
                 id="duplicate-btn"
                 (click)="openDuplicateConfirmModal(templateDto)"
                 mdbTooltip="{{ 'Duplicate eForm' | translate }}"
@@ -269,7 +269,7 @@
                   !templateDto.isLocked &&
                   templateDto.isEditable
                 "
-                mat-mini-fab
+                mat-icon-button
                 id="edit-eform-btn-{{ i }}"
                 [routerLink]="['visual-editor/' + templateDto.id]"
                 mdbTooltip="{{ 'Edit eForm' | translate }}"
@@ -309,7 +309,7 @@
                 <mat-icon svgIcon="file-code"></mat-icon>
               </button>
               <button
-                mat-mini-fab
+                mat-icon-button
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -324,7 +324,7 @@
                 <mat-icon svgIcon="file-word"></mat-icon>
               </button>
               <button
-                mat-mini-fab
+                mat-icon-button
                 *ngIf="
                   templateDto.excelExportEnabled &&
                   templateDto.hasCases &&

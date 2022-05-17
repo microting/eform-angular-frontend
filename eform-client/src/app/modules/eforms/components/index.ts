@@ -7,5 +7,4 @@ export * from './eform-remove-eform-modal/eform-remove-eform-modal.component';
 export * from './eform-upload-zip-modal/eform-upload-zip-modal.component';
 export * from './eform-excel-report-modal/eform-excel-report-modal.component';
 export * from './eforms-bulk-import-modal/eforms-bulk-import-modal.component';
-export * from './eforms-tags/eforms-tags.component';
 export * from './eform-duplicate-confrim-modal/eform-duplicate-confirm-modal.component';

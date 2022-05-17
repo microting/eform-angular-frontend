@@ -17,7 +17,6 @@ import {
   EformsBulkImportModalComponent,
   EformsPageComponent,
   EformUploadZipModalComponent,
-  EformsTagsComponent,
   EformDuplicateConfirmModalComponent,
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -33,40 +32,40 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    EformsRouting,
-    NgSelectModule,
-    MDBBootstrapModule,
-    EformSharedModule,
-    ReactiveFormsModule,
-    FileUploadModule,
-    FormsModule,
-    TranslateModule.forChild(),
-    FontAwesomeModule,
-    OwlDateTimeModule,
-    EformSharedTagsModule,
-    MatDatepickerModule,
-    MatInputModule,
-    EformMatDateFnsDateModule,
-    MatSortModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule
-  ],
-  declarations: [
-    EformsPageComponent,
-    EformEditParingModalComponent,
-    EformCreateModalComponent,
-    EformColumnsModalComponent,
-    EformEditTagsModalComponent,
-    EformRemoveEformModalComponent,
-    EformUploadZipModalComponent,
-    EformExcelReportModalComponent,
-    EformsBulkImportModalComponent,
-    EformsTagsComponent,
-    EformDuplicateConfirmModalComponent,
-  ],
-  providers: [persistProvider],
+    imports: [
+        CommonModule,
+        EformsRouting,
+        NgSelectModule,
+        MDBBootstrapModule,
+        EformSharedModule,
+        ReactiveFormsModule,
+        FileUploadModule,
+        FormsModule,
+        TranslateModule.forChild(),
+        FontAwesomeModule,
+        OwlDateTimeModule,
+        EformSharedTagsModule,
+        MatDatepickerModule,
+        MatInputModule,
+        EformMatDateFnsDateModule,
+        MatSortModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatIconModule
+    ],
+    declarations: [
+        EformsPageComponent,
+        EformEditParingModalComponent,
+        EformCreateModalComponent,
+        EformColumnsModalComponent,
+        EformEditTagsModalComponent,
+        EformRemoveEformModalComponent,
+        EformUploadZipModalComponent,
+        EformExcelReportModalComponent,
+        EformsBulkImportModalComponent,
+        EformDuplicateConfirmModalComponent,
+    ],
+    providers: [persistProvider],
+    exports: []
 })
 export class EFormsModule {}

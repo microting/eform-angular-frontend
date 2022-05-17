@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
-import { DragulaModule } from 'ng2-dragula';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { EformSharedModule } from '../../common/modules/eform-shared/eform-shared.module';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { AdvancedRoutingModule } from './advanced.routing';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TranslateModule} from '@ngx-translate/core';
+import {DragulaModule} from 'ng2-dragula';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {EformSharedModule} from '../../common/modules/eform-shared/eform-shared.module';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {AdvancedRoutingModule} from './advanced.routing';
 import {
   EntitySearchComponent,
   EntitySearchCreateComponent,
@@ -33,31 +33,30 @@ import {
   FolderCreateComponent,
   FolderEditComponent,
   FolderDeleteComponent,
-  SiteTagsComponent,
 } from './components';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { EformImportedModule } from '../../common/modules/eform-imported/eform-imported.module';
-import { advancedPersistProviders } from './components/advansed-persist-providers';
-import { EformSharedTagsModule } from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {EformImportedModule} from '../../common/modules/eform-imported/eform-imported.module';
+import {advancedPersistProviders} from './components/advansed-persist-providers';
+import {EformSharedTagsModule} from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
 import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
-    imports: [
-        AdvancedRoutingModule,
-        CommonModule,
-        MDBBootstrapModule,
-        TranslateModule,
-        EformSharedModule,
-        NgSelectModule,
-        FormsModule,
-        DragulaModule,
-        FontAwesomeModule,
-        MDBBootstrapModule,
-        EformImportedModule,
-        ReactiveFormsModule,
-        EformSharedTagsModule,
-        MatSortModule,
-    ],
+  imports: [
+    AdvancedRoutingModule,
+    CommonModule,
+    MDBBootstrapModule,
+    TranslateModule,
+    EformSharedModule,
+    NgSelectModule,
+    FormsModule,
+    DragulaModule,
+    FontAwesomeModule,
+    MDBBootstrapModule,
+    EformImportedModule,
+    ReactiveFormsModule,
+    EformSharedTagsModule,
+    MatSortModule,
+  ],
   declarations: [
     EntitySearchComponent,
     EntitySelectComponent,
@@ -84,8 +83,8 @@ import {MatSortModule} from '@angular/material/sort';
     FolderCreateComponent,
     FolderEditComponent,
     FolderDeleteComponent,
-    SiteTagsComponent,
   ],
   providers: [...advancedPersistProviders],
 })
-export class AdvancedModule {}
+export class AdvancedModule {
+}

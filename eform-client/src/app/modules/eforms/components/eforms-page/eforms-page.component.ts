@@ -22,6 +22,8 @@ import { AuthStateService } from 'src/app/common/store';
 import {Sort} from '@angular/material/sort';
 import { MatIconRegistry } from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { EformsTagsComponent } from 'src/app/common/modules/eform-shared-tags/components';
 
 @Component({
   selector: 'app-eform-page',
@@ -36,7 +38,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalRemoveEform', { static: true }) modalRemoveEform;
   @ViewChild('modalUploadZip', { static: true }) modalUploadZip;
   @ViewChild('modalEformsImport', { static: true }) modalEformsImport;
-  @ViewChild('modalTags', { static: true }) modalTags;
+  @ViewChild('modalTags', { static: true }) modalTags: EformsTagsComponent;
   @ViewChild('duplicateConfirm', { static: true }) duplicateConfirm;
 
   searchSubject = new Subject();
@@ -124,6 +126,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     public authStateService: AuthStateService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
+    public dialog: MatDialog,
   ) {
     iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(this.wordIcon));
     iconRegistry.addSvgIconLiteral('file-code', sanitizer.bypassSecurityTrustHtml(this.codeIcon));

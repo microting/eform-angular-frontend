@@ -1,41 +1,43 @@
 import {
   Component,
-  EventEmitter,
-  Input,
-  OnChanges,
+  EventEmitter, Input, OnChanges,
   OnDestroy,
-  Output, SimpleChanges,
+  Output,
+  SimpleChanges,
+
 } from '@angular/core';
-import {
-  CommonDictionaryModel,
-  SharedTagCreateModel,
-  SharedTagModel,
-} from 'src/app/common/models';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import {
   SharedTagCreateComponent,
   SharedTagDeleteComponent,
   SharedTagEditComponent,
   SharedTagsComponent
 } from 'src/app/common/modules/eform-shared-tags/components';
+import {
+  CommonDictionaryModel,
+  SharedTagCreateModel,
+  SharedTagModel,
+} from 'src/app/common/models';
 import { Subscription } from 'rxjs';
-import { EmailRecipientsTagsService} from 'src/app/common/services';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { EformTagService } from 'src/app/common/services';
+import {MatDialogRef, MatDialog} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-email-recipients-tags',
-  templateUrl: './email-recipients-tags.component.html',
-  styleUrls: ['./email-recipients-tags.component.scss'],
+  selector: 'app-eforms-tags',
+  templateUrl: './eforms-tags.component.html',
+  styleUrls: ['./eforms-tags.component.scss'],
 })
-export class EmailRecipientsTagsComponent implements OnChanges, OnDestroy {
+export class EformsTagsComponent implements OnDestroy, OnChanges {
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() tagsChanged: EventEmitter<void> = new EventEmitter<void>();
   dialogRef: MatDialogRef<SharedTagsComponent>;
   deleteTag$: Subscription;
   createTag$: Subscription;
   updateTag$: Subscription;
-  constructor(private tagsService: EmailRecipientsTagsService,public dialog: MatDialog) {}
+
+  constructor(
+    private eFormTagService: EformTagService,public dialog: MatDialog) {}
 
   show() {
     this.dialogRef = this.dialog.open(SharedTagsComponent, {
@@ -93,8 +95,8 @@ export class EmailRecipientsTagsComponent implements OnChanges, OnDestroy {
   ngOnDestroy(): void {}
 
   onTagUpdate(model: SharedTagModel) {
-    this.updateTag$ = this.tagsService
-      .updateEmailRecipientTag(model)
+    this.updateTag$ = this.eFormTagService
+      .updateTag(model)
       .subscribe((data) => {
         if (data && data.success) {
           this.tagsChanged.emit();
@@ -103,8 +105,8 @@ export class EmailRecipientsTagsComponent implements OnChanges, OnDestroy {
   }
 
   onTagCreate(model: SharedTagCreateModel) {
-    this.createTag$ = this.tagsService
-      .createEmailRecipientTag(model)
+    this.createTag$ = this.eFormTagService
+      .createTag(model)
       .subscribe((data) => {
         if (data && data.success) {
           this.tagsChanged.emit();
@@ -113,8 +115,8 @@ export class EmailRecipientsTagsComponent implements OnChanges, OnDestroy {
   }
 
   onTagDelete(model: SharedTagModel) {
-    this.deleteTag$ = this.tagsService
-      .deleteEmailRecipientTag(model.id)
+    this.deleteTag$ = this.eFormTagService
+      .deleteTag(model.id)
       .subscribe((data) => {
         if (data && data.success) {
           this.tagsChanged.emit();

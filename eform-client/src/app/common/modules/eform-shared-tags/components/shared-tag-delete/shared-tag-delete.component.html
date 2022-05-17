@@ -1,51 +1,35 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{'Are you sure you want to delete' | translate}}?</h3>
-        <button class="close" data-dismiss="modal" (click)="cancelDelete()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-
-          <div class="row">
-            <div class="col-md-6">
-              <h6>ID</h6>
-            </div>
-            <div class="col-md-6">
-              <strong>{{tagModel.id}}</strong>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-              <h6>{{'Name' | translate}}</h6>
-            </div>
-            <div class="col-md-6">
-              <strong>{{tagModel.name}}</strong>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          mat-raised-button
-          color="warn"
-          class="mr-2"
-          id="tagDeleteSaveBtn"
-          (click)="deleteTag()">
-          {{'Delete' | translate}}
-        </button>
-        <button
-          mat-raised-button
-          id="tagDeleteSaveCancelBtn"
-          (click)="cancelDelete()">
-          {{'Close' | translate}}
-        </button>
-      </div>
+<h3 mat-dialog-title>{{'Are you sure you want to delete' | translate}}?</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>ID</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{tagModel.id}}</strong>
     </div>
   </div>
+
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>{{'Name' | translate}}</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{tagModel.name}}</strong>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="warn"
+    id="tagDeleteSaveBtn"
+    (click)="deleteTag()">
+    {{'Delete' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="tagDeleteSaveCancelBtn"
+    (click)="cancelDelete()">
+    {{'Close' | translate}}
+  </button>
 </div>

@@ -1,11 +1,9 @@
 import {
   Component,
-  EventEmitter,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import { SharedTagCreateModel } from 'src/app/common/models';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-shared-tag-create',
@@ -13,34 +11,19 @@ import { SharedTagCreateModel } from 'src/app/common/models';
   styleUrls: ['./shared-tag-create.component.scss']
 })
 export class SharedTagCreateComponent implements OnInit {
-  @ViewChild('frame') frame;
-  @Output() tagCreate: EventEmitter<SharedTagCreateModel> = new EventEmitter<
-    SharedTagCreateModel
-  >();
-  @Output() tagCreateCancelled: EventEmitter<void> = new EventEmitter<void>();
   name = '';
 
-  constructor() {}
+  constructor( public dialogRef: MatDialogRef<SharedTagCreateComponent>,) {}
 
   ngOnInit() {}
 
-  show() {
-    this.frame.show();
-  }
-
-  hide() {
-    this.frame.hide();
-    this.name = '';
-  }
-
   createItem() {
-    this.tagCreate.emit({ name: this.name } as SharedTagCreateModel);
+    this.dialogRef.close({ name: this.name } as SharedTagCreateModel);
     this.name = '';
   }
 
   cancelCreate() {
-    this.frame.hide();
-    this.tagCreateCancelled.emit();
+    this.dialogRef.close();
     this.name = '';
   }
 }
