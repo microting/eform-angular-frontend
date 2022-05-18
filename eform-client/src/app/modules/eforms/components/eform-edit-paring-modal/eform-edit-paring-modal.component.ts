@@ -1,16 +1,12 @@
 import {
   Component,
-  EventEmitter,
+  Inject,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
-import { FolderDto, SiteNameDto, TemplateDto } from 'src/app/common/models/dto';
-import { DeployCheckbox, DeployModel } from 'src/app/common/models/eforms';
-import { FoldersService, SitesService } from 'src/app/common/services/advanced';
-import { AuthService } from 'src/app/common/services/auth/auth.service';
-import { EFormService } from 'src/app/common/services/eform';
-import { AuthStateService } from 'src/app/common/store';
+import {FolderDto, SiteNameDto, TemplateDto, DeployCheckbox, DeployModel} from 'src/app/common/models';
+import {FoldersService, SitesService, EFormService} from 'src/app/common/services';
+import {AuthStateService} from 'src/app/common/store';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-eform-edit-paring-modal',
@@ -18,11 +14,8 @@ import { AuthStateService } from 'src/app/common/store';
   styleUrls: ['./eform-edit-paring-modal.component.scss'],
 })
 export class EformEditParingModalComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Output() deploymentFinished: EventEmitter<void> = new EventEmitter<void>();
   deployModel: DeployModel = new DeployModel();
   deployViewModel: DeployModel = new DeployModel();
-  selectedTemplateDto: TemplateDto = new TemplateDto();
   sitesDto: Array<SiteNameDto> = [];
   matchFound = false;
   foldersDto: Array<FolderDto> = [];
@@ -37,11 +30,19 @@ export class EformEditParingModalComponent implements OnInit {
     private foldersService: FoldersService,
     private eFormService: EFormService,
     private sitesService: SitesService,
-    private authStateService: AuthStateService
-  ) {}
+    private authStateService: AuthStateService,
+    public dialogRef: MatDialogRef<EformEditParingModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedTemplateDto: TemplateDto = new TemplateDto(),
+  ) {
+  }
 
   ngOnInit() {
     this.loadAllSites();
+    this.saveButtonDisabled = true;
+    this.eformDeployed = this.selectedTemplateDto.deployedSites.length > 0;
+    this.deployModel = new DeployModel();
+    this.deployViewModel = new DeployModel();
+    this.loadAllFolders();
   }
 
   loadAllSites() {
@@ -52,16 +53,6 @@ export class EformEditParingModalComponent implements OnInit {
         }
       });
     }
-  }
-
-  show(templateDto: TemplateDto) {
-    this.saveButtonDisabled = true;
-    this.selectedTemplateDto = templateDto;
-    this.eformDeployed = templateDto.deployedSites.length > 0;
-    this.deployModel = new DeployModel();
-    this.deployViewModel = new DeployModel();
-    this.loadAllFolders();
-    this.frame.show();
   }
 
   addToArray(e: any, deployId: number) {
@@ -108,8 +99,7 @@ export class EformEditParingModalComponent implements OnInit {
     this.eFormService.deploySingle(this.deployModel).subscribe((operation) => {
       if (operation && operation.success) {
         this.deployModel = new DeployModel();
-        this.frame.hide();
-        this.deploymentFinished.emit();
+        this.hide();
       }
     });
   }
@@ -128,5 +118,9 @@ export class EformEditParingModalComponent implements OnInit {
     if (this.deployModel.folderId != null) {
       this.saveButtonDisabled = false;
     }
+  }
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 }

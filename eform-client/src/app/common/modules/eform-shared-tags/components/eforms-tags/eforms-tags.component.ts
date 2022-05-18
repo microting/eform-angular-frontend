@@ -17,10 +17,12 @@ import {
   SharedTagCreateModel,
   SharedTagModel,
 } from 'src/app/common/models';
-import { Subscription } from 'rxjs';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { EformTagService } from 'src/app/common/services';
+import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {EformTagService} from 'src/app/common/services';
 import {MatDialogRef, MatDialog} from '@angular/material/dialog';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {Overlay} from '@angular/cdk/overlay';
 
 @AutoUnsubscribe()
 @Component({
@@ -37,21 +39,22 @@ export class EformsTagsComponent implements OnDestroy, OnChanges {
   updateTag$: Subscription;
 
   constructor(
-    private eFormTagService: EformTagService,public dialog: MatDialog) {}
+    private eFormTagService: EformTagService,
+    public dialog: MatDialog,
+    private overlay: Overlay
+  ) {
+  }
 
   show() {
     this.dialogRef = this.dialog.open(SharedTagsComponent, {
-      disableClose: true,
-      data: this.availableTags,
-      minWidth: 300,
+      ...dialogConfigHelper(this.overlay, this.availableTags)
     });
     this.dialogRef.afterClosed().subscribe(x => {
       if (x && x.action) {
         switch (x.action) {
           case 'create': {
             const dialogRefCreateTag = this.dialog.open(SharedTagCreateComponent, {
-              disableClose: true,
-              minWidth: 300,
+              ...dialogConfigHelper(this.overlay)
             });
             dialogRefCreateTag.afterClosed().subscribe(tag => {
               if (tag) {
@@ -63,9 +66,8 @@ export class EformsTagsComponent implements OnDestroy, OnChanges {
           }
           case 'edit': {
             const dialogRefUpdateTag = this.dialog.open(SharedTagEditComponent, {
-              disableClose: true,
-              minWidth: 300,
-              data: x.tag});
+              ...dialogConfigHelper(this.overlay, x.tag)
+            });
             dialogRefUpdateTag.afterClosed().subscribe(tag => {
               if (tag) {
                 this.onTagUpdate(tag);
@@ -76,9 +78,8 @@ export class EformsTagsComponent implements OnDestroy, OnChanges {
           }
           case 'delete': {
             const dialogRefUpdateTag = this.dialog.open(SharedTagDeleteComponent, {
-              disableClose: true,
-              minWidth: 300,
-              data: x.tag});
+              ...dialogConfigHelper(this.overlay, x.tag)
+            });
             dialogRefUpdateTag.afterClosed().subscribe(tag => {
               if (tag) {
                 this.onTagDelete(tag);
@@ -92,7 +93,8 @@ export class EformsTagsComponent implements OnDestroy, OnChanges {
     });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+  }
 
   onTagUpdate(model: SharedTagModel) {
     this.updateTag$ = this.eFormTagService
@@ -125,7 +127,7 @@ export class EformsTagsComponent implements OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(!changes.availableTags.firstChange && changes.availableTags && this.dialogRef){
+    if (!changes.availableTags.firstChange && changes.availableTags && this.dialogRef) {
       this.dialogRef.componentInstance.availableTags = changes.availableTags.currentValue;
     }
   }

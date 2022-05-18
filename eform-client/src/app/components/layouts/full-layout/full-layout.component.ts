@@ -21,6 +21,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.authStateService.getUserSettings();
     this.isDarkThemeAsync$ = this.authStateService.isDarkThemeAsync.subscribe(
       (isDarkTheme) => {
         isDarkTheme

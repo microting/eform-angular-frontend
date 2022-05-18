@@ -30,29 +30,31 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        EformsRouting,
-        NgSelectModule,
-        MDBBootstrapModule,
-        EformSharedModule,
-        ReactiveFormsModule,
-        FileUploadModule,
-        FormsModule,
-        TranslateModule.forChild(),
-        FontAwesomeModule,
-        OwlDateTimeModule,
-        EformSharedTagsModule,
-        MatDatepickerModule,
-        MatInputModule,
-        EformMatDateFnsDateModule,
-        MatSortModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        MatIconModule
-    ],
+  imports: [
+    CommonModule,
+    EformsRouting,
+    NgSelectModule,
+    MDBBootstrapModule,
+    EformSharedModule,
+    ReactiveFormsModule,
+    FileUploadModule,
+    FormsModule,
+    TranslateModule.forChild(),
+    FontAwesomeModule,
+    OwlDateTimeModule,
+    EformSharedTagsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    EformMatDateFnsDateModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule
+  ],
     declarations: [
         EformsPageComponent,
         EformEditParingModalComponent,

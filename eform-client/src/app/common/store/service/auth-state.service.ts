@@ -37,29 +37,7 @@ export class AuthStateService {
             role: response.role,
           },
         }));
-        this.userSettings.getUserSettings().subscribe((data) => {
-          this.service.obtainUserClaims().subscribe((userClaims) => {
-            this.store.update((state) => ({
-              ...state,
-              currentUser: {
-                ...state.currentUser,
-                darkTheme: data.model.darkTheme,
-                locale: data.model.locale,
-                loginRedirectUrl: data.model.loginRedirectUrl,
-                claims: userClaims,
-              },
-            }));
-            this.router
-              .navigate([
-                `/${
-                  data.model.loginRedirectUrl
-                    ? data.model.loginRedirectUrl
-                    : '/'
-                }`,
-              ])
-              .then();
-          });
-        });
+        this.getUserSettings();
         this.appMenuStateService.getAppMenu(false);
       }
       return;
@@ -90,6 +68,32 @@ export class AuthStateService {
         }
       });
     }
+  }
+
+  getUserSettings(){
+    this.userSettings.getUserSettings().subscribe((data) => {
+      this.service.obtainUserClaims().subscribe((userClaims) => {
+        this.store.update((state) => ({
+          ...state,
+          currentUser: {
+            ...state.currentUser,
+            darkTheme: data.model.darkTheme,
+            locale: data.model.locale,
+            loginRedirectUrl: data.model.loginRedirectUrl,
+            claims: userClaims,
+          },
+        }));
+        this.router
+          .navigate([
+            `/${
+              data.model.loginRedirectUrl
+                ? data.model.loginRedirectUrl
+                : '/'
+            }`,
+          ])
+          .then();
+      });
+    });
   }
 
   logout() {

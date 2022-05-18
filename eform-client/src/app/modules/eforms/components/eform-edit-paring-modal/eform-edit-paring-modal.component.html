@@ -1,79 +1,65 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{'eForm Pairing'}} {{'for' | translate}} {{selectedTemplateDto.label}}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body table-responsive">
-        <div class="row" *ngIf="foldersDto.length > 0">
-          <div class="col">
-            <div class="card z-depth-1 mb-3" style="width: 100%;">
-              <div class="card-header">
-                {{ 'Select Folder' | translate}}
-              </div>
-              <div class="card-body">
-                <app-eform-tree-view-picker
-                  [lockSelectedNode]="eformDeployed"
-                  [nodes]="foldersDto"
-                  [focusedNodeId]="deployModel.folderId"
-                  [showActions]="false"
-                  [allowSelectingParents]="false"
-                  (nodeSelected)="folderSelected($event)"
-                ></app-eform-tree-view-picker>
-              </div>
-            </div>
-          </div>
+<h3 mat-dialog-title>{{'eForm Pairing'}} {{'for' | translate}} {{selectedTemplateDto.label}}</h3>
+<div mat-dialog-content class="">
+  <div class="" *ngIf="foldersDto.length > 0">
+      <div class="card z-depth-1 mb-3" style="width: 100%;">
+        <div class="card-header">
+          {{ 'Select Folder' | translate}}
         </div>
-        <table class="table table-xs table-bordered text-center z-depth-1">
-          <thead>
-          <tr>
-            <th>Microting ID</th>
-            <th>{{ 'Device user' | translate }}</th>
-            <th>{{ 'Select' | translate }}</th>
-          </tr>
-          </thead>
-          <tbody id="pairingModalTableBody">
-          <tr *ngFor="let siteDto of sitesDto">
-            <td id="microtingId" class="align-middle">{{siteDto.siteUId}}</td>
-            <td id="deviceUserFullName" class="align-middle">{{siteDto.siteName}}</td>
-            <td class="align-middle">
-              <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
-                <div *ngIf="checkboxModel.id == siteDto.siteUId">
-                  <mat-checkbox
-                    id="checkbox{{checkboxModel.id}}"
-                    (change)="addToArray($event, checkboxModel.id)"
-                    [ngModel]="checkboxModel.isChecked"
-                    color="primary">
-                  </mat-checkbox>
-                </div>
-              </ng-container>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button
-          mat-raised-button
-          color="accent"
-          class="mr-2"
-          (click)="submitDeployment()"
-          [disabled]="saveButtonDisabled"
-          id="saveParingBtn"
-        >
-          {{'Save' | translate }}
-        </button>
-        <button
-          mat-raised-button
-          id="cancelParingBtn"
-          (click)="frame.hide()"
-        >
-          {{'Cancel' | translate}}
-        </button>
-      </div>
+        <div class="card-body">
+          <app-eform-tree-view-picker
+            [lockSelectedNode]="eformDeployed"
+            [nodes]="foldersDto"
+            [focusedNodeId]="deployModel.folderId"
+            [showActions]="false"
+            [allowSelectingParents]="false"
+            (nodeSelected)="folderSelected($event)"
+          ></app-eform-tree-view-picker>
+        </div>
     </div>
   </div>
+  <table class="table table-xs table-bordered text-center z-depth-1">
+    <thead>
+    <tr>
+      <th>Microting ID</th>
+      <th>{{ 'Device user' | translate }}</th>
+      <th>{{ 'Select' | translate }}</th>
+    </tr>
+    </thead>
+    <tbody id="pairingModalTableBody">
+    <tr *ngFor="let siteDto of sitesDto">
+      <td id="microtingId" class="align-middle">{{siteDto.siteUId}}</td>
+      <td id="deviceUserFullName" class="align-middle">{{siteDto.siteName}}</td>
+      <td class="align-middle">
+        <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
+          <div *ngIf="checkboxModel.id == siteDto.siteUId">
+            <mat-checkbox
+              id="checkbox{{checkboxModel.id}}"
+              (change)="addToArray($event, checkboxModel.id)"
+              [ngModel]="checkboxModel.isChecked"
+              color="primary">
+            </mat-checkbox>
+          </div>
+        </ng-container>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="submitDeployment()"
+    [disabled]="saveButtonDisabled"
+    id="saveParingBtn"
+  >
+    {{'Save' | translate }}
+  </button>
+  <button
+    mat-raised-button
+    id="cancelParingBtn"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

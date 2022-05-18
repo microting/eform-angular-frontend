@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
+import {Component, Inject, OnInit} from '@angular/core';
 import {TemplateColumnModel, UpdateColumnsModel} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {EFormService} from 'src/app/common/services/eform';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-eform-column-modal',
@@ -10,20 +10,17 @@ import {EFormService} from 'src/app/common/services/eform';
   styleUrls: ['./eform-columns-modal.component.scss']
 })
 export class EformColumnsModalComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  selectedTemplateDto: TemplateDto = new TemplateDto();
   columnEditModel: UpdateColumnsModel = new UpdateColumnsModel;
   columnModels: Array<TemplateColumnModel> = [];
 
-  constructor(private eFormService: EFormService, private toastrService: ToastrService) { }
-
-  ngOnInit() {
+  constructor(
+    private eFormService: EFormService,
+    public dialogRef: MatDialogRef<EformColumnsModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedTemplateDto: TemplateDto,) {
   }
 
-  show(selectedTemplate: TemplateDto) {
-    this.selectedTemplateDto = selectedTemplate;
+  ngOnInit() {
     this.getColumnsForTemplate();
-    this.frame.show();
   }
 
   getColumnsForTemplate() {
@@ -43,8 +40,12 @@ export class EformColumnsModalComponent implements OnInit {
     this.columnEditModel.templateId = this.selectedTemplateDto.id;
     this.eFormService.updateTemplateColumns(this.columnEditModel).subscribe((data => {
       if (data && data.success) {
-        this.frame.hide();
+        this.hide(true);
       }
     }));
+  }
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 }

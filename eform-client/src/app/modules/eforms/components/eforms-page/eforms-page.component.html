@@ -61,7 +61,7 @@
     <div class="col-md-4 ng-select-wrapper" *ngIf="userClaims.eformsReadTags">
       <ng-select
         class="custom"
-        dropdownPosition="'bottom'"
+        [dropdownPosition]="'bottom'"
         [placeholder]="'Tags' | translate"
         [items]="availableTags"
         [ngModel]="eformsStateService.getTagIds() | async"
@@ -353,12 +353,12 @@
               >
                 <mat-icon svgIcon="file-upload"></mat-icon>
               </button>
-              <!--            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"-->
-              <!--                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"-->
-              <!--                    [routerLink]="['./report', templateDto.id]"-->
-              <!--                    mdbTooltip="{{ 'Jasper Report' | translate }}">-->
-              <!--              <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>-->
-              <!--            </button>-->
+              <!--<button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"
+                      *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"
+                      [routerLink]="['./report', templateDto.id]"
+                      mdbTooltip="{{ 'Jasper Report' | translate }}">
+                <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>
+              </button>-->
             </div>
           </td>
         </tr>
@@ -368,39 +368,9 @@
 
   <!--pagination(if required)-->
 </div>
-
-<app-eform-create-modal
-  [availableTags]="availableTags"
-  (onEformCreated)="loadAllTags()"
-  #modalNewEform
-></app-eform-create-modal>
-<app-eform-column-modal #modalCasesColumns></app-eform-column-modal>
-<app-eform-edit-paring-modal
-  (deploymentFinished)="loadAllTemplates()"
-  #modalParing
-></app-eform-edit-paring-modal>
-<app-eform-edit-tags-modal
-  [availableTags]="availableTags"
-  (onEFormTagsUpdated)="loadAllTemplates()"
-  #modalEditTags
-></app-eform-edit-tags-modal>
-<app-eform-remove-eform-modal
-  (onEFormDeleted)="loadAllTemplates()"
-  #modalRemoveEform
-></app-eform-remove-eform-modal>
-<app-eform-upload-zip-modal #modalUploadZip></app-eform-upload-zip-modal>
-<app-eforms-bulk-import-modal
-  (importFinished)="loadAllTags()"
-  #modalEformsImport
-></app-eforms-bulk-import-modal>
 <app-eforms-tags
   #modalTags
   [availableTags]="availableTags"
   (tagsChanged)="loadAllTags()"
 >
 </app-eforms-tags>
-<app-eform-duplicate-confirm-modal
-  #duplicateConfirm
-  (eFormDuplicated)="loadAllTemplates()"
->
-</app-eform-duplicate-confirm-modal>

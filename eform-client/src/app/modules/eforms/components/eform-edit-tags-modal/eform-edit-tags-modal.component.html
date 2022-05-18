@@ -1,92 +1,69 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade"
-  #frame="mdbModal"
->
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Select tags for template' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
+<h3 mat-dialog-title>{{ 'Select tags for template' | translate }}</h3>
+<div mat-dialog-content class="ng-select-wrapper">
+  <ng-select
+    class="custom"
+    [dropdownPosition]="'bottom'"
+    [placeholder]="'Current tags' | translate"
+    [(ngModel)]="selectedTemplateTagsIds"
+    [bindValue]="'id'"
+    [bindLabel]="'name'"
+    [items]="availableTags"
+    id="tagSelector"
+    [multiple]="true"
+    appendTo="body"
+  ></ng-select>
+  <!--<div class="row">
+    <div class="col-md-12">
+      <div class="md-form input-group">
+        <input mdbInput
+               #newTagInput
+               id="newTag" type="text" class="form-control">
+        <label for="newTag">{{ 'New tag' | translate }}</label>
+          <button  class="btn-success btn-icon mb-2 btn"
+                   (click)="createNewTag(newTagInput.value); newTagInput.value=''"
+                   type="button" [disabled]="!newTagInput.value">
+            <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
+          </button>
       </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12 tags-selected">
-              <ng-select
-                class="custom"
-                dropdownPosition="'bottom'"
-                [placeholder]="'Current tags' | translate"
-                [(ngModel)]="selectedTemplateTagsIds"
-                [bindValue]="'id'"
-                [bindLabel]="'name'"
-                [items]="availableTags"
-                id="tagSelector"
-                [multiple]="true"
-              ></ng-select>
-            </div>
-          </div>
-
-          <div class="row">
-            <!--            <div class="col-md-12">-->
-            <!--              <div class="md-form input-group">-->
-            <!--                <input mdbInput-->
-            <!--                       #newTagInput-->
-            <!--                       id="newTag" type="text" class="form-control">-->
-            <!--                <label for="newTag">{{ 'New tag' | translate }}</label>-->
-            <!--                  <button  class="btn-success btn-icon mb-2 btn"-->
-            <!--                           (click)="createNewTag(newTagInput.value); newTagInput.value=''"-->
-            <!--                           type="button" [disabled]="!newTagInput.value">-->
-            <!--                    <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>-->
-            <!--                  </button>-->
-            <!--              </div>-->
-            <!--            </div>-->
-            <!--            <div class="col-md-12">-->
-            <!--              <div class="d-flex align-items-center">-->
-            <!--                <ng-select-->
-            <!--                  class="input-group"-->
-            <!--                  dropdownPosition="'bottom'"-->
-            <!--                  id="removeTagSelect"-->
-            <!--                  [bindValue]="'id'"-->
-            <!--                  [bindLabel]="'name'"-->
-            <!--                  [(ngModel)]="tagForRemoval"-->
-            <!--                  [placeholder]="'Tag for removal' | translate"-->
-            <!--                  [items]="availableTags"-->
-            <!--                ></ng-select>-->
-            <!--                <button-->
-            <!--                  class="btn-danger btn-icon mb-2 btn"-->
-            <!--                  (click)="removeTemplateTag()"-->
-            <!--                  [disabled]="!tagForRemoval"-->
-            <!--                  type="button"-->
-            <!--                >-->
-            <!--                  <fa-icon icon="trash" [fixedWidth]="true" size="lg"></fa-icon>-->
-            <!--                </button>-->
-            <!--              </div>-->
-            <!--            </div>-->
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
+    </div>
+    <div class="col-md-12">
+      <div class="d-flex align-items-center">
+        <ng-select
+          class="input-group"
+          dropdownPosition="'bottom'"
+          id="removeTagSelect"
+          [bindValue]="'id'"
+          [bindLabel]="'name'"
+          [(ngModel)]="tagForRemoval"
+          [placeholder]="'Tag for removal' | translate"
+          [items]="availableTags"
+        ></ng-select>
         <button
-          id="tagEditSaveBtn"
-          mat-raised-button
-          color="accent"
-          class="mr-2"
-          (click)="updateTemplateTags()"
+          class="btn-danger btn-icon mb-2 btn"
+          (click)="removeTemplateTag()"
+          [disabled]="!tagForRemoval"
+          type="button"
         >
-          {{ 'Save' | translate }}
-        </button>
-        <button
-          id="tagEditSaveCancelBtn"
-          mat-raised-button
-          (click)="frame.hide()"
-        >
-          {{ 'Cancel' | translate }}
+          <fa-icon icon="trash" [fixedWidth]="true" size="lg"></fa-icon>
         </button>
       </div>
     </div>
-  </div>
+  </div>-->
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    id="tagEditSaveBtn"
+    mat-raised-button
+    color="accent"
+    (click)="updateTemplateTags()"
+  >
+    {{ 'Save' | translate }}
+  </button>
+  <button
+    id="tagEditSaveCancelBtn"
+    mat-raised-button
+    (click)="hide()"
+  >
+    {{ 'Cancel' | translate }}
+  </button>
 </div>

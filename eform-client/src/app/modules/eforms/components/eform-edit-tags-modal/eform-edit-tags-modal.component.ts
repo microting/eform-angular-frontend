@@ -1,15 +1,12 @@
 import {
   Component,
-  EventEmitter,
+  Inject,
   Input,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
-import { CommonDictionaryModel } from 'src/app/common/models/common';
-import { TemplateDto } from 'src/app/common/models/dto';
-import { TemplateTagsUpdateModel } from 'src/app/common/models/eforms';
 import { EformTagService } from 'src/app/common/services/eform';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {CommonDictionaryModel, TemplateDto, TemplateTagsUpdateModel} from 'src/app/common/models';
 
 @Component({
   selector: 'app-eform-edit-tags-modal',
@@ -17,36 +14,24 @@ import { EformTagService } from 'src/app/common/services/eform';
   styleUrls: ['./eform-edit-tags-modal.component.scss'],
 })
 export class EformEditTagsModalComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  // @Output() onTagAdded: EventEmitter<void> = new EventEmitter<void>();
-  @Output() onEFormTagsUpdated: EventEmitter<void> = new EventEmitter<void>();
   @Input() availableTags: Array<CommonDictionaryModel> = [];
   selectedTemplateDto: TemplateDto = new TemplateDto();
   selectedTemplateTagsIds: Array<number> = [];
-  tagForRemoval: number;
 
-  constructor(private eFormTagService: EformTagService) {}
-
-  ngOnInit() {}
-
-  show(selectedTemplate: TemplateDto) {
-    this.selectedTemplateDto = selectedTemplate;
-    this.tagForRemoval = null;
+  constructor(private eFormTagService: EformTagService,
+  public dialogRef: MatDialogRef<EformEditTagsModalComponent>,
+  @Inject(MAT_DIALOG_DATA) value: {
+    availableTags: CommonDictionaryModel[],
+    selectedTemplate: TemplateDto,
+  }) {
+    this.availableTags = value.availableTags ?? [];
+    this.selectedTemplateDto = value.selectedTemplate;
     this.selectedTemplateTagsIds = this.selectedTemplateDto.tags.map(
       (x) => x.key
     );
-    this.frame.show();
   }
 
-  // createNewTag(name: string) {
-  //   if (name) {
-  //     this.eFormTagService.createTag(name).subscribe((operation => {
-  //       if (operation && operation.success) {
-  //         this.onTagAdded.emit();
-  //       }
-  //     }));
-  //   }
-  // }
+  ngOnInit() {}
 
   updateTemplateTags() {
     const templateTagsUpdateModel = new TemplateTagsUpdateModel();
@@ -56,20 +41,33 @@ export class EformEditTagsModalComponent implements OnInit {
       .updateTemplateTags(templateTagsUpdateModel)
       .subscribe((operation) => {
         if (operation && operation.success) {
-          this.onEFormTagsUpdated.emit();
-          this.frame.hide();
+          this.hide(true);
         }
       });
   }
 
-  // removeTemplateTag() {
-  //   this.eFormTagService
-  //     .deleteTag(this.tagForRemoval)
-  //     .subscribe((operation) => {
-  //       if (operation && operation.success) {
-  //         this.onTagAdded.emit();
-  //         this.tagForRemoval = null;
-  //       }
-  //     });
-  // }
+  hide(result = false) {
+    this.dialogRef.close(result);
+  }
+
+  /*removeTemplateTag() {
+    this.eFormTagService
+      .deleteTag(this.tagForRemoval)
+      .subscribe((operation) => {
+        if (operation && operation.success) {
+          this.onTagAdded.emit();
+          this.tagForRemoval = null;
+        }
+      });
+  }*/
+
+  /*createNewTag(name: string) {
+    if (name) {
+      this.eFormTagService.createTag(name).subscribe((operation => {
+        if (operation && operation.success) {
+          this.onTagAdded.emit();
+        }
+      }));
+    }
+  }*/
 }
