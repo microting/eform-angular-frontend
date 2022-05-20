@@ -1,6 +1,6 @@
 @import "../../../scss/utilities/colors";
 
-.navbar-bg {
+/*.navbar-bg {
   background-color: $eform-gray;
   color: white;
 }
@@ -40,4 +40,30 @@
   .dropdown-menu {
     padding-bottom: 25px;
   }
+}*/
+
+#main-header-text {
+  font-size: 1.1rem;
+  line-height: 1.1;
+}
+
+#secondary-header-text {
+  font-size: 0.8rem;
+  line-height: 1.1;
+}
+
+@media (max-width: 767px) {
+  .hidden-xs {
+    display: none !important;
+  }
+}
+
+.nav-link {
+  width: 100%;
+  text-align: inherit;
+}
+
+.logo-container {
+  //width: 181px;
+  //margin: 5px 15px 5px 15px;
 }

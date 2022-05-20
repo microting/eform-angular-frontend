@@ -14,7 +14,6 @@
       id="eformsManageTagsBtn"
       (click)="openTagsModal()"
       mdbTooltip="{{ 'Manage tags' | translate }}"
-      mdbWavesEffect
       *ngIf="authStateService.checkClaim('eformAllowManagingEformTags')"
     >
       <mat-icon>discount</mat-icon>

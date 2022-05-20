@@ -337,10 +337,10 @@ namespace eFormAPI.Web.Services
                             ? d.MenuTemplate.Permissions.Select(y => y.ClaimName).ToList()
                             : new List<string>(),
                         Position = d.Position,
-                        IsInternalLink = d.IsInternalLink,
+                        IsInternalLink = true,
                     })
                         .ToList(),
-                    IsInternalLink = x.IsInternalLink,
+                    IsInternalLink = true,
                 }).ToList();
 
                 // Add user first and last name

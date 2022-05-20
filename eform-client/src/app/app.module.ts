@@ -37,6 +37,12 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from 'src/environments/environment';
 import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -74,6 +80,12 @@ import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
     AkitaNgDevtools,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     SharedPnModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatTreeModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatMenuModule,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],
