@@ -42,38 +42,39 @@
 </eform-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<div class="container-fluid">
-  <div class="row pl-1">
-    <div class="col-md-2">
-      <div class="md-form">
+<div class="d-flex flex-column">
+  <div class="d-flex flex-row justify-content-start">
+    <div class="d-flex flex-column mr-2 ml-2">
+      <mat-form-field>
+        <mat-label>{{ 'Label' | translate }}</mat-label>
         <input
-          mdbInput
+          matInput
           type="text"
           [ngModel]="eformsStateService.getNameFilter() | async"
           (ngModelChange)="onLabelInputChanged($event)"
-          class="form-control input-sm"
           id="labelInput"
         />
-        <label for="labelInput">{{ 'Label' | translate }}</label>
-      </div>
+      </mat-form-field>
     </div>
-    <div class="col-md-4 ng-select-wrapper" *ngIf="userClaims.eformsReadTags">
-      <ng-select
-        class="custom"
-        [dropdownPosition]="'bottom'"
-        [placeholder]="'Tags' | translate"
-        [items]="availableTags"
-        [ngModel]="eformsStateService.getTagIds() | async"
-        (add)="saveTag($event)"
-        (remove)="removeSavedTag($event)"
-        [clearable]="false"
-        [bindLabel]="'name'"
-        [bindValue]="'id'"
-        id="tagSelector"
-        [multiple]="true"
-      ></ng-select>
+    <div class="d-flex flex-column mr-2" *ngIf="userClaims.eformsReadTags">
+      <mat-form-field>
+        <mat-label>{{ 'Tags' | translate }}</mat-label>
+        <mtx-select
+          class="custom"
+          [dropdownPosition]="'bottom'"
+          [items]="availableTags"
+          [ngModel]="eformsStateService.getTagIds() | async"
+          (add)="saveTag($event)"
+          (remove)="removeSavedTag($event)"
+          [clearable]="false"
+          [bindLabel]="'name'"
+          [bindValue]="'id'"
+          id="tagSelector"
+          [multiple]="true"
+        ></mtx-select>
+      </mat-form-field>
     </div>
-    <div>
+    <div class="d-flex flex-column" >
       <mat-form-field appearance="fill">
         <mat-label>Choose a date</mat-label>
         <input matInput [matDatepicker]="picker">
@@ -82,7 +83,7 @@
       </mat-form-field>
     </div>
   </div>
-  <div class="row p-1 table-responsive no-gutters">
+  <div class="p-1 table-responsive no-gutters">
     <table
       mdbTable
       striped="true"
@@ -100,65 +101,65 @@
         [tableHeaders]="tableHeaders"
       ></thead>
       <tbody id="mainPageEFormsTableBody">
-        <tr *ngFor="let templateDto of templateListModel.templates; index as i">
-          <td class="eform-id" id="eform-id-{{ i }}">
-            {{ templateDto.id }}
-          </td>
-          <!--<td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>-->
-          <td id="eform-created-at-{{ i }}">
-            <date-formatter
-              [date]="templateDto.createdAt"
-              [Format]="'datetime'"
-            ></date-formatter>
-          </td>
-          <td id="eform-label-{{ i }}">{{ templateDto.label }}</td>
-          <td id="eform-description-{{ i }}" [innerHTML]="templateDto.description"></td>
-          <td>
-            <div class="d-flex justify-content-center">
-              <div>
-                <a
-                  mat-icon-button
-                  type="button"
-                  color="accent"
-                  *ngIf="
+      <tr *ngFor="let templateDto of templateListModel.templates; index as i">
+        <td class="eform-id" id="eform-id-{{ i }}">
+          {{ templateDto.id }}
+        </td>
+        <!--<td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>-->
+        <td id="eform-created-at-{{ i }}">
+          <date-formatter
+            [date]="templateDto.createdAt"
+            [Format]="'datetime'"
+          ></date-formatter>
+        </td>
+        <td id="eform-label-{{ i }}">{{ templateDto.label }}</td>
+        <td id="eform-description-{{ i }}" [innerHTML]="templateDto.description"></td>
+        <td>
+          <div class="d-flex justify-content-center">
+            <div>
+              <a
+                mat-icon-button
+                type="button"
+                color="accent"
+                *ngIf="
                     checkEformPermissions(
                       templateDto.id,
                       userClaimsEnum.eformsUpdateTags
                     )
                   "
-                  id="eform-edit-btn-{{ i }}"
-                  mdbTooltip="{{ 'Edit tags' | translate }}"
-                  (click)="openEditTagsModal(templateDto)"
-                  style="margin-bottom: 0.3rem;"
-                >
-                  <mat-icon>edit</mat-icon>
-                </a>
-                <br />
-                <ng-container
-                  *ngIf="
+                id="eform-edit-btn-{{ i }}"
+                mdbTooltip="{{ 'Edit tags' | translate }}"
+                (click)="openEditTagsModal(templateDto)"
+                style="margin-bottom: 0.3rem;"
+              >
+                <mat-icon>edit</mat-icon>
+              </a>
+              <br />
+              <ng-container
+                *ngIf="
                     checkEformPermissions(
                       templateDto.id,
                       userClaimsEnum.eformsReadTags
                     )
                   "
+              >
+                <p
+                  class="paragraph-sm badge badge-primary mb-1"
+                  id="eform-tag-{{ i }}"
+                  *ngFor="let tag of templateDto.tags"
                 >
-                  <p
-                    class="paragraph-sm badge badge-primary mb-1"
-                    id="eform-tag-{{ i }}"
-                    *ngFor="let tag of templateDto.tags"
-                  >
-                    <fa-icon icon="tag"></fa-icon>
-                    {{ tag.value }}
-                  </p>
-                </ng-container>
-              </div>
+                  <fa-icon icon="tag"></fa-icon>
+                  {{ tag.value }}
+                </p>
+              </ng-container>
             </div>
-          </td>
-          <td>
-            <div class="d-flex justify-content-center">
-              <div>
-                <button
-                  *ngIf="
+          </div>
+        </td>
+        <td>
+          <div class="d-flex justify-content-center">
+            <div>
+              <button
+                *ngIf="
                     templateDto.deployedSites.length > 0 &&
                     checkEformPermissions(
                       templateDto.id,
@@ -166,19 +167,19 @@
                     ) &&
                     !templateDto.isLocked
                   "
-                  id="eform-pairing-btn-{{ i }}"
-                  mat-icon-button
-                  color="accent"
-                  type="button"
-                  (click)="openPairingModal(templateDto)"
-                  mdbTooltip="{{
+                id="eform-pairing-btn-{{ i }}"
+                mat-icon-button
+                color="accent"
+                type="button"
+                (click)="openPairingModal(templateDto)"
+                mdbTooltip="{{
                     'Click to edit eForm pairing with user(s)' | translate
                   }}"
-                >
-                  <mat-icon>link</mat-icon>
-                </button>
-                <button
-                  *ngIf="
+              >
+                <mat-icon>link</mat-icon>
+              </button>
+              <button
+                *ngIf="
                     templateDto.deployedSites.length == 0 &&
                     checkEformPermissions(
                       templateDto.id,
@@ -186,44 +187,79 @@
                     ) &&
                     !templateDto.isLocked
                   "
-                  id="eform-add-btn-{{ i }}"
-                  mat-icon-button
-                  type="button"
-                  (click)="openPairingModal(templateDto)"
-                  mdbTooltip="{{
+                id="eform-add-btn-{{ i }}"
+                mat-icon-button
+                type="button"
+                (click)="openPairingModal(templateDto)"
+                mdbTooltip="{{
                     'Click to pair eForm with user(s)' | translate
                   }}"
-                >
-                  <!--                {{ 'Pair eForm' | translate }}-->
-                  <mat-icon>link</mat-icon>
-                </button>
-                <!--              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">-->
-                <!--                <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">-->
-                <!--                  {{deployedSite.siteName}}-->
-                <!--                </p>-->
-                <!--              </ng-container>-->
-              </div>
+              >
+                <!--                {{ 'Pair eForm' | translate }}-->
+                <mat-icon>link</mat-icon>
+              </button>
+              <!--              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">-->
+              <!--                <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">-->
+              <!--                  {{deployedSite.siteName}}-->
+              <!--                </p>-->
+              <!--              </ng-container>-->
             </div>
-          </td>
-          <td>
-            <div class="d-flex flex-row justify-content-center">
-              <button
-                mat-icon-button
-                *ngIf="
+          </div>
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button
+              mat-icon-button
+              *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
                     templateDto.id,
                     userClaimsEnum.casesRead
                   )
                 "
-                id="eform-cases-btn-{{ i }}"
-                [routerLink]="['/cases', templateDto.id]"
-                mdbTooltip="{{ 'Show cases' | translate }}"
-              >
-                <mat-icon>cases</mat-icon>
-              </button>
+              id="eform-cases-btn-{{ i }}"
+              [routerLink]="['/cases', templateDto.id]"
+              mdbTooltip="{{ 'Show cases' | translate }}"
+            >
+              <mat-icon>cases</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              id="delete-eform-btn-{{ i }}"
+              (click)="openEformDeleteModal(templateDto)"
+              *ngIf="
+                  checkEformPermissions(
+                    templateDto.id,
+                    userClaimsEnum.eformsDelete
+                  ) && !templateDto.isLocked
+                "
+              mdbTooltip="{{ 'Delete eForm' | translate }}"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <a
+              *ngIf="
+                  checkEformPermissions(
+                    templateDto.id,
+                    userClaimsEnum.eformsDelete
+                  ) &&
+                  !templateDto.isLocked &&
+                  templateDto.isEditable
+                "
+              mat-icon-button
+              id="edit-eform-btn-{{ i }}"
+              [routerLink]="['visual-editor/' + templateDto.id]"
+              mdbTooltip="{{ 'Edit eForm' | translate }}"
+            >
+              <mat-icon>edit</mat-icon>
+            </a>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
               <button
-                mat-icon-button
+                mat-menu-item
                 id="edit-columnts-btn-{{ i }}"
                 *ngIf="
                   checkEformPermissions(
@@ -232,53 +268,20 @@
                   )
                 "
                 (click)="openEditColumnsModal(templateDto)"
-                mdbTooltip="{{ 'Edit columns' | translate }}"
               >
                 <mat-icon>table_chart</mat-icon>
+                <span>{{ 'Edit columns' | translate }}</span>
               </button>
               <button
-                mat-icon-button
-                color="warn"
-                id="delete-eform-btn-{{ i }}"
-                (click)="openEformDeleteModal(templateDto)"
-                *ngIf="
-                  checkEformPermissions(
-                    templateDto.id,
-                    userClaimsEnum.eformsDelete
-                  ) && !templateDto.isLocked
-                "
-                mdbTooltip="{{ 'Delete eForm' | translate }}"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-              <button
-                mat-icon-button
+                mat-menu-item
                 id="duplicate-btn"
                 (click)="openDuplicateConfirmModal(templateDto)"
-                mdbTooltip="{{ 'Duplicate eForm' | translate }}"
               >
                 <mat-icon>content_copy</mat-icon>
+                <span>{{ 'Duplicate eForm' | translate }}</span>
               </button>
-              <a
-                *ngIf="
-                  checkEformPermissions(
-                    templateDto.id,
-                    userClaimsEnum.eformsDelete
-                  ) &&
-                  !templateDto.isLocked &&
-                  templateDto.isEditable
-                "
-                mat-icon-button
-                id="edit-eform-btn-{{ i }}"
-                [routerLink]="['visual-editor/' + templateDto.id]"
-                mdbTooltip="{{ 'Edit eForm' | translate }}"
-              >
-                <mat-icon>edit</mat-icon>
-              </a>
-            </div>
-            <div class="d-flex flex-row justify-content-center">
               <button
-                mat-icon-button
+                mat-menu-item
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -288,12 +291,12 @@
                 "
                 id="download-csv-btn-{{ i }}"
                 (click)="downloadItem('CSV', templateDto.id)"
-                mdbTooltip="{{ 'Download' | translate }} CSV"
               >
                 <mat-icon svgIcon="file-csv"></mat-icon>
+                <span>{{ 'Download' | translate }} CSV</span>
               </button>
               <button
-                mat-icon-button
+                mat-menu-item
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -303,12 +306,12 @@
                 "
                 id="download-xml-btn-{{ i }}"
                 (click)="downloadItem('XML', templateDto.id)"
-                mdbTooltip="{{ 'Download' | translate }} XML"
               >
                 <mat-icon svgIcon="file-code"></mat-icon>
+                <span>{{ 'Download' | translate }} XML</span>
               </button>
               <button
-                mat-icon-button
+                mat-menu-item
                 *ngIf="
                   templateDto.hasCases &&
                   checkEformPermissions(
@@ -318,12 +321,12 @@
                 "
                 id="docx-report-btn-{{ i }}"
                 [routerLink]="['/docx-report', templateDto.id]"
-                mdbTooltip="{{ 'Word Report' | translate }}"
               >
                 <mat-icon svgIcon="file-word"></mat-icon>
+                <span>{{ 'Word Report' | translate }}</span>
               </button>
               <button
-                mat-icon-button
+                mat-menu-item
                 *ngIf="
                   templateDto.excelExportEnabled &&
                   templateDto.hasCases &&
@@ -334,23 +337,21 @@
                 "
                 id="download-excel-btn-{{ i }}"
                 [routerLink]="['/xlsx-report', templateDto.id]"
-                mdbTooltip="{{ 'Download' | translate }} XLSX"
               >
                 <mat-icon svgIcon="file-excel"></mat-icon>
+                <span>{{ 'Download' | translate }} XLSX</span>
               </button>
               <button
-                mat-icon-button
+                mat-menu-item
                 id="upload-zip-btn"
                 (click)="uploadZipFile(templateDto)"
                 *ngIf="
                   checkEformPermissions(
                     templateDto.id,
-                    userClaimsEnum.eformsUploadZip
-                  )
-                "
-                mdbTooltip="{{ 'Upload ZIP archive' | translate }}"
+                    userClaimsEnum.eformsUploadZip)"
               >
                 <mat-icon svgIcon="file-upload"></mat-icon>
+                <span>{{ 'Upload ZIP archive' | translate }}</span>
               </button>
               <!--<button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"
                       *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"
@@ -358,9 +359,10 @@
                       mdbTooltip="{{ 'Jasper Report' | translate }}">
                 <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>
               </button>-->
-            </div>
-          </td>
-        </tr>
+            </mat-menu>
+          </div>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>

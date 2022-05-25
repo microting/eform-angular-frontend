@@ -1,3 +1,4 @@
+/*
 @import "../utilities/colors";
 $highlight-color: $eform-gray;
 body.theme-dark {
@@ -37,7 +38,7 @@ body.theme-dark {
           border-width: 2px;
         }
         .ng-value-container .ng-placeholder {
-          transform: translateY(-1.28125em) scale(.75) perspective(100px) translateZ(.001px);
+          transform: translateY(-0.99em) scale(.75) perspective(100px) translateZ(.001px);
           //color: $highlight-color;
         }
         .ng-arrow-wrapper .ng-arrow {
@@ -49,19 +50,20 @@ body.theme-dark {
     &.ng-select-filtered .ng-select-container {
       .ng-placeholder {
         display: initial;
+        position: absolute;
       }
     }
     .ng-has-value,
     &.ng-select-opened {
       .ng-placeholder {
-        transform: translateY(-1.28125em) scale(.75) perspective(100px) translateZ(.001px);
+        transform: translateY(-0.9em) scale(.75) perspective(100px) translateZ(.001px);
       }
     }
     .ng-select-container {
       align-items: baseline;
-      min-height: 52px;
+      max-height: 46px;
       &:after {
-        border-bottom: 1px solid rgba(0, 0, 0, .20);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.7);
         content: '';
         width: 100%;
         bottom: 0;
@@ -70,12 +72,12 @@ body.theme-dark {
       }
       .ng-value-container {
         align-items: baseline;
-        padding: .4375em 0;
+        padding: .4375em 0 3.5px;
         border-top: .84375em solid transparent;
         .ng-placeholder {
-          position: absolute;
+          //position: absolute;
           //color: var(--black-350);
-          transform-origin: 0 /*0*/;
+          transform-origin: 0 !*0*!;
           transition: transform .4s cubic-bezier(.25, .8, .25, 1), color .4s cubic-bezier(.25, .8, .25, 1), width .4s cubic-bezier(.25, .8, .25, 1);
         }
         .ng-input {
@@ -92,6 +94,9 @@ body.theme-dark {
         .ng-clear-wrapper {
           align-self: flex-end;
           bottom: 7px;
+        }
+        .ng-value-container {
+          overflow: unset;
         }
       }
     }
@@ -558,5 +563,11 @@ body.theme-light {
         }
       }
     }
+  }
+}
+*/
+body {
+  .ng-dropdown-panel{
+    z-index: 100000;
   }
 }

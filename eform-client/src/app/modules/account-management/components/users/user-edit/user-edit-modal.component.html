@@ -28,7 +28,7 @@
                   />
                   <label for="editFirstName">{{
                     'First name' | translate
-                  }}</label>
+                    }}</label>
                 </div>
               </div>
               <div class="col-md-6">
@@ -43,7 +43,7 @@
                   />
                   <label for="editLastName">{{
                     'Last name' | translate
-                  }}</label>
+                    }}</label>
                 </div>
               </div>
             </div>
@@ -80,37 +80,42 @@
             </div>
             <div class="row">
               <div class="col-md-6 ng-select-wrapper">
-                <ng-select
-                  required
-                  bindLabel="name"
-                  bindValue="id"
-                  [clearable]="false"
-                  [ngModel]="selectedUserModel.role"
-                  name="editRole"
-                  (ngModelChange)="onUserRoleUpdated($event)"
-                  [placeholder]="'Role' | translate"
-                  [items]="[
+                <mat-form-field>
+                  <mat-label>{{ 'Role' | translate }}</mat-label>
+                  <mtx-select
+                    required
+                    bindLabel="name"
+                    bindValue="id"
+                    [clearable]="false"
+                    [ngModel]="selectedUserModel.role"
+                    name="editRole"
+                    (ngModelChange)="onUserRoleUpdated($event)"
+                    [placeholder]=""
+                    [items]="[
                     { id: 'admin', name: 'Admin' | translate },
                     { id: 'user', name: 'User' | translate }
                   ]"
-                  id="editRole"
-                ></ng-select>
+                    id="editRole"
+                  ></mtx-select>
+                </mat-form-field>
               </div>
               <div
                 class="col-md-6 ng-select-wrapper"
                 *ngIf="selectedUserModel.role != 'admin'"
               >
-                <ng-select
-                  required
-                  bindLabel="groupName"
-                  bindValue="id"
-                  [clearable]="false"
-                  [(ngModel)]="selectedUserModel.groupId"
-                  name="editGroup"
-                  [placeholder]="'Group' | translate"
-                  [items]="availableGroups.entities"
-                  id="editGroup"
-                ></ng-select>
+                <mat-form-field>
+                  <mat-label>{{ 'Group' | translate }}</mat-label>
+                  <mtx-select
+                    required
+                    bindLabel="groupName"
+                    bindValue="id"
+                    [clearable]="false"
+                    [(ngModel)]="selectedUserModel.groupId"
+                    name="editGroup"
+                    [items]="availableGroups.entities"
+                    id="editGroup"
+                  ></mtx-select>
+                </mat-form-field>
               </div>
             </div>
           </form>

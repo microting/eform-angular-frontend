@@ -2,6 +2,7 @@
 //ng-select
 
 @use '@angular/material' as mat;
+@use '@ng-matero/extensions' as mtx;
 @include mat.core();
 
 // Define a typography
@@ -56,9 +57,13 @@ body {
   }
   &.theme-light {
     @include mat.all-component-themes($eform-light-theme);
+    @include mtx.all-component-themes($eform-light-theme);
+    @include mtx.all-experimental-component-themes($eform-light-theme);
   }
   &.theme-dark {
     @include mat.all-component-colors($eform-dark-theme);
+    @include mtx.all-component-themes($eform-dark-theme);
+    @include mtx.all-experimental-component-themes($eform-dark-theme);
   }
   &.mat-typography {
     margin: 0 0 0 0;

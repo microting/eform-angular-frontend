@@ -1,17 +1,19 @@
 <h3 mat-dialog-title>{{ 'Select tags for template' | translate }}</h3>
 <div mat-dialog-content class="ng-select-wrapper">
-  <ng-select
-    class="custom"
-    [dropdownPosition]="'bottom'"
-    [placeholder]="'Current tags' | translate"
-    [(ngModel)]="selectedTemplateTagsIds"
-    [bindValue]="'id'"
-    [bindLabel]="'name'"
-    [items]="availableTags"
-    id="tagSelector"
-    [multiple]="true"
-    appendTo="body"
-  ></ng-select>
+  <mat-form-field>
+    <mat-label>{{ 'Current tags' | translate }}</mat-label>
+    <mtx-select
+      class="custom"
+      [dropdownPosition]="'bottom'"
+      [(ngModel)]="selectedTemplateTagsIds"
+      [bindValue]="'id'"
+      [bindLabel]="'name'"
+      [items]="availableTags"
+      id="tagSelector"
+      [multiple]="true"
+      appendTo="body"
+    ></mtx-select>
+  </mat-form-field>
   <!--<div class="row">
     <div class="col-md-12">
       <div class="md-form input-group">

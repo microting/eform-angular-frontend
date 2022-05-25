@@ -1,17 +1,20 @@
 <h3 mat-dialog-title>{{ 'Create eForm' | translate }}</h3>
 <div mat-dialog-content class="d-flex flex-column">
   <div class="ng-select-wrapper">
-      <ng-select
+    <mat-form-field>
+      <mat-label>{{ 'Tags' | translate }}</mat-label>
+      <mtx-select
         class="custom"
         [dropdownPosition]="'bottom'"
-        [placeholder]="'Tags' | translate"
         [(ngModel)]="eFormCreateModel.tagIds"
         [bindValue]="'id'"
         [bindLabel]="'name'"
         [items]="availableTags"
         id="createEFormMultiSelector"
-        [multiple]="true"></ng-select>
-    </div>
+        [multiple]="true">
+      </mtx-select>
+    </mat-form-field>
+  </div>
   <div class="d-flex flex-row">
     <mat-form-field>
       <input

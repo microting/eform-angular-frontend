@@ -1,76 +1,103 @@
 <h3 mat-dialog-title>{{ 'Select columns for displaying in Cases' | translate }}</h3>
 <div mat-dialog-content class="d-flex flex-row">
-  <ng-select
+  <mat-form-field>
+    <mat-label>{{ ('Column' | translate) + ' 1' }}</mat-label>
+  <mtx-select
     bindLabel="label"
     bindValue="id"
     [(ngModel)]="columnEditModel.fieldId1"
-    [placeholder]="('Column' | translate) + ' 1'"
     appendTo="body"
-    [items]="columnModels"></ng-select>
-  <ng-select
+    [items]="columnModels">
+  </mtx-select>
+  </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ ('Column' | translate) + ' 2'}}</mat-label>
+  <mtx-select
     bindLabel="label"
     bindValue="id"
     [(ngModel)]="columnEditModel.fieldId2"
-    [placeholder]="('Column' | translate) + ' 2'"
     appendTo="body"
-    [items]="columnModels"></ng-select>
+    [items]="columnModels">
+  </mtx-select>
+    </mat-form-field>
 </div>
 <div class="d-flex flex-row">
-  <ng-select
+  <mat-form-field>
+    <mat-label>{{ ('Column' | translate) + ' 3' }}</mat-label>
+  <mtx-select
     bindLabel="label"
     bindValue="id"
     [(ngModel)]="columnEditModel.fieldId3"
-    [placeholder]="('Column' | translate) + ' 3'"
     appendTo="body"
-    [items]="columnModels"></ng-select>
-  <ng-select
+    [items]="columnModels">
+  </mtx-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ ('Column' | translate) + ' 4' }}</mat-label>
+  <mtx-select
     bindLabel="label"
     bindValue="id"
     [(ngModel)]="columnEditModel.fieldId4"
-    [placeholder]="('Column' | translate) + ' 4'"
     appendTo="body"
-    [items]="columnModels"></ng-select>
+    [items]="columnModels">
+  </mtx-select>
+  </mat-form-field>
 </div>
 <div class="d-flex flex-row">
-  <ng-select
+  <mat-form-field>
+    <mat-label>{{ ('Column' | translate) + ' 5' }}</mat-label>
+  <mtx-select
     bindLabel="label"
     bindValue="id"
     [(ngModel)]="columnEditModel.fieldId5"
-    [placeholder]="('Column' | translate) + ' 5'"
     appendTo="body"
-    [items]="columnModels"></ng-select>
-  <ng-select
+    [items]="columnModels">
+  </mtx-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ ('Column' | translate) + ' 6' }}</mat-label>
+  <mtx-select
     bindLabel="label"
     bindValue="id"
     [(ngModel)]="columnEditModel.fieldId6"
-    [placeholder]="('Column' | translate) + ' 6'"
     appendTo="body"
-    [items]="columnModels"></ng-select>
+    [items]="columnModels">
+  </mtx-select>
+  </mat-form-field>
 </div>
 <div class="d-flex flex-row">
-  <ng-select
-    bindLabel="label"
-    bindValue="id"
-    [(ngModel)]="columnEditModel.fieldId7"
-    [placeholder]="('Column' | translate) + ' 7'"
-    appendTo="body"
-    [items]="columnModels"></ng-select>
-  <ng-select
-    bindLabel="label"
-    bindValue="id"
-    [(ngModel)]="columnEditModel.fieldId8"
-    [placeholder]="('Column' | translate) + ' 8'"
-    appendTo="body"
-    [items]="columnModels"></ng-select>
+  <mat-form-field>
+    <mat-label>{{ ('Column' | translate) + ' 7' }}</mat-label>
+    <mtx-select
+      bindLabel="label"
+      bindValue="id"
+      [(ngModel)]="columnEditModel.fieldId7"
+      appendTo="body"
+      [items]="columnModels">
+    </mtx-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ ('Column' | translate) + ' 8' }}</mat-label>
+    <mtx-select
+      bindLabel="label"
+      bindValue="id"
+      [(ngModel)]="columnEditModel.fieldId8"
+      appendTo="body"
+      [items]="columnModels">
+    </mtx-select>
+  </mat-form-field>
 </div>
 <div class="d-flex flex-row">
-  <ng-select
-    bindLabel="label"
-    bindValue="id"
-    [(ngModel)]="columnEditModel.fieldId9"
-    [placeholder]="('Column' | translate) + ' 9'"
-    appendTo="body"
-    [items]="columnModels"></ng-select>
+  <mat-form-field>
+    <mat-label>{{ ('Column' | translate) + ' 9' }}</mat-label>
+    <mtx-select
+      bindLabel="label"
+      bindValue="id"
+      [(ngModel)]="columnEditModel.fieldId9"
+      appendTo="body"
+      [items]="columnModels">
+    </mtx-select>
+  </mat-form-field>
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button

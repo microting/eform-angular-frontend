@@ -14,18 +14,12 @@ akitaConfig({resettable: true});
 @Component({
   selector: 'app-full-layout-root',
   templateUrl: `./full-layout.component.html`,
-  styles: [`.spacer {
-    flex: 1 1 auto;
-  }
-  .chip{
-    display: flex;
-    align-items: center;
-    border-radius: 30px;
-    border: black solid 1px;
-    justify-content: space-between;
-    flex-direction: row;
-    padding: 2px 2px 2px 4px;
-  }`]
+  styles: [`
+    .spacer {
+      flex: 1 1 auto;
+    }
+  `
+  ]
 })
 export class FullLayoutComponent implements OnInit, OnDestroy {
   isDarkThemeAsync$: Subscription;

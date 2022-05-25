@@ -64,6 +64,10 @@ b, strong {
   font-weight: 500;
 }
 
+mat-form-field ~ mat-form-field {
+  margin-left: 1rem;
+}
+
 /*.mat-checkbox label:before {
   border: none;
   background: none;

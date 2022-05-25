@@ -68,40 +68,46 @@
         <mdb-card-body>
           <div class="container-fluid">
             <div class="row">
-              <ng-select
-                *ngIf="authStateService.isAdmin"
-                id="ProfileLanguageSelector"
-                [placeholder]="'Language' | translate"
-                [bindLabel]="'text'"
-                [bindValue]="'locale'"
-                [clearable]="false"
-                [(ngModel)]="userSettingsModel.locale"
-                [items]="languages"
-              ></ng-select>
+              <mat-form-field>
+                <mat-label>{{ 'Language' | translate }}</mat-label>
+                <mtx-select
+                  *ngIf="authStateService.isAdmin"
+                  id="ProfileLanguageSelector"
+                  [bindLabel]="'text'"
+                  [bindValue]="'locale'"
+                  [clearable]="false"
+                  [(ngModel)]="userSettingsModel.locale"
+                  [items]="languages"
+                ></mtx-select>
+              </mat-form-field>
             </div>
             <div class="row">
-              <ng-select
-                *ngIf="authStateService.isAdmin"
-                id="ProfileFormatSelector"
-                [placeholder]="'Formats' | translate"
-                [bindLabel]="'text'"
-                [bindValue]="'id'"
-                [clearable]="false"
-                [(ngModel)]="userSettingsModel.formats"
-                [items]="countries"
-              ></ng-select>
+              <mat-form-field>
+                <mat-label>{{ 'Formats' | translate }}</mat-label>
+                <mtx-select
+                  *ngIf="authStateService.isAdmin"
+                  id="ProfileFormatSelector"
+                  [bindLabel]="'text'"
+                  [bindValue]="'id'"
+                  [clearable]="false"
+                  [(ngModel)]="userSettingsModel.formats"
+                  [items]="countries"
+                ></mtx-select>
+              </mat-form-field>
             </div>
             <div class="row">
-              <ng-select
-                *ngIf="authStateService.isAdmin"
-                id="ProfileTimeZoneSelector"
-                [placeholder]="'Timezone' | translate"
-                [bindLabel]="'name'"
-                [bindValue]="'id'"
-                [clearable]="false"
-                [(ngModel)]="userSettingsModel.timeZone"
-                [items]="timeZones.timeZoneModels"
-              ></ng-select>
+              <mat-form-field>
+                <mat-label>{{ 'Timezone' | translate }}</mat-label>
+                <mtx-select
+                  *ngIf="authStateService.isAdmin"
+                  id="ProfileTimeZoneSelector"
+                  [bindLabel]="'name'"
+                  [bindValue]="'id'"
+                  [clearable]="false"
+                  [(ngModel)]="userSettingsModel.timeZone"
+                  [items]="timeZones.timeZoneModels"
+                ></mtx-select>
+              </mat-form-field>
             </div>
             <div class="row mb-1">
               <mat-checkbox
