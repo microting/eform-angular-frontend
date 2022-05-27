@@ -2,7 +2,7 @@ name: Pull requests
 
 on:
   pull_request:
-    branches: [ master, stable, visual-editor ]
+    branches: [ master, stable, angular13 ]
     paths-ignore:
     - '*.md'
     - '.github/**'

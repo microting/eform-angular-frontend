@@ -2,7 +2,7 @@ name: Master/Stable
 
 on:
   push:
-    branches: [ master, stable, async, visual-editor ]
+    branches: [ master, stable, angular13 ]
     paths-ignore:
     - '*.md'
     - '.github/**'
