@@ -2,7 +2,7 @@ name: Pull requests
 
 on:
   pull_request:
-    branches: [ master, stable, visual-editor ]
+    branches: [ master, stable, angular13 ]
     paths-ignore:
     - '*.md'
     - '.github/**'
@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        test: [a,b,c,d,e,f,g,h]
+        test: [a,b,c,d,e,f,g,h,i,j]
     steps:
     - uses: actions/checkout@v2
     - name: Upgrade Chrome browser
