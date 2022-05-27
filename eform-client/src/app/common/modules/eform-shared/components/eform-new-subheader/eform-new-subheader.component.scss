@@ -1,0 +1,11 @@
+.spacer {
+  flex: 1 1 auto;
+}
+.card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 8px;
+}

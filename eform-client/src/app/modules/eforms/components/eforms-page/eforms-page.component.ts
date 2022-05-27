@@ -293,7 +293,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   openPairingModal(templateDto: TemplateDto) {
     this.eformEditParingModalComponentAfterClosedSub$ = this.dialog.open(EformEditParingModalComponent, {
-      ...dialogConfigHelper(this.overlay, templateDto), minWidth: 400,
+      ...dialogConfigHelper(this.overlay, templateDto), minWidth: 600,
     }).afterClosed().subscribe(data => data ? this.loadAllTemplates() : undefined);
   }
 

@@ -1,6 +1,6 @@
 <div class="h-100 d-flex flex-column">
   <!--  <app-header></app-header>-->
-  <mat-toolbar>
+  <mat-toolbar style="padding-top: 5px; padding-bottom: 5px" class="d-flex align-items-center">
     <div *ngIf="headerSettingsModel.imageLinkVisible" class="d-flex">
       <div class="logo-container">
         <img height="30px" id="site-header-image" [src]="logoImage | authImage | async"
@@ -34,7 +34,7 @@
     <mat-drawer #drawer mode="side" [opened]="true">
       <app-navigation></app-navigation>
     </mat-drawer>
-    <div class="mb-auto">
+    <div class="mb-auto" style="padding: 1.5rem">
       <app-userback-widget></app-userback-widget>
       <router-outlet></router-outlet>
     </div>

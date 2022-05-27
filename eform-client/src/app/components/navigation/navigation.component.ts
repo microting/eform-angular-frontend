@@ -59,6 +59,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
 
+  getLevel = (node: FlatNode) => node.level;
+
   menu = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   getAppMenuSub$: Subscription;

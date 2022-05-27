@@ -14,6 +14,7 @@ import {
   StatusBarCompactComponent,
   EntityListElementsComponent,
   EntityItemEditNameComponent,
+  EformNewSubheaderComponent,
 } from './components';
 import {
   AuthImagePipe,
@@ -30,6 +31,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   imports: [
@@ -45,7 +47,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule
   ],
   declarations: [
     EformPaginationComponent,
@@ -61,6 +64,7 @@ import {MatIconModule} from '@angular/material/icon';
     StatusBarCompactComponent,
     EntityListElementsComponent,
     EntityItemEditNameComponent,
+    EformNewSubheaderComponent,
   ],
   exports: [
     EformPaginationComponent,
@@ -76,6 +80,7 @@ import {MatIconModule} from '@angular/material/icon';
     StatusBarCompactComponent,
     EntityListElementsComponent,
     EntityItemEditNameComponent,
+    EformNewSubheaderComponent,
   ],
 })
 export class EformSharedModule {

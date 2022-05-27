@@ -1,5 +1,9 @@
-<mat-tree *ngIf="menu.data" [dataSource]="menu" [treeControl]="treeControl">
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding="" style="min-height: 0;">
+<mat-tree *ngIf="menu.data" [dataSource]="menu" [treeControl]="treeControl" class="mt-2 ml-2">
+  <mat-tree-node
+    *matTreeNodeDef="let node"
+    matTreeNodePadding=""
+    style="min-height: 0;"
+    [ngClass]="{'children': getLevel(node) > 0}">
     <ng-container *ngIf="checkGuards(node.guards)">
       <!-- use a disabled button to provide padding for tree leaf -->
       <a mat-button
@@ -22,8 +26,7 @@
       </a>
     </ng-container>
   </mat-tree-node>
-  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding=""
-                 style="margin-right: 1rem; min-height: 0;">
+  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding="" style="margin-right: 1rem; min-height: 0;">
     <ng-container *ngIf="checkGuards(node.guards)">
       <button
         mat-icon-button

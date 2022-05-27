@@ -1,0 +1,11 @@
+<mat-card class="card">
+  <h2 style="margin: 0">
+    {{
+    forceStaticTitle
+      ? title
+      : (appMenuStateService.getTitleByUrl(this.href) | translate)
+    }}
+  </h2>
+  <span class="spacer"></span>
+  <ng-content></ng-content>
+</mat-card>

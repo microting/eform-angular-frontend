@@ -17,33 +17,16 @@
         </div>
     </div>
   </div>
-  <table class="table table-xs table-bordered text-center z-depth-1">
-    <thead>
-    <tr>
-      <th>Microting ID</th>
-      <th>{{ 'Device user' | translate }}</th>
-      <th>{{ 'Select' | translate }}</th>
-    </tr>
-    </thead>
-    <tbody id="pairingModalTableBody">
-    <tr *ngFor="let siteDto of sitesDto">
-      <td id="microtingId" class="align-middle">{{siteDto.siteUId}}</td>
-      <td id="deviceUserFullName" class="align-middle">{{siteDto.siteName}}</td>
-      <td class="align-middle">
-        <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
-          <div *ngIf="checkboxModel.id == siteDto.siteUId">
-            <mat-checkbox
-              id="checkbox{{checkboxModel.id}}"
-              (change)="addToArray($event, checkboxModel.id)"
-              [ngModel]="checkboxModel.isChecked"
-              color="primary">
-            </mat-checkbox>
-          </div>
-        </ng-container>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <mtx-grid
+    [data]="sitesDto"
+    [columns]="columns"
+    [showPaginator]="false"
+    [multiSelectable]="true"
+    [rowSelectable]="true"
+    [rowSelected]="rowSelected"
+    (rowSelectionChange)="rowSelected = $event"
+  >
+  </mtx-grid>
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button

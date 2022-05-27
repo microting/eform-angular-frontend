@@ -8,3 +8,4 @@ export * from './eform-collapse-toggler/eform-collapse-toggle.component';
 export * from './entity-list-elements/entity-list-elements.component';
 export * from './entity-item-edit-name/entity-item-edit-name.component';
 export * from './eform-table';
+export * from './eform-new-subheader/eform-new-subheader.component';

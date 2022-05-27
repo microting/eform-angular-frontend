@@ -1,103 +1,105 @@
 <h3 mat-dialog-title>{{ 'Select columns for displaying in Cases' | translate }}</h3>
-<div mat-dialog-content class="d-flex flex-row">
-  <mat-form-field>
-    <mat-label>{{ ('Column' | translate) + ' 1' }}</mat-label>
-  <mtx-select
-    bindLabel="label"
-    bindValue="id"
-    [(ngModel)]="columnEditModel.fieldId1"
-    appendTo="body"
-    [items]="columnModels">
-  </mtx-select>
-  </mat-form-field>
+<div mat-dialog-content class="need-wrapper">
+  <div class="d-flex flex-row">
+    <mat-form-field>
+      <mat-label>{{ ('Column' | translate) + ' 1' }}</mat-label>
+      <mtx-select
+        bindLabel="label"
+        bindValue="id"
+        [(ngModel)]="columnEditModel.fieldId1"
+        appendTo="body"
+        [items]="columnModels">
+      </mtx-select>
+    </mat-form-field>
     <mat-form-field>
       <mat-label>{{ ('Column' | translate) + ' 2'}}</mat-label>
-  <mtx-select
-    bindLabel="label"
-    bindValue="id"
-    [(ngModel)]="columnEditModel.fieldId2"
-    appendTo="body"
-    [items]="columnModels">
-  </mtx-select>
+      <mtx-select
+        bindLabel="label"
+        bindValue="id"
+        [(ngModel)]="columnEditModel.fieldId2"
+        appendTo="body"
+        [items]="columnModels">
+      </mtx-select>
     </mat-form-field>
-</div>
-<div class="d-flex flex-row">
-  <mat-form-field>
-    <mat-label>{{ ('Column' | translate) + ' 3' }}</mat-label>
-  <mtx-select
-    bindLabel="label"
-    bindValue="id"
-    [(ngModel)]="columnEditModel.fieldId3"
-    appendTo="body"
-    [items]="columnModels">
-  </mtx-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>{{ ('Column' | translate) + ' 4' }}</mat-label>
-  <mtx-select
-    bindLabel="label"
-    bindValue="id"
-    [(ngModel)]="columnEditModel.fieldId4"
-    appendTo="body"
-    [items]="columnModels">
-  </mtx-select>
-  </mat-form-field>
-</div>
-<div class="d-flex flex-row">
-  <mat-form-field>
-    <mat-label>{{ ('Column' | translate) + ' 5' }}</mat-label>
-  <mtx-select
-    bindLabel="label"
-    bindValue="id"
-    [(ngModel)]="columnEditModel.fieldId5"
-    appendTo="body"
-    [items]="columnModels">
-  </mtx-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>{{ ('Column' | translate) + ' 6' }}</mat-label>
-  <mtx-select
-    bindLabel="label"
-    bindValue="id"
-    [(ngModel)]="columnEditModel.fieldId6"
-    appendTo="body"
-    [items]="columnModels">
-  </mtx-select>
-  </mat-form-field>
-</div>
-<div class="d-flex flex-row">
-  <mat-form-field>
-    <mat-label>{{ ('Column' | translate) + ' 7' }}</mat-label>
-    <mtx-select
-      bindLabel="label"
-      bindValue="id"
-      [(ngModel)]="columnEditModel.fieldId7"
-      appendTo="body"
-      [items]="columnModels">
-    </mtx-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>{{ ('Column' | translate) + ' 8' }}</mat-label>
-    <mtx-select
-      bindLabel="label"
-      bindValue="id"
-      [(ngModel)]="columnEditModel.fieldId8"
-      appendTo="body"
-      [items]="columnModels">
-    </mtx-select>
-  </mat-form-field>
-</div>
-<div class="d-flex flex-row">
-  <mat-form-field>
-    <mat-label>{{ ('Column' | translate) + ' 9' }}</mat-label>
-    <mtx-select
-      bindLabel="label"
-      bindValue="id"
-      [(ngModel)]="columnEditModel.fieldId9"
-      appendTo="body"
-      [items]="columnModels">
-    </mtx-select>
-  </mat-form-field>
+  </div>
+  <div class="d-flex flex-row">
+    <mat-form-field>
+      <mat-label>{{ ('Column' | translate) + ' 3' }}</mat-label>
+      <mtx-select
+        bindLabel="label"
+        bindValue="id"
+        [(ngModel)]="columnEditModel.fieldId3"
+        appendTo="body"
+        [items]="columnModels">
+      </mtx-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ ('Column' | translate) + ' 4' }}</mat-label>
+      <mtx-select
+        bindLabel="label"
+        bindValue="id"
+        [(ngModel)]="columnEditModel.fieldId4"
+        appendTo="body"
+        [items]="columnModels">
+      </mtx-select>
+    </mat-form-field>
+  </div>
+  <div class="d-flex flex-row">
+    <mat-form-field>
+      <mat-label>{{ ('Column' | translate) + ' 5' }}</mat-label>
+      <mtx-select
+        bindLabel="label"
+        bindValue="id"
+        [(ngModel)]="columnEditModel.fieldId5"
+        appendTo="body"
+        [items]="columnModels">
+      </mtx-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ ('Column' | translate) + ' 6' }}</mat-label>
+      <mtx-select
+        bindLabel="label"
+        bindValue="id"
+        [(ngModel)]="columnEditModel.fieldId6"
+        appendTo="body"
+        [items]="columnModels">
+      </mtx-select>
+    </mat-form-field>
+  </div>
+  <div class="d-flex flex-row">
+    <mat-form-field>
+      <mat-label>{{ ('Column' | translate) + ' 7' }}</mat-label>
+      <mtx-select
+        bindLabel="label"
+        bindValue="id"
+        [(ngModel)]="columnEditModel.fieldId7"
+        appendTo="body"
+        [items]="columnModels">
+      </mtx-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ ('Column' | translate) + ' 8' }}</mat-label>
+      <mtx-select
+        bindLabel="label"
+        bindValue="id"
+        [(ngModel)]="columnEditModel.fieldId8"
+        appendTo="body"
+        [items]="columnModels">
+      </mtx-select>
+    </mat-form-field>
+  </div>
+  <div class="d-flex flex-row">
+    <mat-form-field>
+      <mat-label>{{ ('Column' | translate) + ' 9' }}</mat-label>
+      <mtx-select
+        bindLabel="label"
+        bindValue="id"
+        [(ngModel)]="columnEditModel.fieldId9"
+        appendTo="body"
+        [items]="columnModels">
+      </mtx-select>
+    </mat-form-field>
+  </div>
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button

@@ -32,6 +32,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
+import {MatCardModule} from '@angular/material/card';
+import {MtxGridModule} from '@ng-matero/extensions/grid';
 
 @NgModule({
   imports: [
@@ -55,7 +57,9 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     MatIconModule,
     MatDialogModule,
     MatMenuModule,
-    MtxSelectModule
+    MtxSelectModule,
+    MatCardModule,
+    MtxGridModule,
   ],
   declarations: [
     EformsPageComponent,
