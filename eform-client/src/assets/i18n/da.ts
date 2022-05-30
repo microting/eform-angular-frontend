@@ -428,4 +428,5 @@ export const da = {
   'Select new image': 'Vælg billede',
   'Select image': 'Vælg billede',
   'Date is required': 'Dato er påkrævet',
+  'Edit selectable entity list': 'Rediger liste'
 };
