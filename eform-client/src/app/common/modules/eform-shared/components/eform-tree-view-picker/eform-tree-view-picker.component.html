@@ -1,109 +1,109 @@
 <ng-container *ngIf="showCollapseButton">
-  <a
-    class="btn-icon mb-2 float-right text-black-50 btn"
+  <button
+    mat-icon-button
     *ngIf="collapsed"
-    (click)="tree.treeModel.expandAll(); collapsed = !collapsed"
+    class="collapse-button"
+    (click)="treeControl.expandAll(); collapsed = !collapsed"
   >
-    <fa-icon icon="angle-double-right" size="lg" [fixedWidth]="true"></fa-icon>
-  </a>
-  <a
-    class="btn-icon mb-2 float-right text-black-50 btn"
+    <mat-icon>expand_more</mat-icon>
+  </button>
+  <button
+    mat-icon-button
     *ngIf="!collapsed"
-    (click)="tree.treeModel.collapseAll(); collapsed = !collapsed"
+    class="collapse-button"
+    (click)="treeControl.collapseAll(); collapsed = !collapsed"
   >
-    <fa-icon icon="angle-double-down" size="lg" [fixedWidth]="true"></fa-icon>
-  </a>
+    <mat-icon>expand_less</mat-icon>
+  </button>
 </ng-container>
 
-<tree-root #tree [nodes]="nodes" [options]="options" [(state)]="state">
-  <ng-template
-    #treeNodeWrapperTemplate
-    let-node
-    let-index="index"
-    let-templates="templates"
-  >
+<mat-tree *ngIf="folders.data" [dataSource]="folders" [treeControl]="treeControl">
+  <mat-tree-node
+    *matTreeNodeDef="let node"
+    matTreeNodePadding=""
+    [ngClass]="{'children': getLevel(node) > 0}">
     <div
-      style="display: flex; align-items: center;"
-      class="node-wrapper"
-      [style.padding-left]="node.getNodePadding()"
+      style="margin-left: 8px"
+      [ngClass]="{'folder': !lockSelectedNode, 'no-drop': lockSelectedNode,
+      'selected-folder': selectedFolderIds.includes(node.id)}"
+      (click)="selected(node.id)"
+      class="d-flex flex-row align-items-center cursor"
     >
-      <div id="folderTreeOpenClose"
-           (click)="node.toggleExpanded()"
-           *ngIf="node.hasChildren"
-      >
-        <fa-icon
-          *ngIf="node?.isCollapsed"
-          icon="folder"
-          size="lg"
-          [ngClass]="{'text-black-50': !node.isActive}"
-        ></fa-icon>
-        <fa-icon
-          *ngIf="node?.isExpanded"
-          icon="folder-open"
-          size="lg"
-          [ngClass]="{'text-black-50': !node.isActive}"
-        ></fa-icon>
+      <mat-icon>folder_open</mat-icon>
+      <div style="margin-left: 8px;">
+        {{node.name}}
       </div>
-      <div id="folderTreeOpenClose" *ngIf="!node.hasChildren" [ngClass]="{'text-black-50': !node.isActive}">
-        <fa-icon icon="folder-open" size="lg"></fa-icon>
-      </div>
-      <div *ngIf="(allowSelectingParents || !node.hasChildren) && !lockSelectedNode"
-           class="node-content-wrapper"
-           [class.node-content-wrapper-active]="node.isActive"
-           (click)="node.mouseAction('click', $event);
-           selected(node.data, node.parent, node.isActive)"
-           (dblclick)="node.mouseAction('dblClick', $event)"
-           (contextmenu)="node.mouseAction('contextMenu', $event)"
-      >
-        <tree-node-content
-          [node]="node"
-          [index]="index"
-          [template]="treeNodeTemplate"
-        ></tree-node-content>
-      </div>
-      <div *ngIf="(!allowSelectingParents && node.hasChildren) || lockSelectedNode"
-           class="node-content-wrapper"
-           (click)="node.toggleExpanded()"
-           [class.node-content-wrapper-active]="node.isActive"
-      >
-        <tree-node-content
-          [node]="node"
-          [index]="index"
-          [template]="treeNodeTemplate"
-        ></tree-node-content>
-      </div>
+      <small class="microting-uid">({{ node.microtingUId }})</small>
+      <ng-container *ngIf="showActions">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <ng-container *ngIf="showCreateAction">
+            <button mat-menu-item (click)="createChild(node.id)">
+              <mat-icon>add</mat-icon>
+              <span>{{ 'Add new child folder' | translate }}</span>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="showEditAction">
+            <button mat-menu-item (click)="edit(node.id)">
+              <mat-icon>edit</mat-icon>
+              <span>{{ 'Edit folder' | translate }}</span>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="showDeleteAction">
+            <button mat-menu-item (click)="delete(node.id)">
+              <mat-icon>delete</mat-icon>
+              <span>{{ 'Delete folder' | translate }}</span>
+            </button>
+          </ng-container>
+        </mat-menu>
+
+      </ng-container>
     </div>
-  </ng-template>
-  <ng-template #treeNodeTemplate let-node let-index="index">
-    <div id="folderTreeId" class="d-flex align-items-center"
-         [ngStyle]="{'cursor': lockSelectedNode ? 'not-allowed' : 'pointer'}">
-      <span id="folderTreeName">{{ node.data.name }} </span>
-      <small style="color: var(--blue-400);">({{ node.data.microtingUId }})</small>
-      <div class="ml-3 text-black-50" *ngIf="node.isActive && showActions">
-        <fa-icon
-          *ngIf="showCreateAction"
-          (click)="createChild($event, node.data)"
-          id="createFolderChildBtn"
-          icon="plus"
-          size="lg"
-        ></fa-icon>
-        <fa-icon
-          *ngIf="showEditAction"
-          (click)="edit($event, node.data)"
-          id="editFolderTreeBtn"
-          class="ml-2"
-          icon="pen"
-          size="lg"
-        ></fa-icon>
-        <fa-icon
-          *ngIf="showDeleteAction"
-          (click)="delete($event, node.data)"
-          id="deleteFolderTreeBtn"
-          class="ml-2"
-          icon="trash-alt"
-          size="lg"
-        ></fa-icon>
+
+  </mat-tree-node>
+  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding="">
+    <ng-container>
+      <button
+        mat-icon-button
+        matTreeNodeToggle
+      >
+        <mat-icon class="mat-icon-rtl-mirror" [ngClass]="{'selected-folder': selectedFolderIds.includes(node.id)}">
+          {{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}
+        </mat-icon>
+      </button>
+      <div
+        [ngClass]="{'selected-folder': selectedFolderIds.includes(node.id)}"
+      >
+        {{node.name}}
       </div>
-    </div>
-  </ng-template>
-</tree-root>
+      <small class="microting-uid">({{ node.microtingUId }})</small>
+      <ng-container *ngIf="showActions">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <ng-container *ngIf="showCreateAction">
+            <button mat-menu-item (click)="createChild(node.id)">
+              <mat-icon>add</mat-icon>
+              <span>{{ 'Add new child folder' | translate }}</span>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="showEditAction">
+            <button mat-menu-item (click)="edit(node.id)">
+              <mat-icon>edit</mat-icon>
+              <span>{{ 'Edit folder' | translate }}</span>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="showDeleteAction">
+            <button mat-menu-item (click)="delete(node.id)">
+              <mat-icon>delete</mat-icon>
+              <span>{{ 'Delete folder' | translate }}</span>
+            </button>
+          </ng-container>
+        </mat-menu>
+      </ng-container>
+    </ng-container>
+  </mat-tree-node>
+</mat-tree>

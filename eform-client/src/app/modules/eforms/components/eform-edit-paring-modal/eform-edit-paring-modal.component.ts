@@ -105,6 +105,7 @@ export class EformEditParingModalComponent implements OnInit {
       if (operation && operation.success) {
         this.foldersDto = operation.model;
         this.fillCheckboxes();
+        this.deployModel.folderId = this.selectedTemplateDto.folderId;
       }
     });
   }

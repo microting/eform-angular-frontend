@@ -10,13 +10,12 @@ import {
   AppMenuStateService,
   AuthStateService,
 } from 'src/app/common/store';
-import {AdminService, AppSettingsService, AuthService} from 'src/app/common/services';
+import {AdminService, AuthService} from 'src/app/common/services';
 import {Subscription} from 'rxjs';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {HeaderSettingsModel, MenuItemModel} from 'src/app/common/models';
+import { MenuItemModel} from 'src/app/common/models';
 import { Router } from '@angular/router';
-import {EventBrokerService} from 'src/app/common/helpers';
 
 interface FlatNode {
   expandable: boolean;

@@ -1,32 +1,31 @@
 <h3 mat-dialog-title>{{'eForm Pairing'}} {{'for' | translate}} {{selectedTemplateDto.label}}</h3>
 <div mat-dialog-content class="">
-  <div class="" *ngIf="foldersDto.length > 0">
-      <div class="card z-depth-1 mb-3" style="width: 100%;">
-        <div class="card-header">
-          {{ 'Select Folder' | translate}}
-        </div>
-        <div class="card-body">
-          <app-eform-tree-view-picker
-            [lockSelectedNode]="eformDeployed"
-            [nodes]="foldersDto"
-            [focusedNodeId]="deployModel.folderId"
-            [showActions]="false"
-            [allowSelectingParents]="false"
-            (nodeSelected)="folderSelected($event)"
-          ></app-eform-tree-view-picker>
-        </div>
-    </div>
-  </div>
-  <mtx-grid
-    [data]="sitesDto"
-    [columns]="columns"
-    [showPaginator]="false"
-    [multiSelectable]="true"
-    [rowSelectable]="true"
-    [rowSelected]="rowSelected"
-    (rowSelectionChange)="rowSelected = $event"
-  >
-  </mtx-grid>
+  <mat-card class="" *ngIf="foldersDto.length > 0">
+    <mat-card-title>
+      <h4>{{ 'Select Folder' | translate}}</h4>
+    </mat-card-title>
+    <mat-card-content>
+      <app-eform-tree-view-picker
+        [lockSelectedNode]="eformDeployed"
+        [nodes]="foldersDto"
+        [focusedNodeId]="deployModel.folderId"
+        [showActions]="false"
+        [allowSelectingParents]="false"
+        (nodeSelected)="folderSelected($event)"
+      ></app-eform-tree-view-picker>
+      <mtx-grid
+        class="mt-2"
+        [data]="sitesDto"
+        [columns]="columns"
+        [showPaginator]="false"
+        [multiSelectable]="true"
+        [rowSelectable]="true"
+        [rowSelected]="rowSelected"
+        (rowSelectionChange)="rowSelected = $event"
+      >
+      </mtx-grid>
+    </mat-card-content>
+  </mat-card>
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button

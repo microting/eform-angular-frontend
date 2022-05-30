@@ -32,24 +32,28 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    NgSelectModule,
-    FormsModule,
-    TreeModule,
-    FontAwesomeModule,
-    RouterModule,
-    DragulaModule,
-    MDBBootstrapModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        NgSelectModule,
+        FormsModule,
+        TreeModule,
+        FontAwesomeModule,
+        RouterModule,
+        DragulaModule,
+        MDBBootstrapModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        MatTreeModule,
+        MatMenuModule
+    ],
   declarations: [
     EformPaginationComponent,
     EformSubheaderComponent,

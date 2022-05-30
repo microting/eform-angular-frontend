@@ -39,6 +39,9 @@ import {EformImportedModule} from '../../common/modules/eform-imported/eform-imp
 import {advancedPersistProviders} from './components/advansed-persist-providers';
 import {EformSharedTagsModule} from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
 import {MatSortModule} from '@angular/material/sort';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -56,6 +59,9 @@ import {MatSortModule} from '@angular/material/sort';
     ReactiveFormsModule,
     EformSharedTagsModule,
     MatSortModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   declarations: [
     EntitySearchComponent,

@@ -35,8 +35,8 @@ $eform-light-theme: mat.define-light-theme((
 ));
 
 // Define a dark theme
-$eform-dark-primary: mat.define-palette(mat.$pink-palette);
-$eform-dark-accent: mat.define-palette(mat.$blue-grey-palette);
+$eform-dark-primary: mat.define-palette(mat.$blue-grey-palette);
+$eform-dark-accent: mat.define-palette(mat.$pink-palette);
 $eform-dark-theme: mat.define-dark-theme((
   color: (
     primary: $eform-dark-primary,
