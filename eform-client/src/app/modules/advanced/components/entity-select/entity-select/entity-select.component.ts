@@ -4,9 +4,11 @@ import {
   Paged,
   TableHeaderElementModel,
   AdvEntitySelectableGroupModel,
+  PaginationModel,
 } from 'src/app/common/models';
 import { AuthStateService } from 'src/app/common/store';
 import { EntitySelectStateService } from '../store';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-selectable-list',
@@ -63,23 +65,18 @@ export class EntitySelectComponent implements OnInit {
     this.getEntitySelectableGroupList();
   }
 
-  changePage(offset: number) {
-    this.entitySelectStateService.changePage(offset);
-    this.getEntitySelectableGroupList();
-  }
-
-  sortTable(sort: string) {
-    this.entitySelectStateService.onSortTable(sort);
-    this.getEntitySelectableGroupList();
-  }
-
-  onPageSizeChanged(pageSize: number) {
-    this.entitySelectStateService.updatePageSize(pageSize);
+  sortTable(sort: Sort) {
+    this.entitySelectStateService.onSortTable(sort.active);
     this.getEntitySelectableGroupList();
   }
 
   onEntityRemoved() {
     this.entitySelectStateService.onDelete();
+    this.getEntitySelectableGroupList();
+  }
+
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.entitySelectStateService.updatePagination(paginationModel);
     this.getEntitySelectableGroupList();
   }
 }

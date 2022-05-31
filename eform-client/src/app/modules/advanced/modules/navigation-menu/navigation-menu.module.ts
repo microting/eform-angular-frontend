@@ -28,6 +28,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DragulaModule } from 'ng2-dragula';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -41,24 +42,25 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
     NavigationMenuItemEditComponent,
     NavigationMenuResetComponent,
   ],
-  imports: [
-    CommonModule,
-    NavigationMenuRouting,
-    ButtonsModule,
-    TranslateModule,
-    FontAwesomeModule,
-    NgSelectModule,
-    InputsModule,
-    TableModule,
-    CardsModule,
-    DragulaModule,
-    TooltipModule,
-    FormsModule,
-    CollapseModule,
-    EformSharedModule,
-    WavesModule,
-    ModalModule,
-    ReactiveFormsModule,
-  ],
+    imports: [
+        CommonModule,
+        NavigationMenuRouting,
+        ButtonsModule,
+        TranslateModule,
+        FontAwesomeModule,
+        NgSelectModule,
+        InputsModule,
+        TableModule,
+        CardsModule,
+        DragulaModule,
+        TooltipModule,
+        FormsModule,
+        CollapseModule,
+        EformSharedModule,
+        WavesModule,
+        ModalModule,
+        ReactiveFormsModule,
+        MatCheckboxModule,
+    ],
 })
 export class NavigationMenuModule {}

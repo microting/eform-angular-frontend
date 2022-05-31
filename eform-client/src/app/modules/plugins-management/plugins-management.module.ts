@@ -15,18 +15,20 @@ import {
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { InstalledPluginPermissionsComponent } from './components/installed/installed-plugin-permissions/installed-plugin-permissions.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    EformSharedModule,
-    MDBBootstrapModule,
-    FormsModule,
-    TranslateModule,
-    NgSelectModule,
-    PluginsManagementRouting,
-    FontAwesomeModule,
-  ],
+    imports: [
+        CommonModule,
+        EformSharedModule,
+        MDBBootstrapModule,
+        FormsModule,
+        TranslateModule,
+        NgSelectModule,
+        PluginsManagementRouting,
+        FontAwesomeModule,
+        MatCheckboxModule,
+    ],
   declarations: [
     InstalledPluginsPageComponent,
     InstalledPluginModalComponent,

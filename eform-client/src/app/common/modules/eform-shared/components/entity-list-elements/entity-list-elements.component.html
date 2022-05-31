@@ -31,25 +31,23 @@
                 *ngIf="!entityItem.name"
                 mdbTooltip="{{ 'Name is required' | translate }}!"
               ></fa-icon>
-              <button mdbBtn
-                      class="btn btn-accent btn-icon text-black-50 mb-2 pull-right"
-                      id="entityItemEditBtn">
-                <fa-icon
-                  icon="pen"
-                  size="lg"
-                  [fixedWidth]="true"
+              <button
+                mat-mini-fab
+                color="accent"
+                class="mr-2 mb-2 pull-right"
+                id="entityItemEditBtn">
+                <mat-icon
                   (click)="onOpenModalEditName(entityItem)"
-                ></fa-icon>
+                >edit</mat-icon>
               </button>
-              <button mdbBtn
-                      class="btn btn-danger btn-icon mb-2 pull-right"
-                      id="entityItemDeleteBtn">
-                <fa-icon
-                  icon="trash-alt"
-                  size="lg"
-                  [fixedWidth]="true"
+              <button
+                mat-mini-fab
+                color="warn"
+                class="mb-2 pull-right"
+                id="entityItemDeleteBtn">
+                <mat-icon
                   (click)="deleteAdvEntitySelectableItem(entityItem.tempId)"
-                ></fa-icon>
+                >delete</mat-icon>
               </button>
             </div>
           </div>

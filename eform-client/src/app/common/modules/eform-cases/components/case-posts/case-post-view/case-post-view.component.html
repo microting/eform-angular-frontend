@@ -55,41 +55,50 @@
           <div class="row">
             <div class="col">
               <div class="md-form">
-                <textarea mdbInput
-                          [(ngModel)]="postViewModel.text"
-                          [disabled]="true"
-                          type="text" id="viewPostEmailText"
-                          name="viewPostEmailText" class="md-textarea form-control"></textarea>
+                <textarea
+                  mdbInput
+                  [(ngModel)]="postViewModel.text"
+                  [disabled]="true"
+                  type="text" id="viewPostEmailText"
+                  name="viewPostEmailText" class="md-textarea form-control"></textarea>
                 <label for="viewPostEmailText">{{ 'Email text' | translate }}</label>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col">
-              <div class="mat-checkbox">
-                <input id="attachLinkToCase" name="attachLinkToCase"
-                       [disabled]="true"
-                       [(ngModel)]="postViewModel.attachLinkToCase"
-                       type="checkbox">
-                <label for="attachLinkToCase">{{ 'Link to case' | translate }}</label>
-              </div>
+              <mat-checkbox
+                id="attachLinkToCase"
+                name="attachLinkToCase"
+                [disabled]="true"
+                [(ngModel)]="postViewModel.attachLinkToCase"
+              >
+                {{ 'Link to case' | translate }}
+              </mat-checkbox>
             </div>
           </div>
           <div class="row" *ngIf="pdfReportAvailable">
             <div class="col">
-              <div class="mat-checkbox">
-                <input id="attachReport" name="attachReport"
-                       [disabled]="true"
-                       [(ngModel)]="postViewModel.attachReport" type="checkbox">
-                <label for="attachReport">{{ 'Attach PDF' | translate }}</label>
-              </div>
+              <mat-checkbox
+                id="attachReport"
+                name="attachReport"
+                [disabled]="true"
+                [(ngModel)]="postViewModel.attachReport"
+              >
+                {{ 'Attach PDF' | translate }}
+              </mat-checkbox>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn id="viewPostCloseBtn" class="btn-accent text-black-50 btn-small-height"
-                (click)="frame.hide()">{{'Close' | translate}}</button>
+        <button
+          mat-raised-button
+          id="viewPostCloseBtn"
+          (click)="frame.hide()"
+        >
+          {{'Close' | translate}}
+        </button>
       </div>
     </div>
   </div>

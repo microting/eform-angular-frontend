@@ -1,150 +1,43 @@
-<div class="w-100 navbar-bg">
-  <nav
-    class="navbar navbar-static-top navbar-expand-lg p-2"
-    id="header"
-    role="navigation"
-  >
-    <button
-      class="navbar-toggler"
-      type="button"
-      aria-label="Toggle navigation"
-      (click)="expandMenu()"
-    >
-      <fa-icon icon="bars" size="lg" [fixedWidth]="true"></fa-icon>
-
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <!--nav items here-->
-    <div class="collapse navbar-collapse" #navigationMenu>
-      <ul class="navbar-nav mr-auto">
-        <ng-container *ngFor="let menu of appMenuQuery.userMenuLeft$ | async">
-          <ng-container *ngIf="checkGuards(menu.guards)">
-            <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown">
-              <li class="nav-item">
-                <a *ngIf="menu.isInternalLink"
-                  routerLink="{{ menu.link }}"
-                  mdbWavesEffect
-                  class="nav-link waves-light"
-                  [id]="menu.e2EId"
-                >
-                  {{ menu.name }}
-                </a>
-                <a *ngIf="!menu.isInternalLink"
-                   mdbWavesEffect
-                   class="nav-link waves-light"
-                   target="_blank"
-                   [href]="menu.link"
-                >
-                  {{menu.name }}
-                </a>
-              </li>
-            </ng-container>
-            <ng-template #dropdown>
-              <li class="nav-item">
-                <div mdbDropdown class="dropdown">
-                  <a
-                    mdbDropdownToggle
-                    mdbWavesEffect
-                    class="nav-link dropdown-toggle waves-light"
-                    [id]="menu.e2EId"
-                    >{{ menu.name }}</a
-                  >
-                  <div
-                    class="dropdown-menu"
-                    *ngIf="menu?.menuItems?.length > 0"
-                  >
-                    <ng-container *ngFor="let subMenu of menu.menuItems">
-                      <a
-                        *ngIf="checkGuards(subMenu.guards) && subMenu.isInternalLink"
-                        class="dropdown-item waves-light"
-                        routerLink="{{ subMenu.link }}"
-                        routerLinkActive="active"
-                        [id]="subMenu.e2EId"
-                      >
-                        {{ subMenu.name }}
-                      </a>
-                      <a
-                        *ngIf="checkGuards(subMenu.guards) && !subMenu.isInternalLink"
-                        class="dropdown-item waves-light"
-                        [href]="subMenu.link"
-                        target="_blank"
-                      >
-                        {{ subMenu.name }}
-                      </a>
-                    </ng-container>
-                  </div>
-                </div>
-              </li>
-            </ng-template>
-          </ng-container>
-        </ng-container>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <ng-container *ngFor="let menu of appMenuQuery.userMenuRight$ | async">
-          <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown">
-            <li class="nav-item">
-              <a
-                routerLink="{{ menu.link }}"
-                mdbWavesEffect
-                class="nav-link waves-light"
-                [id]="menu.e2EId"
-              >
-                {{ menu.name }}
-              </a>
-            </li>
-          </ng-container>
-          <ng-template #dropdown>
-            <li class="nav-item" style="z-index: 1021">
-              <div mdbDropdown class="dropdown">
-                <a
-                  mdbDropdownToggle
-                  mdbWavesEffect
-                  class="nav-link dropdown-toggle waves-light"
-                  [id]="menu.e2EId"
-                  >{{ menu.name }}</a
-                >
-                <div
-                  class="dropdown-menu outbounds-fix"
-                  *ngIf="menu?.menuItems?.length > 0"
-                >
-                  <ng-container *ngFor="let subMenu of menu.menuItems">
-                    <a
-                      *ngIf="checkGuards(subMenu.guards)"
-                      class="dropdown-item waves-light"
-                      routerLink="{{ subMenu.link }}"
-                      routerLinkActive="active"
-                      [id]="subMenu.e2EId"
-                    >
-                      {{ subMenu.name }}
-                    </a>
-                  </ng-container>
-                </div>
-              </div>
-            </li>
-          </ng-template>
-        </ng-container>
-      </ul>
-    </div>
-    <!--right menu-->
-    <!--<div class="pull-right ml-auto">-->
-      <!--<div mdbDropdown class="nav-item dropdown">-->
-        <!--<a-->
-          <!--mdbDropdownToggle-->
-          <!--mdbWavesEffect-->
-          <!--id="userDropdown"-->
-          <!--class="nav-link dropdown-toggle waves-light" *ngIf="userMenu?.name">{{userMenu.name}}</a>-->
-        <!--&lt;!&ndash;dropdown-menu-right doesn't work at navbar, bootstrap bug?&ndash;&gt;-->
-        <!--<div class="dropdown-menu outbounds-fix" *ngIf="userMenu?.submenus?.length">-->
-          <!--<a-->
-            <!--*ngFor="let subMenu of userMenu.submenus"-->
-            <!--id="{{subMenu.e2eId}}"-->
-            <!--class="dropdown-item waves-light"-->
-            <!--routerLink="{{subMenu.link}}"-->
-            <!--routerLinkActive="active">-->
-            <!--{{subMenu.name}}-->
-          <!--</a>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-  </nav>
-</div>
+<mat-tree *ngIf="menu.data" [dataSource]="menu" [treeControl]="treeControl" class="mt-2 ml-2">
+  <mat-tree-node
+    *matTreeNodeDef="let node"
+    matTreeNodePadding=""
+    style="min-height: 0;"
+    [ngClass]="{'children': getLevel(node) > 0}">
+    <ng-container *ngIf="checkGuards(node.guards)">
+      <!-- use a disabled button to provide padding for tree leaf -->
+      <a mat-button
+         color="{{this.router.url === node.link ? 'accent' : ''}}"
+         *ngIf="node.isInternalLink"
+         routerLink="{{ node.link }}"
+         class="nav-link"
+         [id]="node.e2EId"
+      >
+        {{ node.name }}
+      </a>
+      <a mat-button
+         color="{{this.router.url === node.link ? 'accent' : ''}}"
+         *ngIf="!node.isInternalLink"
+         class="nav-link"
+         target="_blank"
+         [href]="node.link"
+      >
+        {{node.name }}
+      </a>
+    </ng-container>
+  </mat-tree-node>
+  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding="" style="margin-right: 1rem; min-height: 0;">
+    <ng-container *ngIf="checkGuards(node.guards)">
+      <button
+        mat-icon-button
+        matTreeNodeToggle
+        [id]="node.e2EId"
+      >
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+      </button>
+      {{node.name}}
+    </ng-container>
+  </mat-tree-node>
+</mat-tree>

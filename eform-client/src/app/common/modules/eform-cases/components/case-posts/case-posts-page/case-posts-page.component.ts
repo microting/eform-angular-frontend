@@ -12,10 +12,12 @@ import {
   CasePostsListModel,
   CommonDictionaryModel,
   TableHeaderElementModel,
+  PaginationModel,
 } from 'src/app/common/models';
 import { ActivatedRoute } from '@angular/router';
 import { CasePostsStateService } from '../store';
 import { AuthStateService } from 'src/app/common/store';
+import {Sort} from '@angular/material/sort';
 
 @AutoUnsubscribe()
 @Component({
@@ -107,13 +109,8 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  sortTable(sort: string) {
-    this.casePostsStateService.onSortTable(sort);
-    this.getCasePosts();
-  }
-
-  changePage(newOffset: any) {
-    this.casePostsStateService.changePage(newOffset);
+  sortTable(sort: Sort) {
+    this.casePostsStateService.onSortTable(sort.active);
     this.getCasePosts();
   }
 
@@ -127,8 +124,8 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-  onPageSizeChanged(pageSize: number) {
-    this.casePostsStateService.updatePageSize(pageSize);
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.casePostsStateService.updatePagination(paginationModel);
     this.getCasePosts();
   }
 }

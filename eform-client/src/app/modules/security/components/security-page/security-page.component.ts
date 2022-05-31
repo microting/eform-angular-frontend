@@ -3,12 +3,13 @@ import {
   SecurityGroupModel,
   SecurityGroupSettingsUpdateModel,
   TableHeaderElementModel,
-  Paged,
+  Paged, PaginationModel,
 } from 'src/app/common/models';
 import { SecurityGroupsService } from 'src/app/common/services';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
 import { SecurityStateService } from '../store';
+import {Sort} from '@angular/material/sort';
 
 @AutoUnsubscribe()
 @Component({
@@ -53,11 +54,6 @@ export class SecurityPageComponent implements OnInit, OnDestroy {
     this.modalGroupDelete.show(securityGroup);
   }
 
-  changePage(offset: number) {
-    this.securityStateService.changePage(offset);
-    this.getSecurityGroups();
-  }
-
   openSettingsModal(securityGroup: SecurityGroupModel) {
     this.modalGroupSettings.show(securityGroup);
   }
@@ -82,13 +78,8 @@ export class SecurityPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-  onPageSizeChanged(pageSize: number) {
-    this.securityStateService.updatePageSize(pageSize);
-    this.getSecurityGroups();
-  }
-
-  onSortTable(sort: string) {
-    this.securityStateService.onSortTable(sort);
+  onSortTable(sort: Sort) {
+    this.securityStateService.onSortTable(sort.active);
     this.getSecurityGroups();
   }
 
@@ -99,5 +90,10 @@ export class SecurityPageComponent implements OnInit, OnDestroy {
         this.getSecurityGroups();
       }
     });
+  }
+
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.securityStateService.updatePagination(paginationModel);
+    this.getSecurityGroups();
   }
 }

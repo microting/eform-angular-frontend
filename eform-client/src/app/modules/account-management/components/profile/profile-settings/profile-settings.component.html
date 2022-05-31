@@ -1,11 +1,11 @@
 <eform-subheader>
   <div class="p-3">
     <button
-      mdbBtn
-      class="btn-success btn-small-height"
+      mat-raised-button
+      color="accent"
+      mdbTooltip="Save settings"
       id="ProfileSettingsSaveBtn"
       (click)="updateUserProfileSettings()"
-      mdbTooltip="Save settings"
     >
       {{ 'Save' | translate }}
     </button>
@@ -14,22 +14,21 @@
 
 <div class="container-fluid mt-4">
   <div class="row mb-4">
-    <div class="col-md-6" *ngIf="authStateService.isAdmin">
+    <div class="col-md-6 mb-3" *ngIf="authStateService.isAdmin">
       <mdb-card>
         <mdb-card-header>
           {{ 'Google Authenticator' | translate }}
         </mdb-card-header>
         <mdb-card-body>
-          <div class="mat-checkbox mb-1">
-            <input
+          <div class="mb-1">
+            <mat-checkbox
               id="2fauthForsed"
               (change)="isTwoFactorEnabledCheckBoxChanged($event)"
-              [checked]="googleAuthInfoModel.isTwoFactorEnabled"
-              [value]="googleAuthInfoModel.isTwoFactorEnabled"
+              [(ngModel)]="googleAuthInfoModel.isTwoFactorEnabled"
               color="primary"
-              type="checkbox"
-            />
-            <label for="2fauthForsed">{{ 'Status' | translate }}</label>
+            >
+              {{ 'Status' | translate }}
+            </mat-checkbox>
           </div>
           <p class="text-danger">
             ({{ 'change will logout you from the application' | translate }})
@@ -46,8 +45,8 @@
             </div>
             <div class="p-0">
               <button
-                mdbBtn
-                class="btn-ar btn-danger"
+                mat-raised-button
+                color="warn"
                 id="deleteGoogleAuthenticatorInfo"
                 mdbTooltip="{{
                   'Remove google authenticator secret key' | translate
@@ -69,50 +68,54 @@
         <mdb-card-body>
           <div class="container-fluid">
             <div class="row">
-              <ng-select *ngIf="authStateService.isAdmin"
-                id="ProfileLanguageSelector"
-                [placeholder]="'Language' | translate"
-                [bindLabel]="'text'"
-                [bindValue]="'locale'"
-                [clearable]="false"
-                [(ngModel)]="userSettingsModel.locale"
-                [items]="languages"
-              ></ng-select>
+              <mat-form-field>
+                <mat-label>{{ 'Language' | translate }}</mat-label>
+                <mtx-select
+                  *ngIf="authStateService.isAdmin"
+                  id="ProfileLanguageSelector"
+                  [bindLabel]="'text'"
+                  [bindValue]="'locale'"
+                  [clearable]="false"
+                  [(ngModel)]="userSettingsModel.locale"
+                  [items]="languages"
+                ></mtx-select>
+              </mat-form-field>
             </div>
             <div class="row">
-              <ng-select *ngIf="authStateService.isAdmin"
-                id="ProfileFormatSelector"
-                [placeholder]="'Formats' | translate"
-                [bindLabel]="'text'"
-                [bindValue]="'id'"
-                [clearable]="false"
-                [(ngModel)]="userSettingsModel.formats"
-                [items]="countries"
-              ></ng-select>
+              <mat-form-field>
+                <mat-label>{{ 'Formats' | translate }}</mat-label>
+                <mtx-select
+                  *ngIf="authStateService.isAdmin"
+                  id="ProfileFormatSelector"
+                  [bindLabel]="'text'"
+                  [bindValue]="'id'"
+                  [clearable]="false"
+                  [(ngModel)]="userSettingsModel.formats"
+                  [items]="countries"
+                ></mtx-select>
+              </mat-form-field>
             </div>
             <div class="row">
-              <ng-select *ngIf="authStateService.isAdmin"
-                id="ProfileTimeZoneSelector"
-                [placeholder]="'Timezone' | translate"
-                [bindLabel]="'name'"
-                [bindValue]="'id'"
-                [clearable]="false"
-                [(ngModel)]="userSettingsModel.timeZone"
-                [items]="timeZones.timeZoneModels"
-              ></ng-select>
+              <mat-form-field>
+                <mat-label>{{ 'Timezone' | translate }}</mat-label>
+                <mtx-select
+                  *ngIf="authStateService.isAdmin"
+                  id="ProfileTimeZoneSelector"
+                  [bindLabel]="'name'"
+                  [bindValue]="'id'"
+                  [clearable]="false"
+                  [(ngModel)]="userSettingsModel.timeZone"
+                  [items]="timeZones.timeZoneModels"
+                ></mtx-select>
+              </mat-form-field>
             </div>
-            <div class="row">
-              <div class="mat-checkbox mb-1">
-                <input
-                  id="darkTheme"
-                  [checked]="userSettingsModel.darkTheme"
-                  [value]="userSettingsModel.darkTheme"
-                  [(ngModel)]="userSettingsModel.darkTheme"
-                  color="primary"
-                  type="checkbox"
-                />
-                <label for="darkTheme">{{ 'Dark theme' | translate }}</label>
-              </div>
+            <div class="row mb-1">
+              <mat-checkbox
+                id="darkTheme"
+                [(ngModel)]="userSettingsModel.darkTheme"
+              >
+                {{ 'Dark theme' | translate }}
+              </mat-checkbox>
             </div>
           </div>
         </mdb-card-body>

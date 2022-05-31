@@ -1,44 +1,25 @@
 import {
   Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
+  Inject,
 } from '@angular/core';
 import { SharedTagModel } from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-shared-tag-delete',
   templateUrl: './shared-tag-delete.component.html',
   styleUrls: ['./shared-tag-delete.component.scss']
 })
-export class SharedTagDeleteComponent implements OnInit {
-  @ViewChild('frame') frame;
-  @Output() tagDelete: EventEmitter<SharedTagModel> = new EventEmitter<
-    SharedTagModel
-  >();
-  @Output() tagDeleteCancelled: EventEmitter<void> = new EventEmitter<void>();
-  tagModel: SharedTagModel = new SharedTagModel();
-
-  constructor() {}
-
-  show(model: SharedTagModel) {
-    this.tagModel = model;
-    this.frame.show();
-  }
-
-  hide() {
-    this.frame.hide();
-  }
-
-  ngOnInit() {}
+export class SharedTagDeleteComponent {
+  constructor(
+    public dialogRef: MatDialogRef<SharedTagDeleteComponent>,
+    @Inject(MAT_DIALOG_DATA) public tagModel: SharedTagModel = new SharedTagModel()) {}
 
   deleteTag() {
-    this.tagDelete.emit(this.tagModel);
+    this.dialogRef.close(this.tagModel);
   }
 
   cancelDelete() {
-    this.frame.hide();
-    this.tagDeleteCancelled.emit();
+    this.dialogRef.close();
   }
 }

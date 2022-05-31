@@ -18,8 +18,16 @@ export class EformsStateService {
     private query: EformsQuery
   ) {}
 
-  getSort(): Observable<SortModel> {
+/*  getSort(): Observable<SortModel> {
     return this.query.selectSort$;
+  }*/
+
+  getActiveSort(): Observable<string> {
+    return this.query.selectActiveSort$;
+  }
+
+  getActiveSortDirection(): Observable<'asc' | 'desc'> {
+    return this.query.selectActiveSortDirection$;
   }
 
   getTagIds(): Observable<number[]> {

@@ -4,6 +4,7 @@ import {
   Paged,
   SecurityGroupModel,
   TableHeaderElementModel,
+  PaginationModel,
 } from 'src/app/common/models';
 import {
   SecurityGroupsService,
@@ -12,6 +13,7 @@ import {
 } from 'src/app/common/services';
 import { UsersStateService } from '../store';
 import { AuthStateService } from 'src/app/common/store';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-users-page',
@@ -68,10 +70,11 @@ export class UsersPageComponent implements OnInit {
   }
 
   getUserInfoList() {
-    this.usersStateService.getAllUsers().subscribe((data) => {
-      if (data && data.model) {
-        this.userInfoModelList = data.model;
-      }
+    this.usersStateService.getAllUsers()
+      .subscribe((data) => {
+        if (data && data.model) {
+          this.userInfoModelList = data.model;
+        }
     });
   }
 
@@ -105,11 +108,6 @@ export class UsersPageComponent implements OnInit {
     this.removeUserModal.show();
   }
 
-  changePage(offset: number) {
-    this.usersStateService.changePage(offset);
-    this.getUserInfoList();
-  }
-
   checked(e: any) {
     if (e.target && e.target.checked) {
       this.adminService.enableTwoFactorAuth().subscribe(
@@ -130,13 +128,8 @@ export class UsersPageComponent implements OnInit {
     }
   }
 
-  onSortTable(sort: string) {
-    this.usersStateService.onSortTable(sort);
-    this.getUserInfoList();
-  }
-
-  onPageSizeChanged(pageSize: number) {
-    this.usersStateService.updatePageSize(pageSize);
+  onSortTable(sort: Sort) {
+    this.usersStateService.onSortTable(sort.active);
     this.getUserInfoList();
   }
 
@@ -147,5 +140,10 @@ export class UsersPageComponent implements OnInit {
         this.getUserInfoList();
       }
     });
+  }
+
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.usersStateService.updatePagination(paginationModel);
+    this.getUserInfoList();
   }
 }

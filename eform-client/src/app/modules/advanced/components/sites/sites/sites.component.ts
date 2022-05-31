@@ -4,9 +4,9 @@ import {
   CommonDictionaryModel,
   TableHeaderElementModel,
 } from 'src/app/common/models';
+import { EformsTagsComponent } from 'src/app/common/modules/eform-shared-tags/components';
 import { EformTagService, SitesService } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
-import { SiteTagsComponent } from '../';
 
 @Component({
   selector: 'app-sites',
@@ -24,8 +24,7 @@ export class SitesComponent implements OnInit {
   ) {}
   @ViewChild('modalSiteEdit', { static: true }) modalSiteEdit;
   @ViewChild('modalSiteDelete', { static: true }) modalSiteDelete;
-  @ViewChild('modalTags', { static: true })
-  modalSiteTags: SiteTagsComponent;
+  @ViewChild('modalTags', { static: true }) modalSiteTags: EformsTagsComponent;
   sitesDto: Array<SiteNameDto> = [];
   selectedSiteDto: SiteNameDto = new SiteNameDto();
   availableTags: Array<CommonDictionaryModel> = [];

@@ -8,7 +8,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3>{{ 'New User' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
+        <button class="close" data-dismiss="modal" (click)="hide()">
           <span>×</span>
         </button>
       </div>
@@ -28,7 +28,7 @@
                   />
                   <label for="createFirstName">{{
                     'First name' | translate
-                  }}</label>
+                    }}</label>
                 </div>
               </div>
               <div class="col-md-6">
@@ -43,7 +43,7 @@
                   />
                   <label for="createLastName">{{
                     'Last name' | translate
-                  }}</label>
+                    }}</label>
                 </div>
               </div>
             </div>
@@ -75,42 +75,46 @@
                     name="createPassword"
                   />
                   <label for="createPassword"
-                    >{{ 'Password' | translate }}*</label
+                  >{{ 'Password' | translate }}*</label
                   >
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 ng-select-wrapper">
-                <ng-select
-                  required
-                  bindLabel="name"
-                  bindValue="id"
-                  [clearable]="false"
-                  [(ngModel)]="newUserModel.role"
-                  name="createRole"
-                  [placeholder]="'Role' | translate"
-                  id="createRole"
-                  [items]="[
+                <mat-form-field>
+                  <mat-label>{{ 'Role' | translate }}</mat-label>
+                  <mtx-select
+                    required
+                    bindLabel="name"
+                    bindValue="id"
+                    [clearable]="false"
+                    [(ngModel)]="newUserModel.role"
+                    name="createRole"
+                    id="createRole"
+                    [items]="[
                     { id: 'admin', name: 'Admin' | translate },
                     { id: 'user', name: 'User' | translate }
                   ]"
-                ></ng-select>
+                  ></mtx-select>
+                </mat-form-field>
               </div>
               <div
                 class="col-md-6 ng-select-wrapper"
                 *ngIf="newUserModel.role !== 'admin'"
               >
-                <ng-select
-                  required
-                  bindLabel="groupName"
-                  bindValue="id"
-                  [(ngModel)]="newUserModel.groupId"
-                  name="createGroup"
-                  id="createGroup"
-                  [placeholder]="'Group' | translate"
-                  [items]="availableGroups.entities"
-                ></ng-select>
+                <mat-form-field>
+                  <mat-label>{{ 'Group' | translate }}</mat-label>
+                  <mtx-select
+                    required
+                    bindLabel="groupName"
+                    bindValue="id"
+                    [(ngModel)]="newUserModel.groupId"
+                    name="createGroup"
+                    id="createGroup"
+                    [items]="availableGroups.entities"
+                  ></mtx-select>
+                </mat-form-field>
               </div>
             </div>
           </form>
@@ -118,8 +122,9 @@
       </div>
       <div class="modal-footer">
         <button
-          mdbBtn
-          class="btn-success btn-small-height"
+          mat-raised-button
+          color="accent"
+          class="mr-2"
           [disabled]="!createForm.form.valid"
           type="submit"
           (click)="createUser()"
@@ -128,9 +133,8 @@
           {{ 'Create' | translate }}
         </button>
         <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
-          (click)="frame.hide()"
+          mat-raised-button
+          (click)="hide()"
           type="button"
           id="createAdministrationUserCancelBtn"
         >

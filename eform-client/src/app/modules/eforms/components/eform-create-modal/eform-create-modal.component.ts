@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {EFormCreateModel} from 'src/app/common/models/eforms';
 import {EFormService} from 'src/app/common/services/eform';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-eform-create-modal',
@@ -9,19 +10,14 @@ import {EFormService} from 'src/app/common/services/eform';
   styleUrls: ['./eform-create-modal.component.scss']
 })
 export class EformCreateModalComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Input() availableTags: Array<CommonDictionaryModel> = [];
-  @Output() onEformCreated: EventEmitter<void> = new EventEmitter<void>();
   eFormCreateModel: EFormCreateModel = new EFormCreateModel();
 
-  constructor(private eFormService: EFormService) {
+  constructor(private eFormService: EFormService,
+  public dialogRef: MatDialogRef<EformCreateModalComponent>,
+  @Inject(MAT_DIALOG_DATA) public availableTags: Array<CommonDictionaryModel> = []) {
   }
 
   ngOnInit() {
-  }
-
-  show() {
-    this.frame.show();
   }
 
   createTemplate() {
@@ -30,10 +26,13 @@ export class EformCreateModalComponent implements OnInit {
     }
     this.eFormService.createSingle(this.eFormCreateModel).subscribe((operation => {
       if (operation && operation.success) {
-        this.onEformCreated.emit();
-        this.eFormCreateModel = new EFormCreateModel;
-        this.frame.hide();
+        this.hide(true);
       }
     }));
+  }
+
+  hide(result = false) {
+    this.dialogRef.close(result);
+    this.eFormCreateModel = new EFormCreateModel;
   }
 }

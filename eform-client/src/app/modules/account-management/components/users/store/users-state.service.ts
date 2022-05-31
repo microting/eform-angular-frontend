@@ -4,7 +4,6 @@ import {
   OperationDataResult,
   Paged,
   PaginationModel,
-  SortModel,
   UserInfoModel,
 } from 'src/app/common/models';
 import { UsersQuery, UsersStore } from './';
@@ -40,19 +39,27 @@ export class UsersStateService {
   //   return this.query.selectIsSortDsc$;
   // }
 
-  getSort(): Observable<SortModel> {
-    return this.query.selectSort$;
+  // getSort(): Observable<SortModel> {
+  //   return this.query.selectSort$;
+  // }
+
+  getActiveSort(): Observable<string> {
+    return this.query.selectActiveSort$;
+  }
+
+  getActiveSortDirection(): Observable<'asc' | 'desc'> {
+    return this.query.selectActiveSortDirection$;
   }
 
   // getOffset(): Observable<number> {
   //   return this.query.selectOffset$;
   // }
 
-  getPageSize(): Observable<number> {
+  /*getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
-  }
+  }*/
 
-  updatePageSize(pageSize: number) {
+  /*updatePageSize(pageSize: number) {
     this.store.update((state) => ({
       pagination: {
         ...state.pagination,
@@ -60,7 +67,7 @@ export class UsersStateService {
       },
     }));
     this.checkOffset();
-  }
+  }*/
 
   onSortTable(sort: string) {
     const localPageSettings = updateTableSort(
@@ -73,11 +80,11 @@ export class UsersStateService {
     }));
   }
 
-  changePage(offset: number) {
+  /*changePage(offset: number) {
     this.store.update((state) => ({
       pagination: { ...state.pagination, offset: offset },
     }));
-  }
+  }*/
 
   onDelete() {
     this.store.update((state) => ({
@@ -104,5 +111,16 @@ export class UsersStateService {
 
   getPagination(): Observable<PaginationModel> {
     return this.query.selectPagination$;
+  }
+
+  updatePagination(pagination: PaginationModel) {
+    this.store.update((state) => ({
+      pagination: {
+        ...state.pagination,
+        pageSize: pagination.pageSize,
+        offset: pagination.offset,
+      },
+    }));
+    // this.checkOffset();
   }
 }

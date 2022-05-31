@@ -21,18 +21,22 @@ import {
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { securityPersistProvider } from './components/store/security.store';
+import {MatSortModule} from '@angular/material/sort';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
-  imports: [
-    EformSharedModule,
-    CommonModule,
-    SecurityRouting,
-    NgSelectModule,
-    TranslateModule,
-    MDBBootstrapModule,
-    FormsModule,
-    FontAwesomeModule,
-  ],
+    imports: [
+        EformSharedModule,
+        CommonModule,
+        SecurityRouting,
+        NgSelectModule,
+        TranslateModule,
+        MDBBootstrapModule,
+        FormsModule,
+        FontAwesomeModule,
+        MatSortModule,
+        MatCheckboxModule,
+    ],
   declarations: [
     SecurityPageComponent,
     SecurityGroupCreateComponent,

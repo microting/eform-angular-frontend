@@ -9,6 +9,15 @@ import {
 } from '@angular/core';
 import { FolderDto } from 'src/app/common/models/dto/folder.dto';
 import { ITreeState, TreeComponent } from '@circlon/angular-tree-component';
+import {FlatTreeControl} from '@angular/cdk/tree';
+import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
+import * as R from 'ramda';
+
+interface FlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
+}
 
 @Component({
   selector: 'app-eform-tree-view-picker',
@@ -16,7 +25,6 @@ import { ITreeState, TreeComponent } from '@circlon/angular-tree-component';
   styleUrls: ['./eform-tree-view-picker.component.scss'],
 })
 export class EformTreeViewPickerComponent implements OnChanges, OnDestroy {
-  @ViewChild('tree') tree: TreeComponent;
   @Input() nodes: FolderDto[] = [];
   @Input() showActions = false;
   @Input() showCreateAction = true;
@@ -32,41 +40,88 @@ export class EformTreeViewPickerComponent implements OnChanges, OnDestroy {
   @Output() nodeSelected: EventEmitter<FolderDto> = new EventEmitter<
     FolderDto
   >();
-  state: ITreeState;
-  options = { animateExpand: true };
   collapsed = true;
+  selectedFolderIds: number[] = [];
 
-  edit(e: any, node: FolderDto) {
-    e.stopPropagation();
-    this.editNode.emit(node);
+  private _transformer = (node: FolderDto, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      level: level,
+      id: node.id,
+      microtingUId: node.microtingUId,
+      description: node.description,
+      createdAt: node.createdAt,
+    };
+  };
+
+  treeControl = new FlatTreeControl<FlatNode>(
+    node => node.level,
+    node => node.expandable,
+  );
+
+  treeFlattener = new MatTreeFlattener(
+    this._transformer,
+    node => node.level,
+    node => node.expandable,
+    node => node.children,
+  );
+
+  hasChild = (_: number, node: FlatNode) => node.expandable;
+
+  getLevel = (node: FlatNode) => node.level;
+
+  folders = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+  delete(folderId: number) {
+    const folder =  this.flatten(this.nodes).find((node) => node.id === folderId)
+    this.deleteNode.emit(folder);
   }
 
-  createChild(e: any, node: FolderDto) {
-    e.stopPropagation();
-    this.createNode.emit(node);
+  edit(folderId: number) {
+    const folder = this.flatten(this.nodes).find((node) => node.id === folderId)
+    this.editNode.emit(folder);
   }
 
-  delete(e: any, node: FolderDto) {
-    e.stopPropagation();
-    this.deleteNode.emit(node);
+  createChild(folderId: number) {
+    const folder =  this.flatten(this.nodes).find((node) => node.id === folderId)
+    this.createNode.emit(folder);
   }
 
-  selected(node: FolderDto, parent: any, isNodeActive: boolean) {
-    this.nodeSelected.emit(isNodeActive ? {...node, parent: parent.data.virtual ? null : parent.data} : null);
+  selected(folderId: number) {
+    if(!this.lockSelectedNode) {
+      const folder = this.flatten(this.nodes).find((node) => node.id === folderId);
+      this.nodeSelected.emit(folder);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes && changes.focusedNodeId) {
-      const newNodeValue = changes.focusedNodeId.currentValue;
-      if (newNodeValue) {
-        setTimeout(() => {
-          const foundNode = this.tree.treeModel.getNodeById(newNodeValue);
-          foundNode.setActiveAndVisible();
-        }, 500);
-      } else {
-        this.tree ? this.tree.treeModel.setActiveNode(null, null) : '';
+    if(changes && changes.nodes && changes.nodes.currentValue){
+      this.folders.data = changes.nodes.currentValue;
+    }
+    if (changes && changes.focusedNodeId && changes.focusedNodeId.currentValue) {
+      this.selectedFolderIds = [];
+      const flattenFolders = this.flatten(this.nodes).reverse();
+      let findId = changes.focusedNodeId.currentValue;
+      for (let i = 0; i < flattenFolders.length; i++) {
+        if (flattenFolders[i].id === findId) {
+          this.selectedFolderIds = [...this.selectedFolderIds, flattenFolders[i].id];
+          findId = flattenFolders[i].parentId;
+        }
       }
     }
+  }
+
+  flatten(array: FolderDto[]) {
+    let returnArray = [...array];
+    for(let i = 0; i < array.length; i++) {
+      if(array[i].children) {
+        returnArray = [...returnArray, ...this.flatten(array[i].children)];
+      }/* else {
+        returnArray = [...returnArray, ...array[i].children];
+      }*/
+    }
+    return returnArray;
   }
 
   ngOnDestroy(): void {

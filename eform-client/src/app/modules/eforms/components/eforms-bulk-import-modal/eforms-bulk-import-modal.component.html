@@ -1,123 +1,100 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade"
-  #frame="mdbModal"
->
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Upload excel file' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="excelEformsModal()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-xs-12 col-md-12">
-              <button
-                mdbBtn
-                class="btn-primary btn-small-height"
-                *ngIf="xlsxEformsFileUploader?.queue?.length == 0"
-                (click)="xlsxEforms.click()"
-              >
-                {{ 'Upload' | translate }}
-              </button>
-              <button
-                mdbBtn
-                class="btn-warning btn-small-height"
-                *ngIf="xlsxEformsFileUploader?.queue?.length > 0"
-                (click)="xlsxEforms.click()"
-              >
-                {{ 'Pending' | translate }}
-              </button>
-              <input
-                class="form-control"
-                type="file"
-                ng2FileSelect
-                (onFileSelected)="uploadExcelEformsFile()"
-                [uploader]="xlsxEformsFileUploader"
-                #xlsxEforms
-                id="xlsxImportInput"
-                style="display: none"
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-md-12">
-              <div style="width: 100%">
-                {{ 'Uploading progress:' | translate }}
-                <div class="progress">
-                  <div
-                    class="progress-bar"
-                    role="progressbar"
-                    [ngStyle]="{
-                      width:
-                        xlsxEformsFileUploader?.queue?.length !== 0
-                          ? xlsxEformsFileUploader.progress + '%'
-                          : ''
-                    }"
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row p-1 mt-4 table-responsive no-gutters">
-            <table
-              mdbTable
-              striped="true"
-              hover="true"
-              small="true"
-              class="z-depth-1 text-center"
-            >
-              <thead>
-                <tr>
-                  <th scope="col">
-                    {{ 'Column' | translate }}
-                  </th>
-                  <th scope="col">
-                    {{ 'Row' | translate }}
-                  </th>
-                  <th scope="col">
-                    {{ 'Error' | translate }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="tableBody">
-                <tr *ngFor="let error of errors">
-                  <td id="errorColumn">
-                    {{ error.col }}
-                  </td>
-                  <td id="errorRow">
-                    {{ error.row }}
-                  </td>
-                  <td id="errorMessage">
-                    {{ error.message }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <!--        <button-->
-        <!--          mdbBtn-->
-        <!--          class="btn-success btn-small-height"-->
-        <!--          (click)="uploadExcelEformsFile()"-->
-        <!--          id="uploadExcelEformsFileBtn"-->
-        <!--        >-->
-        <!--          {{ 'Upload' | translate }}-->
-        <!--        </button>-->
-        <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
-          (click)="excelEformsModal()"
-        >
-          {{ 'Close' | translate }}
-        </button>
+<h3 mat-dialog-title>{{ 'Upload excel file' | translate }}</h3>
+<div mat-dialog-content class="">
+  <div class="d-flex flex-row justify-content-start">
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="xlsxEformsFileUploader?.queue?.length == 0"
+      (click)="xlsxEforms.click()"
+    >
+      {{ 'Upload' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      *ngIf="xlsxEformsFileUploader?.queue?.length > 0"
+      (click)="xlsxEforms.click()"
+    >
+      {{ 'Pending' | translate }}
+    </button>
+    <input
+      type="file"
+      ng2FileSelect
+      (onFileSelected)="uploadExcelEformsFile()"
+      [uploader]="xlsxEformsFileUploader"
+      #xlsxEforms
+      id="xlsxImportInput"
+      style="display: none"
+    />
+  </div>
+  <div class="">
+    <div style="width: 100%">
+      {{ 'Uploading progress:' | translate }}
+      <div class="progress">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          [ngStyle]="{
+                    width:
+                      xlsxEformsFileUploader?.queue?.length !== 0
+                        ? xlsxEformsFileUploader.progress + '%'
+                        : ''
+                  }"
+        ></div>
       </div>
     </div>
   </div>
+  <div class="p-1 mt-4 table-responsive no-gutters">
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
+      <thead>
+      <tr>
+        <th scope="col">
+          {{ 'Column' | translate }}
+        </th>
+        <th scope="col">
+          {{ 'Row' | translate }}
+        </th>
+        <th scope="col">
+          {{ 'Error' | translate }}
+        </th>
+      </tr>
+      </thead>
+      <tbody id="tableBody">
+      <tr *ngFor="let error of errors">
+        <td id="errorColumn">
+          {{ error.col }}
+        </td>
+        <td id="errorRow">
+          {{ error.row }}
+        </td>
+        <td id="errorMessage">
+          {{ error.message }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <!--        <button-->
+  <!--          mdbBtn-->
+  <!--          class="btn-success btn-small-height"-->
+  <!--          (click)="uploadExcelEformsFile()"-->
+  <!--          id="uploadExcelEformsFileBtn"-->
+  <!--        >-->
+  <!--          {{ 'Upload' | translate }}-->
+  <!--        </button>-->
+  <button
+    mat-raised-button
+    (click)="excelEformsModal()"
+  >
+    {{ 'Close' | translate }}
+  </button>
+</div>
+

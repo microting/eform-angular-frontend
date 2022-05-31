@@ -37,25 +37,20 @@
         <div class="card-body">
           <ng-container *ngFor="let permission of permissionType.permissions">
             <div
-              class="mat-checkbox mb-2"
+              class="mb-2"
               [ngStyle]="{
                 display:
                   permissionType.name == 'Eforms' ? 'inline-block' : 'block'
               }"
               [ngClass]="{ 'col-md-3': permissionType.name == 'Eforms' }"
             >
-              <input
+              <mat-checkbox
                 id="{{ permissionType.name }}_{{ permission.claimName }}"
-                [checked]="permission.isEnabled"
-                [value]="permission.isEnabled"
                 [(ngModel)]="permission.isEnabled"
                 color="primary"
-                type="checkbox"
-              />
-              <label
-                for="{{ permissionType.name }}_{{ permission.claimName }}"
-                >{{ permission.permissionName | translate }}</label
               >
+                {{ permission.permissionName | translate }}
+              </mat-checkbox>
             </div>
           </ng-container>
         </div>

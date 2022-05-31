@@ -7,14 +7,20 @@
       <div class="modal-body">
         <h4>{{'If you leave before saving your changes will be lost' | translate}}.</h4>
       </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <button mdbBtn class="btn-success btn-small-height" (click)="confirmationClicked(true)">
+      <div class="modal-footer d-flex justify-content-around">
+        <button
+          mat-raised-button
+          color="accent" (click)="confirmationClicked(true)">
           {{ 'Save & Leave' | translate }}
         </button>
-        <button mdbBtn class="btn-danger btn-small-height" (click)="confirmationClicked(false)">
+        <button
+          mat-raised-button
+          color="warn" (click)="confirmationClicked(false)">
           {{ 'Leave' | translate }}
         </button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="cancelExit()">{{'Cancel' | translate}}</button>
+        <button
+          mat-raised-button
+          (click)="cancelExit()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

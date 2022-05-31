@@ -6,6 +6,7 @@ import { GoogleAuthService } from 'src/app/common/services';
 
 @Component({
   selector: 'app-auth',
+  styleUrls:  ['./auth.component.scss'],
   templateUrl: './auth.component.html',
 })
 export class AuthComponent implements OnInit {
@@ -16,7 +17,7 @@ export class AuthComponent implements OnInit {
   constructor(
     private router: Router,
     private googleAuthService: GoogleAuthService,
-    private settingsService: AppSettingsService
+    public settingsService: AppSettingsService,
   ) {}
 
   ngOnInit() {

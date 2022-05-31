@@ -8,7 +8,7 @@ import {
   TemplateDto,
   CaseListModel,
   CaseModel,
-  TableHeaderElementModel,
+  TableHeaderElementModel, PaginationModel,
 } from 'src/app/common/models';
 import {
   EFormService,
@@ -20,6 +20,7 @@ import { CasesStateService } from '../store';
 import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
+import {Sort} from '@angular/material/sort';
 
 @AutoUnsubscribe()
 @Component({
@@ -73,8 +74,8 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     this.modalRemoveCase.show(caseModel, this.currentTemplate.id);
   }
 
-  sortTable(sort: string) {
-    this.caseStateService.onSortTable(sort);
+  sortTable(sort: Sort) {
+    this.caseStateService.onSortTable(sort.active);
     this.loadAllCases();
   }
 
@@ -142,16 +143,6 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     } else {
       return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
     }
-  }
-
-  changePage(offset: number) {
-    this.caseStateService.changePage(offset);
-    this.loadAllCases();
-  }
-
-  onPageSizeChanged(newPageSize: number) {
-    this.caseStateService.updatePageSize(newPageSize);
-    this.loadAllCases();
   }
 
   onCaseDeleted() {
@@ -255,5 +246,10 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.caseStateService.updatePagination(paginationModel);
+    this.loadAllCases();
   }
 }

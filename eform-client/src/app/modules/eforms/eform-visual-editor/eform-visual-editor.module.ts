@@ -1,20 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { TranslateModule } from '@ngx-translate/core';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { DragulaModule } from 'ng2-dragula';
-import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
-import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
-import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {TranslateModule} from '@ngx-translate/core';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {DragulaModule} from 'ng2-dragula';
+import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
+import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
+import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {
   VisualEditorChecklistModalComponent,
   EformVisualEditorContainerComponent,
   VisualEditorFieldModalComponent,
   EformVisualEditorHeaderComponent,
-  EformVisualEditorTagsComponent,
   VisualEditorFieldComponent,
   VisualEditorChecklistComponent,
   VisualEditorFieldDeleteModalComponent,
@@ -26,13 +25,13 @@ import {
   VisualEditorAdditionalFieldEntitySearchComponent,
   VisualEditorAdditionalFieldEntitySelectComponent,
 } from './components';
-import { EformVisualEditorRouting } from './eform-visual-editor.routing';
+import {EformVisualEditorRouting} from './eform-visual-editor.routing';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
     EformVisualEditorContainerComponent,
     EformVisualEditorHeaderComponent,
-    EformVisualEditorTagsComponent,
     VisualEditorFieldModalComponent,
     VisualEditorChecklistModalComponent,
     VisualEditorFieldComponent,
@@ -59,6 +58,8 @@ import { EformVisualEditorRouting } from './eform-visual-editor.routing';
     EformImportedModule,
     FontAwesomeModule,
     EformSharedTagsModule,
+    MatCheckboxModule,
   ],
 })
-export class EformVisualEditorModule {}
+export class EformVisualEditorModule {
+}

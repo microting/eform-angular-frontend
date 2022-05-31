@@ -47,24 +47,32 @@ import {
 } from './components';
 
 import { casePostsPersistProvider } from './components/case-posts/store';
+import {MatSortModule} from '@angular/material/sort';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
-  imports: [
-    TranslateModule,
-    MDBBootstrapModule,
-    EformSharedModule,
-    CommonModule,
-    NgSelectModule,
-    EformImportedModule,
-    GallerizeModule,
-    LightboxModule,
-    GalleryModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    FormsModule,
-    FontAwesomeModule,
-    RouterModule,
-  ],
+    imports: [
+        TranslateModule,
+        MDBBootstrapModule,
+        EformSharedModule,
+        CommonModule,
+        NgSelectModule,
+        EformImportedModule,
+        GallerizeModule,
+        LightboxModule,
+        GalleryModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
+        FormsModule,
+        FontAwesomeModule,
+        RouterModule,
+        MatSortModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatIconModule,
+    ],
   declarations: [
     CaseEditNavComponent,
     CaseEditSwitchComponent,

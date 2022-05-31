@@ -1,9 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 
 import {
   ChangePasswordComponent,
@@ -13,22 +11,32 @@ import {
   UserEditModalComponent,
   UsersPageComponent,
 } from './components';
-import { AccountManagementRouting } from './account-management.routing';
-import { TranslateModule } from '@ngx-translate/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { usersPersistProvider } from './components/users/store/users.store';
+import {AccountManagementRouting} from './account-management.routing';
+import {TranslateModule} from '@ngx-translate/core';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {usersPersistProvider} from './components/users/store/users.store';
+import {MatSortModule} from '@angular/material/sort';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MtxSelectModule} from '@ng-matero/extensions/select';
 
 @NgModule({
   imports: [
     CommonModule,
     AccountManagementRouting,
-    NgSelectModule,
-    MDBBootstrapModule,
     EformSharedModule,
     TranslateModule,
     ReactiveFormsModule,
     FormsModule,
     FontAwesomeModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MDBBootstrapModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MtxSelectModule,
   ],
   declarations: [
     ChangePasswordComponent,
@@ -40,4 +48,5 @@ import { usersPersistProvider } from './components/users/store/users.store';
   ],
   providers: [usersPersistProvider],
 })
-export class AccountManagementModule {}
+export class AccountManagementModule {
+}

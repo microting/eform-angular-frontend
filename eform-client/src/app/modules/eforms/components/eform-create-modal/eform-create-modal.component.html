@@ -1,62 +1,59 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Create eForm' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <ng-select
-                class="custom"
-                dropdownPosition="'bottom'"
-                [placeholder]="'Tags' | translate"
-                [(ngModel)]="eFormCreateModel.tagIds"
-                [bindValue]="'id'"
-                [bindLabel]="'name'"
-                [items]="availableTags"
-                id="createEFormMultiSelector"
-                [multiple]="true"></ng-select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="md-form">
-                <input mdbInput type="text" [(ngModel)]="eFormCreateModel.newTag" name="addTagInput"
-                       class="form-control" id="addTagInput">
-                <label for="addTagInput">{{'New tags' | translate}}</label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="md-form">
-                <textarea
-                  mdbInput [(ngModel)]="eFormCreateModel.eFormXml"
-                  placeholder="{{ 'Paste XML here' | translate }}"
-                  name="eFormXML" id="eFormXml" rows="18"
-                  class="md-textarea form-control"></textarea>
-                <label for="eFormXml">{{ 'XML from eForm Builder' | translate }}</label>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height"
-                id="createEformBtn"
-                [disabled]="!eFormCreateModel.eFormXml"
-                (click)="createTemplate()">{{'Create' | translate}}
-        </button>
-        <button mdbBtn id="cancelCreateEformBtn" class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Close' |
-          translate}}
-        </button>
-      </div>
-    </div>
+<h3 mat-dialog-title>{{ 'Create eForm' | translate }}</h3>
+<div mat-dialog-content class="d-flex flex-column">
+  <div class="ng-select-wrapper">
+    <mat-form-field>
+      <mat-label>{{ 'Tags' | translate }}</mat-label>
+      <mtx-select
+        class="custom"
+        [dropdownPosition]="'bottom'"
+        [(ngModel)]="eFormCreateModel.tagIds"
+        [bindValue]="'id'"
+        [bindLabel]="'name'"
+        [items]="availableTags"
+        id="createEFormMultiSelector"
+        [multiple]="true">
+      </mtx-select>
+    </mat-form-field>
+  </div>
+  <div class="d-flex flex-row">
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="eFormCreateModel.newTag"
+        id="addTagInput">
+      <mat-label>{{'New tags' | translate}}</mat-label>
+    </mat-form-field>
+  </div>
+  <div class="d-flex flex-row">
+    <mat-form-field>
+      <textarea
+        matInput
+        [(ngModel)]="eFormCreateModel.eFormXml"
+        placeholder="{{ 'Paste XML here' | translate }}"
+        id="eFormXml"
+        rows="18"
+      ></textarea>
+      <mat-label>{{ 'XML from eForm Builder' | translate }}</mat-label>
+    </mat-form-field>
   </div>
 </div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    id="createEformBtn"
+    [disabled]="!eFormCreateModel.eFormXml"
+    (click)="createTemplate()"
+  >
+    {{'Create' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="cancelCreateEformBtn"
+    (click)="hide()"
+  >
+    {{'Close' | translate}}
+  </button>
+</div>
+

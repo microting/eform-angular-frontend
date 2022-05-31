@@ -4,7 +4,7 @@ headerSettingsModel.mainTextVisible ||
 headerSettingsModel.secondaryTextVisible">
   <div class="d-flex">
     <div class="logo-container mr-auto ml-2 pt-1">
-      <img height="60px" id="site-header-image" [src]="logoImage | authImage | async" *ngIf="headerSettingsModel.imageLinkVisible">
+      <img height="60px" id="site-header-image" [src]="logoImage | authImage | async" *ngIf="headerSettingsModel.imageLinkVisible" alt="">
     </div>
     <div class="mr-2 mt-2 text-right">
       <h4 *ngIf="headerSettingsModel.mainTextVisible">

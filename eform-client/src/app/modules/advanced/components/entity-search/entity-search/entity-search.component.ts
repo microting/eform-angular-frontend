@@ -2,11 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   AdvEntitySearchableGroupModel,
   Paged,
+  PaginationModel,
   TableHeaderElementModel,
 } from 'src/app/common/models';
 import { EntitySearchService } from 'src/app/common/services';
 import { EntitySearchStateService } from '../store';
 import { AuthStateService } from 'src/app/common/store';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-searchable-list',
@@ -53,11 +55,6 @@ export class EntitySearchComponent implements OnInit {
       });
   }
 
-  changePage(offset: number) {
-    this.entitySearchStateService.changePage(offset);
-    this.getEntitySearchableGroupList();
-  }
-
   openModalSearchRemove(selectedSearchModel: AdvEntitySearchableGroupModel) {
     this.selectedAdvGroup = selectedSearchModel;
     this.modalSearchRemove.show(this.selectedAdvGroup);
@@ -68,18 +65,18 @@ export class EntitySearchComponent implements OnInit {
     this.getEntitySearchableGroupList();
   }
 
-  sortTable(sort: string) {
-    this.entitySearchStateService.onSortTable(sort);
-    this.getEntitySearchableGroupList();
-  }
-
-  onPageSizeChanged(pageSize: number) {
-    this.entitySearchStateService.updatePageSize(pageSize);
+  sortTable(sort: Sort) {
+    this.entitySearchStateService.onSortTable(sort.active);
     this.getEntitySearchableGroupList();
   }
 
   onEntityRemoved() {
     this.entitySearchStateService.onDelete();
+    this.getEntitySearchableGroupList();
+  }
+
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.entitySearchStateService.updatePagination(paginationModel);
     this.getEntitySearchableGroupList();
   }
 }

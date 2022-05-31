@@ -7,15 +7,14 @@ import {TranslateModule} from '@ngx-translate/core';
 import {
   DateFormatterComponent,
   EformCollapseToggleComponent,
-  EformPageSizeComponent,
   EformPaginationComponent,
   EformSubheaderComponent,
   EformTreeViewPickerComponent,
   StatusBarComponent,
-  EformTableHeaderSortableComponent,
   StatusBarCompactComponent,
   EntityListElementsComponent,
   EntityItemEditNameComponent,
+  EformNewSubheaderComponent,
 } from './components';
 import {
   AuthImagePipe,
@@ -28,22 +27,35 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {EformTableHeadersComponent} from './components';
 import {RouterModule} from '@angular/router';
 import {DragulaModule} from 'ng2-dragula';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    NgSelectModule,
-    FormsModule,
-    TreeModule,
-    FontAwesomeModule,
-    RouterModule,
-    DragulaModule,
-    MDBBootstrapModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        NgSelectModule,
+        FormsModule,
+        TreeModule,
+        FontAwesomeModule,
+        RouterModule,
+        DragulaModule,
+        MDBBootstrapModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        MatTreeModule,
+        MatMenuModule
+    ],
   declarations: [
     EformPaginationComponent,
-    EformPageSizeComponent,
     EformSubheaderComponent,
     StatusBarComponent,
     DateFormatterComponent,
@@ -52,15 +64,14 @@ import {DragulaModule} from 'ng2-dragula';
     SafeHtmlPipe,
     EformTreeViewPickerComponent,
     EformCollapseToggleComponent,
-    EformTableHeaderSortableComponent,
     EformTableHeadersComponent,
     StatusBarCompactComponent,
     EntityListElementsComponent,
     EntityItemEditNameComponent,
+    EformNewSubheaderComponent,
   ],
   exports: [
     EformPaginationComponent,
-    EformPageSizeComponent,
     StatusBarComponent,
     DateFormatterComponent,
     EformTreeViewPickerComponent,
@@ -73,6 +84,7 @@ import {DragulaModule} from 'ng2-dragula';
     StatusBarCompactComponent,
     EntityListElementsComponent,
     EntityItemEditNameComponent,
+    EformNewSubheaderComponent,
   ],
 })
 export class EformSharedModule {

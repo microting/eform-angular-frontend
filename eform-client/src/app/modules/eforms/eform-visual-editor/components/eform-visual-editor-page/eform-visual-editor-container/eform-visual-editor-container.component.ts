@@ -16,7 +16,6 @@ import {
   EformVisualEditorRecursionFieldModel,
   EformVisualEditorUpdateModel,
 } from 'src/app/common/models';
-import { SharedTagsComponent } from 'src/app/common/modules/eform-shared-tags/components';
 import {
   EformTagService,
   EformVisualEditorService,
@@ -26,6 +25,7 @@ import { VisualEditorFieldModalComponent } from '../../';
 import { DragulaService } from 'ng2-dragula';
 import { CollapseComponent } from 'angular-bootstrap-md';
 import { AuthStateService } from 'src/app/common/store';
+import { EformsTagsComponent } from 'src/app/common/modules/eform-shared-tags/components';
 
 @AutoUnsubscribe()
 @Component({
@@ -35,7 +35,7 @@ import { AuthStateService } from 'src/app/common/store';
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   @ViewChild('collapse') collapse: CollapseComponent;
-  @ViewChild('tagsModal') tagsModal: SharedTagsComponent;
+  @ViewChild('tagsModal') tagsModal: EformsTagsComponent;
   @ViewChild('fieldModal') fieldModal: VisualEditorFieldModalComponent;
   @ViewChild('fieldDeleteModal') fieldDeleteModal: any;
   @ViewChild('checklistModal') checklistModal: any;
