@@ -1,17 +1,15 @@
-<eform-subheader>
-  <div class="p-3">
-    <button
-      mdbBtn
-      class="btn-success btn-small-height"
-      id="newDeviceUserBtn"
-      *ngIf="userClaims.deviceUsersCreate"
-      mdbTooltip="{{ 'Create Device User' | translate }}"
-      (click)="createNewUserModal.show()"
-    >
-      {{ 'New Device User' | translate }}
-    </button>
-  </div>
-</eform-subheader>
+<eform-new-subheader>
+  <button
+    mat-raised-button
+    color="accent"
+    id="newDeviceUserBtn"
+    *ngIf="userClaims.deviceUsersCreate"
+    matTooltip="{{ 'Create Device User' | translate }}"
+    (click)="createNewUserModal.show()"
+  >
+    {{ 'New Device User' | translate }}
+  </button>
+</eform-new-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid">

@@ -23,7 +23,7 @@ export class EformsBulkImportModalComponent implements OnInit {
   constructor(
     private toastrService: ToastrService,
     private translateService: TranslateService,
-    private loaderService: LoaderService,
+    public loaderService: LoaderService,
     private authStateService: AuthStateService,
     public dialogRef: MatDialogRef<EformsBulkImportModalComponent>,
   ) {

@@ -33,6 +33,7 @@ import {
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
 
 @AutoUnsubscribe()
 @Component({
@@ -121,24 +122,24 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     return UserClaimsEnum;
   }
 
-  tableHeaders: TableHeaderElementModel[] = [
-    {name: 'Id', elementId: 'idSort', sortable: true},
-    {name: 'CreatedAt', elementId: 'createdAtSort', sortable: true},
+  tableHeaders: MtxGridColumn[] = [
+    {header: 'Id', field: 'id', sortProp: {id: 'Id'}, sortable: true, type: 'number'},
+    {header: 'CreatedAt', sortProp: {id: 'CreatedAt'}, field: 'createdAt', sortable: true},
     {
-      name: 'Text',
-      visibleName: 'Label',
-      elementId: 'nameEFormSort',
+      header: 'Label',
+      field: 'label',
       sortable: true,
+      sortProp: {id: 'Text'},
     },
     {
-      name: 'Description',
-      visibleName: 'Description',
-      elementId: 'descriptionEFormSort',
+      header: 'Description',
+      field: 'description',
+      sortProp: {id: 'Description'},
       sortable: true,
     },
-    {name: 'Tags', elementId: 'tagsEForm', sortable: false},
-    {name: 'Pairing', elementId: 'pairingEForm', sortable: false},
-    {name: 'Actions', elementId: '', sortable: false},
+    {header: 'Tags', field: 'tags'},
+    {header: 'Pairing', field: 'pairingUpdate'},
+    {header: 'Actions', field: 'actions'},
   ];
 
   constructor(

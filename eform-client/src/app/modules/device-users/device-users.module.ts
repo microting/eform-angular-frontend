@@ -15,6 +15,8 @@ import { DeviceUsersRouting } from './device-users.routing';
 import { TranslateModule } from '@ngx-translate/core';
 import { DeviceUsersPersistProvider } from './components/store';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -26,6 +28,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     TranslateModule,
     FormsModule,
     FontAwesomeModule,
+    MatTooltipModule,
+    MatButtonModule,
   ],
   declarations: [
     DeviceUsersPageComponent,

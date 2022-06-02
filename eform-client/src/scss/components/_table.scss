@@ -22,10 +22,10 @@
   }
 }
 
-th>div {
-  justify-content: center;
+.mtx-grid .mat-cell.selected {
+  box-shadow: none !important;
 }
 
-td {
-  padding: 0 !important;
-}
+/*th>div {
+  justify-content: center;
+}*/
