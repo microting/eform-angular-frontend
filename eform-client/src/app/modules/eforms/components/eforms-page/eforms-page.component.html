@@ -44,7 +44,7 @@
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <mat-card class="d-flex flex-column" style="padding: 0;">
   <ng-template #toolbarTpl>
-    <div class="d-flex flex-row justify-content-start flex-wrap">
+    <div class="d-flex flex-row justify-content-start flex-nowrap">
       <div class="d-flex flex-column mr-2 ml-2">
         <mat-form-field>
           <mat-label>{{ 'Label' | translate }}</mat-label>
@@ -141,14 +141,12 @@
         <ng-container
           *ngIf="checkEformPermissions(row.id, userClaimsEnum.eformsReadTags)"
         >
-          <p
-            class="paragraph-sm badge badge-primary mb-1"
-            id="eform-tag-{{ i }}"
-            *ngFor="let tag of row.tags"
-          >
-            <fa-icon icon="tag"></fa-icon>
-            {{ tag.value }}
-          </p>
+          <mat-chip-list>
+            <mat-chip *ngFor="let tag of row.tags" color="primary">
+              <mat-icon>discount</mat-icon>
+              {{tag.value}}
+            </mat-chip>
+          </mat-chip-list>
         </ng-container>
       </div>
     </div>

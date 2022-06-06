@@ -36,6 +36,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MtxButtonModule} from '@ng-matero/extensions/button';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
     imports: [
@@ -64,6 +65,7 @@ import {MtxButtonModule} from '@ng-matero/extensions/button';
         MtxGridModule,
         MatTooltipModule,
         MtxButtonModule,
+        MatChipsModule,
     ],
   declarations: [
     EformsPageComponent,
