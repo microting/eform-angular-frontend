@@ -1,5 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import { DeviceUserModel } from 'src/app/common/models/device-users';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { SiteDto } from 'src/app/common/models/dto';
 import { DeviceUserService } from 'src/app/common/services/device-users';
 import { DeviceUsersStateService } from '../store';
@@ -8,7 +7,7 @@ import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
-import {DeleteDeviceUserModalComponent, EditCreateUserModalComponent} from 'src/app/modules/device-users/components';
+import {DeleteDeviceUserModalComponent, EditCreateUserModalComponent, NewOtpModalComponent} from 'src/app/modules/device-users/components';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
@@ -18,10 +17,6 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
   templateUrl: './device-users-page.component.html',
 })
 export class DeviceUsersPageComponent implements OnInit, OnDestroy {
-  @ViewChild('newOtpModal', { static: true }) newOtpModal;
-
-  selectedSimpleSiteDto: SiteDto = new SiteDto();
-  selectedSimpleSite: DeviceUserModel = new DeviceUserModel();
   sitesDto: Array<SiteDto>;
 
   tableHeaders: MtxGridColumn[] = [
@@ -44,6 +39,7 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   ];
   deleteDeviceUserModalComponentAfterClosedSub$: Subscription;
   editCreateUserModalComponentAfterClosedSub$: Subscription;
+  newOtpModalComponentAfterClosedSub$: Subscription;
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -89,8 +85,10 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
     if (!siteDto.unitId) {
       return;
     }
-    this.selectedSimpleSiteDto = siteDto;
-    this.newOtpModal.show();
+
+    this.newOtpModalComponentAfterClosedSub$ = this.dialog.open(NewOtpModalComponent,
+      {...dialogConfigHelper(this.overlay, siteDto)})
+      .afterClosed().subscribe(data => data ? this.getDeviceUsersFiltered() : undefined);
   }
 
   openDeleteDeviceUserModal(simpleSiteDto: SiteDto) {

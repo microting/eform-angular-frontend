@@ -1,51 +1,37 @@
-<eform-subheader>
-  <div class="p-3">
+<eform-new-subheader>
+  <div>
     <button
-      mdbBtn
-      class="btn-danger btn-icon mb-2"
+      mat-icon-button
       id="resetBtn"
-      mdbTooltip="{{ 'Reset' | translate }}"
+      matTooltip="{{ 'Reset' | translate }}"
       (click)="showResetNavigationMenuModal()"
     >
-      <fa-icon icon="undo" [fixedWidth]="true" size="lg"></fa-icon>
+      <mat-icon>undo</mat-icon>
     </button>
     <button
-      mdbBtn
-      class="btn-success btn-small-height"
+      mat-raised-button
       id="navigationMenuSaveBtn"
       (click)="updateNavigationMenu()"
+      color="accent"
     >
       {{ 'Save' | translate }}
     </button>
   </div>
-</eform-subheader>
+</eform-new-subheader>
 
-<div class="container-fluid">
-  <div class="row mt-4">
-    <div class="col-3">
-      <mdb-card
-        class="mb-3"
-        id="menuTemplate"
-        *ngFor="
+<div style="display: flex;">
+    <mat-accordion multi="true" displayMode="flat">
+      <mat-expansion-panel *ngFor="
           let menuTemplate of navigationMenuModel.menuTemplates;
-          let templateIndex = index
-        "
-      >
-        <mdb-card-header>
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              {{ menuTemplate.name }}
-            </div>
-            <app-eform-collapse-toggle
-              [collapse]="collapse"
-              [collapsed]="menuTemplate.collapsed"
-              (collapseUpdate)="menuTemplate.collapsed = $event"
-            ></app-eform-collapse-toggle>
-          </div>
-        </mdb-card-header>
-        <div mdbCollapse #collapse="bs-collapse">
+          let templateIndex = index">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ menuTemplate.name }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
           <div
-            class="card-body dragula-template"
+            class="dragula-template"
             dragula="MENU_ITEMS"
             id="mainMenu"
             [(dragulaModel)]="menuTemplate.items"
@@ -64,119 +50,130 @@
             </ng-container>
           </div>
         </div>
-      </mdb-card>
+      </mat-expansion-panel>
       <app-navigation-menu-custom
         [availableSecurityGroups]="securityGroups"
         (addCustomLinkToMenu)="manualAddItemToMenu($event)"
         (addCustomDropdownToMenu)="manualAddItemToMenu($event)"
       ></app-navigation-menu-custom>
-    </div>
-    <div class="col-9">
-      <div class="card">
-        <div
-          id="menuItems"
-          class="card-body dragula-item"
-          dragula="MENU_ITEMS"
-          [(dragulaModel)]="navigationMenuModel.actualMenu"
-        >
-          <ng-container
-            *ngFor="
+    </mat-accordion>
+  <mat-card>
+    <div
+      id="menuItems"
+      class="dragula-item"
+      dragula="MENU_ITEMS"
+      [(dragulaModel)]="navigationMenuModel.actualMenu"
+    >
+
+      <mat-accordion multi="true" displayMode="flat">
+        <mat-expansion-panel *ngFor="
+              let menuItem of navigationMenuModel.actualMenu;
+              let firstLevelIndex = index
+            ">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ menuTemplate.name }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <ng-container
+        *ngFor="
               let menuItem of navigationMenuModel.actualMenu;
               let firstLevelIndex = index
             "
-          >
-            <div
-              class="card mb-2 mt-2 dragula-dropdown"
-              id="menuItemDropdown"
-              *ngIf="menuItem.type === menuItemTypes.Dropdown"
-            >
-              <div class="card-header">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <i
-                      class="material-icons md-36 dragula-handle align-middle"
-                      style="cursor: all-scroll"
-                    >
-                      drag_handle
-                    </i>
-                    {{ menuItem.name }}
-                    {{
-                      menuItem.translations.length > 0
-                        ? '/ ' + getMenuTranslation(menuItem.translations)
-                        : ' '
-                    }}
-                  </div>
-                  <div class="d-flex justify-content-end align-items-center">
-                    <fa-icon
-                      id="editBtn"
-                      icon="pen"
-                      class="mr-2"
-                      [fixedWidth]="true"
-                      (click)="onItemEdit(menuItem, firstLevelIndex)"
-                      style="cursor: pointer"
-                    ></fa-icon>
-                    <fa-icon
-                      id="deleteBtn"
-                      icon="trash-alt"
-                      class="mr-2"
-                      [fixedWidth]="true"
-                      (click)="onItemDelete(menuItem, firstLevelIndex)"
-                      style="cursor: pointer"
-                    ></fa-icon>
-                    <app-eform-collapse-toggle
-                      id="collapseToggle"
-                      [collapse]="collapse"
-                      [collapsed]="menuItem.collapsed"
-                      (collapseUpdate)="menuItem.collapsed = $event"
-                    ></app-eform-collapse-toggle>
-                  </div>
-                </div>
-              </div>
-              <div mdbCollapse #collapse="bs-collapse">
-                <!-- Dropdown body -->
-                <div
-                  id="dropdownBody"
-                  class="card-body dragula-dropdown"
-                  dragula="MENU_ITEMS"
-                  *ngIf="menuItem.type === menuItemTypes.Dropdown"
-                  [(dragulaModel)]="menuItem.children"
+      >
+        <div
+          class="card mb-2 mt-2 dragula-dropdown"
+          id="menuItemDropdown"
+          *ngIf="menuItem.type === menuItemTypes.Dropdown"
+        >
+          <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <i
+                  class="material-icons md-36 dragula-handle align-middle"
+                  style="cursor: all-scroll"
                 >
-                  <ng-container
-                    *ngFor="
+                  drag_handle
+                </i>
+                {{ menuItem.name }}
+                {{
+                menuItem.translations.length > 0
+                  ? '/ ' + getMenuTranslation(menuItem.translations)
+                  : ' '
+                }}
+              </div>
+              <div class="d-flex justify-content-end align-items-center">
+                <fa-icon
+                  id="editBtn"
+                  icon="pen"
+                  class="mr-2"
+                  [fixedWidth]="true"
+                  (click)="onItemEdit(menuItem, firstLevelIndex)"
+                  style="cursor: pointer"
+                ></fa-icon>
+                <fa-icon
+                  id="deleteBtn"
+                  icon="trash-alt"
+                  class="mr-2"
+                  [fixedWidth]="true"
+                  (click)="onItemDelete(menuItem, firstLevelIndex)"
+                  style="cursor: pointer"
+                ></fa-icon>
+                <app-eform-collapse-toggle
+                  id="collapseToggle"
+                  [collapse]="collapse"
+                  [collapsed]="menuItem.collapsed"
+                  (collapseUpdate)="menuItem.collapsed = $event"
+                ></app-eform-collapse-toggle>
+              </div>
+            </div>
+          </div>
+
+          <div mdbCollapse #collapse="bs-collapse">
+            <!-- Dropdown body -->
+            <div
+              id="dropdownBody"
+              class="card-body dragula-dropdown"
+              dragula="MENU_ITEMS"
+              *ngIf="menuItem.type === menuItemTypes.Dropdown"
+              [(dragulaModel)]="menuItem.children"
+            >
+              <ng-container
+                *ngFor="
                       let menuItemChild of menuItem.children;
                       let secondLevelIndex = index
                     "
-                  >
-                    <app-navigation-menu-item
-                      (itemDelete)="
+              >
+                <app-navigation-menu-item
+                  (itemDelete)="
                         onItemDelete($event, firstLevelIndex, secondLevelIndex)
                       "
-                      (itemEdit)="
+                  (itemEdit)="
                         onItemEdit($event, firstLevelIndex, secondLevelIndex)
                       "
-                      [item]="menuItemChild"
-                      [firstLevelIndex]="firstLevelIndex"
-                      [secondLevelIndex]="secondLevelIndex"
-                    ></app-navigation-menu-item>
-                  </ng-container>
-                </div>
-                <!-- /Dropdown body -->
-              </div>
+                  [item]="menuItemChild"
+                  [firstLevelIndex]="firstLevelIndex"
+                  [secondLevelIndex]="secondLevelIndex"
+                ></app-navigation-menu-item>
+              </ng-container>
             </div>
-            <!-- Common item body not dropdown -->
-            <app-navigation-menu-item
-              (itemDelete)="onItemDelete($event, firstLevelIndex)"
-              (itemEdit)="onItemEdit($event, firstLevelIndex)"
-              [item]="menuItem"
-              [firstLevelIndex]="firstLevelIndex"
-              *ngIf="menuItem.type !== menuItemTypes.Dropdown"
-            ></app-navigation-menu-item>
-            <!-- /Common item body -->
-          </ng-container>
+            <!-- /Dropdown body -->
+          </div>
         </div>
-      </div>
+        <!-- Common item body not dropdown -->
+        <app-navigation-menu-item
+          (itemDelete)="onItemDelete($event, firstLevelIndex)"
+          (itemEdit)="onItemEdit($event, firstLevelIndex)"
+          [item]="menuItem"
+          [firstLevelIndex]="firstLevelIndex"
+          *ngIf="menuItem.type !== menuItemTypes.Dropdown"
+        ></app-navigation-menu-item>
+        <!-- /Common item body -->
+      </ng-container>
     </div>
-  </div>
+  </mat-card>
 </div>
 
 <app-navigation-menu-item-edit

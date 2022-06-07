@@ -21,23 +21,25 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AccountManagementRouting,
-    EformSharedModule,
-    TranslateModule,
-    ReactiveFormsModule,
-    FormsModule,
-    FontAwesomeModule,
-    MatSortModule,
-    MatCheckboxModule,
-    MDBBootstrapModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MtxSelectModule,
-  ],
+    imports: [
+        CommonModule,
+        AccountManagementRouting,
+        EformSharedModule,
+        TranslateModule,
+        ReactiveFormsModule,
+        FormsModule,
+        FontAwesomeModule,
+        MatSortModule,
+        MatCheckboxModule,
+        MDBBootstrapModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MtxSelectModule,
+        MatCardModule,
+    ],
   declarations: [
     ChangePasswordComponent,
     ProfileSettingsComponent,

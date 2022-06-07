@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {SiteDto} from 'src/app/common/models/dto';
 import {UnitsService} from 'src/app/common/services/advanced';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-new-otp-modal',
@@ -8,24 +9,22 @@ import {UnitsService} from 'src/app/common/services/advanced';
   styleUrls: ['./new-otp-modal.component.scss']
 })
 export class NewOtpModalComponent implements OnInit {
-  @Input() selectedSimpleSite: SiteDto = new SiteDto();
-  @Output() onNewOtpRequested: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame', { static: true }) frame;
-
-  constructor(private unitsService: UnitsService) { }
+  constructor(
+    private unitsService: UnitsService,
+    public dialogRef: MatDialogRef<NewOtpModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedSimpleSite: SiteDto = new SiteDto()) { }
 
   ngOnInit() {
   }
 
-  show() {
-    this.frame.show();
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
   requestOtp() {
     this.unitsService.requestOtp(this.selectedSimpleSite.unitId).subscribe(operation => {
       if (operation && operation.success) {
-        this.frame.hide();
-        this.onNewOtpRequested.emit();
+        this.hide(true);
       }
     });
   }
