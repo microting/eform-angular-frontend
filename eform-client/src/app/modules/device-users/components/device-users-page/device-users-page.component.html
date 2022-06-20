@@ -1,134 +1,98 @@
-<eform-subheader>
-  <div class="p-3">
-    <button
-      mdbBtn
-      class="btn-success btn-small-height"
-      id="newDeviceUserBtn"
-      *ngIf="userClaims.deviceUsersCreate"
-      mdbTooltip="{{ 'Create Device User' | translate }}"
-      (click)="createNewUserModal.show()"
-    >
-      {{ 'New Device User' | translate }}
-    </button>
-  </div>
-</eform-subheader>
+<eform-new-subheader>
+  <button
+    mat-raised-button
+    color="accent"
+    id="newDeviceUserBtn"
+    *ngIf="userClaims.deviceUsersCreate"
+    matTooltip="{{ 'Create Device User' | translate }}"
+    (click)="openCreateModal()"
+  >
+    {{ 'New Device User' | translate }}
+  </button>
+</eform-new-subheader>
 
-<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<div class="container-fluid">
-  <div class="row pl-1">
-    <div class="col-md-2">
-      <div class="md-form">
-        <input
-          mdbInput
-          (ngModelChange)="onSearchChanged($event)"
-          [ngModel]="deviceUsersStateService.getNameFilter() | async"
-          type="text"
-          class="form-control"
-          id="labelInput"
-        />
-        <label for="labelInput">{{ 'Search' | translate }}</label>
+<!--<mat-card class="d-flex flex-column" style="padding: 0;">-->
+  <ng-template #toolbarTpl>
+    <div class="d-flex flex-row justify-content-start flex-nowrap">
+      <div class="d-flex flex-column mr-2 ml-2">
+        <mat-form-field>
+          <mat-label>{{ 'Search' | translate }}</mat-label>
+          <input
+            matInput
+            type="text"
+            (ngModelChange)="onSearchChanged($event)"
+            [ngModel]="deviceUsersStateService.getNameFilter() | async"
+            id="labelInput"
+          />
+        </mat-form-field>
       </div>
     </div>
-  </div>
-  <div class="row p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
+  </ng-template>
+  <mtx-grid
+    style="height: 70vh;"
+    [data]="sitesDto"
+    [columns]="tableHeaders"
+    [cellTemplate]="{
+    firstName: deviceUserFirstNameTpl,
+    lastName: deviceUserLastNameTpl,
+    unitId: unitIdTpl,
+    otpCode: otpCodeTpl,
+    actions: actionsTpl}"
+    [showPaginator]="false"
+    [pageOnFront]="false"
+    [rowStriped]="true"
+    [showToolbar]="true"
+    [showColumnMenuButton]="false"
+    [toolbarTemplate]="toolbarTpl">
+  </mtx-grid>
+  <ng-template #deviceUserFirstNameTpl id="deviceUserFirstName" let-row>
+    {{ row.firstName ?? 'N/A' }}
+  </ng-template>
+  <ng-template #deviceUserLastNameTpl id="deviceUserLastName" let-row>
+    {{ row.lastName ?? 'N/A' }}
+  </ng-template>
+  <ng-template #unitIdTpl let-row>
+    {{ row.unitId ?? 'N/A' }}
+  </ng-template>
+  <ng-template #otpCodeTpl let-row>
+    <ng-container *ngIf="row.customerNo && row.otpCode">
+      {{ row.customerNo }} / {{ row.otpCode }}
+    </ng-container>
+    <ng-container *ngIf="row.otpCode == 0">
+      <button
+        mat-icon-button
+        color="warn"
+        *ngIf="userClaims.deviceUsersUpdate"
+        matTooltip="{{ 'New OTP' | translate }}"
+        (click)="openOtpModal(row)"
+      >
+        <mat-icon>key</mat-icon>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!row.unitId"> N/A </ng-container>
+  </ng-template>
+  <ng-template #actionsTpl let-row>
+    <div *ngIf="userClaims.deviceUsersDelete || userClaims.deviceUsersDelete">
+      <button
+      mat-icon-button
+      id="editDeviceUserBtn"
+      (click)="openEditModal(row)"
+      *ngIf="userClaims.deviceUsersUpdate && !row.isLocked"
+      matTooltip="{{ 'Edit Device User' | translate }}"
     >
-      <thead table-headers [tableHeaders]="tableHeaders"></thead>
-      <tbody id="tableBody">
-        <tr *ngFor="let siteDto of sitesDto">
-          <td id="deviceUserId">{{ siteDto.siteUid }}</td>
-          <td id="deviceUserFirstName">
-            {{ siteDto.firstName }}
-            <ng-container *ngIf="!siteDto.firstName"> N/A </ng-container>
-          </td>
-          <td id="deviceUserLastName">
-            {{ siteDto.lastName }}
-            <ng-container *ngIf="!siteDto.lastName"> N/A </ng-container>
-          </td>
-          <td>
-            {{ siteDto.unitId }}
-            <ng-container *ngIf="!siteDto.unitId"> N/A </ng-container>
-          </td>
-          <td>
-            {{ siteDto.language }}
-          </td>
-          <td>
-            <div class="d-flex flex-row justify-content-center">
-              <ng-container *ngIf="siteDto.customerNo && siteDto.otpCode">
-                {{ siteDto.customerNo }} / {{ siteDto.otpCode }}
-              </ng-container>
-              <ng-container *ngIf="siteDto.otpCode == 0">
-                <button
-                  mdbBtn
-                  class="btn-danger btn-icon mb-2"
-                  *ngIf="userClaims.deviceUsersUpdate"
-                  mdbTooltip="{{ 'New OTP' | translate }}"
-                  (click)="openOtpModal(siteDto)"
-                >
-                  <fa-icon icon="key" size="lg" [fixedWidth]="true"></fa-icon>
-                </button>
-              </ng-container>
-              <ng-container *ngIf="!siteDto.unitId"> N/A </ng-container>
-            </div>
-          </td>
-          <td
-            *ngIf="userClaims.deviceUsersDelete || userClaims.deviceUsersDelete"
-          >
-            <div class="d-flex flex-row justify-content-center">
-              <button
-                mdbBtn
-                class="btn-accent text-black-50 btn-icon mb-2"
-                *ngIf="userClaims.deviceUsersUpdate && !siteDto.isLocked"
-                mdbTooltip="{{ 'Edit Device User' | translate }}"
-                mdbWavesEffect
-                id="editDeviceUserBtn"
-                (click)="openEditModal(siteDto)"
-              >
-                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-              </button>
-              <button
-                mdbBtn
-                class="btn-danger btn-icon mb-2"
-                *ngIf="userClaims.deviceUsersDelete && !siteDto.isLocked"
-                mdbTooltip="{{ 'Delete Device User' | translate }}"
-                id="deleteDeviceUserBtn"
-                (click)="openDeleteDeviceUserModal(siteDto)"
-              >
-                <fa-icon
-                  icon="trash-alt"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <app-new-otp-modal
-    (onNewOtpRequested)="getDeviceUsersFiltered()"
-    [selectedSimpleSite]="selectedSimpleSiteDto"
-    #newOtpModal
-  ></app-new-otp-modal>
-  <app-delete-device-user-modal
-    [selectedDeviceUser]="selectedSimpleSiteDto"
-    (onUserDeleted)="getDeviceUsersFiltered()"
-    #deleteDeviceUserModal
-  ></app-delete-device-user-modal>
-  <app-create-new-user-modal
-    (onDeviceUserCreated)="getDeviceUsersFiltered()"
-    #createNewUserModal
-  ></app-create-new-user-modal>
-  <app-edit-device-user-modal
-    (onUserEdited)="getDeviceUsersFiltered()"
-    [selectedDeviceUser]="selectedSimpleSite"
-    #editDeviceUserModal
-  ></app-edit-device-user-modal>
-</div>
+      <mat-icon>edit</mat-icon>
+    </button>
+      <button
+        mat-icon-button
+        color="warn"
+        id="deleteDeviceUserBtn"
+        (click)="openDeleteDeviceUserModal(row)"
+        *ngIf="userClaims.deviceUsersDelete && !row.isLocked"
+        matTooltip="{{ 'Delete Device User' | translate }}"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </ng-template>
+  <!--pagination(if required)-->
+<!--</mat-card>-->

@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, } from '@angular/core';
 import {SiteDto} from 'src/app/common/models/dto';
 import {DeviceUserService} from 'src/app/common/services/device-users';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-delete-device-user-modal',
@@ -8,25 +9,25 @@ import {DeviceUserService} from 'src/app/common/services/device-users';
   styleUrls: ['./delete-device-user-modal.component.scss']
 })
 export class DeleteDeviceUserModalComponent implements OnInit {
-  @Input() selectedDeviceUser: SiteDto = new SiteDto();
-  @Output() onUserDeleted: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame', { static: true }) frame;
-
-  constructor(private deviceUserService: DeviceUserService) { }
+  constructor(
+    private deviceUserService: DeviceUserService,
+    public dialogRef: MatDialogRef<DeleteDeviceUserModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedDeviceUser: SiteDto = new SiteDto()) {
+  }
 
   ngOnInit() {
   }
 
-  show() {
-    this.frame.show();
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
   deleteSingle() {
-    this.deviceUserService.deleteSingleDeviceUser(this.selectedDeviceUser.siteUid).subscribe(operation => {
-      if (operation && operation.success) {
-        this.onUserDeleted.emit();
-        this.frame.hide();
-      }
+    this.deviceUserService.deleteSingleDeviceUser(this.selectedDeviceUser.siteUid)
+      .subscribe(operation => {
+        if (operation && operation.success) {
+          this.hide(true);
+        }
     });
   }
 }

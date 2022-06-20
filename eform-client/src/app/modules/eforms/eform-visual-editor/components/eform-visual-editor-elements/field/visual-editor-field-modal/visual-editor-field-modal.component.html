@@ -23,54 +23,56 @@
             <div class="row">
               <div class="col">
                 <div class="ng-select-wrapper">
-                  <ng-select
-                    class="custom"
-                    dropdownPosition="'bottom'"
-                    [placeholder]="'Type' | translate"
-                    [clearable]="false"
-                    [bindLabel]="'name'"
-                    [bindValue]="'id'"
-                    [ngModel]="recursionModel.field.fieldType"
-                    (ngModelChange)="updateFieldType($event)"
-                    id="fieldTypeSelector"
-                    [items]="fieldTypes"
-                  >
-                    <ng-template
-                      ng-option-tmp
-                      let-item="item"
-                      let-search="searchTerm"
+                  <mat-form-field>
+                    <mat-label>{{'Type' | translate}}</mat-label>
+                    <mtx-select
+                      class="custom"
+                      [dropdownPosition]="'bottom'"
+                      [clearable]="false"
+                      [bindLabel]="'name'"
+                      [bindValue]="'id'"
+                      [ngModel]="recursionModel.field.fieldType"
+                      (ngModelChange)="updateFieldType($event)"
+                      id="fieldTypeSelector"
+                      [items]="fieldTypes"
                     >
-                      <ng-template #popTemplate>
-                        <p>{{ item.description | translate }}</p>
-                        <img
-                          [src]="item.previewImage"
-                          alt=""
-                          class="img-fluid"
-                        />
-                      </ng-template>
-                      <div
-                        [mdbPopover]="popTemplate"
-                        container="body"
-                        placement="right"
-                        [triggers]="'hover'"
+                      <ng-template
+                        ng-option-tmp
+                        let-item="item"
+                        let-search="searchTerm"
                       >
-                        {{ item.name | translate }}
-                      </div>
-                    </ng-template>
-                  </ng-select>
+                        <ng-template #popTemplate>
+                          <p>{{ item.description | translate }}</p>
+                          <img
+                            [src]="item.previewImage"
+                            alt=""
+                            class="img-fluid"
+                          />
+                        </ng-template>
+                        <div
+                          [mdbPopover]="popTemplate"
+                          container="body"
+                          placement="right"
+                          [triggers]="'hover'"
+                        >
+                          {{ item.name | translate }}
+                        </div>
+                      </ng-template>
+                    </mtx-select>
+                  </mat-form-field>
                 </div>
               </div>
             </div>
 
             <div class="row" *ngIf="!mandatoryIsNotNeed">
               <div class="col">
-                  <mat-checkbox
-                    id="isChecked"
-                    [(ngModel)]="recursionModel.field.mandatory"
-                    color="primary"
-                    type="checkbox">
-                    {{ 'Mandatory' | translate }}
-                  </mat-checkbox>
+                <mat-checkbox
+                  id="isChecked"
+                  [(ngModel)]="recursionModel.field.mandatory"
+                  color="primary"
+                  type="checkbox">
+                  {{ 'Mandatory' | translate }}
+                </mat-checkbox>
               </div>
             </div>
           </mdb-card-body>

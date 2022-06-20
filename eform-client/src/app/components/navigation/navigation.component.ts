@@ -97,10 +97,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
       return true;
     }
 
-    if (guards.includes(this.authStateService.currentRole)) {
-      return true;
-    }
-
     return guards.some((g) => this.authStateService.checkClaim(g));
   }
 }

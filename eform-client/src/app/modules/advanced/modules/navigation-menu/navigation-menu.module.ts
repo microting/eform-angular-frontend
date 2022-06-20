@@ -29,6 +29,12 @@ import { DragulaModule } from 'ng2-dragula';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -42,25 +48,31 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     NavigationMenuItemEditComponent,
     NavigationMenuResetComponent,
   ],
-    imports: [
-        CommonModule,
-        NavigationMenuRouting,
-        ButtonsModule,
-        TranslateModule,
-        FontAwesomeModule,
-        NgSelectModule,
-        InputsModule,
-        TableModule,
-        CardsModule,
-        DragulaModule,
-        TooltipModule,
-        FormsModule,
-        CollapseModule,
-        EformSharedModule,
-        WavesModule,
-        ModalModule,
-        ReactiveFormsModule,
-        MatCheckboxModule,
-    ],
+  imports: [
+    CommonModule,
+    NavigationMenuRouting,
+    ButtonsModule,
+    TranslateModule,
+    FontAwesomeModule,
+    NgSelectModule,
+    InputsModule,
+    TableModule,
+    CardsModule,
+    DragulaModule,
+    TooltipModule,
+    FormsModule,
+    CollapseModule,
+    EformSharedModule,
+    WavesModule,
+    ModalModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatCardModule,
+  ],
 })
 export class NavigationMenuModule {}

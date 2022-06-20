@@ -1,5 +1,5 @@
-<eform-subheader>
-  <div class="p-3">
+<eform-new-subheader>
+  <div>
     <button
       mat-raised-button
       color="accent"
@@ -10,9 +10,105 @@
       {{ 'Save' | translate }}
     </button>
   </div>
-</eform-subheader>
+</eform-new-subheader>
 
-<div class="container-fluid mt-4">
+<div style="
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+">
+  <mat-card>
+    <mat-card-title> {{ 'Google Authenticator' | translate }}</mat-card-title>
+    <div class="mb-1">
+      <mat-checkbox
+        id="2fauthForsed"
+        (change)="isTwoFactorEnabledCheckBoxChanged($event)"
+        [(ngModel)]="googleAuthInfoModel.isTwoFactorEnabled"
+        color="primary"
+      >
+        {{ 'Status' | translate }}
+      </mat-checkbox>
+    </div>
+    <p class="text-danger">
+      ({{ 'change will logout you from the application' | translate }})
+    </p>
+    <ng-container *ngIf="googleAuthInfoModel.psk">
+      <div class="p-0">
+        <div
+          [innerHTML]="'Google Authenticator description' | translate"
+        ></div>
+        <p>
+          <strong>{{ googleAuthInfoModel.psk }}</strong>
+        </p>
+      </div>
+      <div class="p-0">
+        <button
+          mat-raised-button
+          color="warn"
+          id="deleteGoogleAuthenticatorInfo"
+          mdbTooltip="{{
+                  'Remove google authenticator secret key' | translate
+                }}"
+          (click)="deleteGoogleAuthenticatorInfo()"
+        >
+          {{ 'Remove PSK' | translate }}
+        </button>
+      </div>
+    </ng-container>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title> {{ 'General' | translate }}</mat-card-title>
+    <mat-form-field>
+      <mat-label>{{ 'Language' | translate }}</mat-label>
+      <mtx-select
+        *ngIf="authStateService.isAdmin"
+        id="ProfileLanguageSelector"
+        [bindLabel]="'text'"
+        [bindValue]="'locale'"
+        [clearable]="false"
+        [(ngModel)]="userSettingsModel.locale"
+        [items]="languages"
+      ></mtx-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'Formats' | translate }}</mat-label>
+      <mtx-select
+        *ngIf="authStateService.isAdmin"
+        id="ProfileFormatSelector"
+        [bindLabel]="'text'"
+        [bindValue]="'id'"
+        [clearable]="false"
+        [(ngModel)]="userSettingsModel.formats"
+        [items]="countries"
+      ></mtx-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'Timezone' | translate }}</mat-label>
+      <mtx-select
+        *ngIf="authStateService.isAdmin"
+        id="ProfileTimeZoneSelector"
+        [bindLabel]="'name'"
+        [bindValue]="'id'"
+        [clearable]="false"
+        [(ngModel)]="userSettingsModel.timeZone"
+        [items]="timeZones.timeZoneModels"
+      ></mtx-select>
+    </mat-form-field>
+    <div class="mb-1">
+      <mat-checkbox
+        id="darkTheme"
+        [(ngModel)]="userSettingsModel.darkTheme"
+      >
+        {{ 'Dark theme' | translate }}
+      </mat-checkbox>
+    </div>
+  </mat-card>
+</div>
+
+
+<!--<div class="container-fluid mt-4">
   <div class="row mb-4">
     <div class="col-md-6 mb-3" *ngIf="authStateService.isAdmin">
       <mdb-card>
@@ -68,58 +164,18 @@
         <mdb-card-body>
           <div class="container-fluid">
             <div class="row">
-              <mat-form-field>
-                <mat-label>{{ 'Language' | translate }}</mat-label>
-                <mtx-select
-                  *ngIf="authStateService.isAdmin"
-                  id="ProfileLanguageSelector"
-                  [bindLabel]="'text'"
-                  [bindValue]="'locale'"
-                  [clearable]="false"
-                  [(ngModel)]="userSettingsModel.locale"
-                  [items]="languages"
-                ></mtx-select>
-              </mat-form-field>
+
             </div>
             <div class="row">
-              <mat-form-field>
-                <mat-label>{{ 'Formats' | translate }}</mat-label>
-                <mtx-select
-                  *ngIf="authStateService.isAdmin"
-                  id="ProfileFormatSelector"
-                  [bindLabel]="'text'"
-                  [bindValue]="'id'"
-                  [clearable]="false"
-                  [(ngModel)]="userSettingsModel.formats"
-                  [items]="countries"
-                ></mtx-select>
-              </mat-form-field>
+
             </div>
             <div class="row">
-              <mat-form-field>
-                <mat-label>{{ 'Timezone' | translate }}</mat-label>
-                <mtx-select
-                  *ngIf="authStateService.isAdmin"
-                  id="ProfileTimeZoneSelector"
-                  [bindLabel]="'name'"
-                  [bindValue]="'id'"
-                  [clearable]="false"
-                  [(ngModel)]="userSettingsModel.timeZone"
-                  [items]="timeZones.timeZoneModels"
-                ></mtx-select>
-              </mat-form-field>
+
             </div>
-            <div class="row mb-1">
-              <mat-checkbox
-                id="darkTheme"
-                [(ngModel)]="userSettingsModel.darkTheme"
-              >
-                {{ 'Dark theme' | translate }}
-              </mat-checkbox>
-            </div>
+
           </div>
         </mdb-card-body>
       </mdb-card>
     </div>
   </div>
-</div>
+</div>-->
