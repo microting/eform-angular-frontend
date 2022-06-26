@@ -255,9 +255,24 @@ namespace eFormAPI.Web.Services
                             case Constants.FieldTypes.EntitySearch:
                             case Constants.FieldTypes.EntitySelect:
                             {
-                                EntityItem entityItem =
-                                    await sdkDbContext.EntityItems.AsNoTracking().SingleOrDefaultAsync(x => x.Id == int.Parse(caseField.Value));
-                                reportEformCaseModel.CaseFields.Add(entityItem.Name);
+                                try
+                                {
+                                    if (caseField.Value != "null")
+                                    {
+                                        EntityItem entityItem =
+                                            await sdkDbContext.EntityItems.AsNoTracking().SingleOrDefaultAsync(x => x.Id == int.Parse(caseField.Value));
+                                        reportEformCaseModel.CaseFields.Add(entityItem.Name);
+                                    }
+                                    else
+                                    {
+                                        reportEformCaseModel.CaseFields.Add("");
+                                    }
+                                }
+                                catch (Exception exception)
+                                {
+                                    Console.WriteLine(exception.Message);
+                                }
+
                                 break;
                             }
                             case Constants.FieldTypes.SingleSelect:
