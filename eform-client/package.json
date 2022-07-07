@@ -99,7 +99,7 @@
     "@angular-eslint/template-parser": "13.2.1",
     "@angular/cli": "12.2.12",
     "@angular/compiler-cli": "^12.2.12",
-    "@angular/language-service": "^14.0.2",
+    "@angular/language-service": "^14.0.5",
     "@datorama/akita": "^7.1.1",
     "@datorama/akita-ngdevtools": "^7.0.0",
     "@types/chai": "4.3.1",
