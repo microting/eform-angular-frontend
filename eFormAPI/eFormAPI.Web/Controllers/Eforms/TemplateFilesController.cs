@@ -143,7 +143,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/template-files/download-eform-excel")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
-        public async Task DownloadExcelEform(EformDownloadExcelModel excelModel)
+        public Task DownloadExcelEform(EformDownloadExcelModel excelModel)
         {
             const int bufferSize = 4086;
             var buffer = new byte[bufferSize];
@@ -172,7 +172,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                     Response.ContentLength = fileStream.Length;
                     Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-                    while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0 &&
+                    while ((bytesRead = await fileStream.ReadAsync(buffer, 0, buffer.Length)) > 0 &&
                            !HttpContext.RequestAborted.IsCancellationRequested)
                     {
                         await Response.Body.WriteAsync(buffer, 0, bytesRead);
@@ -180,6 +180,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                     }
                 }
             });
+            return Task.CompletedTask;
         }
 
         private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache", string token = "")
