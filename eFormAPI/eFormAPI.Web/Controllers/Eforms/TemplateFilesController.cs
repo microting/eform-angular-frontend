@@ -467,31 +467,35 @@ namespace eFormAPI.Web.Controllers.Eforms
         public async Task<IActionResult> GetPdfFile(string fileName)
         {
             var core = await _coreHelper.GetCore();
-            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
-            {
+            //if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+            //{
                 try
                 {
-                    var ss = await core.GetFileFromSwiftStorage($"{fileName}.pdf");
+                    var ss = await core.GetFileFromS3Storage($"{fileName}.pdf");
 
-                    Response.ContentType = ss.ContentType;
+                    //var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
+
                     Response.ContentLength = ss.ContentLength;
 
-                    return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"pdf"));
+                    return File(ss.ResponseStream, ss.Headers["Content-Type"]);
+
+                    //return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"pdf"));
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
+                    Console.WriteLine(exception.Message);
                     return NotFound();
                 }
 
-            }
-            var filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPdf), fileName + ".pdf");
-            if (!System.IO.File.Exists(filePath))
-            {
-                return NotFound();
-            }
-
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, "application/pdf", Path.GetFileName(filePath));
+            //}
+            // var filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPdf), fileName + ".pdf");
+            // if (!System.IO.File.Exists(filePath))
+            // {
+            //     return NotFound();
+            // }
+            //
+            // var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            // return File(fileStream, "application/pdf", Path.GetFileName(filePath));
         }
 
         [HttpGet]
