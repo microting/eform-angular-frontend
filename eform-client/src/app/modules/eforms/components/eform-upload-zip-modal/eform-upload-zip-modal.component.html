@@ -12,7 +12,7 @@
           <div class="row">
             <div class="col-xs-12 col-md-12">
                   <button mdbBtn class="btn-primary btn-small-height" *ngIf="zipFileUploader?.queue?.length == 0"
-                          (click)="zipInput.click()">{{'Upload' | translate}}</button>
+                          (click)="zipInput.click()">{{'Select file' | translate}}</button>
                   <button mdbBtn class="btn-warning btn-small-height" *ngIf="zipFileUploader?.queue?.length > 0"
                           (click)="zipInput.click()">{{'Pending' | translate}}</button>
                   <input class="input-invisible"
