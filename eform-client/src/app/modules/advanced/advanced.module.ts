@@ -42,6 +42,11 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MtxGridModule} from '@ng-matero/extensions/grid';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatInputModule} from '@angular/material/input';
+import {MtxSelectModule} from '@ng-matero/extensions/select';
 
 @NgModule({
   imports: [
@@ -62,6 +67,11 @@ import {MatButtonModule} from '@angular/material/button';
     MatCardModule,
     MatIconModule,
     MatButtonModule,
+    MatTooltipModule,
+    MtxGridModule,
+    MatDialogModule,
+    MatInputModule,
+    MtxSelectModule,
   ],
   declarations: [
     EntitySearchComponent,

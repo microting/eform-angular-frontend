@@ -392,3 +392,5 @@ docs/plugins/installing-a-plugin./
 
 eFormAPI/eFormAPI.Web/init.json
 *.DotSettings.user
+
+eform-client/.angular
