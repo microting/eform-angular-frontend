@@ -213,9 +213,9 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
         {
+            var core = await _coreHelper.GetCore();
             try
             {
-                var core = await _coreHelper.GetCore();
 
                 EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid);
 
@@ -228,10 +228,26 @@ namespace eFormAPI.Web.Services
 
                 return new OperationDataResult<EntityGroup>(true, entityGroup);
             }
-            catch (Exception)
+            catch (NullReferenceException)
+            {
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var eg = await sdkDbContext.EntityGroups.SingleAsync(x => x.Id == int.Parse(entityGroupUid));
+                EntityGroup entityGroup = await core.EntityGroupRead(eg.MicrotingUid);
+
+                var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+
+                foreach (var _ in plugins.Where(plugin => entityGroup.Name.Contains(plugin)))
+                {
+                    entityGroup.IsLocked = true;
+                }
+
+                return new OperationDataResult<EntityGroup>(true, entityGroup);
+            }
+
+            catch (Exception exception)
             {
                 return new OperationDataResult<EntityGroup>(false,
-                    _localizationService.GetString("ErrorWhileObtainSelectableList"));
+                    _localizationService.GetString("ErrorWhileObtainSelectableList") + $" {exception.Message}");
             }
         }
 

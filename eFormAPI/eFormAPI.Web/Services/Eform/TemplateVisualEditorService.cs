@@ -906,11 +906,14 @@ namespace eFormAPI.Web.Services.Eform
                         {
                             var uploadData = await sdkDbContext.UploadedDatas
                                 .Where(x => x.Checksum == hash.DefaultValue)
-                                .FirstAsync();
+                                .FirstOrDefaultAsync();
 
                             //var fileStream = File.OpenRead(uploadData.FileLocation);
-                            editorField.PdfFiles.Add(new CommonDictionaryModel()
-                                { Name = uploadData.FileName, Id = hash.LanguageId });
+                            if (uploadData != null)
+                            {
+                                editorField.PdfFiles.Add(new CommonDictionaryModel()
+                                    {Name = uploadData.FileName, Id = hash.LanguageId});
+                            }
                         }
 
                         findFields.Add(editorField);
