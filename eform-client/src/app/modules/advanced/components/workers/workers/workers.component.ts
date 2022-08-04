@@ -1,32 +1,37 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { WorkerDto } from 'src/app/common/models/dto';
-import { WorkersService } from 'src/app/common/services/advanced';
-import { TableHeaderElementModel } from 'src/app/common/models';
-import { AuthStateService } from 'src/app/common/store';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {WorkerDto} from 'src/app/common/models';
+import {WorkersService} from 'src/app/common/services';
+import {AuthStateService} from 'src/app/common/store';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {WorkerDeleteComponent, WorkerEditCreateComponent} from '../';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-workers',
   templateUrl: './workers.component.html',
 })
 export class WorkersComponent implements OnInit {
-  @ViewChild('modalWorkerEdit', { static: true }) modalWorkerEdit;
-  @ViewChild('modalWorkerCreate', { static: true }) modalWorkerCreate;
-  @ViewChild('modalWorkerDelete', { static: true }) modalWorkerDelete;
+  @ViewChild('modalWorkerDelete', {static: true}) modalWorkerDelete;
 
   selectedWorkerDto: WorkerDto = new WorkerDto();
   workersDto: Array<WorkerDto> = [];
 
-  tableHeaders: TableHeaderElementModel[] = [
-    { name: 'CreatedAt', sortable: false, elementId: '' },
-    { name: 'Updated at', sortable: false, elementId: '' },
-    { name: 'First name', sortable: false, elementId: '' },
-    { name: 'Last name', sortable: false, elementId: '' },
-    { name: 'Microting UID', sortable: false, elementId: '' },
+  tableHeaders: MtxGridColumn[] = [
+    {header: 'CreatedAt', field: 'createdAt', type: 'date', typeParameter: {format: 'dd.MM.y HH:mm:ss'}},
+    {header: 'Updated at', field: 'updatedAt', type: 'date', typeParameter: {format: 'dd.MM.y HH:mm:ss'}},
+    {header: 'First name', field: 'firstName',},
+    {header: 'Last name', field: 'lastName',},
+    {header: 'Microting UID', field: 'workerUId'},
     this.userClaims.workersDelete || this.userClaims.workersUpdate
-      ? { name: 'Actions', sortable: false, elementId: '' }
-      : null,
+      ? {header: 'Actions', field: 'actions'}
+      : undefined,
   ];
+  editWorkerComponentAfterClosedSub$: Subscription;
+  createWorkerComponentAfterClosedSub$: Subscription;
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -35,25 +40,32 @@ export class WorkersComponent implements OnInit {
   constructor(
     private workersService: WorkersService,
     private router: Router,
-    private authStateService: AuthStateService
-  ) {}
+    private authStateService: AuthStateService,
+    public dialog: MatDialog,
+    private overlay: Overlay
+  ) {
+  }
 
   ngOnInit() {
     this.loadAllWorkers();
   }
 
   openEditModal(selectedWorker: WorkerDto) {
-    this.selectedWorkerDto = selectedWorker;
-    this.modalWorkerEdit.show();
+    this.editWorkerComponentAfterClosedSub$ = this.dialog.open(WorkerEditCreateComponent,
+      {...dialogConfigHelper(this.overlay, selectedWorker), minWidth: 500})
+      .afterClosed().subscribe(data => data ? this.loadAllWorkers() : undefined);
   }
 
   openDeleteModal(selectedWorker: WorkerDto) {
-    this.selectedWorkerDto = selectedWorker;
-    this.modalWorkerDelete.show();
+    this.editWorkerComponentAfterClosedSub$ = this.dialog.open(WorkerDeleteComponent,
+      dialogConfigHelper(this.overlay, selectedWorker))
+      .afterClosed().subscribe(data => data ? this.loadAllWorkers() : undefined);
   }
 
   openCreateModal() {
-    this.modalWorkerCreate.show();
+    this.createWorkerComponentAfterClosedSub$ = this.dialog.open(WorkerEditCreateComponent,
+      {...dialogConfigHelper(this.overlay, new WorkerDto()), minWidth: 500})
+      .afterClosed().subscribe(data => data ? this.loadAllWorkers() : undefined);
   }
 
   loadAllWorkers() {

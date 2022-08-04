@@ -3,13 +3,15 @@ import {RouterModule, Routes} from '@angular/router';
 import {UserClaimsEnum} from 'src/app/common/const';
 import {ClaimsGuard} from 'src/app/common/guards/claims.guard';
 import {
-  EntitySearchComponent, EntitySearchCreateComponent, EntitySearchEditComponent,
-  EntitySelectComponent, EntitySelectCreateComponent, EntitySelectEditComponent,
+  EntitySearchComponent,
+  EntitySearchCreateComponent,
+  EntitySearchEditComponent,
+  EntitySelectComponent,
+  EntitySelectCreateComponent,
+  EntitySelectEditComponent,
   FoldersComponent,
-  SiteEditComponent,
   SitesComponent,
   UnitsComponent,
-  WorkerEditComponent,
   WorkersComponent
 } from './components';
 import {AuthGuard} from 'src/app/common/guards';
@@ -32,18 +34,6 @@ const routes: Routes = [
     component: WorkersComponent,
     canActivate: [ClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.workersRead}
-  },
-  {
-    path: 'workeredit/:id',
-    component: WorkerEditComponent,
-    canActivate: [ClaimsGuard],
-    data: {requiredClaim: UserClaimsEnum.workersUpdate}
-  },
-  {
-    path: 'siteedit/:id',
-    component: SiteEditComponent,
-    canActivate: [ClaimsGuard],
-    data: {requiredClaim: UserClaimsEnum.sitesUpdate}
   },
   {
     path: 'entity-search',

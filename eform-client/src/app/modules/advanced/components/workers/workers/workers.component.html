@@ -1,94 +1,46 @@
-<eform-subheader>
-  <div class="p-3">
+<eform-new-subheader>
+  <button
+    mat-raised-button
+    color="accent"
+    id="workerCreateBtn"
+    *ngIf="userClaims.workersCreate"
+    (click)="openCreateModal()"
+  >
+    {{ 'Create Worker' | translate }}
+  </button>
+</eform-new-subheader>
+
+<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
+
+<mtx-grid
+  [data]="workersDto"
+  [columns]="tableHeaders"
+  [cellTemplate]="{actions: actionsTpl}"
+  [showPaginator]="false"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showColumnMenuButton]="false">
+</mtx-grid>
+<ng-template #actionsTpl let-row>
+  <div  *ngIf="userClaims.workersDelete || userClaims.workersUpdate">
     <button
-      mdbBtn
-      class="btn-success btn-small-height"
-      id="workerCreateBtn"
-      *ngIf="userClaims.workersCreate"
-      (click)="openCreateModal()"
+      mat-icon-button
+      id="workerEditBtn"
+      (click)="openEditModal(row)"
+      *ngIf="userClaims.workersUpdate && !row.isLocked"
+      matTooltip="{{ 'Edit Worker' | translate }}"
     >
-      {{ 'Create Worker' | translate }}
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      color="warn"
+      id="workerDeleteBtn"
+      (click)="openDeleteModal(row)"
+      *ngIf="userClaims.workersDelete && !row.isLocked"
+      matTooltip="{{ 'Delete Worker' | translate }}"
+    >
+      <mat-icon>delete</mat-icon>
     </button>
   </div>
-</eform-subheader>
-<br />
-<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<div class="container-fluid">
-  <div class="row p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-    >
-      <thead table-headers [tableHeaders]="tableHeaders"></thead>
-      <tbody>
-        <tr *ngFor="let workerDto of workersDto">
-          <td>
-            <date-formatter
-              [date]="workerDto.createdAt"
-              [Format]="'datetime'"
-            ></date-formatter>
-          </td>
-          <td>
-            <date-formatter
-              [date]="workerDto.updatedAt"
-              [Format]="'datetime'"
-            ></date-formatter>
-          </td>
-          <td id="workerFirstName">
-            {{ workerDto.firstName }}
-          </td>
-          <td id="workerLastName">
-            {{ workerDto.lastName }}
-          </td>
-          <td id="workerUID">
-            {{ workerDto.workerUId }}
-          </td>
-          <td *ngIf="userClaims.workersDelete || userClaims.workersUpdate">
-            <div class="d-flex flex-row justify-content-center">
-              <button
-                id="workerEditBtn"
-                class="btn btn-accent text-black-50 btn-icon mb-2"
-                *ngIf="userClaims.workersUpdate && !workerDto.isLocked"
-                mdbTooltip="{{ 'Edit Worker' | translate }}"
-                (click)="openEditModal(workerDto)"
-              >
-                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-              </button>
-              <button
-                id="workerDeleteBtn"
-                class="btn btn-danger btn-icon mb-2"
-                *ngIf="userClaims.workersDelete && !workerDto.isLocked"
-                mdbTooltip="{{ 'Delete Worker' | translate }}"
-                (click)="openDeleteModal(workerDto)"
-              >
-                <fa-icon
-                  icon="trash-alt"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<app-worker-create
-  (WorkerCreated)="loadAllWorkers()"
-  #modalWorkerCreate
-></app-worker-create>
-<app-worker-edit
-  (onWorkerEdited)="loadAllWorkers()"
-  [selectedWorkerDto]="selectedWorkerDto"
-  #modalWorkerEdit
-></app-worker-edit>
-<app-worker-delete
-  (onWorkerDeleted)="loadAllWorkers()"
-  [selectedWorkerDto]="selectedWorkerDto"
-  #modalWorkerDelete
-></app-worker-delete>
+</ng-template>

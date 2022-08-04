@@ -1,60 +1,52 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{'Are you sure you want to delete the worker' | translate}}?</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6">
-              <h6>ID</h6>
-            </div>
-            <div class="col-md-6">
-              <h6>{{selectedWorkerDto.workerUId}}</h6>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-              <h6>{{'Creation Date' | translate}}</h6>
-            </div>
-            <div class="col-md-6">
-              <h6>
-                <date-formatter [date]="selectedWorkerDto.createdAt" [Format]="'datetime'"></date-formatter>
-              </h6>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-              <h6>{{'First name' | translate}}</h6>
-            </div>
-            <div class="col-md-6" id="deleteWorkerFirstName">
-              <h6>{{selectedWorkerDto.firstName}}</h6>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-              <h6>{{'Last name' | translate}}</h6>
-            </div>
-            <div class="col-md-6" id="deleteWorkerLastName">
-              <h6>{{selectedWorkerDto.lastName}}</h6>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button mdbBtn id="deleteWorkerDeleteBtn" class="btn-danger btn-small-height"
-                (click)="deleteWorker()">{{'Delete' | translate}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height"
-                (click)="frame.hide()">{{'Cancel' | translate}}</button>
-      </div>
+<h3 mat-dialog-title>{{'Are you sure you want to delete the worker' | translate}}?</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>ID</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{selectedWorkerDto.workerUId}}</strong>
     </div>
   </div>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>{{'Creation Date' | translate}}</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong><date-formatter [date]="selectedWorkerDto.createdAt" [Format]="'datetime'"></date-formatter></strong>
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>{{'First name' | translate}}</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{selectedWorkerDto.firstName}}</strong>
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>{{'Last name' | translate}}</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{selectedWorkerDto.lastName}}</strong>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="warn"
+    id="deleteWorkerDeleteBtn"
+    (click)="deleteWorker()"
+  >
+    {{'Delete' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="workerCancelDeleteBtn"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

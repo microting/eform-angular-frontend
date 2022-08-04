@@ -21,24 +21,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using eFormAPI.Web.Infrastructure.Models;
-using eFormAPI.Web.Infrastructure.Models.DeviceUsers;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Abstractions.Advanced
 {
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Infrastructure.Models;
+    using Infrastructure.Models.DeviceUsers;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     public interface IDeviceUsersService
     {
         Task<OperationDataResult<List<DeviceUser>>> Index(DeviceUserSearchRequestModel requestModel);
 
         Task<OperationDataResult<int>> Create(DeviceUserModel deviceUserModel);
 
-        Task<OperationDataResult<DeviceUser>> Edit(int id);
+        Task<OperationDataResult<DeviceUser>> Read(int id);
 
         Task<OperationResult> Update(DeviceUserModel deviceUserModel);
 
         Task<OperationResult> Delete(int id);
+
+        Task<OperationDataResult<List<CommonDictionaryModel>>> ReadCommonDictionary();
     }
 }

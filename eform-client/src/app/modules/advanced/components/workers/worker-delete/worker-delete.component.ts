@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {WorkerDto} from 'src/app/common/models/dto';
-import {WorkersService} from 'src/app/common/services/advanced';
+import {Component, Inject, OnInit} from '@angular/core';
+import {WorkerDto} from 'src/app/common/models';
+import {WorkersService} from 'src/app/common/services';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-worker-delete',
@@ -8,26 +9,28 @@ import {WorkersService} from 'src/app/common/services/advanced';
   styleUrls: ['./worker-delete.component.scss']
 })
 export class WorkerDeleteComponent implements OnInit {
-  @Input() selectedWorkerDto: WorkerDto = new WorkerDto();
-  @Output() onWorkerDeleted: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame', { static: true }) frame;
 
-  constructor(private workersService: WorkersService) { }
+  constructor(
+    private workersService: WorkersService,
+    public dialogRef: MatDialogRef<WorkerDeleteComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedWorkerDto: WorkerDto = new WorkerDto()
+  ) {
+  }
 
   ngOnInit() {
   }
 
-  show() {
-    this.frame.show();
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
   deleteWorker() {
-    this.workersService.deleteSingleWorker(this.selectedWorkerDto.workerUId).subscribe(operation => {
-      if (operation && operation.success) {
-        this.frame.hide();
-        this.onWorkerDeleted.emit();
-      }
-    });
+    this.workersService.deleteSingleWorker(this.selectedWorkerDto.workerUId)
+      .subscribe(operation => {
+        if (operation && operation.success) {
+          this.hide(true);
+        }
+      });
   }
 
 }
