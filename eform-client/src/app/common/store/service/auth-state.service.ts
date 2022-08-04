@@ -83,15 +83,12 @@ export class AuthStateService {
             claims: userClaims,
           },
         }));
-        this.router
-          .navigate([
-            `/${
-              data.model.loginRedirectUrl
-                ? data.model.loginRedirectUrl
-                : '/'
-            }`,
-          ])
-          .then();
+        if(data.model.loginRedirectUrl) {
+          this.router
+            .navigate([
+              `/${data.model.loginRedirectUrl}`,
+            ]).then();
+        }
       });
     });
   }

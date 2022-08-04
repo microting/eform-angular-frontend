@@ -12,67 +12,67 @@
 </eform-new-subheader>
 
 <!--<mat-card class="d-flex flex-column" style="padding: 0;">-->
-  <ng-template #toolbarTpl>
-    <div class="d-flex flex-row justify-content-start flex-nowrap">
-      <div class="d-flex flex-column mr-2 ml-2">
-        <mat-form-field>
-          <mat-label>{{ 'Search' | translate }}</mat-label>
-          <input
-            matInput
-            type="text"
-            (ngModelChange)="onSearchChanged($event)"
-            [ngModel]="deviceUsersStateService.getNameFilter() | async"
-            id="labelInput"
-          />
-        </mat-form-field>
-      </div>
+<ng-template #toolbarTpl>
+  <div class="d-flex flex-row justify-content-start flex-nowrap">
+    <div class="d-flex flex-column mr-2 ml-2">
+      <mat-form-field>
+        <mat-label>{{ 'Search' | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          (ngModelChange)="onSearchChanged($event)"
+          [ngModel]="deviceUsersStateService.getNameFilter() | async"
+          id="labelInput"
+        />
+      </mat-form-field>
     </div>
-  </ng-template>
-  <mtx-grid
-    [data]="sitesDto"
-    [columns]="tableHeaders"
-    [cellTemplate]="{
-    firstName: deviceUserFirstNameTpl,
-    lastName: deviceUserLastNameTpl,
-    unitId: unitIdTpl,
-    otpCode: otpCodeTpl,
-    actions: actionsTpl}"
-    [showPaginator]="false"
-    [pageOnFront]="false"
-    [rowStriped]="true"
-    [showToolbar]="true"
-    [showColumnMenuButton]="false"
-    [toolbarTemplate]="toolbarTpl">
-  </mtx-grid>
-  <ng-template #deviceUserFirstNameTpl id="deviceUserFirstName" let-row>
-    {{ row.firstName ?? 'N/A' }}
-  </ng-template>
-  <ng-template #deviceUserLastNameTpl id="deviceUserLastName" let-row>
-    {{ row.lastName ?? 'N/A' }}
-  </ng-template>
-  <ng-template #unitIdTpl let-row>
-    {{ row.unitId ?? 'N/A' }}
-  </ng-template>
-  <ng-template #otpCodeTpl let-row>
-    <ng-container *ngIf="row.customerNo && row.otpCode">
-      {{ row.customerNo }} / {{ row.otpCode }}
-    </ng-container>
-    <ng-container *ngIf="row.otpCode == 0">
-      <button
-        mat-icon-button
-        color="warn"
-        *ngIf="userClaims.deviceUsersUpdate"
-        matTooltip="{{ 'New OTP' | translate }}"
-        (click)="openOtpModal(row)"
-      >
-        <mat-icon>key</mat-icon>
-      </button>
-    </ng-container>
-    <ng-container *ngIf="!row.unitId"> N/A </ng-container>
-  </ng-template>
-  <ng-template #actionsTpl let-row>
-    <div *ngIf="userClaims.deviceUsersDelete || userClaims.deviceUsersDelete">
-      <button
+  </div>
+</ng-template>
+<mtx-grid
+  [data]="sitesDto"
+  [columns]="tableHeaders"
+  [cellTemplate]="{
+  firstName: deviceUserFirstNameTpl,
+  lastName: deviceUserLastNameTpl,
+  unitId: unitIdTpl,
+  otpCode: otpCodeTpl,
+  actions: actionsTpl}"
+  [showPaginator]="false"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showToolbar]="true"
+  [showColumnMenuButton]="false"
+  [toolbarTemplate]="toolbarTpl">
+</mtx-grid>
+<ng-template #deviceUserFirstNameTpl id="deviceUserFirstName" let-row>
+  {{ row.firstName ?? 'N/A' }}
+</ng-template>
+<ng-template #deviceUserLastNameTpl id="deviceUserLastName" let-row>
+  {{ row.lastName ?? 'N/A' }}
+</ng-template>
+<ng-template #unitIdTpl let-row>
+  {{ row.unitId ?? 'N/A' }}
+</ng-template>
+<ng-template #otpCodeTpl let-row>
+  <ng-container *ngIf="row.customerNo && row.otpCode">
+    {{ row.customerNo }} / {{ row.otpCode }}
+  </ng-container>
+  <ng-container *ngIf="row.otpCode == 0">
+    <button
+      mat-icon-button
+      color="warn"
+      *ngIf="userClaims.deviceUsersUpdate"
+      matTooltip="{{ 'New OTP' | translate }}"
+      (click)="openOtpModal(row)"
+    >
+      <mat-icon>key</mat-icon>
+    </button>
+  </ng-container>
+  <ng-container *ngIf="!row.unitId"> N/A</ng-container>
+</ng-template>
+<ng-template #actionsTpl let-row>
+  <div *ngIf="userClaims.deviceUsersDelete || userClaims.deviceUsersDelete">
+    <button
       mat-icon-button
       id="editDeviceUserBtn"
       (click)="openEditModal(row)"
@@ -81,17 +81,17 @@
     >
       <mat-icon>edit</mat-icon>
     </button>
-      <button
-        mat-icon-button
-        color="warn"
-        id="deleteDeviceUserBtn"
-        (click)="openDeleteDeviceUserModal(row)"
-        *ngIf="userClaims.deviceUsersDelete && !row.isLocked"
-        matTooltip="{{ 'Delete Device User' | translate }}"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
-  </ng-template>
-  <!--pagination(if required)-->
+    <button
+      mat-icon-button
+      color="warn"
+      id="deleteDeviceUserBtn"
+      (click)="openDeleteDeviceUserModal(row)"
+      *ngIf="userClaims.deviceUsersDelete && !row.isLocked"
+      matTooltip="{{ 'Delete Device User' | translate }}"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</ng-template>
+<!--pagination(if required)-->
 <!--</mat-card>-->
