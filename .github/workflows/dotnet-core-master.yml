@@ -16,12 +16,6 @@ jobs:
         test: [a,b,c,d,e,f,g,h,i,j]
     steps:
     - uses: actions/checkout@v2
-    - name: Upgrade Chrome browser
-      run: |
-        sudo apt-get update
-        sudo apt-get --only-upgrade install google-chrome-stable
-
-        google-chrome --version
     - uses: getong/mariadb-action@v1.1
       with:
         host port: 3306 # Optional, default value is 3306. The port of host
