@@ -102,7 +102,7 @@
     "@angular/language-service": "^14.1.1",
     "@datorama/akita": "^7.1.1",
     "@datorama/akita-ngdevtools": "^7.0.0",
-    "@types/chai": "4.3.1",
+    "@types/chai": "4.3.3",
     "@types/d3": "7.4.0",
     "@types/mocha": "9.1.1",
     "@types/node": "18.0.0",
