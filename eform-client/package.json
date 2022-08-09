@@ -68,7 +68,7 @@
     "chart.js": "3.8.0",
     "core-js": "3.24.1",
     "d3": "7.4.4",
-    "date-fns": "2.28.0",
+    "date-fns": "2.29.1",
     "dom-to-image": "2.6.0",
     "file-saver": "2.0.5",
     "glob": "8.0.3",
