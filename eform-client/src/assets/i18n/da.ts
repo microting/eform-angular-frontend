@@ -348,7 +348,7 @@ export const da = {
   'Select location': 'Vælg lokation',
   Move: 'Flyt',
   'Current tags': 'Nuværende tags',
-  'Edit selectable element': 'Rediger det valgbare element',
+  'Edit selectable element': 'Redigér',
   'Edit selectable list': 'Rediger valgbar liste',
   Folders: 'Mapper',
   Description: 'Beskrivelse',
