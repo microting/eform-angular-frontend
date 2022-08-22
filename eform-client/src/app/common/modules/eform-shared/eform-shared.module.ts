@@ -15,6 +15,8 @@ import {
   EntityListElementsComponent,
   EntityItemEditNameComponent,
   EformNewSubheaderComponent,
+  EntityEditCreateComponent,
+  EntityImportListComponent,
 } from './components';
 import {
   AuthImagePipe,
@@ -34,26 +36,32 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule,
-        NgSelectModule,
-        FormsModule,
-        TreeModule,
-        FontAwesomeModule,
-        RouterModule,
-        DragulaModule,
-        MDBBootstrapModule,
-        MatSortModule,
-        MatPaginatorModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        MatTreeModule,
-        MatMenuModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    NgSelectModule,
+    FormsModule,
+    TreeModule,
+    FontAwesomeModule,
+    RouterModule,
+    DragulaModule,
+    MDBBootstrapModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatTreeModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule
+  ],
   declarations: [
     EformPaginationComponent,
     EformSubheaderComponent,
@@ -69,6 +77,8 @@ import {MatMenuModule} from '@angular/material/menu';
     EntityListElementsComponent,
     EntityItemEditNameComponent,
     EformNewSubheaderComponent,
+    EntityEditCreateComponent,
+    EntityImportListComponent,
   ],
   exports: [
     EformPaginationComponent,
@@ -85,6 +95,8 @@ import {MatMenuModule} from '@angular/material/menu';
     EntityListElementsComponent,
     EntityItemEditNameComponent,
     EformNewSubheaderComponent,
+    EntityEditCreateComponent,
+    EntityImportListComponent,
   ],
 })
 export class EformSharedModule {

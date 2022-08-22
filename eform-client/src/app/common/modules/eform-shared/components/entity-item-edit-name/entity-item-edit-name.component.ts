@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {AdvEntitySearchableItemModel, AdvEntitySelectableItemModel} from 'src/app/common/models/advanced';
+import {EntityItemModel} from 'src/app/common/models/advanced';
 
 @Component({
   selector: 'app-entity-item-edit-name',
@@ -7,18 +7,18 @@ import {AdvEntitySearchableItemModel, AdvEntitySelectableItemModel} from 'src/ap
   styleUrls: ['./entity-item-edit-name.component.scss']
 })
 export class EntityItemEditNameComponent implements OnInit {
-  @Output() itemUpdated: EventEmitter<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel>
-    = new EventEmitter<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel>();
+  @Output() itemUpdated: EventEmitter<EntityItemModel>
+    = new EventEmitter<EntityItemModel>();
   @Output() modalHided: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  selectedEntityItemModel: AdvEntitySelectableItemModel | AdvEntitySearchableItemModel
+  selectedEntityItemModel: EntityItemModel
   = {description: '', displayIndex: 0, entityItemUId: '', workflowState: '', name: ''};
   constructor() { }
 
   ngOnInit() {
   }
 
-  show(model: AdvEntitySelectableItemModel | AdvEntitySearchableItemModel) {
+  show(model: EntityItemModel) {
     this.selectedEntityItemModel = {...this.selectedEntityItemModel, ...model};
     this.frame.show();
   }

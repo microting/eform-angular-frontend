@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EntitySearchService } from 'src/app/common/services';
 import {
-  AdvEntitySearchableGroupModel,
+  EntityGroupModel,
   OperationDataResult,
   Paged,
   PaginationModel,
@@ -21,7 +21,7 @@ export class EntitySearchStateService {
   ) {}
 
   getEntitySearchableGroupList(): Observable<
-    OperationDataResult<Paged<AdvEntitySearchableGroupModel>>
+    OperationDataResult<Paged<EntityGroupModel>>
   > {
     return this.service
       .getEntitySearchableGroupList({

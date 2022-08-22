@@ -1,113 +1,78 @@
-<eform-subheader>
-  <div class="p-3">
-    <button
-      mdbBtn
-      id="createEntitySearchBtn"
-      class="btn btn-success btn-small-height"
-      mdbTooltip="{{ 'Create new searchable list' | translate }}"
-      *ngIf="userClaims.entitySearchCreate"
-      placement="left"
-      [routerLink]="['/advanced/entity-search/create']"
-    >
-      {{ 'New list' | translate }}
-    </button>
-  </div>
-</eform-subheader>
+<eform-new-subheader>
+  <button
+    mat-raised-button
+    color="accent"
+    id="createEntitySearchBtn"
+    matTooltip="{{ 'Create new searchable list' | translate }}"
+    *ngIf="userClaims.entitySearchCreate"
+    matTooltipPosition="left"
+    [routerLink]="['/advanced/entity-search/create']"
+  >
+    {{ 'New list' | translate }}
+  </button>
+</eform-new-subheader>
 
-<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<div class="container-fluid">
-  <div class="row pl-1">
-    <div class="col-md-2">
-      <div class="md-form">
+<ng-template #toolbarTpl>
+  <div class="d-flex flex-row justify-content-start flex-nowrap">
+    <div class="d-flex flex-column mr-2 ml-2">
+      <mat-form-field>
+        <mat-label>{{ 'Search' | translate }}</mat-label>
         <input
-          mdbInput
+          matInput
+          type="text"
           (ngModelChange)="onSearchChanged($event)"
           [ngModel]="entitySearchStateService.getNameFilter() | async"
-          type="text"
-          class="form-control"
           id="labelInput"
         />
-        <label for="labelInput">{{ 'Search' | translate }}</label>
-      </div>
+      </mat-form-field>
     </div>
   </div>
-  <div class="row p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-      matSort
-      [matSortActive]="entitySearchStateService.getActiveSort() | async"
-      [matSortDirection]="entitySearchStateService.getActiveSortDirection() | async"
-      [matSortDisableClear]="true"
-      (matSortChange)="sortTable($event)"
-    >
-      <thead
-        table-headers
-        [tableHeaders]="tableHeaders"
-      ></thead>
-      <tbody id="tableBody">
-      <tr
-        *ngFor="
-            let advEntitySearchableGroup of advEntitySearchableGroupListModel.entities
-          "
-      >
-        <td id="entitySearchMUid">
-          {{ advEntitySearchableGroup.microtingUUID }}
-        </td>
-        <td id="entitySearchName">{{ advEntitySearchableGroup.name }}</td>
-        <td id="entitySearchDescription">
-          {{ advEntitySearchableGroup.description }}
-        </td>
-        <td
-          *ngIf="
-              userClaims.entitySearchDelete || userClaims.entitySearchUpdate
-            "
-        >
-          <div class="d-flex flex-row justify-content-center">
-            <button
-              id="entitySearchUpdateBtn"
-              class="btn btn-accent btn-icon text-black-50 mb-2"
-              [disabled]="!userClaims.entitySearchUpdate"
-              mdbTooltip="{{ 'Edit' | translate }}"
-              [routerLink]="[
-                  '/advanced/entity-search/edit/' +
-                    advEntitySearchableGroup.microtingUUID
-                ]"
-            >
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <button
-              id="entitySearchDeleteBtn"
-              class="btn btn-danger btn-icon mb-2"
-              mdbTooltip="{{ 'Remove' | translate }}"
-              (click)="openModalSearchRemove(advEntitySearchableGroup)"
-              [disabled]="!userClaims.entitySearchDelete ||
-                  advEntitySearchableGroup.isLocked"
-            >
-              <fa-icon
-                icon="trash-alt"
-                [fixedWidth]="true"
-                size="lg"
-              ></fa-icon>
-            </button>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="mr-2 ml-2">
-    <eform-pagination
-      [pagination]="entitySearchStateService.getPagination() | async"
-      (paginationChanged)="onPaginationChanged($event)"
-    ></eform-pagination>
-  </div>
-</div>
+</ng-template>
 
-<app-entity-search-remove
-  (onEntityRemoved)="onEntityRemoved()"
-  #modalSearchRemove
-></app-entity-search-remove>
+<mtx-grid
+  [data]="advEntitySearchableGroupListModel.entities"
+  [columns]="tableHeaders"
+  [cellTemplate]="{actions: actionsTpl}"
+  [showPaginator]="true"
+  [paginationTemplate]="paginatorTpl"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showToolbar]="true"
+  [showColumnMenuButton]="false"
+  [toolbarTemplate]="toolbarTpl"
+  [sortActive]="entitySearchStateService.getActiveSort() | async"
+  [sortDirection]="entitySearchStateService.getActiveSortDirection() | async"
+  (sortChange)="sortTable($event)">
+</mtx-grid>
+
+<ng-template #actionsTpl let-row>
+  <div *ngIf="userClaims.entitySearchDelete || userClaims.entitySearchUpdate">
+    <button
+      mat-icon-button
+      id="entitySearchUpdateBtn"
+      matTooltip="{{ 'Edit' | translate }}"
+      [disabled]="!userClaims.entitySearchUpdate"
+      [routerLink]="['/advanced/entity-search/edit/' + row.microtingUUID]"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      color="warn"
+      id="entitySearchDeleteBtn"
+      (click)="openModalSearchRemove(row)"
+      matTooltip="{{ 'Remove' | translate }}"
+      [disabled]="!userClaims.entitySearchDelete || row.isLocked"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</ng-template>
+
+<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
+<ng-template #paginatorTpl>
+  <eform-pagination
+    [pagination]="entitySearchStateService.getPagination() | async"
+    (paginationChanged)="onPaginationChanged($event)"
+  ></eform-pagination>
+</ng-template>

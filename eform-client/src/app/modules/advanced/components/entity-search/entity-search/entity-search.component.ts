@@ -1,44 +1,53 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
-  AdvEntitySearchableGroupModel,
+  EntityGroupModel,
   Paged,
   PaginationModel,
-  TableHeaderElementModel,
 } from 'src/app/common/models';
 import { EntitySearchService } from 'src/app/common/services';
 import { EntitySearchStateService } from '../store';
 import { AuthStateService } from 'src/app/common/store';
 import {Sort} from '@angular/material/sort';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import {EntitySearchRemoveComponent,} from '../';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-searchable-list',
   templateUrl: './entity-search.component.html',
   styleUrls: ['./entity-search.component.scss'],
 })
-export class EntitySearchComponent implements OnInit {
-  @ViewChild('modalSearchRemove', { static: true }) modalSearchRemove;
-  selectedAdvGroup: AdvEntitySearchableGroupModel = new AdvEntitySearchableGroupModel();
-  advEntitySearchableGroupListModel: Paged<AdvEntitySearchableGroupModel> = new Paged<AdvEntitySearchableGroupModel>();
+export class EntitySearchComponent implements OnInit, OnDestroy{
+  advEntitySearchableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();
+  entitySearchRemoveComponentAfterClosedSub$: Subscription;
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
   }
 
-  tableHeaders: TableHeaderElementModel[] = [
-    { name: 'Id', elementId: 'idTableHeader', sortable: true },
-    { name: 'Name', elementId: 'nameTableHeader', sortable: true },
+  tableHeaders: MtxGridColumn[] = [
+    {header: 'Id', field: 'microtingUUID', sortProp: {id: 'Id'}, sortable: true},
+    {header: 'Name', sortProp: {id: 'Name'}, field: 'name', sortable: true},
     {
-      name: 'Description',
-      elementId: 'descriptionTableHeader',
+      header: 'Description',
+      field: 'description',
       sortable: true,
+      sortProp: {id: 'Description'}
     },
-    { name: 'Actions', elementId: '', sortable: false },
-  ];
+    {header: 'Actions', field: 'actions'},
+  ]
 
   constructor(
     private entitySearchService: EntitySearchService,
     private authStateService: AuthStateService,
-    public entitySearchStateService: EntitySearchStateService
+    public entitySearchStateService: EntitySearchStateService,
+    private dialog: MatDialog,
+    private overlay: Overlay,
   ) {}
 
   ngOnInit() {
@@ -55,9 +64,10 @@ export class EntitySearchComponent implements OnInit {
       });
   }
 
-  openModalSearchRemove(selectedSearchModel: AdvEntitySearchableGroupModel) {
-    this.selectedAdvGroup = selectedSearchModel;
-    this.modalSearchRemove.show(this.selectedAdvGroup);
+  openModalSearchRemove(selectedSearchModel: EntityGroupModel) {
+    this.entitySearchRemoveComponentAfterClosedSub$ = this.dialog.open(EntitySearchRemoveComponent,
+      dialogConfigHelper(this.overlay, selectedSearchModel))
+      .afterClosed().subscribe(data => data ? this.onEntityRemoved() : undefined);
   }
 
   onSearchChanged(name: string) {
@@ -78,5 +88,8 @@ export class EntitySearchComponent implements OnInit {
   onPaginationChanged(paginationModel: PaginationModel) {
     this.entitySearchStateService.updatePagination(paginationModel);
     this.getEntitySearchableGroupList();
+  }
+
+  ngOnDestroy(): void {
   }
 }

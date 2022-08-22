@@ -4,17 +4,14 @@ import {UserClaimsEnum} from 'src/app/common/const';
 import {ClaimsGuard} from 'src/app/common/guards/claims.guard';
 import {
   EntitySearchComponent,
-  EntitySearchCreateComponent,
-  EntitySearchEditComponent,
   EntitySelectComponent,
-  EntitySelectCreateComponent,
-  EntitySelectEditComponent,
   FoldersComponent,
   SitesComponent,
   UnitsComponent,
   WorkersComponent
 } from './components';
 import {AuthGuard} from 'src/app/common/guards';
+import { EntityEditCreateComponent } from 'src/app/common/modules/eform-shared/components';
 
 const routes: Routes = [
   {
@@ -43,15 +40,15 @@ const routes: Routes = [
   },
   {
     path: 'entity-search/edit/:id',
-    component: EntitySearchEditComponent,
+    component: EntityEditCreateComponent,
     canActivate: [ClaimsGuard],
-    data: {requiredClaim: UserClaimsEnum.entitySearchRead}
+    data: {requiredClaim: UserClaimsEnum.entitySearchRead, header: 'searchable'}
   },
   {
     path: 'entity-search/create',
-    component: EntitySearchCreateComponent,
+    component: EntityEditCreateComponent,
     canActivate: [ClaimsGuard],
-    data: {requiredClaim: UserClaimsEnum.entitySearchRead}
+    data: {requiredClaim: UserClaimsEnum.entitySearchRead, header: 'searchable'}
   },
   {
     path: 'entity-select',
@@ -61,15 +58,15 @@ const routes: Routes = [
   },
   {
     path: 'entity-select/edit/:id',
-    component: EntitySelectEditComponent,
+    component: EntityEditCreateComponent,
     canActivate: [ClaimsGuard],
-    data: {requiredClaim: UserClaimsEnum.entitySelectUpdate}
+    data: {requiredClaim: UserClaimsEnum.entitySelectUpdate, header: 'selectable'}
   },
   {
     path: 'entity-select/create',
-    component: EntitySelectCreateComponent,
+    component: EntityEditCreateComponent,
     canActivate: [ClaimsGuard],
-    data: {requiredClaim: UserClaimsEnum.entitySelectUpdate}
+    data: {requiredClaim: UserClaimsEnum.entitySelectUpdate, header: 'selectable'}
   },
   {
     path: 'folders',

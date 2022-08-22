@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {AdvEntitySearchableGroupModel} from 'src/app/common/models/advanced';
+import {Component, Inject, OnInit,} from '@angular/core';
+import {EntityGroupModel} from 'src/app/common/models/advanced';
 import {EntitySearchService} from 'src/app/common/services/advanced';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-entity-search-remove',
@@ -8,26 +9,24 @@ import {EntitySearchService} from 'src/app/common/services/advanced';
   styleUrls: ['./entity-search-remove.component.scss']
 })
 export class EntitySearchRemoveComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Output() onEntityRemoved: EventEmitter<void> = new EventEmitter<void>();
-  selectedGroupModel: AdvEntitySearchableGroupModel = new AdvEntitySearchableGroupModel();
-  constructor(private entitySearchService: EntitySearchService) { }
+  constructor(
+    private entitySearchService: EntitySearchService,
+    public dialogRef: MatDialogRef<EntitySearchRemoveComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedGroupModel: EntityGroupModel = new EntityGroupModel()
+  ) { }
 
   ngOnInit() {
   }
 
-  show(selectedGroup: AdvEntitySearchableGroupModel) {
-    this.selectedGroupModel = selectedGroup;
-    this.frame.show();
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
   deleteSelectedAdvEntitySearchableGroup() {
     this.entitySearchService.deleteEntitySearchableGroup(this.selectedGroupModel.microtingUUID).subscribe((data) => {
       if (data && data.success) {
-        this.frame.hide();
-        this.onEntityRemoved.emit();
+        this.hide(true);
       }
     });
   }
-
 }

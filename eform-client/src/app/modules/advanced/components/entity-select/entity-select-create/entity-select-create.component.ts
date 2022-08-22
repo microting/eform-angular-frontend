@@ -4,9 +4,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  AdvEntitySearchableItemModel,
-  AdvEntitySelectableGroupEditModel,
-  AdvEntitySelectableItemModel,
+  EntityItemModel,
+  EntityGroupEditModel,
 } from 'src/app/common/models/advanced';
 import { EntitySelectService } from 'src/app/common/services/advanced';
 import { Location } from '@angular/common';
@@ -19,7 +18,7 @@ import {getRandomInt} from 'src/app/common/helpers';
   styleUrls: ['./entity-select-create.component.scss'],
 })
 export class EntitySelectCreateComponent implements OnInit {
-  advEntitySelectableGroupCreateModel: AdvEntitySelectableGroupEditModel = new AdvEntitySelectableGroupEditModel();
+  advEntitySelectableGroupCreateModel: EntityGroupEditModel = new EntityGroupEditModel();
   @ViewChild('modalNameEdit', { static: true }) modalNameEdit: EntityItemEditNameComponent;
 
   items = [];
@@ -33,7 +32,7 @@ export class EntitySelectCreateComponent implements OnInit {
 
   show() {
     this.advEntitySelectableGroupCreateModel.name = '';
-    this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels = [];
+    this.advEntitySelectableGroupCreateModel.entityItemModels = [];
   }
 
   createEntitySelectableGroup() {
@@ -41,7 +40,7 @@ export class EntitySelectCreateComponent implements OnInit {
       .createEntitySelectableGroup(this.advEntitySelectableGroupCreateModel)
       .subscribe((data) => {
         if (data && data.success) {
-          this.advEntitySelectableGroupCreateModel = new AdvEntitySelectableGroupEditModel();
+          this.advEntitySelectableGroupCreateModel = new EntityGroupEditModel();
           this.location.back();
         }
       });
@@ -54,9 +53,9 @@ export class EntitySelectCreateComponent implements OnInit {
   }
 
   addNewAdvEntitySelectableItem() {
-    const item = new AdvEntitySelectableItemModel();
-    item.entityItemUId = this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.length.toString();
-    this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.push(
+    const item = new EntityItemModel();
+    item.entityItemUId = this.advEntitySelectableGroupCreateModel.entityItemModels.length.toString();
+    this.advEntitySelectableGroupCreateModel.entityItemModels.push(
       item
     );
   }
@@ -64,9 +63,9 @@ export class EntitySelectCreateComponent implements OnInit {
   importAdvEntitySelectableGroup(importString: string) {
     if (importString) {
       const lines = importString.split('\n');
-      const lengthBeforeImport = this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.length;
+      const lengthBeforeImport = this.advEntitySelectableGroupCreateModel.entityItemModels.length;
       for (let i = 0; i < lines.length; i++) {
-        this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.push(
+        this.advEntitySelectableGroupCreateModel.entityItemModels.push(
           {
             description: '',
             displayIndex: lengthBeforeImport + i,
@@ -80,21 +79,21 @@ export class EntitySelectCreateComponent implements OnInit {
     }
   }
 
-  onItemUpdated(model: AdvEntitySelectableItemModel) {
-    const index = this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels
+  onItemUpdated(model: EntityItemModel) {
+    const index = this.advEntitySelectableGroupCreateModel.entityItemModels
       .findIndex(x => x.entityItemUId === model.entityItemUId);
     if (index !== -1) {
-      this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels[index] = model;
+      this.advEntitySelectableGroupCreateModel.entityItemModels[index] = model;
     }
   }
 
-  onOpenEditNameModal(model: AdvEntitySearchableItemModel) {
+  onOpenEditNameModal(model: EntityItemModel) {
     this.modalNameEdit.show(model);
   }
 
   getRandId(): number{
     const randId = getRandomInt(1, 1000);
-    if(this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels.findIndex(x => x.tempId === randId) !== -1){
+    if(this.advEntitySelectableGroupCreateModel.entityItemModels.findIndex(x => x.tempId === randId) !== -1){
       return this.getRandId();
     }
     return randId;

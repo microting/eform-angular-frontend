@@ -328,6 +328,23 @@ body.theme-dark {
   font-weight: 300;
 }
 
+.mat-drawer-inner-container, .mat-drawer-content {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: black;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #999999;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+  }
+}
 
 body {
   --theme-primary-color-h: 26.53846154;

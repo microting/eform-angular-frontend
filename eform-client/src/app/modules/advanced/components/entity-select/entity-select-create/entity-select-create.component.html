@@ -76,8 +76,8 @@
             </div>
           </div>
           <app-entity-list-elements
-          [entityItemModels]="advEntitySelectableGroupCreateModel.advEntitySelectableItemModels"
-          (entityItemModelsChanged)="advEntitySelectableGroupCreateModel.advEntitySelectableItemModels = $event"
+          [entityItemModels]="advEntitySelectableGroupCreateModel.entityItemModels"
+          (entityItemModelsChanged)="advEntitySelectableGroupCreateModel.entityItemModels = $event"
           (openEditNameModal)="onOpenEditNameModal($event)"
           >
           </app-entity-list-elements>

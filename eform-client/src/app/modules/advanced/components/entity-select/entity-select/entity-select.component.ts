@@ -3,7 +3,7 @@ import { EntitySelectService } from 'src/app/common/services';
 import {
   Paged,
   TableHeaderElementModel,
-  AdvEntitySelectableGroupModel,
+  EntityGroupModel,
   PaginationModel,
 } from 'src/app/common/models';
 import { AuthStateService } from 'src/app/common/store';
@@ -19,8 +19,8 @@ export class EntitySelectComponent implements OnInit {
   @ViewChild('modalSelectRemove', { static: true }) modalSelectRemove;
   @ViewChild('modalSelectCreate', { static: true }) modalSelectCreate;
   @ViewChild('modalSelectEdit', { static: true }) modalSelectEdit;
-  selectedAdvGroup: AdvEntitySelectableGroupModel = new AdvEntitySelectableGroupModel();
-  advEntitySelectableGroupListModel: Paged<AdvEntitySelectableGroupModel> = new Paged<AdvEntitySelectableGroupModel>();
+  selectedAdvGroup: EntityGroupModel = new EntityGroupModel();
+  advEntitySelectableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -55,7 +55,7 @@ export class EntitySelectComponent implements OnInit {
       });
   }
 
-  openModalSelectRemove(selectedSelectModel: AdvEntitySelectableGroupModel) {
+  openModalSelectRemove(selectedSelectModel: EntityGroupModel) {
     this.selectedAdvGroup = selectedSelectModel;
     this.modalSelectRemove.show(this.selectedAdvGroup);
   }

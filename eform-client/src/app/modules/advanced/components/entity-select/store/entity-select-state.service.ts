@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {EntitySelectService} from 'src/app/common/services';
 import {
-  AdvEntitySelectableGroupModel,
+  EntityGroupModel,
   OperationDataResult,
   Paged,
   PaginationModel,
@@ -21,7 +21,7 @@ export class EntitySelectStateService {
   ) {
   }
 
-  getEntitySelectableGroupList(): Observable<OperationDataResult<Paged<AdvEntitySelectableGroupModel>>> {
+  getEntitySelectableGroupList(): Observable<OperationDataResult<Paged<EntityGroupModel>>> {
     return this.service
       .getEntitySelectableGroupList({
         ...this.query.pageSetting.pagination,

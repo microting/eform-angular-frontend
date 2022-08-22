@@ -9,9 +9,6 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {AdvancedRoutingModule} from './advanced.routing';
 import {
   EntitySearchComponent,
-  EntitySearchCreateComponent,
-  EntitySearchEditComponent,
-  EntitySearchImportListComponent,
   EntitySearchRemoveComponent,
   EntitySelectComponent,
   EntitySelectCreateComponent,
@@ -87,10 +84,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     WorkersComponent,
     WorkerEditCreateComponent,
     WorkerDeleteComponent,
-    EntitySearchCreateComponent,
     EntitySearchRemoveComponent,
-    EntitySearchImportListComponent,
-    EntitySearchEditComponent,
     EntitySelectRemoveComponent,
     EntitySelectCreateComponent,
     EntitySelectImportListComponent,

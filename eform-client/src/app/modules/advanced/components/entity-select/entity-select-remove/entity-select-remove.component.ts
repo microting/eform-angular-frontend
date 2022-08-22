@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {AdvEntitySelectableGroupModel} from 'src/app/common/models/advanced';
-import {EntitySelectService} from 'src/app/common/services/advanced';
+import {EntityGroupModel} from 'src/app/common/models';
+import {EntitySelectService} from 'src/app/common/services';
 
 @Component({
   selector: 'app-entity-select-remove',
@@ -10,13 +10,13 @@ import {EntitySelectService} from 'src/app/common/services/advanced';
 export class EntitySelectRemoveComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @Output() onEntityRemoved: EventEmitter<void> = new EventEmitter<void>();
-  selectedGroupModel: AdvEntitySelectableGroupModel = new AdvEntitySelectableGroupModel();
+  selectedGroupModel: EntityGroupModel = new EntityGroupModel();
   constructor(private entitySelectService: EntitySelectService) { }
 
   ngOnInit() {
   }
 
-  show(selectedGroup: AdvEntitySelectableGroupModel) {
+  show(selectedGroup: EntityGroupModel) {
     this.selectedGroupModel = selectedGroup;
     this.frame.show();
   }
