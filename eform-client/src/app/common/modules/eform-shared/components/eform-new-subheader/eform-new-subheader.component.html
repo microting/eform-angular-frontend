@@ -5,6 +5,7 @@
       ? title
       : (appMenuStateService.getTitleByUrl(this.href) | translate)
     }}
+    <small *ngIf="subtitle" style="font-size: 1rem">({{ subtitle | translate }})</small>
   </h2>
   <span class="spacer"></span>
   <ng-content></ng-content>

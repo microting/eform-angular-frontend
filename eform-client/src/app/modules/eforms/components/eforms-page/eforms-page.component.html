@@ -72,17 +72,17 @@
           id="tagSelector"
           [multiple]="true"
         >
-  <!--          <ng-template ng-label-tmp let-item="item">-->
-  <!--            <mat-chip-list>-->
-  <!--              <mat-chip color="primary" selected (removed)="removeSavedTag({value: {id: item.id}})">-->
-  <!--                {{item.name}}-->
-  <!--              </mat-chip>-->
-  <!--              <button matChipRemove>-->
-  <!--                <mat-icon>cancel</mat-icon>-->
-  <!--              </button>-->
-  <!--            </mat-chip-list>-->
+          <!--          <ng-template ng-label-tmp let-item="item">-->
+          <!--            <mat-chip-list>-->
+          <!--              <mat-chip color="primary" selected (removed)="removeSavedTag({value: {id: item.id}})">-->
+          <!--                {{item.name}}-->
+          <!--              </mat-chip>-->
+          <!--              <button matChipRemove>-->
+          <!--                <mat-icon>cancel</mat-icon>-->
+          <!--              </button>-->
+          <!--            </mat-chip-list>-->
 
-  <!--        </ng-template>-->
+          <!--        </ng-template>-->
         </mtx-select>
       </mat-form-field>
     </div>
@@ -131,7 +131,6 @@
       >
         <mat-icon>edit</mat-icon>
       </a>
-      <br />
       <ng-container
         *ngIf="checkEformPermissions(row.id, userClaimsEnum.eformsReadTags)"
       >
@@ -194,13 +193,10 @@
   <div class="">
     <button
       mat-icon-button
-      *ngIf="
-                  row.hasCases &&
-                  checkEformPermissions(
-                    row.id,
-                    userClaimsEnum.casesRead
-                  )
-                "
+      *ngIf="row.hasCases &&
+      checkEformPermissions(
+      row.id,
+      userClaimsEnum.casesRead)"
       id="eform-cases-btn-{{ i }}"
       [routerLink]="['/cases', row.id]"
       matTooltip="{{'Show cases' | translate}}"
