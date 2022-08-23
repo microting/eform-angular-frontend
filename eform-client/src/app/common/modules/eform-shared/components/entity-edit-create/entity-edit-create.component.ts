@@ -47,6 +47,7 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
   updateEntitySelectableGroupSub$: Subscription;
   updateEntitySearchableGroupSub$: Subscription;
   entitySearchImportListComponentAfterClosedSub$: Subscription;
+  entityItemEditNameComponentAfterClosedSub$: Subscription;
 
   get title(): string {
     return `${this.edit ? 'Edit' : 'Create'} ${this.header} list`
@@ -219,7 +220,9 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
   }
 
   onOpenEditNameModal(model: EntityItemModel) {
-    this.modalNameEdit.show(model);
+    this.entityItemEditNameComponentAfterClosedSub$ = this.dialog.open(EntityItemEditNameComponent,
+      {...dialogConfigHelper(this.overlay, model), minWidth: 500})
+      .afterClosed().subscribe(data => data.result ? this.onItemUpdated(data.data) : undefined);
   }
 
   openImportEntityGroup() {

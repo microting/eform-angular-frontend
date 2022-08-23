@@ -328,6 +328,10 @@ body.theme-dark {
   font-weight: 300;
 }
 
+.spacer {
+  flex: 1 1 auto;
+}
+
 .mat-drawer-inner-container, .mat-drawer-content {
   &::-webkit-scrollbar {
     width: 8px;

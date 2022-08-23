@@ -39,29 +39,31 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    NgSelectModule,
-    FormsModule,
-    TreeModule,
-    FontAwesomeModule,
-    RouterModule,
-    DragulaModule,
-    MDBBootstrapModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatTreeModule,
-    MatMenuModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        NgSelectModule,
+        FormsModule,
+        TreeModule,
+        FontAwesomeModule,
+        RouterModule,
+        DragulaModule,
+        MDBBootstrapModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        MatTreeModule,
+        MatMenuModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        MatTooltipModule
+    ],
   declarations: [
     EformPaginationComponent,
     EformSubheaderComponent,

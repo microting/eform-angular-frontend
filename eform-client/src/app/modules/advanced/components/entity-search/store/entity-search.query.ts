@@ -23,7 +23,7 @@ export class EntitySearchQuery extends Query<EntitySearchState> {
         state.pagination.offset
       )
   );
-  selectPageIndex$ = this.select((state) => Math.floor(state.pagination.offset / state.pagination.pageSize));
+  // selectPageIndex$ = this.select((state) => Math.floor(state.pagination.offset / state.pagination.pageSize));
   // selectSort$ = this.select(
   //   (state) => new SortModel(state.pagination.sort, state.pagination.isSortDsc)
   // );

@@ -1,5 +1,6 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {EntityItemModel} from 'src/app/common/models/advanced';
+import {Component, Inject, OnInit} from '@angular/core';
+import {EntityItemModel} from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-entity-item-edit-name',
@@ -7,32 +8,19 @@ import {EntityItemModel} from 'src/app/common/models/advanced';
   styleUrls: ['./entity-item-edit-name.component.scss']
 })
 export class EntityItemEditNameComponent implements OnInit {
-  @Output() itemUpdated: EventEmitter<EntityItemModel>
-    = new EventEmitter<EntityItemModel>();
-  @Output() modalHided: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame', { static: true }) frame;
-  selectedEntityItemModel: EntityItemModel
-  = {description: '', displayIndex: 0, entityItemUId: '', workflowState: '', name: ''};
-  constructor() { }
+  public selectedEntityItemModel: EntityItemModel = new EntityItemModel();
+  constructor(
+    public dialogRef: MatDialogRef<EntityItemEditNameComponent>,
+    @Inject(MAT_DIALOG_DATA) selectedEntityItemModel: EntityItemModel = new EntityItemModel()
+  ) {
+    this.selectedEntityItemModel = {...selectedEntityItemModel};
+  }
 
   ngOnInit() {
   }
 
-  show(model: EntityItemModel) {
-    this.selectedEntityItemModel = {...this.selectedEntityItemModel, ...model};
-    this.frame.show();
+  hide(result = false) {
+    this.dialogRef.close({result, data: result ? this.selectedEntityItemModel : null});
+    this.selectedEntityItemModel = new EntityItemModel();
   }
-
-  hide(){
-    this.selectedEntityItemModel = {description: '', displayIndex: 0, entityItemUId: '', name: '', workflowState: ''};
-    this.frame.hide();
-    this.modalHided.emit();
-  }
-
-  updateItem() {
-    this.itemUpdated.emit(this.selectedEntityItemModel);
-    this.hide();
-    this.modalHided.emit();
-  }
-
 }
