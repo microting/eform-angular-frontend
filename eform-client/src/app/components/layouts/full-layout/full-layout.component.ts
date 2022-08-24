@@ -20,6 +20,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   private brokerListener: any;
   logoImage: any;
   headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;
+  connectionStringExist: boolean;
 
   constructor(
     private authStateService: AuthStateService,
@@ -38,14 +39,6 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSettings();
-    this.authStateService.getUserSettings();
-    this.isDarkThemeAsync$ = this.authStateService.isDarkThemeAsync.subscribe(
-      (isDarkTheme) => {
-        isDarkTheme
-          ? this.switchToDarkTheme()
-          : this.switchToLightTheme();
-      }
-    );
 
     this.localeService.initLocale();
   }
@@ -65,7 +58,18 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
 
   getSettings() {
     this.settingsService.connectionStringExist().subscribe((result) => {
+      this.connectionStringExist = result.success;
       if (result && result.success === true) {
+
+        this.authStateService.getUserSettings();
+        this.isDarkThemeAsync$ = this.authStateService.isDarkThemeAsync.subscribe(
+          (isDarkTheme) => {
+            isDarkTheme
+              ? this.switchToDarkTheme()
+              : this.switchToLightTheme();
+          }
+        );
+
         this.settingsService.getHeaderSettings().subscribe((data => {
           if (data && data.success) {
             this.headerSettingsModel = data.model;

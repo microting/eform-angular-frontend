@@ -1,210 +1,168 @@
-<eform-subheader
+<eform-new-subheader
   [title]="'Database connection setup' | translate"
   [forceStaticTitle]="true"
-  [heandingSizeRem]="1.7"
 >
-  <div class="p-2">
-    <button
-      mdbBtn
-      class="btn-success btn-small-height"
-      id="save"
-      mdbTooltip="Save settings"
-      [disabled]="!settingsForm.form.valid"
-      (click)="updateConnectionString()"
-    >
-      Save
-    </button>
-  </div>
-</eform-subheader>
+  <button
+    mat-raised-button
+    [disabled]="!settingsForm.form.valid"
+    color="accent"
+    matTooltip="{{ 'Save settings' | translate }}"
+    matTooltipPosition="left"
+    id="save"
+    (click)="updateConnectionString()"
+  >
+    {{ 'Save' | translate }}
+  </button>
+</eform-new-subheader>
 
-<div class="container-fluid mb-3">
-  <form #settingsForm="ngForm">
-    <div class="row">
-      <div class="col-md-12 mt-3">
-        <eform-subheader
-          [title]="'Admin information' | translate"
-          [forceStaticTitle]="true"
-          [heandingSizeRem]="1"
-        ></eform-subheader>
-        <!--Admin block-->
-        <div class="row">
-          <div class="col-md-6">
-            <div class="md-form input-group">
+
+<form #settingsForm="ngForm">
+  <div class="d-flex flex-column">
+    <div class="mt-2">
+      <mat-card>
+        <mat-card-title>
+          <h4>
+            {{ 'Admin information' | translate }}
+          </h4>
+        </mat-card-title>
+        <mat-card-content class="flex-inputs-card">
+          <div class="d-flex flex-column mat-input-50">
+            <mat-form-field>
+              <mat-label>{{'First name' | translate}}</mat-label>
               <input
-                mdbInput
+                matInput
                 [(ngModel)]="settingsModel.adminSetupModel.firstName"
                 type="text"
                 name="firstName"
                 #firstName="ngModel"
-                id="firstName"
-                class="form-control"
-              />
-              <label for="firstName">First name</label>
-            </div>
-            <div class="md-form input-group">
+                id="firstName">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{'Last name' | translate}}</mat-label>
               <input
-                mdbInput
+                matInput
                 [(ngModel)]="settingsModel.adminSetupModel.lastName"
                 type="text"
                 name="lastName"
                 #lastName="ngModel"
-                id="lastName"
-                class="form-control"
-              />
-              <label for="lastName">Last name</label>
-            </div>
+                id="lastName">
+            </mat-form-field>
           </div>
-          <div class="col-md-6">
-            <div class="md-form input-group">
+          <div class="d-flex flex-column mat-input-50">
+            <mat-form-field>
+              <mat-label>{{'Email' | translate}}</mat-label>
               <input
-                mdbInput
+                matInput
                 [(ngModel)]="settingsModel.adminSetupModel.email"
                 type="email"
                 name="email"
                 id="email"
-                #email="ngModel"
-                class="form-control"
-              />
-              <label for="email">Email</label>
-            </div>
-            <div class="md-form input-group">
+                #email="ngModel">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{'Password' | translate}}</mat-label>
               <input
-                mdbInput
+                matInput
                 [(ngModel)]="settingsModel.adminSetupModel.password"
                 required
                 type="text"
                 name="password"
                 #password="ngModel"
-                id="password"
-                class="form-control"
-              />
-              <label for="password"
-                >Password<span class="text-danger">*</span>
-              </label>
-            </div>
+                id="password">
+            </mat-form-field>
           </div>
-        </div>
-        <!--SDK Connection-->
-        <div class="row">
-          <div class="col-md-12 mt-3">
-            <eform-subheader
-              [forceStaticTitle]="true"
-              [title]="'Database connection information' | translate"
-              [heandingSizeRem]="1"
-            ></eform-subheader>
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="md-form input-group">
-                  <input
-                    mdbInput
-                    [(ngModel)]="settingsModel.connectionStringSDK.token"
-                    placeholder="12345678909876543210adfecdfefdae"
-                    #tokenSdk="ngModel"
-                    required
-                    type="text"
-                    value=""
-                    name="token"
-                    id="token"
-                    class="form-control"
-                  />
-                  <label for="token"
-                    >Token<span class="text-danger">*</span></label
-                  >
-                </div>
-                <div class="md-form input-group">
-                  <input
-                    mdbInput
-                    [(ngModel)]="
-                      settingsModel.generalAppSetupSettingsModel.customerNo
-                    "
-                    placeholder="123"
-                    #customerNo="ngModel"
-                    required
-                    type="text"
-                    value=""
-                    name="customerNo"
-                    id="customerNo"
-                    class="form-control"
-                  />
-                  <label for="customerNo"
-                    >Customer no<span class="text-danger">*</span></label
-                  >
-                </div>
-                <div class="md-form input-group">
-                  <input
-                    mdbInput
-                    [(ngModel)]="settingsModel.connectionStringSDK.host"
-                    placeholder="localhost"
-                    type="text"
-                    required
-                    name="host"
-                    id="host2"
-                    class="form-control"
-                  />
-                  <label for="host2"
-                    >Server<span class="text-danger">*</span></label
-                  >
-                </div>
-                <div class="md-form input-group">
-                  <input
-                    mdbInput
-                    [(ngModel)]="settingsModel.connectionStringSDK.port"
-                    placeholder="3306"
-                    type="text"
-                    name="port"
-                    id="port"
-                    class="form-control"
-                  />
-                  <label for="port"
-                    >Port<span class="text-danger">*</span></label
-                  >
-                </div>
-                <div class="md-form input-group">
-                  <input
-                    mdbInput
-                    [(ngModel)]="settingsModel.connectionStringSDK.auth"
-                    placeholder="user = root;password = myPassword;"
-                    type="text"
-                    name="auth"
-                    id="auth2"
-                    class="form-control"
-                  />
-                  <label for="auth2"
-                    >Authentication type<span class="text-danger"
-                      >*</span
-                    ></label
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--language-->
-        <div class="row">
-          <div class="col-md-12 mt-3">
-            <eform-subheader
-              [forceStaticTitle]="true"
-              [title]="'Default Language' | translate"
-              [heandingSizeRem]="1"
-            ></eform-subheader>
-            <ng-select
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="mt-4">
+      <mat-card>
+        <mat-card-title>
+          <h4>
+            {{ 'Database connection information' | translate }}
+          </h4>
+        </mat-card-title>
+        <mat-card-content>
+          <mat-form-field>
+            <mat-label>{{'Token' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="settingsModel.connectionStringSDK.token"
+              placeholder="12345678909876543210adfecdfefdae"
+              #tokenSdk="ngModel"
+              required
+              type="text"
+              name="token"
+              id="token">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'Customer no' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="settingsModel.generalAppSetupSettingsModel.customerNo"
+              placeholder="123"
+              #customerNo="ngModel"
+              required
+              type="text"
+              name="customerNo"
+              id="customerNo">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'Server' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="settingsModel.connectionStringSDK.host"
+              placeholder="localhost"
+              type="text"
+              required
+              name="host"
+              id="host2">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'Port' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="settingsModel.connectionStringSDK.port"
+              placeholder="3306"
+              type="text"
+              name="port"
+              id="port">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'Authentication type' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="settingsModel.connectionStringSDK.auth"
+              placeholder="user = root;password = myPassword;"
+              type="text"
+              name="auth"
+              id="auth2">
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="mt-4">
+      <mat-card>
+        <mat-card-title>
+          <h4>
+            {{ 'Default Language' | translate }}
+          </h4>
+        </mat-card-title>
+        <mat-card-content>
+          <mat-form-field>
+            <mat-label>{{'Language' | translate}}</mat-label>
+            <mtx-select
               id="languageSelector"
-              [placeholder]="'Language'"
               name="default-language"
               #defaultLanguage="ngModel"
               [bindValue]="'id'"
               [bindLabel]="'text'"
               [clearable]="false"
-              [(ngModel)]="
-                settingsModel.generalAppSetupSettingsModel.defaultLocale
-              "
+              [(ngModel)]="settingsModel.generalAppSetupSettingsModel.defaultLocale"
               [items]="languages"
-            ></ng-select>
-          </div>
-        </div>
-        <!--(´・ω・｀) end here probably-->
-      </div>
+            ></mtx-select>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
     </div>
-  </form>
-</div>
+  </div>
+</form>
