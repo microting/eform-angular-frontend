@@ -107,7 +107,7 @@
     "@types/mocha": "9.1.1",
     "@types/node": "18.7.13",
     "@typescript-eslint/eslint-plugin": "5.33.1",
-    "@typescript-eslint/parser": "5.33.1",
+    "@typescript-eslint/parser": "5.35.1",
     "@wdio/cli": "7.21.0",
     "@wdio/local-runner": "7.21.0",
     "@wdio/mocha-framework": "7.21.0",
