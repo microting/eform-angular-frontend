@@ -83,7 +83,7 @@
     "ngx-mask": "^13.1.15",
     "ngx-papaparse": "5.1.0",
     "ngx-slimscroll": "12.2.0",
-    "ngx-toastr": "14.3.0",
+    "ngx-toastr": "15.0.0",
     "ngx-ui-switch": "^12.0.1",
     "ramda": "^0.28.0",
     "rxjs": "7.5.6",
