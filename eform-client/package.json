@@ -51,7 +51,7 @@
     "@circlon/angular-tree-component": "^11.0.1",
     "@danielmoncada/angular-datetime-picker": "^13.0.0",
     "@fortawesome/angular-fontawesome": "0.10.2",
-    "@fortawesome/fontawesome-svg-core": "6.1.2",
+    "@fortawesome/fontawesome-svg-core": "6.2.0",
     "@fortawesome/free-solid-svg-icons": "6.1.2",
     "@ng-select/ng-select": "8.1.1",
     "@ngx-gallery/core": "4.0.3",
