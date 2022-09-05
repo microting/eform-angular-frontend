@@ -1,36 +1,41 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { UnitDto } from 'src/app/common/models/dto';
-import { UnitsService } from 'src/app/common/services/advanced';
-import { TableHeaderElementModel } from 'src/app/common/models';
-import { AuthStateService } from 'src/app/common/store';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {UnitDto} from 'src/app/common/models';
+import {UnitsService} from 'src/app/common/services';
+import {AuthStateService} from 'src/app/common/store';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {Subscription} from 'rxjs';
+import {UnitCreateComponent, UnitMoveComponent, UnitsOtpCodeComponent} from './';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-units',
   templateUrl: './units.component.html',
 })
 export class UnitsComponent implements OnInit {
-  @ViewChild('modalUnitsOtpCode', { static: true }) modalUnitsOtpCode;
-  @ViewChild('modalUnitsCreate', { static: true }) modalUnitsCreate;
-  @ViewChild('modalUnitsMove', { static: true }) modalUnitsMove;
+  @ViewChild('modalUnitsMove', {static: true}) modalUnitsMove;
   unitModels: Array<UnitDto> = [];
-  selectedUnitModel: UnitDto = new UnitDto();
 
-  tableHeaders: TableHeaderElementModel[] = [
-    { name: 'Microting UID', elementId: '', sortable: false },
-    { name: 'Location', elementId: '', sortable: false },
-    { name: 'OS', elementId: '', sortable: false },
-    { name: 'OS Version', elementId: '', sortable: false },
-    { name: 'Model', elementId: '', sortable: false },
-    { name: 'InSight Version', elementId: '', sortable: false },
-    { name: 'eForm Version', elementId: '', sortable: false },
-    { name: 'Customer no & OTP', elementId: '', sortable: false },
-    { name: 'Sync delay', elementId: '', sortable: false },
-    { name: 'Sync dialog', elementId: '', sortable: false },
-    { name: 'Push', elementId: '', sortable: false },
+  tableHeaders: MtxGridColumn[] = [
+    {header: 'Microting UID', field: 'microtingUid'},
+    {header: 'Location', field: 'siteName'},
+    {header: 'OS', field: 'os',},
+    {header: 'OS Version', field: 'osVersion',},
+    {header: 'Model', field: 'model'},
+    {header: 'InSight Version', field: 'inSightVersion'},
+    {header: 'eForm Version', field: 'eFormVersion'},
+    {header: 'Customer no & OTP', field: 'otpCode'},
+    {header: 'Sync delay', field: 'syncDelay'},
+    {header: 'Sync dialog', field: 'syncDialog'},
+    {header: 'Push', field: 'push'},
     this.userClaims.sitesDelete || this.userClaims.sitesUpdate
-      ? { name: 'Actions', elementId: '', sortable: false }
-      : null,
+      ? {header: 'Actions', field: 'actions'}
+      : undefined,
   ];
+
+  unitCreateComponentAfterClosedSub$: Subscription;
+  unitsOtpCodeComponentAfterClosedSub$: Subscription;
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -38,8 +43,11 @@ export class UnitsComponent implements OnInit {
 
   constructor(
     private unitsService: UnitsService,
-    private authStateService: AuthStateService
-  ) {}
+    private authStateService: AuthStateService,
+    public dialog: MatDialog,
+    private overlay: Overlay
+  ) {
+  }
 
   ngOnInit() {
     this.loadAllUnits();
@@ -54,16 +62,20 @@ export class UnitsComponent implements OnInit {
   }
 
   openCreateModal() {
-    this.modalUnitsCreate.show();
+    this.unitCreateComponentAfterClosedSub$ = this.dialog.open(UnitCreateComponent,
+      {...dialogConfigHelper(this.overlay, {}), minWidth: 500})
+      .afterClosed().subscribe(data => data ? this.loadAllUnits() : undefined);
   }
 
   openMoveModal(selectedUnitDto: UnitDto) {
-    this.selectedUnitModel = selectedUnitDto;
-    this.modalUnitsMove.show(selectedUnitDto);
+    this.unitCreateComponentAfterClosedSub$ = this.dialog.open(UnitMoveComponent,
+      {...dialogConfigHelper(this.overlay, selectedUnitDto), minWidth: 500})
+      .afterClosed().subscribe(data => data ? this.loadAllUnits() : undefined);
   }
 
   openModalUnitsOtpCode(selectedUnitDto: UnitDto) {
-    this.selectedUnitModel = selectedUnitDto;
-    this.modalUnitsOtpCode.show();
+    this.unitsOtpCodeComponentAfterClosedSub$ = this.dialog.open(UnitsOtpCodeComponent,
+      {...dialogConfigHelper(this.overlay, selectedUnitDto)})
+      .afterClosed().subscribe(data => data ? this.loadAllUnits() : undefined);
   }
 }

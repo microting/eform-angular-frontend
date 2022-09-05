@@ -10,10 +10,10 @@ export class SpinnerComponent implements OnInit {
   loading: boolean;
 
   constructor(private loaderService: LoaderService) {
+  }
+  ngOnInit() {
     this.loaderService.isLoading.subscribe((v) => {
       // console.log(v);
       this.loading = v;
-    });
-  }
-  ngOnInit() {}
+    });}
 }

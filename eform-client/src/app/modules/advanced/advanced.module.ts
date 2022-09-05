@@ -9,14 +9,8 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {AdvancedRoutingModule} from './advanced.routing';
 import {
   EntitySearchComponent,
-  EntitySearchCreateComponent,
-  EntitySearchEditComponent,
-  EntitySearchImportListComponent,
   EntitySearchRemoveComponent,
   EntitySelectComponent,
-  EntitySelectCreateComponent,
-  EntitySelectEditComponent,
-  EntitySelectImportListComponent,
   EntitySelectRemoveComponent,
   SiteDeleteComponent,
   SiteEditComponent,
@@ -25,9 +19,8 @@ import {
   UnitCreateComponent,
   UnitMoveComponent,
   UnitsOtpCodeComponent,
-  WorkerCreateComponent,
+  WorkerEditCreateComponent,
   WorkerDeleteComponent,
-  WorkerEditComponent,
   WorkersComponent,
   FoldersComponent,
   FolderCreateComponent,
@@ -47,6 +40,7 @@ import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -72,6 +66,7 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     MatDialogModule,
     MatInputModule,
     MtxSelectModule,
+    MatSlideToggleModule,
   ],
   declarations: [
     EntitySearchComponent,
@@ -84,17 +79,10 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     UnitMoveComponent,
     UnitsOtpCodeComponent,
     WorkersComponent,
-    WorkerEditComponent,
+    WorkerEditCreateComponent,
     WorkerDeleteComponent,
-    WorkerCreateComponent,
-    EntitySearchCreateComponent,
     EntitySearchRemoveComponent,
-    EntitySearchImportListComponent,
-    EntitySearchEditComponent,
     EntitySelectRemoveComponent,
-    EntitySelectCreateComponent,
-    EntitySelectImportListComponent,
-    EntitySelectEditComponent,
     FoldersComponent,
     FolderCreateComponent,
     FolderEditComponent,

@@ -11,6 +11,7 @@ import { AppMenuStateService } from 'src/app/common/store';
   styleUrls: ['./eform-new-subheader.component.scss'],
 })
 export class EformNewSubheaderComponent implements OnInit, OnDestroy {
+  @Input() subtitle = '';
   @Input() title = '';
   @Input() forceStaticTitle = false;
   @Input() breadcrumbs: { name: string; href?: string }[] = null;

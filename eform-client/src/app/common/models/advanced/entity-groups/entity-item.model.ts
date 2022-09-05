@@ -1,4 +1,4 @@
-export class AdvEntitySearchableItemModel {
+export class EntityItemModel {
   name: string;
   description: string;
   entityItemUId: string;

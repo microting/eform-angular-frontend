@@ -5,16 +5,18 @@ import {
   OperationResult,
   DeviceUserModel,
   DeviceUserRequestModel,
+  CommonDictionaryModel,
+  SiteDto,
 } from 'src/app/common/models';
-import { SiteDto } from 'src/app/common/models/dto';
 import { ApiBaseService } from 'src/app/common/services';
 
 const DeviceUsersMethods = {
   GetAll: '/api/device-users/index',
-  GetSingle: '/api/device-users/edit',
+  GetSingle: '/api/device-users/read',
   UpdateSingle: '/api/device-users/update',
   DeleteSingle: '/api/device-users/delete',
   CreateSingle: '/api/device-users/create',
+  CommonDictionary: '/api/device-users/common-dictionary',
 };
 
 @Injectable()
@@ -36,7 +38,7 @@ export class DeviceUserService {
 
   getSingleSimpleSite(id: number): Observable<OperationDataResult<SiteDto>> {
     return this.apiBaseService.get<SiteDto>(
-      DeviceUsersMethods.GetSingle + '/' + id
+      `${DeviceUsersMethods.GetSingle}/${id}`
     );
   }
 
@@ -60,5 +62,9 @@ export class DeviceUserService {
       DeviceUsersMethods.CreateSingle,
       model
     );
+  }
+
+  getCommonDictionarySites(): Observable<OperationDataResult<Array<CommonDictionaryModel>>> {
+    return this.apiBaseService.get(DeviceUsersMethods.CommonDictionary);
   }
 }

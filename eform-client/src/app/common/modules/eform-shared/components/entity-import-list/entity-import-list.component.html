@@ -1,26 +1,26 @@
-<h3 mat-dialog-title>{{ 'Edit element' | translate}}</h3>
+<h3 mat-dialog-title>{{ 'Import options (max 100 entries)' | translate}}</h3>
 <div mat-dialog-content>
   <mat-form-field>
-    <mat-label>{{'Name' | translate}}</mat-label>
-    <input
+    <textarea
       matInput
-      [(ngModel)]="selectedEntityItemModel.name"
-      type="text"
-      id="entityItemEditNameBox">
+      [(ngModel)]="importString"
+      id="entityImportTextArea"
+      rows="20"
+    ></textarea>
   </mat-form-field>
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
     mat-raised-button
     color="accent"
-    (click)="hide(true)"
-    id="entityItemSaveBtn"
+    (click)="submitImport()"
+    id="entityImportSaveBtn"
   >
     {{'Save' | translate}}
   </button>
   <button
     mat-raised-button
-    id="entityItemCancelBtn"
+    id="entityImportCancelBtn"
     (click)="hide()"
   >
     {{'Cancel' | translate}}

@@ -83,5 +83,10 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+    this.authStateService.isAuthAsync.subscribe((isAuth: boolean) => {
+      if(isAuth) {
+        this.router.navigate(['/']).then();
+      }
+    })
   }
 }

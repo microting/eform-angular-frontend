@@ -7,7 +7,7 @@
              *ngIf="headerSettingsModel.imageLinkVisible" alt="">
       </div>
     </div>
-    <button mat-icon-button (click)="drawer.toggle()">
+    <button mat-icon-button (click)="drawer.toggle()" [hidden]="!connectionStringExist">
       <mat-icon>menu</mat-icon>
     </button>
     <span class="spacer"></span>
@@ -31,7 +31,7 @@
     </mat-chip-list>
   </mat-toolbar>
   <mat-drawer-container autosize style="height: 100%">
-    <mat-drawer #drawer mode="side" [opened]="true">
+    <mat-drawer #drawer mode="side" [opened]="true" [hidden]="!connectionStringExist">
       <app-navigation></app-navigation>
     </mat-drawer>
     <div class="mb-auto" style="padding: 1.5rem">

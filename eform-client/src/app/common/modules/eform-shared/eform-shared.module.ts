@@ -15,6 +15,8 @@ import {
   EntityListElementsComponent,
   EntityItemEditNameComponent,
   EformNewSubheaderComponent,
+  EntityEditCreateComponent,
+  EntityImportListComponent,
 } from './components';
 import {
   AuthImagePipe,
@@ -34,6 +36,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
     imports: [
@@ -52,7 +58,11 @@ import {MatMenuModule} from '@angular/material/menu';
         MatIconModule,
         MatCardModule,
         MatTreeModule,
-        MatMenuModule
+        MatMenuModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        MatTooltipModule
     ],
   declarations: [
     EformPaginationComponent,
@@ -69,6 +79,8 @@ import {MatMenuModule} from '@angular/material/menu';
     EntityListElementsComponent,
     EntityItemEditNameComponent,
     EformNewSubheaderComponent,
+    EntityEditCreateComponent,
+    EntityImportListComponent,
   ],
   exports: [
     EformPaginationComponent,
@@ -85,6 +97,8 @@ import {MatMenuModule} from '@angular/material/menu';
     EntityListElementsComponent,
     EntityItemEditNameComponent,
     EformNewSubheaderComponent,
+    EntityEditCreateComponent,
+    EntityImportListComponent,
   ],
 })
 export class EformSharedModule {

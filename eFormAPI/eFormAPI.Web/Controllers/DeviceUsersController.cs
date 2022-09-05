@@ -34,6 +34,7 @@ namespace eFormAPI.Web.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.EformAngularFrontendBase.Infrastructure.Const;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     [Authorize]
     [Route("api/device-users")]
@@ -70,11 +71,11 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("read/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
         public async Task<OperationDataResult<DeviceUser>> Read(int id)
         {
-            return await _deviceUsersService.Edit(id);
+            return await _deviceUsersService.Read(id);
         }
 
         [HttpPost]
@@ -91,6 +92,14 @@ namespace eFormAPI.Web.Controllers
         public async Task<OperationResult> Delete(int id)
         {
             return await _deviceUsersService.Delete(id);
+        }
+
+        [HttpGet]
+        [Route("common-dictionary")]
+        [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> ReadCommonDictionary()
+        {
+            return await _deviceUsersService.ReadCommonDictionary();
         }
     }
 }

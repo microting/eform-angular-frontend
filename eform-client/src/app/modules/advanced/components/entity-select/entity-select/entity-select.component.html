@@ -1,120 +1,77 @@
-<eform-subheader>
-  <div class="p-3">
-    <button
-      mdbBtn
-      id="entitySelectCreateBtn"
-      class="btn btn-success btn-small-height"
-      *ngIf="userClaims.entitySelectCreate"
-      placement="left"
-      mdbTooltip="{{ 'Create new selectable list' | translate }}"
-      [routerLink]="['/advanced/entity-select/create']"
-    >
-      {{ 'New list' | translate }}
-    </button>
-  </div>
-</eform-subheader>
+<eform-new-subheader>
+  <button
+    mat-raised-button
+    color="accent"
+    id="entitySelectCreateBtn"
+    matTooltip="{{ 'Create new selectable list' | translate }}"
+    *ngIf="userClaims.entitySelectCreate"
+    matTooltipPosition="left"
+    [routerLink]="['/advanced/entity-select/create']"
+  >
+    {{ 'New list' | translate }}
+  </button>
+</eform-new-subheader>
 
-<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<div class="container-fluid">
-  <div class="row pl-1">
-    <div class="col-md-2">
-      <div class="md-form">
+<ng-template #toolbarTpl>
+  <div class="d-flex flex-row justify-content-start flex-nowrap">
+    <div class="d-flex flex-column mr-2 ml-2">
+      <mat-form-field>
+        <mat-label>{{ 'Search' | translate }}</mat-label>
         <input
-          mdbInput
+          matInput
+          type="text"
           (ngModelChange)="onNameFilterChanged($event)"
           [ngModel]="entitySelectStateService.getNameFilter() | async"
-          type="text"
-          class="form-control"
           id="labelInput"
         />
-        <label for="labelInput">{{ 'Search' | translate }}</label>
-      </div>
+      </mat-form-field>
     </div>
   </div>
-  <div class="row p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-      matSort
-      [matSortActive]="entitySelectStateService.getActiveSort() | async"
-      [matSortDirection]="entitySelectStateService.getActiveSortDirection() | async"
-      [matSortDisableClear]="true"
-      (matSortChange)="sortTable($event)"
+</ng-template>
+
+<mtx-grid
+  [data]="advEntitySelectableGroupListModel.entities"
+  [columns]="tableHeaders"
+  [cellTemplate]="{actions: actionsTpl}"
+  [showPaginator]="true"
+  [paginationTemplate]="paginatorTpl"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showToolbar]="true"
+  [showColumnMenuButton]="false"
+  [toolbarTemplate]="toolbarTpl"
+  [sortActive]="entitySelectStateService.getActiveSort() | async"
+  [sortDirection]="entitySelectStateService.getActiveSortDirection() | async"
+  (sortChange)="sortTable($event)">
+</mtx-grid>
+
+<ng-template #actionsTpl let-row>
+  <div *ngIf="userClaims.entitySelectDelete || userClaims.entitySelectUpdate">
+    <button
+      mat-icon-button
+      id="entitySelectUpdateBtn"
+      matTooltip="{{ 'Edit' | translate }}"
+      [disabled]="!userClaims.entitySelectUpdate"
+      [routerLink]="['/advanced/entity-select/edit/' + row.microtingUUID]"
     >
-      <thead
-        table-headers
-        [tableHeaders]="tableHeaders"
-      ></thead>
-      <tbody id="tableBodyEntitySelect">
-      <tr
-        *ngFor="
-            let advEntitySelectableGroup of advEntitySelectableGroupListModel.entities
-          "
-      >
-        <td id="entitySelectMicrotingUUID">
-          {{ advEntitySelectableGroup.microtingUUID }}
-        </td>
-        <td id="entitySelectName">
-          {{ advEntitySelectableGroup.name }}
-        </td>
-        <td id="entitySelectDescription">
-          {{ advEntitySelectableGroup.description }}
-        </td>
-        <td
-          *ngIf="
-              userClaims.entitySelectUpdate || userClaims.entitySelectDelete
-            "
-        >
-          <div class="d-flex flex-row justify-content-center">
-            <button
-              mdbBtn
-              id="entitySelectEditBtn"
-              class="btn btn-accent btn-icon text-black-50 mb-2"
-              [disabled]="!userClaims.entitySelectUpdate"
-              mdbTooltip="{{ 'Edit' | translate }}"
-              [routerLink]="[
-                  '/advanced/entity-select/edit/' +
-                    advEntitySelectableGroup.microtingUUID
-                ]"
-            >
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <button
-              mdbBtn
-              id="entitySelectDeleteBtn"
-              class="btn btn-danger btn-icon mb-2"
-              [disabled]="
-                  !userClaims.entitySelectDelete ||
-                  advEntitySelectableGroup.isLocked
-                "
-              mdbTooltip="{{ 'Remove' | translate }}"
-              (click)="openModalSelectRemove(advEntitySelectableGroup)"
-            >
-              <fa-icon
-                icon="trash-alt"
-                [fixedWidth]="true"
-                size="lg"
-              ></fa-icon>
-            </button>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      color="warn"
+      id="entitySelectDeleteBtn"
+      (click)="openModalSelectRemove(row)"
+      matTooltip="{{ 'Remove' | translate }}"
+      [disabled]="!userClaims.entitySelectDelete || row.isLocked"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
+</ng-template>
 
-  <div class="mr-2 ml-2">
-    <eform-pagination
-      [pagination]="entitySelectStateService.getPagination() | async"
-      (paginationChanged)="onPaginationChanged($event)"
-    ></eform-pagination>
-  </div>
-</div>
-
-<app-entity-select-remove
-  (onEntityRemoved)="onEntityRemoved()"
-  #modalSelectRemove
-></app-entity-select-remove>
+<ng-template #paginatorTpl>
+  <eform-pagination
+    [pagination]="entitySelectStateService.getPagination() | async"
+    (paginationChanged)="onPaginationChanged($event)"
+  ></eform-pagination>
+</ng-template>
