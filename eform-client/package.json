@@ -108,7 +108,7 @@
     "@types/node": "18.7.14",
     "@typescript-eslint/eslint-plugin": "5.36.2",
     "@typescript-eslint/parser": "5.36.0",
-    "@wdio/cli": "7.23.0",
+    "@wdio/cli": "7.24.0",
     "@wdio/local-runner": "7.23.0",
     "@wdio/mocha-framework": "7.23.0",
     "@wdio/spec-reporter": "7.23.0",
