@@ -206,6 +206,7 @@ class MyEformsPage extends PageWithNavbarPage {
     }
     // Add existing tags
     const selectedTags: string[] = [];
+    await browser.pause(500);
     if (tagAddedNum > 0) {
       await spinnerAnimation.waitForDisplayed({
         timeout: 50000,
@@ -299,29 +300,29 @@ class MyEformsRowObject {
 
   async getRow(rowNum: number) {
     const currentPosition = rowNum - 1;
-    this.element = (await $$('#mainPageEFormsTableBody tr'))[currentPosition];
-    this.id = +(await (await $$('#eform-id-' + (rowNum - 1)))[0].getText());
+    this.element = (await $$('#mainPageEFormsTableBody tr.mat-row'))[currentPosition];
+    this.id = +(await (await $$('#eform-id-' + (currentPosition)))[0].getText());
     try {
-      const val = (await $$('#eform-created-at-' + (rowNum - 1)))[0];
+      const val = (await $$('#eform-created-at-' + (currentPosition)))[0];
       this.createdAt = new Date(await val.getText());
     } catch (e) {}
     try {
-      const val = (await $$('#eform-label-' + (rowNum - 1)))[0];
+      const val = (await $$('#eform-label-' + (currentPosition)))[0];
       this.eFormName = await val.getText();
     } catch (e) {}
-    const val2 = (await $$(`#mainPageEFormsTableBody tr`))[rowNum - 1];
-    this.tags = await val2.$$(`#eform-tag-` + (rowNum - 1));
+    const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-row`))[currentPosition];
+    this.tags = await $$(`#eform-tag-` + (currentPosition));
     // this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
-    this.editTagsBtn = (await $$('#eform-edit-btn-' + (rowNum - 1)))[0];
-    this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr`))[
-      rowNum - 1
-    ].$('#eform-pairing-btn-' + (rowNum - 1));
-    this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr`))[
-      rowNum - 1
-    ].$('#eform-add-btn-' + (rowNum - 1));
-    this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (rowNum - 1)))[0];
-    this.deleteBtn = (await $$('#delete-eform-btn-' + (rowNum - 1)))[0];
-    this.uploadZipArchiveBtn = (await $$('#upload-zip-btn-' + (rowNum - 1)))[0];
+    this.editTagsBtn = (await $$('#eform-edit-btn-' + (currentPosition)))[0];
+    this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-row`))[
+      currentPosition
+    ].$('#eform-pairing-btn-' + (currentPosition));
+    this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-row`))[
+      currentPosition
+    ].$('#eform-add-btn-' + (currentPosition));
+    this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (currentPosition)))[0];
+    this.deleteBtn = (await $$('#delete-eform-btn-' + (currentPosition)))[0];
+    this.uploadZipArchiveBtn = (await $$('#upload-zip-btn-' + (currentPosition)))[0];
     this.goVisualEditorBtn = await this.element.$(
       `#edit-eform-btn-${currentPosition}`
     );
