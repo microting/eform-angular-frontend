@@ -94,6 +94,7 @@ export class AuthStateService {
   }
 
   logout() {
+    this.store.reset();
     resetStores();
     this.router.navigate(['/auth']).then();
   }

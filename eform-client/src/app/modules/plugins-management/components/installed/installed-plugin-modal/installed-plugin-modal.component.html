@@ -1,50 +1,30 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade"
-  #frame="mdbModal"
->
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>
-          {{
-            installedPluginModel.status == statusEnum.Enabled
-              ? ('Deactivate:' | translate)
-              : ('Activate:' | translate)
-          }}
-          <br />{{ installedPluginModel.name }}
-        </h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <h1 class="text-danger">{{ 'WARNING' | translate }}!</h1>
-          <p>
-            {{ 'You will be logged out when status is changed' | translate }}
-          </p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          mdbBtn
-          class="btn-danger btn-small-height"
-          (click)="updatePluginStatus(installedPluginModel.status)"
-          id="pluginOKBtn"
-        >
-          {{ 'OK' | translate }}
-        </button>
-        <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
-          (click)="frame.hide()"
-          id="pluginCancelBtn"
-        >
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
-    </div>
+<h3 mat-dialog-title>{{
+  (installedPluginModel.status == statusEnum.Enabled
+    ? 'Activate:' : 'Deactivate:' ) | translate
+  }} <br/>
+  {{ installedPluginModel.name }}</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-column">
+    <h1 class="text-danger">{{ 'WARNING' | translate }}!</h1>
+    <p>
+      {{ 'You will be logged out when status is changed' | translate }}
+    </p>
   </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="updatePluginStatus(installedPluginModel.status)"
+    id="pluginOKBtn"
+  >
+    {{'OK' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    (click)="hide()"
+    id="pluginCancelBtn"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

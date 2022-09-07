@@ -1,38 +1,39 @@
-<div mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{'Plugin permissions' | translate}}</h3>
-      </div>
-      <div class="modal-body">
-        <div class="flex-wrap d-flex flex-row" *ngIf="pluginGroupPermissions">
-          <div class="mb-4 mr-4" *ngFor="let groupPermissions of pluginGroupPermissions">
-            <div class="card">
-              <div class="card-header">{{getSecurityGroupName(groupPermissions.groupId)}}</div>
-              <div class="card-body d-flex flex-column">
-                <ng-container *ngFor="let permission of groupPermissions.permissions">
-                  <div class="mb-2">
-                    <mat-checkbox
-                      id="perm_{{groupPermissions.groupId}}_{{permission.permissionId}}"
-                      [(ngModel)]="permission.isEnabled">
-                      {{permission.permissionName | translate}}
-                    </mat-checkbox>
-                  </div>
-                </ng-container>
-              </div>
-            </div>
+<h3 mat-dialog-title>{{'Plugin permissions' | translate}}</h3>
+<div mat-dialog-content>
+  <div class="flex-wrap d-flex flex-row" *ngIf="pluginGroupPermissions">
+    <mat-card *ngFor="let groupPermissions of pluginGroupPermissions" class="m-2">
+      <mat-card-header>
+        <h3>{{getSecurityGroupName(groupPermissions.groupId)}}</h3>
+      </mat-card-header>
+      <mat-card-content>
+        <ng-container *ngFor="let permission of groupPermissions.permissions">
+          <div class="d-flex flex-column">
+            <mat-checkbox
+              id="perm_{{groupPermissions.groupId}}_{{permission.permissionId}}"
+              [(ngModel)]="permission.isEnabled"
+              class="mb-2">
+              {{permission.permissionName | translate}}
+            </mat-checkbox>
           </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height" (click)="updatePermissions()"
-                id="saveBtn">{{ 'Save' | translate }}</button>
-        <button mdbBtn class="btn-neutral text-black-50 btn-small-height" id="cancelCreateBtn" (click)="hide()">
-          {{ 'Cancel' | translate }}</button>
-      </div>
-    </div>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>
-
-
-
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="updatePluginPermissions()"
+    id="saveBtn"
+  >
+    {{'Save' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    (click)="hide()"
+    id="cancelCreateBtn"
+  >
+    {{'Cancel' | translate}}
+  </button>
+</div>

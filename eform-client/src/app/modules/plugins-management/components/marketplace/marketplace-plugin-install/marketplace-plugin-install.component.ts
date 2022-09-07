@@ -1,5 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MarketplacePluginModel} from '../../../../../common/models/plugins-management';
+import {Component, Inject, OnInit,} from '@angular/core';
+import {MarketplacePluginModel} from 'src/app/common/models';
+import {PluginsManagementService} from 'src/app/common/services';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-plugins-marketplace-install',
@@ -7,24 +9,25 @@ import {MarketplacePluginModel} from '../../../../../common/models/plugins-manag
   styleUrls: ['./marketplace-plugin-install.component.scss']
 })
 export class MarketplacePluginInstallComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Output() onMarketplacePluginInstall: EventEmitter<MarketplacePluginModel> = new EventEmitter();
-  selectedPluginModel: MarketplacePluginModel = new MarketplacePluginModel();
-
-  constructor() { }
+  constructor(
+    private pluginManagementService: PluginsManagementService,
+    public dialogRef: MatDialogRef<MarketplacePluginInstallComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedPluginModel: MarketplacePluginModel = new MarketplacePluginModel(),) { }
 
   ngOnInit() {
   }
 
-  show(model: MarketplacePluginModel) {
-    this.selectedPluginModel = model;
-    this.frame.show();
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
-  hide() { this.frame.hide(); }
 
   installPlugin() {
-    this.onMarketplacePluginInstall.emit(this.selectedPluginModel);
+    this.pluginManagementService.installMarketplacePlugin(this.selectedPluginModel.pluginId).subscribe((data) => {
+      if (data && data.success) {
+        this.hide(true);
+      }
+    });
   }
 
 }

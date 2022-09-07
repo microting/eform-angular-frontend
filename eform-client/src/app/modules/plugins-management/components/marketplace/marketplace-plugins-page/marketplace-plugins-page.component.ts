@@ -1,21 +1,38 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {PluginsManagementService} from '../../../../../common/services/plugins-management';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {PluginsManagementService} from 'src/app/common/services';
 import {
   MarketplacePluginModel, MarketplacePluginsModel,
   MarketplacePluginsRequestModel
 } from 'src/app/common/models/plugins-management';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import {MarketplacePluginInstallComponent} from 'src/app/modules/plugins-management/components';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-plugins-marketplace-page',
   templateUrl: './marketplace-plugins-page.component.html',
   styleUrls: ['./marketplace-plugins-page.component.scss']
 })
-export class MarketplacePluginsPageComponent implements OnInit {
-  @ViewChild('installMarketplacePluginModal', { static: true }) installMarketplacePluginModal;
+export class MarketplacePluginsPageComponent implements OnInit, OnDestroy{
   marketplacePluginsRequestModel: MarketplacePluginsRequestModel = new MarketplacePluginsRequestModel();
   marketplacePluginsList: MarketplacePluginsModel = new MarketplacePluginsModel();
+  tableHeaders: MtxGridColumn[] = [
+    {header: 'Id', field: 'pluginId'},
+    {header: 'Name', field: 'name',},
+    {header: 'Actions', field: 'actions'},
+  ];
+  marketplacePluginInstallComponentAfterClosedSub$: Subscription;
+  getMarketplacePluginsSub$: Subscription;
 
-  constructor(private pluginManagementService: PluginsManagementService) {
+  constructor(
+    private pluginManagementService: PluginsManagementService,
+    private dialog: MatDialog,
+    private overlay: Overlay,) {
   }
 
   ngOnInit() {
@@ -23,7 +40,7 @@ export class MarketplacePluginsPageComponent implements OnInit {
   }
 
   getMarketplacePlugins() {
-    this.pluginManagementService.getMarketplacePlugins(this.marketplacePluginsRequestModel)
+    this.getMarketplacePluginsSub$ = this.pluginManagementService.getMarketplacePlugins(this.marketplacePluginsRequestModel)
       .subscribe((data) => {
       if (data && data.success) {
         this.marketplacePluginsList = data.model;
@@ -32,14 +49,12 @@ export class MarketplacePluginsPageComponent implements OnInit {
   }
 
   showEditModal(marketplacePlugin: MarketplacePluginModel) {
-    this.installMarketplacePluginModal.show(marketplacePlugin);
+    this.marketplacePluginInstallComponentAfterClosedSub$ = this.dialog.open(MarketplacePluginInstallComponent,
+      dialogConfigHelper(this.overlay, marketplacePlugin))
+      .afterClosed().subscribe(data => data ? undefined : undefined);
   }
 
-  installPlugin(model: MarketplacePluginModel) {
-    this.pluginManagementService.installMarketplacePlugin(model.pluginId).subscribe((data) => {
-      if (data && data.success) {
-        this.installMarketplacePluginModal.hide();
-      }
-    });
+  ngOnDestroy(): void {
   }
+
 }

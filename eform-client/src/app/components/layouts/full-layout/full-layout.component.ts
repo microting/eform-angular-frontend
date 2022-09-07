@@ -14,6 +14,7 @@ akitaConfig({resettable: true});
 @Component({
   selector: 'app-full-layout-root',
   templateUrl: `./full-layout.component.html`,
+  styleUrls: ['./full-layout.component.scss']
 })
 export class FullLayoutComponent implements OnInit, OnDestroy {
   isDarkThemeAsync$: Subscription;

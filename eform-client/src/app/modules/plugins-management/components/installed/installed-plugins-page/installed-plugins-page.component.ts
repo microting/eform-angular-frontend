@@ -1,59 +1,71 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { InstalledPluginStatusEnum } from 'src/app/common/const';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {InstalledPluginStatusEnum} from 'src/app/common/const';
 import {
   SecurityGroupsService,
   PluginPermissionsService,
   PluginsManagementService,
 } from 'src/app/common/services';
 import {
-  TableHeaderElementModel,
   SecurityGroupModel,
   SecurityGroupsRequestModel,
   InstalledPluginModel,
   InstalledPluginsModel,
   InstalledPluginsRequestModel,
-  InstalledPluginUpdateModel,
   PluginGroupPermissionsListModel,
-  PluginGroupPermissionsUpdateModel,
 } from 'src/app/common/models';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import {AuthStateService} from 'src/app/common/store';
+import {
+  InstalledPluginModalComponent,
+  InstalledPluginPermissionsComponent
+} from '../../';
+import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-installed-plugins-page',
   templateUrl: './installed-plugins-page.component.html',
   styleUrls: ['./installed-plugins-page.component.scss'],
 })
-export class InstalledPluginsPageComponent implements OnInit {
-  @ViewChild('installedPluginModal', { static: true }) installedPluginModal;
-  // @ViewChild('editInstalledPluginModal') editInstalledPluginModal;
-  @ViewChild('editPluginPermissionsModal', { static: true })
-  editPluginPermissionsModal;
-  @ViewChild('editInstalledPluginModal', { static: true })
-  editInstalledPluginModal;
+export class InstalledPluginsPageComponent implements OnInit, OnDestroy{
   installedPluginsRequestModel: InstalledPluginsRequestModel = new InstalledPluginsRequestModel();
   installedPluginsModel: InstalledPluginsModel = new InstalledPluginsModel();
   securityGroups: SecurityGroupModel[] = [];
-  pluginSettingsUpdateModel: InstalledPluginUpdateModel = new InstalledPluginUpdateModel();
 
-  tableHeaders: TableHeaderElementModel[] = [
-    { name: 'ID', sortable: false },
-    { name: 'Name', sortable: false },
-    { name: 'Version', sortable: false },
-    { name: 'Newest version available', sortable: false },
-    { name: 'Actions', sortable: false },
+  tableHeaders: MtxGridColumn[] = [
+    {header: 'Id', field: 'id'},
+    {header: 'Name', field: 'name',},
+    {header: 'Version', field: 'version',},
+    {header: 'Newest version available', field: 'versionAvailable'},
+    {header: 'Actions', field: 'actions'},
   ];
+  installedPluginModalComponentAfterClosedSub$: Subscription;
+  installedPluginPermissionsComponentAfterClosedSub$: Subscription;
+  getAllSecurityGroupsSub$: Subscription;
+  getInstalledPluginsSub$: Subscription;
+  getPluginPermissionsSub$: Subscription;
+  getPluginGroupPermissionsSub$: Subscription;
 
   constructor(
     private pluginManagementService: PluginsManagementService,
     private pluginPermissionsService: PluginPermissionsService,
-    private securityGroupsService: SecurityGroupsService
-  ) {}
+    private securityGroupsService: SecurityGroupsService,
+    private dialog: MatDialog,
+    private overlay: Overlay,
+    private authStateService: AuthStateService,
+  ) {
+  }
 
   get statusEnum() {
     return InstalledPluginStatusEnum;
   }
 
   ngOnInit() {
-    this.securityGroupsService
+    this.getAllSecurityGroupsSub$ = this.securityGroupsService
       .getAllSecurityGroups(new SecurityGroupsRequestModel())
       .subscribe((data) => {
         if (data && data.success) {
@@ -65,7 +77,7 @@ export class InstalledPluginsPageComponent implements OnInit {
   }
 
   getInstalledPlugins() {
-    this.pluginManagementService
+    this.getInstalledPluginsSub$ = this.pluginManagementService
       .getInstalledPlugins(this.installedPluginsRequestModel)
       .subscribe((data) => {
         if (data && data.success) {
@@ -75,21 +87,18 @@ export class InstalledPluginsPageComponent implements OnInit {
   }
 
   openPluginModal(installedPlugin: InstalledPluginModel, status: number) {
-    this.pluginSettingsUpdateModel.status = status;
-    this.installedPluginModal.installedPluginModel = installedPlugin;
-    this.installedPluginModal.show();
+    this.installedPluginModalComponentAfterClosedSub$ = this.dialog.open(InstalledPluginModalComponent,
+      dialogConfigHelper(this.overlay, {...installedPlugin, status: status}))
+      .afterClosed().subscribe(data => data ? this.authStateService.logout() : undefined);
   }
 
-  // showEditModal(installedPlugin: InstalledPluginModel) {
-  //   this.editInstalledPluginModal.show(installedPlugin);
-  // }
 
   showPermissionsModal(installedPlugin: InstalledPluginModel) {
-    this.pluginPermissionsService
+    this.getPluginPermissionsSub$ = this.pluginPermissionsService
       .getPluginPermissions(installedPlugin.id)
       .subscribe((data) => {
         if (data && data.success) {
-          this.pluginPermissionsService
+          this.getPluginGroupPermissionsSub$ = this.pluginPermissionsService
             .getPluginGroupPermissions(installedPlugin.id)
             .subscribe((groupData) => {
               if (groupData && groupData.success) {
@@ -100,38 +109,23 @@ export class InstalledPluginsPageComponent implements OnInit {
                     groupData.model.push(
                       new PluginGroupPermissionsListModel({
                         groupId: securityGroup.id,
-                        permissions: data.model.map((p) => ({ ...p })),
+                        permissions: data.model.map((p) => ({...p})),
                       })
                     );
                   }
                 }
               }
-
-              this.editPluginPermissionsModal.show({
-                pluginId: installedPlugin.id,
-                groupPermissions: groupData.model,
-              });
+              this.installedPluginPermissionsComponentAfterClosedSub$ = this.dialog.open(InstalledPluginPermissionsComponent,
+                dialogConfigHelper(this.overlay, {
+                  pluginPermissions: {pluginId: installedPlugin.id, groupPermissions: groupData.model,},
+                  securityGroups: this.securityGroups}
+                ))
+                .afterClosed().subscribe((data) => data ? undefined : undefined);
             });
         }
       });
   }
 
-  // updateInstalledPlugin(model: InstalledPluginModel, status: number) {
-  //
-  // }
-
-  updatePluginPermissions(model: PluginGroupPermissionsUpdateModel) {
-    this.pluginPermissionsService
-      .updatePluginGroupPermissions(model)
-      .subscribe((data) => {
-        if (data && data.success) {
-          this.editPluginPermissionsModal.hide();
-        }
-      });
+  ngOnDestroy(): void {
   }
-
-  // updateSettings() {
-  //   this.pluginSettingsUpdateModel.statusChanged = this.statusChanged;
-  //   this.onInstalledPluginUpdate.emit(this.pluginSettingsUpdateModel);
-  // }
 }
