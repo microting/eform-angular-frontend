@@ -6,7 +6,6 @@ import {Sort} from '@angular/material/sort';
 import {
   CommonDictionaryModel,
   Paged,
-  TableHeaderElementModel,
   EmailRecipientModel,
   PaginationModel,
 } from 'src/app/common/models';
@@ -20,6 +19,10 @@ import {
   EmailRecipientsService,
   EmailRecipientsTagsService,
 } from 'src/app/common/services';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
 
 @AutoUnsubscribe()
 @Component({
@@ -28,39 +31,36 @@ import {
   styleUrls: ['./email-recipients-page.component.scss'],
 })
 export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
-  @ViewChild('newRecipientsModal')
-  newRecipientsModal: EmailRecipientsNewComponent;
-  @ViewChild('editRecipientModal')
-  editRecipientModal: EmailRecipientEditComponent;
-  @ViewChild('deleteRecipientModal')
-  deleteRecipientModal: EmailRecipientDeleteComponent;
   @ViewChild('recipientsTagsModal')
   recipientTagsModal: EmailRecipientsTagsComponent;
   emailRecipientsListModel: Paged<EmailRecipientModel> = new Paged<EmailRecipientModel>();
   availableTags: CommonDictionaryModel[] = [];
+
   getAllSub$: Subscription;
   getTagsSub$: Subscription;
+  emailRecipientDeleteComponentAfterClosedSub$: Subscription;
+  emailRecipientEditComponentAfterClosedSub$: Subscription;
+  emailRecipientsNewComponentAfterClosedSub$: Subscription;
 
-  tableHeaders: TableHeaderElementModel[] = [
-    {name: 'Id', elementId: 'idTableHeader', sortable: true},
+  tableHeaders: MtxGridColumn[] = [
+    {header: 'Id', field: 'id', sortProp: {id: 'Id'}, sortable: true},
+    {header: 'Name', sortProp: {id: 'Name'}, field: 'name', sortable: true},
     {
-      name: 'Name',
-      elementId: 'emailRecipientNameTableHeader',
+      header: 'Email',
+      field: 'email',
       sortable: true,
+      sortProp: {id: 'Email'}
     },
-    {
-      name: 'Email',
-      elementId: 'emailRecipientEmailTableHeader',
-      sortable: true,
-    },
-    {name: 'Tags', elementId: '', sortable: false},
-    {name: 'Actions', elementId: '', sortable: false},
-  ];
+    {header: 'Tags', field: 'tags'},
+    {header: 'Actions', field: 'actions'},
+  ]
 
   constructor(
     private emailRecipientsService: EmailRecipientsService,
     private tagsService: EmailRecipientsTagsService,
-    public emailRecipientsStateService: EmailRecipientsStateService
+    public emailRecipientsStateService: EmailRecipientsStateService,
+    private dialog: MatDialog,
+    private overlay: Overlay,
   ) {
   }
 
@@ -95,15 +95,21 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   }
 
   openCreateModal() {
-    this.newRecipientsModal.show();
+    this.emailRecipientsNewComponentAfterClosedSub$ = this.dialog.open(EmailRecipientsNewComponent,
+      {...dialogConfigHelper(this.overlay, this.availableTags), minWidth: 600})
+      .afterClosed().subscribe(data => data ? this.onEmailRecipientCreated() : undefined);
   }
 
   openEditModal(model: EmailRecipientModel) {
-    this.editRecipientModal.show(model);
+    this.emailRecipientEditComponentAfterClosedSub$ = this.dialog.open(EmailRecipientEditComponent,
+      dialogConfigHelper(this.overlay, {emailRecipientUpdateModel: model, availableTags: this.availableTags}))
+      .afterClosed().subscribe(data => data ? this.getEmailRecipients() : undefined);
   }
 
   openDeleteModal(model: EmailRecipientModel) {
-    this.deleteRecipientModal.show(model);
+    this.emailRecipientDeleteComponentAfterClosedSub$ = this.dialog.open(EmailRecipientDeleteComponent,
+      dialogConfigHelper(this.overlay, model))
+      .afterClosed().subscribe(data => data ? this.onEmailRecipientDeleted() : undefined);
   }
 
   openTagsModal() {
@@ -113,9 +119,6 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   removeSavedTag(e: any) {
     this.emailRecipientsStateService.addOrRemoveTagIds(e.value.id);
     this.getEmailRecipients();
-  }
-
-  ngOnDestroy(): void {
   }
 
   tagSelected(id: number) {
@@ -136,5 +139,8 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   onPaginationChanged(paginationModel: PaginationModel) {
     this.emailRecipientsStateService.updatePagination(paginationModel);
     this.getEmailRecipients();
+  }
+
+  ngOnDestroy(): void {
   }
 }

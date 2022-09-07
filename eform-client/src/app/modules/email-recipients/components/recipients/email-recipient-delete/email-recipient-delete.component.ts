@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {CommonDictionaryModel} from '../../../../../common/models/common';
-import {EmailRecipientModel} from '../../../../../common/models/email-recipients';
+import {Component, Inject, OnDestroy, OnInit,} from '@angular/core';
+import {EmailRecipientModel} from 'src/app/common/models';
 import {Subscription} from 'rxjs';
-import {EmailRecipientsService} from '../../../../../common/services/email-recipients';
+import {EmailRecipientsService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
@@ -12,19 +12,16 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
   styleUrls: ['./email-recipient-delete.component.scss']
 })
 export class EmailRecipientDeleteComponent implements OnInit, OnDestroy {
-  @ViewChild('frame') frame;
-  @Input() availableTags: CommonDictionaryModel[] = [];
-  @Output() emailRecipientDeleted: EventEmitter<void> = new EventEmitter<void>();
-  selectedEmailRecipient: EmailRecipientModel = new EmailRecipientModel;
   deleteEmailRecipient$: Subscription;
 
-
-  constructor(private emailRecipientsService: EmailRecipientsService) {
+  constructor(
+    private emailRecipientsService: EmailRecipientsService,
+    public dialogRef: MatDialogRef<EmailRecipientDeleteComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedEmailRecipient: EmailRecipientModel = new EmailRecipientModel()) {
   }
 
-  show(model: EmailRecipientModel) {
-    this.selectedEmailRecipient = model;
-    this.frame.show();
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
   ngOnInit() {
@@ -34,8 +31,7 @@ export class EmailRecipientDeleteComponent implements OnInit, OnDestroy {
     this.deleteEmailRecipient$ = this.emailRecipientsService.deleteEmailRecipient(this.selectedEmailRecipient.id)
       .subscribe((data) => {
         if (data && data.success) {
-          this.frame.hide();
-          this.emailRecipientDeleted.emit();
+          this.hide(true);
         }
       });
   }
