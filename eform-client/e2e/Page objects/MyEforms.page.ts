@@ -192,6 +192,7 @@ class MyEformsPage extends PageWithNavbarPage {
     await browser.execute(function (xmlText) {
       (<HTMLInputElement>document.getElementById('eFormXml')).value = xmlText;
     }, xml);
+    await browser.pause(200);
     await (await this.xmlTextArea()).addValue(' ');
     // Create new tags
     const addedTags: string[] = newTagsList;
@@ -206,7 +207,6 @@ class MyEformsPage extends PageWithNavbarPage {
     }
     // Add existing tags
     const selectedTags: string[] = [];
-    await browser.pause(500);
     if (tagAddedNum > 0) {
       await spinnerAnimation.waitForDisplayed({
         timeout: 50000,
@@ -311,7 +311,7 @@ class MyEformsRowObject {
       this.eFormName = await val.getText();
     } catch (e) {}
     const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-row`))[currentPosition];
-    this.tags = await $$(`#eform-tag-` + (currentPosition));
+    this.tags = await $$(`#eform-tag-` + (currentPosition) + ` span`);
     // this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
     this.editTagsBtn = (await $$('#eform-edit-btn-' + (currentPosition)))[0];
     this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-row`))[

@@ -147,7 +147,7 @@
         <mat-chip-list>
           <mat-chip *ngFor="let tag of row.tags" color="primary" id="eform-tag-{{i}}">
             <mat-icon>discount</mat-icon>
-            {{tag.value}}
+            <span>{{ tag.value }}</span>
           </mat-chip>
         </mat-chip-list>
       </ng-container>
