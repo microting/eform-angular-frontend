@@ -1,59 +1,54 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'New Email recipients' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <ng-select
-                class="custom"
-                dropdownPosition="'bottom'"
-                [placeholder]="'Tags' | translate"
-                [(ngModel)]="emailRecipientsCreateModel.tagsIds"
-                [bindValue]="'id'"
-                [bindLabel]="'name'"
-                [items]="availableTags"
-                id="createEmailRecipientsMultiSelector"
-                [multiple]="true"></ng-select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="md-form">
-                <input mdbInput type="text" [(ngModel)]="emailRecipientsCreateModel.newTags" name="addTagInput"
-                       class="form-control" id="addTagInput">
-                <label for="addTagInput">{{'New tags' | translate}}</label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="md-form">
-                <textarea
-                  mdbInput #textAreaData [(ngModel)]="rawTextareaData"
-                  name="emailAddresses" id="emailAddresses" rows="10"
-                  class="md-textarea form-control"></textarea>
-                <label for="emailAddresses">{{ 'Enter name and email addresses separated by coma (test, test@test.com)' | translate }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height" (click)="createEmailRecipients(textAreaData)"
-                id="emailRecipientsCreateSaveBtn">
-          {{ 'Save' | translate }}
-        </button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()" id="emailRecipientsSaveCancelBtn">
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
-    </div>
+<h3 mat-dialog-title>{{'New Email recipients' | translate}}</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-column">
+    <mat-form-field>
+      <mat-label>{{'Tags' | translate }}</mat-label>
+      <mtx-select
+        class="custom"
+        [dropdownPosition]="'bottom'"
+        [(ngModel)]="emailRecipientsCreateModel.tagsIds"
+        [bindValue]="'id'"
+        [bindLabel]="'name'"
+        [items]="availableTags"
+        id="createEmailRecipientsMultiSelector"
+        [multiple]="true">
+      </mtx-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'New tags' | translate }}</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="emailRecipientsCreateModel.newTags"
+        name="addTagInput"
+        id="addTagInput">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Enter name and email addresses separated by coma (test, test@test.com)' | translate }}</mat-label>
+      <textarea
+        matInput
+        #textAreaData
+        [(ngModel)]="rawTextareaData"
+        name="emailAddresses"
+        id="emailAddresses"
+        rows="10"></textarea>
+    </mat-form-field>
   </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="createEmailRecipients(textAreaData)"
+    id="emailRecipientsCreateSaveBtn"
+  >
+    {{'Save' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="emailRecipientsSaveCancelBtn"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>
