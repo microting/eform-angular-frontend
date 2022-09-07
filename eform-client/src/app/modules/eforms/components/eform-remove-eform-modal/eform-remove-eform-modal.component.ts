@@ -21,7 +21,7 @@ export class EformRemoveEformModalComponent implements OnInit {
   deleteEfrom() {
     this.eFormService.deleteSingle(this.selectedTemplateDto.id).subscribe(operation => {
       if (operation && operation.success) {
-        this.hide();
+        this.hide(true);
       }
     });
   }
