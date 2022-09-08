@@ -140,7 +140,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   loadAllTags() {
     // load tags after call load templates (not know why)
-    if (this.userClaims.eformsReadTags) {
+    //if (this.userClaims.eformsReadTags) {
+      //debugger;
       this.getAvailableTagsSub$ = this.eFormTagService.getAvailableTags()
         .subscribe((data) => {
           if (data && data.success) {
@@ -148,9 +149,10 @@ export class EformsPageComponent implements OnInit, OnDestroy {
             this.loadSelectedUserTags();
           }
         });
-    } else {
-      this.loadAllTemplates();
-    }
+    // } else {
+    //   debugger;
+    //   this.loadAllTemplates();
+    // }
   }
 
   saveTag(e: any) {
