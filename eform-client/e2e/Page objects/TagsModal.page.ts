@@ -7,7 +7,7 @@ export class TagsModalPage extends Page {
 
   public async rowNum(): Promise<number> {
     await browser.pause(500);
-    return (await $$('#tagRow')).length;
+    return (await $$('#tagName')).length;
   }
 
   // Create page elements
