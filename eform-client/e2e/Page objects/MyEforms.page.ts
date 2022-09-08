@@ -25,21 +25,21 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public async idSortBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#idSort');
+    const ele = await $('.eform-id-header .mat-header-cell-inner .mat-sort-header');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public async createdAtSortBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#createdAtSort');
+    const ele = await $('.eform-created-at-header .mat-header-cell-inner .mat-sort-header');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public async eformNameSortBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#nameEFormSort');
+    const ele = await $('.eform-name-header .mat-header-cell-inner .mat-sort-header');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;

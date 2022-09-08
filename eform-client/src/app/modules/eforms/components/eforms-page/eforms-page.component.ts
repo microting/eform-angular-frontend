@@ -79,13 +79,14 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   tableHeaders: MtxGridColumn[] = [
-    {header: 'Id', field: 'id', sortProp: {id: 'Id'}, sortable: true, type: 'number'},
-    {header: 'CreatedAt', sortProp: {id: 'CreatedAt'}, field: 'createdAt', sortable: true},
+    {header: 'ID', field: 'id', sortProp: {id: 'Id'}, sortable: true, type: 'number', class: 'eform-id-header'},
+    {header: 'Server date', sortProp: {id: 'CreatedAt'}, field: 'createdAt', sortable: true, class: 'eform-created-at-header'},
     {
-      header: 'Label',
+      header: 'Name',
       field: 'label',
       sortable: true,
       sortProp: {id: 'Text'},
+      class: 'eform-name-header',
     },
     {
       header: 'Description',
