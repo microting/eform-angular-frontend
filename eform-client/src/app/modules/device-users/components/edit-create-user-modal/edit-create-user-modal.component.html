@@ -40,7 +40,7 @@
     color="accent"
     (click)="edit ? updateSingle() : createDeviceUser()"
     [disabled]="!simpleSiteModel.userFirstName || !simpleSiteModel.userLastName"
-    id="{{edit ? 'editBtn' : 'CreateBtn'}}"
+    id="{{edit ? 'saveEditBtn' : 'saveCreateBtn'}}"
   >
     {{(edit ? 'Save' : 'Create') | translate}}
   </button>

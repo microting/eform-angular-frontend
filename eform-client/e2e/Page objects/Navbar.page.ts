@@ -55,28 +55,28 @@ export class Navbar {
   }
 
   public async workersBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#workers`);
+    const ele = await $(`#workers`);
     await ele.waitForDisplayed({ timeout: 40000 });
     // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public async sitesBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#sites`);
+    const ele = await $(`#sites`);
     await ele.waitForDisplayed({ timeout: 40000 });
     // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public async foldersBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#folders`);
+    const ele = await $(`#folders`);
     await ele.waitForDisplayed({ timeout: 40000 });
     // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public async pluginsBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#plugins-settings`);
+    const ele = await $(`#plugins-settings`);
     await ele.waitForDisplayed({ timeout: 40000 });
     // ele.waitForClickable({timeout: 40000});
     return ele;
@@ -97,25 +97,25 @@ export class Navbar {
   }
 
   public async deviceUsersBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#device-users`);
+    const ele = await $(`#device-users`);
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async entitySearchBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#search`);
+    const ele = await $(`#search`);
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async entitySelectBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#selectable-list`);
+    const ele = await $(`#selectable-list`);
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async myEformsBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#my-eforms`);
+    const ele = await $(`#my-eforms`);
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
