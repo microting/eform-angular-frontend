@@ -13,7 +13,7 @@ describe('Site tags', function () {
     await loginPage.login();
     await myEformsPage.Navbar.goToDeviceUsersPage();
     await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
-    await deviceUsersPage.createDeviceUserFromScratch('John', 'Smith');
+    await deviceUsersPage.createDeviceUserFromScratch('John', 'Doe');
     await myEformsPage.Navbar.goToSites();
   });
   it('should create new tag', async () => {

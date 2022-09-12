@@ -32,6 +32,7 @@
   [data]="sitesDto"
   [columns]="tableHeaders"
   [cellTemplate]="{
+  siteUid: idTpl,
   firstName: deviceUserFirstNameTpl,
   lastName: deviceUserLastNameTpl,
   unitId: unitIdTpl,
@@ -44,11 +45,14 @@
   [showColumnMenuButton]="false"
   [toolbarTemplate]="toolbarTpl">
 </mtx-grid>
-<ng-template #deviceUserFirstNameTpl id="deviceUserFirstName" let-row>
-  {{ row.firstName ?? 'N/A' }}
+<ng-template #idTpl let-row let-i="index">
+  <div class="deviceUserId" id="deviceUserId">{{row.siteUid}}</div>
 </ng-template>
-<ng-template #deviceUserLastNameTpl id="deviceUserLastName" let-row>
-  {{ row.lastName ?? 'N/A' }}
+<ng-template #deviceUserFirstNameTpl let-row>
+  <div class="deviceUserId" id="deviceUserFirstName">{{ row.firstName ?? 'N/A' }}</div>
+</ng-template>
+<ng-template #deviceUserLastNameTpl let-row>
+  <div class="deviceUserId" id="deviceUserLastName">{{ row.lastName ?? 'N/A' }}</div>
 </ng-template>
 <ng-template #unitIdTpl let-row>
   {{ row.unitId ?? 'N/A' }}

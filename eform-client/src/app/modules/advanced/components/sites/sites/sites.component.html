@@ -15,13 +15,19 @@
 <mtx-grid
   [data]="sitesDto"
   [columns]="tableHeaders"
-  [cellTemplate]="{ units: unitsTpl, tags: tagsTpl, actions: actionsTpl}"
+  [cellTemplate]="{ siteUId: siteUIdTpl, siteName: siteNameTpl, units: unitsTpl, tags: tagsTpl, actions: actionsTpl}"
   [showPaginator]="false"
   [pageOnFront]="false"
   [rowStriped]="true"
   [showToolbar]="false"
   [showColumnMenuButton]="false">
 </mtx-grid>
+<ng-template #siteUIdTpl let-row let-i="index">
+  <div class="siteUUId" id="siteUUId">{{row.siteUId}}</div>
+</ng-template>
+<ng-template #siteNameTpl let-row let-i="index">
+  <div class="siteName" id="siteName">{{row.siteName}}</div>
+</ng-template>
 <ng-template #unitsTpl let-row>
   <div
     class="paragraph-sm"

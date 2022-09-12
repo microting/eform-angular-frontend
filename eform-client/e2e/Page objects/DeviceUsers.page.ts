@@ -72,7 +72,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
 
   public async rowNum(): Promise<number> {
     await browser.pause(500);
-    return (await $$('#tableBody > tr')).length;
+    return (await $$('tbody > tr')).length;
   }
 
   async getDeviceUser(num): Promise<DeviceUsersRowObject> {
@@ -183,8 +183,8 @@ export class DeviceUsersRowObject {
           await $$('#deviceUserLastName')[rowNum - 1]
         ).getText();
       } catch (e) {}
-      this.editBtn = (await $$('#editDeviceUserBtn'))[rowNum - 1];
-      this.deleteBtn = (await $$('#deleteDeviceUserBtn'))[rowNum - 1];
+      this.editBtn = (await $$('#editDeviceUserBtn'))[rowNum - 2];
+      this.deleteBtn = (await $$('#deleteDeviceUserBtn'))[rowNum - 2];
     }
     return this;
   }

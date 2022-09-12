@@ -121,7 +121,7 @@ class SitesPage extends PageWithNavbarPage {
 
   async getFirstRowObject(): Promise<SitesRowObject> {
     await browser.pause(500);
-    return this.getSite(1);
+    return this.getSite(2);
   }
 }
 
@@ -140,7 +140,7 @@ export class SitesRowObject {
   deleteBtn: WebdriverIO.Element;
 
   async getRow(rowNum): Promise<SitesRowObject> {
-    this.element = (await $$('#sitesTableBody > tr'))[rowNum - 1];
+    this.element = (await $$('tbody > tr'))[rowNum - 1];
     if (this.element) {
       this.siteId = +(await this.element.$('#siteUUId')).getText();
       this.units = await (await this.element.$('#units')).getText();
