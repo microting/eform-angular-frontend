@@ -67,6 +67,7 @@
     "angular-bootstrap-md": "^12.2.0",
     "angular-calendar": "0.29.0",
     "angular2-uuid": "1.1.1",
+    "build": "^0.1.4",
     "chart.js": "3.7.1",
     "core-js": "3.22.7",
     "d3": "7.4.4",
@@ -88,7 +89,9 @@
     "ngx-slimscroll": "12.2.0",
     "ngx-toastr": "14.3.0",
     "ngx-ui-switch": "^12.0.1",
+    "npm": "^8.19.1",
     "ramda": "^0.28.0",
+    "run": "^1.4.0",
     "rxjs": "7.5.5",
     "tslib": "^2.4.0",
     "zone.js": "^0.11.5"
