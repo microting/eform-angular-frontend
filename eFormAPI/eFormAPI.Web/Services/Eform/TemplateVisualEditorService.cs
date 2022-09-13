@@ -638,7 +638,7 @@ namespace eFormAPI.Web.Services.Eform
                 await fieldFromDb.Update(sdkDbContext);
 
                 // translations
-                var translations = await sdkDbContext.FieldTranslations
+                var translationsFromDb = await sdkDbContext.FieldTranslations
                     .Where(x => x.FieldId == fieldFromDb.Id)
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .ToListAsync();
@@ -672,50 +672,49 @@ namespace eFormAPI.Web.Services.Eform
                 }
 
                 // update translations
-                foreach (var fieldTranslation in translations)
+                foreach (var dbFieldTranslation in translationsFromDb)
                 {
                     var translation =
-                        fieldForUpdate.Translations.First(x => x.LanguageId == fieldTranslation.LanguageId);
+                        fieldForUpdate.Translations.First(x => x.LanguageId == dbFieldTranslation.LanguageId);
                     var fieldType = await sdkDbContext.FieldTypes
                         .FirstOrDefaultAsync(x => x.Id == fieldFromDb.FieldTypeId);
-                    if (translation.Name != fieldTranslation.Text ||
-                        translation.Description != fieldTranslation.Description ||
-                        translation.DefaultValue != fieldTranslation.DefaultValue || // check if update is need
-                        fieldType.Type == Constants.FieldTypes.ShowPdf)
+                    if (translation.Name != dbFieldTranslation.Text ||
+                        translation.Description != dbFieldTranslation.Description ||
+                        translation.DefaultValue != dbFieldTranslation.DefaultValue)
                     {
-                        fieldTranslation.Description = translation.Description?.Replace("</div><div>", "<br>")
+                        dbFieldTranslation.Description = translation.Description?.Replace("</div><div>", "<br>")
                             .Replace("</div>", "").Replace("<div>", "");
-                        fieldTranslation.Text = translation.Name;
-                        fieldTranslation.DefaultValue = translation.DefaultValue;
+                        dbFieldTranslation.Text = translation.Name;
+                        dbFieldTranslation.DefaultValue = translation.DefaultValue;
 
                         if (fieldType.Type == Constants.FieldTypes.ShowPdf)
                         {
                             var hash = hashAndLanguageIdList
-                                .Where(x => x.Value == fieldTranslation.LanguageId)
+                                .Where(x => x.Value == dbFieldTranslation.LanguageId)
                                 .Select(x => x.Key)
                                 .FirstOrDefault();
                             if (!string.IsNullOrEmpty(hash))
                             {
-                                fieldTranslation.DefaultValue = hash; // for pdf
+                                dbFieldTranslation.DefaultValue = hash; // for pdf
                             }
                         }
 
                         if (fieldType.Type == Constants.FieldTypes.Number ||
                             fieldType.Type == Constants.FieldTypes.Number)
                         {
-                            fieldTranslation.DefaultValue = string.IsNullOrEmpty(fieldTranslation.DefaultValue)
+                            dbFieldTranslation.DefaultValue = string.IsNullOrEmpty(dbFieldTranslation.DefaultValue)
                                 ? "0"
-                                : fieldTranslation.DefaultValue;
+                                : dbFieldTranslation.DefaultValue;
                         }
 
                         if (fieldType.Type == Constants.FieldTypes.SaveButton)
                         {
-                            fieldTranslation.DefaultValue = string.IsNullOrEmpty(fieldTranslation.DefaultValue)
+                            dbFieldTranslation.DefaultValue = string.IsNullOrEmpty(dbFieldTranslation.DefaultValue)
                                 ? "Save"
-                                : fieldTranslation.DefaultValue;
+                                : dbFieldTranslation.DefaultValue;
                         }
 
-                        await fieldTranslation.Update(sdkDbContext);
+                        await dbFieldTranslation.Update(sdkDbContext);
                     }
                 }
             }
@@ -846,12 +845,11 @@ namespace eFormAPI.Web.Services.Eform
                         findFields.Add(editorField);
                         break;
                     }
-                    //case Constants.FieldTypes.SaveButton:
-                    //{
-                    //    editorField.Value = field.DefaultValue;
-                    //    findFields.Add(editorField);
-                    //    break;
-                    //}
+                    case Constants.FieldTypes.SaveButton:
+                    {
+                        findFields.Add(editorField);
+                        break;
+                    }
                     case Constants.FieldTypes.FieldGroup:
                     {
                         var fieldsInGroups = await FindFields(eformId, sdkDbContext, field.Id);
@@ -906,11 +904,14 @@ namespace eFormAPI.Web.Services.Eform
                         {
                             var uploadData = await sdkDbContext.UploadedDatas
                                 .Where(x => x.Checksum == hash.DefaultValue)
-                                .FirstAsync();
+                                .FirstOrDefaultAsync();
 
                             //var fileStream = File.OpenRead(uploadData.FileLocation);
-                            editorField.PdfFiles.Add(new CommonDictionaryModel()
-                                { Name = uploadData.FileName, Id = hash.LanguageId });
+                            if (uploadData != null)
+                            {
+                                editorField.PdfFiles.Add(new CommonDictionaryModel()
+                                    {Name = uploadData.FileName, Id = hash.LanguageId});
+                            }
                         }
 
                         findFields.Add(editorField);

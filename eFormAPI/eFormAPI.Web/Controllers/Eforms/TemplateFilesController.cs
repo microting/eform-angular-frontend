@@ -143,7 +143,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/template-files/download-eform-excel")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
-        public async Task DownloadExcelEform(EformDownloadExcelModel excelModel)
+        public Task DownloadExcelEform(EformDownloadExcelModel excelModel)
         {
             const int bufferSize = 4086;
             var buffer = new byte[bufferSize];
@@ -172,7 +172,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                     Response.ContentLength = fileStream.Length;
                     Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-                    while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0 &&
+                    while ((bytesRead = await fileStream.ReadAsync(buffer, 0, buffer.Length)) > 0 &&
                            !HttpContext.RequestAborted.IsCancellationRequested)
                     {
                         await Response.Body.WriteAsync(buffer, 0, bytesRead);
@@ -180,6 +180,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                     }
                 }
             });
+            return Task.CompletedTask;
         }
 
         private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache", string token = "")
@@ -466,31 +467,35 @@ namespace eFormAPI.Web.Controllers.Eforms
         public async Task<IActionResult> GetPdfFile(string fileName)
         {
             var core = await _coreHelper.GetCore();
-            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
-            {
+            //if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+            //{
                 try
                 {
-                    var ss = await core.GetFileFromSwiftStorage($"{fileName}.pdf");
+                    var ss = await core.GetFileFromS3Storage($"{fileName}.pdf");
 
-                    Response.ContentType = ss.ContentType;
+                    //var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
+
                     Response.ContentLength = ss.ContentLength;
 
-                    return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"pdf"));
+                    return File(ss.ResponseStream, ss.Headers["Content-Type"]);
+
+                    //return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"pdf"));
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
+                    Console.WriteLine(exception.Message);
                     return NotFound();
                 }
 
-            }
-            var filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPdf), fileName + ".pdf");
-            if (!System.IO.File.Exists(filePath))
-            {
-                return NotFound();
-            }
-
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, "application/pdf", Path.GetFileName(filePath));
+            //}
+            // var filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPdf), fileName + ".pdf");
+            // if (!System.IO.File.Exists(filePath))
+            // {
+            //     return NotFound();
+            // }
+            //
+            // var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            // return File(fileStream, "application/pdf", Path.GetFileName(filePath));
         }
 
         [HttpGet]

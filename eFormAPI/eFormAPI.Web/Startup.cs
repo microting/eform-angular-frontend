@@ -83,7 +83,11 @@ namespace eFormAPI.Web
         {
             Log.LogEvent("Startup.ConfigureServices");
             // TODO check if we need this or code needs to be updated.
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddMvc(options =>
+            {
+                options.EnableEndpointRouting = false;
+                options.MaxModelBindingCollectionSize = int.MaxValue;
+            });
 
             // Configuration
             services.AddOptions();
@@ -177,6 +181,7 @@ namespace eFormAPI.Web
             services.Configure<FormOptions>(x =>
             {
                 x.ValueLengthLimit = int.MaxValue;
+                x.ValueCountLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = long.MaxValue; // In case of multipart
             });
             // Register the Swagger generator, defining one or more Swagger documents
