@@ -247,11 +247,7 @@ namespace eFormAPI.Web.Services.Eform
                     return new OperationDataResult<EformVisualEditorModel>(false,
                         _localizationService.GetString("EformNotFound"));
 
-                var doneButtonEnabled = dbEform.DoneButtonEnabled ??
-                                        (model.FieldForUpdate.Any(visualEditorFields => visualEditorFields.FieldType == fieldTypeSaveButton) ||
-                                         model.FieldForCreate.Any(visualEditorFields => visualEditorFields.FieldType == fieldTypeSaveButton) ? 1 : 0);
-                dbEform.DoneButtonEnabled = (short?)doneButtonEnabled;
-                await dbEform.Update(sdkDbContext);
+                await UpdateDoneButtonForCheckList(dbEform.Id, sdkDbContext);
 
                 if (dbEform.ParentId != null)
                 {
@@ -381,6 +377,34 @@ namespace eFormAPI.Web.Services.Eform
                 _logger.LogError(e, e.Message);
                 return new OperationDataResult<EformVisualEditorModel>(false,
                     _localizationService.GetString("ErrorWhileUpdateEform"));
+            }
+        }
+
+        private async Task UpdateDoneButtonForCheckList(int checkListId, MicrotingDbContext sdkDbContext)
+        {
+            var children = await sdkDbContext.CheckLists.Where(x => x.ParentId == checkListId).ToListAsync();
+            if (children.Count > 0)
+            {
+                foreach (var child in children)
+                {
+                    await UpdateDoneButtonForCheckList(child.Id, sdkDbContext);
+                }
+            }
+            else
+            {
+
+                var fieldTypeSaveButton = await sdkDbContext.FieldTypes
+                    .Where(x => x.Type == Constants.FieldTypes.SaveButton)
+                    .Select(x => x.Id)
+                    .FirstAsync();
+                var checkList = await sdkDbContext.CheckLists.SingleAsync(x => x.Id == checkListId);
+                var doneButtonEnabled = (await sdkDbContext.Fields
+                                             .Where(x => x.CheckListId == checkListId)
+                                             .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                                             .Where(x => x.FieldTypeId == fieldTypeSaveButton)
+                                             .ToListAsync()).Any() ? 0 : 1;
+                checkList.DoneButtonEnabled = (short?)doneButtonEnabled;
+                await checkList.Update(sdkDbContext);
             }
         }
 
