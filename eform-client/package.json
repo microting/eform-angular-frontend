@@ -111,7 +111,7 @@
     "@wdio/cli": "7.24.0",
     "@wdio/local-runner": "7.24.0",
     "@wdio/mocha-framework": "7.24.0",
-    "@wdio/spec-reporter": "7.24.0",
+    "@wdio/spec-reporter": "7.25.0",
     "angular-mocks": "1.8.3",
     "chai": "4.3.6",
     "chromedriver": "105.0.1",
