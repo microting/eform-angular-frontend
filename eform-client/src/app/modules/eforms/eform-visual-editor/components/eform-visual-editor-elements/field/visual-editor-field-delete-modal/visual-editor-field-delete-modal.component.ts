@@ -1,11 +1,10 @@
 import {
   Component,
-  EventEmitter,
+  Inject,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import { EformVisualEditorRecursionFieldModel } from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-visual-editor-field-delete-modal',
@@ -13,26 +12,13 @@ import { EformVisualEditorRecursionFieldModel } from 'src/app/common/models';
   styleUrls: ['./visual-editor-field-delete-modal.component.scss'],
 })
 export class VisualEditorFieldDeleteModalComponent implements OnInit {
-  @ViewChild('frame', { static: false }) frame;
-  @Output()
-  fieldDelete: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
-  recursionFieldModel: EformVisualEditorRecursionFieldModel = new EformVisualEditorRecursionFieldModel();
-
-  constructor() {}
+  constructor(
+    public dialogRef: MatDialogRef<VisualEditorFieldDeleteModalComponent>,
+    @Inject(MAT_DIALOG_DATA) private recursionFieldModel: EformVisualEditorRecursionFieldModel) {}
 
   ngOnInit() {}
 
-  show(model: EformVisualEditorRecursionFieldModel) {
-    this.recursionFieldModel = model;
-    this.frame.show();
-  }
-
-  hide() {
-    this.frame.hide();
-  }
-
-  onFieldDelete() {
-    this.fieldDelete.emit(this.recursionFieldModel);
-    this.frame.hide();
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 }

@@ -1,10 +1,7 @@
 import {
   Component,
-  EventEmitter,
-  Input,
+  Inject,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import { applicationLanguages } from 'src/app/common/const';
 import {
@@ -13,6 +10,7 @@ import {
 } from 'src/app/common/models';
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-visual-editor-checklist-modal',
@@ -20,12 +18,7 @@ import * as R from 'ramda';
   styleUrls: ['./visual-editor-checklist-modal.component.scss'],
 })
 export class VisualEditorChecklistModalComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Output()
-  createChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter<EformVisualEditorRecursionChecklistModel>();
-  @Output()
-  updateChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter<EformVisualEditorRecursionChecklistModel>();
-  @Input() selectedLanguages: number[];
+  selectedLanguages: number[];
   recursionModel: EformVisualEditorRecursionChecklistModel = new EformVisualEditorRecursionChecklistModel();
   isChecklistSelected = false;
 
@@ -33,7 +26,30 @@ export class VisualEditorChecklistModalComponent implements OnInit {
     return applicationLanguages;
   }
 
-  constructor() {}
+  constructor(
+    public dialogRef: MatDialogRef<VisualEditorChecklistModalComponent>,
+    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionChecklistModel }
+  ) {
+    this.selectedLanguages = model.selectedLanguages;
+    if (model.model) {
+      this.recursionModel = R.clone(model.model);
+      this.isChecklistSelected = false;
+    }
+    if (model.model && model.model.checklist) {
+      this.isChecklistSelected = true;
+
+      // if there are not enough translations
+      this.recursionModel.checklist.translations = fixTranslations(
+        this.recursionModel.checklist.translations
+      );
+    } else {
+      if (!model.model) {
+        this.isChecklistSelected = false;
+        this.recursionModel = new EformVisualEditorRecursionChecklistModel();
+      }
+      this.initForm();
+    }
+  }
 
   ngOnInit() {
     // this.selectedLanguage = applicationLanguages.find(
@@ -47,28 +63,6 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   //   );
   // }
 
-  show(model?: EformVisualEditorRecursionChecklistModel) {
-    if (model) {
-      this.recursionModel = R.clone(model);
-      this.isChecklistSelected = false;
-    }
-    if (model && model.checklist) {
-      this.isChecklistSelected = true;
-
-      // if there are not enough translations
-      this.recursionModel.checklist.translations = fixTranslations(
-        this.recursionModel.checklist.translations
-      );
-    } else {
-      if (!model) {
-        this.isChecklistSelected = false;
-        this.recursionModel = new EformVisualEditorRecursionChecklistModel();
-      }
-      this.initForm();
-    }
-    this.frame.show();
-  }
-
   initForm() {
     this.recursionModel.checklist = new EformVisualEditorModel();
     for (const language of applicationLanguages) {
@@ -80,18 +74,11 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   }
 
   onCreateChecklist() {
-    this.createChecklist.emit({
-      ...this.recursionModel,
-    });
-    this.frame.hide();
+    this.hide(true, this.recursionModel, true);
   }
 
   onUpdateChecklist() {
-    this.updateChecklist.emit({
-      ...this.recursionModel,
-    });
-    this.frame.hide();
-    this.isChecklistSelected = false;
+    this.hide(true, this.recursionModel, false);
   }
 
   isLanguageSelected(languageId: number): boolean {
@@ -100,5 +87,9 @@ export class VisualEditorChecklistModalComponent implements OnInit {
 
   getLanguage(languageId: number): string {
     return this.languages.find((x) => x.id === languageId).text;
+  }
+
+  hide(result = false, model?: EformVisualEditorRecursionChecklistModel, create?: boolean) {
+    this.dialogRef.close({result: result, create: create, model: result ? model : null});
   }
 }

@@ -24,6 +24,8 @@ import {
   VisualEditorAdditionalFieldOptionsComponent,
   VisualEditorAdditionalFieldEntitySearchComponent,
   VisualEditorAdditionalFieldEntitySelectComponent,
+  VisualEditorAdditionalFieldOptionEditComponent,
+  VisualEditorAdditionalFieldOptionDeleteComponent,
 } from './components';
 import {EformVisualEditorRouting} from './eform-visual-editor.routing';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -32,6 +34,11 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MtxPopoverModule} from '@ng-matero/extensions/popover';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MtxGridModule} from '@ng-matero/extensions/grid';
 
 @NgModule({
   declarations: [
@@ -49,6 +56,8 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     VisualEditorAdditionalFieldOptionsComponent,
     VisualEditorAdditionalFieldEntitySearchComponent,
     VisualEditorAdditionalFieldEntitySelectComponent,
+    VisualEditorAdditionalFieldOptionEditComponent,
+    VisualEditorAdditionalFieldOptionDeleteComponent,
   ],
   imports: [
     CommonModule,
@@ -69,6 +78,11 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     MatCardModule,
     MatInputModule,
     MtxSelectModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MtxPopoverModule,
+    DragDropModule,
+    MtxGridModule,
   ],
 })
 export class EformVisualEditorModule {

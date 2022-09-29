@@ -3,6 +3,8 @@
 
 @use '@angular/material' as mat;
 @use '@ng-matero/extensions' as mtx;
+@use './ngx-editor/ngx-editor' as ngx-editor;
+@use '../components/text' as text;
 @include mat.core();
 
 // Define a typography
@@ -55,15 +57,14 @@ body {
   #main-header-text {
     font-weight: 400;
   }
-  &.theme-light {
-    @include mat.all-component-themes($eform-light-theme);
-    @include mtx.all-component-themes($eform-light-theme);
-    @include mtx.all-experimental-component-themes($eform-light-theme);
-  }
-  &.theme-dark {
-    @include mat.all-component-colors($eform-dark-theme);
-    @include mtx.all-component-themes($eform-dark-theme);
-    @include mtx.all-experimental-component-themes($eform-dark-theme);
+  @each $key, $val in (('light', $eform-light-theme), ('dark', $eform-dark-theme)) {
+    &.theme-#{$key} {
+      @include mat.all-component-themes($val);
+      @include mtx.all-component-themes($val);
+      @include ngx-editor.theme($val);
+      @include text.theme($val);
+      @include mtx.all-experimental-component-themes($val);
+    }
   }
   &.mat-typography {
     margin: 0 0 0 0;

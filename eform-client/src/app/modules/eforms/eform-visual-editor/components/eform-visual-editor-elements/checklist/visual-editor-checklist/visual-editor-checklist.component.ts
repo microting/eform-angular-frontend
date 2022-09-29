@@ -49,7 +49,7 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   @Output()
   deleteNestedChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter();
   @Output()
-  copyNestedField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter(); // todo
+  copyNestedField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   @Output()
   changeColorField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   dragulaElementContainerName = UUID.UUID();

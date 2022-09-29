@@ -1,9 +1,7 @@
 import {
   Component,
-  EventEmitter,
-  Input,
+  Inject,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
 import {
@@ -21,6 +19,7 @@ import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
 import {AuthStateService} from 'src/app/common/store';
 import {TranslateService} from '@ngx-translate/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-visual-editor-field-modal',
@@ -28,13 +27,8 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./visual-editor-field-modal.component.scss'],
 })
 export class VisualEditorFieldModalComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
   @ViewChild('popTemplate', { static: true }) popTemplate;
-  @Input() selectedLanguages: number[];
-  @Output()
-  createField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter<EformVisualEditorRecursionFieldModel>();
-  @Output()
-  updateField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
+  selectedLanguages: number[];
   recursionModel: EformVisualEditorRecursionFieldModel = new EformVisualEditorRecursionFieldModel();
   isFieldSelected = false;
   fieldTypes: EformVisualEditorFieldTypeModel[];
@@ -86,13 +80,44 @@ export class VisualEditorFieldModalComponent implements OnInit {
   //   return !this.recursionModel.field.translations.find((x) => x.name !== '');
   // }
 
-  constructor(private authStateService: AuthStateService, private translateService: TranslateService) {}
+  constructor(
+    private authStateService: AuthStateService,
+    private translateService: TranslateService,
+    public dialogRef: MatDialogRef<VisualEditorFieldModalComponent>,
+    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionFieldModel }
+  ) {
+    this.selectedLanguages = model.selectedLanguages;
+    // this.setSelectedLanguage();
+    if (model.model) {
+      this.recursionModel = R.clone(model.model);
+    }
+    if (model.model && model.model.field) {
+      this.isFieldSelected = true;
+      // if there are not enough translations
+      this.recursionModel.field.translations = fixTranslations(
+        this.recursionModel.field.translations
+      ).map((x, i) => {
+        if (this.recursionModel.field.translations.length > i) {
+          // @ts-ignore
+          x.defaultValue =
+            this.recursionModel.field.translations[i].defaultValue ?? '';
+          return x as EformVisualEditorTranslationWithDefaultValue;
+        }
+      });
+    } else {
+      if (!model.model) {
+        this.recursionModel = new EformVisualEditorRecursionFieldModel();
+      }
+      this.initForm();
+    }
+    this.setFieldTypes();
+  }
 
   ngOnInit() {
     // this.setSelectedLanguage();
   }
 
-  show(model?: EformVisualEditorRecursionFieldModel) {
+/*  show(model?: EformVisualEditorRecursionFieldModel) {
     // this.setSelectedLanguage();
     if (model) {
       this.recursionModel = R.clone(model);
@@ -117,8 +142,8 @@ export class VisualEditorFieldModalComponent implements OnInit {
       this.initForm();
     }
     this.setFieldTypes();
-    this.frame.show();
-  }
+    // this.frame.show();
+  }*/
 
   initForm() {
     this.recursionModel.field = new EformVisualEditorFieldModel();
@@ -132,18 +157,18 @@ export class VisualEditorFieldModalComponent implements OnInit {
   }
 
   onCreateField() {
-    this.createField.emit({
-      ...this.recursionModel,
-    });
-    this.frame.hide();
+    // this.createField.emit({
+    //   ...this.recursionModel,
+    // });
+    this.hide(true, this.recursionModel, true);
     this.isFieldSelected = false;
   }
 
   onUpdateField() {
-    this.updateField.emit({
-      ...this.recursionModel,
-    });
-    this.frame.hide();
+    // this.updateField.emit({
+    //   ...this.recursionModel,
+    // });
+    this.hide(true, this.recursionModel, false);
     this.isFieldSelected = false;
   }
 
@@ -163,5 +188,9 @@ export class VisualEditorFieldModalComponent implements OnInit {
       this.recursionModel.field.entityGroupId = null;
     }
     this.recursionModel.field.fieldType = type;
+  }
+
+  hide(result = false, model?: EformVisualEditorRecursionFieldModel, create?: boolean) {
+    this.dialogRef.close({result: result, create: create, model: result ? model : null});
   }
 }

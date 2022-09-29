@@ -80,6 +80,10 @@ b, strong {
   mat-form-field ~ mat-form-field {
     margin-left: 1rem;
   }
+  .mat-card ~ .mat-card {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 }
 
 /*.mat-checkbox label:before {

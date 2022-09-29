@@ -3,7 +3,7 @@
     <button
       mat-raised-button
       color="accent"
-      mdbTooltip="Save settings"
+      matTooltip="Save settings"
       id="ProfileSettingsSaveBtn"
       (click)="updateUserProfileSettings()"
     >
@@ -47,7 +47,7 @@
           mat-raised-button
           color="warn"
           id="deleteGoogleAuthenticatorInfo"
-          mdbTooltip="{{
+          matTooltip="{{
                   'Remove google authenticator secret key' | translate
                 }}"
           (click)="deleteGoogleAuthenticatorInfo()"

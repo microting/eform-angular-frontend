@@ -2,28 +2,26 @@
   [forceStaticTitle]="true"
   [title]="'Eform visual editor' | translate"
 >
-  <div class="">
-    <button
-      mat-icon-button
-      id="manageTags"
-      (click)="openTagsModal()"
-      mdbTooltip="{{ 'Manage tags' | translate }}"
-    >
-      <mat-icon>discount</mat-icon>
-    </button>
-    <button
-      mat-raised-button
-      color="accent"
-      (click)="
+  <button
+    mat-icon-button
+    id="manageTags"
+    (click)="openTagsModal()"
+    matTooltip="{{ 'Manage tags' | translate }}"
+  >
+    <mat-icon>discount</mat-icon>
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="
         selectedTemplateId ? updateVisualTemplate() : createVisualTemplate()
       "
-      mdbTooltip="{{ (selectedTemplateId ? 'Save' : 'Create') | translate }}"
-      id="saveCreateEformBtn"
-      [disabled]="isAllNamesEmpty"
-    >
-      {{ (selectedTemplateId ? 'Save eForm' : 'Create eForm') | translate }}
-    </button>
-  </div>
+    matTooltip="{{ (selectedTemplateId ? 'Save' : 'Create') | translate }}"
+    id="saveCreateEformBtn"
+    [disabled]="isAllNamesEmpty"
+  >
+    {{ (selectedTemplateId ? 'Save eForm' : 'Create eForm') | translate }}
+  </button>
 </eform-new-subheader>
 
 <mat-card class="d-flex flex-column mb-3" style="padding-right: 0; padding-left: 0; padding-bottom: 0">
@@ -35,41 +33,26 @@
   ></app-eform-visual-editor-header>
 </mat-card>
 <mat-card>
-  <div class="row">
-    <div class="col">
-      <ng-container
-        *ngIf="
-                  visualEditorTemplateModel.fields.length ||
-                  visualEditorTemplateModel.checkLists.length
-                "
-      >
-        <button
-          mdbBtn
-          class="btn-icon mb-2 float-right text-black-50"
-          mdbTooltip="{{
-                    (isItemsCollapsed ? 'Expand all' : 'Collapse all')
-                      | translate
-                  }}"
-          (click)="toggleCollapse()"
-          id="expandAllBtn"
-        >
-          <fa-icon
-            [icon]="
-                      isItemsCollapsed
-                        ? 'angle-double-right'
-                        : 'angle-double-down'
-                    "
-            size="lg"
-            [fixedWidth]="true"
-          ></fa-icon>
-        </button>
-      </ng-container>
-    </div>
+  <div
+    *ngIf="visualEditorTemplateModel.fields.length || visualEditorTemplateModel.checkLists.length"
+    class="d-flex justify-content-end"
+  >
+    <button
+      mat-icon-button
+      [matTooltip]="
+                (isItemsCollapsed ? 'Expand all' : 'Collapse all')
+                  | translate
+              "
+      (click)="toggleCollapse()"
+      id="expandAllBtn"
+    >
+      <mat-icon>
+      {{isItemsCollapsed ? 'chevron_right' : 'expand_more'}}</mat-icon>
+    </button>
   </div>
   <div
-    mdbCollapse
-    #collapse="bs-collapse"
-    [isCollapsed]="isItemsCollapsed"
+    class="section-collapse"
+    [ngClass]="{'collapsed' : isItemsCollapsed}"
   >
     <section
       dragula="CHECK_LISTS"
@@ -130,33 +113,27 @@
       ></app-visual-editor-field>
     </section>
   </div>
-  <div class="row">
-    <div class="col d-flex justify-content-end">
-      <button
-        *ngIf="visualEditorTemplateModel.checkLists.length === 0"
-        mdbBtn
-        id="initialFieldCreateBtn"
-        [mdbTooltip]="'Add field' | translate"
-        class="btn-success btn-icon"
-        (click)="showFieldModal()"
-      >
-        <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
-      </button>
-      <button
-        *ngIf="visualEditorTemplateModel.fields.length === 0"
-        mdbBtn
-        id="initialChecklistCreateBtn"
-        [mdbTooltip]="'Add sub eForm' | translate"
-        class="btn-success btn-icon"
-        (click)="showChecklistModal()"
-      >
-        <fa-icon
-          icon="folder-plus"
-          [fixedWidth]="true"
-          size="lg"
-        ></fa-icon>
-      </button>
-    </div>
+  <div class="d-flex justify-content-end">
+    <button
+      *ngIf="visualEditorTemplateModel.checkLists.length === 0"
+      mat-icon-button
+      id="initialFieldCreateBtn"
+      [matTooltip]="'Add field' | translate"
+      color="accent"
+      (click)="showFieldModal()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+    <button
+      *ngIf="visualEditorTemplateModel.fields.length === 0"
+      mat-icon-button
+      color="accent"
+      id="initialChecklistCreateBtn"
+      [matTooltip]="'Add sub eForm' | translate"
+      (click)="showChecklistModal()"
+    >
+      <mat-icon>create_new_folder</mat-icon>
+    </button>
   </div>
 </mat-card>
 
@@ -166,28 +143,3 @@
   (tagsChanged)="getTags()"
 >
 </app-eforms-tags>
-<app-visual-editor-checklist-modal
-  #checklistModal
-  [selectedLanguages]="selectedLanguages"
-  (createChecklist)="onCreateChecklist($event)"
-  (updateChecklist)="onUpdateChecklist($event)"
->
-</app-visual-editor-checklist-modal>
-<app-visual-editor-checklist-delete-modal
-  #checklistDeleteModal
-  (deleteChecklist)="onDeleteChecklist($event)"
->
-</app-visual-editor-checklist-delete-modal>
-
-<app-visual-editor-field-modal
-  #fieldModal
-  [selectedLanguages]="selectedLanguages"
-  (createField)="onFieldCreate($event)"
-  (updateField)="onFieldUpdate($event)"
->
-</app-visual-editor-field-modal>
-<app-visual-editor-field-delete-modal
-  #fieldDeleteModal
-  (fieldDelete)="onFieldDelete($event)"
->
-</app-visual-editor-field-delete-modal>

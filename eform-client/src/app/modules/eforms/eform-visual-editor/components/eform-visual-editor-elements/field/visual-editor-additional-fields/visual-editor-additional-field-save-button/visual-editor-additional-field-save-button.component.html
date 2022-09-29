@@ -1,27 +1,21 @@
-<mdb-card
-  class="mt-3"
-  *ngFor="let translation of field.translations; let translationIndex = index"
->
-  <ng-container *ngIf="isLanguageSelected(translation.languageId)">
-    <mdb-card-header>{{
+<ng-container *ngFor="let translation of field.translations; let translationIndex = index">
+  <mat-card
+    *ngIf="isLanguageSelected(translation.languageId)"
+  >
+    <mat-card-title>{{
       getLanguage(translation.languageId) | translate
-    }}</mdb-card-header>
-    <mdb-card-body>
-      <div class="row">
-        <div class="col">
-          <div class="md-form">
-            <input
-              mdbInput
-              [(ngModel)]="translation.defaultValue"
-              [required]="true"
-              type="text"
-              class="form-control"
-              id="defaultValueEdit{{ translationIndex }}"
-            />
-            <label>{{ 'Value' | translate }}</label>
-          </div>
-        </div>
-      </div>
-    </mdb-card-body>
-  </ng-container>
-</mdb-card>
+      }}</mat-card-title>
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>{{'Value' | translate }}</mat-label>
+        <input
+          matInput
+          [required]="true"
+          type="text"
+          id="defaultValueEdit{{ translationIndex }}"
+          [(ngModel)]="translation.defaultValue"
+        />
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+</ng-container>

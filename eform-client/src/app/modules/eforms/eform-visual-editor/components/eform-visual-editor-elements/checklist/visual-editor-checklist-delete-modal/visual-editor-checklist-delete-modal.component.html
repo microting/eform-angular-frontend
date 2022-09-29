@@ -1,35 +1,18 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade"
-  #frame="mdbModal"
->
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Are you sure you want to delete checklist' | translate }}?</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-footer">
-        <button
-          mdbBtn
-          id="checklistDeleteDeleteBtn"
-          class="btn-danger btn-small-height"
-          (click)="onDeleteChecklist()"
-        >
-          {{ 'Delete' | translate }}
-        </button>
-        <button
-          mdbBtn
-          id="checklistDeleteCancelBtn"
-          class="btn-accent text-black-50 btn-small-height"
-          (click)="frame.hide()"
-        >
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
+<h3 mat-dialog-title>{{ 'Are you sure you want to delete checklist' | translate }}?</h3>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="hide(true)"
+    id="checklistDeleteDeleteBtn"
+  >
+    {{'Delete' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    (click)="hide()"
+    id="checklistDeleteCancelBtn"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

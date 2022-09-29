@@ -20,12 +20,18 @@ import {
   EformTagService,
   EformVisualEditorService,
 } from 'src/app/common/services';
-import { fixTranslations } from 'src/app/common/helpers';
-import { VisualEditorFieldModalComponent } from '../../';
+import {dialogConfigHelper, fixTranslations} from 'src/app/common/helpers';
+import {
+  VisualEditorFieldDeleteModalComponent,
+  VisualEditorFieldModalComponent,
+  VisualEditorChecklistDeleteModalComponent, VisualEditorChecklistModalComponent
+} from '../../';
 import { DragulaService } from 'ng2-dragula';
 import { CollapseComponent } from 'angular-bootstrap-md';
 import { AuthStateService } from 'src/app/common/store';
 import { EformsTagsComponent } from 'src/app/common/modules/eform-shared-tags/components';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
 
 @AutoUnsubscribe()
 @Component({
@@ -36,10 +42,6 @@ import { EformsTagsComponent } from 'src/app/common/modules/eform-shared-tags/co
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   @ViewChild('collapse') collapse: CollapseComponent;
   @ViewChild('tagsModal') tagsModal: EformsTagsComponent;
-  @ViewChild('fieldModal') fieldModal: VisualEditorFieldModalComponent;
-  @ViewChild('fieldDeleteModal') fieldDeleteModal: any;
-  @ViewChild('checklistModal') checklistModal: any;
-  @ViewChild('checklistDeleteModal') checklistDeleteModal: any;
 
   visualEditorTemplateModel: EformVisualEditorModel = new EformVisualEditorModel();
   selectedTemplateId: number;
@@ -53,6 +55,10 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   createVisualTemplateSub$: Subscription;
   updateVisualTemplateSub$: Subscription;
   routerSub$: Subscription;
+  visualEditorFieldModalComponentAfterClosedSub$: Subscription;
+  visualEditorFieldDeleteModalComponentAfterClosedSub$: Subscription;
+  visualEditorChecklistDeleteModalComponentAfterClosedSub$: Subscription;
+  visualEditorChecklistModalComponentAfterClosedSub$: Subscription;
 
   constructor(
     private dragulaService: DragulaService,
@@ -60,7 +66,9 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     private visualEditorService: EformVisualEditorService,
     private router: Router,
     private route: ActivatedRoute,
-    private authStateService: AuthStateService
+    private authStateService: AuthStateService,
+    private dialog: MatDialog,
+    private overlay: Overlay,
   ) {
     this.dragulaService.createGroup('CHECK_LISTS', {
       moves: (el, container, handle) => {
@@ -193,7 +201,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   toggleCollapse() {
     this.isItemsCollapsed = !this.isItemsCollapsed;
-    this.collapse.toggle();
   }
 
   dragulaPositionChecklistChanged(model: EformVisualEditorModel[]) {
@@ -270,19 +277,31 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   }
 
   showFieldModal(model?: EformVisualEditorRecursionFieldModel) {
-    this.fieldModal.show(model);
+    this.visualEditorFieldModalComponentAfterClosedSub$ = this.dialog.open(VisualEditorFieldModalComponent,
+      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages}), minWidth: 600})
+      .afterClosed()
+      .subscribe(data => data.result ? (data.create ? this.onFieldCreate(data.model) : this.onFieldUpdate(data.model)) : undefined);
   }
 
   showDeleteFieldModal(model: EformVisualEditorRecursionFieldModel) {
-    this.fieldDeleteModal.show(model);
+    this.visualEditorFieldDeleteModalComponentAfterClosedSub$ = this.dialog.open(VisualEditorFieldDeleteModalComponent,
+      {...dialogConfigHelper(this.overlay, model), minWidth: 600})
+      .afterClosed()
+      .subscribe(data => data ? this.onFieldDelete(model) : undefined);
   }
 
   showChecklistModal(model?: EformVisualEditorRecursionChecklistModel) {
-    this.checklistModal.show(model);
+    this.visualEditorChecklistModalComponentAfterClosedSub$ = this.dialog.open(VisualEditorChecklistModalComponent,
+      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages}), minWidth: 500})
+      .afterClosed()
+      .subscribe(data => data.result ? (data.create ? this.onCreateChecklist(data.model) : this.onUpdateChecklist(data.model)) : undefined);
   }
 
   showDeleteChecklistModal(model: EformVisualEditorRecursionChecklistModel) {
-    this.checklistDeleteModal.show(model);
+    this.visualEditorChecklistDeleteModalComponentAfterClosedSub$ = this.dialog.open(VisualEditorChecklistDeleteModalComponent,
+      {...dialogConfigHelper(this.overlay, model), minWidth: 600})
+      .afterClosed()
+      .subscribe(data => data ? this.onDeleteChecklist(model) : undefined);
   }
 
   onCreateChecklist(model: EformVisualEditorRecursionChecklistModel) {
@@ -396,7 +415,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
           (x) => indexes.push('checkLists', x) // checkLists[x]
         );
       }
-      indexes.push('checkLists'); // for change checkLists[x].checkLists. if remove this, have been change checkLists[x]
+      indexes.push('checkLists'); // For change checkLists[x].checkLists. if remove this, have change checkLists[x]
       const visualTemplatePath = R.lensPath(indexes);
       const checklists = R.view(
         visualTemplatePath,

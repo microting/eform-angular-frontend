@@ -22,6 +22,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatCardModule} from '@angular/material/card';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import {MatCardModule} from '@angular/material/card';
         MatFormFieldModule,
         MtxSelectModule,
         MatCardModule,
+        MatTooltipModule,
     ],
   declarations: [
     ChangePasswordComponent,
