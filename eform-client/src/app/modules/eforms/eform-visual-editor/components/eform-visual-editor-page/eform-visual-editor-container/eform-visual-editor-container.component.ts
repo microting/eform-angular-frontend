@@ -129,7 +129,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
             R.dropRepeats([...this.selectedLanguages, ...this.visualEditorTemplateModel.translations
               .map(x => x.name ? x.languageId : null)
               .filter(x => x != null)]);
-          debugger;
           this.visualEditorTemplateModel.translations = fixTranslations(
             this.visualEditorTemplateModel.translations
           );
