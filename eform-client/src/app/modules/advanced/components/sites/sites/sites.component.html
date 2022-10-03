@@ -33,16 +33,12 @@
 </ng-template>
 <ng-template #tagsTpl let-row>
   <div id="tags">
-    <div>
-      <p
-        class="badge badge-primary mb-1"
-        id="assignedTag"
-        *ngFor="let tag of row.tags"
-      >
-        <fa-icon icon="tag"></fa-icon>
+    <mat-chip-list>
+      <mat-chip *ngFor="let tag of row.tags" color="primary">
+        <mat-icon>discount</mat-icon>
         {{ getTagName(tag) }}
-      </p>
-    </div>
+      </mat-chip>
+    </mat-chip-list>
   </div>
 </ng-template>
 <ng-template #actionsTpl let-row>

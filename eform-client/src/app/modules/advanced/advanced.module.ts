@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {DragulaModule} from 'ng2-dragula';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {EformSharedModule} from '../../common/modules/eform-shared/eform-shared.module';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {AdvancedRoutingModule} from './advanced.routing';
@@ -40,33 +39,33 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
-  imports: [
-    AdvancedRoutingModule,
-    CommonModule,
-    MDBBootstrapModule,
-    TranslateModule,
-    EformSharedModule,
-    NgSelectModule,
-    FormsModule,
-    DragulaModule,
-    FontAwesomeModule,
-    MDBBootstrapModule,
-    EformImportedModule,
-    ReactiveFormsModule,
-    EformSharedTagsModule,
-    MatSortModule,
-    MatCardModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MtxGridModule,
-    MatDialogModule,
-    MatInputModule,
-    MtxSelectModule,
-    MatSlideToggleModule,
-  ],
+    imports: [
+        AdvancedRoutingModule,
+        CommonModule,
+        TranslateModule,
+        EformSharedModule,
+        NgSelectModule,
+        FormsModule,
+        DragulaModule,
+        FontAwesomeModule,
+        EformImportedModule,
+        ReactiveFormsModule,
+        EformSharedTagsModule,
+        MatSortModule,
+        MatCardModule,
+        MatIconModule,
+        MatButtonModule,
+        MatTooltipModule,
+        MtxGridModule,
+        MatDialogModule,
+        MatInputModule,
+        MtxSelectModule,
+        MatSlideToggleModule,
+        MatChipsModule,
+    ],
   declarations: [
     EntitySearchComponent,
     EntitySelectComponent,

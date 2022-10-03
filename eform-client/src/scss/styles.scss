@@ -2,7 +2,7 @@
 //ng-select
 
 @import "components/index";
-@import "utilities/colors";
+@import "utilities";
 @import "libs/index";
 @import '~ngx-ui-switch/ui-switch.component.scss';
 
@@ -12,13 +12,7 @@ html {
 }
 
 body {
-  &.theme-light {
-  }
-
-  &.theme-dark {
-  }
-
-  height: 100%;
+  height: 100vh;
   //color: var(--theme-body-font-color);
   //background-color: var(--theme-background-color);
   background-image: none;
