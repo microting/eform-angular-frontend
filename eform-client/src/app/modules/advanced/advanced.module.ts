@@ -23,8 +23,7 @@ import {
   WorkerDeleteComponent,
   WorkersComponent,
   FoldersComponent,
-  FolderCreateComponent,
-  FolderEditComponent,
+  FolderEditCreateComponent,
   FolderDeleteComponent,
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -84,8 +83,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     EntitySearchRemoveComponent,
     EntitySelectRemoveComponent,
     FoldersComponent,
-    FolderCreateComponent,
-    FolderEditComponent,
+    FolderEditCreateComponent,
     FolderDeleteComponent,
   ],
   providers: [...advancedPersistProviders],

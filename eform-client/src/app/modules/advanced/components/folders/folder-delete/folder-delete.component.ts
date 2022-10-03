@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FoldersService} from '../../../../../common/services/advanced/folders.service';
-import {FolderDto} from '../../../../../common/models/dto/folder.dto';
+import {Component, Inject, OnInit,} from '@angular/core';
+import {FoldersService} from 'src/app/common/services';
+import {FolderDto} from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-folder-delete',
@@ -8,25 +9,24 @@ import {FolderDto} from '../../../../../common/models/dto/folder.dto';
   styleUrls: ['./folder-delete.component.scss']
 })
 export class FolderDeleteComponent implements OnInit {
- @Input() selectedFolderDto: FolderDto = new FolderDto();
- @Output() onFolderDeleted: EventEmitter<void> = new EventEmitter<void>();
- @ViewChild('frame', { static: true }) frame;
-
-  constructor(private folderService: FoldersService) { }
+  constructor(private folderService: FoldersService,
+  public dialogRef: MatDialogRef<FolderDeleteComponent>,
+  @Inject(MAT_DIALOG_DATA) public selectedFolderDto: FolderDto = new FolderDto()) { }
 
   ngOnInit() {
   }
 
-  show() {
-    this.frame.show();
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
   deleteFolder() {
-    this.folderService.deleteSingleFolder(this.selectedFolderDto.id).subscribe(operation => {
-      if (operation && operation.success) {
-        this.frame.hide();
-        this.onFolderDeleted.emit();
-      }
-    });
+    this.folderService.deleteSingleFolder(this.selectedFolderDto.id)
+      .subscribe(operation => {
+        if (operation && operation.success) {
+          this.hide(true);
+        }
+      });
   }
 }
