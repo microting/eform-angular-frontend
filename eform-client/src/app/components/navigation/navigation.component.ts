@@ -1,8 +1,9 @@
 import {
   Component,
   ElementRef,
+  EventEmitter,
   OnDestroy,
-  OnInit,
+  OnInit, Output,
   ViewChild,
 } from '@angular/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
@@ -31,6 +32,7 @@ interface FlatNode {
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   @ViewChild('navigationMenu', {static: true}) menuElement: ElementRef;
+  @Output() clickOnLink: EventEmitter<void> = new EventEmitter<void>();
 
   private _transformer = (node: MenuItemModel, level: number) => {
     return {
@@ -98,5 +100,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
     }
 
     return guards.some((g) => this.authStateService.checkClaim(g));
+  }
+
+  onClickOnNode() {
+    this.clickOnLink.emit();
   }
 }
