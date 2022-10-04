@@ -5,6 +5,7 @@
 @use '@ng-matero/extensions' as mtx;
 @use './ngx-editor/ngx-editor' as ngx-editor;
 @use '../components/text' as text;
+@use '../libs/ngx-gallery/ngx-gallery' as ngx-gallery;
 @include mat.core();
 
 // Define a typography
@@ -63,6 +64,7 @@ body {
       @include mtx.all-component-themes($val);
       @include ngx-editor.theme($val);
       @include text.theme($val);
+      @include ngx-gallery.theme($val);
       @include mtx.all-experimental-component-themes($val);
     }
   }

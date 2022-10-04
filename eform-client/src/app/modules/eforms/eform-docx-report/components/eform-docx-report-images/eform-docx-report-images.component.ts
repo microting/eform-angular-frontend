@@ -23,6 +23,7 @@ export class EformDocxReportImagesComponent implements OnDestroy, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.imageNames) {
+      this.images = [];
       this.imageNames.forEach(imageValue => {
         this.imageSub$ = this.imageService.getImage(imageValue.value[0]).subscribe(blob => {
           const imageUrl = URL.createObjectURL(blob);
