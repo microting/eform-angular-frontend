@@ -29,69 +29,20 @@
       style="display: none"
     />
   </div>
-  <!--<div class="">
-    <div style="width: 100%">
-      {{ 'Uploading progress:' | translate }}
-      <div class="progress">
-        <div
-          class="progress-bar"
-          role="progressbar"
-          [ngStyle]="{
-                    width:
-                      xlsxEformsFileUploader?.queue?.length !== 0
-                        ? xlsxEformsFileUploader.progress + '%'
-                        : ''
-                  }"
-        ></div>
-      </div>
-    </div>
-  </div>-->
-  <div class="p-1 mt-4 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
+  <div class="mt-4">
+    <mtx-grid
+      [data]="errors"
+      [columns]="tableHeaders"
+      [showPaginator]="false"
+      [pageOnFront]="false"
+      [rowStriped]="true"
+      [showToolbar]="false"
+      [showColumnMenuButton]="false"
     >
-      <thead>
-      <tr>
-        <th scope="col">
-          {{ 'Column' | translate }}
-        </th>
-        <th scope="col">
-          {{ 'Row' | translate }}
-        </th>
-        <th scope="col">
-          {{ 'Error' | translate }}
-        </th>
-      </tr>
-      </thead>
-      <tbody id="tableBody">
-      <tr *ngFor="let error of errors">
-        <td id="errorColumn">
-          {{ error.col }}
-        </td>
-        <td id="errorRow">
-          {{ error.row }}
-        </td>
-        <td id="errorMessage">
-          {{ error.message }}
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    </mtx-grid>
   </div>
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
-  <!--        <button-->
-  <!--          mdbBtn-->
-  <!--          class="btn-success btn-small-height"-->
-  <!--          (click)="uploadExcelEformsFile()"-->
-  <!--          id="uploadExcelEformsFileBtn"-->
-  <!--        >-->
-  <!--          {{ 'Upload' | translate }}-->
-  <!--        </button>-->
   <button
     mat-raised-button
     (click)="excelEformsModal()"

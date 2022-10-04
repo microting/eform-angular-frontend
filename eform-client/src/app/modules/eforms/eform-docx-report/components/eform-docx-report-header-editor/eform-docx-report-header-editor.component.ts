@@ -1,11 +1,12 @@
 import {
   Component,
   EventEmitter,
+  Inject,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
-import { EformDocxReportHeadersModel } from 'src/app/common/models';
+import {EformDocxReportHeadersModel} from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-eform-docx-report-header-editor',
@@ -13,24 +14,18 @@ import { EformDocxReportHeadersModel } from 'src/app/common/models';
   styleUrls: ['./eform-docx-report-header-editor.component.scss'],
 })
 export class EformDocxReportHeaderEditorComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
   @Output()
   updateReportHeaders: EventEmitter<EformDocxReportHeadersModel> = new EventEmitter<EformDocxReportHeadersModel>();
-  reportHeadersModel: EformDocxReportHeadersModel = new EformDocxReportHeadersModel();
-  headers = [{}, {}, {}, {}, {}];
 
-  constructor() {}
+  constructor(
+    public dialogRef: MatDialogRef<EformDocxReportHeaderEditorComponent>,
+    @Inject(MAT_DIALOG_DATA) public reportHeadersModel: EformDocxReportHeadersModel = new EformDocxReportHeadersModel()) {}
 
   ngOnInit(): void {}
 
-  hide() {
-    this.frame.hide();
-    this.reportHeadersModel = new EformDocxReportHeadersModel();
-  }
 
-  show(model: EformDocxReportHeadersModel) {
-    this.reportHeadersModel = model;
-    this.frame.show();
+  hide() {
+    this.dialogRef.close();
   }
 
   updateHeaders() {

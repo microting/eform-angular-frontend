@@ -5,6 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {LoaderService} from 'src/app/common/services/loader.service';
 import {AuthStateService} from 'src/app/common/store';
 import {MatDialogRef} from '@angular/material/dialog';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
 
 @Component({
   selector: 'app-eforms-bulk-import-modal',
@@ -19,6 +20,12 @@ export class EformsBulkImportModalComponent implements OnInit {
     authToken: this.authStateService.bearerToken,
   });
   errors: { row: number; col: number; message: string }[];
+
+  tableHeaders: MtxGridColumn[] = [
+    {header: 'Column', field: 'col'},
+    {header: 'Row', field: 'row'},
+    {header: 'Error', field: 'error',},
+  ];
 
   constructor(
     private toastrService: ToastrService,

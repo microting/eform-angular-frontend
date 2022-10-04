@@ -1,119 +1,71 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade"
-  #frame="mdbModal"
->
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Edit template headers' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="md-form">
-                <input
-                  mdbInput
-                  [(ngModel)]="reportHeadersModel.h1"
-                  required
-                  type="text"
-                  name="reportHeader1"
-                  id="reportHeader1"
-                  class="form-control"
-                />
-                <label for="reportHeader1">H1</label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="md-form">
-                <input
-                  mdbInput
-                  [(ngModel)]="reportHeadersModel.h2"
-                  required
-                  type="text"
-                  name="reportHeader2"
-                  id="reportHeader2"
-                  class="form-control"
-                />
-                <label for="reportHeader2">H2</label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="md-form">
-                <input
-                  mdbInput
-                  [(ngModel)]="reportHeadersModel.h3"
-                  required
-                  type="text"
-                  name="reportHeader3"
-                  id="reportHeader3"
-                  class="form-control"
-                />
-                <label for="reportHeader3">H3</label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="md-form">
-                <input
-                  mdbInput
-                  [(ngModel)]="reportHeadersModel.h4"
-                  required
-                  type="text"
-                  name="reportHeader4"
-                  id="reportHeader4"
-                  class="form-control"
-                />
-                <label for="reportHeader4">H4</label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="md-form">
-                <input
-                  mdbInput
-                  [(ngModel)]="reportHeadersModel.h5"
-                  required
-                  type="text"
-                  name="reportHeader5"
-                  id="reportHeader5"
-                  class="form-control"
-                />
-                <label for="reportHeader5">H5</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          mdbBtn
-          class="btn-success btn-small-height"
-          id="saveReportHeadersBtn"
-          (click)="updateHeaders()"
-        >
-          {{ 'Update' | translate }}
-        </button>
-        <button
-          mdbBtn
-          class="btn-neutral text-black-50 btn-small-height"
-          id="cancelSaveReportHeadersBtn"
-          (click)="frame.hide()"
-        >
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
+<h3 mat-dialog-title>{{ 'Edit template headers' | translate }}</h3>
+<div mat-dialog-content class="d-flex flex-column">
+  <mat-form-field>
+    <mat-label>H1</mat-label>
+    <input
+      matInput
+      [(ngModel)]="reportHeadersModel.h1"
+      required
+      type="text"
+      name="reportHeader1"
+      id="reportHeader1"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>H2</mat-label>
+    <input
+      matInput
+      [(ngModel)]="reportHeadersModel.h2"
+      required
+      type="text"
+      name="reportHeader2"
+      id="reportHeader2">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>H3</mat-label>
+    <input
+      matInput
+      [(ngModel)]="reportHeadersModel.h3"
+      required
+      type="text"
+      name="reportHeader3"
+      id="reportHeader3">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>H4</mat-label>
+    <input
+      matInput
+      [(ngModel)]="reportHeadersModel.h4"
+      required
+      type="text"
+      name="reportHeader4"
+      id="reportHeader4">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>H5</mat-label>
+    <input
+      matInput
+      [(ngModel)]="reportHeadersModel.h5"
+      required
+      type="text"
+      name="reportHeader5"
+      id="reportHeader5">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    id="saveReportHeadersBtn"
+    (click)="updateHeaders()"
+  >
+    {{'Update' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    (click)="hide()"
+    id="cancelSaveReportHeadersBtn"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

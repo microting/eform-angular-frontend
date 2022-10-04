@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {Lightbox} from '@ngx-gallery/lightbox';
 import {TemplateFilesService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {catchError} from 'rxjs/operators';
 
 @AutoUnsubscribe()
 @Component({
@@ -69,9 +70,14 @@ export class EformDocxReportImagesComponent implements OnDestroy, OnChanges {
 
   rotatePicture(image: any) {
     this.buttonsLocked = true;
-    this.imageService.rotateImage(image.fileName).subscribe((operation) => {
+    this.imageService.rotateImage(image.fileName)
+      .pipe(catchError((error, caught) => {
+        this.buttonsLocked = false;
+        return caught;
+      }))
+      .subscribe((operation) => {
       if (operation && operation.success) {
-        const fileName = image.fileName + '?noCache=' + Math.floor(Math.random() * 1000).toString();
+        const fileName = `${image.fileName}?noCache=${Math.floor(Math.random() * 1000)}`;
         this.imageService.getImage(fileName).subscribe(blob => {
           const imageUrl = URL.createObjectURL(blob);
           const currentImage = this.images.find(x => x.value.fileName === image.fileName);
@@ -83,6 +89,6 @@ export class EformDocxReportImagesComponent implements OnDestroy, OnChanges {
         });
       }
       this.buttonsLocked = false;
-    }, () => this.buttonsLocked = false);
+    });
   }
 }
