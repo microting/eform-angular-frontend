@@ -1,6 +1,10 @@
-<div class="md-form md-form-case-elem">
-  <input mdbInput type="number"
-         [(ngModel)]="fieldValueObj.value"
-         id="numberStepperElement{{fieldValueObj.fieldId}}" name="numberStepperElement" class="form-control">
-  <label for="numberStepperElement{{fieldValueObj.fieldId}}">{{'Value' | translate}}</label>
-</div>
+<mat-form-field>
+  <mat-label>{{'Value' | translate}}</mat-label>
+  <input
+    matInput
+    type="number"
+    [(ngModel)]="fieldValueObj.value"
+    id="numberStepperElement{{fieldValueObj.fieldId}}"
+    name="numberStepperElement"
+  >
+</mat-form-field>

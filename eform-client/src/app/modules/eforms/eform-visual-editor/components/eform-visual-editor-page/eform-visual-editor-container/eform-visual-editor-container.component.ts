@@ -40,7 +40,6 @@ import {Overlay} from '@angular/cdk/overlay';
   styleUrls: ['./eform-visual-editor-container.component.scss'],
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
-  @ViewChild('collapse') collapse: CollapseComponent;
   @ViewChild('tagsModal') tagsModal: EformsTagsComponent;
 
   visualEditorTemplateModel: EformVisualEditorModel = new EformVisualEditorModel();

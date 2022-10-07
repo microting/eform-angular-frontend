@@ -1,7 +1,10 @@
-<ng-select
-  bindValue="id"
-  bindLabel="text"
-  [placeholder]="fieldValueObj.valueReadable"
-  [typeahead]="typeahead"
-  (change)="onSelectedChanged($event)"
-  [items]="items"></ng-select>
+<mat-form-field>
+  <mat-label>{{ fieldValueObj.valueReadable }}</mat-label>
+  <mtx-select
+    bindValue="id"
+    bindLabel="text"
+    [typeahead]="typeahead"
+    (change)="onSelectedChanged($event)"
+    [items]="items">
+  </mtx-select>
+</mat-form-field>

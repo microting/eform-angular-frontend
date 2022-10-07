@@ -89,7 +89,7 @@
     </div>
     <div
       *ngIf="field.fieldType == fieldTypes.FieldGroup"
-      class="field-group-container section-collapse"
+      class="field-group-container section-collapse pl-3"
       [ngClass]="{'p-1 pt-3' : !field.collapsed, 'collapsed' : field.collapsed}"
       dragula="{{ dragulaElementContainerName }}"
       [dragulaModel]="field.fields"

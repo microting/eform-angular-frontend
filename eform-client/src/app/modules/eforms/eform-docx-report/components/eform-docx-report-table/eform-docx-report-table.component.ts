@@ -26,10 +26,10 @@ export class EformDocxReportTableComponent implements OnInit, OnChanges {
   @Input() itemHeaders: { key: string; value: string }[] = [];
 
   tableHeaders: MtxGridColumn[] = [
-    {header: this.translateService.get('Case Id'), field: 'microtingSdkCaseId'},
-    {header: this.translateService.get('Created At'), field: 'createdAt'},
-    {header: this.translateService.get('Done by'), field: 'doneBy',},
-    {header: this.translateService.get('Actions'), field: 'actions',},
+    {header: this.translateService.stream('Case Id'), field: 'microtingSdkCaseId'},
+    {header: this.translateService.stream('Created At'), field: 'createdAt'},
+    {header: this.translateService.stream('Done by'), field: 'doneBy',},
+    {header: this.translateService.stream('Actions'), field: 'actions',},
   ];
 
   constructor(private router: Router, private translateService: TranslateService) {}
@@ -49,12 +49,12 @@ export class EformDocxReportTableComponent implements OnInit, OnChanges {
         });
       this.tableHeaders =
         [
-          {header: this.translateService.get('Case Id'), field: 'microtingSdkCaseId'},
-          {header: this.translateService.get('Created At'), field: 'createdAt'},
-          {header: this.translateService.get('Done by'), field: 'doneBy',},
+          {header: this.translateService.stream('Case Id'), field: 'microtingSdkCaseId'},
+          {header: this.translateService.stream('Created At'), field: 'createdAt'},
+          {header: this.translateService.stream('Done by'), field: 'doneBy',},
           ...itemHeaders,
           {
-            header: this.translateService.get('Actions'),
+            header: this.translateService.stream('Actions'),
             field: 'actions',
             type: 'button',
             buttons:[
@@ -63,7 +63,7 @@ export class EformDocxReportTableComponent implements OnInit, OnChanges {
                 icon: 'edit',
                 color: 'accent',
                 click: (record => this.router.navigate([`/cases/edit/${record.microtingSdkCaseId}/${record.eFormId}`])),
-                tooltip: this.translateService.get('Edit Case'),
+                tooltip: this.translateService.stream('Edit Case'),
               }
             ]
           },

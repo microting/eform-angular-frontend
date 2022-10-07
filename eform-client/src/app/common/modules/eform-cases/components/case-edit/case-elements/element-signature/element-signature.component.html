@@ -1,10 +1,16 @@
-<div class="row">
-  <div class="col-md-3 col-sm-4 col-xs-12" *ngFor="let image of images; let i = index">
-    <div class="card z-depth-4 mb-3 mt-1">
-      <img class="card-img-top card-img-adaptive z-depth-1" (click)="openPicture(i)"
-           [src]="image.src | authImage | async" alt="Card image cap">
-    </div>
-  </div>
+<div class="d-flex flex-row flex-wrap justify-content-between">
+  <mat-card
+    *ngFor="let image of images; let i = index"
+    style="width: 500px;"
+    class="d-flex flex-column justify-content-between m-1"
+  >
+    <mat-card-content>
+      <img
+        mat-card-image
+        (click)="openPicture(i)"
+        [src]="image.src | authImage | async"
+        alt="Card image cap"
+      >
+    </mat-card-content>
+  </mat-card>
 </div>
-
-
