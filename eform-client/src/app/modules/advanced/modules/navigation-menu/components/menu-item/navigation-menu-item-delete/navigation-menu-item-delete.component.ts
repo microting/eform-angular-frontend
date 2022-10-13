@@ -1,16 +1,15 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Inject,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
-} from 'src/app/common/models/navigation-menu';
+} from 'src/app/common/models';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-navigation-menu-item-delete',
@@ -18,8 +17,7 @@ import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
   styleUrls: ['./navigation-menu-item-delete.component.scss'],
 })
 export class NavigationMenuItemDeleteComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Output() itemDeleteConfirm: EventEmitter<
+  itemDeleteConfirm: EventEmitter<
     NavigationMenuItemIndexedModel
   > = new EventEmitter<NavigationMenuItemIndexedModel>();
   item: NavigationMenuItemModel = new NavigationMenuItemModel();
@@ -30,20 +28,15 @@ export class NavigationMenuItemDeleteComponent implements OnInit {
     return NavigationMenuItemTypeEnum;
   }
 
-  constructor() {}
+  constructor(
+    public dialogRef: MatDialogRef<NavigationMenuItemDeleteComponent>,
+    @Inject(MAT_DIALOG_DATA) model: {model: NavigationMenuItemModel, firstLevelIndex: number, secondLevelIndex?: number}) {
+    this.item = model.model;
+    this.firstLevelIndex = model.firstLevelIndex;
+    this.secondLevelIndex = model.secondLevelIndex;
+  }
 
   ngOnInit(): void {}
-
-  show(
-    model: NavigationMenuItemModel,
-    firstLevelIndex: number,
-    secondLevelIndex?: number
-  ) {
-    this.item = model;
-    this.firstLevelIndex = firstLevelIndex;
-    this.secondLevelIndex = secondLevelIndex;
-    this.frame.show();
-  }
 
   deleteMenuItem() {
     this.itemDeleteConfirm.emit({
@@ -51,11 +44,9 @@ export class NavigationMenuItemDeleteComponent implements OnInit {
       firstLevelIndex: this.firstLevelIndex,
       secondLevelIndex: this.secondLevelIndex,
     });
-    this.frame.hide();
   }
 
-  cancelDelete() {
-    this.frame.hide();
-    this.item = new NavigationMenuItemModel();
+  hide() {
+    this.dialogRef.close();
   }
 }

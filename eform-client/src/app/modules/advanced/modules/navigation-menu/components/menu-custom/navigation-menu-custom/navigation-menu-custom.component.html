@@ -1,62 +1,29 @@
-<mdb-card class="mb-3" id="menuTemplate">
-  <mdb-card-header>
-    <div class="d-flex justify-content-between align-items-center">
-      <div>
-        {{ 'Custom' | translate }}
-      </div>
-      <app-eform-collapse-toggle
-        [collapse]="collapse"
-        [collapsed]="collapsed"
-        (collapseUpdate)="collapsed = $event"
-      ></app-eform-collapse-toggle>
-    </div>
-  </mdb-card-header>
-  <div mdbCollapse #collapse="bs-collapse">
-    <div class="card-body">
-      <mdb-card class="mb-2">
-        <mdb-card-header>
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              {{ 'Dropdown' | translate }}
-            </div>
-            <fa-icon
-              id="addCustomDropdown"
-              (click)="showDropdownAddModal()"
-              icon="plus"
-              style="cursor: pointer"
-              mdbTooltip="{{ 'Add to menu' | translate }}"
-            ></fa-icon>
-          </div>
-        </mdb-card-header>
-      </mdb-card>
-      <mdb-card class="mb-3">
-        <mdb-card-header>
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              {{ 'Link' | translate }}
-            </div>
-            <fa-icon
-              id="addCustomLink"
-              (click)="showCustomLinkAddModal()"
-              icon="plus"
-              style="cursor: pointer"
-              mdbTooltip="{{ 'Add to menu' | translate }}"
-            ></fa-icon>
-          </div>
-        </mdb-card-header>
-      </mdb-card>
-    </div>
+<mat-expansion-panel class="mt-2">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ 'Custom' | translate }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="d-flex justify-content-between align-items-center">
+    <p>
+      {{ 'Dropdown' | translate }}
+    </p>
+    <mat-icon
+      id="addCustomDropdown"
+      (click)="showDropdownAddModal()"
+      style="cursor: pointer"
+      matTooltip="{{ 'Add to menu' | translate }}"
+    >add</mat-icon>
   </div>
-</mdb-card>
-
-<app-navigation-menu-custom-dropdown
-  #customDropdownModal
-  [availableSecurityGroups]="availableSecurityGroups"
-  (addDropdownToMenu)="onAddDropdownToMenu($event)"
-></app-navigation-menu-custom-dropdown>
-
-<app-navigation-menu-custom-link
-  #customLinkModal
-  [availableSecurityGroups]="availableSecurityGroups"
-  (addLinkToMenu)="onAddLinkToMenu($event)"
-></app-navigation-menu-custom-link>
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      {{ 'Link' | translate }}
+    </div>
+    <mat-icon
+      id="addCustomLink"
+      (click)="showCustomLinkAddModal()"
+      style="cursor: pointer"
+      matTooltip="{{ 'Add to menu' | translate }}"
+    >add</mat-icon>
+  </div>
+</mat-expansion-panel>

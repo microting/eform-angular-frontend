@@ -4,12 +4,15 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { NavigationMenuItemModel } from 'src/app/common/models/navigation-menu';
-import { NavigationMenuCustomDropdownComponent } from '../navigation-menu-custom-dropdown/navigation-menu-custom-dropdown.component';
-import { NavigationMenuCustomLinkComponent } from '../navigation-menu-custom-link/navigation-menu-custom-link.component';
+import { NavigationMenuCustomDropdownComponent, NavigationMenuCustomLinkComponent}
+  from '..';
 import { CommonDictionaryModel } from 'src/app/common/models';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-navigation-menu-custom',
@@ -18,10 +21,6 @@ import { CommonDictionaryModel } from 'src/app/common/models';
 })
 export class NavigationMenuCustomComponent implements OnInit {
   @Input() availableSecurityGroups: CommonDictionaryModel[] = [];
-  @ViewChild('customDropdownModal')
-  customDropdownModal: NavigationMenuCustomDropdownComponent;
-  @ViewChild('customLinkModal')
-  customLinkModal: NavigationMenuCustomLinkComponent;
   @Output() addCustomLinkToMenu: EventEmitter<
     NavigationMenuItemModel
   > = new EventEmitter<NavigationMenuItemModel>();
@@ -29,13 +28,19 @@ export class NavigationMenuCustomComponent implements OnInit {
     NavigationMenuItemModel
   > = new EventEmitter<NavigationMenuItemModel>();
   collapsed = false;
+  navigationMenuCustomDropdownComponentAfterClosedSub$: Subscription;
 
-  constructor() {}
+  constructor(
+    public dialog: MatDialog,
+    private overlay: Overlay) {}
 
   ngOnInit(): void {}
 
   showDropdownAddModal() {
-    this.customDropdownModal.show();
+    this.navigationMenuCustomDropdownComponentAfterClosedSub$ = this.dialog.open(NavigationMenuCustomDropdownComponent, {
+      ...dialogConfigHelper(this.overlay, this.availableSecurityGroups),
+      minWidth: 400,
+    }).afterClosed().subscribe(data => data.result ? this.onAddDropdownToMenu(data.navigationMenuItem) : undefined);
   }
 
   onAddLinkToMenu(model: NavigationMenuItemModel) {
@@ -47,6 +52,9 @@ export class NavigationMenuCustomComponent implements OnInit {
   }
 
   showCustomLinkAddModal() {
-    this.customLinkModal.show();
+    this.navigationMenuCustomDropdownComponentAfterClosedSub$ = this.dialog.open(NavigationMenuCustomLinkComponent, {
+      ...dialogConfigHelper(this.overlay, this.availableSecurityGroups),
+      minWidth: 400,
+    }).afterClosed().subscribe(data => data.result ? this.onAddLinkToMenu(data.link) : undefined);
   }
 }
