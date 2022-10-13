@@ -11,6 +11,7 @@ import {MarketplacePluginInstallComponent} from 'src/app/modules/plugins-managem
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import { TranslateService } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -22,9 +23,9 @@ export class MarketplacePluginsPageComponent implements OnInit, OnDestroy{
   marketplacePluginsRequestModel: MarketplacePluginsRequestModel = new MarketplacePluginsRequestModel();
   marketplacePluginsList: MarketplacePluginsModel = new MarketplacePluginsModel();
   tableHeaders: MtxGridColumn[] = [
-    {header: 'Id', field: 'pluginId'},
-    {header: 'Name', field: 'name',},
-    {header: 'Actions', field: 'actions'},
+    {header: this.translateService.stream('Id'), field: 'pluginId'},
+    {header: this.translateService.stream('Name'), field: 'name',},
+    {header: this.translateService.stream('Actions'), field: 'actions'},
   ];
   marketplacePluginInstallComponentAfterClosedSub$: Subscription;
   getMarketplacePluginsSub$: Subscription;
@@ -32,7 +33,8 @@ export class MarketplacePluginsPageComponent implements OnInit, OnDestroy{
   constructor(
     private pluginManagementService: PluginsManagementService,
     private dialog: MatDialog,
-    private overlay: Overlay,) {
+    private overlay: Overlay,
+    private translateService: TranslateService,) {
   }
 
   ngOnInit() {

@@ -7,7 +7,6 @@ import {
   UserInfoModel,
   Paged,
   SecurityGroupModel,
-  TableHeaderElementModel,
   PaginationModel,
 } from 'src/app/common/models';
 import {
@@ -42,17 +41,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   spinnerStatus: boolean;
   isChecked = true;
 
-  tableHeaders: TableHeaderElementModel[] = [
-    { name: 'Id', elementId: '', sortable: true },
-    { name: 'Email', elementId: '', sortable: true },
-    { name: 'Full Name', elementId: '', sortable: false },
-    { name: 'Role', elementId: '', sortable: true },
-    this.authStateService.currentUserClaims.usersUpdate ||
-    this.authStateService.currentUserClaims.usersDelete
-      ? { name: 'Actions', elementId: '', sortable: false }
-      : null,
-  ];
-  tableHeaders1: MtxGridColumn[] = [
+  tableHeaders: MtxGridColumn[] = [
     {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true},
     {header: this.translateService.stream('Email'), sortProp: {id: 'Email'}, field: 'email', sortable: true},
     {header: this.translateService.stream('Full Name'), field: 'fullName', sortable: false, formatter: rowData => `${rowData.firstName} ${rowData.lastName}`},
@@ -78,9 +67,6 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     private overlay: Overlay,
   ) {}
 
-  ngOnDestroy(): void {
-        throw new Error('Method not implemented.');
-    }
 
   ngOnInit() {
     this.getUserInfoList();
@@ -88,7 +74,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.getSecurityGroups();
     this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
       if(x.usersUpdate || x.usersDelete) {
-        this.tableHeaders1 = [...this.tableHeaders1.filter(x => x.field !== 'actions'),
+        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
             header: this.translateService.stream('Actions'),
             field: 'actions',
@@ -222,5 +208,8 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   onPaginationChanged(paginationModel: PaginationModel) {
     this.usersStateService.updatePagination(paginationModel);
     this.getUserInfoList();
+  }
+
+  ngOnDestroy(): void {
   }
 }

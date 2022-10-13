@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild,} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild,} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
 import {ToastrService} from 'ngx-toastr';
 import {TranslateService} from '@ngx-translate/core';
@@ -22,9 +22,9 @@ export class EformsBulkImportModalComponent implements OnInit {
   errors: { row: number; col: number; message: string }[];
 
   tableHeaders: MtxGridColumn[] = [
-    {header: 'Column', field: 'col'},
-    {header: 'Row', field: 'row'},
-    {header: 'Error', field: 'error',},
+    {header: this.translateService.stream('Column'), field: 'col'},
+    {header: this.translateService.stream('Row'), field: 'row'},
+    {header: this.translateService.stream('Error'), field: 'error',},
   ];
 
   constructor(
@@ -65,7 +65,7 @@ export class EformsBulkImportModalComponent implements OnInit {
       );
       this.xlsxEformsInput.nativeElement.value = '';
     };
-    this.xlsxEformsFileUploader.onAfterAddingFile = (f) => {
+    this.xlsxEformsFileUploader.onAfterAddingFile = (_) => {
       if (this.xlsxEformsFileUploader.queue.length > 1) {
         this.xlsxEformsFileUploader.removeFromQueue(
           this.xlsxEformsFileUploader.queue[0]

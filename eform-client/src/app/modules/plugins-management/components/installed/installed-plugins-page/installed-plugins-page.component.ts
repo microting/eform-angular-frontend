@@ -24,6 +24,7 @@ import {
 } from '../../';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import { TranslateService } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -37,11 +38,11 @@ export class InstalledPluginsPageComponent implements OnInit, OnDestroy{
   securityGroups: SecurityGroupModel[] = [];
 
   tableHeaders: MtxGridColumn[] = [
-    {header: 'Id', field: 'id'},
-    {header: 'Name', field: 'name',},
-    {header: 'Version', field: 'version',},
-    {header: 'Newest version available', field: 'versionAvailable'},
-    {header: 'Actions', field: 'actions'},
+    {header: this.translateService.stream('Id'), field: 'id'},
+    {header: this.translateService.stream('Name'), field: 'name',},
+    {header: this.translateService.stream('Version'), field: 'version',},
+    {header: this.translateService.stream('Newest version available'), field: 'versionAvailable'},
+    {header: this.translateService.stream('Actions'), field: 'actions'},
   ];
   installedPluginModalComponentAfterClosedSub$: Subscription;
   installedPluginPermissionsComponentAfterClosedSub$: Subscription;
@@ -57,6 +58,7 @@ export class InstalledPluginsPageComponent implements OnInit, OnDestroy{
     private dialog: MatDialog,
     private overlay: Overlay,
     private authStateService: AuthStateService,
+    private translateService: TranslateService,
   ) {
   }
 

@@ -11,6 +11,7 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Overlay} from '@angular/cdk/overlay';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -24,8 +25,8 @@ export class VisualEditorAdditionalFieldOptionsComponent
   @Input() selectedLanguages: number[];
   options: string;
   tableHeaders: MtxGridColumn[] = [
-    { header: 'Name', field: 'name' },
-    { header: 'Actions', field: 'actions' },
+    { header: this.translateService.stream('Name'), field: 'name' },
+    { header: this.translateService.stream('Actions'), field: 'actions' },
   ];
   visualEditorAdditionalFieldOptionEditComponentAfterClosedSub$: Subscription;
   visualEditorAdditionalFieldOptionDeleteComponentAfterClosedSub$: Subscription;
@@ -33,6 +34,7 @@ export class VisualEditorAdditionalFieldOptionsComponent
   constructor(
     private dialog: MatDialog,
     private overlay: Overlay,
+    private translateService: TranslateService,
     ) {}
 
   ngOnInit() {}

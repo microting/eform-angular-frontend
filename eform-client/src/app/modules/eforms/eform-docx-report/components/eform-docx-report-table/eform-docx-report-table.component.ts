@@ -5,7 +5,6 @@ import {
   OnInit,
   SimpleChanges, TemplateRef, ViewChild,
 } from '@angular/core';
-import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { EformDocxReportItemModel } from 'src/app/common/models';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import * as R from 'ramda';

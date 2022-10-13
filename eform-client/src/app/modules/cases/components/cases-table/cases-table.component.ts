@@ -1,5 +1,5 @@
 import {ActivatedRoute, Router} from '@angular/router';
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PdfIcon, UserClaimsEnum, WordIcon} from 'src/app/common/const';
 import {composeCasesTableHeaders, dialogConfigHelper} from 'src/app/common/helpers';
 import {
@@ -62,7 +62,6 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     iconRegistry.addSvgIconLiteral('file-pdf', sanitizer.bypassSecurityTrustHtml(PdfIcon));
   }
 
-  @ViewChild('modalRemoveCase', {static: true}) modalRemoveCase;
   currentTemplate: TemplateDto = new TemplateDto();
   eformPermissionsSimpleModel: EformPermissionsSimpleModel = new EformPermissionsSimpleModel();
   caseListModel: CaseListModel = new CaseListModel();
@@ -73,16 +72,13 @@ export class CasesTableComponent implements OnInit, OnDestroy {
   appMenuSub$: Subscription;
   caseRemoveModalComponentAfterClosedSub$: Subscription;
 
-  ngOnDestroy() {
-  }
-
   ngOnInit() {
     this.activateRoute.params.subscribe((params) => {
       this.caseStateService.setTemplateId(+params['id']);
       this.loadTemplateData();
     });
     this.tableHeaders = [
-      {header: 'Id', field: 'id', sortProp: {id: 'Id'}, sortable: true},
+      {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true},
       {
         header: this.translateService.stream('DoneAt'),
         sortProp: {id: 'DoneAt'},
@@ -118,7 +114,6 @@ export class CasesTableComponent implements OnInit, OnDestroy {
       {...dialogConfigHelper(this.overlay, {caseModel: caseModel, templateId: this.currentTemplate.id}), minWidth: 600})
       .afterClosed()
       .subscribe(data => data ? this.onCaseDeleted() : undefined);
-    this.modalRemoveCase.show(caseModel, this.currentTemplate.id);
   }
 
   sortTable(sort: Sort) {
@@ -199,7 +194,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
 
   private setTableHeaders() {
     this.tableHeaders = [
-      {header: 'Id', field: 'id', sortProp: {id: 'Id'}, sortable: true},
+      {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true},
       {
         header: this.translateService.stream('DoneAt'),
         sortProp: {id: 'DoneAt'},
@@ -287,7 +282,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
       }] : undefined;
     this.tableHeaders = [
       ...this.tableHeaders,
-      { header: 'Actions', field: 'actions', },
+      { header: this.translateService.stream('Actions'), field: 'actions', },
     ];
   }
 
@@ -308,5 +303,8 @@ export class CasesTableComponent implements OnInit, OnDestroy {
   onPaginationChanged(paginationModel: PaginationModel) {
     this.caseStateService.updatePagination(paginationModel);
     this.loadAllCases();
+  }
+
+  ngOnDestroy() {
   }
 }
