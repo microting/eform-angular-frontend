@@ -1,73 +1,52 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade"
-  #frame="mdbModal"
->
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Delete user' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6">
-              <h6>ID</h6>
-            </div>
-            <div class="col-md-6">
-              <h6 id="selectedUserId">{{ selectedUser.id }}</h6>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h6>{{ 'Email' | translate }}</h6>
-            </div>
-            <div class="col-md-6">
-              <h6 id="selectedUserEmail">{{ selectedUser.email }}</h6>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h6>{{ 'Full Name' | translate }}</h6>
-            </div>
-            <div class="col-md-6">
-              <h6 id="selectedUserFullName">
-                {{ selectedUser.firstName }} {{ selectedUser.lastName }}
-              </h6>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h6>{{ 'Role' | translate }}</h6>
-            </div>
-            <div class="col-md-6">
-              <h6 id="selectedUserRole">{{ selectedUser.role }}</h6>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          mdbBtn
-          class="btn-danger btn-small-height"
-          (click)="deleteUser()"
-          id="userDeleteBtn"
-        >
-          {{ 'Delete' | translate }}
-        </button>
-        <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
-          (click)="frame.hide()"
-          id="userDeleteCancelBtn"
-        >
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
+<h3 mat-dialog-title>{{'Delete user' | translate}}</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>ID</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{selectedUser.id}}</strong>
     </div>
   </div>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>{{'Email' | translate}}</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{ selectedUser.email }}</strong>
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>{{'Full Name' | translate}}</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{ selectedUser.firstName }} {{ selectedUser.lastName }}</strong>
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>{{'Role' | translate}}</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{ selectedUser.role }}</strong>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="warn"
+    id="userDeleteBtn"
+    (click)="deleteUser()"
+  >
+    {{'Delete' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="userDeleteCancelBtn"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>
