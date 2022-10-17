@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { SecurityGroupGeneralPermissionsService } from 'src/app/common/services';
 import { SecurityRouting } from './security.routing';
@@ -23,20 +21,32 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { securityPersistProvider } from './components/store/security.store';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
+import {MtxGridModule} from '@ng-matero/extensions/grid';
+import {MtxSelectModule} from '@ng-matero/extensions/select';
 
 @NgModule({
-    imports: [
-        EformSharedModule,
-        CommonModule,
-        SecurityRouting,
-        NgSelectModule,
-        TranslateModule,
-        MDBBootstrapModule,
-        FormsModule,
-        FontAwesomeModule,
-        MatSortModule,
-        MatCheckboxModule,
-    ],
+  imports: [
+    EformSharedModule,
+    CommonModule,
+    SecurityRouting,
+    TranslateModule,
+    FormsModule,
+    FontAwesomeModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatInputModule,
+    MtxGridModule,
+    MatDialogModule,
+    MatCardModule,
+    MtxSelectModule,
+  ],
   declarations: [
     SecurityPageComponent,
     SecurityGroupCreateComponent,

@@ -1,80 +1,41 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade"
-  #frame="mdbModal"
->
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Bind Eform' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="md-form">
-              <input
-                mdbInput
-                type="text"
-                (input)="onLabelInputChanged($event.target.value)"
-                class="form-control input-sm"
-                id="labelInput"
-              />
-              <label for="labelInput">{{ 'Search' | translate }}</label>
-            </div>
-          </div>
-        </div>
-        <div class="row p-1 table-responsive no-gutters">
-          <table
-            mdbTable
-            striped="true"
-            hover="true"
-            small="true"
-            class="z-depth-1 text-center"
-          >
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>{{ 'CreatedAt' | translate }}</th>
-                <th>{{ 'eForm Name' | translate }}</th>
-              </tr>
-            </thead>
-            <tbody id="mainPageEFormsTableBody">
-              <tr
-                class="hoverable"
-                style="cursor: pointer"
-                *ngFor="let template of templateListModel.templates"
-                (click)="addEformToGroup(template.id)"
-              >
-                <!--<td scope="row" id="eform-id">{{templateDto.id}}</td>-->
-                <td scope="row" id="eform-id">{{ template.id }}</td>
-                <!--<td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>-->
-                <td id="eform-created-at">
-                  <date-formatter
-                    [date]="template.createdAt"
-                    [Format]="'datetime'"
-                  ></date-formatter>
-                </td>
-                <!--<td id="eform-label">{{templateDto.label}}</td>-->
-                <td id="eform-label">{{ template.label }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          mdbBtn
-          id="cancelCreateEformBtn"
-          class="btn-accent text-black-50 btn-small-height"
-          (click)="frame.hide()"
-        >
-          {{ 'Close' | translate }}
-        </button>
+<h3 mat-dialog-title>{{ 'Bind Eform' | translate }}</h3>
+<div mat-dialog-content>
+  <ng-template #toolbarTpl>
+    <div class="d-flex flex-row justify-content-start flex-nowrap">
+      <div class="d-flex flex-column mr-2 ml-2">
+        <mat-form-field>
+          <mat-label>{{ 'Search' | translate }}</mat-label>
+          <input
+            matInput
+            type="text"
+            (input)="onLabelInputChanged($event.target.value)"
+            id="labelInput"
+          />
+        </mat-form-field>
       </div>
     </div>
-  </div>
+  </ng-template>
+
+  <mtx-grid
+    [data]="templateListModel.templates"
+    [columns]="tableHeaders"
+    [showPaginator]="false"
+    [pageOnFront]="false"
+    [rowStriped]="true"
+    [showToolbar]="true"
+    [showColumnMenuButton]="false"
+    [toolbarTemplate]="toolbarTpl"
+    (rowClick)="addEformToGroup($event.rowData.id)"
+    [rowHover]="true"
+  >
+  </mtx-grid>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    id="cancelCreateEformBtn"
+    (click)="hide()"
+  >
+    {{ 'Close' | translate}}
+  </button>
 </div>
