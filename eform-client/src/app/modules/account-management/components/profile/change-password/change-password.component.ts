@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChangePasswordModel } from 'src/app/common/models/user';
 import { AuthService } from 'src/app/common/services';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
