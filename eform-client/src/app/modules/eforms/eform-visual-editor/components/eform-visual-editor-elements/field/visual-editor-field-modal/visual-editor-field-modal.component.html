@@ -78,50 +78,50 @@
           </mdb-card-body>
         </mdb-card>
         <br />
-        <mdb-card
-          *ngFor="
+        <ng-container *ngFor="
             let translation of recursionModel.field.translations;
             let translationIndex = index
-          "
-          class="mb-3"
-        >
+          ">
           <ng-container *ngIf="translation !== undefined">
             <ng-container *ngIf="isLanguageSelected(translation.languageId)">
-              <mdb-card-header>{{
-                getLanguage(translation.languageId) | translate
-              }}</mdb-card-header>
-              <mdb-card-body>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="md-form">
-                      <input
-                        mdbInput
-                        type="text"
-                        id="fieldNameTranslation_{{ translationIndex }}"
-                        name="fieldNameTranslation_{{ translationIndex }}"
-                        [(ngModel)]="translation.name"
-                        class="form-control"
-                      />
-                      <label for="fieldNameTranslation_{{ translationIndex }}">
-                        {{ 'Name' | translate }}
-                      </label>
+              <mdb-card class="mb-3">
+                <mdb-card-header>{{
+                  getLanguage(translation.languageId) | translate
+                  }}</mdb-card-header>
+                <mdb-card-body>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="md-form">
+                        <input
+                          mdbInput
+                          type="text"
+                          id="fieldNameTranslation_{{ translationIndex }}"
+                          name="fieldNameTranslation_{{ translationIndex }}"
+                          [(ngModel)]="translation.name"
+                          class="form-control"
+                        />
+                        <label for="fieldNameTranslation_{{ translationIndex }}">
+                          {{ 'Name' | translate }}
+                        </label>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-12">
-                    <formatting-text-editor
-                      [(value)]="translation.description"
-                      [placeholder]="'Description' | translate"
-                      id="newFieldDescriptionTranslation_{{ translationIndex }}"
-                    >
-                    </formatting-text-editor>
+                  <div class="row">
+                    <div class="col-12">
+                      <formatting-text-editor
+                        [(value)]="translation.description"
+                        [placeholder]="'Description' | translate"
+                        id="newFieldDescriptionTranslation_{{ translationIndex }}"
+                      >
+                      </formatting-text-editor>
+                    </div>
                   </div>
-                </div>
-              </mdb-card-body>
+                </mdb-card-body>
+              </mdb-card>
             </ng-container>
           </ng-container>
-        </mdb-card>
+        </ng-container>
+
         <app-visual-editor-additional-field-number
           *ngIf="
             recursionModel.field.fieldType == eformFieldTypesEnum.Number ||

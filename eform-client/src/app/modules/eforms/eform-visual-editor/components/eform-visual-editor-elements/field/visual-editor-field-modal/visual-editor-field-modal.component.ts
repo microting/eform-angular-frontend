@@ -125,7 +125,6 @@ export class VisualEditorFieldModalComponent implements OnInit {
 
   initForm() {
     this.recursionModel.field = new EformVisualEditorFieldModel();
-    debugger;
     this.recursionModel.field.translations = fixTranslations(
       this.recursionModel.field.translations
     ).map((x) => {
