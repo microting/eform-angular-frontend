@@ -26,13 +26,6 @@ export const applicationLanguages: {
   { id: 14, locale: 'fi-FI', text: 'Finnish' },
 ];
 
-// This is here for the plugins who does not have a German implantation
-export const applicationLanguages2: {
-  id: number;
-  locale: string;
-  text: string;
-}[] = applicationLanguages.filter((x) => x.locale !== 'de-DE');
-
 
 export const applicationLanguagesTranslated: {
   id: number;
@@ -48,3 +41,12 @@ export const applicationLanguagesTranslated: {
   { id: 2, locale: 'en-US', text: 'Engelsk' },
   { id: 3, locale: 'de-DE', text: 'Tysk' },
 ];
+
+
+// This is here for the plugins who does not have a German implantation
+export const applicationLanguages2: {
+  id: number;
+  locale: string;
+  text: string;
+}[] = applicationLanguagesTranslated.filter((x) => x.locale !== 'de-DE');
+
