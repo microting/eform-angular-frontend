@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import { DeviceUserModel } from 'src/app/common/models/device-users';
 import {DeviceUserService} from 'src/app/common/services/device-users';
-import {applicationLanguages} from 'src/app/common/const/application-languages.const';
+import {applicationLanguages, applicationLanguages2} from 'src/app/common/const/application-languages.const';
 
 @Component({
   selector: 'app-create-new-user-modal',
@@ -16,7 +16,7 @@ export class CreateNewUserModalComponent implements OnInit {
   constructor(private deviceUserService: DeviceUserService) { }
 
   ngOnInit() {
-    this.languages = applicationLanguages;
+    this.languages = applicationLanguages2;
   }
 
   show() {

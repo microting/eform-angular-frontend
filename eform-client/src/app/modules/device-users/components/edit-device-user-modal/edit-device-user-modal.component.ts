@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {DeviceUserModel} from 'src/app/common/models/device-users';
 import {DeviceUserService} from 'src/app/common/services/device-users';
-import {applicationLanguages} from 'src/app/common/const/application-languages.const';
+import {applicationLanguages, applicationLanguages2} from 'src/app/common/const/application-languages.const';
 
 @Component({
   selector: 'app-edit-device-user-modal',
@@ -32,6 +32,6 @@ export class EditDeviceUserModalComponent implements OnInit {
   }
 
   get languages() {
-    return applicationLanguages;
+    return applicationLanguages2;
   }
 }
