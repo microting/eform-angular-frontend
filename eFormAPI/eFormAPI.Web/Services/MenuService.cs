@@ -77,7 +77,7 @@ namespace eFormAPI.Web.Services
             _dbContext.MenuItems.RemoveRange(actualMenu);
             await _dbContext.SaveChangesAsync();
 
-            // Step 2. Traversal collection and add to database depend on menu item type 
+            // Step 2. Traversal collection and add to database depend on menu item type
             for (var i = 0; i < menuItemModels.Count; i++)
             {
                 var menuItemBuilder = new MenuItemBuilder(_dbContext, menuItemModels[i], i);
@@ -277,9 +277,11 @@ namespace eFormAPI.Web.Services
                 var menuItems = menuItemsForFilter
                     .Where(x => x.ParentId == null)
                     .OrderBy(x => x.Position)
-                    .Select(x => new MenuItemModel()
+                    .Select(x => new MenuItemModel
                     {
-                        Name = _dbContext.MenuItemTranslations.First(d => d.MenuItemId == x.Id && d.LocaleName == currentLocale).Name,
+                        Name = _dbContext.MenuItemTranslations.Any(d => d.MenuItemId == x.Id && d.LocaleName == currentLocale)
+                            ? _dbContext.MenuItemTranslations.First(d => d.MenuItemId == x.Id && d.LocaleName == currentLocale).Name
+                            : _dbContext.MenuItemTranslations.First(d => d.MenuItemId == x.Id && d.LocaleName == "en-US").Name,
                         LocaleName = currentLocale,
                         E2EId = x.E2EId,
                         Link = x.Link,
@@ -296,9 +298,11 @@ namespace eFormAPI.Web.Services
                         .Include(p => p.MenuTemplate)
                         .Where(p => p.ParentId == x.Id)
                         .OrderBy(p => p.Position)
-                        .Select(p => new MenuItemModel()
+                        .Select(p => new MenuItemModel
                         {
-                            Name = _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).Name,
+                            Name = _dbContext.MenuItemTranslations.Any(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale)
+                                ? _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).Name
+                                : _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == "en-US").Name,
                             //LocaleName = _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).LocaleName,
                             LocaleName = currentLocale,
                             E2EId = p.E2EId,
@@ -329,7 +333,9 @@ namespace eFormAPI.Web.Services
                     Position = x.Position,
                     MenuItems = x.ChildItems.Select(d => new MenuItemModel
                     {
-                        Name = d.Translations.First(y => y.LocaleName == currentLocale).Name,
+                        Name = d.Translations.Any(y => y.LocaleName == currentLocale)
+                            ? d.Translations.First(y => y.LocaleName == currentLocale).Name
+                            :  d.Translations.First(y => y.LocaleName == "en-US").Name,
                         LocaleName = currentLocale,
                         E2EId = d.E2EId,
                         Link = d.Link,
