@@ -31,6 +31,6 @@ namespace eFormAPI.Web.Infrastructure.Models.SearchableList
         public string Name { get; set; }
         public string GroupUid { get; set; }
         public string Description { get; set; }
-        public List<EntityItem> AdvEntitySearchableItemModels { get; set; }
+        public List<EntityItem> EntityItemModels { get; set; }
     }
 }

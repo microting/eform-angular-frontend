@@ -6,24 +6,25 @@
 @use './ngx-editor/ngx-editor' as ngx-editor;
 @use '../components/text' as text;
 @use '../libs/ngx-gallery/ngx-gallery' as ngx-gallery;
+
 @include mat.core();
 
 // Define a typography
 $eform-typography: mat.define-typography-config(
-$font-family: 'Roboto, "Helvetica Neue", sans-serif',
-//$display-4: mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
-//$display-3: mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
-//$display-2: mat.define-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
-//$display-1: mat.define-typography-level(34px, 40px, 400),
-$headline: mat.define-typography-level(2.5rem, 1.2, 300),
-$title: mat.define-typography-level(2rem, 1.2, 300),
-$subheading-2: mat.define-typography-level(1.75rem, 1.2, 300),
-$subheading-1: mat.define-typography-level(1.5rem, 1.2, 300),
-$body-2: mat.define-typography-level(.8rem, 1.2, 300),
-$body-1: mat.define-typography-level(1rem, 1.2, 300),
-$caption: mat.define-typography-level(.8rem, 1.5, 300),
-$button: mat.define-typography-level(14px, 1.15, 300),
-$input: mat.define-typography-level(inherit, 1.125, 300));
+  $font-family: 'Roboto, "Helvetica Neue", sans-serif',
+    //$display-4: mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+    //$display-3: mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
+    //$display-2: mat.define-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
+    //$display-1: mat.define-typography-level(34px, 40px, 400),
+  $headline: mat.define-typography-level(2.5rem, 1.2, 300),
+  $title: mat.define-typography-level(2rem, 1.2, 300),
+  $subheading-2: mat.define-typography-level(1.75rem, 1.2, 300),
+  $subheading-1: mat.define-typography-level(1.5rem, 1.2, 300),
+  $body-2: mat.define-typography-level(.8rem, 1.2, 300),
+  $body-1: mat.define-typography-level(1rem, 1.2, 300),
+  $caption: mat.define-typography-level(.8rem, 1.5, 300),
+  $button: mat.define-typography-level(14px, 1.15, 300),
+  $input: mat.define-typography-level(inherit, 1.125, 300));
 
 @include mat.core($eform-typography);
 // Define a light theme
@@ -52,12 +53,15 @@ $eform-dark-theme: mat.define-dark-theme((
 html {
   height: 100%;
 }
+
 body {
   margin: 0;
   height: 100%;
+
   #main-header-text {
     font-weight: 400;
   }
+
   @each $key, $val in (('light', $eform-light-theme), ('dark', $eform-dark-theme)) {
     &.theme-#{$key} {
       @include mat.all-component-themes($val);
@@ -68,6 +72,7 @@ body {
       @include mtx.all-experimental-component-themes($val);
     }
   }
+
   &.mat-typography {
     margin: 0 0 0 0;
   }
