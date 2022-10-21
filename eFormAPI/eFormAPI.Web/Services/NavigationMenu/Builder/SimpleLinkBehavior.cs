@@ -31,7 +31,7 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
 
     public class SimpleLinkBehavior : AbstractBehavior
     {
-        public SimpleLinkBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null) 
+        public SimpleLinkBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null)
             : base(dbContext, menuItemModel, parentId)
         {
 
@@ -51,6 +51,18 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
 
             //Set translation for menu item
             SetTranslations(menuItem.Id);
+
+            foreach (var securityGroupId in MenuItemModel.SecurityGroupsIds)
+            {
+                var menuItemSecurityGroup = new MenuItemSecurityGroup()
+                {
+                    SecurityGroupId = securityGroupId,
+                    MenuItemId = menuItem.Id,
+                };
+
+                _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
+                _dbContext.SaveChanges();
+            }
         }
     }
 }

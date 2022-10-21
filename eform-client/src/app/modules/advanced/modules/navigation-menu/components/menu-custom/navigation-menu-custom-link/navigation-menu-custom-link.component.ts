@@ -6,7 +6,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NavigationMenuItemModel } from 'src/app/common/models/navigation-menu';
-import { NavigationMenuItemTypeEnum, applicationLanguages } from 'src/app/common/const';
+import {
+  NavigationMenuItemTypeEnum,
+  applicationLanguages,
+  applicationLanguages2,
+  applicationLanguagesTranslated
+} from 'src/app/common/const';
 import {CommonDictionaryModel} from 'src/app/common/models';
 
 @Component({
@@ -57,7 +62,7 @@ export class NavigationMenuCustomLinkComponent implements OnInit {
   generateLanguages(model: NavigationMenuItemModel) {
     model = {
       ...model,
-      translations: applicationLanguages.map((x) => {
+      translations: applicationLanguagesTranslated.map((x) => {
         return { id: x.id, localeName: x.locale, name: '', language: x.text };
       }),
     };
