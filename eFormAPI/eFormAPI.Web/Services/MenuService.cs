@@ -285,13 +285,18 @@ namespace eFormAPI.Web.Services
                         LocaleName = currentLocale,
                         E2EId = x.E2EId,
                         Link = x.Link,
-                        Guards = x.Type == MenuItemTypeEnum.Link
-                            ? _dbContext.MenuTemplatePermissions
+                        Guards =_dbContext.MenuTemplatePermissions
                                     .Include(y => y.Permission)
                                     .Where(d => d.MenuTemplateId == x.MenuTemplateId)
                                     .Select(y => y.Permission.ClaimName)
-                                    .ToList()
-                            : new List<string>(),
+                                    .ToList(),
+                        // Guards = x.Type == MenuItemTypeEnum.Link
+                        //     ? _dbContext.MenuTemplatePermissions
+                        //             .Include(y => y.Permission)
+                        //             .Where(d => d.MenuTemplateId == x.MenuTemplateId)
+                        //             .Select(y => y.Permission.ClaimName)
+                        //             .ToList()
+                        //     : new List<string>(),
                         Position = x.Position,
                         IsInternalLink = x.IsInternalLink,
                         MenuItems = _dbContext.MenuItems
@@ -307,13 +312,18 @@ namespace eFormAPI.Web.Services
                             LocaleName = currentLocale,
                             E2EId = p.E2EId,
                             Link = p.Link,
-                            Guards = p.Type == MenuItemTypeEnum.Link
-                            ? _dbContext.MenuTemplatePermissions
+                            Guards = _dbContext.MenuTemplatePermissions
                                     .Include(y => y.Permission)
                                     .Where(d => d.MenuTemplateId == p.MenuTemplateId)
                                     .Select(y => y.Permission.ClaimName)
-                                    .ToList()
-                            : new List<string>(),
+                                    .ToList(),
+                            // Guards = p.Type == MenuItemTypeEnum.Link
+                            // ? _dbContext.MenuTemplatePermissions
+                            //         .Include(y => y.Permission)
+                            //         .Where(d => d.MenuTemplateId == p.MenuTemplateId)
+                            //         .Select(y => y.Permission.ClaimName)
+                            //         .ToList()
+                            // : new List<string>(),
                             Position = p.Position,
                             IsInternalLink = p.IsInternalLink,
                         })
@@ -327,9 +337,10 @@ namespace eFormAPI.Web.Services
                     LocaleName = currentLocale,
                     E2EId = x.E2EId,
                     Link = x.Link,
+                    //Guards = x.MenuTemplate.Permissions.Select(y => y.ClaimName).ToList(),
                     Guards = x.Type == MenuItemTypeEnum.Link
-                            ? x.MenuTemplate.Permissions.Select(y => y.ClaimName).ToList()
-                            : new List<string>(),
+                             ? x.MenuTemplate.Permissions.Select(y => y.ClaimName).ToList()
+                             : new List<string>(),
                     Position = x.Position,
                     MenuItems = x.ChildItems.Select(d => new MenuItemModel
                     {
@@ -339,9 +350,10 @@ namespace eFormAPI.Web.Services
                         LocaleName = currentLocale,
                         E2EId = d.E2EId,
                         Link = d.Link,
-                        Guards = d.Type == MenuItemTypeEnum.Link
-                            ? d.MenuTemplate.Permissions.Select(y => y.ClaimName).ToList()
-                            : new List<string>(),
+                        Guards = d.MenuTemplate.Permissions.Select(y => y.ClaimName).ToList(),
+                        // Guards = d.Type == MenuItemTypeEnum.Link
+                        //     ? d.MenuTemplate.Permissions.Select(y => y.ClaimName).ToList()
+                        //     : new List<string>(),
                         Position = d.Position,
                         IsInternalLink = true,
                     })

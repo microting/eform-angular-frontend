@@ -3,7 +3,10 @@ import {
   Inject,
   OnInit,
 } from '@angular/core';
-import { NavigationMenuItemTypeEnum, applicationLanguages } from 'src/app/common/const';
+import {
+  NavigationMenuItemTypeEnum,
+  applicationLanguagesTranslated,
+} from 'src/app/common/const';
 import {CommonDictionaryModel, NavigationMenuItemModel,} from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
@@ -40,7 +43,7 @@ export class NavigationMenuCustomLinkComponent implements OnInit {
   generateLanguages(model: NavigationMenuItemModel) {
     model = {
       ...model,
-      translations: applicationLanguages.map((x) => {
+      translations: applicationLanguagesTranslated.map((x) => {
         return { id: x.id, localeName: x.locale, name: '', language: x.text };
       }),
     };
