@@ -23,6 +23,7 @@ import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
+import { TranslateService } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -43,16 +44,16 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   emailRecipientsNewComponentAfterClosedSub$: Subscription;
 
   tableHeaders: MtxGridColumn[] = [
-    {header: 'Id', field: 'id', sortProp: {id: 'Id'}, sortable: true},
-    {header: 'Name', sortProp: {id: 'Name'}, field: 'name', sortable: true},
+    {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true},
+    {header: this.translateService.stream('Name'), sortProp: {id: 'Name'}, field: 'name', sortable: true},
     {
-      header: 'Email',
+      header: this.translateService.stream('Email'),
       field: 'email',
       sortable: true,
       sortProp: {id: 'Email'}
     },
-    {header: 'Tags', field: 'tags'},
-    {header: 'Actions', field: 'actions'},
+    {header: this.translateService.stream('Tags'), field: 'tags'},
+    {header: this.translateService.stream('Actions'), field: 'actions'},
   ]
 
   constructor(
@@ -61,6 +62,7 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
     public emailRecipientsStateService: EmailRecipientsStateService,
     private dialog: MatDialog,
     private overlay: Overlay,
+    private translateService: TranslateService,
   ) {
   }
 

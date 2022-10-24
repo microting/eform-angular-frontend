@@ -1,14 +1,17 @@
-<ul class="list-group list-group-flush">
-  <li *ngFor="let elm of element.elementList" style="cursor: pointer;"
-      (click)="goToSection('#section' + elm.id)"
-      class="list-group-item list-group-item-action waves-light"
-      routerLinkActive="active"
-      mdbWavesEffect>
-    <a >
-      {{elm.label}}
-    </a>
-    <ng-container *ngIf="elm.elementList">
-      <app-case-edit-nav [element]="elm"></app-case-edit-nav>
-    </ng-container>
-  </li>
-</ul>
+<div
+  *ngFor="let element of element.elementList"
+  style="cursor: pointer"
+  routerLinkActive="active"
+  class="pl-2"
+>
+  <a
+    mat-button
+    (click)="goToSection('#section' + element.id)"
+    class="d-flex w-100"
+  >
+    {{ element.label }}
+  </a>
+  <ng-container *ngIf="element.elementList">
+    <app-case-edit-nav [element]="element"></app-case-edit-nav>
+  </ng-container>
+</div>

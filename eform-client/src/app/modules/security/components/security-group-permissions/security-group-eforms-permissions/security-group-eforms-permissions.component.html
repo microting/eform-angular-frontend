@@ -1,96 +1,40 @@
-<eform-subheader [title]="eformSecurityModel.groupName + ' eForms'">
-</eform-subheader>
+<eform-new-subheader [title]="eformSecurityModel.groupName + ' eForms'" [forceStaticTitle]="true">
+</eform-new-subheader>
 
-<div class="container-fluid">
-  <div class="row d-flex justify-content-between">
-    <div class="col-md-2">
-      <div class="md-form">
+<ng-template #toolbarTpl>
+  <div class="align-items-center d-flex flex-nowrap flex-row justify-content-between">
+    <div class="d-flex">
+      <mat-form-field>
+        <mat-label>{{ 'Search' | translate }}</mat-label>
         <input
-          mdbInput
-          (input)="getAvailableEformsWithNameFilter($event.target.value)"
+          matInput
           type="text"
-          class="form-control input-sm"
+          (input)="getAvailableEformsWithNameFilter($event.target.value)"
           id="labelInput"
         />
-        <label for="labelInput">{{ 'Search' | translate }}</label>
-      </div>
+      </mat-form-field>
     </div>
-    <div class="p-3">
+    <div class="d-flex">
       <button
-        mdbBtn
-        class="btn-success btn-small-height"
+        mat-raised-button
+        color="accent"
         (click)="openEformBindModal()"
-        mdbTooltip="{{ 'Add Eform to Group' | translate }}"
+        matTooltip="{{ 'Add Eform to Group' | translate }}"
         id="newSecurityGroupBtn"
       >
         + {{ 'Bind Eform' | translate }}
       </button>
     </div>
   </div>
-  <div class="row p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-    >
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>{{ 'CreatedAt' | translate }}</th>
-          <th>{{ 'eForm Name' | translate }}</th>
-          <th>{{ 'Actions' | translate }}</th>
-        </tr>
-      </thead>
-      <tbody id="mainPageEFormsTableBody">
-        <tr *ngFor="let eform of eformSecurityModel.eformsList">
-          <td scope="row" id="eform-id">{{ eform.templateId }}</td>
-          <td id="eform-created-at">
-            <date-formatter
-              [date]="eform.createdAt"
-              [Format]="'datetime'"
-            ></date-formatter>
-          </td>
-          <td id="eform-label">{{ eform.label }}</td>
-          <td>
-            <div class="d-flex flex-row justify-content-center">
-              <button
-                mdbBtn
-                class="btn-success btn-icon mb-2"
-                (click)="openEformEditPermissionsModal(eform)"
-                mdbTooltip="{{ 'Eform Permissions' | translate }}"
-              >
-                <i class="material-icons"> lock_open </i>
-              </button>
-              <button
-                mdbBtn
-                class="btn-danger btn-icon mb-2"
-                id="delete-eform-btn"
-                (click)="openEformDeleteFromGroupModal(eform)"
-                mdbTooltip="{{ 'Delete eForm' | translate }}"
-              >
-                <i class="material-icons"> delete_forever </i>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+</ng-template>
 
-<app-security-group-eforms-add
-  (onSearchInputChanged)="getAvailableEformsWithNameFilter($event)"
-  (onEformBound)="getAvailableEforms(); getSecurityGroupEfroms()"
-  [templateListModel]="templateListModel"
-  #eformBindModal
-></app-security-group-eforms-add>
-
-<app-security-group-eforms-delete
-  (onEformDeleted)="getAvailableEforms(); getSecurityGroupEfroms()"
-  #eformDeleteFromGroupModal
-></app-security-group-eforms-delete>
-<app-security-group-eforms-edit
-  #eformEditPermissionsModal
-></app-security-group-eforms-edit>
+<mtx-grid
+  [data]="eformSecurityModel.eformsList"
+  [columns]="tableHeaders"
+  [showPaginator]="false"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showToolbar]="true"
+  [showColumnMenuButton]="false"
+  [toolbarTemplate]="toolbarTpl">
+</mtx-grid>

@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-case-edit-confirmation',
@@ -7,27 +8,28 @@ import {Subject} from 'rxjs';
   styleUrls: ['./case-edit-confirmation.component.scss']
 })
 export class CaseEditConfirmationComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
   navigateAwaySelection$: Subject<boolean> = new Subject<boolean>();
-  @Output() onConfirmationPressed: EventEmitter<boolean> = new EventEmitter<boolean>();
+  onConfirmationPressed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor(
+    public dialogRef: MatDialogRef<CaseEditConfirmationComponent>
+  ) {
+  }
 
   ngOnInit() {
   }
 
-  show() {
-    this.frame.show();
+  hide() {
+    this.dialogRef.close();
   }
 
   confirmationClicked(keepData: boolean) {
     this.onConfirmationPressed.emit(keepData);
-    this.frame.hide();
+    this.hide();
   }
 
   cancelExit() {
-    this.frame.hide();
+    this.hide();
     this.navigateAwaySelection$.next(false);
   }
-
 }

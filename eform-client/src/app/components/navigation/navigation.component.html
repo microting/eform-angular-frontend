@@ -12,6 +12,7 @@
          routerLink="{{ node.link }}"
          class="nav-link"
          [id]="node.e2EId"
+         (click)="onClickOnNode()"
       >
         {{ node.name }}
       </a>
@@ -21,6 +22,7 @@
          class="nav-link"
          target="_blank"
          [href]="node.link"
+         (click)="onClickOnNode()"
       >
         {{node.name }}
       </a>

@@ -17,7 +17,7 @@ export class AuthQuery extends Query<AuthState> {
   }
 
   selectDarkTheme$ = this.select((state) => state.currentUser.darkTheme);
-  // selectCurrentUserClaims$ = this.select((state) => state.currentUser.claims);
+  selectCurrentUserClaims$ = this.select((state) => state.currentUser.claims);
   selectFullName$ = this.select(
     (store) => `${store.currentUser.firstName} ${store.currentUser.lastName}`
   );

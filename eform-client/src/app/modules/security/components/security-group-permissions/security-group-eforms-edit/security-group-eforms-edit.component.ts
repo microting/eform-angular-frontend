@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, } from '@angular/core';
 import {EformPermissionsModel} from 'src/app/common/models/security/group-permissions/eform';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-security-group-eforms-edit',
@@ -8,26 +9,26 @@ import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/sec
   styleUrls: ['./security-group-eforms-edit.component.scss']
 })
 export class SecurityGroupEformsEditComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Output() onEformUpdated: EventEmitter<void> = new EventEmitter<void>();
-  eformSecurityModel: EformPermissionsModel = new EformPermissionsModel();
-  constructor(private securityGroupEformsService: SecurityGroupEformsPermissionsService) { }
+  constructor(
+    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
+    public dialogRef: MatDialogRef<SecurityGroupEformsEditComponent>,
+    @Inject(MAT_DIALOG_DATA) public eformSecurityModel: EformPermissionsModel = new EformPermissionsModel()
+  ) {}
 
   ngOnInit() {
-  }
-
-  show(model: EformPermissionsModel) {
-    this.eformSecurityModel = model;
-    this.frame.show();
   }
 
   updateEformGroupPermissions() {
     this.securityGroupEformsService.updateGroupEformPermissions(this.eformSecurityModel).subscribe((data) => {
       if (data && data.success) {
-        this.onEformUpdated.emit();
+        this.hide(true);
       }
-      this.frame.hide();
     });
+  }
+
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
 }

@@ -1,105 +1,50 @@
-<section id="section{{ element.id }}">
+<section id="section{{ element.id }}" class="d-flex flex-column">
   <!--<section id="section{{element.id}}" *ngIf="element.dataItemList">-->
-  <mdb-card class="mb-4 mt-4" style="width: 100%">
-    <mdb-card-header>
-      <p class="h4">{{ element.label }}</p>
-    </mdb-card-header>
-    <mdb-card-body>
-      <div>
-        <div
-          *ngIf="element.approvalEnabled"
-          (click)="element.status = 'not_checked'"
-        >
-          <label class="md-radio block">
-            <input
-              type="radio"
-              [(ngModel)]="element.status"
-              [checked]="element.status === 'not_checked'"
-              value="not_checked"
-              name="{{ element.label }}{{ element.id }}"
-            />
-            <span class="md-radio--fake"><span></span></span>
-            <div>{{ 'Not checked' | translate }}</div>
-          </label>
-        </div>
-        <div
-          *ngIf="element.approvalEnabled"
-          (click)="element.status = 'approved'"
-        >
-          <label class="md-radio block">
-            <input
-              type="radio"
-              [(ngModel)]="element.status"
-              [checked]="element.status === 'approved'"
-              value="approved"
-              name="{{ element.label }}{{ element.id }}"
-            />
-            <span class="md-radio--fake"><span></span></span>
-            <div>{{ 'Approved' | translate }}</div>
-          </label>
-        </div>
-        <div
-          *ngIf="element.reviewEnabled && element.approvalEnabled"
-          (click)="element.status = 'review'"
-        >
-          <label class="md-radio block">
-            <input
-              type="radio"
-              [(ngModel)]="element.status"
-              [checked]="element.status === 'review'"
-              value="review"
-              name="{{ element.label }}{{ element.id }}"
-            />
-            <span class="md-radio--fake"><span></span></span>
-            <div>{{ 'Review' | translate }}</div>
-          </label>
-        </div>
-        <div
-          *ngIf="element.approvalEnabled"
-          class="radio"
-          (click)="element.status = 'not_approved'"
-        >
-          <label class="md-radio block">
-            <input
-              type="radio"
-              [(ngModel)]="element.status"
-              [checked]="element.status === 'not_approved'"
-              value="not_approved"
-              name="{{ element.label }}{{ element.id }}"
-            />
-            <span class="md-radio--fake"><span></span></span>
-            <div>{{ 'Not approved' | translate }}</div>
-          </label>
-        </div>
-      </div>
+  <mat-card class="mb-4">
+    <mat-card-title>
+      {{ element.label }}
+    </mat-card-title>
+    <mat-card-content>
+      <mat-radio-group *ngIf="element.approvalEnabled" [(ngModel)]="element.status" class="d-flex flex-column">
+        <mat-radio-button value="not_checked">
+          {{ 'Not checked' | translate }}
+        </mat-radio-button>
+        <mat-radio-button value="approved">
+          {{ 'Approved' | translate }}
+        </mat-radio-button>
+        <mat-radio-button *ngIf="element.reviewEnabled" value="review">
+          {{ 'Review' | translate }}
+        </mat-radio-button>
+        <mat-radio-button value="not_approved">
+          {{ 'Not approved' | translate }}
+        </mat-radio-button>
+      </mat-radio-group>
       <app-case-edit-switch
         (needUpdate)="emitNeedUpdate()"
         [dataItemList]="element.dataItemList"
       ></app-case-edit-switch>
       <div class="mt-1 mb-1" *ngIf="element.extraFieldsEnabled">
-        <mdb-card class="mb-4 mt-4" style="width: 100%">
-          <mdb-card-header>{{ 'Extra comment' | translate }}</mdb-card-header>
-          <mdb-card-body>
-            <ng-container
-              *ngFor="let fieldValueDto of element.extraComments; let i = index"
-            >
+        <mat-card class="mb-4 mt-4">
+          <mat-card-title>{{ 'Extra comment' | translate }}</mat-card-title>
+          <mat-card-content>
+            <ng-container *ngFor="let fieldValueDto of element.extraComments;">
               <element-comment [fieldValue]="fieldValueDto"></element-comment>
             </ng-container>
-          </mdb-card-body>
-        </mdb-card>
-        <mdb-card class="mb-4 mt-4" style="width: 100%">
-          <mdb-card-header>{{ 'Extra picture' | translate }}</mdb-card-header>
-          <mdb-card-body>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="mb-4 mt-4">
+          <mat-card-title>{{ 'Extra picture' | translate }}</mat-card-title>
+          <mat-card-content>
             <element-picture
               (pictureUpdated)="emitNeedUpdate()"
               [fieldValues]="element.extraPictures"
             ></element-picture>
-          </mdb-card-body>
-        </mdb-card>
-        <mdb-card class="mb-4 mt-4" style="width: 100%">
-          <mdb-card-header>{{ 'Extra recording' | translate }}</mdb-card-header>
-          <mdb-card-body></mdb-card-body>
-        </mdb-card>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="mb-4 mt-4">
+          <mat-card-title>{{ 'Extra recording' | translate }}</mat-card-title>
+          <mat-card-content></mat-card-content>
+        </mat-card>
       </div>
 
       <ng-container *ngIf="element.elementList">
@@ -108,6 +53,6 @@
           *ngFor="let elem of element.elementList"
         ></app-case-edit-element>
       </ng-container>
-    </mdb-card-body>
-  </mdb-card>
+    </mat-card-content>
+  </mat-card>
 </section>

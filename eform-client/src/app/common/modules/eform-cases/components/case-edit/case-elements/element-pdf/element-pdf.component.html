@@ -1,6 +1,10 @@
-<a class="d-flex align-self-center link-primary" target="_blank"
-   href="javascript:void(0)" (click)="getPdf(dataItemObj.fieldValue)">
-  <fa-icon icon="download" size="lg" [fixedWidth]="true"></fa-icon>
-  Download
+<a
+  mat-raised-button
+  color="primary"
+  target="_blank"
+  href="javascript:void(0)"
+  (click)="getPdf(dataItemObj.fieldValue)">
+  <mat-icon>download</mat-icon>
+  {{'Download' | translate}}
 </a>
 

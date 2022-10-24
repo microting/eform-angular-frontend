@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {CaseModel} from 'src/app/common/models/cases';
 import {CasesService} from 'src/app/common/services/cases';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-case-remove-modal',
@@ -8,27 +9,28 @@ import {CasesService} from 'src/app/common/services/cases';
   styleUrls: ['./case-remove-modal.component.scss']
 })
 export class CaseRemoveModalComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Output() onCaseDeleted: EventEmitter<void> = new EventEmitter<void>();
   selectedTemplateId: number;
   selectedCaseModel: CaseModel = new CaseModel();
 
-  constructor(private casesService: CasesService) { }
+  constructor(
+    private casesService: CasesService,
+    public dialogRef: MatDialogRef<CaseRemoveModalComponent>,
+    @Inject(MAT_DIALOG_DATA) private model: {caseModel: CaseModel, templateId: number}) {
+    this.selectedCaseModel = model.caseModel;
+    this.selectedTemplateId = model.templateId;
+  }
 
   ngOnInit() {
   }
 
-  show(caseModel: CaseModel, templateId: number) {
-    this.selectedCaseModel = caseModel;
-    this.selectedTemplateId = templateId;
-    this.frame.show();
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
   submitCaseDelete() {
     this.casesService.deleteCase(this.selectedCaseModel.id, this.selectedTemplateId).subscribe((data => {
       if (data && data.success) {
-        this.onCaseDeleted.emit();
-        this.frame.hide();
+        this.hide(true);
       }
     }));
   }

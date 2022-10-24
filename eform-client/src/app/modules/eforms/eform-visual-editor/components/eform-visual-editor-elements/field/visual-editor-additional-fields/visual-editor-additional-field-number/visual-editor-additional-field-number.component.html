@@ -1,77 +1,70 @@
-<mdb-card class="mt-3">
-  <mdb-card-body>
-    <div class="row">
-      <div class="col">
-        <div class="md-form">
-          <input
-            mdbInput
+<mat-card>
+  <mat-card-content>
+    <div class="d-flex flex-column">
+      <div class="d-flex flex-row justify-content-between">
+        <div class="d-flex flex-column flex-grow-1" style="padding-right: 1rem;">
+          <mat-form-field>
+            <mat-label>{{ 'Min value' | translate }}</mat-label>
+            <input
+            matInput
             [(ngModel)]="field.minValue"
             [required]="true"
             type="number"
-            class="form-control"
             id="minValueEdit"
-          />
-          <label>{{ 'Min value' | translate }}</label>
+            >
+          </mat-form-field>
+        </div>
+        <div class="d-flex flex-column flex-grow-1" style="padding-left: 1rem;">
+          <mat-form-field>
+            <mat-label>{{ 'Max value' | translate }}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="field.maxValue"
+              [required]="true"
+              type="number"
+              id="maxValueEdit"
+            >
+          </mat-form-field>
         </div>
       </div>
-      <div class="col">
-        <div class="md-form">
-          <input
-            mdbInput
-            [(ngModel)]="field.maxValue"
-            [required]="true"
-            type="number"
-            class="form-control"
-            id="maxValueEdit"
-          />
-          <label>{{ 'Max value' | translate }}</label>
-        </div>
-      </div>
+      <mat-form-field>
+        <mat-label>{{ 'Decimal count' | translate }}</mat-label>
+        <input
+          matInput
+          [(ngModel)]="field.decimalCount"
+          [required]="true"
+          type="number"
+          id="decimalCountEdit"
+        >
+      </mat-form-field>
     </div>
-    <div class="row">
-      <div class="col">
-        <div class="md-form">
-          <input
-            mdbInput
-            [(ngModel)]="field.decimalCount"
-            [required]="true"
-            type="number"
-            class="form-control"
-            id="decimalCountEdit"
-          />
-          <label>{{ 'Decimal count' | translate }}</label>
-        </div>
-      </div>
-    </div>
-    <mdb-card
-      class="mt-3"
-      *ngFor="
+
+    <ng-container  *ngFor="
         let translation of field.translations;
         let translationIndex = index
-      "
-    >
-      <ng-container *ngIf="isLanguageSelected(translation.languageId)">
-        <mdb-card-header>{{
-          getLanguage(translation.languageId) | translate
-        }}</mdb-card-header>
-        <mdb-card-body>
-          <div class="row">
-            <div class="col">
-              <div class="md-form">
-                <input
-                  mdbInput
-                  [(ngModel)]="translation.defaultValue"
-                  [required]="true"
-                  type="number"
-                  class="form-control"
-                  id="defaultValueEdit{{ translationIndex }}"
-                />
-                <label>{{ 'Default value' | translate }}</label>
-              </div>
-            </div>
-          </div>
-        </mdb-card-body>
-      </ng-container>
-    </mdb-card>
-  </mdb-card-body>
-</mdb-card>
+      ">
+      <mat-card
+        class="mt-3"
+        *ngIf="isLanguageSelected(translation.languageId)"
+      >
+        <ng-container>
+          <mat-card-title>{{
+            getLanguage(translation.languageId) | translate
+          }}</mat-card-title>
+          <mat-card-content>
+            <mat-form-field>
+              <mat-label>{{ 'Default value' | translate }}</mat-label>
+              <input
+                matInput
+                [(ngModel)]="translation.defaultValue"
+                [required]="true"
+                type="number"
+                id="defaultValueEdit{{ translationIndex }}"
+              >
+            </mat-form-field>
+          </mat-card-content>
+        </ng-container>
+      </mat-card>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

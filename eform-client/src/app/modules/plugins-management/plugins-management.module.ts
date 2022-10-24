@@ -1,34 +1,41 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { EformSharedModule } from '../../common/modules/eform-shared/eform-shared.module';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-
-import { PluginsManagementRouting } from './plugins-management.routing';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {TranslateModule} from '@ngx-translate/core';
+import {EformSharedModule} from '../../common/modules/eform-shared/eform-shared.module';
+import {PluginsManagementRouting} from './plugins-management.routing';
 import {
   InstalledPluginModalComponent,
   InstalledPluginsPageComponent,
   MarketplacePluginsPageComponent,
   MarketplacePluginInstallComponent,
+  InstalledPluginPermissionsComponent
 } from './components';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { InstalledPluginPermissionsComponent } from './components/installed/installed-plugin-permissions/installed-plugin-permissions.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonModule} from '@angular/material/button';
+import {MtxGridModule} from '@ng-matero/extensions/grid';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        EformSharedModule,
-        MDBBootstrapModule,
-        FormsModule,
-        TranslateModule,
-        NgSelectModule,
-        PluginsManagementRouting,
-        FontAwesomeModule,
-        MatCheckboxModule,
-    ],
+  imports: [
+    CommonModule,
+    EformSharedModule,
+    FormsModule,
+    TranslateModule,
+    PluginsManagementRouting,
+    MatCheckboxModule,
+    MatButtonModule,
+    MtxGridModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatDialogModule,
+    MatCardModule,
+  ],
   declarations: [
     InstalledPluginsPageComponent,
     InstalledPluginModalComponent,
@@ -37,4 +44,5 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     InstalledPluginPermissionsComponent,
   ],
 })
-export class PluginsManagementModule {}
+export class PluginsManagementModule {
+}

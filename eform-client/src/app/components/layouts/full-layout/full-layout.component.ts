@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {akitaConfig} from '@datorama/akita';
 import {AppMenuQuery, AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
@@ -7,6 +7,7 @@ import {AppSettingsService, LocaleService} from 'src/app/common/services';
 import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {HeaderSettingsModel} from 'src/app/common/models';
+import {MatDrawer, MatDrawerMode} from '@angular/material/sidenav';
 
 akitaConfig({resettable: true});
 
@@ -14,13 +15,18 @@ akitaConfig({resettable: true});
 @Component({
   selector: 'app-full-layout-root',
   templateUrl: `./full-layout.component.html`,
+  styleUrls: ['./full-layout.component.scss']
 })
 export class FullLayoutComponent implements OnInit, OnDestroy {
+  @ViewChild('drawer') drawer: MatDrawer
   isDarkThemeAsync$: Subscription;
   private brokerListener: any;
   logoImage: any;
   headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;
   connectionStringExist: boolean;
+  innerWidth = window.innerWidth;
+  sidenavMode: MatDrawerMode = 'side';
+  mobileWidth = 660;
 
   constructor(
     private authStateService: AuthStateService,
@@ -39,8 +45,8 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSettings();
-
     this.localeService.initLocale();
+    this.onResize({});
   }
 
   switchToDarkTheme() {
@@ -90,5 +96,34 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
         this.router.navigate(['/application-settings/connection-string']).then();
       }
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(_) {
+    const oldInnerWidth = this.innerWidth;
+    this.innerWidth = window.innerWidth;
+    this.sidenavMode = this.innerWidth >= this.mobileWidth ? 'side' : 'over';
+    if (oldInnerWidth === this.innerWidth) {
+      return;
+    }
+    if (oldInnerWidth < this.mobileWidth && this.innerWidth >= this.mobileWidth) {
+      this.toggleDrawer(true);
+    } else if (oldInnerWidth >= this.mobileWidth && this.innerWidth < this.mobileWidth) {
+      this.toggleDrawer(false);
+    }
+  }
+
+  toggleDrawer(open?: boolean) {
+    if(open === undefined || open === null) {
+      this.drawer.toggle().then();
+    } else {
+      open ? this.drawer.open() : this.drawer.close();
+    }
+  }
+
+  onClickOnLink() {
+    if(this.innerWidth < this.mobileWidth) {
+      this.toggleDrawer(false);
+    }
   }
 }

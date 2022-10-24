@@ -3,7 +3,6 @@ import {
   OnDestroy,
   OnInit,
   QueryList,
-  ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +15,7 @@ import {
   ReplyRequest,
   TemplateDto, ElementDto, DataItemDto,
 } from 'src/app/common/models';
-import { CaseEditElementComponent } from 'src/app/common/modules/eform-cases/components';
+import {CaseEditConfirmationComponent, CaseEditElementComponent} from 'src/app/common/modules/eform-cases/components';
 import {
   CasesService,
   EFormService,
@@ -27,6 +26,9 @@ import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
 import * as R from 'ramda';
 import {ToastrService} from 'ngx-toastr';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import {dialogConfigHelper} from 'src/app/common/helpers';
 
 @AutoUnsubscribe()
 @Component({
@@ -37,7 +39,6 @@ import {ToastrService} from 'ngx-toastr';
 export class CaseEditComponent implements OnInit, OnDestroy {
   @ViewChildren(CaseEditElementComponent)
   editElements: QueryList<CaseEditElementComponent>;
-  @ViewChild('caseConfirmation', { static: true }) caseConfirmation;
   id: number;
   templateId: number;
   currentTemplate: TemplateDto = new TemplateDto();
@@ -54,6 +55,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   activatedRouteSub$: Subscription;
   queryParamsSun$: Subscription;
   getSingleEformSun$: Subscription;
+  onConfirmationPressedSub$: Subscription;
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -72,6 +74,8 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
     private authStateService: AuthStateService,
     private toastrService: ToastrService,
+    private dialog: MatDialog,
+    private overlay: Overlay,
   ) {
     this.activatedRouteSub$ = activateRoute.params.subscribe((params) => {
       this.id = +params['id'];
@@ -212,8 +216,8 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  confirmExit(keepData: boolean): void {
-    this.caseConfirmation.navigateAwaySelection$.next(true);
+  confirmExit(keepData: boolean, modalId: string): void {
+    this.dialog.getDialogById(modalId).componentInstance.navigateAwaySelection$.next(true);
     if (keepData) {
       this.saveCase();
     } else {
@@ -226,8 +230,11 @@ export class CaseEditComponent implements OnInit, OnDestroy {
       !this.isNoSaveExitAllowed &&
       this.checkEformPermissions(UserClaimsEnum.caseUpdate)
     ) {
-      this.caseConfirmation.show();
-      return this.caseConfirmation.navigateAwaySelection$;
+      const modalId = this.dialog.open(CaseEditConfirmationComponent,
+        {...dialogConfigHelper(this.overlay), minWidth: 600}).id;
+      this.onConfirmationPressedSub$ = this.dialog.getDialogById(modalId).componentInstance.onConfirmationPressed
+        .subscribe(x => this.confirmExit(x, modalId));
+      return this.dialog.getDialogById(modalId).componentInstance.navigateAwaySelection$;
     }
     return true;
   }

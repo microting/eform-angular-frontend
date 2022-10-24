@@ -1,20 +1,20 @@
-<mdb-card class="mt-3">
-  <mdb-card-body>
-    <div class="row">
-      <div class="col">
-        <div class="md-form ng-select-wrapper">
-          <ng-select
-            [items]="entitySelectableGroups"
-            bindLabel="name"
-            [placeholder]="'Selected entity group select' | translate"
-            bindValue="id"
-            [typeahead]="typeahead"
-            [(ngModel)]="field.entityGroupId"
-            id="createPlanningSelector"
-          >
-          </ng-select>
-        </div>
-      </div>
-    </div>
-  </mdb-card-body>
-</mdb-card>
+<mat-card>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>{{'Selected entity group select' | translate}}</mat-label>
+      <mtx-select
+        appendTo="body"
+        [dropdownPosition]="'bottom'"
+        [clearable]="false"
+        [bindLabel]="'name'"
+        [bindValue]="'id'"
+        [typeahead]="typeahead"
+        [(ngModel)]="field.entityGroupId"
+        id="entityGroupSelectSelector"
+        [items]="entitySelectableGroups"
+      >
+      </mtx-select>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>
+

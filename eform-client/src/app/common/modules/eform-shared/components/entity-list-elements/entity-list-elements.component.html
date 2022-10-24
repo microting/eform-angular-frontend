@@ -1,51 +1,36 @@
-<div class="panel panel-default w-100 pt-2">
-  <div class="panel-body">
-    <ul
-      class="list-group"
-      dragula="ITEMS"
-      [(dragulaModel)]="entityItemModels"
-      (dragulaModelChange)="dragulaPositionChanged()"
-    >
-      <!--list item-->
-      <li
-        class="list-group-item"
-        *ngFor="let entityItem of entityItemModels"
-      >
-        <div class="d-flex justify-content-between align-items-center">
-          <div>
-            <a mat-icon-button>
-              <mat-icon>drag_handle</mat-icon>
-            </a>
-          </div>
-          <div id="createEntityItemName">{{ entityItem.name }}</div>
-          <div style="display: flex; align-items: center;">
-            <mat-icon
-              style="width: 40px;"
-              *ngIf="!entityItem.name"
-              matTooltip="{{ 'Name is required' | translate }}!"
-            >report_problem</mat-icon>
-            <button
-              style="margin-left: 0.5rem;"
-              mat-icon-button
-              color="accent"
-              id="entityItemEditBtn">
-              <mat-icon
-                (click)="onOpenModalEditName(entityItem)"
-              >edit
-              </mat-icon>
-            </button>
-            <button
-              mat-icon-button
-              color="warn"
-              id="entityItemDeleteBtn">
-              <mat-icon
-                (click)="deleteAdvEntitySelectableItem(entityItem.tempId)"
-              >delete
-              </mat-icon>
-            </button>
-          </div>
-        </div>
-      </li>
-    </ul>
+<div class="w-100 pt-2">
+  <div
+    dragula="ITEMS"
+    [(dragulaModel)]="entityItemModels"
+    (dragulaModelChange)="dragulaPositionChanged()"
+  >
+    <div
+      *ngFor="let entityItem of entityItemModels"
+      class="d-flex justify-content-between align-items-center pb-2 pt-2">
+      <button mat-icon-button>
+        <mat-icon>drag_handle</mat-icon>
+      </button>
+      <div id="createEntityItemName">{{ entityItem.name }}</div>
+      <div style="display: flex; align-items: center;">
+        <mat-icon
+          style="width: 40px;"
+          *ngIf="!entityItem.name"
+          matTooltip="{{ 'Name is required' | translate }}!"
+        >report_problem</mat-icon>
+        <button
+          style="margin-left: 0.5rem;"
+          mat-icon-button
+          color="accent"
+          id="entityItemEditBtn">
+          <mat-icon (click)="onOpenModalEditName(entityItem)">edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="warn"
+          id="entityItemDeleteBtn">
+          <mat-icon (click)="deleteAdvEntitySelectableItem(entityItem.tempId)">delete</mat-icon>
+        </button>
+      </div>
+    </div>
   </div>
 </div>

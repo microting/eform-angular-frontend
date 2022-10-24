@@ -1,10 +1,11 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild,} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild,} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
 import {ToastrService} from 'ngx-toastr';
 import {TranslateService} from '@ngx-translate/core';
 import {LoaderService} from 'src/app/common/services/loader.service';
 import {AuthStateService} from 'src/app/common/store';
 import {MatDialogRef} from '@angular/material/dialog';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
 
 @Component({
   selector: 'app-eforms-bulk-import-modal',
@@ -19,6 +20,12 @@ export class EformsBulkImportModalComponent implements OnInit {
     authToken: this.authStateService.bearerToken,
   });
   errors: { row: number; col: number; message: string }[];
+
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('Column'), field: 'col'},
+    {header: this.translateService.stream('Row'), field: 'row'},
+    {header: this.translateService.stream('Error'), field: 'error',},
+  ];
 
   constructor(
     private toastrService: ToastrService,
@@ -58,7 +65,7 @@ export class EformsBulkImportModalComponent implements OnInit {
       );
       this.xlsxEformsInput.nativeElement.value = '';
     };
-    this.xlsxEformsFileUploader.onAfterAddingFile = (f) => {
+    this.xlsxEformsFileUploader.onAfterAddingFile = (_) => {
       if (this.xlsxEformsFileUploader.queue.length > 1) {
         this.xlsxEformsFileUploader.removeFromQueue(
           this.xlsxEformsFileUploader.queue[0]

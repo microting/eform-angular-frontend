@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgSelectComponent } from '@ng-select/ng-select';
 import {
   UserInfoModel,
   SecurityGroupCreateModel,
   Paged,
-  TableHeaderElementModel,
 } from 'src/app/common/models';
 import { SecurityGroupsService, AdminService } from 'src/app/common/services';
+import {MtxSelectComponent} from '@ng-matero/extensions/select';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-security-group-create',
@@ -18,18 +19,33 @@ export class SecurityGroupCreateComponent implements OnInit {
   securityGroupUsers: Array<UserInfoModel> = [];
   securityGroupCreateModel: SecurityGroupCreateModel = new SecurityGroupCreateModel();
   users: Paged<UserInfoModel> = new Paged<UserInfoModel>();
-  tableHeaders: TableHeaderElementModel[] = [
-    { name: 'ID', sortable: false, elementId: '' },
-    { name: 'First name', sortable: false, elementId: '' },
-    { name: 'Last name', sortable: false, elementId: '' },
-    { name: 'Email', sortable: false, elementId: '' },
-    { name: 'Actions', sortable: false, elementId: '' },
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('ID'), field: 'id'},
+    {header: this.translateService.stream('First name'), field: 'firstName'},
+    {header: this.translateService.stream('Last name'), field: 'lastName',},
+    {header: this.translateService.stream('Email'), field: 'email',},
+    {
+      header: this.translateService.stream('Actions'),
+      field: 'actions',
+      type: 'button',
+      buttons: [
+        {
+          color: 'warn',
+          type: 'icon',
+          icon: 'delete',
+          tooltip: this.translateService.stream('Remove user from group'),
+          click: (record) => this.deleteUserFromGroup(record),
+        },
+      ]
+    },
   ];
+
 
   constructor(
     private adminService: AdminService,
     private securityGroupsService: SecurityGroupsService,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -51,20 +67,22 @@ export class SecurityGroupCreateComponent implements OnInit {
       });
   }
 
-  addUserToGroup(usersSelector: NgSelectComponent) {
-    const selectedUser = <any>usersSelector.selectedValues[0];
-    this.securityGroupUsers.push({
-      id: selectedUser.id,
-      firstName: selectedUser.firstName,
-      lastName: selectedUser.lastName,
-      email: selectedUser.email,
-      role: '',
-    });
-    usersSelector.clearModel();
-    // Updating user list after working with model
-    this.users.entities = this.users.entities.filter(
-      (x) => x.id !== selectedUser.id
-    );
+  addUserToGroup(usersSelector: MtxSelectComponent) {
+    const selectedUser = <any>usersSelector.ngSelect.selectedValues[0];
+    if(selectedUser) {
+      this.securityGroupUsers = [...this.securityGroupUsers, {
+        id: selectedUser.id,
+        firstName: selectedUser.firstName,
+        lastName: selectedUser.lastName,
+        email: selectedUser.email,
+        role: '',
+      }];
+      usersSelector.ngSelect.clearModel();
+      // Updating user list after working with model
+      this.users.entities = this.users.entities.filter(
+        (x) => x.id !== selectedUser.id
+      );
+    }
   }
 
   deleteUserFromGroup(selectedUserModel: any) {
@@ -85,7 +103,7 @@ export class SecurityGroupCreateComponent implements OnInit {
     this.securityGroupsService
       .createSecurityGroup(this.securityGroupCreateModel)
       .subscribe(() => {
-        this.router.navigate(['/security']);
+        this.router.navigate(['/security']).then();
       });
   }
 }

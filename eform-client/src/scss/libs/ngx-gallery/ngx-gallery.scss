@@ -1,14 +1,28 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
 @import "lib/gallery";
 @import "lib/lightbox";
 
-gallery {
-  background: #e2e2e2 !important;
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+  $background: map.get($theme, 'background');
+
+  gallery {
+    background: map.get($background, 'card') !important;
+  }
+
+  .g-backdrop {
+    //background-color: map.get($background, 'card') !important;
+  }
+
 }
 
-.g-backdrop {
-  background-color: #e2e2e2 !important;
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+  }
 }
-
 
 gallery-image .g-image-item {
   background-size: contain !important;

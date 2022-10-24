@@ -1,90 +1,47 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade overflow-auto"
-  #frame="mdbModal"
->
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>
-          {{
-            (isChecklistSelected ? 'Edit sub eForm' : 'New sub eForm')
-              | translate
-          }}
-        </h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <mdb-card
-          *ngFor="
-            let translation of recursionModel.checklist.translations;
-            let translationIndex = index
-          "
-          class="mb-3"
-        >
-          <ng-container *ngIf="isLanguageSelected(translation.languageId)">
-            <mdb-card-header>{{
-              getLanguage(translation.languageId) | translate
-            }}</mdb-card-header>
-            <mdb-card-body>
-              <div class="row">
-                <div class="col-12">
-                  <div class="md-form">
-                    <input
-                      mdbInput
-                      type="text"
-                      id="newChecklistNameTranslation_{{ translationIndex }}"
-                      name="newChecklistNameTranslation_{{ translationIndex }}"
-                      [(ngModel)]="translation.name"
-                      class="form-control"
-                    />
-                    <label
-                      for="newChecklistNameTranslation_{{ translationIndex }}"
-                    >
-                      {{ 'Name' | translate }}
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <formatting-text-editor
-                    [(value)]="translation.description"
-                    [placeholder]="'Description' | translate"
-                    id="newChecklistDescriptionTranslation_{{
-                      translationIndex
-                    }}"
-                  >
-                  </formatting-text-editor>
-                </div>
-              </div>
-            </mdb-card-body>
-          </ng-container>
-        </mdb-card>
-      </div>
-      <div class="modal-footer">
-        <button
-          mdbBtn
-          class="btn-success btn-small-height"
-          (click)="
-            isChecklistSelected ? onUpdateChecklist() : onCreateChecklist()
-          "
-          id="changeChecklistSaveBtn"
-        >
-          {{ (isChecklistSelected ? 'Save' : 'Create') | translate }}
-        </button>
-        <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
-          (click)="frame.hide()"
-          id="changeChecklistSaveCancelBtn"
-        >
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
+<h3 mat-dialog-title>{{ (isChecklistSelected ? 'Edit sub eForm' : 'New sub eForm') | translate }}</h3>
+<div mat-dialog-content class="need-wrapper">
+  <ng-container *ngFor="let translation of recursionModel.checklist.translations; let translationIndex = index">
+    <ng-container *ngIf="translation !== undefined">
+      <mat-card *ngIf="isLanguageSelected(translation.languageId)">
+        <mat-card-title>{{ getLanguage(translation.languageId) | translate }}</mat-card-title>
+        <mat-card-content>
+          <div class="d-flex flex-column">
+            <mat-form-field>
+              <mat-label>{{'Name' | translate }}</mat-label>
+              <input
+                matInput
+                type="text"
+                id="fieldNameTranslation_{{ translationIndex }}"
+                name="fieldNameTranslation_{{ translationIndex }}"
+                [(ngModel)]="translation.name"
+              />
+            </mat-form-field>
+            <formatting-text-editor
+              [(value)]="translation.description"
+              [placeholder]="'Description' | translate"
+              id="newFieldDescriptionTranslation_{{ translationIndex }}"
+            >
+            </formatting-text-editor>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </ng-container>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="isChecklistSelected ? onUpdateChecklist() : onCreateChecklist()"
+    id="changeChecklistSaveBtn"
+  >
+    {{(isChecklistSelected ? 'Save' : 'Create') | translate}}
+  </button>
+  <button
+    mat-raised-button
+    (click)="hide()"
+    id="changeChecklistSaveCancelBtn"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

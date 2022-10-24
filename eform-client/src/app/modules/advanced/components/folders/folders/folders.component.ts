@@ -1,23 +1,24 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { FoldersService } from '../../../../../common/services/advanced/folders.service';
-import { FolderDto } from '../../../../../common/models/dto/folder.dto';
-import { AuthService } from 'src/app/common/services';
+import { FoldersService } from 'src/app/common/services';
+import { FolderDto } from 'src/app/common/models';
 import { AuthStateService } from 'src/app/common/store';
+import {FolderDeleteComponent, FolderEditCreateComponent} from '../';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-folders',
   templateUrl: './folders.component.html',
 })
 export class FoldersComponent implements OnInit {
-  @ViewChild('modalFolderCreate', { static: true }) modalFolderCreate;
-  @ViewChild('modalFolderEdit', { static: true }) modalFolderEdit;
-  @ViewChild('modalFolderDelete', { static: true }) modalFolderDelete;
-
-  selectedFolder: FolderDto = new FolderDto();
-  spinnerStatus = true;
   foldersFlatList: Array<FolderDto> = [];
   foldersDto: Array<FolderDto> = [];
+  folderDeleteComponentAfterClosedSub$: Subscription;
+  folderEditComponentAfterClosedSub$: Subscription;
+  folderCreateComponentAfterClosedSub$: Subscription;
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -35,18 +36,25 @@ export class FoldersComponent implements OnInit {
   constructor(
     private foldersService: FoldersService,
     private router: Router,
-    private authStateService: AuthStateService
+    private authStateService: AuthStateService,
+    private dialog: MatDialog,
+    private overlay: Overlay,
   ) {}
 
   openCreateModal(selectedFolder?: FolderDto) {
-    this.modalFolderCreate.show(selectedFolder);
+    this.folderCreateComponentAfterClosedSub$ = this.dialog.open(FolderEditCreateComponent,
+      {...dialogConfigHelper(this.overlay, {folder: selectedFolder, create: true}), minWidth: 500})
+      .afterClosed().subscribe(data => data ? this.getInitialData() : undefined);
   }
   openEditModal(selectedFolder: FolderDto) {
-    this.modalFolderEdit.show(selectedFolder);
+    this.folderEditComponentAfterClosedSub$ = this.dialog.open(FolderEditCreateComponent,
+      {...dialogConfigHelper(this.overlay, {folder: selectedFolder, create: false}), minWidth: 500})
+      .afterClosed().subscribe(data => data ? this.getInitialData() : undefined);
   }
   openDeleteModal(selectedFolder: FolderDto) {
-    this.selectedFolder = selectedFolder;
-    this.modalFolderDelete.show();
+    this.folderDeleteComponentAfterClosedSub$ = this.dialog.open(FolderDeleteComponent,
+      dialogConfigHelper(this.overlay, selectedFolder))
+      .afterClosed().subscribe(data => data ? this.getInitialData() : undefined);
   }
 
   loadAllFolders() {

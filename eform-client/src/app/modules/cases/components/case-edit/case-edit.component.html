@@ -1,119 +1,81 @@
-<eform-subheader
+<eform-new-subheader
   [title]="currentTemplate.label"
   [forceStaticTitle]="true"
-></eform-subheader>
+></eform-new-subheader>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-9 col-xs-12" role="main">
-      <!-- Done at user editable -->
-      <mdb-card
-        class="mt-4"
-        style="width: 100%"
-        *ngIf="currentTemplate.isDoneAtEditable"
-      >
-        <mdb-card-header>
-          <p class="h4">{{ 'Done at' | translate }}</p>
-        </mdb-card-header>
-        <mdb-card-body>
-          <div class="md-form md-form-case-elem" [owlDateTimeTrigger]="dt1">
-            <div class="md-form" [owlDateTimeTrigger]="dt1">
-              <i class="material-icons prefix">calendar_today</i>
-              <input
-                mdbInput
-                [owlDateTime]="dt1"
-                [(ngModel)]="replyElement.doneAt"
-                type="text"
-                id="doneAt"
-                name="doneAt"
-                class="form-control"
-                required
-              />
-              <label for="doneAt" [ngClass]="{'invalid': !replyElement.doneAt}">{{
-                'Select date' | translate
-                }}*</label>
-              <owl-date-time [pickerType]="'calendar'"
-                             #dt1
-                             [firstDayOfWeek]="1">
-              </owl-date-time>
-              <div class="invalid" *ngIf="!replyElement.doneAt">
-                {{'Date is required'| translate}}*
-              </div>
-            </div>
-          </div>
-        </mdb-card-body>
-      </mdb-card>
-
-      <!-- Elements loop -->
-      <app-case-edit-element
-        [element]="elem"
-        *ngFor="let elem of replyElement.elementList"
-        (needUpdate)="partialLoadCase()"
-      ></app-case-edit-element>
-    </div>
-
-    <!-- Right section with navigation -->
-    <div class="col-md-3">
-      <mdb-card class="sticky-top mb-4 mt-4" style="width: 100%; z-index: 1">
-        <mdb-card-header>
-          {{ replyElement.label }}
-        </mdb-card-header>
-        <mdb-card-body>
-          <ul class="list-group list-group-flush">
-            <li
-              *ngFor="let element of replyElement.elementList"
-              style="cursor: pointer"
-              class="list-group-item list-group-item-action waves-light"
-              routerLinkActive="active"
-              mdbWavesEffect
-            >
-              <a (click)="goToSection('#section' + element.id)">
-                {{ element.label }}
-              </a>
-              <ng-container *ngIf="element.elementList">
-                <app-case-edit-nav [element]="element"></app-case-edit-nav>
-              </ng-container>
-            </li>
-          </ul>
-        </mdb-card-body>
-        <mdb-card-footer>
-          <div
-            class="
-              d-flex
-              justify-content-center
-              align-items-center
-              flex-column
-              mt-2
-            "
-            *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)"
+<div class="d-flex flex-row justify-content-between">
+  <div class="flex-grow-1 mr-4 d-flex flex-column">
+    <!-- Done at user editable -->
+    <mat-card *ngIf="currentTemplate.isDoneAtEditable" class="mb-4">
+      <mat-card-title>
+        {{ 'Done at' | translate }}
+      </mat-card-title>
+      <mat-card-content>
+        <mat-form-field [owlDateTimeTrigger]="dt1">
+          <mat-label>{{ 'Select date' | translate }}</mat-label>
+          <mat-icon matPrefix>calendar_today</mat-icon>
+          <input
+            matInput
+            id="doneAt"
+            name="doneAt"
+            [owlDateTime]="dt1"
+            [(ngModel)]="replyElement.doneAt"
+            required
+            type="text"
           >
-            <div>
-              <!--              <button-->
-              <!--                mdbBtn-->
-              <!--                class="btn-success btn-small-height"-->
-              <!--                (click)="saveCase(true); this.isSaveClicked = true"-->
-              <!--                id="submit_for_with_post"-->
-              <!--              >-->
-              <!--                {{ 'Save and create new post' | translate }}-->
-              <!--                <i class="fa fa-spinner fa-spin"></i>-->
-              <!--              </button>-->
-              <button
-                mdbBtn
-                class="btn-success btn-small-height"
-                (click)="saveCase(); this.isSaveClicked = true"
-                id="submit_form"
-              >
-                {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin"></i>
-              </button>
-            </div>
+          <owl-date-time [pickerType]="'calendar'" #dt1 [firstDayOfWeek]="1"></owl-date-time>
+          <mat-error class="text-warn" *ngIf="!replyElement.doneAt">
+            {{'Date is required'| translate}}*
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Elements loop -->
+    <app-case-edit-element
+      [element]="elem"
+      *ngFor="let elem of replyElement.elementList"
+      (needUpdate)="partialLoadCase()"
+    ></app-case-edit-element>
+  </div>
+
+  <!-- Right section with navigation -->
+  <div>
+    <mat-card style=" position: sticky; top: 0;">
+      <mat-card-title>
+        {{ replyElement.label }}
+      </mat-card-title>
+      <mat-card-content>
+          <div
+            *ngFor="let element of replyElement.elementList"
+            style="cursor: pointer"
+            routerLinkActive="active"
+          >
+            <a
+              mat-button
+              (click)="goToSection('#section' + element.id)"
+              class="d-flex w-100"
+            >
+              {{ element.label }}
+            </a>
+            <ng-container *ngIf="element.elementList">
+              <app-case-edit-nav [element]="element"></app-case-edit-nav>
+            </ng-container>
           </div>
-        </mdb-card-footer>
-      </mdb-card>
-    </div>
+      </mat-card-content>
+      <mat-card-footer
+        *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)"
+        class="d-flex justify-content-center align-items-center mt-2 mb-2"
+      >
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="saveCase(); this.isSaveClicked = true"
+          id="submit_form"
+        >
+          {{ 'Save' | translate }}
+        </button>
+      </mat-card-footer>
+    </mat-card>
   </div>
 </div>
-
-<app-case-edit-confirmation
-  (onConfirmationPressed)="confirmExit($event)"
-  #caseConfirmation
-></app-case-edit-confirmation>

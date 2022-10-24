@@ -1,27 +1,26 @@
-<div mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Do you want to leave this page' | translate }}?</h3>
-      </div>
-      <div class="modal-body">
-        <h4>{{'If you leave before saving your changes will be lost' | translate}}.</h4>
-      </div>
-      <div class="modal-footer d-flex justify-content-around">
-        <button
-          mat-raised-button
-          color="accent" (click)="confirmationClicked(true)">
-          {{ 'Save & Leave' | translate }}
-        </button>
-        <button
-          mat-raised-button
-          color="warn" (click)="confirmationClicked(false)">
-          {{ 'Leave' | translate }}
-        </button>
-        <button
-          mat-raised-button
-          (click)="cancelExit()">{{'Cancel' | translate}}</button>
-      </div>
-    </div>
-  </div>
+<h3 mat-dialog-title>{{ 'Do you want to leave this page' | translate }}?</h3>
+<div mat-card-content>
+  <h4>{{'If you leave before saving your changes will be lost' | translate}}.</h4>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-around">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="confirmationClicked(true)"
+  >
+    {{'Save & Leave' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="confirmationClicked(false)"
+  >
+    {{'Leave' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    (click)="cancelExit()"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

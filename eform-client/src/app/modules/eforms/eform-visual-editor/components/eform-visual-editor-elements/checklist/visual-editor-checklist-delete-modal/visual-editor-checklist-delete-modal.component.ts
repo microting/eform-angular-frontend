@@ -1,11 +1,10 @@
 import {
   Component,
-  EventEmitter,
+  Inject,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
-import { EformVisualEditorRecursionChecklistModel } from 'src/app/common/models';
+import {EformVisualEditorRecursionChecklistModel,} from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-visual-editor-checklist-delete-modal',
@@ -13,26 +12,16 @@ import { EformVisualEditorRecursionChecklistModel } from 'src/app/common/models'
   styleUrls: ['./visual-editor-checklist-delete-modal.component.scss'],
 })
 export class VisualEditorChecklistDeleteModalComponent implements OnInit {
-  @ViewChild('frame', { static: false }) frame;
-  @Output()
-  deleteChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter();
-  recursionChecklistModel: EformVisualEditorRecursionChecklistModel = new EformVisualEditorRecursionChecklistModel();
 
-  constructor() {}
+  constructor(
+    public dialogRef: MatDialogRef<VisualEditorChecklistDeleteModalComponent>,
+    @Inject(MAT_DIALOG_DATA) private recursionChecklistModel: EformVisualEditorRecursionChecklistModel =
+      new EformVisualEditorRecursionChecklistModel()
+  ) {}
 
   ngOnInit() {}
 
-  show(model: EformVisualEditorRecursionChecklistModel) {
-    this.recursionChecklistModel = model;
-    this.frame.show();
-  }
-
-  hide() {
-    this.frame.hide();
-  }
-
-  onDeleteChecklist() {
-    this.deleteChecklist.emit(this.recursionChecklistModel);
-    this.frame.hide();
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 }
