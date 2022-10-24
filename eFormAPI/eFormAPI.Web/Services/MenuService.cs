@@ -497,27 +497,27 @@ namespace eFormAPI.Web.Services
 
             foreach (var menuItem in items)
             {
-                if (menuItem.Type == MenuItemTypeEnum.Dropdown || menuItem.Type == MenuItemTypeEnum.CustomLink)
-                {
-                    var menuItemSecurityGroups = _dbContext.MenuItemSecurityGroups
-                        .Where(x => x.MenuItemId == menuItem.Id)
-                        .Select(x => x.SecurityGroupId)
-                        .ToList();
-
-                    if (menuItemSecurityGroups.Any())
-                    {
-                        foreach (var securityGroupId in menuItemSecurityGroups)
-                        {
-                            if (_dbContext.SecurityGroupUsers.Any(x => x.SecurityGroupId == securityGroupId && x.EformUserId == currentUser.Id))
-                            {
-                                newList.Add(menuItem);
-                                break;
-                            }
-                        }
-                    }
-                }
-                else
-                {
+                // if (menuItem.Type == MenuItemTypeEnum.Dropdown || menuItem.Type == MenuItemTypeEnum.CustomLink)
+                // {
+                //     var menuItemSecurityGroups = _dbContext.MenuItemSecurityGroups
+                //         .Where(x => x.MenuItemId == menuItem.Id)
+                //         .Select(x => x.SecurityGroupId)
+                //         .ToList();
+                //
+                //     if (menuItemSecurityGroups.Any())
+                //     {
+                //         foreach (var securityGroupId in menuItemSecurityGroups)
+                //         {
+                //             if (_dbContext.SecurityGroupUsers.Any(x => x.SecurityGroupId == securityGroupId && x.EformUserId == currentUser.Id))
+                //             {
+                //                 newList.Add(menuItem);
+                //                 break;
+                //             }
+                //         }
+                //     }
+                // }
+                // else
+                // {
                     var menuItemEnglishName = menuItem.Translations
                         .FirstOrDefault(x => x.LocaleName == LocaleNames.English && x.MenuItemId == menuItem.Id)?.Name;
 
@@ -595,10 +595,30 @@ namespace eFormAPI.Web.Services
                         case "Application settings":
                             break;
                         default:
-                            newList.Add(menuItem);
+                            var menuItemSecurityGroups = _dbContext.MenuItemSecurityGroups
+                                .Where(x => x.MenuItemId == menuItem.Id)
+                                .Select(x => x.SecurityGroupId)
+                                .ToList();
+
+                            if (menuItemSecurityGroups.Any())
+                            {
+                                foreach (var securityGroupId in menuItemSecurityGroups)
+                                {
+                                    if (_dbContext.SecurityGroupUsers.Any(x => x.SecurityGroupId == securityGroupId && x.EformUserId == currentUser.Id))
+                                    {
+                                        newList.Add(menuItem);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                newList.Add(menuItem);
+                            }
+                            //newList.Add(menuItem);
                             break;
                     }
-                }
+                //}
             }
 
             return newList;
