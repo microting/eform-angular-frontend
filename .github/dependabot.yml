@@ -12,3 +12,10 @@ updates:
     interval: daily
     time: "04:00"
   open-pull-requests-limit: 20
+- package-ecosystem: npm
+  directory: "/eform-client"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 20
+  target-branch: "angular13"
