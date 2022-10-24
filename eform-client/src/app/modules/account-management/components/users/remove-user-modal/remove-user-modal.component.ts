@@ -1,12 +1,11 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Inject,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
-import { UserInfoModel } from 'src/app/common/models/user';
+import {UserInfoModel} from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-remove-user-modal',
@@ -14,20 +13,21 @@ import { UserInfoModel } from 'src/app/common/models/user';
   styleUrls: ['./remove-user-modal.component.scss'],
 })
 export class RemoveUserModalComponent implements OnInit {
-  @Input() selectedUser: UserInfoModel = new UserInfoModel();
-  @Output() onUserDeleted: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame', { static: true }) frame;
+  userDeleted: EventEmitter<UserInfoModel> = new EventEmitter<UserInfoModel>();
 
-  constructor() {}
+  constructor(
+    public dialogRef: MatDialogRef<RemoveUserModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedUser: UserInfoModel = new UserInfoModel()) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  show() {
-    this.frame.show();
+  hide() {
+    this.dialogRef.close();
   }
 
   deleteUser() {
-    this.onUserDeleted.emit();
-    this.frame.hide();
+    this.userDeleted.emit(this.selectedUser);
   }
 }

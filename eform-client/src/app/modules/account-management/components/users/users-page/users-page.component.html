@@ -1,108 +1,45 @@
-<eform-subheader>
-  <div class="p-3">
-    <button
-      mdbBtn
-      class="btn-success btn-small-height"
-      (click)="openNewUserModal()"
-      *ngIf="userClaims.usersCreate"
-      mdbTooltip="{{ 'Create user' | translate }}"
-      id="createNewUserBtn"
-    >
-      {{ 'New User' | translate }}
-    </button>
-  </div>
-</eform-subheader>
+<eform-new-subheader>
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="openNewUserModal()"
+    *ngIf="userClaims.usersCreate"
+    matTooltip="{{ 'Create user' | translate }}"
+    id="createNewUserBtn"
+  >
+    {{ 'New User' | translate }}
+  </button>
+</eform-new-subheader>
 
-<div class="d-flex flex-column p-1">
-    <div class="flex-md-row p-3" *ngIf="authStateService.isAdmin">
-      <mat-checkbox
-        id="isChecked"
-        (click)="checked($event)"
-        [(ngModel)]="isChecked"
-        color="primary"
-      >
-        {{ 'Force users to use 2-f-auth' | translate }}
-      </mat-checkbox>
-    </div>
-  <div class="flex-fill p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-      matSort
-      [matSortActive]="usersStateService.getActiveSort() | async"
-      [matSortDirection]="usersStateService.getActiveSortDirection() | async"
-      [matSortDisableClear]="true"
-      (matSortChange)="onSortTable($event)"
-    >
-      <thead
-        table-headers
-        [tableHeaders]="tableHeaders"
-      ></thead>
-      <tbody id="userInfoTable">
-      <tr *ngFor="let userInfoModel of userInfoModelList.entities">
-        <td id="userAdministrationId">{{ userInfoModel.id }}</td>
-        <td id="userAdministrationEmail">{{ userInfoModel.email }}</td>
-        <td id="userAdministrationFullName">
-          {{ userInfoModel.firstName }} {{ userInfoModel.lastName }}
-        </td>
-        <td id="userAdministrationRole">
-          {{ userInfoModel.role }}
-        </td>
-        <td *ngIf="userClaims.usersUpdate || userClaims.usersDelete">
-          <div class="d-flex flex-row justify-content-center">
-            <button
-              id="userAdministrationEditBtn"
-              class="btn btn-accent text-black-50 btn-icon mb-2"
-              *ngIf="userClaims.usersUpdate"
-              mdbTooltip="{{ 'Edit User' | translate }}"
-              (click)="openEditModal(userInfoModel.id)"
-            >
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <button
-              mdbBtn
-              class="btn-danger btn-icon mb-2"
-              *ngIf="userClaims.usersDelete"
-              mdbTooltip="{{ 'Delete user' | translate }}"
-              (click)="openRemoveUserModal(userInfoModel)"
-              id="userAdministrationDeleteBtn"
-            >
-              <fa-icon
-                icon="trash-alt"
-                [fixedWidth]="true"
-                size="lg"
-              ></fa-icon>
-            </button>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="d-flex flex-column">
+  <mat-checkbox
+    *ngIf="authStateService.isAdmin"
+    id="isChecked"
+    (click)="checked($event)"
+    [(ngModel)]="isChecked"
+    color="primary"
+  >
+    {{ 'Force users to use 2-f-auth' | translate }}
+  </mat-checkbox>
 
-  <div class="mr-2 ml-2">
+  <mtx-grid
+    [data]="userInfoModelList.entities"
+    [columns]="tableHeaders"
+    [showPaginator]="true"
+    [paginationTemplate]="paginatorTpl"
+    [pageOnFront]="false"
+    [rowStriped]="true"
+    [showToolbar]="false"
+    [showColumnMenuButton]="false"
+    [sortActive]="usersStateService.getActiveSort() | async"
+    [sortDirection]="usersStateService.getActiveSortDirection() | async"
+    (sortChange)="onSortTable($event)">
+  </mtx-grid>
+
+  <ng-template #paginatorTpl>
     <eform-pagination
       [pagination]="usersStateService.getPagination() | async"
       (paginationChanged)="onPaginationChanged($event)"
     ></eform-pagination>
-  </div>
+  </ng-template>
 </div>
-
-<app-user-edit-modal
-  (onUserUpdated)="getUserInfoList()"
-  [availableGroups]="securityGroups"
-  #userEditModal
-></app-user-edit-modal>
-<app-new-user-modal
-  (userCreated)="getUserInfoList()"
-  [availableGroups]="securityGroups"
-  #newUserModal
-></app-new-user-modal>
-<app-remove-user-modal
-  [selectedUser]="selectedUser"
-  (onUserDeleted)="onUserDeleted()"
-  #removeUserModal
-></app-remove-user-modal>

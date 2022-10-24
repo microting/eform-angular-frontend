@@ -1,171 +1,80 @@
-<eform-subheader [title]="title" [forceStaticTitle]="true"></eform-subheader>
+<eform-new-subheader [title]="title" [forceStaticTitle]="true"></eform-new-subheader>
 
-<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<div class="container-fluid">
-  <div class="row pl-1">
-    <div class="col-md-2">
-      <div class="md-form">
+<ng-template #toolbarTpl>
+  <div class="d-flex flex-row justify-content-start flex-nowrap">
+    <div class="d-flex mr-2 ml-2">
+      <mat-form-field>
+        <mat-label>{{ 'Search' | translate }}</mat-label>
         <input
-          mdbInput
+          matInput
+          type="text"
           [ngModel]="caseStateService.getNameFilter() | async"
           (ngModelChange)="onLabelInputChanged($event)"
-          type="text"
-          class="form-control"
           id="labelInput"
         />
-        <label for="labelInput">{{ 'Search' | translate }}</label>
-      </div>
+      </mat-form-field>
     </div>
   </div>
-  <div class="row p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-      matSort
-      [matSortActive]="caseStateService.getActiveSort() | async"
-      [matSortDirection]="caseStateService.getActiveSortDirection() | async"
-      [matSortDisableClear]="true"
-      (matSortChange)="sortTable($event)"
+</ng-template>
+<mtx-grid
+  [data]="caseListModel.cases"
+  [columns]="tableHeaders"
+  [cellTemplate]="{actions: actionsTpl}"
+  [showPaginator]="true"
+  [paginationTemplate]="paginatorTpl"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showToolbar]="true"
+  [showColumnMenuButton]="false"
+  [toolbarTemplate]="toolbarTpl"
+  [sortActive]="caseStateService.getActiveSort() | async"
+  [sortDirection]="caseStateService.getActiveSortDirection() | async"
+  (sortChange)="sortTable($event)">
+</mtx-grid>
+<ng-template #actionsTpl let-row>
+  <div>
+    <button
+      mat-icon-button
+      color="accent"
+      *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
+      [routerLink]="['/cases/edit/',row.id, currentTemplate.id]"
+      matTooltip="{{ 'Edit Case' | translate }}"
     >
-      <thead
-        table-headers
-        [tableHeaders]="tableHeaders"
-      ></thead>
-      <tbody>
-      <tr *ngFor="let caseModel of caseListModel.cases">
-        <td>{{ caseModel.id }}</td>
-        <td>
-          <date-formatter
-            [date]="caseModel.doneAtUserModifiable"
-            [Format]="'datetime'"
-          ></date-formatter>
-        </td>
-        <td *ngIf="authStateService.isAdmin">
-          <date-formatter
-            [date]="caseModel.createdAt"
-            [Format]="'datetime'"
-          ></date-formatter>
-        </td>
-        <td>{{ caseModel.workerName }}</td>
-        <td *ngIf="currentTemplate.field1" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue1"></div>
-        </td>
-        <td *ngIf="currentTemplate.field2" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue2"></div>
-        </td>
-        <td *ngIf="currentTemplate.field3" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue3"></div>
-        </td>
-        <td *ngIf="currentTemplate.field4" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue4"></div>
-        </td>
-        <td *ngIf="currentTemplate.field5" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue5"></div>
-        </td>
-        <td *ngIf="currentTemplate.field6" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue6"></div>
-        </td>
-        <td *ngIf="currentTemplate.field7" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue7"></div>
-        </td>
-        <td *ngIf="currentTemplate.field8" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue8"></div>
-        </td>
-        <td *ngIf="currentTemplate.field9" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue9"></div>
-        </td>
-        <td>
-          <div class="d-flex flex-row justify-content-center">
-            <button
-              mdbBtn
-              class="btn-success btn-icon mb-2"
-              *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
-              [routerLink]="[
-                  '/cases/edit/' + caseModel.id + '/' + currentTemplate.id
-                ]"
-              mdbTooltip="{{ 'Edit Case' | translate }}"
-            >
-              <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
-            </button>
-            <!--<button
-              mdbBtn
-              class="btn-success btn-icon mb-2"
-              *ngIf="authStateService.isAdmin"
-              [routerLink]="[
-                              '/cases/posts/' + caseModel.id + '/' + currentTemplate.id
-                            ]"
-              mdbTooltip="{{ 'Posts' | translate }}"
-            >
-              <fa-icon
-                icon="sticky-note"
-                size="lg"
-                [fixedWidth]="true"
-              ></fa-icon>
-            </button>-->
-            <button
-              mdbBtn
-              class="btn-success btn-icon mb-2"
-              *ngIf="
-                  checkEformPermissions(userClaimsEnum.caseGetPdf) &&
-                  (currentTemplate.jasperExportEnabled ||
-                    currentTemplate.docxExportEnabled)
-                "
-              (click)="downloadFile(caseModel.id, 'pdf')"
-              mdbTooltip="{{ 'Download PDF' | translate }}"
-            >
-              <fa-icon
-                icon="file-pdf"
-                size="lg"
-                [fixedWidth]="true"
-              ></fa-icon>
-            </button>
-            <button
-              mdbBtn
-              class="btn-info btn-icon mb-2"
-              *ngIf="
-                  checkEformPermissions(userClaimsEnum.caseGetPdf) &&
-                  currentTemplate.docxExportEnabled
-                "
-              (click)="downloadFile(caseModel.id, 'docx')"
-              mdbTooltip="{{ 'Download Docx' | translate }}"
-            >
-              <fa-icon
-                icon="file-word"
-                size="lg"
-                [fixedWidth]="true"
-              ></fa-icon>
-            </button>
-            <button
-              mdbBtn
-              class="btn-danger btn-icon mb-2"
-              *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
-              mdbTooltip="{{ 'Delete Case' | translate }}"
-              (click)="onDeleteClicked(caseModel)"
-            >
-              <fa-icon
-                icon="trash-alt"
-                size="lg"
-                [fixedWidth]="true"
-              ></fa-icon>
-            </button>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      color="primary"
+      *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) &&
+        (currentTemplate.jasperExportEnabled || currentTemplate.docxExportEnabled)"
+      (click)="downloadFile(row.id, 'pdf')"
+      matTooltip="{{ 'Download PDF' | translate }}"
+    >
+      <mat-icon svgIcon="file-pdf"></mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      color="primary"
+      *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && currentTemplate.docxExportEnabled"
+      (click)="downloadFile(row.id, 'docx')"
+      matTooltip="{{ 'Download Docx' | translate }}"
+    >
+      <mat-icon svgIcon="file-word"></mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      color="warn"
+      *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
+      (click)="onDeleteClicked(row)"
+      matTooltip="{{ 'Delete Case' | translate }}"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
-  <div class="mr-2 ml-2">
-    <eform-pagination
-      [pagination]="caseStateService.getPagination() | async"
-      (paginationChanged)="onPaginationChanged($event)"
-    ></eform-pagination>
-  </div>
-</div>
-
-<app-case-remove-modal
-  (onCaseDeleted)="onCaseDeleted()"
-  #modalRemoveCase
-></app-case-remove-modal>
+</ng-template>
+<ng-template #paginatorTpl>
+  <eform-pagination
+    [pagination]="caseStateService.getPagination() | async"
+    (paginationChanged)="onPaginationChanged($event)"
+  ></eform-pagination>
+</ng-template>

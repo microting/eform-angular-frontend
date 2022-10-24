@@ -37,6 +37,7 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { TranslateService } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -79,24 +80,24 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   tableHeaders: MtxGridColumn[] = [
-    {header: 'ID', field: 'id', sortProp: {id: 'Id'}, sortable: true, type: 'number', class: 'eform-id-header'},
-    {header: 'Server date', sortProp: {id: 'CreatedAt'}, field: 'createdAt', sortable: true, class: 'eform-created-at-header'},
+    {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true, type: 'number'},
+    {header: this.translateService.stream('Server date'), sortProp: {id: 'CreatedAt'}, field: 'createdAt', sortable: true},
     {
-      header: 'Name',
+      header: this.translateService.stream('Label'),
       field: 'label',
       sortable: true,
       sortProp: {id: 'Text'},
       class: 'eform-name-header',
     },
     {
-      header: 'Description',
+      header: this.translateService.stream('Description'),
       field: 'description',
       sortProp: {id: 'Description'},
       sortable: true,
     },
-    {header: 'Tags', field: 'tags'},
-    {header: 'Pairing', field: 'pairingUpdate'},
-    {header: 'Actions', field: 'actions'},
+    {header: this.translateService.stream('Tags'), field: 'tags'},
+    {header: this.translateService.stream('Pairing'), field: 'pairingUpdate'},
+    {header: this.translateService.stream('Actions'), field: 'actions'},
   ];
 
   constructor(
@@ -109,7 +110,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     public dialog: MatDialog,
-    private overlay: Overlay
+    private overlay: Overlay,
+    private translateService: TranslateService,
   ) {
     iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(WordIcon));
     iconRegistry.addSvgIconLiteral('file-code', sanitizer.bypassSecurityTrustHtml(CodeIcon));

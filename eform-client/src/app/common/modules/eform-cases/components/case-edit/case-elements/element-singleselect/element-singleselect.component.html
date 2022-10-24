@@ -1,6 +1,10 @@
-<ng-select *ngIf="fieldValueObj !== undefined"
-  bindValue="key"
-  bindLabel="value"
-  [placeholder]="fieldValueObj.valueReadable"
-  (change)="onSelectedChanged($event)"
-  [items]="fieldValueObj.keyValuePairList"></ng-select>
+<mat-form-field *ngIf="fieldValueObj !== undefined">
+  <mat-label>{{ fieldValueObj.valueReadable }}</mat-label>
+  <mtx-select
+    bindValue="key"
+    bindLabel="value"
+    (change)="onSelectedChanged($event)"
+    [items]="fieldValueObj.keyValuePairList">
+  </mtx-select>
+</mat-form-field>
+

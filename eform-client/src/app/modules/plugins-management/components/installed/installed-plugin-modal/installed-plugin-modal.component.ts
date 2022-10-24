@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {
   InstalledPluginModel,
   InstalledPluginUpdateModel,
-} from '../../../../../common/models';
+} from 'src/app/common/models';
 import { InstalledPluginStatusEnum } from 'src/app/common/const';
 import { PluginsManagementService } from 'src/app/common/services';
-import { AuthStateService } from 'src/app/common/store';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-installed-plugin-modal',
@@ -13,14 +13,15 @@ import { AuthStateService } from 'src/app/common/store';
   styleUrls: ['./installed-plugin-modal.component.scss'],
 })
 export class InstalledPluginModalComponent implements OnInit {
-  @Input()
-  installedPluginModel: InstalledPluginModel = new InstalledPluginModel();
-  @ViewChild('frame', { static: true }) editInstalledPluginModal;
-
   constructor(
-    private authStateService: AuthStateService,
-    private pluginManagementService: PluginsManagementService
+    private pluginManagementService: PluginsManagementService,
+    public dialogRef: MatDialogRef<InstalledPluginModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public installedPluginModel: InstalledPluginModel = new InstalledPluginModel()
   ) {}
+
+  hide(result = false) {
+    this.dialogRef.close(result);
+  }
 
   get statusEnum() {
     return InstalledPluginStatusEnum;
@@ -28,24 +29,16 @@ export class InstalledPluginModalComponent implements OnInit {
 
   ngOnInit() {}
 
-  show() {
-    this.editInstalledPluginModal.show();
-  }
-
   updatePluginStatus(status: number) {
     const newModel = new InstalledPluginUpdateModel();
     newModel.id = this.installedPluginModel.id;
     newModel.pluginId = this.installedPluginModel.pluginId;
-    newModel.status =
-      status === this.statusEnum.Enabled
-        ? this.statusEnum.Disabled
-        : this.statusEnum.Enabled;
+    newModel.status = status;
     this.pluginManagementService
       .updateInstalledPlugin(newModel)
       .subscribe((data) => {
         if (data && data.success) {
-          // this.editInstalledPluginModal.hide();
-          this.authStateService.logout();
+          this.hide(true);
           // window.location.reload();
         }
       });

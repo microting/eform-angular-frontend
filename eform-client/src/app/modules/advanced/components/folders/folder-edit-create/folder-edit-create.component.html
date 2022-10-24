@@ -1,0 +1,81 @@
+<h3 mat-dialog-title>{{(edit ? 'Edit Folder' : 'New Folder') | translate}}</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-column">
+    <mat-card class="mb-1">
+      <mat-card-content style="display: flex; flex-direction: row;">
+        <mat-form-field [style]="selectedParentFolder ? 'padding-right: 0.5rem;' : 'padding-right: 0;'">
+          <mat-label>{{'Selected language' | translate }}</mat-label>
+          <mtx-select
+            dropdownPosition="bottom"
+            appendTo="body"
+            [bindLabel]="'text'"
+            [bindValue]="'id'"
+            [clearable]="false"
+            [(ngModel)]="selectedLanguage"
+            [items]="languages"
+            id="editLanguageSelector">
+          </mtx-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="selectedParentFolder" style="padding-left: 0.5rem;">
+          <mat-label>{{ 'Parent name' | translate}}</mat-label>
+          <input
+            matInput
+            [ngModel]="getParentTranslation()"
+            required
+            id="parentName"
+            type="text"
+            name="parentName"
+            [disabled]="true"
+          />
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+    <ng-container
+      *ngFor="
+            let translation of folderUpdateCreateModel.translations;
+            let translationIndex = index
+          "
+    >
+      <mat-card class="mb-1" *ngIf="translation !== undefined && selectedLanguage === translation.languageId">
+<!--        <mat-card-title>{{ getLanguage(translation.languageId) | translate }}</mat-card-title>-->
+        <mat-card-content>
+          <div class="d-flex flex-column">
+            <mat-form-field>
+              <mat-label>{{'Name' | translate }}</mat-label>
+              <input
+                matInput
+                type="text"
+                id="{{edit ? 'edit' : 'create'}}FolderNameTranslation_{{ translationIndex }}"
+                name="{{edit ? 'edit' : 'create'}}FolderNameTranslation_{{ translationIndex }}"
+                [(ngModel)]="translation.name"
+              />
+            </mat-form-field>
+            <formatting-text-editor
+              [(value)]="translation.description"
+              [placeholder]="'Description' | translate"
+              id="{{edit ? 'edit' : 'create'}}FolderDescriptionTranslation_{{ translationIndex }}"
+            >
+            </formatting-text-editor>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="edit ? updateFolder() : createFolder()"
+    id="{{edit ? 'saveEditBtn' : 'folderSaveBtn'}}"
+  >
+    {{(edit ? 'Save' : 'Create') | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="{{edit ? 'cancelEditBtn' : 'cancelCreateBtn'}}"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
+</div>

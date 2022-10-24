@@ -1,89 +1,52 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade"
-  #frame="mdbModal"
->
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Are you sure you want to delete this case' | translate }}?</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6">
-              <h6>ID</h6>
-            </div>
-            <div class="col-md-6">
-              <h6>
-                <strong>{{ selectedCaseModel.id }}</strong>
-              </h6>
-            </div>
-          </div>
-
-          <div class="row" *ngIf="selectedCaseModel.createdAt">
-            <div class="col-md-6">
-              <h6>{{ 'Accessible at' | translate }}</h6>
-            </div>
-            <div class="col-md-6">
-              <h6>
-                <strong>
-                  <date-formatter
-                    [date]="selectedCaseModel.createdAt"
-                    [Format]="'datetime'"
-                  ></date-formatter>
-                </strong>
-              </h6>
-            </div>
-          </div>
-
-          <div class="row" *ngIf="selectedCaseModel.doneAt">
-            <div class="col-md-6">
-              <h6>{{ 'Finished at' | translate }}</h6>
-            </div>
-            <div class="col-md-6">
-              <h6>
-                <strong>
-                  <date-formatter
-                    [date]="selectedCaseModel.doneAt"
-                    [Format]="'datetime'"
-                  ></date-formatter>
-                </strong>
-              </h6>
-            </div>
-          </div>
-
-          <div class="row" *ngIf="selectedCaseModel.workerName">
-            <div class="col-md-6">
-              <h6>{{ 'Done by' | translate }}</h6>
-            </div>
-            <div class="col-md-6">
-              <h6>
-                <strong>{{ selectedCaseModel.workerName }}</strong>
-              </h6>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          mat-raised-button
-          color="accent"
-          (click)="submitCaseDelete()"
-        >
-          {{ 'Delete' | translate }}
-        </button>
-        <button
-          mat-raised-button
-          (click)="frame.hide()"
-        >
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
+<h3 mat-dialog-title>{{ 'Are you sure you want to delete this case' | translate }}?</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>ID</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{selectedCaseModel.id}}</strong>
     </div>
   </div>
+  <div class="d-flex flex-row justify-content-between" *ngIf="selectedCaseModel.createdAt">
+    <div class="d-flex flex-column">
+      <p>{{'Accessible at' | translate}}</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong><date-formatter [date]="selectedCaseModel.createdAt" [Format]="'datetime'"></date-formatter></strong>
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column" *ngIf="selectedCaseModel.doneAt">
+      <p>{{'Finished at' | translate}}</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong><date-formatter [date]="selectedCaseModel.doneAt" [Format]="'datetime'"></date-formatter></strong>
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column" *ngIf="selectedCaseModel.workerName">
+      <p>{{ 'Done by' | translate }}</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{selectedCaseModel.workerName}}</strong>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="hide(true)"
+    id="fieldDeleteDeleteBtn"
+  >
+    {{'Delete' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    (click)="hide()"
+    id="fieldDeleteCancelBtn"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

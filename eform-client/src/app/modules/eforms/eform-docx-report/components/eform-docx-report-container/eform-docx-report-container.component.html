@@ -1,62 +1,53 @@
-<eform-subheader>
+<eform-new-subheader [forceStaticTitle]="true" [title]="'Word report' | translate">
   <button
-    mdbBtn
+    mat-raised-button
     *ngIf="userRole === 'admin'"
     id="reportEditHeadersBtn"
-    class="btn-success btn-small-height"
+    color="accent"
     (click)="showHeadersEditModal()"
   >
     {{ 'Edit headers' | translate }}
   </button>
-</eform-subheader>
+</eform-new-subheader>
 
-<div class="container-fluid">
-  <app-eform-docx-report-header
-    [range]="range"
-    [templateId]="selectedTemplateId"
-    (downloadReport)="onDownloadReport($event)"
-    (generateReport)="onGenerateReport($event)"
-  >
-  </app-eform-docx-report-header>
-  <div class="mb-4">
-    <ng-container *ngIf="reportModel.textHeaders">
-      <h1 *ngIf="reportModel.textHeaders.header1">
-        {{ reportModel.textHeaders.header1 }}
-      </h1>
-      <h2 *ngIf="reportModel.textHeaders.header2">
-        {{ reportModel.textHeaders.header2 }}
-      </h2>
-      <h3 *ngIf="reportModel.textHeaders.header3">
-        {{ reportModel.textHeaders.header3 }}
-      </h3>
-      <h4 *ngIf="reportModel.textHeaders.header4">
-        {{ reportModel.textHeaders.header4 }}
-      </h4>
-      <h5 *ngIf="reportModel.textHeaders.header5">
-        {{ reportModel.textHeaders.header5 }}
-      </h5>
-    </ng-container>
+<app-eform-docx-report-header
+  [range]="range"
+  [templateId]="selectedTemplateId"
+  (downloadReport)="onDownloadReport($event)"
+  (generateReport)="onGenerateReport($event)"
+>
+</app-eform-docx-report-header>
+<ng-container *ngIf="reportModel.textHeaders">
+  <h1 *ngIf="reportModel.textHeaders.header1">
+    {{ reportModel.textHeaders.header1 }}
+  </h1>
+  <h2 *ngIf="reportModel.textHeaders.header2">
+    {{ reportModel.textHeaders.header2 }}
+  </h2>
+  <h3 *ngIf="reportModel.textHeaders.header3">
+    {{ reportModel.textHeaders.header3 }}
+  </h3>
+  <h4 *ngIf="reportModel.textHeaders.header4">
+    {{ reportModel.textHeaders.header4 }}
+  </h4>
+  <h5 *ngIf="reportModel.textHeaders.header5">
+    {{ reportModel.textHeaders.header5 }}
+  </h5>
+</ng-container>
 
-    <ng-container *ngIf="reportModel.descriptionBlocks">
-      <p *ngFor="let descriptionBlock of reportModel.descriptionBlocks">
-        {{ descriptionBlock }}
-      </p>
-    </ng-container>
+<ng-container *ngIf="reportModel.descriptionBlocks">
+  <p *ngFor="let descriptionBlock of reportModel.descriptionBlocks">
+    {{ descriptionBlock }}
+  </p>
+</ng-container>
 
-    <app-eform-docx-report-table
-      [items]="reportModel.items"
-      [itemHeaders]="reportModel.itemHeaders"
-      [dateFrom]="dateFrom"
-      [dateTo]="dateTo"
-    ></app-eform-docx-report-table>
-    <app-eform-docx-report-images
-      *ngIf="reportModel.imageNames.length > 0"
-      [imageNames]="reportModel.imageNames"
-    ></app-eform-docx-report-images>
-  </div>
-</div>
-
-<app-eform-docx-report-header-editor
-  (updateReportHeaders)="onUpdateReportHeaders($event)"
-  #headerEditorModal
-></app-eform-docx-report-header-editor>
+<app-eform-docx-report-table
+  [items]="reportModel.items"
+  [itemHeaders]="reportModel.itemHeaders"
+  [dateFrom]="dateFrom"
+  [dateTo]="dateTo"
+></app-eform-docx-report-table>
+<app-eform-docx-report-images
+  *ngIf="reportModel.imageNames.length > 0"
+  [imageNames]="reportModel.imageNames"
+></app-eform-docx-report-images>

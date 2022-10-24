@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   SiteNameDto,
   CommonDictionaryModel,
@@ -11,13 +11,16 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {SiteDeleteComponent, SiteEditComponent} from 'src/app/modules/advanced/components';
+import { TranslateService } from '@ngx-translate/core';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {Subscription} from 'rxjs';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-sites',
   templateUrl: './sites.component.html',
 })
-export class SitesComponent implements OnInit {
-  siteEditComponentAfterClosedSub$: any;
+export class SitesComponent implements OnInit, OnDestroy {
   get userClaims() {
     return this.authStateService.currentUserClaims;
   }
@@ -28,20 +31,19 @@ export class SitesComponent implements OnInit {
     private eFormTagService: EformTagService,
     public dialog: MatDialog,
     private overlay: Overlay,
+    private translateService: TranslateService,
   ) {}
   @ViewChild('modalTags', { static: true }) modalSiteTags: EformsTagsComponent;
   sitesDto: Array<SiteNameDto> = [];
   availableTags: Array<CommonDictionaryModel> = [];
+  siteEditComponentAfterClosedSub$: Subscription;
+  getCurrentUserClaimsAsyncSub$: Subscription;
 
   tableHeaders: MtxGridColumn[] = [
-    {header: 'Microting UID', field: 'siteUId'},
-    {header: 'Name', field: 'siteName'},
-    { header: 'Units', field: 'units', },
-    { header: 'Tags', field: 'tags', },
-    this.authStateService.currentUserClaims.sitesDelete ||
-    this.authStateService.currentUserClaims.sitesUpdate
-      ? {header: 'Actions', field: 'actions'}
-      : undefined,
+    {header: this.translateService.stream('Microting UID'), field: 'siteUId'},
+    {header: this.translateService.stream('Name'), field: 'siteName'},
+    { header: this.translateService.stream('Units'), field: 'units', },
+    { header: this.translateService.stream('Tags'), field: 'tags', },
   ]
 
   getTagName(tagId: number): string {
@@ -51,6 +53,16 @@ export class SitesComponent implements OnInit {
   ngOnInit() {
     // this.loadAllSites();
     this.loadAllTags();
+    this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
+      if(x.sitesDelete || x.sitesUpdate) {
+        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+          {
+            header: this.translateService.stream('Actions'),
+            field: 'actions',
+          },
+        ];
+      }
+    })
   }
 
   openEditModal(siteNameDto: SiteNameDto) {
@@ -89,5 +101,8 @@ export class SitesComponent implements OnInit {
         this.loadAllSites();
       }
     });
+  }
+
+  ngOnDestroy(): void {
   }
 }

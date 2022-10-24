@@ -1,68 +1,66 @@
 <!-- Nested checklists level rendering -->
 <section id="checkListSection{{ checklistIndex }}" *ngIf="checklist">
-  <div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
-    <div class="card-header">
+  <mat-card class="mb-4 mt-4" style="width: 100%">
+    <mat-card-title>
       <div class="d-flex justify-content-between align-items-center">
-        <div>
-          <i
-            class="material-icons md-36 dragula-handle align-middle"
+        <div style="display: flex; flex-grow: 2; align-items: center;">
+          <mat-icon
+            class="dragula-handle align-middle"
             style="cursor: pointer"
             id="moveBtn"
           >
-            drag_handle
-          </i>
+            menu
+          </mat-icon>
           {{ ('eForm' | translate) + ' - ' + translationChecklistName }}
         </div>
-        <div class="d-flex align-items-center">
-          <fa-icon
+        <div style="display: flex; flex-grow: 1; align-items: center; justify-content: flex-end;">
+          <mat-icon
+            style="margin-right: 1rem;"
             *ngIf="!isChecklistComplete"
-            [mdbTooltip]="'eForm is not complete' | translate"
-            icon="info-circle"
-            [fixedWidth]="true"
-            size="lg"
-            class="text-warning mr-2"
-          ></fa-icon>
+            [matTooltip]="'eForm is not complete' | translate"
+            class="text-warning"
+          >info</mat-icon>
           <button
             *ngIf="checklist.fields.length == 0"
-            mdbBtn
-            [mdbTooltip]="'New sub eForm' | translate"
-            class="btn-success btn-icon"
+            mat-icon-button
+            [matTooltip]="'New sub eForm' | translate"
+            color="accent"
             id="addNewNestedChecklist{{ checklistIndex }}"
             (click)="onAddNewNestedChecklist()"
           >
-            <fa-icon icon="folder-plus" [fixedWidth]="true" size="lg"></fa-icon>
+            <mat-icon>create_new_folder</mat-icon>
           </button>
           <button
             *ngIf="checklist.checkLists.length == 0"
-            mdbBtn
-            [mdbTooltip]="'New nested field' | translate"
-            class="btn-success btn-icon"
+            mat-icon-button
+            color="accent"
+            [matTooltip]="'New nested field' | translate"
             id="addNewNestedField{{ checklistIndex }}"
             (click)="onAddNewNestedField()"
           >
-            <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
+            <mat-icon>add</mat-icon>
           </button>
           <button
-            mdbBtn
-            [mdbTooltip]="'Edit eForm' | translate"
-            class="btn-neutral btn-icon"
+            mat-icon-button
+            color="primary"
+            [matTooltip]="'Edit eForm' | translate"
             id="editChecklistBtn{{ checklistIndex }}"
             (click)="onEditChecklist()"
           >
-            <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+            <mat-icon>edit</mat-icon>
           </button>
           <button
-            mdbBtn
-            [mdbTooltip]="'Delete eForm' | translate"
-            class="btn-danger btn-icon"
+            mat-icon-button
+            [matTooltip]="'Delete eForm' | translate"
+            color="warn"
             id="deleteChecklistBtn{{ checklistIndex }}"
             (click)="onDeleteChecklist()"
           >
-            <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
+            <mat-icon>delete</mat-icon>
           </button>
         </div>
       </div>
-    </div>
+    </mat-card-title>
     <div class="card-body">
       <div
         dragula="{{ dragulaElementContainerName }}"
@@ -109,8 +107,10 @@
           "
           (deleteNestedChecklist)="onDeleteNestedChecklist($event)"
           (deleteNestedField)="onDeleteNestedFieldInNestedChecklist($event)"
+          (changeColorField)="onChangeColorInNestedFieldInNestedChecklist($event)"
+          (copyNestedField)="onCopyNestedFieldInNestedChecklist($event)"
         ></app-visual-editor-checklist>
       </ng-container>
     </div>
-  </div>
+  </mat-card>
 </section>

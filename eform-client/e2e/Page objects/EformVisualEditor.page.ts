@@ -375,7 +375,8 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   }
 
   async openAllLanguages() {
-    for (let i = 0; i < applicationLanguages.length; i++) {
+    //for (let i = 0; i < applicationLanguages.length; i++) {
+    for (let i = 0; i < 3; i++) { // for now only 3 languages
       await this.clickLanguageCheckbox(true, i);
     }
   }
@@ -383,7 +384,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   async clickLanguageCheckbox(value: boolean, index: number) {
     const checkbox = await $(`#languageCheckbox${index}`);
     if ((await checkbox.getValue()) !== value.toString()) {
-      await (await checkbox.$('..')).click();
+      await (await (await checkbox.$('..')).$('..')).click();
     }
   }
 }
@@ -394,8 +395,8 @@ export enum DanishEformFieldTypesEnum {
   'Infoboks',
   'Afkrysning',
   'Billede',
-  Audio,
-  Movie,
+  'Audio',
+  'Movie',
   'Rullemenu',
   'Tekst',
   'Rullemenu multi',

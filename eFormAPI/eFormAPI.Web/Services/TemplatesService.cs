@@ -158,7 +158,7 @@ namespace eFormAPI.Web.Services
                     FolderName = x.CheckList.FolderName,
                     WorkflowState = x.CheckList.WorkflowState,
                     HasCases = x.CheckList.Cases
-                        .Any(y => y.WorkflowState != Constants.WorkflowStates.Removed),
+                        .Any(y => y.WorkflowState != Constants.WorkflowStates.Removed && y.Status == 100),
                     DisplayIndex = x.CheckList.DisplayIndex,
                     Tags = x.CheckList.Taggings
                         .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)

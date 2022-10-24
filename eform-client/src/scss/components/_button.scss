@@ -32,6 +32,12 @@
   }
 }
 
-.mat-button-base ~ .mat-button-base {
-  margin-left: 0.5rem;
+@each $key in mat-button-base, mat-slide-toggle {
+  .#{$key} + .mat-button-base {
+    @if($key==mat-slide-toggle){
+      margin-left: 1rem;
+    } @else {
+      margin-left: 0.5rem;
+    }
+  }
 }

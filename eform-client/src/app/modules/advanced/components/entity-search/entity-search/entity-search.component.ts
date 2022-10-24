@@ -15,6 +15,7 @@ import {EntitySearchRemoveComponent,} from '../';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -31,15 +32,15 @@ export class EntitySearchComponent implements OnInit, OnDestroy{
   }
 
   tableHeaders: MtxGridColumn[] = [
-    {header: 'Id', field: 'microtingUUID', sortProp: {id: 'Id'}, sortable: true},
-    {header: 'Name', sortProp: {id: 'Name'}, field: 'name', sortable: true},
+    {header: this.translateService.stream('Id'), field: 'microtingUUID', sortProp: {id: 'Id'}, sortable: true},
+    {header: this.translateService.stream('Name'), sortProp: {id: 'Name'}, field: 'name', sortable: true},
     {
-      header: 'Description',
+      header: this.translateService.stream('Description'),
       field: 'description',
       sortable: true,
       sortProp: {id: 'Description'}
     },
-    {header: 'Actions', field: 'actions'},
+    {header: this.translateService.stream('Actions'), field: 'actions'},
   ]
 
   constructor(
@@ -48,6 +49,7 @@ export class EntitySearchComponent implements OnInit, OnDestroy{
     public entitySearchStateService: EntitySearchStateService,
     private dialog: MatDialog,
     private overlay: Overlay,
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit() {

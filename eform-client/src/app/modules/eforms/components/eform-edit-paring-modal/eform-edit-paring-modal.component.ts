@@ -24,8 +24,8 @@ export class EformEditParingModalComponent implements OnInit {
   saveButtonDisabled = true;
   eformDeployed = false;
   columns: MtxGridColumn[] = [
-    { header: 'Microting ID', field: 'siteUId', },
-    { header: this.translateService.get('Device user'), field: 'siteName', },
+    { header: this.translateService.stream('Microting ID'), field: 'siteUId', },
+    { header: this.translateService.stream('Device user'), field: 'siteName', },
     // { header: this.translateService.get('Select'), field: 'status' },
   ];
   rowSelected: any[];

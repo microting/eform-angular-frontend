@@ -1,55 +1,34 @@
-<eform-subheader [title]="'Plugins marketplace' | translate">
-  <div class="p-3">
-    <button
-      mdbBtn
-      class="btn-success btn-small-height"
-      id="managementPageButton"
-      [routerLink]="['/plugins-management-settings']"
-    >
-      {{ 'Management' | translate }}
-    </button>
-  </div>
-</eform-subheader>
+<eform-new-subheader [title]="'Plugins marketplace' | translate" [forceStaticTitle]="true">
+  <button
+    color="accent"
+    mat-raised-button
+    id="managementPageButton"
+    [routerLink]="['../']"
+  >
+    {{ 'Management' | translate }}
+  </button>
+</eform-new-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<div class="container-fluid mt-4">
-  <div class="row p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-    >
-      <tr>
-        <th>{{ 'ID' }}</th>
-        <th>{{ 'Name' | translate }}</th>
-        <th>{{ 'Actions' | translate }}</th>
-      </tr>
-      <tr *ngFor="let plugin of marketplacePluginsList.pluginsList">
-        <td>{{ plugin.pluginId }}</td>
-        <td>{{ plugin.name }}</td>
-        <td>
-          <div class="d-flex flex-row justify-content-center">
-            <button
-              mdbBtn
-              class="btn-accent text-black-50 btn-icon mb-2"
-              mdbTooltip="{{ 'Edit Settings' | translate }}"
-              (click)="showEditModal(plugin)"
-              mdbWavesEffect
-              id="editSettingsBtn"
-              id="plugin-settings-btn"
-            >
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
+<mtx-grid
+  [data]="marketplacePluginsList.pluginsList"
+  [columns]="tableHeaders"
+  [cellTemplate]="{actions: actionsTpl}"
+  [showPaginator]="false"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showColumnMenuButton]="false">
+</mtx-grid>
 
-<app-plugins-marketplace-install
-  #installMarketplacePluginModal
-  (onMarketplacePluginInstall)="installPlugin($event)"
-></app-plugins-marketplace-install>
+<ng-template #actionsTpl let-row>
+  <div class="d-flex align-items-center">
+    <button
+      mat-icon-button
+      matTooltip="{{ 'Edit Settings' | translate }}"
+      (click)="showEditModal(row)"
+      id="editSettingsBtn"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+</ng-template>

@@ -1,36 +1,27 @@
-<form [formGroup]="generateForm">
-  <div class="row pl-1">
-    <div class="col-md-3">
-      <div class="md-form" [owlDateTimeTrigger]="dateRangePicker">
-        <i class="material-icons prefix"> calendar_today </i>
-        <input
-          mdbInput
-          formControlName="dateRange"
-          name="dateRange"
-          required
-          [(ngModel)]="range"
-          type="text"
-          [owlDateTime]="dateRangePicker"
-          [selectMode]="'range'"
-          class="form-control input-sm"
-          id="dateFormInput"
-        />
-        <label for="dateFormInput">{{
-          'Select date range' | translate
-        }}</label>
-      </div>
-    </div>
-    <div class="col-md-1 text-center pt-3">
-      <button
-        mdbBtn
-        class="btn-success btn-small-height"
-        [disabled]="generateForm.invalid"
-        (click)="onSave()"
-      >
-        {{ 'Download' | translate }}
-      </button>
-    </div>
-  </div>
+<form [formGroup]="generateForm" style="width: 20%">
+  <mat-form-field [owlDateTimeTrigger]="dateRangePicker">
+    <mat-label>{{ 'Select date range' | translate }}</mat-label>
+    <mat-icon matPrefix>calendar_today</mat-icon>
+    <input
+      matInput
+      formControlName="dateRange"
+      name="dateRange"
+      required
+      [(ngModel)]="range"
+      type="text"
+      [owlDateTime]="dateRangePicker"
+      [selectMode]="'range'"
+      id="dateFormInput"
+    >
+  </mat-form-field>
+  <button
+    mat-raised-button
+    color="accent"
+    [disabled]="generateForm.invalid"
+    (click)="onSave()"
+  >
+    {{ 'Download' | translate }}
+  </button>
 </form>
 
 <owl-date-time

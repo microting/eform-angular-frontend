@@ -12,19 +12,8 @@ import {
   NavigationMenuResetComponent,
 } from './components';
 import { NavigationMenuRouting } from './navigation-menu.routing';
-import {
-  ButtonsModule,
-  CardsModule,
-  CollapseModule,
-  InputsModule,
-  ModalModule,
-  TableModule,
-  TooltipModule,
-  WavesModule,
-} from 'angular-bootstrap-md';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { DragulaModule } from 'ng2-dragula';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
@@ -35,6 +24,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MtxSelectModule} from '@ng-matero/extensions/select';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -51,20 +44,11 @@ import {MatCardModule} from '@angular/material/card';
   imports: [
     CommonModule,
     NavigationMenuRouting,
-    ButtonsModule,
     TranslateModule,
     FontAwesomeModule,
-    NgSelectModule,
-    InputsModule,
-    TableModule,
-    CardsModule,
     DragulaModule,
-    TooltipModule,
     FormsModule,
-    CollapseModule,
     EformSharedModule,
-    WavesModule,
-    ModalModule,
     ReactiveFormsModule,
     MatCheckboxModule,
     MatButtonModule,
@@ -73,6 +57,10 @@ import {MatCardModule} from '@angular/material/card';
     MatGridListModule,
     MatExpansionModule,
     MatCardModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MtxSelectModule,
+    MatInputModule,
   ],
 })
 export class NavigationMenuModule {}

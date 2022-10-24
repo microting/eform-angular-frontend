@@ -1,5 +1,5 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {Gallery, GalleryComponent, GalleryItem, ImageItem} from '@ngx-gallery/core';
+import {Component, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
+import {Gallery, GalleryItem, ImageItem} from '@ngx-gallery/core';
 import {Lightbox} from '@ngx-gallery/lightbox';
 import {FieldValueDto} from 'src/app/common/models';
 import {TemplateFilesService} from 'src/app/common/services';
@@ -9,6 +9,7 @@ import {Subscription} from 'rxjs';
 
 @AutoUnsubscribe()
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'element-signature',
   templateUrl: './element-signature.component.html',
   styleUrls: ['./element-signature.component.scss']
@@ -19,8 +20,12 @@ export class ElementSignatureComponent implements OnChanges, OnDestroy {
   galleryImages: GalleryItem[] = [];
   imageSub$: Subscription;
 
-  constructor(public gallery: Gallery, public lightbox: Lightbox, private imageService: TemplateFilesService) { }
-
+  constructor(
+    public gallery: Gallery,
+    public lightbox: Lightbox,
+    private imageService: TemplateFilesService
+  ) {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.fieldValues) {
@@ -28,7 +33,6 @@ export class ElementSignatureComponent implements OnChanges, OnDestroy {
         if (value.uploadedDataObj) {
           this.imageSub$ = this.imageService.getImage(value.uploadedDataObj.fileName).subscribe(blob => {
             const imageUrl = URL.createObjectURL(blob);
-            // TODO: CHECK
             this.images.push({
               src: imageUrl,
               thumbnail: imageUrl,

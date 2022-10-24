@@ -1,10 +1,8 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Inject,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import {
   NavigationMenuItemIndexedModel,
@@ -13,6 +11,7 @@ import {
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import { CommonDictionaryModel } from 'src/app/common/models';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-navigation-menu-item-edit',
@@ -20,9 +19,8 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./navigation-menu-item-edit.component.scss'],
 })
 export class NavigationMenuItemEditComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Input() availableSecurityGroups: CommonDictionaryModel[] = [];
-  @Output() itemEditConfirm: EventEmitter<
+  availableSecurityGroups: CommonDictionaryModel[] = [];
+  itemEditConfirm: EventEmitter<
     NavigationMenuItemIndexedModel
   > = new EventEmitter<NavigationMenuItemIndexedModel>();
   item: NavigationMenuItemModel = new NavigationMenuItemModel();
@@ -34,18 +32,14 @@ export class NavigationMenuItemEditComponent implements OnInit {
     return NavigationMenuItemTypeEnum;
   }
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  show(
-    model: NavigationMenuItemModel,
-    firstLevelIndex: number,
-    secondLevelIndex?: number
-  ) {
-    this.item = model;
+  constructor(
+    public dialogRef: MatDialogRef<NavigationMenuItemEditComponent>,
+    @Inject(MAT_DIALOG_DATA) model:
+      {model: NavigationMenuItemModel, firstLevelIndex: number, secondLevelIndex?: number, securityGroups: []}) {
+    this.availableSecurityGroups = model.securityGroups;
+    this.item = model.model;
     this.translationsArray.clear();
-    for (const translation of model.translations) {
+    for (const translation of model.model.translations) {
       this.translationsArray.push(
         new FormGroup({
           id: new FormControl(translation.id),
@@ -55,10 +49,11 @@ export class NavigationMenuItemEditComponent implements OnInit {
         })
       );
     }
-    this.firstLevelIndex = firstLevelIndex;
-    this.secondLevelIndex = secondLevelIndex;
-    this.frame.show();
+    this.firstLevelIndex = model.firstLevelIndex;
+    this.secondLevelIndex = model.secondLevelIndex;
   }
+
+  ngOnInit(): void {}
 
   updateItem() {
     this.itemEditConfirm.emit({
@@ -69,15 +64,9 @@ export class NavigationMenuItemEditComponent implements OnInit {
       firstLevelIndex: this.firstLevelIndex,
       secondLevelIndex: this.secondLevelIndex,
     });
-    this.frame.hide();
-  }
-
-  cancelUpdate() {
-    this.frame.hide();
-    this.item = new NavigationMenuItemModel();
   }
 
   hide() {
-    this.frame.hide();
+    this.dialogRef.close();
   }
 }

@@ -1,7 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {TemplateListModel} from 'src/app/common/models/eforms';
-import {EformBindGroupModel} from 'src/app/common/models/security/group-permissions/eform';
-import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
+import {Component, EventEmitter, Inject, OnInit,} from '@angular/core';
+import {TemplateListModel, EformBindGroupModel} from 'src/app/common/models';
+import {SecurityGroupEformsPermissionsService} from 'src/app/common/services';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {TranslateService} from '@ngx-translate/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-security-group-eforms-add',
@@ -9,19 +11,38 @@ import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/sec
   styleUrls: ['./security-group-eforms-add.component.scss']
 })
 export class SecurityGroupEformsAddComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Input() templateListModel: TemplateListModel = new TemplateListModel();
-  @Output() onEformBound: EventEmitter<void> = new EventEmitter<void>();
-  @Output() onSearchInputChanged: EventEmitter<string> = new EventEmitter<string>();
-  eformBindGroupModel: EformBindGroupModel = new EformBindGroupModel();
-  constructor(private securityGroupEformsService: SecurityGroupEformsPermissionsService) { }
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('Id'), field: 'id', class: 'cursor-pointer',},
+    {
+      header: this.translateService.stream('CreatedAt'),
+      field: 'createdAt',
+      type: 'date',
+      typeParameter: {format: 'dd.MM.y HH:mm:ss'},
+      class: 'cursor-pointer',
+    },
+    {
+      header: this.translateService.stream('eForm Name'),
+      field: 'label',
+      class: 'cursor-pointer',
+    },
+  ];
 
-  ngOnInit() {
+  templateListModel: TemplateListModel = new TemplateListModel();
+  onEformBound: EventEmitter<void> = new EventEmitter<void>();
+  onSearchInputChanged: EventEmitter<string> = new EventEmitter<string>();
+  eformBindGroupModel: EformBindGroupModel = new EformBindGroupModel();
+
+  constructor(
+    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
+    private translateService: TranslateService,
+    public dialogRef: MatDialogRef<SecurityGroupEformsAddComponent>,
+    @Inject(MAT_DIALOG_DATA) model: { templateListModel: TemplateListModel, selectedGroupId: number },
+  ) {
+    this.templateListModel = model.templateListModel;
+    this.eformBindGroupModel.groupId = model.selectedGroupId;
   }
 
-  show(groupId: number) {
-    this.eformBindGroupModel.groupId = groupId;
-    this.frame.show();
+  ngOnInit() {
   }
 
   addEformToGroup(eformId: number) {
@@ -35,6 +56,10 @@ export class SecurityGroupEformsAddComponent implements OnInit {
 
   onLabelInputChanged(label: string) {
     this.onSearchInputChanged.emit(label);
+  }
+
+  hide() {
+    this.dialogRef.close();
   }
 
 }

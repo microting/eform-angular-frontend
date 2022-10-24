@@ -142,11 +142,11 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 var groupCreate = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name, editModel.Description, false, true);
-                if (editModel.AdvEntitySearchableItemModels.Any())
+                if (editModel.EntityItemModels.Any())
                 {
                     var entityGroup = await core.EntityGroupRead(groupCreate.MicrotingUid);
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                    foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
+                    foreach (var entityItem in editModel.EntityItemModels)
                     {
                         await core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description,
                             nextItemUid.ToString());
@@ -181,7 +181,7 @@ namespace eFormAPI.Web.Services
 
                 var currentIds = new List<int>();
 
-                foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
+                foreach (var entityItem in editModel.EntityItemModels)
                 {
                     if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
                     {

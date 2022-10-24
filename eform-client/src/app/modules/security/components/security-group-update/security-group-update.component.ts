@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgSelectComponent } from '@ng-select/ng-select';
 import {
   UserInfoModel,
   SecurityGroupUpdateModel,
@@ -8,6 +7,9 @@ import {
   Paged,
 } from 'src/app/common/models';
 import { SecurityGroupsService, AdminService } from 'src/app/common/services';
+import {MtxSelectComponent} from '@ng-matero/extensions/select';
+import { MtxGridColumn } from '@ng-matero/extensions/grid';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-security-group-update',
@@ -19,12 +21,33 @@ export class SecurityGroupUpdateComponent implements OnInit {
   securityGroupUpdateModel: SecurityGroupUpdateModel = new SecurityGroupUpdateModel();
   selectedGroupId: number;
   users: Paged<UserInfoModel> = new Paged<UserInfoModel>();
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('ID'), field: 'id'},
+    {header: this.translateService.stream('First name'), field: 'firstName'},
+    {header: this.translateService.stream('Last name'), field: 'lastName',},
+    {header: this.translateService.stream('Email'), field: 'email',},
+    {
+      header: this.translateService.stream('Actions'),
+      field: 'actions',
+      type: 'button',
+      buttons: [
+        {
+          color: 'warn',
+          type: 'icon',
+          icon: 'delete',
+          tooltip: this.translateService.stream('Remove user from group'),
+          click: (record) => this.deleteUserFromGroup(record),
+        },
+      ]
+    },
+  ];
 
   constructor(
     private adminService: AdminService,
     private securityGroupsService: SecurityGroupsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translateService: TranslateService,
   ) {
     this.route.params.subscribe((params) => {
       this.selectedGroupId = params['id'];
@@ -61,19 +84,21 @@ export class SecurityGroupUpdateComponent implements OnInit {
       });
   }
 
-  addUserToGroup(usersSelector: NgSelectComponent) {
-    const selectedUser = <any>usersSelector.selectedValues[0];
-    this.securityGroupModel.usersList.push({
-      id: selectedUser.id,
-      firstName: selectedUser.firstName,
-      lastName: selectedUser.lastName,
-      email: selectedUser.email,
-    });
-    usersSelector.clearModel();
-    // Updating user list after working with model
-    this.users.entities = this.users.entities.filter(
-      (x) => x.id !== selectedUser.id
-    );
+  addUserToGroup(usersSelector: MtxSelectComponent) {
+    const selectedUser = <any>usersSelector.ngSelect.selectedValues[0];
+    if(selectedUser) {
+      this.securityGroupModel.usersList = [...this.securityGroupModel.usersList, {
+        id: selectedUser.id,
+        firstName: selectedUser.firstName,
+        lastName: selectedUser.lastName,
+        email: selectedUser.email,
+      }];
+      usersSelector.ngSelect.clearModel();
+      // Updating user list after working with model
+      this.users.entities = this.users.entities.filter(
+        (x) => x.id !== selectedUser.id
+      );
+    }
   }
 
   deleteUserFromGroup(selectedUserModel: any) {
@@ -96,7 +121,7 @@ export class SecurityGroupUpdateComponent implements OnInit {
     this.securityGroupsService
       .updateSecurityGroup(this.securityGroupUpdateModel)
       .subscribe(() => {
-        this.router.navigate(['/security']);
+        this.router.navigate(['/security']).then();
       });
   }
 }

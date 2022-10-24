@@ -94,6 +94,7 @@ export class AuthStateService {
   }
 
   logout() {
+    this.store.reset();
     resetStores();
     this.router.navigate(['/auth']).then();
   }
@@ -168,9 +169,9 @@ export class AuthStateService {
     }));
   }
 
-  // get currentUserClaimsAsync() {
-  //   return this.query.selectCurrentUserClaims$;
-  // }
+  get currentUserClaimsAsync() {
+    return this.query.selectCurrentUserClaims$;
+  }
 
   get currentUserClaims(): UserClaimsModel {
     return this.query.currentSetting.currentUser.claims;

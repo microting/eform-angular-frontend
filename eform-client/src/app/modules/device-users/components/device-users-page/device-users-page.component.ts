@@ -10,6 +10,7 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {DeleteDeviceUserModalComponent, EditCreateUserModalComponent, NewOtpModalComponent} from 'src/app/modules/device-users/components';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import { TranslateService } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -20,26 +21,23 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   sitesDto: Array<SiteDto>;
 
   tableHeaders: MtxGridColumn[] = [
-    {header: 'Site ID', field: 'siteUid'},
-    {header: 'First name', field: 'firstName'},
+    {header: this.translateService.stream('Site ID'), field: 'siteUid'},
+    {header: this.translateService.stream('First name'), field: 'firstName'},
     {
-      header: 'Last name',
+      header: this.translateService.stream('Last name'),
       field: 'lastName',
     },
     {
-      header: 'Device ID',
+      header: this.translateService.stream('Device ID'),
       field: 'unitId',
     },
-    {header: 'Language', field: 'language'},
-    {header: 'Customer no & OTP', field: 'otpCode'},
-    this.authStateService.currentUserClaims.deviceUsersDelete ||
-    this.authStateService.currentUserClaims.deviceUsersDelete
-      ? {header: 'Actions', field: 'actions'}
-      : undefined,
+    {header: this.translateService.stream('Language'), field: 'language'},
+    {header: this.translateService.stream('Customer no & OTP'), field: 'otpCode'},
   ];
   deleteDeviceUserModalComponentAfterClosedSub$: Subscription;
   editCreateUserModalComponentAfterClosedSub$: Subscription;
   newOtpModalComponentAfterClosedSub$: Subscription;
+  getCurrentUserClaimsAsyncSub$: Subscription;
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -50,11 +48,22 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
     private authStateService: AuthStateService,
     public deviceUsersStateService: DeviceUsersStateService,
     public dialog: MatDialog,
-    private overlay: Overlay
+    private overlay: Overlay,
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit() {
     this.getDeviceUsersFiltered();
+    this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
+      if(x.deviceUsersDelete || x.deviceUsersUpdate) {
+        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+          {
+            header: this.translateService.stream('Actions'),
+            field: 'actions',
+          },
+        ];
+      }
+    })
   }
 
   openEditModal(simpleSiteDto: SiteDto) {

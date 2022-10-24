@@ -259,7 +259,8 @@ class NavigationMenuPage {
       }
     }
     // $('#customLinkCreateBtn').waitForClickable({timeout: 2000});
-    await(await $('#customLinkCreateBtn')).click();
+    await (await $('#customLinkCreateBtn')).scrollIntoView();
+    await (await $('#customLinkCreateBtn')).click();
   }
 
   public async createCustomDropdown(data: {
@@ -280,6 +281,7 @@ class NavigationMenuPage {
       }
     }
 
+    await (await $('#customDropdownCreateBtn')).scrollIntoView();
     await (await $('button#customDropdownCreateBtn')).click();
   }
 

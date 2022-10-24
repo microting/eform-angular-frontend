@@ -1,11 +1,9 @@
 import {
   Component,
-  EventEmitter,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-navigation-menu-reset',
@@ -13,23 +11,22 @@ import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
   styleUrls: ['./navigation-menu-reset.component.scss'],
 })
 export class NavigationMenuResetComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Output() resetMenuConfirm: EventEmitter<void> = new EventEmitter<void>();
-
   get menuItemType() {
     return NavigationMenuItemTypeEnum;
   }
 
-  constructor() {}
+  constructor(
+    public dialogRef: MatDialogRef<NavigationMenuResetComponent>,
+    ) {}
 
   ngOnInit(): void {}
 
-  show() {
-    this.frame.show();
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
   resetMenu() {
-    this.resetMenuConfirm.emit();
-    this.frame.hide();
+    this.hide(true);
   }
 }

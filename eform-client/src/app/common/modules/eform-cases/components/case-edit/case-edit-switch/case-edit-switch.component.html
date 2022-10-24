@@ -1,71 +1,118 @@
 <ng-container *ngIf="dataItemList">
   <ng-container *ngFor="let dataItem of dataItemList; let i = index">
-    <mdb-card class="mb-3" style="width: 100%"
-         *ngIf="dataItem.fieldType != 'SaveButton' ">
-      <mdb-card-header
-           [ngStyle]="{'background-color': dataItem.color ? '#' + dataItem.color : ''}"
-           *ngIf="dataItem.fieldType != 'FieldContainer' && dataItem.fieldType != 'SaveButton'">
+    <mat-card class="mb-3" *ngIf="dataItem.fieldType != 'SaveButton' ">
+      <mat-card-title
+        *ngIf="dataItem.fieldType != 'FieldContainer' && dataItem.fieldType != 'SaveButton'"
+        style="font-size: 1.5rem; color: black;"
+        [ngStyle]="{'background-color': dataItem.color ? '#' + dataItem.color : ''}"
+      >
         {{dataItem.label}}
         <br>
-        <i><div [innerHtml]="dataItem.description.inderValue"></div></i>
-      </mdb-card-header>
-      <mdb-card-body>
-        <ng-container [ngSwitch]="dataItem.fieldType">
-          <ng-container *ngSwitchCase="'Picture'">
+        <i>
+          <div [innerHtml]="dataItem.description.inderValue"></div>
+        </i>
+      </mat-card-title>
+      <ng-container [ngSwitch]="dataItem.fieldType">
+        <ng-container *ngSwitchCase="'Picture'">
+          <mat-card-content>
             <element-picture [fieldValues]="dataItem.fieldValues" (pictureUpdated)="emitNeedUpdate()"></element-picture>
-          </ng-container>
-          <ng-container *ngSwitchCase="'CheckBox'">
-            <element-checkbox [(fieldValue)]="dataItem.fieldValues[0]"></element-checkbox>
-          </ng-container>
-          <ng-container *ngSwitchCase="'Number'">
-            <element-number [(fieldValue)]="dataItem.fieldValues[0]"></element-number>
-          </ng-container>
-          <ng-container *ngSwitchCase="'NumberStepper'">
-            <element-number-stepper [(fieldValue)]="dataItem.fieldValues[0]"></element-number-stepper>
-          </ng-container>
-          <ng-container *ngSwitchCase="'Comment'">
-            <element-comment [(fieldValue)]="dataItem.fieldValues[0]">></element-comment>
-          </ng-container>
-          <ng-container *ngSwitchCase="'Text'">
-            <element-text [(fieldValue)]="dataItem.fieldValues[0]"></element-text>
-          </ng-container>
-          <ng-container *ngSwitchCase="'Date'">
-            <element-date [(fieldValue)]="dataItem.fieldValues[0]"></element-date>
-          </ng-container>
-          <ng-container *ngSwitchCase="'SingleSelect'">
-            <element-singleselect [(fieldValue)]="dataItem.fieldValues[0]"></element-singleselect>
-          </ng-container>
-          <ng-container *ngSwitchCase="'MultiSelect'">
-            <element-multiselect [(fieldValue)]="dataItem.fieldValues[0]"></element-multiselect>
-          </ng-container>
-          <ng-container *ngSwitchCase="'ShowPdf'">
-            <element-pdf [dataItem]="dataItem"></element-pdf>
-          </ng-container>
-          <ng-container *ngSwitchCase="'None'">
-            <element-infobox [(fieldValue)]="dataItem.fieldValues[0]"></element-infobox>
-          </ng-container>
-          <ng-container *ngSwitchCase="'Timer'">
-            <element-timer [(fieldValue)]="dataItem.fieldValues[0]"></element-timer>
-          </ng-container>
-          <ng-container *ngSwitchCase="'Signature'">
-            <element-signature [fieldValues]="dataItem.fieldValues"></element-signature>
-          </ng-container>
-          <ng-container *ngSwitchCase="'FieldContainer'">
-            <element-container [(fieldValue)]="dataItem.dataItemList" [dataItemLabel]="dataItem.label"></element-container>
-          </ng-container>
-          <ng-container *ngSwitchCase="'EntitySearch'">
-            <element-entitysearch [(fieldValue)]="dataItem.fieldValues[0]" [entityGroupUid]="dataItem.entityGroupId"></element-entitysearch>
-          </ng-container>
-          <ng-container *ngSwitchCase="'EntitySelect'">
-            <element-entityselect [(fieldValue)]="dataItem.fieldValues[0]" [entityGroupUid]="dataItem.entityGroupId"></element-entityselect>
-          </ng-container>
-          <ng-container *ngSwitchCase="'Audio'">
-            <element-audio [(fieldValues)]="dataItem.fieldValues"></element-audio>
-          </ng-container>
-          <div *ngSwitchDefault></div>
+          </mat-card-content>
         </ng-container>
-      </mdb-card-body>
-    </mdb-card>
+        <ng-container *ngSwitchCase="'CheckBox'">
+          <mat-card-content>
+            <element-checkbox [fieldValue]="dataItem.fieldValues[0]"></element-checkbox>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Number'">
+          <mat-card-content>
+            <element-number [fieldValue]="dataItem.fieldValues[0]"></element-number>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'NumberStepper'">
+          <mat-card-content>
+            <element-number-stepper [fieldValue]="dataItem.fieldValues[0]"></element-number-stepper>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Comment'">
+          <mat-card-content>
+            <element-comment [fieldValue]="dataItem.fieldValues[0]">></element-comment>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Text'">
+          <mat-card-content>
+            <element-text [fieldValue]="dataItem.fieldValues[0]"></element-text>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Date'">
+          <mat-card-content>
+            <element-date [fieldValue]="dataItem.fieldValues[0]"></element-date>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'SingleSelect'">
+          <mat-card-content>
+            <element-singleselect [fieldValue]="dataItem.fieldValues[0]"></element-singleselect>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'MultiSelect'">
+          <mat-card-content>
+            <element-multiselect [fieldValue]="dataItem.fieldValues[0]"></element-multiselect>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'ShowPdf'">
+          <mat-card-content>
+            <element-pdf [dataItem]="dataItem"></element-pdf>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'None'">
+<!--          <mat-card-content>-->
+            <element-infobox [fieldValue]="dataItem.fieldValues[0]"></element-infobox>
+<!--          </mat-card-content>-->
+        </ng-container>
+        <ng-container *ngSwitchCase="'Timer'">
+          <mat-card-content>
+            <element-timer [fieldValue]="dataItem.fieldValues[0]"></element-timer>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Signature'">
+          <mat-card-content>
+            <element-signature [fieldValues]="dataItem.fieldValues"></element-signature>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'FieldContainer'">
+          <mat-card-content>
+            <element-container
+              [fieldValue]="dataItem.dataItemList"
+              [dataItemLabel]="dataItem.label">
+            </element-container>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'EntitySearch'">
+          <mat-card-content>
+            <element-entitysearch
+              [fieldValue]="dataItem.fieldValues[0]"
+              [entityGroupUid]="dataItem.entityGroupId">
+            </element-entitysearch>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'EntitySelect'">
+          <mat-card-content>
+            <element-entityselect
+              [fieldValue]="dataItem.fieldValues[0]"
+              [entityGroupUid]="dataItem.entityGroupId">
+            </element-entityselect>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Audio'">
+          <mat-card-content>
+            <element-audio [fieldValues]="dataItem.fieldValues"></element-audio>
+          </mat-card-content>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+<!--          <mat-card-content>-->
+<!--          </mat-card-content>-->
+        </ng-container>
+      </ng-container>
+    </mat-card>
   </ng-container>
 </ng-container>
 

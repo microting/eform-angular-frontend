@@ -1,14 +1,14 @@
 import {
   Component,
   EventEmitter,
+  Inject,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import {
   SecurityGroupModel,
   SecurityGroupSettingsUpdateModel,
 } from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-security-group-settings',
@@ -16,24 +16,21 @@ import {
   styleUrls: ['./security-group-settings.component.scss'],
 })
 export class SecurityGroupSettingsComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Output() settingsUpdate: EventEmitter<
-    SecurityGroupSettingsUpdateModel
-  > = new EventEmitter<SecurityGroupSettingsUpdateModel>();
+  settingsUpdate: EventEmitter<SecurityGroupSettingsUpdateModel> = new EventEmitter<SecurityGroupSettingsUpdateModel>();
   settingsUpdateModel: SecurityGroupSettingsUpdateModel = new SecurityGroupSettingsUpdateModel();
 
-  constructor() {}
-
-  show(securityGroup: SecurityGroupModel) {
+  constructor(
+    public dialogRef: MatDialogRef<SecurityGroupSettingsComponent>,
+    @Inject(MAT_DIALOG_DATA) securityGroup: SecurityGroupModel = new SecurityGroupModel()
+  ) {
     this.settingsUpdateModel = {
       id: securityGroup.id,
       redirectLink: securityGroup.redirectLink,
     };
-    this.frame.show();
   }
 
   hide() {
-    this.frame.hide();
+    this.dialogRef.close();
   }
 
   ngOnInit(): void {}

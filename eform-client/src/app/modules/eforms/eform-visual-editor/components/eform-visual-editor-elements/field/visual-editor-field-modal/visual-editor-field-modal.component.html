@@ -1,192 +1,143 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade overflow-auto"
-  #frame="mdbModal"
->
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>
-          {{ (isFieldSelected ? 'Edit field' : 'New field') | translate }}
-        </h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <mdb-card>
-          <mdb-card-header>{{
-            "Type" | translate
-            }}</mdb-card-header>
-          <mdb-card-body>
-            <div class="row">
-              <div class="col">
-                <div class="ng-select-wrapper">
-                  <mat-form-field>
-                    <mat-label>{{'Type' | translate}}</mat-label>
-                    <mtx-select
-                      class="custom"
-                      [dropdownPosition]="'bottom'"
-                      [clearable]="false"
-                      [bindLabel]="'name'"
-                      [bindValue]="'id'"
-                      [ngModel]="recursionModel.field.fieldType"
-                      (ngModelChange)="updateFieldType($event)"
-                      id="fieldTypeSelector"
-                      [items]="fieldTypes"
-                    >
-                      <ng-template
-                        ng-option-tmp
-                        let-item="item"
-                        let-search="searchTerm"
-                      >
-                        <ng-template #popTemplate>
-                          <p>{{ item.description | translate }}</p>
-                          <img
-                            [src]="item.previewImage"
-                            alt=""
-                            class="img-fluid"
-                          />
-                        </ng-template>
-                        <div
-                          [mdbPopover]="popTemplate"
-                          container="body"
-                          placement="right"
-                          [triggers]="'hover'"
-                        >
-                          {{ item.name | translate }}
-                        </div>
-                      </ng-template>
-                    </mtx-select>
-                  </mat-form-field>
+<h3 mat-dialog-title>{{ (isFieldSelected ? 'Edit field' : 'New field') | translate }}</h3>
+<div mat-dialog-content class="need-wrapper" [ngSwitch]="recursionModel.field.fieldType">
+  <mat-card>
+    <mat-card-title>
+<!--      <h4>-->
+        {{ "Type" | translate }}
+<!--      </h4>-->
+    </mat-card-title>
+    <mat-card-content>
+      <div class="d-flex flex-column justify-content-between">
+        <div class="d-flex flex-row">
+          <mat-form-field>
+            <mat-label>{{'Type' | translate}}</mat-label>
+            <mtx-select
+              class="custom"
+              [dropdownPosition]="'bottom'"
+              [clearable]="false"
+              [bindLabel]="'name'"
+              [bindValue]="'id'"
+              [ngModel]="recursionModel.field.fieldType"
+              (ngModelChange)="updateFieldType($event)"
+              id="fieldTypeSelector"
+              [items]="fieldTypes"
+            >
+              <ng-template
+                ng-option-tmp
+                let-item="item"
+                let-search="searchTerm"
+              >
+                <mtx-popover #popover="mtxPopover" closeOnBackdropClick="true" [position]="['after', 'below']">
+                  <p>{{ item.description | translate }}</p>
+                  <img
+                    [src]="item.previewImage"
+                    alt=""
+                    class="img-fluid"
+                  />
+                </mtx-popover>
+                <div
+                  cdkDrag
+                  [mtxPopoverTriggerFor]="popover"
+                  mtxPopoverTriggerOn="hover"
+                >
+                  {{ item.name | translate }}
                 </div>
-              </div>
-            </div>
-
-            <div class="row" *ngIf="!mandatoryIsNotNeed">
-              <div class="col">
-                <mat-checkbox
-                  id="isChecked"
-                  [(ngModel)]="recursionModel.field.mandatory"
-                  color="primary"
-                  type="checkbox">
-                  {{ 'Mandatory' | translate }}
-                </mat-checkbox>
-              </div>
-            </div>
-          </mdb-card-body>
-        </mdb-card>
-        <br />
-        <mdb-card
-          *ngFor="
+              </ng-template>
+            </mtx-select>
+          </mat-form-field>
+        </div>
+        <mat-checkbox
+          *ngIf="!mandatoryIsNotNeed"
+          id="isChecked"
+          [(ngModel)]="recursionModel.field.mandatory"
+          color="primary"
+          type="checkbox">
+          {{ 'Mandatory' | translate }}
+        </mat-checkbox>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <ng-container
+    *ngFor="
             let translation of recursionModel.field.translations;
             let translationIndex = index
           "
-          class="mb-3"
-        >
-          <ng-container *ngIf="translation !== undefined">
-            <ng-container *ngIf="isLanguageSelected(translation.languageId)">
-              <mdb-card-header>{{
-                getLanguage(translation.languageId) | translate
-              }}</mdb-card-header>
-              <mdb-card-body>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="md-form">
-                      <input
-                        mdbInput
-                        type="text"
-                        id="fieldNameTranslation_{{ translationIndex }}"
-                        name="fieldNameTranslation_{{ translationIndex }}"
-                        [(ngModel)]="translation.name"
-                        class="form-control"
-                      />
-                      <label for="fieldNameTranslation_{{ translationIndex }}">
-                        {{ 'Name' | translate }}
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12">
-                    <formatting-text-editor
-                      [(value)]="translation.description"
-                      [placeholder]="'Description' | translate"
-                      id="newFieldDescriptionTranslation_{{ translationIndex }}"
-                    >
-                    </formatting-text-editor>
-                  </div>
-                </div>
-              </mdb-card-body>
-            </ng-container>
-          </ng-container>
-        </mdb-card>
-        <app-visual-editor-additional-field-number
-          *ngIf="
-            recursionModel.field.fieldType == eformFieldTypesEnum.Number ||
-            recursionModel.field.fieldType == eformFieldTypesEnum.NumberStepper
-          "
-          [field]="recursionModel.field"
-          [selectedLanguages]="selectedLanguages"
-        >
-        </app-visual-editor-additional-field-number>
-        <app-visual-editor-additional-field-save-button
-          *ngIf="
-            recursionModel.field.fieldType == eformFieldTypesEnum.SaveButton
-          "
-          [field]="recursionModel.field"
-          [selectedLanguages]="selectedLanguages"
-        >
-        </app-visual-editor-additional-field-save-button>
-        <app-visual-editor-additional-field-pdf
-          *ngIf="recursionModel.field.fieldType == eformFieldTypesEnum.ShowPdf"
-          [field]="recursionModel.field"
-          [selectedLanguages]="selectedLanguages"
-        >
-        </app-visual-editor-additional-field-pdf>
-        <app-visual-editor-additional-field-options
-          *ngIf="
-            recursionModel.field.fieldType == eformFieldTypesEnum.MultiSelect ||
-            recursionModel.field.fieldType == eformFieldTypesEnum.SingleSelect
-          "
-          [field]="recursionModel.field"
-          [selectedLanguages]="selectedLanguages"
-        >
-        </app-visual-editor-additional-field-options>
-        <app-visual-editor-additional-field-entity-search
-          *ngIf="
-            recursionModel.field.fieldType == eformFieldTypesEnum.EntitySearch
-          "
-          [field]="recursionModel.field"
-        >
-        </app-visual-editor-additional-field-entity-search>
-        <app-visual-editor-additional-field-entity-select
-          *ngIf="
-            recursionModel.field.fieldType == eformFieldTypesEnum.EntitySelect
-          "
-          [field]="recursionModel.field"
-        >
-        </app-visual-editor-additional-field-entity-select>
-      </div>
-      <div class="modal-footer">
-        <button
-          mdbBtn
-          class="btn-success btn-small-height"
-          (click)="isFieldSelected ? onUpdateField() : onCreateField()"
-          id="changeFieldSaveBtn"
-        >
-          {{ 'Save' | translate }}
-        </button>
-        <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
-          (click)="frame.hide()"
-          id="changeFieldSaveCancelBtn"
-        >
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
+  >
+    <ng-container *ngIf="translation !== undefined">
+      <mat-card *ngIf="isLanguageSelected(translation.languageId)">
+        <mat-card-title>{{ getLanguage(translation.languageId) | translate }}</mat-card-title>
+        <mat-card-content>
+          <div class="d-flex flex-column">
+            <mat-form-field>
+              <mat-label>{{'Name' | translate }}</mat-label>
+              <input
+                matInput
+                type="text"
+                id="fieldNameTranslation_{{ translationIndex }}"
+                name="fieldNameTranslation_{{ translationIndex }}"
+                [(ngModel)]="translation.name"
+              />
+            </mat-form-field>
+            <formatting-text-editor
+              [(value)]="translation.description"
+              [placeholder]="'Description' | translate"
+              id="newFieldDescriptionTranslation_{{ translationIndex }}"
+            >
+            </formatting-text-editor>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </ng-container>
+  <app-visual-editor-additional-field-number
+    *ngSwitchCase="eformFieldTypesEnum.Number || eformFieldTypesEnum.NumberStepper"
+    [field]="recursionModel.field"
+    [selectedLanguages]="selectedLanguages"
+  >
+  </app-visual-editor-additional-field-number>
+  <app-visual-editor-additional-field-save-button
+    *ngSwitchCase="eformFieldTypesEnum.SaveButton"
+    [field]="recursionModel.field"
+    [selectedLanguages]="selectedLanguages"
+  >
+  </app-visual-editor-additional-field-save-button>
+  <app-visual-editor-additional-field-pdf
+    *ngSwitchCase="eformFieldTypesEnum.ShowPdf"
+    [field]="recursionModel.field"
+    [selectedLanguages]="selectedLanguages"
+  >
+  </app-visual-editor-additional-field-pdf>
+  <app-visual-editor-additional-field-options
+    *ngSwitchCase="eformFieldTypesEnum.MultiSelect || eformFieldTypesEnum.SingleSelect"
+    [field]="recursionModel.field"
+    [selectedLanguages]="selectedLanguages"
+  >
+  </app-visual-editor-additional-field-options>
+  <app-visual-editor-additional-field-entity-search
+    *ngSwitchCase="eformFieldTypesEnum.EntitySearch"
+    [field]="recursionModel.field"
+  >
+  </app-visual-editor-additional-field-entity-search>
+  <app-visual-editor-additional-field-entity-select
+    *ngSwitchCase="eformFieldTypesEnum.EntitySelect"
+    [field]="recursionModel.field"
+  >
+  </app-visual-editor-additional-field-entity-select>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="isFieldSelected ? onUpdateField() : onCreateField()"
+    id="changeFieldSaveBtn"
+  >
+    {{'Save' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    (click)="hide()"
+    id="changeFieldSaveCancelBtn"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

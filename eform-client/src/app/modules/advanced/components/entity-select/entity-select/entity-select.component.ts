@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { EntitySelectService } from 'src/app/common/services';
 import {
   Paged,
@@ -15,6 +15,7 @@ import {EntitySelectRemoveComponent} from '../';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import { TranslateService } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -23,9 +24,6 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
   styleUrls: ['./entity-select.component.scss'],
 })
 export class EntitySelectComponent implements OnInit, OnDestroy{
-  @ViewChild('modalSelectRemove', { static: true }) modalSelectRemove;
-  @ViewChild('modalSelectCreate', { static: true }) modalSelectCreate;
-  @ViewChild('modalSelectEdit', { static: true }) modalSelectEdit;
   advEntitySelectableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();
   entitySelectRemoveComponentAfterClosedSub$: Subscription;
 
@@ -34,15 +32,15 @@ export class EntitySelectComponent implements OnInit, OnDestroy{
   }
 
   tableHeaders: MtxGridColumn[] = [
-    {header: 'Id', field: 'microtingUUID', sortProp: {id: 'Id'}, sortable: true},
-    {header: 'Name', sortProp: {id: 'Name'}, field: 'name', sortable: true},
+    {header: this.translateService.stream('Id'), field: 'microtingUUID', sortProp: {id: 'Id'}, sortable: true},
+    {header: this.translateService.stream('Name'), sortProp: {id: 'Name'}, field: 'name', sortable: true},
     {
-      header: 'Description',
+      header: this.translateService.stream('Description'),
       field: 'description',
       sortable: true,
       sortProp: {id: 'Description'}
     },
-    {header: 'Actions', field: 'actions'},
+    {header: this.translateService.stream('Actions'), field: 'actions'},
   ]
 
   constructor(
@@ -51,6 +49,7 @@ export class EntitySelectComponent implements OnInit, OnDestroy{
     public entitySelectStateService: EntitySelectStateService,
     private dialog: MatDialog,
     private overlay: Overlay,
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit() {

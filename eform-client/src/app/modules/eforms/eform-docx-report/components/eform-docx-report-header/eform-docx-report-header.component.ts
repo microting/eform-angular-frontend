@@ -5,6 +5,9 @@ import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
 import { LocaleService } from 'src/app/common/services';
 import { format } from 'date-fns';
 import { AuthStateService } from 'src/app/common/store';
+import {MatIconRegistry} from '@angular/material/icon';
+import {WordIcon} from 'src/app/common/const';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-eform-docx-report-header',
@@ -24,8 +27,11 @@ export class EformDocxReportHeaderComponent implements OnInit {
     dateTimeAdapter: DateTimeAdapter<any>,
     private localeService: LocaleService,
     private formBuilder: FormBuilder,
-    authStateService: AuthStateService
+    authStateService: AuthStateService,
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer,
   ) {
+    iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(WordIcon));
     dateTimeAdapter.setLocale(authStateService.currentUserLocale);
   }
 

@@ -8,6 +8,7 @@ import {UnitCreateComponent, UnitMoveComponent, UnitsOtpCodeComponent} from './'
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-units',
@@ -18,24 +19,22 @@ export class UnitsComponent implements OnInit {
   unitModels: Array<UnitDto> = [];
 
   tableHeaders: MtxGridColumn[] = [
-    {header: 'Microting UID', field: 'microtingUid'},
-    {header: 'Location', field: 'siteName'},
-    {header: 'OS', field: 'os',},
-    {header: 'OS Version', field: 'osVersion',},
-    {header: 'Model', field: 'model'},
-    {header: 'InSight Version', field: 'inSightVersion'},
-    {header: 'eForm Version', field: 'eFormVersion'},
-    {header: 'Customer no & OTP', field: 'otpCode'},
-    {header: 'Sync delay', field: 'syncDelay'},
-    {header: 'Sync dialog', field: 'syncDialog'},
-    {header: 'Push', field: 'push'},
-    this.userClaims.sitesDelete || this.userClaims.sitesUpdate
-      ? {header: 'Actions', field: 'actions'}
-      : undefined,
+    {header: this.translateService.stream('Microting UID'), field: 'microtingUid'},
+    {header: this.translateService.stream('Location'), field: 'siteName'},
+    {header: this.translateService.stream('OS'), field: 'os',},
+    {header: this.translateService.stream('OS Version'), field: 'osVersion',},
+    {header: this.translateService.stream('Model'), field: 'model'},
+    {header: this.translateService.stream('InSight Version'), field: 'inSightVersion'},
+    {header: this.translateService.stream('eForm Version'), field: 'eFormVersion'},
+    {header: this.translateService.stream('Customer no & OTP'), field: 'otpCode'},
+    {header: this.translateService.stream('Sync delay'), field: 'syncDelay'},
+    {header: this.translateService.stream('Sync dialog'), field: 'syncDialog'},
+    {header: this.translateService.stream('Push'), field: 'push'},
   ];
 
   unitCreateComponentAfterClosedSub$: Subscription;
   unitsOtpCodeComponentAfterClosedSub$: Subscription;
+  getCurrentUserClaimsAsyncSub$: Subscription;
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -45,12 +44,23 @@ export class UnitsComponent implements OnInit {
     private unitsService: UnitsService,
     private authStateService: AuthStateService,
     public dialog: MatDialog,
-    private overlay: Overlay
+    private overlay: Overlay,
+    private translateService: TranslateService,
   ) {
   }
 
   ngOnInit() {
     this.loadAllUnits();
+    this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
+      if(x.sitesDelete || x.sitesUpdate) {
+        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+          {
+            header: this.translateService.stream('Actions'),
+            field: 'actions',
+          },
+        ];
+      }
+    })
   }
 
   loadAllUnits() {

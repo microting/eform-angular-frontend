@@ -1,112 +1,53 @@
-<eform-subheader>
-  <div class="p-3">
-    <button
-      mdbBtn
-      class="btn btn-success btn-small-height"
-      id="newSecurityGroupBtn"
-      [routerLink]="['marketplace']"
-    >
-      {{ 'Marketplace' | translate }}
-    </button>
-  </div>
-</eform-subheader>
+<eform-new-subheader>
+  <button
+    color="accent"
+    mat-raised-button
+    id="newSecurityGroupBtn"
+    [routerLink]="['marketplace']"
+  >
+    {{ 'Marketplace' | translate }}
+  </button>
+</eform-new-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<div class="container-fluid mt-4">
-  <div class="row p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
+<mtx-grid
+  [data]="installedPluginsModel.pluginsList"
+  [columns]="tableHeaders"
+  [cellTemplate]="{actions: actionsTpl}"
+  [showPaginator]="false"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showColumnMenuButton]="false">
+</mtx-grid>
+
+<ng-template #actionsTpl let-row>
+  <div class="d-flex align-items-center">
+    <button
+      mat-icon-button
+      color="{{row.status === statusEnum.Enabled ? 'accent' : ''}}"
+      matTooltip="{{(row.status === statusEnum.Enabled ? 'Deactivate' : 'Activate') +' plugin' | translate}}"
+      (click)="openPluginModal(row, row.status === statusEnum.Enabled ? statusEnum.Disabled : statusEnum.Enabled)"
     >
-      <thead table-headers [tableHeaders]="tableHeaders"></thead>
-      <tbody id="tableBody">
-        <tr *ngFor="let plugin of installedPluginsModel.pluginsList">
-          <td scope="row" id="plugin-id">{{ plugin.id }}</td>
-          <td id="plugin-name">{{ plugin.name }}</td>
-          <td id="plugin-version">{{ plugin.version }}</td>
-          <td id="plugin-version-available">{{ plugin.versionAvailable }}</td>
-
-          <td>
-            <div class="d-flex flex-row justify-content-center">
-              <div
-                [ngStyle]="{
-                  color:
-                    plugin.status == statusEnum.Enabled ? '#06ba06' : '#ba3f4e'
-                }"
-                id="plugin-status"
-              >
-                <button
-                  mdbBtn
-                  *ngIf="plugin.status == statusEnum.Disabled"
-                  mdbTooltip="{{ 'Activate plugin' | translate }}"
-                  class="btn-accent text-black-50 btn-icon mb-2"
-                  (click)="openPluginModal(plugin, statusEnum.Enabled)"
-                >
-                  <fa-icon icon="toggle-on"></fa-icon>
-                </button>
-                <button
-                  mdbBtn
-                  *ngIf="plugin.status == statusEnum.Enabled"
-                  mdbTooltip="{{ 'Deactivate plugin' | translate }}"
-                  class="btn-success text-white btn-icon mb-2"
-                  (click)="openPluginModal(plugin, statusEnum.Disabled)"
-                >
-                  <fa-icon icon="toggle-off"></fa-icon>
-                </button>
-
-                <!--          {{statusEnum[plugin.status] | translate}}-->
-              </div>
-              <!--            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"-->
-              <!--                    mdbTooltip="{{'Edit Settings' | translate}}"-->
-              <!--                    (click)="showEditModal(plugin)"-->
-              <!--                    mdbWavesEffect id="plugin-settings-btn">-->
-              <!--              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>-->
-              <!--            </button>-->
-              <button
-                mdbBtn
-                *ngIf="plugin.status == statusEnum.Enabled"
-                class="btn-success text-white btn-icon mb-2"
-                mdbTooltip="{{ 'Edit Plugin Permissions' | translate }}"
-                (click)="showPermissionsModal(plugin)"
-                mdbWavesEffect
-                id="plugin-permissions-btn"
-              >
-                <fa-icon
-                  icon="lock-open"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
-              </button>
-              <a
-                mdbBtn
-                *ngIf="plugin.status == statusEnum.Enabled"
-                class="btn-accent text-black-50 btn-icon mb-2"
-                mdbTooltip="{{ 'Plugin Settings Page' | translate }}"
-                routerLink="/plugins/{{ plugin.baseUrl }}/settings"
-                style="margin: 0.375rem"
-                mdbWavesEffect
-                id="plugin-settings-link"
-              >
-                <fa-icon icon="cog" [fixedWidth]="true" size="lg"></fa-icon>
-              </a>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <mat-icon>{{row.status === statusEnum.Enabled ? 'toggle_on' : 'toggle_off'}}</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      color="accent"
+      *ngIf="row.status == statusEnum.Enabled"
+      matTooltip="{{ 'Edit Plugin Permissions' | translate }}"
+      (click)="showPermissionsModal(row)"
+      id="plugin-permissions-btn"
+    >
+      <mat-icon>lock_open</mat-icon>
+    </button>
+    <a
+      mat-icon-button
+      *ngIf="row.status == statusEnum.Enabled"
+      matTooltip="{{ 'Plugin Settings Page' | translate }}"
+      routerLink="/plugins/{{ row.baseUrl }}/settings"
+      id="plugin-settings-link"
+    >
+      <mat-icon>settings</mat-icon>
+    </a>
   </div>
-</div>
-
-<!--<app-installed-plugin-edit #editInstalledPluginModal (onInstalledPluginUpdate)="updateInstalledPlugin($event)">-->
-<!--</app-installed-plugin-edit>-->
-<app-installed-plugin-modal #installedPluginModal></app-installed-plugin-modal>
-
-<app-installed-plugin-permissions
-  #editPluginPermissionsModal
-  [securityGroups]="securityGroups"
-  (pluginPermissionsUpdate)="updatePluginPermissions($event)"
->
-</app-installed-plugin-permissions>
+</ng-template>
