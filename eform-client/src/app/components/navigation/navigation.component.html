@@ -28,18 +28,19 @@
       </a>
     </ng-container>
   </mat-tree-node>
-  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding="" style="margin-right: 1rem; min-height: 0;">
+  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding="" style="min-height: 0;">
     <ng-container *ngIf="checkGuards(node.guards)">
-      <button
+      <a
+        style="padding-left: 16px; width: 100%; text-align: left;"
         mat-icon-button
         matTreeNodeToggle
         [id]="node.e2EId"
-      >
+      ><span style="">
+        {{node.name}}</span>
         <mat-icon class="mat-icon-rtl-mirror">
-          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'expand_less'}}
         </mat-icon>
-      </button>
-      {{node.name}}
+      </a>
     </ng-container>
   </mat-tree-node>
 </mat-tree>
