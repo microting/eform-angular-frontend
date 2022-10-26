@@ -13,7 +13,7 @@
         [class]="isLast ? 'active' : ''"
         *ngFor="let breadcrumbItem of breadcrumbs; last as isLast"
       >
-        <a *ngIf="breadcrumbItem.href" [href]="breadcrumbItem.href">{{
+        <a *ngIf="breadcrumbItem.href" [routerLink]="breadcrumbItem.href">{{
           breadcrumbItem.name
           }}</a>
         <div *ngIf="!breadcrumbItem.href || isLast">{{ breadcrumbItem.name }}</div>
