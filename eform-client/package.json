@@ -123,7 +123,7 @@
     "@wdio/spec-reporter": "7.25.1",
     "angular-mocks": "1.8.3",
     "chai": "4.3.6",
-    "chromedriver": "106.0.1",
+    "chromedriver": "107.0.1",
     "codelyzer": "^6.0.2",
     "eslint": "^8.26.0",
     "fs-extra": "^10.1.0",
