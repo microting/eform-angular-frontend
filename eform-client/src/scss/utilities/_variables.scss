@@ -20,3 +20,4 @@ $spacers: map-merge(
     $spacers
 );
 $cursors: (pointer,text,move,copy,default);
+$positions: static, relative, absolute, fixed, sticky !default;
