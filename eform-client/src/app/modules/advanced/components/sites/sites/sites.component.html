@@ -42,7 +42,7 @@
     <mat-chip-list>
       <mat-chip *ngFor="let tag of row.tags" color="primary">
         <mat-icon>discount</mat-icon>
-        {{ getTagName(tag) }}
+        <span>{{ getTagName(tag) }}</span>
       </mat-chip>
     </mat-chip-list>
   </div>

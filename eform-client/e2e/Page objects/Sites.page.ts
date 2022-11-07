@@ -121,7 +121,7 @@ class SitesPage extends PageWithNavbarPage {
 
   async getFirstRowObject(): Promise<SitesRowObject> {
     await browser.pause(500);
-    return this.getSite(2);
+    return this.getSite(1);
   }
 }
 
@@ -146,8 +146,8 @@ export class SitesRowObject {
       this.units = await (await this.element.$('#units')).getText();
       this.siteName = await (await this.element.$('#siteName')).getText();
       const list = (await (await this.element
-        .$('#tags'))
-        .$$('#assignedTag'));
+        .$('mat-chip-list'))
+        .$$('mat-chip > span'));
       this.tags = await Promise.all(list.map(element => element.getText()));
       // .map((element) => element.getText());
       this.editBtn = await this.element.$('#editSiteBtn');
