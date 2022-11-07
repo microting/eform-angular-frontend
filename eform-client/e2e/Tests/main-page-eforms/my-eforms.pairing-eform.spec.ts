@@ -59,15 +59,12 @@ describe('Main page', function () {
     await (await myEformsPage.getFirstMyEformsRowObj()).unPair([users[1]]);
     const spinnerAnimation = await $('#spinner-animation');
     (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
-    console.log('here 1');
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     //await (await $('td.cdk-column-siteUId > mtx-grid-cell > span')).waitForDisplayed({ timeout: 40000 });
     //await browser.pause(1000);
-    console.log('here 2');
     const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].getText())) {
-        console.log('text is ' + await siteIds[i].getText());
         expect(
           await (await $(`#mat-checkbox-3`)).getValue(),
           `User ${users[1].siteId} paired`
