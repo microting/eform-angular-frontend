@@ -41,11 +41,11 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   public async editFirstNameInput(): Promise<WebdriverIO.Element> {
-    return $('#editFirstNameInput');
+    return $('#firstName');
   }
 
   public async editLastNameInput(): Promise<WebdriverIO.Element> {
-    return $('#editLastNameInput');
+    return $('#lastName');
   }
 
   public async saveEditBtn(): Promise<WebdriverIO.Element> {
@@ -72,7 +72,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
 
   public async rowNum(): Promise<number> {
     await browser.pause(500);
-    return (await $$('#tableBody > tr')).length;
+    return (await $$('tbody > tr')).length;
   }
 
   async getDeviceUser(num): Promise<DeviceUsersRowObject> {
@@ -141,7 +141,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
   ) {
     deviceUser.editBtn.click();
     // browser.pause(5000);
-    await (await $('#editFirstNameInput')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#firstName')).waitForDisplayed({ timeout: 40000 });
     if (name != null) {
       await (await this.editFirstNameInput()).click();
       await (await this.editFirstNameInput()).clearValue();

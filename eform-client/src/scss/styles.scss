@@ -2,7 +2,7 @@
 //ng-select
 
 @import "components/index";
-@import "utilities";
+//@import "utilities/colors";
 @import "libs/index";
 @import '~ngx-ui-switch/ui-switch.component.scss';
 
@@ -123,15 +123,6 @@ body.theme-dark {
     background-color: white;
   }
 }
-.mat-drawer-inner-container {
-  width: 240px !important;
-  max-width: 240px;
-
-  a.nav-link span.mat-button-wrapper {
-    white-space: pre-wrap;
-  }
-}
-
 
 body {
   --theme-body-font-color: var(--black-800);

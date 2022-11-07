@@ -30,7 +30,7 @@
       class="d-flex flex-row align-items-center cursor"
     >
       <mat-icon>folder_open</mat-icon>
-      <div style="margin-left: 8px;">
+      <div style="margin-left: 8px;" id="folderTreeName">
         {{node.name}}
       </div>
       <small class="microting-uid">({{ node.microtingUId }})</small>
@@ -52,7 +52,7 @@
             </button>
           </ng-container>
           <ng-container *ngIf="showDeleteAction">
-            <button mat-menu-item (click)="delete(node.id)">
+            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn">
               <mat-icon>delete</mat-icon>
               <span>{{ 'Delete folder' | translate }}</span>
             </button>
@@ -97,7 +97,7 @@
             </button>
           </ng-container>
           <ng-container *ngIf="showDeleteAction">
-            <button mat-menu-item (click)="delete(node.id)">
+            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn">
               <mat-icon>delete</mat-icon>
               <span>{{ 'Delete folder' | translate }}</span>
             </button>

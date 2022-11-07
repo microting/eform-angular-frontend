@@ -140,14 +140,14 @@ export class SitesRowObject {
   deleteBtn: WebdriverIO.Element;
 
   async getRow(rowNum): Promise<SitesRowObject> {
-    this.element = (await $$('#sitesTableBody > tr'))[rowNum - 1];
+    this.element = (await $$('tbody > tr'))[rowNum - 1];
     if (this.element) {
       this.siteId = +(await this.element.$('#siteUUId')).getText();
       this.units = await (await this.element.$('#units')).getText();
       this.siteName = await (await this.element.$('#siteName')).getText();
       const list = (await (await this.element
-        .$('#tags'))
-        .$$('#assignedTag'));
+        .$('mat-chip-list'))
+        .$$('mat-chip > span'));
       this.tags = await Promise.all(list.map(element => element.getText()));
       // .map((element) => element.getText());
       this.editBtn = await this.element.$('#editSiteBtn');

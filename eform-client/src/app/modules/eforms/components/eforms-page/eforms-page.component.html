@@ -89,9 +89,12 @@
   </div>
 </ng-template>
 <mtx-grid
+  id="mainPageEFormsTableBody"
   [data]="templateListModel.templates"
   [columns]="tableHeaders"
   [cellTemplate]="{
+  id: idTpl,
+  label: labelTpl,
   createdAt: createdAtTpl,
   description: descriptionTpl,
   tags: tagsTpl,
@@ -107,6 +110,13 @@
   [sortDirection]="eformsStateService.getActiveSortDirection() | async"
   (sortChange)="sortTable($event)">
 </mtx-grid>
+<ng-template #labelTpl let-row let-i="index">
+  <div class="eform-label" id="eform-label-{{i}}">{{row.label}}</div>
+</ng-template>
+<ng-template #idTpl let-row let-i="index">
+  <div class="eform-id" id="eform-id-{{i}}">{{row.id}}</div>
+</ng-template>
+
 <ng-template #createdAtTpl let-row>
   <date-formatter
     [date]="row.createdAt"
@@ -116,7 +126,7 @@
 <ng-template #descriptionTpl let-row>
   <div [innerHTML]="row.description"></div>
 </ng-template>
-<ng-template #tagsTpl let-row>
+<ng-template #tagsTpl let-row let-i="index">
   <div class="">
     <div>
       <a
@@ -135,16 +145,16 @@
         *ngIf="checkEformPermissions(row.id, userClaimsEnum.eformsReadTags)"
       >
         <mat-chip-list>
-          <mat-chip *ngFor="let tag of row.tags" color="primary">
+          <mat-chip *ngFor="let tag of row.tags" color="primary" id="eform-tag-{{i}}">
             <mat-icon>discount</mat-icon>
-            {{tag.value}}
+            <span>{{ tag.value }}</span>
           </mat-chip>
         </mat-chip-list>
       </ng-container>
     </div>
   </div>
 </ng-template>
-<ng-template #pairingUpdateTpl let-row>
+<ng-template #pairingUpdateTpl let-row let-i="index">
   <div class="">
     <div>
       <button
@@ -189,7 +199,7 @@
     </div>
   </div>
 </ng-template>
-<ng-template #actionsTpl let-row>
+<ng-template #actionsTpl let-row let-i="index">
   <div class="">
     <button
       mat-icon-button

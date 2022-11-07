@@ -25,21 +25,21 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public async idSortBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#idSort');
+    const ele = await $('.eform-id-header .mat-header-cell-inner .mat-sort-header');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public async createdAtSortBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#createdAtSort');
+    const ele = await $('.eform-created-at-header .mat-header-cell-inner .mat-sort-header');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public async eformNameSortBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#nameEFormSort');
+    const ele = await $('.eform-name-header .mat-header-cell-inner .mat-sort-header');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -192,6 +192,7 @@ class MyEformsPage extends PageWithNavbarPage {
     await browser.execute(function (xmlText) {
       (<HTMLInputElement>document.getElementById('eFormXml')).value = xmlText;
     }, xml);
+    await browser.pause(200);
     await (await this.xmlTextArea()).addValue(' ');
     // Create new tags
     const addedTags: string[] = newTagsList;
@@ -299,29 +300,29 @@ class MyEformsRowObject {
 
   async getRow(rowNum: number) {
     const currentPosition = rowNum - 1;
-    this.element = (await $$('#mainPageEFormsTableBody tr'))[currentPosition];
-    this.id = +(await (await $$('#eform-id-' + (rowNum - 1)))[0].getText());
+    this.element = (await $$('#mainPageEFormsTableBody tr.mat-row'))[currentPosition];
+    this.id = +(await (await $$('#eform-id-' + (currentPosition)))[0].getText());
     try {
-      const val = (await $$('#eform-created-at-' + (rowNum - 1)))[0];
+      const val = (await $$('#eform-created-at-' + (currentPosition)))[0];
       this.createdAt = new Date(await val.getText());
     } catch (e) {}
     try {
-      const val = (await $$('#eform-label-' + (rowNum - 1)))[0];
+      const val = (await $$('#eform-label-' + (currentPosition)))[0];
       this.eFormName = await val.getText();
     } catch (e) {}
-    const val2 = (await $$(`#mainPageEFormsTableBody tr`))[rowNum - 1];
-    this.tags = await val2.$$(`#eform-tag-` + (rowNum - 1));
+    const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-row`))[currentPosition];
+    this.tags = await $$(`#eform-tag-` + (currentPosition) + ` span`);
     // this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
-    this.editTagsBtn = (await $$('#eform-edit-btn-' + (rowNum - 1)))[0];
-    this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr`))[
-      rowNum - 1
-    ].$('#eform-pairing-btn-' + (rowNum - 1));
-    this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr`))[
-      rowNum - 1
-    ].$('#eform-add-btn-' + (rowNum - 1));
-    this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (rowNum - 1)))[0];
-    this.deleteBtn = (await $$('#delete-eform-btn-' + (rowNum - 1)))[0];
-    this.uploadZipArchiveBtn = (await $$('#upload-zip-btn-' + (rowNum - 1)))[0];
+    this.editTagsBtn = (await $$('#eform-edit-btn-' + (currentPosition)))[0];
+    this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-row`))[
+      currentPosition
+    ].$('#eform-pairing-btn-' + (currentPosition));
+    this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-row`))[
+      currentPosition
+    ].$('#eform-add-btn-' + (currentPosition));
+    this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (currentPosition)))[0];
+    this.deleteBtn = (await $$('#delete-eform-btn-' + (currentPosition)))[0];
+    this.uploadZipArchiveBtn = (await $$('#upload-zip-btn-' + (currentPosition)))[0];
     this.goVisualEditorBtn = await this.element.$(
       `#edit-eform-btn-${currentPosition}`
     );
@@ -330,8 +331,8 @@ class MyEformsRowObject {
 
   async deleteEForm() {
     if(await this.deleteBtn) {
-      (await this.deleteBtn).scrollIntoView();
-      (await this.deleteBtn).click();
+      await (await this.deleteBtn).scrollIntoView();
+      await (await this.deleteBtn).click();
       const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');
       await eFormDeleteDeleteBtn.waitForDisplayed({timeout: 40000});
       await eFormDeleteDeleteBtn.waitForClickable({timeout: 40000});
@@ -397,21 +398,24 @@ class MyEformsRowObject {
       timeout: 40000,
     });
     await browser.pause(500);
-    const folders = await $$('tree-node');
+    const folders = await $$('app-eform-tree-view-picker > mat-tree > mat-tree-node');
+    //browser.pause(10000);
     for (let i = 0; i < folders.length; i++) {
       if (
-        (await (await folders[i].$('#folderTreeName')).getText()).includes(
+        (await (await folders[i].$('div > div')).getText()).includes(
           folder.name
         )
       ) {
-        await (await folders[i].$('#folderTreeName')).click();
+        await (await folders[i].$('div')).click();
+        await browser.pause(1000);
       }
     }
     for (let i = 0; i < users.length; i++) {
-      const checkbox = await $(`#checkbox${users[i].siteId}`);
+      const name = `#mat-checkbox-${i+2} > label > div.mat-checkbox-inner-container`;
+      const checkbox = await $(`#mat-checkbox-${i+2}`);
       await checkbox.scrollIntoView();
-      await checkbox.$('..').waitForClickable({ timeout: 40000 });
-      await checkbox.$('..').click();
+      await checkbox.waitForClickable({ timeout: 40000 });
+      await checkbox.click();
     }
     await (await myEformsPage.saveParingBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });

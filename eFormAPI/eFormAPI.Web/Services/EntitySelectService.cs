@@ -136,7 +136,7 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 var groupCreate = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect, editModel.Name, editModel.Description, false, true);
-                if (editModel.EntityItemModels.Any())
+                if (editModel.EntityItemModels != null && editModel.EntityItemModels.Any())
                 {
                     var entityGroup = await core.EntityGroupRead(groupCreate.MicrotingUid);
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
@@ -155,8 +155,9 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(true,
                     _localizationService.GetStringWithFormat("ParamCreatedSuccessfully", groupCreate.MicrotingUid));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Console.WriteLine(exception.Message);
                 return new OperationResult(false, _localizationService.GetString("SelectableListCreationFailed"));
             }
         }

@@ -125,19 +125,16 @@ export class VisualEditorFieldModalComponent implements OnInit {
     if (model && model.field) {
       this.isFieldSelected = true;
       // if there are not enough translations
-      // @ts-ignore
       this.recursionModel.field.translations = fixTranslations(
         this.recursionModel.field.translations
-      );
-      // TODO figure why the below line is not working
-      //   .map((x, i) => {
-      //   if (this.recursionModel.field.translations.length > i) {
-      //     // @ts-ignore
-      //     x.defaultValue =
-      //       this.recursionModel.field.translations[i].defaultValue ?? '';
-      //     return x as EformVisualEditorTranslationWithDefaultValue;
-      //   }
-      // });
+      ).map((x, i) => {
+        if (this.recursionModel.field.translations.length > i) {
+          // @ts-ignore
+          x.defaultValue =
+            this.recursionModel.field.translations[i].defaultValue ?? '';
+          return x as EformVisualEditorTranslationWithDefaultValue;
+        }
+      });
     } else {
       if (!model) {
         this.recursionModel = new EformVisualEditorRecursionFieldModel();

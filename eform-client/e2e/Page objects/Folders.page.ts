@@ -182,10 +182,10 @@ class FoldersPage extends PageWithNavbarPage {
 
   public async rowNum(): Promise<number> {
     await browser.pause(500);
-    if (!(await (await $('#folderTreeId')).isExisting())) {
+    if (!(await (await $('.microting-uid')).isExisting())) {
       await browser.pause(500);
     }
-    return (await $$('#folderTreeId')).length;
+    return (await $$('.microting-uid')).length;
   }
 
   public async rowNumParents(): Promise<number> {
@@ -213,6 +213,7 @@ class FoldersPage extends PageWithNavbarPage {
     await browser.pause(500);
     for (let i = 1; i < (await this.rowNum()) + 1; i++) {
       const folderObj = new FoldersRowObject();
+      //await browser.pause(10000);
       const folder = await folderObj.getRow(i);
       if (folder.name === nameFolder) {
         return folder;
@@ -369,18 +370,21 @@ export class FoldersRowObject {
   createFolderChildBtn;
   folderTreeOpenClose;
   rowNumber: number;
+  dropdown;
 
   async getRow(rowNum: number): Promise<FoldersRowObject> {
     this.rowNumber = rowNum;
-    if ((await $$('.tree-node-level-1'))[rowNum - 1]) {
-      const element = (await $$('.tree-node-level-1'))[rowNum - 1];
+    //await browser.pause(10000);
+    if ((await $$('app-eform-tree-view-picker > mat-tree > mat-tree-node'))[rowNum - 1]) {
+      const element = (await $$('app-eform-tree-view-picker > mat-tree > mat-tree-node'))[rowNum - 1];
       try {
-        this.folderElement = await element.$('#folderTreeId');
+        this.folderElement = await element.$('.microting-uid');
       } catch (e) {
         console.log(e.message());
       }
+      this.dropdown = await element.$('button');
       try {
-        this.name = await (await element.$('#folderTreeName')).getText();
+        this.name = await (await element.$('div > div')).getText();
       } catch (e) {
         console.log(e.message());
       }
@@ -541,10 +545,12 @@ export class FoldersRowObject {
   async delete(clickCancel = false) {
     if (!await this.deleteBtn.isDisplayed()) {
       await this.folderElement.click();
+      await this.dropdown.click();
       await this.getRow(this.rowNumber);
-      await this.deleteBtn.waitForDisplayed({ timeout: 40000 });
+      await $('#deleteFolderTreeBtn').waitForDisplayed({timeout: 40000});
+      //await this.deleteBtn.waitForDisplayed({ timeout: 40000 });
     }
-    await this.deleteBtn.click();
+    await (await $('#deleteFolderTreeBtn')).click();
     if (!clickCancel) {
       await (await foldersPage.saveDeleteBtn()).waitForClickable({
         timeout: 40000,
@@ -557,7 +563,7 @@ export class FoldersRowObject {
     } else {
       await (await foldersPage.cancelDeleteBtn()).click();
     }
-    await await (await foldersPage.newFolderBtn()).waitForDisplayed({
+    await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
     });
   }

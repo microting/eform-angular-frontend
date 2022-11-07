@@ -32,9 +32,9 @@ export async function testSorting(
     const elementsAfter = await Promise.all(elementsForSorting.map(mapFunc));
 
     // get current direction of sorting
-    const sortIcon = await tableHeader.$('i').getText();
+    const sortIcon = await tableHeader.$('.ng-trigger-leftPointer').getAttribute('style');
     let sorted;
-    if (sortIcon === 'expand_more') {
+    if (sortIcon === 'transform: rotate(-45deg);') {
       sorted = elementsBefore.sort().reverse();
     } else if (sortIcon === 'expand_less') {
       sorted = elementsBefore.sort();

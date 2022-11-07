@@ -7,7 +7,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async selectableListCount(): Promise<number> {
-    return (await $$('#tableBodyEntitySelect > tr')).length;
+    return (await $$('tbody > tr')).length;
   }
 
   public async itemsEditPageCount(): Promise<number> {
@@ -41,19 +41,19 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async entitySelectCreateName(): Promise<WebdriverIO.Element> {
-    const ele = await $('#createName');
+    const ele = await $('#editName');
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async entitySelectCreateDescription(): Promise<WebdriverIO.Element> {
-    const ele = await $('#createDescription');
+    const ele = await $('#editDescription');
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async entitySelectCreateImportListBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#importEntitySelectBtn');
+    const ele = await $('#editEntitySearchImportBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
@@ -65,14 +65,14 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async entitySelectCreateSaveBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#createEntitySelectSaveBtn');
+    const ele = await $('#entityCreateSaveBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public async entitySelectCreateCancelBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#createEntitySelectCancelBtn');
+    const ele = await $('#entitySearchUpdateCancelBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -104,14 +104,14 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async entitySelectEditSaveBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#editEntitySelectSaveBtn');
+    const ele = await $('#entityUpdateSaveBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public async entitySelectEditCancelBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#editEntitySelectCancelBtn');
+    const ele = await $('#entitySearchUpdateCancelBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -310,7 +310,7 @@ export class SelectableListRowObject {
 
   public async getRow(rowNum: number) {
     this.index = rowNum;
-    this.element = (await $$('#tableBodyEntitySelect > tr'))[rowNum - 1];
+    this.element = (await $$('tbody > tr'))[rowNum - 1];
     if (this.element) {
       this.id = +await (await (await this.element).$('#entitySelectMicrotingUUID')).getText();
       try {

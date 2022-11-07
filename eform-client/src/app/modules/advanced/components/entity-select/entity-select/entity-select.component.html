@@ -32,7 +32,7 @@
 <mtx-grid
   [data]="advEntitySelectableGroupListModel.entities"
   [columns]="tableHeaders"
-  [cellTemplate]="{actions: actionsTpl}"
+  [cellTemplate]="{microtingUUID: microtingUUIDTpl, name: entitySelectNameTpl, description: entitySelectDescriptionTpl, actions: actionsTpl}"
   [showPaginator]="true"
   [paginationTemplate]="paginatorTpl"
   [pageOnFront]="false"
@@ -44,12 +44,21 @@
   [sortDirection]="entitySelectStateService.getActiveSortDirection() | async"
   (sortChange)="sortTable($event)">
 </mtx-grid>
+<ng-template #microtingUUIDTpl let-row let-i="index">
+  <div class="entitySelectMicrotingUUID" id="entitySelectMicrotingUUID">{{row.microtingUUID}}</div>
+</ng-template>
+<ng-template #entitySelectNameTpl let-row let-i="index">
+  <div class="entitySelectName" id="entitySelectName">{{row.name}}</div>
+</ng-template>
+<ng-template #entitySelectDescriptionTpl let-row let-i="index">
+  <div class="entitySelectDescription" id="entitySelectDescription">{{row.description}}</div>
+</ng-template>
 
 <ng-template #actionsTpl let-row>
   <div *ngIf="userClaims.entitySelectDelete || userClaims.entitySelectUpdate">
     <button
       mat-icon-button
-      id="entitySelectUpdateBtn"
+      id="entitySelectEditBtn"
       matTooltip="{{ 'Edit' | translate }}"
       [disabled]="!userClaims.entitySelectUpdate"
       [routerLink]="['/advanced/entity-select/edit/' + row.microtingUUID]"

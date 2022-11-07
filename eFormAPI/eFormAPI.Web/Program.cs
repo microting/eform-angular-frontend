@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+
 namespace eFormAPI.Web
 {
     using Services.PluginsManagement.MenuItemsLoader;
@@ -176,6 +178,32 @@ namespace eFormAPI.Web
                 {
                     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                     logger.LogError(e, "Error while migrating db");
+                }
+
+                try
+                {
+                    // add missing admin settings to all menu items
+                    var menuItems = dbContext.MenuItems.ToList();
+                    foreach (var menuItem in menuItems)
+                    {
+                        if (!dbContext.MenuItemSecurityGroups.Any(x => x.MenuItemId == menuItem.Id && x.SecurityGroupId == 1))
+                        {
+                            var securityGroup = new MenuItemSecurityGroup
+                            {
+                                MenuItemId = menuItem.Id,
+                                SecurityGroupId = 1
+                            };
+
+                            dbContext.MenuItemSecurityGroups.Add(securityGroup);
+                            dbContext.SaveChanges();
+                            Console.WriteLine($"Adding missing admin settings to menu item {menuItem.Name}");
+                        }
+
+                    }
+                } catch (Exception e)
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(e, "Error while adding missing admin settings to all menu items");
                 }
             }
         }

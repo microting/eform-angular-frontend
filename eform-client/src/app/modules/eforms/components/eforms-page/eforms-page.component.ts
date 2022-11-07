@@ -80,13 +80,14 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   tableHeaders: MtxGridColumn[] = [
-    {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true, type: 'number'},
-    {header: this.translateService.stream('CreatedAt'), sortProp: {id: 'CreatedAt'}, field: 'createdAt', sortable: true},
+    {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true, type: 'number', class: 'eform-id-header'},
+    {header: this.translateService.stream('Server date'), sortProp: {id: 'CreatedAt'}, field: 'createdAt', sortable: true, class: 'eform-created-at-header'},
     {
       header: this.translateService.stream('Label'),
       field: 'label',
       sortable: true,
       sortProp: {id: 'Text'},
+      class: 'eform-name-header',
     },
     {
       header: this.translateService.stream('Description'),
@@ -142,7 +143,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   loadAllTags() {
     // load tags after call load templates (not know why)
-    if (this.userClaims.eformsReadTags) {
+    //if (this.userClaims.eformsReadTags) {
+      //debugger;
       this.getAvailableTagsSub$ = this.eFormTagService.getAvailableTags()
         .subscribe((data) => {
           if (data && data.success) {
@@ -150,9 +152,10 @@ export class EformsPageComponent implements OnInit, OnDestroy {
             this.loadSelectedUserTags();
           }
         });
-    } else {
-      this.loadAllTemplates();
-    }
+    // } else {
+    //   debugger;
+    //   this.loadAllTemplates();
+    // }
   }
 
   saveTag(e: any) {
