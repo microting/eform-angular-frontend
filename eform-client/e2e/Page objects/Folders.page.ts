@@ -370,6 +370,7 @@ export class FoldersRowObject {
   createFolderChildBtn;
   folderTreeOpenClose;
   rowNumber: number;
+  dropdown;
 
   async getRow(rowNum: number): Promise<FoldersRowObject> {
     this.rowNumber = rowNum;
@@ -381,6 +382,7 @@ export class FoldersRowObject {
       } catch (e) {
         console.log(e.message());
       }
+      this.dropdown = await element.$('button');
       try {
         this.name = await (await element.$('div > div')).getText();
       } catch (e) {
@@ -543,10 +545,12 @@ export class FoldersRowObject {
   async delete(clickCancel = false) {
     if (!await this.deleteBtn.isDisplayed()) {
       await this.folderElement.click();
+      await this.dropdown.click();
       await this.getRow(this.rowNumber);
-      await this.deleteBtn.waitForDisplayed({ timeout: 40000 });
+      await $('#deleteFolderTreeBtn').waitForDisplayed({timeout: 40000});
+      //await this.deleteBtn.waitForDisplayed({ timeout: 40000 });
     }
-    await this.deleteBtn.click();
+    await (await $('#deleteFolderTreeBtn')).click();
     if (!clickCancel) {
       await (await foldersPage.saveDeleteBtn()).waitForClickable({
         timeout: 40000,
@@ -559,7 +563,7 @@ export class FoldersRowObject {
     } else {
       await (await foldersPage.cancelDeleteBtn()).click();
     }
-    await await (await foldersPage.newFolderBtn()).waitForDisplayed({
+    await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
     });
   }

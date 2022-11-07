@@ -52,7 +52,7 @@
             </button>
           </ng-container>
           <ng-container *ngIf="showDeleteAction">
-            <button mat-menu-item (click)="delete(node.id)">
+            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn">
               <mat-icon>delete</mat-icon>
               <span>{{ 'Delete folder' | translate }}</span>
             </button>
@@ -97,7 +97,7 @@
             </button>
           </ng-container>
           <ng-container *ngIf="showDeleteAction">
-            <button mat-menu-item (click)="delete(node.id)">
+            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn">
               <mat-icon>delete</mat-icon>
               <span>{{ 'Delete folder' | translate }}</span>
             </button>

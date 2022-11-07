@@ -219,7 +219,7 @@ export class Navbar {
   }
 
   public async goToFolderPage() {
-    if (await (await this.foldersBtn()).isDisplayed()) {
+    if (await (await $(`#folders`)).isDisplayed()) {
       await (await this.foldersBtn()).click();
       await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     } else {
