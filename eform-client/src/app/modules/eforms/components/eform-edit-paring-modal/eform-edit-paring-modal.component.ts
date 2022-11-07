@@ -23,7 +23,7 @@ export class EformEditParingModalComponent implements OnInit {
   foldersDto: Array<FolderDto> = [];
   saveButtonDisabled = true;
   eformDeployed = false;
-  columns: MtxGridColumn[] = [
+  tableHeaders: MtxGridColumn[] = [
     { header: this.translateService.stream('Microting ID'), field: 'siteUId', },
     { header: this.translateService.stream('Device user'), field: 'siteName', },
     // { header: this.translateService.get('Select'), field: 'status' },
