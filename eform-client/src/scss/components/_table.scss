@@ -1,33 +1,12 @@
-.table > tbody > tr > td {
-  vertical-align: middle;
-}
-
-.table-header-sortable {
-  cursor: pointer;
-  font-size: 14px !important;
-}
-
-.table-fixed-scrollable {
-  max-height: 450px;
-  overflow: auto;
-}
-
-.table-with-sticky-headers {
-  table thead th.sticky-top {
-    background-color: var(--theme-background-color);
-    z-index: 1;
-  }
-  & {
-    height: 100vh;
-  }
-}
-
-.mtx-grid .mat-cell.selected {
-  box-shadow: none !important;
-}
+@use 'sass:map';
+@use '@angular/material' as mat;
 
 mtx-grid {
   max-height: 70vh;
+
+  .mat-cell.selected {
+    box-shadow: none !important;
+  }
 
   .mat-table-container::-webkit-scrollbar {
     width: 8px;
@@ -39,12 +18,36 @@ mtx-grid {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
     background-color: #999999;
   }
+
   .mat-table-container::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
     background-color: white;
   }
 }
 
-/*th>div {
-  justify-content: center;
-}*/
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+  $is-dark-theme: map.get($color-config, 'is-dark');
+  $background-powder-color: #b3d3ea;
+  $background-yellow-color: #e6d178;
+  @if $is-dark-theme {
+    $background-powder-color: #4c6071;
+    $background-yellow-color: #7e6f3a;
+  }
+  mtx-grid {
+    .background-yellow {
+      background-color: $background-yellow-color !important;
+    }
+
+    .background-powder {
+      background-color: $background-powder-color !important;
+    }
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+  }
+}
