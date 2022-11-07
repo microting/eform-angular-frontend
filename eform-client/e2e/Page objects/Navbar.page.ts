@@ -219,11 +219,16 @@ export class Navbar {
   }
 
   public async goToFolderPage() {
-    await this.advancedDropdownClick();
-    await (await this.foldersBtn()).waitForDisplayed({ timeout: 40000 });
-    await (await this.foldersBtn()).waitForClickable({ timeout: 40000 });
-    await (await this.foldersBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    if (await (await this.foldersBtn()).isDisplayed()) {
+      await (await this.foldersBtn()).click();
+      await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    } else {
+      await this.advancedDropdownClick();
+      await (await this.foldersBtn()).waitForDisplayed({ timeout: 40000 });
+      await (await this.foldersBtn()).waitForClickable({ timeout: 40000 });
+      await (await this.foldersBtn()).click();
+      await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    }
   }
 
   public async goToPluginsPage() {

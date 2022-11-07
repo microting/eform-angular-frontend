@@ -331,8 +331,8 @@ class MyEformsRowObject {
 
   async deleteEForm() {
     if(await this.deleteBtn) {
-      (await this.deleteBtn).scrollIntoView();
-      (await this.deleteBtn).click();
+      await (await this.deleteBtn).scrollIntoView();
+      await (await this.deleteBtn).click();
       const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');
       await eFormDeleteDeleteBtn.waitForDisplayed({timeout: 40000});
       await eFormDeleteDeleteBtn.waitForClickable({timeout: 40000});
@@ -398,21 +398,24 @@ class MyEformsRowObject {
       timeout: 40000,
     });
     await browser.pause(500);
-    const folders = await $$('tree-node');
+    const folders = await $$('app-eform-tree-view-picker > mat-tree > mat-tree-node');
+    //browser.pause(10000);
     for (let i = 0; i < folders.length; i++) {
       if (
-        (await (await folders[i].$('#folderTreeName')).getText()).includes(
+        (await (await folders[i].$('div > div')).getText()).includes(
           folder.name
         )
       ) {
-        await (await folders[i].$('#folderTreeName')).click();
+        await (await folders[i].$('div')).click();
+        await browser.pause(1000);
       }
     }
     for (let i = 0; i < users.length; i++) {
-      const checkbox = await $(`#checkbox${users[i].siteId}`);
+      const name = `#mat-checkbox-${i+2} > label > div.mat-checkbox-inner-container`;
+      const checkbox = await $(`#mat-checkbox-${i+2}`);
       await checkbox.scrollIntoView();
-      await checkbox.$('..').waitForClickable({ timeout: 40000 });
-      await checkbox.$('..').click();
+      await checkbox.waitForClickable({ timeout: 40000 });
+      await checkbox.click();
     }
     await (await myEformsPage.saveParingBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });

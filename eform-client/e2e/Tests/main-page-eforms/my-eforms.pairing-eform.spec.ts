@@ -37,17 +37,17 @@ describe('Main page', function () {
     await (await myEformsPage.cancelParingBtn()).waitForDisplayed({ timeout: 40000 });
     await browser.pause(1000);
     expect(
-      await (await $('tree-node .node-content-wrapper-active')).getText(),
+      await (await $('mat-tree-node > .selected-folder > div')).getText(),
       'Wrong folder selected'
     ).contain(`${folders[0].name}`);
-    const siteIds = await $$('#microtingId');
+    const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
     for (let i = 0; i < siteIds.length; i++) {
       const index = users.findIndex(
         (user) => user.siteId === +siteIds[i].getText()
       );
       if (index !== -1) {
         expect(
-          await (await $(`#checkbox${users[index].siteId}`)).getValue(),
+          await (await $(`#mat-checkbox-${index}`)).getValue(),
           `User ${users[index].siteId} not paired`
         ).eq('true');
       }
@@ -59,20 +59,23 @@ describe('Main page', function () {
     await (await myEformsPage.getFirstMyEformsRowObj()).unPair([users[1]]);
     const spinnerAnimation = await $('#spinner-animation');
     (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
+    console.log('here 1');
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    await (await $('#microtingId')).waitForDisplayed({ timeout: 40000 });
-    await browser.pause(1000);
-    const siteIds = await $$('#microtingId');
+    //await (await $('td.cdk-column-siteUId > mtx-grid-cell > span')).waitForDisplayed({ timeout: 40000 });
+    //await browser.pause(1000);
+    console.log('here 2');
+    const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].getText())) {
+        console.log('text is ' + await siteIds[i].getText());
         expect(
-          await (await $(`#checkbox${users[1].siteId}`)).getValue(),
+          await (await $(`#mat-checkbox-3`)).getValue(),
           `User ${users[1].siteId} paired`
         ).eq('false');
       }
       if (users[0].siteId === +siteIds[i].getText()) {
         expect(
-          await (await $(`#checkbox${users[0].siteId}`)).getValue(),
+          await (await $(`#mat-checkbox-2`)).getValue(),
           `User ${users[0].siteId} not paired`
         ).eq('true');
       }

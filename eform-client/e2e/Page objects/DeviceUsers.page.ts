@@ -171,6 +171,8 @@ export class DeviceUsersRowObject {
   deleteBtn;
 
   async getRow(rowNum: number) {
+    console.log('getRow');
+    console.log(rowNum);
     if ((await $$('#deviceUserId'))[rowNum - 1]) {
       this.siteId = +(await (await $$('#deviceUserId')[rowNum - 1]).getText());
       try {
@@ -183,8 +185,8 @@ export class DeviceUsersRowObject {
           await $$('#deviceUserLastName')[rowNum - 1]
         ).getText();
       } catch (e) {}
-      this.editBtn = (await $$('#editDeviceUserBtn'))[rowNum - 2];
-      this.deleteBtn = (await $$('#deleteDeviceUserBtn'))[rowNum - 2];
+      this.editBtn = (await $$('#editDeviceUserBtn'))[rowNum - 1];
+      this.deleteBtn = (await $$('#deleteDeviceUserBtn'))[rowNum - 1];
     }
     return this;
   }

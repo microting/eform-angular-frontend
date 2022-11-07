@@ -182,10 +182,10 @@ class FoldersPage extends PageWithNavbarPage {
 
   public async rowNum(): Promise<number> {
     await browser.pause(500);
-    if (!(await (await $('#folderTreeId')).isExisting())) {
+    if (!(await (await $('.microting-uid')).isExisting())) {
       await browser.pause(500);
     }
-    return (await $$('#folderTreeId')).length;
+    return (await $$('.microting-uid')).length;
   }
 
   public async rowNumParents(): Promise<number> {
@@ -213,6 +213,7 @@ class FoldersPage extends PageWithNavbarPage {
     await browser.pause(500);
     for (let i = 1; i < (await this.rowNum()) + 1; i++) {
       const folderObj = new FoldersRowObject();
+      //await browser.pause(10000);
       const folder = await folderObj.getRow(i);
       if (folder.name === nameFolder) {
         return folder;
@@ -372,15 +373,16 @@ export class FoldersRowObject {
 
   async getRow(rowNum: number): Promise<FoldersRowObject> {
     this.rowNumber = rowNum;
-    if ((await $$('.tree-node-level-1'))[rowNum - 1]) {
-      const element = (await $$('.tree-node-level-1'))[rowNum - 1];
+    //await browser.pause(10000);
+    if ((await $$('app-eform-tree-view-picker > mat-tree > mat-tree-node'))[rowNum - 1]) {
+      const element = (await $$('app-eform-tree-view-picker > mat-tree > mat-tree-node'))[rowNum - 1];
       try {
-        this.folderElement = await element.$('#folderTreeId');
+        this.folderElement = await element.$('.microting-uid');
       } catch (e) {
         console.log(e.message());
       }
       try {
-        this.name = await (await element.$('#folderTreeName')).getText();
+        this.name = await (await element.$('div > div')).getText();
       } catch (e) {
         console.log(e.message());
       }
