@@ -112,10 +112,10 @@ describe('Create folder', function () {
     await (
       await (await foldersPage.createLanguageSelector()).$('input')
     ).setValue(da.text);
-    let value = await (await foldersPage.createLanguageSelector()).$(
+    let value = await (await $('ng-dropdown-panel')).$(
       `.ng-option=${da.text}`
     );
-    value.waitForDisplayed({ timeout: 40000 });
+    await value.waitForDisplayed({ timeout: 40000 });
     await value.click();
     await (
       await foldersPage.createDescriptionInput(
@@ -136,7 +136,7 @@ describe('Create folder', function () {
     await (
       await (await foldersPage.editLanguageSelector()).$('input')
     ).setValue(da.text);
-    value = await (await foldersPage.editLanguageSelector()).$(
+    value = await (await $('ng-dropdown-panel')).$(
       `.ng-option=${da.text}`
     );
     await value.waitForDisplayed({ timeout: 40000 });
@@ -160,7 +160,7 @@ describe('Create folder', function () {
     await (await foldersPage.createLanguageSelector())
       .$('input')
       .setValue(da.text);
-    let value = await (await foldersPage.createLanguageSelector()).$(
+    let value = await (await $('ng-dropdown-panel')).$(
       `.ng-option=${da.text}`
     );
     await value.waitForDisplayed({ timeout: 40000 });
@@ -184,7 +184,7 @@ describe('Create folder', function () {
     await (
       await (await foldersPage.editLanguageSelector()).$('input')
     ).setValue(da.text);
-    value = await (await foldersPage.editLanguageSelector()).$(
+    value = await (await $('ng-dropdown-panel')).$(
       `.ng-option=${da.text}`
     );
     await value.waitForDisplayed({ timeout: 40000 });
@@ -208,7 +208,7 @@ describe('Create folder', function () {
     await (
       await (await foldersPage.createLanguageSelector()).$('input')
     ).setValue(da.text);
-    let value = await (await foldersPage.createLanguageSelector()).$(
+    let value = await (await $('ng-dropdown-panel')).$(
       `.ng-option=${da.text}`
     );
     await value.waitForDisplayed({ timeout: 40000 });
@@ -232,7 +232,7 @@ describe('Create folder', function () {
     await (
       await (await foldersPage.editLanguageSelector()).$('input')
     ).setValue(da.text);
-    value = await (await foldersPage.editLanguageSelector()).$(
+    value = await (await $('ng-dropdown-panel')).$(
       `.ng-option=${da.text}`
     );
     await value.waitForDisplayed({ timeout: 40000 });
@@ -256,7 +256,7 @@ describe('Create folder', function () {
     await (
       await (await foldersPage.createLanguageSelector()).$('input')
     ).setValue(da.text);
-    let value = await (await foldersPage.createLanguageSelector()).$(
+    let value = await (await $('ng-dropdown-panel')).$(
       `.ng-option=${da.text}`
     );
     await value.waitForDisplayed({ timeout: 40000 });
@@ -280,7 +280,7 @@ describe('Create folder', function () {
     await (
       await (await foldersPage.editLanguageSelector()).$('input')
     ).setValue(da.text);
-    value = await (await foldersPage.editLanguageSelector()).$(
+    value = await (await $('ng-dropdown-panel')).$(
       `.ng-option=${da.text}`
     );
     await value.waitForDisplayed({ timeout: 40000 });
@@ -298,12 +298,14 @@ describe('Create folder', function () {
   });
   after('should delete folders', async () => {
     const rowCountBeforeCreation = await foldersPage.rowNum();
-    for (let i = 0; i < folderName.length; i++) {
-      await (await foldersPage.getFolderByName(folderName[i])).delete();
+    console.log('rowCountBeforeCreation', rowCountBeforeCreation);
+    for (let i = 0; i < rowCountBeforeCreation; i++) {
+      const folder = await foldersPage.getFolder(1);
+      await folder.delete();
     }
     const rowCountAfterCreation = await foldersPage.rowNum();
     expect(
-      rowCountBeforeCreation - folderName.length,
+      0,
       'Folder not delete'
     ).equal(rowCountAfterCreation);
   });

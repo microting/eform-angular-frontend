@@ -40,13 +40,13 @@
         </button>
         <mat-menu #menu="matMenu">
           <ng-container *ngIf="showCreateAction">
-            <button mat-menu-item (click)="createChild(node.id)">
+            <button mat-menu-item (click)="createChild(node.id)" id="createFolderChildBtn">
               <mat-icon>add</mat-icon>
               <span>{{ 'Add new child folder' | translate }}</span>
             </button>
           </ng-container>
           <ng-container *ngIf="showEditAction">
-            <button mat-menu-item (click)="edit(node.id)">
+            <button mat-menu-item (click)="edit(node.id)" id="editFolderTreeBtn">
               <mat-icon>edit</mat-icon>
               <span>{{ 'Edit folder' | translate }}</span>
             </button>
@@ -76,7 +76,9 @@
       <div
         [ngClass]="{'selected-folder': selectedFolderIds.includes(node.id)}"
       >
-        {{node.name}}
+        <div id="folderTreeName">
+          {{node.name}}
+        </div>
       </div>
       <small class="microting-uid">({{ node.microtingUId }})</small>
       <ng-container *ngIf="showActions">
@@ -85,13 +87,13 @@
         </button>
         <mat-menu #menu="matMenu">
           <ng-container *ngIf="showCreateAction">
-            <button mat-menu-item (click)="createChild(node.id)">
+            <button mat-menu-item (click)="createChild(node.id)" id="createFolderChildBtn">
               <mat-icon>add</mat-icon>
               <span>{{ 'Add new child folder' | translate }}</span>
             </button>
           </ng-container>
           <ng-container *ngIf="showEditAction">
-            <button mat-menu-item (click)="edit(node.id)">
+            <button mat-menu-item (click)="edit(node.id)" id="editFolderTreeBtn">
               <mat-icon>edit</mat-icon>
               <span>{{ 'Edit folder' | translate }}</span>
             </button>
