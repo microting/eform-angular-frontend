@@ -1,6 +1,7 @@
 <mat-tree *ngIf="menu.data" [dataSource]="menu" [treeControl]="treeControl" class="mt-2 ml-2">
   <mat-tree-node
     *matTreeNodeDef="let node"
+    [matTreeNodePaddingIndent]="20"
     matTreeNodePadding=""
     style="min-height: 0;"
     [ngClass]="{'children': getLevel(node) > 0}">
@@ -32,11 +33,11 @@
     <ng-container *ngIf="checkGuards(node.guards)">
       <a
         style="padding-left: 16px; width: 100%; text-align: left;"
-        mat-icon-button
+        mat-button
         matTreeNodeToggle
         [id]="node.e2EId"
-      ><span style="">
-        {{node.name}}</span>
+      >
+        <span style="">{{node.name}}</span>
         <mat-icon class="mat-icon-rtl-mirror">
           {{treeControl.isExpanded(node) ? 'expand_more' : 'expand_less'}}
         </mat-icon>

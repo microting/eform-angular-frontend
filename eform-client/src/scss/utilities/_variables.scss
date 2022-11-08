@@ -19,5 +19,5 @@ $spacers: map-merge(
     ),
     $spacers
 );
-$cursors: (pointer,text,move,copy,default);
+$cursors: (pointer, text, move, copy, 'no-drop', default);
 $positions: static, relative, absolute, fixed, sticky !default;
