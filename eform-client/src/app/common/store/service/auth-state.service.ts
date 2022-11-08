@@ -127,6 +127,10 @@ export class AuthStateService {
     return `${this.query.currentSetting.currentUser.firstName} ${this.query.currentSetting.currentUser.lastName}`;
   }
 
+  get currentUserName(): string {
+    return this.query.currentSetting.currentUser.userName;
+  }
+
   get currentUserFullNameAsync(): Observable<string> {
     return this.query.selectFullName$;
   }
