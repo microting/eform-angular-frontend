@@ -2,7 +2,7 @@ import {Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '
 import {akitaConfig} from '@datorama/akita';
 import {AppMenuQuery, AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {Subscription} from 'rxjs';
+import {Subscription, take} from 'rxjs';
 import {AppSettingsService, LocaleService} from 'src/app/common/services';
 import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
@@ -63,7 +63,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   }
 
   getSettings() {
-    this.settingsService.connectionStringExist().subscribe((result) => {
+    this.settingsService.connectionStringExist().pipe(take(1)).subscribe((result) => {
       this.connectionStringExist = result.success;
       if (result && result.success === true) {
 
@@ -76,7 +76,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
           }
         );
 
-        this.settingsService.getHeaderSettings().subscribe((data => {
+        this.settingsService.getHeaderSettings().pipe(take(1)).subscribe((data => {
           if (data && data.success) {
             this.headerSettingsModel = data.model;
             if (this.headerSettingsModel.imageLink && this.headerSettingsModel.imageLinkVisible) {
