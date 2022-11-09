@@ -436,22 +436,28 @@ export class MainCheckListRowObj {
       this.checklists.push(await clRow.load());
     }
     for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = await $(`#languageCheckbox${i}`);
-      if ((await checkbox.getValue()) !== false.toString()) {
+      const checkbox = await $(`#languageCheckbox${i}-input`);
+      if ((await checkbox.getAttribute('aria-checked')) !== false.toString()) {
+        console.log('i', i);
+        console.log('applicationLanguages[i]', applicationLanguages[i]);
+        console.log('value is true');
         this.translations.push({
           languageId: i,
-          name: await (
-            await $(`#mainCheckListNameTranslation_${i}`)
-          ).getValue(),
-          description: await (
-            await $(
-              `#mainCheckListDescriptionTranslation_${i} .NgxEditor__Content`
-            )
-          ).getText(),
+          name:
+             await (
+             await $(`#mainCheckListNameTranslation_${i}`)
+           ).getValue(),
+          description:
+             await (
+             await $(
+               `#mainCheckListDescriptionTranslation_${i} .NgxEditor__Content`
+             )
+           ).getText(),
           id: null,
         });
       }
     }
+    console.log('done');
   }
 
   async edit(checklist: MainChecklistObj, clickSave = false) {
@@ -551,9 +557,9 @@ export class ChecklistFieldRowObj {
     }
     if (this.element) {
       const str: string[] = (
-        await (await this.element.$('.col-6')).getText()
+        await (await this.element.$('section > div > div > div')).getText()
       )
-        .replace('drag_handle ', '') // delete not need word
+        .replace('menu\n', '') // delete not need word
         .split('; '); // split name and type
       this.name = str[0];
       this.type = DanishEformFieldTypesEnum[str[1]];
