@@ -260,6 +260,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
           await (await this.entitySelectImportTextArea()).addValue(item);
         }
         await (await this.entitySelectImportSaveBtn()).click();
+        await browser.pause(1000);
       } else {
         for (let i = 0; i < data.items.length; i++) {
           await (await this.entitySelectCreateSingleItemBtn()).click();
@@ -429,7 +430,7 @@ export class EntitySelectItemEditRowObject {
   deleteBtn: WebdriverIO.Element;
 
   async getRow(rowNum: number): Promise<EntitySelectItemEditRowObject> {
-    const row = await $$('li.list-group-item')[rowNum - 1];
+    const row = await $$('app-entity-list-elements .d-flex')[rowNum - 1];
     if (row) {
       try {
         this.name = await row.$('#createEntityItemName').getText();
