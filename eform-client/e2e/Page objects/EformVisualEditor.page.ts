@@ -438,9 +438,6 @@ export class MainCheckListRowObj {
     for (let i = 0; i < applicationLanguages.length; i++) {
       const checkbox = await $(`#languageCheckbox${i}-input`);
       if ((await checkbox.getAttribute('aria-checked')) !== false.toString()) {
-        console.log('i', i);
-        console.log('applicationLanguages[i]', applicationLanguages[i]);
-        console.log('value is true');
         this.translations.push({
           languageId: i,
           name:
@@ -457,7 +454,6 @@ export class MainCheckListRowObj {
         });
       }
     }
-    console.log('done');
   }
 
   async edit(checklist: MainChecklistObj, clickSave = false) {
@@ -556,9 +552,9 @@ export class ChecklistFieldRowObj {
       this.element = await $(`#field_${this.index}`);
     }
     if (this.element) {
-      const str: string[] = (
-        await (await this.element.$('section > div > div > div')).getText()
-      )
+      const str: string[] = (await (
+        (await this.element.$('section > div > div > div')).getText()
+      ))
         .replace('menu\n', '') // delete not need word
         .split('; '); // split name and type
       this.name = str[0];
