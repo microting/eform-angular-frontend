@@ -1,5 +1,6 @@
 import {
   Component,
+  EventEmitter,
   Inject,
   OnDestroy,
 } from '@angular/core';
@@ -14,13 +15,17 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./shared-tag-edit.component.scss'],
 })
 export class SharedTagEditComponent implements OnDestroy {
+  public updatedTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
+  public tagModel: SharedTagModel = new SharedTagModel()
 
   constructor(
     public dialogRef: MatDialogRef<SharedTagEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public tagModel: SharedTagModel = new SharedTagModel()) {}
+    @Inject(MAT_DIALOG_DATA) tagModel: SharedTagModel = new SharedTagModel()) {
+    this.tagModel = {...tagModel};
+  }
 
   updateItem() {
-    this.dialogRef.close(this.tagModel);
+    this.updatedTag.emit(this.tagModel);
   }
 
   cancelEdit() {

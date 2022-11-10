@@ -4,13 +4,12 @@
   overflow-x: hidden;
 }
 
-.tag-row ~ .tag-row {
-  margin-top: 0.5rem;
-}
-
-.tag-row:last-of-type {
-  border: none;
-}
 .tag-row {
   border-bottom: 1px solid;
+  ~ .tag-row {
+    margin-top: 0.5rem;
+  }
+  &:last-of-type {
+    border: none;
+  }
 }

@@ -12,13 +12,30 @@
   </button>
 
   <div class="d-flex flex-column">
-    <div class="d-flex flex-row tag-row" *ngFor="let tag of availableTags">
-      <div id="tagName" class="">
+    <div class="d-flex flex-row tag-row align-items-center" *ngFor="let tag of availableTags">
+      <div id="tagName">
         {{tag.name}}
       </div>
-      <div class="ml-auto">
-        <mat-icon id="editTagBtn" (click)="showEditTagModal(tag)">edit</mat-icon>
-        <mat-icon id="deleteTagBtn" (click)="showDeleteTagModal(tag)">delete</mat-icon>
+      <div class="spacer"></div>
+      <div>
+        <button
+          color="accent"
+          mat-icon-button
+          (click)="showEditTagModal(tag)"
+          id="editTagBtn"
+          matTooltip="{{'Edit tag' | translate}}"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="showDeleteTagModal(tag)"
+          id="deleteTagBtn"
+          matTooltip="{{'Delete tag' | translate}}"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
     </div>
   </div>
@@ -26,7 +43,7 @@
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
     mat-raised-button
-    (click)="hide('')"
+    (click)="hide()"
     id="tagsModalCloseBtn">
     {{ 'Close' | translate }}
   </button>

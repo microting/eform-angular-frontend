@@ -1,5 +1,6 @@
 import {
   Component,
+  EventEmitter,
   OnInit,
 } from '@angular/core';
 import { SharedTagCreateModel } from 'src/app/common/models';
@@ -11,6 +12,7 @@ import {MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./shared-tag-create.component.scss']
 })
 export class SharedTagCreateComponent implements OnInit {
+  public createdTag: EventEmitter<SharedTagCreateModel> = new EventEmitter<SharedTagCreateModel>();
   name = '';
 
   constructor( public dialogRef: MatDialogRef<SharedTagCreateComponent>,) {}
@@ -18,7 +20,7 @@ export class SharedTagCreateComponent implements OnInit {
   ngOnInit() {}
 
   createItem() {
-    this.dialogRef.close({ name: this.name } as SharedTagCreateModel);
+    this.createdTag.emit({ name: this.name } as SharedTagCreateModel);
     this.name = '';
   }
 

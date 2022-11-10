@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { snakeToCamel } from 'src/app/common/helpers';
 import { resetStores } from '@datorama/akita';
 import { AppMenuStateService } from 'src/app/common/store';
+import {AppSettingsStore} from 'src/app/modules/application-settings/components/store';
 
 @Injectable()
 export class AuthStateService {
@@ -22,7 +23,8 @@ export class AuthStateService {
     private query: AuthQuery,
     private router: Router,
     private userSettings: UserSettingsService,
-    private appMenuStateService: AppMenuStateService
+    private appMenuStateService: AppMenuStateService,
+    private appSettingsStore: AppSettingsStore,
   ) {}
 
   login(loginInfo: LoginRequestModel) {
@@ -95,6 +97,7 @@ export class AuthStateService {
 
   logout() {
     this.store.reset();
+    this.appSettingsStore.reset();
     resetStores();
     this.router.navigate(['/auth']).then();
   }
