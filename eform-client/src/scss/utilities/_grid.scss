@@ -12,15 +12,7 @@
 
 @each $col in fill-array(10) {
   @each $size in fill-array(10) {
-    $grid-template-columns: #{$size}fr;
-    @for $i from 1 through $col {
-      @if($i == 1){
-        $grid-template-columns: #{$size}fr;
-      }
-      @else {
-        $grid-template-columns: #{$size}fr $grid-template-columns;
-      }
-    }
+    $grid-template-columns: repeat($col, #{$size}fr);
     .grid-#{$col}-columns-#{$size} {
       grid-template-columns: $grid-template-columns;
     }
