@@ -4,6 +4,10 @@
 mtx-grid {
   max-height: 70vh;
 
+  .mat-standard-chip {
+    height: unset;
+  }
+
   .mat-cell.selected {
     box-shadow: none !important;
   }
