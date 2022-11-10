@@ -148,7 +148,8 @@ export class Navbar {
 
   public async clickOnHeaderMenuItem2(headerMenuItem) {
     const ele = await $(
-      `//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`
+      `//*[mat-tree-node]//*[contains(text(), '${headerMenuItem}')]`
+      //`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });

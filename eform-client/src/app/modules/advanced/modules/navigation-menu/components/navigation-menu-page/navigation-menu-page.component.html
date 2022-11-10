@@ -23,7 +23,7 @@
   <mat-accordion multi="true" displayMode="flat" class="mr-2">
     <mat-expansion-panel *ngFor="
           let menuTemplate of navigationMenuModel.menuTemplates;
-          let templateIndex = index">
+          let templateIndex = index" id="menuTemplate">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ menuTemplate.name }}
