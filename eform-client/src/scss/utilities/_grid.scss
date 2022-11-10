@@ -3,7 +3,7 @@
 
 @function fill-array($end, $start: 1) {
   $new-list: ();
-  @for $i from $start through $end - 1 {
+  @for $i from $start through $end + 1 {
     $new-list: list.append($new-list, $i);
   }
   @return $new-list;
