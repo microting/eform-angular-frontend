@@ -181,6 +181,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   async goToVisualEditor() {
     await (await this.eformsVisualEditor()).click();
     await (await this.manageTags()).waitForClickable({ timeout: 40000 });
+    await browser.pause(500);
   }
 
   async createVisualTemplate(checklist: MainChecklistObj, clickSave = false) {
@@ -188,14 +189,17 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
           await this.clickLanguageCheckbox(true, i);
+          await browser.pause(500);
           await (
             await this.mainCheckListNameTranslationByLanguageId(i)
           ).setValue(checklist.translations[i].name);
+          await browser.pause(500);
           await (
             await (
               await this.mainCheckListDescriptionTranslationByLanguageId(i)
             ).$(`.NgxEditor__Content`)
           ).setValue(checklist.translations[i].description);
+          await browser.pause(500);
         }
       }
       if (checklist.tags) {
@@ -203,11 +207,13 @@ class EformVisualEditorPage extends PageWithNavbarPage {
           (await (await this.mainCheckListTagsSelector()).$('input')).setValue(
             checklist.tags[i]
           );
+          await browser.pause(500);
           const option = await (await this.mainCheckListTagsSelector()).$(
             '.ng-option'
           );
           await option.waitForDisplayed({ timeout: 40000 });
           await option.click();
+          await browser.pause(500);
         }
       }
       if (checklist.fields) {
@@ -243,11 +249,13 @@ class EformVisualEditorPage extends PageWithNavbarPage {
           await (await $(`#newChecklistNameTranslation_${i}`)).setValue(
             checklist.translations[i].name
           );
+          await browser.pause(500);
           await (
             await $(
               `#newChecklistDescriptionTranslation_${i} .NgxEditor__Content`
             )
           ).setValue(checklist.translations[i].description);
+          await browser.pause(500);
         }
       }
       // if (clickCancel) {
@@ -326,25 +334,30 @@ class EformVisualEditorPage extends PageWithNavbarPage {
             checklistFieldObj.pathToFiles[i]
           );
           await (await $(`#pdfInput${i}`)).addValue(file);
+          await browser.pause(500);
         }
       }
 
       // number type
       if (checklistFieldObj.minValue) {
         await (await $('#minValueEdit')).setValue(checklistFieldObj.minValue);
+        await browser.pause(500);
       }
       if (checklistFieldObj.maxValue) {
         await (await $('#maxValueEdit')).setValue(checklistFieldObj.maxValue);
+        await browser.pause(500);
       }
       if (checklistFieldObj.defaultValue) {
         await (await $('#defaultValueEdit0')).setValue(
           checklistFieldObj.defaultValue
         );
+        await browser.pause(500);
       }
       if (checklistFieldObj.decimalCount) {
         await (await $('#decimalCountEdit')).setValue(
           checklistFieldObj.decimalCount
         );
+        await browser.pause(500);
       }
 
       // mandatory
@@ -360,6 +373,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
         checklistFieldObj.mandatory
       ) {
         await (await (await $('#isChecked')).$('..')).click();
+        await browser.pause(500);
       }
     }
   }
@@ -370,6 +384,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     } else {
       await (await this.changeFieldSaveBtn()).click();
     }
+    await browser.pause(500);
     await (await this.manageTags()).waitForClickable({ timeout: 40000 });
   }
 
@@ -392,6 +407,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     const checkbox = await $(`#languageCheckbox${index}`);
     if ((await checkbox.getValue()) !== value.toString()) {
       await (await (await checkbox.$('..')).$('..')).click();
+      await browser.pause(500);
     }
   }
 }
