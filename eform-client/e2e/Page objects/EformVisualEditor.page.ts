@@ -788,16 +788,19 @@ export class ChecklistRowObj {
     ).waitForClickable({
       timeout: 40000,
     });
+    await browser.pause(500);
     if (translations) {
       for (let i = 0; i < translations.length; i++) {
         await (await $(`#newChecklistNameTranslation_${i}`)).setValue(
           translations[i].name
         );
+        await browser.pause(500);
         await (
           await $(
             `#newChecklistDescriptionTranslation_${i} .NgxEditor__Content`
           )
         ).setValue(translations[i].description);
+        await browser.pause(500);
       }
     }
   }
@@ -813,6 +816,7 @@ export class ChecklistRowObj {
     await (await eformVisualEditorPage.manageTags()).waitForClickable({
       timeout: 40000,
     });
+    await browser.pause(500);
   }
 }
 
