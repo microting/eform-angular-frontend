@@ -354,7 +354,7 @@ export class SelectableListRowObject {
   async openEdit() {
     await this.editBtn.click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
-    await browser.pause(500);
+    await browser.pause(1000);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
   }
 
@@ -372,6 +372,7 @@ export class SelectableListRowObject {
     }
     await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   async edit(
