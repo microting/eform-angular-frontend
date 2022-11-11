@@ -333,6 +333,7 @@ class MyEformsRowObject {
     if(await this.deleteBtn) {
       await (await this.deleteBtn).scrollIntoView();
       await (await this.deleteBtn).click();
+      await browser.pause(500);
       const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');
       await eFormDeleteDeleteBtn.waitForDisplayed({timeout: 40000});
       await eFormDeleteDeleteBtn.waitForClickable({timeout: 40000});
@@ -348,6 +349,7 @@ class MyEformsRowObject {
   async addTag(tag: string) {
     await this.editTagsBtn.waitForClickable({ timeout: 40000 });
     await this.editTagsBtn.click();
+    await browser.pause(500);
     const tagSelector = await $('app-eform-edit-tags-modal #tagSelector input');
     await tagSelector.waitForDisplayed({ timeout: 40000 });
     await tagSelector.setValue(tag);
@@ -359,6 +361,7 @@ class MyEformsRowObject {
       timeout: 40000,
       reverse: true,
     });
+    await browser.pause(500);
   }
 
   async deleteTags(tags: string[]) {
@@ -384,6 +387,7 @@ class MyEformsRowObject {
       timeout: 40000,
       reverse: true,
     });
+    await browser.pause(500);
   }
 
   async pair(folder: FoldersRowObject, users: DeviceUsersRowObject[]) {
@@ -393,6 +397,7 @@ class MyEformsRowObject {
     } else {
       await this.addPairEformBtn.click();
     }
+    await browser.pause(500);
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await (await myEformsPage.cancelParingBtn()).waitForDisplayed({
       timeout: 40000,
@@ -416,6 +421,7 @@ class MyEformsRowObject {
       await checkbox.scrollIntoView();
       await checkbox.waitForClickable({ timeout: 40000 });
       await checkbox.click();
+      await browser.pause(500);
     }
     await (await myEformsPage.saveParingBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
@@ -424,6 +430,7 @@ class MyEformsRowObject {
   async unPair(users: DeviceUsersRowObject[]) {
     const spinnerAnimation = $('#spinner-animation');
     this.editPairEformBtn.click();
+    await browser.pause(500);
     await (await spinnerAnimation).waitForDisplayed({
       timeout: 40000,
       reverse: true,
@@ -439,6 +446,7 @@ class MyEformsRowObject {
     }
     await (await myEformsPage.saveParingBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   async goToVisualEditor() {
@@ -449,5 +457,6 @@ class MyEformsRowObject {
       timeout: 40000,
       reverse: true,
     });
+    await browser.pause(500);
   }
 }

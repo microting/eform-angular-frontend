@@ -113,7 +113,6 @@ describe('Visual editor page', function () {
       checklist.translations[0].name
     );
     await eform.goToVisualEditor();
-    await browser.pause(500);
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
