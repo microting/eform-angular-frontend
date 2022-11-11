@@ -330,6 +330,7 @@ describe('Visual editor page', function () {
     checklistObj.fields = [...checklistObj.fields, checklistObj.fields[0]];
     let mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
+    await browser.pause(500);
     await mainChecklist.fields[0].makeCopy();
     await eformVisualEditorPage.clickSave();
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();

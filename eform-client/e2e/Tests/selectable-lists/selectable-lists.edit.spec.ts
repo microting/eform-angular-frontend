@@ -31,6 +31,7 @@ describe('Entity Select', function () {
       items: [generateRandmString()],
     };
     await selectableLists.createSelectableList(data);
+    await browser.pause(500);
     const selectableListRowObject = await selectableLists.getFirstSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
     await selectableListRowObject.openEdit();

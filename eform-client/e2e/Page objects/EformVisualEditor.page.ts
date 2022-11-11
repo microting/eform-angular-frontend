@@ -223,6 +223,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     }
     if (clickSave) {
       await this.clickSave();
+      await browser.pause(500);
     }
   }
 
@@ -232,6 +233,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     /*, clickCancel = false*/
   ) {
     await (await this.initialChecklistCreateBtn()).click();
+    await browser.pause(500);
     await (await this.changeChecklistSaveCancelBtn()).waitForClickable({
       timeout: 40000,
     });
@@ -252,6 +254,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       //   this.changeChecklistSaveCancelBtn.click();
       // } else {
       await (await this.changeChecklistSaveBtn()).click();
+      await browser.pause(500);
       // }
       await (await this.manageTags()).waitForClickable({ timeout: 40000 });
       if (checklist.fields) {
@@ -285,8 +288,10 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     if (checklistFieldObj) {
       if (!addNewNestedFieldBtn) {
         await (await this.initialFieldCreateBtn()).click();
+        await browser.pause(500);
       } else {
         await addNewNestedFieldBtn.click();
+        await browser.pause(500);
       }
       await (await this.changeFieldSaveCancelBtn()).waitForClickable({
         timeout: 40000,
@@ -308,6 +313,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
         const option = await (await this.fieldTypeSelector()).$('.ng-option');
         await option.waitForDisplayed({ timeout: 40000 });
         await option.click();
+        await browser.pause(500);
       }
 
       // pdf type
@@ -372,6 +378,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     await (await myEformsPage.newEformBtn()).waitForClickable({
       timeout: 40000,
     });
+    await browser.pause(500);
   }
 
   async openAllLanguages() {
@@ -491,6 +498,7 @@ export class MainCheckListRowObj {
     }
     if (clickSave) {
       await eformVisualEditorPage.clickSave();
+      await browser.pause(500);
     }
   }
 
@@ -602,11 +610,13 @@ export class ChecklistFieldRowObj {
 
   async changeColor(colorName: string) {
     await this.colorsBtn[colorName].click();
+    await browser.pause(500);
   }
 
   async makeCopy() {
     await this.copyBtn.scrollIntoView();
     await this.copyBtn.click();
+    await browser.pause(500);
   }
 
   async addNewNestedField(checklistFieldObj: ChecklistFieldObj) {
@@ -619,6 +629,7 @@ export class ChecklistFieldRowObj {
 
   async collapseToggle() {
     await this.collapseToggleBtn.click();
+    await browser.pause(500);
   }
 
   async delete(clickCancel = false) {
@@ -633,6 +644,7 @@ export class ChecklistFieldRowObj {
         timeout: 40000,
       }
     );
+    await browser.pause(500);
   }
 
   async closeDeleteModal(clickCancel = false) {
@@ -644,6 +656,7 @@ export class ChecklistFieldRowObj {
     await (await eformVisualEditorPage.manageTags()).waitForClickable({
       timeout: 40000,
     });
+    await browser.pause(500);
   }
 
   async edit(field: ChecklistFieldObj, clickCancel = false) {
