@@ -170,6 +170,7 @@ describe('Visual editor page', function () {
       checklistWithPdfFile.translations[0].name
     );
     await eform.goToVisualEditor();
+    await browser.pause(500);
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
@@ -283,10 +284,9 @@ describe('Visual editor page', function () {
       checklistWithPdfFile.translations[0].name
     );
     await eform.goToVisualEditor();
-    await browser.pause(500);
+    await browser.pause(1200);
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
-    await browser.pause(500);
     expect(
       mainChecklist.translations[0].name,
       'name main checklist not valid'

@@ -680,6 +680,7 @@ export class FoldersRowObject {
     if (await $('app-eform-tree-view-picker > mat-tree > mat-tree-node[aria-expanded="false"]')) {
       await $('app-eform-tree-view-picker > mat-tree > mat-tree-node[aria-expanded="false"] > button').click();
     }
+    await browser.pause(500);
   }
 }
 
@@ -770,6 +771,7 @@ export class FoldersTreeRowObject {
     await (await foldersPage.saveEditBtn()).waitForDisplayed({
       timeout: 40000,
     });
+    await browser.pause(500);
   }
 
   async editFolderChild(
@@ -873,5 +875,6 @@ export class FoldersTreeRowObject {
     await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
     });
+    await browser.pause(500);
   }
 }
