@@ -143,7 +143,8 @@ class MyEformsPage extends PageWithNavbarPage {
   async getLastMyEformsRowObj(): Promise<MyEformsRowObject> {
     await browser.pause(1500);
     const obj = new MyEformsRowObject();
-    return await obj.getRow(await this.rowNum());
+    const rowNum = await this.rowNum();
+    return await obj.getRow(rowNum);
   }
 
   async getEformRowObj(
@@ -323,9 +324,7 @@ class MyEformsRowObject {
     this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (currentPosition)))[0];
     this.deleteBtn = (await $$('#delete-eform-btn-' + (currentPosition)))[0];
     this.uploadZipArchiveBtn = (await $$('#upload-zip-btn-' + (currentPosition)))[0];
-    this.goVisualEditorBtn = await this.element.$(
-      `#edit-eform-btn-${currentPosition}`
-    );
+    this.goVisualEditorBtn = await $(`#edit-eform-btn-${currentPosition}`);
     return this;
   }
 
@@ -451,6 +450,7 @@ class MyEformsRowObject {
 
   async goToVisualEditor() {
     await this.goVisualEditorBtn.click();
+    await browser.pause(500);
     await (await $('#manageTags')).waitForClickable({ timeout: 40000 });
     const spinnerAnimation = $('#spinner-animation');
     await (await spinnerAnimation).waitForDisplayed({

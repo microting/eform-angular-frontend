@@ -170,8 +170,8 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   async selectedLanguages(): Promise<number[]> {
     const selectedLanguages = [];
     for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = await $(`#languageCheckbox${i}`);
-      if ((await checkbox.getValue()) === true.toString()) {
+      const checkbox = await $(`#languageCheckbox${i}-input`);
+      if ((await checkbox.getAttribute('aria-checked')) === true.toString()) {
         selectedLanguages.push(i);
       }
     }
@@ -309,15 +309,21 @@ class EformVisualEditorPage extends PageWithNavbarPage {
           await (await $(`#fieldNameTranslation_${i}`)).setValue(
             checklistFieldObj.translations[i].name
           );
+          await browser.pause(500);
           await (
             await $(`#newFieldDescriptionTranslation_${i} .NgxEditor__Content`)
           ).setValue(checklistFieldObj.translations[i].description);
+          await browser.pause(500);
         }
       }
       if (checklistFieldObj.type) {
-        await (await (await this.fieldTypeSelector()).$('input')).setValue(
-          DanishEformFieldTypesEnum[checklistFieldObj.type]
+        const bla = await this.fieldTypeSelector();
+        const foo = await bla.$('input');
+        const bar = DanishEformFieldTypesEnum[checklistFieldObj.type];
+        await (foo).setValue(
+          bar
         );
+        await browser.pause(500);
         const option = await (await this.fieldTypeSelector()).$('.ng-option');
         await option.waitForDisplayed({ timeout: 40000 });
         await option.click();
@@ -744,6 +750,7 @@ export class ChecklistRowObj {
         this.fields.push(await clfRow.loadData());
       }
       const selectedLanguages = await eformVisualEditorPage.selectedLanguages();
+      await browser.pause(500);
       await this.openEditModal();
       for (let i = 0; i < selectedLanguages.length; i++) {
         const translation: CommonTranslationsModel = {
