@@ -101,8 +101,11 @@ class DeviceUsersPage extends PageWithNavbarPage {
 
   public async createNewDeviceUser(firstName: string, lastName: string) {
     await (await this.newDeviceUserBtn()).click();
+    await browser.pause(500);
     await (await this.createFirstNameInput()).setValue(firstName);
+    await browser.pause(500);
     await (await this.createLastNameInput()).setValue(lastName);
+    await browser.pause(500);
     await (await this.saveCreateBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({
       timeout: 90000,

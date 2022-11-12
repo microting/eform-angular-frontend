@@ -5,10 +5,34 @@ import XMLForEform from '../Constants/XMLForEform';
 import { FoldersRowObject } from './Folders.page';
 import { DeviceUsersRowObject } from './DeviceUsers.page';
 import tagsModalPage from './TagsModal.page';
+//import path from 'path';
+const path = require('path');
 
 class MyEformsPage extends PageWithNavbarPage {
   constructor() {
     super();
+  }
+
+  public async takeScreenshot() {
+    const timestamp = new Date().toLocaleString('iso', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).replace(/[ ]/g, '--').replace(':', '-');
+
+    // get current test title and clean it, to use it as file name
+    const filename = encodeURIComponent(
+      `hrome-${timestamp}`.replace(/[/]/g, '__')
+    ).replace(/%../, '.');
+
+    const filePath = path.resolve('./', `${filename}.png`);
+
+    console.log('Saving screenshot to:', filePath);
+    await browser.saveScreenshot(filePath);
+    console.log('Saved screenshot to:', filePath);
   }
 
   public async newEformBtn(): Promise<WebdriverIO.Element> {
@@ -185,6 +209,7 @@ class MyEformsPage extends PageWithNavbarPage {
     const spinnerAnimation = await $('#spinner-animation');
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.newEformBtn()).click();
+    await browser.pause(500);
     await (await this.xmlTextArea()).waitForDisplayed({ timeout: 40000 });
     // Create replaced xml and insert it in textarea
     if (!xml) {
@@ -195,6 +220,7 @@ class MyEformsPage extends PageWithNavbarPage {
     }, xml);
     await browser.pause(200);
     await (await this.xmlTextArea()).addValue(' ');
+    await browser.pause(500);
     // Create new tags
     const addedTags: string[] = newTagsList;
     if (newTagsList.length > 0) {
@@ -215,11 +241,13 @@ class MyEformsPage extends PageWithNavbarPage {
       });
       for (let i = 0; i < tagAddedNum; i++) {
         await (await this.createEformTagSelector()).click();
+        await browser.pause(500);
         const selectedTag = await $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(await selectedTag.getText());
         await selectedTag.waitForDisplayed({ timeout: 40000 });
         await selectedTag.waitForClickable({ timeout: 40000 });
         await selectedTag.click();
+        await browser.pause(500);
         await spinnerAnimation.waitForDisplayed({
           timeout: 50000,
           reverse: true,
@@ -232,6 +260,7 @@ class MyEformsPage extends PageWithNavbarPage {
     // browser.pause(14000);
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.newEformBtn()).waitForClickable({ timeout: 40000 });
+    await browser.pause(500);
     return { added: addedTags, selected: selectedTags };
   }
 
@@ -390,12 +419,16 @@ class MyEformsRowObject {
   }
 
   async pair(folder: FoldersRowObject, users: DeviceUsersRowObject[]) {
+    console.log('Pairing eform');
     const spinnerAnimation = $('#spinner-animation');
     if (await this.editPairEformBtn.isExisting()) {
+      console.log('editPairEformBtn isExisting');
       await this.editPairEformBtn.click();
     } else {
+      console.log('addPairEformBtn isExisting');
       await this.addPairEformBtn.click();
     }
+    console.log('Parring clicked');
     await browser.pause(500);
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await (await myEformsPage.cancelParingBtn()).waitForDisplayed({
@@ -414,14 +447,21 @@ class MyEformsRowObject {
         await browser.pause(1000);
       }
     }
+    console.log('Folder selected');
+    await myEformsPage.takeScreenshot();
     for (let i = 0; i < users.length; i++) {
+      console.log('Selecting user: ' + users[i].firstName);
       //const name = `#mat-checkbox-${i+2} > label > div.mat-checkbox-inner-container`;
       const checkbox = await $(`#checkbox${users[i].siteId}`);
+      console.log('Checkbox found ');
       await checkbox.scrollIntoView();
-      await checkbox.waitForClickable({ timeout: 40000 });
+      console.log('Checkbox scrolled into view');
+      //await checkbox.waitForClickable({ timeout: 40000 });
       await checkbox.click();
+      console.log('User selected ' + users[i].firstName);
       await browser.pause(500);
     }
+    console.log('Users selected');
     await (await myEformsPage.saveParingBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(1000);
