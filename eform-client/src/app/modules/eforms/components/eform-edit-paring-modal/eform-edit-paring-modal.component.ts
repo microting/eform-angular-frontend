@@ -23,12 +23,12 @@ export class EformEditParingModalComponent implements OnInit {
   foldersDto: Array<FolderDto> = [];
   saveButtonDisabled = true;
   eformDeployed = false;
-  columns: MtxGridColumn[] = [
-    { header: this.translateService.stream('Microting ID'), field: 'siteUId', },
-    { header: this.translateService.stream('Device user'), field: 'siteName', },
-    // { header: this.translateService.get('Select'), field: 'status' },
-  ];
-  rowSelected: any[];
+  // columns: MtxGridColumn[] = [
+  //   { header: this.translateService.stream('Microting ID'), field: 'siteUId', },
+  //   { header: this.translateService.stream('Device user'), field: 'siteName', },
+  //   // { header: this.translateService.get('Select'), field: 'status' },
+  // ];
+  //rowSelected: any[];
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -67,7 +67,7 @@ export class EformEditParingModalComponent implements OnInit {
   addToArray(e: any, deployId: number) {
     const deployObject = new DeployCheckbox();
     deployObject.id = deployId;
-    if (e.target.checked) {
+    if (e.checked) {
       deployObject.isChecked = true;
       this.deployModel.deployCheckboxes.push(deployObject);
     } else {
@@ -78,26 +78,58 @@ export class EformEditParingModalComponent implements OnInit {
   }
 
   fillCheckboxes() {
+    // for (const siteDto of this.sitesDto) {
+    //   // @ts-ignore
+    //   siteDto.status = !(this.selectedTemplateDto.deployedSites.findIndex(x => x.siteUId === siteDto.siteUId) === -1);
+    // }
+    // // @ts-ignore
+    // this.rowSelected = this.sitesDto.filter(x => x.status);
     for (const siteDto of this.sitesDto) {
-      // @ts-ignore
-      siteDto.status = !(this.selectedTemplateDto.deployedSites.findIndex(x => x.siteUId === siteDto.siteUId) === -1);
+      const deployObject = new DeployCheckbox();
+      for (const deployedSite of this.selectedTemplateDto.deployedSites) {
+        if (deployedSite.siteUId === siteDto.siteUId) {
+          this.matchFound = true;
+          deployObject.id = siteDto.siteUId;
+          deployObject.isChecked = true;
+          this.deployModel.deployCheckboxes.push(deployObject);
+        }
+      }
+      this.deployModel.folderId = this.selectedTemplateDto.folderId;
+      this.deployViewModel.id = this.selectedTemplateDto.id;
+      if (
+        this.foldersDto.length === 0 ||
+        (this.foldersDto.length > 0 && this.deployModel.folderId)
+      ) {
+        this.saveButtonDisabled = false;
+      }
+      deployObject.id = siteDto.siteUId;
+      deployObject.isChecked = this.matchFound === true;
+      this.matchFound = false;
+      this.deployViewModel.deployCheckboxes.push(deployObject);
     }
-    // @ts-ignore
-    this.rowSelected = this.sitesDto.filter(x => x.status);
   }
 
   submitDeployment() {
     this.deployModel.id = this.selectedTemplateDto.id;
-    this.deployModel.deployCheckboxes = this.rowSelected
-      .map(x => {
-      return { id: x.siteUId, isChecked: true};
-    });
     this.eFormService.deploySingle(this.deployModel).subscribe((operation) => {
       if (operation && operation.success) {
         this.deployModel = new DeployModel();
         this.hide(true);
+        // this.frame.hide();
+        // this.deploymentFinished.emit();
       }
     });
+    // this.deployModel.id = this.selectedTemplateDto.id;
+    // this.deployModel.deployCheckboxes = this.rowSelected
+    //   .map(x => {
+    //   return { id: x.siteUId, isChecked: true};
+    // });
+    // this.eFormService.deploySingle(this.deployModel).subscribe((operation) => {
+    //   if (operation && operation.success) {
+    //     this.deployModel = new DeployModel();
+    //     this.hide(true);
+    //   }
+    // });
   }
 
   loadAllFolders() {

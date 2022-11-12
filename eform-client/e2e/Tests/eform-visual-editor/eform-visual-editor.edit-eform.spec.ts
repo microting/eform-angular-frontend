@@ -201,7 +201,7 @@ describe('Visual editor page', function () {
     await mainChecklist.checklists[0].fields[0].makeCopy();
     await browser.pause(500);
     await mainChecklist.checklists[0].fields[0].changeColor('grey');
-    await browser.pause(500);
+    await browser.pause(1000);
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     await browser.pause(500);
