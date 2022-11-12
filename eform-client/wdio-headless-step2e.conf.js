@@ -11,9 +11,9 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    //'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
-    //'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
-    //'e2e/Tests/profile-settings/profile-settings.language.spec.ts',
+    'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
+    'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
+    'e2e/Tests/profile-settings/profile-settings.language.spec.ts',
     'e2e/Tests/user-administration/user-administration.name-change.spec.ts',
   ],
   suites: {
@@ -57,7 +57,7 @@ exports.config = {
     browserName: 'chrome',
     'goog:chromeOptions': {
       args: [
-        //'headless',
+        'headless',
         'window-size=1920,1080',
         'disable-gpu'],
     },
