@@ -632,7 +632,7 @@ export class ChecklistFieldRowObj {
 
   async changeColor(colorName: string) {
     await this.colorsBtn[colorName].click();
-    await browser.pause(500);
+    await browser.pause(1000);
   }
 
   async makeCopy() {
