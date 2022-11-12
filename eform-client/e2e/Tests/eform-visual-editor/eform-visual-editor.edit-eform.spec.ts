@@ -77,7 +77,6 @@ describe('Visual editor page', function () {
       mandatory: false,
     };
     await eformVisualEditorPage.openAllLanguages();
-    console.log('visual editor page opened');
     await eformVisualEditorPage.createVisualTemplateField(newField);
     await mainChecklist.edit(checklistObjForEdit);
     mainChecklist = new MainCheckListRowObj();

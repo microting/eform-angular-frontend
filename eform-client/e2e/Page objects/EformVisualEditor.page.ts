@@ -631,8 +631,37 @@ export class ChecklistFieldRowObj {
   }
 
   async changeColor(colorName: string) {
-    await this.colorsBtn[colorName].click();
-    await browser.pause(1000);
+    // await this.colorsBtn[colorName].click();
+    // await browser.pause(500);
+    // const backgroundColor = (
+    //   await (await this.element.$('div>div')).getCSSProperty(
+    //     'background-color'
+    //   )
+    // ).parsed.hex;
+    // this.color = eformVisualEditorElementColors.find(
+    //   (x) => x.name === backgroundColor.replace('#', '')
+    // );
+    while (this.color.description.toLowerCase() !== colorName) {
+      await this.colorsBtn[colorName].click();
+      await browser.pause(500);
+      const backgroundColor = (
+        await (await this.element.$('div>div')).getCSSProperty(
+          'background-color'
+        )
+      ).parsed.hex;
+      this.color = eformVisualEditorElementColors.find(
+        (x) => x.name === backgroundColor.replace('#', '')
+      );
+    }
+    // const colorMas = await this.element.$$('#colors >*');
+    // this.colorsBtn = {
+    //   standard: colorMas[0],
+    //   green: colorMas[1],
+    //   blue: colorMas[2],
+    //   yellow: colorMas[3],
+    //   red: colorMas[4],
+    //   grey: colorMas[5],
+    // };
   }
 
   async makeCopy() {
