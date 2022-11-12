@@ -246,8 +246,10 @@ export class SelectableListsPage extends PageWithNavbarPage {
     await browser.pause(500);
     await (await this.entitySelectCreateName()).waitForDisplayed({ timeout: 40000 });
     await (await this.entitySelectCreateName()).setValue(data.name);
+    await browser.pause(500);
     if (data.description) {
       await (await this.entitySelectCreateDescription()).setValue(data.description);
+      await browser.pause(500);
     }
     if (data.items != null) {
       if (multipleImport) {
@@ -259,6 +261,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
             item = item + '\n';
           }
           await (await this.entitySelectImportTextArea()).addValue(item);
+          await browser.pause(500);
         }
         await (await this.entitySelectImportSaveBtn()).click();
         await browser.pause(1000);
@@ -468,12 +471,15 @@ export class EntitySelectItemEditRowObject {
   async edit(newName: string, clickCancel = false) {
     // await this.editBtn.scrollIntoView();
     await this.editBtn.click();
+    await browser.pause(500);
     await (await selectableLists.entitySelectEditItemNameBox()).setValue(newName);
+    await browser.pause(500);
     if (!clickCancel) {
       await (await selectableLists.entitySelectEditItemSaveBtn()).click();
     } else {
       await (await selectableLists.entitySelectEditItemCancelBtn()).click();
     }
+    await browser.pause(500);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
   }
 
@@ -511,12 +517,15 @@ export class EntitySelectItemCreateRowObject {
   async edit(newName: string, clickCancel = false) {
     await this.editBtn.scrollIntoView();
     await this.editBtn.click();
+    await browser.pause(500);
     await (await selectableLists.entitySelectEditItemNameBox()).setValue(newName);
+    await browser.pause(500);
     if (!clickCancel) {
       await (await selectableLists.entitySelectEditItemSaveBtn()).click();
     } else {
       await (await selectableLists.entitySelectEditItemCancelBtn()).click();
     }
+    await browser.pause(500);
     await (await selectableLists.entitySelectCreateCancelBtn()).waitForDisplayed();
   }
 
