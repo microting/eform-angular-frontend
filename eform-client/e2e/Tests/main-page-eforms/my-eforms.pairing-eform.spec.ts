@@ -40,7 +40,8 @@ describe('Main page', function () {
       await (await $('mat-tree-node > .selected-folder > div')).getText(),
       'Wrong folder selected'
     ).contain(`${folders[0].name}`);
-    const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
+    //const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
+    const siteIds = await $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
       const index = users.findIndex(
         (user) => user.siteId === +siteIds[i].getText()
@@ -62,17 +63,18 @@ describe('Main page', function () {
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     //await (await $('td.cdk-column-siteUId > mtx-grid-cell > span')).waitForDisplayed({ timeout: 40000 });
     //await browser.pause(1000);
-    const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
+    //const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
+    const siteIds = await $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].getText())) {
         expect(
-          await (await $(`#mat-checkbox-3`)).getValue(),
+          await (await $(`#checkbox${users[1].siteId}`)).getValue(),
           `User ${users[1].siteId} paired`
         ).eq('false');
       }
       if (users[0].siteId === +siteIds[i].getText()) {
         expect(
-          await (await $(`#mat-checkbox-2`)).getValue(),
+          await (await $(`#checkbox${users[0].siteId}`)).getValue(),
           `User ${users[0].siteId} not paired`
         ).eq('true');
       }
@@ -80,6 +82,9 @@ describe('Main page', function () {
     await (await myEformsPage.cancelParingBtn()).click();
   });
   after(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToMyEForms();
     await (await myEformsPage.getEformsRowObjByNameEForm('test Eform')).deleteEForm();
     await myEformsPage.Navbar.goToDeviceUsersPage();
     for (let i = 0; i < users.length; i++) {

@@ -415,8 +415,8 @@ class MyEformsRowObject {
       }
     }
     for (let i = 0; i < users.length; i++) {
-      const name = `#mat-checkbox-${i+2} > label > div.mat-checkbox-inner-container`;
-      const checkbox = await $(`#mat-checkbox-${i+2}`);
+      //const name = `#mat-checkbox-${i+2} > label > div.mat-checkbox-inner-container`;
+      const checkbox = await $(`#checkbox${users[i].siteId}`);
       await checkbox.scrollIntoView();
       await checkbox.waitForClickable({ timeout: 40000 });
       await checkbox.click();
@@ -434,7 +434,7 @@ class MyEformsRowObject {
       timeout: 40000,
       reverse: true,
     });
-    (await await myEformsPage.cancelParingBtn()).waitForDisplayed({
+    await (await myEformsPage.cancelParingBtn()).waitForDisplayed({
       timeout: 40000,
     });
     for (let i = 0; i < users.length; i++) {
