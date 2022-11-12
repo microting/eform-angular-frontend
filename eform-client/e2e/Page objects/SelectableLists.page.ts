@@ -356,6 +356,7 @@ export class SelectableListRowObject {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(1000);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
+    await browser.pause(1000);
   }
 
   async closeEdit(clickCancel = false) {
@@ -365,14 +366,14 @@ export class SelectableListRowObject {
         timeout: 90000,
         reverse: true,
       });
-      await browser.pause(500);
+      await browser.pause(1000);
     } else {
       await (await selectableLists.entitySelectEditCancelBtn()).click();
-      await browser.pause(500);
+      await browser.pause(1000);
     }
     await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
-    await browser.pause(500);
+    await browser.pause(1000);
   }
 
   async edit(

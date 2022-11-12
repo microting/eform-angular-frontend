@@ -34,8 +34,8 @@ describe('Main page', function () {
     await (await myEformsPage.getFirstMyEformsRowObj()).pair(folders[0], users);
     await (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    await (await myEformsPage.cancelParingBtn()).waitForDisplayed({ timeout: 40000 });
     await browser.pause(1000);
+    await (await myEformsPage.cancelParingBtn()).waitForDisplayed({ timeout: 40000 });
     expect(
       await (await $('mat-tree-node > .selected-folder > div')).getText(),
       'Wrong folder selected'
@@ -58,6 +58,7 @@ describe('Main page', function () {
   });
   it('should unpair one', async () => {
     await (await myEformsPage.getFirstMyEformsRowObj()).unPair([users[1]]);
+    await browser.pause(1000);
     const spinnerAnimation = await $('#spinner-animation');
     (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });

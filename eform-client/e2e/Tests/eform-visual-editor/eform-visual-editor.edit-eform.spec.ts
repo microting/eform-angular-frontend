@@ -87,7 +87,8 @@ describe('Visual editor page', function () {
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     await mainChecklist.fields[1].edit({ type: EformFieldTypesEnum.None });
-    await mainChecklist.fields[1].changeColor('grey');
+    await mainChecklist.fields[1].changeColor('red');
+    await browser.pause(10000);
     checklistObjForEdit.fields = [
       newField,
       { ...checklist.fields[0], type: EformFieldTypesEnum.None },
@@ -120,7 +121,7 @@ describe('Visual editor page', function () {
     expect(
       mainChecklist.fields[1].color.description,
       `field[1] color not valid`
-    ).eq('Grey');
+    ).eq('Red');
   });
   it('should edit created visual template (nested checklist)', async () => {
     const checklist: MainChecklistObj = {

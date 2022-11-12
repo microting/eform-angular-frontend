@@ -424,12 +424,13 @@ class MyEformsRowObject {
     }
     await (await myEformsPage.saveParingBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(1000);
   }
 
   async unPair(users: DeviceUsersRowObject[]) {
     const spinnerAnimation = $('#spinner-animation');
     this.editPairEformBtn.click();
-    await browser.pause(500);
+    await browser.pause(1000);
     await (await spinnerAnimation).waitForDisplayed({
       timeout: 40000,
       reverse: true,
@@ -442,10 +443,11 @@ class MyEformsRowObject {
       await checkbox.scrollIntoView();
       await (await checkbox.$('..')).waitForClickable({ timeout: 40000 });
       await (await checkbox.$('..')).click();
+      await browser.pause(1000);
     }
     await (await myEformsPage.saveParingBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
-    await browser.pause(500);
+    await browser.pause(1000);
   }
 
   async goToVisualEditor() {
