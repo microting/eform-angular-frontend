@@ -23,8 +23,10 @@
   </mat-checkbox>
 
   <mtx-grid
+    id="userInfoTable"
     [data]="userInfoModelList.entities"
     [columns]="tableHeaders"
+    [cellTemplate]="{id: idTpl, email: emailTpl, fullName: fullNameTpl, role: roleTpl, actions: actionsTpl}"
     [showPaginator]="true"
     [paginationTemplate]="paginatorTpl"
     [pageOnFront]="false"
@@ -35,6 +37,45 @@
     [sortDirection]="usersStateService.getActiveSortDirection() | async"
     (sortChange)="onSortTable($event)">
   </mtx-grid>
+  <ng-template #idTpl let-row let-i="index">
+    <div class="userAdministrationId" id="userAdministrationId-{{i}}">{{row.id}}</div>
+  </ng-template>
+
+  <ng-template #emailTpl let-row let-i="index">
+    <div id="userAdministrationEmail-{{i}}">{{row.email}}</div>
+  </ng-template>
+  <ng-template #fullNameTpl let-row let-i="index">
+    <div id="userAdministrationFullName-{{i}}">{{row.firstName}} {{row.lastName}}</div>
+  </ng-template>
+  <ng-template #roleTpl let-row let-i="index">
+    <div id="userAdministrationRole-{{i}}">{{row.role}}</div>
+  </ng-template>
+
+  <ng-template #actionsTpl let-row let-i="index">
+    <div class="d-flex">
+      <button
+        mat-icon-button
+        color="accent"
+        (click)="openEditModal(row.id)"
+        *ngIf="userClaims.usersUpdate"
+        matTooltip="{{ 'Edit user' | translate }}"
+        id="userAdministrationEditBtn-{{i}}"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="openRemoveUserModal(row)"
+        *ngIf="userClaims.usersDelete"
+        matTooltip="{{ 'Delete user' | translate }}"
+        id="userAdministrationDeleteBtn-{{i}}"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </ng-template>
+
 
   <ng-template #paginatorTpl>
     <eform-pagination

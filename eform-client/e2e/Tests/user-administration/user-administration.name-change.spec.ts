@@ -8,6 +8,7 @@ import { generateRandmString } from '../../Helpers/helper-functions';
 const expect = require('chai').expect;
 
 describe('User administration settings', function () {
+  const randomPassword = generateRandmString();
   before(async () => {
     await loginPage.open('/');
     await loginPage.login();
@@ -17,6 +18,7 @@ describe('User administration settings', function () {
     const user: UserAdministrationObject = {
       firstName: 'Foo',
       lastName: 'Bar',
+      password: 'Qq1234567$',
     };
     let userObject = await userAdministration.getUserByNumber();
     await userObject.edit(user);
@@ -27,6 +29,7 @@ describe('User administration settings', function () {
     const user: UserAdministrationObject = {
       firstName: 'John',
       lastName: 'Smith',
+      password: 'Qq1234567$',
     };
     let userObject = await userAdministration.getUserByNumber();
     await userObject.edit(user);
@@ -40,9 +43,10 @@ describe('User administration settings', function () {
       group: 'eForm users',
       role: 'User',
       email: 'user@user.com',
-      password: generateRandmString(),
+      password: randomPassword,
     };
     const countUserBeforeCreate = await userAdministration.rowNum();
+    await browser.pause(500);
     await userAdministration.createNewUser(user);
     expect(countUserBeforeCreate + 1, 'user not created').eq(
       await userAdministration.rowNum()
@@ -52,6 +56,7 @@ describe('User administration settings', function () {
     let userObject = await userAdministration.getUserByNumber(2);
     const user: UserAdministrationObject = {
       role: 'Admin',
+      password: randomPassword,
     };
     await userObject.edit(user);
     userObject = await userAdministration.getUserByNumber(2);
@@ -64,6 +69,7 @@ describe('User administration settings', function () {
     const user: UserAdministrationObject = {
       role: 'User',
       group: 'eForm users',
+      password: randomPassword,
     };
     await userObject.edit(user);
     userObject = await userAdministration.getUserByNumber(2);
