@@ -132,6 +132,7 @@ export class Navbar {
   public async advancedDropdownClick() {
     await (await this.advancedBtn()).waitForDisplayed({ timeout: 60000 });
     await (await this.advancedBtn()).click();
+    await browser.pause(500);
   }
 
   public async clickOnHeaderMenuItem(headerMenuItem) {
@@ -222,6 +223,7 @@ export class Navbar {
   public async goToFolderPage() {
     if (await (await $(`#folders`)).isDisplayed()) {
       await (await this.foldersBtn()).click();
+      await browser.pause(500);
       await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     } else {
       await this.advancedDropdownClick();
@@ -229,6 +231,7 @@ export class Navbar {
       await (await this.foldersBtn()).waitForClickable({ timeout: 40000 });
       await (await this.foldersBtn()).click();
       await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+      await browser.pause(500);
     }
   }
 

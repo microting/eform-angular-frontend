@@ -21,6 +21,7 @@ describe('Site tags', function () {
     await sitesPage.createTag([tagName]);
   });
   it('should assign tag', async () => {
+    await browser.pause(500);
     let site = await sitesPage.getFirstRowObject();
     await site.edit({ tags: [tagName] });
     site = await sitesPage.getFirstRowObject();

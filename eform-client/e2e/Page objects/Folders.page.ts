@@ -253,6 +253,7 @@ class FoldersPage extends PageWithNavbarPage {
     description?: string | Array<{ description: string; language: string }>
   ) {
     await (await this.newFolderBtn()).click();
+    await browser.pause(500);
     await (await this.cancelCreateBtn()).waitForDisplayed({ timeout: 10000 });
     if (name) {
       if (typeof name === typeof '') {
@@ -261,16 +262,19 @@ class FoldersPage extends PageWithNavbarPage {
         await (await this.createLanguageSelector())
           .$('input')
           .setValue(da.text);
+        await browser.pause(500);
         const value = (await this.createLanguageSelector()).$(
           `.ng-option=${da.text}`
         );
         value.waitForDisplayed({ timeout: 40000 });
         value.click();
+        await browser.pause(500);
         (
           await this.createNameInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(nameConverted);
+        await browser.pause(500);
       }
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
@@ -281,16 +285,19 @@ class FoldersPage extends PageWithNavbarPage {
           (await this.createLanguageSelector())
             .$('input')
             .setValue(language.text);
+          await browser.pause(500);
           const value = (await this.createLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           value.waitForDisplayed({ timeout: 40000 });
           value.click();
+          await browser.pause(500);
           (
             await this.createNameInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(nameConverted[i].name);
+          await browser.pause(500);
         }
       }
     }
@@ -302,16 +309,19 @@ class FoldersPage extends PageWithNavbarPage {
         await (
           await (await foldersPage.createLanguageSelector()).$('input')
         ).setValue(da.text);
+        await browser.pause(500);
         const value = await (await this.createLanguageSelector()).$(
           `.ng-option=${da.text}`
         );
         value.waitForDisplayed({ timeout: 40000 });
         value.click();
+        await browser.pause(500);
         (
           await this.createDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(descriptionConvert);
+        await browser.pause(500);
       }
       if (typeof description === typeof []) {
         const descriptionConvert = description as {
@@ -325,16 +335,19 @@ class FoldersPage extends PageWithNavbarPage {
           (await this.createLanguageSelector())
             .$('input')
             .setValue(language.text);
+          await browser.pause(500);
           const value = (await this.createLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           value.waitForDisplayed({ timeout: 40000 });
           value.click();
+          await browser.pause(500);
           (
             await this.createDescriptionInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(descriptionConvert[i].description);
+          await browser.pause(500);
         }
       }
     }
@@ -354,6 +367,7 @@ class FoldersPage extends PageWithNavbarPage {
     await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
     });
+    await browser.pause(500);
   }
 }
 
@@ -396,11 +410,13 @@ export class FoldersRowObject {
       await (
         await (await foldersPage.editLanguageSelector()).$('input')
       ).setValue(language.text);
+      await browser.pause(500);
       const value = await (await $('ng-dropdown-panel')).$(
         `.ng-option=${language.text}`
       );
       await value.waitForDisplayed({ timeout: 40000 });
       await value.click();
+      await browser.pause(500);
       descriptions.push({
         description: await (
           await foldersPage.editDescriptionInput(
@@ -411,6 +427,7 @@ export class FoldersRowObject {
       });
     }
     await (await foldersPage.cancelEditBtn()).click();
+    await browser.pause(500);
     return descriptions;
   }
 
@@ -436,16 +453,19 @@ export class FoldersRowObject {
         await (
           await (await foldersPage.createLanguageSelector()).$('input')
         ).setValue(da.text);
+        await browser.pause(500);
         const value = await (await $('ng-dropdown-panel')).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
+        await browser.pause(500);
         (
           await foldersPage.createNameInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(nameConverted);
+        await browser.pause(500);
       }
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
@@ -456,16 +476,19 @@ export class FoldersRowObject {
           await (
             await (await foldersPage.createLanguageSelector()).$('input')
           ).setValue(language.text);
+          await browser.pause(500);
           const value = await (await $('ng-dropdown-panel')).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
+          await browser.pause(500);
           (
             await foldersPage.createNameInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(nameConverted[i].name);
+          await browser.pause(500);
         }
       }
     }
@@ -476,16 +499,19 @@ export class FoldersRowObject {
         await (
           await (await foldersPage.createLanguageSelector()).$('input')
         ).setValue(da.text);
+        await browser.pause(500);
         const value = await (await $('ng-dropdown-panel')).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
+        await browser.pause(500);
         (
           await foldersPage.createDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(descriptionConvert);
+        await browser.pause(500);
       }
       if (typeof description === typeof []) {
         const descriptionConvert = description as {
@@ -499,16 +525,19 @@ export class FoldersRowObject {
           await (
             await (await foldersPage.createLanguageSelector()).$('input')
           ).setValue(language.text);
+          await browser.pause(500);
           const value = await (await $('ng-dropdown-panel')).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
+          await browser.pause(500);
           (
             await foldersPage.createDescriptionInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(descriptionConvert[i].description);
+          await browser.pause(500);
         }
       }
     }
@@ -586,6 +615,7 @@ export class FoldersRowObject {
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(nameConverted);
+        await browser.pause(500);
       }
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
@@ -606,6 +636,7 @@ export class FoldersRowObject {
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(nameConverted[i].name);
+          await browser.pause(500);
         }
       }
     }
@@ -626,6 +657,7 @@ export class FoldersRowObject {
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(descriptionConvert);
+        await browser.pause(500);
       }
       if (typeof description === typeof []) {
         const descriptionConvert = description as {
@@ -649,6 +681,7 @@ export class FoldersRowObject {
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(descriptionConvert[i].description);
+          await browser.pause(500);
         }
       }
     }
@@ -680,7 +713,7 @@ export class FoldersRowObject {
     if (await $('app-eform-tree-view-picker > mat-tree > mat-tree-node[aria-expanded="false"]')) {
       await $('app-eform-tree-view-picker > mat-tree > mat-tree-node[aria-expanded="false"] > button').click();
     }
-    await browser.pause(500);
+    await browser.pause(1000);
   }
 }
 
@@ -739,6 +772,7 @@ export class FoldersTreeRowObject {
   async delete(clickCancel = false) {
     if (!await (await $('#deleteFolderTreeBtn')).isDisplayed()) {
       await this.dropdown.click();
+      await browser.pause(500);
       await $('#deleteFolderTreeBtn').waitForDisplayed({timeout: 40000});
     }
     await (await $('#deleteFolderTreeBtn')).click();
@@ -751,11 +785,13 @@ export class FoldersTreeRowObject {
         timeout: 2000,
         reverse: true,
       });
+      await browser.pause(500);
     } else {
       await (await foldersPage.cancelDeleteBtn()).waitForClickable({
         timeout: 40000,
       });
       await (await foldersPage.cancelDeleteBtn()).click();
+      await browser.pause(500);
     }
     await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
@@ -765,9 +801,11 @@ export class FoldersTreeRowObject {
   async openEditModal() {
     if (!await (await $('#editFolderTreeBtn')).isDisplayed()) {
       await this.dropdown.click();
+      await browser.pause(500);
       await $('#editFolderTreeBtn').waitForDisplayed({timeout: 40000});
     }
     await (await $('#editFolderTreeBtn')).click();
+    await browser.pause(500);
     await (await foldersPage.saveEditBtn()).waitForDisplayed({
       timeout: 40000,
     });
@@ -787,11 +825,13 @@ export class FoldersTreeRowObject {
         await (
           await (await foldersPage.editLanguageSelector()).$('input')
         ).setValue(da.text);
+        await browser.pause(500);
         const value = await (await $('ng-dropdown-panel')).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
+        await browser.pause(500);
         await (
           await foldersPage.editNameInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
@@ -807,11 +847,13 @@ export class FoldersTreeRowObject {
           await (await foldersPage.editLanguageSelector())
             .$('input')
             .setValue(language.text);
+          await browser.pause(500);
           const value = await (await $('ng-dropdown-panel')).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
+          await browser.pause(500);
           await (
             await foldersPage.editNameInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
@@ -827,11 +869,13 @@ export class FoldersTreeRowObject {
         await (
           await (await foldersPage.editLanguageSelector()).$('input')
         ).setValue(da.text);
+        await browser.pause(500);
         const value = await (await $('ng-dropdown-panel')).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
+        await browser.pause(500);
         await (
           await foldersPage.editDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
@@ -850,11 +894,13 @@ export class FoldersTreeRowObject {
           await (await foldersPage.editLanguageSelector())
             .$('input')
             .setValue(language.text);
+          await browser.pause(500);
           const value = await (await $('ng-dropdown-panel')).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
+          await browser.pause(500);
           await (
             await foldersPage.editDescriptionInput(
               applicationLanguages.findIndex((x) => x.text === language.text)

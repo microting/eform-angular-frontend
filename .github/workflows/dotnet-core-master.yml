@@ -83,3 +83,11 @@ jobs:
         channel_id: CC04FGH5K
         status: ${{matrix.test}} FAILED
         color: danger
+    - name: Archive screenshot artifacts
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: error Screenshots
+        path: |
+          /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/hrome*.png
+        retention-days: 2

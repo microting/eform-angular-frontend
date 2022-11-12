@@ -266,7 +266,8 @@ exports.config = {
 
     const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
 
-    browser.saveScreenshot(filePath);
+    console.log('Saving screenshot to:', filePath);
+    browser.saveScreenshot(filePath).then(r => console.log('Saved screenshot to:', filePath));
   },
   /**
    * Hook that gets executed after the suite has ended
