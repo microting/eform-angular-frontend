@@ -68,13 +68,13 @@ describe('Main page', function () {
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].getText())) {
         expect(
-          await (await $(`#checkbox${users[1].siteId}`)).getValue(),
+          await (await $(`#checkbox${users[1].siteId}`)).getAttribute('ng-reflect-checked'),
           `User ${users[1].siteId} paired`
         ).eq('false');
       }
       if (users[0].siteId === +siteIds[i].getText()) {
         expect(
-          await (await $(`#checkbox${users[0].siteId}`)).getValue(),
+          await (await $(`#checkbox${users[0].siteId}`)).getAttribute('ng-reflect-checked'),
           `User ${users[0].siteId} not paired`
         ).eq('true');
       }
