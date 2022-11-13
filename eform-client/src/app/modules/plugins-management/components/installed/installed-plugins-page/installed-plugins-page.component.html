@@ -1,32 +1,46 @@
 <eform-new-subheader>
-  <button
-    color="accent"
-    mat-raised-button
-    id="newSecurityGroupBtn"
-    [routerLink]="['marketplace']"
-  >
-    {{ 'Marketplace' | translate }}
-  </button>
+<!--  <button-->
+<!--    color="accent"-->
+<!--    mat-raised-button-->
+<!--    id="newSecurityGroupBtn"-->
+<!--    [routerLink]="['marketplace']"-->
+<!--  >-->
+<!--    {{ 'Marketplace' | translate }}-->
+<!--  </button>-->
 </eform-new-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <mtx-grid
   [data]="installedPluginsModel.pluginsList"
   [columns]="tableHeaders"
-  [cellTemplate]="{actions: actionsTpl}"
+  [cellTemplate]="{id: idTpl, name: nameTpl, version: versionTpl, actions: actionsTpl}"
   [showPaginator]="false"
   [pageOnFront]="false"
   [rowStriped]="true"
   [showColumnMenuButton]="false">
 </mtx-grid>
 
-<ng-template #actionsTpl let-row>
+<ng-template #idTpl let-row let-i="index">
+  <div class="plugin-id" id="plugin-id{{i}}">{{row.id}}</div>
+</ng-template>
+
+<ng-template #nameTpl let-row let-i="index">
+  <div class="plugin-name" id="plugin-name{{i}}">{{row.name}}</div>
+</ng-template>
+
+<ng-template #versionTpl let-row let-i="index">
+  <div class="plugin-version" id="plugin-version{{i}}">{{row.version}}</div>
+</ng-template>
+
+
+<ng-template #actionsTpl let-row let-i="index">
   <div class="d-flex align-items-center">
     <button
       mat-icon-button
       color="{{row.status === statusEnum.Enabled ? 'accent' : ''}}"
       matTooltip="{{(row.status === statusEnum.Enabled ? 'Deactivate' : 'Activate') +' plugin' | translate}}"
       (click)="openPluginModal(row, row.status === statusEnum.Enabled ? statusEnum.Disabled : statusEnum.Enabled)"
+      id="plugin-status-button{{i}}"
     >
       <mat-icon>{{row.status === statusEnum.Enabled ? 'toggle_on' : 'toggle_off'}}</mat-icon>
     </button>
