@@ -8,6 +8,7 @@ import {
   DateFormatterComponent,
   EformCollapseToggleComponent,
   EformPaginationComponent,
+  EformPageSizeComponent,// Added only in an transitive import until all plugins have been migrated to the new eform-pagination
   EformSubheaderComponent,
   EformTreeViewPickerComponent,
   StatusBarComponent,
@@ -66,6 +67,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     ],
   declarations: [
     EformPaginationComponent,
+    EformPageSizeComponent,// Added only in an transitive import until all plugins have been migrated to the new eform-pagination
     EformSubheaderComponent,
     StatusBarComponent,
     DateFormatterComponent,
@@ -84,6 +86,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   ],
   exports: [
     EformPaginationComponent,
+    EformPageSizeComponent,// Added only in an transitive import until all plugins have been migrated to the new eform-pagination
     StatusBarComponent,
     DateFormatterComponent,
     EformTreeViewPickerComponent,
