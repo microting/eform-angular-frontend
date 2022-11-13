@@ -15,7 +15,7 @@
       ></app-eform-tree-view-picker>
     </mat-card-content>
   </mat-card>
-  <mat-card>
+  <mat-card *ngIf="sitesDto !== null">
     <mat-card-title>
       <h4>{{ 'Select Site' | translate}}</h4>
     </mat-card-title>

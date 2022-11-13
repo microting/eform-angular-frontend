@@ -7,7 +7,6 @@ import {FolderDto, SiteNameDto, TemplateDto, DeployCheckbox, DeployModel} from '
 import {FoldersService, SitesService, EFormService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { MtxGridColumn } from '@ng-matero/extensions/grid';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -51,7 +50,6 @@ export class EformEditParingModalComponent implements OnInit {
     this.eformDeployed = this.selectedTemplateDto.deployedSites.length > 0;
     this.deployModel = new DeployModel();
     this.deployViewModel = new DeployModel();
-    this.loadAllFolders();
   }
 
   loadAllSites() {
@@ -59,6 +57,7 @@ export class EformEditParingModalComponent implements OnInit {
       this.sitesService.getAllSitesForPairing().subscribe((operation) => {
         if (operation && operation.success) {
           this.sitesDto = operation.model;
+          this.loadAllFolders();
         }
       });
     }
