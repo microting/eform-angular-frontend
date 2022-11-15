@@ -206,18 +206,21 @@ export class Navbar {
   public async goToDeviceUsersPage() {
     await (await this.deviceUsersBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToEntitySelect() {
     await this.advancedDropdownClick();
     await (await this.entitySelectBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToEntitySearch() {
     await this.advancedDropdownClick();
     await (await this.entitySearchBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToFolderPage() {
