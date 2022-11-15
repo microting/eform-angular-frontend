@@ -46,6 +46,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     {header: this.translateService.stream('Email'), sortProp: {id: 'Email'}, field: 'email', sortable: true},
     {header: this.translateService.stream('Full Name'), field: 'fullName', sortable: false, formatter: rowData => `${rowData.firstName} ${rowData.lastName}`},
     {header: this.translateService.stream('Role'), sortProp: {id: 'Role'}, field: 'role', sortable: true},
+    {header: this.translateService.stream('Actions'), field: 'actions', sortable: false},
   ];
   getCurrentUserClaimsAsyncSub$: Subscription;
   userDeletedSub$: Subscription;
@@ -72,35 +73,35 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.getUserInfoList();
     this.getTwoFactorInfo();
     this.getSecurityGroups();
-    this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
-      if(x.usersUpdate || x.usersDelete) {
-        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
-          {
-            header: this.translateService.stream('Actions'),
-            field: 'actions',
-            type: 'button',
-            buttons: [
-              {
-                type: 'icon',
-                icon: 'edit',
-                color: 'accent',
-                tooltip: 'Edit User',
-                click: (rowData) => this.openEditModal(rowData.id),
-                iif: () => this.userClaims.usersUpdate,
-              },
-              {
-                type: 'icon',
-                icon: 'delete',
-                color: 'warn',
-                tooltip: 'Delete user',
-                click: (rowData) => this.openRemoveUserModal(rowData),
-                iif: () => this.userClaims.usersDelete,
-              }
-            ]
-          },
-        ];
-      }
-    })
+    // this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
+    //   if(x.usersUpdate || x.usersDelete) {
+    //     this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+    //       {
+    //         header: this.translateService.stream('Actions'),
+    //         field: 'actions',
+    //         type: 'button',
+    //         buttons: [
+    //           {
+    //             type: 'icon',
+    //             icon: 'edit',
+    //             color: 'accent',
+    //             tooltip: 'Edit User',
+    //             click: (rowData) => this.openEditModal(rowData.id),
+    //             iif: () => this.userClaims.usersUpdate,
+    //           },
+    //           {
+    //             type: 'icon',
+    //             icon: 'delete',
+    //             color: 'warn',
+    //             tooltip: 'Delete user',
+    //             click: (rowData) => this.openRemoveUserModal(rowData),
+    //             iif: () => this.userClaims.usersDelete,
+    //           }
+    //         ]
+    //       },
+    //     ];
+    //   }
+    // })
   }
 
   getTwoFactorInfo() {

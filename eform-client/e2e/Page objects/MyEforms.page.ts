@@ -5,10 +5,34 @@ import XMLForEform from '../Constants/XMLForEform';
 import { FoldersRowObject } from './Folders.page';
 import { DeviceUsersRowObject } from './DeviceUsers.page';
 import tagsModalPage from './TagsModal.page';
+//import path from 'path';
+const path = require('path');
 
 class MyEformsPage extends PageWithNavbarPage {
   constructor() {
     super();
+  }
+
+  public async takeScreenshot() {
+    const timestamp = new Date().toLocaleString('iso', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).replace(/[ ]/g, '--').replace(':', '-');
+
+    // get current test title and clean it, to use it as file name
+    const filename = encodeURIComponent(
+      `hrome-${timestamp}`.replace(/[/]/g, '__')
+    ).replace(/%../, '.');
+
+    const filePath = path.resolve('./', `${filename}.png`);
+
+    console.log('Saving screenshot to:', filePath);
+    await browser.saveScreenshot(filePath);
+    console.log('Saved screenshot to:', filePath);
   }
 
   public async newEformBtn(): Promise<WebdriverIO.Element> {
@@ -141,9 +165,10 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   async getLastMyEformsRowObj(): Promise<MyEformsRowObject> {
-    await browser.pause(500);
+    await browser.pause(1500);
     const obj = new MyEformsRowObject();
-    return await obj.getRow(await this.rowNum());
+    const rowNum = await this.rowNum();
+    return await obj.getRow(rowNum);
   }
 
   async getEformRowObj(
@@ -184,6 +209,7 @@ class MyEformsPage extends PageWithNavbarPage {
     const spinnerAnimation = await $('#spinner-animation');
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.newEformBtn()).click();
+    await browser.pause(500);
     await (await this.xmlTextArea()).waitForDisplayed({ timeout: 40000 });
     // Create replaced xml and insert it in textarea
     if (!xml) {
@@ -194,6 +220,7 @@ class MyEformsPage extends PageWithNavbarPage {
     }, xml);
     await browser.pause(200);
     await (await this.xmlTextArea()).addValue(' ');
+    await browser.pause(500);
     // Create new tags
     const addedTags: string[] = newTagsList;
     if (newTagsList.length > 0) {
@@ -214,11 +241,13 @@ class MyEformsPage extends PageWithNavbarPage {
       });
       for (let i = 0; i < tagAddedNum; i++) {
         await (await this.createEformTagSelector()).click();
+        await browser.pause(500);
         const selectedTag = await $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(await selectedTag.getText());
         await selectedTag.waitForDisplayed({ timeout: 40000 });
         await selectedTag.waitForClickable({ timeout: 40000 });
         await selectedTag.click();
+        await browser.pause(500);
         await spinnerAnimation.waitForDisplayed({
           timeout: 50000,
           reverse: true,
@@ -231,6 +260,7 @@ class MyEformsPage extends PageWithNavbarPage {
     // browser.pause(14000);
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.newEformBtn()).waitForClickable({ timeout: 40000 });
+    await browser.pause(500);
     return { added: addedTags, selected: selectedTags };
   }
 
@@ -323,9 +353,7 @@ class MyEformsRowObject {
     this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (currentPosition)))[0];
     this.deleteBtn = (await $$('#delete-eform-btn-' + (currentPosition)))[0];
     this.uploadZipArchiveBtn = (await $$('#upload-zip-btn-' + (currentPosition)))[0];
-    this.goVisualEditorBtn = await this.element.$(
-      `#edit-eform-btn-${currentPosition}`
-    );
+    this.goVisualEditorBtn = await $(`#edit-eform-btn-${currentPosition}`);
     return this;
   }
 
@@ -333,6 +361,7 @@ class MyEformsRowObject {
     if(await this.deleteBtn) {
       await (await this.deleteBtn).scrollIntoView();
       await (await this.deleteBtn).click();
+      await browser.pause(500);
       const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');
       await eFormDeleteDeleteBtn.waitForDisplayed({timeout: 40000});
       await eFormDeleteDeleteBtn.waitForClickable({timeout: 40000});
@@ -348,6 +377,7 @@ class MyEformsRowObject {
   async addTag(tag: string) {
     await this.editTagsBtn.waitForClickable({ timeout: 40000 });
     await this.editTagsBtn.click();
+    await browser.pause(500);
     const tagSelector = await $('app-eform-edit-tags-modal #tagSelector input');
     await tagSelector.waitForDisplayed({ timeout: 40000 });
     await tagSelector.setValue(tag);
@@ -359,6 +389,7 @@ class MyEformsRowObject {
       timeout: 40000,
       reverse: true,
     });
+    await browser.pause(500);
   }
 
   async deleteTags(tags: string[]) {
@@ -384,15 +415,21 @@ class MyEformsRowObject {
       timeout: 40000,
       reverse: true,
     });
+    await browser.pause(500);
   }
 
   async pair(folder: FoldersRowObject, users: DeviceUsersRowObject[]) {
+    console.log('Pairing eform');
     const spinnerAnimation = $('#spinner-animation');
     if (await this.editPairEformBtn.isExisting()) {
+      console.log('editPairEformBtn isExisting');
       await this.editPairEformBtn.click();
     } else {
+      console.log('addPairEformBtn isExisting');
       await this.addPairEformBtn.click();
     }
+    console.log('Parring clicked');
+    await browser.pause(500);
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await (await myEformsPage.cancelParingBtn()).waitForDisplayed({
       timeout: 40000,
@@ -410,25 +447,35 @@ class MyEformsRowObject {
         await browser.pause(1000);
       }
     }
+    console.log('Folder selected');
+    await myEformsPage.takeScreenshot();
     for (let i = 0; i < users.length; i++) {
-      const name = `#mat-checkbox-${i+2} > label > div.mat-checkbox-inner-container`;
-      const checkbox = await $(`#mat-checkbox-${i+2}`);
+      console.log('Selecting user: ' + users[i].firstName);
+      //const name = `#mat-checkbox-${i+2} > label > div.mat-checkbox-inner-container`;
+      const checkbox = await $(`#checkbox${users[i].siteId}`);
+      console.log('Checkbox found ');
       await checkbox.scrollIntoView();
-      await checkbox.waitForClickable({ timeout: 40000 });
+      console.log('Checkbox scrolled into view');
+      //await checkbox.waitForClickable({ timeout: 40000 });
       await checkbox.click();
+      console.log('User selected ' + users[i].firstName);
+      await browser.pause(500);
     }
+    console.log('Users selected');
     await (await myEformsPage.saveParingBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(1000);
   }
 
   async unPair(users: DeviceUsersRowObject[]) {
     const spinnerAnimation = $('#spinner-animation');
     this.editPairEformBtn.click();
+    await browser.pause(1000);
     await (await spinnerAnimation).waitForDisplayed({
       timeout: 40000,
       reverse: true,
     });
-    (await await myEformsPage.cancelParingBtn()).waitForDisplayed({
+    await (await myEformsPage.cancelParingBtn()).waitForDisplayed({
       timeout: 40000,
     });
     for (let i = 0; i < users.length; i++) {
@@ -436,18 +483,22 @@ class MyEformsRowObject {
       await checkbox.scrollIntoView();
       await (await checkbox.$('..')).waitForClickable({ timeout: 40000 });
       await (await checkbox.$('..')).click();
+      await browser.pause(1000);
     }
     await (await myEformsPage.saveParingBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(1000);
   }
 
   async goToVisualEditor() {
     await this.goVisualEditorBtn.click();
+    await browser.pause(500);
     await (await $('#manageTags')).waitForClickable({ timeout: 40000 });
     const spinnerAnimation = $('#spinner-animation');
     await (await spinnerAnimation).waitForDisplayed({
       timeout: 40000,
       reverse: true,
     });
+    await browser.pause(500);
   }
 }

@@ -4,16 +4,13 @@
     <mat-form-field>
       <mat-label>{{ 'Security groups' | translate }}</mat-label>
       <mtx-select
-        required
-        bindLabel="name"
-        bindValue="id"
+        dropdownPosition="bottom"
         [(ngModel)]="customLinkModel.securityGroupsIds"
         [bindValue]="'id'"
         [bindLabel]="'name'"
         [items]="availableSecurityGroups"
-        id="securityGroupsCustomLinkSelector"
+        id="securityGroupsCustomDropdownSelector"
         [multiple]="true"
-        appendTo="body"
       ></mtx-select>
     </mat-form-field>
     <div class="d-flex flex-row align-items-center need-wrapper">

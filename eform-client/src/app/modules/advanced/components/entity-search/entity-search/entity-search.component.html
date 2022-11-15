@@ -32,7 +32,7 @@
 <mtx-grid
   [data]="advEntitySearchableGroupListModel.entities"
   [columns]="tableHeaders"
-  [cellTemplate]="{actions: actionsTpl}"
+  [cellTemplate]="{microtingUUID: microtingUUIDTpl, name: entitySelectNameTpl, description: entitySelectDescriptionTpl, actions: actionsTpl}"
   [showPaginator]="true"
   [paginationTemplate]="paginatorTpl"
   [pageOnFront]="false"
@@ -44,6 +44,16 @@
   [sortDirection]="entitySearchStateService.getActiveSortDirection() | async"
   (sortChange)="sortTable($event)">
 </mtx-grid>
+<ng-template #microtingUUIDTpl let-row let-i="index">
+  <div class="entitySearchMUid" id="entitySearchMUid">{{row.microtingUUID}}</div>
+</ng-template>
+<ng-template #entitySelectNameTpl let-row let-i="index">
+  <div class="entitySearchName" id="entitySearchName">{{row.name}}</div>
+</ng-template>
+<ng-template #entitySelectDescriptionTpl let-row let-i="index">
+  <div class="entitySelectDescription" id="entitySelectDescription">{{row.description}}</div>
+</ng-template>
+
 
 <ng-template #actionsTpl let-row>
   <div *ngIf="userClaims.entitySearchDelete || userClaims.entitySearchUpdate">

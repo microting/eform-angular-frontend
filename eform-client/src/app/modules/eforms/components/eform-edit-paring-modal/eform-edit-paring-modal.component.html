@@ -13,17 +13,56 @@
         [allowSelectingParents]="false"
         (nodeSelected)="folderSelected($event)"
       ></app-eform-tree-view-picker>
-      <mtx-grid
-        class="mt-2"
-        [data]="sitesDto"
-        [columns]="tableHeaders"
-        [showPaginator]="false"
-        [multiSelectable]="true"
-        [rowSelectable]="true"
-        [rowSelected]="rowSelected"
-        (rowSelectionChange)="rowSelected = $event"
-      >
-      </mtx-grid>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="sitesDto !== null">
+    <mat-card-title>
+      <h4>{{ 'Select Site' | translate}}</h4>
+    </mat-card-title>
+    <mat-card-content>
+      <table class="table table-xs table-bordered text-center z-depth-1">
+        <thead>
+        <tr>
+          <th>Microting ID</th>
+          <th>{{ 'Device user' | translate }}</th>
+          <th>{{ 'Select' | translate }}</th>
+        </tr>
+        </thead>
+        <tbody id="pairingModalTableBody">
+        <tr *ngFor="let siteDto of sitesDto">
+          <td id="microtingId" class="align-middle">{{siteDto.siteUId}}</td>
+          <td id="deviceUserFullName" class="align-middle">{{siteDto.siteName}}</td>
+          <td class="align-middle">
+            <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
+              <div class="mat-checkbox" *ngIf="checkboxModel.id == siteDto.siteUId">
+                <mat-checkbox
+                  [checked]="checkboxModel.isChecked"
+                  (change)="addToArray($event, checkboxModel.id)"
+                  id="checkbox{{checkboxModel.id}}"
+                >
+              </mat-checkbox>
+<!--                <input id="checkbox{{checkboxModel.id}}" (change)="addToArray($event, checkboxModel.id)"-->
+<!--                       [checked]="checkboxModel.isChecked" [value]="checkboxModel.isChecked" color="primary"-->
+<!--                       type="checkbox">-->
+<!--                <label id="checkboxLabel{{checkboxModel.id}}" for="checkbox{{checkboxModel.id}}"></label>-->
+              </div>
+            </ng-container>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+<!--      <mtx-grid-->
+<!--        class="mt-2"-->
+<!--        [data]="sitesDto"-->
+<!--        [columns]="columns"-->
+<!--        [showPaginator]="false"-->
+<!--        [multiSelectable]="true"-->
+<!--        [cellSelectable]="false"-->
+<!--        [rowSelectable]="true"-->
+<!--        [rowSelected]="rowSelected"-->
+<!--        (rowSelectionChange)="rowSelected = $event"-->
+<!--      >-->
+<!--      </mtx-grid>-->
     </mat-card-content>
   </mat-card>
 </div>

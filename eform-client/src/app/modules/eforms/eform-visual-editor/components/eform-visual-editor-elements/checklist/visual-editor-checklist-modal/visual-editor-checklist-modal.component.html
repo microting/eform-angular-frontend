@@ -11,15 +11,15 @@
               <input
                 matInput
                 type="text"
-                id="fieldNameTranslation_{{ translationIndex }}"
-                name="fieldNameTranslation_{{ translationIndex }}"
+                id="newChecklistNameTranslation_{{ translationIndex }}"
+                name="newChecklistNameTranslation_{{ translationIndex }}"
                 [(ngModel)]="translation.name"
               />
             </mat-form-field>
             <formatting-text-editor
               [(value)]="translation.description"
               [placeholder]="'Description' | translate"
-              id="newFieldDescriptionTranslation_{{ translationIndex }}"
+              id="newChecklistDescriptionTranslation_{{ translationIndex }}"
             >
             </formatting-text-editor>
           </div>

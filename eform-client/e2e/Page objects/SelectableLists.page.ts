@@ -243,10 +243,13 @@ export class SelectableListsPage extends PageWithNavbarPage {
     clickCancel = false
   ) {
     await (await this.entitySelectCreateBtn()).click();
+    await browser.pause(500);
     await (await this.entitySelectCreateName()).waitForDisplayed({ timeout: 40000 });
     await (await this.entitySelectCreateName()).setValue(data.name);
+    await browser.pause(500);
     if (data.description) {
       await (await this.entitySelectCreateDescription()).setValue(data.description);
+      await browser.pause(500);
     }
     if (data.items != null) {
       if (multipleImport) {
@@ -258,11 +261,14 @@ export class SelectableListsPage extends PageWithNavbarPage {
             item = item + '\n';
           }
           await (await this.entitySelectImportTextArea()).addValue(item);
+          await browser.pause(500);
         }
         await (await this.entitySelectImportSaveBtn()).click();
+        await browser.pause(1000);
       } else {
         for (let i = 0; i < data.items.length; i++) {
           await (await this.entitySelectCreateSingleItemBtn()).click();
+          await browser.pause(500);
           await (await this.getLastItemCreateObject()).edit(data.items[i]);
         }
       }
@@ -273,12 +279,14 @@ export class SelectableListsPage extends PageWithNavbarPage {
         timeout: 90000,
         reverse: true,
       });
+      await browser.pause(500);
     } else {
       await (await this.entitySelectCreateCancelBtn()).click();
       await (await $('#spinner-animation')).waitForDisplayed({
         timeout: 90000,
         reverse: true,
       });
+      await browser.pause(500);
     }
     await (await this.entitySelectCreateBtn()).waitForDisplayed();
   }
@@ -331,14 +339,17 @@ export class SelectableListRowObject {
 
   async delete(clickCancel = false) {
     await this.deleteBtn.click();
+    await browser.pause(500);
     if (!clickCancel) {
       await (await selectableLists.entitySelectDeleteDeleteBtn()).click();
       await (await $('#spinner-animation')).waitForDisplayed({
         timeout: 90000,
         reverse: true,
       });
+      await browser.pause(500);
     } else {
       await (await selectableLists.entitySelectDeleteCancelBtn()).click();
+      await browser.pause(500);
     }
     await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
   }
@@ -346,7 +357,9 @@ export class SelectableListRowObject {
   async openEdit() {
     await this.editBtn.click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(1000);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
+    await browser.pause(1000);
   }
 
   async closeEdit(clickCancel = false) {
@@ -356,11 +369,14 @@ export class SelectableListRowObject {
         timeout: 90000,
         reverse: true,
       });
+      await browser.pause(1000);
     } else {
       await (await selectableLists.entitySelectEditCancelBtn()).click();
+      await browser.pause(1000);
     }
     await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(1000);
   }
 
   async edit(
@@ -380,6 +396,7 @@ export class SelectableListRowObject {
     if (clearItems && (await selectableLists.itemsEditPageCount()) > 0) {
       for (let i = (await selectableLists.itemsEditPageCount()); i > 0; i--) {
         await (await selectableLists.getFirstItemEditObject()).delete();
+        await browser.pause(500);
       }
     }
     if (data.items != null) {
@@ -388,6 +405,7 @@ export class SelectableListRowObject {
         await (await selectableLists.entitySelectImportTextArea()).waitForDisplayed({
           timeout: 40000,
         });
+        await browser.pause(500);
         for (let i = 0; i < data.items.length; i++) {
           let item = data.items[i];
           if (!item.includes('\n') && i !== data.items.length - 1) {
@@ -396,6 +414,7 @@ export class SelectableListRowObject {
           await (await selectableLists.entitySelectImportTextArea()).addValue(item);
         }
         await (await selectableLists.entitySelectImportSaveBtn()).click();
+        await browser.pause(500);
       } else {
         for (let i = 0; i < (data.items).length; i++) {
           if (editItems) {
@@ -405,7 +424,9 @@ export class SelectableListRowObject {
               await item.edit(data.items[i]);
             } else {
               await (await selectableLists.entitySelectEditSingleItemBtn()).click();
+              await browser.pause(500);
               await (await selectableLists.getLastItemEditObject()).edit(data.items[i]);
+              await browser.pause(500);
             }
           }
           // console.log('edit 4e');
@@ -417,6 +438,7 @@ export class SelectableListRowObject {
       }
     }
     await this.closeEdit(clickCancel);
+    await browser.pause(500);
   }
 }
 
@@ -429,7 +451,7 @@ export class EntitySelectItemEditRowObject {
   deleteBtn: WebdriverIO.Element;
 
   async getRow(rowNum: number): Promise<EntitySelectItemEditRowObject> {
-    const row = await $$('li.list-group-item')[rowNum - 1];
+    const row = await $$('app-entity-list-elements .d-flex')[rowNum - 1];
     if (row) {
       try {
         this.name = await row.$('#createEntityItemName').getText();
@@ -449,18 +471,22 @@ export class EntitySelectItemEditRowObject {
   async edit(newName: string, clickCancel = false) {
     // await this.editBtn.scrollIntoView();
     await this.editBtn.click();
+    await browser.pause(500);
     await (await selectableLists.entitySelectEditItemNameBox()).setValue(newName);
+    await browser.pause(500);
     if (!clickCancel) {
       await (await selectableLists.entitySelectEditItemSaveBtn()).click();
     } else {
       await (await selectableLists.entitySelectEditItemCancelBtn()).click();
     }
+    await browser.pause(500);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
   }
 
-  delete() {
-    this.deleteBtn.scrollIntoView();
-    this.deleteBtn.click();
+  async delete() {
+    await this.deleteBtn.scrollIntoView();
+    await this.deleteBtn.click();
+    await browser.pause(500);
   }
 }
 
@@ -491,12 +517,15 @@ export class EntitySelectItemCreateRowObject {
   async edit(newName: string, clickCancel = false) {
     await this.editBtn.scrollIntoView();
     await this.editBtn.click();
+    await browser.pause(500);
     await (await selectableLists.entitySelectEditItemNameBox()).setValue(newName);
+    await browser.pause(500);
     if (!clickCancel) {
       await (await selectableLists.entitySelectEditItemSaveBtn()).click();
     } else {
       await (await selectableLists.entitySelectEditItemCancelBtn()).click();
     }
+    await browser.pause(500);
     await (await selectableLists.entitySelectCreateCancelBtn()).waitForDisplayed();
   }
 

@@ -190,15 +190,15 @@ class FoldersPage extends PageWithNavbarPage {
 
   public async rowNumParents(): Promise<number> {
     await browser.pause(500);
-    return (await $$('#folderTreeName')).length;
+    return (await $$('mat-tree > mat-tree-node > div > small')).length;
   }
 
   public async rowChildrenNum(): Promise<number> {
-    return (await $$('.tree-node-level-2')).length;
+    return (await $$('mat-tree > mat-tree-node > small')).length;
   }
 
   public async editLanguageSelector(): Promise<WebdriverIO.Element> {
-    const ele = await $('#editLanguageSelector');
+    const ele = await $('#createLanguageSelector');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -223,7 +223,8 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   async getFolderRowNumByName(nameFolder: string): Promise<number> {
-    for (let i = 1; i < (await this.rowNum()) + 1; i++) {
+    const rowNum = await this.rowNum();
+    for (let i = 1; i < (rowNum + 1); i++) {
       const folderObj = new FoldersRowObject();
       const folder = await folderObj.getRow(i);
       if (folder.name === nameFolder) {
@@ -252,6 +253,7 @@ class FoldersPage extends PageWithNavbarPage {
     description?: string | Array<{ description: string; language: string }>
   ) {
     await (await this.newFolderBtn()).click();
+    await browser.pause(500);
     await (await this.cancelCreateBtn()).waitForDisplayed({ timeout: 10000 });
     if (name) {
       if (typeof name === typeof '') {
@@ -260,16 +262,19 @@ class FoldersPage extends PageWithNavbarPage {
         await (await this.createLanguageSelector())
           .$('input')
           .setValue(da.text);
+        await browser.pause(500);
         const value = (await this.createLanguageSelector()).$(
           `.ng-option=${da.text}`
         );
         value.waitForDisplayed({ timeout: 40000 });
         value.click();
+        await browser.pause(500);
         (
           await this.createNameInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(nameConverted);
+        await browser.pause(500);
       }
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
@@ -280,16 +285,19 @@ class FoldersPage extends PageWithNavbarPage {
           (await this.createLanguageSelector())
             .$('input')
             .setValue(language.text);
+          await browser.pause(500);
           const value = (await this.createLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           value.waitForDisplayed({ timeout: 40000 });
           value.click();
+          await browser.pause(500);
           (
             await this.createNameInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(nameConverted[i].name);
+          await browser.pause(500);
         }
       }
     }
@@ -301,16 +309,19 @@ class FoldersPage extends PageWithNavbarPage {
         await (
           await (await foldersPage.createLanguageSelector()).$('input')
         ).setValue(da.text);
+        await browser.pause(500);
         const value = await (await this.createLanguageSelector()).$(
           `.ng-option=${da.text}`
         );
         value.waitForDisplayed({ timeout: 40000 });
         value.click();
+        await browser.pause(500);
         (
           await this.createDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(descriptionConvert);
+        await browser.pause(500);
       }
       if (typeof description === typeof []) {
         const descriptionConvert = description as {
@@ -324,16 +335,19 @@ class FoldersPage extends PageWithNavbarPage {
           (await this.createLanguageSelector())
             .$('input')
             .setValue(language.text);
+          await browser.pause(500);
           const value = (await this.createLanguageSelector()).$(
             `.ng-option=${language.text}`
           );
           value.waitForDisplayed({ timeout: 40000 });
           value.click();
+          await browser.pause(500);
           (
             await this.createDescriptionInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(descriptionConvert[i].description);
+          await browser.pause(500);
         }
       }
     }
@@ -353,6 +367,7 @@ class FoldersPage extends PageWithNavbarPage {
     await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
     });
+    await browser.pause(500);
   }
 }
 
@@ -364,40 +379,24 @@ export class FoldersRowObject {
 
   folderElement;
   name;
-  // description;
-  editBtn;
-  deleteBtn;
-  createFolderChildBtn;
   folderTreeOpenClose;
   rowNumber: number;
   dropdown;
 
   async getRow(rowNum: number): Promise<FoldersRowObject> {
     this.rowNumber = rowNum;
-    //await browser.pause(10000);
     if ((await $$('app-eform-tree-view-picker > mat-tree > mat-tree-node'))[rowNum - 1]) {
       const element = (await $$('app-eform-tree-view-picker > mat-tree > mat-tree-node'))[rowNum - 1];
       try {
         this.folderElement = await element.$('.microting-uid');
       } catch (e) {
-        console.log(e.message());
       }
-      this.dropdown = await element.$('button');
+      this.dropdown = await element.$('button.mat-menu-trigger');
       try {
         this.name = await (await element.$('div > div')).getText();
       } catch (e) {
-        console.log(e.message());
       }
-      // try {
-      //   this.description = element.$('#folderTreeDescription').getText();
-      // } catch (e) {
-      // }
-      this.folderTreeOpenClose = await element.$('#folderTreeOpenClose');
-      this.editBtn = await this.folderElement.$('#editFolderTreeBtn');
-      this.deleteBtn = await this.folderElement.$('#deleteFolderTreeBtn');
-      this.createFolderChildBtn = await this.folderElement.$(
-        '#createFolderChildBtn'
-      );
+      this.folderTreeOpenClose = await element.$('mat-tree-node');
     }
     return this;
   }
@@ -411,11 +410,13 @@ export class FoldersRowObject {
       await (
         await (await foldersPage.editLanguageSelector()).$('input')
       ).setValue(language.text);
-      const value = await (await foldersPage.editLanguageSelector()).$(
+      await browser.pause(500);
+      const value = await (await $('ng-dropdown-panel')).$(
         `.ng-option=${language.text}`
       );
       await value.waitForDisplayed({ timeout: 40000 });
       await value.click();
+      await browser.pause(500);
       descriptions.push({
         description: await (
           await foldersPage.editDescriptionInput(
@@ -426,6 +427,7 @@ export class FoldersRowObject {
       });
     }
     await (await foldersPage.cancelEditBtn()).click();
+    await browser.pause(500);
     return descriptions;
   }
 
@@ -434,14 +436,13 @@ export class FoldersRowObject {
     description?: string | { description: string; language: string }[],
     clickCancel = false
   ) {
-    // await browser.pause(10000);
-    // console.log(this.createFolderChildBtn);
-    if (this.createFolderChildBtn.error != null) {
-      await this.folderElement.click();
-      await this.createFolderChildBtn.waitForDisplayed({ timeout: 40000 });
+    if (!await (await $('#createFolderChildBtn')).isDisplayed()) {
+      //await this.folderElement.click();
+      await this.dropdown.click();
+      await (await $('#createFolderChildBtn')).waitForDisplayed({ timeout: 40000 });
       await this.getRow(this.rowNumber);
     }
-    await this.createFolderChildBtn.click();
+    await (await $('#createFolderChildBtn')).click();
     await (await foldersPage.cancelCreateBtn()).waitForDisplayed({
       timeout: 10000,
     });
@@ -452,16 +453,19 @@ export class FoldersRowObject {
         await (
           await (await foldersPage.createLanguageSelector()).$('input')
         ).setValue(da.text);
-        const value = await (await foldersPage.createLanguageSelector()).$(
+        await browser.pause(500);
+        const value = await (await $('ng-dropdown-panel')).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
+        await browser.pause(500);
         (
           await foldersPage.createNameInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(nameConverted);
+        await browser.pause(500);
       }
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
@@ -472,16 +476,19 @@ export class FoldersRowObject {
           await (
             await (await foldersPage.createLanguageSelector()).$('input')
           ).setValue(language.text);
-          const value = await (await foldersPage.createLanguageSelector()).$(
+          await browser.pause(500);
+          const value = await (await $('ng-dropdown-panel')).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
+          await browser.pause(500);
           (
             await foldersPage.createNameInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(nameConverted[i].name);
+          await browser.pause(500);
         }
       }
     }
@@ -492,16 +499,19 @@ export class FoldersRowObject {
         await (
           await (await foldersPage.createLanguageSelector()).$('input')
         ).setValue(da.text);
-        const value = await (await foldersPage.createLanguageSelector()).$(
+        await browser.pause(500);
+        const value = await (await $('ng-dropdown-panel')).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
+        await browser.pause(500);
         (
           await foldersPage.createDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(descriptionConvert);
+        await browser.pause(500);
       }
       if (typeof description === typeof []) {
         const descriptionConvert = description as {
@@ -515,16 +525,19 @@ export class FoldersRowObject {
           await (
             await (await foldersPage.createLanguageSelector()).$('input')
           ).setValue(language.text);
-          const value = await (await foldersPage.createLanguageSelector()).$(
+          await browser.pause(500);
+          const value = await (await $('ng-dropdown-panel')).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
+          await browser.pause(500);
           (
             await foldersPage.createDescriptionInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(descriptionConvert[i].description);
+          await browser.pause(500);
         }
       }
     }
@@ -543,12 +556,9 @@ export class FoldersRowObject {
   }
 
   async delete(clickCancel = false) {
-    if (!await this.deleteBtn.isDisplayed()) {
-      await this.folderElement.click();
+    if (!await (await $('#deleteFolderTreeBtn')).isDisplayed()) {
       await this.dropdown.click();
-      await this.getRow(this.rowNumber);
       await $('#deleteFolderTreeBtn').waitForDisplayed({timeout: 40000});
-      //await this.deleteBtn.waitForDisplayed({ timeout: 40000 });
     }
     await (await $('#deleteFolderTreeBtn')).click();
     if (!clickCancel) {
@@ -569,19 +579,11 @@ export class FoldersRowObject {
   }
 
   async openEditModal() {
-    if (!await this.editBtn.isDisplayed()) {
-      await this.folderElement.click();
-      await this.getRow(this.rowNumber);
+    if (!await (await $('#createFolderChildBtn')).isDisplayed()) {
+      await this.dropdown.click();
+      await (await $('#createFolderChildBtn')).waitForDisplayed({timeout: 40000});
     }
-    // if (this.editBtn.error !== null) {
-      // await this.folderElement.click();
-      await this.editBtn.waitForDisplayed({ timeout: 40000 });
-    // }
-    // if (!await this.editBtn.isDisplayed()) {
-    //   await this.folderElement.click();
-    //   await this.getRow(this.rowNumber);
-    // }
-    await this.editBtn.click();
+    await (await $('#editFolderTreeBtn')).click();
     await (await foldersPage.cancelEditBtn()).waitForDisplayed({
       timeout: 40000,
     });
@@ -603,7 +605,7 @@ export class FoldersRowObject {
         await (
           await (await foldersPage.editLanguageSelector()).$('input')
         ).setValue(da.text);
-        const value = await (await foldersPage.editLanguageSelector()).$(
+        const value = await (await $('ng-dropdown-panel')).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
@@ -613,6 +615,7 @@ export class FoldersRowObject {
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(nameConverted);
+        await browser.pause(500);
       }
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
@@ -623,7 +626,7 @@ export class FoldersRowObject {
           await (
             await (await foldersPage.editLanguageSelector()).$('input')
           ).setValue(language.text);
-          const value = await (await foldersPage.editLanguageSelector()).$(
+          const value = await (await $('ng-dropdown-panel')).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
@@ -633,6 +636,7 @@ export class FoldersRowObject {
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(nameConverted[i].name);
+          await browser.pause(500);
         }
       }
     }
@@ -643,7 +647,7 @@ export class FoldersRowObject {
         await (
           await (await foldersPage.editLanguageSelector()).$('input')
         ).setValue(da.text);
-        const value = await (await foldersPage.editLanguageSelector()).$(
+        const value = await (await $('ng-dropdown-panel')).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
@@ -653,6 +657,7 @@ export class FoldersRowObject {
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).setValue(descriptionConvert);
+        await browser.pause(500);
       }
       if (typeof description === typeof []) {
         const descriptionConvert = description as {
@@ -666,7 +671,7 @@ export class FoldersRowObject {
           await (
             await (await foldersPage.editLanguageSelector()).$('input')
           ).setValue(language.text);
-          const value = (await foldersPage.editLanguageSelector()).$(
+          const value = await (await $('ng-dropdown-panel')).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
@@ -676,6 +681,7 @@ export class FoldersRowObject {
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).setValue(descriptionConvert[i].description);
+          await browser.pause(500);
         }
       }
     }
@@ -704,9 +710,10 @@ export class FoldersRowObject {
   }
 
   async expandChildren() {
-    if (await this.folderTreeOpenClose.$('fa-icon[icon="folder"]')) {
-      await this.folderTreeOpenClose.click();
+    if (await $('app-eform-tree-view-picker > mat-tree > mat-tree-node[aria-expanded="false"]')) {
+      await $('app-eform-tree-view-picker > mat-tree > mat-tree-node[aria-expanded="false"] > button').click();
     }
+    await browser.pause(1000);
   }
 }
 
@@ -715,38 +722,22 @@ export class FoldersTreeRowObject {
 
   folderTreeElement;
   nameTree;
-  // descriptionTree;
-  editTreeBtn;
-  deleteTreeBtn;
+  dropdown;
 
   async getRow(
     rowNumFolderParent,
     rowNumberFolderChildren
+
   ): Promise<FoldersTreeRowObject> {
-    if (
-      (
-        await (
-          await (await $$('.tree-node-level-1'))[rowNumFolderParent - 1]
-        ).$$('.tree-node-level-2')
-      )[rowNumberFolderChildren - 1]
-    ) {
-      const baseElement = await $$('.tree-node-level-1');
-      const subElement = baseElement[rowNumFolderParent - 1];
-      const element = (await subElement.$$('.tree-node-level-2'))[
-        rowNumberFolderChildren - 1
-      ];
+    if ((await $$('app-eform-tree-view-picker > mat-tree > mat-tree-node.children'))[rowNumberFolderChildren - 1]) {
+      const element = (await $$('app-eform-tree-view-picker > mat-tree > mat-tree-node.children'))[rowNumberFolderChildren - 1];
+      this.dropdown = await element.$('div > button');
       try {
         this.folderTreeElement = await element.$('#folderTreeId');
       } catch (e) {}
       try {
         this.nameTree = await (await element.$('#folderTreeName')).getText();
       } catch (e) {}
-      // try {
-      //   this.descriptionTree = element.$$('#folderTreeDescription')[rowNumberFolderChildren - 1].getText();
-      // } catch (e) {
-      // }
-      this.editTreeBtn = await element.$('#editFolderTreeBtn');
-      this.deleteTreeBtn = await element.$('#deleteFolderTreeBtn');
     }
     return this;
   }
@@ -760,7 +751,7 @@ export class FoldersTreeRowObject {
       await (await foldersPage.editLanguageSelector())
         .$('input')
         .setValue(language.text);
-      const value = await (await foldersPage.editLanguageSelector()).$(
+      const value = await (await $('ng-dropdown-panel')).$(
         `.ng-option=${language.text}`
       );
       value.waitForDisplayed({ timeout: 40000 });
@@ -779,11 +770,12 @@ export class FoldersTreeRowObject {
   }
 
   async delete(clickCancel = false) {
-    if (this.deleteTreeBtn.error != null) {
-      await this.folderTreeElement.click();
-      await this.deleteTreeBtn.waitForDisplayed({ timeout: 40000 });
+    if (!await (await $('#deleteFolderTreeBtn')).isDisplayed()) {
+      await this.dropdown.click();
+      await browser.pause(500);
+      await $('#deleteFolderTreeBtn').waitForDisplayed({timeout: 40000});
     }
-    await this.deleteTreeBtn.click();
+    await (await $('#deleteFolderTreeBtn')).click();
     if (!clickCancel) {
       await (await foldersPage.saveDeleteBtn()).waitForClickable({
         timeout: 40000,
@@ -793,11 +785,13 @@ export class FoldersTreeRowObject {
         timeout: 2000,
         reverse: true,
       });
+      await browser.pause(500);
     } else {
       await (await foldersPage.cancelDeleteBtn()).waitForClickable({
         timeout: 40000,
       });
       await (await foldersPage.cancelDeleteBtn()).click();
+      await browser.pause(500);
     }
     await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
@@ -805,14 +799,17 @@ export class FoldersTreeRowObject {
   }
 
   async openEditModal() {
-    if (this.editTreeBtn.error != null) {
-      await this.folderTreeElement.click();
-      await this.editTreeBtn.waitForDisplayed({ timeout: 40000 });
+    if (!await (await $('#editFolderTreeBtn')).isDisplayed()) {
+      await this.dropdown.click();
+      await browser.pause(500);
+      await $('#editFolderTreeBtn').waitForDisplayed({timeout: 40000});
     }
-    await this.editTreeBtn.click();
+    await (await $('#editFolderTreeBtn')).click();
+    await browser.pause(500);
     await (await foldersPage.saveEditBtn()).waitForDisplayed({
       timeout: 40000,
     });
+    await browser.pause(500);
   }
 
   async editFolderChild(
@@ -828,11 +825,13 @@ export class FoldersTreeRowObject {
         await (
           await (await foldersPage.editLanguageSelector()).$('input')
         ).setValue(da.text);
-        const value = await (await foldersPage.editLanguageSelector()).$(
+        await browser.pause(500);
+        const value = await (await $('ng-dropdown-panel')).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
+        await browser.pause(500);
         await (
           await foldersPage.editNameInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
@@ -848,11 +847,13 @@ export class FoldersTreeRowObject {
           await (await foldersPage.editLanguageSelector())
             .$('input')
             .setValue(language.text);
-          const value = await (await foldersPage.editLanguageSelector()).$(
+          await browser.pause(500);
+          const value = await (await $('ng-dropdown-panel')).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
+          await browser.pause(500);
           await (
             await foldersPage.editNameInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
@@ -868,11 +869,13 @@ export class FoldersTreeRowObject {
         await (
           await (await foldersPage.editLanguageSelector()).$('input')
         ).setValue(da.text);
-        const value = await (await foldersPage.editLanguageSelector()).$(
+        await browser.pause(500);
+        const value = await (await $('ng-dropdown-panel')).$(
           `.ng-option=${da.text}`
         );
         await value.waitForDisplayed({ timeout: 40000 });
         await value.click();
+        await browser.pause(500);
         await (
           await foldersPage.editDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
@@ -891,11 +894,13 @@ export class FoldersTreeRowObject {
           await (await foldersPage.editLanguageSelector())
             .$('input')
             .setValue(language.text);
-          const value = await (await foldersPage.editLanguageSelector()).$(
+          await browser.pause(500);
+          const value = await (await $('ng-dropdown-panel')).$(
             `.ng-option=${language.text}`
           );
           await value.waitForDisplayed({ timeout: 40000 });
           await value.click();
+          await browser.pause(500);
           await (
             await foldersPage.editDescriptionInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
@@ -916,5 +921,6 @@ export class FoldersTreeRowObject {
     await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
     });
+    await browser.pause(500);
   }
 }

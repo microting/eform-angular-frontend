@@ -39,6 +39,7 @@ describe('Entity Search', function () {
     expect(searchableList.name).equal(name);
     await searchableList.editBtn.click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal(itemName);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
@@ -63,6 +64,7 @@ describe('Entity Search', function () {
     const searchableList = await searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
     await searchableList.editBtn.click();
+    await browser.pause(500);
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal('a');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();

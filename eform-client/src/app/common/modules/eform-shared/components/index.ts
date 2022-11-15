@@ -1,4 +1,5 @@
 export * from './eform-pagination/eform-pagination.component';
+export * from './eform-page-size/eform-page-size.component'; // Added only in an transitive import until all plugins have been migrated to the new eform-pagination
 export * from './eform-subheader/eform-subheader.component';
 export * from './status-bar/status-bar.component';
 export * from './status-bar-compact/status-bar-compact.component';

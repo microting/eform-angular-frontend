@@ -23,27 +23,29 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AccountManagementRouting,
-    EformSharedModule,
-    TranslateModule,
-    ReactiveFormsModule,
-    FormsModule,
-    FontAwesomeModule,
-    MatSortModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MtxSelectModule,
-    MatCardModule,
-    MatTooltipModule,
-    MtxGridModule,
-    MatDialogModule,
-    MatInputModule,
-  ],
+    imports: [
+        CommonModule,
+        AccountManagementRouting,
+        EformSharedModule,
+        TranslateModule,
+        ReactiveFormsModule,
+        FormsModule,
+        FontAwesomeModule,
+        MatSortModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MtxSelectModule,
+        MatCardModule,
+        MatTooltipModule,
+        MtxGridModule,
+        MatDialogModule,
+        MatInputModule,
+        MatIconModule,
+    ],
   declarations: [
     ChangePasswordComponent,
     ProfileSettingsComponent,

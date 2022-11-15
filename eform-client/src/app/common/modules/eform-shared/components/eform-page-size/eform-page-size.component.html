@@ -1,0 +1,9 @@
+<ng-select
+  [items]="pageSizes"
+  (ngModelChange)="updateCurrentPageSettings($event)"
+  [clearable]="false"
+  [ngModel]="pageSize"
+  dropdownPosition="top"
+  [placeholder]="'Number of rows' | translate"
+>
+</ng-select>
