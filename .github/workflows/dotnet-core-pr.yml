@@ -72,3 +72,11 @@ jobs:
     - name: The job has failed
       if: ${{ failure() }}
       run: cat dotnet_log
+    - name: Archive screenshot artifacts
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: error Screenshots
+        path: |
+          /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/chrome*.png
+        retention-days: 2
