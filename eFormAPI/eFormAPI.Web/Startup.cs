@@ -131,7 +131,7 @@ namespace eFormAPI.Web
                         // Once we have the correct connectionstring in the connection.json, we restart the server and the above method is used.
                         services.AddEntityFrameworkMySql()
                             .AddDbContext<BaseDbContext>(o => o.UseMySql(
-                                "server=sffsfd;", new MariaDbServerVersion(
+                                "server=localhost;", new MariaDbServerVersion(
                                     new Version(10, 4, 0)), mySqlOptionsAction: builder =>
                                 {
                                     builder.EnableRetryOnFailure();

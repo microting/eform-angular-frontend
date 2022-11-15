@@ -34,10 +34,13 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
   }
 
   onIsAuthAsync(isAuth?: boolean) {
-    if (isAuth && !this.getUserbackWidgetIsEnabledSub$) {
-      this.appSettingsStateService.getOtherSettings();
-      this.getUserbackWidgetIsEnabledSub$ = this.appSettingsQuery.selectOthersSettings$
-        .subscribe((WidgetSettings) => WidgetSettings ? this.onSelectOthersSettings(WidgetSettings, isAuth) : void 0);
+    if (isAuth) {
+      debugger;
+      if (isAuth && !this.getUserbackWidgetIsEnabledSub$) {
+        this.appSettingsStateService.getOtherSettings();
+        this.getUserbackWidgetIsEnabledSub$ = this.appSettingsQuery.selectOthersSettings$
+          .subscribe((WidgetSettings) => WidgetSettings ? this.onSelectOthersSettings(WidgetSettings, isAuth) : void 0);
+      }
     }
   }
 
@@ -57,8 +60,10 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
 
 
   hide(): void {
-    this.widget.destroy();
-    this.isShowing = false;
+    if (this.widget) {
+      this.widget.destroy();
+      this.isShowing = false;
+    }
   }
 
   show(): void {
@@ -79,7 +84,11 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.hide();
-    this.isAuthSub$.unsubscribe();
-    this.getUserbackWidgetIsEnabledSub$.unsubscribe();
+    if (this.isAuthSub$) {
+      this.isAuthSub$.unsubscribe();
+    }
+    if (this.getUserbackWidgetIsEnabledSub$) {
+      this.getUserbackWidgetIsEnabledSub$.unsubscribe();
+    }
   }
 }
