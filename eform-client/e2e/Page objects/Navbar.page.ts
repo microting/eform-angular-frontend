@@ -159,15 +159,19 @@ export class Navbar {
 
   public async logout() {
     await (await this.signOutDropdown()).click();
+    await browser.pause(500);
     await (await this.logoutBtn()).click();
+    await browser.pause(500);
   }
 
   public async goToProfileSettings() {
     await (await this.signOutDropdown()).click();
     await (await this.settingsBtn()).waitForDisplayed({ timeout: 5000 });
     await (await this.settingsBtn()).waitForClickable({ timeout: 5000 });
+    await browser.pause(500);
     await (await this.settingsBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToApplicationSettings() {
@@ -176,12 +180,14 @@ export class Navbar {
     await this.advancedDropdownClick();
     await (await this.applicationSettingsBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToWorkers() {
     await this.advancedDropdownClick();
     await (await this.workersBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToSites() {
@@ -189,18 +195,21 @@ export class Navbar {
     await (await this.sitesBtn()).click();
     // browser.pause(15000);
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToUserAdministration() {
     await (await this.signOutDropdown()).click();
     await (await this.userAdministrationBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToPasswordSettings() {
     await (await this.signOutDropdown()).click();
     await (await this.changePasswordBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToDeviceUsersPage() {
