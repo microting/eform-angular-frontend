@@ -105,7 +105,6 @@ describe('Device users page should not add new device user', async () => {
     // browser.refresh();
   });
   it('should clean up', async () => {
-    await myEformsPage.Navbar.goToDeviceUsersPage();
     await (await deviceUsersPage.getDeviceUserByName(nameDeviceUser)).delete();
     await browser.refresh();
     await expect(await deviceUsersPage.rowNum()).equal(countDeviceUsersBeforeCreating);
