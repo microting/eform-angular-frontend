@@ -23,7 +23,6 @@ describe('Entity Search', function () {
   });
   it('should not create a new searchable list', async () => {
     await loginPage.open('/');
-    await loginPage.login();
     await searchableLists.goToEntitySearchPage();
     const numRows = await searchableLists.rowNum();
     const name = Guid.create().toString();
@@ -32,7 +31,6 @@ describe('Entity Search', function () {
   });
   it('should create a new searchable list with one item', async () => {
     await loginPage.open('/');
-    await loginPage.login();
     await searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
@@ -50,7 +48,6 @@ describe('Entity Search', function () {
   });
   it('should not make a new searchable list with one item', async () => {
     await loginPage.open('/');
-    await loginPage.login();
     await searchableLists.goToEntitySearchPage();
     const numRows = await searchableLists.rowNum();
     const name = Guid.create().toString();
@@ -60,7 +57,6 @@ describe('Entity Search', function () {
   });
   it('should make a new searchable list with multiple items', async () => {
     await loginPage.open('/');
-    await loginPage.login();
     await searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemNames = ['a \n', 'b\n', 'c\n', 'd\n', 'e'];
@@ -91,7 +87,6 @@ describe('Entity Search', function () {
   });
   it('should not create a searchable list with multiple items', async () => {
     await loginPage.open('/');
-    await loginPage.login();
     await searchableLists.goToEntitySearchPage();
     const numRows = await searchableLists.rowNum();
     const name = Guid.create().toString();

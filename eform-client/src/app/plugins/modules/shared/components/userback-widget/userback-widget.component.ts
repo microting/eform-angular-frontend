@@ -35,7 +35,6 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
 
   onIsAuthAsync(isAuth?: boolean) {
     if (isAuth) {
-      debugger;
       if (isAuth && !this.getUserbackWidgetIsEnabledSub$) {
         this.appSettingsStateService.getOtherSettings();
         this.getUserbackWidgetIsEnabledSub$ = this.appSettingsQuery.selectOthersSettings$
