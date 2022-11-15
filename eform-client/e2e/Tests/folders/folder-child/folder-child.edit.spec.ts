@@ -31,6 +31,7 @@ describe('Create folder', function () {
     ).equal(rowCountAfterCreation);
   });
   it('Should change name', async () => {
+    await browser.pause(500);
     const childFolderBeforeEdit = await foldersPage.getFolderFromTree(
       await foldersPage.getFolderRowNumByName(nameFolderChildren),
       1
@@ -47,6 +48,7 @@ describe('Create folder', function () {
     );
   });
   it('Should change description', async () => {
+    await browser.pause(500);
     const childFolder = await foldersPage.getFolderFromTree(
       await foldersPage.getFolderRowNumByName(newName),
       1
@@ -62,6 +64,7 @@ describe('Create folder', function () {
     );
   });
   it('Should not change first name and description if cancel was clicked', async () => {
+    await browser.pause(500);
     const rowParentsCountBeforeEditing = await foldersPage.rowNumParents();
     const childFolderBeforeEdit = await foldersPage.getFolderFromTree(
       await foldersPage.getFolderRowNumByName(newName),
