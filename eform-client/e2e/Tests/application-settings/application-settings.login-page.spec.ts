@@ -31,7 +31,7 @@ describe('Application settings page - site header section', function () {
   });
   it('should change secondary text', async () => {
     await loginPage.login();
-    await myEformsPage.Navbar.goToApplicationSettings();
+    await loginPage.open('/application-settings');
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 120000 });
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await applicationSettingsPage.LoginPage.secondaryTextInput()).setValue(
