@@ -1,13 +1,9 @@
 <section>
   <mat-card-content class="p-3">
-    <div class="d-flex flex-row mb-3 mt-3">
-      <div
-        class="d-flex flex-column mr-5"
-        [ngClass]="{'ml-3': index === 0, 'ml-5': index !== 0}"
-        *ngFor="let language of languages; let index = index"
-      >
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
+      <ng-container *ngFor="let language of languages; let index = index; first as isFirst">
         <mat-checkbox
-          class="mr-3" *ngIf="displayCheckbox(language.id)"
+          *ngIf="displayCheckbox(language.id)"
           id="languageCheckbox{{ index }}"
           name="languageCheckbox{{ index }}"
           [ngModel]="isLanguageSelected(language.id)"
@@ -15,7 +11,7 @@
         >
           {{ language.text | translate }}
         </mat-checkbox>
-      </div>
+      </ng-container>
     </div>
     <ng-container
       *ngFor="let translation of visualEditorModel.translations; let translationIndex = index"

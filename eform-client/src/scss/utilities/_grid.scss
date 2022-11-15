@@ -1,0 +1,22 @@
+@use "sass:list";
+@use "sass:map";
+
+@function fill-array($end, $start: 1) {
+  $new-list: ();
+  @for $i from $start through $end + 1 {
+    $new-list: list.append($new-list, $i);
+  }
+  @return $new-list;
+}
+
+@each $col in fill-array(10) {
+  $grid-template-columns: repeat($col, 1fr);
+  .grid-#{$col}-columns {
+    grid-template-columns: $grid-template-columns;
+    @media (min-width: 320px) and (max-width: 950px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  //  example: .grid-4-columns {grid-template-columns: 1fr 1fr 1fr 1fr;} .grid-5-columns {grid-template-columns: 1fr 1fr 1fr 1fr 1fr;}
+}
+

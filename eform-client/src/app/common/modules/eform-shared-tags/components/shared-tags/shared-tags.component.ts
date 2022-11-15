@@ -1,5 +1,6 @@
 import {
   Component,
+  EventEmitter,
   Inject,
   OnInit,
 } from '@angular/core';
@@ -16,6 +17,9 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class SharedTagsComponent implements OnInit {
   public availableTags: CommonDictionaryModel[] = [];
+  public showCreateTag: EventEmitter<void> = new EventEmitter<void>();
+  public showEditTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
+  public showDeleteTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
 
   constructor(
     public dialogRef: MatDialogRef<SharedTagsComponent>,
@@ -23,22 +27,22 @@ export class SharedTagsComponent implements OnInit {
     this.availableTags = availableTags;
   }
 
-  hide(action: string, tag?: SharedTagModel) {
-    this.dialogRef.close({action, tag});
+  hide() {
+    this.dialogRef.close();
   }
 
   ngOnInit() {
   }
 
   showCreateTagModal() {
-    this.hide('create');
+    this.showCreateTag.emit();
   }
 
   showEditTagModal(tag: SharedTagModel) {
-    this.hide('edit', tag);
+    this.showEditTag.emit(tag);
   }
 
   showDeleteTagModal(tag: SharedTagModel) {
-    this.hide('delete', tag);
+    this.showDeleteTag.emit(tag);
   }
 }

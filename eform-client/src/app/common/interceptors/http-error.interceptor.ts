@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -25,9 +25,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      catchError((error) => {
+      catchError((error, caught) => {
         let errorMessage = '';
-        // Handle 400 - Bad Request
+        // Handle 400 — Bad Request
         if (error.status === 400) {
           let errors;
           if (error._body) {
@@ -43,7 +43,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               console.error(errorItem);
             });
           }
-          return throwError(error);
+          return caught;
         }
         // Handle 401 — Unauthorized
         if (error.status === 401) {
@@ -51,13 +51,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           // console.error('401 - Unauthorized');
           // console.error(error);
           this.authStateService.logout();
-          return throwError(errorMessage);
+          return caught;
         } else if (error.status === 403) {
           this.toastrService.warning('403 - Forbidden');
           // console.error('403 - Forbidden');
           // console.error(error);
           this.router.navigate(['/']).then();
-          return throwError(errorMessage);
+          return caught;
         }
         const body = error._body || '';
         // console.error(errorMessage);
@@ -67,7 +67,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             timeOut: 10000,
           });
         }
-        return throwError(errorMessage);
+        return caught;
       })
     );
   }

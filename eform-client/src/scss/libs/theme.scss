@@ -6,6 +6,8 @@
 @use './ngx-editor/ngx-editor' as ngx-editor;
 @use '../components/text' as text;
 @use '../libs/ngx-gallery/ngx-gallery' as ngx-gallery;
+@use '../components/table' as table;
+@use '../libs/ngx-toastr/ngx-toastr' as ngx-toastr;
 
 @include mat.core();
 
@@ -69,6 +71,8 @@ body {
       @include ngx-editor.theme($val);
       @include text.theme($val);
       @include ngx-gallery.theme($val);
+      @include table.theme($val);
+      @include ngx-toastr.theme($val);
       @include mtx.all-experimental-component-themes($val);
     }
   }

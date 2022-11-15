@@ -37,6 +37,11 @@ export class EformsTagsComponent implements OnDestroy, OnChanges {
   deleteTag$: Subscription;
   createTag$: Subscription;
   updateTag$: Subscription;
+  showCreateTagSub$: Subscription;
+  showEditTagSub$: Subscription;
+  showDeleteTagSub$: Subscription;
+  deletedTagSub$: Subscription;
+  updatedTagSub$: Subscription;
 
   constructor(
     private eFormTagService: EformTagService,
@@ -49,78 +54,57 @@ export class EformsTagsComponent implements OnDestroy, OnChanges {
     this.dialogRef = this.dialog.open(SharedTagsComponent, {
       ...dialogConfigHelper(this.overlay, this.availableTags)
     });
-    this.dialogRef.afterClosed().subscribe(x => {
-      if (x && x.action) {
-        switch (x.action) {
-          case 'create': {
-            const dialogRefCreateTag = this.dialog.open(SharedTagCreateComponent, {
-              ...dialogConfigHelper(this.overlay)
-            });
-            dialogRefCreateTag.afterClosed().subscribe(tag => {
-              if (tag) {
-                this.onTagCreate(tag);
-              }
-              this.show();
-            });
-            break;
-          }
-          case 'edit': {
-            const dialogRefUpdateTag = this.dialog.open(SharedTagEditComponent, {
-              ...dialogConfigHelper(this.overlay, x.tag)
-            });
-            dialogRefUpdateTag.afterClosed().subscribe(tag => {
-              if (tag) {
-                this.onTagUpdate(tag);
-              }
-              this.show();
-            });
-            break;
-          }
-          case 'delete': {
-            const dialogRefUpdateTag = this.dialog.open(SharedTagDeleteComponent, {
-              ...dialogConfigHelper(this.overlay, x.tag)
-            });
-            dialogRefUpdateTag.afterClosed().subscribe(tag => {
-              if (tag) {
-                this.onTagDelete(tag);
-              }
-              this.show();
-            });
-            break;
-          }
-        }
-      }
-    });
+    this.showCreateTagSub$ = this.dialogRef.componentInstance.showCreateTag.subscribe(() => {
+      const dialogRefCreateTag = this.dialog.open(SharedTagCreateComponent, {
+        ...dialogConfigHelper(this.overlay)
+      });
+      this.updatedTagSub$ = dialogRefCreateTag.componentInstance.createdTag.subscribe(tag => this.onTagCreate(tag, dialogRefCreateTag));
+    })
+    this.showEditTagSub$ = this.dialogRef.componentInstance.showEditTag.subscribe((x) => {
+      const dialogRefUpdateTag = this.dialog.open(SharedTagEditComponent, {
+        ...dialogConfigHelper(this.overlay, x)
+      });
+      this.updatedTagSub$ = dialogRefUpdateTag.componentInstance.updatedTag.subscribe(tag => this.onTagUpdate(tag, dialogRefUpdateTag));
+    })
+    this.showDeleteTagSub$ = this.dialogRef.componentInstance.showDeleteTag.subscribe((x) => {
+      const dialogRefUpdateTag = this.dialog.open(SharedTagDeleteComponent, {
+        ...dialogConfigHelper(this.overlay, x)
+      });
+      this.deletedTagSub$ = dialogRefUpdateTag.componentInstance.deletedTag.subscribe(tag => this.onTagDelete(tag, dialogRefUpdateTag));
+    })
   }
 
   ngOnDestroy(): void {
   }
 
-  onTagUpdate(model: SharedTagModel) {
+  onTagUpdate(model: SharedTagModel, dialogRefUpdateTag: MatDialogRef<SharedTagEditComponent>) {
     this.updateTag$ = this.eFormTagService
       .updateTag(model)
       .subscribe((data) => {
         if (data && data.success) {
+          dialogRefUpdateTag.close();
           this.tagsChanged.emit();
         }
       });
   }
 
-  onTagCreate(model: SharedTagCreateModel) {
+  onTagCreate(model: SharedTagCreateModel, dialogRefUpdateTag: MatDialogRef<SharedTagCreateComponent>) {
     this.createTag$ = this.eFormTagService
       .createTag(model)
       .subscribe((data) => {
         if (data && data.success) {
+          dialogRefUpdateTag.close();
           this.tagsChanged.emit();
         }
       });
   }
 
-  onTagDelete(model: SharedTagModel) {
+  onTagDelete(model: SharedTagModel, dialogRefUpdateTag: MatDialogRef<SharedTagDeleteComponent>) {
     this.deleteTag$ = this.eFormTagService
       .deleteTag(model.id)
       .subscribe((data) => {
         if (data && data.success) {
+          dialogRefUpdateTag.close();
           this.tagsChanged.emit();
         }
       });

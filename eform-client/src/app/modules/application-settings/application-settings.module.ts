@@ -6,6 +6,7 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {ApplicationSettingsRouting} from './application-settings.routing';
 import {AdminSettingsComponent, ConnectionSetupComponent} from './components';
+import {appSettingsProvider} from './components/store';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
@@ -33,6 +34,7 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     MtxSelectModule,
   ],
   declarations: [AdminSettingsComponent, ConnectionSetupComponent],
+  providers: [appSettingsProvider],
 })
 export class ApplicationSettingsModule {
 }

@@ -1,3 +1,5 @@
+@import "variables";
+
 .flex-row                { flex-direction: row !important; }
 .flex-column             { flex-direction: column !important; }
 .flex-row-reverse        { flex-direction: row-reverse !important; }
@@ -37,3 +39,7 @@
 .align-self-center      { align-self: center !important; }
 .align-self-baseline    { align-self: baseline !important; }
 .align-self-stretch     { align-self: stretch !important; }
+
+@each $value in $displays {
+  .d-#{$value} { display: $value !important; }
+}

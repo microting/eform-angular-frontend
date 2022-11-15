@@ -5,6 +5,8 @@ import { EventBrokerService } from 'src/app/common/helpers';
 import { AdminSettingsModel } from 'src/app/common/models';
 import { AppSettingsService } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
+import {AppSettingsQuery, AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
+import * as R from 'ramda';
 
 @Component({
   selector: 'app-admin-settings',
@@ -24,11 +26,14 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   latestVersion: string;
   adminSettingsModel: AdminSettingsModel = new AdminSettingsModel();
   othersSettings: { isEnableWidget: boolean } = {isEnableWidget: false};
+  previousAdminSettings: AdminSettingsModel;
 
   constructor(
     private settingsService: AppSettingsService,
     private authStateService: AuthStateService,
-    private eventBrokerService: EventBrokerService
+    private eventBrokerService: EventBrokerService,
+    private appSettingsStateService: AppSettingsStateService,
+    private appSettingsQuery: AppSettingsQuery,
   ) {}
 
   get currentRole(): string {
@@ -39,20 +44,19 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.currentRole === 'admin') {
-      // this.getLatestVersion();
-      this.getAdminSettings();
+      this.getLatestVersion();
+      this.getSettings();
       this.initializeUploaders();
     }
 
-    const authHeader: Array<{
-      name: string;
-      value: string;
-    }> = [];
-    authHeader.push({
-      name: 'Authorization',
-      value: this.authStateService.bearerToken,
-    });
-    const uploadOptions = <FileUploaderOptions>{ headers: authHeader };
+    const uploadOptions: FileUploaderOptions = {
+      headers: [
+        {
+          name: 'Authorization',
+          value: this.authStateService.bearerToken,
+        },
+      ],
+    };
     this.loginPageImageUploader.setOptions(uploadOptions);
     this.headerImageUploader.setOptions(uploadOptions);
   }
@@ -66,42 +70,40 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   }
 
   initializeUploaders() {
-    // TODO: REWORK
-    const re = /(?:\.([^.]+))?$/;
     this.loginPageImageUploader.onAfterAddingFile = (_) => {
       if (this.loginPageImageUploader.queue.length > 1) {
-        this.loginPageImageUploader.removeFromQueue(
-          this.loginPageImageUploader.queue[0]
-        );
+        // save only last file
+        this.loginPageImageUploader.removeFromQueue(this.loginPageImageUploader.queue[0]);
       }
     };
     this.headerImageUploader.onAfterAddingFile = (_) => {
       if (this.headerImageUploader.queue.length > 1) {
-        this.headerImageUploader.removeFromQueue(
-          this.headerImageUploader.queue[0]
-        );
+        // save only last file
+        this.headerImageUploader.removeFromQueue(this.headerImageUploader.queue[0]);
       }
     };
     this.loginPageImageUploader.onAfterAddingAll = (files: FileItem[]) => {
       files.forEach((fileItem) => {
-        fileItem.file.name = UUID.UUID() + '.' + re.exec(fileItem.file.name)[1];
-        this.adminSettingsModel.loginPageSettingsModel.imageLink =
-          fileItem.file.name;
+        fileItem.file.name = `${UUID.UUID()}.${R.last(fileItem.file.name.split('.'))}`; // uuid + file extension
+        this.adminSettingsModel.loginPageSettingsModel.imageLink = fileItem.file.name;
       });
     };
     this.headerImageUploader.onAfterAddingAll = (files: FileItem[]) => {
       files.forEach((fileItem) => {
-        fileItem.file.name = UUID.UUID() + '.' + re.exec(fileItem.file.name)[1];
-        this.adminSettingsModel.headerSettingsModel.imageLink =
-          fileItem.file.name;
+        fileItem.file.name = `${UUID.UUID()}.${R.last(fileItem.file.name.split('.'))}`; // uuid + file extension
+        this.adminSettingsModel.headerSettingsModel.imageLink = fileItem.file.name;
       });
     };
   }
 
-  getAdminSettings() {
-    this.settingsService.getAdminSettings().subscribe((operation) => {
-      if (operation && operation.success) {
-        this.adminSettingsModel = operation.model;
+  getSettings() {
+    this.appSettingsStateService.getAdminSettings();
+    this.appSettingsQuery.selectAllSettings$.subscribe((allSettings) => {
+      const adminSettings = allSettings.adminSettings;
+      const othersSettings = allSettings.othersSettings;
+      if (adminSettings) {
+        this.adminSettingsModel = adminSettings;
+        this.previousAdminSettings = adminSettings;
 
         if (this.adminSettingsModel.headerSettingsModel.imageLink) {
           this.headerImageLink =
@@ -119,24 +121,9 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
           this.loginPageImageLink = '../../../assets/images/eform-phone.jpg';
         }
       }
-    });
-    this.getOtherSettings();
-  }
-
-  getOtherSettings() {
-    this.settingsService.getUserbackWidgetIsEnabled()
-      .subscribe((operation) => {
-        if (operation && operation.success) {
-          this.othersSettings = {...this.othersSettings, isEnableWidget: operation.model.isUserbackWidgetEnabled};
-        }
-    });
-  }
-
-  updateOtherSettings() {
-    this.settingsService.updateUserbackWidgetIsEnabled(this.othersSettings.isEnableWidget)
-      .subscribe((operation) => {
-        if (operation && operation.success) {
-        }
+      if (othersSettings) {
+        this.othersSettings = {...this.othersSettings, isEnableWidget: othersSettings.isUserbackWidgetEnabled};
+      }
     });
   }
 
@@ -148,24 +135,34 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
       this.loginPageImageUploader.queue[0].upload();
     }
 
-    this.settingsService
-      .updateAdminSettings(this.adminSettingsModel)
-      .subscribe((operation) => {
-        if (operation && operation.success) {
-          this.getAdminSettings();
-          this.headerImageUploader.clearQueue();
-          this.loginPageImageUploader.clearQueue();
-          this.eventBrokerService.emit<void>('get-header-settings', null);
-        }
-      });
+    if (!R.equals(this.adminSettingsModel, this.previousAdminSettings)) {
+      this.appSettingsStateService
+        .updateAdminSettings(this.adminSettingsModel)
+        .subscribe((operation) => {
+          if (operation && operation.success) {
+            this.headerImageUploader.clearQueue();
+            this.loginPageImageUploader.clearQueue();
+            this.eventBrokerService.emit<void>('get-header-settings', null);
+          }
+        });
+    }
 
     this.updateOtherSettings();
+  }
+
+  updateOtherSettings() {
+    this.appSettingsStateService.updateUserbackWidgetIsEnabled(this.othersSettings.isEnableWidget)
+      .subscribe((operation) => {
+        if (operation && operation.success) {
+        //
+        }
+      });
   }
 
   resetLoginPageSettings() {
     this.settingsService.resetLoginPageSettings().subscribe((operation) => {
       if (operation && operation.success) {
-        this.getAdminSettings();
+        this.appSettingsStateService.getAllAppSettings();
       }
     });
   }
@@ -173,7 +170,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   resetHeaderSettings() {
     this.settingsService.resetHeaderSettings().subscribe((operation) => {
       if (operation && operation.success) {
-        this.getAdminSettings();
+        this.appSettingsStateService.getAllAppSettings();
       }
     });
   }

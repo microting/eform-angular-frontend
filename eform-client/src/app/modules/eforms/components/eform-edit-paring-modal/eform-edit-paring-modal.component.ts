@@ -22,12 +22,12 @@ export class EformEditParingModalComponent implements OnInit {
   foldersDto: Array<FolderDto> = [];
   saveButtonDisabled = true;
   eformDeployed = false;
-  // columns: MtxGridColumn[] = [
-  //   { header: this.translateService.stream('Microting ID'), field: 'siteUId', },
-  //   { header: this.translateService.stream('Device user'), field: 'siteName', },
-  //   // { header: this.translateService.get('Select'), field: 'status' },
-  // ];
-  //rowSelected: any[];
+  tableHeaders: MtxGridColumn[] = [
+    { header: this.translateService.stream('Microting ID'), field: 'siteUId', },
+    { header: this.translateService.stream('Device user'), field: 'siteName', },
+    // { header: this.translateService.get('Select'), field: 'status' },
+  ];
+  rowSelected: any[];
 
   get userClaims() {
     return this.authStateService.currentUserClaims;

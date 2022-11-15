@@ -1,5 +1,6 @@
 import {
   Component,
+  EventEmitter,
   Inject,
 } from '@angular/core';
 import { SharedTagModel } from 'src/app/common/models';
@@ -11,12 +12,13 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./shared-tag-delete.component.scss']
 })
 export class SharedTagDeleteComponent {
+  public deletedTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
   constructor(
     public dialogRef: MatDialogRef<SharedTagDeleteComponent>,
     @Inject(MAT_DIALOG_DATA) public tagModel: SharedTagModel = new SharedTagModel()) {}
 
   deleteTag() {
-    this.dialogRef.close(this.tagModel);
+    this.deletedTag.emit(this.tagModel);
   }
 
   cancelDelete() {

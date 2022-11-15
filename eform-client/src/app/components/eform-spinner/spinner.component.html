@@ -1,4 +1,4 @@
-<div class="animated fadeIn spinner-container load1" id="spinner-animation" [hidden]="!loading">
+<div class="animated fadeIn spinner-container load1" id="spinner-animation" [hidden]="(this.loaderService.isLoading | async) === false">
   <svg id="eir3k7w3jfv81"
        xmlns="http://www.w3.org/2000/svg"
        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 250 250" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">

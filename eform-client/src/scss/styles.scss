@@ -2,13 +2,18 @@
 //ng-select
 
 @import "components/index";
-//@import "utilities/colors";
+@import "utilities";
 @import "libs/index";
 @import '~ngx-ui-switch/ui-switch.component.scss';
 
 // h-100 for base elements
 html {
   height: 100%;
+}
+
+label {
+  display: unset;
+  margin-bottom: unset;
 }
 
 body {

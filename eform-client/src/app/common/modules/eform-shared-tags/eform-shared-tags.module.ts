@@ -15,25 +15,27 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    NgSelectModule,
-    FormsModule,
-    TreeModule,
-    FontAwesomeModule,
-    WavesModule,
-    ModalModule,
-    ButtonsModule,
-    InputsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        NgSelectModule,
+        FormsModule,
+        TreeModule,
+        FontAwesomeModule,
+        WavesModule,
+        ModalModule,
+        ButtonsModule,
+        InputsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTooltipModule,
+    ],
   declarations: [
     SharedTagDeleteComponent,
     SharedTagEditComponent,
