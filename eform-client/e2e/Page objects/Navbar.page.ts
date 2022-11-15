@@ -177,7 +177,9 @@ export class Navbar {
   public async goToApplicationSettings() {
     const spinnerAnimation = await $('#spinner-animation');
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
-    await this.advancedDropdownClick();
+    if (!await $(`#application-settings`).isDisplayed()) {
+      await this.advancedDropdownClick();
+    }
     await (await this.applicationSettingsBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(500);

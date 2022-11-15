@@ -105,12 +105,9 @@ describe('Device users page should not add new device user', async () => {
     // browser.refresh();
   });
   it('should clean up', async () => {
-    await loginPage.open('/');
     await myEformsPage.Navbar.goToDeviceUsersPage();
     await (await deviceUsersPage.getDeviceUserByName(nameDeviceUser)).delete();
-    await loginPage.open('/');
-    await myEformsPage.Navbar.goToDeviceUsersPage();
-    // browser.refresh();
+    await browser.refresh();
     await expect(await deviceUsersPage.rowNum()).equal(countDeviceUsersBeforeCreating);
   });
 });
