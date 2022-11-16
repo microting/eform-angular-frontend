@@ -91,7 +91,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async entitySelectEditImportListBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#editEntitySelectImportBtn');
+    const ele = await $('#editEntitySearchImportBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
