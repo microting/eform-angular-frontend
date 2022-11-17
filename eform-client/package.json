@@ -124,7 +124,7 @@
     "chai": "4.3.6",
     "chromedriver": "106.0.1",
     "codelyzer": "^6.0.2",
-    "eslint": "^8.16.0",
+    "eslint": "^8.27.0",
     "fs-extra": "^10.1.0",
     "guid-typescript": "1.0.9",
     "path": "0.12.7",
