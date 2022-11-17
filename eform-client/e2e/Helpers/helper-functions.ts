@@ -20,7 +20,6 @@ export async function testSorting(
   if (!mapFunc) {
     mapFunc = async (ele) => await ele.getText();
   }
-  await browser.pause(1000);
   const elementsForSorting = await $$(htmlIdElementsForSorting);
   const elementsBefore = await Promise.all(elementsForSorting.map(mapFunc));
   const spinnerAnimation = await $('#spinner-animation');
@@ -28,18 +27,19 @@ export async function testSorting(
   for (let i = 0; i < 2; i++) {
     await tableHeader.click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
-
+    await browser.pause(500);
+    //
     const elementsAfter = await Promise.all(elementsForSorting.map(mapFunc));
-
-    // get current direction of sorting
+    //
+    // // get current direction of sorting
     const sortIcon = await tableHeader.$('.ng-trigger-leftPointer').getAttribute('style');
     let sorted;
-    if (sortIcon === 'transform: rotate(-45deg);') {
+    if (sortIcon === 'transform: rotate(45deg);') {
       sorted = elementsBefore.sort().reverse();
     } else if (sortIcon === 'expand_less') {
-      sorted = elementsBefore.sort();
-    } else {
       sorted = elementsBefore;
+    } else {
+      sorted = elementsBefore.sort();
     }
     expect(sorted, `Sort by ${sortBy} incorrect`).deep.equal(elementsAfter);
   }
