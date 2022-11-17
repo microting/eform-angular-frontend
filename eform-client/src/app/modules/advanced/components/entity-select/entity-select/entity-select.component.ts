@@ -32,8 +32,8 @@ export class EntitySelectComponent implements OnInit, OnDestroy{
   }
 
   tableHeaders: MtxGridColumn[] = [
-    {header: this.translateService.stream('Id'), field: 'microtingUUID', sortProp: {id: 'Id'}, sortable: true},
-    {header: this.translateService.stream('Name'), sortProp: {id: 'Name'}, field: 'name', sortable: true},
+    {header: this.translateService.stream('Id'), field: 'microtingUUID', sortProp: {id: 'Id'}, sortable: true, class: 'id'},
+    {header: this.translateService.stream('Name'), sortProp: {id: 'Name'}, field: 'name', sortable: true, class: 'name'},
     {
       header: this.translateService.stream('Description'),
       field: 'description',

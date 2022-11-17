@@ -88,9 +88,11 @@ export async function selectDateRangeOnDatePicker(
 
 export async function selectValueInNgSelector(selector: WebdriverIO.Element, value: string,) {
   await (await selector.$('input')).setValue(value);
+  await browser.pause(500);
   const valueForClick = await selector.$(
     `.ng-option=${value}`
   );
   valueForClick.waitForDisplayed({ timeout: 40000 });
   await valueForClick.click();
+  await browser.pause(500);
 }

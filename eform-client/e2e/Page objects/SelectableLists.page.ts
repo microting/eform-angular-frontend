@@ -7,6 +7,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async selectableListCount(): Promise<number> {
+    await browser.pause(500);
     return (await $$('tbody > tr')).length;
   }
 
@@ -318,22 +319,20 @@ export class SelectableListRowObject {
 
   public async getRow(rowNum: number) {
     this.index = rowNum;
-    this.element = (await $$('tbody > tr'))[rowNum - 1];
-    if (this.element) {
-      this.id = +await (await (await this.element).$('#entitySelectMicrotingUUID')).getText();
-      try {
-        this.name = await (await (await this.element).$('#entitySelectName')).getText();
-      } catch (e) {}
-      try {
-        this.description = await (await (await this.element).$('#entitySelectDescription')).getText();
-      } catch (e) {}
-      try {
-        this.deleteBtn = await (await this.element).$('#entitySelectDeleteBtn');
-      } catch (e) {}
-      try {
-        this.editBtn = await (await this.element).$('#entitySelectEditBtn');
-      } catch (e) {}
-    }
+    rowNum = rowNum - 1;
+    this.id = +await (await (await $$('td.id'))[rowNum]).getText();
+    try {
+      this.name = await (await (await $$('td.name'))[rowNum]).getText();
+    } catch (e) {}
+    try {
+      this.description = await (await (await $$('td.description'))[rowNum]).getText();
+    } catch (e) {}
+    try {
+      this.deleteBtn = await (await $$('button.entitySelectDeleteBtn'))[rowNum];
+    } catch (e) {}
+    try {
+      this.editBtn = await (await $$('button.entitySelectEditBtn'))[rowNum];
+    } catch (e) {}
     return this;
   }
 
