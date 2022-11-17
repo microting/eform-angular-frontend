@@ -57,6 +57,8 @@ jobs:
       run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
     - name: NPM Install
       run: cd eform-client && npm install
+    - name: Create errorShots directory
+      run: mkdir /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots
     - name: NPM start
       run: cd eform-client && npm start &
     - name: Sleep 75 seconds
