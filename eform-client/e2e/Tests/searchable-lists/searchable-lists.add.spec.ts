@@ -22,16 +22,12 @@ describe('Entity Search', function () {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should not create a new searchable list', async () => {
-    await loginPage.open('/');
-    await searchableLists.goToEntitySearchPage();
     const numRows = await searchableLists.rowNum();
     const name = Guid.create().toString();
     await searchableLists.createSearchableList_NoItem_Cancels(name);
     expect(await searchableLists.rowNum()).equal(numRows);
   });
   it('should create a new searchable list with one item', async () => {
-    await loginPage.open('/');
-    await searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
     await searchableLists.createSearchableList_OneItem(name, itemName);
@@ -47,8 +43,6 @@ describe('Entity Search', function () {
     await ($('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should not make a new searchable list with one item', async () => {
-    await loginPage.open('/');
-    await searchableLists.goToEntitySearchPage();
     const numRows = await searchableLists.rowNum();
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
@@ -56,8 +50,6 @@ describe('Entity Search', function () {
     expect(await searchableLists.rowNum()).equal(numRows);
   });
   it('should make a new searchable list with multiple items', async () => {
-    await loginPage.open('/');
-    await searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemNames = ['a \n', 'b\n', 'c\n', 'd\n', 'e'];
     await searchableLists.createSearchableList_MultipleItems(name, itemNames);
@@ -86,8 +78,6 @@ describe('Entity Search', function () {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   });
   it('should not create a searchable list with multiple items', async () => {
-    await loginPage.open('/');
-    await searchableLists.goToEntitySearchPage();
     const numRows = await searchableLists.rowNum();
     const name = Guid.create().toString();
     const itemNames = ['a \n', 'b\n', 'c\n', 'd\n', 'e'];

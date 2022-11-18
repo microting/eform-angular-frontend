@@ -135,7 +135,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
       this.loginPageImageUploader.queue[0].upload();
     }
 
-    if (!R.equals(this.adminSettingsModel, this.previousAdminSettings)) {
+    //if (!R.equals(this.adminSettingsModel, this.previousAdminSettings)) { // TODO: fix this, it doesn't work
       this.appSettingsStateService
         .updateAdminSettings(this.adminSettingsModel)
         .subscribe((operation) => {
@@ -145,7 +145,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
             this.eventBrokerService.emit<void>('get-header-settings', null);
           }
         });
-    }
+    //}
 
     this.updateOtherSettings();
   }

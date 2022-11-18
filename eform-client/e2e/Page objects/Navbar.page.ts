@@ -159,29 +159,37 @@ export class Navbar {
 
   public async logout() {
     await (await this.signOutDropdown()).click();
+    await browser.pause(500);
     await (await this.logoutBtn()).click();
+    await browser.pause(500);
   }
 
   public async goToProfileSettings() {
     await (await this.signOutDropdown()).click();
     await (await this.settingsBtn()).waitForDisplayed({ timeout: 5000 });
     await (await this.settingsBtn()).waitForClickable({ timeout: 5000 });
+    await browser.pause(500);
     await (await this.settingsBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToApplicationSettings() {
     const spinnerAnimation = await $('#spinner-animation');
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
-    await this.advancedDropdownClick();
+    if (!await $(`#application-settings`).isDisplayed()) {
+      await this.advancedDropdownClick();
+    }
     await (await this.applicationSettingsBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToWorkers() {
     await this.advancedDropdownClick();
     await (await this.workersBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToSites() {
@@ -189,35 +197,41 @@ export class Navbar {
     await (await this.sitesBtn()).click();
     // browser.pause(15000);
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToUserAdministration() {
     await (await this.signOutDropdown()).click();
     await (await this.userAdministrationBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToPasswordSettings() {
     await (await this.signOutDropdown()).click();
     await (await this.changePasswordBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToDeviceUsersPage() {
     await (await this.deviceUsersBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToEntitySelect() {
     await this.advancedDropdownClick();
     await (await this.entitySelectBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToEntitySearch() {
     await this.advancedDropdownClick();
     await (await this.entitySearchBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToFolderPage() {

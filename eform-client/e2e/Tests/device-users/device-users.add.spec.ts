@@ -41,13 +41,6 @@ describe('Device users page should add new device user', function () {
   });
 });
 describe('Device users page should not add new device user', async () => {
-  afterEach(async () => {
-    // browser.refresh();
-    await loginPage.open('/');
-    await myEformsPage.Navbar.goToDeviceUsersPage();
-    // browser.pause(8000);
-    // $('#newDeviceUserBtn').waitForDisplayed({timeout: 40000});
-  });
   it('with only first name', async () => {
     // $('#newDeviceUserBtn').waitForDisplayed({timeout: 40000});
     const name = generateRandmString();
@@ -62,7 +55,9 @@ describe('Device users page should not add new device user', async () => {
       await (await deviceUsersPage.saveCreateBtn()).isEnabled(),
       'Create button in modal window while creating new device user is active when only name is provided'
     ).equal(false);
-    // browser.refresh();
+
+    await (await deviceUsersPage.cancelCreateBtn()).click();
+    await browser.pause(500);
   });
   it('with only last name', async () => {
     // browser.waitForEnabled('#newDeviceUserBtn', 20000);
@@ -76,17 +71,23 @@ describe('Device users page should not add new device user', async () => {
       await (await deviceUsersPage.saveCreateBtn()).isEnabled(),
       'Create button in modal window while creating new device user is active when only last name is provided'
     ).equal(false);
+
+    await (await deviceUsersPage.cancelCreateBtn()).click();
+    await browser.pause(500);
     // browser.refresh();
   });
   it('without first and last names', async () => {
     // browser.refresh();
     await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
     await (await deviceUsersPage.newDeviceUserBtn()).click();
+    await browser.pause(500);
     await $('#firstName').waitForDisplayed({ timeout: 10000 });
     expect(
       await (await deviceUsersPage.saveCreateBtn()).isEnabled(),
       'Create button in modal window while creating new device user is active when both first name and last name are not provided'
     ).equal(false);
+    await (await deviceUsersPage.cancelCreateBtn()).click();
+    await browser.pause(500);
     // browser.refresh();
   });
   it('if cancel was clicked', async () => {
@@ -95,8 +96,10 @@ describe('Device users page should not add new device user', async () => {
     await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
     await (await deviceUsersPage.newDeviceUserBtn()).click();
     await $('#firstName').waitForDisplayed({ timeout: 10000 });
+    await browser.pause(500);
     await (await deviceUsersPage.cancelCreateBtn()).click();
     await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
+    await browser.pause(500);
     const rowCountAfterCreation = await deviceUsersPage.rowNum();
     expect(
       rowCountAfterCreation,
@@ -105,12 +108,7 @@ describe('Device users page should not add new device user', async () => {
     // browser.refresh();
   });
   it('should clean up', async () => {
-    await loginPage.open('/');
-    await myEformsPage.Navbar.goToDeviceUsersPage();
     await (await deviceUsersPage.getDeviceUserByName(nameDeviceUser)).delete();
-    await loginPage.open('/');
-    await myEformsPage.Navbar.goToDeviceUsersPage();
-    // browser.refresh();
     await expect(await deviceUsersPage.rowNum()).equal(countDeviceUsersBeforeCreating);
   });
 });

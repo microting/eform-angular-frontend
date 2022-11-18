@@ -14,9 +14,9 @@ describe('Entity Select', function () {
   it('should make a new selectable list, with no items.', async () => {
     const data = {name: generateRandmString(), description: generateRandmString()};
     await selectableLists.createSelectableList(data);
-    const selectableList = await selectableLists.getLastSelectableListObject();
-    expect(selectableList.name).equal(data.name);
-    expect(selectableList.description).eq(data.description);
+    const selectableListObject = await selectableLists.getLastSelectableListObject();
+    expect(selectableListObject.name).equal(data.name);
+    expect(selectableListObject.description).eq(data.description);
   });
   it('should not make a new list, with no items', async () => {
     const data = {name: generateRandmString()};
