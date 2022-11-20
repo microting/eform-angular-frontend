@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangePasswordModel } from 'src/app/common/models/user';
 import { AuthService } from 'src/app/common/services';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-change-password',
@@ -10,8 +10,8 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class ChangePasswordComponent implements OnInit {
   changePasswordModel: ChangePasswordModel = new ChangePasswordModel();
-  changePasswordForm: FormGroup;
-  constructor(private authService: AuthService, private fb: FormBuilder) {
+  changePasswordForm: UntypedFormGroup;
+  constructor(private authService: AuthService, private fb: UntypedFormBuilder) {
     this.changePasswordForm = this.fb.group({
       oldPassword: ['', [Validators.required, Validators.min(8)]],
       newPassword: ['', [Validators.required, Validators.min(8)]],

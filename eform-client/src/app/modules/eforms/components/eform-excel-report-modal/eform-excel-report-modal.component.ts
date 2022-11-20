@@ -3,7 +3,7 @@ import {EFormService} from 'src/app/common/services/eform';
 import {EformDownloadExcelModel, TemplateDto} from 'src/app/common/models';
 import {saveAs} from 'file-saver';
 import {format} from 'date-fns';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 
@@ -17,9 +17,9 @@ export class EformExcelReportModalComponent implements OnInit, OnDestroy {
   @ViewChild('frame', {static: true}) frame;
   selectedTemplate: TemplateDto = new TemplateDto();
   downloadExcelSub$: Subscription;
-  downloadForm: FormGroup;
+  downloadForm: UntypedFormGroup;
 
-  constructor(private eFormService: EFormService, private formBuilder: FormBuilder) {
+  constructor(private eFormService: EFormService, private formBuilder: UntypedFormBuilder) {
   }
 
   ngOnInit() {

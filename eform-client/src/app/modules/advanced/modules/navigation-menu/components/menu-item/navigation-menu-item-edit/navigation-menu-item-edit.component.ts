@@ -10,7 +10,7 @@ import {
 } from 'src/app/common/models/navigation-menu';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import { CommonDictionaryModel } from 'src/app/common/models';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
@@ -26,7 +26,7 @@ export class NavigationMenuItemEditComponent implements OnInit {
   item: NavigationMenuItemModel = new NavigationMenuItemModel();
   firstLevelIndex: number;
   secondLevelIndex: number | null;
-  translationsArray: FormArray = new FormArray([]);
+  translationsArray: UntypedFormArray = new UntypedFormArray([]);
 
   get menuItemType() {
     return NavigationMenuItemTypeEnum;
@@ -41,11 +41,11 @@ export class NavigationMenuItemEditComponent implements OnInit {
     this.translationsArray.clear();
     for (const translation of model.model.translations) {
       this.translationsArray.push(
-        new FormGroup({
-          id: new FormControl(translation.id),
-          name: new FormControl(translation.name),
-          localeName: new FormControl(translation.localeName),
-          language: new FormControl(translation.language),
+        new UntypedFormGroup({
+          id: new UntypedFormControl(translation.id),
+          name: new UntypedFormControl(translation.name),
+          localeName: new UntypedFormControl(translation.localeName),
+          language: new UntypedFormControl(translation.language),
         })
       );
     }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,14 +15,14 @@ import { AuthService } from 'src/app/common/services/auth';
   templateUrl: './restore-password.component.html',
 })
 export class RestorePasswordComponent implements OnInit {
-  formRestore: FormGroup;
+  formRestore: UntypedFormGroup;
   email: AbstractControl;
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private settingsService: AppSettingsService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private toastrService: ToastrService
   ) {}
 

@@ -13,8 +13,8 @@ import schema from './schema.const';
 import { Editor, toDoc, toHTML, Toolbar } from 'ngx-editor';
 import {
   ControlContainer,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   FormGroupDirective,
 } from '@angular/forms';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
@@ -35,7 +35,7 @@ export class FormattingTextEditorComponent implements OnInit, OnDestroy, OnChang
   @Input() disabled = false;
   @Output() valueChange = new EventEmitter<string>();
   editor: Editor;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   valueChangesSub$: Subscription;
 
@@ -43,8 +43,8 @@ export class FormattingTextEditorComponent implements OnInit, OnDestroy, OnChang
 
   ngOnInit() {
     this.editor = new Editor({ schema });
-    this.form = new FormGroup({
-      editorContent: new FormControl({
+    this.form = new UntypedFormGroup({
+      editorContent: new UntypedFormControl({
         value: toDoc(this.value, schema),
         disabled: this.disabled,
       }),

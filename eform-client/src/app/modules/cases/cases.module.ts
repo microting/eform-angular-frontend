@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import {
   OWL_DATE_TIME_FORMATS,
   OwlDateTimeModule,
-  OwlMomentDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -26,6 +25,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import {EformDateFnsDateModule} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
 
 @NgModule({
   imports: [
@@ -39,7 +39,7 @@ import {MatCardModule} from '@angular/material/card';
     LightboxModule,
     GalleryModule,
     OwlDateTimeModule,
-    OwlMomentDateTimeModule,
+    EformDateFnsDateModule,
     FormsModule,
     FontAwesomeModule,
     EformCasesModule,

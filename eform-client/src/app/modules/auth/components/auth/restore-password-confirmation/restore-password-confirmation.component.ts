@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
+  UntypedFormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -21,7 +21,7 @@ export class RestorePasswordConfirmationComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private settingsService: AppSettingsService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private toastrService: ToastrService,
     private route: ActivatedRoute
   ) {}

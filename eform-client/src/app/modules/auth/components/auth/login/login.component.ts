@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ import { AuthStateService } from 'src/app/common/store';
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
-  formLogin: FormGroup;
+  formLogin: UntypedFormGroup;
 
   username: AbstractControl;
   email: AbstractControl;
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private googleAuthService: GoogleAuthService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private toastrService: ToastrService,
     private localeService: LocaleService,
     private userSettings: UserSettingsService,

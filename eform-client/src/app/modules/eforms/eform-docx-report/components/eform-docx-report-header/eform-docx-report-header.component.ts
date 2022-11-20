@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EformDocxReportGenerateModel } from 'src/app/common/models';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
 import { LocaleService } from 'src/app/common/services';
 import { format } from 'date-fns';
@@ -21,12 +21,12 @@ export class EformDocxReportHeaderComponent implements OnInit {
   downloadReport: EventEmitter<EformDocxReportGenerateModel> = new EventEmitter();
   @Input() range: Date[];
   @Input() templateId: number;
-  generateForm: FormGroup;
+  generateForm: UntypedFormGroup;
 
   constructor(
     dateTimeAdapter: DateTimeAdapter<any>,
     private localeService: LocaleService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     authStateService: AuthStateService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {AppSettingsService} from 'src/app/common/services/settings';
@@ -10,13 +10,13 @@ import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/se
   templateUrl: './reset-admin-password.component.html'
 })
 export class ResetAdminPasswordComponent implements OnInit {
-  formReset: FormGroup;
+  formReset: UntypedFormGroup;
   secretKey: AbstractControl;
 
   constructor(private router: Router,
               private authService: AuthService,
               private settingsService: AppSettingsService,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               private toastrService: ToastrService,
               private localeService: LocaleService,
               private userSettings: UserSettingsService) {
