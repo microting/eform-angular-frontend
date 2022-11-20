@@ -20,7 +20,6 @@
     </button>
     <a
       mat-icon-button
-      color="accent"
       id="eformsVisualEditor"
       *ngIf="userClaims.eformsCreate"
       [routerLink]="['visual-editor']"
@@ -30,7 +29,6 @@
     </a>
     <button
       mat-icon-button
-      color="accent"
       matTooltip="{{ 'New eForm from XML' | translate }}"
       id="newEFormBtn"
       *ngIf="userClaims.eformsCreate"
@@ -132,7 +130,6 @@
       <a
         mat-icon-button
         type="button"
-        color="accent"
         *ngIf="checkEformPermissions(row.id, userClaimsEnum.eformsUpdateTags)"
         id="eform-edit-btn-{{ i }}"
         matTooltip="{{ 'Edit tags' | translate }}"
