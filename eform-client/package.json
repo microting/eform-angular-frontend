@@ -112,7 +112,7 @@
     "@datorama/akita-ngdevtools": "^7.0.0",
     "@types/chai": "4.3.4",
     "@types/d3": "7.4.0",
-    "@types/mocha": "9.1.1",
+    "@types/mocha": "10.0.0",
     "@types/node": "18.11.9",
     "@typescript-eslint/eslint-plugin": "5.43.0",
     "@typescript-eslint/parser": "5.43.0",
