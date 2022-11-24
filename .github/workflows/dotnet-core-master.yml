@@ -91,5 +91,5 @@ jobs:
       with:
         name: error Screenshots
         path: |
-          /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/chrome*.png
+          /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots/chrome*.png
         retention-days: 2

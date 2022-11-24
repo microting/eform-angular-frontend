@@ -65,4 +65,18 @@ describe('Create folder', function () {
   //   const rowCountAfterDelete = await foldersPage.rowNum();
   //   expect(rowCountBeforeDelete - 1).eq(rowCountAfterDelete);
   // });
+  after('should delete folders', async () => {
+    const rowCountBeforeCreation = await foldersPage.rowNum();
+    //for (let i = 0; i < rowCountBeforeCreation; i++) {
+      //console.log(i);
+      const folder = await foldersPage.getFolder(1);
+      await folder.delete();
+      await browser.pause(500);
+    //}
+    const rowCountAfterCreation = await foldersPage.rowNum();
+    expect(
+      0,
+      'Folder not delete'
+    ).equal(rowCountAfterCreation);
+  });
 });

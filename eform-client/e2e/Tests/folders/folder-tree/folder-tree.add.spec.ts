@@ -298,10 +298,10 @@ describe('Create folder', function () {
   });
   after('should delete folders', async () => {
     const rowCountBeforeCreation = await foldersPage.rowNum();
-    console.log('rowCountBeforeCreation', rowCountBeforeCreation);
     for (let i = 0; i < rowCountBeforeCreation; i++) {
       const folder = await foldersPage.getFolder(1);
       await folder.delete();
+      await browser.pause(500);
     }
     const rowCountAfterCreation = await foldersPage.rowNum();
     expect(
