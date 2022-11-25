@@ -19,17 +19,18 @@
         </mat-icon>
         {{ fieldTranslationAndType }}
       </div>
-      <div style="display: flex; flex-direction: row; flex-grow: 1; justify-content: space-evenly;" id="colors">
-        <button
-          *ngFor="let color of fieldColors"
-          mat-mini-fab
-          [ngStyle]="{'background-color': '#' + color.name}"
-          [matTooltip]="color.description"
-          style="border-radius: 10em; padding: 1em 1em;"
-          (click)="onChangeColor(color.name)"
-        ></button>
-      </div>
+
       <div class="d-flex justify-content-end align-items-center" style="flex-grow: 3;">
+        <div id="colors">
+          <button
+            *ngFor="let color of fieldColors"
+            mat-mini-fab
+            [ngStyle]="{'background-color': '#' + color.name}"
+            [matTooltip]="color.description"
+            style="border-radius: 5em; padding: 1px 1px 1px 1px;"
+            (click)="onChangeColor(color.name)"
+          ></button>
+        </div>
         <mat-icon
           style="margin-right: 1rem;"
           *ngIf="!isFieldComplete"
