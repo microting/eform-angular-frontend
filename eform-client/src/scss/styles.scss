@@ -53,7 +53,13 @@ b, strong {
 
 .need-wrapper {
   mat-form-field ~ mat-form-field {
-    margin-left: 1rem;
+    padding-left: 1rem;
+  }
+  &.flex-column mat-form-field ~ formatting-text-editor {
+    padding-top: 1rem;
+  }
+  &.flex-row mat-form-field ~ formatting-text-editor {
+    padding-left: 1rem;
   }
 
   .mat-card ~ .mat-card {

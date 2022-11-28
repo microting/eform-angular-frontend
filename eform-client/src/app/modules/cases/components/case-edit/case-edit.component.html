@@ -3,8 +3,8 @@
   [forceStaticTitle]="true"
 ></eform-new-subheader>
 
-<div class="d-flex flex-row justify-content-between">
-  <div class="flex-grow-1 mr-4 d-flex flex-column">
+<div class="d-grid justify-content-between" style="grid-template-columns: 5fr 2fr;">
+  <div class="mr-4 d-flex flex-column">
     <!-- Done at user editable -->
     <mat-card *ngIf="currentTemplate.isDoneAtEditable" class="mb-4">
       <mat-card-title>
