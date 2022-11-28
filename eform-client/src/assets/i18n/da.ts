@@ -16,7 +16,7 @@ export const da = {
   Port: 'Port',
   Login: 'Log ind',
   Password: 'Adgangskode',
-  'Forgot password': 'Har du glemt din adgangskode?',
+  'Forgot password': 'Har du glemt din adgangskode',
   'Restore password': 'Fortsæt',
   'Reset admin password': 'Nulstil admin adgangskode',
   'Back to login': 'Log ind',
