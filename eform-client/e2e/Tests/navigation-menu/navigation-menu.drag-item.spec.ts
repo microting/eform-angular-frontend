@@ -60,21 +60,12 @@ describe(' Navigation menu - Drag item', function () {
     await browser.pause(500);
 
     for (const item of array) {
-      console.log('s1');
-      const bla = (await navigationMenuPage.menuItems()).length - 1;
-      console.log('s2 ' + bla);
-      const foo = await navigationMenuPage.dropdownBodyChilds(bla);
-      console.log('s3 ' + foo.length);
+      const foo = await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItems()).length - 1);
       const bar = await foo[item.indexChildDropdown];
-      console.log('s4 ' + bar);
       const text = await bar.$('#editBtn');
-      console.log('s5 ' + text);
       await text.click();
-      console.log('s6');
       await browser.pause(500);
 
-      // await navigationMenuPage.dropdownBodyChilds(
-      //   (await navigationMenuPage.menuItemsChilds()).length - 1)[item.indexChildDropdown].$('#editBtn').click();
       for (const translation of item.translations_array) {
         const i = item.translations_array.indexOf(translation);
         expect(await (await navigationMenuPage.editItemTranslation(

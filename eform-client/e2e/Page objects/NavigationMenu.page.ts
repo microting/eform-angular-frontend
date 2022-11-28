@@ -50,10 +50,7 @@ class NavigationMenuPage {
   }
 
   public async dropdownBodyChilds(indexDropdown: number) {
-    const bla = await this.menuItems();
-    console.log('bla.length is ' +bla.length);
-    console.log('indexDropdown is ' + indexDropdown);
-    return await (bla)[indexDropdown].$$('#dropdownBody>*');
+    return await (await this.menuItems())[indexDropdown].$$('#dropdownBody>*');
   }
 
   public async editTranslationsOnDropdownBodyChilds(data: {
@@ -129,10 +126,9 @@ class NavigationMenuPage {
     await elem.scrollIntoView();
     await browser.pause(2000);
 
-    const bla = await $(`#drag_handle${indexDropdownInMenuItems}_${indexItemOfSwap}`);
     await browser.pause(2000);
     await elem.dragAndDrop(
-      bla
+      await $(`#drag_handle${indexDropdownInMenuItems}_${indexItemOfSwap}`)
     );
     await browser.pause(2000);
   }
