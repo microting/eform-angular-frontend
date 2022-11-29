@@ -7,7 +7,7 @@ import {
   UserClaimsModel,
   UserInfoModel,
 } from 'src/app/common/models';
-import { Observable } from 'rxjs';
+import {Observable, zip} from 'rxjs';
 import { Router } from '@angular/router';
 import { snakeToCamel } from 'src/app/common/helpers';
 import { resetStores } from '@datorama/akita';
@@ -73,26 +73,24 @@ export class AuthStateService {
   }
 
   getUserSettings(){
-    this.userSettings.getUserSettings().subscribe((data) => {
-      this.service.obtainUserClaims().subscribe((userClaims) => {
-        this.store.update((state) => ({
-          ...state,
-          currentUser: {
-            ...state.currentUser,
-            darkTheme: data.model.darkTheme,
-            locale: data.model.locale,
-            loginRedirectUrl: data.model.loginRedirectUrl,
-            claims: userClaims,
-          },
-        }));
-        if(data.model.loginRedirectUrl) {
-          this.router
-            .navigate([
-              `/${data.model.loginRedirectUrl}`,
-            ]).then();
-        }
-      });
-    });
+    zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+      this.store.update((state) => ({
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          darkTheme: userSettings.model.darkTheme,
+          locale: userSettings.model.locale,
+          loginRedirectUrl: userSettings.model.loginRedirectUrl,
+          claims: userClaims,
+        },
+      }));
+      if(userSettings.model.loginRedirectUrl) {
+        this.router
+          .navigate([
+            `/${userSettings.model.loginRedirectUrl}`,
+          ]).then();
+      }
+    })
   }
 
   logout() {
@@ -140,6 +138,10 @@ export class AuthStateService {
 
   get currentUserLocale(): string {
     return this.query.currentSetting.currentUser.locale;
+  }
+
+  get currentUserLocaleAsync() {
+    return this.query.selectCurrentUserLocale$;
   }
 
   updateUserLocale(locale: string) {
