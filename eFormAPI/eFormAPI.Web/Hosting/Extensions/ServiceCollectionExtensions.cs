@@ -39,7 +39,6 @@ namespace eFormAPI.Web.Hosting.Extensions
     using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
     using Newtonsoft.Json.Serialization;
-    using OpenStack.NetCoreSwiftClient.Extensions;
 
     public static class ServiceCollectionExtensions
     {
@@ -97,7 +96,7 @@ namespace eFormAPI.Web.Hosting.Extensions
             List<IEformPlugin> plugins)
         {
             var connectionString = configuration.MyConnectionString();
-            if (!connectionString.IsNullOrEmpty() && connectionString != "...")
+            if (!string.IsNullOrEmpty(connectionString) && connectionString != "...")
             {
                 List<EformPlugin> eformPlugins;
                 var contextFactory = new BaseDbContextFactory();

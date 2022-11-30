@@ -33,7 +33,6 @@ namespace eFormAPI.Web.Controllers.Eforms
     using Microting.eForm.Dto;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-    using OpenStack.NetCoreSwiftClient.Extensions;
     using Microting.EformAngularFrontendBase.Infrastructure.Const;
 
     [Authorize]
@@ -54,16 +53,6 @@ namespace eFormAPI.Web.Controllers.Eforms
             try
             {
                 var core = await _coreHelper.GetCore();
-
-                if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
-                {
-                    var ss = await core.GetFileFromSwiftStorage($"{fileName}");
-
-                    Response.ContentType = ss.ContentType;
-                    Response.ContentLength = ss.ContentLength;
-
-                    return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("wav"));
-                }
 
                 if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                 {
