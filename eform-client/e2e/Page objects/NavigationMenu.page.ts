@@ -50,10 +50,7 @@ class NavigationMenuPage {
   }
 
   public async dropdownBodyChilds(indexDropdown: number) {
-    const bla = await this.menuItems();
-    console.log('bla.length is ' +bla.length);
-    console.log('indexDropdown is ' + indexDropdown);
-    return await (bla)[indexDropdown].$$('#dropdownBody>*');
+    return await (await this.menuItems())[indexDropdown].$$('#dropdownBody>*');
   }
 
   public async editTranslationsOnDropdownBodyChilds(data: {
@@ -125,36 +122,22 @@ class NavigationMenuPage {
     indexItemForSwap,
     indexItemOfSwap
   ) {
-    console.log('d1');
-    console.log('indexDropdownInMenuItems is ' + indexDropdownInMenuItems);
     const elem = await $(`#drag_handle${indexDropdownInMenuItems}_${indexItemForSwap}`);
-    console.log('dragName is ' + `#drag_handle${indexDropdownInMenuItems}_${indexItemForSwap}`);
-    console.log('d2');
     await elem.scrollIntoView();
-    console.log('d3');
     await browser.pause(2000);
-    console.log('d4');
-    console.log('dragName is ' + `#drag_handle${indexDropdownInMenuItems}_${indexItemOfSwap}`);
 
-    const bla = await $(`#drag_handle${indexDropdownInMenuItems}_${indexItemOfSwap}`);
-    console.log('d5 ' + JSON.stringify(bla));
     await browser.pause(2000);
     await elem.dragAndDrop(
-      bla
+      await $(`#drag_handle${indexDropdownInMenuItems}_${indexItemOfSwap}`)
     );
     await browser.pause(2000);
-    console.log('d6');
   }
 
   public async createMenuItemFromTemplate(indexItemInTemplate) {
-    console.log('dr1');
     const currentDropDrownBodyCount = (await navigationMenuPage.menuItems()).length;
     const elem = await this.dragHandleOnItemInMainMenu(indexItemInTemplate);
-    console.log('dr2');
     const toElement = (await $$('mat-card > mat-accordion')[0]);
-    console.log('dr3');
     await elem.dragAndDrop(toElement);
-    console.log('dr4');
     // await (await this.dragHandleOnItemInMainMenu(indexItemInTemplate)).dragAndDrop(
     //
     // );

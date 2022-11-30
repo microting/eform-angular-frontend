@@ -223,6 +223,9 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         field: 'fieldValue1',
         sortable: true,
         sortProp: {id: 'FieldValue1'},
+      formatter: (record: CaseModel) => {
+        return record.fieldValue1;
+      }
       }] : undefined;
     this.currentTemplate.field2 && this.currentTemplate.field2.label
       ? this.tableHeaders = [...this.tableHeaders, {
@@ -230,6 +233,9 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         field: 'fieldValue2',
         sortable: true,
         sortProp: {id: 'FieldValue2'},
+        formatter: (record: CaseModel) => {
+          return record.fieldValue2;
+        },
       }] : undefined;
     this.currentTemplate.field3 && this.currentTemplate.field3.label
       ? this.tableHeaders = [...this.tableHeaders, {
@@ -237,6 +243,9 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         field: 'fieldValue3',
         sortable: true,
         sortProp: {id: 'FieldValue3'},
+        formatter: (record: CaseModel) => {
+          return record.fieldValue3;
+        }
       }] : undefined;
     this.currentTemplate.field4 && this.currentTemplate.field4.label
       ? this.tableHeaders = [...this.tableHeaders, {
@@ -244,6 +253,9 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         field: 'fieldValue4',
         sortable: true,
         sortProp: {id: 'FieldValue4'},
+        formatter: (record: CaseModel) => {
+          return record.fieldValue4;
+        }
       }] : undefined;
     this.currentTemplate.field5 && this.currentTemplate.field5.label
       ? this.tableHeaders = [...this.tableHeaders, {
@@ -251,6 +263,9 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         field: 'fieldValue5',
         sortable: true,
         sortProp: {id: 'FieldValue5'},
+        formatter: (record: CaseModel) => {
+          return record.fieldValue5;
+        }
       }] : undefined;
     this.currentTemplate.field6 && this.currentTemplate.field6.label
       ? this.tableHeaders = [...this.tableHeaders, {
@@ -258,6 +273,9 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         field: 'fieldValue6',
         sortable: true,
         sortProp: {id: 'FieldValue6'},
+        formatter: (record: CaseModel) => {
+          return record.fieldValue6;
+        }
       }] : undefined;
     this.currentTemplate.field7 && this.currentTemplate.field7.label
       ? this.tableHeaders = [...this.tableHeaders, {
@@ -265,6 +283,9 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         field: 'fieldValue7',
         sortable: true,
         sortProp: {id: 'FieldValue7'},
+        formatter: (record: CaseModel) => {
+          return record.fieldValue7;
+        }
       }] : undefined;
     this.currentTemplate.field8 && this.currentTemplate.field8.label
       ? this.tableHeaders = [...this.tableHeaders, {
@@ -272,6 +293,9 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         field: 'fieldValue8',
         sortable: true,
         sortProp: {id: 'FieldValue8'},
+        formatter: (record: CaseModel) => {
+          return record.fieldValue8;
+        }
       }] : undefined;
     this.currentTemplate.field9 && this.currentTemplate.field9.label
       ? this.tableHeaders = [...this.tableHeaders, {
@@ -279,6 +303,9 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         field: 'fieldValue9',
         sortable: true,
         sortProp: {id: 'FieldValue9'},
+        formatter: (record: CaseModel) => {
+          return record.fieldValue9;
+        }
       }] : undefined;
     this.tableHeaders = [
       ...this.tableHeaders,

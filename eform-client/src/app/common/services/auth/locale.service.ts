@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { CookieService } from 'ngx-cookie-service';
-import { Observable } from 'rxjs';
-import { OperationDataResult } from 'src/app/common/models';
-import { applicationLanguages } from 'src/app/common/const';
-import { AuthStateService } from 'src/app/common/store';
-import { ApiBaseService } from 'src/app/common/services';
-import { translates } from 'src/assets/i18n/translates';
+import {Injectable} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {CookieService} from 'ngx-cookie-service';
+import {Observable} from 'rxjs';
+import {OperationDataResult} from 'src/app/common/models';
+import {applicationLanguages} from 'src/app/common/const';
+import {AuthStateService} from 'src/app/common/store';
+import {ApiBaseService} from 'src/app/common/services';
+import {translates} from 'src/assets/i18n/translates';
+import {filter} from 'rxjs/operators';
 
 export let LocaleMethods = {
   // GoogleAuthenticatorInfo: 'api/auth/google-auth-info',
@@ -20,7 +21,8 @@ export class LocaleService {
     private authStateService: AuthStateService,
     private translateService: TranslateService,
     private cookieService: CookieService
-  ) {}
+  ) {
+  }
 
   getDefaultLocale(): Observable<OperationDataResult<any>> {
     return this.apiBaseService.get<string>(LocaleMethods.DefaultLocale);
@@ -48,6 +50,12 @@ export class LocaleService {
       this.translateService.use(language);
       this.initCookies(language);
     }
+    this.authStateService.currentUserLocaleAsync
+      .pipe(filter(x => !!x))
+      .subscribe(x => {
+        this.translateService.use(x);
+        this.updateCookies(x);
+      });
   }
 
   // updateUserLocale(localeName: string) {
@@ -61,8 +69,8 @@ export class LocaleService {
       localeName,
       darkTheme
     );
-    this.updateCookies(localeName);
-    this.translateService.use(localeName);
+    // this.updateCookies(localeName);
+    // this.translateService.use(localeName);
   }
 
   initCookies(locale: string) {

@@ -232,8 +232,7 @@ describe('Visual editor page', function () {
     await browser.pause(500);
     await eformVisualEditorPage.clickSave();
     await browser.pause(500);
-    const bla = await myEformsPage.getLastMyEformsRowObj();
-    await bla.goToVisualEditor();
+    await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     await browser.pause(500);
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
