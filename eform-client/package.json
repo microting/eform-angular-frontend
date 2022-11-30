@@ -55,7 +55,7 @@
     "@fortawesome/angular-fontawesome": "0.10.2",
     "@fortawesome/fontawesome-svg-core": "6.1.1",
     "@fortawesome/free-solid-svg-icons": "6.1.1",
-    "@ng-matero/extensions": "^13.1.0",
+    "@ng-matero/extensions": "^13.3.0",
     "@ng-select/ng-select": "8.3.0",
     "@ngx-gallery/core": "4.0.3",
     "@ngx-gallery/gallerize": "4.0.3",
