@@ -18,6 +18,7 @@ label {
 
 body {
   height: 100vh;
+
   #main-header-text {
     font-weight: 400;
   }
@@ -60,6 +61,7 @@ b, strong {
   &.flex-row mat-form-field ~ formatting-text-editor {
     padding-left: 1rem;
   }
+
   .mat-card ~ .mat-card {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -70,6 +72,7 @@ body.theme-dark {
   --black-025: #393939;
   --black-800: #e7e8eb;
   --blue-600: #3ca4ff;
+
   .mat-option {
     font-size: unset !important;
   }
@@ -138,7 +141,25 @@ body, .theme-light {
   --black-800: #242729;
   --blue-600: #0077cc;
   --theme-body-font-color: var(--black-800);
+
   .mat-option {
     font-size: unset !important;
   }
+}
+
+.mat-icon-button .mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px
+}
+.mat-menu-item .mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px
+}
+
+#sign-out-dropdown {
+  top: -4px;
 }

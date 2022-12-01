@@ -91,7 +91,7 @@ namespace eFormAPI.Web.Hosting.Helpers.DbOptions
         {
             var dictionary = new Dictionary<string, string>();
             var sectionName = currentObject.GetType().Name;
-            prefix = prefix.IsNullOrEmpty()
+            prefix = string.IsNullOrEmpty(prefix)
                 ? $"{sectionName}"
                 : $"{prefix}:{sectionName}";
 

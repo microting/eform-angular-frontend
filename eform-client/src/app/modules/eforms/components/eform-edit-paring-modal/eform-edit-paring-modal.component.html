@@ -20,37 +20,47 @@
       <h4>{{ 'Select Site' | translate}}</h4>
     </mat-card-title>
     <mat-card-content>
-      <table class="table table-xs table-bordered text-center z-depth-1">
-        <thead>
-        <tr>
-          <th>Microting ID</th>
-          <th>{{ 'Device user' | translate }}</th>
-          <th>{{ 'Select' | translate }}</th>
-        </tr>
-        </thead>
-        <tbody id="pairingModalTableBody">
-        <tr *ngFor="let siteDto of sitesDto">
-          <td id="microtingId" class="align-middle">{{siteDto.siteUId}}</td>
-          <td id="deviceUserFullName" class="align-middle">{{siteDto.siteName}}</td>
-          <td class="align-middle">
-            <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
-              <div class="mat-checkbox" *ngIf="checkboxModel.id == siteDto.siteUId">
-                <mat-checkbox
-                  [checked]="checkboxModel.isChecked"
-                  (change)="addToArray($event, checkboxModel.id)"
-                  id="checkbox{{checkboxModel.id}}"
-                >
-              </mat-checkbox>
-<!--                <input id="checkbox{{checkboxModel.id}}" (change)="addToArray($event, checkboxModel.id)"-->
-<!--                       [checked]="checkboxModel.isChecked" [value]="checkboxModel.isChecked" color="primary"-->
-<!--                       type="checkbox">-->
-<!--                <label id="checkboxLabel{{checkboxModel.id}}" for="checkbox{{checkboxModel.id}}"></label>-->
-              </div>
-            </ng-container>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="mtx-grid ng-star-inserted">
+        <div class="mtx-grid-main mtx-grid-layout">
+          <div class="mtx-grid-content mtx-grid-layout">
+            <div class="mat-table-container mat-table-with-data">
+              <table class="mat-table cdk-table mat-sort mat-table-striped ng-star-inserted" style="width: 100%">
+                <thead>
+                <tr role="rowgroup" class="mat-header-row cdk-header-row ng-star-inserted" mat-header-row>
+                  <th role="columnheader" class="mat-header-cell cdk-header-cell cdk-column-id mat-column-id ng-star-inserted mat-table-sticky mat-table-sticky-border-elem-top">Microting ID</th>
+                  <th role="columnheader" class="mat-header-cell cdk-header-cell cdk-column-id mat-column-id ng-star-inserted mat-table-sticky mat-table-sticky-border-elem-top">{{ 'Device user' | translate }}</th>
+                  <th role="columnheader" class="mat-header-cell cdk-header-cell cdk-column-id mat-column-id ng-star-inserted mat-table-sticky mat-table-sticky-border-elem-top">{{ 'Select' | translate }}</th>
+                </tr>
+                </thead>
+                <tbody id="pairingModalTableBody" role="rowgroup">
+                <ng-container *ngFor="let siteDto of sitesDto; let i = index">
+                  <tr class="mat-row cdk-row ng-star-inserted {{i%2 ? 'mat-row-odd' : ''}}">
+                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id ng-star-inserted" id="microtingId">{{siteDto.siteUId}}</td>
+                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id ng-star-inserted" id="deviceUserFullName">{{siteDto.siteName}}</td>
+                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id ng-star-inserted">
+                      <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
+                        <div class="mat-checkbox" *ngIf="checkboxModel.id == siteDto.siteUId">
+                          <mat-checkbox
+                            [checked]="checkboxModel.isChecked"
+                            (change)="addToArray($event, checkboxModel.id)"
+                            id="checkbox{{checkboxModel.id}}"
+                          >
+                          </mat-checkbox>
+                          <!--                <input id="checkbox{{checkboxModel.id}}" (change)="addToArray($event, checkboxModel.id)"-->
+                          <!--                       [checked]="checkboxModel.isChecked" [value]="checkboxModel.isChecked" color="primary"-->
+                          <!--                       type="checkbox">-->
+                          <!--                <label id="checkboxLabel{{checkboxModel.id}}" for="checkbox{{checkboxModel.id}}"></label>-->
+                        </div>
+                      </ng-container>
+                    </td>
+                  </tr>
+                </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
 <!--      <mtx-grid-->
 <!--        class="mt-2"-->
 <!--        [data]="sitesDto"-->

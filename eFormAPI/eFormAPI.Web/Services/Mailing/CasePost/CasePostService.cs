@@ -48,7 +48,6 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application.CasePosts;
-    using OpenStack.NetCoreSwiftClient.Extensions;
     using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
     public class CasePostService : ICasePostService, ICasePostBaseService
@@ -470,7 +469,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             await _emailService.SendFileAsync(
                                 EformEmailConst.FromEmail,
                                 $"{currentUser.FirstName} {currentUser.LastName}",
-                                casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
+                                string.IsNullOrEmpty(casePost.Subject) ? "-" : casePost.Subject,
                                 recipient.Email,
                                 filePath,
                                 html: html);
@@ -481,7 +480,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             await _emailService.SendAsync(
                                 EformEmailConst.FromEmail,
                                 $"{currentUser.FirstName} {currentUser.LastName}",
-                                casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
+                                string.IsNullOrEmpty(casePost.Subject) ? "-" : casePost.Subject,
                                 recipient.Email,
                                 html: html);
                         }
@@ -491,7 +490,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         await _emailService.SendAsync(
                             EformEmailConst.FromEmail,
                             $"{currentUser.FirstName} {currentUser.LastName}",
-                            casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
+                            string.IsNullOrEmpty(casePost.Subject) ? "-" : casePost.Subject,
                             recipient.Email,
                             html: html);
                     }

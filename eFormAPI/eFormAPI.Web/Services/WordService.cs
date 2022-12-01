@@ -248,12 +248,7 @@ namespace eFormAPI.Web.Services
         {
             var filePath = Path.Combine(basePicturePath, imageName);
             Stream stream;
-            if (_swiftEnabled)
-            {
-                var storageResult = await core.GetFileFromSwiftStorage(imageName);
-                stream = storageResult.ObjectStreamContent;
-            }
-            else if (_s3Enabled)
+            if (_s3Enabled)
             {
                 var storageResult = await core.GetFileFromS3Storage(imageName);
                 stream = storageResult.ResponseStream;

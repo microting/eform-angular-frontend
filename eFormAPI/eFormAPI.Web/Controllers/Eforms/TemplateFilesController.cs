@@ -40,7 +40,6 @@ namespace eFormAPI.Web.Controllers.Eforms
     using Microting.eForm.Infrastructure.Models;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using OpenStack.NetCoreSwiftClient.Extensions;
     using Services.Export;
     using System;
     using System.Globalization;
@@ -49,7 +48,6 @@ namespace eFormAPI.Web.Controllers.Eforms
     using System.Text;
     using System.Threading.Tasks;
     using System.Xml.Linq;
-    using Microsoft.AspNetCore.Http;
     using Microting.eForm.Infrastructure.Constants;
     using Microting.EformAngularFrontendBase.Infrastructure.Const;
     using Settings = Microting.eForm.Dto.Settings;
@@ -214,16 +212,6 @@ namespace eFormAPI.Web.Controllers.Eforms
                     break;
             }
 
-            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
-            {
-                var ss = await core.GetFileFromSwiftStorage($"{fileName}.{ext}");
-
-                Response.ContentType = ss.ContentType;
-                Response.ContentLength = ss.ContentLength;
-
-                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"{fileType}"));
-            }
-
             try
             {
                 if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
@@ -258,10 +246,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             var core = await _coreHelper.GetCore();
             Directory.CreateDirectory(Path.Combine("tmp"));
             var filePath = Path.Combine("tmp",fileName);
-            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
-            {
-                return await RotateImageSwift(fileName);
-            }
+
             if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
             {
                 return await RotateImageS3(fileName);
@@ -708,22 +693,6 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 return BadRequest($"Invalid Request! Exception: {e.Message}");
             }
-        }
-
-        private async Task<OperationResult> RotateImageSwift(string fileName)
-        {
-            var core = await _coreHelper.GetCore();
-            var result =  await core.GetFileFromSwiftStorage(fileName);
-            var filePath = Path.Combine("tmp",fileName);
-            var fileStream = System.IO.File.Create(filePath);
-            await result.ObjectStreamContent.CopyToAsync(fileStream);
-
-            fileStream.Close();
-            await fileStream.DisposeAsync();
-
-            result.ObjectStreamContent.Close();
-            await result.ObjectStreamContent.DisposeAsync();
-            return await RotateFileAndPutToStorage(filePath, core, fileName);
         }
 
         private async Task<OperationResult> RotateImageS3(string fileName)

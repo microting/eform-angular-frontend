@@ -299,9 +299,9 @@ namespace eFormAPI.Web.Services
                     MainTextVisible = _loginPageSettings.Value.MainTextVisible,
                     SecondaryText = _loginPageSettings.Value.SecondaryText,
                     SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
-                    IsSMTPExists = !_emailSettings.Value.SmtpHost.IsNullOrEmpty() &&
-                                   !_emailSettings.Value.SmtpPort.ToString().IsNullOrEmpty(),
-                    IsSendGridExists = !_emailSettings.Value.SendGridKey.IsNullOrEmpty(),
+                    IsSMTPExists = string.IsNullOrEmpty(_emailSettings.Value.SmtpHost) &&
+                                   string.IsNullOrEmpty(_emailSettings.Value.SmtpPort.ToString()),
+                    IsSendGridExists = string.IsNullOrEmpty(_emailSettings.Value.SendGridKey),
                 };
                 return new OperationDataResult<LoginPageSettingsModel>(true, model);
             }
@@ -393,7 +393,7 @@ namespace eFormAPI.Web.Services
                         MainTextVisible = _loginPageSettings.Value.MainTextVisible,
                         SecondaryText = _loginPageSettings.Value.SecondaryText,
                         SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
-                        IsSendGridExists = !_emailSettings.Value.SendGridKey.IsNullOrEmpty(),
+                        IsSendGridExists = string.IsNullOrEmpty(_emailSettings.Value.SendGridKey),
                     },
                     SwiftSettingsModel = new SwiftSettingsModel()
                     {

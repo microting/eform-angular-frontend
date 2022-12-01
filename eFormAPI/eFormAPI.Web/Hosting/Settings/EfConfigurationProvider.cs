@@ -53,7 +53,7 @@ namespace eFormAPI.Web.Hosting.Settings
         // Load config data from EF DB.
         public override void Load()
         {
-            if (_connectionString.IsNullOrEmpty() || _connectionString == "...")
+            if (string.IsNullOrEmpty(_connectionString) || _connectionString == "...")
             {
                 var seedData = ConfigurationSeed.Data;
                 Data = seedData.ToDictionary(

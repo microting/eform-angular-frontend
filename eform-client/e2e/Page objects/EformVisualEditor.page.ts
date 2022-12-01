@@ -317,11 +317,8 @@ class EformVisualEditorPage extends PageWithNavbarPage {
         }
       }
       if (checklistFieldObj.type) {
-        const bla = await this.fieldTypeSelector();
-        const foo = await bla.$('input');
-        const bar = DanishEformFieldTypesEnum[checklistFieldObj.type];
-        await (foo).setValue(
-          bar
+        await (await (await this.fieldTypeSelector()).$('input')).setValue(
+          DanishEformFieldTypesEnum[checklistFieldObj.type]
         );
         await browser.pause(500);
         const option = await (await this.fieldTypeSelector()).$('.ng-option');

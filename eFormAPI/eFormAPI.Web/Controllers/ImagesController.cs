@@ -30,7 +30,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using OpenStack.NetCoreSwiftClient.Extensions;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -55,30 +54,14 @@ namespace eFormAPI.Web.Controllers
         {
             var filePath = PathHelper.GetEformSettingsImagesPath(fileName);
             string ext = Path.GetExtension(fileName).Replace(".", "");
-            
+
             if (ext == "jpg")
             {
                 ext = "jpeg";
             }
             string fileType = $"image/{ext}";
-                
-            var core = await _coreHelper.GetCore();
-            
-            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
-            {
-                var ss =  await core.GetFileFromSwiftStorage(fileName);
-                
-                if (ss == null)
-                {
-                    return NotFound($"Trying to find file at location: {filePath}");
-                }
-                
-                Response.ContentType = ss.ContentType;
-                Response.ContentLength = ss.ContentLength;
 
-                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);
-//                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
-            }
+            var core = await _coreHelper.GetCore();
 
             if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
             {
@@ -88,14 +71,14 @@ namespace eFormAPI.Web.Controllers
 
                 return File(ss.ResponseStream, ss.Headers["Content-Type"]);
             }
-            
+
             if (!System.IO.File.Exists(filePath))
-            {                
+            {
                 return NotFound($"Trying to find file at location: {filePath}");
             }
 
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, fileType);            
+            return File(fileStream, fileType);
         }
 
         [HttpGet]
@@ -105,29 +88,14 @@ namespace eFormAPI.Web.Controllers
         {
             var filePath = PathHelper.GetEformLoginPageSettingsImagesPath(fileName);
             string ext = Path.GetExtension(fileName).Replace(".", "");
-            
+
             if (ext == "jpg")
             {
                 ext = "jpeg";
             }
-            
+
             string fileType = $"image/{ext}";
             var core = await _coreHelper.GetCore();
-            
-            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
-            {
-                var ss =  await core.GetFileFromSwiftStorage(fileName);
-                
-                if (ss == null)
-                {
-                    return NotFound($"Trying to find file at location: {filePath}");
-                }
-                
-                Response.ContentType = ss.ContentType;
-                Response.ContentLength = ss.ContentLength;
-
-                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);                
-            }
 
             if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
             {
@@ -137,17 +105,17 @@ namespace eFormAPI.Web.Controllers
 
                 return File(ss.ResponseStream, ss.Headers["Content-Type"]);
             }
-            
+
             if (!System.IO.File.Exists(filePath))
-            {                
+            {
                 return NotFound($"Trying to find file at location: {filePath}");
             }
 
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, fileType);  
+            return File(fileStream, fileType);
         }
 
-        [HttpPost]        
+        [HttpPost]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/images/login-page-images")]
         public async Task<IActionResult> PostLoginPageImages(IFormFile file)
@@ -184,7 +152,7 @@ namespace eFormAPI.Web.Controllers
             }
 
             if (iUploadedCnt > 0)
-            {                
+            {
                 return Ok();
             }
             return BadRequest(_localizationService.GetString("InvalidRequest"));
