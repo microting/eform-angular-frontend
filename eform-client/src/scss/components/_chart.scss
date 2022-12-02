@@ -4,6 +4,7 @@
 @mixin color($theme) {
   $color-config: mat.get-color-config($theme);
   $is-dark-theme: map.get($color-config, 'is-dark');
+  $background: map.get(map.get($theme, 'background'), 'card');
 
   @if ($is-dark-theme) {
     /*Backgrounds*/
@@ -115,7 +116,7 @@
 
     .chart-legend {
       .legend-labels {
-        background: rgba(255, 255, 255, 0.05) !important;
+        background: $background !important;
       }
 
       .legend-item {
