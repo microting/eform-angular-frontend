@@ -234,7 +234,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   uploadZipFile(templateDto: TemplateDto) {
     this.eformUploadZipModalComponentAfterClosedSub$ = this.dialog.open(EformUploadZipModalComponent, {
-      ...dialogConfigHelper(this.overlay, {availableTags: this.availableTags, selectedTemplate: templateDto}), minWidth: 400,
+      ...dialogConfigHelper(this.overlay, templateDto), minWidth: 400,
     }).afterClosed().subscribe(data => data ? undefined : undefined);
   }
 
