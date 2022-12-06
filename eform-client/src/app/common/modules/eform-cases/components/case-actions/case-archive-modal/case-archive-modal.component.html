@@ -1,82 +1,34 @@
-<div
-  [config]="{ ignoreBackdropClick: true }"
-  mdbModal
-  class="modal fade"
-  #frame="mdbModal"
->
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>
-          {{
-            (caseArchiveModel.isArchived
-              ? 'Are you sure you want to unarchive this case'
-              : 'Are you sure you want to archive this case'
-            ) | translate
-          }}?
-        </h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6">
-              <h6>ID</h6>
-            </div>
-            <div class="col-md-6">
-              <h6>
-                <strong>{{ caseArchiveModel.id }}</strong>
-              </h6>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-              <h6>{{ 'Finished at' | translate }}</h6>
-            </div>
-            <div class="col-md-6">
-              <h6>
-                <strong>
-                  <date-formatter
-                    [date]="caseArchiveModel.doneAt"
-                    [Format]="'datetime'"
-                  ></date-formatter>
-                </strong>
-              </h6>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-              <h6>{{ 'Done by' | translate }}</h6>
-            </div>
-            <div class="col-md-6">
-              <h6>
-                <strong>{{ caseArchiveModel.workerName }}</strong>
-              </h6>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          mat-raised-button
-          color="accent"
-          (click)="submitCaseToArchive()"
-        >
-          {{
-            (caseArchiveModel.isArchived ? 'Unarchive' : 'Archive') | translate
-          }}
-        </button>
-        <button
-          mat-raised-button
-          (click)="frame.hide()"
-        >
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
-    </div>
+<h3 mat-dialog-title>{{
+  (caseArchiveModel.isArchived
+    ? 'Are you sure you want to unarchive this case'
+    : 'Are you sure you want to archive this case') | translate
+  }}?</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-row justify-content-between">
+    <p>ID</p>
+    <strong>{{caseArchiveModel.id}}</strong>
   </div>
+  <div class="d-flex flex-row justify-content-between">
+    <p>{{'Finished at' | translate}}</p>
+    <strong>
+      <date-formatter [date]="caseArchiveModel.doneAt" [Format]="'datetime'"></date-formatter>
+    </strong>
+  </div>
+  <div class="d-flex flex-row justify-content-between">
+    <p>{{ 'Done by' | translate }}</p>
+    <strong>{{caseArchiveModel.workerName}}</strong>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    [color]="caseArchiveModel.isArchived ? 'accent' : 'warn'"
+    (click)="submitCaseToArchive()">
+    {{(caseArchiveModel.isArchived ? 'Unarchive' : 'Archive') | translate}}
+  </button>
+  <button
+    mat-raised-button
+    (click)="hide()">
+    {{'Cancel' | translate}}
+  </button>
 </div>

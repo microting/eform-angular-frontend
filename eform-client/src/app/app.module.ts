@@ -14,7 +14,6 @@ import {
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
 import {faCoffee, fas} from '@fortawesome/free-solid-svg-icons';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {providers} from 'src/app/app.declarations';
 import {AppRoutingModule} from 'src/app/app.routing';
 import {translateConfig} from 'src/app/common/helpers';
@@ -36,6 +35,7 @@ import {
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {AkitaNgDevtools} from '@datorama/akita-ngdevtools';
 import {environment} from 'src/environments/environment';
+// angular material modules
 import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
@@ -44,8 +44,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
-import { MtxGridModule } from '@ng-matero/extensions/grid';
-import { MtxSelectModule } from '@ng-matero/extensions/select';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -63,23 +63,18 @@ import { MtxSelectModule } from '@ng-matero/extensions/select';
     // Libs
     AppRoutingModule,
     BrowserModule,
-    MDBBootstrapModule.forRoot(),
     TranslateModule.forRoot(translateConfig),
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({preventDuplicates: true}),
     DragulaModule.forRoot(),
     NgxMaskModule.forRoot(),
+    MDBBootstrapModule.forRoot(),
     GalleryModule,
     LightboxModule,
     GallerizeModule,
     FontAwesomeModule,
     NgxChartsModule,
-    // Modules
-    PluginsModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    EformSharedModule,
     AkitaNgDevtools,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     SharedPnModule,
@@ -90,8 +85,12 @@ import { MtxSelectModule } from '@ng-matero/extensions/select';
     MatToolbarModule,
     MatMenuModule,
     MatChipsModule,
-    MtxGridModule,
-    MtxSelectModule,
+    MatExpansionModule,
+    // Modules
+    PluginsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    EformSharedModule,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],
