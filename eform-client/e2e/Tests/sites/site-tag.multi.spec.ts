@@ -13,7 +13,7 @@ describe('Site tags', function () {
     await loginPage.login();
     await myEformsPage.Navbar.goToDeviceUsersPage();
     await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
-    await deviceUsersPage.createDeviceUserFromScratch('John', 'Smith');
+    await deviceUsersPage.createDeviceUserFromScratch('John', 'Doe');
     await myEformsPage.Navbar.goToSites();
   });
   it('should create new tag', async () => {
@@ -21,6 +21,7 @@ describe('Site tags', function () {
     await sitesPage.createTag([tagName]);
   });
   it('should assign tag', async () => {
+    await browser.pause(500);
     let site = await sitesPage.getFirstRowObject();
     await site.edit({ tags: [tagName] });
     site = await sitesPage.getFirstRowObject();

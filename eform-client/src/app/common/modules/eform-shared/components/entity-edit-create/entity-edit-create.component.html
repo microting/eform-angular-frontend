@@ -1,0 +1,79 @@
+<eform-new-subheader [title]="title | translate" [forceStaticTitle]="true">
+  <button
+    *ngIf="edit"
+    mat-raised-button
+    color="accent"
+    id="entityUpdateSaveBtn"
+    (click)="updateEntityGroup()"
+    [disabled]="entityGroupEditModel.isLocked && !entityGroupEditModel.isEditable"
+  >
+    {{ 'Save' | translate }}
+  </button>
+  <button
+    *ngIf="!edit"
+    mat-raised-button
+    color="accent"
+    id="entityCreateSaveBtn"
+    (click)="createEntityGroup()"
+    [disabled]="!entityGroupEditModel.name"
+  >
+    {{ 'Create' | translate }}
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    id="entitySearchUpdateCancelBtn"
+    (click)="goBack()"
+  >
+    {{ 'Cancel' | translate }}
+  </button>
+</eform-new-subheader>
+
+<mat-card>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>{{'Name' | translate }}</mat-label>
+      <input
+        matInput
+        [disabled]="entityGroupEditModel.isLocked"
+        [(ngModel)]="entityGroupEditModel.name"
+        required
+        type="text"
+        id="editName">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Description' | translate }}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="entityGroupEditModel.description"
+        [disabled]="entityGroupEditModel.isLocked && !entityGroupEditModel.isEditable"
+        id="editDescription"
+        type="text">
+    </mat-form-field>
+
+    <div class="d-flex justify-content-end">
+      <button
+        id="editEntitySearchImportBtn"
+        mat-icon-button
+        [disabled]="entityGroupEditModel.isLocked && !entityGroupEditModel.isEditable"
+        (click)="openImportEntityGroup()"
+      >
+        <mat-icon>format_list_bulleted</mat-icon>
+      </button>
+      <button
+        id="addSingleEntitySelectableItem"
+        mat-icon-button
+        (click)="addNewEntityItem()"
+        [disabled]="entityGroupEditModel.isLocked && !entityGroupEditModel.isEditable"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <app-entity-list-elements
+      [entityItemModels]="entityGroupEditModel.entityItemModels"
+      (entityItemModelsChanged)="entityGroupEditModel.entityItemModels = $event"
+      (openEditNameModal)="onOpenEditNameModal($event)"
+    >
+    </app-entity-list-elements>
+  </mat-card-content>
+</mat-card>

@@ -1,16 +1,17 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-md" id="resetModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{'Are you sure you want to reset menu to default? The action can not be undone' | translate}}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-footer">
-        <button mdbBtn id="deleteWorkerDeleteBtn" class="btn-danger btn-small-height" (click)="resetMenu()">{{'Reset' | translate}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Cancel' | translate}}</button>
-      </div>
-    </div>
-  </div>
+<h3 mat-dialog-title>{{'Are you sure you want to reset menu to default? The action can not be undone' | translate}}</h3>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="warn"
+    id="deleteWorkerDeleteBtn"
+    (click)="resetMenu()"
+  >
+    {{'Reset' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

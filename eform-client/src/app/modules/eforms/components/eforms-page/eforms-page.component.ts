@@ -1,14 +1,13 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { UserClaimsEnum } from 'src/app/common/const';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Subject, Subscription} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+import {CodeIcon, CsvIcon, ExcelIcon, FileUploadIcon, UserClaimsEnum, WordIcon} from 'src/app/common/const';
 import {
   SavedTagModel,
   TemplateListModel,
   EformPermissionsSimpleModel,
   TemplateDto,
   CommonDictionaryModel,
-  TableHeaderElementModel,
 } from 'src/app/common/models';
 import {
   SecurityGroupEformsPermissionsService,
@@ -16,30 +15,61 @@ import {
   EformTagService,
   AuthService,
 } from 'src/app/common/services';
-import { saveAs } from 'file-saver';
-import { EformsStateService } from '../../store';
-import { AuthStateService } from 'src/app/common/store';
+import {saveAs} from 'file-saver';
+import {EformsStateService} from '../../store';
+import {AuthStateService} from 'src/app/common/store';
+import {Sort} from '@angular/material/sort';
+import {MatIconRegistry} from '@angular/material/icon';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatDialog} from '@angular/material/dialog';
+import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/components';
+import {
+  EformColumnsModalComponent,
+  EformCreateModalComponent,
+  EformDuplicateConfirmModalComponent,
+  EformEditParingModalComponent,
+  EformEditTagsModalComponent,
+  EformRemoveEformModalComponent,
+  EformsBulkImportModalComponent,
+  EformUploadZipModalComponent,
+} from '../../components';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {Overlay} from '@angular/cdk/overlay';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { TranslateService } from '@ngx-translate/core';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-eform-page',
   templateUrl: './eforms-page.component.html',
   styleUrls: ['./eforms-page.component.scss'],
 })
 export class EformsPageComponent implements OnInit, OnDestroy {
-  @ViewChild('modalNewEform', { static: true }) newEformModal;
-  @ViewChild('modalCasesColumns', { static: true }) modalCasesColumnsModal;
-  @ViewChild('modalParing', { static: true }) modalPairing;
-  @ViewChild('modalEditTags', { static: true }) modalEditTags;
-  @ViewChild('modalRemoveEform', { static: true }) modalRemoveEform;
-  @ViewChild('modalUploadZip', { static: true }) modalUploadZip;
-  @ViewChild('modalEformsImport', { static: true }) modalEformsImport;
-  @ViewChild('modalTags', { static: true }) modalTags;
-  @ViewChild('duplicateConfirm', { static: true }) duplicateConfirm;
+  @ViewChild('modalTags', {static: true}) modalTags: EformsTagsComponent;
 
   searchSubject = new Subject();
   templateListModel: TemplateListModel = new TemplateListModel();
   eformPermissionsSimpleModel: Array<EformPermissionsSimpleModel> = [];
   availableTags: Array<CommonDictionaryModel> = [];
+
+  eformsBulkImportModalAfterClosedSub$: Subscription;
+  downloadCSVFileSub$: Subscription;
+  downloadEformXMLSub$: Subscription;
+  getEformsSimplePermissionsSub$: Subscription;
+  getSavedTagsSub$: Subscription;
+  addSavedTagSub$: Subscription;
+  deleteSavedTagSub$: Subscription;
+  getAvailableTagsSub$: Subscription;
+  loadAllTemplatesSub$: Subscription;
+  searchSubjectSub$: Subscription;
+  eformCreateModalComponentAfterClosedSub$: Subscription;
+  eformDuplicateConfirmModalComponentAfterClosedSub$: Subscription;
+  eformEditTagsModalComponentAfterClosedSub$: Subscription;
+  eformUploadZipModalComponentAfterClosedSub$: Subscription;
+  eformColumnsModalComponentAfterClosedSub$: Subscription;
+  eformEditParingModalComponentAfterClosedSub$: Subscription;
+  eformRemoveEformModalComponentAfterClosedSub$: Subscription;
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -49,24 +79,25 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     return UserClaimsEnum;
   }
 
-  tableHeaders: TableHeaderElementModel[] = [
-    { name: 'Id', elementId: 'idSort', sortable: true },
-    { name: 'CreatedAt', elementId: 'createdAtSort', sortable: true },
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true, type: 'number', class: 'eform-id-header'},
+    {header: this.translateService.stream('Server date'), sortProp: {id: 'CreatedAt'}, field: 'createdAt', sortable: true, class: 'eform-created-at-header'},
     {
-      name: 'Text',
-      visibleName: 'Label',
-      elementId: 'nameEFormSort',
+      header: this.translateService.stream('Label'),
+      field: 'label',
       sortable: true,
+      sortProp: {id: 'Text'},
+      class: 'eform-name-header',
     },
     {
-      name: 'Description',
-      visibleName: 'Description',
-      elementId: 'descriptionEFormSort',
+      header: this.translateService.stream('Description'),
+      field: 'description',
+      sortProp: {id: 'Description'},
       sortable: true,
     },
-    { name: 'Tags', elementId: 'tagsEForm', sortable: false },
-    { name: 'Pairing', elementId: 'pairingEForm', sortable: false },
-    { name: 'Actions', elementId: '', sortable: false },
+    {header: this.translateService.stream('Tags'), field: 'tags'},
+    {header: this.translateService.stream('Pairing'), field: 'pairingUpdate'},
+    {header: this.translateService.stream('Actions'), field: 'actions'},
   ];
 
   constructor(
@@ -75,9 +106,19 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
     public eformsStateService: EformsStateService,
-    public authStateService: AuthStateService
+    public authStateService: AuthStateService,
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer,
+    public dialog: MatDialog,
+    private overlay: Overlay,
+    private translateService: TranslateService,
   ) {
-    this.searchSubject.pipe(debounceTime(500)).subscribe((val: string) => {
+    iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(WordIcon));
+    iconRegistry.addSvgIconLiteral('file-code', sanitizer.bypassSecurityTrustHtml(CodeIcon));
+    iconRegistry.addSvgIconLiteral('file-csv', sanitizer.bypassSecurityTrustHtml(CsvIcon));
+    iconRegistry.addSvgIconLiteral('file-upload', sanitizer.bypassSecurityTrustHtml(FileUploadIcon));
+    iconRegistry.addSvgIconLiteral('file-excel', sanitizer.bypassSecurityTrustHtml(ExcelIcon));
+    this.searchSubjectSub$ = this.searchSubject.pipe(debounceTime(500)).subscribe((val: string) => {
       this.eformsStateService.updateNameFilter(val);
       this.loadAllTags();
     });
@@ -89,36 +130,39 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.searchSubject.unsubscribe();
   }
 
   loadAllTemplates() {
-    this.eformsStateService.loadAllTemplates().subscribe((operation) => {
-      if (operation && operation.success) {
-        this.templateListModel = operation.model;
-      }
-    });
+    this.loadAllTemplatesSub$ = this.eformsStateService.loadAllTemplates()
+      .subscribe((operation) => {
+        if (operation && operation.success) {
+          this.templateListModel = operation.model;
+        }
+      });
   }
 
   loadAllTags() {
     // load tags after call load templates (not know why)
-    if (this.userClaims.eformsReadTags) {
-      this.eFormTagService.getAvailableTags().subscribe((data) => {
-        if (data && data.success) {
-          this.availableTags = data.model;
-          this.loadSelectedUserTags();
-        }
-      });
-    } else {
-      this.loadAllTemplates();
-    }
+    //if (this.userClaims.eformsReadTags) {
+      //debugger;
+      this.getAvailableTagsSub$ = this.eFormTagService.getAvailableTags()
+        .subscribe((data) => {
+          if (data && data.success) {
+            this.availableTags = data.model;
+            this.loadSelectedUserTags();
+          }
+        });
+    // } else {
+    //   debugger;
+    //   this.loadAllTemplates();
+    // }
   }
 
   saveTag(e: any) {
     const savedTagModel = new SavedTagModel();
     savedTagModel.tagId = e.id;
     savedTagModel.tagName = e.name;
-    this.eFormTagService.addSavedTag(savedTagModel).subscribe((data) => {
+    this.addSavedTagSub$ = this.eFormTagService.addSavedTag(savedTagModel).subscribe((data) => {
       if (data && data.success) {
         this.eformsStateService.addOrRemoveTagIds(e.id);
         this.loadAllTemplates();
@@ -127,7 +171,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   removeSavedTag(e: any) {
-    this.eFormTagService.deleteSavedTag(e.value.id).subscribe((data) => {
+    this.deleteSavedTagSub$ = this.eFormTagService.deleteSavedTag(e.value.id).subscribe((data) => {
       if (data && data.success) {
         this.eformsStateService.addOrRemoveTagIds(e.value.id);
         this.loadAllTemplates();
@@ -136,7 +180,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   loadSelectedUserTags() {
-    this.eFormTagService.getSavedTags().subscribe((data) => {
+    this.getSavedTagsSub$ = this.eFormTagService.getSavedTags().subscribe((data) => {
       if (data && data.success) {
         if (data.model.tagList.length > 0) {
           this.eformsStateService.updateTagIds(
@@ -149,7 +193,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   loadEformsPermissions() {
-    this.securityGroupEformsService
+    this.getEformsSimplePermissionsSub$ = this.securityGroupEformsService
       .getEformsSimplePermissions()
       .subscribe((data) => {
         if (data && data.success) {
@@ -164,35 +208,44 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     this.searchSubject.next(label);
   }
 
-  sortTable(sort: string) {
-    this.eformsStateService.onSortTable(sort);
+  sortTable(sort: Sort) {
+    this.eformsStateService.onSortTable(sort.active);
     this.loadAllTemplates();
   }
 
   openNewEformModal() {
-    this.newEformModal.show();
+    this.eformCreateModalComponentAfterClosedSub$ = this.dialog.open(EformCreateModalComponent, {
+      ...dialogConfigHelper(this.overlay, this.availableTags),
+      minWidth: 400,
+    }).afterClosed().subscribe(data => data ? this.loadAllTags() : undefined);
   }
 
   openEditColumnsModal(templateDto: TemplateDto) {
-    this.modalCasesColumnsModal.show(templateDto);
+    this.eformColumnsModalComponentAfterClosedSub$ = this.dialog.open(EformColumnsModalComponent, {
+      ...dialogConfigHelper(this.overlay, templateDto), minWidth: 400,
+    }).afterClosed().subscribe(data => data ? undefined : undefined);
   }
 
   openEformDeleteModal(templateDto: TemplateDto) {
-    this.modalRemoveEform.show(templateDto);
+    this.eformRemoveEformModalComponentAfterClosedSub$ = this.dialog.open(EformRemoveEformModalComponent, {
+      ...dialogConfigHelper(this.overlay, templateDto),
+    }).afterClosed().subscribe(data => data ? this.loadAllTemplates() : undefined);
   }
 
   uploadZipFile(templateDto: TemplateDto) {
-    this.modalUploadZip.show(templateDto);
+    this.eformUploadZipModalComponentAfterClosedSub$ = this.dialog.open(EformUploadZipModalComponent, {
+      ...dialogConfigHelper(this.overlay, templateDto), minWidth: 400,
+    }).afterClosed().subscribe(data => data ? undefined : undefined);
   }
 
   downloadItem(itemName: string, templateId: number) {
     if (itemName === 'XML') {
-      this.eFormService.downloadEformXML(templateId).subscribe((data) => {
+      this.downloadEformXMLSub$ = this.eFormService.downloadEformXML(templateId).subscribe((data) => {
         const blob = new Blob([data]);
         saveAs(blob, `eForm_${templateId}.xml`);
       });
     } else {
-      this.eFormService.downloadCSVFile(templateId).subscribe((data) => {
+      this.downloadCSVFileSub$ = this.eFormService.downloadCSVFile(templateId).subscribe((data) => {
         const blob = new Blob([data]);
         saveAs(blob, `eForm_${templateId}.csv`);
       });
@@ -200,15 +253,23 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   openPairingModal(templateDto: TemplateDto) {
-    this.modalPairing.show(templateDto);
+    this.eformEditParingModalComponentAfterClosedSub$ = this.dialog.open(EformEditParingModalComponent, {
+      ...dialogConfigHelper(this.overlay, templateDto), minWidth: 600,
+    }).afterClosed().subscribe(data => data ? this.loadAllTemplates() : undefined);
   }
 
   openEditTagsModal(templateDto: TemplateDto) {
-    this.modalEditTags.show(templateDto);
+    this.eformEditTagsModalComponentAfterClosedSub$ = this.dialog.open(EformEditTagsModalComponent, {
+      ...dialogConfigHelper(this.overlay, {availableTags: this.availableTags, selectedTemplate: templateDto}),
+      minWidth: 400,
+    }).afterClosed().subscribe(data => data ? this.loadAllTemplates() : undefined);
   }
 
   openEformsImportModal() {
-    this.modalEformsImport.show();
+    this.eformsBulkImportModalAfterClosedSub$ = this.dialog.open(EformsBulkImportModalComponent, {
+      ...dialogConfigHelper(this.overlay, this.availableTags),
+      minWidth: 400,
+    }).afterClosed().subscribe(data => data ? this.loadAllTags() : undefined);
   }
 
   checkEformPermissions(templateId: number, permissionIndex: number) {
@@ -229,6 +290,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   openDuplicateConfirmModal(templateDto: TemplateDto) {
-    this.duplicateConfirm.show(templateDto);
+    this.eformDuplicateConfirmModalComponentAfterClosedSub$ = this.dialog.open(EformDuplicateConfirmModalComponent, {
+      ...dialogConfigHelper(this.overlay, templateDto),
+    }).afterClosed().subscribe(data => data ? this.loadAllTemplates() : undefined);
   }
 }

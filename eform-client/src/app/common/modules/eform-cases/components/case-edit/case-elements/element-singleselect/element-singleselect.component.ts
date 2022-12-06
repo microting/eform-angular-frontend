@@ -1,9 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {Component, Input} from '@angular/core';
 import {FieldValueDto} from 'src/app/common/models';
-import {CommonDictionaryTextModel} from 'src/app/common/models/common';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'element-singleselect',
   templateUrl: './element-singleselect.component.html',
   styleUrls: ['./element-singleselect.component.scss']

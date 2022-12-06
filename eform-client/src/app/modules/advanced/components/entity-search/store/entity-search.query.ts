@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import { EntitySearchStore, EntitySearchState } from './entity-search.store';
-import { PaginationModel, SortModel } from 'src/app/common/models';
+import { PaginationModel } from 'src/app/common/models';
 
 @Injectable({ providedIn: 'root' })
 export class EntitySearchQuery extends Query<EntitySearchState> {
@@ -23,7 +23,10 @@ export class EntitySearchQuery extends Query<EntitySearchState> {
         state.pagination.offset
       )
   );
-  selectSort$ = this.select(
-    (state) => new SortModel(state.pagination.sort, state.pagination.isSortDsc)
-  );
+  // selectPageIndex$ = this.select((state) => Math.floor(state.pagination.offset / state.pagination.pageSize));
+  // selectSort$ = this.select(
+  //   (state) => new SortModel(state.pagination.sort, state.pagination.isSortDsc)
+  // );
+  selectActiveSort$ = this.select((state) => state.pagination.sort);
+  selectActiveSortDirection$ = this.select((state) => state.pagination.isSortDsc ? 'desc' : 'asc');
 }

@@ -33,16 +33,16 @@ namespace eFormAPI.Web.Services
     public class LocalizationService : ILocalizationService
     {
         private readonly IStringLocalizer _localizer;
- 
+
         public LocalizationService(IStringLocalizerFactory factory)
         {
             _localizer = factory.Create("SharedResource",
                 Assembly.GetEntryAssembly().FullName);
         }
- 
+
         public string GetString(string key)
         {
-            if (key.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(key))
             {
                 return key;
             }
@@ -53,7 +53,7 @@ namespace eFormAPI.Web.Services
         public string GetStringWithFormat(string format,
             params object[] args)
         {
-            if (format.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(format))
             {
                 return format;
             }

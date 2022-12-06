@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {CommonDictionaryModel} from '../../../../../common/models/common';
+import {Component, Inject, OnDestroy, OnInit,} from '@angular/core';
+import {CommonDictionaryModel, EmailRecipientCreateModel, EmailRecipientsCreateModel} from 'src/app/common/models';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {EmailRecipientsService} from '../../../../../common/services/email-recipients';
-import {EmailRecipientCreateModel, EmailRecipientsCreateModel} from '../../../../../common/models/email-recipients';
+import {EmailRecipientsService} from 'src/app/common/services';
 import {ToastrService} from 'ngx-toastr';
 import {TranslateService} from '@ngx-translate/core';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
@@ -14,24 +14,24 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./email-recipients-new.component.scss']
 })
 export class EmailRecipientsNewComponent implements OnInit, OnDestroy {
-  @ViewChild('frame') frame;
-  @Input() availableTags: CommonDictionaryModel[] = [];
-  @Output() emailRecipientsCreated: EventEmitter<void> = new EventEmitter<void>();
   emailRecipientsCreateModel: EmailRecipientsCreateModel = new EmailRecipientsCreateModel();
   createEmailRecipients$: Subscription;
   rawTextareaData = '';
 
-
-  constructor(private emailRecipientsService: EmailRecipientsService,
-              private toastrService: ToastrService,
-              private translateService: TranslateService) {
-  }
-
-  show() {
-    this.frame.show();
+  constructor(
+    private emailRecipientsService: EmailRecipientsService,
+    private toastrService: ToastrService,
+    private translateService: TranslateService,
+    public dialogRef: MatDialogRef<EmailRecipientsNewComponent>,
+    @Inject(MAT_DIALOG_DATA) public availableTags: CommonDictionaryModel[] = [],
+  ) {
   }
 
   ngOnInit() {
+  }
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
   createEmailRecipients(textAreaData: HTMLTextAreaElement) {
@@ -52,15 +52,11 @@ export class EmailRecipientsNewComponent implements OnInit, OnDestroy {
       this.createEmailRecipients$ = this.emailRecipientsService.createEmailRecipients({
         ...this.emailRecipientsCreateModel,
         emailRecipientsList: emailRecipients
-      })
-        .subscribe((data) => {
-          if (data && data.success) {
-            this.frame.hide();
-            this.rawTextareaData = '';
-            this.emailRecipientsCreateModel = new EmailRecipientsCreateModel();
-            this.emailRecipientsCreated.emit();
-          }
-        });
+      }).subscribe((data) => {
+        if (data && data.success) {
+          this.hide(true);
+        }
+      });
     } else {
       this.toastrService.error(this.translateService.instant('Email/name text area should have at least one email/name pair'));
     }

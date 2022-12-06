@@ -10,7 +10,7 @@ describe(' Navigation menu - Edit item', function () {
     await myEformsPage.Navbar.goToMenuEditorPage();
   });
   it('element must be created from custom link with security group', async () => {
-    const count = (await navigationMenuPage.menuItemsChilds()).length;
+    const count = (await navigationMenuPage.menuItems()).length;
     await navigationMenuPage.collapseTemplates(1);
     const customLink = {
       securityGroups: ['eForm admins'],
@@ -18,8 +18,11 @@ describe(' Navigation menu - Edit item', function () {
       translations: ['test1', 'test2', 'test3']
     };
     await navigationMenuPage.createCustomLink(customLink);
-    expect(count + 1).eq((await navigationMenuPage.menuItemsChilds()).length);
+    await browser.pause(500);
+    expect(count + 1).eq((await navigationMenuPage.menuItems()).length);
+    await browser.pause(500);
     await navigationMenuPage.clickSaveMenuBtn();
+    await browser.pause(500);
   });
   it('link with security group must be updated', async () => {
     const customLink = {
@@ -27,11 +30,15 @@ describe(' Navigation menu - Edit item', function () {
       link: 'linkTest00',
       translations: ['Test11', 'Test22', 'Test31']
     };
-    await navigationMenuPage.editCustomLink(customLink, (await navigationMenuPage.menuItemsChilds()).length - 1);
+    await navigationMenuPage.collapseTemplates(1);
+    await navigationMenuPage.editCustomLink(customLink, (await navigationMenuPage.menuItems()).length - 1);
+    await browser.pause(500);
 
     await navigationMenuPage.clickSaveMenuBtn();
+    await browser.pause(500);
 
-    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItemsChilds()).length - 1);
+    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItems()).length - 1);
+    await browser.pause(500);
     for (const securityGroup of customLink.securityGroups) {
       const i = customLink.securityGroups.indexOf(securityGroup);
       expect(await (await navigationMenuPage.securityGroupsValue())[i].getText(), 'SecurityGroup save is incorrect').eq(securityGroup);
@@ -40,34 +47,42 @@ describe(' Navigation menu - Edit item', function () {
     customLink.translations.forEach(async (translation, i) => {
       if (translation) {
         expect(await (await navigationMenuPage.editItemTranslation(
-          (await navigationMenuPage.menuItemsChilds()).length - 1, 0, i)).getValue(),
+          (await navigationMenuPage.menuItems()).length - 1, 0, i)).getValue(),
           `Translation field [${i}] save is incorrect`).eq(translation);
       }
     });
     await (await navigationMenuPage.editItemSaveBtn()).click();
+    await browser.pause(500);
 
     await navigationMenuPage.resetMenu();
+    await browser.pause(500);
   });
   it('element must be created from custom dropdown with security group', async () => {
-    const count = (await navigationMenuPage.menuItemsChilds()).length;
+    const count = (await navigationMenuPage.menuItems()).length;
     const dropdown = {
       securityGroups: ['eForm admins'],
       translations: ['test1', 'test2', 'test3']
     };
+    await navigationMenuPage.collapseTemplates(1);
     await navigationMenuPage.createCustomDropdown(dropdown);
-    expect(count + 1).eq((await navigationMenuPage.menuItemsChilds()).length);
+    await browser.pause(500);
+    expect(count + 1).eq((await navigationMenuPage.menuItems()).length);
     await navigationMenuPage.clickSaveMenuBtn();
+    await browser.pause(500);
   });
   it('dropdown with security group must be updated', async () => {
     const dropdown = {
       securityGroups: ['eForm users'],
       translations: ['Test11', 'Test22', 'Test31']
     };
-    await navigationMenuPage.editCustomDropdown(dropdown, (await navigationMenuPage.menuItemsChilds()).length - 1);
+    await navigationMenuPage.editCustomDropdown(dropdown, (await navigationMenuPage.menuItems()).length - 1);
+    await browser.pause(500);
 
     await navigationMenuPage.clickSaveMenuBtn();
+    await browser.pause(500);
 
-    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItemsChilds()).length - 1);
+    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItems()).length - 1);
+    await browser.pause(500);
     for (const securityGroup of dropdown.securityGroups) {
       const i = dropdown.securityGroups.indexOf(securityGroup);
       expect(await (await navigationMenuPage.securityGroupsValue())[i].getText(), 'SecurityGroup save is incorrect').eq(securityGroup);
@@ -76,20 +91,24 @@ describe(' Navigation menu - Edit item', function () {
       const i = dropdown.translations.indexOf(translation);
       if (translation) {
         expect(await (await navigationMenuPage.editItemTranslation(
-          (await navigationMenuPage.menuItemsChilds()).length - 1, 0, i)).getValue(),
+          (await navigationMenuPage.menuItems()).length - 1, 0, i)).getValue(),
           `Translation field [${i}] save is incorrect`).eq(translation);
       }
     }
     await (await navigationMenuPage.editItemSaveBtn()).click();
+    await browser.pause(500);
     await navigationMenuPage.resetMenu();
+    await browser.pause(500);
   });
   it('element must be moved from templates to list', async () => {
-    const count = (await navigationMenuPage.menuItemsChilds()).length;
+    const count = (await navigationMenuPage.menuItems()).length;
     await navigationMenuPage.collapseTemplates(0);
     await navigationMenuPage.createMenuItemFromTemplate(0);
+    await browser.pause(500);
 
-    expect(count + 1).eq((await navigationMenuPage.menuItemsChilds()).length);
+    expect(count + 1).eq((await navigationMenuPage.menuItems()).length);
     await navigationMenuPage.clickSaveMenuBtn();
+    await browser.pause(500);
     await navigationMenuPage.collapseTemplates(0);
   });
   it('element must be updated on link field', async() => {
@@ -99,9 +118,12 @@ describe(' Navigation menu - Edit item', function () {
       translations: []
     };
     await navigationMenuPage.editTemplateItem(data, 0);
+    await browser.pause(500);
     await navigationMenuPage.openOnEditCreatedMenuItem(0);
+    await browser.pause(500);
     expect(await (await navigationMenuPage.editLinkInput()).getValue(), 'Link save is incorrect').eq(data.link);
     await (await navigationMenuPage.editItemSaveBtn()).click();
+    await browser.pause(500);
     });
   it('element must be updated on translation fields', async() => {
     const data = {
@@ -109,8 +131,10 @@ describe(' Navigation menu - Edit item', function () {
       translations: ['translate1', 'translate21', 'translate0']
     };
     await navigationMenuPage.editTemplateItem(data, 0);
+    await browser.pause(500);
 
     await navigationMenuPage.openOnEditCreatedMenuItem(0);
+    await browser.pause(500);
 
     for (const translation of data.translations) {
       const i = data.translations.indexOf(translation);
@@ -120,6 +144,8 @@ describe(' Navigation menu - Edit item', function () {
       }
     }
     await (await navigationMenuPage.editItemSaveBtn()).click();
+    await browser.pause(500);
     await navigationMenuPage.resetMenu();
+    await browser.pause(500);
   });
 });

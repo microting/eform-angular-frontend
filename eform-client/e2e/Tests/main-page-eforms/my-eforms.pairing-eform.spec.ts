@@ -27,19 +27,33 @@ describe('Main page', function () {
     await myEformsPage.createNewEform('test Eform');
   });
   it('should pair several device users', async () => {
+    console.log('Pairing several device users');
     await (await myEformsPage.idSortBtn()).click();
+    console.log('Clicking on eform sort id');
     const spinnerAnimation = await $('#spinner-animation');
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     await browser.pause(1000);
-    await (await myEformsPage.getFirstMyEformsRowObj()).pair(folders[0], users);
-    await (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
+    console.log('Getting first eform');
+    let eform = await myEformsPage.getFirstMyEformsRowObj();
+    console.log('Got first eform');
+    console.log('Pairing eform');
+    await eform.pair(folders[0], users);
+    console.log('Paired eform');
+    //await (await myEformsPage.getFirstMyEformsRowObj()).pair(folders[0], users);
+    console.log('Getting first eform');
+    eform = await myEformsPage.getFirstMyEformsRowObj();
+    console.log('Got first eform');
+    console.log('Checking if eform is paired');
+    await eform.editPairEformBtn.click();
+    //await (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    await (await myEformsPage.cancelParingBtn()).waitForDisplayed({ timeout: 40000 });
     await browser.pause(1000);
+    await (await myEformsPage.cancelParingBtn()).waitForDisplayed({ timeout: 40000 });
     expect(
-      await (await $('tree-node .node-content-wrapper-active')).getText(),
+      await (await $('mat-tree-node > .selected-folder > div')).getText(),
       'Wrong folder selected'
     ).contain(`${folders[0].name}`);
+    //const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
     const siteIds = await $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
       const index = users.findIndex(
@@ -47,7 +61,7 @@ describe('Main page', function () {
       );
       if (index !== -1) {
         expect(
-          await (await $(`#checkbox${users[index].siteId}`)).getValue(),
+          await (await $(`#mat-checkbox-${index}`)).getValue(),
           `User ${users[index].siteId} not paired`
         ).eq('true');
       }
@@ -57,22 +71,24 @@ describe('Main page', function () {
   });
   it('should unpair one', async () => {
     await (await myEformsPage.getFirstMyEformsRowObj()).unPair([users[1]]);
+    await browser.pause(1000);
     const spinnerAnimation = await $('#spinner-animation');
     (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    await (await $('#microtingId')).waitForDisplayed({ timeout: 40000 });
-    await browser.pause(1000);
+    //await (await $('td.cdk-column-siteUId > mtx-grid-cell > span')).waitForDisplayed({ timeout: 40000 });
+    //await browser.pause(1000);
+    //const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
     const siteIds = await $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].getText())) {
         expect(
-          await (await $(`#checkbox${users[1].siteId}`)).getValue(),
+          await (await $(`#checkbox${users[1].siteId}`)).getAttribute('ng-reflect-checked'),
           `User ${users[1].siteId} paired`
         ).eq('false');
       }
       if (users[0].siteId === +siteIds[i].getText()) {
         expect(
-          await (await $(`#checkbox${users[0].siteId}`)).getValue(),
+          await (await $(`#checkbox${users[0].siteId}`)).getAttribute('ng-reflect-checked'),
           `User ${users[0].siteId} not paired`
         ).eq('true');
       }
@@ -80,6 +96,9 @@ describe('Main page', function () {
     await (await myEformsPage.cancelParingBtn()).click();
   });
   after(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToMyEForms();
     await (await myEformsPage.getEformsRowObjByNameEForm('test Eform')).deleteEForm();
     await myEformsPage.Navbar.goToDeviceUsersPage();
     for (let i = 0; i < users.length; i++) {

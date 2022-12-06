@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit,} from '@angular/core';
 import {SiteNameDto} from 'src/app/common/models/dto';
 import {SitesService} from 'src/app/common/services/advanced';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-site-delete',
@@ -8,24 +9,23 @@ import {SitesService} from 'src/app/common/services/advanced';
   styleUrls: ['./site-delete.component.scss']
 })
 export class SiteDeleteComponent implements OnInit {
-  @Input() siteNameDto: SiteNameDto = new SiteNameDto();
-  @Output() onSiteRemoved: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame', { static: true }) frame;
-
-  constructor(private sitesService: SitesService) { }
+  constructor(
+    private sitesService: SitesService,
+    public dialogRef: MatDialogRef<SiteDeleteComponent>,
+    @Inject(MAT_DIALOG_DATA) public siteNameDto: SiteNameDto = new SiteNameDto()
+  ) { }
 
   ngOnInit() {
   }
 
-  show() {
-    this.frame.show();
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
   deleteSingle() {
     this.sitesService.deleteSingleSite(this.siteNameDto.id).subscribe(operation => {
       if (operation && operation.success) {
-        this.onSiteRemoved.emit();
-        this.frame.hide();
+        this.hide(true);
       }
     });
   }

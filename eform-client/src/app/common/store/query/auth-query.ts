@@ -17,13 +17,10 @@ export class AuthQuery extends Query<AuthState> {
   }
 
   selectDarkTheme$ = this.select((state) => state.currentUser.darkTheme);
-  // selectCurrentUserClaims$ = this.select((state) => state.currentUser.claims);
-  selectFullName$ = this.select(
-    (store) => `${store.currentUser.firstName} ${store.currentUser.lastName}`
-  );
-  selectIsAuth$ = this.select(
-    (store) => !!store.token.accessToken
-  );
+  selectCurrentUserClaims$ = this.select((state) => state.currentUser.claims);
+  selectFullName$ = this.select((store) => `${store.currentUser.firstName} ${store.currentUser.lastName}`);
+  selectIsAuth$ = this.select((store) => !!store.token.accessToken);
+  selectCurrentUserLocale$ = this.select((state) => state.currentUser.locale);
 
   get isAuth() {
     return !!this.getValue().token.accessToken;

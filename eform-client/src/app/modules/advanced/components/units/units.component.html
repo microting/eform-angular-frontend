@@ -1,160 +1,81 @@
-<eform-subheader>
-  <div class="p-3">
-    <!--    <button-->
-    <!--      class="btn btn-neutral" id="unitMoveBtn" *ngIf="userClaims.workersCreate"-->
-    <!--      (click)="openMoveModal()">{{ 'Move unit' | translate }}</button>-->
-    <button
-      mdbBtn
-      class="btn-success btn-small-height"
-      id="unitCreateBtn"
-      *ngIf="userClaims.workersCreate"
-      (click)="openCreateModal()"
-    >
-      {{ 'Create unit' | translate }}
-    </button>
-  </div>
-</eform-subheader>
+<eform-new-subheader>
+  <button
+    mat-raised-button
+    color="accent"
+    id="unitCreateBtn"
+    *ngIf="userClaims.workersCreate"
+    (click)="openCreateModal()"
+  >
+    {{ 'Create unit' | translate }}
+  </button>
+</eform-new-subheader>
 <br />
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<div class="container-fluid">
-  <div class="row p-1 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
+
+
+<mtx-grid
+  [data]="unitModels"
+  [columns]="tableHeaders"
+  [cellTemplate]="{
+  otpCode: otpCodeTpl,
+  syncDelay: syncDelayTpl,
+  syncDialog: syncDialogTpl,
+  push: pushTpl,
+  actions: actionsTpl}"
+  [showPaginator]="false"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showToolbar]="false"
+  [showColumnMenuButton]="false">
+</mtx-grid>
+<ng-template #otpCodeTpl let-row>
+  <ng-container *ngIf="row.customerNo && row.otpCode">
+    <strong>{{ row.customerNo }} / {{ row.otpCode }}</strong>
+  </ng-container>
+  <ng-container *ngIf="row.otpCode == 0">
+    <button
+      mat-icon-button
+      color="warn"
+      *ngIf="userClaims.unitsUpdate"
+      matTooltip="{{ 'Get OTP code' | translate }}"
+      (click)="openModalUnitsOtpCode(row)"
     >
-      <thead table-headers [tableHeaders]="tableHeaders"></thead>
-      <tbody>
-        <tr *ngFor="let unitModel of unitModels; let i = index">
-          <td>
-            {{ unitModel.microtingUid }}
-          </td>
-          <td>
-            {{ unitModel.siteName }}
-          </td>
-          <td>
-            {{ unitModel.os }}
-          </td>
-          <td>
-            {{ unitModel.osVersion }}
-          </td>
-          <td>
-            {{ unitModel.model }}
-          </td>
-          <td>
-            {{ unitModel.inSightVersion }}
-          </td>
-          <td>
-            {{ unitModel.eFormVersion }}
-          </td>
-          <td>
-            <div class="d-flex flex-row justify-content-center">
-              <div *ngIf="unitModel.otpCode != 0">
-                <strong
-                  >{{ unitModel.customerNo }} / {{ unitModel.otpCode }}</strong
-                >
-              </div>
-              <button
-                *ngIf="unitModel.otpCode == 0 && userClaims.unitsUpdate"
-                class="btn btn-danger btn-icon mb-2"
-                mdbTooltip="{{ 'Get OTP code' | translate }}"
-                (click)="openModalUnitsOtpCode(unitModel)"
-              >
-                <fa-icon icon="key" size="lg" [fixedWidth]="true"></fa-icon>
-              </button>
-            </div>
-          </td>
-          <td>
-            <button
-              mdbBtn
-              *ngIf="!unitModel.syncDelayEnabled"
-              mdbTooltip="{{ 'Activate sync delay' | translate }}"
-              class="btn-accent text-black-50 btn-icon mb-2"
-            >
-              <fa-icon icon="toggle-on"></fa-icon>
-            </button>
-            <button
-              mdbBtn
-              *ngIf="unitModel.syncDelayEnabled"
-              mdbTooltip="{{ 'Deactivate sync delay' | translate }}"
-              class="btn-success text-white btn-icon mb-2"
-            >
-              <fa-icon icon="toggle-off"></fa-icon>
-            </button>
-          </td>
-          <td>
-            <button
-              mdbBtn
-              *ngIf="!unitModel.syncDialog"
-              mdbTooltip="{{ 'Activate sync dialog' | translate }}"
-              class="btn-accent text-black-50 btn-icon mb-2"
-            >
-              <fa-icon icon="toggle-on"></fa-icon>
-            </button>
-            <button
-              mdbBtn
-              *ngIf="unitModel.syncDialog"
-              mdbTooltip="{{ 'Deactivate sync dialog' | translate }}"
-              class="btn-success text-white btn-icon mb-2"
-            >
-              <fa-icon icon="toggle-off"></fa-icon>
-            </button>
-          </td>
-          <td>
-            <button
-              mdbBtn
-              *ngIf="!unitModel.pushEnabled"
-              mdbTooltip="{{ 'Activate push' | translate }}"
-              class="btn-accent text-black-50 btn-icon mb-2"
-            >
-              <fa-icon icon="toggle-on"></fa-icon>
-            </button>
-            <button
-              mdbBtn
-              *ngIf="unitModel.pushEnabled"
-              mdbTooltip="{{ 'Deactivate push' | translate }}"
-              class="btn-success text-white btn-icon mb-2"
-            >
-              <fa-icon icon="toggle-off"></fa-icon>
-            </button>
-          </td>
-          <td>
-            <button
-              mdbBtn
-              class="btn-danger btn-icon mb-2 btn-small-height"
-              id="moveBtn_{{ i }}"
-              *ngIf="userClaims.sitesDelete && !unitModel.isLocked"
-              mdbTooltip="{{ 'Move unit' | translate }}"
-              (click)="openMoveModal(unitModel)"
-            >
-              <fa-icon icon="dolly" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <!--          <button mdbBtn class="btn-danger btn-icon mb-2 " id="deleteBtn_{{i}}" *ngIf="userClaims.sitesDelete"-->
-            <!--                  mdbTooltip="{{'Delete site' | translate}}"-->
-            <!--                  (click)="openDeleteModal(siteDto)">-->
-            <!--            <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>-->
-            <!--          </button>-->
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <mat-icon>key</mat-icon>
+    </button>
+  </ng-container>
+</ng-template>
+<ng-template #syncDelayTpl let-row>
+  <mat-slide-toggle
+    [checked]="row.syncDelayEnabled"
+    matTooltip="{{(row.syncDelayEnabled ? 'Deactivate ' : 'Activate ') + 'sync delay' | translate}}"
+    disabled="true"
+  ></mat-slide-toggle>
+</ng-template>
+<ng-template #syncDialogTpl let-row>
+  <mat-slide-toggle
+    [checked]="row.syncDialog"
+    matTooltip="{{(row.syncDialog ? 'Deactivate ' : 'Activate ') + 'sync dialog' | translate}}"
+    disabled="true"
+  ></mat-slide-toggle>
+</ng-template>
+<ng-template #pushTpl let-row>
+  <mat-slide-toggle
+    [checked]="row.pushEnabled"
+    matTooltip="{{(row.syncDialog ? 'Deactivate ' : 'Activate ') + 'push' | translate}}"
+    disabled="true"
+  ></mat-slide-toggle>
+</ng-template>
+<ng-template #actionsTpl let-row let-index="index">
+  <div>
+    <button
+      mat-icon-button
+      color="warn"
+      id="moveBtn_{{ index }}"
+      *ngIf="userClaims.sitesDelete && !row.isLocked"
+      matTooltip="{{ 'Move unit' | translate }}"
+      (click)="openMoveModal(row)"
+    >
+      <mat-icon>trolley</mat-icon>
+    </button>
   </div>
-</div>
-
-<app-unit-create
-  (UnitCreated)="loadAllUnits()"
-  #modalUnitsCreate
-></app-unit-create>
-
-<app-unit-move
-  (UnitMoved)="loadAllUnits()"
-  [selectedUnitModel]="selectedUnitModel"
-  #modalUnitsMove
-></app-unit-move>
-<app-units-otp-code
-  (onUnitOtpRewoked)="loadAllUnits()"
-  [selectedUnitModel]="selectedUnitModel"
-  #modalUnitsOtpCode
-></app-units-otp-code>
+</ng-template>

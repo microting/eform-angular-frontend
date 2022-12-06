@@ -1,3 +1,4 @@
+const path = require("path");
 exports.config = {
   runner: 'local',
   path: '/',
@@ -13,7 +14,7 @@ exports.config = {
   specs: [
     'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
     'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
-    'e2e/Tests/profile-settings/profile-settings.language.spect.ts',
+    'e2e/Tests/profile-settings/profile-settings.language.spec.ts',
     'e2e/Tests/user-administration/user-administration.name-change.spec.ts',
   ],
   suites: {
@@ -251,14 +252,14 @@ exports.config = {
 
     // get current test title and clean it, to use it as file name
     const filename = encodeURIComponent(
-      `${
-        test.fullTitle.replace(/\s+/g, '-')
-      }-chrome-${timestamp}`.replace(/[/]/g, '__')
+      `chrome-${timestamp}`.replace(/[/]/g, '__')
     ).replace(/%../, '.');
 
     const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
 
+    console.log('Saving screenshot to:', filePath);
     browser.saveScreenshot(filePath);
+    console.log('Saved screenshot to:', filePath);
   },
   /**
    * Hook that gets executed after the suite has ended

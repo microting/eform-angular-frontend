@@ -1,39 +1,33 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ eformSecurityModel.label + ' ' + ('Permissions' | translate) }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
+<h3 mat-dialog-title>{{ eformSecurityModel.label + ' ' + ('Permissions' | translate) }}</h3>
+<div mat-dialog-content>
+  <mat-card *ngFor="let permissionType of eformSecurityModel.permissionTypes" class="mb-2">
+    <mat-card-title>{{permissionType.name | translate}}</mat-card-title>
+    <mat-card-content>
+      <div class="mb-2" *ngFor="let permission of permissionType.permissions">
+        <mat-checkbox
+          id="{{permission.name}}_{{permission.claimName}}"
+          [(ngModel)]="permission.isEnabled"
+          color="primary"
+        >
+          {{permission.permissionName | translate}}
+        </mat-checkbox>
       </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="mb-4 col-md-12" *ngFor="let permissionType of eformSecurityModel.permissionTypes">
-            <div class="card">
-              <div class="card-header">
-                {{permissionType.name | translate}}
-              </div>
-              <div class="card-body">
-                <div class="mat-checkbox mb-2 col-md-4" *ngFor="let permission of permissionType.permissions">
-                  <input id="{{permission.name}}_{{permission.claimName}}"
-                         [checked]="permission.isEnabled" [value]="permission.isEnabled"
-                         [(ngModel)]="permission.isEnabled"
-                         color="primary" type="checkbox">
-                  <label for="{{permission.name}}_{{permission.claimName}}">{{permission.permissionName |
-                    translate}}</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height" (click)="updateEformGroupPermissions()">{{'Save' | translate}}</button>
-        <button mdbBtn id="cancelCreateEformBtn" class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Close' |
-          translate}}
-        </button>
-      </div>
-    </div>
-  </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="updateEformGroupPermissions()"
+  >
+    {{ 'Save' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="cancelCreateEformBtn"
+    (click)="hide()"
+  >
+    {{ 'Cancel' | translate}}
+  </button>
 </div>

@@ -1,65 +1,55 @@
-<eform-subheader
+<eform-new-subheader
   [title]="
     securityGroupGeneralPermissionsModel.groupName +
     ' ' +
     ('General Permissions' | translate)
   "
+  [forceStaticTitle]="true"
 >
-  <div class="p-3">
-    <button
-      mdbBtn
-      class="btn-success btn-small-height"
-      (click)="updateSecurityGroupGeneralPermissions()"
-      mdbTooltip="{{ 'Update Permissions' | translate }}"
-      id="newSecurityGroupBtn"
-    >
-      {{ 'Save' | translate }}
-    </button>
-  </div>
-</eform-subheader>
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="updateSecurityGroupGeneralPermissions()"
+    matTooltip="{{ 'Update Permissions' | translate }}"
+    id="newSecurityGroupBtn"
+  >
+    {{ 'Save' | translate }}
+  </button>
+</eform-new-subheader>
 
-<div class="container-fluid mt-4">
-  <div class="row">
-    <div
-      class="mb-4"
-      [ngClass]="{
-        'col-md-12': permissionType.name == 'Eforms',
-        'col-md-3': permissionType.name != 'Eforms'
+<div class="d-flex flex-row mt-4 flex-wrap justify-content-between">
+  <div
+    class="mb-4 d-flex"
+    [ngClass]="{
+        'flex-grow-1': permissionType.name == 'Eforms',
+        'flex-grow-0': permissionType.name != 'Eforms'
       }"
-      *ngFor="
+    *ngFor="
         let permissionType of securityGroupGeneralPermissionsModel.permissionTypes
       "
-    >
-      <div class="card">
-        <div class="card-header">
-          {{ permissionType.name | translate }}
-        </div>
-        <div class="card-body">
-          <ng-container *ngFor="let permission of permissionType.permissions">
-            <div
-              class="mat-checkbox mb-2"
-              [ngStyle]="{
+  >
+    <mat-card class="mr-2" style="min-width: 300px">
+      <mat-card-title>{{ permissionType.name | translate }}</mat-card-title>
+      <mat-card-content>
+        <ng-container *ngFor="let permission of permissionType.permissions">
+          <div
+            class="mb-2"
+            [ngStyle]="{
                 display:
                   permissionType.name == 'Eforms' ? 'inline-block' : 'block'
               }"
-              [ngClass]="{ 'col-md-3': permissionType.name == 'Eforms' }"
+            [ngClass]="{ 'col-md-3': permissionType.name == 'Eforms' }"
+          >
+            <mat-checkbox
+              id="{{ permissionType.name }}_{{ permission.claimName }}"
+              [(ngModel)]="permission.isEnabled"
+              color="primary"
             >
-              <input
-                id="{{ permissionType.name }}_{{ permission.claimName }}"
-                [checked]="permission.isEnabled"
-                [value]="permission.isEnabled"
-                [(ngModel)]="permission.isEnabled"
-                color="primary"
-                type="checkbox"
-              />
-              <label
-                for="{{ permissionType.name }}_{{ permission.claimName }}"
-                >{{ permission.permissionName | translate }}</label
-              >
-            </div>
-          </ng-container>
-        </div>
-      </div>
-    </div>
+              {{ permission.permissionName | translate }}
+            </mat-checkbox>
+          </div>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

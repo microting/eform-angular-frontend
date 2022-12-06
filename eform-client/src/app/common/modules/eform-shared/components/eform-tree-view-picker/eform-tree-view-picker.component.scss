@@ -1,0 +1,38 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import 'src/scss/libs/theme';
+
+:host .mat-button-base ~ .mat-button-base {
+   margin-left: 0;
+}
+
+mat-tree-node.mat-tree-node {
+  min-height: 30px;
+  max-height: 30px;
+}
+
+.collapse-button {
+  position: absolute;
+  right: 20px;
+}
+
+.selected-folder {
+  color: mat.get-color-from-palette(mat.$pink-palette, 300);
+}
+
+.microting-uid {
+  color: mat.get-color-from-palette($eform-light-primary, 300);
+  margin-left: .5rem;
+}
+
+.folder:hover {
+  color: mat.get-color-from-palette(mat.$pink-palette, 300);
+  transition: color .5s;
+}
+
+.cursor {
+  cursor: pointer;
+  &.no-drop{
+    cursor: no-drop;
+  }
+}

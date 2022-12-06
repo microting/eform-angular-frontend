@@ -13,17 +13,17 @@ describe('Entity Select Sort', function () {
     await selectableLists.createDummySelectableLists(3);
   });
   it('should be able to sort by ID', async () => {
-    testSorting(
+    await testSorting(
       await selectableLists.idTableHeader(),
       '#entitySelectMicrotingUUID',
       'ID'
     );
   });
   it('should be able to sort by Name', async () => {
-    testSorting(await selectableLists.nameTableHeader(), '#entitySelectName', 'Name');
+    await testSorting(await selectableLists.nameTableHeader(), '#entitySelectName', 'Name');
   });
   it('should be able to sort by Description', async () => {
-    testSorting(
+    await testSorting(
       await selectableLists.descriptionTableHeader(),
       '#entitySelectDescription',
       'Description'

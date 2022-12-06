@@ -1,0 +1,27 @@
+.flex-inputs-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .mat-input-50 {
+    width: 49%;
+  }
+}
+
+@media only screen and (max-width: 780px) {
+  .flex-inputs-card {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+
+    .mat-input-50 {
+      width: 100%;
+      &:nth-child(1) {
+        margin-top: 0;
+      }
+      &:nth-last-child(1) {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {CommonDictionaryModel} from '../../../../../common/models/common';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {EmailRecipientsService} from '../../../../../common/services/email-recipients';
+import {EmailRecipientsService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {EmailRecipientModel, EmailRecipientUpdateModel} from '../../../../../common/models/email-recipients';
+import {EmailRecipientModel, EmailRecipientUpdateModel, CommonDictionaryModel} from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
@@ -12,33 +12,34 @@ import {EmailRecipientModel, EmailRecipientUpdateModel} from '../../../../../com
   styleUrls: ['./email-recipient-edit.component.scss']
 })
 export class EmailRecipientEditComponent implements OnInit, OnDestroy {
-  @ViewChild('frame') frame;
-  @Input() availableTags: CommonDictionaryModel[] = [];
-  @Output() emailRecipientUpdated: EventEmitter<void> = new EventEmitter<void>();
+  availableTags: CommonDictionaryModel[] = [];
   emailRecipientUpdateModel: EmailRecipientUpdateModel = new EmailRecipientUpdateModel;
   updateEmailRecipient$: Subscription;
 
 
-  constructor(private emailRecipientsService: EmailRecipientsService) {
-  }
-
-  show(model: EmailRecipientModel) {
-    this.emailRecipientUpdateModel = {id: model.id, name: model.name, email: model.email, tagsIds: model.tags.map(x => x.id)};
-    this.frame.show();
+  constructor(
+    private emailRecipientsService: EmailRecipientsService,
+    public dialogRef: MatDialogRef<EmailRecipientEditComponent>,
+    @Inject(MAT_DIALOG_DATA) data: { emailRecipientUpdateModel: EmailRecipientModel, availableTags: CommonDictionaryModel[] }
+  ) {
+    this.emailRecipientUpdateModel = {...data.emailRecipientUpdateModel, tagsIds: data.emailRecipientUpdateModel.tags.map(x => x.id)};
+    this.availableTags = data.availableTags;
   }
 
   ngOnInit() {
   }
 
+  hide(result = false) {
+    this.dialogRef.close(result);
+  }
+
   updateEmailRecipient() {
     this.updateEmailRecipient$ = this.emailRecipientsService.updateEmailRecipient(this.emailRecipientUpdateModel)
       .subscribe((data) => {
-      if (data && data.success) {
-        this.frame.hide();
-        this.emailRecipientUpdated.emit();
-        this.emailRecipientUpdateModel = new EmailRecipientUpdateModel;
-      }
-    });
+        if (data && data.success) {
+          this.hide(true);
+        }
+      });
   }
 
   ngOnDestroy(): void {

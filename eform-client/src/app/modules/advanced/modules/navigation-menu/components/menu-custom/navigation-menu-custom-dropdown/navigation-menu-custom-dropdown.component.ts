@@ -1,14 +1,13 @@
 import {
   Component,
-  EventEmitter, Input,
+  Inject,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
-import { NavigationMenuItemModel } from 'src/app/common/models/navigation-menu';
+import {  } from 'src/app/common/models/navigation-menu';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import { applicationLanguages } from 'src/app/common/const/application-languages.const';
-import {CommonDictionaryModel} from 'src/app/common/models';
+import {CommonDictionaryModel, NavigationMenuItemModel} from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-navigation-menu-custom-dropdown',
@@ -16,45 +15,32 @@ import {CommonDictionaryModel} from 'src/app/common/models';
   styleUrls: ['./navigation-menu-custom-dropdown.component.scss'],
 })
 export class NavigationMenuCustomDropdownComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Output() addDropdownToMenu: EventEmitter<
-    NavigationMenuItemModel
-  > = new EventEmitter<NavigationMenuItemModel>();
   customDropdownModel: NavigationMenuItemModel = new NavigationMenuItemModel();
-  @Input() availableSecurityGroups: CommonDictionaryModel[] = [
-    {
-      id: 1,
-      name: 'Test',
-      description: ''
-    },
-  ];
 
-  constructor() {}
+  constructor(
+    public dialogRef: MatDialogRef<NavigationMenuCustomDropdownComponent>,
+    @Inject(MAT_DIALOG_DATA) public availableSecurityGroups: CommonDictionaryModel[] = [
+      {
+        id: 1,
+        name: 'Test',
+        description: ''
+      },]) {}
 
-  ngOnInit(): void {}
-
-  show() {
+  ngOnInit(): void {
     this.customDropdownModel = this.generateLanguages(this.customDropdownModel);
-    this.frame.show();
   }
 
-  addCustomDropdown() {
-    this.addDropdownToMenu.emit({
-      ...this.customDropdownModel,
-      id: Math.floor(Math.random() * 1000),
-      type: NavigationMenuItemTypeEnum.Dropdown,
-      isVirtual: true,
-      children: [],
-      name: 'Dropdown',
+  hide(result = false) {
+    this.dialogRef.close({result: result,
+      navigationMenuItem: {
+        ...this.customDropdownModel,
+        id: Math.floor(Math.random() * 1000),
+        type: NavigationMenuItemTypeEnum.Dropdown,
+        isVirtual: true,
+        children: [],
+        name: 'Dropdown',
+      }
     });
-    this.hide();
-  }
-
-  hide() {
-    this.frame.hide();
-    this.customDropdownModel = this.generateLanguages(
-      new NavigationMenuItemModel()
-    );
   }
 
   generateLanguages(model: NavigationMenuItemModel) {

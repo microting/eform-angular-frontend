@@ -5,7 +5,6 @@ import {
   OperationDataResult,
   Paged,
   PaginationModel,
-  SortModel,
 } from 'src/app/common/models';
 import { Observable } from 'rxjs';
 import { EmailRecipientsQuery, EmailRecipientsStore } from './';
@@ -42,19 +41,27 @@ export class EmailRecipientsStateService {
       );
   }
 
-  updatePageSize(pageSize: number) {
+  /*updatePageSize(pageSize: number) {
     this.store.update((state) => ({
       pagination: { ...state.pagination, pageSize: pageSize },
     }));
     this.checkOffset();
-  }
+  }*/
 
-  getPageSize(): Observable<number> {
+  /*getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
+  }*/
+
+  // getSort(): Observable<SortModel> {
+  //   return this.query.selectSort$;
+  // }
+
+  getActiveSort(): Observable<string> {
+    return this.query.selectActiveSort$;
   }
 
-  getSort(): Observable<SortModel> {
-    return this.query.selectSort$;
+  getActiveSortDirection(): Observable<'asc' | 'desc'> {
+    return this.query.selectActiveSortDirection$;
   }
 
   addOrRemoveTagIds(id: number) {
@@ -85,11 +92,11 @@ export class EmailRecipientsStateService {
     }));
   }
 
-  changePage(offset: number) {
+  /*changePage(offset: number) {
     this.store.update((state) => ({
       pagination: { ...state.pagination, offset: offset },
     }));
-  }
+  }*/
 
   checkOffset() {
     const newOffset = getOffset(
@@ -113,5 +120,16 @@ export class EmailRecipientsStateService {
 
   getPagination(): Observable<PaginationModel> {
     return this.query.selectPagination$;
+  }
+
+  updatePagination(pagination: PaginationModel) {
+    this.store.update((state) => ({
+      pagination: {
+        ...state.pagination,
+        pageSize: pagination.pageSize,
+        offset: pagination.offset,
+      },
+    }));
+    // this.checkOffset();
   }
 }

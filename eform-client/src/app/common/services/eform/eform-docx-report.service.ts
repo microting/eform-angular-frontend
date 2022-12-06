@@ -45,8 +45,8 @@ export class EformDocxReportService {
     );
   }
 
-  downloadReport(model: EformDocxReportGenerateModel): Observable<any> {
-    return this.apiBaseService.getBlobData(
+  downloadReport(model: EformDocxReportGenerateModel): Observable<string | Blob> {
+    return this.apiBaseService.getBlobData<string | Blob>(
       EformDocxReportServiceMethods.DocxReport + '/word',
       model
     );

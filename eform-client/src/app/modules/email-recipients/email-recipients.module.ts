@@ -1,12 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { EformSharedModule } from '../../common/modules/eform-shared/eform-shared.module';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { TranslateModule } from '@ngx-translate/core';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { FormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { EmailRecipientsRouting } from './email-recipients.routing';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {EformSharedModule} from '../../common/modules/eform-shared/eform-shared.module';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {TranslateModule} from '@ngx-translate/core';
+import {FormsModule} from '@angular/forms';
+import {EmailRecipientsRouting} from './email-recipients.routing';
 import {
   EmailRecipientDeleteComponent,
   EmailRecipientEditComponent,
@@ -14,16 +12,24 @@ import {
   EmailRecipientsPageComponent,
   EmailRecipientsTagsComponent,
 } from './components';
-import { EformSharedTagsModule } from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
-import { emailRecipientsPersistProvider } from './components/store/email-recipients.store';
+import {EformSharedTagsModule} from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
+import {emailRecipientsPersistProvider} from './components/store/email-recipients.store';
+import {MatSortModule} from '@angular/material/sort';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatInputModule} from '@angular/material/input';
+import {MtxSelectModule} from '@ng-matero/extensions/select';
+import {MtxGridModule} from '@ng-matero/extensions/grid';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     EmailRecipientsPageComponent,
     EmailRecipientsNewComponent,
     EmailRecipientEditComponent,
-    EmailRecipientsTagsComponent,
     EmailRecipientDeleteComponent,
+    EmailRecipientsTagsComponent
   ],
   imports: [
     CommonModule,
@@ -31,12 +37,19 @@ import { emailRecipientsPersistProvider } from './components/store/email-recipie
     CommonModule,
     NgSelectModule,
     TranslateModule,
-    MDBBootstrapModule,
     FormsModule,
-    FontAwesomeModule,
     EmailRecipientsRouting,
     EformSharedTagsModule,
+    MatSortModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatInputModule,
+    MtxSelectModule,
+    MtxGridModule,
+    MatDialogModule,
   ],
   providers: [emailRecipientsPersistProvider],
 })
-export class EmailRecipientsModule {}
+export class EmailRecipientsModule {
+}

@@ -15,20 +15,19 @@ import { SortModel, TableHeaderElementModel } from 'src/app/common/models';
   styleUrls: ['./eform-table-headers.component.scss'],
 })
 export class EformTableHeadersComponent implements OnInit {
+  // todo need to remove from this line to end
   @Input() sort: SortModel;
   @Input() isSortDsc: boolean;
   @Input() currentSortName: string;
   @Output() sortChanged: EventEmitter<string> = new EventEmitter<string>();
+  // todo end
   @Input() tableHeaders: TableHeaderElementModel[] = [];
   @Input() customCell: TemplateRef<any>;
   @Input() stickyHeader = false;
+  @Input() needTranslateHeader = true;
   constructor() {}
 
   ngOnInit(): void {}
-
-  onSortClick(name: string) {
-    this.sortChanged.emit(name);
-  }
 
   getElementId(name: string): string {
     if (name) {

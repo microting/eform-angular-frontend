@@ -1,0 +1,28 @@
+$transition-duration: .5s;
+
+[id^='fieldSection'] {
+  color: black;
+}
+
+.section-collapse {
+  transition: all $transition-duration ease-in-out 0s;
+  position: relative;
+  overflow: hidden;
+  max-height: 150em;
+  &.collapsed {
+    max-height: 0 !important;
+  }
+  .collapsed {
+    transition: padding .5s ease-in-out 0s;
+    padding: 0 !important;
+  }
+}
+
+#colors .mat-mini-fab {
+  height: 25px;
+  width: 25px;
+}
+
+#colors {
+  padding-top: 10px;
+}

@@ -1,10 +1,8 @@
-<eform-subheader [title]="title" [forceStaticTitle]="true"> </eform-subheader>
+<eform-new-subheader [title]="title" [forceStaticTitle]="true"></eform-new-subheader>
 
-<div class="container-fluid">
-  <app-eform-xlsx-report-header
-    [range]="range"
-    [templateId]="selectedTemplateId"
-    (downloadReport)="onDownloadReport($event)"
-  >
-  </app-eform-xlsx-report-header>
-</div>
+<app-eform-xlsx-report-header
+  [range]="range"
+  [templateId]="selectedTemplateId"
+  (downloadReport)="onDownloadReport($event)"
+>
+</app-eform-xlsx-report-header>

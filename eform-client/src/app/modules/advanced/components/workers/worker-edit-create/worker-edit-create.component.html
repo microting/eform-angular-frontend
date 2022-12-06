@@ -1,0 +1,58 @@
+<h3 mat-dialog-title>{{ (edit ? 'Edit' : 'Create Worker') | translate}}</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-column">
+    <mat-form-field *ngIf="!edit">
+      <mat-label>{{'Select location' | translate }}</mat-label>
+      <mtx-select
+        dropdownPosition="bottom"
+        [bindValue]="'id'"
+        [bindLabel]="'name'"
+        [(ngModel)]="workerModel.workerUId"
+        [items]="simpleSites"
+        id="workerSelector"
+        [multiple]="false"
+        appendTo="body"
+        [clearable]="false">
+      </mtx-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'First name' | translate }}</mat-label>
+      <input
+        name="firstName"
+        [(ngModel)]="workerModel.firstName"
+        matInput
+        required
+        type="text"
+        id="firstName">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Last name' | translate }}</mat-label>
+      <input
+        matInput
+        name="lastName"
+        [(ngModel)]="workerModel.lastName"
+        required
+        type="text"
+        id="lastName">
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="edit ? updateSingle() : createWorker()"
+    [disabled]="!workerModel.firstName || !workerModel.lastName"
+    id="{{edit ? 'workerEditSaveBtn' : 'workerSaveBtn'}}"
+  >
+    {{(edit ? 'Save' : 'Create') | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="{{edit ? 'workerCancelEditBtn' : 'workerCancelCreateBtn'}}"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
+</div>
+

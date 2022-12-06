@@ -1,38 +1,31 @@
-import {AfterContentInit, AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {UnitModel} from '../../../../../common/models/advanced';
-import {SiteDto, UnitDto} from '../../../../../common/models/dto';
-import {UnitsService} from '../../../../../common/services/advanced';
-import {DeviceUserService} from 'src/app/common/services/device-users';
-import {DeviceUserRequestModel} from 'src/app/common/models';
+import {Component, Inject, OnInit} from '@angular/core';
+import {UnitModel, SiteDto, UnitDto, DeviceUserRequestModel } from 'src/app/common/models';
+import {UnitsService, DeviceUserService} from 'src/app/common/services';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-unit-move',
   templateUrl: './unit-move.component.html',
   styleUrls: ['./unit-move.component.scss']
 })
-export class UnitMoveComponent implements OnInit, AfterContentInit {
-  @Output() UnitMoved: EventEmitter<void> = new EventEmitter<void>();
-  @Input() selectedUnitModel: UnitDto = new UnitDto();
-  @ViewChild('frame') frame;
+export class UnitMoveComponent implements OnInit {
   unitModel: UnitModel = new UnitModel;
   simpleSites: Array<SiteDto> = [];
 
-  constructor(private simpleSitesService: DeviceUserService, private unitsService: UnitsService) { }
-
-  ngOnInit() {
-  }
-
-  show(selected: UnitDto) {
-    this.frame.show();
-    // this.selectedUnitModel = selected;
-    this.unitModel.id = selected.id;
-    this.unitModel.siteId = selected.siteMicrotingUid;
+  constructor(
+    private simpleSitesService: DeviceUserService,
+    private unitsService: UnitsService,
+    public dialogRef: MatDialogRef<UnitMoveComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedUnitModel: UnitDto = new UnitDto()
+  ) {
+    this.unitModel.id = selectedUnitModel.id;
+    this.unitModel.siteId = selectedUnitModel.siteMicrotingUid;
     if (this.simpleSites.length === 0) {
       this.loadAllSimpleSites();
     }
   }
 
-  ngAfterContentInit() {
+  ngOnInit() {
   }
 
   loadAllSimpleSites() {
@@ -47,10 +40,12 @@ export class UnitMoveComponent implements OnInit, AfterContentInit {
     this.unitModel.id = this.selectedUnitModel.id;
     this.unitsService.moveUnit(this.unitModel).subscribe((data => {
       if (data && data.success) {
-        //     this.newWorkerModel = new WorkerCreateModel;
-        this.UnitMoved.emit();
-        this.frame.hide();
+        this.hide(true);
       }
     }));
+  }
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 }

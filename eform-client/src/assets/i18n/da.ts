@@ -16,7 +16,7 @@ export const da = {
   Port: 'Port',
   Login: 'Log ind',
   Password: 'Adgangskode',
-  'Forgot password': 'Har du glemt din adgangskode?',
+  'Forgot password': 'Har du glemt din adgangskode',
   'Restore password': 'Fortsæt',
   'Reset admin password': 'Nulstil admin adgangskode',
   'Back to login': 'Log ind',
@@ -28,8 +28,8 @@ export const da = {
   Search: 'Søg',
   done_at: 'Dato',
   DoneAt: 'Dato',
-  created_at: 'Server dato',
-  CreatedAt: 'Server dato',
+  created_at: 'Udført dato',
+  CreatedAt: 'Udført dato',
   worker_name: 'Udført af',
   SiteId: 'Udført af',
   'Edit Case': 'Rediger sagen',
@@ -428,5 +428,4 @@ export const da = {
   'Select new image': 'Vælg billede',
   'Select image': 'Vælg billede',
   'Date is required': 'Dato er påkrævet',
-  'Edit selectable entity list': 'Rediger liste'
 };

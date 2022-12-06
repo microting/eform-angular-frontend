@@ -6,8 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import {
-  AdvEntitySearchableItemModel,
-  AdvEntitySelectableItemModel
+  EntityItemModel,
 } from 'src/app/common/models';
 import {getRandomInt} from 'src/app/common/helpers';
 
@@ -17,11 +16,11 @@ import {getRandomInt} from 'src/app/common/helpers';
   styleUrls: ['./entity-list-elements.component.scss'],
 })
 export class EntityListElementsComponent implements OnInit {
-  @Input() entityItemModels: Array<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel> = [];
-  @Output() entityItemModelsChanged: EventEmitter<Array<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel>> =
-    new EventEmitter<Array<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel>>();
-  @Output() openEditNameModal: EventEmitter<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel> =
-    new EventEmitter<AdvEntitySelectableItemModel | AdvEntitySearchableItemModel>();
+  @Input() entityItemModels: Array<EntityItemModel> = [];
+  @Output() entityItemModelsChanged: EventEmitter<Array<EntityItemModel>> =
+    new EventEmitter<Array<EntityItemModel>>();
+  @Output() openEditNameModal: EventEmitter<EntityItemModel> =
+    new EventEmitter<EntityItemModel>();
   constructor() {
   }
 
@@ -52,7 +51,7 @@ export class EntityListElementsComponent implements OnInit {
     this.entityItemModelsChanged.emit(this.entityItemModels);
   }
 
-  onOpenModalEditName(entityItem: AdvEntitySelectableItemModel | AdvEntitySearchableItemModel) {
+  onOpenModalEditName(entityItem: EntityItemModel) {
     this.openEditNameModal.emit(entityItem);
   }
 

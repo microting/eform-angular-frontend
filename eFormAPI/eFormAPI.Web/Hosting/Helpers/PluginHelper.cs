@@ -54,8 +54,6 @@ namespace eFormAPI.Web.Hosting.Helpers
     using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
     using Microting.eFormApi.BasePn.Infrastructure.Settings;
     using Microting.eFormApi.BasePn.Services;
-    using OpenStack.NetCoreSwiftClient;
-    using OpenStack.NetCoreSwiftClient.Infrastructure.Models;
 
     public static class PluginHelper
     {
@@ -331,8 +329,6 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(Core),
                             typeof(GetObjectResponse),
                             typeof(AmazonS3Client),
-                            typeof(SwiftObjectGetResponse),
-                            typeof(SwiftClient)
                         });
 
                     var types = loader

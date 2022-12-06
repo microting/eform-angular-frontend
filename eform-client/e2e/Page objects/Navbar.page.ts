@@ -55,28 +55,28 @@ export class Navbar {
   }
 
   public async workersBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#workers`);
+    const ele = await $(`#workers`);
     await ele.waitForDisplayed({ timeout: 40000 });
     // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public async sitesBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#sites`);
+    const ele = await $(`#sites`);
     await ele.waitForDisplayed({ timeout: 40000 });
     // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public async foldersBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#folders`);
+    const ele = await $(`#folders`);
     await ele.waitForDisplayed({ timeout: 40000 });
     // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public async pluginsBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#plugins-settings`);
+    const ele = await $(`#plugins-settings`);
     await ele.waitForDisplayed({ timeout: 40000 });
     // ele.waitForClickable({timeout: 40000});
     return ele;
@@ -97,25 +97,25 @@ export class Navbar {
   }
 
   public async deviceUsersBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#device-users`);
+    const ele = await $(`#device-users`);
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async entitySearchBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#search`);
+    const ele = await $(`#search`);
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async entitySelectBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#selectable-list`);
+    const ele = await $(`#selectable-list`);
     await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public async myEformsBtn(): Promise<WebdriverIO.Element> {
-    const ele = await (await this.header()).$(`#my-eforms`);
+    const ele = await $(`#my-eforms`);
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -132,6 +132,7 @@ export class Navbar {
   public async advancedDropdownClick() {
     await (await this.advancedBtn()).waitForDisplayed({ timeout: 60000 });
     await (await this.advancedBtn()).click();
+    await browser.pause(500);
   }
 
   public async clickOnHeaderMenuItem(headerMenuItem) {
@@ -148,7 +149,8 @@ export class Navbar {
 
   public async clickOnHeaderMenuItem2(headerMenuItem) {
     const ele = await $(
-      `//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`
+      `//*[mat-tree-node]//*[contains(text(), '${headerMenuItem}')]`
+      //`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -157,29 +159,37 @@ export class Navbar {
 
   public async logout() {
     await (await this.signOutDropdown()).click();
+    await browser.pause(500);
     await (await this.logoutBtn()).click();
+    await browser.pause(500);
   }
 
   public async goToProfileSettings() {
     await (await this.signOutDropdown()).click();
     await (await this.settingsBtn()).waitForDisplayed({ timeout: 5000 });
     await (await this.settingsBtn()).waitForClickable({ timeout: 5000 });
+    await browser.pause(500);
     await (await this.settingsBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToApplicationSettings() {
     const spinnerAnimation = await $('#spinner-animation');
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
-    await this.advancedDropdownClick();
+    if (!await $(`#application-settings`).isDisplayed()) {
+      await this.advancedDropdownClick();
+    }
     await (await this.applicationSettingsBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToWorkers() {
     await this.advancedDropdownClick();
     await (await this.workersBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToSites() {
@@ -187,43 +197,56 @@ export class Navbar {
     await (await this.sitesBtn()).click();
     // browser.pause(15000);
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToUserAdministration() {
     await (await this.signOutDropdown()).click();
     await (await this.userAdministrationBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToPasswordSettings() {
     await (await this.signOutDropdown()).click();
     await (await this.changePasswordBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToDeviceUsersPage() {
     await (await this.deviceUsersBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToEntitySelect() {
     await this.advancedDropdownClick();
     await (await this.entitySelectBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToEntitySearch() {
     await this.advancedDropdownClick();
     await (await this.entitySearchBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
 
   public async goToFolderPage() {
-    await this.advancedDropdownClick();
-    await (await this.foldersBtn()).waitForDisplayed({ timeout: 40000 });
-    await (await this.foldersBtn()).waitForClickable({ timeout: 40000 });
-    await (await this.foldersBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    if (await (await $(`#folders`)).isDisplayed()) {
+      await (await this.foldersBtn()).click();
+      await browser.pause(500);
+      await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    } else {
+      await this.advancedDropdownClick();
+      await (await this.foldersBtn()).waitForDisplayed({ timeout: 40000 });
+      await (await this.foldersBtn()).waitForClickable({ timeout: 40000 });
+      await (await this.foldersBtn()).click();
+      await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+      await browser.pause(500);
+    }
   }
 
   public async goToPluginsPage() {

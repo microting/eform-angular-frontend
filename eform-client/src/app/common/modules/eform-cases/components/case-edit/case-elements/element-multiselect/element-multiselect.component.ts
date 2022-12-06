@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'element-multiselect',
   templateUrl: './element-multiselect.component.html',
   styleUrls: ['./element-multiselect.component.scss']
@@ -29,11 +30,7 @@ export class ElementMultiselectComponent implements OnInit {
     if (!item || !e.target) {
       return;
     }
-    if (e.target.checked) {
-      item.selected = true;
-    } else {
-      item.selected = false;
-    }
+    item.selected = !!e.target.checked;
     this.refreshValue();
   }
 
@@ -44,11 +41,7 @@ export class ElementMultiselectComponent implements OnInit {
     }
     const res = str.split('|');
     this.fieldValueObj.keyValuePairList.forEach(x => {
-      if (this.arrayContains(x.key.toString(), res)) {
-        x.selected = true;
-      } else {
-        x.selected = false;
-      }
+      x.selected = this.arrayContains(x.key.toString(), res);
     });
   }
 

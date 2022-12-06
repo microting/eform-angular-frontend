@@ -1,829 +1,429 @@
-<eform-subheader [subtitle]="adminSettingsModel.assemblyVersion">
-  <div class="p-3">
-    <button
-      mdbBtn
-      class="btn-success btn-small-height"
-      id="applicationSettingsSaveBtn"
-      [disabled]="!settingsForm.form.valid"
-      (click)="updateAdminSettings()"
-      mdbTooltip="Save settings"
-    >
-      {{ 'Save' | translate }}
-    </button>
+<eform-new-subheader [subtitle]="adminSettingsModel.assemblyVersion">
+  <button
+    mat-raised-button
+    color="accent"
+    matTooltip="{{ 'Save settings' | translate }}"
+    matTooltipPosition="left"
+    id="applicationSettingsSaveBtn"
+    (click)="updateAdminSettings()"
+  >
+    {{ 'Save' | translate }}
+  </button>
+</eform-new-subheader>
+
+<div class="d-flex flex-column">
+  <div class="flex-cards">
+    <mat-card class="mat-card-50">
+      <mat-card-title>
+        <h4 class="d-flex">
+          {{ 'Login Page' | translate }}
+          <span class="spacer"></span>
+          <button
+            mat-icon-button
+            id="loginPageReset"
+            (click)="resetLoginPageSettings()"
+            matTooltip="{{ 'Reset' | translate }}"
+          >
+            <mat-icon>undo</mat-icon>
+          </button>
+        </h4>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label>{{'Main Text' | translate}}</mat-label>
+          <input
+          matInput
+          [(ngModel)]="adminSettingsModel.loginPageSettingsModel.mainText"
+          type="text"
+          id="mainTextLoginPage">
+          <mat-icon
+            matSuffix
+            (click)="adminSettingsModel.loginPageSettingsModel.mainTextVisible = !adminSettingsModel
+                        .loginPageSettingsModel.mainTextVisible"
+            id="loginPageMainTextVisibilityToggler"
+          >
+            {{adminSettingsModel.loginPageSettingsModel.mainTextVisible ? 'visibility' : 'visibility_off'}}
+          </mat-icon>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'Secondary Text' | translate}}</mat-label>
+          <input
+            matInput
+            [(ngModel)]="adminSettingsModel.loginPageSettingsModel.secondaryText"
+            type="text"
+            id="secondaryTextLoginPage">
+          <mat-icon
+            matSuffix
+            (click)="adminSettingsModel.loginPageSettingsModel.secondaryTextVisible = !adminSettingsModel
+                        .loginPageSettingsModel.secondaryTextVisible"
+            id="loginPageSecondaryTextVisibilityToggler"
+          >
+            {{adminSettingsModel.loginPageSettingsModel.secondaryTextVisible ? 'visibility' : 'visibility_off'}}
+          </mat-icon>
+        </mat-form-field>
+        <div class="d-flex flex-wrap justify-content-between">
+          <div>
+            <p class="mb-0 align-self-center">
+              {{ 'Image' | translate }}
+            </p>
+            <img
+              alt=""
+              *ngIf="loginPageImageLink"
+              class="p-3"
+              height="112"
+              width="90"
+              [src]="loginPageImageLink | authImage | async"
+            />
+          </div>
+          <div class="d-flex">
+            <div class="align-self-center">
+              <p>{{ 'Recommended parameters' | translate }}:</p>
+              <p>{{ 'Resolution' | translate }} - 90x100</p>
+              <p>{{ 'Proportions' | translate }} - 1:1.5</p>
+            </div>
+            <div class="align-self-center align-self-end mb-3">
+              <button
+                mat-raised-button
+                color="primary"
+                *ngIf="loginPageImageUploader?.queue?.length === 0"
+                id="loginPageImageUploadBtn"
+                (click)="loginPagefileInput.click()"
+              >
+                {{ 'Upload' | translate }}
+              </button>
+              <button
+                mat-raised-button
+                color="warn"
+                *ngIf="loginPageImageUploader?.queue?.length > 0"
+                (click)="loginPagefileInput.click()"
+              >
+                {{ 'Pending' | translate }}
+              </button>
+              <input
+                class="input-invisible"
+                type="file"
+                ng2FileSelect
+                #loginPagefileInput
+                [uploader]="loginPageImageUploader"
+                id="loginPageFileInput"
+              />
+              <button
+                mat-icon-button
+                id="loginPageImageVisibilityToggler"
+                (click)="adminSettingsModel.loginPageSettingsModel.imageLinkVisible = !adminSettingsModel
+                          .loginPageSettingsModel.imageLinkVisible">
+                <mat-icon>
+                  {{adminSettingsModel.loginPageSettingsModel.imageLinkVisible ? 'visibility' : 'visibility_off'}}
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="mat-card-50">
+      <mat-card-title>
+        <h4 class="d-flex">
+          {{ 'Site header' | translate }}
+          <span class="spacer"></span>
+          <button
+            mat-icon-button
+            id="siteHeaderReset"
+            (click)="resetHeaderSettings()"
+            matTooltip="{{ 'Reset' | translate }}"
+          >
+            <mat-icon>undo</mat-icon>
+          </button>
+        </h4>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label>{{'Main Text' | translate}}</mat-label>
+          <input
+            name="headerSettingsMainText"
+            id="headerSettingsMainText"
+            matInput
+            [(ngModel)]="adminSettingsModel.headerSettingsModel.mainText"
+            type="text">
+          <mat-icon
+            matSuffix
+            (click)="adminSettingsModel.headerSettingsModel.mainTextVisible = !adminSettingsModel
+                        .headerSettingsModel.mainTextVisible"
+            id="siteHeaderMainTextToggler"
+          >
+            {{adminSettingsModel.headerSettingsModel.mainTextVisible ? 'visibility' : 'visibility_off'}}
+          </mat-icon>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'Secondary Text' | translate}}</mat-label>
+          <input
+            matInput
+            [(ngModel)]="adminSettingsModel.headerSettingsModel.secondaryText"
+            type="text"
+            name="headerSettingsSecondaryText"
+            id="headerSettingsSecondaryText">
+          <mat-icon
+            matSuffix
+            (click)="adminSettingsModel.headerSettingsModel.secondaryTextVisible = !adminSettingsModel
+                        .headerSettingsModel.secondaryTextVisible"
+            id="siteHeaderSecondaryTextToggler"
+          >
+            {{adminSettingsModel.headerSettingsModel.secondaryTextVisible ? 'visibility' : 'visibility_off'}}
+          </mat-icon>
+        </mat-form-field>
+        <div class="d-flex flex-wrap justify-content-between">
+          <div>
+            <p class="mb-0 align-self-center">
+              {{ 'Logo' | translate }}
+            </p>
+            <img
+              alt=""
+              *ngIf="headerImageLink"
+              class="p-3"
+              width="150"
+              [src]="headerImageLink | authImage | async"
+            />
+          </div>
+          <div class="d-flex">
+            <div class="align-self-center">
+              <p>{{ 'Recommended parameters' | translate }}:</p>
+              <p>{{ 'Resolution' | translate }} - 170x80</p>
+              <p>{{ 'Proportions' | translate }} - 2:1</p>
+            </div>
+            <div class="align-self-center align-self-end mb-3">
+              <button
+                mat-raised-button
+                color="primary"
+                *ngIf="headerImageUploader?.queue?.length === 0"
+                id="siteHeaderUploadBtn"
+                (click)="headerImageUploaderInput.click()"
+              >
+                {{ 'Upload' | translate }}
+              </button>
+              <button
+                mat-raised-button
+                color="warn"
+                *ngIf="headerImageUploader?.queue?.length > 0"
+                (click)="headerImageUploaderInput.click()"
+              >
+                {{ 'Pending' | translate }}
+              </button>
+              <input
+                class="input-invisible"
+                type="file"
+                ng2FileSelect
+                [uploader]="headerImageUploader"
+                #headerImageUploaderInput
+                id="siteHeaderFileInput"
+              />
+              <button
+                mat-icon-button
+                id="siteHeaderImageVisibilityToggler"
+                (click)="adminSettingsModel.headerSettingsModel.imageLinkVisible = !adminSettingsModel
+                          .headerSettingsModel.imageLinkVisible">
+                <mat-icon>
+                  {{adminSettingsModel.headerSettingsModel.imageLinkVisible ? 'visibility' : 'visibility_off'}}
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
-</eform-subheader>
+  <div class="mt-4">
+    <mat-card>
+      <mat-card-title>
+        <h4>
+          {{ 'SDK information' | translate }}
+        </h4>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label>{{'Customer no' | translate}}</mat-label>
+          <input
+            matInput
+            [(ngModel)]="adminSettingsModel.sdkSettingsModel.customerNo"
+            type="text"
+            name="customerNo"
+            id="customerNo">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'File location picture' | translate}}</mat-label>
+          <input
+            matInput
+            [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPicture"
+            type="text"
+            name="fileLocationPicture"
+            id="fileLocationPicture">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'File location PDF' | translate}}</mat-label>
+          <input
+            matInput
+            [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPdf"
+            type="text"
+            name="fileLocationPdf"
+            id="fileLocationPdf">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'File location Jasper report files' | translate}}</mat-label>
+          <input
+            matInput
+            [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationReports"
+            type="text"
+            name="fileLocationReports"
+            id="fileLocationReports">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'Http server address' | translate}}</mat-label>
+          <input
+            matInput
+            [(ngModel)]="adminSettingsModel.sdkSettingsModel.httpServerAddress"
+            type="text"
+            name="httpServerAddress"
+            id="httpServerAddress">
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
-<div class="container-fluid">
-  <form #settingsForm="ngForm">
-    <div class="row mt-4">
-      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
-        <div class="card">
-          <div class="card-header card-header-extended">
-            <div class="d-flex justify-content-between align-items-center">
-              {{ 'Login Page' | translate }}
-              <button
-                mdbBtn
-                class="btn-neutral btn-icon"
-                id="loginPageReset"
-                (click)="resetLoginPageSettings()"
-                mdbTooltip="{{ 'Reset' | translate }}"
-                id="loginPageReset"
-              >
-                <fa-icon icon="undo" [fixedWidth]="true" size="lg"></fa-icon>
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="container-fluid">
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  [(ngModel)]="
-                    adminSettingsModel.loginPageSettingsModel.mainText
-                  "
-                  type="text"
-                  #mainTextLoginPage="ngModel"
-                  name="mainTextLoginPage"
-                  id="mainTextLoginPage"
-                  class="form-control"
-                />
-                <label for="mainTextLoginPage">{{
-                  'Main Text' | translate
-                }}</label>
-                <div class="input-group-btn">
-                  <button
-                    class="btn btn-icon waves-light m-0"
-                    id="loginPageMainTextVisibilityToggler"
-                    [class.btn-success]="
-                      adminSettingsModel.loginPageSettingsModel.mainTextVisible
-                    "
-                    [class.btn-danger]="
-                      !adminSettingsModel.loginPageSettingsModel.mainTextVisible
-                    "
-                    (click)="
-                      adminSettingsModel.loginPageSettingsModel.mainTextVisible = !adminSettingsModel
-                        .loginPageSettingsModel.mainTextVisible
-                    "
-                  >
-                    <fa-icon
-                      icon="eye"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        adminSettingsModel.loginPageSettingsModel
-                          .mainTextVisible
-                      "
-                    ></fa-icon>
+  <div class="flex-cards mt-4">
+    <mat-card class="mat-card-50">
+      <mat-card-title>
+        <h4>{{ 'Storage information' | translate }}</h4>
+      </mat-card-title>
+      <mat-card-content>
+        <section class="d-flex flex-column">
+          <mat-checkbox
+            id="swiftEnabled"
+            [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEnabled"
+          >{{'Swift enabled' | translate}}
+          </mat-checkbox>
+          <mat-checkbox
+            id="s3Enabled"
+            [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Enabled"
+          >{{'S3 enabled' | translate}}
+          </mat-checkbox>
+        </section>
+        <ng-container *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled">
+          <mat-form-field>
+            <mat-label>{{'User name' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftUserName"
+              placeholder="eformsdk"
+              type="text"
+              name="swiftUserName"
+              id="swiftUserName">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'Password' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftPassword"
+              placeholder="eformsdktosecretpassword"
+              type="password"
+              name="swiftPassword"
+              id="swiftPassword">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'Swift endpoint' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEndpoint"
+              placeholder="http://172.16.4.4:8080/swift/v1"
+              type="text"
+              name="swiftEndpoint"
+              id="swiftEndpoint">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'Keystone endpoint' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="adminSettingsModel.swiftSettingsModel.keystoneEndpoint"
+              placeholder="http://172.16.4.4:5000/v2.0"
+              type="text"
+              name="keystoneEndpoint"
+              id="keystoneEndpoint">
+          </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
+          <mat-form-field>
+            <mat-label>{{'S3 accessKey' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="adminSettingsModel.s3SettingsModel.s3AccessKeyId"
+              placeholder="false"
+              type="text"
+              name="s3AccessKeyId"
+              id="s3AccessKeyId">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'S3 secretAccessKey' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="adminSettingsModel.s3SettingsModel.s3SecrectAccessKey"
+              placeholder="false"
+              type="password"
+              name="s3SecrectAccessKey"
+              id="s3SecrectAccessKey">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'S3 endpoint' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Endpoint"
+              placeholder="false"
+              type="text"
+              name="s3Endpoint"
+              id="s3Endpoint">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'S3 bucket name' | translate}}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="adminSettingsModel.s3SettingsModel.s3BucketName"
+              placeholder="false"
+              type="password"
+              name="s3BucketName"
+              id="s3BucketName">
+          </mat-form-field>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="mat-card-50">
+      <mat-card-title>
+        <h4>{{ 'SendGrid Information' | translate }}</h4>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label>{{'Key' | translate}}</mat-label>
+          <input
+            matInput
+            placeholder="12345678909876543210adfecdfefdae"
+            type="password"
+            name="sendGridKey"
+            id="sendGridKey"
+            [(ngModel)]="adminSettingsModel.sendGridSettingsModel.apiKey">
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
-                    <fa-icon
-                      icon="eye-slash"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        !adminSettingsModel.loginPageSettingsModel
-                          .mainTextVisible
-                      "
-                    ></fa-icon>
-                  </button>
-                </div>
-              </div>
-
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  [(ngModel)]="
-                    adminSettingsModel.loginPageSettingsModel.secondaryText
-                  "
-                  type="text"
-                  #secondaryTextLoginPage="ngModel"
-                  name="secondaryTextLoginPage"
-                  id="secondaryTextLoginPage"
-                  class="form-control"
-                />
-                <label>{{ 'Secondary Text' | translate }}</label>
-                <div class="input-group-btn">
-                  <button
-                    id="loginPageSecondaryTextVisibilityToggler"
-                    class="btn btn-icon waves-light m-0"
-                    [class.btn-success]="
-                      adminSettingsModel.loginPageSettingsModel
-                        .secondaryTextVisible
-                    "
-                    [class.btn-danger]="
-                      !adminSettingsModel.loginPageSettingsModel
-                        .secondaryTextVisible
-                    "
-                    (click)="
-                      adminSettingsModel.loginPageSettingsModel.secondaryTextVisible = !adminSettingsModel
-                        .loginPageSettingsModel.secondaryTextVisible
-                    "
-                  >
-                    <fa-icon
-                      icon="eye"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        adminSettingsModel.loginPageSettingsModel
-                          .secondaryTextVisible
-                      "
-                    ></fa-icon>
-
-                    <fa-icon
-                      icon="eye-slash"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        !adminSettingsModel.loginPageSettingsModel
-                          .secondaryTextVisible
-                      "
-                    ></fa-icon>
-                  </button>
-                </div>
-              </div>
-
-              <div class="d-flex flex-wrap">
-                <div class="mr-auto">
-                  <p class="mb-0 align-self-center">
-                    {{ 'Image' | translate }}
-                  </p>
-                  <img
-                    *ngIf="loginPageImageLink"
-                    class="p-3"
-                    height="112"
-                    width="90"
-                    [src]="loginPageImageLink | authImage | async"
-                  />
-                </div>
-                <div class="align-self-center">
-                  <p>{{ 'Recommended parameters' | translate }}:</p>
-                  <p>{{ 'Resolution' | translate }} - 90x100</p>
-                  <p>{{ 'Proportions' | translate }} - 1:1.5</p>
-                </div>
-                <div class="align-self-center align-self-end mb-3">
-                  <button
-                    mdbBtn
-                    type="button"
-                    color="primary"
-                    size="sm"
-                    *ngIf="loginPageImageUploader?.queue?.length === 0"
-                    id="loginPageImageUploadBtn"
-                    (click)="loginPagefileInput.click()"
-                  >
-                    {{ 'Upload' | translate }}
-                  </button>
-                  <button
-                    mdbBtn
-                    type="button"
-                    color="warning"
-                    size="sm"
-                    *ngIf="loginPageImageUploader?.queue?.length > 0"
-                    (click)="loginPagefileInput.click()"
-                  >
-                    {{ 'Pending' | translate }}
-                  </button>
-                  <input
-                    class="input-invisible"
-                    type="file"
-                    ng2FileSelect
-                    #loginPagefileInput
-                    [uploader]="loginPageImageUploader"
-                    id="loginPageFileInput"
-                  />
-                  <button
-                    class="btn btn-icon waves-light m-0"
-                    id="loginPageImageVisibilityToggler"
-                    [class.btn-success]="
-                      adminSettingsModel.loginPageSettingsModel.imageLinkVisible
-                    "
-                    [class.btn-danger]="
-                      !adminSettingsModel.loginPageSettingsModel
-                        .imageLinkVisible
-                    "
-                    (click)="
-                      adminSettingsModel.loginPageSettingsModel.imageLinkVisible = !adminSettingsModel
-                        .loginPageSettingsModel.imageLinkVisible
-                    "
-                  >
-                    <fa-icon
-                      icon="eye"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        adminSettingsModel.loginPageSettingsModel
-                          .imageLinkVisible
-                      "
-                    ></fa-icon>
-
-                    <fa-icon
-                      icon="eye-slash"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        !adminSettingsModel.loginPageSettingsModel
-                          .imageLinkVisible
-                      "
-                    ></fa-icon>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
-        <div class="card">
-          <div class="card-header card-header-extended">
-            <div class="d-flex justify-content-between align-items-center">
-              {{ 'Site header' | translate }}
-              <button
-                mdbBtn
-                class="btn-neutral btn-icon"
-                id="siteHeaderReset"
-                mdbTooltip="{{ 'Reset' | translate }}"
-                (click)="resetHeaderSettings()"
-              >
-                <fa-icon icon="undo" [fixedWidth]="true" size="lg"></fa-icon>
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="container-fluid">
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="adminSettingsModel.headerSettingsModel.mainText"
-                  type="text"
-                  name="headerSettingsMainText"
-                  id="headerSettingsMainText"
-                />
-                <label for="headerSettingsMainText">{{
-                  'Main Text' | translate
-                }}</label>
-                <div class="input-group-btn">
-                  <button
-                    id="siteHeaderMainTextToggler"
-                    class="btn btn-icon waves-light m-0"
-                    [class.btn-success]="
-                      adminSettingsModel.headerSettingsModel.mainTextVisible
-                    "
-                    [class.btn-danger]="
-                      !adminSettingsModel.headerSettingsModel.mainTextVisible
-                    "
-                    (click)="
-                      adminSettingsModel.headerSettingsModel.mainTextVisible = !adminSettingsModel
-                        .headerSettingsModel.mainTextVisible
-                    "
-                  >
-                    <fa-icon
-                      icon="eye"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        adminSettingsModel.headerSettingsModel.mainTextVisible
-                      "
-                    ></fa-icon>
-                    <fa-icon
-                      icon="eye-slash"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        !adminSettingsModel.headerSettingsModel.mainTextVisible
-                      "
-                    ></fa-icon>
-                  </button>
-                </div>
-              </div>
-
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="
-                    adminSettingsModel.headerSettingsModel.secondaryText
-                  "
-                  type="text"
-                  name="headerSettingsSecondaryText"
-                  id="headerSettingsSecondaryText"
-                />
-                <label for="headerSettingsSecondaryText">{{
-                  'Secondary Text' | translate
-                }}</label>
-                <div class="input-group-btn">
-                  <button
-                    id="siteHeaderSecondaryTextToggler"
-                    class="btn btn-icon waves-light m-0"
-                    [class.btn-success]="
-                      adminSettingsModel.headerSettingsModel
-                        .secondaryTextVisible
-                    "
-                    [class.btn-danger]="
-                      !adminSettingsModel.headerSettingsModel
-                        .secondaryTextVisible
-                    "
-                    (click)="
-                      adminSettingsModel.headerSettingsModel.secondaryTextVisible = !adminSettingsModel
-                        .headerSettingsModel.secondaryTextVisible
-                    "
-                  >
-                    <fa-icon
-                      icon="eye"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        adminSettingsModel.headerSettingsModel
-                          .secondaryTextVisible
-                      "
-                    ></fa-icon>
-                    <fa-icon
-                      icon="eye-slash"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        !adminSettingsModel.headerSettingsModel
-                          .secondaryTextVisible
-                      "
-                    ></fa-icon>
-                  </button>
-                </div>
-              </div>
-
-              <div class="d-flex flex-wrap">
-                <div class="mr-auto">
-                  <p class="mb-0 align-self-center">{{ 'Logo' | translate }}</p>
-                  <img
-                    *ngIf="headerImageLink"
-                    class="p-3"
-                    width="150"
-                    [src]="headerImageLink | authImage | async"
-                  />
-                </div>
-                <div class="align-self-center">
-                  <p>{{ 'Recommended parameters' | translate }}:</p>
-                  <p>{{ 'Resolution' | translate }} - 170x80</p>
-                  <p>{{ 'Proportions' | translate }} - 2:1</p>
-                </div>
-                <div class="align-self-center align-self-end">
-                  <button
-                    mdbBtn
-                    type="button"
-                    color="primary"
-                    size="sm"
-                    *ngIf="headerImageUploader?.queue?.length === 0"
-                    id="siteHeaderUploadBtn"
-                    (click)="headerImageUploaderInput.click()"
-                  >
-                    {{ 'Upload' | translate }}
-                  </button>
-                  <button
-                    mdbBtn
-                    type="button"
-                    color="warning"
-                    size="sm"
-                    *ngIf="headerImageUploader?.queue?.length > 0"
-                    (click)="headerImageUploaderInput.click()"
-                  >
-                    {{ 'Pending' | translate }}
-                  </button>
-                  <input
-                    class="input-invisible"
-                    type="file"
-                    ng2FileSelect
-                    [uploader]="headerImageUploader"
-                    #headerImageUploaderInput
-                    id="siteHeaderFileInput"
-                  />
-                  <button
-                    class="btn btn-icon waves-light m-0"
-                    id="siteHeaderImageVisibilityToggler"
-                    [class.btn-success]="
-                      adminSettingsModel.headerSettingsModel.imageLinkVisible
-                    "
-                    [class.btn-danger]="
-                      !adminSettingsModel.headerSettingsModel.imageLinkVisible
-                    "
-                    (click)="
-                      adminSettingsModel.headerSettingsModel.imageLinkVisible = !adminSettingsModel
-                        .headerSettingsModel.imageLinkVisible
-                    "
-                  >
-                    <fa-icon
-                      icon="eye"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        adminSettingsModel.headerSettingsModel.imageLinkVisible
-                      "
-                    ></fa-icon>
-                    <fa-icon
-                      icon="eye-slash"
-                      [fixedWidth]="true"
-                      size="lg"
-                      *ngIf="
-                        !adminSettingsModel.headerSettingsModel.imageLinkVisible
-                      "
-                    ></fa-icon>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row mt-4">
-      <div class="col-md-12 col-xs-12 mt-1 mb-4 control-block">
-        <div class="card">
-          <div class="card-header card-header-simple">
-            <div class="d-flex justify-content-between align-items-center">
-              {{ 'SDK information' | translate }}
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="container-fluid">
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="adminSettingsModel.sdkSettingsModel.customerNo"
-                  type="text"
-                  name="customerNo"
-                  id="customerNo"
-                />
-                <label for="customerNo">{{ 'Customer no' | translate }}</label>
-              </div>
-
-              <!--              <div class="md-form input-group">-->
-              <!--                <input mdbInput class="form-control"-->
-              <!--                       [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLevel"-->
-              <!--                       type="text" name="logLevel" id="logLevel">-->
-              <!--                <label for="logLevel">{{ 'Log level' | translate }}</label>-->
-              <!--              </div>-->
-
-              <!--              <div class="md-form input-group">-->
-              <!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLimit"-->
-              <!--                       type="text" name="logLimit" id="logLimit">-->
-              <!--                <label for="logLimit">{{ 'Log limit' | translate }}</label>-->
-              <!--              </div>-->
-
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="
-                    adminSettingsModel.sdkSettingsModel.fileLocationPicture
-                  "
-                  type="text"
-                  value=""
-                  name="fileLocationPicture"
-                  id="fileLocationPicture"
-                />
-                <label>{{ 'File location picture' | translate }}</label>
-              </div>
-
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="
-                    adminSettingsModel.sdkSettingsModel.fileLocationPdf
-                  "
-                  type="text"
-                  value=""
-                  name="fileLocationPdf"
-                  id="fileLocationPdf"
-                />
-                <label>{{ 'File location PDF' | translate }}</label>
-              </div>
-
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="
-                    adminSettingsModel.sdkSettingsModel.fileLocationReports
-                  "
-                  type="text"
-                  value=""
-                  name="fileLocationReports"
-                  id="fileLocationReports"
-                />
-                <label>{{
-                  'File location Jasper report files' | translate
-                }}</label>
-              </div>
-
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="
-                    adminSettingsModel.sdkSettingsModel.httpServerAddress
-                  "
-                  type="text"
-                  value=""
-                  name="httpServerAddress"
-                  id="httpServerAddress"
-                />
-                <label>{{ 'Http server address' | translate }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row mt-4">
-      <!--      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">-->
-      <!--        <div class="card">-->
-      <!--          <div class="card-header card-header-simple">-->
-      <!--            <div class="d-flex justify-content-between align-items-center">-->
-      <!--              {{ 'SMTP Information' | translate}}-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--          <div class="card-body">-->
-      <!--            <div class="container-fluid">-->
-
-      <!--              <div class="md-form input-group">-->
-      <!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.host"-->
-      <!--                       placeholder="smtp.gmail.com" type="text" name="host"-->
-      <!--                       id="host">-->
-      <!--                <label for="host">{{ 'Host' | translate }}</label>-->
-      <!--              </div>-->
-
-      <!--              <div class="md-form input-group">-->
-      <!--                <input mdbInput class="form-control"-->
-      <!--                       [(ngModel)]="adminSettingsModel.smtpSettingsModel.port"-->
-      <!--                       placeholder="1433"-->
-      <!--                       type="text" name="port" id="port">-->
-      <!--                <label for="port">{{ 'Port' | translate }}</label>-->
-      <!--              </div>-->
-
-      <!--              <div class="md-form input-group">-->
-      <!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.login"-->
-      <!--                       placeholder="userName" type="text" name="login" id="login">-->
-      <!--                <label for="login">{{ 'Login' | translate }}</label>-->
-      <!--              </div>-->
-
-      <!--              <div class="md-form input-group">-->
-      <!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.password"-->
-      <!--                       placeholder="12345678909876543210adfecdfefdae" type="password" value=""-->
-      <!--                       name="password" id="password">-->
-      <!--                <label>{{ 'Password' | translate }}</label>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
-        <div class="card">
-          <div class="card-header card-header-simple">
-            <div class="d-flex justify-content-between align-items-center">
-              {{ 'Storage information' | translate }}
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="container-fluid">
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="
-                    adminSettingsModel.swiftSettingsModel.swiftEnabled
-                  "
-                  placeholder="false"
-                  type="text"
-                  name="swiftEnabled"
-                  id="swiftEnabled"
-                />
-                <label for="swiftEnabled">{{
-                  'Swift enabled' | translate
-                }}</label>
-              </div>
-
-              <div
-                class="md-form input-group"
-                *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled"
-              >
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="
-                    adminSettingsModel.swiftSettingsModel.swiftUserName
-                  "
-                  placeholder="eformsdk"
-                  type="text"
-                  name="swiftUserName"
-                  id="swiftUserName"
-                />
-                <label for="swiftUserName">{{ 'User name' | translate }}</label>
-              </div>
-
-              <div
-                class="md-form input-group"
-                *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled"
-              >
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="
-                    adminSettingsModel.swiftSettingsModel.swiftPassword
-                  "
-                  placeholder="eformsdktosecretpassword"
-                  type="password"
-                  name="swiftPassword"
-                  id="swiftPassword"
-                />
-                <label for="swiftPassword">{{ 'Password' | translate }}</label>
-              </div>
-
-              <div
-                class="md-form input-group"
-                *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled"
-              >
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="
-                    adminSettingsModel.swiftSettingsModel.swiftEndpoint
-                  "
-                  placeholder="http://172.16.4.4:8080/swift/v1"
-                  type="text"
-                  value=""
-                  name="swiftEndpoint"
-                  id="swiftEndpoint"
-                />
-                <label for="swiftEndpoint">{{
-                  'Swift endpoint' | translate
-                }}</label>
-              </div>
-
-              <div
-                class="md-form input-group"
-                *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled"
-              >
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="
-                    adminSettingsModel.swiftSettingsModel.keystoneEndpoint
-                  "
-                  placeholder="http://172.16.4.4:5000/v2.0"
-                  type="text"
-                  value=""
-                  name="keystoneEndpoint"
-                  id="keystoneEndpoint"
-                />
-                <label for="keystoneEndpoint">{{
-                  'Keystone endpoint' | translate
-                }}</label>
-              </div>
-
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Enabled"
-                  placeholder="false"
-                  type="text"
-                  name="s3Enabled"
-                  id="s3Enabled"
-                />
-                <label for="swiftEnabled">{{ 'S3 enabled' | translate }}</label>
-              </div>
-
-              <div
-                class="md-form input-group"
-                *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled"
-              >
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="adminSettingsModel.s3SettingsModel.s3AccessKeyId"
-                  placeholder="false"
-                  type="text"
-                  name="s3AccessKeyId"
-                  id="s3AccessKeyId"
-                />
-                <label for="swiftEnabled">{{
-                  'S3 accessKey' | translate
-                }}</label>
-              </div>
-
-              <div
-                class="md-form input-group"
-                *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled"
-              >
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="
-                    adminSettingsModel.s3SettingsModel.s3SecrectAccessKey
-                  "
-                  placeholder="false"
-                  type="password"
-                  name="s3SecrectAccessKey"
-                  id="s3SecrectAccessKey"
-                />
-                <label for="swiftEnabled">{{
-                  'S3 secretAccessKey' | translate
-                }}</label>
-              </div>
-
-              <div
-                class="md-form input-group"
-                *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled"
-              >
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Endpoint"
-                  placeholder="false"
-                  type="text"
-                  name="s3Endpoint"
-                  id="s3Endpoint"
-                />
-                <label for="swiftEnabled">{{
-                  'S3 endpoint' | translate
-                }}</label>
-              </div>
-
-              <div
-                class="md-form input-group"
-                *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled"
-              >
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="adminSettingsModel.s3SettingsModel.s3BucketName"
-                  placeholder="false"
-                  type="password"
-                  name="s3BucketName"
-                  id="s3BucketName"
-                />
-                <label for="swiftEnabled">{{
-                  'S3 bucket name' | translate
-                }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--    </div>-->
-
-      <!--    <div class="row mt-4">-->
-      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
-        <div class="card">
-          <div class="card-header card-header-simple">
-            <div class="d-flex justify-content-between align-items-center">
-              {{ 'SendGrid Information' | translate }}
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="container-fluid">
-              <div class="md-form input-group">
-                <input
-                  mdbInput
-                  class="form-control"
-                  [(ngModel)]="adminSettingsModel.sendGridSettingsModel.apiKey"
-                  placeholder="12345678909876543210adfecdfefdae"
-                  type="password"
-                  value=""
-                  name="sendGridKey"
-                  id="sendGridKey"
-                />
-                <label for="sendGridKey">{{ 'Key' | translate }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
-        <div class="card">
-          <div class="card-header card-header-simple">
-            <div class="d-flex justify-content-between align-items-center">
-              {{ 'Other' | translate }}
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="container-fluid">
-              <div class="mat-checkbox">
-                <input
-                  id="isEnableWidget"
-                  [value]="othersSettings.isEnableWidget"
-                  [(ngModel)]="othersSettings.isEnableWidget"
-                  [ngModelOptions]="{standalone: true}"
-                  type="checkbox"
-                />
-                <label for="isEnableWidget">{{
-                  'Userback widget' | translate
-                  }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
+  <div class="flex-cards mt-4">
+    <mat-card class="mat-card-50">
+      <mat-card-title>
+        <h4>{{ 'Other' | translate }}</h4>
+      </mat-card-title>
+      <mat-card-content>
+          <mat-checkbox
+            id="isEnableWidget"
+            [(ngModel)]="othersSettings.isEnableWidget"
+            [ngModelOptions]="{standalone: true}"
+          >{{'Userback widget' | translate}}
+          </mat-checkbox>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

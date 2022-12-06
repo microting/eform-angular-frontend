@@ -7,7 +7,7 @@ export class TagsModalPage extends Page {
 
   public async rowNum(): Promise<number> {
     await browser.pause(500);
-    return (await $$('#tagRow')).length;
+    return (await $$('#tagName')).length;
   }
 
   // Create page elements
@@ -67,18 +67,22 @@ export class TagsModalPage extends Page {
 
   public async createTag(tagName: string) {
     await (await this.newTagBtn()).click();
+    await browser.pause(500);
     await (await $('#newTagName')).waitForDisplayed({ timeout: 90000 });
     await (await this.newTagNameInput()).setValue(tagName);
     await (await this.newTagSaveBtn()).click();
+    await browser.pause(500);
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await (await $('#newTagBtn')).waitForDisplayed({ timeout: 40000 });
   }
 
   public async cancelCreateTag(tagName: string) {
     await (await this.newTagBtn()).click();
+    await browser.pause(500);
     await (await $('#newTagName')).waitForDisplayed({ timeout: 90000 });
     await (await this.newTagNameInput()).setValue(tagName);
     await (await this.newTagSaveCancelBtn()).click();
+    await browser.pause(500);
     await (await $('#newTagBtn')).waitForDisplayed({ timeout: 40000 });
   }
 
@@ -87,8 +91,10 @@ export class TagsModalPage extends Page {
     const result = new TagRowObject();
     const rowObject = await result.getRow(rowNumber);
     await rowObject.editTagClick();
+    await browser.pause(500);
     await (await this.editTagNameInput()).setValue(name);
     await (await this.tagEditSaveBtn()).click();
+    await browser.pause(500);
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await (await $('#newTagBtn')).waitForDisplayed({ timeout: 40000 });
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
@@ -135,6 +141,7 @@ export class TagsModalPage extends Page {
 
   public async closeTagModal() {
     await (await this.tagsModalCloseBtn()).click();
+    await browser.pause(500);
   }
 }
 

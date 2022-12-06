@@ -9,11 +9,11 @@ import { LoaderService } from 'src/app/common/services';
 export class SpinnerComponent implements OnInit {
   loading: boolean;
 
-  constructor(private loaderService: LoaderService) {
-    this.loaderService.isLoading.subscribe((v) => {
+  constructor(public loaderService: LoaderService) {
+  }
+  ngOnInit() {
+    /*this.loaderService.isLoading.subscribe((v) => {
       // console.log(v);
       this.loading = v;
-    });
-  }
-  ngOnInit() {}
+    });*/}
 }

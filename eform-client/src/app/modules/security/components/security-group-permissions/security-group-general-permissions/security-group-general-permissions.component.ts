@@ -1,4 +1,4 @@
-import { flatten } from '@angular/compiler';
+import * as R from 'ramda';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -49,7 +49,7 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
 
   updateSecurityGroupGeneralPermissions() {
     this.securityGroupGeneralPermissionsUpdateModel.groupId = this.selectedGroupId;
-    this.securityGroupGeneralPermissionsUpdateModel.permissions = flatten(
+    this.securityGroupGeneralPermissionsUpdateModel.permissions = R.flatten(
       this.securityGroupGeneralPermissionsModel.permissionTypes.map(
         (x) => x.permissions
       )

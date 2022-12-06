@@ -1,13 +1,12 @@
 import {
   Component,
   EventEmitter,
+  Inject,
   OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { SharedTagModel } from 'src/app/common/models';
+import {SharedTagModel} from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
@@ -15,35 +14,23 @@ import { SharedTagModel } from 'src/app/common/models';
   templateUrl: './shared-tag-edit.component.html',
   styleUrls: ['./shared-tag-edit.component.scss'],
 })
-export class SharedTagEditComponent implements OnInit, OnDestroy {
-  @ViewChild('frame') frame;
-  @Output() tagUpdate: EventEmitter<SharedTagModel> = new EventEmitter<
-    SharedTagModel
-  >();
-  @Output() tagUpdateCancelled: EventEmitter<void> = new EventEmitter<void>();
-  tagModel: SharedTagModel = new SharedTagModel();
+export class SharedTagEditComponent implements OnDestroy {
+  public updatedTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
+  public tagModel: SharedTagModel = new SharedTagModel()
 
-  constructor() {}
-
-  ngOnInit() {}
-
-  show(model: SharedTagModel) {
-    this.tagModel = model;
-    this.frame.show();
-  }
-
-  hide() {
-    this.frame.hide();
+  constructor(
+    public dialogRef: MatDialogRef<SharedTagEditComponent>,
+    @Inject(MAT_DIALOG_DATA) tagModel: SharedTagModel = new SharedTagModel()) {
+    this.tagModel = {...tagModel};
   }
 
   updateItem() {
-    this.tagUpdate.emit(this.tagModel);
+    this.updatedTag.emit(this.tagModel);
+  }
+
+  cancelEdit() {
+    this.dialogRef.close();
   }
 
   ngOnDestroy(): void {}
-
-  cancelEdit() {
-    this.frame.hide();
-    this.tagUpdateCancelled.emit();
-  }
 }

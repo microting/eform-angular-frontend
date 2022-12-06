@@ -1,4 +1,4 @@
-import { FolderTranslationModel } from './folder-translation.model';
+import { FolderTranslationModel } from 'src/app/common/models';
 
 export class FolderUpdateModel {
   id: number;

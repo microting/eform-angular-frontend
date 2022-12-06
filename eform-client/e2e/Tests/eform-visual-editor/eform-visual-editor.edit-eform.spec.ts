@@ -48,7 +48,9 @@ describe('Visual editor page', function () {
       ],
     };
     await eformVisualEditorPage.createVisualTemplate(checklist, true);
+    await browser.pause(500);
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+    await browser.pause(500);
     let mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     const checklistObjForEdit: MainChecklistObj = {
@@ -60,18 +62,6 @@ describe('Visual editor page', function () {
           languageId: 1,
           id: null,
         },
-        {
-          name: generateRandmString(),
-          description: generateRandmString(),
-          languageId: 2,
-          id: null,
-        },
-        {
-          name: generateRandmString(),
-          description: generateRandmString(),
-          languageId: 3,
-          id: null,
-        },
       ],
     };
     const newField: ChecklistFieldObj = {
@@ -81,18 +71,6 @@ describe('Visual editor page', function () {
           name: generateRandmString(),
           description: generateRandmString(),
           languageId: 1,
-          id: null,
-        },
-        {
-          name: generateRandmString(),
-          description: generateRandmString(),
-          languageId: 2,
-          id: null,
-        },
-        {
-          name: generateRandmString(),
-          description: generateRandmString(),
-          languageId: 3,
           id: null,
         },
       ],
@@ -108,7 +86,8 @@ describe('Visual editor page', function () {
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     await mainChecklist.fields[1].edit({ type: EformFieldTypesEnum.None });
-    await mainChecklist.fields[1].changeColor('grey');
+    await mainChecklist.fields[1].changeColor('red');
+    await browser.pause(10000);
     checklistObjForEdit.fields = [
       newField,
       { ...checklist.fields[0], type: EformFieldTypesEnum.None },
@@ -141,7 +120,7 @@ describe('Visual editor page', function () {
     expect(
       mainChecklist.fields[1].color.description,
       `field[1] color not valid`
-    ).eq('Grey');
+    ).eq('Red');
   });
   it('should edit created visual template (nested checklist)', async () => {
     const checklist: MainChecklistObj = {
@@ -203,9 +182,12 @@ describe('Visual editor page', function () {
       ],
     };
     await eformVisualEditorPage.createVisualTemplate(checklist, true);
+    await browser.pause(500);
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+    await browser.pause(500);
     let mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
+    await browser.pause(500);
     checklist.checklists[1].translations = [
       {
         name: generateRandmString(),
@@ -215,13 +197,18 @@ describe('Visual editor page', function () {
       },
     ];
     await mainChecklist.checklists[1].edit(checklist.checklists[1].translations);
+    await browser.pause(500);
     await mainChecklist.checklists[0].fields[0].makeCopy();
+    await browser.pause(500);
     await mainChecklist.checklists[0].fields[0].changeColor('grey');
+    await browser.pause(1000);
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
+    await browser.pause(500);
     await mainChecklist.checklists[0].fields[1].changePosition(
       mainChecklist.checklists[0].fields[0]
     );
+    await browser.pause(500);
     checklist.checklists[0].fields = [
       checklist.checklists[0].fields[1],
       {
@@ -235,16 +222,21 @@ describe('Visual editor page', function () {
     ];
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
+    await browser.pause(500);
     await mainChecklist.checklists[0].fields[1].edit({
       type: checklist.checklists[0].fields[1].type,
       maxValue: checklist.checklists[0].fields[1].maxValue,
       minValue: checklist.checklists[0].fields[1].minValue,
       defaultValue: checklist.checklists[0].fields[1].defaultValue,
     });
+    await browser.pause(500);
     await eformVisualEditorPage.clickSave();
+    await browser.pause(500);
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+    await browser.pause(500);
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
+    await browser.pause(500);
 
     for (let i = 0; i < checklist.checklists[0].fields.length; i++) {
       expect(

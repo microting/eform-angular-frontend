@@ -83,7 +83,11 @@ namespace eFormAPI.Web
         {
             Log.LogEvent("Startup.ConfigureServices");
             // TODO check if we need this or code needs to be updated.
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddMvc(options =>
+            {
+                options.EnableEndpointRouting = false;
+                options.MaxModelBindingCollectionSize = int.MaxValue;
+            });
 
             // Configuration
             services.AddOptions();
@@ -127,7 +131,7 @@ namespace eFormAPI.Web
                         // Once we have the correct connectionstring in the connection.json, we restart the server and the above method is used.
                         services.AddEntityFrameworkMySql()
                             .AddDbContext<BaseDbContext>(o => o.UseMySql(
-                                "server=sffsfd;", new MariaDbServerVersion(
+                                "server=localhost;", new MariaDbServerVersion(
                                     new Version(10, 4, 0)), mySqlOptionsAction: builder =>
                                 {
                                     builder.EnableRetryOnFailure();
@@ -177,6 +181,7 @@ namespace eFormAPI.Web
             services.Configure<FormOptions>(x =>
             {
                 x.ValueLengthLimit = int.MaxValue;
+                x.ValueCountLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = long.MaxValue; // In case of multipart
             });
             // Register the Swagger generator, defining one or more Swagger documents

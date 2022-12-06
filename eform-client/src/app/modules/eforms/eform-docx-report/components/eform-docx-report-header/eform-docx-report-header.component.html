@@ -1,27 +1,37 @@
-<form [formGroup]="generateForm">
-  <div class="row pl-1">
-    <div class="col-md-3">
-      <div class="md-form" [owlDateTimeTrigger]="dateRangePicker">
-        <i class="material-icons prefix">
-          calendar_today
-        </i>
-        <input mdbInput  formControlName="dateRange"
-               name="dateRange" required
-               [(ngModel)]="range"
-               type="text" [owlDateTime]="dateRangePicker" [selectMode]="'range'"
-               class="form-control input-sm" id="dateFormInput">
-        <label for="dateFormInput">{{'Select date range' | translate}}</label>
-      </div>
-    </div>
-    <div class="col-md-3 text-center pt-3">
-      <button mdbBtn class="btn-success btn-small-height" [disabled]="generateForm.invalid" (click)="onSubmit()">
-        {{'Generate' | translate}}
-      </button>
-      <button mdbBtn class="btn-info btn-icon mb-2" [disabled]="generateForm.invalid" (click)="onSave()">
-        <fa-icon icon="file-word" size="lg" [fixedWidth]="true"></fa-icon>
-      </button>
-    </div>
-
+<form [formGroup]="generateForm" class="d-flex align-items-center flex-wrap">
+  <div class="d-flex mr-2">
+    <mat-form-field [owlDateTimeTrigger]="dateRangePicker">
+      <mat-label>{{ 'Select date range' | translate }}</mat-label>
+      <mat-icon matPrefix>calendar_today</mat-icon>
+      <input
+        matInput
+        formControlName="dateRange"
+        name="dateRange"
+        required
+        type="text"
+        [owlDateTime]="dateRangePicker"
+        [selectMode]="'range'"
+        id="dateFormInput"
+      >
+    </mat-form-field>
+  </div>
+  <div class="d-flex flex-row">
+    <button
+      mat-raised-button
+      color="accent"
+      [disabled]="generateForm.invalid"
+      (click)="onSubmit()"
+    >
+      {{'Generate' | translate}}
+    </button>
+    <button
+      mat-icon-button
+      color="primary"
+      [disabled]="generateForm.invalid"
+      (click)="onSave()"
+    >
+      <mat-icon svgIcon="file-word"></mat-icon>
+    </button>
   </div>
 </form>
 

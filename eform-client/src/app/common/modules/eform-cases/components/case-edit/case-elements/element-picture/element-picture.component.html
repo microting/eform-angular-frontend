@@ -1,104 +1,54 @@
-<div class="row pl-2">
-  <button mdbBtn class="btn-success btn-icon"
-          [disabled]="buttonsLocked"
-          mdbTooltip="{{'Add new image' | translate}}"
-          (click)="updateAddNewImageModal.show()">
-    <fa-icon icon="plus" size="lg" [fixedWidth]="true"></fa-icon>
+<div>
+  <button
+    mat-icon-button
+    color="primary"
+    [disabled]="buttonsLocked"
+    matTooltip="{{'Add new image' | translate}}"
+    (click)="openAddImage()"
+  >
+    <mat-icon>add</mat-icon>
   </button>
 </div>
-<div class="row">
-  <div class="col-md-3 col-sm-4 col-xs-12" *ngFor="let image of images; let i = index">
-    <mdb-card>
-      <mdb-card-img (click)="openPicture(i)" [src]="image.src | authImage | async" alt="Card image cap" ></mdb-card-img>
-      <!--Card content-->
-      <mdb-card-body>
-        <mdb-card-text>
-          <div class="d-flex justify-content-center">
-            <button mdbBtn class="btn-icon btn-accent text-black-50"
-                    mdbTooltip="{{'Rotate on 90' | translate}}"
-                    [disabled]="buttonsLocked"
-                    (click)="rotatePicture(image)">
-              <fa-icon icon="undo" flip="vertical" size="lg" [fixedWidth]="true" style="transform: rotate(180deg);"></fa-icon>
-            </button>
-            <button mdbBtn class="btn-icon btn-danger"
-                    [disabled]="buttonsLocked"
-                    mdbTooltip="{{'Delete picture' | translate}}"
-                    (click)="imageForDelete = image; confirmDeleteImageModal.show()">
-              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
-            </button>
-            <button [disabled]="!image.googleMapsLat && !image.googleMapsLon || buttonsLocked"
-                    mdbTooltip="{{'Open location' | translate}}"
-                    (click)="openGpsWindow(image.googleMapsUrl)" class="btn btn-icon btn-success">
-              <fa-icon icon="map-marker-alt" size="lg" [fixedWidth]="true"></fa-icon>
-            </button>
-<!--            <button mdbBtn class="btn btn-icon btn-success"-->
-<!--                    mdbTooltip="{{'Update image' | translate}}"-->
-<!--                    [disabled]="buttonsLocked"-->
-<!--                    (click)="imageIdForUpdate = image.uploadedObjId;updateAddNewImageModal.show()">-->
-<!--              <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>-->
-<!--            </button>-->
-          </div>
-        </mdb-card-text>
-      </mdb-card-body>
-    </mdb-card>
-  </div>
-</div>
-
-<div mdbModal class="modal fade" #updateAddNewImageModal="mdbModal">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Select new image' | translate }}</h3>
-      </div>
-      <div class="modal-body">
-        <input
-          type="file"
-          hidden
-          accept="image/*"
-          (change)="onFileSelected($event)"
-          id="imageInput"
-          #fileUpload
-        />
-        <div>
-          {{
-          newImageForUpdate ? newImageForUpdate.name :
-          'No file uploaded yet.' | translate
-          }}
-          <button
-            mdbBtn
-            class="btn-primary btn-small-height"
-            (click)="fileUpload.click()"
-          >
-            {{ 'Select image' | translate }}
-          </button>
-        </div>
-      </div>
-      <div class="modal-footer d-flex justify-content-around">
-        <button mdbBtn class="btn-success btn-small-height" (click)="!!imageIdForUpdate ? updatePicture() : addPicture()" [disabled]="!newImageForUpdate">
-          {{ (!!imageIdForUpdate ? 'Update' : 'Add') | translate }}
-        </button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="imageIdForUpdate = undefined; updateAddNewImageModal.hide()">
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
+<div class="d-flex flex-row flex-wrap justify-content-between">
+  <mat-card
+  *ngFor="let image of images; let i = index"
+  style="width: 500px;"
+  class="d-flex flex-column justify-content-between m-1"
+>
+  <mat-card-content>
+    <img
+      mat-card-image
+      (click)="openPicture(i)"
+      [src]="image.src | authImage | async"
+      alt="Card image cap"
+    >
+  </mat-card-content>
+  <mat-card-footer>
+    <div class="d-flex justify-content-center">
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="{{'Rotate on 90' | translate}}"
+        (click)="rotatePicture(image)">
+        <mat-icon>rotate_90_degrees_cw</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="warn"
+        [disabled]="buttonsLocked"
+        matTooltip="{{'Delete picture' | translate}}"
+        (click)="openDeleteImage(image)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="{{'Open location' | translate}}"
+        [disabled]="!image.googleMapsLat && !image.googleMapsLon || buttonsLocked"
+        (click)="openGpsWindow(image.googleMapsUrl)">
+        <mat-icon>place</mat-icon>
+      </button>
     </div>
-  </div>
-</div>
-
-<div mdbModal class="modal fade" #confirmDeleteImageModal="mdbModal">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Are you sure you want to delete' | translate }}?</h3>
-      </div>
-      <div class="modal-footer d-flex justify-content-around">
-        <button mdbBtn class="btn-danger btn-small-height" (click)="deletePicture(imageForDelete)" [disabled]="!imageForDelete">
-          {{ 'Delete' | translate }}
-        </button>
-        <button mdbBtn class="btn-accent btn-small-height" (click)="imageForDelete = undefined; confirmDeleteImageModal.hide()">
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
+  </mat-card-footer>
+</mat-card>
 </div>

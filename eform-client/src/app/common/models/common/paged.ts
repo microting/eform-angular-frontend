@@ -1,4 +1,4 @@
 export class Paged<T> {
-  total: number;
-  entities: T[];
+  total: number = 0;
+  entities: T[] = [];
 }

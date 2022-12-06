@@ -1,18 +1,28 @@
 import {
   Component,
   ElementRef,
+  EventEmitter,
   OnDestroy,
-  OnInit,
+  OnInit, Output,
   ViewChild,
 } from '@angular/core';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {
-  AppMenuQuery,
   AppMenuStateService,
   AuthStateService,
 } from 'src/app/common/store';
-import { AdminService, AuthService } from 'src/app/common/services';
-import { Subscription } from 'rxjs';
+import {AdminService, AuthService} from 'src/app/common/services';
+import {Subscription} from 'rxjs';
+import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
+import {FlatTreeControl} from '@angular/cdk/tree';
+import { MenuItemModel} from 'src/app/common/models';
+import { Router } from '@angular/router';
+
+interface FlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
+}
 
 @AutoUnsubscribe()
 @Component({
@@ -21,8 +31,38 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit, OnDestroy {
-  @ViewChild('navigationMenu', { static: true }) menuElement: ElementRef;
-  private _menuFlag = false;
+  @ViewChild('navigationMenu', {static: true}) menuElement: ElementRef;
+  @Output() clickOnLink: EventEmitter<void> = new EventEmitter<void>();
+
+  private _transformer = (node: MenuItemModel, level: number) => {
+    return {
+      expandable: !!node.menuItems && node.menuItems.length > 0,
+      name: node.name,
+      level: level,
+      e2EId: node.e2EId,
+      link: node.link,
+      guards: node.guards,
+      isInternalLink: node.isInternalLink,
+    };
+  };
+
+  treeControl = new FlatTreeControl<FlatNode>(
+    node => node.level,
+    node => node.expandable,
+  );
+
+  treeFlattener = new MatTreeFlattener(
+    this._transformer,
+    node => node.level,
+    node => node.expandable,
+    node => node.menuItems,
+  );
+
+  hasChild = (_: number, node: FlatNode) => node.expandable;
+
+  getLevel = (node: FlatNode) => node.level;
+
+  menu = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   getAppMenuSub$: Subscription;
   getCurrentUserInfoSub$: Subscription;
@@ -32,10 +72,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
     private adminService: AdminService,
     private appMenuService: AppMenuStateService,
     private authStateService: AuthStateService,
-    public appMenuQuery: AppMenuQuery
-  ) {}
+    public router: Router,
+  ) {
+  }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+  }
 
   ngOnInit() {
     if (this.authStateService.isAuth) {
@@ -44,7 +86,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
         .subscribe((result) => {
           this.authStateService.updateUserInfo(result);
         });
-      this.getAppMenuSub$ = this.appMenuService.getAppMenu().subscribe();
+      this.getAppMenuSub$ = this.appMenuService.getAppMenu().subscribe(x => {
+        if (x && x.leftMenu/* && x.rightMenu*/) {
+          this.menu.data = [...x.leftMenu/*, ...x.rightMenu*/];
+        }
+      });
     }
   }
 
@@ -53,17 +99,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
       return true;
     }
 
-    if (guards.includes(this.authStateService.currentRole)) {
-      return true;
-    }
-
     return guards.some((g) => this.authStateService.checkClaim(g));
   }
 
-  expandMenu() {
-    this._menuFlag
-      ? this.menuElement.nativeElement.classList.remove('show')
-      : this.menuElement.nativeElement.classList.add('show');
-    this._menuFlag = !this._menuFlag;
+  onClickOnNode() {
+    this.clickOnLink.emit();
   }
 }

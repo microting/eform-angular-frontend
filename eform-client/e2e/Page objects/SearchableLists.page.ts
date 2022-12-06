@@ -40,16 +40,16 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return $('#labelInput');
   }
   public async entitySearchCreateName(): Promise<WebdriverIO.Element> {
-    return $('#createName');
+    return $('#editName');
   }
   public async entitySearchCreateImportBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#importEntitySearchBtn');
+    const ele = await $('#editEntitySearchImportBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchCreateSingleItemBtn(): Promise<WebdriverIO.Element> {
-    return $('#addSingleEntitySearchableItem');
+    return $('#addSingleEntitySelectableItem');
   }
   public async entitySearchCreateSingleItemEditBtn(): Promise<WebdriverIO.Element> {
     return $('#entityItemEditBtn');
@@ -73,31 +73,31 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return ele;
   }
   public async entitySearchCreateImportItemTextArea(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySearchImportTextArea');
+    const ele = await $('#entityImportTextArea');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchCreateImportItemSaveBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySearchImportSaveBtn');
+    const ele = await $('#entityImportSaveBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchCreateImportItemCancelBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $(`#entitySearchImportCancelBtn`);
+    const ele = await $(`#entityImportCancelBtn`);
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchCreateSaveBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySearchCreateSaveBtn');
+    const ele = await $('#entityCreateSaveBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchCreateCancelBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySearchCreateCancelBtn');
+    const ele = await $('#entitySearchUpdateCancelBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -151,25 +151,25 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return ele;
   }
   public async entitySearchEditImportItemTextArea(): Promise<WebdriverIO.Element> {
-    const ele = await $(`#entitySearchImportTextArea`);
+    const ele = await $(`#entityImportTextArea`);
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchEditImportItemSaveBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $(`#entitySearchImportSaveBtn`);
+    const ele = await $(`#entityImportSaveBtn`);
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchEditImportItemCancelBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySearchImportCancelBtn');
+    const ele = await $('#entityImportCancelBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
   public async entitySearchEditSaveBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySearchUpdateSaveBtn');
+    const ele = await $('#entityUpdateSaveBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -201,10 +201,13 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public async createSearchableList_NoItem(name: string) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.createEntitySearchBtn()).click();
-    await (await $('#createName')).waitForDisplayed({ timeout: 40000 });
+    await browser.pause(500);
+    await (await $('#editName')).waitForDisplayed({ timeout: 40000 });
     await (await this.entitySearchCreateName()).setValue(name);
+    await browser.pause(500);
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateSaveBtn()).click();
+    await browser.pause(500);
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.createEntitySearchBtn()).waitForDisplayed({timeout: 90000});
   }
@@ -212,31 +215,41 @@ export class SearchableListsPage extends PageWithNavbarPage {
     (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.createEntitySearchBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
-    await $('#createName').waitForDisplayed({ timeout: 40000 });
+    await $('#editName').waitForDisplayed({ timeout: 40000 });
     await (await this.entitySearchCreateName()).setValue(name);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
     await (await this.entitySearchCreateSingleItemBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
     await (await this.entitySearchCreateSingleItemEditBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateItemNameBox()).setValue(itemName);
     await (await this.entitySearchCreateItemSaveBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateSaveBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.createEntitySearchBtn()).waitForDisplayed({timeout: 90000});
   }
   public async createSearchableList_MultipleItems(name, itemNames) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.createEntitySearchBtn()).click();
-    await $('#createName').waitForDisplayed({ timeout: 40000 });
+    await browser.pause(500);
+    await $('#editName').waitForDisplayed({ timeout: 40000 });
     await (await this.entitySearchCreateName()).setValue(name);
+    await browser.pause(500);
     await (await this.entitySearchCreateImportBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateImportItemTextArea()).setValue(itemNames);
+    await browser.pause(500);
     await (await this.entitySearchCreateImportItemSaveBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateSaveBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.createEntitySearchBtn()).waitForDisplayed({timeout: 90000});
   }
@@ -244,43 +257,58 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public async createSearchableList_NoItem_Cancels(name) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.createEntitySearchBtn()).click();
-    await $('#createName').waitForDisplayed({ timeout: 40000 });
+    await $('#editName').waitForDisplayed({ timeout: 40000 });
+    await browser.pause(500);
     await (await this.entitySearchCreateName()).setValue(name);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
     await (await this.entitySearchCreateCancelBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.createEntitySearchBtn()).waitForDisplayed({timeout: 90000});
+    await browser.pause(500);
   }
   public async createSearchableList_OneItem_Cancels(name, itemName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.createEntitySearchBtn()).click();
-    await $('#createName').waitForDisplayed({ timeout: 40000 });
+    await browser.pause(500);
+    await $('#editName').waitForDisplayed({ timeout: 40000 });
     await (await this.entitySearchCreateName()).setValue(name);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateSingleItemBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateSingleItemEditBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateItemNameBox()).setValue(itemName);
+    await browser.pause(500);
     await (await this.entitySearchCreateItemSaveBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateCancelBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.createEntitySearchBtn()).waitForDisplayed({timeout: 90000});
   }
   public async createSearchableList_MultipleItems_Cancels(name, itemNames) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.createEntitySearchBtn()).click();
-    await $('#createName').waitForDisplayed({ timeout: 40000 });
+    await browser.pause(500);
+    await $('#editName').waitForDisplayed({ timeout: 40000 });
     await (await this.entitySearchCreateName()).setValue(name);
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateImportBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateImportItemTextArea()).setValue(itemNames);
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateImportItemSaveBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateCancelBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.createEntitySearchBtn()).waitForDisplayed({timeout: 90000});
   }
@@ -288,73 +316,94 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public async editSearchableListNameOnly(newName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.entitySearchEditBtn()).click();
+    await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
     await browser.pause(500);
     await (await this.entitySearchEditNameBox()).setValue(newName);
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchEditSaveBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
   public async editSearchableListNameOnly_Cancels(newName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.entitySearchEditBtn()).click();
+    await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
     await browser.pause(500);
     await (await this.entitySearchEditNameBox()).setValue(newName);
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchEditCancelBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
   public async editSearchableListNameAndItem(newName, newItemName) {
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchEditBtn()).click();
-    await $('#editName').waitForDisplayed({ timeout: 200000 });
+    await browser.pause(500);
     await $('#editName').waitForClickable({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
     await browser.pause(500);
     await (await this.entitySearchEditNameBox()).setValue(newName);
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await this.editItemName(newItemName);
+    await browser.pause(500);
     await (await this.entitySearchEditSaveBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
   public async editSearchableListOnlyItem(newItemName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.entitySearchEditBtn()).click();
+    await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await this.editItemName(newItemName);
+    await browser.pause(500);
     await (await this.entitySearchEditSaveBtn()).click();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
   public async editSearchableListNameAndItem_Cancels(newName, newItemName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.entitySearchEditBtn()).click();
+    await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
     await browser.pause(500);
     await (await this.entitySearchEditNameBox()).setValue(newName);
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await this.editItemName(newItemName);
+    await browser.pause(500);
     await (await this.entitySearchEditCancelBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
   public async editSearchableListNameAndItem_CancelsBoth(newName, newItemName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.entitySearchEditBtn()).click();
+    await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
     await browser.pause(500);
     await (await this.entitySearchEditNameBox()).setValue(newName);
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await this.editItemName_Cancels(newItemName);
+    await browser.pause(500);
     await (await this.entitySearchEditCancelBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
   public async editSearchableListNameAndItem_CancelsItemName(newName, newItemName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.entitySearchEditBtn()).click();
+    await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
     await browser.pause(500);
@@ -363,15 +412,19 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await this.editItemName_Cancels(newItemName);
     await (await this.entitySearchEditSaveBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
   public async deleteItemFromList() {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.entitySearchEditBtn()).click();
+    await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await this.deleteItem();
+    await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchEditSaveBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+    await browser.pause(500);
   }
   public async deleteList() {
     const deleteList = await this.getFirstRowObject();

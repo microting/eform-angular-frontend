@@ -1,0 +1,24 @@
+$divider: "/\00a0"; // "/ "
+ul {
+  &.eform-breadcrumb {
+    padding: 10px 0 0 0;
+    list-style: none;
+    margin-bottom: 0;
+    li {
+      display: inline;
+      font-size: 18px;
+      &+li:before {
+        padding: 8px;
+        //color: black;
+        content: $divider;
+      }
+      a {
+        color: #0275d8;
+        text-decoration: none;
+      }
+      div {
+        display: inline;
+      }
+    }
+  }
+}

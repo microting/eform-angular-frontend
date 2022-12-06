@@ -7,11 +7,12 @@ import {
   UserClaimsModel,
   UserInfoModel,
 } from 'src/app/common/models';
-import { Observable } from 'rxjs';
+import {Observable, zip} from 'rxjs';
 import { Router } from '@angular/router';
 import { snakeToCamel } from 'src/app/common/helpers';
 import { resetStores } from '@datorama/akita';
 import { AppMenuStateService } from 'src/app/common/store';
+import {AppSettingsStore} from 'src/app/modules/application-settings/components/store';
 
 @Injectable()
 export class AuthStateService {
@@ -22,7 +23,8 @@ export class AuthStateService {
     private query: AuthQuery,
     private router: Router,
     private userSettings: UserSettingsService,
-    private appMenuStateService: AppMenuStateService
+    private appMenuStateService: AppMenuStateService,
+    private appSettingsStore: AppSettingsStore,
   ) {}
 
   login(loginInfo: LoginRequestModel) {
@@ -37,29 +39,7 @@ export class AuthStateService {
             role: response.role,
           },
         }));
-        this.userSettings.getUserSettings().subscribe((data) => {
-          this.service.obtainUserClaims().subscribe((userClaims) => {
-            this.store.update((state) => ({
-              ...state,
-              currentUser: {
-                ...state.currentUser,
-                darkTheme: data.model.darkTheme,
-                locale: data.model.locale,
-                loginRedirectUrl: data.model.loginRedirectUrl,
-                claims: userClaims,
-              },
-            }));
-            this.router
-              .navigate([
-                `/${
-                  data.model.loginRedirectUrl
-                    ? data.model.loginRedirectUrl
-                    : '/'
-                }`,
-              ])
-              .then();
-          });
-        });
+        this.getUserSettings();
         this.appMenuStateService.getAppMenu(false);
       }
       return;
@@ -92,7 +72,30 @@ export class AuthStateService {
     }
   }
 
+  getUserSettings(){
+    zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+      this.store.update((state) => ({
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          darkTheme: userSettings.model.darkTheme,
+          locale: userSettings.model.locale,
+          loginRedirectUrl: userSettings.model.loginRedirectUrl,
+          claims: userClaims,
+        },
+      }));
+      if(userSettings.model.loginRedirectUrl) {
+        this.router
+          .navigate([
+            `/${userSettings.model.loginRedirectUrl}`,
+          ]).then();
+      }
+    })
+  }
+
   logout() {
+    this.store.reset();
+    this.appSettingsStore.reset();
     resetStores();
     this.router.navigate(['/auth']).then();
   }
@@ -125,12 +128,20 @@ export class AuthStateService {
     return `${this.query.currentSetting.currentUser.firstName} ${this.query.currentSetting.currentUser.lastName}`;
   }
 
+  get currentUserName(): string {
+    return this.query.currentSetting.currentUser.userName;
+  }
+
   get currentUserFullNameAsync(): Observable<string> {
     return this.query.selectFullName$;
   }
 
   get currentUserLocale(): string {
     return this.query.currentSetting.currentUser.locale;
+  }
+
+  get currentUserLocaleAsync() {
+    return this.query.selectCurrentUserLocale$;
   }
 
   updateUserLocale(locale: string) {
@@ -167,9 +178,9 @@ export class AuthStateService {
     }));
   }
 
-  // get currentUserClaimsAsync() {
-  //   return this.query.selectCurrentUserClaims$;
-  // }
+  get currentUserClaimsAsync() {
+    return this.query.selectCurrentUserClaims$;
+  }
 
   get currentUserClaims(): UserClaimsModel {
     return this.query.currentSetting.currentUser.claims;

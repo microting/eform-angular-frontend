@@ -1,127 +1,26 @@
-<eform-subheader>
-  <div class="p-3">
-    <!--    <button-->
-    <!--      mdbBtn-->
-    <!--      class="btn-success btn-small-height"-->
-    <!--      id="folderCreateBtn"-->
-    <!--      *ngIf="userClaims.workersCreate"-->
-    <!--      (click)="openCreateModal()"-->
-    <!--    >-->
-    <!--      {{ 'Create folder' | translate }}-->
-    <!--    </button>-->
-  </div>
-</eform-subheader>
+<eform-new-subheader>
+</eform-new-subheader>
 
-<div class="container-fluid">
-  <div class="card z-depth-1 mb-4 mt-4" style="width: 100%">
-    <div class="card-body">
-      <app-eform-tree-view-picker
-        *ngIf="foldersDto.length"
-        class="mb-2"
-        [nodes]="foldersDto"
-        [showActions]="true"
-        [showCollapseButton]="foldersDto.length > 0"
-        (createNode)="openCreateModal($event)"
-        (editNode)="openEditModal($event)"
-        (deleteNode)="openDeleteModal($event)"
-      ></app-eform-tree-view-picker>
-      <p
-        style="cursor: pointer; margin-bottom: 0"
-        id="newFolderBtn"
-        (click)="openCreateModal()"
-        *ngIf="userClaims.workersCreate"
-      >
-        <fa-icon class="mr-2 text-black-50" icon="plus" size="lg"></fa-icon>
-        {{ 'Add new' | translate }}
-      </p>
-    </div>
-  </div>
-  <!--  <div class="row p-1 table-responsive no-gutters mb-4">-->
-  <!--    <table-->
-  <!--      mdbTable-->
-  <!--      striped="true"-->
-  <!--      hover="true"-->
-  <!--      small="true"-->
-  <!--      class="z-depth-1 text-center"-->
-  <!--    >-->
-  <!--      <thead>-->
-  <!--        <tr>-->
-  <!--          <th scope="col">{{ 'ID' | translate }}</th>-->
-  <!--          <th scope="col">{{ 'Microting UUID' | translate }}</th>-->
-  <!--          <th scope="col">{{ 'CreatedAt' | translate }}</th>-->
-  <!--          <th scope="col">{{ 'Updated at' | translate }}</th>-->
-  <!--          <th scope="col">{{ 'Name' | translate }}</th>-->
-  <!--          <th scope="col">{{ 'Description' | translate }}</th>-->
-  <!--          <th-->
-  <!--            scope="col"-->
-  <!--            *ngIf="userClaims.workersDelete || userClaims.workersUpdate"-->
-  <!--          >-->
-  <!--            {{ 'Actions' | translate }}-->
-  <!--          </th>-->
-  <!--        </tr>-->
-  <!--      </thead>-->
-  <!--      <tbody id="tableBody">-->
-  <!--        <tr *ngFor="let folderDto of foldersFlatList">-->
-  <!--          <td id="folderId" >{{ folderDto.id }}</td>-->
-  <!--          <td>{{ folderDto.microtingUId }}</td>-->
-  <!--          <td>-->
-  <!--            <date-formatter-->
-  <!--              [date]="folderDto.createdAt"-->
-  <!--              [Format]="'datetime'"-->
-  <!--            ></date-formatter>-->
-  <!--          </td>-->
-  <!--          <td>-->
-  <!--            <date-formatter-->
-  <!--              [date]="folderDto.updatedAt"-->
-  <!--              [Format]="'datetime'"-->
-  <!--            ></date-formatter>-->
-  <!--          </td>-->
-  <!--          <td id="folderName" >{{ folderDto.name }}</td>-->
-  <!--          <td id="folderDescription" >{{ folderDto.description }}</td>-->
-  <!--          <td *ngIf="userClaims.workersDelete || userClaims.workersUpdate">-->
-  <!--            <div class="d-flex flex-row justify-content-center">-->
-  <!--              <button-->
-  <!--                id="folderEditBtn"-->
-  <!--                class="btn btn-accent text-black-50 btn-icon mb-2"-->
-  <!--                *ngIf="userClaims.workersUpdate"-->
-  <!--                mdbTooltip="{{ 'Edit Folder' | translate }}"-->
-  <!--                (click)="openEditModal(folderDto)"-->
-  <!--              >-->
-  <!--                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>-->
-  <!--              </button>-->
-  <!--              <button-->
-  <!--                id="folderDeleteBtn"-->
-  <!--                class="btn btn-danger btn-icon mb-2"-->
-  <!--                *ngIf="userClaims.workersDelete"-->
-  <!--                mdbTooltip="{{ 'Delete Folder' | translate }}"-->
-  <!--                (click)="openDeleteModal(folderDto)"-->
-  <!--              >-->
-  <!--                <fa-icon-->
-  <!--                  icon="trash-alt"-->
-  <!--                  [fixedWidth]="true"-->
-  <!--                  size="lg"-->
-  <!--                ></fa-icon>-->
-  <!--              </button>-->
-  <!--            </div>-->
-  <!--          </td>-->
-  <!--        </tr>-->
-  <!--      </tbody>-->
-  <!--    </table>-->
-  <!--  </div>-->
-</div>
-
-<app-folder-create
-  (folderCreated)="getInitialData()"
-  #modalFolderCreate
-></app-folder-create>
-
-<app-folder-edit
-  (folderEdited)="getInitialData()"
-  #modalFolderEdit
-></app-folder-edit>
-
-<app-folder-delete
-  (onFolderDeleted)="getInitialData()"
-  [selectedFolderDto]="selectedFolder"
-  #modalFolderDelete
-></app-folder-delete>
+<mat-card>
+  <mat-card-content>
+    <app-eform-tree-view-picker
+      *ngIf="foldersDto.length"
+      [nodes]="foldersDto"
+      [showActions]="true"
+      [showCollapseButton]="foldersDto.length > 0"
+      (createNode)="openCreateModal($event)"
+      (editNode)="openEditModal($event)"
+      (deleteNode)="openDeleteModal($event)"
+    ></app-eform-tree-view-picker>
+    <button
+      mat-raised-button
+      style="margin-top: 10px"
+      id="newFolderBtn"
+      (click)="openCreateModal()"
+      *ngIf="userClaims.workersCreate"
+    >
+      <mat-icon>add</mat-icon>
+      {{ 'Add new' | translate }}
+    </button>
+  </mat-card-content>
+</mat-card>

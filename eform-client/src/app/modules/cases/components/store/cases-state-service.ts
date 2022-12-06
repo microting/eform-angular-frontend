@@ -5,7 +5,6 @@ import {
   CaseListModel,
   OperationDataResult,
   PaginationModel,
-  SortModel,
   TemplateDto,
 } from 'src/app/common/models';
 import { updateTablePage, updateTableSort } from 'src/app/common/helpers';
@@ -64,7 +63,7 @@ export class CasesStateService {
     }));
   }
 
-  updatePageSize(pageSize: number) {
+  /*updatePageSize(pageSize: number) {
     this.store.update((state) => ({
       pagination: { ...state.pagination, pageSize: pageSize },
     }));
@@ -73,17 +72,25 @@ export class CasesStateService {
 
   getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
+  }*/
+
+  // getSort(): Observable<SortModel> {
+  //   return this.query.selectSort$;
+  // }
+
+  getActiveSort(): Observable<string> {
+    return this.query.selectActiveSort$;
   }
 
-  getSort(): Observable<SortModel> {
-    return this.query.selectSort$;
+  getActiveSortDirection(): Observable<'asc' | 'desc'> {
+    return this.query.selectActiveSortDirection$;
   }
 
   getNameFilter(): Observable<string> {
     return this.query.selectNameFilter$;
   }
 
-  changePage(offset: number) {
+  /*changePage(offset: number) {
     const updatedPageSetting = updateTablePage(offset, {
       ...this.query.pageSetting.pagination,
     });
@@ -93,7 +100,7 @@ export class CasesStateService {
         offset: updatedPageSetting.offset,
       },
     }));
-  }
+  }*/
 
   onDelete() {
     this.store.update((state) => ({
@@ -135,5 +142,16 @@ export class CasesStateService {
 
   getPagination(): Observable<PaginationModel> {
     return this.query.selectPagination$;
+  }
+
+  updatePagination(pagination: PaginationModel) {
+    this.store.update((state) => ({
+      pagination: {
+        ...state.pagination,
+        pageSize: pagination.pageSize,
+        offset: pagination.offset,
+      },
+    }));
+    // this.checkOffset();
   }
 }

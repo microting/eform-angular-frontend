@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {FileUploader} from 'ng2-file-upload';
 import {ToastrService} from 'ngx-toastr';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {AuthStateService} from 'src/app/common/store';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-eform-upload-zip-modal',
@@ -11,8 +12,6 @@ import {AuthStateService} from 'src/app/common/store';
   styleUrls: ['./eform-upload-zip-modal.component.scss'],
 })
 export class EformUploadZipModalComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  selectedTemplate: TemplateDto = new TemplateDto();
   zipFileUploader: FileUploader = new FileUploader({
     url: '/api/template-files/upload-eform-zip',
     authToken: this.authStateService.bearerToken,
@@ -21,8 +20,11 @@ export class EformUploadZipModalComponent implements OnInit {
   constructor(
     private toastrService: ToastrService,
     private translateService: TranslateService,
-    private authStateService: AuthStateService
-  ) {}
+    private authStateService: AuthStateService,
+    public dialogRef: MatDialogRef<EformUploadZipModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedTemplate: TemplateDto,
+  ) {
+  }
 
   ngOnInit() {
     this.zipFileUploader.onBuildItemForm = (item, form) => {
@@ -33,7 +35,7 @@ export class EformUploadZipModalComponent implements OnInit {
       this.toastrService.success(
         this.translateService.instant('File has been uploaded successfully')
       );
-      this.frame.hide();
+      this.hideZipModal(true);
     };
     this.zipFileUploader.onErrorItem = () => {
       this.zipFileUploader.clearQueue();
@@ -48,17 +50,12 @@ export class EformUploadZipModalComponent implements OnInit {
     };
   }
 
-  show(templateDto: TemplateDto) {
-    this.selectedTemplate = templateDto;
-    this.frame.show();
-  }
-
   uploadTemplateZIP() {
     this.zipFileUploader.queue[0].upload();
   }
 
-  hideZipModal() {
+  hideZipModal(result = false) {
     this.zipFileUploader.clearQueue();
-    this.frame.hide();
+    this.dialogRef.close(result);
   }
 }

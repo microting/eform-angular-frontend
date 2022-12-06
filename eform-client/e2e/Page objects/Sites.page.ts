@@ -7,7 +7,7 @@ class SitesPage extends PageWithNavbarPage {
   }
 
   public async rowNum(): Promise<number> {
-    return (await $$('#sitesTableBody > tr')).length;
+    return (await $$('tbody > tr')).length;
   }
 
   public async siteTagSelector(): Promise<WebdriverIO.Element> {
@@ -95,6 +95,7 @@ class SitesPage extends PageWithNavbarPage {
 
   public async createTag(tagName: string[]) {
     await (await this.sitesManageTagsBtn()).click();
+    await browser.pause(500);
     await (await tagsModalPage.tagsModalCloseBtn()).waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < tagName.length; i++) {
       await tagsModalPage.createTag(tagName[i]);
@@ -105,6 +106,7 @@ class SitesPage extends PageWithNavbarPage {
 
   public async removeTags(tagName: string[]) {
     await (await this.sitesManageTagsBtn()).click();
+    await browser.pause(500);
     await (await tagsModalPage.tagsModalCloseBtn()).waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < tagName.length; i++) {
       await (await tagsModalPage.getTagByName(tagName[i])).deleteTag();
@@ -121,7 +123,12 @@ class SitesPage extends PageWithNavbarPage {
 
   async getFirstRowObject(): Promise<SitesRowObject> {
     await browser.pause(500);
-    return this.getSite(1);
+    const rowNum = await this.rowNum();
+    if (rowNum > 1) {
+      return this.getSite(2);
+    } else {
+      return this.getSite(1);
+    }
   }
 }
 
@@ -140,14 +147,14 @@ export class SitesRowObject {
   deleteBtn: WebdriverIO.Element;
 
   async getRow(rowNum): Promise<SitesRowObject> {
-    this.element = (await $$('#sitesTableBody > tr'))[rowNum - 1];
+    this.element = (await $$('tbody > tr'))[rowNum - 1];
     if (this.element) {
       this.siteId = +(await this.element.$('#siteUUId')).getText();
       this.units = await (await this.element.$('#units')).getText();
       this.siteName = await (await this.element.$('#siteName')).getText();
       const list = (await (await this.element
-        .$('#tags'))
-        .$$('#assignedTag'));
+        .$('mat-chip-list'))
+        .$$('mat-chip > span'));
       this.tags = await Promise.all(list.map(element => element.getText()));
       // .map((element) => element.getText());
       this.editBtn = await this.element.$('#editSiteBtn');
@@ -158,14 +165,18 @@ export class SitesRowObject {
 
   async openEditModal(site?: { name?: string; tags?: string[] }) {
     this.editBtn.click();
+    await browser.pause(500);
     await (await sitesPage.siteEditCancelBtn()).waitForDisplayed({ timeout: 40000 });
     if (site) {
       if (site.name) {
+        await (await sitesPage.siteNameEditInput()).clearValue();
         await (await sitesPage.siteNameEditInput()).setValue(site.name);
+        await browser.pause(500);
       }
       if (site.tags) {
         for (let i = 0; i < site.tags.length; i++) {
           await (await (await sitesPage.tagSelector()).$('input')).addValue(site.tags[i]);
+          await browser.pause(500);
           await browser.keys(['Return']);
         }
       }
@@ -178,6 +189,7 @@ export class SitesRowObject {
     } else {
       await (await sitesPage.siteEditSaveBtn()).click();
     }
+    await browser.pause(500);
     await (await sitesPage.sitesManageTagsBtn()).waitForClickable({ timeout: 40000 });
   }
 
@@ -188,6 +200,7 @@ export class SitesRowObject {
 
   async openDeleteModal() {
     await this.deleteBtn.click();
+    await browser.pause(500);
     await (await sitesPage.siteDeleteCancelBtn()).waitForClickable({ timeout: 40000 });
   }
 
@@ -197,6 +210,7 @@ export class SitesRowObject {
     } else {
       await (await sitesPage.siteDeleteDeleteBtn()).click();
     }
+    await browser.pause(500);
     await (await sitesPage.sitesManageTagsBtn()).waitForClickable({ timeout: 40000 });
   }
 

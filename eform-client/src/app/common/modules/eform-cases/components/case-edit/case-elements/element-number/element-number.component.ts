@@ -1,14 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, Input} from '@angular/core';
 import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'element-number',
   templateUrl: './element-number.component.html',
   styleUrls: ['./element-number.component.scss']
 })
 export class ElementNumberComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();
+  valid: boolean;
   @Input()
   get fieldValue() {
     return this.fieldValueObj;
@@ -23,23 +24,22 @@ export class ElementNumberComponent {
 
   }
 
-  validateInput(e): boolean {
+  validateInput(e) {
     const value = e.target.value + String.fromCharCode(e.keyCode);
     let rgx = /^(\d+,?(?:\d+,|\d*)+)$/;
     if (value.match(rgx)) {
       if (value.includes(',')) {
         rgx = /(,)/g;
         const b = value.match(rgx);
-        if (b.length > 1) {
-          return false;
-        } else {
-          return true;
-        }
+        this.valid = b.length <= 1;
+        return;
       } else {
-        return true;
+        this.valid = true;
+        return;
       }
     } else {
-      return false;
+      this.valid = false;
+      return;
     }
   }
 }

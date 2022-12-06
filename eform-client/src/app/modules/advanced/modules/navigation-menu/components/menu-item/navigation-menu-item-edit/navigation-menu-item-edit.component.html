@@ -1,121 +1,70 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-md" id="editMenuEntry">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'Edit menu entry' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div
-            class="row"
-            *ngIf="
-              item.type === menuItemType.CustomLink ||
-              item.type === menuItemType.Dropdown
-            "
-          >
-            <div class="col-md-12">
-              <ng-select
-                class="custom"
-                dropdownPosition="'bottom'"
-                [placeholder]="'Security groups' | translate"
-                [(ngModel)]="item.securityGroupsIds"
-                [bindValue]="'id'"
-                [bindLabel]="'name'"
-                [items]="availableSecurityGroups"
-                id="editSecurityGroupsSelector"
-                [multiple]="true"
-              ></ng-select>
-            </div>
-          </div>
-          <div
-            class="row align-items-center"
-            *ngIf="
-              item.type === menuItemType.CustomLink ||
-              item.type === menuItemType.Link
-            "
-          >
-            <div class="col">
-              <div class="md-form">
-                <input
-                  mdbInput
-                  type="text"
-                  id="editLinkInput"
-                  name="editLinkInput"
-                  [(ngModel)]="item.link"
-                  class="form-control"
-                />
-                <label for="editLinkInput">{{ 'Link' | translate }}</label>
-              </div>
-            </div>
-            <div class="col" *ngIf="item.type === menuItemType.CustomLink">
-              <div class="mat-checkbox">
-                <input
-                  type="checkbox"
-                  id="editLinkIsInternalLink"
-                  name="editLinkIsInternalLink"
-                  [(ngModel)]="item.isInternalLink"
-                />
-                <label for="editLinkIsInternalLink">{{ 'Is internal link' | translate }}</label>
-              </div>
-            </div>
-          </div>
-          <div
-            class="row"
-            *ngFor="
+<h3 mat-dialog-title>{{'Edit menu entry' | translate}}</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-column">
+    <mat-form-field>
+      <mat-label>{{'Security groups' | translate}}</mat-label>
+      <mtx-select
+        dropdownPosition="bottom"
+        [(ngModel)]="item.securityGroupsIds"
+        [bindValue]="'id'"
+        [bindLabel]="'name'"
+        [items]="availableSecurityGroups"
+        id="editSecurityGroupsSelector"
+        [multiple]="true"      >
+      </mtx-select>
+    </mat-form-field>
+    <div class="d-flex flex-row align-items-center need-wrapper"
+         *ngIf="item.type === menuItemType.CustomLink || item.type === menuItemType.Link">
+      <mat-form-field>
+        <mat-label>{{ 'Link' | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          id="editLinkInput"
+          name="editLinkInput"
+          [(ngModel)]="item.link"
+        >
+      </mat-form-field>
+      <mat-checkbox
+        id="editLinkIsInternalLink"
+        name="editLinkIsInternalLink"
+        [(ngModel)]="item.isInternalLink"
+        class="ml-2"
+      >
+        {{ 'Is internal link' | translate }}
+      </mat-checkbox>
+    </div>
+    <mat-form-field *ngFor="
               let translationControls of translationsArray.controls;
               let translationIndex = index
-            "
-          >
-            <ng-container [formGroup]="translationControls">
-              <div class="col">
-                <div class="md-form">
-                  <input
-                    mdbInput
-                    type="text"
-                    id="editItemTranslation{{ firstLevelIndex }}_{{
-                      secondLevelIndex ? secondLevelIndex : 0
-                    }}_{{ translationIndex }}"
-                    name="editItemTranslation{{ firstLevelIndex }}_{{
-                      secondLevelIndex ? secondLevelIndex : 0
-                    }}_{{ translationIndex }}"
-                    formControlName="name"
-                    class="form-control"
-                  />
-                  <label
-                    for="editItemTranslation{{ firstLevelIndex }}_{{
-                      secondLevelIndex ? secondLevelIndex : 0
-                    }}_{{ translationIndex }}"
-                    >
-                   {{ translationControls.get('language').value }}
-                  </label
-                  >
-                </div>
-              </div>
-            </ng-container>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          mdbBtn
-          class="btn-success btn-small-height"
-          id="editItemSaveBtn"
-          (click)="updateItem()"
+            ">
+      <ng-container [formGroup]="translationControls">
+        <mat-label>{{ translationControls.get('language').value }}</mat-label>
+        <input
+          matInput
+          type="text"
+          id="editItemTranslation{{ firstLevelIndex }}_{{ secondLevelIndex ? secondLevelIndex : 0 }}_{{ translationIndex }}"
+          name="editItemTranslation{{ firstLevelIndex }}_{{ secondLevelIndex ? secondLevelIndex : 0 }}_{{ translationIndex }}"
+          formControlName="name"
         >
-          {{ 'Save' | translate }}
-        </button>
-        <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
-          id="editItemSaveCancelBtn"
-          (click)="hide()"
-        >
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>
-    </div>
+      </ng-container>
+    </mat-form-field>
   </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    id="editItemSaveBtn"
+    (click)="updateItem()"
+  >
+    {{'Save' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="editItemSaveCancelBtn"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

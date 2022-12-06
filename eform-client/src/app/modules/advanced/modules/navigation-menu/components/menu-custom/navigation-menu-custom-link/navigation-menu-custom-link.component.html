@@ -1,98 +1,67 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-md" id="newLinkModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'New custom link' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <ng-select
-                class="custom"
-                dropdownPosition="'bottom'"
-                [placeholder]="'Security groups' | translate"
-                [(ngModel)]="customLinkModel.securityGroupsIds"
-                [bindValue]="'id'"
-                [bindLabel]="'name'"
-                [items]="availableSecurityGroups"
-                id="securityGroupsCustomLinkSelector"
-                [multiple]="true"
-              ></ng-select>
-            </div>
-          </div>
-          <div class="row align-items-center">
-            <div class="col">
-              <div class="md-form">
-                <input
-                  mdbInput
-                  type="text"
-                  id="customLinkLink"
-                  name="customLinkLink"
-                  [(ngModel)]="customLinkModel.link"
-                  class="form-control"
-                />
-                <label for="customLinkLink">{{ 'Link' | translate }}</label>
-              </div>
-            </div>
-            <div class="col">
-              <div class="mat-checkbox">
-                <input
-                  type="checkbox"
-                  id="customLinkIsInternalLink"
-                  name="customLinkIsInternalLink"
-                  [(ngModel)]="customLinkModel.isInternalLink"
-                />
-                <label for="customLinkIsInternalLink">{{ 'Is internal link' | translate }}</label>
-              </div>
-            </div>
-          </div>
-          <div
-            class="row"
-            *ngFor="
+<h3 mat-dialog-title>{{ 'New custom link' | translate }}</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-column">
+    <mat-form-field>
+      <mat-label>{{ 'Security groups' | translate }}</mat-label>
+      <mtx-select
+        dropdownPosition="bottom"
+        [(ngModel)]="customLinkModel.securityGroupsIds"
+        [bindValue]="'id'"
+        [bindLabel]="'name'"
+        [items]="availableSecurityGroups"
+        id="securityGroupsCustomDropdownSelector"
+        [multiple]="true"
+      ></mtx-select>
+    </mat-form-field>
+    <div class="d-flex flex-row align-items-center need-wrapper">
+      <mat-form-field>
+        <mat-label>{{ 'Link' | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          id="customLinkLink"
+          name="customLinkLink"
+          [(ngModel)]="customLinkModel.link"
+        >
+      </mat-form-field>
+      <mat-checkbox
+        id="customLinkIsInternalLink"
+        name="customLinkIsInternalLink"
+        [(ngModel)]="customLinkModel.isInternalLink"
+      >
+        {{ 'Is internal link' | translate }}
+      </mat-checkbox>
+    </div>
+    <mat-form-field *ngFor="
               let translation of customLinkModel.translations;
               let i = index
-            "
-          >
-            <div class="col">
-              <div class="md-form">
-                <input
-                  mdbInput
-                  type="text"
-                  id="linkTranslation{{ i }}"
-                  name="linkTranslation{{ i }}"
-                  [(ngModel)]="translation.name"
-                  class="form-control"
-                />
-                <label for="linkTranslation{{ i }}">{{
-                  translation.language
-                }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          mdbBtn
-          class="btn-success btn-small-height"
-          id="customLinkCreateBtn"
-          (click)="addCustomLink()"
-        >
-          {{ 'Add' | translate }}
-        </button>
-        <button
-          mdbBtn
-          class="btn-accent text-black-50 btn-small-height"
-          id="customLinkCancelCreateBtn"
-          (click)="hide()"
-        >
-          {{ 'Close' | translate }}
-        </button>
-      </div>
-    </div>
+            ">
+      <mat-label>{{ translation.language | translate }}</mat-label>
+      <input
+        matInput
+        type="text"
+        id="linkTranslation{{ i }}"
+        name="linkTranslation{{ i }}"
+        [(ngModel)]="translation.name"
+      >
+    </mat-form-field>
   </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    id="customLinkCreateBtn"
+    (click)="addCustomLink()"
+  >
+    {{ 'Add' | translate }}
+  </button>
+  <button
+    mat-raised-button
+    (click)="hide()"
+    type="button"
+    id="customLinkCancelCreateBtn"
+  >
+    {{ 'Cancel' | translate }}
+  </button>
 </div>

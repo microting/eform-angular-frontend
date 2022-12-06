@@ -7,7 +7,6 @@ import {
   Paged,
   PaginationModel,
   SecurityGroupModel,
-  SortModel,
 } from 'src/app/common/models';
 import { updateTableSort, getOffset } from 'src/app/common/helpers';
 import { map } from 'rxjs/operators';
@@ -50,7 +49,7 @@ export class SecurityStateService {
     this.checkOffset();
   }
 
-  updatePageSize(pageSize: number) {
+  /*updatePageSize(pageSize: number) {
     this.store.update((state) => ({
       pagination: {
         ...state.pagination,
@@ -58,28 +57,36 @@ export class SecurityStateService {
       },
     }));
     this.checkOffset();
-  }
+  }*/
 
-  getPageSize(): Observable<number> {
+  /*getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
+  }*/
+
+  // getSort(): Observable<SortModel> {
+  //   return this.query.selectSort$;
+  // }
+
+  getActiveSort(): Observable<string> {
+    return this.query.selectActiveSort$;
   }
 
-  getSort(): Observable<SortModel> {
-    return this.query.selectSort$;
+  getActiveSortDirection(): Observable<'asc' | 'desc'> {
+    return this.query.selectActiveSortDirection$;
   }
 
   getNameFilter(): Observable<string> {
     return this.query.selectNameFilter$;
   }
 
-  changePage(offset: number) {
+  /*changePage(offset: number) {
     this.store.update((state) => ({
       pagination: {
         ...state.pagination,
         offset: offset,
       },
     }));
-  }
+  }*/
 
   onDelete() {
     this.store.update((state) => ({
@@ -120,5 +127,17 @@ export class SecurityStateService {
 
   getPagination(): Observable<PaginationModel> {
     return this.query.selectPagination$;
+  }
+
+
+  updatePagination(pagination: PaginationModel) {
+    this.store.update((state) => ({
+      pagination: {
+        ...state.pagination,
+        pageSize: pagination.pageSize,
+        offset: pagination.offset,
+      },
+    }));
+    // this.checkOffset();
   }
 }

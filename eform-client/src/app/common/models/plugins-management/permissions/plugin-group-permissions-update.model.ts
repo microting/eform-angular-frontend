@@ -1,4 +1,4 @@
-import {PluginGroupPermissionsListModel} from './plugin-group-permissions.model';
+import {PluginGroupPermissionsListModel} from 'src/app/common/models';
 
 export class PluginGroupPermissionsUpdateModel {
   pluginId: number;

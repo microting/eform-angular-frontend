@@ -2,7 +2,7 @@ name: Pull requests
 
 on:
   pull_request:
-    branches: [ master, stable, visual-editor ]
+    branches: [ master, stable, angular13 ]
     paths-ignore:
     - '*.md'
     - '.github/**'
@@ -16,12 +16,6 @@ jobs:
         test: [a,b,c,d,e,f,g,h,i,j]
     steps:
     - uses: actions/checkout@v2
-    - name: Upgrade Chrome browser
-      run: |
-        sudo apt-get update
-        sudo apt-get --only-upgrade install google-chrome-stable
-
-        google-chrome --version
     - uses: getong/mariadb-action@v1.1
       with:
         host port: 3306 # Optional, default value is 3306. The port of host
@@ -45,7 +39,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
@@ -63,6 +57,8 @@ jobs:
       run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
     - name: NPM Install
       run: cd eform-client && npm install
+    - name: Create errorShots directory
+      run: mkdir /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots
     - name: NPM start
       run: cd eform-client && npm start &
     - name: Sleep 75 seconds
@@ -78,3 +74,11 @@ jobs:
     - name: The job has failed
       if: ${{ failure() }}
       run: cat dotnet_log
+    - name: Archive screenshot artifacts
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: error Screenshots
+        path: |
+          /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots/errorShots/chrome*.png
+        retention-days: 2

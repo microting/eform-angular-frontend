@@ -1,34 +1,10 @@
-<div class="d-flex justify-content-center" *ngIf="size > limit">
-  <nav aria-label="pagination">
-    <ul class="pagination pg-blue">
-      <li class="page-item" *ngIf="currentPage > 1">
-        <a
-          class="page-link"
-          aria-label="Previous"
-          (click)="selectPage(currentPage - 1)"
-        >
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
+<mat-paginator
+  [length]="pagination.total"
+  [pageSize]="pagination.pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="getCurrentPage()"
+  (page)="changePage($event)"
 
-      <li
-        class="page-item active"
-        *ngFor="let page of pages | async"
-        (click)="selectPage(page)"
-        [ngClass]="{ active: currentPage === page }"
-      >
-        <a class="page-link">{{ page }} </a>
-      </li>
-
-      <li class="page-item" *ngIf="currentPage != totalPages">
-        <a
-          class="page-link"
-          (click)="selectPage(currentPage + 1)"
-          aria-label="Next"
-        >
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-</div>
+  >
+</mat-paginator>
+<!--aria-label="{{'Number of rows' | translate}}"-->

@@ -92,7 +92,7 @@ describe('Device users page', function () {
     );
     await lastDeviceUserBeforeEdit.editBtn.click();
     // browser.pause(4000);
-    await (await $('#editFirstNameInput')).waitForDisplayed({ timeout: 10000 });
+    await (await $('#firstName')).waitForDisplayed({ timeout: 10000 });
     await (await deviceUsersPage.editFirstNameInput()).click();
     await (await deviceUsersPage.editFirstNameInput()).clearValue();
     await (await deviceUsersPage.editFirstNameInput()).setValue(newName);

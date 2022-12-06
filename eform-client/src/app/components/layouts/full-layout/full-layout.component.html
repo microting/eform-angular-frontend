@@ -1,9 +1,43 @@
 <div class="h-100 d-flex flex-column">
-  <app-header></app-header>
-  <app-navigation></app-navigation>
-  <div class="mb-auto">
-    <app-userback-widget></app-userback-widget>
-    <router-outlet></router-outlet>
-  </div>
+  <!--  <app-header></app-header>-->
+  <mat-toolbar style="padding-top: 5px; padding-bottom: 5px" class="d-flex align-items-center">
+    <div *ngIf="headerSettingsModel.imageLinkVisible" class="d-flex">
+      <div class="logo-container">
+        <img height="30px" id="site-header-image" [src]="logoImage | authImage | async"
+             *ngIf="headerSettingsModel.imageLinkVisible" alt="">
+      </div>
+    </div>
+    <button mat-icon-button (click)="toggleDrawer()" [hidden]="!connectionStringExist">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <mat-chip-list>
+      <mat-chip style="padding: 0" color="primary" selected>
+        <mat-chip-avatar>
+          <mat-icon>account_circle</mat-icon>
+        </mat-chip-avatar>
+        <button mat-icon-button [matMenuTriggerFor]="menu" id="sign-out-dropdown">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <a mat-menu-item *ngFor="let menu of appMenuQuery.userMenuRight$ | async"
+             routerLink="{{ menu.link }}"
+             [id]="menu.e2EId"
+          ><!--color="{{this.router.url === menu.link ? 'accent' : ''}}"-->
+            {{ menu.name }}
+          </a>
+        </mat-menu>
+      </mat-chip>
+    </mat-chip-list>
+  </mat-toolbar>
+  <mat-drawer-container autosize style="height: 100%">
+    <mat-drawer #drawer [mode]="sidenavMode" [opened]="innerWidth >= 660" [hidden]="!connectionStringExist">
+      <app-navigation (clickOnLink)="onClickOnLink()"></app-navigation>
+    </mat-drawer>
+    <div class="mb-auto" style="padding: 1.5rem">
+      <app-userback-widget></app-userback-widget>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-container>
   <app-footer></app-footer>
 </div>

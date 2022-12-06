@@ -1,100 +1,65 @@
 <section>
-  <div class="card z-depth-3 mt-4" style="width: 100%">
-    <div class="card-body">
-      <mdb-card>
-        <mdb-card-body>
-          <div class="row mb-3 mt-3">
-            <div
-              class="col"
-              *ngFor="let language of languages; let index = index"
-            >
-              <div class="mat-checkbox mr-3" *ngIf="displayCheckbox(language.id)">
-                <input
-                  id="languageCheckbox{{ index }}"
-                  name="languageCheckbox{{ index }}"
-                  [ngModel]="isLanguageSelected(language.id)"
-                  [value]="isLanguageSelected(language.id)"
-                  (ngModelChange)="onAddOrDeleteLanguage($event, language.id)"
-                  type="checkbox"
-                />
-                <label for="languageCheckbox{{ index }}">{{
-                  language.text | translate
-                }}</label>
-              </div>
-            </div>
-          </div>
-          <ng-container
-            *ngFor="
-              let translation of visualEditorModel.translations;
-              let translationIndex = index
-            "
-          >
-            <mdb-card
-              class="mb-3"
-              *ngIf="isLanguageSelected(translation.languageId)"
-            >
-              <mdb-card-header>{{
-                getLanguage(translation.languageId) | translate
-              }}</mdb-card-header>
-              <mdb-card-body>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="md-form">
-                      <input
-                        mdbInput
-                        type="text"
-                        id="mainCheckListNameTranslation_{{ translationIndex }}"
-                        name="mainCheckListNameTranslation_{{
-                          translationIndex
-                        }}"
-                        [(ngModel)]="translation.name"
-                        class="form-control"
-                      />
-                      <label
-                        for="mainCheckListNameTranslation_{{
-                          translationIndex
-                        }}"
-                      >
-                        {{ 'Name' | translate }}
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12">
-                    <formatting-text-editor
-                      [(value)]="translation.description"
-                      [placeholder]="'Description' | translate"
-                      id="mainCheckListDescriptionTranslation_{{
-                        translationIndex
-                      }}"
-                    >
-                    </formatting-text-editor>
-                  </div>
-                </div>
-              </mdb-card-body>
-            </mdb-card>
-          </ng-container>
-          <div class="row">
-            <div class="col">
-              <div class="ng-select-wrapper d-flex align-items-center">
-                <ng-select
-                  dropdownPosition="'bottom'"
-                  [placeholder]="'Selected tags' | translate"
-                  clearable="false"
-                  bindLabel="name"
-                  bindValue="id"
-                  [(ngModel)]="visualEditorModel.tagIds"
-                  id="mainCheckListTagsSelector"
-                  [items]="availableTags"
-                  multiple="true"
-                >
-                </ng-select>
-              </div>
-            </div>
-          </div>
-        </mdb-card-body>
-      </mdb-card>
+  <mat-card-content class="p-3">
+    <div class="d-grid grid-3-columns pb-2">
+      <ng-container *ngFor="let language of languages; let index = index; first as isFirst">
+        <mat-checkbox
+          *ngIf="displayCheckbox(language.id)"
+          id="languageCheckbox{{ index }}"
+          name="languageCheckbox{{ index }}"
+          [ngModel]="isLanguageSelected(language.id)"
+          (ngModelChange)="onAddOrDeleteLanguage($event, language.id)"
+        >
+          {{ language.text | translate }}
+        </mat-checkbox>
+      </ng-container>
     </div>
-  </div>
+    <ng-container
+      *ngFor="let translation of visualEditorModel.translations; let translationIndex = index"
+    >
+      <mat-card
+        *ngIf="isLanguageSelected(translation.languageId)"
+        class="mb-3"
+      >
+        <mat-card-title>
+          <h4>
+            {{ getLanguage(translation.languageId) | translate }}
+          </h4>
+        </mat-card-title>
+        <mat-card-content>
+          <div class="d-flex flex-column">
+            <mat-form-field class="mb-3">
+              <mat-label>{{ 'Name' | translate }}</mat-label>
+              <input
+                matInput
+                type="text"
+                id="mainCheckListNameTranslation_{{ translationIndex }}"
+                name="mainCheckListNameTranslation_{{ translationIndex }}"
+                [(ngModel)]="translation.name"
+              />
+            </mat-form-field>
+            <formatting-text-editor
+              [(value)]="translation.description"
+              [placeholder]="'Description' | translate"
+              id="mainCheckListDescriptionTranslation_{{ translationIndex }}"
+            >
+            </formatting-text-editor>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+    <mat-form-field>
+      <mat-label>{{ 'Selected tags' | translate }}</mat-label>
+      <mtx-select
+        [dropdownPosition]="'bottom'"
+        clearable="false"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="visualEditorModel.tagIds"
+        id="mainCheckListTagsSelector"
+        [items]="availableTags"
+        multiple="true"
+      >
+      </mtx-select>
+    </mat-form-field>
+  </mat-card-content>
 </section>

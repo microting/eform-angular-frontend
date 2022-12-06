@@ -8,7 +8,7 @@ export class UserAdministration extends PageWithNavbarPage {
   }
 
   public async rowNum(): Promise<number> {
-    return (await (await this.userInfoTable()).$$('tr')).length;
+    return (await $$('.userAdministrationId')).length;
   }
 
   public async userInfoTable(): Promise<WebdriverIO.Element> {
@@ -107,6 +107,13 @@ export class UserAdministration extends PageWithNavbarPage {
     return ele;
   }
 
+  public async editPassword(): Promise<WebdriverIO.Element> {
+    const ele = await $('#editPassword');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
+    return ele;
+  }
+
   public async createRole(): Promise<WebdriverIO.Element> {
     const ele = await $('#createRole');
     await ele.waitForDisplayed({ timeout: 40000 });
@@ -153,6 +160,7 @@ export class UserAdministration extends PageWithNavbarPage {
 
   public async openCreateNewUser(user: UserAdministrationObject) {
     await (await this.createNewUserBtn()).click();
+    await browser.pause(500);
     await (await this.createAdministrationUserCancelBtn()).waitForDisplayed({ timeout: 40000 });
     await (await this.createFirstName()).setValue(user.firstName);
     await (await this.createLastName()).setValue(user.lastName);
@@ -200,15 +208,13 @@ export class UserAdministrationRowObject {
   deleteBtn;
 
   async getRow(rowNum: number): Promise<UserAdministrationRowObject> {
-    this.element = (await (await userAdministration.userInfoTable()).$$('tr'))[rowNum - 1];
-    if (this.element) {
-      this.id = +await (await this.element.$('#userAdministrationId')).getText();
-      this.email = await (await this.element.$('#userAdministrationEmail')).getText();
-      this.fullName = await (await this.element.$('#userAdministrationFullName')).getText();
-      this.role = await (await this.element.$('#userAdministrationRole')).getText();
-      this.editBtn = await this.element.$('#userAdministrationEditBtn');
-      this.deleteBtn = await this.element.$('#userAdministrationDeleteBtn');
-    }
+    rowNum = rowNum - 1;
+    this.id = +await (await $('#userAdministrationId-'+rowNum)).getText();
+    this.email = await (await $('#userAdministrationEmail-'+rowNum)).getText();
+    this.fullName = await (await $('#userAdministrationFullName-'+rowNum)).getText();
+    this.role = await (await $('#userAdministrationRole-'+rowNum)).getText();
+    this.editBtn = await $('#userAdministrationEditBtn-'+rowNum);
+    this.deleteBtn = await $('#userAdministrationDeleteBtn-'+rowNum);
     return this;
   }
 
@@ -216,40 +222,61 @@ export class UserAdministrationRowObject {
     await this.editBtn.click();
     await (await userAdministration.editFirstName()).waitForDisplayed({ timeout: 40000 });
     if (user.firstName) {
+      await (await userAdministration.editFirstName()).clearValue();
+      await browser.pause(500);
       await (await userAdministration.editFirstName()).setValue(user.firstName);
+      await browser.pause(500);
     }
     if (user.lastName) {
+      await (await userAdministration.editLastName()).clearValue();
+      await browser.pause(500);
       await (await userAdministration.editLastName()).setValue(user.lastName);
+      await browser.pause(500);
     }
     if (user.email) {
+      await (await userAdministration.editEmail()).clearValue();
+      await browser.pause(500);
       await (await userAdministration.editEmail()).setValue(user.email);
     }
     if (user.role) {
       await (await userAdministration.editRole()).click();
+      await browser.pause(500);
       await (await userAdministration.editRole()).$('input').setValue(user.role);
       await browser.keys(['Return']);
     }
     if (user.group) {
       await (await userAdministration.editGroup()).click();
+      await browser.pause(500);
       await (await (await userAdministration.editGroup()).$('input')).setValue(user.group);
+      await browser.pause(500);
       await browser.keys(['Return']);
+    }
+    if (user.password) {
+      await (await userAdministration.editPassword()).clearValue();
+      await browser.pause(500);
+      await (await userAdministration.editPassword()).setValue(user.password);
+      await browser.pause(500);
     }
   }
 
   public async closeEdit(clickCancel = false) {
     if (clickCancel) {
       await (await userAdministration.editUserCancelSaveBtn()).click();
+      await browser.pause(500);
     } else {
       await (await userAdministration.editUserSaveBtn()).click();
       await (await $('#spinner-animation')).waitForDisplayed({
         timeout: 90000,
         reverse: true,
       });
+      await browser.pause(500);
     }
 
     await loginPage.open('/');
+    await browser.pause(500);
     await myEformsPage.Navbar.goToUserAdministration();
     await (await userAdministration.createNewUserBtn()).waitForClickable({ timeout: 40000 });
+    await browser.pause(500);
   }
 
   public async edit(user: UserAdministrationObject, clickCancel = false) {

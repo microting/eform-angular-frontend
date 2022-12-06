@@ -1,18 +1,26 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   SiteNameDto,
   CommonDictionaryModel,
-  TableHeaderElementModel,
 } from 'src/app/common/models';
+import { EformsTagsComponent } from 'src/app/common/modules/eform-shared-tags/components';
 import { EformTagService, SitesService } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
-import { SiteTagsComponent } from '../';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import {SiteDeleteComponent, SiteEditComponent} from 'src/app/modules/advanced/components';
+import { TranslateService } from '@ngx-translate/core';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {Subscription} from 'rxjs';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-sites',
   templateUrl: './sites.component.html',
 })
-export class SitesComponent implements OnInit {
+export class SitesComponent implements OnInit, OnDestroy {
   get userClaims() {
     return this.authStateService.currentUserClaims;
   }
@@ -20,25 +28,23 @@ export class SitesComponent implements OnInit {
   constructor(
     private sitesService: SitesService,
     private authStateService: AuthStateService,
-    private eFormTagService: EformTagService
+    private eFormTagService: EformTagService,
+    public dialog: MatDialog,
+    private overlay: Overlay,
+    private translateService: TranslateService,
   ) {}
-  @ViewChild('modalSiteEdit', { static: true }) modalSiteEdit;
-  @ViewChild('modalSiteDelete', { static: true }) modalSiteDelete;
-  @ViewChild('modalTags', { static: true })
-  modalSiteTags: SiteTagsComponent;
+  @ViewChild('modalTags', { static: true }) modalSiteTags: EformsTagsComponent;
   sitesDto: Array<SiteNameDto> = [];
-  selectedSiteDto: SiteNameDto = new SiteNameDto();
   availableTags: Array<CommonDictionaryModel> = [];
+  siteEditComponentAfterClosedSub$: Subscription;
+  getCurrentUserClaimsAsyncSub$: Subscription;
 
-  tableHeaders: TableHeaderElementModel[] = [
-    { name: 'Microting UID', elementId: '', sortable: false },
-    { name: 'Name', elementId: '', sortable: false },
-    { name: 'Units', elementId: '', sortable: false },
-    { name: 'Tags', elementId: '', sortable: false },
-    this.userClaims.sitesDelete || this.userClaims.sitesUpdate
-      ? { name: 'Actions', elementId: '', sortable: false }
-      : null,
-  ];
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('Microting UID'), field: 'siteUId'},
+    {header: this.translateService.stream('Name'), field: 'siteName'},
+    { header: this.translateService.stream('Units'), field: 'units', },
+    { header: this.translateService.stream('Tags'), field: 'tags', },
+  ]
 
   getTagName(tagId: number): string {
     return this.availableTags.find((x) => x.id === tagId).name;
@@ -47,15 +53,33 @@ export class SitesComponent implements OnInit {
   ngOnInit() {
     // this.loadAllSites();
     this.loadAllTags();
+    this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
+      if(x.sitesDelete || x.sitesUpdate) {
+        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+          {
+            header: this.translateService.stream('Actions'),
+            field: 'actions',
+          },
+        ];
+      }
+    })
   }
 
   openEditModal(siteNameDto: SiteNameDto) {
-    this.modalSiteEdit.show(siteNameDto.id);
+    this.siteEditComponentAfterClosedSub$ = this.dialog.open(SiteEditComponent,
+      {
+        ...dialogConfigHelper(this.overlay, {
+          siteId: siteNameDto.id,
+          availableTags: this.availableTags,
+        }), minWidth: 500
+      })
+      .afterClosed().subscribe(data => data ? this.loadAllSites() : undefined);
   }
 
   openDeleteModal(siteNameDto: SiteNameDto) {
-    this.selectedSiteDto = siteNameDto;
-    this.modalSiteDelete.show();
+    this.siteEditComponentAfterClosedSub$ = this.dialog.open(SiteDeleteComponent,
+      {...dialogConfigHelper(this.overlay, siteNameDto), maxWidth: 400})
+      .afterClosed().subscribe(data => data ? this.loadAllSites() : undefined);
   }
 
   loadAllSites() {
@@ -77,5 +101,8 @@ export class SitesComponent implements OnInit {
         this.loadAllSites();
       }
     });
+  }
+
+  ngOnDestroy(): void {
   }
 }

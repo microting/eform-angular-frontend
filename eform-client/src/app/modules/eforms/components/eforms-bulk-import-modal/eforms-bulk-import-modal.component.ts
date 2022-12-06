@@ -1,9 +1,11 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild,} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild,} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
 import {ToastrService} from 'ngx-toastr';
 import {TranslateService} from '@ngx-translate/core';
 import {LoaderService} from 'src/app/common/services/loader.service';
 import {AuthStateService} from 'src/app/common/store';
+import {MatDialogRef} from '@angular/material/dialog';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
 
 @Component({
   selector: 'app-eforms-bulk-import-modal',
@@ -11,24 +13,31 @@ import {AuthStateService} from 'src/app/common/store';
   styleUrls: ['./eforms-bulk-import-modal.component.scss'],
 })
 export class EformsBulkImportModalComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @ViewChild('xlsxEforms', { static: false })
+  @ViewChild('xlsxEforms', {static: false})
   xlsxEformsInput: ElementRef;
   xlsxEformsFileUploader: FileUploader = new FileUploader({
     url: '/api/templates/import',
     authToken: this.authStateService.bearerToken,
   });
-  @Output() importFinished = new EventEmitter<void>();
   errors: { row: number; col: number; message: string }[];
+
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('Column'), field: 'col'},
+    {header: this.translateService.stream('Row'), field: 'row'},
+    {header: this.translateService.stream('Error'), field: 'error',},
+  ];
 
   constructor(
     private toastrService: ToastrService,
     private translateService: TranslateService,
-    private loaderService: LoaderService,
-    private authStateService: AuthStateService
-  ) {}
+    public loaderService: LoaderService,
+    private authStateService: AuthStateService,
+    public dialogRef: MatDialogRef<EformsBulkImportModalComponent>,
+  ) {
+  }
 
   ngOnInit() {
+    this.xlsxEformsFileUploader.clearQueue();
     this.xlsxEformsFileUploader.onSuccessItem = (item, response) => {
       const model = JSON.parse(response).model;
       if (model) {
@@ -44,8 +53,7 @@ export class EformsBulkImportModalComponent implements OnInit {
         this.toastrService.success(
           this.translateService.instant('Import has been finished successfully')
         );
-        this.frame.hide();
-        this.importFinished.emit();
+        this.excelEformsModal(true);
       }
       this.loaderService.isLoading.next(false);
       this.xlsxEformsInput.nativeElement.value = '';
@@ -57,7 +65,7 @@ export class EformsBulkImportModalComponent implements OnInit {
       );
       this.xlsxEformsInput.nativeElement.value = '';
     };
-    this.xlsxEformsFileUploader.onAfterAddingFile = (f) => {
+    this.xlsxEformsFileUploader.onAfterAddingFile = (_) => {
       if (this.xlsxEformsFileUploader.queue.length > 1) {
         this.xlsxEformsFileUploader.removeFromQueue(
           this.xlsxEformsFileUploader.queue[0]
@@ -67,18 +75,13 @@ export class EformsBulkImportModalComponent implements OnInit {
     };
   }
 
-  show() {
-    this.xlsxEformsFileUploader.clearQueue();
-    this.frame.show();
-  }
-
   uploadExcelEformsFile() {
     this.xlsxEformsFileUploader.queue[0].upload();
     this.loaderService.isLoading.next(true);
   }
 
-  excelEformsModal() {
-    this.frame.hide();
+  excelEformsModal(result = false) {
+    this.dialogRef.close(result);
     this.xlsxEformsFileUploader.clearQueue();
   }
 }

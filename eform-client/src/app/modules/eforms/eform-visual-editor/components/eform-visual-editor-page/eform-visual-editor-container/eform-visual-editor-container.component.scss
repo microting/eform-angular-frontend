@@ -1,0 +1,9 @@
+.section-collapse {
+  transition: max-height .5s ease-in-out 0s;
+  position: relative;
+  overflow: hidden;
+  max-height: 150em;
+  &.collapsed {
+    max-height: 0 !important;
+  }
+}

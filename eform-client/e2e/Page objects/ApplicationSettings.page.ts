@@ -31,7 +31,9 @@ export class ApplicationSettingsPage extends PageWithNavbarPage {
 
   public async save() {
     await (await this.saveBtn()).click();
+    await browser.pause(500);
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await browser.pause(500);
   }
 }
 

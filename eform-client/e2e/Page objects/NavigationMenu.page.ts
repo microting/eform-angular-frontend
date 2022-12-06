@@ -1,11 +1,12 @@
 class NavigationMenuPage {
   public async menuItemsChilds(): Promise<WebdriverIO.ElementArray> {
     await browser.pause(1000);
-    return $$('#menuItems>*');
+    return $$('#menuItems.mat-expanded app-navigation-menu-item');
+    //return $$('#dropdownBody app-navigation-menu-item');
   }
 
-  public async menuItems(): Promise<WebdriverIO.Element> {
-    return $('#menuItems');
+  public async menuItems(): Promise<WebdriverIO.ElementArray> {
+    return $$('#menuItems');
   }
 
   public async editLinkInput(): Promise<WebdriverIO.Element> {
@@ -25,7 +26,7 @@ class NavigationMenuPage {
   }
 
   public async securityGroupsCustomLinkSelector(): Promise<WebdriverIO.Element> {
-    return $('#securityGroupsCustomLinkSelector');
+    return $('#editSecurityGroupsSelector');
   }
 
   public async securityGroupsCustomDropdownSelector(): Promise<WebdriverIO.Element> {
@@ -45,11 +46,11 @@ class NavigationMenuPage {
   }
 
   public async dropdownBody(index: number) {
-    return await (await this.menuItemsChilds())[index].$('#dropdownBody');
+    return await (await this.menuItems())[index].$('#dropdownBody');
   }
 
   public async dropdownBodyChilds(indexDropdown: number) {
-    return await (await this.menuItemsChilds())[indexDropdown].$$('#dropdownBody>*');
+    return await (await this.menuItems())[indexDropdown].$$('#dropdownBody>*');
   }
 
   public async editTranslationsOnDropdownBodyChilds(data: {
@@ -60,7 +61,8 @@ class NavigationMenuPage {
     await (await (await this.dropdownBodyChilds(data.indexDropdownInMenu))
       [data.indexChildDropdown].$('#editBtn'))
       .click();
-    await (await $('#editMenuEntry')).waitForDisplayed({ timeout: 40000 });
+    await browser.pause(500);
+    await (await $('#editItemSaveBtn')).waitForDisplayed({ timeout: 40000 });
     for (const translation of data.translations_array) {
       const i = data.translations_array.indexOf(translation);
       await (await this.editItemTranslation(
@@ -68,12 +70,14 @@ class NavigationMenuPage {
         data.indexChildDropdown,
         i
       )).setValue(translation);
+      await browser.pause(500);
     }
     await (await this.editItemSaveBtn()).click();
+    await browser.pause(500);
   }
 
   public async collapseMenuItemDropdown(index: number) {
-    await (await (await this.menuItemsChilds())[index].$('#collapseToggle')).click();
+    await (await (await this.menuItems())[index].$('.mat-expansion-indicator')).click();
   }
 
   public async dragTemplateOnElementInCreatedDropdown(
@@ -84,20 +88,23 @@ class NavigationMenuPage {
     await this.collapseTemplates(0);
     if ((await this.dropdownBodyChilds(indexCreatedDropdown)).length === 0) {
       await (await this.dragHandleOnItemInMainMenu(indexTemplate)).dragAndDrop(
-        await this.dropdownBody(indexCreatedDropdown)
+         await this.dropdownBody(indexCreatedDropdown)
       );
     } else {
       await (await this.dragHandleOnItemInMainMenu(indexTemplate)).dragAndDrop(
-        (await this.dropdownBodyChilds(indexCreatedDropdown))[
-          indexElementInCreatedDropdown
-        ]
+        await this.dropdownBody(indexCreatedDropdown)
       );
+      // await (await this.dragHandleOnItemInMainMenu(indexTemplate)).dragAndDrop(
+      //   (await this.dropdownBodyChilds(indexCreatedDropdown))[
+      //     indexElementInCreatedDropdown
+      //   ]
+      // );
     }
     await this.collapseTemplates(0);
   }
 
   public async collapseTemplates(indexTemplate) {
-    await (await (await this.dropdownTemplate(indexTemplate)).$('app-eform-collapse-toggle')).click();
+    await (await this.dropdownTemplate(indexTemplate)).click();
     // waiting for the menu to open. Menu not have id or any universal selector.
     await browser.pause(1500);
   }
@@ -107,7 +114,7 @@ class NavigationMenuPage {
   }
 
   public async dragHandleOnItemInMainMenu(numberItem): Promise<WebdriverIO.Element> {
-    return await (await this.mainMenu()).$(`#dragHandle0_${numberItem}`);
+    return $(`#dragHandle0_${numberItem}`);
   }
 
   public async dragAndDropElementOfDropdown(
@@ -115,23 +122,25 @@ class NavigationMenuPage {
     indexItemForSwap,
     indexItemOfSwap
   ) {
-    const elem = await (await this.menuItemsChilds())[indexDropdownInMenuItems].$(
-      `#drag_handle${indexDropdownInMenuItems}_${indexItemForSwap}`
-    );
+    const elem = await $(`#drag_handle${indexDropdownInMenuItems}_${indexItemForSwap}`);
     await elem.scrollIntoView();
     await browser.pause(2000);
 
+    await browser.pause(2000);
     await elem.dragAndDrop(
-      await (await this.menuItemsChilds())[indexDropdownInMenuItems].$(
-        `#drag_handle${indexDropdownInMenuItems}_${indexItemOfSwap}`
-      )
+      await $(`#drag_handle${indexDropdownInMenuItems}_${indexItemOfSwap}`)
     );
+    await browser.pause(2000);
   }
 
   public async createMenuItemFromTemplate(indexItemInTemplate) {
-    await (await this.dragHandleOnItemInMainMenu(indexItemInTemplate)).dragAndDrop(
-      (await this.menuItemsChilds())[0]
-    );
+    const currentDropDrownBodyCount = (await navigationMenuPage.menuItems()).length;
+    const elem = await this.dragHandleOnItemInMainMenu(indexItemInTemplate);
+    const toElement = (await $$('mat-card > mat-accordion')[0]);
+    await elem.dragAndDrop(toElement);
+    // await (await this.dragHandleOnItemInMainMenu(indexItemInTemplate)).dragAndDrop(
+    //
+    // );
   }
 
   public async dropdownTemplate(indexTemplate) {
@@ -147,8 +156,9 @@ class NavigationMenuPage {
   }
 
   public async openOnEditCreatedMenuItem(indexInCreatedMenuItems) {
-    await (await (await this.menuItemsChilds())[indexInCreatedMenuItems].$('#editBtn')).click();
-    await (await $('#editMenuEntry')).waitForDisplayed({ timeout: 40000 });
+    await (await (await this.menuItems())[indexInCreatedMenuItems].$('#editBtn')).click();
+    await (await $('#editItemSaveBtn')).waitForDisplayed({ timeout: 40000 });
+    //await (await $('#editMenuEntry')).waitForDisplayed({ timeout: 40000 });
   }
 
   public async editItemTranslation(
@@ -167,19 +177,22 @@ class NavigationMenuPage {
     await resetBtn.scrollIntoView();
     await resetBtn.waitForClickable({ timeout: 40000 });
     await resetBtn.click();
-    await (await $('#resetModal')).waitForDisplayed({ timeout: 40000 });
+    await browser.pause(500);
     const deleteWorkerDeleteBtn = await $('#deleteWorkerDeleteBtn');
     await deleteWorkerDeleteBtn.waitForDisplayed({ timeout: 40000 });
     await deleteWorkerDeleteBtn.waitForClickable({ timeout: 40000 });
     await deleteWorkerDeleteBtn.click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await browser.pause(500);
   }
 
   public async deleteElementFromMenuItems(indexElementInMenu) {
-    const deleteBtn = await (await this.menuItemsChilds())[indexElementInMenu].$('#deleteBtn');
+    const deleteBtn = await (await this.menuItems())[indexElementInMenu].$('#deleteBtn');
     await deleteBtn.scrollIntoView();
     await deleteBtn.waitForClickable({ timeout: 40000 });
+    await browser.pause(500);
     await deleteBtn.click();
+    await browser.pause(500);
     const menuItemDeleteBtn = await $('#menuItemDeleteBtn');
     await menuItemDeleteBtn.waitForDisplayed({ timeout: 40000 });
     await menuItemDeleteBtn.waitForClickable({ timeout: 40000 });
@@ -193,11 +206,14 @@ class NavigationMenuPage {
     await deleteBtn.scrollIntoView();
     await deleteBtn.waitForClickable({ timeout: 40000 });
     await deleteBtn.click();
+    await browser.pause(500);
     const menuItemDeleteBtn = await $('#menuItemDeleteBtn');
     await menuItemDeleteBtn.waitForDisplayed({ timeout: 40000 });
     await menuItemDeleteBtn.waitForClickable({ timeout: 40000 });
     await menuItemDeleteBtn.click();
+    await browser.pause(500);
     await this.collapseMenuItemDropdown(indexDropdown);
+    await browser.pause(500);
   }
 
   public async createCustomLinkTranslation(index, value) {
@@ -212,6 +228,7 @@ class NavigationMenuPage {
 
   public async setSecurityGroupCustomLinkSelector(textSecurityGroup) {
     await (await this.securityGroupsCustomLinkSelector()).click();
+    await browser.pause(500);
     await (await $(
       `//*[@id="securityGroupsCustomLinkSelector"]//*[text()="${textSecurityGroup}"]`
     )).click();
@@ -229,7 +246,7 @@ class NavigationMenuPage {
   public async selectCustomLink() {
     // $('#customLinkCreateBtn').waitForExist({timeout: 2000, reverse: true});
     await (await $('#addCustomLink')).click();
-    await (await $('#newLinkModal')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#customLinkCreateBtn')).waitForDisplayed({ timeout: 40000 });
   }
 
   public async selectCustomDropdown() {
@@ -245,10 +262,10 @@ class NavigationMenuPage {
     translations: string[];
   }) {
     await this.selectCustomLink();
-    await (await $('#newLinkModal')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#customLinkCreateBtn')).waitForDisplayed({ timeout: 40000 });
     if (data.securityGroups.length > 0) {
       for (const securityGroup of data.securityGroups) {
-        await this.setSecurityGroupCustomLinkSelector(securityGroup);
+        await this.setSecurityGroupCustomDropdownSelector(securityGroup);
       }
     }
     await (await this.createCustomLinkInput()).setValue(data.link);
@@ -259,7 +276,8 @@ class NavigationMenuPage {
       }
     }
     // $('#customLinkCreateBtn').waitForClickable({timeout: 2000});
-    await(await $('#customLinkCreateBtn')).click();
+    await (await $('#customLinkCreateBtn')).scrollIntoView();
+    await (await $('#customLinkCreateBtn')).click();
   }
 
   public async createCustomDropdown(data: {
@@ -267,7 +285,7 @@ class NavigationMenuPage {
     translations: string[];
   }) {
     await this.selectCustomDropdown();
-    await (await $('#newDropdownModal')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#customDropdownCreateBtn')).waitForDisplayed({ timeout: 40000 });
     if (data.securityGroups.length > 0) {
       for (const securityGroup of data.securityGroups) {
         await this.setSecurityGroupCustomDropdownSelector(securityGroup);
@@ -280,6 +298,7 @@ class NavigationMenuPage {
       }
     }
 
+    await (await $('#customDropdownCreateBtn')).scrollIntoView();
     await (await $('button#customDropdownCreateBtn')).click();
   }
 

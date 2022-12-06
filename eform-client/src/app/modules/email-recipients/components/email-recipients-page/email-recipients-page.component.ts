@@ -1,12 +1,14 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {EmailRecipientsStateService} from '../store';
+import {Sort} from '@angular/material/sort';
 import {
   CommonDictionaryModel,
   Paged,
-  TableHeaderElementModel,
   EmailRecipientModel,
-} from '../../../../common/models';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+  PaginationModel,
+} from 'src/app/common/models';
 import {
   EmailRecipientDeleteComponent,
   EmailRecipientEditComponent,
@@ -16,8 +18,12 @@ import {
 import {
   EmailRecipientsService,
   EmailRecipientsTagsService,
-} from '../../../../common/services';
-import { EmailRecipientsStateService } from '../store';
+} from 'src/app/common/services';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import { TranslateService } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -26,40 +32,39 @@ import { EmailRecipientsStateService } from '../store';
   styleUrls: ['./email-recipients-page.component.scss'],
 })
 export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
-  @ViewChild('newRecipientsModal')
-  newRecipientsModal: EmailRecipientsNewComponent;
-  @ViewChild('editRecipientModal')
-  editRecipientModal: EmailRecipientEditComponent;
-  @ViewChild('deleteRecipientModal')
-  deleteRecipientModal: EmailRecipientDeleteComponent;
   @ViewChild('recipientsTagsModal')
   recipientTagsModal: EmailRecipientsTagsComponent;
   emailRecipientsListModel: Paged<EmailRecipientModel> = new Paged<EmailRecipientModel>();
   availableTags: CommonDictionaryModel[] = [];
+
   getAllSub$: Subscription;
   getTagsSub$: Subscription;
+  emailRecipientDeleteComponentAfterClosedSub$: Subscription;
+  emailRecipientEditComponentAfterClosedSub$: Subscription;
+  emailRecipientsNewComponentAfterClosedSub$: Subscription;
 
-  tableHeaders: TableHeaderElementModel[] = [
-    { name: 'Id', elementId: 'idTableHeader', sortable: true },
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true},
+    {header: this.translateService.stream('Name'), sortProp: {id: 'Name'}, field: 'name', sortable: true},
     {
-      name: 'Name',
-      elementId: 'emailRecipientNameTableHeader',
+      header: this.translateService.stream('Email'),
+      field: 'email',
       sortable: true,
+      sortProp: {id: 'Email'}
     },
-    {
-      name: 'Email',
-      elementId: 'emailRecipientEmailTableHeader',
-      sortable: true,
-    },
-    { name: 'Tags', elementId: '', sortable: false },
-    { name: 'Actions', elementId: '', sortable: false },
-  ];
+    {header: this.translateService.stream('Tags'), field: 'tags'},
+    {header: this.translateService.stream('Actions'), field: 'actions'},
+  ]
 
   constructor(
     private emailRecipientsService: EmailRecipientsService,
     private tagsService: EmailRecipientsTagsService,
-    public emailRecipientsStateService: EmailRecipientsStateService
-  ) {}
+    public emailRecipientsStateService: EmailRecipientsStateService,
+    private dialog: MatDialog,
+    private overlay: Overlay,
+    private translateService: TranslateService,
+  ) {
+  }
 
   ngOnInit(): void {
     this.getEmailRecipients();
@@ -86,26 +91,27 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSortTable(sort: string) {
-    this.emailRecipientsStateService.onSortTable(sort);
-    this.getEmailRecipients();
-  }
-
-  changePage(offset: number) {
-    this.emailRecipientsStateService.changePage(offset);
+  onSortTable(sort: Sort) {
+    this.emailRecipientsStateService.onSortTable(sort.active);
     this.getEmailRecipients();
   }
 
   openCreateModal() {
-    this.newRecipientsModal.show();
+    this.emailRecipientsNewComponentAfterClosedSub$ = this.dialog.open(EmailRecipientsNewComponent,
+      {...dialogConfigHelper(this.overlay, this.availableTags), minWidth: 600})
+      .afterClosed().subscribe(data => data ? this.onEmailRecipientCreated() : undefined);
   }
 
   openEditModal(model: EmailRecipientModel) {
-    this.editRecipientModal.show(model);
+    this.emailRecipientEditComponentAfterClosedSub$ = this.dialog.open(EmailRecipientEditComponent,
+      dialogConfigHelper(this.overlay, {emailRecipientUpdateModel: model, availableTags: this.availableTags}))
+      .afterClosed().subscribe(data => data ? this.getEmailRecipients() : undefined);
   }
 
   openDeleteModal(model: EmailRecipientModel) {
-    this.deleteRecipientModal.show(model);
+    this.emailRecipientDeleteComponentAfterClosedSub$ = this.dialog.open(EmailRecipientDeleteComponent,
+      dialogConfigHelper(this.overlay, model))
+      .afterClosed().subscribe(data => data ? this.onEmailRecipientDeleted() : undefined);
   }
 
   openTagsModal() {
@@ -117,8 +123,6 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
     this.getEmailRecipients();
   }
 
-  ngOnDestroy(): void {}
-
   tagSelected(id: number) {
     this.emailRecipientsStateService.addOrRemoveTagIds(id);
     this.getEmailRecipients();
@@ -129,13 +133,16 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
     this.getTags();
   }
 
-  onPageSizeChanged(pageSize: number) {
-    this.emailRecipientsStateService.updatePageSize(pageSize);
-    this.getEmailRecipients();
-  }
-
   onEmailRecipientDeleted() {
     this.emailRecipientsStateService.onDelete();
     this.getEmailRecipients();
+  }
+
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.emailRecipientsStateService.updatePagination(paginationModel);
+    this.getEmailRecipients();
+  }
+
+  ngOnDestroy(): void {
   }
 }

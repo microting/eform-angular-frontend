@@ -1,151 +1,103 @@
-<eform-subheader>
-  <div class="p-3">
-    <button
-      mdbBtn
-      class="btn-accent text-black-50 btn-icon"
-      (click)="openTagsModal()"
-      mdbTooltip="{{ 'Manage tags' | translate }}"
-      mdbWavesEffect
-    >
-      <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
-    </button>
-    <button
-      mdbBtn
-      id="createEmailRecipientBtn"
-      class="btn-success btn-small-height"
-      (click)="openCreateModal()"
-    >
-      {{ 'Add Recipients' | translate }}
-    </button>
-  </div>
-</eform-subheader>
+<eform-new-subheader>
+  <button
+    mat-icon-button
+    (click)="openTagsModal()"
+    matTooltip="{{ 'Manage tags' | translate }}"
+  >
+    <mat-icon>discount</mat-icon>
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    id="createEmailRecipientBtn"
+    matTooltip="{{ 'Add Recipients' | translate }}"
+    (click)="openCreateModal()"
+  >
+    {{ 'Add Recipients' | translate }}
+  </button>
+</eform-new-subheader>
 
-<div class="container-fluid">
-  <div class="row pl-1">
-    <div class="col-md-4 col-sm-8 ng-select-wrapper">
-      <ng-select
-        class="custom"
-        dropdownPosition="'bottom'"
-        [placeholder]="'Tags' | translate"
-        [items]="availableTags"
-        [ngModel]="emailRecipientsStateService.getTagIds() | async"
-        (add)="tagSelected($event.id)"
-        (remove)="removeSavedTag($event)"
-        [clearable]="false"
-        [bindLabel]="'name'"
-        [bindValue]="'id'"
-        id="tagSelector"
-        [multiple]="true"
-      ></ng-select>
+<ng-template #toolbarTpl>
+  <div class="d-flex flex-row justify-content-start flex-nowrap">
+    <div class="d-flex flex-column mr-2 ml-2">
+      <mat-form-field>
+        <mat-label>{{ 'Tags' | translate }}</mat-label>
+        <mtx-select
+          class="custom"
+          [dropdownPosition]="bottom"
+          [items]="availableTags"
+          [ngModel]="emailRecipientsStateService.getTagIds() | async"
+          (add)="tagSelected($event.id)"
+          (remove)="removeSavedTag($event)"
+          [clearable]="false"
+          [bindLabel]="'name'"
+          [bindValue]="'id'"
+          id="tagSelector"
+          [multiple]="true"
+        ></mtx-select>
+      </mat-form-field>
     </div>
   </div>
-  <div class="row p-1 mt-4 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-    >
-      <thead
-        table-headers
-        [tableHeaders]="tableHeaders"
-        [sort]="this.emailRecipientsStateService.getSort() | async"
-        (sortChanged)="onSortTable($event)"
-      ></thead>
-      <tbody id="tableBody">
-        <tr
-          *ngFor="
-            let recipient of emailRecipientsListModel?.entities;
-            let i = index
-          "
-        >
-          <td id="emailRecipientId">
-            {{ recipient.id }}
-          </td>
-          <td id="emailRecipientName">
-            {{ recipient.name }}
-          </td>
-          <td id="emailRecipientEmail">
-            {{ recipient.email }}
-          </td>
-          <td id="emailRecipientTags">
-            <ng-container *ngFor="let tag of recipient.tags; let i = index">
-              <span
-                class="badge badge-primary mb-1"
-                style="cursor: pointer"
-                (click)="tagSelected(tag.id)"
-              >
-                <fa-icon icon="tag"></fa-icon>
-                {{ tag.name }}
-              </span>
-              <br />
-            </ng-container>
-          </td>
-          <td>
-            <div class="d-flex flex-row justify-content-center">
-              <button
-                mdbBtn
-                class="btn-accent text-black-50 btn-icon mb-2"
-                id="emailRecipientEditBtn"
-                mdbTooltip="{{ 'Edit email recipient' | translate }}"
-                mdbWavesEffect
-                (click)="openEditModal(recipient)"
-              >
-                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-              </button>
-              <button
-                id="emailRecipientDeleteBtn"
-                class="btn btn-danger btn-icon mb-2"
-                mdbTooltip="{{ 'Delete email recipient' | translate }}"
-                (click)="openDeleteModal(recipient)"
-              >
-                <fa-icon
-                  icon="trash-alt"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="row p-1 my-4 mx-2" *ngIf="emailRecipientsListModel.total === 0">
-    <span>{{ 'No email recipients found' | translate }}</span>
-  </div>
-  <div class="row justify-content-between mr-2 ml-2">
-    <div class="col-md-1">
-      <eform-page-size
-        [pageSize]="emailRecipientsStateService.getPageSize() | async"
-        (onPageSizeChanged)="onPageSizeChanged($event)"
-      ></eform-page-size>
-    </div>
-    <eform-pagination
-      [pagination]="emailRecipientsStateService.getPagination() | async"
-      (onPageChanged)="changePage($event)"
-    ></eform-pagination>
-  </div>
-</div>
+</ng-template>
 
-<app-email-recipients-new
-  #newRecipientsModal
-  [availableTags]="availableTags"
-  (emailRecipientsCreated)="onEmailRecipientCreated()"
-></app-email-recipients-new>
+<mtx-grid
+  [data]="emailRecipientsListModel?.entities"
+  [columns]="tableHeaders"
+  [cellTemplate]="{actions: actionsTpl, tags: tagsTpl}"
+  [showPaginator]="true"
+  [paginationTemplate]="paginatorTpl"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showToolbar]="true"
+  [showColumnMenuButton]="false"
+  [toolbarTemplate]="toolbarTpl"
+  [sortActive]="emailRecipientsStateService.getActiveSort() | async"
+  [sortDirection]="emailRecipientsStateService.getActiveSortDirection() | async"
+  (sortChange)="onSortTable($event)">
+</mtx-grid>
+
+<ng-template #actionsTpl let-row>
+  <button
+    mat-icon-button
+    id="emailRecipientEditBtn"
+    matTooltip="{{ 'Edit email recipient' | translate }}"
+    (click)="openEditModal(row)"
+  >
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    color="warn"
+    id="emailRecipientDeleteBtn"
+    matTooltip="{{ 'Delete email recipient' | translate }}"
+    (click)="openDeleteModal(row)"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+</ng-template>
+
+<ng-template #tagsTpl let-row>
+  <ng-container *ngFor="let tag of row.tags; let i = index">
+    <span
+      class="badge badge-primary mb-1"
+      style="cursor: pointer"
+      (click)="tagSelected(tag.id)"
+    >
+      <mat-icon [inline]="true">discount</mat-icon>
+      {{ tag.name }}
+    </span>
+  </ng-container>
+</ng-template>
+
+<ng-template #paginatorTpl>
+  <eform-pagination
+    [pagination]="emailRecipientsStateService.getPagination() | async"
+    (paginationChanged)="onPaginationChanged($event)"
+  ></eform-pagination>
+</ng-template>
+
 <app-email-recipients-tags
   #recipientsTagsModal
   [availableTags]="availableTags"
   (tagsChanged)="getTags()"
 ></app-email-recipients-tags>
-<app-email-recipient-edit
-  #editRecipientModal
-  [availableTags]="availableTags"
-  (emailRecipientUpdated)="getEmailRecipients()"
-></app-email-recipient-edit>
-<app-email-recipient-delete
-  #deleteRecipientModal
-  [availableTags]="availableTags"
-  (emailRecipientDeleted)="onEmailRecipientDeleted()"
-></app-email-recipient-delete>

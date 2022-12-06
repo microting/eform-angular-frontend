@@ -4,111 +4,103 @@
 
   <!--  <div dragula="{{dragulaElementContainerName}}" [dragulaModel]="visualEditorTemplateModel.fields"-->
   <!--       (dragulaModelChange)="onFieldChanged($event)">-->
-  <div class="card mb-3 hoverable container-fluid" style="width: 100%">
+  <div class="mb-3 hoverable" style="width: 100%">
     <div
-      class="card-header row d-flex align-items-center justify-content-end"
+      class="d-flex align-items-center justify-content-end p-2"
       [ngStyle]="{ 'background-color': field.color ? '#' + field.color : '' }"
     >
-      <div class="col-6">
-        <i
-          class="material-icons md-36 dragula-handle align-middle"
+      <div style="display: flex; flex-grow: 6; align-items: center;">
+        <mat-icon
+          class="dragula-handle align-middle"
           style="cursor: pointer"
           id="moveFieldBtn"
         >
-          drag_handle
-        </i>
+          menu
+        </mat-icon>
         {{ fieldTranslationAndType }}
       </div>
-      <div class="col">
-        <div class="row" id="colors">
-          <div *ngFor="let color of fieldColors">
-            <div
-              mdbBtn
-              [style]="'background-color: #' + color.name + ';'"
-              [mdbTooltip]="color.description"
-              style="border-radius: 10em; padding: 1em 1em"
-              (click)="onChangeColor(color.name)"
-            ></div>
-          </div>
+
+      <div class="d-flex justify-content-end align-items-center" style="flex-grow: 3;">
+        <div id="colors">
+          <button
+            *ngFor="let color of fieldColors"
+            mat-mini-fab
+            [ngStyle]="{'background-color': '#' + color.name}"
+            [matTooltip]="color.description"
+            style="border-radius: 5em; padding: 1px 1px 1px 1px;"
+            (click)="onChangeColor(color.name)"
+          ></button>
         </div>
-      </div>
-      <div class="col-3 d-flex justify-content-end align-items-center">
-        <fa-icon
+        <mat-icon
+          style="margin-right: 1rem;"
           *ngIf="!isFieldComplete"
-          [mdbTooltip]="'Field is not complete' | translate"
-          icon="info-circle"
-          [fixedWidth]="true"
-          size="lg"
+          [matTooltip]="'Field is not complete' | translate"
           class="text-warning mr-2"
           id="isNotFieldComplete"
-        ></fa-icon>
+        >info</mat-icon>
         <button
+          mat-icon-button
+          color="accent"
           *ngIf="field.fieldType == fieldTypes.FieldGroup && !fieldIsNested"
           id="addNewNestedField"
-          class="btn btn-success btn-icon mr-2"
           (click)="onAddNewField()"
-          [mdbTooltip]="'Add new nested field' | translate"
+          [matTooltip]="'Add new nested field' | translate"
         >
-          <fa-icon icon="plus" [fixedWidth]="true"></fa-icon>
+          <mat-icon>add</mat-icon>
         </button>
         <button
+          mat-icon-button
+          color="accent"
           id="copyBtn"
-          class="btn btn-success btn-icon mr-2"
           (click)="onCopyField(field)"
-          [mdbTooltip]="'Copy field' | translate"
+          [matTooltip]="'Copy field' | translate"
         >
-          <fa-icon icon="copy" [fixedWidth]="true"></fa-icon>
+          <mat-icon>content_copy</mat-icon>
         </button>
         <button
+          mat-icon-button
+          color="primary"
           id="editBtn"
-          class="btn btn-neutral btn-icon mr-2"
           (click)="onEditField()"
-          [mdbTooltip]="'Edit field' | translate"
+          [matTooltip]="'Edit field' | translate"
         >
-          <fa-icon icon="pen" [fixedWidth]="true"></fa-icon>
+          <mat-icon>edit</mat-icon>
         </button>
         <button
+          mat-icon-button
+          color="warn"
           id="deleteBtn"
-          class="btn btn-danger btn-icon mr-2"
           (click)="onDeleteField()"
-          [mdbTooltip]="'Delete field' | translate"
+          [matTooltip]="'Delete field' | translate"
         >
-          <fa-icon icon="trash-alt" [fixedWidth]="true"></fa-icon>
+          <mat-icon>delete</mat-icon>
         </button>
         <button
+          mat-icon-button
           *ngIf="field.fieldType == fieldTypes.FieldGroup"
           id="collapseToggleBtn"
-          class="btn btn-neutral btn-icon mr-2"
-          [mdbTooltip]="
+          [matTooltip]="
             (field.collapsed ? 'Expand field' : 'Collapse field') | translate
           "
           (click)="toggleCollapse(field)"
         >
-          <fa-icon
-            [icon]="field.collapsed ? 'angle-right' : 'angle-down'"
-            [fixedWidth]="true"
-          ></fa-icon>
+          <mat-icon>{{field.collapsed ? 'chevron_right' : 'expand_more'}}</mat-icon>
         </button>
       </div>
     </div>
     <div
-      mdbCollapse
-      [isCollapsed]="field.collapsed"
-      #nestedFields="bs-collapse"
       *ngIf="field.fieldType == fieldTypes.FieldGroup"
-      class="card-body"
-      [class]="
-        (field.collapsed ? 'p-0' : 'p-1 pt-3') +
-        (field.fieldType == fieldTypes.FieldGroup
-          ? ' field-group-container'
-          : '')
-      "
+      class="field-group-container section-collapse pl-3"
+      [ngClass]="{'p-1 pt-3' : !field.collapsed, 'collapsed' : field.collapsed}"
       dragula="{{ dragulaElementContainerName }}"
       [dragulaModel]="field.fields"
       id="nestedFields"
       (dragulaModelChange)="onFieldPositionChangedOnNestedField($event)"
     >
-      <ng-container *ngFor="let nestedField of field.fields; let i = index">
+      <div
+        *ngFor="let nestedField of field.fields; let i = index"
+        [ngClass]="{'collapsed' : field.collapsed}"
+      >
         <app-visual-editor-field
           [field]="nestedField"
           [checklistRecursionIndexes]="checklistRecursionIndexes"
@@ -121,7 +113,7 @@
           (editField)="onEditFieldOnNestedField($event)"
         >
         </app-visual-editor-field
-      ></ng-container>
+      ></div>
     </div>
   </div>
 </section>

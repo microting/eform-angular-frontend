@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {EformPermissionsModel} from 'src/app/common/models/security/group-permissions/eform';
-import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
+import {Component, Inject, OnInit,} from '@angular/core';
+import {EformPermissionsModel} from 'src/app/common/models';
+import {SecurityGroupEformsPermissionsService} from 'src/app/common/services';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-security-group-eforms-delete',
@@ -8,33 +9,34 @@ import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/sec
   styleUrls: ['./security-group-eforms-delete.component.scss']
 })
 export class SecurityGroupEformsDeleteComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
-  @Output() onEformDeleted: EventEmitter<void> = new EventEmitter<void>();
   eformSecurityModel: EformPermissionsModel = new EformPermissionsModel();
   groupId: number;
-  constructor(private securityGroupEformsService: SecurityGroupEformsPermissionsService) { }
-
-  ngOnInit() {
+  constructor(
+    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
+    public dialogRef: MatDialogRef<SecurityGroupEformsDeleteComponent>,
+    @Inject(MAT_DIALOG_DATA) model: {model: EformPermissionsModel, selectedGroupId: number}
+  ) {
+    this.eformSecurityModel = model.model;
+    this.groupId = model.selectedGroupId;
   }
 
-  show(model: EformPermissionsModel, groupId: number) {
-    this.eformSecurityModel = model;
-    this.groupId = groupId;
-    this.frame.show();
+  ngOnInit() {
   }
 
   deleteEformFromSecurityGroup() {
     this.securityGroupEformsService.deleteEformFromGroup(
       {
         eformId : this.eformSecurityModel.templateId,
-        groupId: this.groupId
-
+        groupId: this.groupId,
       }).subscribe((data) => {
       if (data && data.success) {
-        this.onEformDeleted.emit();
+        this.hide(true);
       }
-      this.frame.hide();
     });
+  }
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 
 }

@@ -5,6 +5,7 @@
   &:not(.btn-block) {
     display: inline-flex;
   }
+
   &.btn-neutral {
     color: $eform-gray;
     background-color: var(--black-050);
@@ -15,6 +16,7 @@
       color: $eform-gray-dark;
     }
   }
+
   &.btn-icon {
     //padding: 0.5rem 0.5rem;
     padding: 0.46em 0.5rem;
@@ -23,5 +25,19 @@
   &.btn-small-height {
     padding-top: 0.46em;
     padding-bottom: 0.46em;
+  }
+
+  &.text-uppercase {
+    text-transform: uppercase;
+  }
+}
+
+@each $key in mat-button-base, mat-slide-toggle {
+  .#{$key} + .mat-button-base {
+    @if($key==mat-slide-toggle){
+      margin-left: 1rem;
+    } @else {
+      margin-left: 0.5rem;
+    }
   }
 }

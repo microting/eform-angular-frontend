@@ -1,6 +1,6 @@
 @import "../../../scss/utilities/colors";
 
-.navbar-bg {
+/*.navbar-bg {
   background-color: $eform-gray;
   color: white;
 }
@@ -8,6 +8,14 @@
 .nav-item {
   & a {
     padding: 0.5rem 0.8rem !important;
+    color: white !important;
+    background-color: $eform-gray;
+  }
+  & a.active {
+     background-color: $eform-red;
+   }
+  & a:hover {
+    color: $eform-gray-light !important;
   }
 }
 
@@ -21,14 +29,6 @@
 }
 
 .nav-item a {
-  color: white !important;
-  background-color: $eform-gray;
-  &.active {
-    background-color: $eform-red;
-  }
-  &:hover {
-    color: $eform-gray-light !important;
-  }
 }
 
 .outbounds-fix {
@@ -40,4 +40,30 @@
   .dropdown-menu {
     padding-bottom: 25px;
   }
+}*/
+
+#main-header-text {
+  font-size: 1.1rem;
+  line-height: 1.1;
+}
+
+#secondary-header-text {
+  font-size: 0.8rem;
+  line-height: 1.1;
+}
+
+@media (max-width: 767px) {
+  .hidden-xs {
+    display: none !important;
+  }
+}
+
+.nav-link {
+  width: 100%;
+  text-align: inherit;
+}
+
+.logo-container {
+  //width: 181px;
+  //margin: 5px 15px 5px 15px;
 }

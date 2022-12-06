@@ -1,0 +1,105 @@
+<h3 mat-dialog-title>{{ (edit ? 'Edit User' : 'New User') | translate }}</h3>
+<div mat-dialog-content>
+  <form #form="ngForm" class="need-wrapper">
+    <div class="d-flex flex-row">
+      <mat-form-field>
+        <mat-label>{{ 'First name' | translate }}</mat-label>
+        <input
+        matInput
+        type="text"
+        [(ngModel)]="userModel.firstName"
+        [id]="edit ? 'editFirstName' : 'createFirstName'"
+        [name]="edit ? 'editFirstName' : 'createFirstName'"
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'Last name' | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="userModel.lastName"
+          [name]="edit ? 'editLastName' : 'createLastName'"
+          [id]="edit ? 'editLastName' : 'createLastName'"
+        >
+      </mat-form-field>
+    </div>
+    <div class="d-flex flex-row">
+      <mat-form-field>
+        <mat-label>{{ 'Email' | translate }}</mat-label>
+        <input
+          matInput
+          required
+          #createEmail="ngModel"
+          type="text"
+          [(ngModel)]="userModel.email"
+          [id]="edit ? 'emailEdit' : 'createEmail'"
+          [name]="edit ? 'emailEdit' : 'createEmail'"
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'Password' | translate }}</mat-label>
+        <input
+          matInput
+          required
+          type="password"
+          [(ngModel)]="userModel.password"
+          [id]="edit ? 'editPassword' : 'createPassword'"
+          [name]="edit ? 'editPassword' : 'createPassword'"
+        >
+      </mat-form-field>
+    </div>
+    <div class="d-flex flex-row">
+      <mat-form-field>
+        <mat-label>{{ 'Role' | translate }}</mat-label>
+        <mtx-select
+          required
+          bindLabel="name"
+          bindValue="id"
+          [clearable]="false"
+          [(ngModel)]="userModel.role"
+          [name]="edit ? 'editRole' : 'createRole'"
+          [id]="edit ? 'editRole' : 'createRole'"
+          id="createRole"
+          appendTo="body"
+          [items]="[
+                    { id: 'admin', name: 'Admin' | translate },
+                    { id: 'user', name: 'User' | translate }
+                  ]"
+        ></mtx-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="userModel.role !== 'admin'">
+        <mat-label>{{ 'Group' | translate }}</mat-label>
+        <mtx-select
+          required
+          bindLabel="groupName"
+          bindValue="id"
+          [(ngModel)]="userModel.groupId"
+          [name]="edit ? 'editGroup' : 'createGroup'"
+          [id]="edit ? 'editGroup' : 'createGroup'"
+          appendTo="body"
+          [items]="availableGroups.entities"
+        ></mtx-select>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    [disabled]="!form.form.valid"
+    mat-raised-button
+    color="accent"
+    type="submit"
+    (click)="edit ? updateUser() : createUser()"
+    [id]="edit ? 'editUserSaveBtn' : 'createAdministrationUserBtn'"
+  >
+    {{ edit ? 'Save' : 'Create' | translate }}
+  </button>
+  <button
+    mat-raised-button
+    (click)="hide()"
+    type="button"
+    [id]="edit ? 'editUserCancelSaveBtn' : 'createAdministrationUserCancelBtn'"
+  >
+    {{ 'Cancel' | translate }}
+  </button>
+</div>

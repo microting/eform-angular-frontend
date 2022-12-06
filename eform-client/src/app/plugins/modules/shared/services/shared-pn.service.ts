@@ -18,8 +18,7 @@ export class SharedPnService {
     const localPagesSettings = localStorage.getItem(localStorageItemName);
     let result;
     if (pageName) {
-      const bla = JSON.parse(localPagesSettings);
-      result = bla.find((x) => x.name === pageName);
+      result = JSON.parse(localPagesSettings).find((x) => x.name === pageName);
       return <ApplicationPageModel>result;
     }
     return <ApplicationPageModel>JSON.parse(localPagesSettings);

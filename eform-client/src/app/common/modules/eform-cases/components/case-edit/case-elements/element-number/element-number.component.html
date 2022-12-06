@@ -1,7 +1,10 @@
-<div class="md-form md-form-case-elem">
-  <input mdbInput type="text"
-         [(ngModel)]="fieldValueObj.value"
-         (keypress)="validateInput($event)"
-         id="numberElement{{fieldValueObj.fieldId}}" name="numberElement" class="form-control">
-  <label for="numberElement{{fieldValueObj.fieldId}}">{{'Value' | translate}}</label>
-</div>
+<mat-form-field>
+  <mat-label>{{'Value' | translate}}</mat-label>
+  <input
+    matInput
+    type="number"
+    [(ngModel)]="fieldValueObj.value"
+    id="numberElement{{fieldValueObj.fieldId}}"
+    name="numberElement"
+  >
+</mat-form-field>

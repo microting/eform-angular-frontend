@@ -1,36 +1,39 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{'Create unit' | translate}}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <ng-select
-                class="custom"
-                dropdownPosition="'bottom'"
-                [bindValue]="'siteId'"
-                [bindLabel]="'fullName'"
-                [(ngModel)]="unitModel.siteId"
-                [placeholder]="'Select location' | translate"
-                [items]="simpleSites"
-                id="workerSelector"
-                [clearable]="false"
-                [multiple]="false"></ng-select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height"
-                id="workerSaveBtn" (click)="createUnit()">{{'Create' | translate}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Cancel' | translate}}</button>
-      </div>
-    </div>
+<h3 mat-dialog-title>{{ 'Create unit' | translate}}</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-column">
+    <mat-form-field>
+      <mat-label>{{'Select location' | translate }}</mat-label>
+      <mtx-select
+        class="custom"
+        appendTo="body"
+        dropdownPosition="bottom"
+        [bindValue]="'siteId'"
+        [bindLabel]="'fullName'"
+        [(ngModel)]="unitModel.siteId"
+        [items]="simpleSites"
+        id="workerSelector"
+        [clearable]="false"
+        [multiple]="false">
+      </mtx-select>
+    </mat-form-field>
   </div>
+</div>
+
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="createUnit()"
+    [disabled]="!unitModel.siteId"
+    id="workerSaveBtn"
+  >
+    {{'Create' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="workerSaveCancelBtn"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
 </div>

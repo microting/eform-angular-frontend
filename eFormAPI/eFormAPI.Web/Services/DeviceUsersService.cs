@@ -37,6 +37,7 @@ namespace eFormAPI.Web.Services
     using Microting.eForm.Infrastructure.Constants;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     public class DeviceUsersService : IDeviceUsersService
     {
@@ -202,14 +203,14 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationDataResult<DeviceUser>> Edit(int id)
+        public async Task<OperationDataResult<DeviceUser>> Read(int id)
         {
             var core = await _coreHelper.GetCore();
             await using var db = core.DbContextHelper.GetDbContext();
 
             //var siteDto = await core.SiteRead(id);
             DeviceUser deviceUser = null;
-            var site = await db.Sites.SingleOrDefaultAsync(x => x.MicrotingUid == id);
+            var site = await db.Sites.SingleOrDefaultAsync(x => x.Id == id);
             if (site == null)
                 return null;
 
@@ -262,16 +263,16 @@ namespace eFormAPI.Web.Services
                         var isUpdated = await core.SiteUpdate(deviceUserModel.Id, fullName, deviceUserModel.UserFirstName,
                             deviceUserModel.UserLastName, workerDto.Email, deviceUserModel.LanguageCode);
 
-                        if (isUpdated)
-                            // {
-                            //     Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == deviceUserModel.Id);
-                            //     site.LanguageId = language.Id;
-                            //     await site.Update(db);
-                            // }
-                            return isUpdated
-                                ? new OperationResult(true, _localizationService.GetString("DeviceUserUpdatedSuccessfully"))
-                                : new OperationResult(false,
-                                    _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated", deviceUserModel.Id));
+                        // if (isUpdated)
+                        // {
+                        //     Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == deviceUserModel.Id);
+                        //     site.LanguageId = language.Id;
+                        //     await site.Update(db);
+                        // }
+                        return isUpdated
+                            ? new OperationResult(true, _localizationService.GetString("DeviceUserUpdatedSuccessfully"))
+                            : new OperationResult(false,
+                                _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated", deviceUserModel.Id));
                     }
 
                     return new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeObtained"));
@@ -301,6 +302,32 @@ namespace eFormAPI.Web.Services
             catch (Exception)
             {
                 return new OperationResult(false, _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", id));
+            }
+        }
+
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> ReadCommonDictionary()
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+
+                var sitesQuery = sdkDbContext.Sites
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed);
+
+                var deviceUsers = await sitesQuery
+                    .Select(x => new CommonDictionaryModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                    })
+                    .ToListAsync();
+
+                return new OperationDataResult<List<CommonDictionaryModel>>(true, deviceUsers);
+            }
+            catch (Exception ex)
+            {
+                return new OperationDataResult<List<CommonDictionaryModel>>(false, _localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers") + " " + ex.Message);
             }
         }
     }

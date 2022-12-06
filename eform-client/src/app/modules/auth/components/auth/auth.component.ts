@@ -3,9 +3,11 @@ import { Router } from '@angular/router';
 import { LoginPageSettingsModel } from 'src/app/common/models';
 import { AppSettingsService } from 'src/app/common/services';
 import { GoogleAuthService } from 'src/app/common/services';
+import {take} from 'rxjs';
 
 @Component({
   selector: 'app-auth',
+  styleUrls:  ['./auth.component.scss'],
   templateUrl: './auth.component.html',
 })
 export class AuthComponent implements OnInit {
@@ -16,7 +18,7 @@ export class AuthComponent implements OnInit {
   constructor(
     private router: Router,
     private googleAuthService: GoogleAuthService,
-    private settingsService: AppSettingsService
+    public settingsService: AppSettingsService,
   ) {}
 
   ngOnInit() {
@@ -34,9 +36,9 @@ export class AuthComponent implements OnInit {
 
   isConnectionStringExist(secondCheck: boolean) {
     console.debug('isConnectionStringExist called');
-    this.settingsService.connectionStringExist().subscribe(
+    this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
       (result) => {
-        if (result && !result.success) {
+        if (!result || (result && !result.success)) {
           if (secondCheck) {
             this.router
               .navigate(['/application-settings/connection-string'])
@@ -55,7 +57,7 @@ export class AuthComponent implements OnInit {
   }
 
   getSettings() {
-    this.settingsService.getLoginPageSettings().subscribe((data) => {
+    this.settingsService.getLoginPageSettings().pipe(take(1)).subscribe((data) => {
       if (data && data.success) {
         this.loginPageSettings = this.settingsService.loginPageSettingsModel =
           data.model;
@@ -74,7 +76,7 @@ export class AuthComponent implements OnInit {
   }
 
   getTwoFactorInfo() {
-    this.googleAuthService.twoFactorAuthInfo().subscribe((data) => {
+    this.googleAuthService.twoFactorAuthInfo().pipe(take(1)).subscribe((data) => {
       this.twoFactorForced = data.model;
     });
   }

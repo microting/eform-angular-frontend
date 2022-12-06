@@ -1,11 +1,11 @@
 import {
   Component,
   EventEmitter,
+  Inject,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
-import { SecurityGroupModel } from 'src/app/common/models/security';
+import { SecurityGroupModel } from 'src/app/common/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-security-group-remove',
@@ -13,22 +13,17 @@ import { SecurityGroupModel } from 'src/app/common/models/security';
   styleUrls: ['./security-group-remove.component.scss'],
 })
 export class SecurityGroupRemoveComponent implements OnInit {
-  @Output()
   onSecurityGroupRemoved: EventEmitter<number> = new EventEmitter<number>();
-  @ViewChild('frame', { static: true }) frame;
 
-  selectedSecurityGroup: SecurityGroupModel = new SecurityGroupModel();
-  constructor() {}
+  constructor(
+    public dialogRef: MatDialogRef<SecurityGroupRemoveComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedSecurityGroup: SecurityGroupModel = new SecurityGroupModel()
+  ) {}
 
   ngOnInit() {}
 
-  show(securityGroup: any) {
-    this.selectedSecurityGroup = securityGroup;
-    this.frame.show();
-  }
-
   hide() {
-    this.frame.hide();
+    this.dialogRef.close();
   }
 
   deleteSingle() {

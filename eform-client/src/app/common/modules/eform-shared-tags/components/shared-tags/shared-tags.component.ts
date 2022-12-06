@@ -1,20 +1,14 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
+  Inject,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import {
   CommonDictionaryModel,
-  SharedTagCreateModel,
   SharedTagModel,
 } from 'src/app/common/models';
-import { SharedTagDeleteComponent } from '../shared-tag-delete/shared-tag-delete.component';
-import { SharedTagCreateComponent } from '../shared-tag-create/shared-tag-create.component';
-import { SharedTagEditComponent } from '../shared-tag-edit/shared-tag-edit.component';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-shared-tags',
@@ -22,61 +16,33 @@ import { SharedTagEditComponent } from '../shared-tag-edit/shared-tag-edit.compo
   styleUrls: ['./shared-tags.component.scss']
 })
 export class SharedTagsComponent implements OnInit {
-  @ViewChild('frame') frame;
-  @ViewChild('tagCreateModal') tagCreateModal: SharedTagCreateComponent;
-  @ViewChild('tagEditModal') tagEditModal: SharedTagEditComponent;
-  @ViewChild('tagDeleteModal') tagDeleteModal: SharedTagDeleteComponent;
-  @Input() availableTags: CommonDictionaryModel[] = [];
-  @Output() createTag: EventEmitter<SharedTagCreateModel> = new EventEmitter<
-    SharedTagCreateModel
-  >();
-  @Output() updateTag: EventEmitter<SharedTagModel> = new EventEmitter<
-    SharedTagModel
-  >();
-  @Output() deleteTag: EventEmitter<SharedTagModel> = new EventEmitter<
-    SharedTagModel
-  >();
+  public availableTags: CommonDictionaryModel[] = [];
+  public showCreateTag: EventEmitter<void> = new EventEmitter<void>();
+  public showEditTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
+  public showDeleteTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
 
-  constructor() {}
-
-  show() {
-    this.frame.show();
+  constructor(
+    public dialogRef: MatDialogRef<SharedTagsComponent>,
+    @Inject(MAT_DIALOG_DATA) availableTags: CommonDictionaryModel[] = [],) {
+    this.availableTags = availableTags;
   }
 
   hide() {
-    this.frame.hide();
+    this.dialogRef.close();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   showCreateTagModal() {
-    this.frame.hide();
-    this.tagCreateModal.show();
+    this.showCreateTag.emit();
   }
 
   showEditTagModal(tag: SharedTagModel) {
-    this.frame.hide();
-    this.tagEditModal.show(tag);
+    this.showEditTag.emit(tag);
   }
 
   showDeleteTagModal(tag: SharedTagModel) {
-    this.frame.hide();
-    this.tagDeleteModal.show(tag);
-  }
-
-  onChildrenModalHide() {
-    this.frame.show();
-  }
-
-  onTagUpdate(model: SharedTagModel) {
-    this.updateTag.emit(model);
-  }
-
-  onTagCreate(model: SharedTagCreateModel) {
-    this.createTag.emit(model);
-  }
-
-  onTagDelete(model: SharedTagModel) {
-    this.deleteTag.emit(model);
+    this.showDeleteTag.emit(tag);
   }
 }

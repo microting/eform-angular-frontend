@@ -19,6 +19,9 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { EformXlsxReportRouting } from './eform-xlsx-report.routing';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,9 @@ import { EformXlsxReportRouting } from './eform-xlsx-report.routing';
     EformXlsxReportRouting,
     ModalModule,
     FormsModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
   ],
 })
 export class EformXlsxReportModule {}

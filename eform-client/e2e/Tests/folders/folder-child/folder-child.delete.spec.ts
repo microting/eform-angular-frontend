@@ -5,6 +5,7 @@ import { generateRandmString } from '../../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
 const nameFolder = generateRandmString();
+const childName = generateRandmString();
 
 describe('Delete folder', function () {
   before(async () => {
@@ -15,7 +16,6 @@ describe('Delete folder', function () {
     const description = generateRandmString();
     await foldersPage.createNewFolder(nameFolder, description);
     // const rowParentsCountBeforeCreation = foldersPage.rowNumParents;
-    const childName = generateRandmString();
     const childDescription = generateRandmString();
     const folder = await foldersPage.getFolderByName(nameFolder);
     await folder.createChild(childName, childDescription);
@@ -24,7 +24,7 @@ describe('Delete folder', function () {
   it('Delete folder child with name and description', async () => {
     const rowCountBeforeDelete = await foldersPage.rowChildrenNum();
     await (await foldersPage
-      .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1))
+      .getFolderFromTree(await foldersPage.getFolderRowNumByName(childName), 1))
       .delete();
     const rowCountAfterDelete = await foldersPage.rowChildrenNum();
     expect(
@@ -39,6 +39,8 @@ describe('Delete folder', function () {
       .getFolderByName(nameFolder))
       .createChild(childName, childDescription);
     const rowCountBeforeDelete = await foldersPage.rowChildrenNum();
+    const folder = await foldersPage.getFolderByName(nameFolder);
+    await folder.expandChildren();
     await (await foldersPage
       .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1))
       .delete(true);

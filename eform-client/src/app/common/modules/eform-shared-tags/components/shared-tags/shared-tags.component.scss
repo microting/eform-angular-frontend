@@ -3,3 +3,13 @@
   overflow: auto;
   overflow-x: hidden;
 }
+
+.tag-row {
+  border-bottom: 1px solid;
+  ~ .tag-row {
+    margin-top: 0.5rem;
+  }
+  &:last-of-type {
+    border: none;
+  }
+}

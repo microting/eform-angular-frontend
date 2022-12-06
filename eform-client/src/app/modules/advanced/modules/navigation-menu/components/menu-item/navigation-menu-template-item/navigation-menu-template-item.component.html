@@ -1,4 +1,16 @@
-<div class="card mb-2 mt-2">
+<mat-card class="mb-2 mt-2">
+  <mat-card-title style="font-size: 1.5rem;">
+    <mat-icon
+      id="dragHandle{{templateIndex}}_{{itemIndex}}"
+      class="dragula-handle align-middle"
+      style="cursor: all-scroll">
+      menu
+    </mat-icon>
+    {{ item.name }}
+  </mat-card-title>
+</mat-card>
+
+<!--<div class="card mb-2 mt-2">
   <div class="card-header">
     <div class="d-flex justify-content-between align-items-center">
       <div>
@@ -32,4 +44,4 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->

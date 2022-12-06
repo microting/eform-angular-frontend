@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
-  AdvEntitySearchableGroupEditModel,
+  EntityGroupEditModel,
   AdvEntitySearchableGroupListRequestModel,
-  AdvEntitySearchableGroupModel,
+  EntityGroupModel,
   CommonDictionaryModel,
   CommonDictionaryTextModel,
   OperationDataResult,
@@ -28,8 +28,8 @@ export class EntitySearchService {
 
   getEntitySearchableGroupList(
     model: AdvEntitySearchableGroupListRequestModel
-  ): Observable<OperationDataResult<Paged<AdvEntitySearchableGroupModel>>> {
-    return this.apiBaseService.post<Paged<AdvEntitySearchableGroupModel>>(
+  ): Observable<OperationDataResult<Paged<EntityGroupModel>>> {
+    return this.apiBaseService.post<Paged<EntityGroupModel>>(
       AdvSearchableEntityMethods.GetAll,
       model
     );
@@ -37,16 +37,16 @@ export class EntitySearchService {
 
   getEntitySearchableGroup(
     id: number
-  ): Observable<OperationDataResult<AdvEntitySearchableGroupModel>> {
-    return this.apiBaseService.get<AdvEntitySearchableGroupModel>(
+  ): Observable<OperationDataResult<EntityGroupModel>> {
+    return this.apiBaseService.get<EntityGroupModel>(
       AdvSearchableEntityMethods.GetSingle + '/' + id
     );
   }
 
   updateEntitySearchableGroup(
-    model: AdvEntitySearchableGroupEditModel
+    model: EntityGroupEditModel
   ): Observable<OperationResult> {
-    return this.apiBaseService.post<AdvEntitySearchableGroupEditModel>(
+    return this.apiBaseService.post<EntityGroupEditModel>(
       AdvSearchableEntityMethods.UpdateSingle,
       model
     );
@@ -59,9 +59,9 @@ export class EntitySearchService {
   }
 
   createEntitySearchableGroup(
-    model: AdvEntitySearchableGroupEditModel
+    model: EntityGroupEditModel
   ): Observable<OperationResult> {
-    return this.apiBaseService.post<AdvEntitySearchableGroupEditModel>(
+    return this.apiBaseService.post<EntityGroupEditModel>(
       AdvSearchableEntityMethods.CreateSingle,
       model
     );
