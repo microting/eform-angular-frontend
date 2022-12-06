@@ -45,6 +45,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     ToastrModule.forRoot({preventDuplicates: true}),
     DragulaModule.forRoot(),
     NgxMaskModule.forRoot(),
+    MDBBootstrapModule.forRoot(),
     GalleryModule,
     LightboxModule,
     GallerizeModule,
