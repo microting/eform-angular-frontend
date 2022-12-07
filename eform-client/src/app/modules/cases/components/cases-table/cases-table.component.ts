@@ -109,7 +109,6 @@ export class CasesTableComponent implements OnInit, OnDestroy {
   }
 
   onDeleteClicked(caseModel: CaseModel) {
-
     this.caseRemoveModalComponentAfterClosedSub$ = this.dialog.open(CaseRemoveModalComponent,
       {...dialogConfigHelper(this.overlay, {caseModel: caseModel, templateId: this.currentTemplate.id}), minWidth: 600})
       .afterClosed()
