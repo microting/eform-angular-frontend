@@ -30,7 +30,7 @@
       </mat-chip>
     </mat-chip-list>
   </mat-toolbar>
-  <mat-drawer-container autosize style="height: 100%">
+  <mat-drawer-container autosize style="height: 100%;">
     <mat-drawer #drawer [mode]="sidenavMode" [opened]="innerWidth >= 660" [hidden]="!connectionStringExist">
       <app-navigation (clickOnLink)="onClickOnLink()"></app-navigation>
     </mat-drawer>

@@ -13,15 +13,18 @@ import {
 } from 'src/app/common/store';
 import {AdminService, AuthService} from 'src/app/common/services';
 import {Subscription} from 'rxjs';
-import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import {FlatTreeControl} from '@angular/cdk/tree';
-import { MenuItemModel} from 'src/app/common/models';
-import { Router } from '@angular/router';
+import {MatTreeNestedDataSource} from '@angular/material/tree';
+import {NestedTreeControl} from '@angular/cdk/tree';
+import {Router} from '@angular/router';
 
-interface FlatNode {
-  expandable: boolean;
+interface MenuNode {
   name: string;
-  level: number;
+  menuItems?: MenuNode[];
+  link: string;
+  e2EId: string;
+  position: number;
+  isInternalLink: boolean;
+  guards: Array<string>;
 }
 
 @AutoUnsubscribe()
@@ -34,35 +37,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
   @ViewChild('navigationMenu', {static: true}) menuElement: ElementRef;
   @Output() clickOnLink: EventEmitter<void> = new EventEmitter<void>();
 
-  private _transformer = (node: MenuItemModel, level: number) => {
-    return {
-      expandable: !!node.menuItems && node.menuItems.length > 0,
-      name: node.name,
-      level: level,
-      e2EId: node.e2EId,
-      link: node.link,
-      guards: node.guards,
-      isInternalLink: node.isInternalLink,
-    };
-  };
+  treeControl = new NestedTreeControl<MenuNode>(node => node.menuItems);
 
-  treeControl = new FlatTreeControl<FlatNode>(
-    node => node.level,
-    node => node.expandable,
-  );
+  hasChild = (_: number, node: MenuNode) => !!node.menuItems && node.menuItems.length > 0;
 
-  treeFlattener = new MatTreeFlattener(
-    this._transformer,
-    node => node.level,
-    node => node.expandable,
-    node => node.menuItems,
-  );
-
-  hasChild = (_: number, node: FlatNode) => node.expandable;
-
-  getLevel = (node: FlatNode) => node.level;
-
-  menu = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  menu = new MatTreeNestedDataSource<MenuNode>();
 
   getAppMenuSub$: Subscription;
   getCurrentUserInfoSub$: Subscription;
