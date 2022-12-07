@@ -1,15 +1,12 @@
 import {Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {akitaConfig} from '@datorama/akita';
 import {AppMenuQuery, AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {Subscription, take} from 'rxjs';
+import {Subscription, take, zip} from 'rxjs';
 import {AppSettingsService, LocaleService} from 'src/app/common/services';
 import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {HeaderSettingsModel} from 'src/app/common/models';
 import {MatDrawer, MatDrawerMode} from '@angular/material/sidenav';
-
-akitaConfig({resettable: true});
 
 @AutoUnsubscribe()
 @Component({
@@ -18,7 +15,7 @@ akitaConfig({resettable: true});
   styleUrls: ['./full-layout.component.scss']
 })
 export class FullLayoutComponent implements OnInit, OnDestroy {
-  @ViewChild('drawer') drawer: MatDrawer
+  @ViewChild('drawer') drawer: MatDrawer;
   isDarkThemeAsync$: Subscription;
   private brokerListener: any;
   logoImage: any;
@@ -29,7 +26,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   mobileWidth = 660;
 
   constructor(
-    private authStateService: AuthStateService,
+    public authStateService: AuthStateService,
     private renderer: Renderer2,
     private localeService: LocaleService,
     public appMenuQuery: AppMenuQuery,
@@ -47,6 +44,13 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     this.getSettings();
     this.localeService.initLocale();
     this.onResize({});
+    this.isDarkThemeAsync$ = this.authStateService.isDarkThemeAsync.subscribe(
+      (isDarkTheme) => {
+        isDarkTheme
+          ? this.switchToDarkTheme()
+          : this.switchToLightTheme();
+      }
+    );
   }
 
   switchToDarkTheme() {
@@ -63,39 +67,31 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   }
 
   getSettings() {
-    this.settingsService.connectionStringExist().pipe(take(1)).subscribe((result) => {
-      this.connectionStringExist = result.success;
-      if (result && result.success === true) {
-
-        this.authStateService.getUserSettings();
-        this.isDarkThemeAsync$ = this.authStateService.isDarkThemeAsync.subscribe(
-          (isDarkTheme) => {
-            isDarkTheme
-              ? this.switchToDarkTheme()
-              : this.switchToLightTheme();
-          }
-        );
-
-        this.settingsService.getHeaderSettings().pipe(take(1)).subscribe((data => {
-          if (data && data.success) {
-            this.headerSettingsModel = data.model;
-            if (this.headerSettingsModel.imageLink && this.headerSettingsModel.imageLinkVisible) {
-              this.logoImage = 'api/images/eform-images?fileName=' + this.headerSettingsModel.imageLink;
-            } else if (!this.headerSettingsModel.imageLink) {
-              this.logoImage = '../../../assets/images/logo.png';
+    this.authStateService.isConnectionStringExist();
+    zip(this.authStateService.isConnectionStringExistAsync, this.authStateService.isAuthAsync)
+      .subscribe(([isConnectionStringExist, isAuth]) => {
+        if (isConnectionStringExist && isAuth) {
+          this.authStateService.getUserSettings();
+          this.settingsService.getHeaderSettings().pipe(take(1)).subscribe((data => {
+            if (data && data.success) {
+              this.headerSettingsModel = data.model;
+              if (this.headerSettingsModel.imageLink && this.headerSettingsModel.imageLinkVisible) {
+                this.logoImage = 'api/images/eform-images?fileName=' + this.headerSettingsModel.imageLink;
+              } else if (!this.headerSettingsModel.imageLink) {
+                this.logoImage = '../../../assets/images/logo.png';
+              }
             }
-          }
-        }));
-      } else {
-        this.logoImage = '../../../assets/images/logo.png';
-        this.headerSettingsModel.imageLinkVisible = true;
-        this.headerSettingsModel.mainTextVisible = true;
-        this.headerSettingsModel.secondaryTextVisible = true;
-        this.headerSettingsModel.mainText = 'eForm Backend';
-        this.headerSettingsModel.secondaryText = 'No more paper-forms and back-office data entry';
-        this.router.navigate(['/application-settings/connection-string']).then();
-      }
-    });
+          }));
+        } else {
+          this.logoImage = '../../../assets/images/logo.png';
+          this.headerSettingsModel.imageLinkVisible = true;
+          this.headerSettingsModel.mainTextVisible = true;
+          this.headerSettingsModel.secondaryTextVisible = true;
+          this.headerSettingsModel.mainText = 'eForm Backend';
+          this.headerSettingsModel.secondaryText = 'No more paper-forms and back-office data entry';
+          this.router.navigate(['/application-settings/connection-string']).then();
+        }
+      });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -114,7 +110,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   }
 
   toggleDrawer(open?: boolean) {
-    if(open === undefined || open === null) {
+    if (open === undefined || open === null) {
       this.drawer.toggle().then();
     } else {
       open ? this.drawer.open() : this.drawer.close();
@@ -122,7 +118,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   }
 
   onClickOnLink() {
-    if(this.innerWidth < this.mobileWidth) {
+    if (this.innerWidth < this.mobileWidth) {
       this.toggleDrawer(false);
     }
   }

@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { AppMenuStore } from '../store';
-import { AppMenuQuery } from '../query';
-import { AppMenuService } from 'src/app/common/services';
-import { map } from 'rxjs/operators';
-import { MenuItemModel, UserMenuModel } from 'src/app/common/models';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {AppMenuStore} from '../store';
+import {AppMenuQuery} from '../query';
+import {AppMenuService} from 'src/app/common/services';
+import {catchError} from 'rxjs/operators';
+import {MenuItemModel} from 'src/app/common/models';
 
 @Injectable()
 export class AppMenuStateService {
@@ -12,36 +11,44 @@ export class AppMenuStateService {
     private store: AppMenuStore,
     private service: AppMenuService,
     private query: AppMenuQuery
-  ) {}
-  private responseIsLoading = false;
+  ) {
+    this.query.selectLoading().subscribe(x => this.isLoading = x);
+    this.store.setLoading(false);
+  }
 
-  getAppMenu(takeFromCache = true): Observable<UserMenuModel> {
-    if (takeFromCache && this.query.currentAppMenu) {
-      return this.appMenuObservable;
-    } else if (!this.responseIsLoading) {
-      this.responseIsLoading = true;
-      this.service.getAppMenuFromServer().subscribe(
-        (response) => {
-          if (response && response.success && response.model) {
-            if (!this.query.currentAppMenu) {
-              this.store.set({ 0: response.model });
-            } else {
-              this.store.update(0, response.model);
+  isLoading: boolean;
+
+  getAppMenu() {
+    if (!this.isLoading) {
+      this.store.setLoading(true);
+      this.service.getAppMenuFromServer()
+        .pipe(
+          catchError((err, caught) => {
+            this.store.setLoading(false);
+            return caught;
+          })
+        )
+        .subscribe(
+          (response) => {
+            if (response && response.success && response.model) {
+              if (!this.query.currentAppMenu) {
+                this.store.set({0: response.model});
+              } else {
+                this.store.update(0, response.model);
+              }
             }
-          }
-          this.responseIsLoading = false;
-        },
-        () => (this.responseIsLoading = false)
-      );
-      return this.appMenuObservable;
-    } else {
-      // so that the second request does not start until the first one is completed
-      return this.appMenuObservable;
+            this.store.setLoading(false);
+          },
+        );
     }
   }
 
   get appMenuObservable() {
     return this.query.userMenu$;
+  }
+
+  get userMenuLeftAsync() {
+    return this.query.userMenuLeft$;
   }
 
   getTitleByUrl(href: string): string {

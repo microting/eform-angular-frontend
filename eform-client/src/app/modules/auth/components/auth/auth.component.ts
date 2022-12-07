@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { LoginPageSettingsModel } from 'src/app/common/models';
-import { AppSettingsService } from 'src/app/common/services';
-import { GoogleAuthService } from 'src/app/common/services';
-import {take} from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {LoginPageSettingsModel} from 'src/app/common/models';
+import {AppSettingsService} from 'src/app/common/services';
+import {GoogleAuthService} from 'src/app/common/services';
+import {BehaviorSubject, count, skip, take} from 'rxjs';
+import {AuthStateService} from 'src/app/common/store';
 
 @Component({
   selector: 'app-auth',
-  styleUrls:  ['./auth.component.scss'],
+  styleUrls: ['./auth.component.scss'],
   templateUrl: './auth.component.html',
 })
 export class AuthComponent implements OnInit {
@@ -19,7 +20,9 @@ export class AuthComponent implements OnInit {
     private router: Router,
     private googleAuthService: GoogleAuthService,
     public settingsService: AppSettingsService,
-  ) {}
+    private authService: AuthStateService,
+  ) {
+  }
 
   ngOnInit() {
     this.checkConnectionString();
@@ -27,33 +30,27 @@ export class AuthComponent implements OnInit {
 
   checkConnectionString() {
     console.debug('checkConnectionString called');
-    if (!this.isConnectionStringExist(false)) {
-      setTimeout(() => {
-        this.isConnectionStringExist(true);
-      }, 5000);
-    }
-  }
-
-  isConnectionStringExist(secondCheck: boolean) {
-    console.debug('isConnectionStringExist called');
-    this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
-      (result) => {
-        if (!result || (result && !result.success)) {
-          if (secondCheck) {
-            this.router
-              .navigate(['/application-settings/connection-string'])
-              .then();
-          }
-          return false;
-        } else if (result && result.success) {
+    this.authService.isConnectionStringExistAsync.pipe(
+      count((isConnectionStringExist, i) => {
+        if (isConnectionStringExist === false && i < 2) { // if connection string not exist and trys < 2 -- try after 5 second.
+          setTimeout(() => {
+            this.isConnectionStringExist();
+          }, 5000);
+        } else if (isConnectionStringExist === false && i >= 2) { // if connection string not exist and trys >= 2 -- redirect to set connection string.
+          this.router
+            .navigate(['/application-settings/connection-string'])
+            .then();
+        } else { // else connection string exist
           this.getSettings();
           this.getTwoFactorInfo();
         }
-        return true;
-      }
-      // (error) => false
-    );
-    return false;
+        return true; // need for subs.
+      })).subscribe();
+    this.isConnectionStringExist();
+  }
+
+  isConnectionStringExist() {
+    this.authService.isConnectionStringExist();
   }
 
   getSettings() {

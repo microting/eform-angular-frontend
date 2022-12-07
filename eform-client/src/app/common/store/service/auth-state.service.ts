@@ -1,31 +1,35 @@
-import { Injectable } from '@angular/core';
-import { AuthStore } from '../store';
-import { AuthQuery } from '../query';
-import { AuthService, UserSettingsService } from 'src/app/common/services';
+import {Injectable} from '@angular/core';
+import {AuthStore} from '../store';
+import {AuthQuery} from '../query';
+import {AppSettingsService, AuthService, UserSettingsService} from 'src/app/common/services';
 import {
   LoginRequestModel,
   UserClaimsModel,
   UserInfoModel,
 } from 'src/app/common/models';
-import {Observable, zip} from 'rxjs';
-import { Router } from '@angular/router';
-import { snakeToCamel } from 'src/app/common/helpers';
-import { resetStores } from '@datorama/akita';
-import { AppMenuStateService } from 'src/app/common/store';
+import {Observable, take, zip} from 'rxjs';
+import {Router} from '@angular/router';
+import {snakeToCamel} from 'src/app/common/helpers';
+import {resetStores} from '@datorama/akita';
 import {AppSettingsStore} from 'src/app/modules/application-settings/components/store';
 
 @Injectable()
 export class AuthStateService {
   private isRefreshing = false;
+
   constructor(
     private store: AuthStore,
     private service: AuthService,
     private query: AuthQuery,
     private router: Router,
     private userSettings: UserSettingsService,
-    private appMenuStateService: AppMenuStateService,
     private appSettingsStore: AppSettingsStore,
-  ) {}
+    public settingsService: AppSettingsService,
+  ) {
+  }
+
+  isConnectionStringExistLoading = false;
+  isUserSettingsLoading = false;
 
   login(loginInfo: LoginRequestModel) {
     this.service.login(loginInfo).subscribe((response) => {
@@ -40,9 +44,7 @@ export class AuthStateService {
           },
         }));
         this.getUserSettings();
-        this.appMenuStateService.getAppMenu(false);
       }
-      return;
     });
   }
 
@@ -72,32 +74,56 @@ export class AuthStateService {
     }
   }
 
-  getUserSettings(){
-    zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
-      this.store.update((state) => ({
-        ...state,
-        currentUser: {
-          ...state.currentUser,
-          darkTheme: userSettings.model.darkTheme,
-          locale: userSettings.model.locale,
-          loginRedirectUrl: userSettings.model.loginRedirectUrl,
-          claims: userClaims,
-        },
-      }));
-      if(userSettings.model.loginRedirectUrl) {
-        this.router
-          .navigate([
-            `/${userSettings.model.loginRedirectUrl}`,
-          ]).then();
-      }
-    })
+  getUserSettings() {
+    if (!this.isUserSettingsLoading) {
+      this.isUserSettingsLoading = true;
+      zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+        this.isUserSettingsLoading = false;
+        this.store.update((state) => ({
+          ...state,
+          currentUser: {
+            ...state.currentUser,
+            darkTheme: userSettings.model.darkTheme,
+            locale: userSettings.model.locale,
+            loginRedirectUrl: userSettings.model.loginRedirectUrl,
+            claims: userClaims,
+          },
+        }));
+        if (userSettings.model.loginRedirectUrl) {
+          this.router
+            .navigate([
+              `/${userSettings.model.loginRedirectUrl}`,
+            ]).then();
+        }
+      });
+    }
   }
 
   logout() {
-    this.store.reset();
-    this.appSettingsStore.reset();
     resetStores();
     this.router.navigate(['/auth']).then();
+  }
+
+  isConnectionStringExist() {
+    console.debug('isConnectionStringExist called');
+    if (!this.query.currentSetting.isConnectionStringExist && !this.isConnectionStringExistLoading) {
+      this.isConnectionStringExistLoading = true;
+      this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
+        (result) => {
+          if (!result || (result && !result.success)) {
+            this.store.update(() => ({isConnectionStringExist: false}));
+            this.isConnectionStringExistLoading = false;
+          } else if (result && result.success) {
+            this.store.update(() => ({isConnectionStringExist: true}));
+            this.isConnectionStringExistLoading = false;
+          }
+        }
+      );
+    }
+  }
+
+  get isConnectionStringExistAsync(): Observable<boolean> {
+    return this.query.selectIsConnectionStringExist$;
   }
 
   get isAuth(): boolean {

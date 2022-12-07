@@ -7,7 +7,7 @@
              *ngIf="headerSettingsModel.imageLinkVisible" alt="">
       </div>
     </div>
-    <button mat-icon-button (click)="toggleDrawer()" [hidden]="!connectionStringExist">
+    <button mat-icon-button (click)="toggleDrawer()" [hidden]="(authStateService.isConnectionStringExistAsync | async) === false">
       <mat-icon>menu</mat-icon>
     </button>
     <span class="spacer"></span>
@@ -31,7 +31,7 @@
     </mat-chip-list>
   </mat-toolbar>
   <mat-drawer-container autosize style="height: 100%;">
-    <mat-drawer #drawer [mode]="sidenavMode" [opened]="innerWidth >= 660" [hidden]="!connectionStringExist">
+    <mat-drawer #drawer [mode]="sidenavMode" [opened]="innerWidth >= 660" [hidden]="(authStateService.isConnectionStringExistAsync | async) === false">
       <app-navigation (clickOnLink)="onClickOnLink()"></app-navigation>
     </mat-drawer>
     <div class="mb-auto" style="padding: 1.5rem">

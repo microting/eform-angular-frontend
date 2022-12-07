@@ -102,7 +102,7 @@ export class ProfileSettingsComponent implements OnInit {
           this.userSettingsModel.locale,
           this.userSettingsModel.darkTheme
         );
-        this.appMenuStateService.getAppMenu(false).subscribe();
+        this.appMenuStateService.getAppMenu();
       });
   }
 }
