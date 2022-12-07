@@ -69,6 +69,15 @@ export class ApiBaseService {
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
+  public getNoToast<T>(method: string, params?: any): Observable<any> {
+    return this.http
+      .get(method, {
+        headers: this.setHeaders(),
+        params: ApiBaseService.setParams(params),
+      })
+      .pipe(map((response) => this.extractDataNoToast<T>(response)));
+  }
+
   public post<T>(method: string, body: any): Observable<any> {
     const model = JSON.stringify(body);
     return this.http
@@ -208,6 +217,21 @@ export class ApiBaseService {
         this.toastrService.success(body.message);
       } else if (body && !body.success && body.message) {
         this.toastrService.error(body.message);
+      }
+    } catch (e) {
+      return {};
+    }
+    return <T>body || {};
+  }
+
+  private extractDataNoToast<T>(res: any) {
+    let body;
+    try {
+      body = res;
+      if (body && body.success && body.message && body.message !== 'Success') {
+        //this.toastrService.success(body.message);
+      } else if (body && !body.success && body.message) {
+        //this.toastrService.error(body.message);
       }
     } catch (e) {
       return {};

@@ -43,7 +43,7 @@ export class AppSettingsService {
   }
 
   getAdminSettings(): Observable<OperationDataResult<AdminSettingsModel>> {
-    return this.apiBaseService.get<AdminSettingsModel>(
+    return this.apiBaseService.getNoToast<AdminSettingsModel>(
       SettingsMethods.GetAdminSettings
     );
   }

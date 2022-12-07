@@ -15,7 +15,7 @@ jobs:
       matrix:
         test: [a,b,c,d,e,f,g,h,i,j]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: getong/mariadb-action@v1.1
       with:
         host port: 3306 # Optional, default value is 3306. The port of host
