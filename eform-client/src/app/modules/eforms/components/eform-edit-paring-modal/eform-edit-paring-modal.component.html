@@ -20,24 +20,24 @@
       <h4>{{ 'Select Site' | translate}}</h4>
     </mat-card-title>
     <mat-card-content>
-      <div class="mtx-grid ng-star-inserted">
+      <div class="mtx-grid">
         <div class="mtx-grid-main mtx-grid-layout">
           <div class="mtx-grid-content mtx-grid-layout">
             <div class="mat-table-container mat-table-with-data">
-              <table class="mat-table cdk-table mat-sort mat-table-striped ng-star-inserted" style="width: 100%">
+              <table class="mat-table cdk-table mat-table-striped" style="width: 100%">
                 <thead>
-                <tr role="rowgroup" class="mat-header-row cdk-header-row ng-star-inserted" mat-header-row>
-                  <th role="columnheader" class="mat-header-cell cdk-header-cell cdk-column-id mat-column-id ng-star-inserted mat-table-sticky mat-table-sticky-border-elem-top">Microting ID</th>
-                  <th role="columnheader" class="mat-header-cell cdk-header-cell cdk-column-id mat-column-id ng-star-inserted mat-table-sticky mat-table-sticky-border-elem-top">{{ 'Device user' | translate }}</th>
-                  <th role="columnheader" class="mat-header-cell cdk-header-cell cdk-column-id mat-column-id ng-star-inserted mat-table-sticky mat-table-sticky-border-elem-top">{{ 'Select' | translate }}</th>
+                <tr role="rowgroup" class="mat-header-row cdk-header-row" mat-header-row>
+                  <th role="columnheader" class="mat-header-cell cdk-header-cell cdk-column-id mat-column-id mat-table-sticky mat-table-sticky-border-elem-top">Microting ID</th>
+                  <th role="columnheader" class="mat-header-cell cdk-header-cell cdk-column-id mat-column-id mat-table-sticky mat-table-sticky-border-elem-top">{{ 'Device user' | translate }}</th>
+                  <th role="columnheader" class="mat-header-cell cdk-header-cell cdk-column-id mat-column-id mat-table-sticky mat-table-sticky-border-elem-top">{{ 'Select' | translate }}</th>
                 </tr>
                 </thead>
                 <tbody id="pairingModalTableBody" role="rowgroup">
                 <ng-container *ngFor="let siteDto of sitesDto; let i = index">
-                  <tr class="mat-row cdk-row ng-star-inserted {{i%2 ? 'mat-row-odd' : ''}}">
-                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id ng-star-inserted" id="microtingId">{{siteDto.siteUId}}</td>
-                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id ng-star-inserted" id="deviceUserFullName">{{siteDto.siteName}}</td>
-                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id ng-star-inserted">
+                  <tr class="mat-row cdk-row {{i%2 ? 'mat-row-odd' : ''}}">
+                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id" id="microtingId">{{siteDto.siteUId}}</td>
+                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id" id="deviceUserFullName">{{siteDto.siteName}}</td>
+                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id">
                       <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
                         <div class="mat-checkbox" *ngIf="checkboxModel.id == siteDto.siteUId">
                           <mat-checkbox
