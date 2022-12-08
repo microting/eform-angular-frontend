@@ -106,7 +106,7 @@ export class AuthStateService {
 
   isConnectionStringExist() {
     console.debug('isConnectionStringExist called');
-    if (!this.query.currentSetting.isConnectionStringExist && !this.isConnectionStringExistLoading) {
+    if (!this.isConnectionStringExistLoading) {
       this.isConnectionStringExistLoading = true;
       this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
         (result) => {
@@ -186,6 +186,16 @@ export class AuthStateService {
       currentUser: {
         ...state.currentUser,
         locale: locale,
+        darkTheme: darkTheme,
+      },
+    }));
+  }
+
+  updateDarkTheme(darkTheme: boolean) {
+    this.store.update((state) => ({
+      ...state,
+      currentUser: {
+        ...state.currentUser,
         darkTheme: darkTheme,
       },
     }));

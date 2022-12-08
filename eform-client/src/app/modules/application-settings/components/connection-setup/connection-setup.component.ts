@@ -1,14 +1,18 @@
-import {Component, HostBinding, OnInit, Renderer2} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {SettingsModel} from 'src/app/common/models/settings';
-import {AppSettingsService} from 'src/app/common/services/settings';
+import {SettingsModel} from 'src/app/common/models';
+import {AppSettingsService} from 'src/app/common/services';
+import {AuthStateService} from 'src/app/common/store';
+import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-database-setup',
   templateUrl: './connection-setup.component.html',
   styleUrls: ['./connection-setup.component.scss']
 })
-export class ConnectionSetupComponent implements OnInit {
+export class ConnectionSetupComponent implements OnInit, OnDestroy {
   settingsModel: SettingsModel = new SettingsModel();
 
   languages = [
@@ -22,15 +26,22 @@ export class ConnectionSetupComponent implements OnInit {
     {id: 'mssql', text: 'MS SQL'}
   ];
 
+  isConnectionStringExistAsyncSub$: Subscription;
+  updateConnectionStringSub$: Subscription;
+  getApplicationHostOsSub$: Subscription;
+
   constructor(
-    private renderer: Renderer2,
-    private settingsService: AppSettingsService, private router: Router) {
+    private settingsService: AppSettingsService,
+    private router: Router,
+    public authStateService: AuthStateService,
+  ) {
   }
 
+
   ngOnInit() {
-    this.renderer.addClass(document.body, 'theme-dark');
+    this.authStateService.updateDarkTheme(true);
     this.settingsModel.generalAppSetupSettingsModel.defaultLocale = 'en-US';
-    this.settingsService.getApplicationHostOs().subscribe(operation => {
+    this.getApplicationHostOsSub$ = this.settingsService.getApplicationHostOs().subscribe(operation => {
       if (operation && operation.success) {
         if (operation.message === 'Windows') {
           this.settingsModel.connectionStringSDK.sqlServerType = 'mssql';
@@ -42,15 +53,23 @@ export class ConnectionSetupComponent implements OnInit {
       }
     });
 
-  }
-
-  updateConnectionString() {
-    this.settingsService.updateConnectionString(this.settingsModel).subscribe(operation => {
-      if (operation && operation.success) {
-        this.router.navigate(['/login']).then();
+    this.isConnectionStringExistAsyncSub$ = this.authStateService.isConnectionStringExistAsync.subscribe(isConnectionStringExist => {
+      if (isConnectionStringExist) {
+        setTimeout(() => this.router.navigate(['/auth']).then(), 5000);
       }
     });
   }
 
+  updateConnectionString() {
+    this.updateConnectionStringSub$ = this.settingsService.updateConnectionString(this.settingsModel).subscribe(operation => {
+      if (operation && operation.success) {
+        setTimeout(() => {
+          this.authStateService.isConnectionStringExist();
+        }, 5000);
+      }
+    });
+  }
 
+  ngOnDestroy(): void {
+  }
 }
