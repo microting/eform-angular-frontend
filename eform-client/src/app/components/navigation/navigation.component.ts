@@ -16,6 +16,7 @@ import {Subscription} from 'rxjs';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {Router} from '@angular/router';
+import {filter} from 'rxjs/operators';
 
 interface MenuNode {
   name: string;
@@ -59,18 +60,19 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.authStateService.isAuth) {
+    this.authStateService.isAuthAsync.pipe(filter(isAuth => isAuth === true)).subscribe(isAuth => {
       this.getCurrentUserInfoSub$ = this.adminService
         .getCurrentUserInfo()
         .subscribe((result) => {
           this.authStateService.updateUserInfo(result);
         });
-      this.getAppMenuSub$ = this.appMenuService.getAppMenu().subscribe(x => {
-        if (x && x.leftMenu/* && x.rightMenu*/) {
-          this.menu.data = [...x.leftMenu/*, ...x.rightMenu*/];
+      this.getAppMenuSub$ = this.appMenuService.userMenuLeftAsync.subscribe(x => {
+        if (x) {
+          this.menu.data = [...x];
         }
       });
-    }
+      this.appMenuService.getAppMenu();
+    });
   }
 
   checkGuards(guards: string[]) {

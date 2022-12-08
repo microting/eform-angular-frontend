@@ -42,7 +42,6 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   updateNavigationMenuSub$: Subscription;
   securityGroupsSub$: Subscription;
   resetSub$: Subscription;
-  getAppMenuSub$: Subscription;
   itemDeleteConfirmSub$: any;
   itemEditConfirmSub$: any;
   navigationMenuResetComponentAfterClosedSub$: Subscription;
@@ -112,9 +111,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   }
 
   getHeaderNavigationMenu() {
-    this.getAppMenuSub$ = this.appMenuStateService
-      .getAppMenu(false)
-      .subscribe();
+    this.appMenuStateService.getAppMenu();
   }
 
   updateNavigationMenu() {
