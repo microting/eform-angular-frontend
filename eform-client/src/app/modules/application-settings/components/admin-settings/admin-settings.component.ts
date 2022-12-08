@@ -44,9 +44,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.currentRole === 'admin') {
-      this.getLatestVersion();
       this.getSettings();
-      this.initializeUploaders();
     }
 
     const uploadOptions: FileUploaderOptions = {
@@ -97,10 +95,13 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   }
 
   getSettings() {
-    this.appSettingsStateService.getAdminSettings();
+    //this.appSettingsStateService.getAdminSettings();
+    this.appSettingsStateService.getAllAppSettings();
     this.appSettingsQuery.selectAllSettings$.subscribe((allSettings) => {
       const adminSettings = allSettings.adminSettings;
       const othersSettings = allSettings.othersSettings;
+      this.initializeUploaders();
+      this.getLatestVersion();
       if (adminSettings) {
         this.adminSettingsModel = adminSettings;
         this.previousAdminSettings = adminSettings;
