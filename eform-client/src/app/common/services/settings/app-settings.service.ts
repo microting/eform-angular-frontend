@@ -79,7 +79,7 @@ export class AppSettingsService {
   }
 
   getApplicationHostOs(): Observable<OperationDataResult<string>> {
-    return this.apiBaseService.get<string>(SettingsMethods.GetApplicationHostOs);
+    return this.apiBaseService.getNoToast<string>(SettingsMethods.GetApplicationHostOs);
   }
 
   getLatestVersion(): Observable<OperationDataResult<string>> {
@@ -87,7 +87,7 @@ export class AppSettingsService {
   }
 
   getUserbackWidgetIsEnabled(): Observable<OperationDataResult<UserbackWidgetSettingModel>> {
-    return this.apiBaseService.get(SettingsMethods.UserbackWidget);
+    return this.apiBaseService.getNoToast(SettingsMethods.UserbackWidget);
   }
 
   updateUserbackWidgetIsEnabled(isEnableWidget: boolean): Observable<OperationResult> {
