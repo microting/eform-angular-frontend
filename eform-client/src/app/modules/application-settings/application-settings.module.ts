@@ -5,7 +5,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {FileUploadModule} from 'ng2-file-upload';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {ApplicationSettingsRouting} from './application-settings.routing';
-import {AdminSettingsComponent, ConnectionSetupComponent} from './components';
+import {AdminSettingsComponent} from './components';
 import {appSettingsProvider} from './components/store';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -33,7 +33,7 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     MatInputModule,
     MtxSelectModule,
   ],
-  declarations: [AdminSettingsComponent, ConnectionSetupComponent],
+  declarations: [AdminSettingsComponent],
   providers: [appSettingsProvider],
 })
 export class ApplicationSettingsModule {

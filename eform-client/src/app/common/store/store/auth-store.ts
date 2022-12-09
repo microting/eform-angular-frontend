@@ -88,7 +88,7 @@ export function createInitialState(): AuthState {
         eformAllowManagingEformTags: false,
       },
     },
-    isConnectionStringExist: false,
+    isConnectionStringExist: true,
   };
 }
 

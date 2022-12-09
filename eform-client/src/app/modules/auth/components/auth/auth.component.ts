@@ -3,8 +3,7 @@ import {Router} from '@angular/router';
 import {LoginPageSettingsModel} from 'src/app/common/models';
 import {AppSettingsService} from 'src/app/common/services';
 import {GoogleAuthService} from 'src/app/common/services';
-import {BehaviorSubject, count, skip, take} from 'rxjs';
-import {AuthStateService} from 'src/app/common/store';
+import {take} from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -20,23 +19,30 @@ export class AuthComponent implements OnInit {
     private router: Router,
     private googleAuthService: GoogleAuthService,
     public settingsService: AppSettingsService,
-    private authService: AuthStateService,
+    // private authService: AuthStateService,
   ) {
   }
 
   ngOnInit() {
-    this.checkConnectionString();
+    this.getInitialData();
   }
 
-  checkConnectionString() {
+  getInitialData() {
+    this.getSettings();
+    this.getTwoFactorInfo();
+  }
+
+  /*checkConnectionString() {
     console.debug('checkConnectionString called');
     this.authService.isConnectionStringExistAsync.pipe(
       count((isConnectionStringExist, i) => {
-        if (isConnectionStringExist === false && i < 2) { // if connection string not exist and trys < 2 -- try after 5 second.
+        if (isConnectionStringExist === false && i < 1) {
+        // if connection string not exist and trys < 2 -- try after 5 second.
           setTimeout(() => {
             this.isConnectionStringExist();
           }, 5000);
-        } else if (isConnectionStringExist === false && i >= 2) { // if connection string not exist and trys >= 2 -- redirect to set connection string.
+        } else if (isConnectionStringExist === false && i >= 1) {
+        // if connection string not exist and trys >= 2 -- redirect to set connection string.
           this.router
             .navigate(['/application-settings/connection-string'])
             .then();
@@ -51,7 +57,7 @@ export class AuthComponent implements OnInit {
 
   isConnectionStringExist() {
     this.authService.isConnectionStringExist();
-  }
+  }*/
 
   getSettings() {
     this.settingsService.getLoginPageSettings().pipe(take(1)).subscribe((data) => {
