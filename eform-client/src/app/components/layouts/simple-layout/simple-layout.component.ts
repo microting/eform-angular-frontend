@@ -44,22 +44,18 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
   }
 
   getSettings() {
-    this.isConnectionStringExistTrueSub$ = this.authStateService.isConnectionStringExistAsync
-      .pipe(
-        filter(isConnectionStringExist => isConnectionStringExist === true),
-        count((isConnectionStringExist, i) => {
-          if(i > 0) { // connection string exist
-            this.router.navigate(['/auth']).then();
-          } else { // it's initial value, so need get not initial value
-            this.authStateService.isConnectionStringExist();
-          }
-          return true; // need for subs.
-        })
-      )
-      .subscribe();
+    this.isConnectionStringExistTrueSub$ = this.authStateService.IsConnectionStringExistWithCountAsync
+      .pipe(filter(connectionString => connectionString.isConnectionStringExist === true))
+      .subscribe((connectionString) => {
+        if (connectionString.count > 0) { // connection string exist
+          this.router.navigate(['/auth']).then();
+        } else { // it's initial value, so need get not initial value
+          this.authStateService.isConnectionStringExist();
+        }
+      });
 
-    this.isConnectionStringExistFalseSub$ = this.authStateService.isConnectionStringExistAsync.pipe(
-      filter(isConnectionStringExist => isConnectionStringExist === true))
+    this.isConnectionStringExistFalseSub$ = this.authStateService.IsConnectionStringExistWithCountAsync.pipe(
+      filter(connectionString => connectionString.isConnectionStringExist === false))
       .subscribe(() => {
           this.router
             .navigate(['/connection-string'])

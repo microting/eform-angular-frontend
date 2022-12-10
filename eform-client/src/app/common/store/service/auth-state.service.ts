@@ -114,10 +114,20 @@ export class AuthStateService {
       this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
         (result) => {
           if (!result || (result && !result.success)) {
-            this.store._setState(state => ({...state, isConnectionStringExist: false}));
+            this.store.update((state) => ({
+              connectionString: {
+                isConnectionStringExist: false,
+                count: state.connectionString.count + 1
+              }
+            }));
             this.isConnectionStringExistLoading = false;
           } else if (result && result.success) {
-            this.store.update(() => ({isConnectionStringExist: true}));
+            this.store.update((state) => ({
+              connectionString: {
+                isConnectionStringExist: true,
+                count: state.connectionString.count + 1
+              }
+            }));
             this.isConnectionStringExistLoading = false;
           }
         }
@@ -127,6 +137,10 @@ export class AuthStateService {
 
   get isConnectionStringExistAsync(): Observable<boolean> {
     return this.query.selectIsConnectionStringExist$;
+  }
+
+  get IsConnectionStringExistWithCountAsync() {
+    return this.query.selectIsConnectionStringExistWithCount$;
   }
 
   get isAuth(): boolean {

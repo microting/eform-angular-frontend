@@ -21,7 +21,8 @@ export class AuthQuery extends Query<AuthState> {
   selectFullName$ = this.select((store) => `${store.currentUser.firstName} ${store.currentUser.lastName}`);
   selectIsAuth$ = this.select((store) => !!store.token.accessToken);
   selectCurrentUserLocale$ = this.select((state) => state.currentUser.locale);
-  selectIsConnectionStringExist$ = this.select((state) => state.isConnectionStringExist);
+  selectIsConnectionStringExist$ = this.select((state) => state.connectionString.isConnectionStringExist);
+  selectIsConnectionStringExistWithCount$ = this.select((state) => state.connectionString);
 
   get isAuth() {
     return !!this.getValue().token.accessToken;
