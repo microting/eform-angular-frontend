@@ -19,7 +19,10 @@ export interface AuthState {
     loginRedirectUrl: string;
     claims: UserClaimsModel;
   };
-  isConnectionStringExist: boolean;
+  connectionString: {
+    isConnectionStringExist: boolean;
+    count: number;
+  };
 }
 
 export function createInitialState(): AuthState {
@@ -88,7 +91,10 @@ export function createInitialState(): AuthState {
         eformAllowManagingEformTags: false,
       },
     },
-    isConnectionStringExist: false,
+    connectionString: {
+      isConnectionStringExist: true,
+      count: 0,
+    },
   };
 }
 
@@ -99,7 +105,10 @@ const authPersistStorage = persistState({
     return {
       currentUser: state.currentUser,
       token: state.token,
-      isConnectionStringExist: state.isConnectionStringExist,
+      connectionString: {
+        isConnectionStringExist: state.connectionString.isConnectionStringExist,
+        count: 0
+      },
     };
   },
 });

@@ -1,7 +1,11 @@
 import {Injectable} from '@angular/core';
 import {AuthStore} from '../store';
 import {AuthQuery} from '../query';
-import {AppSettingsService, AuthService, UserSettingsService} from 'src/app/common/services';
+import {
+  AppSettingsService,
+  AuthService,
+  UserSettingsService
+} from 'src/app/common/services';
 import {
   LoginRequestModel,
   UserClaimsModel,
@@ -11,7 +15,6 @@ import {Observable, take, zip} from 'rxjs';
 import {Router} from '@angular/router';
 import {snakeToCamel} from 'src/app/common/helpers';
 import {resetStores} from '@datorama/akita';
-import {AppSettingsStore} from 'src/app/modules/application-settings/components/store';
 
 @Injectable()
 export class AuthStateService {
@@ -23,7 +26,7 @@ export class AuthStateService {
     private query: AuthQuery,
     private router: Router,
     private userSettings: UserSettingsService,
-    private appSettingsStore: AppSettingsStore,
+    // private appSettingsStore: AppSettingsStore,
     public settingsService: AppSettingsService,
   ) {
   }
@@ -111,10 +114,20 @@ export class AuthStateService {
       this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
         (result) => {
           if (!result || (result && !result.success)) {
-            this.store.update(() => ({isConnectionStringExist: false}));
+            this.store.update((state) => ({
+              connectionString: {
+                isConnectionStringExist: false,
+                count: state.connectionString.count + 1
+              }
+            }));
             this.isConnectionStringExistLoading = false;
           } else if (result && result.success) {
-            this.store.update(() => ({isConnectionStringExist: true}));
+            this.store.update((state) => ({
+              connectionString: {
+                isConnectionStringExist: true,
+                count: state.connectionString.count + 1
+              }
+            }));
             this.isConnectionStringExistLoading = false;
           }
         }
@@ -124,6 +137,10 @@ export class AuthStateService {
 
   get isConnectionStringExistAsync(): Observable<boolean> {
     return this.query.selectIsConnectionStringExist$;
+  }
+
+  get IsConnectionStringExistWithCountAsync() {
+    return this.query.selectIsConnectionStringExistWithCount$;
   }
 
   get isAuth(): boolean {

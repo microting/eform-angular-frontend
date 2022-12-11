@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdminGuard, AuthGuard, ClaimsGuard } from 'src/app/common/guards';
-import { FullLayoutComponent, SimpleLayoutComponent } from './components';
+import { FullLayoutComponent, SimpleLayoutComponent, ConnectionSetupComponent} from './components';
 import { UserClaimsEnum } from 'src/app/common/const';
 
 export const routes: Routes = [
@@ -97,6 +97,17 @@ export const routes: Routes = [
     },
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'connection-string',
+    component: SimpleLayoutComponent,
+    children: [
+
+      {
+        path: '',
+        component: ConnectionSetupComponent
+      }
+    ]
   },
   // otherwise redirect to home
   { path: '**', redirectTo: '' },
