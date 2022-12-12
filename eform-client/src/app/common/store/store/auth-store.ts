@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { persistState, Store, StoreConfig } from '@datorama/akita';
 import { UserClaimsModel } from 'src/app/common/models';
+import {debounceTime} from 'rxjs/operators';
 
 export interface AuthState {
   token: {
@@ -113,6 +114,7 @@ const authPersistStorage = persistState({
       },
     };
   },
+  preStorageUpdateOperator: () => debounceTime(5000),
 });
 
 @Injectable({ providedIn: 'root' })
