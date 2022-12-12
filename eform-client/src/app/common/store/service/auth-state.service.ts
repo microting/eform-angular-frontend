@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {Injectable} from '@angular/core';
 import {AuthStore} from '../store';
 import {AuthQuery} from '../query';
@@ -37,15 +38,18 @@ export class AuthStateService {
   login(loginInfo: LoginRequestModel) {
     this.service.login(loginInfo).subscribe((response) => {
       if (response) {
-        this.store.update((state) => ({
-          ...state,
+        this.store.update((state) => {
+          console.log(`before AuthStateService.login.store.update \n ${JSON.stringify(state)}`);
+          return {...state,
           token: {
             accessToken: response.access_token,
             tokenType: response.token_type,
             expiresIn: response.expires_in,
             role: response.role,
           },
-        }));
+        }});
+
+        console.log(`after AuthStateService.login.store.update \n ${JSON.stringify(this.store._value())}`);
         this.getUserSettings();
       }
     });
@@ -57,6 +61,7 @@ export class AuthStateService {
       this.service.refreshToken().subscribe((response) => {
         if (response) {
           this.service.obtainUserClaims().subscribe((userClaims) => {
+            console.log(`before AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
             this.store.update((state) => ({
               ...state,
               token: {
@@ -70,8 +75,12 @@ export class AuthStateService {
                 claims: userClaims,
               },
             }));
+            console.log(`after AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
             this.isRefreshing = false;
           });
+        } else {
+          this.logout();
+          this.isRefreshing = false;
         }
       });
     }
@@ -82,6 +91,7 @@ export class AuthStateService {
       this.isUserSettingsLoading = true;
       zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
         this.isUserSettingsLoading = false;
+        console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
         this.store.update((state) => ({
           ...state,
           currentUser: {
@@ -92,6 +102,7 @@ export class AuthStateService {
             claims: userClaims,
           },
         }));
+        console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
         if (userSettings.model.loginRedirectUrl) {
           this.router
             .navigate([
@@ -103,8 +114,10 @@ export class AuthStateService {
   }
 
   logout() {
+    console.log(`before AuthStateService.logout \n ${JSON.stringify(this.store._value())}`);
     resetStores();
     this.router.navigate(['/auth']).then();
+    console.log(`after AuthStateService.logout \n ${JSON.stringify(this.store._value())}`);
   }
 
   isConnectionStringExist() {

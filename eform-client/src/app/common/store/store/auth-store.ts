@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Injectable } from '@angular/core';
 import { persistState, Store, StoreConfig } from '@datorama/akita';
 import { UserClaimsModel } from 'src/app/common/models';
@@ -102,6 +103,7 @@ const authPersistStorage = persistState({
   include: ['auth'],
   key: 'mainStore',
   preStorageUpdate(storeName, state: AuthState): AuthState {
+    console.log(`mainStore.auth.preStorageUpdate \n ${JSON.stringify(state)}`);
     return {
       currentUser: state.currentUser,
       token: state.token,
@@ -118,9 +120,11 @@ const authPersistStorage = persistState({
 export class AuthStore extends Store<AuthState> {
   constructor() {
     super(createInitialState());
+    console.log(`mainStore.auth.constructor \n ${JSON.stringify(this._value())}`);
   }
 
   reset(): void {
+    console.log(`mainStore.auth.reset \n ${JSON.stringify(this._value())}`);
     super.reset();
     this.update(() => createInitialState());
   }
