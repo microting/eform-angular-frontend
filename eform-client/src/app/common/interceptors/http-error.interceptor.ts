@@ -122,7 +122,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         }
         // Handle 401 — Unauthorized
         if (error.status === 401) {
-          this.toastrService.warning('401 - Unauthorized');
+          //this.toastrService.warning('401 - Unauthorized');
           // console.error('401 - Unauthorized');
           // console.error(error);
           this.authStateService.logout();
