@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -16,12 +16,16 @@ import { GoogleAuthService, LocaleService } from 'src/app/common/services/auth';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { UserSettingsService } from 'src/app/common/services/auth/user-settings.service';
 import { AuthStateService } from 'src/app/common/store';
+import {filter} from 'rxjs/operators';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {Subscription} from 'rxjs';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   formLogin: FormGroup;
 
   username: AbstractControl;
@@ -35,6 +39,7 @@ export class LoginComponent implements OnInit {
   showLoginForm = true;
   showAdminResetForm = false;
   error: string;
+  isAuthAsyncSub$: Subscription;
 
   constructor(
     private router: Router,
@@ -83,10 +88,11 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
-    this.authStateService.isAuthAsync.subscribe((isAuth: boolean) => {
-      if(isAuth) {
-        this.router.navigate(['/']).then();
-      }
+    this.isAuthAsyncSub$ = this.authStateService.isAuthAsync.pipe(filter((isAuth: boolean) => isAuth === true)).subscribe(() => {
+      this.router.navigate(['/']).then();
     })
+  }
+
+  ngOnDestroy(): void {
   }
 }
