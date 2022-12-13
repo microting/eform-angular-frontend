@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { persistState, Store, StoreConfig } from '@datorama/akita';
 import { UserClaimsModel } from 'src/app/common/models';
+import {debounceTime} from 'rxjs/operators';
 
 export interface AuthState {
   token: {
@@ -27,6 +28,7 @@ export interface AuthState {
 }
 
 export function createInitialState(): AuthState {
+  console.log('Constructor AuthStateService called');
   return {
     token: {
       accessToken: '',
@@ -102,17 +104,18 @@ export function createInitialState(): AuthState {
 const authPersistStorage = persistState({
   include: ['auth'],
   key: 'mainStore',
-  preStorageUpdate(storeName, state: AuthState): AuthState {
-    console.log(`mainStore.auth.preStorageUpdate \n ${JSON.stringify(state)}`);
-    return {
-      currentUser: state.currentUser,
-      token: state.token,
-      connectionString: {
-        isConnectionStringExist: state.connectionString.isConnectionStringExist,
-        count: 0
-      },
-    };
-  },
+  // preStorageUpdate(storeName, state: AuthState): AuthState {
+  //   console.log(`mainStore.auth.preStorageUpdate \n ${JSON.stringify(state)}`);
+  //   return {
+  //     currentUser: state.currentUser,
+  //     token: state.token,
+  //     connectionString: {
+  //       isConnectionStringExist: state.connectionString.isConnectionStringExist,
+  //       count: 0
+  //     },
+  //   };
+  // },
+  //preStorageUpdateOperator: () => debounceTime(5000),
 });
 
 @Injectable({ providedIn: 'root' })

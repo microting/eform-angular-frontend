@@ -28,7 +28,7 @@ export function createInitialState(): EntitySelectState {
 
 const entitySelectPersistStorage = persistState({
   include: ['entitySelect'],
-  key: 'mainStore',
+  key: 'mainStoreEntitySelect',
   preStorageUpdate(storeName: string, state: EntitySelectState): any {
     return {
       pagination: state.pagination,

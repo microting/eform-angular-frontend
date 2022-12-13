@@ -16,7 +16,7 @@ export function createInitialState(): DeviceUsersState {
 
 const deviceUsersPersistStorage = persistState({
   include: ['deviceUsers'],
-  key: 'mainStore',
+  key: 'mainStoreDeviceUsers',
   preStorageUpdate(storeName, state) {
     return {
       filters: state.filters,

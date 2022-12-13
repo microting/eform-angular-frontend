@@ -13,7 +13,7 @@ export interface CasesState {
 
 const casesPersistStorage = persistState({
   include: ['cases'],
-  key: 'mainStore',
+  key: 'mainStoreCases',
   preStorageUpdate(storeName: string, state: CasesState): any {
     return {
       pagination: state.pagination,
