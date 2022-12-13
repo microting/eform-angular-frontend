@@ -97,7 +97,6 @@ describe('Main page', function () {
   });
   after(async () => {
     await loginPage.open('/');
-    await loginPage.login();
     await myEformsPage.Navbar.goToMyEForms();
     await (await myEformsPage.getEformsRowObjByNameEForm('test Eform')).deleteEForm();
     await myEformsPage.Navbar.goToDeviceUsersPage();

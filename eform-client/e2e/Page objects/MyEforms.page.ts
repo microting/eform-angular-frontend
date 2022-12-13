@@ -25,7 +25,7 @@ class MyEformsPage extends PageWithNavbarPage {
 
     // get current test title and clean it, to use it as file name
     const filename = encodeURIComponent(
-      `hrome-${timestamp}`.replace(/[/]/g, '__')
+      `chrome-${timestamp}`.replace(/[/]/g, '__')
     ).replace(/%../, '.');
 
     const filePath = path.resolve('./', `${filename}.png`);
