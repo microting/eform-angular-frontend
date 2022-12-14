@@ -255,6 +255,9 @@ namespace eFormAPI.Web.Services
         {
             try
             {
+
+                // Get all user claims and filter menu for user
+                var userClaims = await _claimsService.GetUserClaimsNames(_userService.UserId);
                 var menuItemsForFilter = await _dbContext.MenuItems
                     .Include(x => x.MenuTemplate)
                         .ThenInclude(x => x.EformPlugin)
@@ -266,8 +269,6 @@ namespace eFormAPI.Web.Services
                     ? LocaleNames.English
                     : locale;
 
-                // Get all user claims and filter menu for user
-                var userClaims = await _claimsService.GetUserClaimsNames(_userService.UserId);
 
                 if (!_userService.IsInRole(EformRole.Admin))
                 {

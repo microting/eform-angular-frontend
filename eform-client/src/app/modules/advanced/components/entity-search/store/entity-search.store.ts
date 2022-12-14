@@ -25,7 +25,7 @@ export function createInitialState(): EntitySearchState {
 
 const entitySearchPersistStorage = persistState({
   include: ['entitySearch'],
-  key: 'mainStore',
+  key: 'mainStoreEntitySearch',
   preStorageUpdate(storeName, state) {
     return {
       pagination: state.pagination,

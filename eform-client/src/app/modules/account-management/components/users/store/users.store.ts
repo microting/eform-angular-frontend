@@ -21,7 +21,7 @@ export function createInitialState(): UsersState {
 
 const usersPersistStorage = persistState({
   include: ['users'],
-  key: 'mainStore',
+  key: 'mainStoreUsers',
   preStorageUpdate(storeName, state) {
     return {
       pagination: state.pagination,

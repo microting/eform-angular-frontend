@@ -28,7 +28,7 @@ export function createInitialState(): EmailRecipientsState {
 
 const emailRecipientsPersistStorage = persistState({
   include: ['emailRecipients'],
-  key: 'mainStore',
+  key: 'mainStoreEmailRecipients',
   preStorageUpdate(storeName, state: EmailRecipientsState) {
     return {
       pagination: state.pagination,

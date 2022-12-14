@@ -25,7 +25,7 @@ export function createInitialState(): EformsState {
 
 const eformsPersistStorage = persistState({
   include: ['eforms'],
-  key: 'mainStore',
+  key: 'mainStoreEforms',
   preStorageUpdate(storeName, state) {
     return {
       pagination: state.pagination,

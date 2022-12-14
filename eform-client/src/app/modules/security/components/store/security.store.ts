@@ -28,7 +28,7 @@ export function createInitialState(): SecurityState {
 
 const securityPersistStorage = persistState({
   include: ['security'],
-  key: 'mainStore',
+  key: 'mainStoreSecurity',
   preStorageUpdate(storeName, state: SecurityState) {
     return {
       pagination: state.pagination,
