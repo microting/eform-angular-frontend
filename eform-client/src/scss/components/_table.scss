@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
-mtx-grid {
+.mtx-grid {
   max-height: 70vh;
 
   .mat-standard-chip {
@@ -16,21 +16,11 @@ mtx-grid {
     min-height: 82px;
   }
 
-/*  .mat-table-container::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    background-color: black;
+  &.mtx-grid-toolbar-display-block, .mtx-grid-toolbar-display-block {
+    .mtx-grid-toolbar {
+      display: block !important;
+    }
   }
-
-  .mat-table-container::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-    background-color: #999999;
-  }
-
-  .mat-table-container::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-    background-color: white;
-  }*/
 }
 
 @mixin color($theme) {
