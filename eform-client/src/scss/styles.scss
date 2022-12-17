@@ -67,6 +67,17 @@ b, strong {
   }
 }
 
+@media (orientation: portrait) {
+  .need-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .need-wrapper mat-form-field ~ .mat-form-field {
+    padding-left: 0 !important;
+  }
+}
+
 body.theme-dark {
   --black-025: #393939;
   --black-800: #e7e8eb;
