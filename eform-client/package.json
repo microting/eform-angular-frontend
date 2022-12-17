@@ -91,7 +91,7 @@
     "ngx-slimscroll": "12.2.0",
     "ngx-toastr": "14.3.0",
     "ngx-ui-switch": "^12.0.1",
-    "npm": "^9.1.3",
+    "npm": "^9.2.0",
     "ramda": "^0.28.0",
     "run": "^1.4.0",
     "rxjs": "7.8.0",
