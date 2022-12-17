@@ -26,7 +26,7 @@ export class ConnectionSetupComponent implements OnInit, OnDestroy {
     {id: 'mssql', text: 'MS SQL'}
   ];
 
-  isConnectionStringExistAsyncSub$: Subscription;
+  // isConnectionStringExistAsyncSub$: Subscription;
   updateConnectionStringSub$: Subscription;
   getApplicationHostOsSub$: Subscription;
 
@@ -53,11 +53,11 @@ export class ConnectionSetupComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.isConnectionStringExistAsyncSub$ = this.authStateService.isConnectionStringExistAsync.subscribe(isConnectionStringExist => {
+    /*this.isConnectionStringExistAsyncSub$ = this.authStateService.isConnectionStringExistAsync.subscribe(isConnectionStringExist => {
       if (isConnectionStringExist) {
         setTimeout(() => this.router.navigate(['/auth']).then(), 5000);
       }
-    });
+    });*/
   }
 
   updateConnectionString() {
@@ -65,7 +65,7 @@ export class ConnectionSetupComponent implements OnInit, OnDestroy {
       if (operation && operation.success) {
         setTimeout(() => {
           this.authStateService.isConnectionStringExist();
-        }, 5000);
+        }, 3000);
       }
     });
   }

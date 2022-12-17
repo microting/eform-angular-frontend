@@ -27,7 +27,7 @@ export function createInitialState(): CasePostsState {
 
 const casePostsPersistStorage = persistState({
   include: ['casePosts'],
-  key: 'mainStore',
+  key: 'mainStoreCasePosts',
   preStorageUpdate(storeName, state) {
     return {
       pagination: state.pagination,

@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {AuthStateService} from 'src/app/common/store';
-import {Subscription, take, zip} from 'rxjs';
+import {count, Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {AppSettingsService} from 'src/app/common/services';
 import {Router} from '@angular/router';
+import {filter} from 'rxjs/operators';
 
 @AutoUnsubscribe()
 @Component({
@@ -12,6 +12,8 @@ import {Router} from '@angular/router';
 })
 export class SimpleLayoutComponent implements OnInit, OnDestroy {
   isDarkThemeAsync$: Subscription;
+  isConnectionStringExistTrueSub$: Subscription;
+  isConnectionStringExistFalseSub$: Subscription;
 
   constructor(
     public authStateService: AuthStateService,
@@ -42,14 +44,22 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
   }
 
   getSettings() {
-    this.authStateService.isConnectionStringExist();
-    zip(this.authStateService.isConnectionStringExistAsync, this.authStateService.isAuthAsync)
-      .subscribe(([isConnectionStringExist, isAuth]) => {
-        if (!isConnectionStringExist && !isAuth) {
-          this.router.navigate(['/application-settings/connection-string']).then();
-        } else if (isConnectionStringExist && !isAuth) {
+    this.isConnectionStringExistTrueSub$ = this.authStateService.IsConnectionStringExistWithCountAsync
+      .pipe(filter(connectionString => connectionString.isConnectionStringExist === true))
+      .subscribe((connectionString) => {
+        if (connectionString.count > 0) { // connection string exist
           this.router.navigate(['/auth']).then();
+        } else { // it's initial value, so need get not initial value
+          this.authStateService.isConnectionStringExist();
         }
+      });
+
+    this.isConnectionStringExistFalseSub$ = this.authStateService.IsConnectionStringExistWithCountAsync.pipe(
+      filter(connectionString => connectionString.isConnectionStringExist === false))
+      .subscribe(() => {
+          this.router
+            .navigate(['/connection-string'])
+            .then();
       });
   }
 

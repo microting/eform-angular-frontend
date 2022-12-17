@@ -43,6 +43,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("api/menu/current-user")]
         public Task<OperationDataResult<MenuModel>> GetCurrentUserMenu()
         {

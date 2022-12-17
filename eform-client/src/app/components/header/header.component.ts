@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit {
         this.headerSettingsModel.secondaryTextVisible = true;
         this.headerSettingsModel.mainText = 'eForm Backend';
         this.headerSettingsModel.secondaryText = 'No more paper-forms and back-office data entry';
-        this.router.navigate(['/application-settings/connection-string']).then();
+        this.router.navigate(['/connection-string']).then();
       }
     });
   }

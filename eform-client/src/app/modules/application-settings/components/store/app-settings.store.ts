@@ -21,7 +21,7 @@ export function createInitialState(): AppSettingsState {
 
 const appSettingsPersistStorage = persistState({
   include: ['appSettings'],
-  key: 'mainStore',
+  key: 'mainStoreAppSettings',
   preStorageUpdate(storeName, state: AppSettingsState): AppSettingsState {
     return {
       adminSettingsModel: state.adminSettingsModel,

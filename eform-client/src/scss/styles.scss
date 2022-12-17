@@ -4,7 +4,6 @@
 @import "components/index";
 @import "utilities";
 @import "libs/index";
-@import '~ngx-ui-switch/ui-switch.component.scss';
 
 // h-100 for base elements
 html {
@@ -65,6 +64,17 @@ b, strong {
   .mat-card ~ .mat-card {
     margin-top: 1rem;
     margin-bottom: 1rem;
+  }
+}
+
+@media (orientation: portrait) {
+  .need-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .need-wrapper mat-form-field ~ .mat-form-field {
+    padding-left: 0 !important;
   }
 }
 

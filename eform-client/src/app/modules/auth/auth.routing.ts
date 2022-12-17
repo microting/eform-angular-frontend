@@ -43,7 +43,7 @@ const routes: Routes = [
   {
     path: 'sign-out',
     component: SignOutComponent
-  }
+  },
 ];
 
 

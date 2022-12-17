@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
 import { Injectable } from '@angular/core';
 import { persistState, Store, StoreConfig } from '@datorama/akita';
 import { UserClaimsModel } from 'src/app/common/models';
+import {debounceTime} from 'rxjs/operators';
 
 export interface AuthState {
   token: {
@@ -19,10 +21,14 @@ export interface AuthState {
     loginRedirectUrl: string;
     claims: UserClaimsModel;
   };
-  isConnectionStringExist: boolean;
+  connectionString: {
+    isConnectionStringExist: boolean;
+    count: number;
+  };
 }
 
 export function createInitialState(): AuthState {
+  console.log('Constructor AuthStateService called');
   return {
     token: {
       accessToken: '',
@@ -88,20 +94,28 @@ export function createInitialState(): AuthState {
         eformAllowManagingEformTags: false,
       },
     },
-    isConnectionStringExist: false,
+    connectionString: {
+      isConnectionStringExist: true,
+      count: 0,
+    },
   };
 }
 
 const authPersistStorage = persistState({
   include: ['auth'],
   key: 'mainStore',
-  preStorageUpdate(storeName, state: AuthState): AuthState {
-    return {
-      currentUser: state.currentUser,
-      token: state.token,
-      isConnectionStringExist: state.isConnectionStringExist,
-    };
-  },
+  // preStorageUpdate(storeName, state: AuthState): AuthState {
+  //   console.log(`mainStore.auth.preStorageUpdate \n ${JSON.stringify(state)}`);
+  //   return {
+  //     currentUser: state.currentUser,
+  //     token: state.token,
+  //     connectionString: {
+  //       isConnectionStringExist: state.connectionString.isConnectionStringExist,
+  //       count: 0
+  //     },
+  //   };
+  // },
+  //preStorageUpdateOperator: () => debounceTime(5000),
 });
 
 @Injectable({ providedIn: 'root' })
@@ -109,9 +123,11 @@ const authPersistStorage = persistState({
 export class AuthStore extends Store<AuthState> {
   constructor() {
     super(createInitialState());
+    console.log(`mainStore.auth.constructor \n ${JSON.stringify(this._value())}`);
   }
 
   reset(): void {
+    console.log(`mainStore.auth.reset \n ${JSON.stringify(this._value())}`);
     super.reset();
     this.update(() => createInitialState());
   }

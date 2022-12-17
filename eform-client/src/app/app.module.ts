@@ -26,6 +26,7 @@ import {
   NavigationComponent,
   SimpleLayoutComponent,
   SpinnerComponent,
+  ConnectionSetupComponent,
 } from './components';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {
@@ -46,6 +47,11 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {MtxSelectModule} from '@ng-matero/extensions/select';
+import {FormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -58,6 +64,7 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
     FooterComponent,
     NavigationComponent,
     SpinnerComponent,
+    ConnectionSetupComponent,
   ],
   imports: [
     // Libs
@@ -86,6 +93,11 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
     MatMenuModule,
     MatChipsModule,
     MatExpansionModule,
+    MtxSelectModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatInputModule,
     // Modules
     PluginsModule,
     OwlDateTimeModule,
