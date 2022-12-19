@@ -19,6 +19,14 @@ a {
   color: $eform-orange;
 }
 
+.text-black {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.text-white {
+  color: white;
+}
+
 @mixin color($theme) {
   $color-config: mat.get-color-config($theme);
   $warn-palette: map.get($color-config, 'warn');
