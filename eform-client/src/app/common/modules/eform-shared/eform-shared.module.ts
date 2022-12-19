@@ -18,6 +18,7 @@ import {
   EformNewSubheaderComponent,
   EntityEditCreateComponent,
   EntityImportListComponent,
+  DeleteModalComponent,
 } from './components';
 import {
   AuthImagePipe,
@@ -83,6 +84,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     EformNewSubheaderComponent,
     EntityEditCreateComponent,
     EntityImportListComponent,
+    DeleteModalComponent,
   ],
   exports: [
     EformPaginationComponent,
@@ -102,6 +104,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     EformNewSubheaderComponent,
     EntityEditCreateComponent,
     EntityImportListComponent,
+    DeleteModalComponent,
   ],
 })
 export class EformSharedModule {

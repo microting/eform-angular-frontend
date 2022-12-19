@@ -1,16 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { SiteDto } from 'src/app/common/models/dto';
-import { DeviceUserService } from 'src/app/common/services/device-users';
-import { DeviceUsersStateService } from '../store';
-import { AuthStateService } from 'src/app/common/store';
+import {DeviceUserService} from 'src/app/common/services';
+import {DeviceUsersStateService} from '../store';
+import {AuthStateService} from 'src/app/common/store';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
-import {DeleteDeviceUserModalComponent, EditCreateUserModalComponent, NewOtpModalComponent} from 'src/app/modules/device-users/components';
-import {Subscription} from 'rxjs';
+import {
+  EditCreateUserModalComponent,
+  NewOtpModalComponent
+} from '../';
+import {Subscription, zip} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
+import {DeleteModalSettingModel, SiteDto} from 'src/app/common/models';
+import {DeleteModalComponent} from 'src/app/common/modules/eform-shared/components';
 
 @AutoUnsubscribe()
 @Component({
@@ -34,10 +38,11 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
     {header: this.translateService.stream('Language'), field: 'language'},
     {header: this.translateService.stream('Customer no & OTP'), field: 'otpCode'},
   ];
-  deleteDeviceUserModalComponentAfterClosedSub$: Subscription;
   editCreateUserModalComponentAfterClosedSub$: Subscription;
   newOtpModalComponentAfterClosedSub$: Subscription;
   getCurrentUserClaimsAsyncSub$: Subscription;
+  deviceUserDeletedSub$: Subscription;
+  translatesSub$: Subscription;
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -50,12 +55,13 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private overlay: Overlay,
     private translateService: TranslateService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.getDeviceUsersFiltered();
     this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
-      if(x.deviceUsersDelete || x.deviceUsersUpdate) {
+      if (x.deviceUsersDelete || x.deviceUsersUpdate) {
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
             header: this.translateService.stream('Actions'),
@@ -63,16 +69,19 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
           },
         ];
       }
-    })
+    });
   }
 
   openEditModal(simpleSiteDto: SiteDto) {
     this.editCreateUserModalComponentAfterClosedSub$ = this.dialog.open(EditCreateUserModalComponent,
-      {...dialogConfigHelper(this.overlay, {
-        userFirstName: simpleSiteDto.firstName,
-        userLastName: simpleSiteDto.lastName,
-        id: simpleSiteDto.siteUid,
-        languageCode: simpleSiteDto.languageCode}), minWidth: 500})
+      {
+        ...dialogConfigHelper(this.overlay, {
+          userFirstName: simpleSiteDto.firstName,
+          userLastName: simpleSiteDto.lastName,
+          id: simpleSiteDto.siteUid,
+          languageCode: simpleSiteDto.languageCode
+        }), minWidth: 500
+      })
       .afterClosed().subscribe(data => data ? this.getDeviceUsersFiltered() : undefined);
   }
 
@@ -101,9 +110,37 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   }
 
   openDeleteDeviceUserModal(simpleSiteDto: SiteDto) {
-    this.deleteDeviceUserModalComponentAfterClosedSub$ = this.dialog.open(DeleteDeviceUserModalComponent,
-      dialogConfigHelper(this.overlay, simpleSiteDto))
-      .afterClosed().subscribe(data => data ? this.getDeviceUsersFiltered() : undefined);
+    this.translatesSub$ = zip(
+      this.translateService.stream('Are you sure you want to delete'),
+      this.translateService.stream('First name'),
+      this.translateService.stream('Last name'),
+    ).subscribe(([headerText, firstName, lastName]) => {
+      const settings: DeleteModalSettingModel = {
+        model: simpleSiteDto,
+        settings: {
+          headerText: `${headerText}?`,
+          fields: [
+            {header: 'ID', field: 'siteId'},
+            {header: firstName, field: 'firstName'},
+            {header: lastName, field: 'lastName'},
+          ],
+          cancelButtonId: 'cancelDeleteBtn',
+          deleteButtonId: 'saveDeleteBtn',
+        }
+      };
+      const deviceUserDeleteModal =
+        this.dialog.open(DeleteModalComponent, {...dialogConfigHelper(this.overlay, settings)});
+      this.deviceUserDeletedSub$ = deviceUserDeleteModal.componentInstance.delete
+        .subscribe((model: SiteDto) => {
+          this.deviceUsersService.deleteSingleDeviceUser(model.siteUid)
+            .subscribe(operation => {
+              if (operation && operation.success) {
+                deviceUserDeleteModal.close();
+                this.getDeviceUsersFiltered();
+              }
+            });
+        });
+    });
   }
 
   onSearchChanged(name: string) {
