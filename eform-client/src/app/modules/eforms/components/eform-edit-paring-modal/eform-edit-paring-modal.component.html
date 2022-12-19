@@ -15,6 +15,7 @@
       ></app-eform-tree-view-picker>
     </mat-card-content>
   </mat-card>
+  <br>
   <mat-card *ngIf="sitesDto !== null">
     <mat-card-title>
       <h4>{{ 'Select Site' | translate}}</h4>
@@ -61,18 +62,6 @@
           </div>
         </div>
       </div>
-<!--      <mtx-grid-->
-<!--        class="mt-2"-->
-<!--        [data]="sitesDto"-->
-<!--        [columns]="columns"-->
-<!--        [showPaginator]="false"-->
-<!--        [multiSelectable]="true"-->
-<!--        [cellSelectable]="false"-->
-<!--        [rowSelectable]="true"-->
-<!--        [rowSelected]="rowSelected"-->
-<!--        (rowSelectionChange)="rowSelected = $event"-->
-<!--      >-->
-<!--      </mtx-grid>-->
     </mat-card-content>
   </mat-card>
 </div>
