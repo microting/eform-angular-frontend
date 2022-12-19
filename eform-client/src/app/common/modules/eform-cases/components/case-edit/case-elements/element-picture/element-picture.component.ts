@@ -7,17 +7,15 @@ import {
   OnDestroy,
   Output,
   SimpleChanges,
-  ViewChild
 } from '@angular/core';
 import {Gallery, GalleryItem, ImageItem} from '@ngx-gallery/core';
 import {Lightbox} from '@ngx-gallery/lightbox';
 import {FieldValueDto} from 'src/app/common/models';
-import {TemplateFilesService} from 'src/app/common/services/cases';
+import {TemplateFilesService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 import * as R from 'ramda';
 import {ActivatedRoute} from '@angular/router';
-import {ModalDirective} from 'angular-bootstrap-md';
 import {catchError} from 'rxjs/operators';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
@@ -31,8 +29,6 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
   styleUrls: ['./element-picture.component.scss']
 })
 export class ElementPictureComponent implements OnChanges, OnDestroy {
-  @ViewChild('updateAddNewImageModal', {static: false}) updateAddNewImageModal: ModalDirective;
-  @ViewChild('confirmDeleteImageModal', {static: false}) confirmDeleteImageModal: ModalDirective;
   @Input() fieldValues: Array<FieldValueDto> = [];
   @Output() pictureUpdated: EventEmitter<void> = new EventEmitter<void>();
   buttonsLocked = false;
@@ -219,23 +215,23 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
         </button>
       </div>
     </div>
-      <div mat-dialog-actions class="d-flex flex-row justify-content-end">
-        <button
-          mat-raised-button
-          color="accent"
-          (click)="onAddPicture()"
-          [disabled]="!image"
-        >
-          {{ 'Save' | translate }}
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="hide()"
-        >
-          {{ 'Cancel' | translate }}
-        </button>
-      </div>`,
+    <div mat-dialog-actions class="d-flex flex-row justify-content-end">
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="onAddPicture()"
+        [disabled]="!image"
+      >
+        {{ 'Save' | translate }}
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="hide()"
+      >
+        {{ 'Cancel' | translate }}
+      </button>
+    </div>`,
 })
 export class AddPictureDialogComponent {
   addedPicture: EventEmitter<File> = new EventEmitter<File>();
