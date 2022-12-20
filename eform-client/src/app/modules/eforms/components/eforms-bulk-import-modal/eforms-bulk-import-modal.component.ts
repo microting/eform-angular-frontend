@@ -55,7 +55,7 @@ export class EformsBulkImportModalComponent implements OnInit {
         );
         this.excelEformsModal(true);
       }
-      this.loaderService.isLoading.next(false);
+      this.loaderService.setLoading(false);
       this.xlsxEformsInput.nativeElement.value = '';
     };
     this.xlsxEformsFileUploader.onErrorItem = () => {
@@ -77,7 +77,7 @@ export class EformsBulkImportModalComponent implements OnInit {
 
   uploadExcelEformsFile() {
     this.xlsxEformsFileUploader.queue[0].upload();
-    this.loaderService.isLoading.next(true);
+    this.loaderService.setLoading(true);
   }
 
   excelEformsModal(result = false) {
