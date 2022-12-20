@@ -124,7 +124,7 @@
     "chromedriver": "107.0.3",
     "codelyzer": "^6.0.2",
     "eslint": "^8.30.0",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.0",
     "guid-typescript": "1.0.9",
     "path": "0.12.7",
     "run-sequence": "2.2.1",
