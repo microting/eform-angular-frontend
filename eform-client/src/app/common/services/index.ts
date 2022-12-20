@@ -11,3 +11,4 @@ export * from './advanced';
 export * from './eform';
 export * from './loader.service';
 export * from './apiBase.service';
+export * from './title.service';

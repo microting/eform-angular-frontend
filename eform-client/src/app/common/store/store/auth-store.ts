@@ -104,6 +104,11 @@ export function createInitialState(): AuthState {
 const authPersistStorage = persistState({
   include: ['auth'],
   key: 'mainStore',
+  /*
+  TODO: it's need for not save not needed values. I think it need uncomment
+   because count save in local storage and restore after reload app
+   and not check connection string after reload page
+   */
   // preStorageUpdate(storeName, state: AuthState): AuthState {
   //   console.log(`mainStore.auth.preStorageUpdate \n ${JSON.stringify(state)}`);
   //   return {
