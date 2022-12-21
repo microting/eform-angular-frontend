@@ -126,7 +126,6 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadEformsPermissions();
-    this.loadAllTags();
   }
 
   ngOnDestroy() {
@@ -197,6 +196,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
       .getEformsSimplePermissions()
       .subscribe((data) => {
         if (data && data.success) {
+          this.loadAllTags();
           this.eformPermissionsSimpleModel = this.securityGroupEformsService.mapEformsSimplePermissions(
             data.model
           );
