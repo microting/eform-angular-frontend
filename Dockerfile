@@ -1,4 +1,4 @@
-FROM node:16.16.0 as node-env
+FROM node:18.12.1 as node-env
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY eform-client ./
