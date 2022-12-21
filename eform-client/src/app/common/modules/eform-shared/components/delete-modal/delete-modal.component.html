@@ -1,0 +1,37 @@
+<h3 mat-dialog-title>{{deleteModalSettingModel.settings.headerText}}</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-row justify-content-between" *ngFor="let field of deleteModalSettingModel.settings.fields">
+    <p>{{field.header}}</p>
+    <ng-container [ngSwitch]="field.type">
+      <ng-container *ngSwitchCase="'date'">
+        <strong>{{(getValueModel(field.field) | date: (field.format ?? 'dd.MM.yyyy')) ?? '--'}}</strong>
+      </ng-container>
+      <ng-container *ngSwitchCase="'dateTime'">
+        <strong><date-formatter [date]="getValueModel(field.field) ?? '--'" [Format]="field.format"></date-formatter></strong>
+      </ng-container>
+      <ng-container *ngSwitchCase="'text'">
+        <strong>{{field.text ?? '--'}}</strong>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <strong>{{getValueModel(field.field) ?? '--'}}</strong>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="warn"
+    [id]="this.deleteModalSettingModel.settings.deleteButtonId"
+    (click)="onClickDelete()"
+  >
+    {{this.deleteModalSettingModel.settings.deleteButtonText ?? ('Delete' | translate)}}
+  </button>
+  <button
+    mat-raised-button
+    [id]="this.deleteModalSettingModel.settings.cancelButtonId"
+    (click)="hide()"
+  >
+    {{this.deleteModalSettingModel.settings.cancelButtonText ?? ('Cancel' | translate)}}
+  </button>
+</div>

@@ -20,7 +20,7 @@ export class LoaderInterceptor implements HttpInterceptor {
     if (i >= 0) {
       this.requests.splice(i, 1);
     }
-    this.loaderService.isLoading.next(this.requests.length > 0);
+    this.loaderService.setLoading(this.requests.length > 0);
   }
 
   intercept(
@@ -31,7 +31,7 @@ export class LoaderInterceptor implements HttpInterceptor {
 
     // console.log('No of requests--->' + this.requests.length);
 
-    this.loaderService.isLoading.next(true);
+    this.loaderService.setLoading(true);
     return new Observable((observer) => {
       const subscription = next.handle(req).subscribe(
         (event) => {

@@ -13,6 +13,7 @@ export * from './filtration-state.model';
 export * from './common-dictionary.model';
 export * from './common-translation.model';
 export * from './common-translations.model';
+export * from './delete-modal-setting.model';
 export * from './table-header-element.model';
 export * from './common-dictionary-text.model';
 export * from './common-simple-translation.model';

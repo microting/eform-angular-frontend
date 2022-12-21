@@ -18,7 +18,9 @@ import { UserSettingsService } from 'src/app/common/services/auth/user-settings.
 import { AuthStateService } from 'src/app/common/store';
 import {filter} from 'rxjs/operators';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {Subscription} from 'rxjs';
+import {Subscription, take} from 'rxjs';
+import {TitleService} from 'src/app/common/services';
+import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -49,7 +51,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private toastrService: ToastrService,
     private localeService: LocaleService,
     private userSettings: UserSettingsService,
-    private authStateService: AuthStateService
+    private authStateService: AuthStateService,
+    private titleService: TitleService,
+    private translateService: TranslateService,
   ) {}
 
   login() {
@@ -84,6 +88,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.translateService.get('Login').pipe(take(1)).subscribe(translate => this.titleService.setTitle(translate));
     this.formLogin = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],

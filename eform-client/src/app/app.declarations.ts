@@ -42,6 +42,7 @@ import {
   TemplateFilesService,
   UnitsService,
   WorkersService,
+  TitleService,
 } from 'src/app/common/services';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { UserSettingsService } from 'src/app/common/services/auth/user-settings.service';
@@ -98,6 +99,7 @@ export let providers = [
   PluginPermissionsService,
   NavigationMenuService,
   LoaderService,
+  TitleService,
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
