@@ -12,13 +12,13 @@ describe('Application settings page - site header section', function () {
   });
   // it('should change main text', async () => {
   //   await myEformsPage.Navbar.goToApplicationSettings();
-  //   await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 120000 });
+  //   await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
   //   await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   //   await (await applicationSettingsPage.SiteHeader.mainTextInput()).setValue(
   //     ApplicationSettingsConstants.SiteHeader.customMainText
   //   );
   //   await applicationSettingsPage.save();
-  //   await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 120000 });
+  //   await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 240000 });
   //   (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   //   expect(
   //     await (await applicationSettingsPage.siteHeaderMainText()).getText(),

@@ -401,4 +401,12 @@ export const enUS = {
   EntitySelect: 'Dropdown (my lists)',
   MultiSelect: 'Multiselect',
   'Save eForm.': 'Save eForm',
+  'Server date': 'Server date',
+  'eForm Pairing for': 'eForm Pairing for',
+  'Select Site': 'Select Site',
+  'Select': 'Select',
+  'Employee': 'Employee',
+  'Site': 'Site',
+  'Selected language': 'Selected language',
+  'New folder': 'New folder',
 };

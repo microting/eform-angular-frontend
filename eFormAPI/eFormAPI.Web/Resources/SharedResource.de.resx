@@ -735,4 +735,7 @@
   <data name="EformReportNotFound" xml:space="preserve">
     <value>Eform-Bericht nicht gefunden</value>
   </data>
+  <data name="Folders" xml:space="preserve">
+    <value>Ordnern</value>
+  </data>
 </root>

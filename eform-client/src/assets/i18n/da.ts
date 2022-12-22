@@ -428,4 +428,12 @@ export const da = {
   'Select new image': 'Vælg billede',
   'Select image': 'Vælg billede',
   'Date is required': 'Dato er påkrævet',
+  'Server date': 'Server dato',
+  'eForm Pairing for': 'eForm Pairing for',
+  'Select Site': 'Vælg lokation',
+  'Select': 'Vælg',
+  'Employee': 'Medarbejder',
+  'Site': 'Lokation',
+  'Selected language': 'Valgt sprog',
+  'New folder': 'Ny mappe',
 };
