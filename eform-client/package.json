@@ -51,7 +51,7 @@
     "@angular/platform-browser-dynamic": "13.3.7",
     "@angular/router": "13.3.7",
     "@circlon/angular-tree-component": "^11.0.1",
-    "@danielmoncada/angular-datetime-picker": "^13.0.0",
+    "@danielmoncada/angular-datetime-picker": "^15.0.1",
     "@fortawesome/angular-fontawesome": "0.10.2",
     "@fortawesome/fontawesome-svg-core": "6.2.1",
     "@fortawesome/free-solid-svg-icons": "6.1.1",
