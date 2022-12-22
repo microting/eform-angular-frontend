@@ -20,6 +20,7 @@ export class AppMenuStateService {
 
   getAppMenu() {
     if (!this.isLoading) {
+      this.store.reset();
       this.store.setLoading(true);
       this.service.getAppMenuFromServer()
         .pipe(

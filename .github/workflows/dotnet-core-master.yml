@@ -16,26 +16,16 @@ jobs:
         test: [a,b,c,d,e,f,g,h,i,j]
     steps:
     - uses: actions/checkout@v3
-    - uses: getong/mariadb-action@v1.1
-      with:
-        host port: 3306 # Optional, default value is 3306. The port of host
-        container port: 3306 # Optional, default value is 3306. The port of container
-        character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
-        collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
-        mariadb version: 'latest' # Optional, default value is "latest". The version of the MariaDB
-        mysql database: 'some_test' # Optional, default value is "test". The specified database which will be create
-        mysql root password: 'secretpassword' # Required if "mysql user" is empty, default is empty. The root superuser password
-        mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
-        mysql password: 'passwordtoo' # Required if "mysql user" exists. The password for the "mysql user"
-    - name: Sleep 15 seconds
-      run: sleep 15
-    - uses: getong/rabbitmq-action@v1.2
-      with:
-        rabbitmq version: 'latest'
-        host port: 5672
-        rabbitmq user: 'admin'
-        rabbitmq password: 'password'
-        rabbitmq vhost: 'vhost_name'
+    - name: Create docker network 🖧
+      run: docker network create --driver bridge data
+    - name: Start MariaDB
+      run: |
+        docker pull mariadb:10.8
+        docker run --name mariadbtest --network data -e MYSQL_ROOT_PASSWORD=secretpassword -p 3306 -d mariadb:10.8
+    - name: Start rabbitmq
+      run: |
+        docker pull rabbitmq:latest
+        docker run -d --hostname my-rabbit --name some-rabbit --network data -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=password rabbitmq:latest
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:

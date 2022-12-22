@@ -65,13 +65,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
         .getCurrentUserInfo()
         .subscribe((result) => {
           this.authStateService.updateUserInfo(result);
+          this.appMenuService.getAppMenu();
         });
       this.getAppMenuSub$ = this.appMenuService.userMenuLeftAsync.subscribe(x => {
-        if (x) {
+        if (x !== undefined) {
           this.menu.data = [...x];
         }
       });
-      this.appMenuService.getAppMenu();
     });
   }
 
