@@ -26,25 +26,25 @@ jobs:
       run: |
         docker pull rabbitmq:latest
         docker run -d --hostname my-rabbit --name some-rabbit --network data -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=password rabbitmq:latest
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
+    #- name: Setup .NET Core
+    #  uses: actions/setup-dotnet@v3
+    #  with:
+    #    dotnet-version: 7.0.x
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18.12.1'
-    - name: Install dependencies
-      run: dotnet restore eFormAPI/eFormAPI.sln
-    - name: Get the version
-      id: get_version
-      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d "v" -f 2)
-    - name: Build
-      run: dotnet build eFormAPI/eFormAPI.sln
-    - name: Unit Tests
-      run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
-    - name: Integration Tests
-      run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
+    #- name: Install dependencies
+    #  run: dotnet restore eFormAPI/eFormAPI.sln
+    #- name: Get the version
+    #  id: get_version
+    #  run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d "v" -f 2)
+    #- name: Build
+    #  run: dotnet build eFormAPI/eFormAPI.sln
+    #- name: Unit Tests
+    #  run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
+    #- name: Integration Tests
+    #  run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
     - name: NPM Install
       run: cd eform-client && npm install
     - name: Create errorShots directory
@@ -61,14 +61,16 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build the tagged Docker image
-      run: docker build . -t microtingas/frontend-container:latest -t --build-arg GITVERSION=1.0.0
+      run: docker build . -t microtingas/frontend-container:latest --build-arg GITVERSION=1.0.0
     - name: Start the newly build Docker container
       id: docker-run
-      run: docker run --name my-container --network data microtingas/frontend-container:latest "/ConnectionString=host=mariadbtest;Database=420_SDK;user=root;password=secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;" > docker_run_log 2>&1 &
-    - name: Sleep 75 seconds
-      run: sleep 75
+      run: docker run --name my-container -p 4200:5000 --network data microtingas/frontend-container:latest "/ConnectionString=host=mariadbtest;Database=420_SDK;user=root;password=secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;" > docker_run_log 2>&1 &
+    - name: Sleep 15 seconds
+      run: sleep 15
     - name: Get standard output
-      run: cat main/docker_run_log
+      run: cat docker_run_log
+    - name: Pretest changes to work with Docker container
+      run: sed -i 's/localhost/mariadbtest/g' eform-client/e2e/Constants/DatabaseConfigurationConstants.ts
     - name: Configuration testing
       run: cd eform-client && npm run testheadless
     - name: testheadless2${{matrix.test}}
@@ -83,8 +85,7 @@ jobs:
     - name: The job has failed
       if: ${{ failure() }}
       run: |
-        cat dotnet_log
-        cat eform-client/npm_log
+        cat docker_run_log
     - name: Notify slack fail
       if: ${{ failure() }}
       env:

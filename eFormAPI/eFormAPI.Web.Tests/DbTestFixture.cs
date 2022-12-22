@@ -56,7 +56,7 @@ namespace eFormAPI.Web.Tests
         [SetUp]
         public async Task Setup()
         {
-            ConnectionString = @"Server = localhost; port = 3306; Database = angular-tests; user = root; password = secretpassword; Convert Zero Datetime = true;";
+            ConnectionString = @"Server = 127.0.0.1; port = 3306; Database = angular-tests; user = root; password = secretpassword; Convert Zero Datetime = true;";
 
             GetContext(ConnectionString);
 
