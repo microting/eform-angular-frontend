@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Create docker network 🖧
-      run: docker network create --driver bridge data
+      run: docker network create --driver bridge --attachable data
     - name: Start MariaDB
       run: |
         docker pull mariadb:10.8
@@ -49,18 +49,37 @@ jobs:
       run: cd eform-client && npm install
     - name: Create errorShots directory
       run: mkdir /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots
-    - name: NPM start
-      run: cd eform-client && npm start > npm_log 2>&1 &
+    #- name: NPM start
+    #  run: cd eform-client && npm start > npm_log 2>&1 &
+    #- name: Sleep 75 seconds
+    #  run: sleep 75
+    #- name: Dotnet run
+    #  run: dotnet run --project eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build the tagged Docker image
+      run: docker build . -t microtingas/frontend-container:latest -t --build-arg GITVERSION=1.0.0
+    - name: Start the newly build Docker container
+      id: docker-run
+      run: docker run --name my-container --network data microtingas/frontend-container:latest "/ConnectionString=host=mariadbtest;Database=420_SDK;user=root;password=secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;" > docker_run_log 2>&1 &
     - name: Sleep 75 seconds
       run: sleep 75
-    - name: Dotnet run
-      run: dotnet run --project eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
-    - name: Sleep 75 seconds
-      run: sleep 75
+    - name: Get standard output
+      run: cat main/docker_run_log
     - name: Configuration testing
       run: cd eform-client && npm run testheadless
     - name: testheadless2${{matrix.test}}
       run: cd eform-client && npm run testheadless2${{matrix.test}}
+    - name: Stop the newly build Docker container
+      run: docker stop my-container
+    - name: Get standard output
+      run: |
+        cat docker_run_log
+        result=`cat docker_run_log | grep "Now listening on: http://0.0.0.0:5000" -m 1 | wc -l`
+        if [ $result -ne 1 ];then exit 1; fi
     - name: The job has failed
       if: ${{ failure() }}
       run: |
