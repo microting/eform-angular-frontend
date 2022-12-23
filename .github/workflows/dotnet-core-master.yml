@@ -36,9 +36,6 @@ jobs:
         node-version: '18.12.1'
     - name: Install dependencies
       run: dotnet restore eFormAPI/eFormAPI.sln
-    #- name: Get the version
-    #  id: get_version
-    #  run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d "v" -f 2)
     - name: Build
       run: dotnet build eFormAPI/eFormAPI.sln
     - name: Unit Tests
@@ -49,12 +46,6 @@ jobs:
       run: cd eform-client && npm install
     - name: Create errorShots directory
       run: mkdir /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots
-    #- name: NPM start
-    #  run: cd eform-client && npm start > npm_log 2>&1 &
-    #- name: Sleep 75 seconds
-    #  run: sleep 75
-    #- name: Dotnet run
-    #  run: dotnet run --project eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
     - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
