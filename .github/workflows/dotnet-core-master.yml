@@ -10,12 +10,39 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Docker image
+        id: build
+        run: docker build . -t microtingas/frontend-container:latest --build-arg GITVERSION=1.0.0
+        shell: bash
+      - run: docker save microtingas/frontend-container:latest -o container.tar
+      - uses: actions/upload-artifact@v2
+        with:
+          name: container
+          path: container.tar
+  test:
+    needs: build
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         test: [a,b,c,d,e,f,g,h,i,j]
     steps:
     - uses: actions/checkout@v3
+    - name: Cache node_modules
+      id: cache
+      uses: actions/cache@v3
+      with:
+        path: eform-client/node_modules
+        key: ${{ runner.os }}-build-${{ hashFiles('eform-client/package.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - uses: actions/download-artifact@v2
+      with:
+        name: container
+    - run: docker load -i container.tar
     - name: Create docker network 🖧
       run: docker network create --driver bridge --attachable data
     - name: Start MariaDB
@@ -26,33 +53,15 @@ jobs:
       run: |
         docker pull rabbitmq:latest
         docker run -d --hostname my-rabbit --name some-rabbit --network data -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=password rabbitmq:latest
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18.12.1'
-    - name: Install dependencies
-      run: dotnet restore eFormAPI/eFormAPI.sln
-    - name: Build
-      run: dotnet build eFormAPI/eFormAPI.sln
-    - name: Unit Tests
-      run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
-    - name: Integration Tests
-      run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
     - name: NPM Install
       run: cd eform-client && npm install
+      if: steps.cache.outputs.cache-hit != 'true'
     - name: Create errorShots directory
       run: mkdir /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots
-    - name: Login to DockerHub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Build the tagged Docker image
-      run: docker build . -t microtingas/frontend-container:latest --build-arg GITVERSION=1.0.0
     - name: Start the newly build Docker container
       id: docker-run
       run: docker run --name my-container -p 4200:5000 --network data microtingas/frontend-container:latest "/ConnectionString=host=mariadbtest;Database=420_Angular;user=root;password=secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;" > docker_run_log 2>&1 &
@@ -94,3 +103,30 @@ jobs:
         path: |
           /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots/chrome*.png
         retention-days: 2
+  test-dotnet:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Create docker network 🖧
+      run: docker network create --driver bridge --attachable data
+    - name: Start MariaDB
+      run: |
+        docker pull mariadb:10.8
+        docker run --name mariadbtest --network data -e MYSQL_ROOT_PASSWORD=secretpassword -p 3306:3306 -d mariadb:10.8
+    - name: Start rabbitmq
+      run: |
+        docker pull rabbitmq:latest
+        docker run -d --hostname my-rabbit --name some-rabbit --network data -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=password rabbitmq:latest
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Install dependencies
+      run: dotnet restore eFormAPI/eFormAPI.sln
+    - name: Build
+      run: dotnet build eFormAPI/eFormAPI.sln
+    - name: Unit Tests
+      run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
+    - name: Integration Tests
+      run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
