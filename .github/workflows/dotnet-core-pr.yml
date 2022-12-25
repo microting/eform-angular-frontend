@@ -22,6 +22,7 @@ jobs:
           name: container
           path: container.tar
   test:
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
