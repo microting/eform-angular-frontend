@@ -94,7 +94,9 @@ export class AuthStateService {
   }
 
   getUserSettings() {
-    if (!this.isUserSettingsLoading) {
+    console.log('getUserSettings called');
+    console.log('this.isUserSettingsLoading: ' + this.isUserSettingsLoading);
+    //if (!this.isUserSettingsLoading) {
       this.isUserSettingsLoading = true;
       zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
         this.isUserSettingsLoading = false;
@@ -117,7 +119,7 @@ export class AuthStateService {
             ]).then();
         }
       });
-    }
+    //}
   }
 
   logout() {
