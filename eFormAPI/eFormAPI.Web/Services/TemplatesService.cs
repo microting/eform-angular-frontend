@@ -110,6 +110,7 @@ namespace eFormAPI.Web.Services
                     .Where(x => x.CheckList.ParentId == null)
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Where(x => x.CheckList.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.CheckList.IsHidden == false)
                     .Where(x => x.LanguageId == language.Id);
 
                 query = QueryHelper.AddFilterAndSortToQuery(query, templateRequestModel, new List<string> { "Text" },
