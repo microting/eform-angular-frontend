@@ -195,6 +195,10 @@ namespace eFormAPI.Web.Services.Export
                                     worksheet.Cell(x + 1, y + 1).Value = dataY;
                                     //worksheet.Cell(x + 1, y + 1).Style.Numberformat.Format = "HH:mm:ss";
                                     break;
+                                case 4:
+                                    worksheet.Cell(x + 1, y + 1).Value = "'" + dataY;
+                                    worksheet.Cell(x + 1, y + 1).DataType = XLDataType.Text;
+                                    break;
                                 case 6:
                                     worksheet.Cell(x + 1, y + 1).Value = dataY;
                                     //worksheet.Cell(x + 1, y + 1).Style.Numberformat.Format = "yyyy";
@@ -213,7 +217,7 @@ namespace eFormAPI.Web.Services.Export
                                         if (float.TryParse(dataY, out var i))
                                         {
                                             worksheet.Cell(x + 1, y + 1).Value = dataY.Replace(",", ".");
-                                            worksheet.Cell(x + 1, y + 1).DataType = XLDataType.Number;;
+                                            worksheet.Cell(x + 1, y + 1).DataType = XLDataType.Number;
                                         }
                                         else
                                         {
