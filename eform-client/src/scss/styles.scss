@@ -6,8 +6,8 @@
 @import "libs/index";
 
 // h-100 for base elements
-html {
-  height: 100%;
+html, body {
+  height: 100vh;
 }
 
 label {
@@ -15,21 +15,8 @@ label {
   margin-bottom: unset;
 }
 
-body {
-  height: 100vh;
-
-  #main-header-text {
-    font-weight: 400;
-  }
-}
-
-.footer-version {
-  color: gray;
-  font-size: 0.8em;
-}
-
-.tooltip {
-  pointer-events: none !important;
+.mat-option {
+  font-size: unset !important;
 }
 
 .scrollable-block {
@@ -38,87 +25,8 @@ body {
   overflow-x: hidden;
 }
 
-.advanced-pie-legend-wrapper {
-  position: absolute !important;
-}
-
-.close:focus {
-  outline: none;
-}
-
 b, strong {
   font-weight: 500;
-}
-
-.need-wrapper {
-  mat-form-field ~ mat-form-field {
-    padding-left: 1rem;
-  }
-  &.flex-column mat-form-field ~ formatting-text-editor {
-    padding-top: 1rem;
-  }
-  &.flex-row mat-form-field ~ formatting-text-editor {
-    padding-left: 1rem;
-  }
-
-  .mat-card ~ .mat-card {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-}
-
-@media (orientation: portrait) {
-  .need-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .need-wrapper mat-form-field ~ .mat-form-field {
-    padding-left: 0 !important;
-  }
-}
-
-body.theme-dark {
-  --black-025: #393939;
-  --black-800: #e7e8eb;
-  --blue-600: #3ca4ff;
-
-  .mat-option {
-    font-size: unset !important;
-  }
-
-  .panel {
-    background-color: transparent;
-  }
-
-  .owl-dt-container {
-    background-color: var(--black-025);
-    color: var(--theme-body-font-color);
-  }
-
-  .owl-dt-calendar-control {
-    color: var(--theme-body-font-color);
-  }
-
-  .owl-dt-calendar-table .owl-dt-calendar-cell {
-    color: var(--theme-body-font-color);
-  }
-
-  .owl-dt-calendar-table .owl-dt-calendar-cell-selected {
-    background-color: var(--blue-600);
-  }
-
-  .owl-dt-calendar-table .owl-dt-calendar-cell-in-range {
-    background: rgba(63, 81, 181, 0.2);
-  }
-
-  .owl-dt-container-info .owl-dt-container-info-active {
-    color: var(--blue-600);
-  }
-
-  .list-group-item-action a {
-    color: var(--black-600);
-  }
 }
 
 .spacer {
@@ -141,35 +49,4 @@ body.theme-dark {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
     background-color: white;
   }
-}
-
-body {
-  --theme-body-font-color: var(--black-800);
-}
-
-body, .theme-light {
-  --black-800: #242729;
-  --blue-600: #0077cc;
-  --theme-body-font-color: var(--black-800);
-
-  .mat-option {
-    font-size: unset !important;
-  }
-}
-
-.mat-icon-button .mat-icon {
-  width: 18px;
-  height: 18px;
-  font-size: 18px;
-  line-height: 18px
-}
-.mat-menu-item .mat-icon {
-  width: 18px;
-  height: 18px;
-  font-size: 18px;
-  line-height: 18px
-}
-
-#sign-out-dropdown {
-  top: -4px;
 }

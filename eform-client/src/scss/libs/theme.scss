@@ -9,6 +9,7 @@
 @use '../components/table' as table;
 @use '../components/chart' as chart;
 @use '../libs/ngx-toastr/ngx-toastr' as ngx-toastr;
+@use '../libs/ng-datepicker/ng-datepicker' as ng-datepicker;
 
 @include mat.core();
 
@@ -75,6 +76,7 @@ body {
       @include table.theme($val);
       @include ngx-toastr.theme($val);
       @include chart.theme($val);
+      @include ng-datepicker.theme($val);
       @include mtx.all-experimental-component-themes($val);
     }
   }
