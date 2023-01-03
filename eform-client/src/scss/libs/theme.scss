@@ -53,19 +53,7 @@ $eform-dark-theme: mat.define-dark-theme((
   typography: $eform-typography,
 ));
 
-// h-100 for base elements
-html {
-  height: 100%;
-}
-
 body {
-  margin: 0;
-  height: 100%;
-
-  #main-header-text {
-    font-weight: 400;
-  }
-
   @each $key, $val in (('light', $eform-light-theme), ('dark', $eform-dark-theme)) {
     &.theme-#{$key} {
       @include mat.all-component-themes($val);
@@ -83,5 +71,9 @@ body {
 
   &.mat-typography {
     margin: 0 0 0 0;
+  }
+
+  #main-header-text {
+    font-weight: 400;
   }
 }

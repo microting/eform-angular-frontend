@@ -1,6 +1,4 @@
 /* You can add global styles to this file, and also import other style files 2 */
-//ng-select
-
 @import "components/index";
 @import "utilities";
 @import "libs/index";
@@ -8,21 +6,7 @@
 // h-100 for base elements
 html, body {
   height: 100vh;
-}
-
-label {
-  display: unset;
-  margin-bottom: unset;
-}
-
-.mat-option {
-  font-size: unset !important;
-}
-
-.scrollable-block {
-  max-height: 400px;
-  overflow: auto;
-  overflow-x: hidden;
+  margin: 0;
 }
 
 b, strong {
