@@ -743,4 +743,7 @@
   <data name="ImageUpdatedSuccessfully" xml:space="preserve">
     <value>Зображення успішно оновлено</value>
   </data>
+  <data name="Folders" xml:space="preserve">
+    <value>Папки</value>
+  </data>
 </root>

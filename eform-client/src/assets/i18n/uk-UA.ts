@@ -377,5 +377,13 @@ export const ukUA = {
   'Generate report': 'Створити {{value}} звіт',
   'Select date range': 'Виберіть діапазон дат',
   'Edit headers': 'Редагувати заголовки',
-  'Generate': 'Створити звіт'
+  'Generate': 'Створити звіт',
+  'Server date': 'Дата сервера',
+  'eForm Pairing for': 'Парування eForm для',
+  'Select Site': 'Вибрати локацію',
+  'Select': 'Вибрати',
+  'Employee': 'Співробітник',
+  'Site': 'Локація',
+  'Selected language': 'Вибраний мова',
+  'New folder': 'Нова папка',
 };

@@ -128,11 +128,11 @@ const authPersistStorage = persistState({
 export class AuthStore extends Store<AuthState> {
   constructor() {
     super(createInitialState());
-    console.log(`mainStore.auth.constructor \n ${JSON.stringify(this._value())}`);
+    //console.log(`mainStore.auth.constructor \n ${JSON.stringify(this._value())}`);
   }
 
   reset(): void {
-    console.log(`mainStore.auth.reset \n ${JSON.stringify(this._value())}`);
+    //console.log(`mainStore.auth.reset \n ${JSON.stringify(this._value())}`);
     super.reset();
     this.update(() => createInitialState());
   }

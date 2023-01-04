@@ -6,7 +6,7 @@ const expect = require('chai').expect;
 
 describe('Database', function () {
   it('should be configured successfully', async () => {
-    databasePage.open('/');
+    await databasePage.open('/');
     await (await databasePage.saveBtn()).waitForDisplayed({timeout: 90000});
     await (await databasePage.languageDropdown()).waitForDisplayed({timeout: 90000});
     await browser.pause(5000);

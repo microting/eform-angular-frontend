@@ -65,7 +65,7 @@ export class ConnectionSetupComponent implements OnInit, OnDestroy {
       if (operation && operation.success) {
         setTimeout(() => {
           this.authStateService.isConnectionStringExist();
-        }, 3000);
+        }, 10000);
       }
     });
   }

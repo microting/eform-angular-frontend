@@ -385,5 +385,13 @@ export const deDE = {
   'Generate report': 'Bericht {{value}} generieren',
   'Select date range': 'Datumsbereich auswählen',
   'Edit headers': 'Kopfzeilen bearbeiten',
-  'Generate': 'Bericht generieren'
+  'Generate': 'Bericht generieren',
+  'Server date': 'Serverdatum',
+  'eForm Pairing for': 'eForm Pairing für',
+  'Select Site': 'Site auswählen',
+  'Select': 'Auswählen',
+  'Employee': 'Mitarbeiter',
+  'Site': 'Site',
+  'Selected language': 'Gewählte Sprache',
+  'New folder': 'Neuer Ordner',
 };

@@ -20,6 +20,7 @@ export class AppMenuStateService {
 
   getAppMenu() {
     if (!this.isLoading) {
+      this.store.reset();
       this.store.setLoading(true);
       this.service.getAppMenuFromServer()
         .pipe(
@@ -31,11 +32,11 @@ export class AppMenuStateService {
         .subscribe(
           (response) => {
             if (response && response.success && response.model) {
-              if (!this.query.currentAppMenu) {
+              //if (!this.query.currentAppMenu) {
                 this.store.set({0: response.model});
-              } else {
-                this.store.update(0, response.model);
-              }
+              //} else {
+              //  this.store.update(0, response.model);
+              //}
             }
             this.store.setLoading(false);
           },

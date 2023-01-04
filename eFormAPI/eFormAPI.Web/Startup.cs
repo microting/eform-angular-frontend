@@ -116,6 +116,7 @@ namespace eFormAPI.Web
                     Log.LogEvent($"We don't have a ConnectionString, so using default");
                     if (Configuration.MyConnectionString() != "...")
                     {
+                        Log.LogEvent($"ConnectionString is {Configuration.MyConnectionString()}");
                         services.AddEntityFrameworkMySql()
                             .AddDbContext<BaseDbContext>(o => o.UseMySql(
                                 Configuration.MyConnectionString(), new MariaDbServerVersion(
@@ -126,7 +127,7 @@ namespace eFormAPI.Web
                     }
                     else
                     {
-                        Log.LogEvent($"Setting default as active connection string.");
+                        Log.LogEvent("Setting default as active connection string.");
                         // We use this hack to get the project started and we actually don't use this connection, but it's needed for the service to start.
                         // Once we have the correct connectionstring in the connection.json, we restart the server and the above method is used.
                         services.AddEntityFrameworkMySql()

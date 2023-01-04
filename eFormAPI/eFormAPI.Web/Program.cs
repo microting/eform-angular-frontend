@@ -283,7 +283,7 @@ namespace eFormAPI.Web
                 }
                 else if (args.Any())
                 {
-                    Log.LogEvent("Try initialize from args");
+                    Log.LogEvent("Try initializing from args");
                     var defaultConfig = new ConfigurationBuilder()
                         .AddCommandLine(args)
                         .AddEnvironmentVariables(prefix: "ASPNETCORE_")
@@ -374,6 +374,7 @@ namespace eFormAPI.Web
 
                     if (!string.IsNullOrEmpty(connectionString))
                     {
+                        Log.LogEvent($"Creating ConnectionString file with the ConnectionString: {connectionString}");
                         ConnectionStringManager.CreateWithConnectionString(filePath, connectionString);
                     }
 
