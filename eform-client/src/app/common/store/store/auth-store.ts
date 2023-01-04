@@ -25,6 +25,7 @@ export interface AuthState {
     isConnectionStringExist: boolean;
     count: number;
   };
+  sideMenuOpened: boolean;
 }
 
 export function createInitialState(): AuthState {
@@ -98,6 +99,7 @@ export function createInitialState(): AuthState {
       isConnectionStringExist: true,
       count: 0,
     },
+    sideMenuOpened: true,
   };
 }
 

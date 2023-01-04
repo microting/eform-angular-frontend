@@ -133,6 +133,8 @@
         .active {
           .legend-label-text {
             color: #fff !important;
+            text-overflow: clip !important;
+            padding-right: 5px;
           }
         }
       }
@@ -148,6 +150,12 @@
       .legend-item {
         &:hover {
           color: #fff !important;
+        }
+      }
+
+      .legend-items-container {
+        .legend-items {
+          overflow: visible !important;
         }
       }
     }
@@ -167,11 +175,6 @@
 }
 
 .legend-title-text {
-  text-overflow: clip !important;
-  padding-right: 5px;
-}
-
-.legend-label-text {
   text-overflow: clip !important;
   padding-right: 5px;
 }

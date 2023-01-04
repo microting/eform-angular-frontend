@@ -23,6 +23,7 @@ export class AuthQuery extends Query<AuthState> {
   selectCurrentUserLocale$ = this.select((state) => state.currentUser.locale);
   selectIsConnectionStringExist$ = this.select((state) => state.connectionString.isConnectionStringExist);
   selectIsConnectionStringExistWithCount$ = this.select((state) => state.connectionString);
+  selectSideMenuOpened$ = this.select((state) => state.sideMenuOpened);
 
   get isAuth() {
     return !!this.getValue().token.accessToken;
