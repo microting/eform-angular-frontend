@@ -41,3 +41,31 @@
 .mx-auto {
   margin-left: auto !important;
 }
+
+.need-wrapper {
+  mat-form-field ~ mat-form-field {
+    padding-left: 1rem;
+  }
+  &.flex-column mat-form-field ~ formatting-text-editor {
+    padding-top: 1rem;
+  }
+  &.flex-row mat-form-field ~ formatting-text-editor {
+    padding-left: 1rem;
+  }
+
+  .mat-card ~ .mat-card {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (orientation: portrait) {
+  .need-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .need-wrapper mat-form-field ~ .mat-form-field {
+    padding-left: 0 !important;
+  }
+}

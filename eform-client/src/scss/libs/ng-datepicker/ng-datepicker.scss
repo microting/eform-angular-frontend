@@ -1,9 +1,13 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
 // We want overlays to always appear over user content, so set a baseline
 // very high z-index for the overlay container, which is where we create the new
 // stacking context for all overlays.
-$cdk-z-index-overlay-container: 100000;
+$cdk-z-index-overlay-container: 1000;
 $cdk-z-index-overlay: 1000;
 $cdk-z-index-overlay-backdrop: 1000;
+
+$theme-color: #3f51b5;
 
 // Background color for all of the backdrops
 $cdk-overlay-dark-backdrop-background: rgba(0, 0, 0, 0.288);
@@ -155,19 +159,9 @@ $backdrop-animation-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
   outline: none;
 }
 
-$theme-color: #3f51b5;
-
 .owl-dt-container,
 .owl-dt-container * {
   box-sizing: border-box;
-}
-
-.owl-dt-container {
-  display: block;
-  font-size: 1rem;
-  background: #ffffff;
-  pointer-events: auto;
-  z-index: 1000;
 }
 
 .owl-dt-container-row {
@@ -277,7 +271,7 @@ $theme-color: #3f51b5;
     color: rgba(0, 0, 0, .85);
     -webkit-appearance: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-tap-highlight-color: transparent;
+    //-webkit-tap-highlight-color: transparent;
   }
 
   .owl-dt-calendar-cell-content {
@@ -670,4 +664,49 @@ $theme-color: #3f51b5;
   padding: 0;
   position: absolute;
   width: 1px;
+}
+
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+  $is-dark-theme: map.get($color-config, 'is-dark');
+  $color-text: #242729;
+  $blue-600: #0077cc;
+  $black-025: #ffffff;
+  @if $is-dark-theme {
+    $color-text: #e7e8eb;
+    $blue-600: #3ca4ff;
+    $black-025: #393939;
+  }
+
+  .owl-dt-container {
+    background-color: $black-025;
+    color: $color-text;
+    display: block;
+    font-size: 1rem;
+    pointer-events: auto;
+    z-index: 1000;
+  }
+
+  .owl-dt-calendar-control {
+    color: $color-text;
+  }
+
+  .owl-dt-calendar-table .owl-dt-calendar-cell {
+    color: $color-text;
+  }
+
+  .owl-dt-calendar-table .owl-dt-calendar-cell-selected {
+    background-color: $blue-600;
+  }
+
+  .owl-dt-container-info .owl-dt-container-info-active {
+    color: $blue-600;
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+  }
 }

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {CanDeactivateGuard} from 'src/app/common/guards';
-import {CasePostsPageComponent} from 'src/app/common/modules/eform-cases/components';
+// import {CasePostsPageComponent} from 'src/app/common/modules/eform-cases/components';
 import {CaseEditComponent, CasesTableComponent} from './components';
 
 const routes: Routes = [
@@ -15,14 +15,14 @@ const routes: Routes = [
     component: CaseEditComponent,
     canDeactivate: [CanDeactivateGuard]
   },
-  {
-    path: 'posts/:id/:templateId/:postAction',
-    component: CasePostsPageComponent,
-  },
-  {
-    path: 'posts/:id/:templateId',
-    component: CasePostsPageComponent,
-  }
+  // {
+  //   path: 'posts/:id/:templateId/:postAction',
+  //   component: CasePostsPageComponent,
+  // },
+  // {
+  //   path: 'posts/:id/:templateId',
+  //   component: CasePostsPageComponent,
+  // }
 ];
 
 
