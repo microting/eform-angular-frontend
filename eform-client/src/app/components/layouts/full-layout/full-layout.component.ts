@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {AppMenuQuery, AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription, take, zip} from 'rxjs';
@@ -14,16 +14,16 @@ import {MatDrawer, MatDrawerMode} from '@angular/material/sidenav';
   templateUrl: `./full-layout.component.html`,
   styleUrls: ['./full-layout.component.scss']
 })
-export class FullLayoutComponent implements OnInit, OnDestroy {
+export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('drawer') drawer: MatDrawer;
   isDarkThemeAsync$: Subscription;
   private brokerListener: any;
   logoImage: any;
   headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;
-  connectionStringExist: boolean;
   innerWidth = window.innerWidth;
   sidenavMode: MatDrawerMode = 'side';
   mobileWidth = 660;
+  openedChangeSub$: Subscription;
 
   constructor(
     public authStateService: AuthStateService,
@@ -51,6 +51,10 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
           : this.switchToLightTheme();
       }
     );
+  }
+
+  ngAfterViewInit() {
+    this.openedChangeSub$ = this.drawer.openedChange.subscribe(opened => this.authStateService.updateSideMenuOpened(opened));
   }
 
   switchToDarkTheme() {
@@ -82,7 +86,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
               }
             }
           }));
-        } else if (!isConnectionStringExist && !isAuth)  {
+        } else if (!isConnectionStringExist && !isAuth) {
           this.logoImage = '../../../assets/images/logo.png';
           this.headerSettingsModel.imageLinkVisible = true;
           this.headerSettingsModel.mainTextVisible = true;

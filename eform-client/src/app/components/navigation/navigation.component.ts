@@ -1,10 +1,9 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   OnDestroy,
-  OnInit, Output,
-  ViewChild,
+  OnInit,
+  Output,
 } from '@angular/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {
@@ -35,7 +34,6 @@ interface MenuNode {
   styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit, OnDestroy {
-  @ViewChild('navigationMenu', {static: true}) menuElement: ElementRef;
   @Output() clickOnLink: EventEmitter<void> = new EventEmitter<void>();
 
   treeControl = new NestedTreeControl<MenuNode>(node => node.menuItems);
@@ -60,7 +58,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authStateService.isAuthAsync.pipe(filter(isAuth => isAuth === true)).subscribe(isAuth => {
+    this.authStateService.isAuthAsync.pipe(filter(isAuth => isAuth === true)).subscribe(() => {
       this.getCurrentUserInfoSub$ = this.adminService
         .getCurrentUserInfo()
         .subscribe((result) => {
@@ -69,6 +67,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
           this.getAppMenuSub$ = this.appMenuService.userMenuLeftAsync.subscribe(x => {
             if (x !== undefined) {
               this.menu.data = [...x];
+              this.restoreOpenedMenu();
             }
           });
         });
@@ -85,5 +84,51 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   onClickOnNode() {
     this.clickOnLink.emit();
+  }
+
+  private restoreOpenedMenu() {
+    const href = this.router.url;
+    const nodes = this.getNodesByUrl(href);
+    if(nodes.length > 0) {
+      nodes.forEach(node => this.expandNode(node));
+    }
+  }
+
+  private getNodesByUrl(href: string): MenuNode[] {
+    if (this.menu.data && this.menu.data.length > 0) {
+      // if link no have required first symbol - it's add this symbol
+      if (href.charAt(0) !== '/') {
+        href = '/' + href;
+      }
+      return this.searchNodes(href, this.menu.data);
+    }
+  }
+
+  private searchNodes(href: string, menuItems: MenuNode[]): MenuNode[] {
+    for (const menuItem of menuItems) {
+      let menuItemLink = menuItem.link || '';
+      if (menuItemLink !== '') {
+        // if link no have required first symbol - it's add this symbol
+        if (menuItemLink.charAt(0) !== '/') {
+            menuItemLink = `/${menuItemLink}`;
+        }
+        // if link eq searched link - return node
+        if (menuItemLink === href) {
+          return [menuItem];
+        }
+      }
+      if (menuItem.menuItems.length > 0) {
+        const nodes = this.searchNodes(href, menuItem.menuItems);
+        if (nodes.length > 0) {
+          //this.expandNode(menuItem); // expand father node(nested node - it's searched node). works only if menu no deep
+          return [...nodes, menuItem]; // add father node for deep menu
+        }
+      }
+    }
+    return []; // current link is not found. Maybe user in right menu or etc.
+  }
+
+  private expandNode(node: MenuNode) {
+    this.treeControl.expand(node);
   }
 }

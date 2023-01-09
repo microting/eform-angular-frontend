@@ -1,47 +1,5 @@
 @import "../../../scss/utilities/colors";
 
-/*.navbar-bg {
-  background-color: $eform-gray;
-  color: white;
-}
-
-.nav-item {
-  & a {
-    padding: 0.5rem 0.8rem !important;
-    color: white !important;
-    background-color: $eform-gray;
-  }
-  & a.active {
-     background-color: $eform-red;
-   }
-  & a:hover {
-    color: $eform-gray-light !important;
-  }
-}
-
-.dropdown-item a {
-  color: $eform-red-dark;
-}
-
-.dropdown-menu {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.nav-item a {
-}
-
-.outbounds-fix {
-  left: auto;
-  right: 0;
-}
-
-@media screen and (max-width: 991px) {
-  .dropdown-menu {
-    padding-bottom: 25px;
-  }
-}*/
-
 #main-header-text {
   font-size: 1.1rem;
   line-height: 1.1;
@@ -61,14 +19,9 @@
 .nav-link {
   width: 100%;
   text-align: inherit;
-  height: 48px;
+  min-height: 48px;
   display: flex;
   align-items: center;
-}
-
-.logo-container {
-  //width: 181px;
-  //margin: 5px 15px 5px 15px;
 }
 
 .mat-expansion-panel-header {
@@ -81,4 +34,13 @@
 
 .mat-tree-node  {
   display: inline-flex;
+}
+
+.mat-menu-item, .mat-icon-button {
+  .mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    line-height: 18px
+  }
 }

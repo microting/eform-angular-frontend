@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { StatusBarModel} from '../../../../models/common';
+import {Component, OnInit, Input} from '@angular/core';
+import {StatusBarModel} from 'src/app/common/models';
+import {CaseStatusEnum} from 'src/app/common/const';
 
 @Component({
   selector: 'status-bar',
@@ -8,16 +9,38 @@ import { StatusBarModel} from '../../../../models/common';
 })
 export class StatusBarComponent implements OnInit {
   statusBar: StatusBarModel = new StatusBarModel();
-  constructor() { }
+
+  constructor() {
+  }
+
   @Input()
   get status() {
     return this.statusBar.status;
   }
-  set status(status: number) {
+
+  set status(status: CaseStatusEnum) {
     this.statusBar.status = status;
   }
 
- ngOnInit() {
+  get statusText(): string {
+    switch (this.statusBar.status) {
+      case CaseStatusEnum.SavedLocally:
+        return 'Saved locally';
+      case CaseStatusEnum.ReadyForServer:
+        return 'Ready for server';
+      case CaseStatusEnum.ReceivedByServer:
+        return 'Received by server';
+      case CaseStatusEnum.ReadyForDevice:
+        return 'Ready for device';
+      case CaseStatusEnum.RetrievedByDevice:
+        return 'Retrieved by device';
+      case CaseStatusEnum.Completed:
+        return 'Completed';
+      case CaseStatusEnum.SystemError:
+        return 'System error: Contact Microting';
+    }
   }
 
+  ngOnInit() {
+  }
 }

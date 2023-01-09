@@ -10,10 +10,11 @@
   display: none !important;
 }
 .gu-unselectable {
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
+  $value: none !important;
+  -webkit-user-select: $value;
+  -moz-user-select: $value;
+  -ms-user-select: $value;
+  user-select: $value;
 }
 .gu-transit {
   opacity: 0.2;

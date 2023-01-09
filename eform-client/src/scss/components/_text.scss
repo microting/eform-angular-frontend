@@ -26,6 +26,11 @@ a {
 .text-white {
   color: white;
 }
+@each $key in (nowrap, unset, break-spaces, normal, pre, pre-line, pre-wrap) {
+  .text-#{$key} {
+    white-space: $key;
+  }
+}
 
 @mixin color($theme) {
   $color-config: mat.get-color-config($theme);

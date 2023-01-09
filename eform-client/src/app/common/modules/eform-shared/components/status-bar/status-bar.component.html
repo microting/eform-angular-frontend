@@ -1,22 +1,5 @@
-<!--<div class="progress-bar" role="progressbar" style="width: {{trashInspection.status-bar}}%"></div>-->
-<!--<div class="progress" *ngIf="statusBar.status == 0"  style="height: 2em">-->
-<!--  <div class="progress-bar grey lighten-1 text-dark" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%; padding-left: 5px; padding-right: 5px;">{{'Saved locally' | translate}}</div>-->
-<!--</div>-->
-<div class="progress" *ngIf="statusBar.status == 33" style="height: 2em">
-  <div class="progress-bar grey darken-1" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%; padding-left: 5px; padding-right: 5px;">{{'Ready for server' | translate}}</div>
-</div>
-<div class="progress" *ngIf="statusBar.status == 66" style="height: 2em">
-  <div class="progress-bar warning-color text-black-50" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%; padding-left: 5px; padding-right: 5px;">{{'Received by server' | translate}}</div>
-</div>
-<div class="progress" *ngIf="statusBar.status == 70" style="height: 2em">
-  <div class="progress-bar warning-color-dark" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%; padding-left: 5px; padding-right: 5px;">{{'Ready for device' | translate}}</div>
-</div>
-<div class="progress" *ngIf="statusBar.status == 77" style="height: 2em">
-  <div class="progress-bar info-color-dark" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%; padding-left: 5px; padding-right: 5px;">{{'Retrieved by device' | translate}}</div>
-</div>
-<div class="progress" *ngIf="statusBar.status == 100" style="height: 2em">
-  <div class="progress-bar success-color-dark" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%; padding-left: 5px; padding-right: 5px;">{{'Completed' | translate}}</div>
-</div>
-<div class="progress" *ngIf="statusBar.status == 110" style="height: 2em; padding-left: 2px;">
-  <div class="progress-bar red accent-4" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%; padding-left: 5px; padding-right: 5px;">{{'System error: Contact Microting' | translate}}</div>
+<div class="status-container">
+  <div class="status-{{statusBar.status}}">
+    {{statusText | translate}}
+  </div>
 </div>
