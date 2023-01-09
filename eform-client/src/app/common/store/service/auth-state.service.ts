@@ -209,6 +209,10 @@ export class AuthStateService {
     return this.query.selectCurrentUserLocale$;
   }
 
+  get sideMenuOpenedAsync() {
+    return this.query.selectSideMenuOpened$;
+  }
+
   updateUserLocale(locale: string) {
     this.store.update((state) => ({
       ...state,
@@ -250,6 +254,13 @@ export class AuthStateService {
         id: userInfo.id,
         userName: userInfo.email,
       },
+    }));
+  }
+
+  updateSideMenuOpened(opened: boolean) {
+    this.store.update((state) => ({
+      ...state,
+      sideMenuOpened: opened,
     }));
   }
 

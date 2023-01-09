@@ -9,6 +9,7 @@
 @use '../components/table' as table;
 @use '../components/chart' as chart;
 @use '../libs/ngx-toastr/ngx-toastr' as ngx-toastr;
+@use '../libs/ng-datepicker/ng-datepicker' as ng-datepicker;
 
 @include mat.core();
 
@@ -52,19 +53,7 @@ $eform-dark-theme: mat.define-dark-theme((
   typography: $eform-typography,
 ));
 
-// h-100 for base elements
-html {
-  height: 100%;
-}
-
 body {
-  margin: 0;
-  height: 100%;
-
-  #main-header-text {
-    font-weight: 400;
-  }
-
   @each $key, $val in (('light', $eform-light-theme), ('dark', $eform-dark-theme)) {
     &.theme-#{$key} {
       @include mat.all-component-themes($val);
@@ -75,11 +64,16 @@ body {
       @include table.theme($val);
       @include ngx-toastr.theme($val);
       @include chart.theme($val);
+      @include ng-datepicker.theme($val);
       @include mtx.all-experimental-component-themes($val);
     }
   }
 
   &.mat-typography {
     margin: 0 0 0 0;
+  }
+
+  #main-header-text {
+    font-weight: 400;
   }
 }
