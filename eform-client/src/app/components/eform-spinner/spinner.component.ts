@@ -30,7 +30,7 @@ export class SpinnerComponent implements OnInit {
         console.error(e);
       }
     </script>
-  </svg>`
+  </svg>`;
   trustedHtml: SafeHtml;
 
   constructor(

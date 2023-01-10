@@ -22,6 +22,7 @@ export class ApiBaseService {
   ): FormData {
     const formData = form || new FormData();
     // eslint-disable-next-line guard-for-in
+    // tslint:disable-next-line:forin
     for (const property in object) {
       const changedNameProperty = needPascalStyle
         ? property[0].toUpperCase() + R.drop(1, property)
