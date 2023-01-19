@@ -61,9 +61,7 @@ namespace eFormAPI.Web.Services.Eform
             {
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
-                // if checklist have cases or pair - read not approve
-                // ReSharper disable once AccessToModifiedClosure
-                var count = await sdkDbContext.CheckLists
+                var checkLists = await sdkDbContext.CheckLists
                     // ReSharper disable once AccessToModifiedClosure
                     .Where(x => x.Id == id)
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -71,16 +69,12 @@ namespace eFormAPI.Web.Services.Eform
                     .Select(x =>
                         x.Children.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).ToList())
                     .FirstOrDefaultAsync();
-                if (count?.Count == 1)
-                {
-                    id += 1;
-                }
 
-                var eform = await FindTemplates(id, sdkDbContext);
-                if (count?.Count == 1)
+                if (checkLists?.Count == 1)
                 {
+                    var eform = await FindTemplates(checkLists.First().Id, sdkDbContext);
                     var checklist = await sdkDbContext.CheckLists
-                        .Where(x => x.Id == id - 1)
+                        .Where(x => x.Id == id)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Include(x => x.Translations)
                         .Include(x => x.Taggings)
@@ -104,9 +98,12 @@ namespace eFormAPI.Web.Services.Eform
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         // ReSharper disable once PossibleInvalidOperationException
                         .Select(x => (int)x.TagId).ToList();
-                }
 
-                return new OperationDataResult<EformVisualEditorModel>(true, eform);
+                    return new OperationDataResult<EformVisualEditorModel>(true, eform);
+                } else {
+                    var eform = await FindTemplates(id, sdkDbContext);
+                    return new OperationDataResult<EformVisualEditorModel>(true, eform);
+                }
             }
             catch (Exception e)
             {
