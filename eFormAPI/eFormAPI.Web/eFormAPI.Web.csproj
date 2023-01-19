@@ -48,7 +48,7 @@
   <ItemGroup>
     <PackageReference Include="AWSSDK.Core" Version="3.7.103.17" />
     <PackageReference Include="AWSSDK.S3" Version="3.7.101.55" />
-    <PackageReference Include="ClosedXML" Version="0.97.0" />
+    <PackageReference Include="ClosedXML" Version="0.100.3" />
     <PackageReference Include="Magick.NET-Q16-x64" Version="12.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.2" />

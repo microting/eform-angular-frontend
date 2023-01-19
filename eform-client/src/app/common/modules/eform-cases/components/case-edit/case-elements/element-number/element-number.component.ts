@@ -9,9 +9,9 @@ import {FieldValueDto} from 'src/app/common/models';
 })
 export class ElementNumberComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();
-  valid: boolean;
   @Input()
   get fieldValue() {
+    debugger;
     return this.fieldValueObj;
   }
 
@@ -21,25 +21,21 @@ export class ElementNumberComponent {
   }
 
   constructor() {
-
   }
 
   validateInput(e) {
-    const value = e.target.value + String.fromCharCode(e.keyCode);
-    let rgx = /^(\d+,?(?:\d+,|\d*)+)$/;
-    if (value.match(rgx)) {
-      if (value.includes(',')) {
-        rgx = /(,)/g;
-        const b = value.match(rgx);
-        this.valid = b.length <= 1;
-        return;
-      } else {
-        this.valid = true;
-        return;
-      }
+    e.target.value = this.removeNonNumeric(e.target.value);
+  }
+
+  removeNonNumeric(str: string) {
+    //Remove all none numeric characters except one comma
+    let newString = str.replace(/[^0-9,]/g, '');
+    //Check if there's more than one comma in the string
+    if (newString.match(/,/g).length > 1) {
+      newString = this.fieldValueObj.value;
     } else {
-      this.valid = false;
-      return;
+      this.fieldValueObj.value = newString;
     }
+    return newString;
   }
 }
