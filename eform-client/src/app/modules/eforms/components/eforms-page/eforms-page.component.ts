@@ -222,7 +222,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   openEditColumnsModal(templateDto: TemplateDto) {
     this.eformColumnsModalComponentAfterClosedSub$ = this.dialog.open(EformColumnsModalComponent, {
-      ...dialogConfigHelper(this.overlay, templateDto), minWidth: 400,
+      ...dialogConfigHelper(this.overlay, templateDto), minWidth: 800,
     }).afterClosed().subscribe(data => data ? undefined : undefined);
   }
 

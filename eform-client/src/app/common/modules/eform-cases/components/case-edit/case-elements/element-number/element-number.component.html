@@ -2,9 +2,11 @@
   <mat-label>{{'Value' | translate}}</mat-label>
   <input
     matInput
-    type="number"
-    [(ngModel)]="fieldValueObj.value"
+    type="text"
+    lang="de"
+    [ngModel]="fieldValueObj.value"
     id="numberElement{{fieldValueObj.fieldId}}"
     name="numberElement"
+    (input)="validateInput($event)"
   >
 </mat-form-field>

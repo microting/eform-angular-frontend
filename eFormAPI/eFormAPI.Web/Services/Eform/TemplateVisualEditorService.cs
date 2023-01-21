@@ -61,20 +61,20 @@ namespace eFormAPI.Web.Services.Eform
             {
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
-                // if checklist have cases or pair - read not approve
-                // ReSharper disable once AccessToModifiedClosure
                 var checkLists = await sdkDbContext.CheckLists
                     // ReSharper disable once AccessToModifiedClosure
-                    .Where(x => x.ParentId == id)
+                    .Where(x => x.Id == id)
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .ToListAsync();
+                    .Include(x => x.Children)
+                    .Select(x =>
+                        x.Children.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).ToList())
+                    .FirstOrDefaultAsync();
 
                 if (checkLists?.Count == 1)
                 {
-
-                    var eform = await FindTemplates(id, sdkDbContext);
+                    var eform = await FindTemplates(checkLists.First().Id, sdkDbContext);
                     var checklist = await sdkDbContext.CheckLists
-                        .Where(x => x.Id == checkLists.First().Id)
+                        .Where(x => x.Id == id)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Include(x => x.Translations)
                         .Include(x => x.Taggings)
@@ -100,9 +100,10 @@ namespace eFormAPI.Web.Services.Eform
                         .Select(x => (int)x.TagId).ToList();
 
                     return new OperationDataResult<EformVisualEditorModel>(true, eform);
+                } else {
+                    var eform = await FindTemplates(id, sdkDbContext);
+                    return new OperationDataResult<EformVisualEditorModel>(true, eform);
                 }
-                return new OperationDataResult<EformVisualEditorModel>(false,
-                    _localizationService.GetString("ErrorWhileObtainingEform"));
             }
             catch (Exception e)
             {

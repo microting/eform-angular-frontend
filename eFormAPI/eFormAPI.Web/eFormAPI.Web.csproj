@@ -46,25 +46,25 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.7.103.14" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.101.52" />
-    <PackageReference Include="ClosedXML" Version="0.97.0" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.103.19" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.101.57" />
+    <PackageReference Include="ClosedXML" Version="0.100.3" />
     <PackageReference Include="Magick.NET-Q16-x64" Version="12.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.2" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="7.0.11" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="7.0.10" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="7.0.9" />
+    <PackageReference Include="Microting.eForm" Version="7.0.14" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="7.0.13" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="7.0.12" />
     <PackageReference Include="Microting.HtmlToOpenXml.dll" Version="2.3.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="1.4.0" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="sendgrid" Version="9.28.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
-    <PackageReference Include="System.Threading.AccessControl" Version="7.0.0" />
+    <PackageReference Include="System.Threading.AccessControl" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
