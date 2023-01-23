@@ -580,7 +580,7 @@ export class ChecklistFieldRowObj {
     }
     if (this.element) {
       const str: string[] = (await (
-        (await this.element.$('section > div > div > div')).getText()
+        (await this.element.$('section > div > div > div > span')).getText()
       ))
         .replace('menu\n', '') // delete not need word
         .split('; '); // split name and type

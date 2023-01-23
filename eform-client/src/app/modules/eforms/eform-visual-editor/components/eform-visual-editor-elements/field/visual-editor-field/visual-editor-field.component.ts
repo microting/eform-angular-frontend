@@ -168,7 +168,11 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
     const type = this.fieldTypeTranslation(this.field.fieldType);
     let strForReturn = this.getTranslation;
     if (type) {
-      strForReturn += `; ${type}`;
+      if (this.field.id != null) {
+        strForReturn += `; ${type}; <small class="microting-uid">(${this.field.id })</small>`;
+      } else {
+        strForReturn += `; ${type}`;
+      }
     }
     return strForReturn;
   }
