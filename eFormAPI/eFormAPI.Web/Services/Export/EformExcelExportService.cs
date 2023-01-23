@@ -185,7 +185,7 @@ namespace eFormAPI.Web.Services.Export
                             {
                                 case 0:
                                 case 10:
-                                    worksheet.Cell(x + 1, y + 1).Value = int.Parse(dataY);
+                                    worksheet.Cell(x + 1, y + 1).SetValue(int.Parse(dataY));
                                     break;
                                 case 1:
                                     worksheet.Cell(x + 1, y + 1).Value = dataY;
@@ -196,28 +196,28 @@ namespace eFormAPI.Web.Services.Export
                                     //worksheet.Cell(x + 1, y + 1).Style.Numberformat.Format = "HH:mm:ss";
                                     break;
                                 case 4:
-                                    worksheet.Cell(x + 1, y + 1).Value = "'" + dataY;
-                                    worksheet.Cell(x + 1, y + 1).DataType = XLDataType.Text;
+                                    worksheet.Cell(x + 1, y + 1).SetValue("'" + dataY);
+                                    //worksheet.Cell(x + 1, y + 1).DataType = XLDataType.Text;
                                     break;
                                 case 6:
-                                    worksheet.Cell(x + 1, y + 1).Value = dataY;
+                                    worksheet.Cell(x + 1, y + 1).SetValue(dataY);
                                     //worksheet.Cell(x + 1, y + 1).Style.Numberformat.Format = "yyyy";
                                     break;
                                 case 7:
-                                    worksheet.Cell(x + 1, y + 1).Value = dataY;
+                                    worksheet.Cell(x + 1, y + 1).SetValue(dataY);
                                     //worksheet.Cell(x + 1, y + 1).Style.Numberformat.Format = "yyyy-MM-dd HH:mm:ss";
                                     break;
                                 default:
                                     if (dataY == "checked")
                                     {
-                                        worksheet.Cell(x + 1, y + 1).Value = 1;
+                                        worksheet.Cell(x + 1, y + 1).SetValue(1);
                                     }
                                     else
                                     {
                                         if (float.TryParse(dataY, out var i))
                                         {
-                                            worksheet.Cell(x + 1, y + 1).Value = dataY.Replace(",", ".");
-                                            worksheet.Cell(x + 1, y + 1).DataType = XLDataType.Number;
+                                            worksheet.Cell(x + 1, y + 1).SetValue(dataY.Replace(",", "."));
+                                            //worksheet.Cell(x + 1, y + 1).DataType = XLDataType.Number;
                                         }
                                         else
                                         {
@@ -231,7 +231,7 @@ namespace eFormAPI.Web.Services.Export
 
                         if (x == 0)
                         {
-                            worksheet.Cell(x + 1, y + 1).Value = dataY;
+                            worksheet.Cell(x + 1, y + 1).SetValue(dataY);
                             worksheet.Cell(x + 1, y + 1).Style.Font.Bold = true;
                         }
                     }

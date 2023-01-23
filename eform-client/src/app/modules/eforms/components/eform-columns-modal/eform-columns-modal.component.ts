@@ -21,6 +21,7 @@ export class EformColumnsModalComponent implements OnInit {
 
   ngOnInit() {
     this.getColumnsForTemplate();
+    this.dialogRef.updateSize('100%');
   }
 
   getColumnsForTemplate() {

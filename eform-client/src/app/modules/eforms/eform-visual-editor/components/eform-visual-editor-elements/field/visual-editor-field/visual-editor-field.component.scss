@@ -8,7 +8,6 @@ $transition-duration: .5s;
   transition: all $transition-duration ease-in-out 0s;
   position: relative;
   overflow: hidden;
-  max-height: 150em;
   &.collapsed {
     max-height: 0 !important;
   }
