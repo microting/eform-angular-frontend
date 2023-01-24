@@ -94,7 +94,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public async entitySelectEditImportListBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#editEntitySearchImportBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    //await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -401,7 +401,8 @@ export class SelectableListRowObject {
     }
     if (data.items != null) {
       if (multipleImport) {
-        await (await selectableLists.entitySelectEditImportListBtn()).click();
+        const button = await selectableLists.entitySelectEditImportListBtn();
+        await button.click();
         await (await selectableLists.entitySelectImportTextArea()).waitForDisplayed({
           timeout: 40000,
         });
