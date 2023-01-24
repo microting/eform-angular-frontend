@@ -23,9 +23,6 @@ SOFTWARE.
 */
 
 
-using System.Threading;
-using Microting.EformAngularFrontendBase.Infrastructure.Data;
-
 namespace eFormAPI.Web.Hosting.Helpers
 {
     using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities;
@@ -69,46 +66,26 @@ namespace eFormAPI.Web.Hosting.Helpers
             var contextFactory = new BaseDbContextFactory();
             if (connectionString != "...")
             {
-                BaseDbContext dbContext = null;
-                var connectDeadline = DateTime.Now.AddMinutes(5);
-                while (dbContext == null)
+                using (var dbContext = contextFactory.CreateDbContext(new[] {connectionString}))
                 {
                     try
                     {
-                        dbContext = contextFactory.CreateDbContext(new[] { connectionString });
-                    } catch(MySqlConnector.MySqlException e) {
-                        if (DateTime.Now > connectDeadline) {
-                            //logger.LogError("Failed to connect to database, exiting.");
-                            throw;
-                        }
-                        //logger.LogInformation("Failed to connect to database, retrying... {Error}", e);
-                        Thread.Sleep(1000);
+                        eformPlugins = dbContext.EformPlugins
+                            .AsNoTracking()
+                            .ToList();
+                    }
+                    catch
+                    {
+                        // ignored
                     }
                 }
-                eformPlugins = dbContext.EformPlugins
-                .AsNoTracking()
-                .ToList();
-
-                // using (var dbContext = contextFactory.CreateDbContext(new[] {connectionString}))
-                // {
-                //     try
-                //     {
-                //         eformPlugins = dbContext.EformPlugins
-                //             .AsNoTracking()
-                //             .ToList();
-                //     }
-                //     catch
-                //     {
-                //         // ignored
-                //     }
-                // }
 
 
                 // create plugin loaders
-                // if (eformPlugins != null)
-                // {
-                    // using (var dbContext = contextFactory.CreateDbContext(new[] {connectionString}))
-                    // {
+                if (eformPlugins != null)
+                {
+                    using (var dbContext = contextFactory.CreateDbContext(new[] {connectionString}))
+                    {
                         var dbNameSection = Regex.Match(connectionString, @"([D|d]atabase=\w*;)").Groups[0].Value;
                         var dbPrefix = Regex.Match(connectionString, @"[D|d]atabase=(\d*)_").Groups[1].Value;
 
@@ -147,8 +124,8 @@ namespace eFormAPI.Web.Hosting.Helpers
                                 dbContext.SaveChanges();
                             }
                         }
-                    // }
-                // }
+                    }
+                }
             }
 
             return plugins;
@@ -163,29 +140,21 @@ namespace eFormAPI.Web.Hosting.Helpers
             var plugins = new List<IEformPlugin>();
             if (connectionString != "...")
             {
-                BaseDbContext dbContext = null;
-                var connectDeadline = DateTime.Now.AddMinutes(5);
-                while (dbContext == null)
+                using var dbContext = contextFactory.CreateDbContext(new[] { connectionString });
+                try
                 {
-                    try
-                    {
-                        dbContext = contextFactory.CreateDbContext(new[] { connectionString });
-                    } catch(MySqlConnector.MySqlException e) {
-                        if (DateTime.Now > connectDeadline) {
-                            //logger.LogError("Failed to connect to database, exiting.");
-                            throw;
-                        }
-                        //logger.LogInformation("Failed to connect to database, retrying... {Error}", e);
-                        Thread.Sleep(1000);
-                    }
+                    eformPlugins = dbContext.EformPlugins
+                        .AsNoTracking()
+                        .ToList();
                 }
-                eformPlugins = dbContext.EformPlugins
-                    .AsNoTracking()
-                    .ToList();
+                catch
+                {
+                    // ignored
+                }
 
                 // create plugin loaders
-                // if (eformPlugins != null)
-                // {
+                if (eformPlugins != null)
+                {
                     var dbNameSection = Regex.Match(connectionString, @"(Database=\w*;)").Groups[0].Value;
                     var dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
 
@@ -223,7 +192,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                             dbContext.EformPlugins.Add(newPlugin);
                             dbContext.SaveChanges();
                         }
-                    // }
+                    }
                 }
             }
             return plugins;
