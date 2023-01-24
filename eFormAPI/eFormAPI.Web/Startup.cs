@@ -103,7 +103,7 @@ namespace eFormAPI.Web
                 services.AddEntityFrameworkMySql()
                     .AddDbContext<BaseDbContext>(o => o.UseMySql(
                         Configuration["ConnectionString"], new MariaDbServerVersion(
-                        new Version(10, 4, 0)), mySqlOptionsAction: builder =>
+                            ServerVersion.AutoDetect(Configuration["ConnectinString"])), mySqlOptionsAction: builder =>
                     {
                         builder.EnableRetryOnFailure();
                     }));
@@ -120,7 +120,7 @@ namespace eFormAPI.Web
                         services.AddEntityFrameworkMySql()
                             .AddDbContext<BaseDbContext>(o => o.UseMySql(
                                 Configuration.MyConnectionString(), new MariaDbServerVersion(
-                                    new Version(10, 4, 0)), mySqlOptionsAction: builder =>
+                                    ServerVersion.AutoDetect(Configuration.MyConnectionString())), mySqlOptionsAction: builder =>
                                 {
                                     builder.EnableRetryOnFailure();
                                 }));
