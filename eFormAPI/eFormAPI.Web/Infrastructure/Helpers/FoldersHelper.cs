@@ -21,6 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using System.Runtime.InteropServices;
+
 namespace eFormAPI.Web.Infrastructure.Helpers
 {
     using System.Collections.Generic;
@@ -52,11 +55,14 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             return new List<FolderDtoModel>();
         }
 
-        private static void AddChildren(FolderDtoModel node, IDictionary<int, List<FolderDtoModel>> source)
+        private static void AddChildren(FolderDtoModel node, Dictionary<int, List<FolderDtoModel>> source)
         {
-            if (source.ContainsKey(node.Id))
+            // Speed optimization
+            ref var valOrNew = ref CollectionsMarshal.GetValueRefOrAddDefault(source, node.Id, out var exists);
+
+            if (exists)
             {
-                node.Children = source[node.Id];
+                node.Children = valOrNew;
                 foreach (var t in node.Children.OrderBy(x => x.Name))
                 {
                     AddChildren(t, source);
@@ -66,6 +72,19 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             {
                 node.Children = new List<FolderDtoModel>();
             }
+
+            // if (source.ContainsKey(node.Id))
+            // {
+            //     node.Children = source[node.Id];
+            //     foreach (var t in node.Children.OrderBy(x => x.Name))
+            //     {
+            //         AddChildren(t, source);
+            //     }
+            // }
+            // else
+            // {
+            //     node.Children = new List<FolderDtoModel>();
+            // }
         }
 
         public static async Task DeleteFolder(Core core, MicrotingDbContext sdkDbContext, int id)
