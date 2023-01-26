@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import * as R from 'ramda';
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 import {
   applicationLanguages,
   EformFieldTypesEnum,
@@ -26,10 +26,9 @@ import {
   VisualEditorFieldModalComponent,
   VisualEditorChecklistDeleteModalComponent, VisualEditorChecklistModalComponent
 } from '../../';
-import { DragulaService } from 'ng2-dragula';
-import { CollapseComponent } from 'angular-bootstrap-md';
-import { AuthStateService } from 'src/app/common/store';
-import { EformsTagsComponent } from 'src/app/common/modules/eform-shared-tags/components';
+import {DragulaService} from 'ng2-dragula';
+import {AuthStateService} from 'src/app/common/store';
+import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/components';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 
@@ -132,10 +131,11 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.visualEditorTemplateModel = data.model;
-          this.selectedLanguages =
-            R.dropRepeats([...this.selectedLanguages, ...this.visualEditorTemplateModel.translations
-              .map(x => x.name ? x.languageId : null)
-              .filter(x => x != null)]);
+          this.selectedLanguages = [...this.selectedLanguages, ...this.visualEditorTemplateModel.translations
+            .map(x => x.name ? x.languageId : null)
+            .filter(x => x != null)];
+          // drop repeats. ramda not found repeats, if array [2,1,2,3]
+          this.selectedLanguages = this.selectedLanguages.filter((item, pos) => this.selectedLanguages.indexOf(item) === pos);
           this.visualEditorTemplateModel.translations = fixTranslations(
             this.visualEditorTemplateModel.translations
           );
@@ -386,7 +386,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         visualTemplatePath,
         this.visualEditorTemplateModel
       );
-      checklist = { ...checklist, ...model.checklist };
+      checklist = {...checklist, ...model.checklist};
       this.visualEditorTemplateModel = R.set(
         visualTemplatePath,
         checklist,
@@ -494,7 +494,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         // add nested field to field
         const groupField = this.visualEditorTemplateModel.fields[
           model.fieldIndex
-        ];
+          ];
         model.field = {
           ...model.field,
           position: groupField.fields.length,
@@ -549,7 +549,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         // update in group field
         this.visualEditorTemplateModel.fields[
           model.parentFieldIndex
-        ].fields = R.update(
+          ].fields = R.update(
           model.fieldIndex,
           model.field,
           this.visualEditorTemplateModel.fields[model.parentFieldIndex].fields
@@ -598,7 +598,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         // delete from group
         this.visualEditorTemplateModel.fields[
           model.parentFieldIndex
-        ].fields = R.remove(
+          ].fields = R.remove(
           model.fieldIndex,
           1,
           this.visualEditorTemplateModel.fields[model.parentFieldIndex].fields
@@ -683,7 +683,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       } else {
         this.eformVisualEditorUpdateModel.checklistForUpdate = [
           ...this.eformVisualEditorUpdateModel.checklistForUpdate,
-          { ...checklist, checkLists: [], fields: [] },
+          {...checklist, checkLists: [], fields: []},
         ];
       }
     } else if (checklist.tempId) {
@@ -732,13 +732,13 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     return mas;
   }
 
-  onAddOrDeleteLanguage(model: { addTranslate: boolean; languageId: number }) {
-    if (model) {
-      if (model.addTranslate) {
-        this.selectedLanguages = [...this.selectedLanguages, model.languageId];
+  onAddOrDeleteLanguage(languageId: number) {
+    if (languageId) {
+      if (!this.selectedLanguages.some(x => x === languageId)) {
+        this.selectedLanguages = [...this.selectedLanguages, languageId];
       } else {
         this.selectedLanguages = [
-          ...this.selectedLanguages.filter((x) => x !== model.languageId),
+          ...this.selectedLanguages.filter((x) => x !== languageId),
         ];
       }
     }
