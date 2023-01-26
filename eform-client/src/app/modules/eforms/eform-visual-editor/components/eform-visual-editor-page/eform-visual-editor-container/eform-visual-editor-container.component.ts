@@ -580,6 +580,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       const visualTemplatePath = R.lensPath(indexes);
       const fields = R.view(visualTemplatePath, this.visualEditorTemplateModel);
       fields.splice(model.fieldIndex, 1);
+      this.checkPosition(fields);
       this.visualEditorTemplateModel = R.set(
         visualTemplatePath,
         fields,
@@ -596,13 +597,9 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
       if (!R.isNil(model.parentFieldIndex)) {
         // delete from group
-        this.visualEditorTemplateModel.fields[
-          model.parentFieldIndex
-          ].fields = R.remove(
-          model.fieldIndex,
-          1,
-          this.visualEditorTemplateModel.fields[model.parentFieldIndex].fields
-        );
+        this.visualEditorTemplateModel.fields[model.parentFieldIndex].fields =
+          R.remove(model.fieldIndex, 1, this.visualEditorTemplateModel.fields[model.parentFieldIndex].fields);
+        this.checkPosition(this.visualEditorTemplateModel.fields[model.parentFieldIndex].fields);
       } else {
         // simple delete
         this.visualEditorTemplateModel.fields = R.remove(
@@ -610,6 +607,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
           1,
           this.visualEditorTemplateModel.fields
         );
+        this.checkPosition(this.visualEditorTemplateModel.fields);
       }
     }
   }
