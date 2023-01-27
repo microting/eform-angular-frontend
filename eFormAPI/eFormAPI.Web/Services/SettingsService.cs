@@ -187,8 +187,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 dbContextOptionsBuilder.UseMySql(angularConnectionString,
-                    new MariaDbServerVersion(
-                    new Version(10, 4, 0)),
+                    new MariaDbServerVersion(ServerVersion.AutoDetect(angularConnectionString)),
                     b =>
                     b.EnableRetryOnFailure());
 

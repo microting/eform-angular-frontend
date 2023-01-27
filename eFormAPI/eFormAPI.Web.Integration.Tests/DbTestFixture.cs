@@ -43,7 +43,7 @@ namespace eFormAPI.Web.Integration.Tests
             DbContextOptionsBuilder<BaseDbContext> dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
             dbContextOptionsBuilder.UseMySql(connectionStr,
                     new MariaDbServerVersion(
-                    new Version(10, 4, 0)),
+                        ServerVersion.AutoDetect(connectionStr)),
                     b => b.EnableRetryOnFailure());
             DbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
 
