@@ -7,7 +7,7 @@
           id="languageCheckbox{{ index }}"
           name="languageCheckbox{{ index }}"
           [ngModel]="isLanguageSelected(language.id)"
-          (ngModelChange)="onAddOrDeleteLanguage($event, language.id)"
+          (ngModelChange)="onAddOrDeleteLanguage(language.id)"
         >
           {{ language.text | translate }}
         </mat-checkbox>

@@ -2,9 +2,9 @@
 <div mat-dialog-content class="need-wrapper" [ngSwitch]="recursionModel.field.fieldType">
   <mat-card>
     <mat-card-title>
-<!--      <h4>-->
-        {{ "Type" | translate }}
-<!--      </h4>-->
+      <!--      <h4>-->
+      {{ "Type" | translate }}
+      <!--      </h4>-->
     </mat-card-title>
     <mat-card-content>
       <div class="d-flex flex-column justify-content-between">
@@ -90,7 +90,13 @@
     </ng-container>
   </ng-container>
   <app-visual-editor-additional-field-number
-    *ngSwitchCase="eformFieldTypesEnum.Number || eformFieldTypesEnum.NumberStepper"
+    *ngSwitchCase="eformFieldTypesEnum.Number"
+    [field]="recursionModel.field"
+    [selectedLanguages]="selectedLanguages"
+  >
+  </app-visual-editor-additional-field-number>
+  <app-visual-editor-additional-field-number
+    *ngSwitchCase="eformFieldTypesEnum.NumberStepper"
     [field]="recursionModel.field"
     [selectedLanguages]="selectedLanguages"
   >
@@ -108,7 +114,13 @@
   >
   </app-visual-editor-additional-field-pdf>
   <app-visual-editor-additional-field-options
-    *ngSwitchCase="eformFieldTypesEnum.MultiSelect || eformFieldTypesEnum.SingleSelect"
+    *ngSwitchCase="eformFieldTypesEnum.SingleSelect"
+    [field]="recursionModel.field"
+    [selectedLanguages]="selectedLanguages"
+  >
+  </app-visual-editor-additional-field-options>
+  <app-visual-editor-additional-field-options
+    *ngSwitchCase="eformFieldTypesEnum.MultiSelect"
     [field]="recursionModel.field"
     [selectedLanguages]="selectedLanguages"
   >

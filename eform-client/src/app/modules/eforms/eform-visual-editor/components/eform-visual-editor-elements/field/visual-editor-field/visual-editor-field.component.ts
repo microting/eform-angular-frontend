@@ -24,6 +24,7 @@ import { LocaleService } from 'src/app/common/services';
 import * as R from 'ramda';
 import { CollapseComponent } from 'angular-bootstrap-md';
 import {TranslateService} from '@ngx-translate/core';
+import {getRandomInt} from 'src/app/common/helpers';
 
 @Component({
   selector: 'app-visual-editor-field',
@@ -125,7 +126,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
 
   onCopyField(field) {
     this.copyField.emit({
-      field: R.clone(field),
+      field: {...field, id: null, tempId: getRandomInt(1000, 10000),},
       fieldIndex: this.fieldIsNested ? this.fieldIndex : null,
       checklistRecursionIndexes: this.checklistRecursionIndexes,
       parentFieldIndex: this.parentFieldIndex,

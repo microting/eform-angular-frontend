@@ -16,10 +16,7 @@ export class EformVisualEditorHeaderComponent implements OnInit {
   visualEditorModel: EformVisualEditorModel = new EformVisualEditorModel();
   @Input() selectedLanguages: number[];
   @Input() availableTags: CommonDictionaryModel[];
-  @Output() addOrDeleteLanguage: EventEmitter<{
-    addTranslate: boolean;
-    languageId: number;
-  }> = new EventEmitter();
+  @Output() addOrDeleteLanguage: EventEmitter<number> = new EventEmitter();
 
   get languages() {
     return applicationLanguages;
@@ -29,8 +26,8 @@ export class EformVisualEditorHeaderComponent implements OnInit {
 
   ngOnInit() {}
 
-  onAddOrDeleteLanguage(addTranslate: boolean, languageId: number) {
-    this.addOrDeleteLanguage.emit({ addTranslate, languageId });
+  onAddOrDeleteLanguage(languageId: number) {
+    this.addOrDeleteLanguage.emit(languageId);
   }
 
   getLanguage(languageId: number): string {
