@@ -46,6 +46,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
 
   async saveCreateEformBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#saveCreateEformBtn');
+    await ele.scrollIntoView();
     await ele.waitForDisplayed({ timeout: 40000 });
     // await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -392,7 +393,8 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   }
 
   async clickSave() {
-    await (await this.saveCreateEformBtn()).click();
+    const saveBtn = await this.saveCreateEformBtn();
+    await saveBtn.click();
     await (await myEformsPage.newEformBtn()).waitForClickable({
       timeout: 40000,
     });

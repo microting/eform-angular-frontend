@@ -11,6 +11,8 @@ import {
 import { EformFieldTypesEnum } from '../../../src/app/common/const';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import { afterEach, beforeEach } from 'mocha';
+import {Guid} from 'guid-typescript';
+import XMLForEformSimple from '../../Constants/XMLForEformSimple';
 
 const expect = require('chai').expect;
 
@@ -19,10 +21,51 @@ describe('Visual editor page', function () {
     await loginPage.open('/');
     await loginPage.login();
   });
-  beforeEach(async () => {
-    await eformVisualEditorPage.goToVisualEditor();
+  it('should create eform from XML and edit it', async () => {
+    const newEformLabel = Guid.create().toString();
+    const xml = XMLForEformSimple.XML;
+    await myEformsPage.createNewEform(newEformLabel, [], 0, xml);
+      await browser.pause(500);
+      await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+      await browser.pause(500);
+      let mainChecklist = new MainCheckListRowObj();
+      const checklist: MainChecklistObj = {
+        translations: [
+          {
+            name: generateRandmString(),
+            description: generateRandmString(),
+            languageId: 1,
+            id: null,
+          },
+        ],
+      };
+      const checklistObjForEdit: MainChecklistObj = {
+        ...checklist,
+        translations: [
+          {
+            name: generateRandmString(),
+            description: generateRandmString(),
+            languageId: 1,
+            id: null,
+          },
+        ],
+      };
+      await mainChecklist.edit(checklistObjForEdit);
+      await eformVisualEditorPage.clickSave();
+      await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+      mainChecklist = new MainCheckListRowObj();
+      await mainChecklist.getAllFields();
+    expect(
+        mainChecklist.translations[0].name,
+        `checklists[1] name not valid`
+      ).eq(checklistObjForEdit.translations[0].name);
+      expect(
+        mainChecklist.translations[0].description,
+        `checklists[1] description not valid`
+      ).eq(checklistObjForEdit.translations[0].description);
   });
   it('should edit created visual template', async () => {
+    await eformVisualEditorPage.goToVisualEditor();
     const checklist: MainChecklistObj = {
       translations: [
         {
@@ -87,7 +130,7 @@ describe('Visual editor page', function () {
     await mainChecklist.getAllFields();
     await mainChecklist.fields[1].edit({ type: EformFieldTypesEnum.None });
     await mainChecklist.fields[1].changeColor('red');
-    await browser.pause(10000);
+    // await browser.pause(10000);
     checklistObjForEdit.fields = [
       newField,
       { ...checklist.fields[0], type: EformFieldTypesEnum.None },
@@ -123,6 +166,7 @@ describe('Visual editor page', function () {
     ).eq('Red');
   });
   it('should edit created visual template (nested checklist)', async () => {
+    await eformVisualEditorPage.goToVisualEditor();
     const checklist: MainChecklistObj = {
       translations: [
         {
@@ -201,7 +245,7 @@ describe('Visual editor page', function () {
     await mainChecklist.checklists[0].fields[0].makeCopy();
     await browser.pause(500);
     await mainChecklist.checklists[0].fields[0].changeColor('grey');
-    await browser.pause(1000);
+    // await browser.pause(1000);
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     await browser.pause(500);
