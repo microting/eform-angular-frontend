@@ -32,7 +32,7 @@
   box-shadow: none !important;
 }
 
-.mat-tree-node  {
+.mat-tree-node {
   display: inline-flex;
 }
 
@@ -43,4 +43,9 @@
     font-size: 18px;
     line-height: 18px
   }
+}
+
+mat-tree mat-nested-tree-node mat-accordion mat-expansion-panel mat-tree-node span {
+  white-space: initial;
+  line-height: 1.4em;
 }
