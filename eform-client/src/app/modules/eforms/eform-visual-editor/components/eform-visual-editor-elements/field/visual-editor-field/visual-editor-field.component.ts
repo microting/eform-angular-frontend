@@ -84,7 +84,11 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
 
   constructor(private localeService: LocaleService, private translateService: TranslateService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.fieldIsNested) {
+      this.dragulaElementContainerName = 'NESTED_FIELDS';
+    }
+  }
 
   onAddNewField() {
     this.addNewField.emit({
