@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { AdminGuard, AuthGuard, ClaimsGuard } from 'src/app/common/guards';
+import {AdminGuard, AuthGuard, ClaimsGuard} from 'src/app/common/guards';
 import { FullLayoutComponent, SimpleLayoutComponent, ConnectionSetupComponent} from './components';
 import { UserClaimsEnum } from 'src/app/common/const';
 
@@ -102,7 +101,6 @@ export const routes: Routes = [
     path: 'connection-string',
     component: SimpleLayoutComponent,
     children: [
-
       {
         path: '',
         component: ConnectionSetupComponent
