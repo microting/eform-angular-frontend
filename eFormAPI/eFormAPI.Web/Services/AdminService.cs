@@ -377,7 +377,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 // password
-                if (userRegisterModel.Password != null)
+                if (!string.IsNullOrEmpty(userRegisterModel.Password) && userRegisterModel.Password != " ")
                 {
                     await _userManager.RemovePasswordAsync(user);
                     await _userManager.AddPasswordAsync(user, userRegisterModel.Password);
