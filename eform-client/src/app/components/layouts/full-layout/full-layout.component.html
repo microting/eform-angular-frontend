@@ -17,7 +17,7 @@
           <mat-icon>account_circle</mat-icon>
         </mat-chip-avatar>
         <button mat-icon-button [matMenuTriggerFor]="menu" id="sign-out-dropdown">
-          <mat-icon>settings</mat-icon>
+          <mat-icon style="line-height: 26px !important;">settings</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
           <a mat-menu-item *ngFor="let menu of appMenuQuery.userMenuRight$ | async"

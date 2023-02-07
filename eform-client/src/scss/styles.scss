@@ -53,7 +53,7 @@ body, .theme-light {
   width: 18px;
   height: 18px;
   font-size: 18px;
-  line-height: 18px
+  line-height: 18px !important;
 }
 .mat-menu-item .mat-icon {
   width: 18px;
@@ -61,19 +61,3 @@ body, .theme-light {
   font-size: 18px;
   line-height: 18px
 }
-
-#sign-out-dropdown {
-  top: -4px;
-}
-
-
-.advanced-pie-legend .legend-items-container .legend-items {
-  overflow: visible !important;
-}
-
-app-navigation mat-tree mat-nested-tree-node mat-accordion mat-expansion-panel mat-tree-node span{
-  white-space: initial;
-  line-height: 1.4em;
-
-}
-
