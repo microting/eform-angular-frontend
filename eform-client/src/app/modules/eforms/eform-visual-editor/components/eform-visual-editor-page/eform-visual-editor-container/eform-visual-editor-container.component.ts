@@ -95,6 +95,23 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         return target.id === 'editorFields' || target.id === 'nestedFields';
       },
     });
+    this.dragulaService.createGroup('NESTED_FIELDS', {
+      moves: (el, container, handle) => {
+        return (
+          handle.id === 'moveFieldBtn' &&
+          handle.classList.contains('dragula-handle')
+        );
+      },
+      accepts: (el, target) => {
+        if (el.classList.contains('field-group')) {
+          return (
+            (target.id === 'editorFields' || target.id === 'nestedFields') &&
+            !target.classList.contains('field-group-container')
+          );
+        }
+        return target.id === 'editorFields' || target.id === 'nestedFields';
+      },
+    });
   }
 
   get isAllNamesEmpty() {
@@ -745,5 +762,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.dragulaService.destroy('CHECK_LISTS');
     this.dragulaService.destroy('FIELDS');
+    this.dragulaService.destroy('NESTED_FIELDS');
   }
 }

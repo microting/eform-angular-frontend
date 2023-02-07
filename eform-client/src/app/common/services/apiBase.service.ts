@@ -134,8 +134,16 @@ export class ApiBaseService {
         headers: this.setHeaders(),
         params: ApiBaseService.setParams(params),
         responseType: 'blob',
-      })
-      .pipe(map((response) => response));
+      });
+  }
+
+  // post request for get blob file
+  public postBlobData<T>(method: string, body?: any): Observable<any> {
+    return this.http
+      .post(method, JSON.stringify(body), {
+        headers: this.setHeaders(),
+        responseType: 'blob',
+      });
   }
 
   public uploadFiles<T>(

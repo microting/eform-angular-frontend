@@ -440,4 +440,5 @@ export const da = {
   'eForm': 'eForm',
   'Search eForm': 'Søg eForm',
   'Selected tags': 'Valgte tags',
+  'Back': 'Tilbage',
 };
