@@ -14,6 +14,7 @@ export class AuthComponent implements OnInit {
   loginPageSettings: LoginPageSettingsModel = new LoginPageSettingsModel();
   loginImage: any;
   twoFactorForced = false;
+  onForgotPasswordPage = false;
 
   constructor(
     private router: Router,
@@ -25,6 +26,15 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
     this.getInitialData();
+    this.router.events.subscribe(_ => {
+      if(
+        this.router.url.includes('reset-admin-password') ||
+        this.router.url.includes('restore-password-confirmation') ||
+        this.router.url.includes('restore-password')
+      ) {
+        this.onForgotPasswordPage = true;
+      }
+    })
   }
 
   getInitialData() {

@@ -409,4 +409,5 @@ export const enUS = {
   'Site': 'Site',
   'Selected language': 'Selected language',
   'New folder': 'New folder',
+  'Back': 'Back',
 };

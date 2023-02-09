@@ -48,7 +48,9 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
       .subscribe((connectionString) => {
         if (connectionString.isConnectionStringExist === true) {
           if (connectionString.count > 0) { // connection string exist
-            this.router.navigate(['/auth']).then();
+            if(!this.router.url.includes('auth')) { // page not include auth
+              this.router.navigate(['/auth']).then();
+            }
           } else { // it's initial value, so need get not initial value
             this.authStateService.isConnectionStringExist();
           }

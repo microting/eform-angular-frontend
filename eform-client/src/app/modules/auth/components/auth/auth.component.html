@@ -21,7 +21,7 @@
   <a
     class="text-accent mt-2"
     [routerLink]="['restore-password']"
-    *ngIf="settingsService.loginPageSettingsModel.isSendGridExists"
+    *ngIf="settingsService.loginPageSettingsModel.isSendGridExists && !onForgotPasswordPage"
   >
     {{ 'Forgot password' | translate }}?
   </a>

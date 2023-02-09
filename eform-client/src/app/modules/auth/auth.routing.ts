@@ -28,7 +28,7 @@ const routes: Routes = [
       },
       {
         path: 'restore-password-confirmation',
-        component: RestorePasswordConfirmationComponent
+        component: RestorePasswordConfirmationComponent,
       },
       {
         path: 'reset-admin-password',
