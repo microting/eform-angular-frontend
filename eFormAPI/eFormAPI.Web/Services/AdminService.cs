@@ -195,7 +195,7 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetString("RoleNotFound"));
                 }
 
-                if (string.IsNullOrEmpty(userRegisterModel.Password) || userRegisterModel.Password.Length < 8)
+                if (string.IsNullOrEmpty(userRegisterModel.Password) || userRegisterModel.Password.Length < 6)
                 {
                     return new OperationResult(false,
                         _localizationService.GetString("PasswordIsNotValid"));
