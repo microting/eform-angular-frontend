@@ -292,6 +292,23 @@ namespace eFormAPI.Web.Services.Eform
                         translationForUpdate.Description = translationsModel.Description;
                         await translationForUpdate.Update(sdkDbContext);
                     }
+
+                    var checkList = await sdkDbContext.CheckLists.FirstAsync(x => x.Id == model.Checklist.Id).ConfigureAwait(false);
+                    var parentCheckList = await sdkDbContext.CheckLists.FirstOrDefaultAsync(x => x.Id == checkList.ParentId).ConfigureAwait(false);
+                    if (parentCheckList != null)
+                    {
+                        var translationForUpdateParent = sdkDbContext.CheckListTranslations
+                            .FirstOrDefault(x =>
+                                x.LanguageId == translationsModel.LanguageId &&
+                                (x.CheckListId == parentCheckList.Id));
+
+                        if (translationForUpdateParent != null)
+                        {
+                            translationForUpdateParent.Text = translationsModel.Name;
+                            translationForUpdateParent.Description = translationsModel.Description;
+                            await translationForUpdateParent.Update(sdkDbContext);
+                        }
+                    }
                 }
 
                 //tagging

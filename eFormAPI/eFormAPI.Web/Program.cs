@@ -202,8 +202,8 @@ namespace eFormAPI.Web
                     }
                 } catch (Exception e)
                 {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(e, "Error while adding missing admin settings to all menu items");
+                    //var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    //logger.LogError(e, "Error while adding missing admin settings to all menu items");
                 }
             }
         }

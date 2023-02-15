@@ -46,6 +46,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
 
   async saveCreateEformBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#saveCreateEformBtn');
+    await ele.scrollIntoView();
     await ele.waitForDisplayed({ timeout: 40000 });
     // await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -392,7 +393,8 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   }
 
   async clickSave() {
-    await (await this.saveCreateEformBtn()).click();
+    const saveBtn = await this.saveCreateEformBtn();
+    await saveBtn.click();
     await (await myEformsPage.newEformBtn()).waitForClickable({
       timeout: 40000,
     });
@@ -580,7 +582,7 @@ export class ChecklistFieldRowObj {
     }
     if (this.element) {
       const str: string[] = (await (
-        (await this.element.$('section > div > div > div')).getText()
+        (await this.element.$('section > div > div > div > span')).getText()
       ))
         .replace('menu\n', '') // delete not need word
         .split('; '); // split name and type
