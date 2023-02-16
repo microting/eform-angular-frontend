@@ -11,7 +11,6 @@ import {
 import {DeviceUsersRouting} from './device-users.routing';
 import {TranslateModule} from '@ngx-translate/core';
 import {DeviceUsersPersistProvider} from './components/store';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
@@ -29,7 +28,6 @@ import {MatDialogModule} from '@angular/material/dialog';
     EformSharedModule,
     TranslateModule,
     FormsModule,
-    FontAwesomeModule,
     MatTooltipModule,
     MatButtonModule,
     MatCardModule,

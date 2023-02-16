@@ -26,8 +26,6 @@ import {
   SafeHtmlPipe,
 } from 'src/app/common/pipes';
 import {TreeModule} from '@circlon/angular-tree-component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {EformTableHeadersComponent} from './components';
 import {RouterModule} from '@angular/router';
 import {DragulaModule} from 'ng2-dragula';
@@ -50,10 +48,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         NgSelectModule,
         FormsModule,
         TreeModule,
-        FontAwesomeModule,
         RouterModule,
         DragulaModule,
-        MDBBootstrapModule,
         MatSortModule,
         MatPaginatorModule,
         MatButtonModule,

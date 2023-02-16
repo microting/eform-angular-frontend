@@ -13,7 +13,6 @@ import {
   RestorePasswordConfirmationComponent,
   SignOutComponent,
 } from './components';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -31,7 +30,6 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     AuthRouting,
     ReactiveFormsModule,
     EformSharedModule,
-    FontAwesomeModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,

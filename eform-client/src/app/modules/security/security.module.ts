@@ -17,7 +17,6 @@ import {
   SecurityGroupEformsDeleteComponent,
   SecurityGroupSettingsComponent,
 } from './components';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { securityPersistProvider } from './components/store/security.store';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -36,7 +35,6 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     SecurityRouting,
     TranslateModule,
     FormsModule,
-    FontAwesomeModule,
     MatSortModule,
     MatCheckboxModule,
     MatButtonModule,
