@@ -7,7 +7,6 @@ import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-share
 import {ApplicationSettingsRouting} from './application-settings.routing';
 import {AdminSettingsComponent} from './components';
 import {appSettingsProvider} from './components/store';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -24,7 +23,6 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     FormsModule,
     TranslateModule,
     FileUploadModule,
-    FontAwesomeModule,
     MatCheckboxModule,
     MatButtonModule,
     MatTooltipModule,

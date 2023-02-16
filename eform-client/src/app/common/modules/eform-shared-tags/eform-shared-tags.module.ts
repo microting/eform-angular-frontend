@@ -8,8 +8,6 @@ import {
   SharedTagDeleteComponent, SharedTagEditComponent, SharedTagsComponent, SharedTagCreateComponent, EformsTagsComponent,
 } from './components';
 import {TreeModule} from '@circlon/angular-tree-component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {ButtonsModule, InputsModule, ModalModule, WavesModule} from 'angular-bootstrap-md';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -24,11 +22,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         NgSelectModule,
         FormsModule,
         TreeModule,
-        FontAwesomeModule,
-        WavesModule,
-        ModalModule,
-        ButtonsModule,
-        InputsModule,
         MatButtonModule,
         MatIconModule,
         MatDialogModule,

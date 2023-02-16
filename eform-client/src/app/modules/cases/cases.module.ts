@@ -6,7 +6,6 @@ import {
   OwlDateTimeModule,
   OwlMomentDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { GalleryModule } from '@ngx-gallery/core';
 import { GallerizeModule } from '@ngx-gallery/gallerize';
@@ -41,7 +40,6 @@ import {MatCardModule} from '@angular/material/card';
     OwlDateTimeModule,
     OwlMomentDateTimeModule,
     FormsModule,
-    FontAwesomeModule,
     EformCasesModule,
     MatSortModule,
     MatInputModule,
