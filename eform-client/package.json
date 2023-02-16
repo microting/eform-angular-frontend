@@ -90,7 +90,7 @@
     "ngx-editor": "^12.0.0",
     "ngx-image-cropper": "6.3.2",
     "ngx-mask": "^13.1.15",
-    "ngx-papaparse": "6.0.2",
+    "ngx-papaparse": "7.0.0",
     "ngx-slimscroll": "12.2.0",
     "ngx-toastr": "14.3.0",
     "npm": "^9.4.2",
