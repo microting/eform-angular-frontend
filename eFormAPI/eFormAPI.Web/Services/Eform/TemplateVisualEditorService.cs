@@ -1220,6 +1220,7 @@ namespace eFormAPI.Web.Services.Eform
             var children = await sdkDbContext.CheckLists
                 .Where(x => x.ParentId == ef.Id)
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .OrderBy(x => x.DisplayIndex)
                 .ToListAsync();
             foreach (var checkList in children)
             {
