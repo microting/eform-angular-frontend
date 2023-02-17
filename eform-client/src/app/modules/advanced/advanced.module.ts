@@ -25,7 +25,6 @@ import {
   FolderEditCreateComponent,
   FolderDeleteComponent,
 } from './components';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {EformImportedModule} from '../../common/modules/eform-imported/eform-imported.module';
 import {advancedPersistProviders} from './components/advansed-persist-providers';
 import {EformSharedTagsModule} from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
@@ -50,7 +49,6 @@ import {MatChipsModule} from '@angular/material/chips';
         NgSelectModule,
         FormsModule,
         DragulaModule,
-        FontAwesomeModule,
         EformImportedModule,
         ReactiveFormsModule,
         EformSharedTagsModule,

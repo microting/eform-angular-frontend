@@ -9,11 +9,6 @@ import {LightboxModule} from '@ngx-gallery/lightbox';
 import {DragulaModule} from 'ng2-dragula';
 import {NgxMaskModule} from 'ngx-mask';
 import {ToastrModule} from 'ngx-toastr';
-import {
-  FaIconLibrary,
-  FontAwesomeModule,
-} from '@fortawesome/angular-fontawesome';
-import {faCoffee, fas} from '@fortawesome/free-solid-svg-icons';
 import {providers} from 'src/app/app.declarations';
 import {AppRoutingModule} from 'src/app/app.routing';
 import {translateConfig} from 'src/app/common/helpers';
@@ -46,7 +41,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {FormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -76,11 +70,9 @@ import {MatInputModule} from '@angular/material/input';
     ToastrModule.forRoot({preventDuplicates: true}),
     DragulaModule.forRoot(),
     NgxMaskModule.forRoot(),
-    MDBBootstrapModule.forRoot(),
     GalleryModule,
     LightboxModule,
     GallerizeModule,
-    FontAwesomeModule,
     NgxChartsModule,
     AkitaNgDevtools,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
@@ -109,8 +101,6 @@ import {MatInputModule} from '@angular/material/input';
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(library: FaIconLibrary) {
-    library.addIconPacks(fas);
-    library.addIcons(faCoffee);
+  constructor() {
   }
 }

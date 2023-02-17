@@ -7,12 +7,10 @@ import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GalleryModule } from '@ngx-gallery/core';
 import { GallerizeModule } from '@ngx-gallery/gallerize';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import { TranslateModule } from '@ngx-translate/core';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { MY_MOMENT_FORMATS } from 'src/app/common/helpers';
 import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
@@ -63,7 +61,6 @@ import {NgSelectModule} from '@ng-select/ng-select';
 @NgModule({
     imports: [
         TranslateModule,
-        MDBBootstrapModule,
         EformSharedModule,
         CommonModule,
         EformImportedModule,
@@ -73,7 +70,6 @@ import {NgSelectModule} from '@ng-select/ng-select';
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
         FormsModule,
-        FontAwesomeModule,
         RouterModule,
         MatSortModule,
         MatCheckboxModule,

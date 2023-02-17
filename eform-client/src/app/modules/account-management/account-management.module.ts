@@ -11,7 +11,6 @@ import {
 } from './components';
 import {AccountManagementRouting} from './account-management.routing';
 import {TranslateModule} from '@ngx-translate/core';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {usersPersistProvider} from './components/users/store/users.store';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -23,7 +22,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
-import {MatIconModule} from "@angular/material/icon";
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
     imports: [
@@ -33,7 +32,6 @@ import {MatIconModule} from "@angular/material/icon";
         TranslateModule,
         ReactiveFormsModule,
         FormsModule,
-        FontAwesomeModule,
         MatSortModule,
         MatCheckboxModule,
         MatButtonModule,

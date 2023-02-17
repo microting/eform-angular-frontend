@@ -7,7 +7,6 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { CollapseComponent } from 'angular-bootstrap-md';
 import { UUID } from 'angular2-uuid';
 import {
   EformVisualEditorFieldsDnDRecursionModel,
@@ -29,7 +28,6 @@ import {
   styleUrls: ['./visual-editor-checklist.component.scss'],
 })
 export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
-  @ViewChild('collapse', { static: true }) collapse: CollapseComponent;
   @Input() checklist: EformVisualEditorModel;
   @Input() checklistIndex = 0;
   @Input() checklistRecursionIndex = 0;

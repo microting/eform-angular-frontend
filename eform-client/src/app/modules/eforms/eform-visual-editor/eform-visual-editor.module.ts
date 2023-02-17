@@ -1,7 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TranslateModule} from '@ngx-translate/core';
 import {DragulaModule} from 'ng2-dragula';
 import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
@@ -66,7 +65,6 @@ import {MtxGridModule} from '@ng-matero/extensions/grid';
     FormsModule,
     DragulaModule,
     EformImportedModule,
-    FontAwesomeModule,
     EformSharedTagsModule,
     MatCheckboxModule,
     MatButtonModule,

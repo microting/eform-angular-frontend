@@ -22,7 +22,6 @@ import {
 } from 'src/app/modules/eforms/eform-visual-editor/const/eform-visual-editor-element-types';
 import { LocaleService } from 'src/app/common/services';
 import * as R from 'ramda';
-import { CollapseComponent } from 'angular-bootstrap-md';
 import {TranslateService} from '@ngx-translate/core';
 import {getRandomInt} from 'src/app/common/helpers';
 
@@ -32,7 +31,6 @@ import {getRandomInt} from 'src/app/common/helpers';
   styleUrls: ['./visual-editor-field.component.scss'],
 })
 export class VisualEditorFieldComponent implements OnInit, OnDestroy {
-  @ViewChild('nestedFields') nestedFields: CollapseComponent;
   @Input() field: EformVisualEditorFieldModel;
   @Input() fieldIndex: number;
   @Input() checklistRecursionIndexes = [];
@@ -139,7 +137,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
 
   toggleCollapse(field: EformVisualEditorFieldModel) {
     field.collapsed = !field.collapsed;
-    this.nestedFields.toggle();
+    //this.nestedFields.toggle();
   }
 
   onChangeColorOnNestedField(fieldModel: EformVisualEditorRecursionFieldModel) {

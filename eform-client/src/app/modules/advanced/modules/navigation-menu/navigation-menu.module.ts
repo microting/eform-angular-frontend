@@ -13,7 +13,6 @@ import {
 } from './components';
 import { NavigationMenuRouting } from './navigation-menu.routing';
 import { TranslateModule } from '@ngx-translate/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DragulaModule } from 'ng2-dragula';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
@@ -45,7 +44,6 @@ import {MatInputModule} from '@angular/material/input';
     CommonModule,
     NavigationMenuRouting,
     TranslateModule,
-    FontAwesomeModule,
     DragulaModule,
     FormsModule,
     EformSharedModule,

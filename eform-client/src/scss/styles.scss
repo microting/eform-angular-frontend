@@ -49,6 +49,10 @@ body, .theme-light {
   }
 }
 
+a {
+  text-decoration: none;
+}
+
 .mat-icon-button .mat-icon {
   width: 18px;
   height: 18px;
@@ -61,3 +65,16 @@ body, .theme-light {
   font-size: 18px;
   line-height: 18px
 }
+
+.h-100 {
+  height: 100% !important;
+}
+
+.text-center {
+  text-align: center!important;
+}
+
+.reportCaseUnarchive {
+  color: green !important;
+}
+
