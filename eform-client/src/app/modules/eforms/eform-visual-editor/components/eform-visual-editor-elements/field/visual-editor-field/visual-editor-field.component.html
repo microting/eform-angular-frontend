@@ -1,5 +1,5 @@
 <!-- First level fields render -->
-<section id="fieldSection{{ fieldIndex }}" *ngIf="field">
+<div id="fieldSection{{ fieldIndex }}" *ngIf="field">
   <!-- IMPORTANT TO IMPLEMENT FOR NESTING OF GROUPS -->
 
   <!--  <div dragula="{{dragulaElementContainerName}}" [dragulaModel]="visualEditorTemplateModel.fields"-->
@@ -13,7 +13,7 @@
         <mat-icon
           class="dragula-handle align-middle"
           style="cursor: pointer"
-          id="moveFieldBtn"
+          [id]="fieldIsNested ? 'moveNestedFieldBtn' : 'moveFieldBtn'"
         >
           menu
         </mat-icon>
@@ -90,30 +90,28 @@
     </div>
     <div
       *ngIf="field.fieldType == fieldTypes.FieldGroup"
-      class="field-group-container section-collapse pl-3"
+      class="field-group-container section-collapse pl-3 nested-fields"
       [ngClass]="{'p-1 pt-3' : !field.collapsed, 'collapsed' : field.collapsed}"
-      dragula="{{ dragulaElementContainerName }}"
+      dragula="FIELDS"
       [dragulaModel]="field.fields"
       id="nestedFields"
       (dragulaModelChange)="onFieldPositionChangedOnNestedField($event)"
     >
-      <div
+      <app-visual-editor-field
         *ngFor="let nestedField of field.fields; let i = index"
         [ngClass]="{'collapsed' : field.collapsed}"
+        [field]="nestedField"
+        [checklistRecursionIndexes]="checklistRecursionIndexes"
+        [fieldIndex]="i"
+        [fieldIsNested]="true"
+        [parentFieldIndex]="fieldIndex"
+        (changeColor)="onChangeColorOnNestedField($event)"
+        (copyField)="onCopyFieldOnNestedField($event)"
+        (deleteField)="onDeleteFieldOnNestedField($event)"
+        (editField)="onEditFieldOnNestedField($event)"
       >
-        <app-visual-editor-field
-          [field]="nestedField"
-          [checklistRecursionIndexes]="checklistRecursionIndexes"
-          [fieldIndex]="i"
-          [fieldIsNested]="true"
-          [parentFieldIndex]="fieldIndex"
-          (changeColor)="onChangeColorOnNestedField($event)"
-          (copyField)="onCopyFieldOnNestedField($event)"
-          (deleteField)="onDeleteFieldOnNestedField($event)"
-          (editField)="onEditFieldOnNestedField($event)"
-        >
-        </app-visual-editor-field
-      ></div>
+      </app-visual-editor-field
+    >
     </div>
   </div>
-</section>
+</div>

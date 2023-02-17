@@ -81,37 +81,41 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     this.dragulaService.createGroup('FIELDS', {
       moves: (el, container, handle) => {
         return (
-          handle.id === 'moveFieldBtn' &&
+          (handle.id === 'moveFieldBtn' || handle.id === 'moveNestedFieldBtn') &&
           handle.classList.contains('dragula-handle')
         );
       },
       accepts: (el, target) => {
         if (el.classList.contains('field-group')) {
           return (
-            (target.id === 'editorFields' || target.id === 'nestedFields') &&
             !target.classList.contains('field-group-container')
+            || target.classList.contains('editor-fields')
           );
         }
-        return target.id === 'editorFields' || target.id === 'nestedFields';
+        return target.classList.contains('editor-fields')
+          || target.classList.contains('nested-fields');
       },
     });
-    this.dragulaService.createGroup('NESTED_FIELDS', {
-      moves: (el, container, handle) => {
-        return (
-          handle.id === 'moveFieldBtn' &&
-          handle.classList.contains('dragula-handle')
-        );
-      },
-      accepts: (el, target) => {
-        if (el.classList.contains('field-group')) {
-          return (
-            (target.id === 'editorFields' || target.id === 'nestedFields') &&
-            !target.classList.contains('field-group-container')
-          );
-        }
-        return target.id === 'editorFields' || target.id === 'nestedFields';
-      },
-    });
+    // this.dragulaService.createGroup('NESTED_FIELDS', {
+    //   moves: (el, container, handle) => {
+    //     return (
+    //       handle.id === 'moveNestedFieldBtn' &&
+    //       handle.classList.contains('dragula-handle')
+    //     );
+    //   },
+    //   accepts: (el, target) => {
+    //     if (el.classList.contains('field-group')) {
+    //       return (
+    //         (target.id === 'editorFields' || target.id === 'nestedFields') &&
+    //         !target.classList.contains('field-group-container')
+    //       );
+    //     }
+    //     return target.id === 'editorFields'
+    //       || target.id === 'nestedFields'
+    //       || target.classList.contains('editor-fields')
+    //       || target.classList.contains('nested-fields');
+    //   },
+    // });
   }
 
   get isAllNamesEmpty() {
@@ -762,6 +766,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.dragulaService.destroy('CHECK_LISTS');
     this.dragulaService.destroy('FIELDS');
-    this.dragulaService.destroy('NESTED_FIELDS');
+    // this.dragulaService.destroy('NESTED_FIELDS');
   }
 }

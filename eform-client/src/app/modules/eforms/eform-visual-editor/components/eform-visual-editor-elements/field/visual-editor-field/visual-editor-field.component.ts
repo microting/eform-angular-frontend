@@ -5,7 +5,6 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 import {
   applicationLanguages,
@@ -19,9 +18,8 @@ import {
 import {
   eformVisualEditorElementColors,
   getTranslatedTypes
-} from 'src/app/modules/eforms/eform-visual-editor/const/eform-visual-editor-element-types';
+} from '../../../../const';
 import { LocaleService } from 'src/app/common/services';
-import * as R from 'ramda';
 import {TranslateService} from '@ngx-translate/core';
 import {getRandomInt} from 'src/app/common/helpers';
 
@@ -49,7 +47,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   changeColor: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   @Output()
   copyField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
-  dragulaElementContainerName = 'FIELDS';
+  // dragulaElementContainerName = this.fieldIsNested ? 'NESTED_FIELDS' : 'FIELDS';
 
   get fieldTypes() {
     return EformFieldTypesEnum;
@@ -69,8 +67,11 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
     const languageId = applicationLanguages.find(
       (x) => x.locale === this.localeService.getCurrentUserLocale()
     ).id;
-    return this.field.translations.find((x) => x.languageId === languageId)
-      .name;
+    const index = this.field.translations.findIndex((x) => x.languageId === languageId);
+    if(index !== -1) {
+      return this.field.translations[index].name && '';
+    }
+    return '';
   }
 
   fieldTypeTranslation(fieldType: number): string {
@@ -83,9 +84,6 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   constructor(private localeService: LocaleService, private translateService: TranslateService) {}
 
   ngOnInit() {
-    if(this.fieldIsNested) {
-      this.dragulaElementContainerName = 'NESTED_FIELDS';
-    }
   }
 
   onAddNewField() {
@@ -137,7 +135,6 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
 
   toggleCollapse(field: EformVisualEditorFieldModel) {
     field.collapsed = !field.collapsed;
-    //this.nestedFields.toggle();
   }
 
   onChangeColorOnNestedField(fieldModel: EformVisualEditorRecursionFieldModel) {
@@ -172,7 +169,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
     let strForReturn = this.getTranslation;
     if (type) {
       if (this.field.id != null) {
-        strForReturn += `; ${type}; <small class="microting-uid">(${this.field.id })</small>`;
+        strForReturn += `; ${type}; <small class="microting-uid">(${this.field.id})</small>`;
       } else {
         strForReturn += `; ${type}`;
       }

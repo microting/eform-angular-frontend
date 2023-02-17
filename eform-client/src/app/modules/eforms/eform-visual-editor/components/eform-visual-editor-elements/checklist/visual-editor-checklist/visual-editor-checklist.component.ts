@@ -50,7 +50,7 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   copyNestedField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   @Output()
   changeColorField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
-  dragulaElementContainerName = UUID.UUID();
+  // dragulaElementContainerName = UUID.UUID();
 
   composeIndexes(checklistIndex: number) {
     return [...this.checklistRecursionIndexes, checklistIndex];
@@ -74,10 +74,10 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private dragulaService: DragulaService,
+    // private dragulaService: DragulaService,
     private authStateService: AuthStateService
   ) {
-    this.dragulaService.createGroup(this.dragulaElementContainerName, {
+/*    this.dragulaService.createGroup(this.dragulaElementContainerName, {
       moves: (el, container, handle) => {
         return handle.classList.contains('dragula-handle');
       },
@@ -87,7 +87,7 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
           target.id.includes(`fields_${this.checklistIndex}`)
         );
       },
-    });
+    });*/
   }
 
   get fieldTypes() {
@@ -207,7 +207,7 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.dragulaService.destroy(this.dragulaElementContainerName);
+    // this.dragulaService.destroy(this.dragulaElementContainerName);
   }
 
   onChangeColorInNestedFieldInNestedChecklist(
