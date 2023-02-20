@@ -738,4 +738,7 @@
   <data name="Folders" xml:space="preserve">
     <value>Ordnern</value>
   </data>
+  <data name="EformSuccessfullyUpdated" xml:space="preserve">
+    <value>eForm aktualisiert</value>
+  </data>
 </root>
