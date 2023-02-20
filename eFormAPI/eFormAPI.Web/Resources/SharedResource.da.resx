@@ -744,4 +744,7 @@
   <data name="Folders" xml:space="preserve">
     <value>Mapper</value>
   </data>
+  <data name="EformSuccessfullyUpdated" xml:space="preserve">
+    <value>eForm opdateret</value>
+  </data>
 </root>

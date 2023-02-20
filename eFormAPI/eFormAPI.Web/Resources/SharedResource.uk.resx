@@ -746,4 +746,7 @@
   <data name="Folders" xml:space="preserve">
     <value>Папки</value>
   </data>
+  <data name="EformSuccessfullyUpdated" xml:space="preserve">
+    <value>Електронну форму оновлено</value>
+  </data>
 </root>
