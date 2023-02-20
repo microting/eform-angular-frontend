@@ -1,2 +1,12 @@
-<formatting-text-editor [(value)]="fieldValueObj.value">
-</formatting-text-editor>
+<!--<formatting-text-editor [(value)]="fieldValueObj.value">-->
+<!--</formatting-text-editor>-->
+<mat-form-field>
+  <textarea
+    matInput
+    [(ngModel)]="fieldValueObj.value"
+    id="textElement{{fieldValueObj.fieldId}}"
+    name="textElement{{fieldValueObj.fieldId}}"
+    rows="5"
+  ></textarea>
+</mat-form-field>
+
