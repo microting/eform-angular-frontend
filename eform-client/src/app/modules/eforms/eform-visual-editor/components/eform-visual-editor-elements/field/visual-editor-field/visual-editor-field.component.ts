@@ -69,7 +69,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
     ).id;
     const index = this.field.translations.findIndex((x) => x.languageId === languageId);
     if(index !== -1) {
-      return this.field.translations[index].name && '';
+      return this.field.translations[index].name || '';
     }
     return '';
   }

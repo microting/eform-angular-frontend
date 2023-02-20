@@ -26,7 +26,7 @@
     mat-raised-button
     color="primary"
     id="cancel{{(selectedTemplateId ? 'Edit' : 'Create')}}Btn"
-    (click)="openTagsModal()"
+    [routerLink]="['/']"
   >
     {{'Cancel'| translate}}
   </button>
