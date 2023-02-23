@@ -145,7 +145,7 @@
     <value>Case loading mislykkedes</value>
   </data>
   <data name="CaseParamDeletedSuccessfully" xml:space="preserve">
-    <value>Sag nr. {0} er slettet korrekt</value>
+    <value>Sag nr. {0} er slettet</value>
   </data>
   <data name="CheckConnectionString" xml:space="preserve">
     <value>Kontroller forbindelsesstrengen</value>
@@ -166,37 +166,37 @@
     <value>Kunne ikke skrive forbindelsesstreng i /bin/Input.txt</value>
   </data>
   <data name="DeviceUserCouldNotBeCreated" xml:space="preserve">
-    <value>Enhedsbruger kunne ikke oprettes</value>
+    <value>Medarbejder kunne ikke oprettes</value>
   </data>
   <data name="DeviceUserCouldNotBeObtained" xml:space="preserve">
-    <value>Enhedsbruger med sådan UId kunne ikke opnås</value>
+    <value>Medarbejder med sådan UId kunne ikke opnås</value>
   </data>
   <data name="DeviceUserCouldNotBeUpdated" xml:space="preserve">
-    <value>Enhedsbruger kunne ikke opdateres</value>
+    <value>Medarbejder kunne ikke opdateres</value>
   </data>
   <data name="DeviceUserNotFound" xml:space="preserve">
-    <value>Enhedsbruger UId blev ikke fundet</value>
+    <value>Medarbejder UId blev ikke fundet</value>
   </data>
   <data name="DeviceUserPa" xml:space="preserve">
-    <value>Enhedsbruger med id "{0}" kunne ikke slettes</value>
+    <value>Medarbejder med id "{0}" kunne ikke slettes</value>
   </data>
   <data name="DeviceUserParamCouldNotBeDeleted" xml:space="preserve">
-    <value>Enhedsbruger "{0}" kunne ikke slettes</value>
+    <value>Medarbejder "{0}" kunne ikke slettes</value>
   </data>
   <data name="DeviceUserParamCouldNotBeEdited" xml:space="preserve">
-    <value>Enhedsbruger med id {0} kunne ikke redigeres</value>
+    <value>Medarbejder med id {0} kunne ikke redigeres</value>
   </data>
   <data name="DeviceUserParamCouldNotBeUpdated" xml:space="preserve">
-    <value>Enhedsbruger med id {0} kunne ikke opdateres</value>
+    <value>Medarbejder med id {0} kunne ikke opdateres</value>
   </data>
   <data name="DeviceUserParamCreatedSuccessfully" xml:space="preserve">
-    <value>Enhedsbruger "{0}" blev oprettet med succes</value>
+    <value>Medarbejder "{0}" blev oprettet med succes</value>
   </data>
   <data name="DeviceUserParamDeletedSuccessfully" xml:space="preserve">
-    <value>Enhedsbruger "{0}" slettes korrekt</value>
+    <value>Medarbejder "{0}" slettet</value>
   </data>
   <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
-    <value>Enhedsbruger opdateret med succes</value>
+    <value>Medarbejder opdateret med succes</value>
   </data>
   <data name="eFormCouldNotBeCreated" xml:space="preserve">
     <value>eForm kunne ikke oprettes</value>
@@ -304,7 +304,7 @@
     <value>{0} oprettet</value>
   </data>
   <data name="ParamDeletedSuccessfully" xml:space="preserve">
-    <value>{0} slettet korrekt</value>
+    <value>{0} slettet</value>
   </data>
   <data name="ParamPairedSuccessfully" xml:space="preserve">
     <value>{0} parret</value>
@@ -346,7 +346,7 @@
     <value>Lokationen med id {0} kunne ikke opdateres</value>
   </data>
   <data name="SiteParamDeletedSuccessfully" xml:space="preserve">
-    <value>Lokation "{0}" blev slettet korrekt</value>
+    <value>Lokation "{0}" blev slettet</value>
   </data>
   <data name="SiteParamNotFound" xml:space="preserve">
     <value>Lokation med id {0} ikke fundet</value>
@@ -355,7 +355,7 @@
     <value>Medarbejder med id {0} kunne ikke slettes</value>
   </data>
   <data name="TagDeletedSuccessfully" xml:space="preserve">
-    <value>Tag slettet korrekt</value>
+    <value>Tag slettet</value>
   </data>
   <data name="TagParamCreatedSuccessfully" xml:space="preserve">
     <value>Tag "{0}" oprettet</value>
@@ -400,7 +400,7 @@
     <value>Medarbejder med id {0} kan ikke opdateres</value>
   </data>
   <data name="WorkerParamDeletedSuccessfully" xml:space="preserve">
-    <value>Medarbejdere "{0} {1}" blet slettet korrekt</value>
+    <value>Medarbejdere "{0} {1}" blet slettet</value>
   </data>
   <data name="WorkerParamWasUpdated" xml:space="preserve">
     <value>Medarbejder med id {0} blev opdateret</value>
@@ -517,7 +517,7 @@
     <value>Skift adgangskode</value>
   </data>
   <data name="DeviceUsers" xml:space="preserve">
-    <value>Enhedsbrugere</value>
+    <value>Medarbejdere</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Log ud</value>
