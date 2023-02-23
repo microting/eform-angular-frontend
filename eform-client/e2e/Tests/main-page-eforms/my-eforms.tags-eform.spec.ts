@@ -59,7 +59,7 @@ describe('Main page', function () {
     await elem.waitForDisplayed({ timeout: 40000, reverse: true });
     await myEformsPage.removeTag(testTag);
     await elem.waitForDisplayed({ timeout: 40000 });
-    expect(await elem.getText()).eq(`Tag slettet korrekt`);
+    expect(await elem.getText()).eq(`Tag slettet`);
   });
   it('should delete existing eform', async () => {
     const rowCountBeforeDelete = await myEformsPage.rowNum();
