@@ -2,7 +2,7 @@ name: Master/Stable
 
 on:
   push:
-    branches: [ master, stable, angular13 ]
+    branches: [ master, stable ]
     paths-ignore:
     - '*.md'
     - '.github/**'
@@ -33,7 +33,7 @@ jobs:
         run: docker build . -t microtingas/frontend-container:latest --build-arg GITVERSION=1.0.0
         shell: bash
       - run: docker save microtingas/frontend-container:latest -o container.tar
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: container
           path: container.tar
@@ -55,7 +55,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: container
     - run: docker load -i container.tar
@@ -63,8 +63,8 @@ jobs:
       run: docker network create --driver bridge --attachable data
     - name: Start MariaDB
       run: |
-        docker pull mariadb:10.8
-        docker run --name mariadbtest --network data -e MYSQL_ROOT_PASSWORD=secretpassword -p 3306:3306 -d mariadb:10.8
+        docker pull mariadb:latest
+        docker run --name mariadbtest --network data -e MYSQL_ROOT_PASSWORD=secretpassword -p 3306:3306 -d mariadb:latest
     - name: Start rabbitmq
       run: |
         docker pull rabbitmq:latest
@@ -128,8 +128,8 @@ jobs:
       run: docker network create --driver bridge --attachable data
     - name: Start MariaDB
       run: |
-        docker pull mariadb:10.8
-        docker run --name mariadbtest --network data -e MYSQL_ROOT_PASSWORD=secretpassword -p 3306:3306 -d mariadb:10.8
+        docker pull mariadb:latest
+        docker run --name mariadbtest --network data -e MYSQL_ROOT_PASSWORD=secretpassword -p 3306:3306 -d mariadb:latest
     - name: Start rabbitmq
       run: |
         docker pull rabbitmq:latest
