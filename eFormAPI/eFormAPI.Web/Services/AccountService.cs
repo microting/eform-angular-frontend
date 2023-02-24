@@ -270,7 +270,7 @@ namespace eFormAPI.Web.Services
             return new OperationResult(true, _localizationService.GetStringWithFormat("YourEmailPasswordHasBeenReset", user.Email));
         }
 
-        public async Task<OperationResult> ResetPassword(ResetPasswordModel model)
+        public async Task<OperationResult> ResetPassword(Infrastructure.Models.ResetPasswordModel model)
         {
             var user = await _userManager.FindByIdAsync(model.UserId.ToString());
             if (user == null)
@@ -278,7 +278,7 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false);
             }
 
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.NewPassword);
             if (result.Succeeded)
             {
                 return new OperationResult(true);
