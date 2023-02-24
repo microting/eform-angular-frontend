@@ -10,7 +10,7 @@ import {
   CommonTranslationsModel,
 } from '../../src/app/common/models';
 import myEformsPage from './MyEforms.page';
-import { eformVisualEditorElementColors } from '../../src/app/modules/eforms/eform-visual-editor/const/eform-visual-editor-element-types';
+import { eformVisualEditorElementColors } from '../../src/app/modules/eforms/eform-visual-editor/const';
 
 class EformVisualEditorPage extends PageWithNavbarPage {
   constructor() {
@@ -582,7 +582,7 @@ export class ChecklistFieldRowObj {
     }
     if (this.element) {
       const str: string[] = (await (
-        (await this.element.$('section > div > div > div > span')).getText()
+        (await this.element.$('.field-name-and-type')).getText()
       ))
         .replace('menu\n', '') // delete not need word
         .split('; '); // split name and type
@@ -594,7 +594,7 @@ export class ChecklistFieldRowObj {
       this.moveFieldBtn = await this.element.$('#moveFieldBtn');
       this.fieldIsNotComplete = !!(await this.element.$('#isNotFieldComplete'));
       const backgroundColor = (
-        await (await this.element.$('div>div')).getCSSProperty(
+        await (await this.element.$('div>div>div')).getCSSProperty(
           'background-color'
         )
       ).parsed.hex;
@@ -644,7 +644,7 @@ export class ChecklistFieldRowObj {
       await this.colorsBtn[colorName].click();
       await browser.pause(500);
       const backgroundColor = (
-        await (await this.element.$('div>div')).getCSSProperty(
+        await (await this.element.$('div>div>div')).getCSSProperty(
           'background-color'
         )
       ).parsed.hex;

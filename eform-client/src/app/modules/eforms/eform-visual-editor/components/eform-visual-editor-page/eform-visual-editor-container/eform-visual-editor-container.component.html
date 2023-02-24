@@ -22,6 +22,14 @@
   >
     {{ (selectedTemplateId ? 'Save' : 'Create') | translate }}
   </button>
+  <button
+    mat-raised-button
+    color="primary"
+    id="cancel{{(selectedTemplateId ? 'Edit' : 'Create')}}Btn"
+    [routerLink]="['/']"
+  >
+    {{'Cancel'| translate}}
+  </button>
 </eform-new-subheader>
 
 <mat-card class="d-flex flex-column mb-3" style="padding-right: 0; padding-left: 0; padding-bottom: 0">
@@ -54,7 +62,7 @@
     class="section-collapse"
     [ngClass]="{'collapsed' : isItemsCollapsed}"
   >
-    <section
+    <div
       dragula="CHECK_LISTS"
       id="editorChecklists"
       (dragulaModelChange)="dragulaPositionChecklistChanged($event)"
@@ -82,14 +90,15 @@
         (copyNestedField)="onFieldCreate($event)"
         (changeColorField)="onFieldUpdate($event)"
       ></app-visual-editor-checklist>
-    </section>
-    <section
+    </div>
+    <div
       *ngIf="
                 !visualEditorTemplateModel.checkLists ||
                 visualEditorTemplateModel.checkLists.length == 0
               "
       dragula="FIELDS"
       id="editorFields"
+      class="editor-fields"
       (dragulaModelChange)="dragulaPositionFieldChanged($event)"
       [dragulaModel]="visualEditorTemplateModel.fields"
     >
@@ -107,11 +116,9 @@
         (changeColor)="onFieldUpdate($event)"
         (copyField)="onFieldCreate($event)"
         (addNewField)="showFieldModal($event)"
-        [class]="
-                  field.fieldType == fieldTypes.FieldGroup ? 'field-group' : ''
-                "
+        [class.field-group]="field.fieldType == fieldTypes.FieldGroup"
       ></app-visual-editor-field>
-    </section>
+    </div>
   </div>
   <div class="d-flex justify-content-end">
     <button
