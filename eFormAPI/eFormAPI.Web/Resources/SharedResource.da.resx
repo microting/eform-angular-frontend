@@ -190,13 +190,13 @@
     <value>Medarbejder med id {0} kunne ikke opdateres</value>
   </data>
   <data name="DeviceUserParamCreatedSuccessfully" xml:space="preserve">
-    <value>Medarbejder "{0}" blev oprettet med succes</value>
+    <value>Medarbejder "{0}" blev oprettet</value>
   </data>
   <data name="DeviceUserParamDeletedSuccessfully" xml:space="preserve">
     <value>Medarbejder "{0}" slettet</value>
   </data>
   <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
-    <value>Medarbejder opdateret med succes</value>
+    <value>Medarbejder opdateret</value>
   </data>
   <data name="eFormCouldNotBeCreated" xml:space="preserve">
     <value>eForm kunne ikke oprettes</value>
@@ -205,7 +205,7 @@
     <value>eForm "{0}" kunne ikke slettes</value>
   </data>
   <data name="eFormParamCreatedSuccessfully" xml:space="preserve">
-    <value>eForm "{0}" blev oprettet med succes</value>
+    <value>eForm "{0}" blev oprettet</value>
   </data>
   <data name="eFormParamDeletedSuccessfully" xml:space="preserve">
     <value>eForm "{0}" er blevet slettet</value>
@@ -283,7 +283,7 @@
     <value>Billedet blev ikke slettet</value>
   </data>
   <data name="ImageRotatedSuccessfully" xml:space="preserve">
-    <value>Billedet roteres med succes</value>
+    <value>Billedet roteres</value>
   </data>
   <data name="InvalidRequest" xml:space="preserve">
     <value>Ugyldig forespørgsel</value>
