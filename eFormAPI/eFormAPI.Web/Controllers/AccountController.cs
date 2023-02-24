@@ -110,7 +110,7 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         [Route("api/account/reset-password")]
         [AllowAnonymous]
-        public async Task<OperationResult> ResetPassword([FromBody] ResetPasswordModel model)
+        public async Task<OperationResult> ResetPassword([FromBody] Infrastructure.Models.ResetPasswordModel model)
         {
             if (!ModelState.IsValid)
             {

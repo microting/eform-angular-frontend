@@ -38,7 +38,7 @@ namespace eFormAPI.Web.Abstractions
         Task<UserInfoViewModel> GetUserInfo();
         Task<OperationDataResult<UserSettingsModel>> GetUserSettings();
         Task<OperationResult> ResetAdminPassword(string code);
-        Task<OperationResult> ResetPassword(ResetPasswordModel model);
+        Task<OperationResult> ResetPassword(Infrastructure.Models.ResetPasswordModel model);
         Task<OperationResult> UpdateUserSettings(UserSettingsModel model);
         OperationDataResult<TimeZonesModel> AllTimeZones();
     }
