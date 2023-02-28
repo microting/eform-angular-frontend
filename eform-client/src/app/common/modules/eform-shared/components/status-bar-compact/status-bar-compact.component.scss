@@ -1,0 +1,27 @@
+$statuses: (
+  0: #bdbdbd,
+  33: #757575,
+  66: #ffbb33,
+  70: #ff8800,
+  77: #0099cc,
+  100: #007e33,
+  110: #d50000
+);
+
+.status-container {
+  display: flex;
+  height: 1.4em;
+  width: 1.4em;
+  overflow: hidden;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+
+  @each $status, $background-color in $statuses {
+    .status-#{$status} {
+      background-color: $background-color;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
