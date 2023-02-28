@@ -3,6 +3,8 @@
 
 .mtx-grid {
   max-height: 70vh;
+  border: 0 !important;
+  outline: 1px solid rgba(255,255,255,0.2);
 
   .mat-standard-chip {
     height: unset;
