@@ -86,7 +86,6 @@ export async function selectDateRangeOnDatePicker(
   await selectDateOnDatePicker(yearTo, monthTo, dayTo);
 }
 
-
 export async function selectValueInNgSelector(selector: WebdriverIO.Element, value: string, selectorInModal: boolean = false,) {
   await selector.waitForDisplayed({ timeout: 40000 });
   const input = await selector.$('input');
@@ -102,6 +101,29 @@ export async function selectValueInNgSelector(selector: WebdriverIO.Element, val
   } else {
     valueForClick = await selector.$(
       `.ng-option=${value}`
+    );
+  }
+  // await valueForClick.waitForDisplayed({ timeout: 40000 });
+  await valueForClick.waitForClickable({ timeout: 40000 });
+  await valueForClick.click();
+  await browser.pause(500);
+}
+
+export async function selectValueInNgSelectorWithSeparateValueAndSearchValue(selector: WebdriverIO.Element, valueForSearch: string, valueForSelect: string = '', selectorInModal: boolean = false,) {
+  await selector.waitForDisplayed({ timeout: 40000 });
+  const input = await selector.$('input');
+  await input.waitForDisplayed({ timeout: 40000 })
+  await (await input).setValue(valueForSearch);
+  await browser.pause(500);
+  let valueForClick: WebdriverIO.Element;
+  // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)
+  if(selectorInModal) {
+    valueForClick = await $(
+      `.ng-option=${valueForSelect ? valueForSelect : valueForSearch}`
+    );
+  } else {
+    valueForClick = await selector.$(
+      `.ng-option=${valueForSelect ? valueForSelect : valueForSearch}`
     );
   }
   // await valueForClick.waitForDisplayed({ timeout: 40000 });
