@@ -2,8 +2,8 @@ import { Guid } from 'guid-typescript';
 
 const expect = require('chai').expect;
 
-export function generateRandmString() {
-  return Guid.raw();
+export function generateRandmString(length: number = 36) {
+  return Guid.raw().toString().slice(0, length);
 }
 
 export async function testSorting(
@@ -86,13 +86,48 @@ export async function selectDateRangeOnDatePicker(
   await selectDateOnDatePicker(yearTo, monthTo, dayTo);
 }
 
-export async function selectValueInNgSelector(selector: WebdriverIO.Element, value: string,) {
-  await (await selector.$('input')).setValue(value);
+export async function selectValueInNgSelector(selector: WebdriverIO.Element, value: string, selectorInModal: boolean = false,) {
+  await selector.waitForDisplayed({ timeout: 40000 });
+  const input = await selector.$('input');
+  await input.waitForDisplayed({ timeout: 40000 })
+  await (await input).setValue(value);
   await browser.pause(500);
-  const valueForClick = await selector.$(
-    `.ng-option=${value}`
-  );
-  valueForClick.waitForDisplayed({ timeout: 40000 });
+  let valueForClick: WebdriverIO.Element;
+  // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)
+  if(selectorInModal) {
+    valueForClick = await $(
+      `.ng-option=${value}`
+    );
+  } else {
+    valueForClick = await selector.$(
+      `.ng-option=${value}`
+    );
+  }
+  // await valueForClick.waitForDisplayed({ timeout: 40000 });
+  await valueForClick.waitForClickable({ timeout: 40000 });
+  await valueForClick.click();
+  await browser.pause(500);
+}
+
+export async function selectValueInNgSelectorWithSeparateValueAndSearchValue(selector: WebdriverIO.Element, valueForSearch: string, valueForSelect: string = '', selectorInModal: boolean = false,) {
+  await selector.waitForDisplayed({ timeout: 40000 });
+  const input = await selector.$('input');
+  await input.waitForDisplayed({ timeout: 40000 })
+  await (await input).setValue(valueForSearch);
+  await browser.pause(500);
+  let valueForClick: WebdriverIO.Element;
+  // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)
+  if(selectorInModal) {
+    valueForClick = await $(
+      `.ng-option=${valueForSelect ? valueForSelect : valueForSearch}`
+    );
+  } else {
+    valueForClick = await selector.$(
+      `.ng-option=${valueForSelect ? valueForSelect : valueForSearch}`
+    );
+  }
+  // await valueForClick.waitForDisplayed({ timeout: 40000 });
+  await valueForClick.waitForClickable({ timeout: 40000 });
   await valueForClick.click();
   await browser.pause(500);
 }

@@ -2,11 +2,12 @@ import {AfterContentInit, AfterViewInit, Component, HostListener, OnDestroy, OnI
 import {AppMenuQuery, AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription, take, zip} from 'rxjs';
-import {AppSettingsService, LocaleService} from 'src/app/common/services';
+import {AppSettingsService, LoaderService, LocaleService} from 'src/app/common/services';
 import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {HeaderSettingsModel} from 'src/app/common/models';
 import {MatDrawer, MatDrawerMode} from '@angular/material/sidenav';
+import {filter} from 'rxjs/operators';
 
 @AutoUnsubscribe()
 @Component({
@@ -33,6 +34,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     public router: Router,
     private eventBrokerService: EventBrokerService,
     private settingsService: AppSettingsService,
+    private loaderService: LoaderService,
   ) {
     this.brokerListener = eventBrokerService.listen<void>('get-header-settings',
       () => {
@@ -42,7 +44,9 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.getSettings();
+    this.loaderService.setLoading(true);
     this.localeService.initLocale();
+    this.authStateService.currentUserLocaleAsync.pipe(filter(x => !!x), take(1)).subscribe(_ => this.loaderService.setLoading(false))
     this.onResize({});
     this.isDarkThemeAsync$ = this.authStateService.isDarkThemeAsync.subscribe(
       (isDarkTheme) => {
