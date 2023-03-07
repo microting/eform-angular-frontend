@@ -32,6 +32,8 @@
     "testheadlessplugin2h": "./node_modules/.bin/wdio wdio-headless-plugin-step2h.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testheadlessplugin2i": "./node_modules/.bin/wdio wdio-headless-plugin-step2i.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testheadlessplugin2j": "./node_modules/.bin/wdio wdio-headless-plugin-step2j.conf.js --disable-gpu --browsers=ChromeHeadless",
+    "testheadlessplugin2k": "./node_modules/.bin/wdio wdio-headless-plugin-step2k.conf.js --disable-gpu --browsers=ChromeHeadless",
+    "testheadlessplugin2l": "./node_modules/.bin/wdio wdio-headless-plugin-step2l.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testheadlessplugin3a": "./node_modules/.bin/wdio wdio-headless-plugin-step3a.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testheadlessplugin3b": "./node_modules/.bin/wdio wdio-headless-plugin-step3b.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testheadlessplugin3c": "./node_modules/.bin/wdio wdio-headless-plugin-step3c.conf.js --disable-gpu --browsers=ChromeHeadless",
