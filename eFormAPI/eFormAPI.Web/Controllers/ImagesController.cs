@@ -121,34 +121,20 @@ namespace eFormAPI.Web.Controllers
         public async Task<IActionResult> PostLoginPageImages(IFormFile file)
         {
             var iUploadedCnt = 0;
-            var saveFolder = PathHelper.GetEformLoginPageSettingsImagesPath();
-            if (string.IsNullOrEmpty(saveFolder))
-            {
-                return BadRequest(_localizationService.GetString("FolderError"));
-            }
-
-            if (!Directory.Exists(saveFolder))
-            {
-                Directory.CreateDirectory(saveFolder);
-            }
 
             if (file.Length > 0)
             {
-                var filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
-                if (!System.IO.File.Exists(filePath))
-                {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    using (var stream = new MemoryStream())
                     {
                         await file.CopyToAsync(stream);
 
                         var core = await _coreHelper.GetCore();
-                        if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+                        if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                         {
-                            await core.PutFileToStorageSystem(filePath, file.FileName);
+                            await core.PutFileToS3Storage(stream, file.FileName);
                         }
                     }
                     iUploadedCnt++;
-                }
             }
 
             if (iUploadedCnt > 0)
