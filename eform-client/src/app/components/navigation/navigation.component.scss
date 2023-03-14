@@ -1,39 +1,49 @@
 @import "../../../scss/utilities/colors";
 
-#main-header-text {
-  font-size: 1.1rem;
-  line-height: 1.1;
-}
+mat-tree {
+  mat-tree-node {
+    display: inline-flex;
 
-#secondary-header-text {
-  font-size: 0.8rem;
-  line-height: 1.1;
-}
+    .nav-link {
+      width: 100%;
+      text-align: inherit;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
 
-@media (max-width: 767px) {
-  .hidden-xs {
-    display: none !important;
+      span {
+        white-space: initial;
+        line-height: 1.4em;
+      }
+    }
   }
-}
 
-.nav-link {
-  width: 100%;
-  text-align: inherit;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-}
+  mat-nested-tree-node { // styles for nested tree nodes
+    mat-accordion {
+      mat-expansion-panel {
+        &:not([class*=mat-elevation-z]) {
+          box-shadow: none !important;
+        }
 
-.mat-expansion-panel-header {
-  padding-left: 1rem;
-}
+        .mat-expansion-panel-header {
+          padding-left: 1rem;
+        }
 
-.mat-expansion-panel:not([class*=mat-elevation-z]) {
-  box-shadow: none !important;
-}
+        .mat-expansion-panel-content {
+          .mat-expansion-panel-body {
+            mat-tree-node {
+              display: inline-flex;
 
-.mat-tree-node {
-  display: inline-flex;
+              span {
+                white-space: initial;
+                line-height: 1.4em;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .mat-menu-item, .mat-icon-button {
@@ -43,9 +53,4 @@
     font-size: 18px;
     line-height: 18px
   }
-}
-
-mat-tree mat-nested-tree-node mat-accordion mat-expansion-panel mat-tree-node span {
-  white-space: initial;
-  line-height: 1.4em;
 }

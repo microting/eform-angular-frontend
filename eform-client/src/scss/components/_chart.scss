@@ -164,7 +164,15 @@
       font-size: 0.8em;
       color: $color-text-med;
     }
-  }
+  } @else { // light theme
+    .advanced-pie-legend {
+      .legend-items-container {
+        .legend-items {
+          overflow: visible !important;
+        }
+      }
+    }
+}
 }
 
 @mixin theme($theme) {

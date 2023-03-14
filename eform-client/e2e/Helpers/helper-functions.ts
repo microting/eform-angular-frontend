@@ -96,11 +96,11 @@ export async function selectValueInNgSelector(selector: WebdriverIO.Element, val
   // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)
   if(selectorInModal) {
     valueForClick = await $(
-      `.ng-option=${value}`
+      `.ng-option*=${value}`
     );
   } else {
     valueForClick = await selector.$(
-      `.ng-option=${value}`
+      `.ng-option*=${value}`
     );
   }
   // await valueForClick.waitForDisplayed({ timeout: 40000 });
@@ -119,11 +119,11 @@ export async function selectValueInNgSelectorWithSeparateValueAndSearchValue(sel
   // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)
   if(selectorInModal) {
     valueForClick = await $(
-      `.ng-option=${valueForSelect ? valueForSelect : valueForSearch}`
+      `.ng-option*=${valueForSelect ? valueForSelect : valueForSearch}`
     );
   } else {
     valueForClick = await selector.$(
-      `.ng-option=${valueForSelect ? valueForSelect : valueForSearch}`
+      `.ng-option*=${valueForSelect ? valueForSelect : valueForSearch}`
     );
   }
   // await valueForClick.waitForDisplayed({ timeout: 40000 });
