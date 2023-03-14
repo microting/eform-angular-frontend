@@ -46,17 +46,17 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.7.105.10" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.103.17" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.105.18" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.103.26" />
     <PackageReference Include="ClosedXML" Version="0.100.3" />
-    <PackageReference Include="Magick.NET-Q16-x64" Version="12.3.0" />
+    <PackageReference Include="Magick.NET-Q16-x64" Version="13.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.3" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="7.0.25" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="7.0.21" />
+    <PackageReference Include="Microting.eForm" Version="7.0.26" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="7.0.22" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="7.0.21" />
     <PackageReference Include="Microting.HtmlToOpenXml.dll" Version="2.3.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
