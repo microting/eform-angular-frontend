@@ -42,7 +42,7 @@ export function createInitialState(): AuthState {
       lastName: '',
       id: 0,
       userName: '',
-      locale: '',
+      locale: 'da', // TODO add env for test run
       darkTheme: false,
       loginRedirectUrl: '',
       claims: {
