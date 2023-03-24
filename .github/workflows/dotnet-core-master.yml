@@ -25,8 +25,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.12.1'
-      - name: NPM Install
-        run: cd eform-client && npm install
+      - name: Yarn Install
+        run: cd eform-client && yarn install
         if: steps.cache.outputs.cache-hit != 'true'
       - name: Build Docker image
         id: build
@@ -73,8 +73,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18.12.1'
-    - name: NPM Install
-      run: cd eform-client && npm install
+    - name: Yarn Install
+      run: cd eform-client && yarn install
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Create errorShots directory
       run: mkdir /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots
