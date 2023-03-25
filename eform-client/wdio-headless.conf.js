@@ -11,6 +11,21 @@ exports.config = {
   // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
+
+  autoCompileOpts: {
+    autoCompile: true,
+    // see https://github.com/TypeStrong/ts-node#cli-and-programmatic-options
+    // for all available options
+    tsNodeOpts: {
+      transpileOnly: true,
+      project: 'e2e/tsconfig.e2e.json'
+    }
+    // tsconfig-paths is only used if "tsConfigPathsOpts" are provided, if you
+    // do please make sure "tsconfig-paths" is installed as dependency
+    // tsConfigPathsOpts: {
+    //     baseUrl: './'
+    // }
+  },
   specs: [
     'e2e/Tests/database-configuration/**/*.spec.ts',
   ],
@@ -152,8 +167,8 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     //require: 'ts-node/register',
-    compilers: ['tsconfig-paths/register'],
-    timeout: 240000
+    //compilers: ['tsconfig-paths/register'],
+    //timeout: 240000
   },
   //
   // =====

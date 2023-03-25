@@ -16,8 +16,13 @@
       "*": [ "./*" ],
       "src/*": ["./src/*"],
     },
-    "types": ["node", "webdriverio/async", "@wdio/mocha-framework"],
-    "target": "es2020",
+    "types": [
+      "node",
+      "webdriverio/async",
+      "@wdio/mocha-framework",
+      "expect-webdriverio"
+    ],
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
