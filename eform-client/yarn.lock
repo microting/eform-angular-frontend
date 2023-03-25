@@ -2524,9 +2524,9 @@
   integrity sha512-/fvYntiO1GeICvqbQ3doGDIP97vWmvFt83GKguJ6prmQM2iXZfFcq6YE8KteFyRtX2/h5Hf91BYvPodJKFYv5Q==
 
 "@types/node@*", "@types/node@^18.0.0":
-  version "18.15.7"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.15.7.tgz#33514fca9bdf136f77027358850c0fb9cd93c669"
-  integrity sha512-LFmUbFunqmBn26wJZgZPYZPrDR1RwGOu2v79Mgcka1ndO6V0/cwjivPTc4yoK6n9kmw4/ls1r8cLrvh2iMibFA==
+  version "18.15.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.15.9.tgz#a9b529d2a16ae73122b3875969e7db18c9f3e790"
+  integrity sha512-dUxhiNzBLr6IqlZXz6e/rN2YQXlFgOei/Dxy+e3cyXTJ4txSUbGT2/fmnD6zd/75jDMeW5bDee+YXxlFKHoV0A==
 
 "@types/node@18.14.6":
   version "18.14.6"
@@ -4582,9 +4582,9 @@ css-what@^6.0.1:
   integrity sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==
 
 cssdb@^7.0.0:
-  version "7.4.1"
-  resolved "https://registry.yarnpkg.com/cssdb/-/cssdb-7.4.1.tgz#61d55c0173126689922a219e15e131e4b5caf422"
-  integrity sha512-0Q8NOMpXJ3iTDDbUv9grcmQAfdDx4qz+fN/+Md2FGbevT+6+bJNQ2LjB2YIUlLbpBTM32idU1Sb+tb/uGt6/XQ==
+  version "7.5.1"
+  resolved "https://registry.yarnpkg.com/cssdb/-/cssdb-7.5.1.tgz#1cd18e13994adf07cb30f4dc21d93b0cff212519"
+  integrity sha512-YdmjGmoS9TT5wgoKjySaBqgbPYtyxbbegeK8WNqWbZRa7SJcX9V0qGfDjbI8oPQwmh/zuA6ZSnQBCKLj9bZufw==
 
 cssesc@^3.0.0:
   version "3.0.0"
@@ -4667,9 +4667,9 @@ d3-contour@4:
     d3-array "^3.2.0"
 
 d3-delaunay@6:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/d3-delaunay/-/d3-delaunay-6.0.2.tgz#7fd3717ad0eade2fc9939f4260acfb503f984e92"
-  integrity sha512-IMLNldruDQScrcfT+MWnazhHbDJhcRJyOEBAJfwQnHle1RPh6WDuLvxNArUju2VSMSUuKlY5BGHRJ2cYyoFLQQ==
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/d3-delaunay/-/d3-delaunay-6.0.3.tgz#d0824ba2012a5f6cd17d035653d0515d1c098257"
+  integrity sha512-1gPbiMuikAgU/rFcT6WMu17zx0aelw9Hh80go7/TwZQ+/uq8DqqmiNYy+EqPEvTSp/BkJFIpQxjac4Gk/w0zOg==
   dependencies:
     delaunator "5"
 
@@ -5355,9 +5355,9 @@ ejs@^3.0.1:
     jake "^10.8.5"
 
 electron-to-chromium@^1.4.284:
-  version "1.4.339"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.339.tgz#bfa611a7707ca8bbb784e01fe247c18a35bd8d28"
-  integrity sha512-MSXHBJGcbBydq/DQDlpBeUKnJ6C7aTiNCTRpfDV5Iz0sNr/Ng6RJFloq82AAicp/SrmDq4zF6XsKG0B8Xwn1UQ==
+  version "1.4.340"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.340.tgz#3a6d7414c1fc2dbf84b6f7af3ec24270606c85b8"
+  integrity sha512-zx8hqumOqltKsv/MF50yvdAlPF9S/4PXbyfzJS6ZGhbddGkRegdwImmfSVqCkEziYzrIGZ/TlrzBND4FysfkDg==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -10790,9 +10790,9 @@ terser@5.14.2:
     source-map-support "~0.5.20"
 
 terser@^5.16.5:
-  version "5.16.6"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-5.16.6.tgz#f6c7a14a378ee0630fbe3ac8d1f41b4681109533"
-  integrity sha512-IBZ+ZQIA9sMaXmRZCUMDjNH0D5AQQfdn4WUjHL0+1lF4TP1IHRJbrhb6fNaXWikrYQTSkb7SLxkeXAiy1p7mbg==
+  version "5.16.8"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.16.8.tgz#ccde583dabe71df3f4ed02b65eb6532e0fae15d5"
+  integrity sha512-QI5g1E/ef7d+PsDifb+a6nnVgC4F22Bg6T0xrBrz6iloVB4PUkkunp6V8nzoOOZJIzjWVdAGqCdlKlhLq/TbIA==
   dependencies:
     "@jridgewell/source-map" "^0.3.2"
     acorn "^8.5.0"
