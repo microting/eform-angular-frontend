@@ -1,5 +1,5 @@
 
-import DatabaseConfigurationConstants from '../../e2e/Constants/DatabaseConfigurationConstants'
+import DatabaseConfigurationConstants from '../../../e2e/Constants/DatabaseConfigurationConstants'
 describe('template spec', () => {
   it('passes', () => {
     cy.visit('http://localhost:4200');

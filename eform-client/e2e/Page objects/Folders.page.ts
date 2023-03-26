@@ -1,5 +1,5 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
-import { applicationLanguages } from 'src/app/common/const';
+import { applicationLanguages } from '../../src/app/common/const';
 
 class FoldersPage extends PageWithNavbarPage {
   constructor() {

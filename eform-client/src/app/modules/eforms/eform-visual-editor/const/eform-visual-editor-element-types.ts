@@ -1,4 +1,4 @@
-import { EformFieldTypesEnum } from 'src/app/common/const';
+import { EformFieldTypesEnum } from '../../../../common/const';
 import {
   CommonDictionaryModel,
   EformVisualEditorFieldTypeModel,
