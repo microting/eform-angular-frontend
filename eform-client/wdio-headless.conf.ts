@@ -1,5 +1,6 @@
 //const path = require("path");
 import type { Options } from '@wdio/types'
+import path from "path";
 
 export const config: Options.Testrunner = {
   runner: 'local',
@@ -204,7 +205,7 @@ export const config: Options.Testrunner = {
    */
   before: function () {
     //require('ts-node/register');
-    //browser.timeouts('implicit', 5000);
+    browser.timeouts('implicit', 5000);
   },
   /**
    * Runs before a WebdriverIO command gets executed.
@@ -224,8 +225,27 @@ export const config: Options.Testrunner = {
    * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
    * @param {Object} test test details
    */
-  // beforeTest: function (test) {
-  // },
+  beforeTest: function (test) {
+    const timestamp = new Date().toLocaleString('iso', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).replace(/[ ]/g, '--').replace(':', '-');
+
+    // get current test title and clean it, to use it as file name
+    const filename = encodeURIComponent(
+      `chrome-${timestamp}`.replace(/[/]/g, '__')
+    ).replace(/%../, '.');
+
+    const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
+
+    console.log('Saving screenshot to:', filePath);
+    browser.saveScreenshot(filePath);
+    console.log('Saved screenshot to:', filePath);
+  },
   /**
    * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
    * beforeEach in Mocha)
@@ -271,9 +291,9 @@ export const config: Options.Testrunner = {
 
     const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
 
-    //console.log('Saving screenshot to:', filePath);
-    //browser.saveScreenshot(filePath);
-    //console.log('Saved screenshot to:', filePath);
+    console.log('Saving screenshot to:', filePath);
+    browser.saveScreenshot(filePath);
+    console.log('Saved screenshot to:', filePath);
   },
   /**
    * Hook that gets executed after the suite has ended
@@ -289,8 +309,39 @@ export const config: Options.Testrunner = {
    * @param {Number} result 0 - command success, 1 - command error
    * @param {Object} error error object if any
    */
-  // afterCommand: function (commandName, args, result, error) {
-  // },
+  afterCommand: function (commandName, args, result, error) {
+    const path = require('path');
+
+    // if test passed, ignore, else take and save screenshot.
+    if (error === undefined) {
+      return;
+    }
+
+    /*
+     * get the current date and clean it
+     * const date = (new Date()).toString().replace(/\s/g, '-').replace(/-\(\w+\)/, '');
+     */
+    //const { browserName } = browser.desiredCapabilities;
+    const timestamp = new Date().toLocaleString('iso', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).replace(/[ ]/g, '--').replace(':', '-');
+
+    // get current test title and clean it, to use it as file name
+    const filename = encodeURIComponent(
+      `chrome-${timestamp}`.replace(/[/]/g, '__')
+    ).replace(/%../, '.');
+
+    const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
+
+    console.log('Saving screenshot to:', filePath);
+    browser.saveScreenshot(filePath);
+    console.log('Saved screenshot to:', filePath);
+  },
   /**
    * Gets executed after all Tests are done. You still have access to all global variables from
    * the test.
