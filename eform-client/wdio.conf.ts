@@ -1,5 +1,7 @@
-const path = require("path");
-exports.config = {
+//const path = require("path");
+import type { Options } from '@wdio/types'
+
+export const config: Options.Testrunner = {
   runner: 'local',
   path: '/',
   //
@@ -11,15 +13,28 @@ exports.config = {
   // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
+
+  autoCompileOpts: {
+    autoCompile: true,
+    // see https://github.com/TypeStrong/ts-node#cli-and-programmatic-options
+    // for all available options
+    tsNodeOpts: {
+      transpileOnly: true,
+      project: 'e2e/tsconfig.e2e.json'
+    }
+    // tsconfig-paths is only used if "tsConfigPathsOpts" are provided, if you
+    // do please make sure "tsconfig-paths" is installed as dependency
+    // tsConfigPathsOpts: {
+    //     baseUrl: './'
+    // }
+  },
   specs: [
-    'e2e/Tests/navigation-menu/navigation-menu.create-item.spec.ts',
-    'e2e/Tests/navigation-menu/navigation-menu.edit-item.spec.ts',
-    'e2e/Tests/navigation-menu/navigation-menu.drag-item.spec.ts',
-    'e2e/Tests/navigation-menu/navigation-menu.delete-item.spec.ts',
-    'e2e/Tests/navigation-menu/subheader.spec.ts',
+    'e2e/Tests/database-configuration/**/*.spec.ts',
   ],
   suites: {
-    settings: ['e2e/Tests/application-settings/**/*.spec.ts'],
+    settings: [
+      'e2e/Tests/application-settings/**/*.spec.ts'
+    ],
   },
   // Patterns to exclude.
   exclude: [
@@ -47,26 +62,25 @@ exports.config = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
-  capabilities: [
-    {
-      // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-      // grid with only 5 firefox instances available you can make sure that not more than
-      // 5 instances get started at a time.
-      maxInstances: 5,
-      //
-      browserName: 'chrome',
-      'goog:chromeOptions': {
-        args: [
-          'headless',
-          'window-size=1920,1080',
-          'disable-gpu'],
-      },
-      // If outputDir is provided WebdriverIO can capture driver session logs
-      // it is possible to configure which logTypes to include/exclude.
-      // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
-      // excludeDriverLogs: ['bugreport', 'server'],
+  capabilities: [{
+
+    // maxInstances can get overwritten per capability. So if you have an in-house Selenium
+    // grid with only 5 firefox instances available you can make sure that not more than
+    // 5 instances get started at a time.
+    maxInstances: 5,
+    //
+    browserName: 'chrome',
+    'goog:chromeOptions': {
+      args: [
+        //'headless',
+        'window-size=1920,1080',
+        'disable-gpu'],
     },
-  ],
+    // If outputDir is provided WebdriverIO can capture driver session logs
+    // it is possible to configure which logTypes to include/exclude.
+    // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
+    // excludeDriverLogs: ['bugreport', 'server'],
+  }],
   //
   // ===================
   // Test Configurations
@@ -76,23 +90,23 @@ exports.config = {
   // By default WebdriverIO commands are executed in a synchronous way using
   // the wdio-sync package. If you still want to run your Tests in an async way
   // e.g. using promises you can set the sync option to false.
-  sync: false,
+  //sync: false,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
   logLevel: 'silent',
   //
   // Enables colors for log output.
-  coloredLogs: true,
+  //coloredLogs: true,
   //
   // Warns when a deprecated command is used
-  deprecationWarnings: true,
+  //deprecationWarnings: true,
   //
   // If you only want to run your Tests until a specific amount of Tests have failed use
   // bail (default is 0 - don't bail, run all Tests).
   bail: 0,
   //
   // Saves a screenshot to a given path if a command fails.
-  screenshotPath: './errorShots/',
+  //screenshotPath: './errorShots/',
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
@@ -155,8 +169,8 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     //require: 'ts-node/register',
-    compilers: ['tsconfig-paths/register'],
-    timeout: 60000,
+    //compilers: ['tsconfig-paths/register'],
+    timeout: 240000
   },
   //
   // =====
@@ -190,7 +204,7 @@ exports.config = {
    */
   before: function () {
     //require('ts-node/register');
-    browser.timeouts('implicit', 5000);
+    //browser.timeouts('implicit', 5000);
   },
   /**
    * Runs before a WebdriverIO command gets executed.
@@ -228,11 +242,7 @@ exports.config = {
    * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) ends.
    * @param {Object} test test details
    */
-  afterTest: function (
-    test,
-    context,
-    { error, result, duration, passed, retries }
-  ) {
+  afterTest: function (test, context, { error, result, duration, passed, retries }) {
     const path = require('path');
 
     // if test passed, ignore, else take and save screenshot.
@@ -261,9 +271,9 @@ exports.config = {
 
     const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
 
-    console.log('Saving screenshot to:', filePath);
-    browser.saveScreenshot(filePath);
-    console.log('Saved screenshot to:', filePath);
+    //console.log('Saving screenshot to:', filePath);
+    //browser.saveScreenshot(filePath);
+    //console.log('Saved screenshot to:', filePath);
   },
   /**
    * Hook that gets executed after the suite has ended
@@ -306,4 +316,4 @@ exports.config = {
    */
   // onComplete: function(exitCode, config, capabilities) {
   // }
-};
+}

@@ -1,5 +1,7 @@
-const path = require("path");
-exports.config = {
+//const path = require("path");
+import type { Options } from '@wdio/types'
+
+export const config: Options.Testrunner = {
   runner: 'local',
   path: '/',
   //
@@ -11,11 +13,25 @@ exports.config = {
   // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
+
+  autoCompileOpts: {
+    autoCompile: true,
+    // see https://github.com/TypeStrong/ts-node#cli-and-programmatic-options
+    // for all available options
+    tsNodeOpts: {
+      transpileOnly: true,
+      project: 'e2e/tsconfig.e2e.json'
+    }
+    // tsconfig-paths is only used if "tsConfigPathsOpts" are provided, if you
+    // do please make sure "tsconfig-paths" is installed as dependency
+    // tsConfigPathsOpts: {
+    //     baseUrl: './'
+    // }
+  },
   specs: [
-    'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
-    'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
-    'e2e/Tests/profile-settings/profile-settings.language.spec.ts',
-    'e2e/Tests/user-administration/user-administration.name-change.spec.ts',
+    'e2e/Tests/selectable-lists/selectable-lists.add.spec.ts',
+    'e2e/Tests/selectable-lists/selectable-lists.edit.spec.ts',
+    'e2e/Tests/selectable-lists/selectable-lists.delete.spec.ts',
   ],
   suites: {
     settings: [
@@ -76,23 +92,23 @@ exports.config = {
   // By default WebdriverIO commands are executed in a synchronous way using
   // the wdio-sync package. If you still want to run your Tests in an async way
   // e.g. using promises you can set the sync option to false.
-  sync: false,
+  //sync: false,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
   logLevel: 'silent',
   //
   // Enables colors for log output.
-  coloredLogs: true,
+  //coloredLogs: true,
   //
   // Warns when a deprecated command is used
-  deprecationWarnings: true,
+  //deprecationWarnings: true,
   //
   // If you only want to run your Tests until a specific amount of Tests have failed use
   // bail (default is 0 - don't bail, run all Tests).
   bail: 0,
   //
   // Saves a screenshot to a given path if a command fails.
-  screenshotPath: './errorShots/',
+  //screenshotPath: './errorShots/',
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
@@ -155,8 +171,8 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     //require: 'ts-node/register',
-    compilers: ['tsconfig-paths/register'],
-    timeout: 60000
+    //compilers: ['tsconfig-paths/register'],
+    timeout: 240000
   },
   //
   // =====
@@ -190,7 +206,7 @@ exports.config = {
    */
   before: function () {
     //require('ts-node/register');
-    browser.timeouts('implicit', 5000);
+    //browser.timeouts('implicit', 5000);
   },
   /**
    * Runs before a WebdriverIO command gets executed.
@@ -257,9 +273,9 @@ exports.config = {
 
     const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
 
-    console.log('Saving screenshot to:', filePath);
-    browser.saveScreenshot(filePath);
-    console.log('Saved screenshot to:', filePath);
+    //console.log('Saving screenshot to:', filePath);
+    //browser.saveScreenshot(filePath);
+    //console.log('Saved screenshot to:', filePath);
   },
   /**
    * Hook that gets executed after the suite has ended
