@@ -3,7 +3,7 @@
     "baseUrl": "./",
     "forceConsistentCasingInFileNames": false,
     "strict": false,
-    "module": "ES2022",
+    "module": "es2020",
     "outDir": "./dist/out-src",
     "sourceMap": true,
     "declaration": false,
@@ -12,6 +12,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
+    "esModuleInterop": true,
     "paths": {
       "*": [ "./*" ],
       "src/*": ["./src/*"],
@@ -22,12 +23,12 @@
       "@wdio/mocha-framework",
       "expect-webdriverio"
     ],
-    "target": "ES2022",
+    "target": "es2020",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "ES2022",
+      "es2020",
       "dom"
     ]
   },

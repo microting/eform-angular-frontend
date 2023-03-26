@@ -124,7 +124,6 @@ const authPersistStorage = persistState({
   // },
   //preStorageUpdateOperator: () => debounceTime(5000),
 });
-
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'auth', resettable: true })
 export class AuthStore extends Store<AuthState> {

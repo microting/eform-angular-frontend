@@ -17,7 +17,7 @@ import {Router} from '@angular/router';
 import {snakeToCamel} from 'src/app/common/helpers';
 import {resetStores} from '@datorama/akita';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthStateService {
   private isRefreshing = false;
 
