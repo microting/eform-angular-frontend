@@ -1,25 +1,24 @@
-
+import databasePage from '../Database.page';
 import DatabaseConfigurationConstants from '../../../e2e/Constants/DatabaseConfigurationConstants'
-describe('template spec', () => {
-  it('passes', () => {
+import loginPage from '../Login.page';
+
+describe('Database', () => {
+  it('should be configured successfully', () => {
     cy.visit('http://localhost:4200');
-    cy.get('#spinner-animation').should('not.be.visible');
-    cy.get('#firstName').should('be.visible').type(DatabaseConfigurationConstants.firstName);
-    cy.get('#lastName').should('be.visible').type(DatabaseConfigurationConstants.lastNAme);
-    cy.get('#email').should('be.visible').type(DatabaseConfigurationConstants.email);
-    cy.get('#password').should('be.visible').type(DatabaseConfigurationConstants.password);
-    cy.get('#customerNo').should('be.visible').type(DatabaseConfigurationConstants.customerNo);
-    cy.get('#token').should('be.visible').type(DatabaseConfigurationConstants.token);
-    cy.get('#auth2').should('be.visible').type(DatabaseConfigurationConstants.authenticationType);
-    cy.get('#host2').should('be.visible').click().focused().clear().type(DatabaseConfigurationConstants.SqlServer);
-    cy.get('#languageSelector').should('be.visible').click();
-    cy.get('.ng-option .ng-star-inserted').each((item, index, list) => {
-      if (item.text() === DatabaseConfigurationConstants.languageOptions.danish) {
-        item.click();
-      }
-      });
-    cy.get('#save').should('be.visible').click();
+    databasePage.languageDropdown().should('be.visible');
+    cy.wait(5000);
+    databasePage.firstNameInput().should('be.visible');
+    databasePage.lastNameInput().should('be.visible');
+    databasePage.emailInput().should('be.visible');
+    databasePage.passwordInput().should('be.visible');
+    databasePage.customerNo().should('be.visible');
+    databasePage.tokenInput().should('be.visible');
+    databasePage.authenticationType().should('be.visible');
+    databasePage.languageDropdown().should('be.visible');
+
+    databasePage.configure(DatabaseConfigurationConstants.languageOptions.danish);
+    databasePage.save();
     cy.wait(90000);
-    cy.get('#loginBtn').should('be.visible').click();
-    })
-})
+    loginPage.getLoginButton().should('be.visible');
+  });
+});
