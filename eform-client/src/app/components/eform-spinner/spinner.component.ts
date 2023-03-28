@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LoaderService} from 'src/app/common/services';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-eform-spinner',
   templateUrl: './spinner.component.html',
-  styleUrls: ['./spinner.component.scss'],
+  styleUrls: ['./spinner.component.scss']
 })
 export class SpinnerComponent implements OnInit {
   loading: boolean;
@@ -36,14 +36,15 @@ export class SpinnerComponent implements OnInit {
   constructor(
     public loaderService: LoaderService,
     sanitizer: DomSanitizer,
+    private cdr: ChangeDetectorRef
   ) {
     this.trustedHtml = sanitizer.bypassSecurityTrustHtml(this.icon);
   }
 
   ngOnInit() {
-    /*this.loaderService.isLoading.subscribe((v) => {
-      // console.log(v);
-      this.loading = v;
-    });*/
+    this.loaderService.isLoading.subscribe(isLoading => {
+      this.loading = isLoading;
+      this.cdr.detectChanges();
+    });
   }
 }
