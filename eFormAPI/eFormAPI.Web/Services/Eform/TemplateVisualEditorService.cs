@@ -82,6 +82,7 @@ namespace eFormAPI.Web.Services.Eform
                         {
                             x.Taggings,
                             x.Translations,
+                            quickSync = x.QuickSyncEnabled == 1,
                         })
                         .FirstOrDefaultAsync();
                     eform.Translations = checklist?.Translations
@@ -98,6 +99,7 @@ namespace eFormAPI.Web.Services.Eform
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         // ReSharper disable once PossibleInvalidOperationException
                         .Select(x => (int)x.TagId).ToList();
+                    eform.QuickSync = (bool)checklist?.quickSync;
 
                     return new OperationDataResult<EformVisualEditorModel>(true, eform);
                 } else {
@@ -144,7 +146,7 @@ namespace eFormAPI.Web.Services.Eform
                     MultiApproval = 0,
                     FastNavigation = 0,
                     DownloadEntities = 0,
-                    QuickSyncEnabled = 0,
+                    QuickSyncEnabled = model.QuickSync ? (short)1 : (short)0,
                     IsEditable = true,
                     IsLocked = false
                 };
@@ -311,9 +313,19 @@ namespace eFormAPI.Web.Services.Eform
                     }
                 }
 
-                //tagging
                 var eformWithTags = parentEform ?? dbEform;
 
+	            // change main checklist fields
+                var quickSyncEnabled = eformWithTags.QuickSyncEnabled == 1;
+
+				if (quickSyncEnabled != model.QuickSync)
+				{
+                    // convert bool to short
+					eformWithTags.QuickSyncEnabled = model.QuickSync ? (short)1 : (short)0;
+					await eformWithTags.Update(sdkDbContext);
+				}
+
+                //tagging
                 var tagsIdForDelete = eformWithTags.Taggings
                     .Select(x => x.TagId)
                     .Where(id => !model.Checklist.TagIds.Contains((int)id))

@@ -61,5 +61,12 @@
       >
       </mtx-select>
     </mat-form-field>
+    <mat-slide-toggle
+      color="primary"
+      id="mainCheckListQuickSyncToggle"
+      [checked]="visualEditorModel.quickSync"
+      [(ngModel)]="visualEditorModel.quickSync">
+      {{ "Quick sync" | translate }}
+    </mat-slide-toggle>
   </mat-card-content>
 </section>
