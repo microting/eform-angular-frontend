@@ -14,4 +14,5 @@ export class EformVisualEditorModel {
   checkLists: EformVisualEditorModel[] = [];
   tempId?: number = getRandomInt(1000, 10000);
   parentChecklistId?: number;
+  quickSync: boolean = false;
 }

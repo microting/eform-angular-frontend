@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   HttpResponse,
   HttpRequest,
@@ -6,51 +6,61 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { LoaderService } from 'src/app/common/services';
+import {finalize, Observable, throwError} from 'rxjs';
+import {LoaderService} from 'src/app/common/services';
+import {catchError, tap} from 'rxjs/operators';
 
 @Injectable()
+// This is a class for an HTTP interceptor that intercepts HTTP requests and responses
+// It implements the HttpInterceptor interface from the @angular/common/http package
 export class LoaderInterceptor implements HttpInterceptor {
+  // This is an array of HTTP requests that are currently being processed
   private requests: HttpRequest<any>[] = [];
 
-  constructor(private loaderService: LoaderService) {}
+  // This is the constructor for the class
+  // It takes a LoaderService as a parameter
+  constructor(private loaderService: LoaderService) {
+  }
 
+  // This method removes a request from the requests array
+  // It takes an HttpRequest as a parameter
   removeRequest(req: HttpRequest<any>) {
     const i = this.requests.indexOf(req);
     if (i >= 0) {
       this.requests.splice(i, 1);
     }
+    // This sets the loading state of the loader service based on the number of requests in the array
     this.loaderService.setLoading(this.requests.length > 0);
   }
 
+  // This method intercepts an HTTP request and returns an Observable of the HTTP event
+  // It takes an HttpRequest and an HttpHandler as parameters
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // This adds the request to the requests array
     this.requests.push(req);
 
+    // This sets the loading state of the loader service to true
     this.loaderService.setLoading(true);
 
-    return new Observable((observer) => {
-      const subscription = next.handle(req).subscribe(
-        (event) => {
-          if (event instanceof HttpResponse) {
-            this.removeRequest(req);
-            observer.next(event);
+    // This returns an Observable of the HTTP event
+    return next.handle(req)
+      .pipe(
+        // This tap operator checks if the event is an HttpResponse and removes the request from the requests array if it is
+        tap((event) => {
+            if (event instanceof HttpResponse) {
+              this.removeRequest(req);
+            }
           }
-        },
-        (err) => {
+        ),
+        // This catchError operator removes the request from the requests array and throws an error if there is an error
+        catchError((err) => {
           this.removeRequest(req);
-          observer.error(err);
-        },
-        () => {
+          return throwError(err);
+        }),
+        // This finalize operator removes the request from the requests array when the Observable completes
+        finalize(() => {
           this.removeRequest(req);
-          observer.complete();
-        }
+        })
       );
-
-      // remove request from queue when cancelled
-      return () => {
-        this.removeRequest(req);
-        subscription.unsubscribe();
-      };
-    });
   }
 }

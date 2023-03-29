@@ -46,6 +46,7 @@ import {FormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -95,6 +96,7 @@ import {MatInputModule} from '@angular/material/input';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     EformSharedModule,
+    MatProgressSpinnerModule,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],

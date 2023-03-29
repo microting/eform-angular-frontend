@@ -1,0 +1,31 @@
+<h3 mat-dialog-title>{{ 'New tags' | translate }}</h3>
+<div mat-dialog-content>
+  <mat-form-field>
+    <textarea
+      matInput
+      [(ngModel)]="textareaValue"
+      type="text"
+      id="newTagsName"
+      rows="10"
+    ></textarea>
+    <mat-label>{{ 'Names' | translate }}</mat-label>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    id="newTagsSaveBtn"
+    [disabled]="!textareaValue"
+    (click)="createTags()"
+  >
+    {{ 'Create' | translate }}
+  </button>
+  <button
+    mat-raised-button
+    id="newTagsSaveCancelBtn"
+    (click)="cancelCreate()"
+  >
+    {{ 'Close' | translate }}
+  </button>
+</div>

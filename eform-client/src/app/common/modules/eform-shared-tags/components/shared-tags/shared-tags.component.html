@@ -1,16 +1,26 @@
 <h3 mat-dialog-title>{{ 'Tags management' | translate }}</h3>
 <div mat-dialog-content class="d-flex flex-column">
-  <button
-    mat-raised-button
-    color="accent"
-    class="mb-2 ml-auto"
-    id="newTagBtn"
-    (click)="showCreateTagModal()"
-    type="button">
-    <mat-icon>add</mat-icon>
-    {{'Add new' | translate}}
-  </button>
-
+  <div class="d-flex flex-row justify-content-end mb-2">
+    <button
+      *ngIf="showMultipleCreateBtn"
+      mat-raised-button
+      color="primary"
+      id="newTagsBtn"
+      (click)="showMultipleCreateTagModal()"
+      type="button">
+      <mat-icon>add</mat-icon>
+      {{'Add bulk' | translate}}
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      id="newTagBtn"
+      (click)="showCreateTagModal()"
+      type="button">
+      <mat-icon>add</mat-icon>
+      {{'Add new' | translate}}
+    </button>
+  </div>
   <div class="d-flex flex-column">
     <div class="d-flex flex-row tag-row align-items-center" *ngFor="let tag of availableTags">
       <div id="tagName">
