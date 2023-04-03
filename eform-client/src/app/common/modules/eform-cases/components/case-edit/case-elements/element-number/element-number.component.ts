@@ -31,8 +31,12 @@ export class ElementNumberComponent {
     //Remove all none numeric characters except one comma
     let newString = str.replace(/[^0-9,]/g, '');
     //Check if there's more than one comma in the string
-    if (newString.match(/,/g).length > 1) {
-      newString = this.fieldValueObj.value;
+    if (newString.match(/,/g) !== null) {
+      if (newString.match(/,/g).length > 1) {
+        newString = this.fieldValueObj.value;
+      } else {
+        this.fieldValueObj.value = newString;
+      }
     } else {
       this.fieldValueObj.value = newString;
     }
