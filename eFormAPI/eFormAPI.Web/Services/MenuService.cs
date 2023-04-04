@@ -128,9 +128,9 @@ namespace eFormAPI.Web.Services
                                     Id = e.Id,
                                     Name = e.Name,
                                     LocaleName = e.LocaleName,
-                                    Language = e.Language,
+                                    Language = e.Language
 
-                                 })
+                                })
                                 .ToList(),
                             RelatedTemplateItemId = 1
                         })
@@ -163,7 +163,7 @@ namespace eFormAPI.Web.Services
                                     Id = e.Id,
                                     Name = e.Name,
                                     LocaleName = e.LocaleName,
-                                    Language = e.Language,
+                                    Language = e.Language
                                 })
                                 .ToList(),
                                 RelatedTemplateItemId = p.Id
@@ -196,7 +196,7 @@ namespace eFormAPI.Web.Services
                                 Id = p.Id,
                                 Name = p.Name,
                                 LocaleName = p.LocaleName,
-                                Language = p.Language,
+                                Language = p.Language
                             })
                             .ToList(),
                         SecurityGroupsIds = securityGroupsIds
@@ -221,23 +221,23 @@ namespace eFormAPI.Web.Services
                                         Id = k.Id,
                                         Name = k.Name,
                                         LocaleName = k.LocaleName,
-                                        Language = k.Language,
+                                        Language = k.Language
                                     })
                                     .ToList(),
                                 SecurityGroupsIds = _dbContext.MenuItemSecurityGroups
                                     .Where(k => k.MenuItemId == p.Id)
                                     .Select(k => k.SecurityGroupId)
                                     .ToList(),
-                                IsInternalLink = p.IsInternalLink,
+                                IsInternalLink = p.IsInternalLink
                             })
-                            .ToList(),
+                            .ToList()
                     })
                     .ToList();
 
                 var result = new NavigationMenuModel()
                 {
                     MenuTemplates = menuTemplates,
-                    ActualMenu = actualMenu,
+                    ActualMenu = actualMenu
                 };
 
                 return new OperationDataResult<NavigationMenuModel>(true, result);
@@ -326,7 +326,7 @@ namespace eFormAPI.Web.Services
                             //         .ToList()
                             // : new List<string>(),
                             Position = p.Position,
-                            IsInternalLink = p.IsInternalLink,
+                            IsInternalLink = p.IsInternalLink
                         })
                         .ToList()
                     })
@@ -356,10 +356,10 @@ namespace eFormAPI.Web.Services
                         //     ? d.MenuTemplate.Permissions.Select(y => y.ClaimName).ToList()
                         //     : new List<string>(),
                         Position = d.Position,
-                        IsInternalLink = true,
+                        IsInternalLink = true
                     })
                         .ToList(),
-                    IsInternalLink = true,
+                    IsInternalLink = true
                 }).ToList();
 
                 // Add user first and last name
@@ -370,7 +370,7 @@ namespace eFormAPI.Web.Services
                 var result = new MenuModel
                 {
                     LeftMenu = menuItems,
-                    RightMenu = orderedRightMenu,
+                    RightMenu = orderedRightMenu
                 };
 
                 // Add menu from plugins
@@ -431,7 +431,7 @@ namespace eFormAPI.Web.Services
                     Type = pluginMenuItem.Type,
                     Position = currentPosition,
                     MenuTemplateId = _dbContext.MenuTemplates.First(x => x.E2EId == pluginMenuItem.E2EId).Id,
-                    ParentId = parentId,
+                    ParentId = parentId
                 };
 
                 _dbContext.MenuItems.Add(newMenuItem);
@@ -442,7 +442,7 @@ namespace eFormAPI.Web.Services
                              Language = menuItemTranslation.Language,
                              LocaleName = menuItemTranslation.LocaleName,
                              Name = menuItemTranslation.Name,
-                             MenuItemId = newMenuItem.Id,
+                             MenuItemId = newMenuItem.Id
                          }))
                 {
                     _dbContext.MenuItemTranslations.Add(translation);
@@ -470,7 +470,7 @@ namespace eFormAPI.Web.Services
                              Language = menuItemTranslation.Language,
                              LocaleName = menuItemTranslation.LocaleName,
                              Name = menuItemTranslation.Name,
-                             MenuItemId = newMenuItem.Id,
+                             MenuItemId = newMenuItem.Id
                          }))
                 {
                     _dbContext.MenuItemTranslations.Add(translation);

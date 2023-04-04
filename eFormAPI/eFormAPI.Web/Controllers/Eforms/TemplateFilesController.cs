@@ -304,7 +304,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 {
                     Checksum = hash,
                     FileName = newFile.FileName,
-                    FileLocation = filePath,
+                    FileLocation = filePath
                 };
                 await newUploadData.Create(sdkDbContext);
 

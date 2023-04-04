@@ -157,7 +157,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                             UpdatedAt = DateTime.UtcNow,
                             EmailRecipientId = emailRecipient.Id,
                             EmailTagId = tagId,
-                            Version = 1,
+                            Version = 1
                         };
 
                         await _dbContext.EmailTagRecipients.AddAsync(emailTagRecipient);
@@ -233,7 +233,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                                 CreatedByUserId = _userService.UserId,
                                 UpdatedAt = DateTime.UtcNow,
                                 UpdatedByUserId = _userService.UserId,
-                                Version = 1,
+                                Version = 1
                             };
                             await _dbContext.EmailTags.AddAsync(emailTag);
                             await _dbContext.SaveChangesAsync();
@@ -256,7 +256,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                             UpdatedAt = DateTime.UtcNow,
                             UpdatedByUserId = _userService.UserId,
                             Version = 1,
-                            TagRecipients = new List<EmailTagRecipient>(),
+                            TagRecipients = new List<EmailTagRecipient>()
                         };
 
                         // add new tags
@@ -270,7 +270,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                                     UpdatedAt = DateTime.UtcNow,
                                     UpdatedByUserId = _userService.UserId,
                                     Version = 1,
-                                    EmailTagId = tagId,
+                                    EmailTagId = tagId
                                 });
                         }
 
@@ -305,7 +305,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                     {
                         Id = x.Id,
                         Name = x.Name,
-                        IsTag = true,
+                        IsTag = true
                     }).ToListAsync();
 
                 var emailRecipients = await _dbContext.EmailRecipients
@@ -315,7 +315,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                     {
                         Id = x.Id,
                         Name = $"{x.Name} ({x.Email})",
-                        IsTag = false,
+                        IsTag = false
                     }).ToListAsync();
 
                 var result = new List<EmailRecipientTagCommonModel>();
@@ -344,7 +344,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                     .Select(x => new CommonDictionaryModel
                     {
                         Id = x.Id,
-                        Name = $"{x.Name} ({x.Email})",
+                        Name = $"{x.Name} ({x.Email})"
                     }).ToListAsync();
 
                 return new OperationDataResult<CommonDictionaryModel[]>(
@@ -372,7 +372,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                     .Select(u => new EmailRecipientTagModel
                     {
                         Id = u.EmailTag.Id,
-                        Name = u.EmailTag.Name,
+                        Name = u.EmailTag.Name
                     }).ToList()
             });
         }

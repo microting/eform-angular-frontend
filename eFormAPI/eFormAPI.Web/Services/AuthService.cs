@@ -170,7 +170,7 @@ namespace eFormAPI.Web.Services
                 userName = user.UserName,
                 role = roleList.FirstOrDefault(),
                 FirstName = user.FirstName,
-                LastName = user.LastName,
+                LastName = user.LastName
             });
         }
 
@@ -207,7 +207,7 @@ namespace eFormAPI.Web.Services
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(AuthConsts.ClaimLastUpdateKey, timeStamp.ToString()),
+                    new Claim(AuthConsts.ClaimLastUpdateKey, timeStamp.ToString())
                 };
 
                 if (!string.IsNullOrEmpty(user.Locale))
@@ -241,7 +241,7 @@ namespace eFormAPI.Web.Services
                 var authItem = new AuthItem
                 {
                     TimeStamp = timeStamp,
-                    Claims = userInMemoryClaims,
+                    Claims = userInMemoryClaims
                 };
 
                 _authCacheService.Set(authItem, user.Id);

@@ -148,7 +148,7 @@ namespace eFormAPI.Web.Services
                     {
                         Name = x.Name,
                         Description = x.Description,
-                        LanguageId = x.LanguageId,
+                        LanguageId = x.LanguageId
                     }).ToList();
 
                 await core.FolderCreate(folderTranslations, createModel.ParentId); // creating the folder in Danish as default
@@ -229,7 +229,7 @@ namespace eFormAPI.Web.Services
                     {
                         Name = x.Name,
                         Description = x.Description,
-                        LanguageId = x.LanguageId,
+                        LanguageId = x.LanguageId
                     }).ToList();
 
                 await core.FolderUpdate(folderUpdateModel.Id, folderTranslations, folder.ParentId);
@@ -299,7 +299,7 @@ namespace eFormAPI.Web.Services
                     {
                         Name = y.Name,
                         Description = y.Description,
-                        LanguageId = y.LanguageId,
+                        LanguageId = y.LanguageId
                     }).ToList()
             });
         }
@@ -318,7 +318,7 @@ namespace eFormAPI.Web.Services
                     .First(y => y.LanguageId == languageId)
                     .Name,
                 ParentId = x.ParentId,
-                UpdatedAt = x.UpdatedAt,
+                UpdatedAt = x.UpdatedAt
             });
         }
     }

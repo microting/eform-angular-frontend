@@ -68,7 +68,7 @@ namespace eFormAPI.Web.Services
                     .Select(x => new CommonDictionaryModel
                     {
                         Id = x.Id,
-                        Name = x.Name,
+                        Name = x.Name
                     })
                     .OrderBy(x => x.Name)
                     .ToListAsync();
@@ -111,7 +111,7 @@ namespace eFormAPI.Web.Services
                             .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
                             .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
                             .Select(t => (int)t.TagId).ToList(),
-                        IsLocked = x.IsLocked,
+                        IsLocked = x.IsLocked
                     }).ToListAsync();
 
                 return new OperationDataResult<List<SiteModel>>(true, sites);
@@ -143,7 +143,7 @@ namespace eFormAPI.Web.Services
                         Tags = x.SiteTags
                             .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
                             .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
-                            .Select(t => (int)t.TagId).ToList(),
+                            .Select(t => (int)t.TagId).ToList()
                     }).FirstOrDefaultAsync();
 
                 if (site == null)
@@ -222,7 +222,7 @@ namespace eFormAPI.Web.Services
                     var siteTag = new SiteTag
                     {
                         TagId = tagIdForCreate,
-                        SiteId = site.Id,
+                        SiteId = site.Id
                     };
 
                     await siteTag.Create(dbContext);

@@ -82,7 +82,7 @@ namespace eFormAPI.Web.Services.Eform
                         {
                             x.Taggings,
                             x.Translations,
-                            quickSync = x.QuickSyncEnabled == 1,
+                            quickSync = x.QuickSyncEnabled == 1
                         })
                         .FirstOrDefaultAsync();
                     eform.Translations = checklist?.Translations
@@ -92,7 +92,7 @@ namespace eFormAPI.Web.Services.Eform
                             Id = x.Id,
                             Description = x.Description,
                             LanguageId = x.LanguageId,
-                            Name = x.Text,
+                            Name = x.Text
                         })
                         .ToList();
                     eform.TagIds = checklist?.Taggings
@@ -251,7 +251,7 @@ namespace eFormAPI.Web.Services.Eform
                 if (dbEform.ParentId != null)
                 {
                     parentEform = await sdkDbContext.CheckLists
-                        .Where(x => x.Id == model.Checklist.Id - 1)
+                        .Where(x => x.Id == dbEform.ParentId)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Include(x => x.Taggings)
                         .Include(x => x.Translations)
@@ -266,7 +266,7 @@ namespace eFormAPI.Web.Services.Eform
                         CheckListId = dbEform.Id,
                         LanguageId = translation.LanguageId,
                         Text = translation.Name,
-                        Description = translation.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
+                        Description = translation.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", "")
                     }))
                 {
                     await newCheckListTranslation.Create(sdkDbContext);
@@ -302,7 +302,7 @@ namespace eFormAPI.Web.Services.Eform
                         var translationForUpdateParent = sdkDbContext.CheckListTranslations
                             .FirstOrDefault(x =>
                                 x.LanguageId == translationsModel.LanguageId &&
-                                (x.CheckListId == parentCheckList.Id));
+                                x.CheckListId == parentCheckList.Id);
 
                         if (translationForUpdateParent != null)
                         {
@@ -315,15 +315,11 @@ namespace eFormAPI.Web.Services.Eform
 
                 var eformWithTags = parentEform ?? dbEform;
 
-	            // change main checklist fields
-                var quickSyncEnabled = eformWithTags.QuickSyncEnabled == 1;
-
-				if (quickSyncEnabled != model.QuickSync)
-				{
-                    // convert bool to short
-					eformWithTags.QuickSyncEnabled = model.QuickSync ? (short)1 : (short)0;
-					await eformWithTags.Update(sdkDbContext);
-				}
+                // convert bool to short
+				eformWithTags.QuickSyncEnabled = model.Checklist.QuickSync ? (short)1 : (short)0;
+				await eformWithTags.Update(sdkDbContext);
+                dbEform.QuickSyncEnabled = eformWithTags.QuickSyncEnabled;
+                await dbEform.Update(sdkDbContext);
 
                 //tagging
                 var tagsIdForDelete = eformWithTags.Taggings
@@ -352,7 +348,7 @@ namespace eFormAPI.Web.Services.Eform
                 foreach (var tagging in tagsForCreate.Select(tagId => new Tagging
                          {
                              CheckListId = eformWithTags.Id,
-                             TagId = tagId,
+                             TagId = tagId
                          }))
                 {
                     await tagging.Create(sdkDbContext);
@@ -580,7 +576,7 @@ namespace eFormAPI.Web.Services.Eform
                                             LanguageId = y.LanguageId,
                                             Text = y.Name
                                         })
-                                    .ToList(),
+                                    .ToList()
                             })
                             .ToList();
 
@@ -602,7 +598,7 @@ namespace eFormAPI.Web.Services.Eform
                                         // ReSharper disable once PossibleInvalidOperationException
                                         Id = (int)y.Id
                                     })
-                                    .ToList(),
+                                    .ToList()
                             });
 
                         foreach (var fieldOption in optionsForUpdate)
@@ -665,7 +661,7 @@ namespace eFormAPI.Web.Services.Eform
                                     {
                                         Checksum = hashAndLanguageIdList.Last().Key,
                                         FileName = pdfFile.File.FileName,
-                                        FileLocation = filePath,
+                                        FileLocation = filePath
                                     };
                                     await uploadData.Create(sdkDbContext);
                                 }
@@ -704,7 +700,7 @@ namespace eFormAPI.Web.Services.Eform
                         LanguageId = x.LanguageId,
                         Text = x.Name,
                         Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
-                        DefaultValue = x.DefaultValue,
+                        DefaultValue = x.DefaultValue
                     })
                     .ToList())
                 {
@@ -874,12 +870,12 @@ namespace eFormAPI.Web.Services.Eform
                             Description = x.Description,
                             Name = x.Text,
                             LanguageId = x.LanguageId,
-                            DefaultValue = x.DefaultValue,
+                            DefaultValue = x.DefaultValue
                         }).ToList(),
                     Mandatory = Convert.ToBoolean(field.Mandatory),
                     // ReSharper disable once PossibleInvalidOperationException
                     ChecklistId = (int)field.CheckListId,
-                    EntityGroupId = field.EntityGroupId,
+                    EntityGroupId = field.EntityGroupId
                 };
 
                 switch (field.FieldType.Type)
@@ -995,7 +991,7 @@ namespace eFormAPI.Web.Services.Eform
                     MaxValue = field.MaxValue ?? null,
                     MinValue = field.MinValue ?? null,
                     Mandatory = Convert.ToInt16(field.Mandatory),
-                    ParentFieldId = parentFieldId ?? field.ParentFieldId,
+                    ParentFieldId = parentFieldId ?? field.ParentFieldId
                 };
                 await dbField.Create(sdkDbContext);
 
@@ -1034,7 +1030,7 @@ namespace eFormAPI.Web.Services.Eform
                                                 LanguageId = y.LanguageId,
                                                 Text = y.Name
                                             })
-                                        .ToList(),
+                                        .ToList()
                                 })
                             .ToList();
                         foreach (var dbOption in optionsForCreate)
@@ -1084,7 +1080,7 @@ namespace eFormAPI.Web.Services.Eform
                                     {
                                         Checksum = hashAndLanguageIdList.Last().Key,
                                         FileName = pdfFile.File.FileName,
-                                        FileLocation = filePath,
+                                        FileLocation = filePath
                                     };
                                     await uploadData.Create(sdkDbContext);
                                 }
@@ -1133,7 +1129,7 @@ namespace eFormAPI.Web.Services.Eform
                             LanguageId = x.LanguageId,
                             Text = x.Name,
                             Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
-                            DefaultValue = x.DefaultValue,
+                            DefaultValue = x.DefaultValue
                         }).ToList();
                 foreach (var fieldTranslation in translates)
                 {
@@ -1193,7 +1189,7 @@ namespace eFormAPI.Web.Services.Eform
                             Name = y.Text,
                             Description = y.Description,
                             Id = y.Id,
-                            LanguageId = y.LanguageId,
+                            LanguageId = y.LanguageId
                         })
                     .ToList(),
                 TagIds = ef.Taggings.Select(y => (int)y.TagId).ToList(),
@@ -1323,7 +1319,7 @@ namespace eFormAPI.Web.Services.Eform
                     CheckListId = checkList.Id,
                     LanguageId = x.LanguageId,
                     Text = x.Name,
-                    Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
+                    Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", "")
                 }))
                 {
                     await translation.Create(sdkDbContext);
@@ -1363,7 +1359,7 @@ namespace eFormAPI.Web.Services.Eform
                     DisplayIndex = fieldGroup.Position,
                     MaxValue = fieldGroup.MaxValue,
                     MinValue = fieldGroup.MinValue,
-                    Mandatory = Convert.ToInt16(fieldGroup.Mandatory),
+                    Mandatory = Convert.ToInt16(fieldGroup.Mandatory)
                 };
                 await dbField.Create(sdkDbContext);
 
@@ -1375,7 +1371,7 @@ namespace eFormAPI.Web.Services.Eform
                             LanguageId = x.LanguageId,
                             Text = x.Name,
                             Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
-                            DefaultValue = x.DefaultValue,
+                            DefaultValue = x.DefaultValue
                         }).ToList();
                 foreach (var fieldTranslation in translates)
                 {

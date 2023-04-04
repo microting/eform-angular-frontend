@@ -136,14 +136,14 @@ namespace eFormAPI.Web.Services
                     Header2 = template.ReportH2 == template.ReportH1 ? null : template.ReportH2,
                     Header3 = template.ReportH3 == template.ReportH2 ? null : template.ReportH3,
                     Header4 = template.ReportH4 == template.ReportH3 ? null : template.ReportH4,
-                    Header5 = template.ReportH5 == template.ReportH4 ? null : template.ReportH5,
+                    Header5 = template.ReportH5 == template.ReportH4 ? null : template.ReportH5
                 },
                 DescriptionBlocks = new List<string>(),
                 Items = new List<ReportEformCaseModel>(),
                 ImageNames = new List<KeyValuePair<List<string>, List<string>>>(),
                 ItemHeaders = new List<KeyValuePair<int, string>>(),
                 FromDate = dateFrom,
-                ToDate = dateTo,
+                ToDate = dateTo
             };
 
             var fields = await core.Advanced_TemplateFieldReadAll(template.Id, language);
@@ -210,7 +210,7 @@ namespace eFormAPI.Web.Services
                     MicrotingSdkCaseId = caseDto.Id,
                     MicrotingSdkCaseDoneAt = TimeZoneInfo.ConvertTimeFromUtc((DateTime) caseDto.DoneAt, timeZoneInfo),
                     EFormId = caseDto.CheckListId,
-                    DoneBy = $"{caseDto.Worker.FirstName} {caseDto.Worker.LastName}",
+                    DoneBy = $"{caseDto.Worker.FirstName} {caseDto.Worker.LastName}"
                 };
 
                 var fieldValues = sdkDbContext.FieldValues

@@ -130,7 +130,7 @@ namespace eFormAPI.Web.Services
                 DarkTheme = darkTheme,
                 Formats = formats,
                 TimeZone = timeZone,
-                LoginRedirectUrl = securityGroupRedirectLink,
+                LoginRedirectUrl = securityGroupRedirectLink
             });
         }
 
