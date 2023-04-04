@@ -120,7 +120,6 @@ jobs:
           /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots/chrome*.png
         retention-days: 2
   test-dotnet:
-    needs: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
