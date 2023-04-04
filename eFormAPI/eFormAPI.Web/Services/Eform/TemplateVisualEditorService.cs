@@ -832,6 +832,19 @@ namespace eFormAPI.Web.Services.Eform
         private static async Task<List<VisualEditorFieldModel>> FindFields(int eformId, MicrotingDbContext sdkDbContext,
             int parentFieldId = -1)
         {
+            var danishLanguageId = await sdkDbContext.Languages
+                .Where(x => x.LanguageCode == "da")
+                .Select(x => x.Id)
+                .FirstAsync();
+            var englishLanguageId = await sdkDbContext.Languages
+                .Where(x => x.LanguageCode == "en-US")
+                .Select(x => x.Id)
+                .FirstAsync();
+            var germanLanguageId = await sdkDbContext.Languages
+                .Where(x => x.LanguageCode == "de-DE")
+                .Select(x => x.Id)
+                .FirstAsync();
+
             var findFields = new List<VisualEditorFieldModel>();
             var fieldQuery = sdkDbContext.Fields
                 .Where(x => x.CheckListId == eformId)
@@ -877,6 +890,67 @@ namespace eFormAPI.Web.Services.Eform
                     ChecklistId = (int)field.CheckListId,
                     EntityGroupId = field.EntityGroupId
                 };
+
+                if (editorField.Translations.All(x => x.Id != danishLanguageId))
+                {
+                    var translation = new FieldTranslation
+                    {
+                        FieldId = (int)editorField.Id,
+                        Description = "",
+                        Text = "",
+                        LanguageId = danishLanguageId,
+                        DefaultValue = ""
+                    };
+                    await translation.Create(sdkDbContext);
+                    editorField.Translations.Add(new TranslationWithDefaultValue
+                    {
+                        Id = translation.Id,
+                        Description = "",
+                        Name = "",
+                        LanguageId = danishLanguageId,
+                        DefaultValue = ""
+                    });
+                }
+                if (editorField.Translations.All(x => x.Id != englishLanguageId))
+                {
+                    var translation = new FieldTranslation
+                    {
+                        FieldId = (int)editorField.Id,
+                        Description = "",
+                        Text = "",
+                        LanguageId = englishLanguageId,
+                        DefaultValue = ""
+                    };
+                    await translation.Create(sdkDbContext);
+                    editorField.Translations.Add(new TranslationWithDefaultValue
+                    {
+                        Id = translation.Id,
+                        Description = "",
+                        Name = "",
+                        LanguageId = englishLanguageId,
+                        DefaultValue = ""
+                    });
+                }
+                if (editorField.Translations.All(x => x.Id != germanLanguageId))
+                {
+                    var translation = new FieldTranslation
+                    {
+                        FieldId = (int)editorField.Id,
+                        Description = "",
+                        Text = "",
+                        LanguageId = germanLanguageId,
+                        DefaultValue = ""
+                    };
+                    await translation.Create(sdkDbContext);
+                    editorField.Translations.Add(new TranslationWithDefaultValue
+                    {
+                        Id = translation.Id,
+                        Description = "",
+                        Name = "",
+                        LanguageId = germanLanguageId,
+                        DefaultValue = ""
+                    });
+                }
 
                 switch (field.FieldType.Type)
                 {
