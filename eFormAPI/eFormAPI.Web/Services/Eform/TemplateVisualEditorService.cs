@@ -61,18 +61,25 @@ namespace eFormAPI.Web.Services.Eform
             {
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
-                var checkLists = await sdkDbContext.CheckLists
+                var children = await sdkDbContext.CheckLists
                     // ReSharper disable once AccessToModifiedClosure
-                    .Where(x => x.Id == id)
+                    .Where(x => x.ParentId == id)
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Include(x => x.Children)
-                    .Select(x =>
-                        x.Children.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).ToList())
-                    .FirstOrDefaultAsync();
+                    .Include(x => x.Translations)
+                    //.Include(x => x.Children)
+                    //.Select(x =>
+                    //    x.Children.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).ToList())
+                    .ToListAsync();
 
-                if (checkLists?.Count == 1)
+                if (children.Count == 1)
                 {
-                    var eform = await FindTemplates(checkLists.First().Id, sdkDbContext);
+                    var eform = await FindTemplates(id, sdkDbContext);
+                    if (eform.Translations.First().Name != children.First().Translations.First().Text)
+                    {
+                        return new OperationDataResult<EformVisualEditorModel>(true, eform);
+                    }
+
+                    eform = await FindTemplates(children.First().Id, sdkDbContext);
                     var checklist = await sdkDbContext.CheckLists
                         .Where(x => x.Id == id)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -85,6 +92,7 @@ namespace eFormAPI.Web.Services.Eform
                             quickSync = x.QuickSyncEnabled == 1
                         })
                         .FirstOrDefaultAsync();
+
                     eform.Translations = checklist?.Translations
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Select(x => new CommonTranslationsModel
@@ -95,10 +103,12 @@ namespace eFormAPI.Web.Services.Eform
                             Name = x.Text
                         })
                         .ToList();
+
                     eform.TagIds = checklist?.Taggings
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         // ReSharper disable once PossibleInvalidOperationException
                         .Select(x => (int)x.TagId).ToList();
+
                     eform.QuickSync = (bool)checklist?.quickSync;
 
                     return new OperationDataResult<EformVisualEditorModel>(true, eform);
