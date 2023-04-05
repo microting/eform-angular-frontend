@@ -319,7 +319,7 @@ namespace eFormAPI.Web.Services
                     .Select(x => new CommonDictionaryModel
                     {
                         Id = x.Id,
-                        Name = x.Name,
+                        Name = x.Name
                     })
                     .ToListAsync();
 

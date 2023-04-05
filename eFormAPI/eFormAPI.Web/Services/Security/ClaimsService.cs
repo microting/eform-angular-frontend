@@ -72,7 +72,7 @@ namespace eFormAPI.Web.Services.Security
                         UserId = x.EformUserId,
                         Role = x.EformUser.UserRoles
                             .Select(y => y.Role.Name)
-                            .FirstOrDefault(),
+                            .FirstOrDefault()
                     })
                     .ToListAsync();
 
@@ -240,7 +240,7 @@ namespace eFormAPI.Web.Services.Security
                 // E-mail recipients
                 new Claim(AuthConsts.EformClaims.EmailRecipientsClaims.Create, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EmailRecipientsClaims.Delete, AuthConsts.ClaimDefaultValue),
-                new Claim(AuthConsts.EformClaims.EmailRecipientsClaims.Read, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EmailRecipientsClaims.Read, AuthConsts.ClaimDefaultValue)
             };
 
             claims.AddRange(await GetAllPluginClaims());

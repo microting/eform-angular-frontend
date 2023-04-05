@@ -173,13 +173,13 @@ namespace eFormAPI.Web.Services.Security
 //                {
                     var securityGroup = new SecurityGroup
                     {
-                        Name = requestModel.Name,
+                        Name = requestModel.Name
                     };
                     foreach (var userId in requestModel.UserIds)
                     {
                         securityGroup.SecurityGroupUsers.Add(new SecurityGroupUser()
                         {
-                            EformUserId = userId,
+                            EformUserId = userId
                         });
                     }
 
@@ -335,7 +335,7 @@ namespace eFormAPI.Web.Services.Security
                         Id = u.EformUser.Id,
                         FirstName = u.EformUser.FirstName,
                         LastName = u.EformUser.LastName,
-                        Email = u.EformUser.Email,
+                        Email = u.EformUser.Email
                     }).ToList()
                 });
         }

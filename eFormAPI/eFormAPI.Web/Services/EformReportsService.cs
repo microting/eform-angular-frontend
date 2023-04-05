@@ -95,7 +95,7 @@ namespace eFormAPI.Web.Services
                         {
                             EformReportId = parent.EformReportId,
                             ElementId = element.Id,
-                            ParentId = parent.Id,
+                            ParentId = parent.Id
                         };
                         dbContext.EformReportElements.Add(eformReportElement);
                         dbContext.SaveChanges();
@@ -137,7 +137,7 @@ namespace eFormAPI.Web.Services
                     DataItemList = GetReportDataItemList(dbContext, x, null,
                         dataElements.Where(y => y.Id == x.ElementId)
                             .Select(y => new List<object>(y.DataItemList))
-                            .FirstOrDefault()),
+                            .FirstOrDefault())
                 }).ToList();
         }
 
@@ -171,7 +171,7 @@ namespace eFormAPI.Web.Services
                     eformReportDataItem = new EformReportDataItem()
                     {
                         DataItemId = item.Id,
-                        Visibility = true,
+                        Visibility = true
                     };
                     if (parentElement != null)
                     {
@@ -203,7 +203,7 @@ namespace eFormAPI.Web.Services
                     Id = dataItem.Id,
                     DataItemId = dataItem.DataItemId,
                     Position = dataItem.Position,
-                    Visibility = dataItem.Visibility,
+                    Visibility = dataItem.Visibility
                 };
                 foreach (var dataItemObject in dataItemsList)
                 {
@@ -234,7 +234,7 @@ namespace eFormAPI.Web.Services
                                     Key = keyValuePair.Key,
                                     Value = keyValuePair.Value,
                                     DisplayOrder = keyValuePair.DisplayOrder,
-                                    Selected = keyValuePair.Selected,
+                                    Selected = keyValuePair.Selected
                                 });
                             }
                         }
@@ -254,7 +254,7 @@ namespace eFormAPI.Web.Services
                                     Key = keyValuePair.Key,
                                     Value = keyValuePair.Value,
                                     DisplayOrder = keyValuePair.DisplayOrder,
-                                    Selected = keyValuePair.Selected,
+                                    Selected = keyValuePair.Selected
                                 });
                             }
                         }
@@ -317,7 +317,7 @@ namespace eFormAPI.Web.Services
                     {
                         TemplateId = template.Id,
                         IsDateVisible = true,
-                        IsWorkerNameVisible = true,
+                        IsWorkerNameVisible = true
                     };
                     _dbContext.EformReports.Add(eformReport);
                     await _dbContext.SaveChangesAsync();
@@ -344,7 +344,7 @@ namespace eFormAPI.Web.Services
                         reportElement = new EformReportElement()
                         {
                             EformReportId = eformReport.Id,
-                            ElementId = templateElement.Id,
+                            ElementId = templateElement.Id
                         };
                         _dbContext.EformReportElements.Add(reportElement);
                         await _dbContext.SaveChangesAsync();
@@ -364,7 +364,7 @@ namespace eFormAPI.Web.Services
                     {
                         Id = reportElement.Id,
                         ElementId = reportElement.ElementId,
-                        Label = templateElement.Label,
+                        Label = templateElement.Label
                     };
                     if (templateElement.GetType() == typeof(DataElement))
                     {
@@ -401,7 +401,7 @@ namespace eFormAPI.Web.Services
                         : Encoding.UTF8.GetString(eformReport.HeaderImage),
                     HeaderVisibility = eformReport.HeaderVisibility,
                     IsDateVisible = eformReport.IsDateVisible,
-                    IsWorkerNameVisible = eformReport.IsWorkerNameVisible,
+                    IsWorkerNameVisible = eformReport.IsWorkerNameVisible
                 };
                 result.EformReport = eformReportModel;
 

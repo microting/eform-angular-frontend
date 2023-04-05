@@ -131,7 +131,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             .ToList(),
                         ToRecipientsTags = x.Tags
                             .Select(y => y.EmailTag.Name)
-                            .ToList(),
+                            .ToList()
 
                     }).ToListAsync();
 
@@ -286,7 +286,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             .ToList(),
                         ToRecipientsTags = x.Tags
                             .Select(y => y.EmailTag.Name)
-                            .ToList(),
+                            .ToList()
                     }).FirstOrDefaultAsync();
 
                 if (casePost == null)
@@ -334,7 +334,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     Subject = requestModel.Subject,
                     CaseId = requestModel.CaseId,
                     PostDate = DateTime.UtcNow,
-                    WorkflowState = Constants.WorkflowStates.Created,
+                    WorkflowState = Constants.WorkflowStates.Created
                 };
 
                 await _dbContext.CasePosts.AddAsync(casePost);
@@ -351,7 +351,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         UpdatedByUserId = _userService.UserId,
                         CasePostId = casePost.Id,
                         EmailTagId = tagsId,
-                        WorkflowState = Constants.WorkflowStates.Created,
+                        WorkflowState = Constants.WorkflowStates.Created
                     };
 
                     await _dbContext.CasePostEmailTags.AddAsync(casePostEmailTag);
@@ -368,7 +368,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         UpdatedByUserId = _userService.UserId,
                         CasePostId = casePost.Id,
                         EmailRecipientId = recipientId,
-                        WorkflowState = Constants.WorkflowStates.Created,
+                        WorkflowState = Constants.WorkflowStates.Created
                     };
 
                     await _dbContext.CasePostEmailRecipients.AddAsync(casePostEmailRecipient);
@@ -559,7 +559,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             .ToList(),
                         ToRecipientsTags = x.Tags
                             .Select(y => y.EmailTag.Name)
-                            .ToList(),
+                            .ToList()
                     }).ToListAsync();
 
                 return new OperationDataResult<CasePostsCommonModel>(

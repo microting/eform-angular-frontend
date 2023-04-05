@@ -96,7 +96,7 @@ namespace eFormAPI.Web.Hosting.Extensions
             {
                 DefaultRequestCulture = new RequestCulture("en-US"),
                 SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures,
+                SupportedUICultures = supportedCultures
             };
             // Find the cookie provider with LINQ
             var cookieProvider = localizationOptions.RequestCultureProviders

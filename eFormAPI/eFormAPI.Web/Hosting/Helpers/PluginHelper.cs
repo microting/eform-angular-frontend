@@ -328,7 +328,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(IDesignTimeDbContextFactory<>),
                             typeof(Core),
                             typeof(GetObjectResponse),
-                            typeof(AmazonS3Client),
+                            typeof(AmazonS3Client)
                         });
 
                     var types = loader

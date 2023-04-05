@@ -78,7 +78,7 @@ namespace eFormAPI.Web.Services
                 SyncDefaultDelay = t.SyncDefaultDelay,
                 SyncDelayEnabled = t.SyncDelayEnabled,
                 SyncDelayPrCheckList = t.SyncDelayPrCheckList,
-                IsLocked = t.IsLocked,
+                IsLocked = t.IsLocked
             }).ToListAsync().ConfigureAwait(false);
 
             return new OperationDataResult<List<UnitModel>>(true, units);

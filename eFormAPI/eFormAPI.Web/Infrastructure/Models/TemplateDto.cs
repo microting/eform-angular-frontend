@@ -102,7 +102,7 @@ namespace eFormAPI.Web.Infrastructure.Models
                 IsLocked = templateDto.IsLocked,
                 IsEditable = templateDto.IsEditable,
                 IsAchievable = templateDto.IsAchievable,
-                IsDoneAtEditable = templateDto.IsDoneAtEditable,
+                IsDoneAtEditable = templateDto.IsDoneAtEditable
             };
         }
 

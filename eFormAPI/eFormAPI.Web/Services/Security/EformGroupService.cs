@@ -182,7 +182,7 @@ namespace eFormAPI.Web.Services.Security
                     {
                         GroupName = e.SecurityGroup.Name,
                         EformInGroupId = e.Id,
-                        TemplateId = e.TemplateId,
+                        TemplateId = e.TemplateId
                         // Permissions = _dbContext.Permissions
                         //     .Where(x => eformClaims.Contains(x.ClaimName))
                         //     .Select(x => new EformPermissionModel()
@@ -213,7 +213,7 @@ namespace eFormAPI.Web.Services.Security
                             ClaimName = x.ClaimName,
                             PermissionName = x.PermissionName,
                             PermissionType = x.PermissionType.Name,
-                            PermissionTypeId = x.PermissionTypeId,
+                            PermissionTypeId = x.PermissionTypeId
                         }).ToListAsync();
                     foreach (EformPermissionModel permission in eformPermissionsModel.Permissions)
                     {
@@ -363,7 +363,7 @@ namespace eFormAPI.Web.Services.Security
                                 await _dbContext.EformPermissions.AddAsync(new EformPermission()
                                 {
                                     EformInGroupId = requestModel.EformInGroupId,
-                                    PermissionId = permissionModel.Id,
+                                    PermissionId = permissionModel.Id
                                 });
                             }
                         }

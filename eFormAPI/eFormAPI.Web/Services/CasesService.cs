@@ -145,14 +145,14 @@ namespace eFormAPI.Web.Services
                     Version = x.Version,
                     WorkflowState = x.WorkflowState,
                     SiteName = x.SiteName,
-                    WorkerName = x.SiteName,
+                    WorkerName = x.SiteName
                 })
                     .ToListAsync();
 
                 var model = new CaseListModel
                 {
                     NumOfElements = total,
-                    Cases = cases,
+                    Cases = cases
                 };
 
                 return new OperationDataResult<CaseListModel>(true, model);
