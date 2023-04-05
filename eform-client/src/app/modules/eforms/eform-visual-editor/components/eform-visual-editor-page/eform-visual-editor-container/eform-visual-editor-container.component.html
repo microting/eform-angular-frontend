@@ -3,6 +3,15 @@
   [title]="(selectedTemplateId ? 'eForm' : 'New eForm') | translate"
 >
   <button
+    mat-raised-button
+    *ngIf="authStateService.isAdmin"
+    id="reportEditHeadersBtn"
+    color="accent"
+    (click)="showHeadersEditModal()"
+  >
+    {{ 'Edit headers' | translate }}
+  </button>
+  <button
     mat-icon-button
     id="manageTags"
     (click)="openTagsModal()"

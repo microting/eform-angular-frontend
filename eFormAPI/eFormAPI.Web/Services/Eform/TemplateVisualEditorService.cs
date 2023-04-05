@@ -148,8 +148,13 @@ namespace eFormAPI.Web.Services.Eform
                     DownloadEntities = 0,
                     QuickSyncEnabled = model.QuickSync ? (short)1 : (short)0,
                     IsEditable = true,
-                    IsLocked = false
-                };
+                    IsLocked = false,
+                    ReportH1 = model.DocxReportHeaders?.H1?.Trim(),
+                    ReportH2 = model.DocxReportHeaders?.H2?.Trim(),
+                    ReportH3 = model.DocxReportHeaders?.H3?.Trim(),
+                    ReportH4 = model.DocxReportHeaders?.H4?.Trim(),
+                    ReportH5 = model.DocxReportHeaders?.H5?.Trim(),
+				};
                 await newCheckList.Create(sdkDbContext);
 
                 // create two checkList
