@@ -46,7 +46,7 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.7.106.11" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.106.13" />
     <PackageReference Include="AWSSDK.S3" Version="3.7.103.41" />
     <PackageReference Include="ClosedXML" Version="0.100.3" />
     <PackageReference Include="Magick.NET-Q16-x64" Version="13.0.1" />
