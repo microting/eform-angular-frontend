@@ -79,7 +79,7 @@ class DatabasePage extends Page {
     this.host().click().focused().clear().type(DatabaseConfigurationConstants.SqlServer);
     this.authenticationType().type(DatabaseConfigurationConstants.authenticationType);
     this.selectLanguage(language);
-    //await cy.wait(3000);
+    //cy.wait(3000);
   }
 }
 

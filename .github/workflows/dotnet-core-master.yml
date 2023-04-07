@@ -68,7 +68,7 @@ jobs:
       run: cat docker_run_log
     - name: Pretest changes to work with Docker container
       run: sed -i 's/localhost/mariadbtest/g' eform-client/e2e/Constants/DatabaseConfigurationConstants.ts
-    - name: UI Tests - Chrome
+    - name: DB Configuration
       uses: cypress-io/github-action@v4
       with:
         start: echo 'hi'
@@ -77,6 +77,17 @@ jobs:
         browser: chrome
         record: false
         spec: cypress/e2e/db/*
+        config-file: cypress.config.ts
+        working-directory: eform-client
+    - name: ${{matrix.test}} test
+      uses: cypress-io/github-action@v4
+      with:
+        start: echo 'hi'
+        wait-on: "http://localhost:4200"
+        wait-on-timeout: 120
+        browser: chrome
+        record: false
+        spec: cypress/e2e/${{matrix.test}}/*
         config-file: cypress.config.ts
         working-directory: eform-client
     - name: testheadless2${{matrix.test}}

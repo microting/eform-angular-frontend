@@ -1,9 +1,6 @@
-const loginConstants = require('../../e2e/Constants/LoginConstants');
+import loginConstants from '../../e2e/Constants/LoginConstants';
 
 class LoginPage {
-  visit() {
-    cy.visit('/login');
-  }
 
   getMainText() {
     return cy.get('#loginMainText');
@@ -33,6 +30,7 @@ class LoginPage {
     this.getUsernameInput().type(username);
     this.getPasswordInput().type(password);
     this.getLoginButton().click();
+    // @ts-ignore
     cy.get('#newEFormBtn').should('be.visible');
   }
 

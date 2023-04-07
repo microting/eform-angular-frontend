@@ -115,8 +115,9 @@
   <div class="eform-id" id="eform-id-{{i}}">{{row.id}}</div>
 </ng-template>
 
-<ng-template #createdAtTpl let-row>
+<ng-template #createdAtTpl let-row let-i="index">
   <date-formatter
+    id="eform-created-at-{{i}}"
     [date]="row.createdAt"
     [Format]="'datetime'"
   ></date-formatter>
@@ -247,7 +248,7 @@
     <mat-menu #menu="matMenu">
       <button
         mat-menu-item
-        id="edit-columnts-btn-{{ i }}"
+        id="edit-columns-btn-{{ i }}"
         *ngIf="
                   checkEformPermissions(
                     row.id,
@@ -330,7 +331,7 @@
       </button>
       <button
         mat-menu-item
-        id="upload-zip-btn"
+        id="upload-zip-btn-{{ i }}"
         (click)="uploadZipFile(row)"
         *ngIf="
                   checkEformPermissions(

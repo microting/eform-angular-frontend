@@ -5,15 +5,15 @@ export default class Page {
     cy.visit(path);
   }
 
-  async spinnerAnimation() {
+  spinnerAnimation() {
     return cy.get('#spinner-animation');
   }
 
-  async waitForSpinnerHide(timeout = 90000) {
-    await cy.waitUntil(() => cy.get('#spinner-animation').should('not.exist'), { timeout: timeout });
+  waitForSpinnerHide(timeout = 90000) {
+    cy.waitUntil(() => cy.get('#spinner-animation').should('not.exist'), { timeout: timeout });
   }
 
-  async waitForSpinnerShow(timeout = 90000) {
-    await cy.waitUntil(() => cy.get('#spinner-animation').should('exist'), { timeout: timeout });
+  waitForSpinnerShow(timeout = 90000) {
+    cy.waitUntil(() => cy.get('#spinner-animation').should('exist'), { timeout: timeout });
   }
 }
