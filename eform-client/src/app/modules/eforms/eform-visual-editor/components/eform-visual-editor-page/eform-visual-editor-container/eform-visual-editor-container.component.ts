@@ -8,7 +8,7 @@ import {
   EformFieldTypesEnum,
 } from 'src/app/common/const';
 import {
-  CommonDictionaryModel,
+  CommonDictionaryModel, EformDocxReportHeadersModel,
   EformVisualEditorFieldModel,
   EformVisualEditorFieldsDnDRecursionModel,
   EformVisualEditorModel,
@@ -17,6 +17,7 @@ import {
   EformVisualEditorUpdateModel,
 } from 'src/app/common/models';
 import {
+  EformDocxReportService,
   EformTagService,
   EformVisualEditorService,
 } from 'src/app/common/services';
@@ -29,8 +30,9 @@ import {
 import {DragulaService} from 'ng2-dragula';
 import {AuthStateService} from 'src/app/common/store';
 import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/components';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
+import {EformDocxReportHeaderEditorComponent} from 'src/app/modules/eforms/eform-docx-report/components';
 
 @AutoUnsubscribe()
 @Component({
@@ -47,6 +49,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   isItemsCollapsed = false;
   eformVisualEditorUpdateModel: EformVisualEditorUpdateModel = new EformVisualEditorUpdateModel();
   selectedLanguages: number[] = [];
+  reportHeadersModel: EformDocxReportHeadersModel = new EformDocxReportHeadersModel();
 
   getTagsSub$: Subscription;
   getVisualTemplateSub$: Subscription;
@@ -57,6 +60,9 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   visualEditorFieldDeleteModalComponentAfterClosedSub$: Subscription;
   visualEditorChecklistDeleteModalComponentAfterClosedSub$: Subscription;
   visualEditorChecklistModalComponentAfterClosedSub$: Subscription;
+  updateReportHeadersSub$: Subscription;
+  updateHeadersSub$: Subscription;
+  reportHeadersSub$: any;
 
   constructor(
     private dragulaService: DragulaService,
@@ -64,9 +70,10 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     private visualEditorService: EformVisualEditorService,
     private router: Router,
     private route: ActivatedRoute,
-    private authStateService: AuthStateService,
+    public authStateService: AuthStateService,
     private dialog: MatDialog,
     private overlay: Overlay,
+    private reportService: EformDocxReportService,
   ) {
     this.dragulaService.createGroup('CHECK_LISTS', {
       moves: (el, container, handle) => {
@@ -96,26 +103,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
           || target.classList.contains('nested-fields');
       },
     });
-    // this.dragulaService.createGroup('NESTED_FIELDS', {
-    //   moves: (el, container, handle) => {
-    //     return (
-    //       handle.id === 'moveNestedFieldBtn' &&
-    //       handle.classList.contains('dragula-handle')
-    //     );
-    //   },
-    //   accepts: (el, target) => {
-    //     if (el.classList.contains('field-group')) {
-    //       return (
-    //         (target.id === 'editorFields' || target.id === 'nestedFields') &&
-    //         !target.classList.contains('field-group-container')
-    //       );
-    //     }
-    //     return target.id === 'editorFields'
-    //       || target.id === 'nestedFields'
-    //       || target.classList.contains('editor-fields')
-    //       || target.classList.contains('nested-fields');
-    //   },
-    // });
   }
 
   get isAllNamesEmpty() {
@@ -140,10 +127,21 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       ];
       if (this.selectedTemplateId) {
         this.getVisualTemplate(this.selectedTemplateId);
+        this.getReportHeaders(this.selectedTemplateId);
       } else {
         this.initForm();
       }
     });
+  }
+
+  getReportHeaders(templateId: number) {
+    this.reportHeadersSub$ = this.reportService
+      .getTemplateDocxReportHeaders(templateId)
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.reportHeadersModel = data.model;
+        }
+      });
   }
 
   getVisualTemplate(templateId: number) {
@@ -217,6 +215,32 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   openTagsModal() {
     this.tagsModal.show();
+  }
+
+  showHeadersEditModal() {
+    const modal = this.dialog.open(EformDocxReportHeaderEditorComponent,
+      {...dialogConfigHelper(this.overlay, this.reportHeadersModel || this.visualEditorTemplateModel.docxReportHeaders), minWidth: 500});
+    this.updateReportHeadersSub$ = modal
+      .componentInstance.updateReportHeaders
+      .subscribe(data => {
+        if(this.selectedTemplateId) {
+          this.onUpdateReportHeaders(data, modal);
+        } else {
+          this.visualEditorTemplateModel.docxReportHeaders = data;
+          modal.close();
+        }
+      });
+  }
+
+  onUpdateReportHeaders(model: EformDocxReportHeadersModel, modal: MatDialogRef<EformDocxReportHeaderEditorComponent>) {
+    this.updateHeadersSub$ = this.reportService
+      .updateTemplateDocxReportHeaders(model)
+      .subscribe((data) => {
+        if (data && data.success) {
+          modal.close();
+          this.getReportHeaders(this.selectedTemplateId);
+        }
+      });
   }
 
   toggleCollapse() {

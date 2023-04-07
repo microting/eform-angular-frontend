@@ -1,6 +1,6 @@
 import {
   EformVisualEditorFieldModel,
-  CommonTranslationsModel,
+  CommonTranslationsModel, EformDocxReportHeadersModel,
 } from 'src/app/common/models';
 import { getRandomInt } from 'src/app/common/helpers';
 
@@ -15,4 +15,7 @@ export class EformVisualEditorModel {
   tempId?: number = getRandomInt(1000, 10000);
   parentChecklistId?: number;
   quickSync: boolean = false;
+
+  // only for create
+  docxReportHeaders?: EformDocxReportHeadersModel;
 }

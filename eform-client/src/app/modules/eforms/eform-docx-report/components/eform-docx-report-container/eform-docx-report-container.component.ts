@@ -1,25 +1,21 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
 import {
   CommonDictionaryModel,
   EformDocxReportGenerateModel,
-  EformDocxReportHeadersModel,
   EformDocxReportModel,
   SharedTagModel,
 } from 'src/app/common/models';
-import { EmailRecipientsService } from 'src/app/common/services';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { parseISO } from 'date-fns';
-import { saveAs } from 'file-saver';
-import { EformDocxReportService } from 'src/app/common/services/eform';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { AuthStateService } from 'src/app/common/store';
+import {
+  EmailRecipientsService,
+  EformDocxReportService
+} from 'src/app/common/services';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {parseISO} from 'date-fns';
+import {saveAs} from 'file-saver';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {catchError} from 'rxjs/operators';
-import {MatDialog} from '@angular/material/dialog';
-import {Overlay} from '@angular/cdk/overlay';
-import {dialogConfigHelper} from 'src/app/common/helpers';
-import {EformDocxReportHeaderEditorComponent} from 'src/app/modules/eforms/eform-docx-report/components';
 
 @AutoUnsubscribe()
 @Component({
@@ -29,23 +25,14 @@ import {EformDocxReportHeaderEditorComponent} from 'src/app/modules/eforms/eform
 })
 export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
   reportModel: EformDocxReportModel = new EformDocxReportModel();
-  reportHeadersModel: EformDocxReportHeadersModel = new EformDocxReportHeadersModel();
   dateFrom: any;
   dateTo: any;
   range: Date[] = [];
-  availableEmailRecipients: CommonDictionaryModel[] = [];
   availableTags: SharedTagModel[] = [];
   selectedTemplateId: number;
   generateReportSub$: Subscription;
   downloadReportSub$: Subscription;
   activatedRouteSub$: Subscription;
-  updateHeadersSub$: Subscription;
-  reportHeadersSub$: Subscription;
-  updateReportHeadersSub$: Subscription;
-
-  get userRole() {
-    return this.authStateService.currentRole;
-  }
 
   constructor(
     private emailRecipientsService: EmailRecipientsService,
@@ -53,9 +40,6 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
     private reportService: EformDocxReportService,
     private toastrService: ToastrService,
     private router: Router,
-    private authStateService: AuthStateService,
-    private dialog: MatDialog,
-    private overlay: Overlay,
   ) {
     this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
       // Required to reload component
@@ -68,7 +52,6 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
       this.dateFrom = params['dateFrom'];
       this.dateTo = params['dateTo'];
       this.selectedTemplateId = +params['eformId'];
-      this.getReportHeaders(this.selectedTemplateId);
 
       this.range.push(parseISO(params['dateFrom']));
       this.range.push(parseISO(params['dateTo']));
@@ -83,27 +66,7 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {}
-
-  getReportHeaders(templateId: number) {
-    this.reportHeadersSub$ = this.reportService
-      .getTemplateDocxReportHeaders(templateId)
-      .subscribe((data) => {
-        if (data && data.success) {
-          this.reportHeadersModel = data.model;
-        }
-      });
-  }
-
-  showHeadersEditModal() {
-    const idModal = this.dialog.open(EformDocxReportHeaderEditorComponent,
-      {...dialogConfigHelper(this.overlay, this.reportHeadersModel), minWidth: 500})
-      .id;
-    this.updateReportHeadersSub$ = this.dialog.getDialogById(idModal)
-      .componentInstance.updateReportHeaders
-      .subscribe(data => {
-        this.onUpdateReportHeaders(data, idModal);
-      });
+  ngOnInit() {
   }
 
   onGenerateReport(model: EformDocxReportGenerateModel) {
@@ -123,9 +86,9 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
       .downloadReport(model)
       .pipe(catchError(
         (error, caught) => {
-        this.toastrService.error('Error downloading report');
-        return caught;
-      }))
+          this.toastrService.error('Error downloading report');
+          return caught;
+        }))
       .subscribe(
         (data) => {
           saveAs(data, model.dateFrom + '_' + model.dateTo + '_report.docx');
@@ -133,16 +96,6 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
       );
   }
 
-  onUpdateReportHeaders(model: EformDocxReportHeadersModel, idModal: string) {
-    this.updateHeadersSub$ = this.reportService
-      .updateTemplateDocxReportHeaders(model)
-      .subscribe((data) => {
-        if (data && data.success) {
-          this.dialog.getDialogById(idModal).close();
-          this.getReportHeaders(this.selectedTemplateId);
-        }
-      });
+  ngOnDestroy(): void {
   }
-
-  ngOnDestroy(): void {}
 }
