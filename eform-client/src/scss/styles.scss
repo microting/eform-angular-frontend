@@ -82,3 +82,9 @@ app-navigation mat-tree mat-nested-tree-node mat-accordion mat-expansion-panel m
   white-space: initial;
   //line-height: 1.4em;
 }
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
+}
