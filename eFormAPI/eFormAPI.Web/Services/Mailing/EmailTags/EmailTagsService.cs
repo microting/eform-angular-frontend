@@ -65,7 +65,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailTags
                     .Select(x => new CommonDictionaryModel
                     {
                         Id = x.Id,
-                        Name = x.Name,
+                        Name = x.Name
                     }).ToListAsync();
 
                 return new OperationDataResult<CommonDictionaryModel[]>(
@@ -150,7 +150,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailTags
                     CreatedByUserId = _userService.UserId,
                     UpdatedByUserId = _userService.UserId,
                     UpdatedAt = DateTime.UtcNow,
-                    Version = 1,
+                    Version = 1
                 };
 
                 await _dbContext.EmailTags.AddAsync(emailTag);

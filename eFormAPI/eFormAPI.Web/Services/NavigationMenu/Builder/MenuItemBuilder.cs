@@ -47,7 +47,7 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
                 {
                     new SimpleLinkBehavior(_dbContext, MenuItemModel, parentId),
                     new CustomLinkBehavior(_dbContext, MenuItemModel, parentId),
-                    new DropdownBehavior(_dbContext, MenuItemModel, parentId),
+                    new DropdownBehavior(_dbContext, MenuItemModel, parentId)
                 };
         }
 
@@ -59,7 +59,7 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
                 Type = MenuItemModel.Type,
                 Link = MenuItemModel.Link,
                 E2EId = MenuItemModel.E2EId,
-                IsInternalLink = MenuItemModel.IsInternalLink,
+                IsInternalLink = MenuItemModel.IsInternalLink
             };
 
             foreach (var behavior in _behaviors.Where(behavior => behavior.IsExecute()))

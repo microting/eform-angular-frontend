@@ -38,7 +38,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     Name = "user",
                     E2EId = "sign-out-dropdown",
                     Link = "",
-                    Position = 0,
+                    Position = 0
                 },
                 new RightMenuItemModel
                 {
@@ -47,7 +47,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     E2EId = "user-management-menu",
                     Link = "/account-management/users",
                     Position = 0,
-                    ParentId = 10,
+                    ParentId = 10
                 },
                 new RightMenuItemModel
                 {
@@ -56,7 +56,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     E2EId = "settings",
                     Link = "/account-management/settings",
                     Position = 1,
-                    ParentId = 10,
+                    ParentId = 10
                 },
                 new RightMenuItemModel
                 {
@@ -65,7 +65,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     E2EId = "security",
                     Link = "/security",
                     Position = 2,
-                    ParentId = 10,
+                    ParentId = 10
                 },
                 new RightMenuItemModel
                 {
@@ -74,7 +74,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     E2EId = "change-password",
                     Link = "/account-management/change-password",
                     Position = 3,
-                    ParentId = 10,
+                    ParentId = 10
                 },
                 new RightMenuItemModel
                 {
@@ -83,7 +83,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     E2EId = "sign-out",
                     Link = "/auth/sign-out",
                     Position = 4,
-                    ParentId = 10,
+                    ParentId = 10
                 }
             };
         }

@@ -259,7 +259,7 @@ namespace eFormAPI.Web.Services
                                 Name = menuTemplateFromPlugin.Name,
                                 E2EId = menuTemplateFromPlugin.E2EId,
                                 DefaultLink = menuTemplateFromPlugin.DefaultLink,
-                                EformPluginId = eformPlugin.Id,
+                                EformPluginId = eformPlugin.Id
                             };
 
                             _dbContext.MenuTemplates.Add(menuTemplateToDatabase);
@@ -272,7 +272,7 @@ namespace eFormAPI.Web.Services
                                     Language = translation.Language,
                                     LocaleName = translation.LocaleName,
                                     Name = translation.Name,
-                                    MenuTemplateId = menuTemplateToDatabase.Id,
+                                    MenuTemplateId = menuTemplateToDatabase.Id
                                 };
 
                                 _dbContext.MenuTemplateTranslations.Add(menuTemplateTranslation);
@@ -291,7 +291,7 @@ namespace eFormAPI.Web.Services
                                     {
                                         newPermissionType = new PermissionType
                                         {
-                                            Name = itemPermission.PermissionTypeName,
+                                            Name = itemPermission.PermissionTypeName
                                         };
 
                                         _dbContext.PermissionTypes.Add(newPermissionType);
@@ -313,7 +313,7 @@ namespace eFormAPI.Web.Services
                                     var menuTemplatePermission = new MenuTemplatePermission
                                     {
                                         MenuTemplateId = menuTemplateToDatabase.Id,
-                                        PermissionId = permission.Id,
+                                        PermissionId = permission.Id
                                     };
 
                                     _dbContext.MenuTemplatePermissions.Add(menuTemplatePermission);
@@ -386,7 +386,7 @@ namespace eFormAPI.Web.Services
                 var result = new PluginsStoreModel()
                 {
                     Total = list.Count,
-                    PluginsList = list,
+                    PluginsList = list
                 };
                 return new OperationDataResult<PluginsStoreModel>(true, result);
             }

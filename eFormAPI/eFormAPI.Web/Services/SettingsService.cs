@@ -300,7 +300,7 @@ namespace eFormAPI.Web.Services
                     SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
                     IsSMTPExists = string.IsNullOrEmpty(_emailSettings.Value.SmtpHost) &&
                                    string.IsNullOrEmpty(_emailSettings.Value.SmtpPort.ToString()),
-                    IsSendGridExists = !string.IsNullOrEmpty(_emailSettings.Value.SendGridKey),
+                    IsSendGridExists = !string.IsNullOrEmpty(_emailSettings.Value.SendGridKey)
                 };
                 return new OperationDataResult<LoginPageSettingsModel>(true, model);
             }
@@ -323,7 +323,7 @@ namespace eFormAPI.Web.Services
                     MainText = _headerSettings.Value.MainText,
                     MainTextVisible = _headerSettings.Value.MainTextVisible,
                     SecondaryText = _headerSettings.Value.SecondaryText,
-                    SecondaryTextVisible = _headerSettings.Value.SecondaryTextVisible,
+                    SecondaryTextVisible = _headerSettings.Value.SecondaryTextVisible
                 };
 
                 return new OperationDataResult<HeaderSettingsModel>(true, model);
@@ -369,11 +369,11 @@ namespace eFormAPI.Web.Services
                         Host = _emailSettings.Value.SmtpHost,
                         Port = _emailSettings.Value.SmtpPort.ToString(),
                         Login = _emailSettings.Value.Login,
-                        Password = _emailSettings.Value.Password,
+                        Password = _emailSettings.Value.Password
                     },
                     SendGridSettingsModel = new SendGridSettingsModel()
                     {
-                        ApiKey = _emailSettings.Value.SendGridKey,
+                        ApiKey = _emailSettings.Value.SendGridKey
                     },
                     HeaderSettingsModel = new HeaderSettingsModel()
                     {
@@ -382,7 +382,7 @@ namespace eFormAPI.Web.Services
                         MainText = _headerSettings.Value.MainText,
                         MainTextVisible = _headerSettings.Value.MainTextVisible,
                         SecondaryText = _headerSettings.Value.SecondaryText,
-                        SecondaryTextVisible = _headerSettings.Value.SecondaryTextVisible,
+                        SecondaryTextVisible = _headerSettings.Value.SecondaryTextVisible
                     },
                     LoginPageSettingsModel = new LoginPageSettingsModel()
                     {
@@ -392,7 +392,7 @@ namespace eFormAPI.Web.Services
                         MainTextVisible = _loginPageSettings.Value.MainTextVisible,
                         SecondaryText = _loginPageSettings.Value.SecondaryText,
                         SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
-                        IsSendGridExists = !string.IsNullOrEmpty(_emailSettings.Value.SendGridKey),
+                        IsSendGridExists = !string.IsNullOrEmpty(_emailSettings.Value.SendGridKey)
                     },
                     SwiftSettingsModel = new SwiftSettingsModel()
                     {

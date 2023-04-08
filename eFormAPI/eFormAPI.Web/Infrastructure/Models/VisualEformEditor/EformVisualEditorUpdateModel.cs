@@ -50,5 +50,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         // checklist models for update
         public List<EformVisualEditorModel> ChecklistForUpdate { get; set; }
             = new List<EformVisualEditorModel>();
-    }
+
+        public bool QuickSync { get; set; }
+	}
 }

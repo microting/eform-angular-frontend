@@ -60,7 +60,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
                     Language = translation.Language,
                     LocaleName = translation.LocaleName,
                     Name = translation.Name,
-                    MenuTemplateId = menuTemplate.Id,
+                    MenuTemplateId = menuTemplate.Id
                 };
 
                 _dbContext.MenuTemplateTranslations.Add(menuTemplateTranslation);
@@ -79,7 +79,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
                     {
                         newPermissionType = new PermissionType
                         {
-                            Name = itemPermission.PermissionTypeName,
+                            Name = itemPermission.PermissionTypeName
                         };
 
                         _dbContext.PermissionTypes.Add(newPermissionType);
@@ -101,7 +101,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
                     var menuTemplatePermission = new MenuTemplatePermission
                     {
                         MenuTemplateId = menuTemplate.Id,
-                        PermissionId = permission.Id,
+                        PermissionId = permission.Id
                     };
 
                     _dbContext.MenuTemplatePermissions.Add(menuTemplatePermission);
@@ -119,7 +119,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
                     ? MenuItem.Position 
                     : _dbContext.MenuItems.Where(x => x.ParentId == null).Max(x => x.Position) + MenuItem.Position + 1,
                 MenuTemplateId = menuTemplate.Id,
-                ParentId = parentId,
+                ParentId = parentId
             };
 
             _dbContext.MenuItems.Add(newMenuItem);
@@ -132,7 +132,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
                     Language = menuItemTranslation.Language,
                     LocaleName = menuItemTranslation.LocaleName,
                     Name = menuItemTranslation.Name,
-                    MenuItemId = newMenuItem.Id,
+                    MenuItemId = newMenuItem.Id
                 };
 
                 _dbContext.MenuItemTranslations.Add(translation);

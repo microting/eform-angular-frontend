@@ -57,7 +57,7 @@ namespace eFormAPI.Web.Hosting.Settings
             {
                 ConnectionStrings = new ConnectionStrings()
                 {
-                    DefaultConnection = "...",
+                    DefaultConnection = "..."
                 }
             };
             Save(mainSettings, filePath);
@@ -69,7 +69,7 @@ namespace eFormAPI.Web.Hosting.Settings
             {
                 ConnectionStrings = new ConnectionStrings()
                 {
-                    DefaultConnection = connectionString,
+                    DefaultConnection = connectionString
                 }
             };
             Save(mainSettings, filePath);

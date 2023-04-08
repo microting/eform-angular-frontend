@@ -1,6 +1,5 @@
-<div
-  class="animated fadeIn spinner-container load1" id="spinner-animation"
-  [hidden]="(this.loaderService.isLoading | async) === false"
-  [innerHTML]="trustedHtml"
->
+<div class="overlay-spinner" *ngIf="loading">
+  <mat-spinner id="spinner-animation">
+  </mat-spinner>
 </div>
+<ng-content></ng-content>

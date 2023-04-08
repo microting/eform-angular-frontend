@@ -237,7 +237,7 @@ namespace eFormAPI.Web
                         SMTPSettingsModel = startup.SMTPSettingsModel,
                         SdkSettingsModel = startup.SdkSettingsModel,
                         SendGridSettingsModel = startup.SendGridSettingsModel,
-                        SwiftSettingsModel = startup.SwiftSettingsModel,
+                        SwiftSettingsModel = startup.SwiftSettingsModel
                     };
 
                     var updateAdminSettingsResult =
@@ -321,7 +321,7 @@ namespace eFormAPI.Web
                                 FirstName = firstName,
                                 LastName = lastName,
                                 Email = email,
-                                Password = password,
+                                Password = password
                             };
 
                             var contextFactory = new BaseDbContextFactory();

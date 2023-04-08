@@ -81,7 +81,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
                     Language = menuItemTranslation.Language,
                     LocaleName = menuItemTranslation.LocaleName,
                     Name = menuItemTranslation.Name,
-                    MenuItemId = newMenuItem.Id,
+                    MenuItemId = newMenuItem.Id
                 }))
             {
                 _dbContext.MenuItemTranslations.Add(translation);

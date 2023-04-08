@@ -48,5 +48,9 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         public int? TempId { get; set; }
 
         public int? ParentChecklistId { get; set; }
-    }
+
+        public bool QuickSync { get; set; }
+
+        public EformDocxReportHeadersModel DocxReportHeaders { get; set; }
+	}
 }

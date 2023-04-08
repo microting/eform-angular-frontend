@@ -36,6 +36,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MtxPopoverModule} from '@ng-matero/extensions/popover';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import {MtxGridModule} from '@ng-matero/extensions/grid';
     MtxPopoverModule,
     DragDropModule,
     MtxGridModule,
+    MatSlideToggleModule,
   ],
 })
 export class EformVisualEditorModule {

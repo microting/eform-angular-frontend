@@ -74,7 +74,7 @@ namespace eFormAPI.Web.Services.Import
                     {
                         Name = name,
                         EformXML = xml,
-                        ExcelRow = row.RowNumber(),
+                        ExcelRow = row.RowNumber()
                     };
 
                     if (!string.IsNullOrEmpty(tag1))

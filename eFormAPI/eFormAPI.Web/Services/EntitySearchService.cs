@@ -322,7 +322,7 @@ namespace eFormAPI.Web.Services
                     .Select(x => new CommonDictionaryModel
                     {
                         Name = x.Name,
-                        Id = int.Parse(x.MicrotingUid),
+                        Id = int.Parse(x.MicrotingUid)
                     })
                     .ToListAsync();
 

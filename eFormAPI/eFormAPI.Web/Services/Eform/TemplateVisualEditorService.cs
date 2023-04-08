@@ -61,18 +61,25 @@ namespace eFormAPI.Web.Services.Eform
             {
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
-                var checkLists = await sdkDbContext.CheckLists
+                var children = await sdkDbContext.CheckLists
                     // ReSharper disable once AccessToModifiedClosure
-                    .Where(x => x.Id == id)
+                    .Where(x => x.ParentId == id)
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Include(x => x.Children)
-                    .Select(x =>
-                        x.Children.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).ToList())
-                    .FirstOrDefaultAsync();
+                    .Include(x => x.Translations)
+                    //.Include(x => x.Children)
+                    //.Select(x =>
+                    //    x.Children.Where(y => y.WorkflowState != Constants.WorkflowStates.Removed).ToList())
+                    .ToListAsync();
 
-                if (checkLists?.Count == 1)
+                if (children.Count == 1)
                 {
-                    var eform = await FindTemplates(checkLists.First().Id, sdkDbContext);
+                    var eform = await FindTemplates(id, sdkDbContext);
+                    if (eform.Translations.First().Name != children.First().Translations.First().Text)
+                    {
+                        return new OperationDataResult<EformVisualEditorModel>(true, eform);
+                    }
+
+                    eform = await FindTemplates(children.First().Id, sdkDbContext);
                     var checklist = await sdkDbContext.CheckLists
                         .Where(x => x.Id == id)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -82,8 +89,10 @@ namespace eFormAPI.Web.Services.Eform
                         {
                             x.Taggings,
                             x.Translations,
+                            quickSync = x.QuickSyncEnabled == 1
                         })
                         .FirstOrDefaultAsync();
+
                     eform.Translations = checklist?.Translations
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Select(x => new CommonTranslationsModel
@@ -91,13 +100,16 @@ namespace eFormAPI.Web.Services.Eform
                             Id = x.Id,
                             Description = x.Description,
                             LanguageId = x.LanguageId,
-                            Name = x.Text,
+                            Name = x.Text
                         })
                         .ToList();
+
                     eform.TagIds = checklist?.Taggings
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         // ReSharper disable once PossibleInvalidOperationException
                         .Select(x => (int)x.TagId).ToList();
+
+                    eform.QuickSync = (bool)checklist?.quickSync;
 
                     return new OperationDataResult<EformVisualEditorModel>(true, eform);
                 } else {
@@ -144,10 +156,15 @@ namespace eFormAPI.Web.Services.Eform
                     MultiApproval = 0,
                     FastNavigation = 0,
                     DownloadEntities = 0,
-                    QuickSyncEnabled = 0,
+                    QuickSyncEnabled = model.QuickSync ? (short)1 : (short)0,
                     IsEditable = true,
-                    IsLocked = false
-                };
+                    IsLocked = false,
+                    ReportH1 = model.DocxReportHeaders?.H1?.Trim(),
+                    ReportH2 = model.DocxReportHeaders?.H2?.Trim(),
+                    ReportH3 = model.DocxReportHeaders?.H3?.Trim(),
+                    ReportH4 = model.DocxReportHeaders?.H4?.Trim(),
+                    ReportH5 = model.DocxReportHeaders?.H5?.Trim(),
+				};
                 await newCheckList.Create(sdkDbContext);
 
                 // create two checkList
@@ -249,7 +266,7 @@ namespace eFormAPI.Web.Services.Eform
                 if (dbEform.ParentId != null)
                 {
                     parentEform = await sdkDbContext.CheckLists
-                        .Where(x => x.Id == model.Checklist.Id - 1)
+                        .Where(x => x.Id == dbEform.ParentId)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Include(x => x.Taggings)
                         .Include(x => x.Translations)
@@ -264,7 +281,7 @@ namespace eFormAPI.Web.Services.Eform
                         CheckListId = dbEform.Id,
                         LanguageId = translation.LanguageId,
                         Text = translation.Name,
-                        Description = translation.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
+                        Description = translation.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", "")
                     }))
                 {
                     await newCheckListTranslation.Create(sdkDbContext);
@@ -300,7 +317,7 @@ namespace eFormAPI.Web.Services.Eform
                         var translationForUpdateParent = sdkDbContext.CheckListTranslations
                             .FirstOrDefault(x =>
                                 x.LanguageId == translationsModel.LanguageId &&
-                                (x.CheckListId == parentCheckList.Id));
+                                x.CheckListId == parentCheckList.Id);
 
                         if (translationForUpdateParent != null)
                         {
@@ -311,9 +328,15 @@ namespace eFormAPI.Web.Services.Eform
                     }
                 }
 
-                //tagging
                 var eformWithTags = parentEform ?? dbEform;
 
+                // convert bool to short
+				eformWithTags.QuickSyncEnabled = model.Checklist.QuickSync ? (short)1 : (short)0;
+				await eformWithTags.Update(sdkDbContext);
+                dbEform.QuickSyncEnabled = eformWithTags.QuickSyncEnabled;
+                await dbEform.Update(sdkDbContext);
+
+                //tagging
                 var tagsIdForDelete = eformWithTags.Taggings
                     .Select(x => x.TagId)
                     .Where(id => !model.Checklist.TagIds.Contains((int)id))
@@ -340,7 +363,7 @@ namespace eFormAPI.Web.Services.Eform
                 foreach (var tagging in tagsForCreate.Select(tagId => new Tagging
                          {
                              CheckListId = eformWithTags.Id,
-                             TagId = tagId,
+                             TagId = tagId
                          }))
                 {
                     await tagging.Create(sdkDbContext);
@@ -568,7 +591,7 @@ namespace eFormAPI.Web.Services.Eform
                                             LanguageId = y.LanguageId,
                                             Text = y.Name
                                         })
-                                    .ToList(),
+                                    .ToList()
                             })
                             .ToList();
 
@@ -590,7 +613,7 @@ namespace eFormAPI.Web.Services.Eform
                                         // ReSharper disable once PossibleInvalidOperationException
                                         Id = (int)y.Id
                                     })
-                                    .ToList(),
+                                    .ToList()
                             });
 
                         foreach (var fieldOption in optionsForUpdate)
@@ -653,7 +676,7 @@ namespace eFormAPI.Web.Services.Eform
                                     {
                                         Checksum = hashAndLanguageIdList.Last().Key,
                                         FileName = pdfFile.File.FileName,
-                                        FileLocation = filePath,
+                                        FileLocation = filePath
                                     };
                                     await uploadData.Create(sdkDbContext);
                                 }
@@ -692,7 +715,7 @@ namespace eFormAPI.Web.Services.Eform
                         LanguageId = x.LanguageId,
                         Text = x.Name,
                         Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
-                        DefaultValue = x.DefaultValue,
+                        DefaultValue = x.DefaultValue
                     })
                     .ToList())
                 {
@@ -824,6 +847,19 @@ namespace eFormAPI.Web.Services.Eform
         private static async Task<List<VisualEditorFieldModel>> FindFields(int eformId, MicrotingDbContext sdkDbContext,
             int parentFieldId = -1)
         {
+            var danishLanguageId = await sdkDbContext.Languages
+                .Where(x => x.LanguageCode == "da")
+                .Select(x => x.Id)
+                .FirstAsync();
+            var englishLanguageId = await sdkDbContext.Languages
+                .Where(x => x.LanguageCode == "en-US")
+                .Select(x => x.Id)
+                .FirstAsync();
+            var germanLanguageId = await sdkDbContext.Languages
+                .Where(x => x.LanguageCode == "de-DE")
+                .Select(x => x.Id)
+                .FirstAsync();
+
             var findFields = new List<VisualEditorFieldModel>();
             var fieldQuery = sdkDbContext.Fields
                 .Where(x => x.CheckListId == eformId)
@@ -862,13 +898,74 @@ namespace eFormAPI.Web.Services.Eform
                             Description = x.Description,
                             Name = x.Text,
                             LanguageId = x.LanguageId,
-                            DefaultValue = x.DefaultValue,
+                            DefaultValue = x.DefaultValue
                         }).ToList(),
                     Mandatory = Convert.ToBoolean(field.Mandatory),
                     // ReSharper disable once PossibleInvalidOperationException
                     ChecklistId = (int)field.CheckListId,
-                    EntityGroupId = field.EntityGroupId,
+                    EntityGroupId = field.EntityGroupId
                 };
+
+                if (editorField.Translations.All(x => x.Id != danishLanguageId))
+                {
+                    var translation = new FieldTranslation
+                    {
+                        FieldId = (int)editorField.Id,
+                        Description = "",
+                        Text = "",
+                        LanguageId = danishLanguageId,
+                        DefaultValue = ""
+                    };
+                    await translation.Create(sdkDbContext);
+                    editorField.Translations.Add(new TranslationWithDefaultValue
+                    {
+                        Id = translation.Id,
+                        Description = "",
+                        Name = "",
+                        LanguageId = danishLanguageId,
+                        DefaultValue = ""
+                    });
+                }
+                if (editorField.Translations.All(x => x.Id != englishLanguageId))
+                {
+                    var translation = new FieldTranslation
+                    {
+                        FieldId = (int)editorField.Id,
+                        Description = "",
+                        Text = "",
+                        LanguageId = englishLanguageId,
+                        DefaultValue = ""
+                    };
+                    await translation.Create(sdkDbContext);
+                    editorField.Translations.Add(new TranslationWithDefaultValue
+                    {
+                        Id = translation.Id,
+                        Description = "",
+                        Name = "",
+                        LanguageId = englishLanguageId,
+                        DefaultValue = ""
+                    });
+                }
+                if (editorField.Translations.All(x => x.Id != germanLanguageId))
+                {
+                    var translation = new FieldTranslation
+                    {
+                        FieldId = (int)editorField.Id,
+                        Description = "",
+                        Text = "",
+                        LanguageId = germanLanguageId,
+                        DefaultValue = ""
+                    };
+                    await translation.Create(sdkDbContext);
+                    editorField.Translations.Add(new TranslationWithDefaultValue
+                    {
+                        Id = translation.Id,
+                        Description = "",
+                        Name = "",
+                        LanguageId = germanLanguageId,
+                        DefaultValue = ""
+                    });
+                }
 
                 switch (field.FieldType.Type)
                 {
@@ -983,7 +1080,7 @@ namespace eFormAPI.Web.Services.Eform
                     MaxValue = field.MaxValue ?? null,
                     MinValue = field.MinValue ?? null,
                     Mandatory = Convert.ToInt16(field.Mandatory),
-                    ParentFieldId = parentFieldId ?? field.ParentFieldId,
+                    ParentFieldId = parentFieldId ?? field.ParentFieldId
                 };
                 await dbField.Create(sdkDbContext);
 
@@ -1022,7 +1119,7 @@ namespace eFormAPI.Web.Services.Eform
                                                 LanguageId = y.LanguageId,
                                                 Text = y.Name
                                             })
-                                        .ToList(),
+                                        .ToList()
                                 })
                             .ToList();
                         foreach (var dbOption in optionsForCreate)
@@ -1072,7 +1169,7 @@ namespace eFormAPI.Web.Services.Eform
                                     {
                                         Checksum = hashAndLanguageIdList.Last().Key,
                                         FileName = pdfFile.File.FileName,
-                                        FileLocation = filePath,
+                                        FileLocation = filePath
                                     };
                                     await uploadData.Create(sdkDbContext);
                                 }
@@ -1121,7 +1218,7 @@ namespace eFormAPI.Web.Services.Eform
                             LanguageId = x.LanguageId,
                             Text = x.Name,
                             Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
-                            DefaultValue = x.DefaultValue,
+                            DefaultValue = x.DefaultValue
                         }).ToList();
                 foreach (var fieldTranslation in translates)
                 {
@@ -1181,7 +1278,7 @@ namespace eFormAPI.Web.Services.Eform
                             Name = y.Text,
                             Description = y.Description,
                             Id = y.Id,
-                            LanguageId = y.LanguageId,
+                            LanguageId = y.LanguageId
                         })
                     .ToList(),
                 TagIds = ef.Taggings.Select(y => (int)y.TagId).ToList(),
@@ -1311,7 +1408,7 @@ namespace eFormAPI.Web.Services.Eform
                     CheckListId = checkList.Id,
                     LanguageId = x.LanguageId,
                     Text = x.Name,
-                    Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
+                    Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", "")
                 }))
                 {
                     await translation.Create(sdkDbContext);
@@ -1351,7 +1448,7 @@ namespace eFormAPI.Web.Services.Eform
                     DisplayIndex = fieldGroup.Position,
                     MaxValue = fieldGroup.MaxValue,
                     MinValue = fieldGroup.MinValue,
-                    Mandatory = Convert.ToInt16(fieldGroup.Mandatory),
+                    Mandatory = Convert.ToInt16(fieldGroup.Mandatory)
                 };
                 await dbField.Create(sdkDbContext);
 
@@ -1363,7 +1460,7 @@ namespace eFormAPI.Web.Services.Eform
                             LanguageId = x.LanguageId,
                             Text = x.Name,
                             Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
-                            DefaultValue = x.DefaultValue,
+                            DefaultValue = x.DefaultValue
                         }).ToList();
                 foreach (var fieldTranslation in translates)
                 {

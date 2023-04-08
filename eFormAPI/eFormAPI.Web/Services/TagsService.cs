@@ -73,7 +73,7 @@ namespace eFormAPI.Web.Services
                     model.Add(new CommonDictionaryModel()
                     {
                         Id = tag.Id,
-                        Name = tag.Name,
+                        Name = tag.Name
                     });
                 });
                 return new OperationDataResult<List<CommonDictionaryModel>>(true, model);
@@ -184,11 +184,11 @@ namespace eFormAPI.Web.Services
                     .Select(x => new SavedTagModel()
                     {
                         TagId = x.TagId,
-                        TagName = x.TagName,
+                        TagName = x.TagName
                     }).ToListAsync();
                 var result = new SavedTagsModel()
                 {
-                    TagList = savedTags,
+                    TagList = savedTags
                 };
                 return new OperationDataResult<SavedTagsModel>(true, result);
             }

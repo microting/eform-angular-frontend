@@ -99,7 +99,7 @@ namespace eFormAPI.Web.Services
                     LastName = x.LastName,
                     Id = x.Id,
                     UserName = x.UserName,
-                    Email = x.Email,
+                    Email = x.Email
                 });
 
                 // sort
@@ -300,7 +300,7 @@ namespace eFormAPI.Web.Services
                     Id = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    UserName = user.UserName,
+                    UserName = user.UserName
                 };
                 // get role
                 var roles = await _userManager.GetRolesAsync(user);

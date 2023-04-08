@@ -57,7 +57,7 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
                 var menuItemSecurityGroup = new MenuItemSecurityGroup()
                 {
                     SecurityGroupId = securityGroupId,
-                    MenuItemId = menuItem.Id,
+                    MenuItemId = menuItem.Id
                 };
 
                 _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);

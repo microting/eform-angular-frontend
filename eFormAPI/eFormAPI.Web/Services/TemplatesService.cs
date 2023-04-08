@@ -432,7 +432,7 @@ namespace eFormAPI.Web.Services
                     .Select(x => new
                     {
                         x.Key,
-                        Count = x.Count(),
+                        Count = x.Count()
                     })
                     .Where(x => x.Count > 1)
                     .ToList();
@@ -772,7 +772,7 @@ namespace eFormAPI.Web.Services
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow,
                         WorkflowState = Constants.WorkflowStates.Created,
-                        TagId = y.TagId,
+                        TagId = y.TagId
                     }).ToList(),
                     Translations = x.Translations.Select(y => new CheckListTranslation
                     {
@@ -782,9 +782,9 @@ namespace eFormAPI.Web.Services
                         WorkflowState = Constants.WorkflowStates.Created,
                         LanguageId = y.LanguageId,
                         Text = y.Text,
-                        Description = y.Description,
+                        Description = y.Description
                     }).ToList(),
-                    Children = new List<CheckList>(),
+                    Children = new List<CheckList>()
                 })
                 .FirstOrDefaultAsync();
             if (eform == null)
@@ -850,7 +850,7 @@ namespace eFormAPI.Web.Services
                             Version = 1,
                             CreatedAt = DateTime.UtcNow,
                             UpdatedAt = DateTime.UtcNow,
-                            WorkflowState = Constants.WorkflowStates.Created,
+                            WorkflowState = Constants.WorkflowStates.Created
                         }).ToList(),
                     Mandatory = field.Mandatory,
                     EntityGroupId = field.EntityGroupId,
@@ -879,12 +879,12 @@ namespace eFormAPI.Web.Services
                                 Version = 1,
                                 CreatedAt = DateTime.UtcNow,
                                 UpdatedAt = DateTime.UtcNow,
-                                WorkflowState = Constants.WorkflowStates.Created,
+                                WorkflowState = Constants.WorkflowStates.Created
                             }).ToList(),
                         Version = 1,
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow,
-                        WorkflowState = Constants.WorkflowStates.Created,
+                        WorkflowState = Constants.WorkflowStates.Created
                     }).ToList(),
                     GeolocationEnabled = field.GeolocationEnabled,
                     GeolocationForced = field.GeolocationForced,
@@ -903,7 +903,7 @@ namespace eFormAPI.Web.Services
                     Version = 1,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
-                    WorkflowState = Constants.WorkflowStates.Created,
+                    WorkflowState = Constants.WorkflowStates.Created
                 };
 
 
