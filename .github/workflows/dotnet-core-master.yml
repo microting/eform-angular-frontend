@@ -91,6 +91,17 @@ jobs:
       run: cd eform-client && npm run testheadless
     - name: testheadless2${{matrix.test}}
       run: cd eform-client && npm run testheadless2${{matrix.test}}
+    - name: ${{matrix.test}} test
+      uses: cypress-io/github-action@v4
+      with:
+        start: echo 'hi'
+        wait-on: "http://localhost:4200"
+        wait-on-timeout: 120
+        browser: chrome
+        record: false
+        spec: cypress/e2e/${{matrix.test}}/*
+        config-file: cypress.config.ts
+        working-directory: eform-client
     - name: Stop the newly build Docker container
       run: docker stop my-container
     - name: Get standard output

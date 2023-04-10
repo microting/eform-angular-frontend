@@ -40,3 +40,4 @@ Thumbs.db
 errorShots/
 browserslist
 ChromeDriver.txt
+cypress/videos/
