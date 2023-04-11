@@ -747,4 +747,7 @@
   <data name="EformSuccessfullyUpdated" xml:space="preserve">
     <value>eForm updated</value>
   </data>
+  <data name="EformSuccessfullyCreated" xml:space="preserve">
+    <value>eForm created</value>
+  </data>
 </root>

@@ -904,7 +904,7 @@ describe('Visual editor page', function () {
       fields: [
         {
           translations: [
-            { name: 'Number 1', description: '', languageId: 1, id: null },
+            { name: 'Number 2', description: '', languageId: 1, id: null },
           ],
           type: EformFieldTypesEnum.Number,
           mandatory: true,
@@ -915,7 +915,7 @@ describe('Visual editor page', function () {
       eformName,
       [],
       0,
-      XMLForEformFractions.XML.replace('Number 1', eformName)
+      XMLForEformFractions.XML.replace(/Number 1/g, eformName)
     );
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     const mainChecklist = await new MainCheckListRowObj();
