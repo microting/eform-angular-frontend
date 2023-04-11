@@ -10,8 +10,10 @@ describe(' Navigation menu - Edit item', function () {
     await myEformsPage.Navbar.goToMenuEditorPage();
   });
   it('element must be created from custom link with security group', async () => {
+    await browser.pause(2000);
     const count = (await navigationMenuPage.menuItems()).length;
     await navigationMenuPage.collapseTemplates(1);
+    await browser.pause(1500);
     const customLink = {
       securityGroups: ['eForm admins'],
       link: 'test0',
@@ -31,6 +33,7 @@ describe(' Navigation menu - Edit item', function () {
       translations: ['Test11', 'Test22', 'Test31']
     };
     await navigationMenuPage.collapseTemplates(1);
+    await browser.pause(1500);
     await navigationMenuPage.editCustomLink(customLink, (await navigationMenuPage.menuItems()).length - 1);
     await browser.pause(500);
 
@@ -38,10 +41,11 @@ describe(' Navigation menu - Edit item', function () {
     await browser.pause(500);
 
     await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItems()).length - 1);
-    await browser.pause(500);
+    await browser.pause(1500);
+    const securityGroups = await navigationMenuPage.securityGroupsValue();
     for (const securityGroup of customLink.securityGroups) {
       const i = customLink.securityGroups.indexOf(securityGroup);
-      expect(await (await navigationMenuPage.securityGroupsValue())[i].getText(), 'SecurityGroup save is incorrect').eq(securityGroup);
+      expect(await securityGroups[i].getText(), 'SecurityGroup save is incorrect').eq(securityGroup);
     }
     expect(await (await navigationMenuPage.editLinkInput()).getValue(), 'Link save is incorrect').contains(customLink.link);
     customLink.translations.forEach(async (translation, i) => {
@@ -55,15 +59,17 @@ describe(' Navigation menu - Edit item', function () {
     await browser.pause(500);
 
     await navigationMenuPage.resetMenu();
-    await browser.pause(500);
+    await browser.pause(2000);
   });
   it('element must be created from custom dropdown with security group', async () => {
+    await browser.pause(1500);
     const count = (await navigationMenuPage.menuItems()).length;
     const dropdown = {
       securityGroups: ['eForm admins'],
       translations: ['test1', 'test2', 'test3']
     };
     await navigationMenuPage.collapseTemplates(1);
+    await browser.pause(1500);
     await navigationMenuPage.createCustomDropdown(dropdown);
     await browser.pause(500);
     expect(count + 1).eq((await navigationMenuPage.menuItems()).length);
@@ -98,9 +104,10 @@ describe(' Navigation menu - Edit item', function () {
     await (await navigationMenuPage.editItemSaveBtn()).click();
     await browser.pause(500);
     await navigationMenuPage.resetMenu();
-    await browser.pause(500);
+    await browser.pause(2000);
   });
   it('element must be moved from templates to list', async () => {
+    await browser.pause(1500);
     const count = (await navigationMenuPage.menuItems()).length;
     await navigationMenuPage.collapseTemplates(0);
     await navigationMenuPage.createMenuItemFromTemplate(0);

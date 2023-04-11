@@ -243,7 +243,8 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await (await this.entitySearchCreateImportBtn()).click();
     await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
-    await (await this.entitySearchCreateImportItemTextArea()).setValue(itemNames);
+    await (await this.entitySearchCreateImportItemTextArea()).click();
+    await browser.keys(itemNames);
     await browser.pause(500);
     await (await this.entitySearchCreateImportItemSaveBtn()).click();
     await browser.pause(500);
@@ -301,7 +302,8 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await (await this.entitySearchCreateImportBtn()).click();
     await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
-    await (await this.entitySearchCreateImportItemTextArea()).setValue(itemNames);
+    await (await this.entitySearchCreateImportItemTextArea()).click();
+    await browser.keys(itemNames);
     await browser.pause(500);
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await this.entitySearchCreateImportItemSaveBtn()).click();

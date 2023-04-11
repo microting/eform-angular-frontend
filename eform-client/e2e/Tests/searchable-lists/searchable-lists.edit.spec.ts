@@ -89,7 +89,8 @@ describe('Entity Search', function () {
     await (await searchableLists.entitySearchEditImportBtn()).click();
     await browser.pause(500);
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
-    await (await searchableLists.entitySearchEditImportItemTextArea()).addValue(newItemNames);
+    await (await searchableLists.entitySearchEditImportItemTextArea()).click();
+    await browser.keys(newItemNames);
     await browser.pause(500);
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await searchableLists.entitySearchEditImportItemSaveBtn()).click();

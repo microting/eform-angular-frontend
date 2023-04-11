@@ -106,7 +106,7 @@ class NavigationMenuPage {
   public async collapseTemplates(indexTemplate) {
     await (await this.dropdownTemplate(indexTemplate)).click();
     // waiting for the menu to open. Menu not have id or any universal selector.
-    await browser.pause(1500);
+    await browser.pause(2000);
   }
 
   public async mainMenu(): Promise<WebdriverIO.Element> {
@@ -238,7 +238,7 @@ class NavigationMenuPage {
   public async setSecurityGroupCustomDropdownSelector(textSecurityGroup) {
     await (await this.securityGroupsCustomDropdownSelector()).click();
     await (await $(
-      `//*[@id="securityGroupsCustomDropdownSelector"]//*[text()="${textSecurityGroup}"]`
+      `//*["ng-dropdown-panel"]//*[text()="${textSecurityGroup}"]`
     )).click();
     await browser.pause(500);
   }
@@ -348,7 +348,7 @@ class NavigationMenuPage {
     for (const textSecurityGroup of securityGroups) {
       await (await (this.editSecurityGroupsSelector())).click();
       await (await $(
-        `//*[@id="editSecurityGroupsSelector"]//*[text()="${textSecurityGroup}"]`
+        `//*["ng-dropdown-panel"]//*[text()="${textSecurityGroup}"]`
       )).click();
       await browser.pause(500);
     }
