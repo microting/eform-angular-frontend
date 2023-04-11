@@ -26,8 +26,8 @@ export default {
       <DataItemList>
         <DataItem type="Number">
           <Id>343963</Id>
-          <Label>Number 1</Label>
-          <Description><![CDATA[Number 1 description]]></Description>
+          <Label>Number 2</Label>
+          <Description><![CDATA[Number 2 description]]></Description>
           <DisplayOrder>0</DisplayOrder>
           <Mandatory>true</Mandatory>
           <MinValue>1</MinValue>
