@@ -9,25 +9,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-4-cores
     steps:
       - uses: actions/checkout@v3
-      - name: Cache node_modules
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: eform-client/node_modules
-          key: ${{ runner.os }}-build-${{ hashFiles('eform-client/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.12.1'
       - name: NPM Install
         run: cd eform-client && npm install
-        if: steps.cache.outputs.cache-hit != 'true'
       - name: Build Docker image
         id: build
         run: docker build . -t microtingas/frontend-container:latest --build-arg GITVERSION=1.0.0
@@ -39,22 +29,13 @@ jobs:
           path: container.tar
   test:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-4-cores
     strategy:
       fail-fast: false
       matrix:
         test: [a,b,c,d,e,f,g,h,i,j]
     steps:
     - uses: actions/checkout@v3
-    - name: Cache node_modules
-      id: cache
-      uses: actions/cache@v3
-      with:
-        path: eform-client/node_modules
-        key: ${{ runner.os }}-build-${{ hashFiles('eform-client/package.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
     - uses: actions/download-artifact@v3
       with:
         name: container
@@ -75,7 +56,6 @@ jobs:
         node-version: '18.12.1'
     - name: NPM Install
       run: cd eform-client && npm install
-      if: steps.cache.outputs.cache-hit != 'true'
     - name: Create errorShots directory
       run: mkdir /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots      
     - name: Start the newly build Docker container
