@@ -94,14 +94,24 @@ export async function selectValueInNgSelector(selector: WebdriverIO.Element, val
   await browser.pause(500);
   let valueForClick: WebdriverIO.Element;
   // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)
+
+  // const value = await (
+  //   await $('ng-dropdown-panel')
+  // ).$(`.ng-option=${areaRule.type}`);
   if(selectorInModal) {
-    valueForClick = await $(
-      `.ng-option*=${value}`
-    );
+    valueForClick = await (
+      await $('ng-dropdown-panel')
+    ).$(`.ng-option=${value}`);
+    // valueForClick = await $(
+    //   `.ng-option*=${value}`
+    // );
   } else {
-    valueForClick = await selector.$(
-      `.ng-option*=${value}`
-    );
+    valueForClick = await (
+      await $('ng-dropdown-panel')
+    ).$(`.ng-option=${value}`);
+    // valueForClick = await selector.$(
+    //   `.ng-option*=${value}`
+    // );
   }
   // await valueForClick.waitForDisplayed({ timeout: 40000 });
   await valueForClick.waitForClickable({ timeout: 40000 });
