@@ -19,7 +19,7 @@
     "testheadless2h": "./node_modules/.bin/wdio wdio-headless-step2h.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
     "testheadless2i": "./node_modules/.bin/wdio wdio-headless-step2i.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
     "testheadless2j": "./node_modules/.bin/wdio wdio-headless-step2j.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
-    "testplugin": "./node_modules/.bin/wdio wdio-plugin-step2.conf.ts --disable-gpu",
+    "testplugin": "./node_modules/.bin/wdio wdio-plugin-step2.conf.ts --disable-gpu --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
     "testheadlessplugin": "./node_modules/.bin/wdio wdio-headless-plugin-step2.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
     "testheadlessplugin2a": "./node_modules/.bin/wdio wdio-headless-plugin-step2a.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
     "testheadlessplugin2b": "./node_modules/.bin/wdio wdio-headless-plugin-step2b.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
