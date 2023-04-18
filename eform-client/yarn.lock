@@ -3140,14 +3140,14 @@
   dependencies:
     "@types/node" "^18.0.0"
 
-"@wdio/reporter@8.6.8":
-  version "8.6.8"
-  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-8.6.8.tgz#9db642bc6d55ab7978d3b71842353bf561110778"
-  integrity sha512-9x5YD759puJM1rhvbOq9nGA1ztVbKfm3niR4bqqmddyHI5onH+TpIowUJXt8WULdwZoxeWnz/P/E8mKMKNFwXw==
+"@wdio/reporter@8.8.4":
+  version "8.8.4"
+  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-8.8.4.tgz#148ff9e44d378044d75d6fba50b9cbf0410caa95"
+  integrity sha512-74V3+Pkg0MaPWSyQ6BNdF31an24zFoK9Gpxb+DkEor110UrhY/OyAmHVKKpS0TJzsDD1qdaGYYufyrS+175iQQ==
   dependencies:
     "@types/node" "^18.0.0"
     "@wdio/logger" "8.6.6"
-    "@wdio/types" "8.6.8"
+    "@wdio/types" "8.8.4"
     diff "^5.0.0"
     object-inspect "^1.12.0"
     supports-color "9.3.1"
@@ -3181,13 +3181,13 @@
     "@wdio/cli" "^7.1.2"
     typescript "^4.2.3"
 
-"@wdio/spec-reporter@8.6.8":
-  version "8.6.8"
-  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-8.6.8.tgz#b96ef024bb007aca63f2999d05951789e9b9908c"
-  integrity sha512-AWwvg123SgQaYxqVe6q/YsjD4HbjpAu1a8QO32z4uke+6k+BcGgzl0JsXHP21rit4dmqBe8W4zKVGNlKL1RdbQ==
+"@wdio/spec-reporter@8.8.4":
+  version "8.8.4"
+  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-8.8.4.tgz#8a0db108d7c6ccd80c38378bdc88cabfbad3e9cd"
+  integrity sha512-Hxkdcph13pjLv+ATqVlbfwJb6+kjmOdkP3IiJ69etAnEmjMb7ITuns5+5oqJ3z4JmLaCbNTlWpszobnoTv35Rg==
   dependencies:
-    "@wdio/reporter" "8.6.8"
-    "@wdio/types" "8.6.8"
+    "@wdio/reporter" "8.8.4"
+    "@wdio/types" "8.8.4"
     chalk "^5.1.2"
     easy-table "^1.2.0"
     pretty-ms "^7.0.0"
