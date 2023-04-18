@@ -749,4 +749,7 @@
   <data name="EformSuccessfullyUpdated" xml:space="preserve">
     <value>Електронну форму оновлено</value>
   </data>
+  <data name="EformSuccessfullyCreated" xml:space="preserve">
+    <value>Електронну форму створено</value>
+  </data>
 </root>

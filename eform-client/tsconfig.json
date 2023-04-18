@@ -1,24 +1,34 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "module": "commonjs",
+    "forceConsistentCasingInFileNames": false,
+    "strict": false,
+    "module": "es2020",
     "outDir": "./dist/out-src",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
     "paths": {
       "*": [ "./*" ],
       "src/*": ["./src/*"],
     },
-    "types": ["node", "webdriverio/async", "@wdio/mocha-framework"],
-    "target": "es2015",
+    "types": [
+      "node",
+      "webdriverio/async",
+      "@wdio/mocha-framework",
+      "expect-webdriverio"
+    ],
+    "target": "es2020",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2020",
       "dom"
     ]
   },

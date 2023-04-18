@@ -2,7 +2,7 @@ name: Pull requests
 
 on:
   pull_request:
-    branches: [ master, stable ]
+    branches: [ master, stable, angular14 ]
     paths-ignore:
     - '*.md'
     - '.github/**'
@@ -12,22 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Cache node_modules
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: eform-client/node_modules
-          key: ${{ runner.os }}-build-${{ hashFiles('eform-client/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.12.1'
-      - name: NPM Install
-        run: cd eform-client && npm install
-        if: steps.cache.outputs.cache-hit != 'true'
       - name: Build Docker image
         id: build
         run: docker build . -t microtingas/frontend-container:latest --build-arg GITVERSION=1.0.0
@@ -46,15 +30,6 @@ jobs:
         test: [a,b,c,d,e,f,g,h,i,j]
     steps:
     - uses: actions/checkout@v3
-    - name: Cache node_modules
-      id: cache
-      uses: actions/cache@v3
-      with:
-        path: eform-client/node_modules
-        key: ${{ runner.os }}-build-${{ hashFiles('eform-client/package.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
     - uses: actions/download-artifact@v3
       with:
         name: container
@@ -73,8 +48,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18.12.1'
-    - name: NPM Install
-      run: cd eform-client && npm install
+    - name: yarn install
+      run: cd eform-client && yarn install
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Create errorShots directory
       run: mkdir /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots      
@@ -87,10 +62,31 @@ jobs:
       run: cat docker_run_log
     - name: Pretest changes to work with Docker container
       run: sed -i 's/localhost/mariadbtest/g' eform-client/e2e/Constants/DatabaseConfigurationConstants.ts
-    - name: Configuration testing
-      run: cd eform-client && npm run testheadless
+    - name: DB Configuration
+      uses: cypress-io/github-action@v4
+      with:
+        start: echo 'hi'
+        wait-on: "http://localhost:4200"
+        wait-on-timeout: 120
+        browser: chrome
+        record: false
+        spec: cypress/e2e/db/*
+        config-file: cypress.config.ts
+        working-directory: eform-client
     - name: testheadless2${{matrix.test}}
       run: cd eform-client && npm run testheadless2${{matrix.test}}
+    - name: ${{matrix.test}} test
+      continue-on-error: true
+      uses: cypress-io/github-action@v4
+      with:
+        start: echo 'hi'
+        wait-on: "http://localhost:4200"
+        wait-on-timeout: 120
+        browser: chrome
+        record: false
+        spec: cypress/e2e/${{matrix.test}}/*
+        config-file: cypress.config.ts
+        working-directory: eform-client
     - name: Stop the newly build Docker container
       run: docker stop my-container
     - name: Get standard output

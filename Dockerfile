@@ -1,8 +1,8 @@
-FROM node:18.12.1 as node-env
+FROM node:18.15.0 as node-env
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY eform-client ./
-RUN npm install
+RUN yarn install
 RUN npm run build
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env

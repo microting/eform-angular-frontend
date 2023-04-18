@@ -21,13 +21,13 @@ describe('Database', function () {
     expect(await (await databasePage.tokenInput()).isDisplayed()).equal(true);
     expect(await (await databasePage.authenticationType()).isDisplayed()).equal(true);
     expect(await (await databasePage.languageDropdown()).isDisplayed()).equal(true);
-    if (await (await databasePage.saveBtn()).isExisting()) {
+    //if (await (await databasePage.saveBtn()).isExisting()) {
       await databasePage.configure(DatabaseConfigurationConstants.languageOptions.danish);
       await browser.pause(1000);
       await databasePage.save();
       await (await $('#loginBtn')).waitForDisplayed({timeout: 90000});
       // browser.pause(45000);
       expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
-    }
+    //}
   });
 });

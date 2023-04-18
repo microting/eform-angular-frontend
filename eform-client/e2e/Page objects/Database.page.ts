@@ -58,7 +58,7 @@ class DatabasePage extends Page {
   public async selectLanguage(language) {
     const dropdown = await this.languageDropdown();
     await dropdown.click();
-    const ele = await (await (await $(`//*[@id="languageSelector"]//*[text()="${language}"]`)).$('..')).$('..');
+    const ele = await (await (await $(`//*[@class="ng-dropdown-panel ng-star-inserted ng-select-top"]//*[text()="${language}"]`)).$('..')).$('..');
     await ele.click();
   }
 

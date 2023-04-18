@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using ClosedXML.Graphics;
+
 namespace eFormAPI.Web.Services.Import
 {
     using System;
@@ -49,6 +51,9 @@ namespace eFormAPI.Web.Services.Import
             try
             {
                 var result = new List<EformImportExcelModel>();
+                foreach (var fontFamily in SixLabors.Fonts.SystemFonts.Collection.Families)
+                    Console.WriteLine(fontFamily.Name);
+                LoadOptions.DefaultGraphicEngine = new DefaultGraphicEngine("Carlito");
                 var workbook = new XLWorkbook(excelStream);
                 var worksheet = workbook.Worksheet(EformImportExcelConsts.EformsWorksheet);
                 var rows = worksheet.RangeUsed().RowsUsed();

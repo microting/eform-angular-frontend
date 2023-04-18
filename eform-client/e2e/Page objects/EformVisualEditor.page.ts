@@ -322,7 +322,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
           DanishEformFieldTypesEnum[checklistFieldObj.type]
         );
         await browser.pause(500);
-        const option = await (await this.fieldTypeSelector()).$('.ng-option');
+        const option = await (await $('ng-dropdown-panel')).$('.ng-option');
         await option.waitForDisplayed({ timeout: 40000 });
         await option.click();
         await browser.pause(500);

@@ -4,6 +4,16 @@ import { AuthState, AuthStore } from '../store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthQuery extends Query<AuthState> {
+
+  selectDarkTheme$ = this.select((state) => state.currentUser.darkTheme);
+  selectCurrentUserClaims$ = this.select((state) => state.currentUser.claims);
+  selectFullName$ = this.select((store) => `${store.currentUser.firstName} ${store.currentUser.lastName}`);
+  selectIsAuth$ = this.select((store) => !!store.token.accessToken);
+  selectCurrentUserLocale$ = this.select((state) => state.currentUser.locale);
+  selectIsConnectionStringExist$ = this.select((state) => state.connectionString.isConnectionStringExist);
+  selectIsConnectionStringExistWithCount$ = this.select((state) => state.connectionString);
+  selectSideMenuOpened$ = this.select((state) => state.sideMenuOpened);
+
   constructor(protected store: AuthStore) {
     super(store);
   }
@@ -15,15 +25,6 @@ export class AuthQuery extends Query<AuthState> {
   get bearerToken() {
     return `Bearer ${this.getValue().token.accessToken}`;
   }
-
-  selectDarkTheme$ = this.select((state) => state.currentUser.darkTheme);
-  selectCurrentUserClaims$ = this.select((state) => state.currentUser.claims);
-  selectFullName$ = this.select((store) => `${store.currentUser.firstName} ${store.currentUser.lastName}`);
-  selectIsAuth$ = this.select((store) => !!store.token.accessToken);
-  selectCurrentUserLocale$ = this.select((state) => state.currentUser.locale);
-  selectIsConnectionStringExist$ = this.select((state) => state.connectionString.isConnectionStringExist);
-  selectIsConnectionStringExistWithCount$ = this.select((state) => state.connectionString);
-  selectSideMenuOpened$ = this.select((state) => state.sideMenuOpened);
 
   get isAuth() {
     return !!this.getValue().token.accessToken;

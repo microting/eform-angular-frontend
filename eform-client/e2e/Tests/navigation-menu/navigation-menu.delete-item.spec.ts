@@ -10,8 +10,10 @@ describe('Navigation menu - Delete item', function () {
     await myEformsPage.Navbar.goToMenuEditorPage();
   });
   it('element must be created from custom dropdown which elements and create templates elements', async () => {
+    await browser.pause(2000);
     const count = (await navigationMenuPage.menuItems()).length;
     await navigationMenuPage.collapseTemplates(1);
+    await browser.pause(1500);
     const dropdown = {
       securityGroups: [],
       translations: ['test1', 'test', 'test3']
@@ -30,7 +32,7 @@ describe('Navigation menu - Delete item', function () {
     await navigationMenuPage.createMenuItemFromTemplate(3);
     await browser.pause(500);
     await navigationMenuPage.collapseTemplates(0);
-    await browser.pause(500);
+    await browser.pause(1500);
 
     // check, how match created elements
     expect(count + 3).eq((await navigationMenuPage.menuItems()).length);
@@ -52,6 +54,7 @@ describe('Navigation menu - Delete item', function () {
     await browser.pause(500);
   });
   it('should before deleted items from custom dropdown and items menu', async() => {
+    await browser.pause(2000);
     // remember count elements in dropdown
     // tslint:disable-next-line:max-line-length
     const countInDropdown = await (await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItems()).length - 1)).length;
@@ -85,6 +88,6 @@ describe('Navigation menu - Delete item', function () {
     expect(countInMenuItems - 3).eq((await navigationMenuPage.menuItems()).length);
 
     await navigationMenuPage.resetMenu();
-    await browser.pause(500);
+    await browser.pause(1500);
   });
 });

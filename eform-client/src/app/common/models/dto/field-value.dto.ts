@@ -6,12 +6,12 @@ import {DataItemDto} from './data-item.dto';
 export class FieldValueDto extends DataItemDto {
   // FieldValue
   fieldId: number;
-  fieldType: string;
+  declare fieldType: string;
   dateOfDoing: Date;
   value: string;
   microtingUuid: string;
   valueReadable: string;
-  description: any;
+  declare description: any;
 
   latitude: string;
   longitude: string;
