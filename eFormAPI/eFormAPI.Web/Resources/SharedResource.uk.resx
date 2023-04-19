@@ -752,4 +752,7 @@
   <data name="EformSuccessfullyCreated" xml:space="preserve">
     <value>Електронну форму створено</value>
   </data>
+  <data name="PasswordSuccessfullyUpdated" xml:space="preserve">
+    <value>Пароль оновлено</value>
+  </data>
 </root>
