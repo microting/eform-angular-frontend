@@ -134,7 +134,7 @@
     "path": "0.12.7",
     "run-sequence": "2.2.1",
     "ts-node": "10.9.1",
-    "tsconfig-paths": "^4.1.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "4.7.4",
     "wdio-chromedriver-service": "^8.1.1",
     "webdriverio": "8.8.4"
