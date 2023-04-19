@@ -8851,10 +8851,10 @@ ng2-file-upload@1.4.0:
   dependencies:
     tslib "^1.9.0"
 
-ng2-pdf-viewer@^9.1.4:
-  version "9.1.4"
-  resolved "https://registry.npmjs.org/ng2-pdf-viewer/-/ng2-pdf-viewer-9.1.4.tgz"
-  integrity sha512-NnjrSW7iRF8c/FJM9Va8cXbw7gdbahlP0nxYKsdOASdLtgYHQloOHCd2szZwHM++/RQjtLnZ2kTZb4OxvgrZHg==
+ng2-pdf-viewer@^9.1.5:
+  version "9.1.5"
+  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-9.1.5.tgz#bcc9223eea96d2974f8c8377a333d45ff64a3caf"
+  integrity sha512-vg+ByLcAiV9aouj6XdZKsGfZljOP1IO2VGVEZtbqW83wKfFD3UzrplZH6fImIG3O7LVxH9jFZpHE7QnqmhrYtg==
   dependencies:
     pdfjs-dist "~2.14.305"
     tslib "^2.3.1"
