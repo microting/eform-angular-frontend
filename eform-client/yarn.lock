@@ -358,10 +358,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/language-service@14.2.12":
-  version "14.2.12"
-  resolved "https://registry.npmjs.org/@angular/language-service/-/language-service-14.2.12.tgz"
-  integrity sha512-YmW6simyEVmpDmbYVUhZ2IxSP6pmsWrV120rB9Y21/BeM39WIXA4NCNirVWlAd/KAKY9O7Sbn1nXI6rSDfhopQ==
+"@angular/language-service@15.2.7":
+  version "15.2.7"
+  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-15.2.7.tgz#a201ed232797edd62c0e33eacf747da27c9da98d"
+  integrity sha512-uQ5ZACxDgP7pvakdqzN+W2CMls8svwBN8gygLwxvf+b4B+jllcmO45W/O9MPXfB/qfBRuuBmClm/29L1RmMHUA==
 
 "@angular/localize@14.3.0":
   version "14.3.0"
@@ -3198,13 +3198,6 @@
     "@types/node" "^18.0.0"
     got "^11.8.1"
 
-"@wdio/types@8.6.8":
-  version "8.6.8"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.6.8.tgz#5ec623a9559aeeb9863e448340d47321f33cb436"
-  integrity sha512-hwlkQ6E8DNIFL/l8vHve3Zpl1t6Hqle7vtatEkAlrmbnExc7qI6Yw6SI5T/KiBSAi0ez1OypbGhdrbXFfywxng==
-  dependencies:
-    "@types/node" "^18.0.0"
-
 "@wdio/types@8.8.4":
   version "8.8.4"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.8.4.tgz#880f2ba7b3e28ba3cd974cb14ddd82204aed1c72"
@@ -3219,16 +3212,6 @@
   dependencies:
     "@wdio/logger" "7.26.0"
     "@wdio/types" "7.30.2"
-    p-iteration "^1.1.8"
-
-"@wdio/utils@8.6.8":
-  version "8.6.8"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.6.8.tgz#492be51f788477be286d7b45ec79fa28ca6e53a7"
-  integrity sha512-ibhuEGBwkRoy3hqKb7pXGqJkH8vSqSsTyYdxQ8cGJYFfOIvHJR1aTLz+az5zJMLNUUT6WItRBwa5Rad0hlWbFw==
-  dependencies:
-    "@wdio/logger" "8.6.6"
-    "@wdio/types" "8.6.8"
-    import-meta-resolve "^2.2.0"
     p-iteration "^1.1.8"
 
 "@wdio/utils@8.8.4":
