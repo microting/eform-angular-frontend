@@ -3198,13 +3198,6 @@
     "@types/node" "^18.0.0"
     got "^11.8.1"
 
-"@wdio/types@8.6.8":
-  version "8.6.8"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.6.8.tgz#5ec623a9559aeeb9863e448340d47321f33cb436"
-  integrity sha512-hwlkQ6E8DNIFL/l8vHve3Zpl1t6Hqle7vtatEkAlrmbnExc7qI6Yw6SI5T/KiBSAi0ez1OypbGhdrbXFfywxng==
-  dependencies:
-    "@types/node" "^18.0.0"
-
 "@wdio/types@8.8.4":
   version "8.8.4"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.8.4.tgz#880f2ba7b3e28ba3cd974cb14ddd82204aed1c72"
@@ -3219,16 +3212,6 @@
   dependencies:
     "@wdio/logger" "7.26.0"
     "@wdio/types" "7.30.2"
-    p-iteration "^1.1.8"
-
-"@wdio/utils@8.6.8":
-  version "8.6.8"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.6.8.tgz#492be51f788477be286d7b45ec79fa28ca6e53a7"
-  integrity sha512-ibhuEGBwkRoy3hqKb7pXGqJkH8vSqSsTyYdxQ8cGJYFfOIvHJR1aTLz+az5zJMLNUUT6WItRBwa5Rad0hlWbFw==
-  dependencies:
-    "@wdio/logger" "8.6.6"
-    "@wdio/types" "8.6.8"
-    import-meta-resolve "^2.2.0"
     p-iteration "^1.1.8"
 
 "@wdio/utils@8.8.4":
@@ -3535,37 +3518,37 @@ ajv@^6.10.0, ajv@^6.12.4, ajv@^6.12.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-angular-calendar@0.29.0:
-  version "0.29.0"
-  resolved "https://registry.npmjs.org/angular-calendar/-/angular-calendar-0.29.0.tgz"
-  integrity sha512-TK4yUNsOhCUVrBRTJhGvVgGkQHgR0DTDFnPUTv0YSeDAuq5+irWjH23UrHmrhBCwFPelGLrTHjxsbMwjuzrJjw==
+angular-calendar@0.30.1:
+  version "0.30.1"
+  resolved "https://registry.yarnpkg.com/angular-calendar/-/angular-calendar-0.30.1.tgz#6d433dfd81d1aab5fe1c58373bcac277154e6625"
+  integrity sha512-QNDGmMzDH/Lx0WXya3mug+MYEpEAQHKlErB/ZpE5F1glChFmPuWCV4aLN6sqacMjZW1TybAJ/ES88B6LS7l8zw==
   dependencies:
     "@scarf/scarf" "^1.1.1"
-    angular-draggable-droppable "^6.0.0"
-    angular-resizable-element "^5.0.0"
-    calendar-utils "^0.9.0"
+    angular-draggable-droppable "^7.0.0"
+    angular-resizable-element "^6.0.0"
+    calendar-utils "^0.10.1"
     positioning "^2.0.1"
-    tslib "^2.0.0"
+    tslib "^2.4.0"
 
-angular-draggable-droppable@^6.0.0:
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/angular-draggable-droppable/-/angular-draggable-droppable-6.1.0.tgz"
-  integrity sha512-axf3YMZ1ovhVZXnydP5iatNT5V05uK1wrUIhlJy4XGFVzIfTOGPn6d0E4r43lyDPj1r6daz3ODm8UNXzjWgcCg==
+angular-draggable-droppable@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/angular-draggable-droppable/-/angular-draggable-droppable-7.0.0.tgz#b7a2c020c04f061d4de55c28d1baee31cba148d2"
+  integrity sha512-XEtIx4hsByrwunKPHiqXRcqCPZlP2YF7ZXWgdoBIGiNVg0L/4xx8OcaKVeVsrOrKsN/t/IB4kJqeG45btUcSGA==
   dependencies:
     "@mattlewis92/dom-autoscroller" "^2.4.2"
-    tslib "^2.3.1"
+    tslib "^2.4.0"
 
 angular-mocks@1.8.3:
   version "1.8.3"
   resolved "https://registry.npmjs.org/angular-mocks/-/angular-mocks-1.8.3.tgz"
   integrity sha512-vqsT6zwu80cZ8RY7qRQBZuy6Fq5X7/N5hkV9LzNT0c8b546rw4ErGK6muW1u2JnDKYa7+jJuaGM702bWir4HGw==
 
-angular-resizable-element@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.npmjs.org/angular-resizable-element/-/angular-resizable-element-5.0.0.tgz"
-  integrity sha512-GbV8myA2x8aUU8CK7siTi1QMjtilzQzIgClqUVpE/YM1WAp0/OnioBV12oLcOT24eEwP3zDqPTHL+D1Kv2rNAw==
+angular-resizable-element@^6.0.0:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/angular-resizable-element/-/angular-resizable-element-6.0.2.tgz#8f8caa6469dcf58bc8970653a6ff67f0a9f4a033"
+  integrity sha512-OEWDfI945UqQMpHfRn/XNrGrOZAXEv6Utzqoc83yAYuNIKJXyTpivcrr/IZsQq735QYLLV/OeDzdP5XilLdMDA==
   dependencies:
-    tslib "^2.2.0"
+    tslib "^2.3.0"
 
 angular2-uuid@1.1.1:
   version "1.1.1"
@@ -4256,10 +4239,10 @@ cachedir@^2.3.0:
   resolved "https://registry.npmjs.org/cachedir/-/cachedir-2.3.0.tgz"
   integrity sha512-A+Fezp4zxnit6FanDmv9EqXNAi3vt9DWp51/71UEhXukb7QUuvtv9344h91dyAxuTLoSYJFU299qzR3tzwPAhw==
 
-calendar-utils@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.npmjs.org/calendar-utils/-/calendar-utils-0.9.0.tgz"
-  integrity sha512-QxMf/I+y/it02EoFvla7Fq9n4SIOK9T97wT4W0VfvbFTbhf92AYHm9IBXGWDJiARNM2pvrGCFtI8AFB0D4OuWw==
+calendar-utils@^0.10.1:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/calendar-utils/-/calendar-utils-0.10.4.tgz#31bbeb4e35579137043bc85471e98a2924d81ff9"
+  integrity sha512-gBK4xCJ42yjaUKwuUha6cZOfxAmGzvSgbdAaX3xLRioeKbYoOK1x1qeD6dch72rsMZlTgATPbBBx42bnkStqgQ==
 
 call-bind@^1.0.0, call-bind@^1.0.2:
   version "1.0.2"
