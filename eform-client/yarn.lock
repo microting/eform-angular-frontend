@@ -358,10 +358,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/language-service@14.2.12":
-  version "14.2.12"
-  resolved "https://registry.npmjs.org/@angular/language-service/-/language-service-14.2.12.tgz"
-  integrity sha512-YmW6simyEVmpDmbYVUhZ2IxSP6pmsWrV120rB9Y21/BeM39WIXA4NCNirVWlAd/KAKY9O7Sbn1nXI6rSDfhopQ==
+"@angular/language-service@15.2.7":
+  version "15.2.7"
+  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-15.2.7.tgz#a201ed232797edd62c0e33eacf747da27c9da98d"
+  integrity sha512-uQ5ZACxDgP7pvakdqzN+W2CMls8svwBN8gygLwxvf+b4B+jllcmO45W/O9MPXfB/qfBRuuBmClm/29L1RmMHUA==
 
 "@angular/localize@14.3.0":
   version "14.3.0"
