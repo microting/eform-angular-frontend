@@ -47,16 +47,26 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
       this.getSettings();
     }
 
-    const uploadOptions: FileUploaderOptions = {
+    const uploadOptionsLogin: FileUploaderOptions = {
       headers: [
         {
           name: 'Authorization',
-          value: this.authStateService.bearerToken,
-        },
+          value: this.authStateService.bearerToken
+        }
       ],
+      url: '/api/images/login-page-images',
     };
-    this.loginPageImageUploader.setOptions(uploadOptions);
-    this.headerImageUploader.setOptions(uploadOptions);
+    const uploadOptionsHeader: FileUploaderOptions = {
+      headers: [
+        {
+          name: 'Authorization',
+          value: this.authStateService.bearerToken
+        }
+      ],
+      url: '/api/images/eform-images',
+    };
+    this.loginPageImageUploader.setOptions(uploadOptionsLogin);
+    this.headerImageUploader.setOptions(uploadOptionsHeader);
   }
 
   getLatestVersion() {

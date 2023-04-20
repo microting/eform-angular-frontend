@@ -200,7 +200,7 @@ export const da = {
     '<p>Hemmelig nøgle mellem <strong>Eform</strong> applikation og  <strong>Google Authenticator</strong>. Hold det sikkert og fortæl ikke nogen.</p><p>Du bør fjerne denne nøgle, hvis <strong>Google Authenticator</strong> geninstalleres eller nøglen er fjernet</p>',
   'New OTP for': 'Ny OTP til',
   Loading: 'Indlæser',
-  Pending: 'Verserende',
+  Pending: 'Afventer',
   Upload: 'Vælg fil',
   Role: 'Rolle',
   'New list': 'Ny liste',

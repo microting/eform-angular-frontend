@@ -122,19 +122,26 @@ namespace eFormAPI.Web.Controllers
         {
             var iUploadedCnt = 0;
 
+            var saveFolder = PathHelper.GetEformLoginPageSettingsImagesPath();
+            if (string.IsNullOrEmpty(saveFolder))
+            {
+                return BadRequest(_localizationService.GetString("FolderError"));
+            }
+            Directory.CreateDirectory(saveFolder);
+
             if (file.Length > 0)
             {
-                    using (var stream = new MemoryStream())
+                var filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
+                await using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    var core = await _coreHelper.GetCore();
+                    if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                     {
-                        await file.CopyToAsync(stream);
-
-                        var core = await _coreHelper.GetCore();
-                        if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-                        {
-                            await core.PutFileToS3Storage(stream, file.FileName);
-                        }
+                        await core.PutFileToStorageSystem(filePath, file.FileName);
                     }
-                    iUploadedCnt++;
+                }
+                iUploadedCnt++;
             }
 
             if (iUploadedCnt > 0)
@@ -155,28 +162,21 @@ namespace eFormAPI.Web.Controllers
             {
                 return BadRequest(_localizationService.GetString("FolderError"));
             }
-
-            if (!Directory.Exists(saveFolder))
-            {
-                Directory.CreateDirectory(saveFolder);
-            }
+            Directory.CreateDirectory(saveFolder);
 
             if (file.Length > 0)
             {
                 var filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
-                if (!System.IO.File.Exists(filePath))
+                await using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    await file.CopyToAsync(stream);
+                    var core = await _coreHelper.GetCore();
+                    if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                     {
-                        await file.CopyToAsync(stream);
-                        var core = await _coreHelper.GetCore();
-                        if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-                        {
-                            await core.PutFileToStorageSystem(filePath, file.FileName);
-                        }
+                        await core.PutFileToStorageSystem(filePath, file.FileName);
                     }
-                    iUploadedCnt++;
                 }
+                iUploadedCnt++;
             }
 
             if (iUploadedCnt > 0)
