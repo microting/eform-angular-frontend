@@ -1,5 +1,6 @@
 export default class Page {
-  constructor() {}
+  constructor() {
+  }
 
   open(path) {
     cy.visit(path);
@@ -9,11 +10,19 @@ export default class Page {
     return cy.get('#spinner-animation');
   }
 
-  waitForSpinnerHide(timeout = 90000) {
-    cy.waitUntil(() => cy.get('#spinner-animation').should('not.exist'), { timeout: timeout });
+  waitForSpinnerHide(timeout = 10000) {
+    if (this.spinnerAnimation().should('exist')) {
+      this.spinnerAnimation().should('not.exist');
+      return;
+    }
+    this.spinnerAnimation().should('not.exist');
   }
 
   waitForSpinnerShow(timeout = 90000) {
-    cy.waitUntil(() => cy.get('#spinner-animation').should('exist'), { timeout: timeout });
+    if (this.spinnerAnimation().should('not.exist')) {
+      this.spinnerAnimation().should('exist');
+      return;
+    }
+    this.spinnerAnimation().should('exist');
   }
 }
