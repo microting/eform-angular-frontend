@@ -744,4 +744,7 @@
   <data name="EformSuccessfullyCreated" xml:space="preserve">
     <value>eForm erstellt</value>
   </data>
+  <data name="PasswordSuccessfullyUpdated" xml:space="preserve">
+    <value>Passwort aktualisiert</value>
+  </data>
 </root>
