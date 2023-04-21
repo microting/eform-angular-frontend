@@ -3046,16 +3046,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@8.8.4":
-  version "8.8.4"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.8.4.tgz#9c04347510e229c0b8cb2893090a919d731bacb5"
-  integrity sha512-e3mEXpTBhkR0srSF6vd8zvPyZqm7ang19oz18BupdRPbQ0nALZCYaIF4gUsmGzLDoofGcxJuEiCW5N+dYJvERg==
+"@wdio/mocha-framework@8.8.6":
+  version "8.8.6"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.8.6.tgz#2850efa30c6243a1152e39be2cf8b07a7d95253c"
+  integrity sha512-ovHvDpyuCowEZLmElvKrNQdCdcC8R0bdIrlLlkWlIHbGHe60U57vUcAjwqFwksvvnSF1zI6uDfgcsU1qtmwezg==
   dependencies:
     "@types/mocha" "^10.0.0"
     "@types/node" "^18.0.0"
     "@wdio/logger" "8.6.6"
-    "@wdio/types" "8.8.4"
-    "@wdio/utils" "8.8.4"
+    "@wdio/types" "8.8.6"
+    "@wdio/utils" "8.8.6"
     mocha "^10.0.0"
 
 "@wdio/protocols@7.27.0":
@@ -3149,6 +3149,13 @@
   dependencies:
     "@types/node" "^18.0.0"
 
+"@wdio/types@8.8.6":
+  version "8.8.6"
+  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.8.6.tgz#edb0f2d8564e753c211484b819a4e4fd838b0cb6"
+  integrity sha512-SwV0k0iv3F0ePZ3VyLuotAv9HKme4496+j/uBs1pKLzsLfemJ15F7d+LQr7eSIDr2THpmMTfoUvCzLbefiB/Xg==
+  dependencies:
+    "@types/node" "^18.0.0"
+
 "@wdio/utils@7.30.2":
   version "7.30.2"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-7.30.2.tgz#d4642c3b8333f3f2ae9d46229098c0a77c3f887b"
@@ -3165,6 +3172,16 @@
   dependencies:
     "@wdio/logger" "8.6.6"
     "@wdio/types" "8.8.4"
+    import-meta-resolve "^2.2.0"
+    p-iteration "^1.1.8"
+
+"@wdio/utils@8.8.6":
+  version "8.8.6"
+  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.8.6.tgz#26f96c29b153c595935fbb824ffae0958e30dfe9"
+  integrity sha512-xQ461/7b9IsZ/B0/fMfQHlp6+li/50GzinsZSCvg4hCR56iYNmbVKBD7uYpqyzUf4+c5dHkEMNxLta6BQzS/sg==
+  dependencies:
+    "@wdio/logger" "8.6.6"
+    "@wdio/types" "8.8.6"
     import-meta-resolve "^2.2.0"
     p-iteration "^1.1.8"
 
@@ -8848,10 +8865,10 @@ ngx-image-cropper@6.3.3:
   dependencies:
     tslib "^2.3.0"
 
-ngx-mask@^13.1.15:
-  version "13.1.15"
-  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-13.1.15.tgz#1bfd96772f72eabd70ae186335b5e6804789ee23"
-  integrity sha512-fplyzkFa6lFTzPo/AHaI3TBQxTMdcqQClR9BLLAWTvCyDZkV28fLqWkpIpy0VvPc9ADogFpJJj7R1356mszjag==
+ngx-mask@^14.2.4:
+  version "14.2.4"
+  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-14.2.4.tgz#da7ba480d7c7f5be9ff34c35a288838c58d65bbd"
+  integrity sha512-158nAe2tyiZa2T8COoI6SvJCQHqpJ4+JW0amGcvVEYUBF6FIoYK66BlnOJURAOy5qry0d0N45w7J/LGsCBgZcg==
   dependencies:
     tslib "^2.3.0"
 
