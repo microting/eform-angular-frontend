@@ -15,6 +15,6 @@ export class PermissionGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
     const requiredPermission = route.data['requiredPermission'];
-    return this.authStateService.checkClaim(requiredPermission);
+    return !requiredPermission || this.authStateService.checkClaim(requiredPermission);
   }
 }

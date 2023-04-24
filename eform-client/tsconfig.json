@@ -15,13 +15,14 @@
     "esModuleInterop": true,
     "paths": {
       "*": [ "./*" ],
-      "src/*": ["./src/*"],
+      "src/*": ["./src/*"]
     },
     "types": [
       "node",
       "webdriverio/async",
       "@wdio/mocha-framework",
-      "expect-webdriverio"
+      "expect-webdriverio",
+      "cypress"
     ],
     "target": "es2020",
     "typeRoots": [
@@ -33,6 +34,7 @@
     ]
   },
   "include": [
-    "./src/**/*.ts"
-  ],
+    "./src/**/*.ts",
+    "./cypress/**/*.ts",
+  ]
 }

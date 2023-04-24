@@ -16,7 +16,7 @@ export class ClaimsGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
     const claim = UserClaimsEnum[route.data['requiredClaim']] as string;
-    return this.authStateService.checkClaim(claim);
+    return !claim || this.authStateService.checkClaim(claim);
     // return userClaims.hasOwnProperty(claim) && userClaims[claim] === 'True';
   }
 }

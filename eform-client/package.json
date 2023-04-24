@@ -40,7 +40,8 @@
     "testheadlessplugin4b": "./node_modules/.bin/wdio wdio-headless-plugin-step4b.conf.ts --disable-gpu --browsers=ChromeHeadless",
     "testheadlessplugin4c": "./node_modules/.bin/wdio wdio-headless-plugin-step4c.conf.ts --disable-gpu --browsers=ChromeHeadless",
     "lint": "ng lint eform-angular",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "runE2E": "npx cypress run --browser chrome"
   },
   "prettier": {
     "singleQuote": true

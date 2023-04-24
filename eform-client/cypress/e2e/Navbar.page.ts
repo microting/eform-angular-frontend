@@ -75,11 +75,6 @@ export class Navbar {
     return cy.contains('.fadeInDropdown', menuItem).should('be.visible').click();
   }
 
-  public advancedDropdownClick() {
-    this.advancedBtn();
-    cy.wait(500);
-  }
-
   public clickOnHeaderMenuItem(headerMenuItem) {
     return cy.contains('#header', headerMenuItem).parentsUntil('#header').last().click();
   }
@@ -93,114 +88,126 @@ export class Navbar {
   }
 
   public logout() {
-    cy.get(this.signOutDropdown()).click();
+    this.signOutDropdown().click();
     cy.wait(500);
-    cy.get(this.logoutBtn()).click();
+    this.logoutBtn().click();
     cy.wait(500);
   }
 
   public goToProfileSettings() {
-    cy.get(this.signOutDropdown()).click();
-    cy.get(this.settingsBtn()).should('be.visible').should('be.enabled').click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.signOutDropdown().click();
+    this.settingsBtn().should('be.visible').should('be.enabled').click();
+    this.waitForSpinnerHide();
     cy.wait(500);
   }
 
   public goToApplicationSettings() {
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.waitForSpinnerHide();
     cy.get('#application-settings').should('be.visible').then(isDisplayed => {
       if (!isDisplayed) {
-        this.advancedDropdownClick();
+        this.advancedBtn();
       }
     });
-    cy.get(this.applicationSettingsBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.applicationSettingsBtn().click();
+    this.waitForSpinnerHide();
     cy.wait(500);
   }
 
   public goToWorkers() {
-    this.advancedDropdownClick();
-    cy.get(this.workersBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.advancedBtn();
+    this.workersBtn().click();
+    this.waitForSpinnerHide();
     cy.wait(500);
   }
 
   public goToSites() {
-    this.advancedDropdownClick();
-    cy.get(this.sitesBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.advancedBtn();
+    this.sitesBtn().click();
+    this.waitForSpinnerHide();
     cy.wait(500);
   }
 
   public goToUserAdministration() {
-    cy.get(this.signOutDropdown()).click();
-    cy.get(this.userAdministrationBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.signOutDropdown().click();
+    this.userAdministrationBtn().click();
+    this.waitForSpinnerHide();
     cy.wait(500);
   }
 
   public goToPasswordSettings() {
-    cy.get(this.signOutDropdown()).click();
-    cy.get(this.changePasswordBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.signOutDropdown().click();
+    this.changePasswordBtn().click();
+    this.waitForSpinnerHide();
     cy.wait(500);
   }
 
   public goToDeviceUsersPage() {
-    cy.get(this.deviceUsersBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.deviceUsersBtn().click();
+    this.waitForSpinnerHide();
     cy.wait(500);
   }
 
   public goToEntitySelect() {
-    this.advancedDropdownClick();
-    cy.get(this.entitySelectBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.advancedBtn();
+    this.entitySelectBtn().click();
+    this.waitForSpinnerHide();
     cy.wait(500);
   }
 
   public goToEntitySearch() {
-    this.advancedDropdownClick();
-    cy.get(this.entitySearchBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.advancedBtn();
+    this.entitySearchBtn().click();
+    this.waitForSpinnerHide();
     cy.wait(500);
   }
 
   public goToFolderPage() {
     cy.get(`#folders`).should('be.visible').then(isDisplayed => {
       if (isDisplayed) {
-        cy.get(this.foldersBtn()).click();
+        this.foldersBtn().click();
         cy.wait(500);
-        cy.get('#spinner-animation').should('not.be.visible');
+        this.waitForSpinnerHide();
       } else {
-        this.advancedDropdownClick();
-        cy.get(this.foldersBtn()).should('be.visible').should('be.enabled').click();
-        cy.get('#spinner-animation').should('not.be.visible');
+        this.advancedBtn();
+        this.foldersBtn().should('be.visible').should('be.enabled').click();
+        this.waitForSpinnerHide();
         cy.wait(500);
       }
     });
   }
 
   public goToPluginsPage() {
-    this.advancedDropdownClick();
-    cy.get(this.pluginsBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.advancedBtn();
+    this.pluginsBtn().click();
   }
 
   public goToMenuEditorPage() {
-    cy.get(this.signOutDropdown()).click();
-    cy.get(this.menuEditorBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.signOutDropdown().click();
+    this.menuEditorBtn().click();
+    this.waitForSpinnerHide();
   }
 
   public goToMyEForms() {
-    cy.get(this.myEformsBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.myEformsBtn().click();
+    this.waitForSpinnerHide();
   }
 
   public goToSecurity() {
-    cy.get(this.signOutDropdown()).click();
-    cy.get(this.securityBtn()).click();
-    cy.get('#spinner-animation').should('not.be.visible');
+    this.signOutDropdown().click();
+    this.securityBtn().click();
+    this.waitForSpinnerHide();
+  }
+
+  spinnerAnimation() {
+    return cy.get('#spinner-animation');
+  }
+
+  public waitForSpinnerHide() {
+    if(this.spinnerAnimation().should('exist'))
+    {
+      this.spinnerAnimation().should('not.exist');
+      return;
+    }
+    this.spinnerAnimation().should('not.exist');
   }
 }

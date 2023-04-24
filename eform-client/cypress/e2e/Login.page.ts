@@ -30,7 +30,6 @@ class LoginPage {
     this.getUsernameInput().type(username);
     this.getPasswordInput().type(password);
     this.getLoginButton().click();
-    // @ts-ignore
     cy.get('#newEFormBtn').should('be.visible');
   }
 
