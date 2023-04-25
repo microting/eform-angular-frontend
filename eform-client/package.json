@@ -40,7 +40,8 @@
     "testheadlessplugin4b": "./node_modules/.bin/wdio wdio-headless-plugin-step4b.conf.ts --disable-gpu --browsers=ChromeHeadless",
     "testheadlessplugin4c": "./node_modules/.bin/wdio wdio-headless-plugin-step4c.conf.ts --disable-gpu --browsers=ChromeHeadless",
     "lint": "ng lint eform-angular",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "runE2E": "npx cypress run --browser chrome"
   },
   "prettier": {
     "singleQuote": true
@@ -110,13 +111,13 @@
     "@angular-eslint/template-parser": "15.2.1",
     "@angular/cli": "15.2.6",
     "@angular/compiler-cli": "14.3.0",
-    "@angular/language-service": "15.2.7",
+    "@angular/language-service": "15.2.8",
     "@datorama/akita": "^8.0.1",
     "@datorama/akita-ngdevtools": "^7.0.0",
     "@types/chai": "4.3.4",
     "@types/d3": "7.4.0",
     "@types/mocha": "10.0.1",
-    "@types/node": "18.15.11",
+    "@types/node": "18.15.12",
     "@typescript-eslint/eslint-plugin": "5.59.0",
     "@typescript-eslint/parser": "5.59.0",
     "@wdio/cli": "8.8.4",
