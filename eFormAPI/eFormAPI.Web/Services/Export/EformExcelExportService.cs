@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Linq;
+using ClosedXML.Graphics;
 using ICSharpCode.SharpZipLib.Zip;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
@@ -155,6 +156,7 @@ namespace eFormAPI.Web.Services.Export
                         _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
                 }
 
+                LoadOptions.DefaultGraphicEngine = new DefaultGraphicEngine("Carlito");
                 var wb = new XLWorkbook(resultDocument);
                 try {
                     var workSheetToDelete = wb.Worksheets.Worksheet($"Data_{excelModel.TemplateId}");
