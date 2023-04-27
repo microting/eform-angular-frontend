@@ -3046,16 +3046,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@8.8.6":
-  version "8.8.6"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.8.6.tgz#2850efa30c6243a1152e39be2cf8b07a7d95253c"
-  integrity sha512-ovHvDpyuCowEZLmElvKrNQdCdcC8R0bdIrlLlkWlIHbGHe60U57vUcAjwqFwksvvnSF1zI6uDfgcsU1qtmwezg==
+"@wdio/mocha-framework@8.8.7":
+  version "8.8.7"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.8.7.tgz#f9fcc335844c7fa24d8d8bbd72841c67f5adf196"
+  integrity sha512-GDdvuZaHxd90b1AFpCM0y1irtyyN2ErwlpJUQsm74CpDrEcqhbvCIljkHO4DHzSIkDa5iFJMvHl7dIs4lgXINw==
   dependencies:
     "@types/mocha" "^10.0.0"
     "@types/node" "^18.0.0"
     "@wdio/logger" "8.6.6"
-    "@wdio/types" "8.8.6"
-    "@wdio/utils" "8.8.6"
+    "@wdio/types" "8.8.7"
+    "@wdio/utils" "8.8.7"
     mocha "^10.0.0"
 
 "@wdio/protocols@7.27.0":
@@ -3149,6 +3149,13 @@
   dependencies:
     "@types/node" "^18.0.0"
 
+"@wdio/types@8.8.7":
+  version "8.8.7"
+  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.8.7.tgz#981dc39c3da62da9043e5b0708e1d1fb4024feb0"
+  integrity sha512-zCbvHt2nuMOOZY1ccY3DYV9xMFpcz7Ds7vq7SnNplw8hWPkqL9kGEDl3D0yEotFsjVY3Zbs56XBzl1aTbLPc8w==
+  dependencies:
+    "@types/node" "^18.0.0"
+
 "@wdio/utils@7.30.2":
   version "7.30.2"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-7.30.2.tgz#d4642c3b8333f3f2ae9d46229098c0a77c3f887b"
@@ -3166,6 +3173,16 @@
     "@wdio/logger" "8.6.6"
     "@wdio/types" "8.8.6"
     import-meta-resolve "^2.2.0"
+    p-iteration "^1.1.8"
+
+"@wdio/utils@8.8.7":
+  version "8.8.7"
+  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.8.7.tgz#d5f15a07b2fa3ba50c6092348a4a46bea9999104"
+  integrity sha512-9Q/EK6ALVc5Xof0rIOQgwUAaH3rsjniT75ERpBYW2I/SC/tcXwh+UAzUQwA+MIIGCg00/xVMUMn9JaJXE93naw==
+  dependencies:
+    "@wdio/logger" "8.6.6"
+    "@wdio/types" "8.8.7"
+    import-meta-resolve "^3.0.0"
     p-iteration "^1.1.8"
 
 "@webassemblyjs/ast@1.11.1":
@@ -7127,6 +7144,11 @@ import-meta-resolve@^2.1.0, import-meta-resolve@^2.2.0:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/import-meta-resolve/-/import-meta-resolve-2.2.2.tgz#75237301e72d1f0fbd74dbc6cca9324b164c2cc9"
   integrity sha512-f8KcQ1D80V7RnqVm+/lirO9zkOxjGxhaTC1IPrBGd3MEfNgmNG67tSUO9gTi2F3Blr2Az6g1vocaxzkVnWl9MA==
+
+import-meta-resolve@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/import-meta-resolve/-/import-meta-resolve-3.0.0.tgz#94a6aabc623874fbc2f3525ec1300db71c6cbc11"
+  integrity sha512-4IwhLhNNA8yy445rPjD/lWh++7hMDOml2eHtd58eG7h+qK3EryMuuRbsHGPikCoAgIkkDnckKfWSk2iDla/ejg==
 
 imurmurhash@^0.1.4:
   version "0.1.4"
