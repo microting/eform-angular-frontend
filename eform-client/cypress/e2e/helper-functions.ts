@@ -13,7 +13,7 @@ export function generateRandmString(length = 36) {
  * @param {string} selectorColumnElementsForSorting - Selector for the table column to be sorted
  * @param {string} sortBy - The name of the column being sorted (optional)
  */
-export function testSorting(selectorTableHeader: string, selectorColumnElementsForSorting: string, sortBy: string) {
+export function testSorting(selectorTableHeader: string | Function, selectorColumnElementsForSorting: string, sortBy: string) {
   const cellsToStrings = (cells$) => {
     return _.map(cells$, (cell$): string => {
       return cell$.textContent;
@@ -21,7 +21,12 @@ export function testSorting(selectorTableHeader: string, selectorColumnElementsF
   };
 
   // Get table header
-  const tableHeader = () => cy.get(selectorTableHeader).should('be.visible');
+  let tableHeader;
+  if (typeof selectorTableHeader === 'string') {
+    tableHeader = () => cy.get(selectorTableHeader).should('be.visible');
+  } else {
+    tableHeader = selectorTableHeader;
+  }
 
   // Get all the elements to be sorted
   const elementsForSorting = () => cy.get(selectorColumnElementsForSorting);
