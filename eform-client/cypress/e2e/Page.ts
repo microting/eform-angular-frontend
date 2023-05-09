@@ -11,11 +11,12 @@ export default class Page {
   }
 
   waitForSpinnerHide(timeout = 10000) {
-    if (this.spinnerAnimation().should('exist')) {
-      this.spinnerAnimation().should('not.exist');
-      return;
-    }
-    this.spinnerAnimation().should('not.exist');
+
+    this.spinnerAnimation().then(($ele) => {
+      if (!$ele.is(':visible')) {
+        this.spinnerAnimation().should('not.exist');
+      }
+    });
   }
 
   waitForSpinnerShow(timeout = 90000) {
