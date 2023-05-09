@@ -101,21 +101,25 @@ export async function selectValueInNgSelector(selector: WebdriverIO.Element, val
   if(selectorInModal) {
     valueForClick = await (
       await $('ng-dropdown-panel')
-    ).$(`.ng-option=${value}`);
+    ).$(`.ng-option`);
+    // valueForClick = await (
+    //   await $('ng-dropdown-panel')
+    // ).$(`//*[@class='ng-option-label ng-star-inserted' and contains(text(), '${value}')]`);
     // valueForClick = await $(
     //   `.ng-option*=${value}`
     // );
+    await valueForClick.click();
   } else {
     valueForClick = await (
       await $('ng-dropdown-panel')
     ).$(`.ng-option=${value}`);
+    await valueForClick.waitForClickable({ timeout: 40000 });
+    await valueForClick.click();
     // valueForClick = await selector.$(
     //   `.ng-option*=${value}`
     // );
   }
   // await valueForClick.waitForDisplayed({ timeout: 40000 });
-  await valueForClick.waitForClickable({ timeout: 40000 });
-  await valueForClick.click();
   await browser.pause(500);
 }
 
