@@ -16,6 +16,7 @@ import {Observable, take, zip} from 'rxjs';
 import {Router} from '@angular/router';
 import {snakeToCamel} from 'src/app/common/helpers';
 import {resetStores} from '@datorama/akita';
+import {applicationLanguages} from 'src/app/common/const';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStateService {
@@ -202,6 +203,14 @@ export class AuthStateService {
 
   get currentUserLocale(): string {
     return this.query.currentSetting.currentUser.locale;
+  }
+
+  get currentUserLanguage(): { id: number; locale: string; text: string } {
+    return applicationLanguages.find(x => x.locale === this.query.currentSetting.currentUser.locale);
+  }
+
+  get currentUserLanguageAsync(): Observable<{id: number, locale: string, text: string}> {
+    return this.query.selectCurrentUserLanguage$;
   }
 
   get currentUserLocaleAsync() {

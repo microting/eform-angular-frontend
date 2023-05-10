@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import { AuthState, AuthStore } from '../store';
+import {applicationLanguages} from 'src/app/common/const';
 
 @Injectable({ providedIn: 'root' })
 export class AuthQuery extends Query<AuthState> {
@@ -10,6 +11,7 @@ export class AuthQuery extends Query<AuthState> {
   selectFullName$ = this.select((store) => `${store.currentUser.firstName} ${store.currentUser.lastName}`);
   selectIsAuth$ = this.select((store) => !!store.token.accessToken);
   selectCurrentUserLocale$ = this.select((state) => state.currentUser.locale);
+  selectCurrentUserLanguage$ = this.select((state) => applicationLanguages.find(x => x.locale === state.currentUser.locale))
   selectIsConnectionStringExist$ = this.select((state) => state.connectionString.isConnectionStringExist);
   selectIsConnectionStringExistWithCount$ = this.select((state) => state.connectionString);
   selectSideMenuOpened$ = this.select((state) => state.sideMenuOpened);

@@ -1,10 +1,15 @@
 import {Guid} from 'guid-typescript';
-import Page from './Page';
 
 const {_} = Cypress;
 
-export function generateRandmString(length = 36) {
+export function generateRandmString(length: number = 36): string {
   return Guid.raw().toString().slice(0, length);
+}
+
+export function getRandomInt(min: number, max: number): number {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 /**
@@ -62,27 +67,44 @@ export function testSorting(selectorTableHeader: string | Function, selectorColu
     });
 }
 
-
-export function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
-export function selectDateOnDatePicker(year, month, day) {
-  cy.wait(1000);
-  cy.get('.owl-dt-calendar-control-content span').click();
-  cy.wait(1000);
+/**
+ * Selects a date on the date picker widget.
+ * @param {number} year - Year value of the date to select.
+ * @param {number} month - Month value of the date to select.
+ * @param {number} day - Day value of the date to select.
+ */
+export function selectDateOnDatePicker(year: number, month: number, day: number) {
+  cy.wait(500);
+  // Click on the date picker widget's control button.
+  cy.get('button.owl-dt-control-button .owl-dt-control-button-content span').click();
+  cy.wait(500);
+  // Click on the year cell of the date picker widget.
   cy.get(`tbody span.owl-dt-calendar-cell-content:eq(${year - 2016})`).click();
-  cy.wait(1000);
+  cy.wait(500);
+  // Click on the month cell of the date picker widget.
   cy.get(`span.owl-dt-calendar-cell-content:eq(${month - 1})`).click();
-  cy.wait(1000);
+  cy.wait(500);
+  // Click on the day cell of the date picker widget.
   cy.get(`span.owl-dt-calendar-cell-content:not(.owl-dt-calendar-cell-out):eq(${day - 1})`).click();
-  cy.wait(1000);
+  cy.wait(500);
 }
 
-export function selectDateRangeOnDatePicker(yearFrom, monthFrom, dayFrom, yearTo, monthTo, dayTo) {
+/**
+ * Selects a date range on the date picker widget.
+ * @param {number} yearFrom - Year value of the start date.
+ * @param {number} monthFrom - Month value of the start date.
+ * @param {number} dayFrom - Day value of the start date.
+ * @param {number} yearTo - Year value of the end date.
+ * @param {number} monthTo - Month value of the end date.
+ * @param {number} dayTo - Day value of the end date.
+ */
+export function selectDateRangeOnDatePicker(
+  yearFrom: number, monthFrom: number, dayFrom: number,
+  yearTo: number, monthTo: number, dayTo: number
+) {
+  // Select the start date.
   selectDateOnDatePicker(yearFrom, monthFrom, dayFrom);
+  // Select the end date.
   selectDateOnDatePicker(yearTo, monthTo, dayTo);
 }
 
