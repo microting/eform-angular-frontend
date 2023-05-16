@@ -7,7 +7,7 @@ import {
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {CaseArchiveModel,} from 'src/app/common/models';
 import {CasesService} from 'src/app/common/services';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 
 @AutoUnsubscribe()
 @Component({

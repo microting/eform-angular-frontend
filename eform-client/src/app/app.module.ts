@@ -34,19 +34,19 @@ import {environment} from 'src/environments/environment';
 // angular material modules
 import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatButtonModule} from '@angular/material/button';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatChipsModule} from '@angular/material/chips';
+import {MatLegacyMenuModule as MatMenuModule} from '@angular/material/legacy-menu';
+import {MatLegacyChipsModule as MatChipsModule} from '@angular/material/legacy-chips';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {FormsModule} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCardModule} from '@angular/material/card';
-import {MatInputModule} from '@angular/material/input';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
+import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
+import {MatLegacyProgressSpinnerModule as MatProgressSpinnerModule} from '@angular/material/legacy-progress-spinner';
 
 @NgModule({
   declarations: [

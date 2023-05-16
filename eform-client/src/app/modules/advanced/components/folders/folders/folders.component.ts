@@ -5,7 +5,7 @@ import { FolderDto } from 'src/app/common/models';
 import { AuthStateService } from 'src/app/common/store';
 import {FolderDeleteComponent, FolderEditCreateComponent} from '../';
 import {dialogConfigHelper} from 'src/app/common/helpers';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import { Subscription } from 'rxjs';
 

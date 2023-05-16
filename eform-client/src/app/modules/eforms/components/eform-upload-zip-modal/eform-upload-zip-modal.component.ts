@@ -4,7 +4,7 @@ import {FileUploader} from 'ng2-file-upload';
 import {ToastrService} from 'ngx-toastr';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {AuthStateService} from 'src/app/common/store';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-eform-upload-zip-modal',

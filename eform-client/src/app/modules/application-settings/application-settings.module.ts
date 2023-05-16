@@ -7,12 +7,12 @@ import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-share
 import {ApplicationSettingsRouting} from './application-settings.routing';
 import {AdminSettingsComponent} from './components';
 import {appSettingsProvider} from './components/store';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatCardModule} from '@angular/material/card';
+import {MatLegacyCheckboxModule as MatCheckboxModule} from '@angular/material/legacy-checkbox';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
+import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
+import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
 import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
+import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 
 @NgModule({

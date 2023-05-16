@@ -25,18 +25,18 @@ import {
   VisualEditorAdditionalFieldOptionDeleteComponent,
 } from './components';
 import {EformVisualEditorRouting} from './eform-visual-editor.routing';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatButtonModule} from '@angular/material/button';
+import {MatLegacyCheckboxModule as MatCheckboxModule} from '@angular/material/legacy-checkbox';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
 import {MatIconModule} from '@angular/material/icon';
-import {MatCardModule} from '@angular/material/card';
-import {MatInputModule} from '@angular/material/input';
+import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
+import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
 import {MtxPopoverModule} from '@ng-matero/extensions/popover';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatLegacySlideToggleModule as MatSlideToggleModule} from '@angular/material/legacy-slide-toggle';
 
 @NgModule({
   declarations: [

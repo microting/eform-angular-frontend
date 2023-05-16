@@ -3,7 +3,7 @@ import {SiteDto, UnitModel} from 'src/app/common/models';
 import {UnitsService} from 'src/app/common/services';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 import {DeviceUserRequestModel} from 'src/app/common/models';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-unit-create',

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-case-edit-confirmation',

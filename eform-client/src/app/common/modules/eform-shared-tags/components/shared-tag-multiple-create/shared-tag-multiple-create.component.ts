@@ -4,7 +4,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {SharedTagMultipleCreateModel} from 'src/app/common/models';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-shared-tag-multiple-create',

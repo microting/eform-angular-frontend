@@ -21,7 +21,7 @@ import {
 } from '../';
 import * as R from 'ramda';
 import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 

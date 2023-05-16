@@ -11,15 +11,15 @@ import {
 import {DeviceUsersRouting} from './device-users.routing';
 import {TranslateModule} from '@ngx-translate/core';
 import {DeviceUsersPersistProvider} from './components/store';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
+import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
-import {MatInputModule} from '@angular/material/input';
+import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatIconModule} from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
 
 @NgModule({
   imports: [

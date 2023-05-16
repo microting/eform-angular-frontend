@@ -5,7 +5,7 @@ import {
   MarketplacePluginsRequestModel
 } from 'src/app/common/models/plugins-management';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {MarketplacePluginInstallComponent} from 'src/app/modules/plugins-management/components';
 import {dialogConfigHelper} from 'src/app/common/helpers';

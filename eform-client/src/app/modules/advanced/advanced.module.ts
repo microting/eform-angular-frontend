@@ -29,16 +29,16 @@ import {EformImportedModule} from '../../common/modules/eform-imported/eform-imp
 import {advancedPersistProviders} from './components/advansed-persist-providers';
 import {EformSharedTagsModule} from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
 import {MatSortModule} from '@angular/material/sort';
-import {MatCardModule} from '@angular/material/card';
+import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
 import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
+import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatInputModule} from '@angular/material/input';
+import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
+import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatChipsModule} from '@angular/material/chips';
+import {MatLegacySlideToggleModule as MatSlideToggleModule} from '@angular/material/legacy-slide-toggle';
+import {MatLegacyChipsModule as MatChipsModule} from '@angular/material/legacy-chips';
 
 @NgModule({
     imports: [

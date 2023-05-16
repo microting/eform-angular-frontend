@@ -47,14 +47,14 @@ import {
 
 import { casePostsPersistProvider } from './components/case-posts/store';
 import {MatSortModule} from '@angular/material/sort';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatButtonModule} from '@angular/material/button';
+import {MatLegacyCheckboxModule as MatCheckboxModule} from '@angular/material/legacy-checkbox';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
 import {MatIconModule} from '@angular/material/icon';
-import {MatCardModule} from '@angular/material/card';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatInputModule} from '@angular/material/input';
+import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatLegacyRadioModule as MatRadioModule} from '@angular/material/legacy-radio';
+import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
+import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
+import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {NgSelectModule} from '@ng-select/ng-select';
 
