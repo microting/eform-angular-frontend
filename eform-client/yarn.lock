@@ -1399,10 +1399,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@danielmoncada/angular-datetime-picker@15.0.2":
-  version "15.0.2"
-  resolved "https://registry.yarnpkg.com/@danielmoncada/angular-datetime-picker/-/angular-datetime-picker-15.0.2.tgz#7a26904764436a0e631df46e842fbdc860a3ecbe"
-  integrity sha512-kWmT35i1sdE10uzMsmLT2iUmSnRNnWwS8Wg7VQZjVogqpOfsPmgdcFtGsUudq0C1OxT5eCxtp3cIfY7h1Hohbw==
+"@danielmoncada/angular-datetime-picker@16.0.1":
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/@danielmoncada/angular-datetime-picker/-/angular-datetime-picker-16.0.1.tgz#fddb2aee9503702bb11c992e8c7d962b8a967056"
+  integrity sha512-HvpGYYdeGpnLQtBc0yyQ3QBiS/2rpUbJiCy7Lempk0jVEvUaW1ICPgL40ss+FlMP+R/3pZHzLxrSA9cr1H2N8A==
   dependencies:
     tslib "^2.3.1"
 
