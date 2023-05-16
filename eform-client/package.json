@@ -63,7 +63,7 @@
     "@circlon/angular-tree-component": "^11.0.4",
     "@danielmoncada/angular-datetime-picker": "15.0.2",
     "@ng-matero/extensions": "^14.7.0",
-    "@ng-select/ng-select": "9.1.0",
+    "@ng-select/ng-select": "10.0.4",
     "@ngx-gallery/core": "4.0.3",
     "@ngx-gallery/gallerize": "4.0.3",
     "@ngx-gallery/lightbox": "4.0.3",
