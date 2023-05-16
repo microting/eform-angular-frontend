@@ -3017,16 +3017,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@8.10.0":
-  version "8.10.0"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.10.0.tgz#e29d13f1bdd78d8f837d09ed639aa8a56bc34b9d"
-  integrity sha512-n9VRHzzL8UpZ5tTK7qf7u+Vjs1LA3YTRYYYSocaB9CMt3hm0y5HCofI527xPEpz8r9NW5NJn2yoEYQXBnk6+Mw==
+"@wdio/mocha-framework@8.10.2":
+  version "8.10.2"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.10.2.tgz#17e98bb8c8c11521758f2aa2ec788b45a6739bc8"
+  integrity sha512-qD8wGJWCXDXMiH917aAzZaOfWavgI2H9SjrNjSHbE8BEZSd9cX43zTo5ZBsqY0JEWD0Ihz32iOyTCvRNynUImA==
   dependencies:
     "@types/mocha" "^10.0.0"
-    "@types/node" "^18.0.0"
+    "@types/node" "^20.1.0"
     "@wdio/logger" "8.6.6"
-    "@wdio/types" "8.10.0"
-    "@wdio/utils" "8.10.0"
+    "@wdio/types" "8.10.2"
+    "@wdio/utils" "8.10.2"
     mocha "^10.0.0"
 
 "@wdio/protocols@7.27.0":
@@ -3113,13 +3113,6 @@
     "@types/node" "^18.0.0"
     got "^11.8.1"
 
-"@wdio/types@8.10.0":
-  version "8.10.0"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.10.0.tgz#141876a4a6fb494cb36219dd337dc25e511d1339"
-  integrity sha512-NozAgHOy7nuoXc47dAxy+52bPOQnaIVb7nEIZA2D/3x9QadGSX4ofydhyXcEH8UDtHfIAdN/xjj96ljhvg+BAw==
-  dependencies:
-    "@types/node" "^18.0.0"
-
 "@wdio/types@8.10.2":
   version "8.10.2"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.10.2.tgz#fceb85e68b2b82de8671d7ebd0d606ad6e2563d7"
@@ -3134,16 +3127,6 @@
   dependencies:
     "@wdio/logger" "7.26.0"
     "@wdio/types" "7.30.2"
-    p-iteration "^1.1.8"
-
-"@wdio/utils@8.10.0":
-  version "8.10.0"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.10.0.tgz#13154f06315fafb9d09bd410d96eb33d61141a16"
-  integrity sha512-lUidzrcMQl7mOAkcHxydsZWsg81PuGWNwf3yR+CTdEZZVTWi/ZY8rZGaZljhM2TCqBJAdtVfiWalRlJincv4Cw==
-  dependencies:
-    "@wdio/logger" "8.6.6"
-    "@wdio/types" "8.10.0"
-    import-meta-resolve "^3.0.0"
     p-iteration "^1.1.8"
 
 "@wdio/utils@8.10.2":
