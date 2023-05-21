@@ -220,7 +220,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
                     Response.ContentLength = ss.ContentLength;
 
-                    return File(ss.ResponseStream, ss.Headers["Content-Type"]);
+                    return File(ss.ResponseStream, ss.Headers.ContentType);
                 }
             } catch (Exception e)
             {
@@ -462,7 +462,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
                     Response.ContentLength = ss.ContentLength;
 
-                    return File(ss.ResponseStream, ss.Headers["Content-Type"]);
+                    return File(ss.ResponseStream, ss.Headers.ContentType);
 
                     //return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"pdf"));
                 }

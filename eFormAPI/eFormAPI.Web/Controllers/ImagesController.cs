@@ -69,7 +69,7 @@ namespace eFormAPI.Web.Controllers
 
                 Response.ContentLength = ss.ContentLength;
 
-                return File(ss.ResponseStream, ss.Headers["Content-Type"]);
+                return File(ss.ResponseStream, ss.Headers.ContentType);
             }
 
             if (!System.IO.File.Exists(filePath))
@@ -103,7 +103,7 @@ namespace eFormAPI.Web.Controllers
 
                 Response.ContentLength = ss.ContentLength;
 
-                return File(ss.ResponseStream, ss.Headers["Content-Type"]);
+                return File(ss.ResponseStream, ss.Headers.ContentType);
             }
 
             if (!System.IO.File.Exists(filePath))
