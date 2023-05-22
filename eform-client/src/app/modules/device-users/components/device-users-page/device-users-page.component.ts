@@ -66,6 +66,10 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
           {
             header: this.translateService.stream('Actions'),
             field: 'actions',
+            type: 'button',
+            width: '150px',
+            pinned: 'right',
+            right: '0px',
           },
         ];
       }

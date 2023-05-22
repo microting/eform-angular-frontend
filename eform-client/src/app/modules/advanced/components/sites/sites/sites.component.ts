@@ -59,6 +59,10 @@ export class SitesComponent implements OnInit, OnDestroy {
           {
             header: this.translateService.stream('Actions'),
             field: 'actions',
+            type: 'button',
+            width: '200px',
+            pinned: 'right',
+            right: '0px',
           },
         ];
       }

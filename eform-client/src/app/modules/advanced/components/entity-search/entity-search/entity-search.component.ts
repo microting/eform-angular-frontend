@@ -40,7 +40,14 @@ export class EntitySearchComponent implements OnInit, OnDestroy{
       sortable: true,
       sortProp: {id: 'Description'}
     },
-    {header: this.translateService.stream('Actions'), field: 'actions'},
+    {
+      header: this.translateService.stream('Actions'),
+      field: 'actions',
+      type: 'button',
+      width: '200px',
+      pinned: 'right',
+      right: '0px',
+    },
   ]
 
   constructor(

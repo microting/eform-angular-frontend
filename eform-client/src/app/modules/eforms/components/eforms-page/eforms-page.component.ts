@@ -97,7 +97,14 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     },
     {header: this.translateService.stream('Tags'), field: 'tags'},
     {header: this.translateService.stream('Pairing'), field: 'pairingUpdate'},
-    {header: this.translateService.stream('Actions'), field: 'actions'},
+    {
+      header: this.translateService.stream('Actions'),
+      field: 'actions',
+      type: 'button',
+      width: '200px',
+      pinned: 'right',
+      right: '0px',
+    },
   ];
 
   constructor(

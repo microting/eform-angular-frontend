@@ -41,7 +41,14 @@ export class EntitySelectComponent implements OnInit, OnDestroy{
       sortProp: {id: 'Description'},
       class: 'description'
     },
-    {header: this.translateService.stream('Actions'), field: 'actions'},
+    {
+      header: this.translateService.stream('Actions'),
+      field: 'actions',
+      type: 'button',
+      width: '200px',
+      pinned: 'right',
+      right: '0px',
+    },
   ]
 
   constructor(
