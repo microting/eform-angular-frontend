@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import {
   OWL_DATE_TIME_FORMATS,
   OwlDateTimeModule,
-  // OwlMomentDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { GalleryModule } from '@ngx-gallery/core';

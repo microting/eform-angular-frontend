@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -27,8 +27,8 @@ import {TranslateService} from '@ngx-translate/core';
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  formLogin: FormGroup;
+export class LoginComponent implements OnInit {
+  formLogin: UntypedFormGroup;
 
   username: AbstractControl;
   email: AbstractControl;
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     private googleAuthService: GoogleAuthService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private toastrService: ToastrService,
     private localeService: LocaleService,
     private userSettings: UserSettingsService,

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,14 +19,14 @@ import { AuthStateService } from 'src/app/common/store';
 export class GoogleAuthenticatorComponent implements OnInit {
   googleAuthenticatorModel: GoogleAuthenticatorModel;
   loginRequestModel: LoginRequestModel;
-  formGoogleAuth: FormGroup;
+  formGoogleAuth: UntypedFormGroup;
   code: AbstractControl;
 
   constructor(
     private authStateService: AuthStateService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {
     this.route.params.subscribe((params) => {
       const parsedModel = JSON.parse(atob(params['cypher']));
