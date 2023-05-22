@@ -83,7 +83,6 @@ body {
       @include ngx-toastr.theme($val);
       @include chart.theme($val);
       @include ng-datepicker.theme($val);
-      //@include mtx.all-experimental-component-themes($val);
     }
   }
 

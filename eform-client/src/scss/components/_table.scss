@@ -4,13 +4,12 @@
 .mtx-grid {
   max-height: 70vh;
   border: 0 !important;
-  outline: 1px solid rgba(255,255,255,0.2);
 
   .mat-standard-chip {
     height: unset;
   }
 
-  .mat-cell.selected {
+  .mat-mdc-cell.selected {
     box-shadow: none !important;
   }
 
@@ -28,6 +27,11 @@
 @mixin color($theme) {
   $color-config: mat.get-color-config($theme);
   $is-dark-theme: map.get($color-config, 'is-dark');
+  $backgrounds: map.get($color-config, background);
+  $foreground: map.get($color-config, foreground);
+  $text-color: map.get($foreground, text);
+  $background: map.get($backgrounds, card);
+
   $background-powder-color: #b3d3ea;
   $background-yellow-color: #e6d178;
   @if $is-dark-theme {
@@ -35,12 +39,26 @@
     $background-yellow-color: #7e6f3a;
   }
   mtx-grid {
+    outline: 1px solid rgba($text-color, .2);
+
+    thead {
+      background-color: $background;
+    }
+
     .background-yellow {
       background-color: $background-yellow-color !important;
     }
 
     .background-powder {
       background-color: $background-powder-color !important;
+    }
+
+    .mdc-data-table__cell, .mdc-data-table__header-cell {
+      border-bottom-color: rgba($text-color, .2);
+    }
+
+    .mdc-data-table__header-cell {
+      font-weight: normal;
     }
   }
 }
