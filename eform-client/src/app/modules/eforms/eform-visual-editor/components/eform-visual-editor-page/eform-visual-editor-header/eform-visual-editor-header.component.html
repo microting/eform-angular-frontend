@@ -20,11 +20,11 @@
         *ngIf="isLanguageSelected(translation.languageId)"
         class="mb-3"
       >
-        <mat-card-title>
+        <mat-card-header>
           <h4>
             {{ getLanguage(translation.languageId) | translate }}
           </h4>
-        </mat-card-title>
+        </mat-card-header>
         <mat-card-content>
           <div class="d-flex flex-column">
             <mat-form-field class="mb-3">

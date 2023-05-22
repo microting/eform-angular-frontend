@@ -6,7 +6,7 @@ import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {Subscription} from 'rxjs';
 import {UnitCreateComponent, UnitMoveComponent, UnitsOtpCodeComponent} from './';
 import {dialogConfigHelper} from 'src/app/common/helpers';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import { TranslateService } from '@ngx-translate/core';
 

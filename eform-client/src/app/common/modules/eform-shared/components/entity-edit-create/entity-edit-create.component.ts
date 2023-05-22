@@ -19,7 +19,7 @@ import {dialogConfigHelper, getRandomInt} from 'src/app/common/helpers';
 import {ActivatedRoute} from '@angular/router';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 
 @AutoUnsubscribe()

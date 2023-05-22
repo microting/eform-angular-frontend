@@ -1,9 +1,9 @@
 <h3 mat-dialog-title>{{'eForm Pairing for' | translate}} {{selectedTemplateDto.label}}</h3>
 <div mat-dialog-content class="">
   <mat-card class="" *ngIf="foldersDto.length > 0">
-    <mat-card-title>
+    <mat-card-header>
       <h4>{{ 'Select Folder' | translate}}</h4>
-    </mat-card-title>
+    </mat-card-header>
     <mat-card-content>
       <app-eform-tree-view-picker
         [lockSelectedNode]="eformDeployed"
@@ -17,9 +17,9 @@
   </mat-card>
   <br>
   <mat-card *ngIf="sitesDto !== null">
-    <mat-card-title>
+    <mat-card-header>
       <h4>{{ 'Select Site' | translate}}</h4>
-    </mat-card-title>
+    </mat-card-header>
     <mat-card-content>
       <div class="mtx-grid">
         <div class="mtx-grid-main mtx-grid-layout">

@@ -15,7 +15,7 @@ import {
 } from 'src/app/common/models';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {dialogConfigHelper} from 'src/app/common/helpers';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {AuthStateService} from 'src/app/common/store';
 import {

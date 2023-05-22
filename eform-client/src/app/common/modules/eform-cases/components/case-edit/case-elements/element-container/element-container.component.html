@@ -1,10 +1,10 @@
-<mat-card>
-  <mat-card-title (click)="isCollapsed = !isCollapsed" class="d-flex">
-    <h6>{{dataItemLabel}}</h6>
-    <div class="spacer"></div>
-    <mat-icon>{{isCollapsed ? 'chevron_right' : 'expand_more'}}</mat-icon>
-  </mat-card-title>
-  <mat-card-content class="section-collapse" [ngClass]="{'collapsed' : isCollapsed}">
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{dataItemLabel}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
     <app-case-edit-switch [dataItemList]="dataItemList"></app-case-edit-switch>
-  </mat-card-content>
-</mat-card>
+  </mat-expansion-panel>
+</mat-accordion>

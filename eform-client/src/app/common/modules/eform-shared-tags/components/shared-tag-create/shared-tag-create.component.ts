@@ -4,7 +4,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { SharedTagCreateModel } from 'src/app/common/models';
-import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-shared-tag-create',

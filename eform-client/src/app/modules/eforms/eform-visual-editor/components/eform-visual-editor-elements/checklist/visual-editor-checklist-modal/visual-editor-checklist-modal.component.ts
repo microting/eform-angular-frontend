@@ -10,7 +10,7 @@ import {
 } from 'src/app/common/models';
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-visual-editor-checklist-modal',

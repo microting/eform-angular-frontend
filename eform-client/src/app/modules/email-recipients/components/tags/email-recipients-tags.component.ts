@@ -20,7 +20,7 @@ import {
 } from 'src/app/common/modules/eform-shared-tags/components';
 import { Subscription } from 'rxjs';
 import { EmailRecipientsTagsService} from 'src/app/common/services';
-import {MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({

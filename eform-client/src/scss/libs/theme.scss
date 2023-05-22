@@ -49,6 +49,7 @@ $eform-typography: mat.define-legacy-typography-config(
 //    `@include mat.legacy-typography-hierarchy($eform-typography);`
 @include mat.all-legacy-component-typographies($eform-typography);
 @include mat.legacy-core();
+
 // Define a light theme
 $eform-light-primary: mat.define-palette(mat.$indigo-palette);
 $eform-light-accent: mat.define-palette(mat.$pink-palette);
@@ -74,6 +75,7 @@ $eform-dark-theme: mat.define-dark-theme((
 body {
   @each $key, $val in (('light', $eform-light-theme), ('dark', $eform-dark-theme)) {
     &.theme-#{$key} {
+      @include mat.all-component-themes($val);
       @include mat.all-legacy-component-themes($val);
       @include mtx.all-component-themes($val);
       @include ngx-editor.theme($val);

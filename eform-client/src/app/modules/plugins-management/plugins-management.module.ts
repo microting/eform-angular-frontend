@@ -11,14 +11,14 @@ import {
   MarketplacePluginInstallComponent,
   InstalledPluginPermissionsComponent
 } from './components';
-import {MatLegacyCheckboxModule as MatCheckboxModule} from '@angular/material/legacy-checkbox';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatLegacySlideToggleModule as MatSlideToggleModule} from '@angular/material/legacy-slide-toggle';
 import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
 import {MatIconModule} from '@angular/material/icon';
-import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
-import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   imports: [

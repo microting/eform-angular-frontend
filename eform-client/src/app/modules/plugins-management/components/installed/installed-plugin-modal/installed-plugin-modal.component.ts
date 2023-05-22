@@ -5,7 +5,7 @@ import {
 } from 'src/app/common/models';
 import { InstalledPluginStatusEnum } from 'src/app/common/const';
 import { PluginsManagementService } from 'src/app/common/services';
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-installed-plugin-modal',

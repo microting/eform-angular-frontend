@@ -1,9 +1,9 @@
 <section id="section{{ element.id }}" class="d-flex flex-column">
   <!--<section id="section{{element.id}}" *ngIf="element.dataItemList">-->
   <mat-card class="mb-4">
-    <mat-card-title>
+    <mat-card-header>
       {{ element.label }}
-    </mat-card-title>
+    </mat-card-header>
     <mat-card-content>
       <mat-radio-group *ngIf="element.approvalEnabled" [(ngModel)]="element.status" class="d-flex flex-column">
         <mat-radio-button value="not_checked">
@@ -25,7 +25,7 @@
       ></app-case-edit-switch>
       <div class="mt-1 mb-1" *ngIf="element.extraFieldsEnabled">
         <mat-card class="mb-4 mt-4">
-          <mat-card-title>{{ 'Extra comment' | translate }}</mat-card-title>
+          <mat-card-header>{{ 'Extra comment' | translate }}</mat-card-header>
           <mat-card-content>
             <ng-container *ngFor="let fieldValueDto of element.extraComments;">
               <element-comment [fieldValue]="fieldValueDto"></element-comment>
@@ -33,7 +33,7 @@
           </mat-card-content>
         </mat-card>
         <mat-card class="mb-4 mt-4">
-          <mat-card-title>{{ 'Extra picture' | translate }}</mat-card-title>
+          <mat-card-header>{{ 'Extra picture' | translate }}</mat-card-header>
           <mat-card-content>
             <element-picture
               (pictureUpdated)="emitNeedUpdate()"
@@ -42,7 +42,7 @@
           </mat-card-content>
         </mat-card>
         <mat-card class="mb-4 mt-4">
-          <mat-card-title>{{ 'Extra recording' | translate }}</mat-card-title>
+          <mat-card-header>{{ 'Extra recording' | translate }}</mat-card-header>
           <mat-card-content></mat-card-content>
         </mat-card>
       </div>

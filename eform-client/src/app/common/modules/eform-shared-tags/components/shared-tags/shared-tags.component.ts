@@ -8,7 +8,7 @@ import {
   CommonDictionaryModel,
   SharedTagModel,
 } from 'src/app/common/models';
-import {MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA} from '@angular/material/legacy-dialog';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-shared-tags',

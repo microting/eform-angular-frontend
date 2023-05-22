@@ -6,7 +6,7 @@ import {
 import {FolderDto, SiteNameDto, TemplateDto, DeployCheckbox, DeployModel} from 'src/app/common/models';
 import {FoldersService, SitesService, EFormService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

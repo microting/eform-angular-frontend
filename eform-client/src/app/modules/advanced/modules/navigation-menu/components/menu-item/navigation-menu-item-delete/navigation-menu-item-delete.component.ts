@@ -9,7 +9,7 @@ import {
   NavigationMenuItemModel,
 } from 'src/app/common/models';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-navigation-menu-item-delete',

@@ -2,9 +2,9 @@
   <mat-card
     *ngIf="isLanguageSelected(translation.languageId)"
   >
-    <mat-card-title>{{
+    <mat-card-header>{{
       getLanguage(translation.languageId) | translate
-      }}</mat-card-title>
+      }}</mat-card-header>
     <mat-card-content>
       <mat-form-field>
         <mat-label>{{'Value' | translate }}</mat-label>

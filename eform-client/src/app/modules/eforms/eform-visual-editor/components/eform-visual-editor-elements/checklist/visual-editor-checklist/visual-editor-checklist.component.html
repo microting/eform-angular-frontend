@@ -1,7 +1,7 @@
 <!-- Nested checklists level rendering -->
 <div id="checkListSection{{ checklistIndex }}" *ngIf="checklist">
   <mat-card class="mb-4 mt-4">
-    <mat-card-title>
+    <mat-card-header>
       <div class="d-flex justify-content-between align-items-center">
         <div style="display: flex; flex-grow: 2; align-items: center;">
           <mat-icon
@@ -60,7 +60,7 @@
           </button>
         </div>
       </div>
-    </mat-card-title>
+    </mat-card-header>
     <div class="card-body">
       <div
         dragula="FIELDS"

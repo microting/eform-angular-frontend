@@ -3,7 +3,7 @@ import {Subscription} from 'rxjs';
 import {EmailRecipientsService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {EmailRecipientModel, EmailRecipientUpdateModel, CommonDictionaryModel} from 'src/app/common/models';
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({

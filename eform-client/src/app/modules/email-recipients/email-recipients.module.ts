@@ -21,7 +21,7 @@ import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/lega
 import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
-import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [

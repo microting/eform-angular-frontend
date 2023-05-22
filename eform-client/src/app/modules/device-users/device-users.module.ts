@@ -13,13 +13,13 @@ import {TranslateModule} from '@ngx-translate/core';
 import {DeviceUsersPersistProvider} from './components/store';
 import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
 import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
-import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatCardModule} from '@angular/material/card';
 import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatIconModule} from '@angular/material/icon';
-import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   imports: [

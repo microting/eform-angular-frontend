@@ -13,7 +13,7 @@ import {
   RestorePasswordConfirmationComponent,
   SignOutComponent,
 } from './components';
-import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatCardModule} from '@angular/material/card';
 import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
 import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MatIconModule} from '@angular/material/icon';

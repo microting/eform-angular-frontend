@@ -21,7 +21,7 @@ import {AuthStateService} from 'src/app/common/store';
 import {Sort} from '@angular/material/sort';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/components';
 import {
   EformColumnsModalComponent,

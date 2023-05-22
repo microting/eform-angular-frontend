@@ -25,14 +25,14 @@ import {
   VisualEditorAdditionalFieldOptionDeleteComponent,
 } from './components';
 import {EformVisualEditorRouting} from './eform-visual-editor.routing';
-import {MatLegacyCheckboxModule as MatCheckboxModule} from '@angular/material/legacy-checkbox';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
 import {MatIconModule} from '@angular/material/icon';
-import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatCardModule} from '@angular/material/card';
 import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
-import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
+import {MatDialogModule} from '@angular/material/dialog';
 import {MtxPopoverModule} from '@ng-matero/extensions/popover';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MtxGridModule} from '@ng-matero/extensions/grid';

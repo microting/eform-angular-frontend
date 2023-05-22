@@ -3,7 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
-import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-navigation-menu-reset',

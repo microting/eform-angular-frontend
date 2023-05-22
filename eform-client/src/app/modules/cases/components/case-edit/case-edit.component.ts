@@ -26,7 +26,7 @@ import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
 import * as R from 'ramda';
 import {ToastrService} from 'ngx-toastr';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 

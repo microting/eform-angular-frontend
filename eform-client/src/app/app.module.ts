@@ -1,6 +1,7 @@
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GalleryModule} from '@ngx-gallery/core';
 import {GallerizeModule} from '@ngx-gallery/gallerize';
@@ -31,22 +32,21 @@ import {
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {AkitaNgDevtools} from '@datorama/akita-ngdevtools';
 import {environment} from 'src/environments/environment';
+import {SharedPnModule} from './plugins/modules/shared/shared-pn.module';
 // angular material modules
-import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
+import {MatButtonModule} from '@angular/material/button';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatLegacyMenuModule as MatMenuModule} from '@angular/material/legacy-menu';
+import {MatMenuModule} from '@angular/material/menu';
 import {MatLegacyChipsModule as MatChipsModule} from '@angular/material/legacy-chips';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
-import {FormsModule} from '@angular/forms';
 import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
-import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatCardModule} from '@angular/material/card';
 import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
-import {MatLegacyProgressSpinnerModule as MatProgressSpinnerModule} from '@angular/material/legacy-progress-spinner';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [

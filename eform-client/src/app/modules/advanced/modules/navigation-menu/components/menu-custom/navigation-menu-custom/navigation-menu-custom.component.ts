@@ -10,7 +10,7 @@ import { NavigationMenuCustomDropdownComponent, NavigationMenuCustomLinkComponen
   from '..';
 import { CommonDictionaryModel } from 'src/app/common/models';
 import {dialogConfigHelper} from 'src/app/common/helpers';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {Subscription} from 'rxjs';
 

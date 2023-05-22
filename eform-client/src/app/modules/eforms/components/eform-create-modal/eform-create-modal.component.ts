@@ -2,7 +2,7 @@ import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from 
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {EFormCreateModel} from 'src/app/common/models/eforms';
 import {EFormService} from 'src/app/common/services/eform';
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-eform-create-modal',

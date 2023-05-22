@@ -23,7 +23,7 @@ import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
 import {MatIconModule} from '@angular/material/icon';
 import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
-import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   imports: [

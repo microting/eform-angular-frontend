@@ -2,9 +2,9 @@
 <div mat-dialog-content>
   <div class="flex-wrap d-flex flex-row" *ngIf="pluginGroupPermissions">
     <mat-card *ngFor="let groupPermissions of pluginGroupPermissions" class="m-2">
-      <mat-card-title>
+      <mat-card-header>
         <h3>{{getSecurityGroupName(groupPermissions.groupId)}}</h3>
-      </mat-card-title>
+      </mat-card-header>
       <mat-card-content>
         <ng-container *ngFor="let permission of groupPermissions.permissions">
           <div class="d-flex flex-column">

@@ -30,7 +30,7 @@ import {
 import {DragulaService} from 'ng2-dragula';
 import {AuthStateService} from 'src/app/common/store';
 import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/components';
-import {MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {EformDocxReportHeaderEditorComponent} from 'src/app/modules/eforms/eform-docx-report/components';
 

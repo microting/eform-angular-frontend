@@ -17,8 +17,8 @@ import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy
 import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MatIconModule} from '@angular/material/icon';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
-import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
-import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
 import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
 
 @NgModule({

@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {AdminGuard, AuthGuard, ClaimsGuard} from 'src/app/common/guards';
-import { FullLayoutComponent, SimpleLayoutComponent, ConnectionSetupComponent} from './components';
-import { UserClaimsEnum } from 'src/app/common/const';
+import {FullLayoutComponent, SimpleLayoutComponent, ConnectionSetupComponent} from './components';
+import {UserClaimsEnum} from 'src/app/common/const';
 
 export const routes: Routes = [
   {
@@ -45,7 +45,7 @@ export const routes: Routes = [
         loadChildren: () =>
           import(
             './modules/application-settings/application-settings.module'
-          ).then((m) => m.ApplicationSettingsModule),
+            ).then((m) => m.ApplicationSettingsModule),
       },
       {
         path: 'plugins-settings',
@@ -66,7 +66,7 @@ export const routes: Routes = [
       {
         path: 'email-recipients',
         canActivate: [ClaimsGuard],
-        data: { requiredClaim: UserClaimsEnum.emailRecipientRead },
+        data: {requiredClaim: UserClaimsEnum.emailRecipientRead},
         loadChildren: () =>
           import('./modules/email-recipients/email-recipients.module').then(
             (m) => m.EmailRecipientsModule
@@ -108,15 +108,16 @@ export const routes: Routes = [
     ]
   },
   // otherwise redirect to home
-  { path: '**', redirectTo: '' },
+  {path: '**', redirectTo: ''},
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-    useHash: false
-}),
+      useHash: false,
+    }),
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

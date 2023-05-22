@@ -1,9 +1,11 @@
 <mat-form-field>
-  <mat-label>{{ fieldValueObj.valueReadable }}</mat-label>
+  <mat-label>{{ fieldValueObj.label }}</mat-label>
   <mtx-select
     bindValue="id"
     bindLabel="text"
     (change)="onSelectedChanged($event)"
-    [items]="items">
+    [items]="items"
+    [ngModel]="fieldValueObj.valueReadable"
+  >
   </mtx-select>
 </mat-form-field>

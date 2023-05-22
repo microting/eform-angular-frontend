@@ -6,7 +6,7 @@ import {
 import * as R from 'ramda';
 import {applicationLanguages} from 'src/app/common/const';
 import { MtxGridColumn } from '@ng-matero/extensions/grid';
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Overlay} from '@angular/cdk/overlay';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';

@@ -17,7 +17,7 @@ import {Subscription} from 'rxjs';
 import * as R from 'ramda';
 import {ActivatedRoute} from '@angular/router';
 import {catchError} from 'rxjs/operators';
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 

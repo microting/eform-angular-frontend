@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import { DeviceUserModel } from 'src/app/common/models/device-users';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 import {applicationLanguages} from 'src/app/common/const/application-languages.const';
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-create-user-modal',

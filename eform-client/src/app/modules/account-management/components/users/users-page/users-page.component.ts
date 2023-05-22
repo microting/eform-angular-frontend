@@ -21,7 +21,7 @@ import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {UserModalComponent, RemoveUserModalComponent} from 'src/app/modules/account-management/components';

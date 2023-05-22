@@ -9,7 +9,6 @@ import { DataItemDto } from 'src/app/common/models';
 })
 export class ElementContainerComponent {
   dataItemList: Array<DataItemDto> = [];
-  isCollapsed = true;
   @Input() dataItemLabel: string;
   @Input()
   get fieldValue() {

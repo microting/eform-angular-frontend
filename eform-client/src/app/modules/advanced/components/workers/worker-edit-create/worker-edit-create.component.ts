@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {WorkerDto, WorkerCreateModel, WorkerModel, CommonDictionaryModel} from 'src/app/common/models';
 import {WorkersService, DeviceUserService} from 'src/app/common/services';
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-worker-edit-create',
