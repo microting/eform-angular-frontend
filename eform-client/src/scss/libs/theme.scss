@@ -11,10 +11,19 @@
 @use '../libs/ngx-toastr/ngx-toastr' as ngx-toastr;
 @use '../libs/ng-datepicker/ng-datepicker' as ng-datepicker;
 
-@include mat.core();
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
+@include mat.all-legacy-component-typographies();
+@include mat.legacy-core();
 
 // Define a typography
-$eform-typography: mat.define-typography-config(
+$eform-typography: mat.define-legacy-typography-config(
   $font-family: 'Roboto, "Helvetica Neue", sans-serif',
     //$display-4: mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
     //$display-3: mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
@@ -30,7 +39,16 @@ $eform-typography: mat.define-typography-config(
   $button: mat.define-typography-level(14px, 1.15, 300),
   $input: mat.define-typography-level(inherit, 1.125, 300));
 
-@include mat.core($eform-typography);
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy($eform-typography);`
+@include mat.all-legacy-component-typographies($eform-typography);
+@include mat.legacy-core();
 // Define a light theme
 $eform-light-primary: mat.define-palette(mat.$indigo-palette);
 $eform-light-accent: mat.define-palette(mat.$pink-palette);
@@ -56,7 +74,7 @@ $eform-dark-theme: mat.define-dark-theme((
 body {
   @each $key, $val in (('light', $eform-light-theme), ('dark', $eform-dark-theme)) {
     &.theme-#{$key} {
-      @include mat.all-component-themes($val);
+      @include mat.all-legacy-component-themes($val);
       @include mtx.all-component-themes($val);
       @include ngx-editor.theme($val);
       @include text.theme($val);
@@ -65,7 +83,7 @@ body {
       @include ngx-toastr.theme($val);
       @include chart.theme($val);
       @include ng-datepicker.theme($val);
-      @include mtx.all-experimental-component-themes($val);
+      //@include mtx.all-experimental-component-themes($val);
     }
   }
 
@@ -77,3 +95,4 @@ body {
     font-weight: 400;
   }
 }
+//mat.all-legacy-component-themes

@@ -20,7 +20,7 @@ import {
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {EformTagService} from 'src/app/common/services';
-import {MatDialogRef, MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialogRef as MatDialogRef, MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Overlay} from '@angular/cdk/overlay';
 

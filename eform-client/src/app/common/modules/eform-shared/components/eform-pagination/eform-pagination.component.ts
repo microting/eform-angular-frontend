@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { PaginationModel } from 'src/app/common/models';
-import {PageEvent} from '@angular/material/paginator';
+import {LegacyPageEvent as PageEvent} from '@angular/material/legacy-paginator';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector

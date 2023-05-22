@@ -1,5 +1,5 @@
 import { Overlay } from '@angular/cdk/overlay';
-import { MatDialogConfig } from '@angular/material/dialog';
+import { MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog';
 
 export function dialogConfigHelper(overlay: Overlay, data?: any): MatDialogConfig {
   return {

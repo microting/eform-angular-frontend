@@ -9,7 +9,7 @@ import { Paged } from 'src/app/common/models/common';
 import { SecurityGroupModel } from 'src/app/common/models/security';
 import { UserRegisterModel } from 'src/app/common/models/user';
 import { AdminService } from 'src/app/common/services/users';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-user-modal',

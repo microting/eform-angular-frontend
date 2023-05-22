@@ -9,7 +9,7 @@ import { AuthStateService } from 'src/app/common/store';
 import { EntitySelectStateService } from '../store';
 import {Sort} from '@angular/material/sort';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {EntitySelectRemoveComponent} from '../';
 import {dialogConfigHelper} from 'src/app/common/helpers';

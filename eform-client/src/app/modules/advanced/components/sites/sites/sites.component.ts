@@ -8,7 +8,7 @@ import { EformTagService, SitesService } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {dialogConfigHelper} from 'src/app/common/helpers';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {SiteDeleteComponent, SiteEditComponent} from 'src/app/modules/advanced/components';
 import { TranslateService } from '@ngx-translate/core';

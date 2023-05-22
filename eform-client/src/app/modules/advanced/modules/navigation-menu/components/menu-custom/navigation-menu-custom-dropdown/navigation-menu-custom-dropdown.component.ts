@@ -7,7 +7,7 @@ import {  } from 'src/app/common/models/navigation-menu';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import { applicationLanguages } from 'src/app/common/const/application-languages.const';
 import {CommonDictionaryModel, NavigationMenuItemModel} from 'src/app/common/models';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-navigation-menu-custom-dropdown',

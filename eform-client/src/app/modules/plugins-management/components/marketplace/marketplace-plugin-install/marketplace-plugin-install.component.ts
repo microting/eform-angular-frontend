@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit,} from '@angular/core';
 import {MarketplacePluginModel} from 'src/app/common/models';
 import {PluginsManagementService} from 'src/app/common/services';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-plugins-marketplace-install',
