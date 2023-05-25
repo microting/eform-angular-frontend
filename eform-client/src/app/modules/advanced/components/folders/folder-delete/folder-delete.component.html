@@ -29,7 +29,7 @@
       <p>{{'Description' | translate}}</p>
     </div>
     <div class="d-flex flex-column">
-      <strong>{{selectedFolderDto.description}}</strong>
+      <strong [innerHTML]="selectedFolderDto.description"></strong>
     </div>
   </div>
 </div>

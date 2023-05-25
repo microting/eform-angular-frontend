@@ -42,8 +42,8 @@
                       <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
                         <div class="mat-checkbox" *ngIf="checkboxModel.id == siteDto.siteUId">
                           <mat-checkbox
-                            [checked]="checkboxModel.isChecked"
-                            (change)="addToArray($event, checkboxModel.id)"
+                            [ngModel]="checkboxModel.isChecked"
+                            (ngModelChange)="addToArray($event, checkboxModel.id)"
                             id="checkbox{{checkboxModel.id}}"
                           >
                           </mat-checkbox>

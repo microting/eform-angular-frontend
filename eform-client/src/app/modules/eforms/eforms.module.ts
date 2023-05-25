@@ -31,36 +31,36 @@ import {MatLegacyMenuModule as MatMenuModule} from '@angular/material/legacy-men
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatCardModule} from '@angular/material/card';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
-import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {MtxButtonModule} from '@ng-matero/extensions/button';
 import {MatLegacyChipsModule as MatChipsModule} from '@angular/material/legacy-chips';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        EformsRouting,
-        EformSharedModule,
-        ReactiveFormsModule,
-        FileUploadModule,
-        FormsModule,
-        TranslateModule.forChild(),
-        OwlDateTimeModule,
-        EformSharedTagsModule,
-        MatDatepickerModule,
-        MatInputModule,
-        EformMatDateFnsDateModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        MatIconModule,
-        MatDialogModule,
-        MatMenuModule,
-        MtxSelectModule,
-        MatCardModule,
-        MtxGridModule,
-        MatTooltipModule,
-        MtxButtonModule,
-        MatChipsModule,
-    ],
+  imports: [
+    CommonModule,
+    EformsRouting,
+    EformSharedModule,
+    ReactiveFormsModule,
+    FileUploadModule,
+    FormsModule,
+    TranslateModule.forChild(),
+    OwlDateTimeModule,
+    EformSharedTagsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    EformMatDateFnsDateModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    MatMenuModule,
+    MtxSelectModule,
+    MatCardModule,
+    MtxGridModule,
+    MatTooltipModule,
+    MtxButtonModule,
+    MatChipsModule,
+  ],
   declarations: [
     EformsPageComponent,
     EformEditParingModalComponent,

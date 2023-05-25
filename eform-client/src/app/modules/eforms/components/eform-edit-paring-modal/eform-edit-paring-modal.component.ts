@@ -63,10 +63,10 @@ export class EformEditParingModalComponent implements OnInit {
     }
   }
 
-  addToArray(e: any, deployId: number) {
+  addToArray(checked: boolean, deployId: number) {
     const deployObject = new DeployCheckbox();
     deployObject.id = deployId;
-    if (e.checked) {
+    if (checked) {
       deployObject.isChecked = true;
       this.deployModel.deployCheckboxes.push(deployObject);
     } else {

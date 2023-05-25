@@ -220,8 +220,8 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
   }
 
   onOpenEditNameModal(model: EntityItemModel) {
-    this.entityItemEditNameComponentAfterClosedSub$ = this.dialog.open(EntityItemEditNameComponent,
-      {...dialogConfigHelper(this.overlay, model), minWidth: 500})
+    const modal = this.dialog.open(EntityItemEditNameComponent, {...dialogConfigHelper(this.overlay, model), minWidth: 500});
+    this.entityItemEditNameComponentAfterClosedSub$ = modal
       .afterClosed().subscribe(data => data.result ? this.onItemUpdated(data.data) : undefined);
   }
 

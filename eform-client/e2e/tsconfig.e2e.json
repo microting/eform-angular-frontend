@@ -1,15 +1,19 @@
 {
-    "extends": "../tsconfig.json",
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "es5",
-        "types": [
-            "node",
-            "webdriverio/async",
-            "expect-webdriverio",
-            "@wdio/local-runner",
-            "@wdio/mocha-framework",
-            "@wdio/spec-reporter"
-        ]
-    }
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "types": [
+      "node",
+      "webdriverio/async",
+      "expect-webdriverio",
+      "@wdio/local-runner",
+      "@wdio/mocha-framework",
+      "@wdio/spec-reporter",
+      "@wdio/globals/types"
+    ]
+  },
+  "include": [
+    "node_modules/expect-webdriverio"
+  ]
 }

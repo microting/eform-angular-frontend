@@ -21,14 +21,16 @@
           style="margin-left: 0.5rem;"
           mat-icon-button
           color="accent"
+          (click)="onOpenModalEditName(entityItem)"
           id="entityItemEditBtn">
-          <mat-icon (click)="onOpenModalEditName(entityItem)">edit</mat-icon>
+          <mat-icon>edit</mat-icon>
         </button>
         <button
+          (click)="deleteAdvEntitySelectableItem(entityItem.tempId)"
           mat-icon-button
           color="warn"
           id="entityItemDeleteBtn">
-          <mat-icon (click)="deleteAdvEntitySelectableItem(entityItem.tempId)">delete</mat-icon>
+          <mat-icon>delete</mat-icon>
         </button>
       </div>
     </div>

@@ -109,10 +109,10 @@
   (sortChange)="sortTable($event)">
 </mtx-grid>
 <ng-template #labelTpl let-row let-i="index">
-  <div class="eform-label" id="eform-label-{{i}}">{{row.label}}</div>
+  <span class="eform-label" id="eform-label-{{i}}">{{row.label}}</span>
 </ng-template>
 <ng-template #idTpl let-row let-i="index">
-  <div class="eform-id" id="eform-id-{{i}}">{{row.id}}</div>
+  <span class="eform-id" id="eform-id-{{i}}">{{row.id}}</span>
 </ng-template>
 
 <ng-template #createdAtTpl let-row let-i="index">
@@ -126,75 +126,74 @@
   <div [innerHTML]="row.description"></div>
 </ng-template>
 <ng-template #tagsTpl let-row let-i="index">
-  <div class="">
-    <div>
-      <a
-        mat-icon-button
-        type="button"
-        *ngIf="checkEformPermissions(row.id, userClaimsEnum.eformsUpdateTags)"
-        id="eform-edit-btn-{{ i }}"
-        matTooltip="{{ 'Edit tags' | translate }}"
-        (click)="openEditTagsModal(row)"
-        style="margin-bottom: 0.3rem;"
-      >
-        <mat-icon>edit</mat-icon>
-      </a>
-      <ng-container
-        *ngIf="checkEformPermissions(row.id, userClaimsEnum.eformsReadTags)"
-      >
-        <mat-chip-list>
-          <mat-chip *ngFor="let tag of row.tags" color="primary" id="eform-tag-{{i}}">
-            <mat-icon>discount</mat-icon>
-            <span>{{ tag.value }}</span>
-          </mat-chip>
-        </mat-chip-list>
-      </ng-container>
-    </div>
+  <div>
+    <button
+      mat-icon-button
+      type="button"
+      *ngIf="checkEformPermissions(row.id, userClaimsEnum.eformsUpdateTags)"
+      id="eform-edit-btn-{{ i }}"
+      matTooltip="{{ 'Edit tags' | translate }}"
+      (click)="openEditTagsModal(row)"
+      style="margin-bottom: 0.3rem;"
+      class="edit-tags-btn"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+    <ng-container
+      *ngIf="checkEformPermissions(row.id, userClaimsEnum.eformsReadTags)"
+    >
+      <mat-chip-list>
+        <mat-chip *ngFor="let tag of row.tags" color="primary" class="eform-tag" id="eform-tag-{{i}}">
+          <mat-icon>discount</mat-icon>
+          <span class="eform-tag-name">{{ tag.value }}</span>
+        </mat-chip>
+      </mat-chip-list>
+    </ng-container>
   </div>
 </ng-template>
 <ng-template #pairingUpdateTpl let-row let-i="index">
-  <div class="">
-    <div>
-      <button
-        *ngIf="row.deployedSites.length > 0 &&
-        checkEformPermissions(row.id, userClaimsEnum.eformsPairingUpdate) && !row.isLocked"
-        id="eform-pairing-btn-{{ i }}"
-        mat-icon-button
-        color="accent"
-        type="button"
-        (click)="openPairingModal(row)"
-        matTooltip="{{
-                    'Click to edit eForm pairing with user(s)' | translate
-                  }}"
-      >
-        <mat-icon>link</mat-icon>
-      </button>
-      <button
-        *ngIf="
-              row.deployedSites.length == 0 &&
-              checkEformPermissions(
-                row.id,
-                userClaimsEnum.eformsPairingUpdate
-              ) &&
-              !row.isLocked
-            "
-        id="eform-add-btn-{{ i }}"
-        mat-icon-button
-        type="button"
-        (click)="openPairingModal(row)"
-        matTooltip="{{
-                    'Click to pair eForm with user(s)' | translate
-                  }}"
-      >
-        <!--                {{ 'Pair eForm' | translate }}-->
-        <mat-icon>link</mat-icon>
-      </button>
-      <!-- <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">
-        <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">
-          {{deployedSite.siteName}}
-        </p>
-      </ng-container>-->
-    </div>
+  <div>
+    <button
+      *ngIf="row.deployedSites.length > 0 &&
+      checkEformPermissions(row.id, userClaimsEnum.eformsPairingUpdate) && !row.isLocked"
+      id="eform-pairing-btn-{{ i }}"
+      mat-icon-button
+      color="accent"
+      type="button"
+      (click)="openPairingModal(row)"
+      matTooltip="{{
+                  'Click to edit eForm pairing with user(s)' | translate
+                }}"
+      class="eform-pairing-btn"
+    >
+      <mat-icon>link</mat-icon>
+    </button>
+    <button
+      *ngIf="
+            row.deployedSites.length == 0 &&
+            checkEformPermissions(
+              row.id,
+              userClaimsEnum.eformsPairingUpdate
+            ) &&
+            !row.isLocked
+          "
+      id="eform-add-btn-{{ i }}"
+      mat-icon-button
+      type="button"
+      (click)="openPairingModal(row)"
+      matTooltip="{{
+                  'Click to pair eForm with user(s)' | translate
+                }}"
+      class="eform-pairing-btn"
+    >
+      <!--                {{ 'Pair eForm' | translate }}-->
+      <mat-icon>link</mat-icon>
+    </button>
+    <!-- <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">
+      <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">
+        {{deployedSite.siteName}}
+      </p>
+    </ng-container>-->
   </div>
 </ng-template>
 <ng-template #actionsTpl let-row let-i="index">
@@ -215,6 +214,7 @@
       mat-icon-button
       color="warn"
       id="delete-eform-btn-{{ i }}"
+      class="delete-eform-btn"
       (click)="openEformDeleteModal(row)"
       *ngIf="
                   checkEformPermissions(
@@ -239,10 +239,11 @@
       id="edit-eform-btn-{{ i }}"
       [routerLink]="['visual-editor/' + row.id]"
       matTooltip="{{ 'Edit eForm' | translate }}"
+      class="edit-eform-btn"
     >
       <mat-icon>edit</mat-icon>
     </a>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="eform-menu-actions">
       <mat-icon>more_horiz</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
@@ -256,6 +257,7 @@
                   )
                 "
         (click)="openEditColumnsModal(row)"
+        class="edit-columns-btn"
       >
         <mat-icon>table_chart</mat-icon>
         <span>{{ 'Edit columns' | translate }}</span>
@@ -264,6 +266,7 @@
         mat-menu-item
         id="duplicate-btn"
         (click)="openDuplicateConfirmModal(row)"
+        class="duplicate-btn"
       >
         <mat-icon>content_copy</mat-icon>
         <span>{{ 'Duplicate eForm' | translate }}</span>
@@ -279,6 +282,7 @@
                 "
         id="download-csv-btn-{{ i }}"
         (click)="downloadItem('CSV', row.id)"
+        class="download-csv-btn"
       >
         <mat-icon svgIcon="file-csv"></mat-icon>
         <span>{{ 'Download' | translate }} CSV</span>
@@ -294,6 +298,7 @@
                 "
         id="download-xml-btn-{{ i }}"
         (click)="downloadItem('XML', row.id)"
+        class="download-xml-btn"
       >
         <mat-icon svgIcon="file-code"></mat-icon>
         <span>{{ 'Download' | translate }} XML</span>
@@ -309,6 +314,7 @@
                 "
         id="docx-report-btn-{{ i }}"
         [routerLink]="['/docx-report', row.id]"
+        class="docx-report-btn"
       >
         <mat-icon svgIcon="file-word"></mat-icon>
         <span>{{ 'Word Report' | translate }}</span>
@@ -325,6 +331,7 @@
                 "
         id="download-excel-btn-{{ i }}"
         [routerLink]="['/xlsx-report', row.id]"
+        class="download-excel-btn"
       >
         <mat-icon svgIcon="file-excel"></mat-icon>
         <span>{{ 'Download' | translate }} XLSX</span>
@@ -337,6 +344,7 @@
                   checkEformPermissions(
                     row.id,
                     userClaimsEnum.eformsUploadZip)"
+        class="upload-zip-btn"
       >
         <mat-icon svgIcon="file-upload"></mat-icon>
         <span>{{ 'Upload ZIP archive' | translate }}</span>
@@ -350,7 +358,6 @@
     </mat-menu>
   </div>
 </ng-template>
-<!--pagination(if required)-->
 <app-eforms-tags
   #modalTags
   [availableTags]="availableTags"

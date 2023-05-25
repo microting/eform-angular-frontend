@@ -36,32 +36,32 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatMenuModule} from '@angular/material/menu';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
+import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule,
-        NgSelectModule,
-        FormsModule,
-        TreeModule,
-        RouterModule,
-        DragulaModule,
-        MatSortModule,
-        MatPaginatorModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        MatTreeModule,
-        MatMenuModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDialogModule,
-        MatTooltipModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    FormsModule,
+    TreeModule,
+    RouterModule,
+    DragulaModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatTreeModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    MatTooltipModule,
+    NgSelectModule
+  ],
   declarations: [
     EformPaginationComponent,
     EformPageSizeComponent,// Added only in an transitive import until all plugins have been migrated to the new eform-pagination

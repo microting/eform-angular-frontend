@@ -4,6 +4,7 @@ import deviceUsersPage, {
   DeviceUsersRowObject,
 } from '../../Page objects/DeviceUsers.page';
 import foldersPage, { FoldersRowObject } from '../../Page objects/Folders.page';
+import {expect as expectWdio} from 'expect-webdriverio'
 
 const expect = require('chai').expect;
 const users = new Array<DeviceUsersRowObject>();
@@ -73,7 +74,7 @@ describe('Main page', function () {
     await (await myEformsPage.getFirstMyEformsRowObj()).unPair([users[1]]);
     await browser.pause(1000);
     const spinnerAnimation = await $('#spinner-animation');
-    (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
+    await (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     //await (await $('td.cdk-column-siteUId > mtx-grid-cell > span')).waitForDisplayed({ timeout: 40000 });
     //await browser.pause(1000);
@@ -81,16 +82,12 @@ describe('Main page', function () {
     const siteIds = await $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].getText())) {
-        expect(
-          await (await $(`#checkbox${users[1].siteId}-input`)).getAttribute('aria-checked'),
-          `User ${users[1].siteId} paired`
-        ).eq('false');
+        const checkbox = await $(`#checkbox${users[1].siteId}-input`);
+        await expectWdio(checkbox).toHaveElementClass('mdc-checkbox--selected', {message: `User ${users[1].siteId} not paired`});
       }
       if (users[0].siteId === +siteIds[i].getText()) {
-        expect(
-          await (await $(`#checkbox${users[0].siteId}-input`)).getAttribute('aria-checked'),
-          `User ${users[0].siteId} not paired`
-        ).eq('true');
+        const checkbox = await $(`#checkbox${users[0].siteId}-input`);
+        await expectWdio(checkbox).toHaveElementClass('mdc-checkbox--selected', {message: `User ${users[0].siteId} not paired`});
       }
     }
     await (await myEformsPage.cancelParingBtn()).click();

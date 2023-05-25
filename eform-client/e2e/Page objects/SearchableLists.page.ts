@@ -15,7 +15,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   async getFirstRowObject(): Promise<SearchableListRowObject> {
     await browser.pause(500);
     const obj = new SearchableListRowObject();
-    const row = await obj.getRow(1);
+    const row = await obj.getRow(2);
     if (row.name !== 'Device users') {
       return row;
     } else {
@@ -102,7 +102,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
-  public async entitySearchEditBtn(i = 0): Promise<WebdriverIO.Element> {
+  public async entitySearchEditBtn(i = 1): Promise<WebdriverIO.Element> {
     const ele = await $$('#entitySearchUpdateBtn')[i];
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
