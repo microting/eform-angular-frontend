@@ -108,16 +108,27 @@ export function selectDateRangeOnDatePicker(
   selectDateOnDatePicker(yearTo, monthTo, dayTo);
 }
 
-export function selectValueInNgSelector(selector: string, value: string, selectorInModal = false) {
-  cy.get(selector).should('be.visible');
-  cy.get(selector).find('input').should('be.visible').clear().type(value);
+export function selectValueInNgSelector(
+  selector: string | (() => Cypress.Chainable<JQuery<HTMLElement>>),
+  value: string,
+  selectorInModal = false,
+  shouldChainer: string = 'have.text') {
+  let select: () => Cypress.Chainable<JQuery<HTMLElement>>;
+  if (typeof selector === 'string') {
+    select = () => cy.get(selector).should('be.visible');
+  } else {
+    select = selector;
+  }
+
+  select().should('be.visible');
+  select().find('input').should('be.visible').clear().type(value);
   cy.wait(500);
   let valueForClick;
   // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)
   if (selectorInModal) {
-    valueForClick = cy.get(`.ng-option`).should('have.text', value);
+    valueForClick = cy.get(`.ng-option`).should(shouldChainer, value);
   } else {
-    valueForClick = cy.get(selector).find(`.ng-option`).should('have.text', value);
+    valueForClick = select().find(`.ng-option`).should(shouldChainer, value);
   }
   valueForClick.should('be.visible').click();
   cy.wait(500);

@@ -1,10 +1,7 @@
-import { PageWithNavbarPage } from './PageWithNavbar.page';
+import {PageWithNavbarPage} from './PageWithNavbar.page';
 import XMLForEform from '../../e2e/Constants/XMLForEform';
-import { FoldersTreeRowObject } from './Folders.page';
-import { DeviceUsersRowObject } from './DeviceUsers.page';
 import tagsModalPage from './TagsModal.page';
-//import path from 'path';
-const path = require('path');
+import {selectValueInNgSelector} from './helper-functions';
 
 class MyEformsPage extends PageWithNavbarPage {
   constructor() {
@@ -12,24 +9,47 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public newEformBtn() {
-    const ele = cy.get('#newEFormBtn');
-    ele.should('be.visible').should('be.enabled');
-    // @ts-ignore
-    return ele;
+    return cy.get('#newEFormBtn').should('be.visible').should('be.enabled');
   }
 
-  public rowNum() {
-    // @ts-ignore
-    // cy.get('.eform-id').then(($el) => {
-    //   return Cypress.$($el).length;
-    //   //cy.log(itemCount)
-    //   return itemCount;
-    // })
-    cy.log('rowNum');
-    return cy.get('.eform-id').its('length');
+  public rowNum(): Cypress.Chainable<number> {
+    return cy.get('#mainPageEFormsTableBody tbody tr').its('length');
+    /* return cy.get('#mainPageEFormsTableBody tbody tr')
+       .then((rows) => {
+         const count = rows.length;
+         return cy.wrap(count).as('rowCount');
+       })
+       .then(() => cy.get('@rowCount'))
+       .then((rowCount) => +rowCount);*/
   }
 
-  public idSortBtn(): Cypress.Chainable<JQuery<HTMLElement>> {
+
+  public importEformsBtn() {
+    return cy.get('#importEformsBtn').should('be.visible').should('be.enabled');
+  }
+
+  public eformsManageTagsBtn() {
+    return cy.get('#eformsManageTagsBtn').should('be.visible').should('be.enabled');
+  }
+
+  public eformsVisualEditor() {
+    return cy.get('#eformsVisualEditor').should('be.visible').should('be.enabled');
+  }
+
+  public eFormDeleteDeleteBtn() {
+    return cy.get('#eFormDeleteDeleteBtn').should('be.visible').should('be.enabled');
+  }
+
+  public eFormDeleteCancelBtn() {
+    return cy.get('#eFormDeleteCancelBtn').should('be.visible').should('be.enabled');
+  }
+
+  public eformFilter() {
+    return cy.get('#labelInput').should('be.visible');
+  }
+
+
+  /*public idSortBtn(): Cypress.Chainable<JQuery<HTMLElement>> {
     return cy.get('.eform-id-header .mat-header-cell-inner .mat-sort-header').should('be.visible').should('be.enabled');
   }
 
@@ -39,38 +59,19 @@ class MyEformsPage extends PageWithNavbarPage {
 
   public eformNameSortBtn(): Cypress.Chainable<JQuery<HTMLElement>> {
     return cy.get('.eform-name-header .mat-header-cell-inner .mat-sort-header').should('be.visible').should('be.enabled');
-  }
-
-  public eformFilter(): Cypress.Chainable<JQuery<HTMLElement>> {
-    return cy.get('#labelInput');
-  }
+  }*/
 
   // Create eform modal
   public createEformTagSelector() {
-    // @ts-ignore
-    const ele = cy.get('#createEFormMultiSelector');
-    ele.should('be.visible').should('be.enabled');
-    return ele;
-  }
-  public importEformsBtn() {
-    // @ts-ignore
-    const ele = cy.get('#importEformsBtn');
-    ele.should('be.visible').should('be.enabled');
-    return ele;
+    return cy.get('#createEFormMultiSelector').should('be.visible').should('be.enabled');
   }
 
   public createEformNewTagInput() {
-    // @ts-ignore
-    const ele = cy.get('#addTagInput');
-    ele.should('be.visible');
-    return ele;
+    return cy.get('#addTagInput').should('be.visible');
   }
 
   public xmlTextArea() {
-    // @ts-ignore
-    const ele = cy.get('#eFormXml');
-    ele.should('be.visible');
-    return ele;
+    return cy.get('#eFormXml').should('be.visible');
   }
 
   public createEformBtn() {
@@ -80,15 +81,15 @@ class MyEformsPage extends PageWithNavbarPage {
     return ele;
   }
 
-  public cancelCreateEformBtn(): Promise<JQuery<HTMLElement>> {
+  public cancelCreateEformBtn() {
     return cy.get('#cancelCreateEformBtn').should('be.visible').should('be.enabled');
   }
 
-  tagEditSaveBtn(): Promise<JQuery<HTMLElement>> {
+  tagEditSaveBtn() {
     return cy.get('#tagEditSaveBtn').should('be.visible').should('be.enabled');
   }
 
-  tagEditSaveCancelBtn(): Promise<JQuery<HTMLElement>> {
+  tagEditSaveCancelBtn() {
     return cy.get('#tagEditSaveCancelBtn').should('be.visible').should('be.enabled');
   }
 
@@ -97,29 +98,16 @@ class MyEformsPage extends PageWithNavbarPage {
     return cy.get('#tagSelector').should('be.visible');
   }
 
-  saveParingBtn(): Promise<JQuery<HTMLElement>> {
+  saveParingBtn() {
     return cy.get('#saveParingBtn').should('be.visible').should('be.enabled');
   }
 
-  cancelParingBtn(): Promise<JQuery<HTMLElement>> {
+  cancelParingBtn() {
     return cy.get('#cancelParingBtn').should('be.visible').should('be.enabled');
   }
 
-  xlsxImportInput(): Promise<JQuery<HTMLElement>> {
+  xlsxImportInput() {
     return cy.get('#xlsxImportInput').should('be.visible');
-  }
-
-  eformsManageTagsBtn(): Cypress.Chainable<JQuery> {
-    const ele = cy.get('#eformsManageTagsBtn');
-    ele.should('be.visible');
-    ele.should('be.enabled');
-    return ele;
-  }
-
-  getFirstMyEformsRowObj(): Cypress.Chainable<MyEformsRowObject> {
-    cy.wait(500);
-    const result = new MyEformsRowObject();
-    return result.getRow(1);
   }
 
   // getEformsRowObjByNameEForm(
@@ -140,7 +128,7 @@ class MyEformsPage extends PageWithNavbarPage {
   //   });
   // }
 
-  getLastMyEformsRowObj(): Cypress.Chainable<MyEformsRowObject> {
+  getLastMyEformsRowObj(): MyEformsRowObject {
     cy.wait(1500);
     const obj = new MyEformsRowObject();
     const rowNum = this.rowNum();
@@ -150,101 +138,70 @@ class MyEformsPage extends PageWithNavbarPage {
   getEformRowObj(
     num,
     pause: boolean = false
-  ): Cypress.Chainable<MyEformsRowObject> {
+  ): MyEformsRowObject {
     if (pause) {
       cy.wait(500);
     }
     return myEformsRowObject.getRow(num);
-    return result.getRow(num);
   }
 
-  public clearEFormTable() {
+  public getRowObjectByIndex(index, findTags: string[] = ['deleteBtn']): MyEformsRowObject {
+    return myEformsRowObject.getRow(index, findTags);
+  }
+
+  public getFirstRowObject(findTags: string[] = ['deleteBtn']): MyEformsRowObject {
+    return myEformsRowObject.getRow(1, findTags);
+  }
+
+  clearTable() {
+    cy.log('**CLEAR EFORMS TABLE**');
     cy.wait(500);
-    const rowCount = this.rowNum();
-    let indexForDelete = 1;
-    for (let i = 1; i <= rowCount; i++) {
-      const eformsRowObject = this.getEformRowObj(i, false);
-      if (
-        eformsRowObject &&
-        eformsRowObject.deleteBtn &&
-        (eformsRowObject.deleteBtn.should('be.visible'))
-      ) {
-        eformsRowObject.deleteEForm();
-      } else {
-        indexForDelete += 1;
+    this.rowNum().then(rowNum => {
+      for (let i = rowNum; i > 0; i--) {
+        cy.get('#mainPageEFormsTableBody tbody tr.cdk-row .delete-eform-btn').last().scrollIntoView().click();
+        this.getFirstRowObject([]).closeDeleteModal();
+        cy.wait(500);
       }
-    }
+    });
   }
 
   createNewEform(
     eFormLabel,
     newTagsList = [],
-    tagAddedNum = 0,
+    tags: string[] = [],
     xml = ''
   ) {
-    // @ts-ignore
-    const spinnerAnimation = cy.get('#spinner-animation');
-    spinnerAnimation.should('not.visible', {timeout: 50000});
     this.newEformBtn().click();
-    // @ts-ignore
     cy.wait(500);
     this.xmlTextArea().should('be.visible', {timeout: 40000});
     // Create replaced xml and insert it in textarea
     if (!xml) {
       xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
     }
-    cy.window().then(win => {
-      win.document.getElementById('eFormXml').value = xml;
-    });
-    cy.wait(200);
-    this.xmlTextArea().type(' ');
-    cy.wait(500);
+    this.xmlTextArea().type(xml, {parseSpecialCharSequences: false, delay: 0, scrollBehavior: 'bottom', force: true});
     // Create new tags
-    const addedTags = newTagsList;
     if (newTagsList.length > 0) {
       this.createEformNewTagInput().type(newTagsList.join(','));
-      spinnerAnimation.should('not.visible', {timeout: 50000});
     }
     // Add existing tags
-    const selectedTags = [];
-    if (tagAddedNum > 0) {
-      spinnerAnimation.should('not.exist', {timeout: 50000});
-      for (let i = 0; i < tagAddedNum; i++) {
-        this.createEformTagSelector().click();
-        cy.wait(500);
-        const selectedTag = cy.get('.ng-option:not(.ng-option-selected)');
-        selectedTags.push(selectedTag.text());
-        selectedTag.should('be.visible', {timeout: 40000});
-        selectedTag.should('be.enabled', {timeout: 40000});
-        selectedTag.click();
-        cy.wait(500);
-        spinnerAnimation.should('not.visible', {timeout: 50000});
-        cy.get('#createEformBtn').should('be.visible', {timeout: 10000});
-      }
+    for (let i = 0; i < tags.length; i++) {
+      selectValueInNgSelector(this.createEformTagSelector, tags[i]);
     }
-    cy.intercept('POST', '/api/templates/create').as('createEform');
     this.createEformBtn().click();
-    // @ts-ignore
-    cy.wait('@createEform', {timeout: 50000}).then(() => {
-      spinnerAnimation.should('not.be.visible', {timeout: 50000});
-    });
     this.newEformBtn().should('be.enabled', {timeout: 40000});
-    // @ts-ignore
     cy.wait(500);
-    return { added: addedTags, selected: selectedTags };
   }
+
   createNewTag(nameTag) {
     this.createNewTags([nameTag]);
   }
 
   createNewTags(nameTags) {
-    cy.get(this.eformsManageTagsBtn()).click();
-    cy.get(tagsModalPage.tagsModalCloseBtn()).should('be.visible');
-    for (let i = 0; i < nameTags.length; i++) {
-      tagsModalPage.createTag(nameTags[i]);
-    }
+    this.eformsManageTagsBtn().click();
+    tagsModalPage.tagsModalCloseBtn().should('be.visible');
+    tagsModalPage.createTags(nameTags);
     tagsModalPage.closeTagModal();
-    cy.get(this.newEformBtn()).should('be.visible').click();
+    this.newEformBtn().should('be.visible').click();
   }
 
   removeTag(nameTag) {
@@ -252,108 +209,106 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   removeTags(nameTags) {
-    cy.get(this.eformsManageTagsBtn()).click();
-    cy.get(tagsModalPage.tagsModalCloseBtn()).should('be.visible');
+    this.eformsManageTagsBtn().click();
+    tagsModalPage.tagsModalCloseBtn().should('be.visible');
     for (let i = 0; i < nameTags.length; i++) {
-      const tag = tagsModalPage.getTagByName(nameTags[i]);
-      tag.deleteTag();
+      // const tag = tagsModalPage.getTagByName(nameTags[i]);
+      // tag.deleteTag();
     }
     tagsModalPage.closeTagModal();
-    cy.get(this.newEformBtn()).should('be.visible').click();
+    this.newEformBtn().should('be.visible').click();
   }
 
   enterTagFilter(nameTag) {
-    cy.get(this.tagSelector())
+    this.tagSelector()
       .find('input')
       .type(nameTag);
     cy.get('ng-dropdown-panel .ng-option')
       .should('be.visible')
       .first()
       .click();
-    cy.get('#spinner-animation').should('not.be.visible');
   }
 }
 
 const myEformsPage = new MyEformsPage();
 
 class MyEformsRowObject {
-  constructor() {}
+  constructor() {
+  }
 
-  element;
-  id;
-  createdAt;
-  eFormName;
-  tags;
-  editTagsBtn;
-  addPairEformBtn;
-  editPairEformBtn;
-  editColumnsBtn;
-  deleteBtn;
-  uploadZipArchiveBtn;
-  goVisualEditorBtn;
+  element: () => Cypress.Chainable<JQuery<HTMLElement>>;
+  id: Cypress.Chainable<JQuery<HTMLElement>>;
+  createdAt: Cypress.Chainable<JQuery<HTMLElement>>;
+  eFormName: Cypress.Chainable<JQuery<HTMLElement>>;
+  description: Cypress.Chainable<JQuery<HTMLElement>>;
+  tags: Cypress.Chainable<string[]>;
+  editTagsBtn: Cypress.Chainable<JQuery<HTMLElement>>;
+  editPairEformBtn: Cypress.Chainable<JQuery<HTMLElement>>;
+  deleteBtn: () => Cypress.Chainable<JQuery<HTMLElement>>;
+  goVisualEditorBtn: Cypress.Chainable<JQuery<HTMLElement>>;
+  menuBtn: Cypress.Chainable<JQuery<HTMLElement>>;
 
-  getRow(rowNum) {
+  getRow(rowNum, findProps: string[] = ['deleteBtn']) {
     const currentPosition = rowNum - 1;
-    this.element = cy.get('#mainPageEFormsTableBody tr.mat-row').eq(currentPosition);
-    cy.get(`#eform-id-${currentPosition}`)
-      .eq(0)
-      .invoke('text')
-      .then((text) => {
-        this.id = +text;
-      });
-    cy.get(`#eform-created-at-${currentPosition}`)
-      .eq(0)
-      .invoke('text')
-      .then((text) => {
-        this.createdAt = new Date(text);
-      });
-    cy.get(`#eform-label-${currentPosition}`)
-      .eq(0)
-      .invoke('text')
-      .then((text) => {
-        this.eFormName = text;
-      });
-    cy.get('#mainPageEFormsTableBody').then($body => {
-      if ($body.find(`#eform-tag-${currentPosition} span`).length > 0) {
-        this.tags = cy.get(`#eform-tag-${currentPosition} span`);
-      } else {
-        this.tags = [];
-      }
-      if ($body.find(`eform-add-btn-${currentPosition}`).length > 0) {
-        this.addPairEformBtn = cy.get(`#eform-add-btn-${currentPosition}`);
-      } else {
-        this.addPairEformBtn = [];
-      }
-      if ($body.find(`#eform-pairing-btn-${currentPosition}`).length > 0) {
-        this.editPairEformBtn = cy.get(`#eform-pairing-btn-${currentPosition}`);
-      } else {
-        this.editPairEformBtn = [];
-      }
+    this.element = () => cy.get('#mainPageEFormsTableBody tbody tr.cdk-row').eq(currentPosition);
 
-      //this.editColumnsBtn = cy.get(`#edit-columnts-btn-${currentPosition}`).eq(0);
-      if ($body.find(`#edit-columns-btn-${currentPosition}`).length > 0) {
-        this.editColumnsBtn = cy.get(`#edit-columns-btn-${currentPosition}`).eq(0);
-      } else {
-        this.editColumnsBtn = [];
-      }
-    });
-    //this.tags = cy.get(`#eform-tag-${currentPosition} span`);
-    this.editTagsBtn = cy.get(`#eform-edit-btn-${currentPosition}`).eq(0);
-
-    //this.addPairEformBtn = cy.get(`#eform-add-btn-${currentPosition}`);
-    //this.editColumnsBtn = cy.get(`#edit-columnts-btn-${currentPosition}`).eq(0);
-    this.deleteBtn = cy.get(`#delete-eform-btn-${currentPosition}`).eq(0);
-    //this.uploadZipArchiveBtn = cy.get(`#upload-zip-btn-${currentPosition}`).eq(0);
-    this.goVisualEditorBtn = cy.get(`#edit-eform-btn-${currentPosition}`);
-    return cy.wrap(this);
+    if (findProps.includes('id')) {
+      this.id = this.element().find('.mat-column-id span');
+    }
+    if (findProps.includes('eFormName')) {
+      this.eFormName = this.element().find('.mat-column-label span');
+    }
+    if (findProps.includes('createdAt')) {
+      this.createdAt = this.element().find('.mat-column-createdAt');
+    }
+    if (findProps.includes('description')) {
+      this.description = this.element().find('.mat-column-description');
+    }
+    if (findProps.includes('editPairEformBtn')) {
+      this.editPairEformBtn = this.element().find('.mat-column-pairingUpdate .eform-pairing-btn');
+    }
+    if (findProps.includes('editTagsBtn')) {
+      this.editTagsBtn = this.element().find('.mat-column-tags .edit-tags-btn');
+    }
+    if (findProps.includes('deleteBtn')) {
+      this.deleteBtn = () => this.element().find('.mat-column-actions .delete-eform-btn');
+    }
+    if (findProps.includes('goVisualEditorBtn')) {
+      this.goVisualEditorBtn = this.element().find('.mat-column-actions .edit-eform-btn');
+    }
+    if (findProps.includes('menuBtn')) {
+      this.menuBtn = this.element().find('.mat-column-actions .eform-menu-actions');
+    }
+    if (findProps.includes('tags')) {
+      this.element()
+        .find('.mat-column-tags .eform-tag')
+        .invoke('text')
+        .then((text: string) => {
+          this.tags = cy.wrap(text.split('discount').filter(x => x !== ''));
+        });
+    }
+    return this;
   }
 
 
-  deleteEForm() {
+  deleteEForm(clickCancel = false) {
+    this.openDeleteModal();
+    this.closeDeleteModal(clickCancel);
+  }
+
+  openDeleteModal() {
+    this.deleteBtn().should('not.be.disabled').click();
     cy.wait(500);
-    const eFormDeleteDeleteBtn = cy.get('#eFormDeleteDeleteBtn');
-    eFormDeleteDeleteBtn.should('be.visible').click();
-    cy.wait(500);
+    myEformsPage.eFormDeleteDeleteBtn().should('be.visible');
+  }
+
+  closeDeleteModal(clickCancel = false) {
+    if (clickCancel) {
+      myEformsPage.eFormDeleteCancelBtn().click();
+    } else {
+      myEformsPage.eFormDeleteDeleteBtn().click();
+    }
+    myEformsPage.newEformBtn().should('be.enabled');
   }
 
   addTag(tag: string) {
@@ -385,23 +340,23 @@ class MyEformsRowObject {
   }
 
   pair(folder, users) {
-    console.log('Pairing eform');
+    cy.log('Pairing eform');
     const spinnerAnimation = cy.get('#spinner-animation');
     if (this.editPairEformBtn.should('exist')) {
-      console.log('editPairEformBtn isExisting');
+      cy.log('editPairEformBtn isExisting');
       this.editPairEformBtn.click();
     } else {
-      console.log('addPairEformBtn isExisting');
-      this.addPairEformBtn.click();
+      cy.log('addPairEformBtn isExisting');
+      this.editPairEformBtn.click();
     }
-    console.log('Parring clicked');
+    cy.log('Parring clicked');
     cy.wait(500);
-    spinnerAnimation.should('not.exist', { timeout: 90000 });
-    (myEformsPage.cancelParingBtn()).should('be.visible', { timeout: 40000 });
+    spinnerAnimation.should('not.exist', {timeout: 90000});
+    (myEformsPage.cancelParingBtn()).should('be.visible', {timeout: 40000});
     cy.wait(500);
     const folders = cy.get('app-eform-tree-view-picker > mat-tree > mat-tree-node');
     //cy.wait(10000);
-    for (let i = 0; i < folders.length; i++) {
+    /*for (let i = 0; i < folders.length; i++) {
       if (
         ((folders[i].$('div > div')).invoke('text')).includes(
           folder.name
@@ -410,24 +365,23 @@ class MyEformsRowObject {
         (folders[i].$('div')).click();
         cy.wait(1000);
       }
-    }
-    console.log('Folder selected');
-    myEformsPage.takeScreenshot();
+    }*/
+    cy.log('Folder selected');
     for (let i = 0; i < users.length; i++) {
-      console.log('Selecting user: ' + users[i].firstName);
+      cy.log('Selecting user: ' + users[i].firstName);
       //const name = `#mat-checkbox-${i+2} > label > div.mat-checkbox-inner-container`;
       const checkbox = cy.get(`#checkbox${users[i].siteId}`);
-      console.log('Checkbox found ');
+      cy.log('Checkbox found ');
       checkbox.scrollIntoView();
-      console.log('Checkbox scrolled into view');
+      cy.log('Checkbox scrolled into view');
       //checkbox.should('be.visible').should('be.enabled');
       checkbox.click();
-      console.log('User selected ' + users[i].firstName);
+      cy.log('User selected ' + users[i].firstName);
       cy.wait(500);
     }
-    console.log('Users selected');
+    cy.log('Users selected');
     (myEformsPage.saveParingBtn()).click();
-    spinnerAnimation.should('not.exist', { timeout: 90000 });
+    spinnerAnimation.should('not.exist', {timeout: 90000});
     cy.wait(1000);
   }
 
@@ -435,29 +389,27 @@ class MyEformsRowObject {
     const spinnerAnimation = cy.get('#spinner-animation');
     this.editPairEformBtn.click();
     cy.wait(1000);
-    spinnerAnimation.should('not.be.visible', { timeout: 40000 });
-    cy.get(myEformsPage.cancelParingBtn()).should('be.visible', { timeout: 40000 });
+    spinnerAnimation.should('not.be.visible', {timeout: 40000});
+    myEformsPage.cancelParingBtn().should('be.visible', {timeout: 40000});
     for (let i = 0; i < users.length; i++) {
       const checkbox = cy.get(`#checkbox${users[i].siteId}`);
       checkbox.scrollIntoView();
-      checkbox.parent().should('be.visible', { timeout: 40000 }).click();
+      checkbox.parent().should('be.visible', {timeout: 40000}).click();
       cy.wait(1000);
     }
-    cy.get(myEformsPage.saveParingBtn()).click();
-    spinnerAnimation.should('not.be.visible', { timeout: 90000 });
+    myEformsPage.saveParingBtn().click();
+    spinnerAnimation.should('not.be.visible', {timeout: 90000});
     cy.wait(1000);
   }
 
   goToVisualEditor() {
     this.goVisualEditorBtn.click();
     cy.wait(500);
-    cy.get('#manageTags').should('be.visible', { timeout: 40000 }).click();
-    const spinnerAnimation = cy.get('#spinner-animation');
-    spinnerAnimation.should('not.be.visible', { timeout: 40000 });
+    cy.get('#manageTags').should('be.visible', {timeout: 40000}).click();
     cy.wait(500);
   }
 }
 
 const myEformsRowObject = new MyEformsRowObject();
 
-export { myEformsRowObject, myEformsPage}
+export {myEformsRowObject, myEformsPage};

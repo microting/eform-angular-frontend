@@ -32,7 +32,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -54,7 +54,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -87,7 +87,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -98,7 +98,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -140,7 +140,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -151,7 +151,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -194,7 +194,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -205,7 +205,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -251,7 +251,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -262,7 +262,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -309,7 +309,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -320,7 +320,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -369,7 +369,7 @@ describe('Visual editor page', function () {
           {
             name: generateRandmString(),
             description: generateRandmString(),
-            languageId: 1,
+            languageId: 0,
             id: null,
           },
         ],
@@ -380,7 +380,7 @@ describe('Visual editor page', function () {
               {
                 name: generateRandmString(),
                 description: generateRandmString(),
-                languageId: 1,
+                languageId: 0,
                 id: null,
               },
             ],
@@ -397,7 +397,7 @@ describe('Visual editor page', function () {
           {
             name: generateRandmString(),
             description: generateRandmString(),
-            languageId: 1,
+            languageId: 0,
             id: null,
           },
         ],
@@ -465,7 +465,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -476,7 +476,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -493,7 +493,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -528,7 +528,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -538,7 +538,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -548,7 +548,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -580,7 +580,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -590,7 +590,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -601,7 +601,7 @@ describe('Visual editor page', function () {
                 {
                   name: generateRandmString(),
                   description: generateRandmString(),
-                  languageId: 1,
+                  languageId: 0,
                   id: null,
                 },
               ],
@@ -614,7 +614,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -654,7 +654,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -664,7 +664,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -675,7 +675,7 @@ describe('Visual editor page', function () {
                 {
                   name: generateRandmString(),
                   description: generateRandmString(),
-                  languageId: 1,
+                  languageId: 0,
                   id: null,
                 },
               ],
@@ -691,7 +691,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -731,7 +731,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -742,7 +742,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -754,7 +754,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -799,7 +799,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -812,7 +812,7 @@ describe('Visual editor page', function () {
                 {
                   name: generateRandmString(),
                   description: generateRandmString(),
-                  languageId: 1,
+                  languageId: 0,
                   id: null,
                 },
               ],
@@ -824,7 +824,7 @@ describe('Visual editor page', function () {
                 {
                   name: generateRandmString(),
                   description: generateRandmString(),
-                  languageId: 1,
+                  languageId: 0,
                   id: null,
                 },
               ],
@@ -835,7 +835,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -845,7 +845,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -899,12 +899,12 @@ describe('Visual editor page', function () {
     const eformName = generateRandmString();
     const eformFromXml: MainChecklistObj = {
       translations: [
-        { name: eformName, description: '', languageId: 1, id: null },
+        { name: eformName, description: '', languageId: 0, id: null },
       ],
       fields: [
         {
           translations: [
-            { name: 'Number 2', description: '', languageId: 1, id: null },
+            { name: 'Number 2', description: '', languageId: 0, id: null },
           ],
           type: EformFieldTypesEnum.Number,
           mandatory: true,

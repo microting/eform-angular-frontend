@@ -5,10 +5,13 @@
       id="drag_handle{{firstLevelIndex}}_{{secondLevelIndex}}"
       class="md-36 dragula-handle align-middle">menu
     </mat-icon>
-    {{ item.name }}
-    {{
-    item.translations.length > 0 ? '/ ' + getMenuTranslation(item.translations) : ' '
-    }}
+    <span class="item-name">
+      {{ item.name }}
+    </span>
+    <span class="px-2">{{item.translations.length > 0 ? '/' : ''}}</span>
+    <span class="item-translations">
+      {{item.translations.length > 0 ? getMenuTranslation(item.translations) : ' '}}
+    </span>
     <div class="spacer"></div>
     <div>
       <button

@@ -98,6 +98,11 @@ export class EformTreeViewPickerComponent implements OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if(changes && changes.nodes && changes.nodes.currentValue){
       this.folders.data = changes.nodes.currentValue;
+      if(!this.collapsed && this.showCollapseButton) {
+        this.treeControl.expandAll();
+      } else if(this.collapsed && this.showCollapseButton) {
+        this.treeControl.collapseAll();
+      }
     }
     if (changes && changes.focusedNodeId && changes.focusedNodeId.currentValue) {
       this.selectedFolderIds = [];

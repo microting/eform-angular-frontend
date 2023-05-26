@@ -1,42 +1,31 @@
 import loginPage from '../Login.page';
 import {myEformsPage, myEformsRowObject} from '../MyEforms.page';
-import { v4 as uuidv4 } from 'uuid';
-import {Guid} from 'guid-typescript';
-import {expect} from 'chai';
+import {generateRandmString} from '../helper-functions';
 
 
-// @ts-ignore
 describe('My eforms', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    // myEformsPage.clearTable();
   });
-  // @ts-ignore
-  it('should create eform without any tags',() => {
-    const newEformLabel = Guid.create().toString();
+  it('should create eform without any tags', () => {
+    const newEformLabel = generateRandmString();
     myEformsPage.createNewEform(newEformLabel);
-    myEformsPage.rowNum().then((rowNum) => {
-      console.log(rowNum);
-      myEformsRowObject.getRow(rowNum).then((row) => {
-        expect(row.tags.length).to.equal(0);
-        console.log(row);
-        row.deleteBtn.click();
-        myEformsRowObject.deleteEForm();
-      });
+    myEformsPage.rowNum().should('eq', 1);
+    const rowObj = myEformsPage.getFirstRowObject(['eFormName']);
+    rowObj.eFormName.should('have.text', newEformLabel);
+    rowObj.element().find('.mat-column-tags .eform-tag').should('not.exist');
+  });
+  it('should create eform simultaneously with creating 1 tag', () => {
+    const newEformLabel = generateRandmString();
+    const newEformTag = generateRandmString();
+    myEformsPage.createNewEform(newEformLabel, [newEformTag]);
+    myEformsPage.rowNum().should('eq', 1).then(() => {
+      const rowObj = myEformsPage.getFirstRowObject(['eFormName', 'tags']);
+      rowObj.eFormName.should('have.text', newEformLabel);
+      rowObj.tags.should('have.length', 1);
     });
-    //myEformsPage.getEformsRowObjByNameEForm(newEformLabel).then((eform) => {
-    //  expect(eform.tags.length).to.equal(1);
-    //   //expect(eform.tags[0].getText()).to.eventually.equal(createdTag);
-    //   const countBeforeDelete = myEformsPage.rowNum();
-    //   eform.deleteEForm();
-    //   myEformsPage.rowNum().then((newRowCount) => {
-    //     expect(countBeforeDelete - 1).to.equal(newRowCount);
-    //   });
-    //});
-    // const countBeforeDelete = myEformsPage.rowNum();
-    // eform.deleteEForm();
-    // const newRowCount = myEformsPage.rowNum();
-    // expect(+countBeforeDelete - 1).eq(newRowCount);
   });
   // it('should create eform simultaneously with creating 1 tag', () => {
   //   const newEformLabel = uuidv4();
@@ -111,4 +100,7 @@ describe('My eforms', () => {
   //   myEformsPage.clickNewEformBtn();
   //   cy.get('#createFormButton').should('be.disabled');
   // });
+  afterEach(() => {
+    myEformsPage.clearTable();
+  });
 });

@@ -6,6 +6,7 @@ class NavigationMenuPage {
   }
 
   public async menuItems(): Promise<WebdriverIO.ElementArray> {
+    await browser.pause(1000);
     return $$('#menuItems');
   }
 

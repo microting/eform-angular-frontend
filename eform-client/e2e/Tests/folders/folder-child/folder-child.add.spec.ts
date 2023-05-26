@@ -14,19 +14,17 @@ describe('Create folder', function () {
     await (await foldersPage.newFolderBtn()).waitForDisplayed({ timeout: 40000 });
     const description = generateRandmString();
     await foldersPage.createNewFolder(nameFolder, description);
+    await foldersPage.expandOrCollapseAll();
   });
   it('Create folder child with name and description', async () => {
     const name = generateRandmString();
     const description = generateRandmString();
-    const rowCountBeforeCreation = await foldersPage.rowChildrenNum();
     const folder = await foldersPage.getFolderByName(nameFolder);
     await folder.createChild(name, description);
-    await folder.expandChildren();
     const rowCountAfterCreation = await foldersPage.rowChildrenNum();
-    expect(
-      rowCountBeforeCreation + 1,
+    expect(rowCountAfterCreation,
       `Number of rows hasn't changed after creating new folder`
-    ).equal(rowCountAfterCreation);
+    ).equal(1);
   });
   // it('Create folder child with name only', async () => {
   //   const parentFolder = foldersPage.getFolderByName(nameFolder);

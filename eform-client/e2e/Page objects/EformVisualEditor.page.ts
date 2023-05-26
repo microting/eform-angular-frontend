@@ -11,6 +11,7 @@ import {
 } from '../../src/app/common/models';
 import myEformsPage from './MyEforms.page';
 import { eformVisualEditorElementColors } from '../../src/app/modules/eforms/eform-visual-editor/const';
+import {selectValueInNgSelector} from '../Helpers/helper-functions';
 
 class EformVisualEditorPage extends PageWithNavbarPage {
   constructor() {
@@ -171,8 +172,8 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   async selectedLanguages(): Promise<number[]> {
     const selectedLanguages = [];
     for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = await $(`#languageCheckbox${i}-input`);
-      if ((await checkbox.getAttribute('aria-checked')) === true.toString()) {
+      const checkbox = await $(`#languageCheckbox${i}`);
+      if ((await checkbox.getAttribute('ng-reflect-model')) === true.toString()) {
         selectedLanguages.push(i);
       }
     }
@@ -205,16 +206,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       }
       if (checklist.tags) {
         for (let i = 0; i < checklist.tags.length; i++) {
-          (await (await this.mainCheckListTagsSelector()).$('input')).setValue(
-            checklist.tags[i]
-          );
-          await browser.pause(500);
-          const option = await (await this.mainCheckListTagsSelector()).$(
-            '.ng-option'
-          );
-          await option.waitForDisplayed({ timeout: 40000 });
-          await option.click();
-          await browser.pause(500);
+          await selectValueInNgSelector(await this.mainCheckListTagsSelector(), checklist.tags[i]);
         }
       }
       if (checklist.fields) {
@@ -464,8 +456,8 @@ export class MainCheckListRowObj {
       this.checklists.push(await clRow.load());
     }
     for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = await $(`#languageCheckbox${i}-input`);
-      if ((await checkbox.getAttribute('aria-checked')) !== false.toString()) {
+      const checkbox = await $(`#languageCheckbox${i}`);
+      if ((await checkbox.getAttribute('ng-reflect-model')) === true.toString()) {
         this.translations.push({
           languageId: i,
           name:

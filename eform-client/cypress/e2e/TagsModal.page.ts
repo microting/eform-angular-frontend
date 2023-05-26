@@ -49,8 +49,17 @@ export class TagsModalPage extends Page {
     this.newTagBtn();
     cy.get('#newTagName').scrollIntoView().should('be.visible').type(tagName);
     this.newTagSaveBtn().click();
-    cy.get('#spinner-animation').should('not.exist');
     this.newTagBtn().should('be.visible');
+  }
+
+  createTags(tagNames: string[] = []) {
+    for (let i = 0; i < tagNames.length; i++) {
+      this.createTag(tagNames[i]);
+    }
+  }
+
+  closeTagModal() {
+    this.tagsModalCloseBtn().click();
   }
 
   cancelCreateTag(tagName) {
@@ -66,7 +75,6 @@ export class TagsModalPage extends Page {
     rowObject.editTagClick();
     cy.get('#tagNameEdit').scrollIntoView().should('be.visible').type(name);
     this.tagEditSaveBtn().click();
-    cy.get('#spinner-animation').should('not.exist');
     this.newTagBtn().should('be.visible');
   }
 
@@ -83,7 +91,6 @@ export class TagsModalPage extends Page {
     const result = new TagRowObject();
     const rowObject = result.getRow(rowNumber);
     rowObject.deleteTag();
-    cy.get('#spinner-animation').should('not.exist');
   }
 
   cancelDeleteTag(rowNumber) {
@@ -91,7 +98,6 @@ export class TagsModalPage extends Page {
     const rowObject = result.getRow(rowNumber);
     rowObject.deleteTag(true);
     this.tagDeleteSaveCancelBtn().click();
-    cy.get('#spinner-animation').should('not.exist');
   }
 }
 
@@ -113,7 +119,6 @@ export class TagRowObject {
   editTagClick() {
     const editBtn = this.editTagBtn;
     editBtn.click();
-    cy.get('#spinner-animation').should('not.exist', { timeout: 90000 });
   }
 
   deleteTag(clickCancel = false) {

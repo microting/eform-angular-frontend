@@ -63,9 +63,9 @@
       <mat-expansion-panel *ngFor="
               let menuItem of navigationMenuModel.actualMenu;
               let firstLevelIndex = index"
-              [hideToggle]="menuItem.type !== menuItemTypes.Dropdown"
-              class="dragula-item"
-              id="menuItems"
+                           [hideToggle]="menuItem.type !== menuItemTypes.Dropdown"
+                           class="dragula-item"
+                           id="menuItems"
       >
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -74,11 +74,12 @@
               style="cursor: all-scroll">
               menu
             </mat-icon>
+            <span class="menuItemName">
             {{ menuItem.name }} {{
-            menuItem.translations.length > 0
-              ? '/ ' + getMenuTranslation(menuItem.translations)
-              : ' '
-            }}
+              menuItem.translations.length > 0
+                ? '/ ' + getMenuTranslation(menuItem.translations)
+                : ' '
+              }}</span>
             <div class="spacer"></div>
             <button mat-icon-button (click)="onItemEdit(menuItem, firstLevelIndex)" id="editBtn" color="accent">
               <mat-icon>edit</mat-icon>

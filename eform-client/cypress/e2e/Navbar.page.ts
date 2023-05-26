@@ -16,7 +16,7 @@ export class Navbar {
   }
 
   public logoutBtn() {
-    return cy.get('#sign-out').should('be.visible').click();
+    return cy.get('#sign-out').should('be.visible');
   }
 
   public settingsBtn() {

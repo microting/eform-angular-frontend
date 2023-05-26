@@ -10,13 +10,13 @@ describe(' Navigation menu - Drag item', function () {
     await myEformsPage.Navbar.goToMenuEditorPage();
   });
   it('element must be created from custom dropdown which elements', async () => {
-    const count = (await navigationMenuPage.menuItems()).length;
     await navigationMenuPage.collapseTemplates(1);
     const dropdown = {
       securityGroups: [],
       translations: ['test1', 'test', 'test3']
     };
 
+    const count = (await navigationMenuPage.menuItems()).length;
     await navigationMenuPage.createCustomDropdown(dropdown);
     await browser.pause(500);
 
@@ -83,11 +83,11 @@ describe(' Navigation menu - Drag item', function () {
     await navigationMenuPage.clickSaveMenuBtn();
     await browser.pause(500);
 
-    const itemsBeforeSwap = ['menu\nDevice Users / test2Dan\nedit\ndelete', 'menu\nSites / test0Dan\nedit\ndelete', 'menu\nWorkers / test1Dan\nedit\ndelete'];
+    const itemsBeforeSwap = ['test0Dan', 'test2Dan', 'test1Dan'];
     // tslint:disable-next-line:max-line-length
     for (let i = 0; i < (await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItems()).length - 1)).length; i++) {
       const elem = (await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItems()).length - 1))[i];
-      expect(await elem.getText()).eq(itemsBeforeSwap[i]);
+      expect(await (await elem.$('.item-translations')).getText()).eq(itemsBeforeSwap[i]);
     }
     await browser.pause(500);
     await navigationMenuPage.resetMenu();

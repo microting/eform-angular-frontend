@@ -366,6 +366,10 @@ class FoldersPage extends PageWithNavbarPage {
     });
     await browser.pause(500);
   }
+
+  public async expandOrCollapseAll() {
+    await (await $('.collapse-button')).click();
+  }
 }
 
 const foldersPage = new FoldersPage();
@@ -388,7 +392,7 @@ export class FoldersRowObject {
         this.folderElement = await element.$('.microting-uid');
       } catch (e) {
       }
-      this.dropdown = await element.$('button.mat-menu-trigger');
+      this.dropdown = await element.$('button.mat-mdc-menu-trigger');
       try {
         this.name = await (await element.$('div > div')).getText();
       } catch (e) {
