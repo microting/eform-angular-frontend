@@ -34,7 +34,7 @@ describe('Visual editor page', function () {
           {
             name: generateRandmString(),
             description: generateRandmString(),
-            languageId: 1,
+            languageId: 0,
             id: null,
           },
         ],
@@ -45,7 +45,7 @@ describe('Visual editor page', function () {
           {
             name: generateRandmString(),
             description: generateRandmString(),
-            languageId: 1,
+            languageId: 0,
             id: null,
           },
         ],
@@ -71,7 +71,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -82,7 +82,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -102,7 +102,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -113,7 +113,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -172,7 +172,7 @@ describe('Visual editor page', function () {
         {
           name: generateRandmString(),
           description: generateRandmString(),
-          languageId: 1,
+          languageId: 0,
           id: null,
         },
       ],
@@ -182,7 +182,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -193,7 +193,7 @@ describe('Visual editor page', function () {
                 {
                   name: generateRandmString(),
                   description: generateRandmString(),
-                  languageId: 1,
+                  languageId: 0,
                   id: null,
                 },
               ],
@@ -205,7 +205,7 @@ describe('Visual editor page', function () {
                 {
                   name: generateRandmString(),
                   description: generateRandmString(),
-                  languageId: 1,
+                  languageId: 0,
                   id: null,
                 },
               ],
@@ -218,7 +218,7 @@ describe('Visual editor page', function () {
             {
               name: generateRandmString(),
               description: generateRandmString(),
-              languageId: 1,
+              languageId: 0,
               id: null,
             },
           ],
@@ -236,7 +236,7 @@ describe('Visual editor page', function () {
       {
         name: generateRandmString(),
         description: generateRandmString(),
-        languageId: 1,
+        languageId: 0,
         id: null,
       },
     ];

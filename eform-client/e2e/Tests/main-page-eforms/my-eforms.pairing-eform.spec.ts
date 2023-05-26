@@ -4,7 +4,6 @@ import deviceUsersPage, {
   DeviceUsersRowObject,
 } from '../../Page objects/DeviceUsers.page';
 import foldersPage, { FoldersRowObject } from '../../Page objects/Folders.page';
-import {expect as expectWdio} from 'expect-webdriverio'
 
 const expect = require('chai').expect;
 const users = new Array<DeviceUsersRowObject>();
@@ -82,12 +81,12 @@ describe('Main page', function () {
     const siteIds = await $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].getText())) {
-        const checkbox = await $(`#checkbox${users[1].siteId}-input`);
-        await expectWdio(checkbox).toHaveElementClass('mdc-checkbox--selected', {message: `User ${users[1].siteId} not paired`});
+        const checkbox = await $(`#checkbox${users[1].siteId}`);
+        expect(await checkbox.getAttribute('ng-reflect-model')).eq(false.toString(), {message: `User ${users[1].siteId} paired`});
       }
       if (users[0].siteId === +siteIds[i].getText()) {
-        const checkbox = await $(`#checkbox${users[0].siteId}-input`);
-        await expectWdio(checkbox).toHaveElementClass('mdc-checkbox--selected', {message: `User ${users[0].siteId} not paired`});
+        const checkbox = await $(`#checkbox${users[0].siteId}`);
+        expect(await checkbox.getAttribute('ng-reflect-model')).eq(true.toString(), {message: `User ${users[0].siteId} not paired`});
       }
     }
     await (await myEformsPage.cancelParingBtn()).click();
