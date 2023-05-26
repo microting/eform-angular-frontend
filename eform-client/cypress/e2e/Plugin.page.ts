@@ -28,7 +28,7 @@ class PluginPage extends PageWithNavbarPage {
       .should('be.visible');
   }
 
-  public enablePluginByName(pluginName: string) {
+  public enablePluginByName(pluginName: string, msForWait: number = 100000) {
     let row = cy.contains('.mat-row', pluginName).first();
     let switchElement = row
       .find('.mat-column-actions button')
@@ -36,7 +36,7 @@ class PluginPage extends PageWithNavbarPage {
     switchElement.click(); // call warning modal
     this.pluginOKBtn().should('be.visible')
       .should('be.enabled').click(); // button in warning modal
-    cy.wait(100000); // wait for server migrate db plugin
+    cy.wait(msForWait); // wait for server migrate db plugin
     loginPage.login();
     this.Navbar.goToPluginsPage();
   }

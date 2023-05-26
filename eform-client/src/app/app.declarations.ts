@@ -3,16 +3,16 @@ import {
   LocationStrategy,
   PathLocationStrategy,
 } from '@angular/common';
-import { CookieService } from 'ngx-cookie-service';
-import { ToastrService } from 'ngx-toastr';
+import {CookieService} from 'ngx-cookie-service';
+import {ToastrService} from 'ngx-toastr';
 import {
   AdminGuard,
   AuthGuard,
   CanDeactivateGuard,
   PermissionGuard,
 } from 'src/app/common/guards';
-import { ClaimsGuard } from 'src/app/common/guards/claims.guard';
-import { EventBrokerService } from 'src/app/common/helpers';
+import {ClaimsGuard} from 'src/app/common/guards/claims.guard';
+import {EventBrokerService} from 'src/app/common/helpers';
 import {
   AdminService,
   ApiBaseService,
@@ -44,19 +44,20 @@ import {
   WorkersService,
   TitleService,
 } from 'src/app/common/services';
-import { AuthService } from 'src/app/common/services/auth/auth.service';
-import { UserSettingsService } from 'src/app/common/services/auth/user-settings.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {AuthService} from 'src/app/common/services/auth/auth.service';
+import {UserSettingsService} from 'src/app/common/services/auth/user-settings.service';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {
   HttpErrorInterceptor,
   JwtInterceptor,
   LoaderInterceptor,
   UserClaimsInterceptor,
 } from 'src/app/common/interceptors';
-import { GALLERY_CONFIG } from '@ngx-gallery/core';
-import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
-import { persistProviders } from 'src/app/common/store/persist.config';
-import { BaseService } from 'src/app/common/services/base.service';
+import {GALLERY_CONFIG} from '@ngx-gallery/core';
+import {AppMenuStateService, AuthStateService} from 'src/app/common/store';
+import {persistProviders} from 'src/app/common/store/persist.config';
+import {BaseService} from 'src/app/common/services/base.service';
+import {DateInterceptor} from 'src/app/common/interceptors/date.interceptor';
 // Guards
 
 export let providers = [
@@ -100,10 +101,11 @@ export let providers = [
   NavigationMenuService,
   LoaderService,
   TitleService,
-  { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: UserClaimsInterceptor, multi: true },
+  {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+  {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
+  {provide: HTTP_INTERCEPTORS, useClass: DateInterceptor, multi: true},
+  {provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true},
+  {provide: HTTP_INTERCEPTORS, useClass: UserClaimsInterceptor, multi: true},
   {
     provide: GALLERY_CONFIG,
     useValue: {

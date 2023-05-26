@@ -45,7 +45,7 @@
       <mat-card-title>
         {{ replyElement.label }}
       </mat-card-title>
-      <mat-card-content>
+      <mat-card-content style="max-height: 50vh; overflow: auto;">
           <div
             *ngFor="let element of replyElement.elementList"
             style="cursor: pointer"
