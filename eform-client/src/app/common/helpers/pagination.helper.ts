@@ -1,4 +1,4 @@
-export function getOffset(pageSize, offset, total): number {
+export function getOffset(pageSize: number, offset: number, total: number): number {
   while (getCurrentPage(pageSize, offset) > getTotalPages(pageSize, total)) {
     offset -= pageSize;
   }
