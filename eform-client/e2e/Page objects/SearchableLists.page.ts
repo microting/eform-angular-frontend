@@ -6,7 +6,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public async rowNum(): Promise<number> {
     await browser.pause(500);
-    return (await $$('#tableBody > tr')).length;
+    return (await $$('app-searchable-list .cdk-row')).length;
   }
   public async items(): Promise<number> {
     await browser.pause(500);
@@ -15,7 +15,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   async getFirstRowObject(): Promise<SearchableListRowObject> {
     await browser.pause(500);
     const obj = new SearchableListRowObject();
-    const row = await obj.getRow(2);
+    const row = await obj.getRow(1);
     if (row.name !== 'Device users') {
       return row;
     } else {
@@ -102,7 +102,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
-  public async entitySearchEditBtn(i = 1): Promise<WebdriverIO.Element> {
+  public async entitySearchEditBtn(i = 0): Promise<WebdriverIO.Element> {
     const ele = await $$('#entitySearchUpdateBtn')[i];
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -317,7 +317,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async editSearchableListNameOnly(newName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
-    await (await this.entitySearchEditBtn()).click();
+    await (await this.getFirstRowObject()).editBtn.click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
@@ -331,7 +331,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public async editSearchableListNameOnly_Cancels(newName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
-    await (await this.entitySearchEditBtn()).click();
+    await (await this.getFirstRowObject()).editBtn.click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
@@ -345,7 +345,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public async editSearchableListNameAndItem(newName, newItemName) {
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
-    await (await this.entitySearchEditBtn()).click();
+    await (await this.getFirstRowObject()).editBtn.click();
     await browser.pause(500);
     await $('#editName').waitForClickable({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
@@ -361,7 +361,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public async editSearchableListOnlyItem(newItemName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
-    await (await this.entitySearchEditBtn()).click();
+    await (await this.getFirstRowObject()).editBtn.click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await this.editItemName(newItemName);
@@ -372,7 +372,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public async editSearchableListNameAndItem_Cancels(newName, newItemName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
-    await (await this.entitySearchEditBtn()).click();
+    await (await this.getFirstRowObject()).editBtn.click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
@@ -388,7 +388,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public async editSearchableListNameAndItem_CancelsBoth(newName, newItemName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
-    await (await this.entitySearchEditBtn()).click();
+    await (await this.getFirstRowObject()).editBtn.click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
@@ -404,7 +404,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public async editSearchableListNameAndItem_CancelsItemName(newName, newItemName) {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
-    await (await this.entitySearchEditBtn()).click();
+    await (await this.getFirstRowObject()).editBtn.click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await (await this.entitySearchEditNameBox()).clearValue();
@@ -418,7 +418,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public async deleteItemFromList() {
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
-    await (await this.entitySearchEditBtn()).click();
+    await (await this.getFirstRowObject()).editBtn.click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({ timeout: 200000 });
     await this.deleteItem();
@@ -472,23 +472,29 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
   public async cleanup() {
-    const deleteObject = await this.getFirstRowObject();
-    if (deleteObject != null) {
-      await $('#spinner-animation').waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
-      await deleteObject.deleteBtn.click();
-      await $('#spinner-animation').waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
-      await (await this.entitySearchDeleteDeleteBtn()).click();
-      await $('#spinner-animation').waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
-      // browser.refresh();
+    await browser.pause(2000);
+    const rowCount = await this.rowNum();
+    for (let i = 1; i <= rowCount; i++) {
+      const deleteObject = await this.getFirstRowObject();
+      if (deleteObject != null) {
+        await $('#spinner-animation').waitForDisplayed({
+          timeout: 90000,
+          reverse: true,
+        });
+        if(deleteObject.deleteBtn.isClickable) {
+          await deleteObject.deleteBtn.click();
+          await $('#spinner-animation').waitForDisplayed({
+            timeout: 90000,
+            reverse: true,
+          });
+          await (await this.entitySearchDeleteDeleteBtn()).click();
+          await $('#spinner-animation').waitForDisplayed({
+            timeout: 90000,
+            reverse: true,
+          });
+        }
+        // browser.refresh();
+      }
     }
   }
 }

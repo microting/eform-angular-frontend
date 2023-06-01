@@ -104,7 +104,6 @@ export class Navbar {
 
   public async entitySearchBtn(): Promise<WebdriverIO.Element> {
     const ele = await $(`#search`);
-    await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
@@ -228,9 +227,12 @@ export class Navbar {
   }
 
   public async goToEntitySearch() {
-    await this.advancedDropdownClick();
+    if (!await (await this.entitySearchBtn()).isDisplayed()) {
+      await this.advancedDropdownClick();
+    }
     await (await this.entitySearchBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await (await $('#createEntitySearchBtn')).waitForDisplayed({ timeout: 40000 });
     await browser.pause(500);
   }
 

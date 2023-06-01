@@ -8,18 +8,13 @@ describe('Entity Search', function () {
   before(async () => {
     await loginPage.open('/auth');
     await loginPage.login();
-  });
-  it('should go to entity search page', async () => {
     await searchableLists.goToEntitySearchPage();
-    await (await $('#createEntitySearchBtn')).waitForDisplayed({ timeout: 40000 });
   });
   it('should create a new searchable list', async () => {
     const name = Guid.create().toString();
     await searchableLists.createSearchableList_NoItem(name);
     const searchableList = await searchableLists.getFirstRowObject();
     expect((await searchableList.name)).equal(name);
-    await searchableLists.cleanup();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should not create a new searchable list', async () => {
     const numRows = await searchableLists.rowNum();
@@ -39,7 +34,6 @@ describe('Entity Search', function () {
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal(itemName);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
-    await searchableLists.cleanup();
     await ($('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should not make a new searchable list with one item', async () => {
@@ -74,7 +68,6 @@ describe('Entity Search', function () {
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await searchableLists.entitySearchEditCancelBtn()).click();
-    await searchableLists.cleanup();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   });
   it('should not create a searchable list with multiple items', async () => {
@@ -84,4 +77,8 @@ describe('Entity Search', function () {
     await searchableLists.createSearchableList_MultipleItems_Cancels(name, itemNames);
     expect(await searchableLists.rowNum()).equal(numRows);
   });
+  afterEach(async () => {
+    await searchableLists.goToEntitySearchPage();
+    await searchableLists.cleanup();
+  })
 });
