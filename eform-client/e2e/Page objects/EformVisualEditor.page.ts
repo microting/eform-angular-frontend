@@ -172,8 +172,8 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   async selectedLanguages(): Promise<number[]> {
     const selectedLanguages = [];
     for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = await $(`#languageCheckbox${i}`);
-      if ((await checkbox.getAttribute('ng-reflect-model')) === true.toString()) {
+      const checkbox = await $(`#languageCheckbox${i}-input`);
+      if ((await checkbox.getProperty('checked')) === true) {
         selectedLanguages.push(i);
       }
     }
@@ -456,8 +456,8 @@ export class MainCheckListRowObj {
       this.checklists.push(await clRow.load());
     }
     for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = await $(`#languageCheckbox${i}`);
-      if ((await checkbox.getAttribute('ng-reflect-model')) === true.toString()) {
+      const checkbox = await $(`#languageCheckbox${i}-input`);
+      if ((await checkbox.getProperty('checked')) === true) {
         this.translations.push({
           languageId: i,
           name:

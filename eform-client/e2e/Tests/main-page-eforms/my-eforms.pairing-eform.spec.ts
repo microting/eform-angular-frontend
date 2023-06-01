@@ -81,12 +81,12 @@ describe('Main page', function () {
     const siteIds = await $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].getText())) {
-        const checkbox = await $(`#checkbox${users[1].siteId}`);
-        expect(await checkbox.getAttribute('ng-reflect-model')).eq(false.toString(), {message: `User ${users[1].siteId} paired`});
+        const checkbox = await $(`#checkbox${users[1].siteId}-input`);
+        expect(await checkbox.getProperty('checked')).eq(false, {message: `User ${users[1].siteId} paired`});
       }
       if (users[0].siteId === +siteIds[i].getText()) {
-        const checkbox = await $(`#checkbox${users[0].siteId}`);
-        expect(await checkbox.getAttribute('ng-reflect-model')).eq(true.toString(), {message: `User ${users[0].siteId} not paired`});
+        const checkbox = await $(`#checkbox${users[0].siteId}-input`);
+        expect(await checkbox.getProperty('checked')).eq(true, {message: `User ${users[0].siteId} not paired`});
       }
     }
     await (await myEformsPage.cancelParingBtn()).click();
