@@ -22,6 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microting.eForm.Infrastructure.Factories;
+
 namespace eFormAPI.Web
 {
     using Services.Import;
@@ -70,6 +74,7 @@ namespace eFormAPI.Web
 
     public class Startup
     {
+        private bool _sdkPresent;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -107,6 +112,32 @@ namespace eFormAPI.Web
                     {
                         builder.EnableRetryOnFailure();
                     }));
+
+                services.AddHealthChecks()
+                    .AddMySql(Configuration["ConnectinString"]!);
+                if (Configuration["ConnectinString"].Contains("localhost"))
+                {
+                    services.AddHealthChecks().AddRabbitMQ("amqp://localhost", name: "rabbitmq");
+                }
+                else
+                {
+                    try {
+                        var dbContextFactory = new MicrotingDbContextFactory();
+                        var dbcontext =
+                            dbContextFactory.CreateDbContext(new[]
+                                { Configuration["ConnectinString"].Replace("Angular", "SDK") });
+                        var rabbithost = dbcontext.Settings.First(x => x.Name == "rabbitMqHost").Value;
+                        var rabbituser = dbcontext.Settings.First(x => x.Name == "rabbitMqUser").Value;
+                        var rabbitpass = dbcontext.Settings.First(x => x.Name == "rabbitMqPassword").Value;
+
+                        services.AddHealthChecks().AddRabbitMQ($"amqp://{rabbituser}:{rabbitpass}@{rabbithost}", name: "rabbitmq");
+                        _sdkPresent = true;
+                    }
+                    catch (Exception ex) {
+                        Log.LogException(ex.Message);
+                        _sdkPresent = false;
+                    }
+                }
             }
             else
             {
@@ -124,6 +155,32 @@ namespace eFormAPI.Web
                                 {
                                     builder.EnableRetryOnFailure();
                                 }));
+
+                        services.AddHealthChecks()
+                            .AddMySql(Configuration.MyConnectionString());
+                        if (Configuration.MyConnectionString().Contains("localhost"))
+                        {
+                            services.AddHealthChecks().AddRabbitMQ("amqp://localhost", name: "rabbitmq");
+                        }
+                        else
+                        {
+                            try {
+                                var dbContextFactory = new MicrotingDbContextFactory();
+                                var dbcontext =
+                                    dbContextFactory.CreateDbContext(new[]
+                                        { Configuration.MyConnectionString().Replace("Angular", "SDK") });
+                                var rabbithost = dbcontext.Settings.First(x => x.Name == "rabbitMqHost").Value;
+                                var rabbituser = dbcontext.Settings.First(x => x.Name == "rabbitMqUser").Value;
+                                var rabbitpass = dbcontext.Settings.First(x => x.Name == "rabbitMqPassword").Value;
+
+                                services.AddHealthChecks().AddRabbitMQ($"amqp://{rabbituser}:{rabbitpass}@{rabbithost}", name: "rabbitmq");
+                                _sdkPresent = true;
+                            }
+                            catch (Exception ex) {
+                                Log.LogException(ex.Message);
+                                _sdkPresent = false;
+                            }
+                        }
                     }
                     else
                     {
@@ -288,6 +345,13 @@ namespace eFormAPI.Web
                 // Since swagger is not accessible from outside the local server we do not need to disable it for production.
                 app.UseSwagger();
                 app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1"); });
+            }
+            if (_sdkPresent)
+            {
+                app.UseHealthChecks("/_health", new HealthCheckOptions
+                {
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
             }
 
             // Plugins
