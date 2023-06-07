@@ -49,7 +49,7 @@
     <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="6.0.2" />
     <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="6.0.2" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
-    <PackageReference Include="AWSSDK.Core" Version="3.7.107.2" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.107.3" />
     <PackageReference Include="AWSSDK.S3" Version="3.7.104.28" />
     <PackageReference Include="ClosedXML" Version="0.101.0" />
     <PackageReference Include="Magick.NET-Q16-x64" Version="13.1.3" />
