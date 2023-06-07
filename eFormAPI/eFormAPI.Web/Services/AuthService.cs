@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using PureOtp;
+
 namespace eFormAPI.Web.Services
 {
     using Cache.AuthCache;
@@ -48,7 +50,6 @@ namespace eFormAPI.Web.Services
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
-    using OtpSharp;
 
     public class AuthService : IAuthService
     {
