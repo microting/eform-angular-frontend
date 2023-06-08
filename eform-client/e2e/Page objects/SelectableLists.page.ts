@@ -291,6 +291,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
       await browser.pause(500);
     }
     await (await this.entitySelectCreateBtn()).waitForDisplayed();
+    await browser.pause(1000);
   }
 
   public async cleanupList() {
