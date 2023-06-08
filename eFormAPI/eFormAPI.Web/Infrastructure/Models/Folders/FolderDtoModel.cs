@@ -21,21 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Folders
-{
-    using System;
-    using System.Collections.Generic;
+namespace eFormAPI.Web.Infrastructure.Models.Folders;
 
-    public class FolderDtoModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int? ParentId { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public int? MicrotingUId { get; set; }
-        public List<FolderDtoModel> Children { get; set; }
-            = new List<FolderDtoModel>();
-    }
+using System;
+using System.Collections.Generic;
+
+public class FolderDtoModel
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int? ParentId { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public int? MicrotingUId { get; set; }
+    public List<FolderDtoModel> Children { get; set; }
+        = new List<FolderDtoModel>();
 }

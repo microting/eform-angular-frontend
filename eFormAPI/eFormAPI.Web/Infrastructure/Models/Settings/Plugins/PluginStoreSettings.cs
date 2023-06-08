@@ -1,7 +1,6 @@
-﻿namespace eFormAPI.Web.Infrastructure.Models.Settings.Plugins
+﻿namespace eFormAPI.Web.Infrastructure.Models.Settings.Plugins;
+
+public class PluginStoreSettings
 {
-    public class PluginStoreSettings
-    {
-        public string PluginListLink { get; set; }
-    }
+    public string PluginListLink { get; set; }
 }

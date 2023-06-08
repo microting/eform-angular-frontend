@@ -231,8 +231,8 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div class="mt-4">
-    <mat-card>
+  <div class="flex-cards mt-4">
+    <mat-card class="mat-card-50">
       <mat-card-title>
         <h4>
           {{ 'SDK information' | translate }}
@@ -246,34 +246,8 @@
             [(ngModel)]="adminSettingsModel.sdkSettingsModel.customerNo"
             type="text"
             name="customerNo"
+            disabled
             id="customerNo">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>{{'File location picture' | translate}}</mat-label>
-          <input
-            matInput
-            [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPicture"
-            type="text"
-            name="fileLocationPicture"
-            id="fileLocationPicture">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>{{'File location PDF' | translate}}</mat-label>
-          <input
-            matInput
-            [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPdf"
-            type="text"
-            name="fileLocationPdf"
-            id="fileLocationPdf">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>{{'File location Jasper report files' | translate}}</mat-label>
-          <input
-            matInput
-            [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationReports"
-            type="text"
-            name="fileLocationReports"
-            id="fileLocationReports">
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{'Http server address' | translate}}</mat-label>
@@ -284,121 +258,14 @@
             name="httpServerAddress"
             id="httpServerAddress">
         </mat-form-field>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <div class="flex-cards mt-4">
-    <mat-card class="mat-card-50">
-      <mat-card-title>
-        <h4>{{ 'Storage information' | translate }}</h4>
-      </mat-card-title>
-      <mat-card-content>
-        <section class="d-flex flex-column">
-          <mat-checkbox
-            id="swiftEnabled"
-            [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEnabled"
-          >{{'Swift enabled' | translate}}
-          </mat-checkbox>
-          <mat-checkbox
-            id="s3Enabled"
-            [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Enabled"
-          >{{'S3 enabled' | translate}}
-          </mat-checkbox>
-        </section>
-        <ng-container *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled">
-          <mat-form-field>
-            <mat-label>{{'User name' | translate}}</mat-label>
-            <input
-              matInput
-              [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftUserName"
-              placeholder="eformsdk"
-              type="text"
-              name="swiftUserName"
-              id="swiftUserName">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>{{'Password' | translate}}</mat-label>
-            <input
-              matInput
-              [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftPassword"
-              placeholder="eformsdktosecretpassword"
-              type="password"
-              name="swiftPassword"
-              id="swiftPassword">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>{{'Swift endpoint' | translate}}</mat-label>
-            <input
-              matInput
-              [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEndpoint"
-              placeholder="http://172.16.4.4:8080/swift/v1"
-              type="text"
-              name="swiftEndpoint"
-              id="swiftEndpoint">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>{{'Keystone endpoint' | translate}}</mat-label>
-            <input
-              matInput
-              [(ngModel)]="adminSettingsModel.swiftSettingsModel.keystoneEndpoint"
-              placeholder="http://172.16.4.4:5000/v2.0"
-              type="text"
-              name="keystoneEndpoint"
-              id="keystoneEndpoint">
-          </mat-form-field>
-        </ng-container>
-        <ng-container *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
-          <mat-form-field>
-            <mat-label>{{'S3 accessKey' | translate}}</mat-label>
-            <input
-              matInput
-              [(ngModel)]="adminSettingsModel.s3SettingsModel.s3AccessKeyId"
-              placeholder="false"
-              type="text"
-              name="s3AccessKeyId"
-              id="s3AccessKeyId">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>{{'S3 secretAccessKey' | translate}}</mat-label>
-            <input
-              matInput
-              [(ngModel)]="adminSettingsModel.s3SettingsModel.s3SecrectAccessKey"
-              placeholder="false"
-              type="password"
-              name="s3SecrectAccessKey"
-              id="s3SecrectAccessKey">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>{{'S3 endpoint' | translate}}</mat-label>
-            <input
-              matInput
-              [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Endpoint"
-              placeholder="false"
-              type="text"
-              name="s3Endpoint"
-              id="s3Endpoint">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>{{'S3 bucket name' | translate}}</mat-label>
-            <input
-              matInput
-              [(ngModel)]="adminSettingsModel.s3SettingsModel.s3BucketName"
-              placeholder="false"
-              type="password"
-              name="s3BucketName"
-              id="s3BucketName">
-          </mat-form-field>
-        </ng-container>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="mat-card-50">
-      <mat-card-title>
-        <h4>{{ 'SendGrid Information' | translate }}</h4>
-      </mat-card-title>
-      <mat-card-content>
+        <mat-checkbox
+          id="isEnableWidget"
+          [(ngModel)]="othersSettings.isEnableWidget"
+          [ngModelOptions]="{standalone: true}"
+        >{{'Userback widget' | translate}}
+        </mat-checkbox>
         <mat-form-field>
-          <mat-label>{{'Key' | translate}}</mat-label>
+          <mat-label>{{'Sendgrid key' | translate}}</mat-label>
           <input
             matInput
             placeholder="12345678909876543210adfecdfefdae"
@@ -409,21 +276,26 @@
         </mat-form-field>
       </mat-card-content>
     </mat-card>
+    <mat-card class="mat-card-50">
+      <mat-card-title>
+        <h4>{{ 'Languages' | translate }}</h4>
+      </mat-card-title>
+      <mat-card-content>
+        <ng-container *ngFor="let language of languagesModel.languages">
+          <p>
+            <mat-checkbox
+              [(ngModel)]="language.isActive"
+              [ngModelOptions]="{standalone: true}">
+              {{language.name}}
+            </mat-checkbox>
+          </p>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <div class="flex-cards mt-4">
-    <mat-card class="mat-card-50">
-      <mat-card-title>
-        <h4>{{ 'Other' | translate }}</h4>
-      </mat-card-title>
-      <mat-card-content>
-          <mat-checkbox
-            id="isEnableWidget"
-            [(ngModel)]="othersSettings.isEnableWidget"
-            [ngModelOptions]="{standalone: true}"
-          >{{'Userback widget' | translate}}
-          </mat-checkbox>
-      </mat-card-content>
-    </mat-card>
+
+
   </div>
 </div>

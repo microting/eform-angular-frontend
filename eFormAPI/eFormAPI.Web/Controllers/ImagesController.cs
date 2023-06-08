@@ -31,159 +31,158 @@ using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
-namespace eFormAPI.Web.Controllers
+namespace eFormAPI.Web.Controllers;
+
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+
+[Authorize]
+public class ImagesController : Controller
 {
-    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+    private readonly ILocalizationService _localizationService;
+    private readonly IEFormCoreService _coreHelper;
 
-    [Authorize]
-    public class ImagesController : Controller
+    public ImagesController(IEFormCoreService coreHelper,
+        ILocalizationService localizationService)
     {
-        private readonly ILocalizationService _localizationService;
-        private readonly IEFormCoreService _coreHelper;
+        _coreHelper = coreHelper;
+        _localizationService = localizationService;
+    }
 
-        public ImagesController(IEFormCoreService coreHelper,
-            ILocalizationService localizationService)
+    [HttpGet]
+    [Route("api/images/eform-images")]
+    public async Task<IActionResult> GetImage(string fileName)
+    {
+        var filePath = PathHelper.GetEformSettingsImagesPath(fileName);
+        string ext = Path.GetExtension(fileName).Replace(".", "");
+
+        if (ext == "jpg")
         {
-            _coreHelper = coreHelper;
-            _localizationService = localizationService;
+            ext = "jpeg";
+        }
+        string fileType = $"image/{ext}";
+
+        var core = await _coreHelper.GetCore();
+
+        if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+        {
+            var ss = await core.GetFileFromS3Storage($"{fileName}");
+
+            Response.ContentLength = ss.ContentLength;
+
+            return File(ss.ResponseStream, ss.Headers.ContentType);
         }
 
-        [HttpGet]
-        [Route("api/images/eform-images")]
-        public async Task<IActionResult> GetImage(string fileName)
+        if (!System.IO.File.Exists(filePath))
         {
-            var filePath = PathHelper.GetEformSettingsImagesPath(fileName);
-            string ext = Path.GetExtension(fileName).Replace(".", "");
-
-            if (ext == "jpg")
-            {
-                ext = "jpeg";
-            }
-            string fileType = $"image/{ext}";
-
-            var core = await _coreHelper.GetCore();
-
-            if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-            {
-                var ss = await core.GetFileFromS3Storage($"{fileName}");
-
-                Response.ContentLength = ss.ContentLength;
-
-                return File(ss.ResponseStream, ss.Headers.ContentType);
-            }
-
-            if (!System.IO.File.Exists(filePath))
-            {
-                return NotFound($"Trying to find file at location: {filePath}");
-            }
-
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, fileType);
+            return NotFound($"Trying to find file at location: {filePath}");
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("api/images/login-page-images")]
-        public async Task<IActionResult> GetLoginPageImage(string fileName)
+        var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+        return File(fileStream, fileType);
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    [Route("api/images/login-page-images")]
+    public async Task<IActionResult> GetLoginPageImage(string fileName)
+    {
+        var filePath = PathHelper.GetEformLoginPageSettingsImagesPath(fileName);
+        string ext = Path.GetExtension(fileName).Replace(".", "");
+
+        if (ext == "jpg")
         {
-            var filePath = PathHelper.GetEformLoginPageSettingsImagesPath(fileName);
-            string ext = Path.GetExtension(fileName).Replace(".", "");
-
-            if (ext == "jpg")
-            {
-                ext = "jpeg";
-            }
-
-            string fileType = $"image/{ext}";
-            var core = await _coreHelper.GetCore();
-
-            if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-            {
-                var ss = await core.GetFileFromS3Storage($"{fileName}");
-
-                Response.ContentLength = ss.ContentLength;
-
-                return File(ss.ResponseStream, ss.Headers.ContentType);
-            }
-
-            if (!System.IO.File.Exists(filePath))
-            {
-                return NotFound($"Trying to find file at location: {filePath}");
-            }
-
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, fileType);
+            ext = "jpeg";
         }
 
-        [HttpPost]
-        [Authorize(Roles = EformRole.Admin)]
-        [Route("api/images/login-page-images")]
-        public async Task<IActionResult> PostLoginPageImages(IFormFile file)
+        string fileType = $"image/{ext}";
+        var core = await _coreHelper.GetCore();
+
+        if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
         {
-            var iUploadedCnt = 0;
+            var ss = await core.GetFileFromS3Storage($"{fileName}");
 
-            var saveFolder = PathHelper.GetEformLoginPageSettingsImagesPath();
-            if (string.IsNullOrEmpty(saveFolder))
-            {
-                return BadRequest(_localizationService.GetString("FolderError"));
-            }
-            Directory.CreateDirectory(saveFolder);
+            Response.ContentLength = ss.ContentLength;
 
-            if (file.Length > 0)
+            return File(ss.ResponseStream, ss.Headers.ContentType);
+        }
+
+        if (!System.IO.File.Exists(filePath))
+        {
+            return NotFound($"Trying to find file at location: {filePath}");
+        }
+
+        var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+        return File(fileStream, fileType);
+    }
+
+    [HttpPost]
+    [Authorize(Roles = EformRole.Admin)]
+    [Route("api/images/login-page-images")]
+    public async Task<IActionResult> PostLoginPageImages(IFormFile file)
+    {
+        var iUploadedCnt = 0;
+
+        var saveFolder = PathHelper.GetEformLoginPageSettingsImagesPath();
+        if (string.IsNullOrEmpty(saveFolder))
+        {
+            return BadRequest(_localizationService.GetString("FolderError"));
+        }
+        Directory.CreateDirectory(saveFolder);
+
+        if (file.Length > 0)
+        {
+            var filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
+            await using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                var filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
-                await using (var stream = new FileStream(filePath, FileMode.Create))
+                await file.CopyToAsync(stream);
+                var core = await _coreHelper.GetCore();
+                if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                 {
-                    await file.CopyToAsync(stream);
-                    var core = await _coreHelper.GetCore();
-                    if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-                    {
-                        await core.PutFileToStorageSystem(filePath, file.FileName);
-                    }
+                    await core.PutFileToStorageSystem(filePath, file.FileName);
                 }
-                iUploadedCnt++;
             }
-
-            if (iUploadedCnt > 0)
-            {
-                return Ok();
-            }
-            return BadRequest(_localizationService.GetString("InvalidRequest"));
+            iUploadedCnt++;
         }
 
-        [HttpPost]
-        [Authorize(Roles = EformRole.Admin)]
-        [Route("api/images/eform-images")]
-        public async Task<IActionResult> PostEformImages(IFormFile file)
+        if (iUploadedCnt > 0)
         {
-            var iUploadedCnt = 0;
-            var saveFolder = PathHelper.GetEformSettingsImagesPath();
-            if (string.IsNullOrEmpty(saveFolder))
-            {
-                return BadRequest(_localizationService.GetString("FolderError"));
-            }
-            Directory.CreateDirectory(saveFolder);
-
-            if (file.Length > 0)
-            {
-                var filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
-                await using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                    var core = await _coreHelper.GetCore();
-                    if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-                    {
-                        await core.PutFileToStorageSystem(filePath, file.FileName);
-                    }
-                }
-                iUploadedCnt++;
-            }
-
-            if (iUploadedCnt > 0)
-            {
-                return Ok();
-            }
-            return BadRequest(_localizationService.GetString("InvalidRequest"));
+            return Ok();
         }
+        return BadRequest(_localizationService.GetString("InvalidRequest"));
+    }
+
+    [HttpPost]
+    [Authorize(Roles = EformRole.Admin)]
+    [Route("api/images/eform-images")]
+    public async Task<IActionResult> PostEformImages(IFormFile file)
+    {
+        var iUploadedCnt = 0;
+        var saveFolder = PathHelper.GetEformSettingsImagesPath();
+        if (string.IsNullOrEmpty(saveFolder))
+        {
+            return BadRequest(_localizationService.GetString("FolderError"));
+        }
+        Directory.CreateDirectory(saveFolder);
+
+        if (file.Length > 0)
+        {
+            var filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
+            await using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+                var core = await _coreHelper.GetCore();
+                if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+                {
+                    await core.PutFileToStorageSystem(filePath, file.FileName);
+                }
+            }
+            iUploadedCnt++;
+        }
+
+        if (iUploadedCnt > 0)
+        {
+            return Ok();
+        }
+        return BadRequest(_localizationService.GetString("InvalidRequest"));
     }
 }

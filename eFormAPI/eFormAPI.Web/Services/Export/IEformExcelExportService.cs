@@ -22,15 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.Export
-{
-    using System.IO;
-    using System.Threading.Tasks;
-    using Infrastructure.Models;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+namespace eFormAPI.Web.Services.Export;
 
-    public interface IEformExcelExportService
-    {
-        Task<OperationDataResult<Stream>> EformExport(EformDownloadExcelModel excelModel);
-    }
+using System.IO;
+using System.Threading.Tasks;
+using Infrastructure.Models;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
+public interface IEformExcelExportService
+{
+    Task<OperationDataResult<Stream>> EformExport(EformDownloadExcelModel excelModel);
 }

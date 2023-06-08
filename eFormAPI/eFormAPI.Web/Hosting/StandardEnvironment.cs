@@ -21,13 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Hosting
+namespace eFormAPI.Web.Hosting;
+
+public static class StandardEnvironment
 {
-    public static class StandardEnvironment
-    {
-        public const string Development = "Development";
-        public const string Test = "Testing";
-        public const string Staging = "Staging";
-        public const string Production = "Production";
-    }
+    public const string Development = "Development";
+    public const string Test = "Testing";
+    public const string Staging = "Staging";
+    public const string Production = "Production";
 }

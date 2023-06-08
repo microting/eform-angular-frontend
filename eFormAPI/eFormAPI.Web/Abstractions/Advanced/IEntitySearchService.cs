@@ -22,33 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Abstractions.Advanced
+namespace eFormAPI.Web.Abstractions.Advanced;
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Infrastructure.Models;
+using Infrastructure.Models.SearchableList;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public interface IEntitySearchService
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Infrastructure.Models;
-    using Infrastructure.Models.SearchableList;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    Task<OperationDataResult<Paged<EntityGroup>>> Index(
+        AdvEntitySearchableGroupListRequestModel requestModel);
 
-    public interface IEntitySearchService
-    {
-        Task<OperationDataResult<Paged<EntityGroup>>> Index(
-            AdvEntitySearchableGroupListRequestModel requestModel);
+    Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid,
+        string searchString);
 
-        Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid,
-            string searchString);
+    Task<OperationResult> Create(AdvEntitySearchableGroupEditModel editModel);
 
-        Task<OperationResult> Create(AdvEntitySearchableGroupEditModel editModel);
+    Task<OperationResult> Update(AdvEntitySearchableGroupEditModel editModel);
 
-        Task<OperationResult> Update(AdvEntitySearchableGroupEditModel editModel);
+    Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid);
 
-        Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid);
+    Task<OperationResult> Delete(string entityGroupUid);
 
-        Task<OperationResult> Delete(string entityGroupUid);
+    Task<OperationResult> SendSearchableGroup(string entityGroupUid);
 
-        Task<OperationResult> SendSearchableGroup(string entityGroupUid);
-
-        Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary(string searchString);
-    }
+    Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary(string searchString);
 }

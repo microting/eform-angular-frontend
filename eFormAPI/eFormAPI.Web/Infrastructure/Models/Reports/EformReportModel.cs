@@ -22,16 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Reports
+namespace eFormAPI.Web.Infrastructure.Models.Reports;
+
+public class EformReportModel
 {
-    public class EformReportModel
-    {
-        public int Id { get; set; }
-        public int TemplateId { get; set; }
-        public string Description { get; set; }
-        public string HeaderImage { get; set; }
-        public string HeaderVisibility { get; set; }
-        public bool IsDateVisible { get; set; }
-        public bool IsWorkerNameVisible { get; set; }
-    }
+    public int Id { get; set; }
+    public int TemplateId { get; set; }
+    public string Description { get; set; }
+    public string HeaderImage { get; set; }
+    public string HeaderVisibility { get; set; }
+    public bool IsDateVisible { get; set; }
+    public bool IsWorkerNameVisible { get; set; }
 }

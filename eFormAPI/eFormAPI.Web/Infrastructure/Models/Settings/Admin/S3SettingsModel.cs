@@ -21,14 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
+namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+
+public class S3SettingsModel
 {
-    public class S3SettingsModel
-    {
-        public bool S3Enabled { get; set; }
-        public string S3AccessKeyId  { get; set; }
-        public string S3SecrectAccessKey { get; set; }
-        public string S3Endpoint { get; set; }
-        public string S3BucketName { get; set; }
-    }
+    public bool S3Enabled { get; set; }
+    public string S3AccessKeyId  { get; set; }
+    public string S3SecrectAccessKey { get; set; }
+    public string S3Endpoint { get; set; }
+    public string S3BucketName { get; set; }
 }

@@ -24,23 +24,22 @@ SOFTWARE.
 
 using System;
 
-namespace eFormAPI.Web.Infrastructure.Models.Mailing
+namespace eFormAPI.Web.Infrastructure.Models.Mailing;
+
+using System.Collections.Generic;
+
+public class CasePostsListModel
 {
-    using System.Collections.Generic;
+    public string EFormName { get; set; }
+    public DateTime CaseDoneAt { get; set; }
+    public int CaseId { get; set; }
+    public string WorkerName { get; set; }
+    public int Total { get; set; }
+    public bool PdfReportAvailable { get; set; }
 
-    public class CasePostsListModel
-    {
-        public string EFormName { get; set; }
-        public DateTime CaseDoneAt { get; set; }
-        public int CaseId { get; set; }
-        public string WorkerName { get; set; }
-        public int Total { get; set; }
-        public bool PdfReportAvailable { get; set; }
+    public List<KeyValueStringModel> AdditionalFields { get; set; }
+        = new List<KeyValueStringModel>();
 
-        public List<KeyValueStringModel> AdditionalFields { get; set; }
-            = new List<KeyValueStringModel>();
-
-        public List<CasePostModel> CasePostsList { get; set; }
-            = new List<CasePostModel>();
-    }
+    public List<CasePostModel> CasePostsList { get; set; }
+        = new List<CasePostModel>();
 }

@@ -18,33 +18,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
+namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor;
+
+using System.Collections.Generic;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public class EformVisualEditorModel
 {
-    using System.Collections.Generic;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    public int? Id { get; set; }
 
-    public class EformVisualEditorModel
-    {
-        public int? Id { get; set; }
-
-        /// <summary>
-        /// Translates for eform label and description with languageId
-        /// </summary>
-        public List<CommonTranslationsModel> Translations { get; set; }
-            = new();
+    /// <summary>
+    /// Translates for eform label and description with languageId
+    /// </summary>
+    public List<CommonTranslationsModel> Translations { get; set; }
+        = new();
        
-        public List<int> TagIds { get; set; } = new();
+    public List<int> TagIds { get; set; } = new();
 
-        public int? Position { get; set; }
+    public int? Position { get; set; }
 
-        public List<EformVisualEditorModel> CheckLists { get; set; } = new();
+    public List<EformVisualEditorModel> CheckLists { get; set; } = new();
 
-        public List<VisualEditorFieldModel> Fields { get; set; } = new();
+    public List<VisualEditorFieldModel> Fields { get; set; } = new();
 
-        public int? TempId { get; set; }
+    public int? TempId { get; set; }
 
-        public int? ParentChecklistId { get; set; }
+    public int? ParentChecklistId { get; set; }
 
-        public bool QuickSync { get; set; }
-	}
+    public bool QuickSync { get; set; }
 }

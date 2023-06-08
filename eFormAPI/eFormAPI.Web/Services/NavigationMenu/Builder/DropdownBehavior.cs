@@ -22,52 +22,51 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.NavigationMenu.Builder
-{
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+namespace eFormAPI.Web.Services.NavigationMenu.Builder;
 
-    public class DropdownBehavior : AbstractBehavior
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+
+public class DropdownBehavior : AbstractBehavior
+{
+    public DropdownBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null) 
+        : base(dbContext, menuItemModel, parentId)
     {
-        public DropdownBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null) 
-            : base(dbContext, menuItemModel, parentId)
+    }
+
+    public override bool IsExecute()
+        => MenuItemModel.Type == MenuItemTypeEnum.Dropdown;
+
+    public override void Setup(MenuItem menuItem)
+    {
+        menuItem.Name = "Dropdown";
+        menuItem.MenuTemplateId = null; // because menuitem is dropdown
+        menuItem.ParentId = null; // null is always
+
+        _dbContext.MenuItems.Add(menuItem);
+        _dbContext.SaveChanges();
+
+        //Set translation for menu item
+        SetTranslations(menuItem.Id);
+
+        foreach (var securityGroupId in MenuItemModel.SecurityGroupsIds)
         {
+            var menuItemSecurityGroup = new MenuItemSecurityGroup()
+            {
+                SecurityGroupId = securityGroupId,
+                MenuItemId = menuItem.Id
+            };
+
+            _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
+            _dbContext.SaveChanges();
         }
 
-        public override bool IsExecute()
-          => MenuItemModel.Type == MenuItemTypeEnum.Dropdown;
-
-        public override void Setup(MenuItem menuItem)
+        for (int i = 0; i < MenuItemModel.Children.Count; i++)
         {
-            menuItem.Name = "Dropdown";
-            menuItem.MenuTemplateId = null; // because menuitem is dropdown
-            menuItem.ParentId = null; // null is always
+            var menuItemBuilder = new MenuItemBuilder(_dbContext, MenuItemModel.Children[i], i, menuItem.Id);
 
-            _dbContext.MenuItems.Add(menuItem);
-            _dbContext.SaveChanges();
-
-            //Set translation for menu item
-            SetTranslations(menuItem.Id);
-
-            foreach (var securityGroupId in MenuItemModel.SecurityGroupsIds)
-            {
-                var menuItemSecurityGroup = new MenuItemSecurityGroup()
-                {
-                    SecurityGroupId = securityGroupId,
-                    MenuItemId = menuItem.Id
-                };
-
-                _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
-                _dbContext.SaveChanges();
-            }
-
-            for (int i = 0; i < MenuItemModel.Children.Count; i++)
-            {
-                var menuItemBuilder = new MenuItemBuilder(_dbContext, MenuItemModel.Children[i], i, menuItem.Id);
-
-                menuItemBuilder.Build();
-            }
+            menuItemBuilder.Build();
         }
     }
 }

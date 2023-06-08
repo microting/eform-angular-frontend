@@ -21,15 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Folders
+namespace eFormAPI.Web.Infrastructure.Models.Folders;
+
+using System.Collections.Generic;
+
+public class FolderCreateModel
 {
-    using System.Collections.Generic;
+    public int? ParentId { get; set; }
 
-    public class FolderCreateModel
-    {
-        public int? ParentId { get; set; }
-
-        public List<FolderTranslationModel> Translations { get; set; }
-            = new List<FolderTranslationModel>();
-    }
+    public List<FolderTranslationModel> Translations { get; set; }
+        = new List<FolderTranslationModel>();
 }

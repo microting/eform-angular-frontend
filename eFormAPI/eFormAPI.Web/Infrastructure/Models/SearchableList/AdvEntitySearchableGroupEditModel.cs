@@ -24,13 +24,12 @@ SOFTWARE.
 using System.Collections.Generic;
 using Microting.eForm.Infrastructure.Models;
 
-namespace eFormAPI.Web.Infrastructure.Models.SearchableList
+namespace eFormAPI.Web.Infrastructure.Models.SearchableList;
+
+public class AdvEntitySearchableGroupEditModel
 {
-    public class AdvEntitySearchableGroupEditModel
-    {
-        public string Name { get; set; }
-        public string GroupUid { get; set; }
-        public string Description { get; set; }
-        public List<EntityItem> EntityItemModels { get; set; }
-    }
+    public string Name { get; set; }
+    public string GroupUid { get; set; }
+    public string Description { get; set; }
+    public List<EntityItem> EntityItemModels { get; set; }
 }

@@ -22,84 +22,83 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Controllers.Security
+namespace eFormAPI.Web.Controllers.Security;
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions.Security;
+using Infrastructure.Models.Permissions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+
+[Authorize]
+public class SecurityGroupController : Controller
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using eFormAPI.Web.Abstractions.Security;
-    using Infrastructure.Models.Permissions;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
+    private readonly ISecurityGroupService _securityGroupService;
 
-    [Authorize]
-    public class SecurityGroupController : Controller
+    public SecurityGroupController(ISecurityGroupService securityGroupService)
     {
-        private readonly ISecurityGroupService _securityGroupService;
+        _securityGroupService = securityGroupService;
+    }
 
-        public SecurityGroupController(ISecurityGroupService securityGroupService)
-        {
-            _securityGroupService = securityGroupService;
-        }
+    [HttpPost]
+    [Route("api/security/groups/index")]
+    [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
+    public async Task<OperationDataResult<Paged<SecurityGroupModel>>> GetEntityGroups([FromBody] SecurityGroupRequestModel requestModel)
+    {
+        return await _securityGroupService.GetSecurityGroups(requestModel);
+    }
 
-        [HttpPost]
-        [Route("api/security/groups/index")]
-        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
-        public async Task<OperationDataResult<Paged<SecurityGroupModel>>> GetEntityGroups([FromBody] SecurityGroupRequestModel requestModel)
-        {
-            return await _securityGroupService.GetSecurityGroups(requestModel);
-        }
-
-        [HttpGet]
-        [Route("api/security/groups/dictionary")]
-        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
-        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetSecurityGroupsDictionary()
-        {
-            return await _securityGroupService.GetSecurityGroupsDictionary();
-        }
+    [HttpGet]
+    [Route("api/security/groups/dictionary")]
+    [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
+    public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetSecurityGroupsDictionary()
+    {
+        return await _securityGroupService.GetSecurityGroupsDictionary();
+    }
 
 
-        [HttpGet]
-        [Route("api/security/groups/{id}")]
-        [Authorize(Roles = EformRole.Admin)]
-        public async Task<OperationDataResult<SecurityGroupModel>> GetEntityGroup(int id)
-        {
-            return await _securityGroupService.GetSecurityGroup(id);
-        }
+    [HttpGet]
+    [Route("api/security/groups/{id}")]
+    [Authorize(Roles = EformRole.Admin)]
+    public async Task<OperationDataResult<SecurityGroupModel>> GetEntityGroup(int id)
+    {
+        return await _securityGroupService.GetSecurityGroup(id);
+    }
 
-        [HttpPost]
-        [Route("api/security/groups")]
-        [Authorize(Roles = EformRole.Admin)]
-        public async Task<OperationResult> CreateSecurityGroup([FromBody] SecurityGroupCreateModel model)
-        {
-            return await _securityGroupService.CreateSecurityGroup(model);
-        }
+    [HttpPost]
+    [Route("api/security/groups")]
+    [Authorize(Roles = EformRole.Admin)]
+    public async Task<OperationResult> CreateSecurityGroup([FromBody] SecurityGroupCreateModel model)
+    {
+        return await _securityGroupService.CreateSecurityGroup(model);
+    }
 
-        [HttpPut]
-        [Route("api/security/groups")]
-        [Authorize(Roles = EformRole.Admin)]
-        public async Task<OperationResult> UpdateSecurityGroup([FromBody] SecurityGroupUpdateModel model)
-        {
-            return await _securityGroupService.UpdateSecurityGroup(model);
-        }
+    [HttpPut]
+    [Route("api/security/groups")]
+    [Authorize(Roles = EformRole.Admin)]
+    public async Task<OperationResult> UpdateSecurityGroup([FromBody] SecurityGroupUpdateModel model)
+    {
+        return await _securityGroupService.UpdateSecurityGroup(model);
+    }
 
-        [HttpPut]
-        [Route("api/security/groups/settings")]
-        [Authorize(Roles = EformRole.Admin)]
-        public async Task<OperationResult> UpdateSecurityGroupSettings([FromBody] SecurityGroupSettingsUpdateModel requestModel)
-        {
-            return await _securityGroupService.UpdateSecurityGroupSettings(requestModel);
-        }
+    [HttpPut]
+    [Route("api/security/groups/settings")]
+    [Authorize(Roles = EformRole.Admin)]
+    public async Task<OperationResult> UpdateSecurityGroupSettings([FromBody] SecurityGroupSettingsUpdateModel requestModel)
+    {
+        return await _securityGroupService.UpdateSecurityGroupSettings(requestModel);
+    }
 
-        [HttpDelete]
-        [Route("api/security/groups/{id}")]
-        [Authorize(Roles = EformRole.Admin)]
-        public async Task<OperationResult> DeleteSecurityGroup(int id)
-        {
-            return await _securityGroupService.DeleteSecurityGroup(id);
-        }
+    [HttpDelete]
+    [Route("api/security/groups/{id}")]
+    [Authorize(Roles = EformRole.Admin)]
+    public async Task<OperationResult> DeleteSecurityGroup(int id)
+    {
+        return await _securityGroupService.DeleteSecurityGroup(id);
     }
 }

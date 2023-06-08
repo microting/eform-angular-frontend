@@ -18,45 +18,44 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Helpers
-{
-    using System.Collections;
-    using System.Linq;
+namespace eFormAPI.Web.Infrastructure.Helpers;
 
-    public static class ReflectionSetProperty
+using System.Collections;
+using System.Linq;
+
+public static class ReflectionSetProperty
+{
+    /// <summary>
+    /// Set property by path.
+    /// </summary>
+    /// <param name="target">object for set</param>
+    /// <param name="property">path to property. must be separated by dots. for example:
+    /// target = {x:{list:[1,2,3]}}; path = 'x.list.1'; setTo = 2; returns {x:{list:[2,2,3]}}</param>
+    /// <param name="setTo">the value to set for path</param>
+    public static void SetProperty(object target, string property, object setTo)
     {
-        /// <summary>
-        /// Set property by path.
-        /// </summary>
-        /// <param name="target">object for set</param>
-        /// <param name="property">path to property. must be separated by dots. for example:
-        /// target = {x:{list:[1,2,3]}}; path = 'x.list.1'; setTo = 2; returns {x:{list:[2,2,3]}}</param>
-        /// <param name="setTo">the value to set for path</param>
-        public static void SetProperty(object target, string property, object setTo)
+        var parts = property.Split('.');
+        // if target object is List and target object no end target - 
+        // we need cast to IList and get value by index
+        if (target.GetType().Namespace == "System.Collections.Generic" && parts.Length != 1)
         {
-            var parts = property.Split('.');
-            // if target object is List and target object no end target - 
-            // we need cast to IList and get value by index
-            if (target.GetType().Namespace == "System.Collections.Generic" && parts.Length != 1)
+            var targetList = (IList)target;
+            var value = targetList[int.Parse(parts.First())];
+            SetProperty(value, string.Join(".", parts.Skip(1)), setTo);
+        }
+        else
+        {
+            var prop = target.GetType().GetProperty(parts[0]);
+            if (parts.Length == 1)
             {
-                var targetList = (IList)target;
-                var value = targetList[int.Parse(parts.First())];
-                SetProperty(value, string.Join(".", parts.Skip(1)), setTo);
+                // last property
+                prop.SetValue(target, setTo, null);
             }
             else
             {
-                var prop = target.GetType().GetProperty(parts[0]);
-                if (parts.Length == 1)
-                {
-                    // last property
-                    prop.SetValue(target, setTo, null);
-                }
-                else
-                {
-                    // Not at the end, go recursive
-                    var value = prop.GetValue(target);
-                    SetProperty(value, string.Join(".", parts.Skip(1)), setTo);
-                }
+                // Not at the end, go recursive
+                var value = prop.GetValue(target);
+                SetProperty(value, string.Join(".", parts.Skip(1)), setTo);
             }
         }
     }

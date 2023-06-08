@@ -28,54 +28,53 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 
-namespace eFormAPI.Web.Services
+namespace eFormAPI.Web.Services;
+
+public class EmailSender : IEmailSender
 {
-    public class EmailSender : IEmailSender
+    private readonly IOptions<EmailSettings> _options;
+
+    public EmailSender(IOptions<EmailSettings> options)
     {
-        private readonly IOptions<EmailSettings> _options;
+        _options = options;
+    }
 
-        public EmailSender(IOptions<EmailSettings> options)
+    public Task SendEmailAsync(string email, string subject, string htmlMessage)
+    {
+        var port = _options.Value.SmtpPort;
+        var userName = _options.Value.Login;
+        var password =  _options.Value.Password;
+        var host = _options.Value.SmtpHost;
+
+        if (string.IsNullOrEmpty(host) || port <= 0)
         {
-            _options = options;
-        }
-
-        public Task SendEmailAsync(string email, string subject, string htmlMessage)
-        {
-            var port = _options.Value.SmtpPort;
-            var userName = _options.Value.Login;
-            var password =  _options.Value.Password;
-            var host = _options.Value.SmtpHost;
-
-            if (string.IsNullOrEmpty(host) || port <= 0)
-            {
-                return Task.CompletedTask;
-            }
-
-            var smtp = new SmtpClient
-            {
-                Host = host,
-                Port = port,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(userName, password)
-            };
-            if (!userName.Contains(@"@"))
-            {
-                if (htmlMessage.Contains("microting.com"))
-                {
-                    userName = "no-reply@microting.com";
-                }
-            }
-            
-            using (var mailMessage = new MailMessage(userName, email))
-            {
-                mailMessage.Subject = subject;
-                mailMessage.Body = htmlMessage;
-                mailMessage.IsBodyHtml = true;
-                smtp.Send(mailMessage);
-            }
             return Task.CompletedTask;
         }
+
+        var smtp = new SmtpClient
+        {
+            Host = host,
+            Port = port,
+            EnableSsl = true,
+            DeliveryMethod = SmtpDeliveryMethod.Network,
+            UseDefaultCredentials = false,
+            Credentials = new NetworkCredential(userName, password)
+        };
+        if (!userName.Contains(@"@"))
+        {
+            if (htmlMessage.Contains("microting.com"))
+            {
+                userName = "no-reply@microting.com";
+            }
+        }
+            
+        using (var mailMessage = new MailMessage(userName, email))
+        {
+            mailMessage.Subject = subject;
+            mailMessage.Body = htmlMessage;
+            mailMessage.IsBodyHtml = true;
+            smtp.Send(mailMessage);
+        }
+        return Task.CompletedTask;
     }
 }

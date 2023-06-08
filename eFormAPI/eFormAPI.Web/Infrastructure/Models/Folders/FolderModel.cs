@@ -18,17 +18,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Folders
+namespace eFormAPI.Web.Infrastructure.Models.Folders;
+
+using System.Collections.Generic;
+
+public class FolderModel
 {
-    using System.Collections.Generic;
+    public int Id { get; set; }
 
-    public class FolderModel
-    {
-        public int Id { get; set; }
+    public int? ParentId { get; set; }
 
-        public int? ParentId { get; set; }
-
-        public List<FolderTranslationModel> Translations { get; set; }
-            = new List<FolderTranslationModel>();
-    }
+    public List<FolderTranslationModel> Translations { get; set; }
+        = new List<FolderTranslationModel>();
 }

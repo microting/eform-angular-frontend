@@ -23,13 +23,12 @@ SOFTWARE.
 */
 using eFormAPI.Web.Hosting.Enums;
 
-namespace eFormAPI.Web.Infrastructure.Models.Plugins
+namespace eFormAPI.Web.Infrastructure.Models.Plugins;
+
+public class InstalledPluginUpdateModel
 {
-    public class InstalledPluginUpdateModel
-    {
-        public int Id { get; set; }
-        public string PluginId { get; set; }
-        public PluginStatus Status { get; set; }
-        public string ConnectionString { get; set; }
-    }
+    public int Id { get; set; }
+    public string PluginId { get; set; }
+    public PluginStatus Status { get; set; }
+    public string ConnectionString { get; set; }
 }

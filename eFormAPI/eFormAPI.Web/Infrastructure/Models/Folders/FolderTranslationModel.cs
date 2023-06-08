@@ -18,14 +18,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Folders
+namespace eFormAPI.Web.Infrastructure.Models.Folders;
+
+public class FolderTranslationModel
 {
-    public class FolderTranslationModel
-    {
-        public int LanguageId { get; set; }
+    public int LanguageId { get; set; }
 
-        public string Name { get; set; }
+    public string Name { get; set; }
 
-        public string Description { get; set; }
-    }
+    public string Description { get; set; }
 }

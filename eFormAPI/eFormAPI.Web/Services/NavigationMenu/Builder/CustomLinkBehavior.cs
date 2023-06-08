@@ -22,45 +22,44 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.NavigationMenu.Builder
+namespace eFormAPI.Web.Services.NavigationMenu.Builder;
+
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+
+public class CustomLinkBehavior : AbstractBehavior
 {
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+    public CustomLinkBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null) 
+        : base(dbContext, menuItemModel, parentId)
+    { 
+    }
 
-    public class CustomLinkBehavior : AbstractBehavior
+    public override bool IsExecute()
+        => MenuItemModel.Type == MenuItemTypeEnum.CustomLink;
+
+    public override void Setup(MenuItem menuItem)
     {
-        public CustomLinkBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null) 
-            : base(dbContext, menuItemModel, parentId)
-        { 
-        }
+        menuItem.Name = MenuItemModel.Name;
+        menuItem.MenuTemplateId = null;
+        menuItem.ParentId = _parentId;
 
-        public override bool IsExecute()
-          => MenuItemModel.Type == MenuItemTypeEnum.CustomLink;
+        _dbContext.MenuItems.Add(menuItem);
+        _dbContext.SaveChanges();
 
-        public override void Setup(MenuItem menuItem)
+        //Set translation for menu item
+        SetTranslations(menuItem.Id);
+
+        foreach (var securityGroupId in MenuItemModel.SecurityGroupsIds)
         {
-            menuItem.Name = MenuItemModel.Name;
-            menuItem.MenuTemplateId = null;
-            menuItem.ParentId = _parentId;
-
-            _dbContext.MenuItems.Add(menuItem);
-            _dbContext.SaveChanges();
-
-            //Set translation for menu item
-            SetTranslations(menuItem.Id);
-
-            foreach (var securityGroupId in MenuItemModel.SecurityGroupsIds)
+            var menuItemSecurityGroup = new MenuItemSecurityGroup()
             {
-                var menuItemSecurityGroup = new MenuItemSecurityGroup()
-                {
-                    SecurityGroupId = securityGroupId,
-                    MenuItemId = menuItem.Id
-                };
+                SecurityGroupId = securityGroupId,
+                MenuItemId = menuItem.Id
+            };
 
-                _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
-                _dbContext.SaveChanges();
-            }
+            _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
+            _dbContext.SaveChanges();
         }
     }
 }

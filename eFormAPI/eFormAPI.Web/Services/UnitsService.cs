@@ -34,26 +34,26 @@ using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace eFormAPI.Web.Services
+namespace eFormAPI.Web.Services;
+
+public class UnitsService : IUnitsService
 {
-    public class UnitsService : IUnitsService
+    private readonly IEFormCoreService _coreHelper;
+    private readonly ILocalizationService _localizationService;
+
+    public UnitsService(ILocalizationService localizationService, IEFormCoreService coreHelper)
     {
-        private readonly IEFormCoreService _coreHelper;
-        private readonly ILocalizationService _localizationService;
+        _localizationService = localizationService;
+        _coreHelper = coreHelper;
+    }
 
-        public UnitsService(ILocalizationService localizationService, IEFormCoreService coreHelper)
-        {
-            _localizationService = localizationService;
-            _coreHelper = coreHelper;
-        }
-
-        public async Task<OperationDataResult<List<UnitModel>>> Index()
-        {
-            var core = await _coreHelper.GetCore();
-            await using var dbContext = core.DbContextHelper.GetDbContext();
-            var units = await dbContext.Units.AsNoTracking()
-                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                .Select(t => new UnitModel()
+    public async Task<OperationDataResult<List<UnitModel>>> Index()
+    {
+        var core = await _coreHelper.GetCore();
+        await using var dbContext = core.DbContextHelper.GetDbContext();
+        var units = await dbContext.Units.AsNoTracking()
+            .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+            .Select(t => new UnitModel()
             {
                 Id = t.Id,
                 CreatedAt = t.CreatedAt,
@@ -81,62 +81,61 @@ namespace eFormAPI.Web.Services
                 IsLocked = t.IsLocked
             }).ToListAsync().ConfigureAwait(false);
 
-            return new OperationDataResult<List<UnitModel>>(true, units);
-        }
+        return new OperationDataResult<List<UnitModel>>(true, units);
+    }
 
-        public async Task<OperationResult> Create(UnitModel model)
+    public async Task<OperationResult> Create(UnitModel model)
+    {
+        try
         {
-            try
-            {
-                var core = await _coreHelper.GetCore();
+            var core = await _coreHelper.GetCore();
 
-                if (await core.Advanced_UnitCreate(model.SiteId).ConfigureAwait(false))
-                {
-                    return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));
-                }
-
-                return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
-            }
-            catch (Exception)
+            if (await core.Advanced_UnitCreate(model.SiteId).ConfigureAwait(false))
             {
-                return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
+                return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));
             }
+
+            return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
         }
-
-        public async Task<OperationResult> Update(UnitModel model)
+        catch (Exception)
         {
-            try
-            {
-                var core = await _coreHelper.GetCore();
-
-                if (await core.Advanced_UnitMove(model.Id, model.SiteId).ConfigureAwait(false))
-                {
-                    return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));
-                }
-
-                return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
-
-            }
-            catch (Exception)
-            {
-                return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
-            }
+            return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
         }
+    }
 
-        public async Task<OperationDataResult<UnitDto>> RequestOtp(int id)
+    public async Task<OperationResult> Update(UnitModel model)
+    {
+        try
         {
-            try
+            var core = await _coreHelper.GetCore();
+
+            if (await core.Advanced_UnitMove(model.Id, model.SiteId).ConfigureAwait(false))
             {
-                var core = await _coreHelper.GetCore();
-                var unitDto = await core.Advanced_UnitRequestOtp(id);
-                return new OperationDataResult<UnitDto>(true, _localizationService.GetString("NewOTPCreatedSuccessfully"),
-                    unitDto);
+                return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));
             }
-            catch (Exception)
-            {
-                return new OperationDataResult<UnitDto>(false,
-                    _localizationService.GetStringWithFormat("UnitParamOTPCouldNotCompleted", id));
-            }
+
+            return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
+
+        }
+        catch (Exception)
+        {
+            return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
+        }
+    }
+
+    public async Task<OperationDataResult<UnitDto>> RequestOtp(int id)
+    {
+        try
+        {
+            var core = await _coreHelper.GetCore();
+            var unitDto = await core.Advanced_UnitRequestOtp(id);
+            return new OperationDataResult<UnitDto>(true, _localizationService.GetString("NewOTPCreatedSuccessfully"),
+                unitDto);
+        }
+        catch (Exception)
+        {
+            return new OperationDataResult<UnitDto>(false,
+                _localizationService.GetStringWithFormat("UnitParamOTPCouldNotCompleted", id));
         }
     }
 }

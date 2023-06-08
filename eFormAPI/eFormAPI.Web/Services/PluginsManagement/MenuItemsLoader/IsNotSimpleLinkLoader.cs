@@ -22,86 +22,85 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
+namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
+
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+using System.Collections.Generic;
+using System.Linq;
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+
+public class IsNotSimpleLinkLoader : AbstractLoader
 {
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+    private readonly BaseDbContext _dbContext;
 
-    public class IsNotSimpleLinkLoader : AbstractLoader
+    public IsNotSimpleLinkLoader(BaseDbContext dbContext) : base(dbContext)
     {
-        private readonly BaseDbContext _dbContext;
+        _dbContext = dbContext;
+    }
 
-        public IsNotSimpleLinkLoader(BaseDbContext dbContext) : base(dbContext)
+    public override bool IsExecute(PluginMenuItemModel menuItem)
+        => menuItem.Type != MenuItemTypeEnum.Link;
+
+    public override void Load(PluginMenuItemModel menuItem, string pluginId, int? parentId)
+    {
+        int currentPosition;
+
+        if (menuItem.Type == MenuItemTypeEnum.Dropdown)
         {
-            _dbContext = dbContext;
+            currentPosition = _dbContext.MenuItems
+                .Where(x => x.ParentId == null)
+                .Max(x => x.Position) + menuItem.Position + 1;
         }
-
-        public override bool IsExecute(PluginMenuItemModel menuItem)
-           => menuItem.Type != MenuItemTypeEnum.Link;
-
-        public override void Load(PluginMenuItemModel menuItem, string pluginId, int? parentId)
+        else
         {
-            int currentPosition;
-
-            if (menuItem.Type == MenuItemTypeEnum.Dropdown)
-            {
-                currentPosition = _dbContext.MenuItems
+            currentPosition = parentId != null
+                ? menuItem.Position
+                : _dbContext.MenuItems
                     .Where(x => x.ParentId == null)
                     .Max(x => x.Position) + menuItem.Position + 1;
-            }
-            else
-            {
-                currentPosition = parentId != null
-                    ? menuItem.Position
-                    : _dbContext.MenuItems
-                        .Where(x => x.ParentId == null)
-                        .Max(x => x.Position) + menuItem.Position + 1;
-            }
+        }
 
-            var newMenuItem = new MenuItem()
-            {
-                E2EId = menuItem.E2EId,
-                Name = menuItem.Type == MenuItemTypeEnum.Dropdown ? "Dropdown" : menuItem.Name,
-                Link = menuItem.Link,
-                Type = menuItem.Type,
-                Position = currentPosition,
-                MenuTemplateId = null,
-                ParentId = parentId
-            };
+        var newMenuItem = new MenuItem()
+        {
+            E2EId = menuItem.E2EId,
+            Name = menuItem.Type == MenuItemTypeEnum.Dropdown ? "Dropdown" : menuItem.Name,
+            Link = menuItem.Link,
+            Type = menuItem.Type,
+            Position = currentPosition,
+            MenuTemplateId = null,
+            ParentId = parentId
+        };
 
-            _dbContext.MenuItems.Add(newMenuItem);
+        _dbContext.MenuItems.Add(newMenuItem);
+        _dbContext.SaveChanges();
+
+        foreach (var translation in menuItem.Translations
+                     .Select(menuItemTranslation => new MenuItemTranslation
+                     {
+                         Language = menuItemTranslation.Language,
+                         LocaleName = menuItemTranslation.LocaleName,
+                         Name = menuItemTranslation.Name,
+                         MenuItemId = newMenuItem.Id
+                     }))
+        {
+            _dbContext.MenuItemTranslations.Add(translation);
             _dbContext.SaveChanges();
+        }
 
-            foreach (var translation in menuItem.Translations
-                .Select(menuItemTranslation => new MenuItemTranslation
-                {
-                    Language = menuItemTranslation.Language,
-                    LocaleName = menuItemTranslation.LocaleName,
-                    Name = menuItemTranslation.Name,
-                    MenuItemId = newMenuItem.Id
-                }))
+        if (menuItem.ChildItems.Any())
+        {
+            foreach (var menuItemChild in menuItem.ChildItems)
             {
-                _dbContext.MenuItemTranslations.Add(translation);
-                _dbContext.SaveChanges();
-            }
-
-            if (menuItem.ChildItems.Any())
-            {
-                foreach (var menuItemChild in menuItem.ChildItems)
+                var loaders = new List<AbstractLoader>()
                 {
-                    var loaders = new List<AbstractLoader>()
-                    {
-                        new SimpleLinkLoader(_dbContext),
-                        new IsNotSimpleLinkLoader(_dbContext)
-                    };
+                    new SimpleLinkLoader(_dbContext),
+                    new IsNotSimpleLinkLoader(_dbContext)
+                };
 
-                    foreach (var loader in loaders.Where(loader => loader.IsExecute(menuItemChild)))
-                    {
-                        loader.Load(menuItemChild, pluginId, newMenuItem.Id);
-                    }
+                foreach (var loader in loaders.Where(loader => loader.IsExecute(menuItemChild)))
+                {
+                    loader.Load(menuItemChild, pluginId, newMenuItem.Id);
                 }
             }
         }

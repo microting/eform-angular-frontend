@@ -21,66 +21,65 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Controllers.Mailing
+namespace eFormAPI.Web.Controllers.Mailing;
+
+using System.Threading.Tasks;
+using Infrastructure.Models.Mailing;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using Services.Mailing.EmailRecipients;
+
+[Authorize]
+public class EmailRecipientsController : Controller
 {
-    using System.Threading.Tasks;
-    using Infrastructure.Models.Mailing;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-    using Services.Mailing.EmailRecipients;
+    private readonly IEmailRecipientsService _emailRecipientsService;
 
-    [Authorize]
-    public class EmailRecipientsController : Controller
+    public EmailRecipientsController(IEmailRecipientsService emailRecipientsService)
     {
-        private readonly IEmailRecipientsService _emailRecipientsService;
+        _emailRecipientsService = emailRecipientsService;
+    }
 
-        public EmailRecipientsController(IEmailRecipientsService emailRecipientsService)
-        {
-            _emailRecipientsService = emailRecipientsService;
-        }
+    [HttpPost]
+    [Route("api/email-recipients/index")]
+    public async Task<OperationDataResult<Paged<EmailRecipientModel>>> GetEmailRecipients([FromBody]EmailRecipientsRequestModel requestModel)
+    {
+        return await _emailRecipientsService.GetEmailRecipients(requestModel);
+    }
 
-        [HttpPost]
-        [Route("api/email-recipients/index")]
-        public async Task<OperationDataResult<Paged<EmailRecipientModel>>> GetEmailRecipients([FromBody]EmailRecipientsRequestModel requestModel)
-        {
-            return await _emailRecipientsService.GetEmailRecipients(requestModel);
-        }
+    [HttpPost]
+    [Route("api/email-recipients")]
+    public async Task<OperationResult> CreateEmailRecipients([FromBody] EmailRecipientsCreateModel model)
+    {
+        return await _emailRecipientsService.CreateEmailRecipient(model);
+    }
 
-        [HttpPost]
-        [Route("api/email-recipients")]
-        public async Task<OperationResult> CreateEmailRecipients([FromBody] EmailRecipientsCreateModel model)
-        {
-            return await _emailRecipientsService.CreateEmailRecipient(model);
-        }
+    [HttpPut]
+    [Route("api/email-recipients")]
+    public async Task<OperationResult> UpdateEmailTag([FromBody] EmailRecipientUpdateModel model)
+    {
+        return await _emailRecipientsService.UpdateEmailRecipient(model);
+    }
 
-        [HttpPut]
-        [Route("api/email-recipients")]
-        public async Task<OperationResult> UpdateEmailTag([FromBody] EmailRecipientUpdateModel model)
-        {
-            return await _emailRecipientsService.UpdateEmailRecipient(model);
-        }
+    [HttpDelete]
+    [Route("api/email-recipients/{id}")]
+    public async Task<OperationResult> DeleteEmailRecipient(int id)
+    {
+        return await _emailRecipientsService.DeleteEmailRecipient(id);
+    }
 
-        [HttpDelete]
-        [Route("api/email-recipients/{id}")]
-        public async Task<OperationResult> DeleteEmailRecipient(int id)
-        {
-            return await _emailRecipientsService.DeleteEmailRecipient(id);
-        }
+    [HttpGet]
+    [Route("api/email-recipients/common")]
+    public async Task<OperationDataResult<EmailRecipientTagCommonModel[]>> GetEmailRecipientsAndTags()
+    {
+        return await _emailRecipientsService.GetEmailRecipientsAndTags();
+    }
 
-        [HttpGet]
-        [Route("api/email-recipients/common")]
-        public async Task<OperationDataResult<EmailRecipientTagCommonModel[]>> GetEmailRecipientsAndTags()
-        {
-            return await _emailRecipientsService.GetEmailRecipientsAndTags();
-        }
-
-        [HttpGet]
-        [Route("api/email-recipients/simple")]
-        public async Task<OperationDataResult<CommonDictionaryModel[]>> GetSimpleEmailRecipients()
-        {
-            return await _emailRecipientsService.GetSimpleEmailRecipients();
-        }
+    [HttpGet]
+    [Route("api/email-recipients/simple")]
+    public async Task<OperationDataResult<CommonDictionaryModel[]>> GetSimpleEmailRecipients()
+    {
+        return await _emailRecipientsService.GetSimpleEmailRecipients();
     }
 }

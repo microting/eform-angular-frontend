@@ -22,48 +22,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.Security
+namespace eFormAPI.Web.Services.Security;
+
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.eFormApi.BasePn.Abstractions;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions.Security;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+
+
+public class EformPermissionsService : IEformPermissionsService
 {
-    using System.Linq;
-    using Microsoft.EntityFrameworkCore;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using Microting.eFormApi.BasePn.Abstractions;
-    using System.Threading.Tasks;
-    using eFormAPI.Web.Abstractions.Security;
-    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+    private readonly BaseDbContext _dbContext;
+    private readonly IUserService _userService;
 
-
-    public class EformPermissionsService : IEformPermissionsService
+    public EformPermissionsService(BaseDbContext dbContext,
+        IUserService userService)
     {
-        private readonly BaseDbContext _dbContext;
-        private readonly IUserService _userService;
+        _dbContext = dbContext;
+        _userService = userService;
+    }
 
-        public EformPermissionsService(BaseDbContext dbContext,
-            IUserService userService)
+    public async Task<bool> CheckEform(int eformId, string claimName)
+    {
+        if (!_userService.IsInRole(EformRole.Admin))
         {
-            _dbContext = dbContext;
-            _userService = userService;
-        }
-
-        public async Task<bool> CheckEform(int eformId, string claimName)
-        {
-            if (!_userService.IsInRole(EformRole.Admin))
-            {
-                var result = await _dbContext
-                    .EformInGroups
-                    .Where(x => x.TemplateId == eformId)
-                    .Where(x => x.SecurityGroup.SecurityGroupUsers.Any(u => u.EformUserId == _userService.UserId))
-                    .Select(x => new
-                    {
-                        iss = x.EformPermissions.Any(y => y.Permission.ClaimName == claimName)
-                    })
-                    .FirstOrDefaultAsync();
-                if (result != null)
+            var result = await _dbContext
+                .EformInGroups
+                .Where(x => x.TemplateId == eformId)
+                .Where(x => x.SecurityGroup.SecurityGroupUsers.Any(u => u.EformUserId == _userService.UserId))
+                .Select(x => new
                 {
-                    return result.iss;
-                }
+                    iss = x.EformPermissions.Any(y => y.Permission.ClaimName == claimName)
+                })
+                .FirstOrDefaultAsync();
+            if (result != null)
+            {
+                return result.iss;
             }
-            return true;
         }
+        return true;
     }
 }

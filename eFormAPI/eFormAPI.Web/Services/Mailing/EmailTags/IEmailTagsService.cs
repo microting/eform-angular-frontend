@@ -21,18 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Services.Mailing.EmailTags
-{
-    using System.Threading.Tasks;
-    using Infrastructure.Models.Mailing;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+namespace eFormAPI.Web.Services.Mailing.EmailTags;
 
-    public interface IEmailTagsService
-    {
-        Task<OperationDataResult<CommonDictionaryModel[]>> GetEmailTags();
-        Task<OperationResult> UpdateEmailTag(EmailRecipientTagModel requestModel);
-        Task<OperationResult> DeleteEmailTag(int id);
-        Task<OperationResult> CreateEmailTag(EmailRecipientTagModel requestModel);
-    }
+using System.Threading.Tasks;
+using Infrastructure.Models.Mailing;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public interface IEmailTagsService
+{
+    Task<OperationDataResult<CommonDictionaryModel[]>> GetEmailTags();
+    Task<OperationResult> UpdateEmailTag(EmailRecipientTagModel requestModel);
+    Task<OperationResult> DeleteEmailTag(int id);
+    Task<OperationResult> CreateEmailTag(EmailRecipientTagModel requestModel);
 }

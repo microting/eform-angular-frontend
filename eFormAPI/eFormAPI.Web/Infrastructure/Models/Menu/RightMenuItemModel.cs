@@ -21,25 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Menu
+namespace eFormAPI.Web.Infrastructure.Models.Menu;
+
+using System.Collections.Generic;
+
+public class RightMenuItemModel
 {
-    using System.Collections.Generic;
+    public string Name { get; set; }
 
-    public class RightMenuItemModel
-    {
-        public string Name { get; set; }
+    public string LocaleName { get; set; }
 
-        public string LocaleName { get; set; }
+    public string Link { get; set; }
 
-        public string Link { get; set; }
+    public string E2EId { get; set; }
 
-        public string E2EId { get; set; }
+    public int Position { get; set; }
+    public int ParentId { get; set; }
 
-        public int Position { get; set; }
-        public int ParentId { get; set; }
+    public List<RightMenuItemModel> MenuItems { get; set; } = new List<RightMenuItemModel>();
 
-        public List<RightMenuItemModel> MenuItems { get; set; } = new List<RightMenuItemModel>();
-
-        public List<string> Guards { get; set; } = new List<string>();
-    }
+    public List<string> Guards { get; set; } = new List<string>();
 }

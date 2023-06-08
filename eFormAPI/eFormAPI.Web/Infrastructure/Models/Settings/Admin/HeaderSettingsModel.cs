@@ -21,15 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
+namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+
+public class HeaderSettingsModel
 {
-    public class HeaderSettingsModel
-    {
-        public string MainText { get; set; }
-        public bool MainTextVisible { get; set; }
-        public string SecondaryText { get; set; }
-        public bool SecondaryTextVisible { get; set; }
-        public string ImageLink { get; set; }
-        public bool ImageLinkVisible { get; set; }
-    }
+    public string MainText { get; set; }
+    public bool MainTextVisible { get; set; }
+    public string SecondaryText { get; set; }
+    public bool SecondaryTextVisible { get; set; }
+    public string ImageLink { get; set; }
+    public bool ImageLinkVisible { get; set; }
 }

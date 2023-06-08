@@ -28,48 +28,47 @@ using Castle.Core.Internal;
 using eFormAPI.Web.Abstractions;
 using Microsoft.Extensions.Localization;
 
-namespace eFormAPI.Web.Services
+namespace eFormAPI.Web.Services;
+
+public class LocalizationService : ILocalizationService
 {
-    public class LocalizationService : ILocalizationService
+    private readonly IStringLocalizer _localizer;
+
+    public LocalizationService(IStringLocalizerFactory factory)
     {
-        private readonly IStringLocalizer _localizer;
+        _localizer = factory.Create("SharedResource",
+            Assembly.GetEntryAssembly().FullName);
+    }
 
-        public LocalizationService(IStringLocalizerFactory factory)
+    public string GetString(string key)
+    {
+        if (string.IsNullOrEmpty(key))
         {
-            _localizer = factory.Create("SharedResource",
-                Assembly.GetEntryAssembly().FullName);
+            return key;
+        }
+        var str = _localizer[key];
+        return str.Value;
+    }
+
+    public string GetStringWithFormat(string format,
+        params object[] args)
+    {
+        if (string.IsNullOrEmpty(format))
+        {
+            return format;
         }
 
-        public string GetString(string key)
+        var message = _localizer[format];
+        if (message?.Value == null)
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                return key;
-            }
-            var str = _localizer[key];
-            return str.Value;
+            return null;
         }
 
-        public string GetStringWithFormat(string format,
-            params object[] args)
+        if (args != null && args.Any())
         {
-            if (string.IsNullOrEmpty(format))
-            {
-                return format;
-            }
-
-            var message = _localizer[format];
-            if (message?.Value == null)
-            {
-                return null;
-            }
-
-            if (args != null && args.Any())
-            {
-                return string.Format(message.Value, args);
-            }
-
-            return message.Value;
+            return string.Format(message.Value, args);
         }
+
+        return message.Value;
     }
 }

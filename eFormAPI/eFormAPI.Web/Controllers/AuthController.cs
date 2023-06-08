@@ -30,99 +30,98 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
-namespace eFormAPI.Web.Controllers
+namespace eFormAPI.Web.Controllers;
+
+[Authorize]
+public class AuthController : Controller
 {
-    [Authorize]
-    public class AuthController : Controller
+    private readonly IAuthService _authService;
+    private readonly ILocalizationService _localizationService;
+
+    public AuthController(
+        IAuthService authService,
+        ILocalizationService localizationService)
     {
-        private readonly IAuthService _authService;
-        private readonly ILocalizationService _localizationService;
+        _authService = authService;
+        _localizationService = localizationService;
+    }
 
-        public AuthController(
-            IAuthService authService,
-            ILocalizationService localizationService)
+    [HttpPost]
+    [AllowAnonymous]
+    [Route("api/auth/token")]
+    public async Task<OperationResult> AuthenticateUser(LoginModel model)
+    {
+        Log.LogEvent("api/auth/token called");
+        return await _authService.AuthenticateUser(model);
+    }
+
+    [HttpGet]
+    [Route("api/auth/token/refresh")]
+    public async Task<OperationResult> RefreshToken()
+    {
+        return await _authService.RefreshToken();
+    }
+
+    [HttpGet]
+    [Route("api/auth/logout")]
+    public OperationResult Logout()
+    {
+        return _authService.LogOut();
+    }
+
+    [HttpGet]
+    [Route("api/auth/claims")]
+    public OperationResult GetCurrentUserClaims()
+    {
+        return _authService.GetCurrentUserClaims();
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    [Route("api/auth/two-factor-info")]
+    public OperationDataResult<bool> TwoFactorAuthForceInfo()
+    {
+        return _authService.TwoFactorAuthForceInfo();
+    }
+
+    [HttpGet]
+    [Route("api/auth/google-auth-info")]
+    public async Task<OperationDataResult<GoogleAuthInfoModel>> GetGoogleAuthenticatorInfo()
+    {
+        return await _authService.GetGoogleAuthenticatorInfo();
+    }
+
+    [HttpPost]
+    [Route("api/auth/google-auth-info")]
+    public async Task<OperationResult> UpdateGoogleAuthenticatorInfo([FromBody] GoogleAuthInfoModel requestModel)
+    {
+        return await _authService.UpdateGoogleAuthenticatorInfo(requestModel);
+    }
+
+    [HttpDelete]
+    [Route("api/auth/google-auth-info")]
+    public async Task<OperationResult> DeleteGoogleAuthenticatorInfo()
+    {
+        return await _authService.DeleteGoogleAuthenticatorInfo();
+    }
+
+    /// <summary>
+    /// Get secret key and barcode to enable GoogleAuthenticator for account
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost]
+    [AllowAnonymous]
+    [Route("api/auth/google-auth-key")]
+    public async Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(
+        [FromBody] LoginModel loginModel)
+    {
+        // check model
+        if (!ModelState.IsValid)
         {
-            _authService = authService;
-            _localizationService = localizationService;
+            return new OperationDataResult<GoogleAuthenticatorModel>(false,
+                _localizationService.GetString("InvalidUserNameOrPassword"));
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("api/auth/token")]
-        public async Task<OperationResult> AuthenticateUser(LoginModel model)
-        {
-            Log.LogEvent("api/auth/token called");
-            return await _authService.AuthenticateUser(model);
-        }
-
-        [HttpGet]
-        [Route("api/auth/token/refresh")]
-        public async Task<OperationResult> RefreshToken()
-        {
-            return await _authService.RefreshToken();
-        }
-
-        [HttpGet]
-        [Route("api/auth/logout")]
-        public OperationResult Logout()
-        {
-            return _authService.LogOut();
-        }
-
-        [HttpGet]
-        [Route("api/auth/claims")]
-        public OperationResult GetCurrentUserClaims()
-        {
-            return _authService.GetCurrentUserClaims();
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("api/auth/two-factor-info")]
-        public OperationDataResult<bool> TwoFactorAuthForceInfo()
-        {
-            return _authService.TwoFactorAuthForceInfo();
-        }
-
-        [HttpGet]
-        [Route("api/auth/google-auth-info")]
-        public async Task<OperationDataResult<GoogleAuthInfoModel>> GetGoogleAuthenticatorInfo()
-        {
-            return await _authService.GetGoogleAuthenticatorInfo();
-        }
-
-        [HttpPost]
-        [Route("api/auth/google-auth-info")]
-        public async Task<OperationResult> UpdateGoogleAuthenticatorInfo([FromBody] GoogleAuthInfoModel requestModel)
-        {
-            return await _authService.UpdateGoogleAuthenticatorInfo(requestModel);
-        }
-
-        [HttpDelete]
-        [Route("api/auth/google-auth-info")]
-        public async Task<OperationResult> DeleteGoogleAuthenticatorInfo()
-        {
-            return await _authService.DeleteGoogleAuthenticatorInfo();
-        }
-
-        /// <summary>
-        /// Get secret key and barcode to enable GoogleAuthenticator for account
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("api/auth/google-auth-key")]
-        public async Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(
-            [FromBody] LoginModel loginModel)
-        {
-            // check model
-            if (!ModelState.IsValid)
-            {
-                return new OperationDataResult<GoogleAuthenticatorModel>(false,
-                    _localizationService.GetString("InvalidUserNameOrPassword"));
-            }
-
-            return await _authService.GetGoogleAuthenticator(loginModel);
-        }
+        return await _authService.GetGoogleAuthenticator(loginModel);
     }
 }

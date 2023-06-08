@@ -22,214 +22,227 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services
+using System.Collections.Generic;
+
+namespace eFormAPI.Web.Services;
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Consts;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microting.eForm.Infrastructure.Data.Entities;
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+
+public class UserService : IUserService
 {
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
-    using Microting.eFormApi.BasePn.Abstractions;
-    using Microting.eFormApi.BasePn.Infrastructure.Consts;
-    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-    using System;
-    using System.Linq;
-    using System.Security.Claims;
-    using System.Threading.Tasks;
-    using Microting.eForm.Infrastructure.Data.Entities;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    private readonly UserManager<EformUser> _userManager;
+    private readonly IHttpContextAccessor _httpAccessor;
+    private readonly BaseDbContext _dbContext;
+    private readonly IEFormCoreService _coreHelper;
 
-    public class UserService : IUserService
+    public UserService(BaseDbContext dbContext,
+        UserManager<EformUser> userManager,
+        IHttpContextAccessor httpAccessor,
+        IEFormCoreService coreHelper)
     {
-        private readonly UserManager<EformUser> _userManager;
-        private readonly IHttpContextAccessor _httpAccessor;
-        private readonly BaseDbContext _dbContext;
-        private readonly IEFormCoreService _coreHelper;
+        _userManager = userManager;
+        _httpAccessor = httpAccessor;
+        _dbContext = dbContext;
+        _coreHelper = coreHelper;
+    }
 
-        public UserService(BaseDbContext dbContext,
-            UserManager<EformUser> userManager,
-            IHttpContextAccessor httpAccessor,
-            IEFormCoreService coreHelper)
+    public async Task<EformUser> GetByIdAsync(int id)
+    {
+        return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<EformUser> GetByUsernameAsync(string username)
+    {
+        return await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == username);
+    }
+
+    public int UserId
+    {
+        get
         {
-            _userManager = userManager;
-            _httpAccessor = httpAccessor;
-            _dbContext = dbContext;
-            _coreHelper = coreHelper;
+            var value = _httpAccessor?.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return value == null ? 0 : int.Parse(value);
+        }
+    }
+
+    public string Role => _httpAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Role);
+
+    public bool IsInRole(string role) => _httpAccessor.HttpContext.User.IsInRole(role);
+
+    public bool IsAdmin()
+    {
+        return IsInRole(EformRole.Admin);
+    }
+
+    public async Task<EformUser> GetCurrentUserAsync()
+    {
+        return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == UserId);
+    }
+
+    public async Task<TimeZoneInfo> GetCurrentUserTimeZoneInfo()
+    {
+        if (UserId < 1)
+        {
+            throw new Exception("User not authorized!");
         }
 
-        public async Task<EformUser> GetByIdAsync(int id)
+        return await GetTimeZoneInfo(UserId);
+    }
+
+    public async Task<TimeZoneInfo> GetTimeZoneInfo(int userId)
+    {
+
+        var timeZone = await _dbContext.Users
+            .AsNoTracking()
+            .Where(x => x.Id == userId)
+            .Select(x => x.TimeZone)
+            .FirstOrDefaultAsync();
+
+        if (string.IsNullOrEmpty(timeZone))
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            timeZone = "Europe/Copenhagen";
         }
 
-        public async Task<EformUser> GetByUsernameAsync(string username)
+        TimeZoneInfo timeZoneInfo;
+        try
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == username);
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+        }
+        catch
+        {
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
         }
 
-        public int UserId
+        return timeZoneInfo;
+    }
+
+    public async Task<string> GetCurrentUserLocale()
+    {
+        if (UserId < 1)
         {
-            get
-            {
-                var value = _httpAccessor?.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                return value == null ? 0 : int.Parse(value);
-            }
+            throw new Exception("User not authorized!");
         }
 
-        public string Role => _httpAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Role);
+        return await GetUserLocale(UserId);
+    }
 
-        public bool IsInRole(string role) => _httpAccessor.HttpContext.User.IsInRole(role);
+    public async Task<string> GetUserLocale(int userId)
+    {
+        var locale = await _dbContext.Users
+            .AsNoTracking()
+            .Where(x => x.Id == userId)
+            .Select(x => x.Locale)
+            .FirstOrDefaultAsync();
 
-        public bool IsAdmin()
+        if (string.IsNullOrEmpty(locale))
         {
-            return IsInRole(EformRole.Admin);
+            locale = LocaleNames.Danish;
         }
 
-        public async Task<EformUser> GetCurrentUserAsync()
+        return locale;
+    }
+
+    public async Task<string> GetCurrentUserFormats()
+    {
+        if (UserId < 1)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == UserId);
+            throw new Exception("User not authorized!");
         }
 
-        public async Task<TimeZoneInfo> GetCurrentUserTimeZoneInfo()
-        {
-            if (UserId < 1)
-            {
-                throw new Exception("User not authorized!");
-            }
+        return await GetUserFormats(UserId);
+    }
 
-            return await GetTimeZoneInfo(UserId);
+    public async Task<string> GetUserFormats(int userId)
+    {
+        var formats = await _dbContext.Users
+            .AsNoTracking()
+            .Where(x => x.Id == userId)
+            .Select(x => x.Formats)
+            .FirstOrDefaultAsync();
+
+        if (string.IsNullOrEmpty(formats))
+        {
+            formats = "";
         }
 
-        public async Task<TimeZoneInfo> GetTimeZoneInfo(int userId)
+        return formats;
+    }
+
+    public Task AddPasswordAsync(EformUser user, string password)
+    {
+        return _userManager.AddPasswordAsync(user, password);
+    }
+
+    public async Task AddToRoleAsync(EformUser user, string role)
+    {
+        if (!await _userManager.IsInRoleAsync(user, role))
         {
+            await _userManager.AddToRoleAsync(user, role);
+        }
+    }
 
-            var timeZone = await _dbContext.Users
-                .AsNoTracking()
-                .Where(x => x.Id == userId)
-                .Select(x => x.TimeZone)
-                .FirstOrDefaultAsync();
+    public async Task<string> GetFullNameUserByUserIdAsync(int userId)
+    {
+        return await _dbContext.Users
+            .AsNoTracking()
+            .Where(x => x.Id == userId)
+            .Select(x => $"{x.FirstName} {x.LastName}")
+            .FirstOrDefaultAsync();
+    }
 
-            if (string.IsNullOrEmpty(timeZone))
-            {
-                timeZone = "Europe/Copenhagen";
-            }
-
-            TimeZoneInfo timeZoneInfo;
-            try
-            {
-                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
-            }
-            catch
-            {
-                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
-            }
-
-            return timeZoneInfo;
+    public async Task<string> GetCurrentUserFullName()
+    {
+        if (UserId < 1)
+        {
+            throw new Exception("User not authorized!");
         }
 
-        public async Task<string> GetCurrentUserLocale()
-        {
-            if (UserId < 1)
-            {
-                throw new Exception("User not authorized!");
-            }
+        return await GetFullNameUserByUserIdAsync(UserId);
+    }
 
-            return await GetUserLocale(UserId);
+    public async Task<Language> GetLanguageByUserIdAsync(int userId)
+    {
+        var core = await _coreHelper.GetCore();
+        var locale = await GetUserLocale(userId);
+        var sdkDbContext = core.DbContextHelper.GetDbContext();
+        var language = await sdkDbContext.Languages
+            .AsNoTracking()
+            .Where(x => x.LanguageCode.ToLower() == locale.ToLower())
+            .FirstAsync();
+
+        return language;
+    }
+
+    public async Task<Language> GetCurrentUserLanguage()
+    {
+        if (UserId < 1)
+        {
+            throw new Exception("User not authorized!");
         }
 
-        public async Task<string> GetUserLocale(int userId)
-        {
-            var locale = await _dbContext.Users
-                .AsNoTracking()
-                .Where(x => x.Id == userId)
-                .Select(x => x.Locale)
-                .FirstOrDefaultAsync();
+        return await GetLanguageByUserIdAsync(UserId);
+    }
 
-            if (string.IsNullOrEmpty(locale))
-            {
-                locale = LocaleNames.Danish;
-            }
+    public async Task<List<Language>> GetActiveLanguages()
+    {
+        var core = await _coreHelper.GetCore();
+        var sdkDbContext = core.DbContextHelper.GetDbContext();
+        var languages = await sdkDbContext.Languages
+            .AsNoTracking()
+            .Where(x => x.IsActive == true)
+            .ToListAsync();
 
-            return locale;
-        }
-
-        public async Task<string> GetCurrentUserFormats()
-        {
-            if (UserId < 1)
-            {
-                throw new Exception("User not authorized!");
-            }
-
-            return await GetUserFormats(UserId);
-        }
-
-        public async Task<string> GetUserFormats(int userId)
-        {
-            var formats = await _dbContext.Users
-                .AsNoTracking()
-                .Where(x => x.Id == userId)
-                .Select(x => x.Formats)
-                .FirstOrDefaultAsync();
-
-            if (string.IsNullOrEmpty(formats))
-            {
-                formats = "";
-            }
-
-            return formats;
-        }
-
-        public Task AddPasswordAsync(EformUser user, string password)
-        {
-            return _userManager.AddPasswordAsync(user, password);
-        }
-
-        public async Task AddToRoleAsync(EformUser user, string role)
-        {
-            if (!await _userManager.IsInRoleAsync(user, role))
-            {
-                await _userManager.AddToRoleAsync(user, role);
-            }
-        }
-
-        public async Task<string> GetFullNameUserByUserIdAsync(int userId)
-        {
-            return await _dbContext.Users
-                .AsNoTracking()
-                .Where(x => x.Id == userId)
-                .Select(x => $"{x.FirstName} {x.LastName}")
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task<string> GetCurrentUserFullName()
-        {
-            if (UserId < 1)
-            {
-                throw new Exception("User not authorized!");
-            }
-
-            return await GetFullNameUserByUserIdAsync(UserId);
-        }
-
-        public async Task<Language> GetLanguageByUserIdAsync(int userId)
-        {
-            var core = await _coreHelper.GetCore();
-            var locale = await GetUserLocale(userId);
-            var sdkDbContext = core.DbContextHelper.GetDbContext();
-            var language = await sdkDbContext.Languages
-                .AsNoTracking()
-                .Where(x => x.LanguageCode.ToLower() == locale.ToLower())
-                .FirstAsync();
-
-            return language;
-        }
-
-        public async Task<Language> GetCurrentUserLanguage()
-        {
-            if (UserId < 1)
-            {
-                throw new Exception("User not authorized!");
-            }
-
-            return await GetLanguageByUserIdAsync(UserId);
-        }
+        return languages;
     }
 }

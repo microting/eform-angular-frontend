@@ -24,12 +24,11 @@ SOFTWARE.
 using System.Collections.Generic;
 using Microting.eForm.Dto;
 
-namespace eFormAPI.Web.Infrastructure.Models.Cases.Response
+namespace eFormAPI.Web.Infrastructure.Models.Cases.Response;
+
+public class CaseListModel
 {
-    public class CaseListModel
-    {
-        public int NumOfElements { get; set; }
-        public int PageNum { get; set; }
-        public List<Case> Cases { get; set; }
-    }
+    public int NumOfElements { get; set; }
+    public int PageNum { get; set; }
+    public List<Case> Cases { get; set; }
 }

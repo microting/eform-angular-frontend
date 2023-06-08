@@ -9,6 +9,7 @@ import {
 } from 'src/app/common/models';
 import { SettingsModel } from 'src/app/common/models/settings';
 import { ApiBaseService } from 'src/app/common/services';
+import {LanguagesModel} from "src/app/common/models/common/languages.model";
 
 const SettingsMethods = {
   UpdateConnectionString: '/api/settings/connection-string',
@@ -24,6 +25,8 @@ const SettingsMethods = {
   GetAnonymousImage: 'api/images/login-page-images',
   GetAuthorizedImage: 'api/images/eform-images',
   UserbackWidget: 'api/settings/userback-widget',
+  GetLanguages: 'api/settings/languages',
+  UpdateLanguages: 'api/settings/languages',
 };
 
 @Injectable()
@@ -92,5 +95,13 @@ export class AppSettingsService {
 
   updateUserbackWidgetIsEnabled(isEnableWidget: boolean): Observable<OperationResult> {
     return this.apiBaseService.put(SettingsMethods.UserbackWidget, isEnableWidget);
+  }
+
+  getLanguages(): Observable<OperationDataResult<LanguagesModel>> {
+    return this.apiBaseService.getNoToast<LanguagesModel>(SettingsMethods.GetLanguages);
+  }
+
+  updateLanguages(model: LanguagesModel): Observable<OperationResult> {
+    return this.apiBaseService.put(SettingsMethods.UpdateLanguages, model);
   }
 }

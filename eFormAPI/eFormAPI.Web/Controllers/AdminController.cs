@@ -22,83 +22,82 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Controllers
+namespace eFormAPI.Web.Controllers;
+
+using System.Threading.Tasks;
+using Abstractions;
+using Infrastructure.Models.Users;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+
+[Authorize]
+[Route("api/admin")]
+public class AdminController : Controller
 {
-    using System.Threading.Tasks;
-    using Abstractions;
-    using Infrastructure.Models.Users;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
+    private readonly IAdminService _adminService;
 
-    [Authorize]
-    [Route("api/admin")]
-    public class AdminController : Controller
+    public AdminController(IAdminService adminService)
     {
-        private readonly IAdminService _adminService;
+        _adminService = adminService;
+    }
 
-        public AdminController(IAdminService adminService)
-        {
-            _adminService = adminService;
-        }
+    [HttpPost]
+    [Route("get-users")]
+    [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
+    public async Task<OperationDataResult<Paged<UserInfoViewModel>>> Index([FromBody] UserInfoRequest paginationModel)
+    {
+        return await _adminService.Index(paginationModel);
+    }
 
-        [HttpPost]
-        [Route("get-users")]
-        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
-        public async Task<OperationDataResult<Paged<UserInfoViewModel>>> Index([FromBody] UserInfoRequest paginationModel)
-        {
-            return await _adminService.Index(paginationModel);
-        }
+    [HttpPost]
+    [Route("create-user")]
+    [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Create)]
+    public async Task<OperationResult> Create([FromBody] UserRegisterModel userRegisterModel)
+    {
+        return await _adminService.Create(userRegisterModel);
+    }
 
-        [HttpPost]
-        [Route("create-user")]
-        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Create)]
-        public async Task<OperationResult> Create([FromBody] UserRegisterModel userRegisterModel)
-        {
-            return await _adminService.Create(userRegisterModel);
-        }
-
-        [HttpGet]
-        [Route("user/{userId}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
-        public Task<OperationDataResult<UserRegisterModel>> Read(int userId)
-        {
-            return _adminService.Read(userId);
-        }
+    [HttpGet]
+    [Route("user/{userId}")]
+    [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
+    public Task<OperationDataResult<UserRegisterModel>> Read(int userId)
+    {
+        return _adminService.Read(userId);
+    }
         
-        [HttpPost]
-        [Route("update-user")]
-        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Update)]
-        public async Task<OperationResult> Update([FromBody] UserRegisterModel userRegisterModel)
-        {
-            return await _adminService.Update(userRegisterModel);
-        }
+    [HttpPost]
+    [Route("update-user")]
+    [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Update)]
+    public async Task<OperationResult> Update([FromBody] UserRegisterModel userRegisterModel)
+    {
+        return await _adminService.Update(userRegisterModel);
+    }
         
-        [HttpGet]
-        [Route("delete-user/{userId}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Delete)]
-        public Task<OperationResult> Delete(int userId)
-        {
-            return _adminService.Delete(userId);
-        }
+    [HttpGet]
+    [Route("delete-user/{userId}")]
+    [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Delete)]
+    public Task<OperationResult> Delete(int userId)
+    {
+        return _adminService.Delete(userId);
+    }
 
-        [HttpGet]
-        [Route("enable-two-factor")]
-        [Authorize(Roles = EformRole.Admin)]
-        public Task<OperationResult> EnableTwoFactorAuthForce()
-        {
-            return _adminService.EnableTwoFactorAuthForce();
-        }
+    [HttpGet]
+    [Route("enable-two-factor")]
+    [Authorize(Roles = EformRole.Admin)]
+    public Task<OperationResult> EnableTwoFactorAuthForce()
+    {
+        return _adminService.EnableTwoFactorAuthForce();
+    }
 
-        [HttpGet]
-        [Route("disable-two-factor")]
-        [Authorize(Roles = EformRole.Admin)]
-        public Task<OperationResult> DisableTwoFactorAuthForce()
-        {
-            return _adminService.DisableTwoFactorAuthForce();
-        }
+    [HttpGet]
+    [Route("disable-two-factor")]
+    [Authorize(Roles = EformRole.Admin)]
+    public Task<OperationResult> DisableTwoFactorAuthForce()
+    {
+        return _adminService.DisableTwoFactorAuthForce();
     }
 }

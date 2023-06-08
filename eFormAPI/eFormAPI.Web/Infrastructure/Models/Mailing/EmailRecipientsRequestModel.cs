@@ -22,18 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Mailing
-{
-    using System.Collections.Generic;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+namespace eFormAPI.Web.Infrastructure.Models.Mailing;
 
-    public class EmailRecipientsRequestModel : PaginationModel
-    {
-        public string Sort { get; set; }
+using System.Collections.Generic;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public class EmailRecipientsRequestModel : PaginationModel
+{
+    public string Sort { get; set; }
         
-        public bool IsSortDsc { get; set; }
+    public bool IsSortDsc { get; set; }
         
-        public List<int> TagIds { get; set; }
-            = new List<int>();
-    }
+    public List<int> TagIds { get; set; }
+        = new List<int>();
 }

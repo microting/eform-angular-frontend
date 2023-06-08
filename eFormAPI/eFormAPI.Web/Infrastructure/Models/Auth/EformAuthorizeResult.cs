@@ -21,13 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Auth
-{
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
+namespace eFormAPI.Web.Infrastructure.Models.Auth;
 
-    public class EformAuthorizeResult : AuthorizeResult
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    }
+using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
+
+public class EformAuthorizeResult : AuthorizeResult
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 }

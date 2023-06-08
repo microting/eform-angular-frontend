@@ -21,13 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.SearchableList
+namespace eFormAPI.Web.Infrastructure.Models.SearchableList;
+
+public class AdvEntitySearchableItemModel
 {
-    public class AdvEntitySearchableItemModel
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string EntityItemUId { get; set; }
-        public string WorkflowState { get; set; }
-    }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string EntityItemUId { get; set; }
+    public string WorkflowState { get; set; }
 }

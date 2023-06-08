@@ -21,66 +21,65 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Services.Cache.AuthCache
+namespace eFormAPI.Web.Services.Cache.AuthCache;
+
+using System;
+using Infrastructure.Models.Auth;
+using Microsoft.Extensions.Caching.Memory;
+
+public sealed class AuthCacheService : IAuthCacheService
 {
-    using System;
-    using Infrastructure.Models.Auth;
-    using Microsoft.Extensions.Caching.Memory;
+    /// <summary>
+    /// The cache expiration
+    /// </summary>
+    private const int CacheExpiration = 24; // Cache Sliding Expiration in hours
 
-    public sealed class AuthCacheService : IAuthCacheService
+    /// <summary>
+    /// The key string
+    /// </summary>
+    private const string KeyString = "Auth";
+
+    /// <summary>
+    /// The cache
+    /// </summary>
+    private readonly IMemoryCache _cache;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AuthCacheService" /> class.
+    /// </summary>
+    /// <param name="memoryCache">The memory cache.</param>
+    public AuthCacheService(IMemoryCache memoryCache)
     {
-        /// <summary>
-        /// The cache expiration
-        /// </summary>
-        private const int CacheExpiration = 24; // Cache Sliding Expiration in hours
+        _cache = memoryCache;
+    }
 
-        /// <summary>
-        /// The key string
-        /// </summary>
-        private const string KeyString = "Auth";
+    public AuthItem TryGetValue(int userId)
+    {
+        var cacheKey = $"{KeyString}:{userId}";
 
-        /// <summary>
-        /// The cache
-        /// </summary>
-        private readonly IMemoryCache _cache;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AuthCacheService" /> class.
-        /// </summary>
-        /// <param name="memoryCache">The memory cache.</param>
-        public AuthCacheService(IMemoryCache memoryCache)
+        // Look for cache key.
+        if (!_cache.TryGetValue(cacheKey, out AuthItem cacheEntry))
         {
-            _cache = memoryCache;
+            return null;
         }
 
-        public AuthItem TryGetValue(int userId)
-        {
-            var cacheKey = $"{KeyString}:{userId}";
+        return cacheEntry;
+    }
 
-            // Look for cache key.
-            if (!_cache.TryGetValue(cacheKey, out AuthItem cacheEntry))
-            {
-                return null;
-            }
+    public void Set(AuthItem authItem, int userId)
+    {
+        var cacheKey = $"{KeyString}:{userId}";
 
-            return cacheEntry;
-        }
+        // Set cache options.
+        var cacheEntryOptions = new MemoryCacheEntryOptions()
+            .SetSlidingExpiration(TimeSpan.FromHours(CacheExpiration));
 
-        public void Set(AuthItem authItem, int userId)
-        {
-            var cacheKey = $"{KeyString}:{userId}";
+        // Save data in cache.
+        _cache.Set(cacheKey, authItem, cacheEntryOptions);
+    }
 
-            // Set cache options.
-            var cacheEntryOptions = new MemoryCacheEntryOptions()
-                .SetSlidingExpiration(TimeSpan.FromHours(CacheExpiration));
-
-            // Save data in cache.
-            _cache.Set(cacheKey, authItem, cacheEntryOptions);
-        }
-
-        public void Remove(int userId)
-        {
-            _cache.Remove($"{KeyString}:{userId}");
-        }
+    public void Remove(int userId)
+    {
+        _cache.Remove($"{KeyString}:{userId}");
     }
 }

@@ -22,317 +22,316 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services
+namespace eFormAPI.Web.Services;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Abstractions;
+using Abstractions.Advanced;
+using Infrastructure.Models.SearchableList;
+using Microsoft.EntityFrameworkCore;
+using Microting.eForm.Infrastructure.Constants;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using Microting.eForm.Infrastructure.Models;
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using EntityGroup = Infrastructure.Models.EntityGroup;
+
+public class EntitySearchService : IEntitySearchService
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Abstractions;
-    using Abstractions.Advanced;
-    using Infrastructure.Models.SearchableList;
-    using Microsoft.EntityFrameworkCore;
-    using Microting.eForm.Infrastructure.Constants;
-    using Microting.eFormApi.BasePn.Abstractions;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-    using Microting.eForm.Infrastructure.Models;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-    using EntityGroup = Infrastructure.Models.EntityGroup;
+    private readonly BaseDbContext _dbContext;
+    private readonly IEFormCoreService _coreHelper;
+    private readonly ILocalizationService _localizationService;
 
-    public class EntitySearchService : IEntitySearchService
+    public EntitySearchService(BaseDbContext dbContext,
+        IEFormCoreService coreHelper,
+        ILocalizationService localizationService)
     {
-        private readonly BaseDbContext _dbContext;
-        private readonly IEFormCoreService _coreHelper;
-        private readonly ILocalizationService _localizationService;
+        _dbContext = dbContext;
+        _coreHelper = coreHelper;
+        _localizationService = localizationService;
+    }
 
-        public EntitySearchService(BaseDbContext dbContext,
-            IEFormCoreService coreHelper,
-            ILocalizationService localizationService)
+
+    public async Task<OperationDataResult<Paged<EntityGroup>>> Index(
+        AdvEntitySearchableGroupListRequestModel requestModel)
+    {
+        try
         {
-            _dbContext = dbContext;
-            _coreHelper = coreHelper;
-            _localizationService = localizationService;
-        }
+            var core = await _coreHelper.GetCore();
+            var sdkDbContext = core.DbContextHelper.GetDbContext();
 
+            var entityGroupList = new Paged<EntityGroup>();
 
-        public async Task<OperationDataResult<Paged<EntityGroup>>> Index(
-            AdvEntitySearchableGroupListRequestModel requestModel)
-        {
-            try
+            // get query
+            var entitySelectableGroupQuery = sdkDbContext.EntityGroups
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Where(x => x.Type == Constants.FieldTypes.EntitySearch)
+                .Where(x => x.MicrotingUid != null)
+                .AsNoTracking()
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(requestModel.NameFilter))
             {
-                var core = await _coreHelper.GetCore();
-                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                entitySelectableGroupQuery = entitySelectableGroupQuery
+                    .Where(x => x.Name.Contains(requestModel.NameFilter));
+            }
 
-                var entityGroupList = new Paged<EntityGroup>();
+            // sort
+            entitySelectableGroupQuery = QueryHelper.AddSortToQuery(entitySelectableGroupQuery, requestModel.Sort, requestModel.IsSortDsc);
 
-                // get query
-                var entitySelectableGroupQuery = sdkDbContext.EntityGroups
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Where(x => x.Type == Constants.FieldTypes.EntitySearch)
-                    .Where(x => x.MicrotingUid != null)
-                    .AsNoTracking()
-                    .AsQueryable();
+            // count elements
+            entityGroupList.Total = await entitySelectableGroupQuery.Select(x => x.Id).CountAsync();
 
-                if (!string.IsNullOrEmpty(requestModel.NameFilter))
+            // pagination
+            entitySelectableGroupQuery =
+                entitySelectableGroupQuery
+                    .Skip(requestModel.Offset)
+                    .Take(requestModel.PageSize);
+
+            // select and take from db
+            var entityGroups = await entitySelectableGroupQuery
+                .Select(x => new EntityGroup
                 {
-                    entitySelectableGroupQuery = entitySelectableGroupQuery
-                        .Where(x => x.Name.Contains(requestModel.NameFilter));
-                }
+                    Description = x.Description,
+                    WorkflowState = x.WorkflowState,
+                    CreatedAt = x.CreatedAt,
+                    Id = x.Id,
+                    MicrotingUUID = x.MicrotingUid,
+                    Name = x.Name,
+                    Type = x.Type,
+                    UpdatedAt = x.UpdatedAt,
+                    EntityGroupItemLst = new List<EntityItem>(),
+                    IsLocked = x.Locked,
+                    IsEditable = x.Editable
+                }).ToListAsync();
 
-                // sort
-                entitySelectableGroupQuery = QueryHelper.AddSortToQuery(entitySelectableGroupQuery, requestModel.Sort, requestModel.IsSortDsc);
+            entityGroupList.Entities = entityGroups;
 
-                // count elements
-                entityGroupList.Total = await entitySelectableGroupQuery.Select(x => x.Id).CountAsync();
-
-                // pagination
-                entitySelectableGroupQuery =
-                    entitySelectableGroupQuery
-                        .Skip(requestModel.Offset)
-                        .Take(requestModel.PageSize);
-
-                // select and take from db
-                var entityGroups = await entitySelectableGroupQuery
-                    .Select(x => new EntityGroup
-                    {
-                        Description = x.Description,
-                        WorkflowState = x.WorkflowState,
-                        CreatedAt = x.CreatedAt,
-                        Id = x.Id,
-                        MicrotingUUID = x.MicrotingUid,
-                        Name = x.Name,
-                        Type = x.Type,
-                        UpdatedAt = x.UpdatedAt,
-                        EntityGroupItemLst = new List<EntityItem>(),
-                        IsLocked = x.Locked,
-                        IsEditable = x.Editable
-                    }).ToListAsync();
-
-                entityGroupList.Entities = entityGroups;
-
-                if (entityGroupList.Entities != null)
+            if (entityGroupList.Entities != null)
+            {
+                List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                foreach (EntityGroup entityGroup in entityGroupList.Entities)
                 {
-                    List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
-                    foreach (EntityGroup entityGroup in entityGroupList.Entities)
+                    foreach (string plugin in plugins)
                     {
-                        foreach (string plugin in plugins)
+                        if (entityGroup.Name.Contains(plugin))
                         {
-                            if (entityGroup.Name.Contains(plugin))
-                            {
-                                entityGroup.IsLocked = true;
-                            }
+                            entityGroup.IsLocked = true;
                         }
                     }
                 }
+            }
 
-                return new OperationDataResult<Paged<EntityGroup>>(true, entityGroupList);
-            }
-            catch (Exception ex)
-            {
-                return new OperationDataResult<Paged<EntityGroup>>(false,
-                    _localizationService.GetString("SearchableListLoadingFailed") + ex.Message);
-            }
+            return new OperationDataResult<Paged<EntityGroup>>(true, entityGroupList);
         }
-
-        public async Task<OperationResult> Create(AdvEntitySearchableGroupEditModel editModel)
+        catch (Exception ex)
         {
-            try
-            {
-                var core = await _coreHelper.GetCore();
-                var groupCreate = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name, editModel.Description, false, true);
-                if (editModel.EntityItemModels.Any())
-                {
-                    var entityGroup = await core.EntityGroupRead(groupCreate.MicrotingUid);
-                    var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                    foreach (var entityItem in editModel.EntityItemModels)
-                    {
-                        await core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description,
-                            nextItemUid.ToString());
-
-                        //entityGroup.EntityGroupItemLst.Add(new EntityItem(entityItem.Name,
-                        //    entityItem.Description, nextItemUid.ToString(), Constants.WorkflowStates.Created));
-                        nextItemUid++;
-                    }
-
-                    //core.EntityGroupUpdate(entityGroup);
-                }
-
-                return new OperationResult(true,
-                    _localizationService.GetStringWithFormat("ParamCreatedSuccessfully", groupCreate.MicrotingUid));
-            }
-            catch (Exception)
-            {
-                return new OperationResult(false, _localizationService.GetString("SearchableListCreationFailed"));
-            }
+            return new OperationDataResult<Paged<EntityGroup>>(false,
+                _localizationService.GetString("SearchableListLoadingFailed") + ex.Message);
         }
+    }
 
-        public async Task<OperationResult> Update(AdvEntitySearchableGroupEditModel editModel)
+    public async Task<OperationResult> Create(AdvEntitySearchableGroupEditModel editModel)
+    {
+        try
         {
-            try
+            var core = await _coreHelper.GetCore();
+            var groupCreate = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name, editModel.Description, false, true);
+            if (editModel.EntityItemModels.Any())
             {
-                var core = await _coreHelper.GetCore();
-                var entityGroup = await core.EntityGroupRead(editModel.GroupUid);
-
-                entityGroup.Description = editModel.Description;
-                entityGroup.Name = editModel.Name;
-                await core.EntityGroupUpdate(entityGroup);
-
-                var currentIds = new List<int>();
-
+                var entityGroup = await core.EntityGroupRead(groupCreate.MicrotingUid);
+                var nextItemUid = entityGroup.EntityGroupItemLst.Count;
                 foreach (var entityItem in editModel.EntityItemModels)
                 {
-                    if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
-                    {
-                        var et = await core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name,
-                            entityItem.Description, entityItem.DisplayIndex.ToString());
-                        currentIds.Add(et.Id);
-                    }
-                    else
-                    {
-                        await core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description,
-                            entityItem.DisplayIndex.ToString(), entityItem.DisplayIndex);
-                        currentIds.Add(entityItem.Id);
-                    }
+                    await core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description,
+                        nextItemUid.ToString());
+
+                    //entityGroup.EntityGroupItemLst.Add(new EntityItem(entityItem.Name,
+                    //    entityItem.Description, nextItemUid.ToString(), Constants.WorkflowStates.Created));
+                    nextItemUid++;
                 }
 
-                foreach (var entityItem in entityGroup.EntityGroupItemLst)
-                {
-                    if (!currentIds.Contains(entityItem.Id))
-                    {
-                        await core.EntityItemDelete(entityItem.Id);
-                    }
-                }
+                //core.EntityGroupUpdate(entityGroup);
+            }
 
-                return new OperationResult(true,
-                    _localizationService.GetStringWithFormat("ParamUpdatedSuccessfully", editModel.Name));
-            }
-            catch (Exception)
-            {
-                return new OperationResult(false, _localizationService.GetString("SearchableListCreationFailed"));
-            }
+            return new OperationResult(true,
+                _localizationService.GetStringWithFormat("ParamCreatedSuccessfully", groupCreate.MicrotingUid));
         }
-
-        public async Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
+        catch (Exception)
         {
-            try
-            {
-                var core = await _coreHelper.GetCore();
-
-                EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid);
-
-                var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
-
-                foreach (var _ in plugins.Where(plugin => entityGroup.Name.Contains(plugin)))
-                {
-                    entityGroup.IsLocked = true;
-                }
-
-                return new OperationDataResult<EntityGroup>(true, entityGroup);
-            }
-            catch (Exception)
-            {
-                return new OperationDataResult<EntityGroup>(false,
-                    _localizationService.GetString("ErrorWhenObtainingSearchableList"));
-            }
+            return new OperationResult(false, _localizationService.GetString("SearchableListCreationFailed"));
         }
+    }
 
-        public async Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid,
-            string searchString)
+    public async Task<OperationResult> Update(AdvEntitySearchableGroupEditModel editModel)
+    {
+        try
         {
-            try
+            var core = await _coreHelper.GetCore();
+            var entityGroup = await core.EntityGroupRead(editModel.GroupUid);
+
+            entityGroup.Description = editModel.Description;
+            entityGroup.Name = editModel.Name;
+            await core.EntityGroupUpdate(entityGroup);
+
+            var currentIds = new List<int>();
+
+            foreach (var entityItem in editModel.EntityItemModels)
             {
-                var core = await _coreHelper.GetCore();
-
-                var entityGroup = await core.EntityGroupRead(entityGroupUid, "Name", searchString);
-
-                var mappedEntityGroupDict = new List<CommonDictionaryTextModel>();
-
-                foreach (var entityGroupItem in entityGroup.EntityGroupItemLst)
+                if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
                 {
-                    mappedEntityGroupDict.Add(new CommonDictionaryTextModel()
-                    {
-                        Id = entityGroupItem.Id.ToString(),
-                        Text = entityGroupItem.Name
-                    });
+                    var et = await core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name,
+                        entityItem.Description, entityItem.DisplayIndex.ToString());
+                    currentIds.Add(et.Id);
                 }
-
-                return new OperationDataResult<List<CommonDictionaryTextModel>>(true, mappedEntityGroupDict);
+                else
+                {
+                    await core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description,
+                        entityItem.DisplayIndex.ToString(), entityItem.DisplayIndex);
+                    currentIds.Add(entityItem.Id);
+                }
             }
-            catch (Exception)
+
+            foreach (var entityItem in entityGroup.EntityGroupItemLst)
             {
-                return new OperationDataResult<List<CommonDictionaryTextModel>>(false,
-                    _localizationService.GetString("ErrorWhenObtainingSearchableList"));
+                if (!currentIds.Contains(entityItem.Id))
+                {
+                    await core.EntityItemDelete(entityItem.Id);
+                }
             }
-        }
 
-        public async Task<OperationResult> Delete(string entityGroupUid)
+            return new OperationResult(true,
+                _localizationService.GetStringWithFormat("ParamUpdatedSuccessfully", editModel.Name));
+        }
+        catch (Exception)
         {
-            try
-            {
-                var core = await _coreHelper.GetCore();
-
-
-                return await core.EntityGroupDelete(entityGroupUid)
-                    ? new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid))
-                    : new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
-            }
-            catch (Exception)
-            {
-                return new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
-            }
+            return new OperationResult(false, _localizationService.GetString("SearchableListCreationFailed"));
         }
+    }
+
+    public async Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
+    {
+        try
+        {
+            var core = await _coreHelper.GetCore();
+
+            EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid);
+
+            var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+
+            foreach (var _ in plugins.Where(plugin => entityGroup.Name.Contains(plugin)))
+            {
+                entityGroup.IsLocked = true;
+            }
+
+            return new OperationDataResult<EntityGroup>(true, entityGroup);
+        }
+        catch (Exception)
+        {
+            return new OperationDataResult<EntityGroup>(false,
+                _localizationService.GetString("ErrorWhenObtainingSearchableList"));
+        }
+    }
+
+    public async Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid,
+        string searchString)
+    {
+        try
+        {
+            var core = await _coreHelper.GetCore();
+
+            var entityGroup = await core.EntityGroupRead(entityGroupUid, "Name", searchString);
+
+            var mappedEntityGroupDict = new List<CommonDictionaryTextModel>();
+
+            foreach (var entityGroupItem in entityGroup.EntityGroupItemLst)
+            {
+                mappedEntityGroupDict.Add(new CommonDictionaryTextModel()
+                {
+                    Id = entityGroupItem.Id.ToString(),
+                    Text = entityGroupItem.Name
+                });
+            }
+
+            return new OperationDataResult<List<CommonDictionaryTextModel>>(true, mappedEntityGroupDict);
+        }
+        catch (Exception)
+        {
+            return new OperationDataResult<List<CommonDictionaryTextModel>>(false,
+                _localizationService.GetString("ErrorWhenObtainingSearchableList"));
+        }
+    }
+
+    public async Task<OperationResult> Delete(string entityGroupUid)
+    {
+        try
+        {
+            var core = await _coreHelper.GetCore();
+
+
+            return await core.EntityGroupDelete(entityGroupUid)
+                ? new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid))
+                : new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
+        }
+        catch (Exception)
+        {
+            return new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
+        }
+    }
 
 #pragma warning disable 1998
-        public async Task<OperationResult> SendSearchableGroup(string entityGroupUid)
+    public async Task<OperationResult> SendSearchableGroup(string entityGroupUid)
 #pragma warning restore 1998
+    {
+        try
         {
-            try
-            {
-                //var core = await _coreHelper.GetCore();
+            //var core = await _coreHelper.GetCore();
 
-                return new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid));
-            }
-            catch (Exception)
-            {
-                return new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
-            }
+            return new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid));
         }
-
-        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary(string searchString)
+        catch (Exception)
         {
-            try
+            return new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
+        }
+    }
+
+    public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary(string searchString)
+    {
+        try
+        {
+            var core = await _coreHelper.GetCore();
+            var sdkDbContext = core.DbContextHelper.GetDbContext();
+
+            var query = sdkDbContext.EntityGroups
+                .Where(x => x.Type == Constants.FieldTypes.EntitySearch)
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Where(x => x.MicrotingUid != null);
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                var core = await _coreHelper.GetCore();
-                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                query = query.Where(x => x.Name.ToUpper().Contains(searchString.ToUpper()));
+            }
 
-                var query = sdkDbContext.EntityGroups
-                    .Where(x => x.Type == Constants.FieldTypes.EntitySearch)
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Where(x => x.MicrotingUid != null);
-
-                if (!string.IsNullOrEmpty(searchString))
+            var entityGroups = await query
+                .OrderBy(x => x.Name)
+                .Select(x => new CommonDictionaryModel
                 {
-                    query = query.Where(x => x.Name.ToUpper().Contains(searchString.ToUpper()));
-                }
+                    Name = x.Name,
+                    Id = int.Parse(x.MicrotingUid)
+                })
+                .ToListAsync();
 
-                var entityGroups = await query
-                    .OrderBy(x => x.Name)
-                    .Select(x => new CommonDictionaryModel
-                    {
-                        Name = x.Name,
-                        Id = int.Parse(x.MicrotingUid)
-                    })
-                    .ToListAsync();
-
-                return new OperationDataResult<List<CommonDictionaryModel>>(true, entityGroups);
-            }
-            catch (Exception exception)
-            {
-                return new OperationDataResult<List<CommonDictionaryModel>>(false,
-                    _localizationService.GetString("ErrorWhenObtainingSearchableList") + $" {exception.Message}");
-            }
+            return new OperationDataResult<List<CommonDictionaryModel>>(true, entityGroups);
+        }
+        catch (Exception exception)
+        {
+            return new OperationDataResult<List<CommonDictionaryModel>>(false,
+                _localizationService.GetString("ErrorWhenObtainingSearchableList") + $" {exception.Message}");
         }
     }
 }

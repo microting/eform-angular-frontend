@@ -22,81 +22,80 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Hosting.Security
+namespace eFormAPI.Web.Hosting.Security;
+
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+using Services.Cache.AuthCache;
+
+public class ClaimsTransformer : IClaimsTransformation
 {
-    using System;
-    using System.Linq;
-    using System.Security.Claims;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Authentication;
-    using Microsoft.AspNetCore.Http;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
-    using Services.Cache.AuthCache;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IAuthCacheService _authCacheService;
 
-    public class ClaimsTransformer : IClaimsTransformation
+    public ClaimsTransformer(
+        IHttpContextAccessor httpContextAccessor,
+        IAuthCacheService authCacheService)
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IAuthCacheService _authCacheService;
+        _httpContextAccessor = httpContextAccessor;
+        _authCacheService = authCacheService;
+    }
 
-        public ClaimsTransformer(
-            IHttpContextAccessor httpContextAccessor,
-            IAuthCacheService authCacheService)
+    public async Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
+    {
+        // create a copy
+        var cp = principal.Clone();
+
+        // get Identity
+        var ci = (ClaimsIdentity) cp.Identity;
+
+        var list = ci.Claims.Select(x => new {key = x.Type, value = x.Value}).ToList();
+
+        var userIdClaim = list.FirstOrDefault(x => x.key == ClaimTypes.NameIdentifier);
+        var timeClaim = list.FirstOrDefault(x => x.key == AuthConsts.ClaimLastUpdateKey);
+
+
+        if (userIdClaim == null)
         {
-            _httpContextAccessor = httpContextAccessor;
-            _authCacheService = authCacheService;
+            throw new Exception("user claim not found");
         }
 
-        public async Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
+        if (timeClaim == null)
         {
-            // create a copy
-            var cp = principal.Clone();
+            throw new Exception("time claim not found");
+        }
 
-            // get Identity
-            var ci = (ClaimsIdentity) cp.Identity;
+        var userId = int.Parse(userIdClaim.value);
 
-            var list = ci.Claims.Select(x => new {key = x.Type, value = x.Value}).ToList();
+        // try to get user info from memory storage
+        var auth = _authCacheService.TryGetValue(userId);
 
-            var userIdClaim = list.FirstOrDefault(x => x.key == ClaimTypes.NameIdentifier);
-            var timeClaim = list.FirstOrDefault(x => x.key == AuthConsts.ClaimLastUpdateKey);
+        if (auth == null)
+        {
+            _httpContextAccessor.HttpContext.Response.Headers.Add(AuthConsts.UpdateHeaderName, AuthConsts.UpdateHeaderValue);
+        }
+        else
+        {
+            // check timestamp
+            var timeValue = long.Parse(timeClaim.value);
 
-
-            if (userIdClaim == null)
-            {
-                throw new Exception("user claim not found");
-            }
-
-            if (timeClaim == null)
-            {
-                throw new Exception("time claim not found");
-            }
-
-            var userId = int.Parse(userIdClaim.value);
-
-            // try to get user info from memory storage
-            var auth = _authCacheService.TryGetValue(userId);
-
-            if (auth == null)
+            if (timeValue != auth.TimeStamp)
             {
                 _httpContextAccessor.HttpContext.Response.Headers.Add(AuthConsts.UpdateHeaderName, AuthConsts.UpdateHeaderValue);
             }
-            else
+
+            // Add claims
+            foreach (var authClaim in auth.Claims)
             {
-                // check timestamp
-                var timeValue = long.Parse(timeClaim.value);
-
-                if (timeValue != auth.TimeStamp)
-                {
-                    _httpContextAccessor.HttpContext.Response.Headers.Add(AuthConsts.UpdateHeaderName, AuthConsts.UpdateHeaderValue);
-                }
-
-                // Add claims
-                foreach (var authClaim in auth.Claims)
-                {
-                    ci.AddClaim(authClaim);
-                }
+                ci.AddClaim(authClaim);
             }
-
-            return await Task.FromResult(cp);
         }
+
+        return await Task.FromResult(cp);
     }
 }

@@ -21,21 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Services.Mailing.CasePost
+namespace eFormAPI.Web.Services.Mailing.CasePost;
+
+using System.Threading.Tasks;
+using Infrastructure.Models.Mailing;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
+public interface ICasePostService
 {
-    using System.Threading.Tasks;
-    using Infrastructure.Models.Mailing;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    Task<OperationDataResult<CasePostsListModel>> GetAllPosts(
+        CasePostsRequest requestModel);
 
-    public interface ICasePostService
-    {
-        Task<OperationDataResult<CasePostsListModel>> GetAllPosts(
-            CasePostsRequest requestModel);
+    Task<OperationDataResult<CasePostViewModel>> GetPostForView(
+        int id);
 
-        Task<OperationDataResult<CasePostViewModel>> GetPostForView(
-            int id);
-
-        Task<OperationResult> CreatePost(
-            CasePostCreateModel requestModel);
-    }
+    Task<OperationResult> CreatePost(
+        CasePostCreateModel requestModel);
 }

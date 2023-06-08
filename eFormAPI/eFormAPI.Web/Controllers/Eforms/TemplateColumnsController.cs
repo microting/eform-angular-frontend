@@ -22,58 +22,57 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Controllers.Eforms
+namespace eFormAPI.Web.Controllers.Eforms;
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions.Eforms;
+using eFormAPI.Web.Abstractions.Security;
+using Infrastructure.Models.Templates;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+
+[Authorize]
+public class TemplateColumnsController : Controller
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using eFormAPI.Web.Abstractions.Eforms;
-    using eFormAPI.Web.Abstractions.Security;
-    using Infrastructure.Models.Templates;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
+    private readonly ITemplateColumnsService _templateColumnsService;
+    private readonly IEformPermissionsService _permissionsService;
 
-    [Authorize]
-    public class TemplateColumnsController : Controller
+    public TemplateColumnsController(ITemplateColumnsService templateColumnsService,
+        IEformPermissionsService permissionsService)
     {
-        private readonly ITemplateColumnsService _templateColumnsService;
-        private readonly IEformPermissionsService _permissionsService;
+        _templateColumnsService = templateColumnsService;
+        _permissionsService = permissionsService;
+    }
 
-        public TemplateColumnsController(ITemplateColumnsService templateColumnsService,
-            IEformPermissionsService permissionsService)
+    [HttpGet]
+    [Route("api/template-columns/{templateId}")]
+    public async Task<OperationDataResult<List<TemplateColumnModel>>> GetAvailableColumns(int templateId)
+    {
+        return await _templateColumnsService.GetAvailableColumns(templateId);
+    }
+
+    [HttpGet]
+    [Route("api/template-columns/current/{templateId}")]
+    public async Task<OperationDataResult<DisplayTemplateColumnsModel>> GetCurrentColumns(int templateId)
+    {
+        return await _templateColumnsService.GetCurrentColumns(templateId);
+    }
+
+    [HttpPost]
+    [Route("api/template-columns")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateColumns)]
+    public async Task<IActionResult> UpdateColumns([FromBody] UpdateTemplateColumnsModel model)
+    {
+        if (model.TemplateId != null
+            && !await _permissionsService.CheckEform((int) model.TemplateId,
+                AuthConsts.EformClaims.EformsClaims.UpdateColumns))
         {
-            _templateColumnsService = templateColumnsService;
-            _permissionsService = permissionsService;
+            return Forbid();
         }
 
-        [HttpGet]
-        [Route("api/template-columns/{templateId}")]
-        public async Task<OperationDataResult<List<TemplateColumnModel>>> GetAvailableColumns(int templateId)
-        {
-            return await _templateColumnsService.GetAvailableColumns(templateId);
-        }
-
-        [HttpGet]
-        [Route("api/template-columns/current/{templateId}")]
-        public async Task<OperationDataResult<DisplayTemplateColumnsModel>> GetCurrentColumns(int templateId)
-        {
-            return await _templateColumnsService.GetCurrentColumns(templateId);
-        }
-
-        [HttpPost]
-        [Route("api/template-columns")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateColumns)]
-        public async Task<IActionResult> UpdateColumns([FromBody] UpdateTemplateColumnsModel model)
-        {
-            if (model.TemplateId != null
-                && !await _permissionsService.CheckEform((int) model.TemplateId,
-                    AuthConsts.EformClaims.EformsClaims.UpdateColumns))
-            {
-                return Forbid();
-            }
-
-            return Ok(await _templateColumnsService.UpdateColumns(model));
-        }
+        return Ok(await _templateColumnsService.UpdateColumns(model));
     }
 }

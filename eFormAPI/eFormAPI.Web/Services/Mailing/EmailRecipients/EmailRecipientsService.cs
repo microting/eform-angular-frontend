@@ -21,360 +21,359 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Services.Mailing.EmailRecipients
+namespace eFormAPI.Web.Services.Mailing.EmailRecipients;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Abstractions;
+using Infrastructure.Models.Mailing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microting.eForm.Infrastructure.Constants;
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Mailing;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public class EmailRecipientsService : IEmailRecipientsService
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Abstractions;
-    using Infrastructure.Models.Mailing;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Logging;
-    using Microting.eForm.Infrastructure.Constants;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Mailing;
-    using Microting.eFormApi.BasePn.Abstractions;
-    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    private readonly ILogger<EmailRecipientsService> _logger;
+    private readonly IUserService _userService;
+    private readonly ILocalizationService _localizationService;
+    private readonly BaseDbContext _dbContext;
 
-    public class EmailRecipientsService : IEmailRecipientsService
+    public EmailRecipientsService(
+        ILogger<EmailRecipientsService> logger,
+        IUserService userService,
+        ILocalizationService localizationService,
+        BaseDbContext dbContext)
     {
-        private readonly ILogger<EmailRecipientsService> _logger;
-        private readonly IUserService _userService;
-        private readonly ILocalizationService _localizationService;
-        private readonly BaseDbContext _dbContext;
+        _logger = logger;
+        _userService = userService;
+        _localizationService = localizationService;
+        _dbContext = dbContext;
+    }
 
-        public EmailRecipientsService(
-            ILogger<EmailRecipientsService> logger,
-            IUserService userService,
-            ILocalizationService localizationService,
-            BaseDbContext dbContext)
+    public async Task<OperationDataResult<Paged<EmailRecipientModel>>> GetEmailRecipients(
+        EmailRecipientsRequestModel requestModel)
+    {
+        try
         {
-            _logger = logger;
-            _userService = userService;
-            _localizationService = localizationService;
-            _dbContext = dbContext;
-        }
+            var emailRecipientsModel = new Paged<EmailRecipientModel>();
+            var emailRecipientsQuery = _dbContext.EmailRecipients
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .AsQueryable();
 
-        public async Task<OperationDataResult<Paged<EmailRecipientModel>>> GetEmailRecipients(
-            EmailRecipientsRequestModel requestModel)
-        {
-            try
+            emailRecipientsQuery = QueryHelper.AddSortToQuery(emailRecipientsQuery, requestModel.Sort, requestModel.IsSortDsc);
+
+            // Tag ids
+            if (requestModel.TagIds.Any())
             {
-                var emailRecipientsModel = new Paged<EmailRecipientModel>();
-                var emailRecipientsQuery = _dbContext.EmailRecipients
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .AsQueryable();
-
-                emailRecipientsQuery = QueryHelper.AddSortToQuery(emailRecipientsQuery, requestModel.Sort, requestModel.IsSortDsc);
-
-                // Tag ids
-                if (requestModel.TagIds.Any())
-                {
-                    emailRecipientsQuery = emailRecipientsQuery
-                        .Where(x => x.TagRecipients
-                            .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
-                            .Any(y => requestModel.TagIds.Contains(y.EmailTagId)));
-                }
-
-                emailRecipientsModel.Total = await emailRecipientsQuery.Select(x => x.Id).CountAsync();
-
                 emailRecipientsQuery = emailRecipientsQuery
-                    .Skip(requestModel.Offset)
-                    .Take(requestModel.PageSize);
-
-                var emailRecipientList = await AddSelectToEmailRecipientsQuery(emailRecipientsQuery)
-                    .ToListAsync();
-
-                emailRecipientsModel.Entities = emailRecipientList;
-
-                return new OperationDataResult<Paged<EmailRecipientModel>>(
-                    true,
-                    emailRecipientsModel);
+                    .Where(x => x.TagRecipients
+                        .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Any(y => requestModel.TagIds.Contains(y.EmailTagId)));
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                _logger.LogError(e.Message);
-                return new OperationDataResult<Paged<EmailRecipientModel>>(false,
-                    _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
-            }
+
+            emailRecipientsModel.Total = await emailRecipientsQuery.Select(x => x.Id).CountAsync();
+
+            emailRecipientsQuery = emailRecipientsQuery
+                .Skip(requestModel.Offset)
+                .Take(requestModel.PageSize);
+
+            var emailRecipientList = await AddSelectToEmailRecipientsQuery(emailRecipientsQuery)
+                .ToListAsync();
+
+            emailRecipientsModel.Entities = emailRecipientList;
+
+            return new OperationDataResult<Paged<EmailRecipientModel>>(
+                true,
+                emailRecipientsModel);
         }
-
-        public async Task<OperationResult> UpdateEmailRecipient(
-            EmailRecipientUpdateModel requestModel)
+        catch (Exception e)
         {
-            //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+            Console.WriteLine(e);
+            _logger.LogError(e.Message);
+            return new OperationDataResult<Paged<EmailRecipientModel>>(false,
+                _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
+        }
+    }
+
+    public async Task<OperationResult> UpdateEmailRecipient(
+        EmailRecipientUpdateModel requestModel)
+    {
+        //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
 //                {
-                try
-                {
-                    var emailRecipient = await _dbContext.EmailRecipients
-                        .Include(x => x.TagRecipients)
-                        .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
-
-                    if (emailRecipient == null)
-                    {
-                        //transaction.Rollback();
-                        return new OperationResult(false,
-                            _localizationService.GetString("EmailRecipientNotFound"));
-                    }
-
-                    emailRecipient.Name = requestModel.Name;
-                    emailRecipient.Email = requestModel.Email.Replace(" ", "");
-                    emailRecipient.UpdatedAt = DateTime.UtcNow;
-                    emailRecipient.UpdatedByUserId = _userService.UserId;
-
-                    // Tags
-                    var tagIds = emailRecipient.TagRecipients
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Select(x => x.EmailTagId)
-                        .ToList();
-
-                    var tagsForDelete = emailRecipient.TagRecipients
-                        .Where(x => !requestModel.TagsIds.Contains(x.EmailTagId))
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .ToList();
-
-                    var tagsForCreate = requestModel.TagsIds
-                        .Where(x => !tagIds.Contains(x))
-                        .ToList();
-
-                    foreach (var tagRecipient in tagsForDelete)
-                    {
-                        _dbContext.EmailTagRecipients.Remove(tagRecipient);
-                    }
-
-                    foreach (var tagId in tagsForCreate)
-                    {
-
-                        var emailTagRecipient = new EmailTagRecipient
-                        {
-                            CreatedByUserId = _userService.UserId,
-                            UpdatedByUserId = _userService.UserId,
-                            CreatedAt = DateTime.UtcNow,
-                            UpdatedAt = DateTime.UtcNow,
-                            EmailRecipientId = emailRecipient.Id,
-                            EmailTagId = tagId,
-                            Version = 1
-                        };
-
-                        await _dbContext.EmailTagRecipients.AddAsync(emailTagRecipient);
-                    }
-
-                    _dbContext.EmailRecipients.Update(emailRecipient);
-                    await _dbContext.SaveChangesAsync();
-
-                    //transaction.Commit();
-                    return new OperationResult(true,
-                        _localizationService.GetString("EmailRecipientUpdatedSuccessfully"));
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    _logger.LogError(e.Message);
-                    //transaction.Rollback();
-                    return new OperationResult(false,
-                        _localizationService.GetString("ErrorWhileUpdatingEmailRecipient"));
-                }
-            //}
-        }
-
-        public async Task<OperationResult> DeleteEmailRecipient(int id)
+        try
         {
-            try
+            var emailRecipient = await _dbContext.EmailRecipients
+                .Include(x => x.TagRecipients)
+                .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
+
+            if (emailRecipient == null)
             {
-                var emailRecipient = await _dbContext.EmailRecipients
-                    .FirstOrDefaultAsync(x => x.Id == id);
-
-                if (emailRecipient == null)
-                {
-                    return new OperationResult(false,
-                        _localizationService.GetString("EmailRecipientNotFound"));
-                }
-
-                _dbContext.EmailRecipients.Remove(emailRecipient);
-                await _dbContext.SaveChangesAsync();
-
-                return new OperationResult(true,
-                    _localizationService.GetString("EmailRecipientRemovedSuccessfully"));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                _logger.LogError(e.Message);
+                //transaction.Rollback();
                 return new OperationResult(false,
-                    _localizationService.GetString("ErrorWhileRemovingEmailRecipient"));
+                    _localizationService.GetString("EmailRecipientNotFound"));
             }
-        }
 
-        public async Task<OperationResult> CreateEmailRecipient(EmailRecipientsCreateModel createModel)
-        {
-            //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-//                {
-                try
+            emailRecipient.Name = requestModel.Name;
+            emailRecipient.Email = requestModel.Email.Replace(" ", "");
+            emailRecipient.UpdatedAt = DateTime.UtcNow;
+            emailRecipient.UpdatedByUserId = _userService.UserId;
+
+            // Tags
+            var tagIds = emailRecipient.TagRecipients
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Select(x => x.EmailTagId)
+                .ToList();
+
+            var tagsForDelete = emailRecipient.TagRecipients
+                .Where(x => !requestModel.TagsIds.Contains(x.EmailTagId))
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .ToList();
+
+            var tagsForCreate = requestModel.TagsIds
+                .Where(x => !tagIds.Contains(x))
+                .ToList();
+
+            foreach (var tagRecipient in tagsForDelete)
+            {
+                _dbContext.EmailTagRecipients.Remove(tagRecipient);
+            }
+
+            foreach (var tagId in tagsForCreate)
+            {
+
+                var emailTagRecipient = new EmailTagRecipient
                 {
-                    var tagIds = new List<int>();
-                    // Create tags
+                    CreatedByUserId = _userService.UserId,
+                    UpdatedByUserId = _userService.UserId,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
+                    EmailRecipientId = emailRecipient.Id,
+                    EmailTagId = tagId,
+                    Version = 1
+                };
 
-                    if (!string.IsNullOrEmpty(createModel.NewTags))
+                await _dbContext.EmailTagRecipients.AddAsync(emailTagRecipient);
+            }
+
+            _dbContext.EmailRecipients.Update(emailRecipient);
+            await _dbContext.SaveChangesAsync();
+
+            //transaction.Commit();
+            return new OperationResult(true,
+                _localizationService.GetString("EmailRecipientUpdatedSuccessfully"));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            _logger.LogError(e.Message);
+            //transaction.Rollback();
+            return new OperationResult(false,
+                _localizationService.GetString("ErrorWhileUpdatingEmailRecipient"));
+        }
+        //}
+    }
+
+    public async Task<OperationResult> DeleteEmailRecipient(int id)
+    {
+        try
+        {
+            var emailRecipient = await _dbContext.EmailRecipients
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (emailRecipient == null)
+            {
+                return new OperationResult(false,
+                    _localizationService.GetString("EmailRecipientNotFound"));
+            }
+
+            _dbContext.EmailRecipients.Remove(emailRecipient);
+            await _dbContext.SaveChangesAsync();
+
+            return new OperationResult(true,
+                _localizationService.GetString("EmailRecipientRemovedSuccessfully"));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            _logger.LogError(e.Message);
+            return new OperationResult(false,
+                _localizationService.GetString("ErrorWhileRemovingEmailRecipient"));
+        }
+    }
+
+    public async Task<OperationResult> CreateEmailRecipient(EmailRecipientsCreateModel createModel)
+    {
+        //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+//                {
+        try
+        {
+            var tagIds = new List<int>();
+            // Create tags
+
+            if (!string.IsNullOrEmpty(createModel.NewTags))
+            {
+                var tagNames = createModel.NewTags
+                    .Replace(" ", "")
+                    .Split(',');
+
+                foreach (var tagName in tagNames)
+                {
+                    var emailTag = new EmailTag
                     {
-                        var tagNames = createModel.NewTags
-                        .Replace(" ", "")
-                        .Split(',');
+                        Name = tagName,
+                        CreatedAt = DateTime.UtcNow,
+                        CreatedByUserId = _userService.UserId,
+                        UpdatedAt = DateTime.UtcNow,
+                        UpdatedByUserId = _userService.UserId,
+                        Version = 1
+                    };
+                    await _dbContext.EmailTags.AddAsync(emailTag);
+                    await _dbContext.SaveChangesAsync();
+                    tagIds.Add(emailTag.Id);
+                }
+            }
 
-                        foreach (var tagName in tagNames)
+
+            tagIds.AddRange(createModel.TagsIds);
+
+
+            foreach (var recipientCreateModel in createModel.EmailRecipientsList)
+            {
+                var emailRecipient = new EmailRecipient
+                {
+                    Name = recipientCreateModel.Name,
+                    Email = recipientCreateModel.Email.Replace(" ", ""),
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedByUserId = _userService.UserId,
+                    UpdatedAt = DateTime.UtcNow,
+                    UpdatedByUserId = _userService.UserId,
+                    Version = 1,
+                    TagRecipients = new List<EmailTagRecipient>()
+                };
+
+                // add new tags
+                foreach (var tagId in tagIds)
+                {
+                    emailRecipient.TagRecipients.Add(
+                        new EmailTagRecipient
                         {
-                            var emailTag = new EmailTag
-                            {
-                                Name = tagName,
-                                CreatedAt = DateTime.UtcNow,
-                                CreatedByUserId = _userService.UserId,
-                                UpdatedAt = DateTime.UtcNow,
-                                UpdatedByUserId = _userService.UserId,
-                                Version = 1
-                            };
-                            await _dbContext.EmailTags.AddAsync(emailTag);
-                            await _dbContext.SaveChangesAsync();
-                            tagIds.Add(emailTag.Id);
-                        }
-                    }
-
-
-                    tagIds.AddRange(createModel.TagsIds);
-
-
-                    foreach (var recipientCreateModel in createModel.EmailRecipientsList)
-                    {
-                        var emailRecipient = new EmailRecipient
-                        {
-                            Name = recipientCreateModel.Name,
-                            Email = recipientCreateModel.Email.Replace(" ", ""),
                             CreatedAt = DateTime.UtcNow,
                             CreatedByUserId = _userService.UserId,
                             UpdatedAt = DateTime.UtcNow,
                             UpdatedByUserId = _userService.UserId,
                             Version = 1,
-                            TagRecipients = new List<EmailTagRecipient>()
-                        };
-
-                        // add new tags
-                        foreach (var tagId in tagIds)
-                        {
-                            emailRecipient.TagRecipients.Add(
-                                new EmailTagRecipient
-                                {
-                                    CreatedAt = DateTime.UtcNow,
-                                    CreatedByUserId = _userService.UserId,
-                                    UpdatedAt = DateTime.UtcNow,
-                                    UpdatedByUserId = _userService.UserId,
-                                    Version = 1,
-                                    EmailTagId = tagId
-                                });
-                        }
-
-                        await _dbContext.EmailRecipients.AddAsync(emailRecipient);
-                    }
-
-                    await _dbContext.SaveChangesAsync();
-
-                    //transaction.Commit();
-                    return new OperationResult(true,
-                        _localizationService.GetString("EmailRecipientCreatedSuccessfully"));
+                            EmailTagId = tagId
+                        });
                 }
-                catch (Exception e)
+
+                await _dbContext.EmailRecipients.AddAsync(emailRecipient);
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            //transaction.Commit();
+            return new OperationResult(true,
+                _localizationService.GetString("EmailRecipientCreatedSuccessfully"));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            _logger.LogError(e.Message);
+            //transaction.Commit();
+            return new OperationResult(false,
+                _localizationService.GetString("ErrorWhileCreatingEmailRecipient"));
+        }
+        //}
+    }
+
+    public async Task<OperationDataResult<EmailRecipientTagCommonModel[]>> GetEmailRecipientsAndTags()
+    {
+        try
+        {
+            var emailTags = await _dbContext.EmailTags
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .AsNoTracking()
+                .Select(x => new EmailRecipientTagCommonModel
                 {
-                    Console.WriteLine(e);
-                    _logger.LogError(e.Message);
-                    //transaction.Commit();
-                    return new OperationResult(false,
-                        _localizationService.GetString("ErrorWhileCreatingEmailRecipient"));
-                }
-            //}
-        }
+                    Id = x.Id,
+                    Name = x.Name,
+                    IsTag = true
+                }).ToListAsync();
 
-        public async Task<OperationDataResult<EmailRecipientTagCommonModel[]>> GetEmailRecipientsAndTags()
+            var emailRecipients = await _dbContext.EmailRecipients
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .AsNoTracking()
+                .Select(x => new EmailRecipientTagCommonModel
+                {
+                    Id = x.Id,
+                    Name = $"{x.Name} ({x.Email})",
+                    IsTag = false
+                }).ToListAsync();
+
+            var result = new List<EmailRecipientTagCommonModel>();
+            result.AddRange(emailTags);
+            result.AddRange(emailRecipients);
+
+            return new OperationDataResult<EmailRecipientTagCommonModel[]>(
+                true,
+                result.OrderBy(x => x.Name).ToArray());
+        }
+        catch (Exception e)
         {
-            try
-            {
-                var emailTags = await _dbContext.EmailTags
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .AsNoTracking()
-                    .Select(x => new EmailRecipientTagCommonModel
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        IsTag = true
-                    }).ToListAsync();
-
-                var emailRecipients = await _dbContext.EmailRecipients
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .AsNoTracking()
-                    .Select(x => new EmailRecipientTagCommonModel
-                    {
-                        Id = x.Id,
-                        Name = $"{x.Name} ({x.Email})",
-                        IsTag = false
-                    }).ToListAsync();
-
-                var result = new List<EmailRecipientTagCommonModel>();
-                result.AddRange(emailTags);
-                result.AddRange(emailRecipients);
-
-                return new OperationDataResult<EmailRecipientTagCommonModel[]>(
-                    true,
-                    result.OrderBy(x => x.Name).ToArray());
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                _logger.LogError(e.Message);
-                return new OperationDataResult<EmailRecipientTagCommonModel[]>(false,
-                    _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
-            }
+            Console.WriteLine(e);
+            _logger.LogError(e.Message);
+            return new OperationDataResult<EmailRecipientTagCommonModel[]>(false,
+                _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
         }
+    }
 
-        public async Task<OperationDataResult<CommonDictionaryModel[]>> GetSimpleEmailRecipients()
+    public async Task<OperationDataResult<CommonDictionaryModel[]>> GetSimpleEmailRecipients()
+    {
+        try
         {
-            try
-            {
-                var emailRecipients = await _dbContext.EmailRecipients
-                    .AsNoTracking()
-                    .Select(x => new CommonDictionaryModel
-                    {
-                        Id = x.Id,
-                        Name = $"{x.Name} ({x.Email})"
-                    }).ToListAsync();
+            var emailRecipients = await _dbContext.EmailRecipients
+                .AsNoTracking()
+                .Select(x => new CommonDictionaryModel
+                {
+                    Id = x.Id,
+                    Name = $"{x.Name} ({x.Email})"
+                }).ToListAsync();
 
-                return new OperationDataResult<CommonDictionaryModel[]>(
-                    true,
-                    emailRecipients.ToArray());
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                _logger.LogError(e.Message);
-                return new OperationDataResult<CommonDictionaryModel[]>(false,
-                    _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
-            }
+            return new OperationDataResult<CommonDictionaryModel[]>(
+                true,
+                emailRecipients.ToArray());
         }
-
-        private IQueryable<EmailRecipientModel> AddSelectToEmailRecipientsQuery(IQueryable<EmailRecipient> query)
+        catch (Exception e)
         {
-            return query.Select(x => new EmailRecipientModel()
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Email = x.Email,
-                Tags = x.TagRecipients
-                    .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Select(u => new EmailRecipientTagModel
-                    {
-                        Id = u.EmailTag.Id,
-                        Name = u.EmailTag.Name
-                    }).ToList()
-            });
+            Console.WriteLine(e);
+            _logger.LogError(e.Message);
+            return new OperationDataResult<CommonDictionaryModel[]>(false,
+                _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
         }
+    }
+
+    private IQueryable<EmailRecipientModel> AddSelectToEmailRecipientsQuery(IQueryable<EmailRecipient> query)
+    {
+        return query.Select(x => new EmailRecipientModel()
+        {
+            Id = x.Id,
+            Name = x.Name,
+            Email = x.Email,
+            Tags = x.TagRecipients
+                .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                .Select(u => new EmailRecipientTagModel
+                {
+                    Id = u.EmailTag.Id,
+                    Name = u.EmailTag.Name
+                }).ToList()
+        });
     }
 }

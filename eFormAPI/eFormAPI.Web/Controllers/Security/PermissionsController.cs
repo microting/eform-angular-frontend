@@ -29,30 +29,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace eFormAPI.Web.Controllers.Security
+namespace eFormAPI.Web.Controllers.Security;
+
+[Authorize(Roles = EformRole.Admin)]
+public class PermissionsController : Controller
 {
-    [Authorize(Roles = EformRole.Admin)]
-    public class PermissionsController : Controller
+    private readonly IPermissionsService _permissionsService;
+
+    public PermissionsController(IPermissionsService permissionsService)
     {
-        private readonly IPermissionsService _permissionsService;
+        _permissionsService = permissionsService;
+    }
 
-        public PermissionsController(IPermissionsService permissionsService)
-        {
-            _permissionsService = permissionsService;
-        }
+    [HttpGet]
+    [Route("api/security/permissions/{groupId}")]
+    public async Task<OperationDataResult<PermissionsModel>> GetEntityGroup(int groupId)
+    {
+        return await _permissionsService.GetGroupPermissions(groupId);
+    }
 
-        [HttpGet]
-        [Route("api/security/permissions/{groupId}")]
-        public async Task<OperationDataResult<PermissionsModel>> GetEntityGroup(int groupId)
-        {
-            return await _permissionsService.GetGroupPermissions(groupId);
-        }
-
-        [HttpPut]
-        [Route("api/security/permissions")]
-        public async Task<OperationResult> UpdateSecurityGroup([FromBody] PermissionsUpdateModel model)
-        {
-            return await _permissionsService.UpdatePermissions(model);
-        }
+    [HttpPut]
+    [Route("api/security/permissions")]
+    public async Task<OperationResult> UpdateSecurityGroup([FromBody] PermissionsUpdateModel model)
+    {
+        return await _permissionsService.UpdatePermissions(model);
     }
 }

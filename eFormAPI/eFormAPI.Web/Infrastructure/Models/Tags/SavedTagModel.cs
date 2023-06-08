@@ -21,11 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Tags
+namespace eFormAPI.Web.Infrastructure.Models.Tags;
+
+public class SavedTagModel
 {
-    public class SavedTagModel
-    {
-        public int TagId { get; set; }
-        public string TagName { get; set; }
-    }
+    public int TagId { get; set; }
+    public string TagName { get; set; }
 }

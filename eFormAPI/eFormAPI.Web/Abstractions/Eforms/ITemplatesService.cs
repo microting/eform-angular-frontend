@@ -22,39 +22,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Abstractions.Eforms
+namespace eFormAPI.Web.Abstractions.Eforms;
+
+using Infrastructure.Models;
+using Infrastructure.Models.Import;
+using Infrastructure.Models.Templates;
+using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Models;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+
+public interface ITemplatesService
 {
-    using Infrastructure.Models;
-    using Infrastructure.Models.Import;
-    using Infrastructure.Models.Templates;
-    using Microting.eForm.Dto;
-    using Microting.eForm.Infrastructure.Models;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Threading.Tasks;
+    Task<OperationResult> Create(EFormXmlModel eFormXmlModel);
 
-    public interface ITemplatesService
-    {
-        Task<OperationResult> Create(EFormXmlModel eFormXmlModel);
+    Task<OperationDataResult<ExcelParseResult>> Import(Stream excelStream);
 
-        Task<OperationDataResult<ExcelParseResult>> Import(Stream excelStream);
+    Task<OperationResult> Delete(int id);
 
-        Task<OperationResult> Delete(int id);
+    Task<OperationResult> Deploy(DeployModel deployModel);
 
-        Task<OperationResult> Deploy(DeployModel deployModel);
+    Task<OperationDataResult<int>> Duplicate(TemplateDuplicateRequestModel requestModel);
 
-        Task<OperationDataResult<int>> Duplicate(TemplateDuplicateRequestModel requestModel);
+    Task<OperationDataResult<DeployToModel>> DeployTo(int id);
 
-        Task<OperationDataResult<DeployToModel>> DeployTo(int id);
+    Task<OperationDataResult<Template_Dto>> Get(int id);
 
-        Task<OperationDataResult<Template_Dto>> Get(int id);
+    Task<OperationDataResult<List<Field>>> GetFields(int id);
 
-        Task<OperationDataResult<List<Field>>> GetFields(int id);
+    Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel);
 
-        Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel);
-
-        Task<OperationDataResult<List<CommonDictionaryModel>>> GetDictionaryTemplates(string nameFilter, int idFilter);
-    }
+    Task<OperationDataResult<List<CommonDictionaryModel>>> GetDictionaryTemplates(string nameFilter, int idFilter);
 }

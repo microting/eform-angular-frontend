@@ -22,30 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Abstractions.Advanced
+namespace eFormAPI.Web.Abstractions.Advanced;
+
+using Infrastructure.Models;
+using Infrastructure.Models.SelectableList;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+public interface IEntitySelectService
 {
-    using Infrastructure.Models;
-    using Infrastructure.Models.SelectableList;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+    Task<OperationDataResult<Paged<EntityGroup>>> Index(
+        AdvEntitySelectableGroupListRequestModel requestModel);
 
-    public interface IEntitySelectService
-    {
-        Task<OperationDataResult<Paged<EntityGroup>>> Index(
-            AdvEntitySelectableGroupListRequestModel requestModel);
+    Task<OperationResult> Create(AdvEntitySelectableGroupEditModel editModel);
 
-        Task<OperationResult> Create(AdvEntitySelectableGroupEditModel editModel);
+    Task<OperationResult> Update(AdvEntitySelectableGroupEditModel editModel);
 
-        Task<OperationResult> Update(AdvEntitySelectableGroupEditModel editModel);
+    Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid);
 
-        Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid);
+    Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid);
 
-        Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid);
+    Task<OperationResult> Delete(string entityGroupUid);
 
-        Task<OperationResult> Delete(string entityGroupUid);
-
-        Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary(string searchString);
-    }
+    Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary(string searchString);
 }

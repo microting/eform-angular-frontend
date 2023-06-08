@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { persistState, Store, StoreConfig } from '@datorama/akita';
 import {
-  AdminSettingsModel, UserbackWidgetSettingModel,
+  AdminSettingsModel, LanguagesModel, UserbackWidgetSettingModel,
 } from 'src/app/common/models';
 
 export interface AppSettingsState {
   adminSettingsModel: AdminSettingsModel;
   othersSettings: UserbackWidgetSettingModel;
+  languagesModel: LanguagesModel;
 }
 
 export function createInitialState(): AppSettingsState {
@@ -26,6 +27,7 @@ const appSettingsPersistStorage = persistState({
     return {
       adminSettingsModel: state.adminSettingsModel,
       othersSettings: state.othersSettings,
+      languagesModel: state.languagesModel,
     };
   },
 });

@@ -22,99 +22,98 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Controllers
+namespace eFormAPI.Web.Controllers;
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Abstractions.Eforms;
+using Abstractions.Security;
+using Infrastructure.Models.Tags;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+[Authorize]
+public class TagsController : Controller
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Abstractions.Eforms;
-    using Abstractions.Security;
-    using Infrastructure.Models.Tags;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    private readonly ITagsService _tagsService;
+    private readonly IEformPermissionsService _permissionsService;
 
-    [Authorize]
-    public class TagsController : Controller
+    public TagsController(ITagsService tagsService,
+        IEformPermissionsService permissionsService)
     {
-        private readonly ITagsService _tagsService;
-        private readonly IEformPermissionsService _permissionsService;
+        _tagsService = tagsService;
+        _permissionsService = permissionsService;
+    }
 
-        public TagsController(ITagsService tagsService,
-            IEformPermissionsService permissionsService)
-        {
-            _tagsService = tagsService;
-            _permissionsService = permissionsService;
-        }
-
-        [HttpGet]
-        [Route("api/tags/index")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ReadTags)]
-        public async Task<OperationDataResult<List<CommonDictionaryModel>>> Index()
-        {
-            return await _tagsService.Index();
-        }
+    [HttpGet]
+    [Route("api/tags/index")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ReadTags)]
+    public async Task<OperationDataResult<List<CommonDictionaryModel>>> Index()
+    {
+        return await _tagsService.Index();
+    }
         
-        [HttpPost]
-        [Route("api/tags")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
-        public async Task<OperationResult> Create([FromBody] CommonTagModel tag)
-        {
-            return await _tagsService.Create(tag.Name);
-        }
+    [HttpPost]
+    [Route("api/tags")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
+    public async Task<OperationResult> Create([FromBody] CommonTagModel tag)
+    {
+        return await _tagsService.Create(tag.Name);
+    }
 
 
-        [HttpPost]
-        [Route("api/tags/template")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
-        public async Task<IActionResult> Update([FromBody] UpdateTemplateTagsModel requestModel)
-        {
-            if (!await _permissionsService.CheckEform(requestModel.TemplateId,
+    [HttpPost]
+    [Route("api/tags/template")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
+    public async Task<IActionResult> Update([FromBody] UpdateTemplateTagsModel requestModel)
+    {
+        if (!await _permissionsService.CheckEform(requestModel.TemplateId,
                 AuthConsts.EformClaims.EformsClaims.UpdateTags))
-            {
-                return Forbid();
-            }
-
-            return Ok(await _tagsService.Update(requestModel));
-        }
-
-        [HttpDelete]
-        [Route("api/tags")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
-        public async Task<OperationResult> DeleteTag(int tagId)
         {
-            return await _tagsService.Delete(tagId);
+            return Forbid();
         }
+
+        return Ok(await _tagsService.Update(requestModel));
+    }
+
+    [HttpDelete]
+    [Route("api/tags")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
+    public async Task<OperationResult> DeleteTag(int tagId)
+    {
+        return await _tagsService.Delete(tagId);
+    }
 
         
 
-        [HttpGet]
-        [Route("api/tags/saved")]
-        public async Task<OperationDataResult<SavedTagsModel>> GetSavedTags()
-        {
-            return await _tagsService.GetSavedTags();
-        }
+    [HttpGet]
+    [Route("api/tags/saved")]
+    public async Task<OperationDataResult<SavedTagsModel>> GetSavedTags()
+    {
+        return await _tagsService.GetSavedTags();
+    }
 
-        [HttpPut]
-        [Route("api/tags/saved")]
-        public async Task<OperationResult> AddTagToSaved([FromBody] SavedTagModel model)
-        {
-            return await _tagsService.AddTagToSaved(model);
-        }
+    [HttpPut]
+    [Route("api/tags/saved")]
+    public async Task<OperationResult> AddTagToSaved([FromBody] SavedTagModel model)
+    {
+        return await _tagsService.AddTagToSaved(model);
+    }
 
-        [HttpDelete]
-        [Route("api/tags/saved")]
-        public async Task<OperationResult> RemoveTagFromSaved(int tagId)
-        {
-            return await _tagsService.RemoveTagFromSaved(tagId);
-        }
+    [HttpDelete]
+    [Route("api/tags/saved")]
+    public async Task<OperationResult> RemoveTagFromSaved(int tagId)
+    {
+        return await _tagsService.RemoveTagFromSaved(tagId);
+    }
 
-        [HttpPut]
-        [Route("api/tags")]
-        public async Task<OperationResult> UpdateTag([FromBody] CommonTagModel commonTagModel)
-        {
-            return await _tagsService.UpdateTag(commonTagModel);
-        }
+    [HttpPut]
+    [Route("api/tags")]
+    public async Task<OperationResult> UpdateTag([FromBody] CommonTagModel commonTagModel)
+    {
+        return await _tagsService.UpdateTag(commonTagModel);
     }
 }

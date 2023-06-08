@@ -25,21 +25,20 @@ using System.Threading.Tasks;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
-namespace eFormAPI.Web.Abstractions
-{
-    using System.Collections.Generic;
-    using Infrastructure.Models.Auth;
+namespace eFormAPI.Web.Abstractions;
 
-    public interface IAuthService
-    {
-        Task<OperationDataResult<EformAuthorizeResult>> AuthenticateUser(LoginModel model);
-        Task<OperationDataResult<EformAuthorizeResult>> RefreshToken();
-        Task<OperationResult> DeleteGoogleAuthenticatorInfo();
-        Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel);
-        Task<OperationDataResult<GoogleAuthInfoModel>> GetGoogleAuthenticatorInfo();
-        OperationResult LogOut();
-        OperationDataResult<Dictionary<string, string>> GetCurrentUserClaims();
-        OperationDataResult<bool> TwoFactorAuthForceInfo();
-        Task<OperationResult> UpdateGoogleAuthenticatorInfo(GoogleAuthInfoModel requestModel);
-    }
+using System.Collections.Generic;
+using Infrastructure.Models.Auth;
+
+public interface IAuthService
+{
+    Task<OperationDataResult<EformAuthorizeResult>> AuthenticateUser(LoginModel model);
+    Task<OperationDataResult<EformAuthorizeResult>> RefreshToken();
+    Task<OperationResult> DeleteGoogleAuthenticatorInfo();
+    Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel);
+    Task<OperationDataResult<GoogleAuthInfoModel>> GetGoogleAuthenticatorInfo();
+    OperationResult LogOut();
+    OperationDataResult<Dictionary<string, string>> GetCurrentUserClaims();
+    OperationDataResult<bool> TwoFactorAuthForceInfo();
+    Task<OperationResult> UpdateGoogleAuthenticatorInfo(GoogleAuthInfoModel requestModel);
 }

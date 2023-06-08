@@ -23,19 +23,18 @@ SOFTWARE.
 */
 using System.Collections.Generic;
 
-namespace eFormAPI.Web.Infrastructure.Models.Permissions
+namespace eFormAPI.Web.Infrastructure.Models.Permissions;
+
+public class SecurityGroupModel
 {
-    public class SecurityGroupModel
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string GroupName { get; set; }
+    public string GroupName { get; set; }
 
-        public int UserAmount { get; set; }
+    public int UserAmount { get; set; }
 
-        public string RedirectLink { get; set; }
+    public string RedirectLink { get; set; }
 
-        public List<SecurityGroupUserModel> UsersList { get; set; }
-            = new List<SecurityGroupUserModel>();
-    }
+    public List<SecurityGroupUserModel> UsersList { get; set; }
+        = new List<SecurityGroupUserModel>();
 }
