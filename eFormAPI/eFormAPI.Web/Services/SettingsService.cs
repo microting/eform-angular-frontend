@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using eFormAPI.Web.Infrastructure.Models;
 using Microting.eForm.Infrastructure;
 
 namespace eFormAPI.Web.Services;
@@ -282,23 +283,34 @@ public class SettingsService : ISettingsService
         return new OperationResult(true);
     }
 
-    public async Task<OperationDataResult<List<Language>>> GetLanguages()
+    public async Task<OperationDataResult<LanguagesModel>> GetLanguages()
     {
         var core = await _coreHelper.GetCore();
         var sdkDbContext = core.DbContextHelper.GetDbContext();
         var languages = await sdkDbContext.Languages
             .AsNoTracking()
+            .Select(x => new LanguageModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                LanguageCode = x.LanguageCode,
+                IsActive = x.IsActive
+            })
             .ToListAsync();
 
-        return new OperationDataResult<List<Language>>(true, languages);
+        LanguagesModel languagesModel = new LanguagesModel();
+        languagesModel.Languages = new List<LanguageModel>();
+        languagesModel.Languages.AddRange(languages);
+
+        return new OperationDataResult<LanguagesModel>(true, languagesModel);
     }
 
-    public async Task<OperationResult> UpdateLanguages(List<Language> languages)
+    public async Task<OperationResult> UpdateLanguages(LanguagesModel languages)
     {
         var core = await _coreHelper.GetCore();
         var sdkDbContext = core.DbContextHelper.GetDbContext();
         // loop through all languages and update them accordingly
-        foreach (var language in languages)
+        foreach (var language in languages.Languages)
         {
             _logger.LogInformation($"Updating language {language.Name} with id {language.Id}");
             var dbLanguage = await sdkDbContext.Languages

@@ -25,6 +25,7 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using Microsoft.AspNetCore.Authorization;
@@ -176,14 +177,14 @@ public class SettingsController : Controller
 
     [HttpGet]
     [Route("languages")]
-    public Task<OperationDataResult<List<Language>>> GetLanguages()
+    public Task<OperationDataResult<LanguagesModel>> GetLanguages()
     {
         return _settingsService.GetLanguages();
     }
 
     [HttpPut]
     [Route("languages")]
-    public Task<OperationResult> UpdateLanguages([FromBody] List<Language> languages)
+    public Task<OperationResult> UpdateLanguages([FromBody] LanguagesModel languages)
     {
         return _settingsService.UpdateLanguages(languages);
     }

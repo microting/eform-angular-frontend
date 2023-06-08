@@ -13,7 +13,7 @@ export class AppSettingsQuery extends Query<AppSettingsState> {
   }
 
   selectAllSettings$ = this.select((state) => {
-    return {adminSettings: state.adminSettingsModel, othersSettings: state.othersSettings,}
+    return {adminSettings: state.adminSettingsModel, othersSettings: state.othersSettings, languages: state.languagesModel};
   });
   selectAdminSettings$ = this.select((state) => state.adminSettingsModel);
   selectOthersSettings$ = this.select((state) => state.othersSettings);

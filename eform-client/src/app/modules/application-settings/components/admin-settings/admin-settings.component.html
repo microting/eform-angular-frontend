@@ -258,15 +258,14 @@
             name="httpServerAddress"
             id="httpServerAddress">
         </mat-form-field>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="mat-card-50">
-      <mat-card-title>
-        <h4>{{ 'SendGrid Information' | translate }}</h4>
-      </mat-card-title>
-      <mat-card-content>
+        <mat-checkbox
+          id="isEnableWidget"
+          [(ngModel)]="othersSettings.isEnableWidget"
+          [ngModelOptions]="{standalone: true}"
+        >{{'Userback widget' | translate}}
+        </mat-checkbox>
         <mat-form-field>
-          <mat-label>{{'Key' | translate}}</mat-label>
+          <mat-label>{{'Sendgrid key' | translate}}</mat-label>
           <input
             matInput
             placeholder="12345678909876543210adfecdfefdae"
@@ -277,21 +276,26 @@
         </mat-form-field>
       </mat-card-content>
     </mat-card>
+    <mat-card class="mat-card-50">
+      <mat-card-title>
+        <h4>{{ 'Languages' | translate }}</h4>
+      </mat-card-title>
+      <mat-card-content>
+        <ng-container *ngFor="let language of languagesModel.languages">
+          <p>
+            <mat-checkbox
+              [(ngModel)]="language.isActive"
+              [ngModelOptions]="{standalone: true}">
+              {{language.name}}
+            </mat-checkbox>
+          </p>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <div class="flex-cards mt-4">
-    <mat-card class="mat-card-50">
-      <mat-card-title>
-        <h4>{{ 'Userback' | translate }}</h4>
-      </mat-card-title>
-      <mat-card-content>
-          <mat-checkbox
-            id="isEnableWidget"
-            [(ngModel)]="othersSettings.isEnableWidget"
-            [ngModelOptions]="{standalone: true}"
-          >{{'Userback widget' | translate}}
-          </mat-checkbox>
-      </mat-card-content>
-    </mat-card>
+
+
   </div>
 </div>

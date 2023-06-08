@@ -17,3 +17,4 @@ export * from './delete-modal-setting.model';
 export * from './table-header-element.model';
 export * from './common-dictionary-text.model';
 export * from './common-simple-translation.model';
+export * from './languages.model';

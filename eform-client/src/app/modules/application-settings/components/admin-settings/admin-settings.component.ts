@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UUID } from 'angular2-uuid';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { EventBrokerService } from 'src/app/common/helpers';
-import { AdminSettingsModel } from 'src/app/common/models';
+import {AdminSettingsModel, LanguagesModel} from 'src/app/common/models';
 import { AppSettingsService } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
 import {AppSettingsQuery, AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
@@ -26,6 +26,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   latestVersion: string;
   adminSettingsModel: AdminSettingsModel = new AdminSettingsModel();
   othersSettings: { isEnableWidget: boolean } = {isEnableWidget: false};
+  languagesModel: LanguagesModel = new LanguagesModel();
   previousAdminSettings: AdminSettingsModel;
 
   constructor(
@@ -135,6 +136,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
       if (othersSettings) {
         this.othersSettings = {...this.othersSettings, isEnableWidget: othersSettings.isUserbackWidgetEnabled};
       }
+      this.languagesModel = allSettings.languages;
     });
   }
 
@@ -159,6 +161,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
     //}
 
     this.updateOtherSettings();
+    this.updateLanguages();
   }
 
   updateOtherSettings() {
@@ -180,6 +183,14 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
 
   resetHeaderSettings() {
     this.settingsService.resetHeaderSettings().subscribe((operation) => {
+      if (operation && operation.success) {
+        this.appSettingsStateService.getAllAppSettings();
+      }
+    });
+  }
+
+  updateLanguages() {
+    this.appSettingsStateService.updateLanguages(this.languagesModel).subscribe((operation) => {
       if (operation && operation.success) {
         this.appSettingsStateService.getAllAppSettings();
       }

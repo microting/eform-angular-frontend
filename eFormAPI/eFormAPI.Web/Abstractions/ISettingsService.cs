@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using Microting.eForm.Infrastructure.Data.Entities;
@@ -46,6 +47,6 @@ public interface ISettingsService
     Task<OperationResult> UpdateAdminSettings(AdminSettingsModel adminSettingsModel);
     Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel);
     Task<OperationResult> IntegrityCheck();
-    Task<OperationDataResult<List<Language>>> GetLanguages();
-    Task<OperationResult> UpdateLanguages(List<Language> languages);
+    Task<OperationDataResult<LanguagesModel>> GetLanguages();
+    Task<OperationResult> UpdateLanguages(LanguagesModel languages);
 }
