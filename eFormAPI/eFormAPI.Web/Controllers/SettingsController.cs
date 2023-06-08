@@ -21,12 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -169,5 +172,19 @@ public class SettingsController : Controller
     public Task<OperationDataResult<UserbackWidgetModel>> IsUserbackWidget()
     {
         return _adminService.GetUserbackWidget();
+    }
+
+    [HttpGet]
+    [Route("languages")]
+    public Task<OperationDataResult<List<Language>>> GetLanguages()
+    {
+        return _settingsService.GetLanguages();
+    }
+
+    [HttpPut]
+    [Route("languages")]
+    public Task<OperationResult> UpdateLanguages([FromBody] List<Language> languages)
+    {
+        return _settingsService.UpdateLanguages(languages);
     }
 }

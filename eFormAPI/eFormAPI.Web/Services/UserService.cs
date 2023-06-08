@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Collections.Generic;
+
 namespace eFormAPI.Web.Services;
 
 using Microsoft.AspNetCore.Http;
@@ -230,5 +232,17 @@ public class UserService : IUserService
         }
 
         return await GetLanguageByUserIdAsync(UserId);
+    }
+
+    public async Task<List<Language>> GetActiveLanguages()
+    {
+        var core = await _coreHelper.GetCore();
+        var sdkDbContext = core.DbContextHelper.GetDbContext();
+        var languages = await sdkDbContext.Languages
+            .AsNoTracking()
+            .Where(x => x.IsActive == true)
+            .ToListAsync();
+
+        return languages;
     }
 }

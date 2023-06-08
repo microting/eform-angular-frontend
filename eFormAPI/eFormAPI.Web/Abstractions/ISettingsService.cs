@@ -21,9 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Abstractions;
@@ -43,4 +46,6 @@ public interface ISettingsService
     Task<OperationResult> UpdateAdminSettings(AdminSettingsModel adminSettingsModel);
     Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel);
     Task<OperationResult> IntegrityCheck();
+    Task<OperationDataResult<List<Language>>> GetLanguages();
+    Task<OperationResult> UpdateLanguages(List<Language> languages);
 }

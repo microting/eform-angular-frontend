@@ -44,7 +44,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using Castle.Core.Internal;
 using Hosting.Helpers;
 using Infrastructure.Models.Settings.Admin;
 using Infrastructure.Models.Settings.Initial;
@@ -258,9 +257,6 @@ public class SettingsService : ISettingsService
             return exception.InnerException != null
                 ? new OperationResult(false, exception.Message + " - " + exception.InnerException.Message)
                 : new OperationResult(false, exception.Message);
-
-            //return new OperationResult(false,
-            //    _localizationService.GetString("CouldNotWriteConnectionString"));
         }
 
         Program.Restart();
@@ -286,11 +282,39 @@ public class SettingsService : ISettingsService
         return new OperationResult(true);
     }
 
+    public async Task<OperationDataResult<List<Language>>> GetLanguages()
+    {
+        var core = await _coreHelper.GetCore();
+        var sdkDbContext = core.DbContextHelper.GetDbContext();
+        var languages = await sdkDbContext.Languages
+            .AsNoTracking()
+            .ToListAsync();
+
+        return new OperationDataResult<List<Language>>(true, languages);
+    }
+
+    public async Task<OperationResult> UpdateLanguages(List<Language> languages)
+    {
+        var core = await _coreHelper.GetCore();
+        var sdkDbContext = core.DbContextHelper.GetDbContext();
+        // loop through all languages and update them accordingly
+        foreach (var language in languages)
+        {
+            _logger.LogInformation($"Updating language {language.Name} with id {language.Id}");
+            var dbLanguage = await sdkDbContext.Languages
+                .FirstAsync(x => x.Id == language.Id);
+            dbLanguage.IsActive = language.IsActive;
+            await dbLanguage.Update(sdkDbContext);
+        }
+
+        return new OperationResult(true);
+    }
+
     public OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings()
     {
         try
         {
-            var model = new LoginPageSettingsModel()
+            var model = new LoginPageSettingsModel
             {
                 ImageLink = _loginPageSettings.Value.ImageLink,
                 ImageLinkVisible = _loginPageSettings.Value.ImageLinkVisible,
@@ -316,7 +340,7 @@ public class SettingsService : ISettingsService
     {
         try
         {
-            var model = new HeaderSettingsModel()
+            var model = new HeaderSettingsModel
             {
                 ImageLink = _headerSettings.Value.ImageLink,
                 ImageLinkVisible = _headerSettings.Value.ImageLinkVisible,
@@ -362,20 +386,20 @@ public class SettingsService : ISettingsService
         {
             var core = await _coreHelper.GetCore();
 
-            var model = new AdminSettingsModel()
+            var model = new AdminSettingsModel
             {
-                SMTPSettingsModel = new SMTPSettingsModel()
+                SMTPSettingsModel = new SMTPSettingsModel
                 {
                     Host = _emailSettings.Value.SmtpHost,
                     Port = _emailSettings.Value.SmtpPort.ToString(),
                     Login = _emailSettings.Value.Login,
                     Password = _emailSettings.Value.Password
                 },
-                SendGridSettingsModel = new SendGridSettingsModel()
+                SendGridSettingsModel = new SendGridSettingsModel
                 {
                     ApiKey = _emailSettings.Value.SendGridKey
                 },
-                HeaderSettingsModel = new HeaderSettingsModel()
+                HeaderSettingsModel = new HeaderSettingsModel
                 {
                     ImageLink = _headerSettings.Value.ImageLink,
                     ImageLinkVisible = _headerSettings.Value.ImageLinkVisible,
@@ -384,7 +408,7 @@ public class SettingsService : ISettingsService
                     SecondaryText = _headerSettings.Value.SecondaryText,
                     SecondaryTextVisible = _headerSettings.Value.SecondaryTextVisible
                 },
-                LoginPageSettingsModel = new LoginPageSettingsModel()
+                LoginPageSettingsModel = new LoginPageSettingsModel
                 {
                     ImageLink = _loginPageSettings.Value.ImageLink,
                     ImageLinkVisible = _loginPageSettings.Value.ImageLinkVisible,
@@ -394,30 +418,11 @@ public class SettingsService : ISettingsService
                     SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
                     IsSendGridExists = !string.IsNullOrEmpty(_emailSettings.Value.SendGridKey)
                 },
-                SwiftSettingsModel = new SwiftSettingsModel()
-                {
-                    SwiftEnabled = (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true"),
-                    SwiftUserName = await core.GetSdkSetting(Settings.swiftUserName),
-                    SwiftPassword = "SOMESECRETPASSWORD",
-                    SwiftEndpoint = await core.GetSdkSetting(Settings.swiftEndPoint),
-                    KeystoneEndpoint = await core.GetSdkSetting(Settings.keystoneEndPoint)
-                },
-                S3SettingsModel = new S3SettingsModel()
-                {
-                    S3Enabled = (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true"),
-                    S3AccessKeyId = await core.GetSdkSetting(Settings.s3AccessKeyId),
-                    S3SecrectAccessKey = "SOMESECRETPASSWORD",
-                    S3Endpoint = await core.GetSdkSetting(Settings.s3Endpoint),
-                    S3BucketName = await core.GetSdkSetting(Settings.s3BucketName)
-                },
-                SdkSettingsModel = new SDKSettingsModel()
+                SdkSettingsModel = new SDKSettingsModel
                 {
                     CustomerNo = await core.GetSdkSetting(Settings.customerNo),
                     LogLevel = await core.GetSdkSetting(Settings.logLevel),
                     LogLimit = await core.GetSdkSetting(Settings.logLimit),
-                    FileLocationPicture = await core.GetSdkSetting(Settings.fileLocationPicture),
-                    FileLocationPdf = await core.GetSdkSetting(Settings.fileLocationPdf),
-                    FileLocationReports = await core.GetSdkSetting(Settings.fileLocationJasper),
                     HttpServerAddress = await core.GetSdkSetting(Settings.httpServerAddress)
                 },
                 SiteLink = await core.GetSdkSetting(Settings.httpServerAddress),
@@ -440,7 +445,7 @@ public class SettingsService : ISettingsService
             var core = await _coreHelper.GetCore();
             if (adminSettingsModel.SMTPSettingsModel != null)
             {
-                await _emailSettings.UpdateDb((option) =>
+                await _emailSettings.UpdateDb(option =>
                 {
                     option.SmtpHost = adminSettingsModel.SMTPSettingsModel.Host;
                     option.SmtpPort = int.Parse(adminSettingsModel.SMTPSettingsModel.Port);
@@ -452,7 +457,7 @@ public class SettingsService : ISettingsService
 
             if (adminSettingsModel.HeaderSettingsModel != null)
             {
-                await _headerSettings.UpdateDb((option) =>
+                await _headerSettings.UpdateDb(option =>
                 {
                     option.ImageLink = adminSettingsModel.HeaderSettingsModel.ImageLink;
                     option.ImageLinkVisible = adminSettingsModel.HeaderSettingsModel.ImageLinkVisible;
@@ -465,7 +470,7 @@ public class SettingsService : ISettingsService
 
             if (adminSettingsModel.LoginPageSettingsModel != null)
             {
-                await _loginPageSettings.UpdateDb((option) =>
+                await _loginPageSettings.UpdateDb(option =>
                 {
                     option.ImageLink = adminSettingsModel.LoginPageSettingsModel.ImageLink;
                     option.ImageLinkVisible = adminSettingsModel.LoginPageSettingsModel.ImageLinkVisible;
