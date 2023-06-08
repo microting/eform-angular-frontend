@@ -49,22 +49,19 @@
     <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="6.0.2" />
     <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="6.0.2" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
-    <PackageReference Include="AWSSDK.Core" Version="3.7.107.2" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.104.28" />
     <PackageReference Include="ClosedXML" Version="0.101.0" />
-    <PackageReference Include="Magick.NET-Q16-x64" Version="13.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.5" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="7.0.42" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="7.0.35" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="7.0.35" />
+    <PackageReference Include="Microting.eForm" Version="7.0.45" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="7.0.37" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="7.0.38" />
     <PackageReference Include="Microting.HtmlToOpenXml.dll" Version="2.3.1" />
+    <PackageReference Include="PureOtp" Version="1.0.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="1.4.0" />
-    <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="sendgrid" Version="9.28.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
     <PackageReference Include="System.Threading.AccessControl" Version="7.0.1" />

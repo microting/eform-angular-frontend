@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 namespace eFormAPI.Web.Services;
 
 using Cache.AuthCache;
@@ -36,6 +35,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Abstractions;
 using eFormAPI.Web.Abstractions.Security;
+using PureOtp;
 using Hosting.Helpers.DbOptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -48,7 +48,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
-using OtpSharp;
 
 public class AuthService : IAuthService
 {
