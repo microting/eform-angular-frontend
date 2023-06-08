@@ -7,7 +7,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async selectableListCount(): Promise<number> {
-    await browser.pause(500);
+    //await browser.pause(500);
     return (await $$('tbody > tr')).length;
   }
 
@@ -291,7 +291,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
       await browser.pause(500);
     }
     await (await this.entitySelectCreateBtn()).waitForDisplayed();
-    await browser.pause(1000);
+    //await browser.pause(1000);
   }
 
   public async cleanupList() {
@@ -358,9 +358,9 @@ export class SelectableListRowObject {
   async openEdit() {
     await this.editBtn.click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
-    await browser.pause(1000);
+    //await browser.pause(1000);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
-    await browser.pause(1000);
+    //await browser.pause(1000);
   }
 
   async closeEdit(clickCancel = false) {
@@ -370,14 +370,13 @@ export class SelectableListRowObject {
         timeout: 90000,
         reverse: true,
       });
-      await browser.pause(1000);
+      //await browser.pause(500);
     } else {
       await (await selectableLists.entitySelectEditCancelBtn()).click();
-      await browser.pause(1000);
+      //await browser.pause(500);
     }
     await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
-    await browser.pause(1000);
   }
 
   async edit(
@@ -440,7 +439,7 @@ export class SelectableListRowObject {
       }
     }
     await this.closeEdit(clickCancel);
-    await browser.pause(500);
+    //await browser.pause(500);
   }
 }
 
