@@ -25,21 +25,20 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace eFormAPI.Web.Abstractions.Security
+namespace eFormAPI.Web.Abstractions.Security;
+
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+
+public interface IClaimsService
 {
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    Task UpdateAuthenticatedUsers(List<int> securityGroups);
+    Task<List<Claim>> GetUserPermissions(int userId, bool isAdmin);
+    Task<List<Claim>> GetAllAuthClaims();
+    Task<List<Claim>> GetUserClaims(int userId);
+    Task<List<string>> GetUserClaimsNames(int userId);
+    Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionsListModel> permissions);
+    Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id);
+    Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id);
 
-    public interface IClaimsService
-    {
-        Task UpdateAuthenticatedUsers(List<int> securityGroups);
-        Task<List<Claim>> GetUserPermissions(int userId, bool isAdmin);
-        Task<List<Claim>> GetAllAuthClaims();
-        Task<List<Claim>> GetUserClaims(int userId);
-        Task<List<string>> GetUserClaimsNames(int userId);
-        Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionsListModel> permissions);
-        Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id);
-        Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id);
-
-    }
 }

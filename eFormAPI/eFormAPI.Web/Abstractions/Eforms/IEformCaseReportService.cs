@@ -22,22 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Abstractions.Eforms
+namespace eFormAPI.Web.Abstractions.Eforms;
+
+using System.IO;
+using System.Threading.Tasks;
+using Infrastructure.Models;
+using Infrastructure.Models.ReportEformCase;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
+public interface IEformCaseReportService
 {
-    using System.IO;
-    using System.Threading.Tasks;
-    using Infrastructure.Models;
-    using Infrastructure.Models.ReportEformCase;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    public Task<OperationDataResult<EFormCasesReportModel>> GetReportEformCases(EFormCaseReportRequest eFormCaseReportRequest);
 
-    public interface IEformCaseReportService
-    {
-        public Task<OperationDataResult<EFormCasesReportModel>> GetReportEformCases(EFormCaseReportRequest eFormCaseReportRequest);
+    public Task<OperationDataResult<Stream>> GenerateReportFile(EFormCaseReportRequest model);
 
-        public Task<OperationDataResult<Stream>> GenerateReportFile(EFormCaseReportRequest model);
-
-        public Task<OperationResult> UpdateReportHeaders(EformDocxReportHeadersModel eformDocxReportHeadersModel);
+    public Task<OperationResult> UpdateReportHeaders(EformDocxReportHeadersModel eformDocxReportHeadersModel);
         
-        public Task<OperationDataResult<EformDocxReportHeadersModel>> GetReportHeadersByTemplateId(int templateId);
-    }
+    public Task<OperationDataResult<EformDocxReportHeadersModel>> GetReportHeadersByTemplateId(int templateId);
 }

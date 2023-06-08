@@ -22,12 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Import
-{
-    using Microsoft.AspNetCore.Http;
+namespace eFormAPI.Web.Infrastructure.Models.Import;
 
-    public class EformExcelUploadModel
-    {
-        public IFormFile File { get; set; }
-    }
+using Microsoft.AspNetCore.Http;
+
+public class EformExcelUploadModel
+{
+    public IFormFile File { get; set; }
 }

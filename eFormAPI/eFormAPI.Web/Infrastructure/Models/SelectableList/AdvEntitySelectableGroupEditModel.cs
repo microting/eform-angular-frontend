@@ -25,13 +25,12 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Microting.eForm.Infrastructure.Models;
 
-namespace eFormAPI.Web.Infrastructure.Models.SelectableList
+namespace eFormAPI.Web.Infrastructure.Models.SelectableList;
+
+public class AdvEntitySelectableGroupEditModel
 {
-    public class AdvEntitySelectableGroupEditModel
-    {
-        public string Name { get; set; }
-        public string GroupUid { get; set; }
-        public string Description { get; set; }
-        [CanBeNull] public List<EntityItem> EntityItemModels { get; set; }
-    }
+    public string Name { get; set; }
+    public string GroupUid { get; set; }
+    public string Description { get; set; }
+    [CanBeNull] public List<EntityItem> EntityItemModels { get; set; }
 }

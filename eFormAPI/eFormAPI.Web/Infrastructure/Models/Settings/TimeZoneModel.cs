@@ -1,8 +1,7 @@
-namespace eFormAPI.Web.Infrastructure.Models.Settings
+namespace eFormAPI.Web.Infrastructure.Models.Settings;
+
+public class TimeZoneModel
 {
-    public class TimeZoneModel
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-    }
+    public string Id { get; set; }
+    public string Name { get; set; }
 }

@@ -26,22 +26,21 @@ using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Abstractions;
+
+public interface ISettingsService
 {
-    public interface ISettingsService
-    {
-        OperationResult ConnectionStringExist();
-        Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings();
-        OperationDataResult<string> GetDefaultLocale();
-        OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings();
-        OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings();
-        OperationDataResult<string> GetAssemblyVersion();
-        OperationDataResult<string> GetApplicationHostOs();
-        OperationDataResult<string> GetLatestVersion();
-        Task<OperationResult> ResetLoginPageSettings();
-        Task<OperationResult> ResetPageHeaderSettings();
-        Task<OperationResult> UpdateAdminSettings(AdminSettingsModel adminSettingsModel);
-        Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel);
-        Task<OperationResult> IntegrityCheck();
-    }
+    OperationResult ConnectionStringExist();
+    Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings();
+    OperationDataResult<string> GetDefaultLocale();
+    OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings();
+    OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings();
+    OperationDataResult<string> GetAssemblyVersion();
+    OperationDataResult<string> GetApplicationHostOs();
+    OperationDataResult<string> GetLatestVersion();
+    Task<OperationResult> ResetLoginPageSettings();
+    Task<OperationResult> ResetPageHeaderSettings();
+    Task<OperationResult> UpdateAdminSettings(AdminSettingsModel adminSettingsModel);
+    Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel);
+    Task<OperationResult> IntegrityCheck();
 }

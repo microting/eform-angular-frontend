@@ -22,13 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.NavigationMenu
+namespace eFormAPI.Web.Services.NavigationMenu;
+
+public class NavigationMenuTranslationModel
 {
-    public class NavigationMenuTranslationModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string LocaleName { get; set; }
-        public string Language { get; set; }
-    }
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string LocaleName { get; set; }
+    public string Language { get; set; }
 }

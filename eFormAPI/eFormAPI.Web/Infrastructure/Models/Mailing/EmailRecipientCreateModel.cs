@@ -22,12 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Mailing
+namespace eFormAPI.Web.Infrastructure.Models.Mailing;
+
+public class EmailRecipientCreateModel
 {
-    public class EmailRecipientCreateModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-    }
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
 }

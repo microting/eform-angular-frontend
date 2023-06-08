@@ -25,11 +25,10 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models.Reports;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace eFormAPI.Web.Abstractions.Eforms
+namespace eFormAPI.Web.Abstractions.Eforms;
+
+public interface IEformReportsService
 {
-    public interface IEformReportsService
-    {
-        Task<OperationDataResult<EformReportFullModel>> GetEformReport(int templateId);
-        Task<OperationResult> UpdateEformReport(EformReportFullModel requestModel);
-    }
+    Task<OperationDataResult<EformReportFullModel>> GetEformReport(int templateId);
+    Task<OperationResult> UpdateEformReport(EformReportFullModel requestModel);
 }

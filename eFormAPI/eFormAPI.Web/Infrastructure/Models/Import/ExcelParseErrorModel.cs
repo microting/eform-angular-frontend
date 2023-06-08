@@ -22,12 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Import
+namespace eFormAPI.Web.Infrastructure.Models.Import;
+
+public class ExcelParseErrorModel
 {
-    public class ExcelParseErrorModel
-    {
-        public int Row { get; set; }
-        public int? Col { get; set; }
-        public string Message { get; set; }
-    }
+    public int Row { get; set; }
+    public int? Col { get; set; }
+    public string Message { get; set; }
 }

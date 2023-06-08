@@ -26,28 +26,27 @@ using eFormAPI.Web.Infrastructure.Models.Users;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Abstractions;
+
+using Infrastructure.Models.Settings.Admin;
+
+public interface IAdminService
 {
-    using Infrastructure.Models.Settings.Admin;
+    Task<OperationDataResult<Paged<UserInfoViewModel>>> Index(UserInfoRequest paginationModel);
 
-    public interface IAdminService
-    {
-        Task<OperationDataResult<Paged<UserInfoViewModel>>> Index(UserInfoRequest paginationModel);
+    Task<OperationResult> Create(UserRegisterModel userRegisterModel);
 
-        Task<OperationResult> Create(UserRegisterModel userRegisterModel);
+    Task<OperationDataResult<UserRegisterModel>> Read(int userId);
 
-        Task<OperationDataResult<UserRegisterModel>> Read(int userId);
+    Task<OperationResult> Update(UserRegisterModel userRegisterModel);
 
-        Task<OperationResult> Update(UserRegisterModel userRegisterModel);
+    Task<OperationResult> Delete(int userId);
 
-        Task<OperationResult> Delete(int userId);
+    Task<OperationResult> DisableTwoFactorAuthForce();
 
-        Task<OperationResult> DisableTwoFactorAuthForce();
+    Task<OperationResult> EnableTwoFactorAuthForce();
 
-        Task<OperationResult> EnableTwoFactorAuthForce();
+    Task<OperationResult> UpdateUserbackWidget(bool isEnableWidget);
 
-        Task<OperationResult> UpdateUserbackWidget(bool isEnableWidget);
-
-        Task<OperationDataResult<UserbackWidgetModel>> GetUserbackWidget();
-    }
+    Task<OperationDataResult<UserbackWidgetModel>> GetUserbackWidget();
 }

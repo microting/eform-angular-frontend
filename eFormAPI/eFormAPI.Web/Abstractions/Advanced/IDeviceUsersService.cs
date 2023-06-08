@@ -22,26 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Abstractions.Advanced
+namespace eFormAPI.Web.Abstractions.Advanced;
+
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Infrastructure.Models;
+using Infrastructure.Models.DeviceUsers;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+public interface IDeviceUsersService
 {
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Infrastructure.Models;
-    using Infrastructure.Models.DeviceUsers;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    public interface IDeviceUsersService
-    {
-        Task<OperationDataResult<List<DeviceUser>>> Index(DeviceUserSearchRequestModel requestModel);
+    Task<OperationDataResult<List<DeviceUser>>> Index(DeviceUserSearchRequestModel requestModel);
 
-        Task<OperationDataResult<int>> Create(DeviceUserModel deviceUserModel);
+    Task<OperationDataResult<int>> Create(DeviceUserModel deviceUserModel);
 
-        Task<OperationDataResult<DeviceUser>> Read(int id);
+    Task<OperationDataResult<DeviceUser>> Read(int id);
 
-        Task<OperationResult> Update(DeviceUserModel deviceUserModel);
+    Task<OperationResult> Update(DeviceUserModel deviceUserModel);
 
-        Task<OperationResult> Delete(int id);
+    Task<OperationResult> Delete(int id);
 
-        Task<OperationDataResult<List<CommonDictionaryModel>>> ReadCommonDictionary();
-    }
+    Task<OperationDataResult<List<CommonDictionaryModel>>> ReadCommonDictionary();
 }

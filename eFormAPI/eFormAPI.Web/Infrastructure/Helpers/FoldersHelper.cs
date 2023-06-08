@@ -24,110 +24,108 @@ SOFTWARE.
 
 using System.Runtime.InteropServices;
 
-namespace eFormAPI.Web.Infrastructure.Helpers
+namespace eFormAPI.Web.Infrastructure.Helpers;
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using eFormCore;
+using Microsoft.EntityFrameworkCore;
+using Microting.eForm.Infrastructure;using Models.Folders;
+
+public static class FoldersHelper
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using eFormCore;
-    using Microsoft.EntityFrameworkCore;
-    using Microting.eForm.Infrastructure;using Models.Folders;
-
-    public static class FoldersHelper
+    public static IList<FolderDtoModel> BuildTree(this List<FolderDtoModel> source)
     {
-        public static IList<FolderDtoModel> BuildTree(this List<FolderDtoModel> source)
+        if (source.Any())
         {
-            if (source.Any())
+            var groups = source.GroupBy(i => i.ParentId);
+            var roots = groups.FirstOrDefault(g => g.Key.HasValue == false).ToList();
+
+            if (roots.Count > 0)
             {
-                var groups = source.GroupBy(i => i.ParentId);
-                var roots = groups.FirstOrDefault(g => g.Key.HasValue == false).ToList();
-
-                if (roots.Count > 0)
+                var dict = groups.Where(g => g.Key.HasValue).ToDictionary(g => g.Key.Value, g => g.ToList());
+                foreach (var item in roots.OrderBy(x => x.Name))
                 {
-                    var dict = groups.Where(g => g.Key.HasValue).ToDictionary(g => g.Key.Value, g => g.ToList());
-                    foreach (var item in roots.OrderBy(x => x.Name))
-                    {
-                        AddChildren(item, dict);
-                    }
-                }
-                return roots;
-            }
-            return new List<FolderDtoModel>();
-        }
-
-        private static void AddChildren(FolderDtoModel node, Dictionary<int, List<FolderDtoModel>> source)
-        {
-            // Speed optimization
-            ref var valOrNew = ref CollectionsMarshal.GetValueRefOrAddDefault(source, node.Id, out var exists);
-
-            if (exists)
-            {
-                node.Children = valOrNew;
-                foreach (var t in node.Children.OrderBy(x => x.Name))
-                {
-                    AddChildren(t, source);
+                    AddChildren(item, dict);
                 }
             }
-            else
-            {
-                node.Children = new List<FolderDtoModel>();
-            }
-
-            // if (source.ContainsKey(node.Id))
-            // {
-            //     node.Children = source[node.Id];
-            //     foreach (var t in node.Children.OrderBy(x => x.Name))
-            //     {
-            //         AddChildren(t, source);
-            //     }
-            // }
-            // else
-            // {
-            //     node.Children = new List<FolderDtoModel>();
-            // }
+            return roots;
         }
+        return new List<FolderDtoModel>();
+    }
 
-        public static async Task DeleteFolder(Core core, MicrotingDbContext sdkDbContext, int id)
-        {
-            await DeleteChildren(core, sdkDbContext, id);
-            await core.FolderDelete(id);
-        }
+    private static void AddChildren(FolderDtoModel node, Dictionary<int, List<FolderDtoModel>> source)
+    {
+        // Speed optimization
+        ref var valOrNew = ref CollectionsMarshal.GetValueRefOrAddDefault(source, node.Id, out var exists);
 
-        private static async Task DeleteChildren(Core core, MicrotingDbContext sdkDbContext, int id)
+        if (exists)
         {
-            var folders = await sdkDbContext.Folders.Where(x => x.ParentId == id).ToListAsync();
-            foreach (var folder in folders)
+            node.Children = valOrNew;
+            foreach (var t in node.Children.OrderBy(x => x.Name))
             {
-                var subFolders = await sdkDbContext.Folders.Where(x => x.ParentId == folder.Id).ToListAsync();
-                foreach (var subfolder in subFolders)
-                {
-                    await DeleteChildren(core, sdkDbContext, subfolder.Id);
-                }
-                await core.FolderDelete(folder.Id);
+                AddChildren(t, source);
             }
         }
-
-        public static List<FolderDtoModel> BuildTreeV2(List<FolderDtoModel> source)
+        else
         {
-            var foldersForReturn = source.Where(x => x.ParentId == null).ToList();
-            foreach (var dtoModel in foldersForReturn)
-            {
-                    dtoModel.Children = AddToTree(source.Where(x => x.ParentId != null).ToList(), dtoModel);
-            }
-
-            return foldersForReturn;
+            node.Children = new List<FolderDtoModel>();
         }
 
-        private static List<FolderDtoModel> AddToTree(List<FolderDtoModel> source, FolderDtoModel folderDtoModelForAdd)
-        {
-            folderDtoModelForAdd.Children = source.Where(x => x.ParentId == folderDtoModelForAdd.Id).ToList(); // find children folder
-            foreach (var folderDtoModel in folderDtoModelForAdd.Children) // if we have children, check if children also have children
-            {
-                folderDtoModel.Children = AddToTree(source, folderDtoModel);
-            }
+        // if (source.ContainsKey(node.Id))
+        // {
+        //     node.Children = source[node.Id];
+        //     foreach (var t in node.Children.OrderBy(x => x.Name))
+        //     {
+        //         AddChildren(t, source);
+        //     }
+        // }
+        // else
+        // {
+        //     node.Children = new List<FolderDtoModel>();
+        // }
+    }
 
-            return folderDtoModelForAdd.Children;
+    public static async Task DeleteFolder(Core core, MicrotingDbContext sdkDbContext, int id)
+    {
+        await DeleteChildren(core, sdkDbContext, id);
+        await core.FolderDelete(id);
+    }
+
+    private static async Task DeleteChildren(Core core, MicrotingDbContext sdkDbContext, int id)
+    {
+        var folders = await sdkDbContext.Folders.Where(x => x.ParentId == id).ToListAsync();
+        foreach (var folder in folders)
+        {
+            var subFolders = await sdkDbContext.Folders.Where(x => x.ParentId == folder.Id).ToListAsync();
+            foreach (var subfolder in subFolders)
+            {
+                await DeleteChildren(core, sdkDbContext, subfolder.Id);
+            }
+            await core.FolderDelete(folder.Id);
         }
     }
 
+    public static List<FolderDtoModel> BuildTreeV2(List<FolderDtoModel> source)
+    {
+        var foldersForReturn = source.Where(x => x.ParentId == null).ToList();
+        foreach (var dtoModel in foldersForReturn)
+        {
+            dtoModel.Children = AddToTree(source.Where(x => x.ParentId != null).ToList(), dtoModel);
+        }
+
+        return foldersForReturn;
+    }
+
+    private static List<FolderDtoModel> AddToTree(List<FolderDtoModel> source, FolderDtoModel folderDtoModelForAdd)
+    {
+        folderDtoModelForAdd.Children = source.Where(x => x.ParentId == folderDtoModelForAdd.Id).ToList(); // find children folder
+        foreach (var folderDtoModel in folderDtoModelForAdd.Children) // if we have children, check if children also have children
+        {
+            folderDtoModel.Children = AddToTree(source, folderDtoModel);
+        }
+
+        return folderDtoModelForAdd.Children;
+    }
 }

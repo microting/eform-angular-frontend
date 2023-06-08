@@ -1,7 +1,6 @@
-namespace eFormAPI.Web.Services
+namespace eFormAPI.Web.Services;
+
+public class TemplateFilesService
 {
-    public class TemplateFilesService
-    {
         
-    }
 }

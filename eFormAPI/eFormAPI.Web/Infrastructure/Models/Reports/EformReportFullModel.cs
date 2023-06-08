@@ -22,11 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Reports
+namespace eFormAPI.Web.Infrastructure.Models.Reports;
+
+public class EformReportFullModel
 {
-    public class EformReportFullModel
-    {
-        public EformMainElement EformMainElement { get; set; } = new EformMainElement();
-        public EformReportModel EformReport { get; set; } = new EformReportModel();
-    }
+    public EformMainElement EformMainElement { get; set; } = new EformMainElement();
+    public EformReportModel EformReport { get; set; } = new EformReportModel();
 }

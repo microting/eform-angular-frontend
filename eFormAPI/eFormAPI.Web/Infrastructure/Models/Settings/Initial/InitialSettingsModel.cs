@@ -21,13 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Settings.Initial
+namespace eFormAPI.Web.Infrastructure.Models.Settings.Initial;
+
+public class InitialSettingsModel
 {
-    public class InitialSettingsModel
-    {
-        public ConnectionStringMainModel ConnectionStringMain { get; set; }
-        public ConnectionStringSDKModel ConnectionStringSdk { get; set; }
-        public AdminSetupModel AdminSetupModel { get; set; }
-        public GeneralAppSetupSettingsModel GeneralAppSetupSettingsModel { get; set; }
-    }
+    public ConnectionStringMainModel ConnectionStringMain { get; set; }
+    public ConnectionStringSDKModel ConnectionStringSdk { get; set; }
+    public AdminSetupModel AdminSetupModel { get; set; }
+    public GeneralAppSetupSettingsModel GeneralAppSetupSettingsModel { get; set; }
 }

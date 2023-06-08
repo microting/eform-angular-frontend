@@ -22,15 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Hosting.Helpers.DbOptions
-{
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using System;
-    using System.Threading.Tasks;
-    using Microsoft.Extensions.Options;
+namespace eFormAPI.Web.Hosting.Helpers.DbOptions;
 
-    public interface IDbOptions<out T> : IOptionsSnapshot<T> where T : class, new()
-    {
-        Task UpdateDb(Action<T> applyChanges, BaseDbContext dbContext);
-    }
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+
+public interface IDbOptions<out T> : IOptionsSnapshot<T> where T : class, new()
+{
+    Task UpdateDb(Action<T> applyChanges, BaseDbContext dbContext);
 }

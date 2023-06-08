@@ -21,52 +21,51 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Controllers.Mailing
+namespace eFormAPI.Web.Controllers.Mailing;
+
+using System.Threading.Tasks;
+using Infrastructure.Models.Mailing;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using Services.Mailing.EmailTags;
+
+[Authorize]
+public class EmailTagsController : Controller
 {
-    using System.Threading.Tasks;
-    using Infrastructure.Models.Mailing;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-    using Services.Mailing.EmailTags;
+    private readonly IEmailTagsService _emailTagsService;
 
-    [Authorize]
-    public class EmailTagsController : Controller
+    public EmailTagsController(IEmailTagsService emailTagsService)
     {
-        private readonly IEmailTagsService _emailTagsService;
+        _emailTagsService = emailTagsService;
+    }
 
-        public EmailTagsController(IEmailTagsService emailTagsService)
-        {
-            _emailTagsService = emailTagsService;
-        }
+    [HttpGet]
+    [Route("api/email-recipients/tags")]
+    public async Task<OperationDataResult<CommonDictionaryModel[]>> GetEmailTags()
+    {
+        return await _emailTagsService.GetEmailTags();
+    }
 
-        [HttpGet]
-        [Route("api/email-recipients/tags")]
-        public async Task<OperationDataResult<CommonDictionaryModel[]>> GetEmailTags()
-        {
-            return await _emailTagsService.GetEmailTags();
-        }
+    [HttpPost]
+    [Route("api/email-recipients/tags")]
+    public async Task<OperationResult> CreateEmailTag([FromBody] EmailRecipientTagModel model)
+    {
+        return await _emailTagsService.CreateEmailTag(model);
+    }
 
-        [HttpPost]
-        [Route("api/email-recipients/tags")]
-        public async Task<OperationResult> CreateEmailTag([FromBody] EmailRecipientTagModel model)
-        {
-            return await _emailTagsService.CreateEmailTag(model);
-        }
+    [HttpPut]
+    [Route("api/email-recipients/tags")]
+    public async Task<OperationResult> UpdateEmailTag([FromBody] EmailRecipientTagModel model)
+    {
+        return await _emailTagsService.UpdateEmailTag(model);
+    }
 
-        [HttpPut]
-        [Route("api/email-recipients/tags")]
-        public async Task<OperationResult> UpdateEmailTag([FromBody] EmailRecipientTagModel model)
-        {
-            return await _emailTagsService.UpdateEmailTag(model);
-        }
-
-        [HttpDelete]
-        [Route("api/email-recipients/tags/{id}")]
-        public async Task<OperationResult> DeleteEmailTag(int id)
-        {
-            return await _emailTagsService.DeleteEmailTag(id);
-        }
+    [HttpDelete]
+    [Route("api/email-recipients/tags/{id}")]
+    public async Task<OperationResult> DeleteEmailTag(int id)
+    {
+        return await _emailTagsService.DeleteEmailTag(id);
     }
 }

@@ -22,10 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Templates
+namespace eFormAPI.Web.Infrastructure.Models.Templates;
+
+public class TemplateDuplicateRequestModel
 {
-    public class TemplateDuplicateRequestModel
-    {
-        public int TemplateId { get; set; }
-    }
+    public int TemplateId { get; set; }
 }

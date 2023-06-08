@@ -22,70 +22,69 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Helpers
-{
-    using System.Collections.Generic;
-    using Models.Menu;
+namespace eFormAPI.Web.Infrastructure.Helpers;
 
-    public static class EformMenuHelper
+using System.Collections.Generic;
+using Models.Menu;
+
+public static class EformMenuHelper
+{
+    public static List<RightMenuItemModel> GetRightMenu()
     {
-        public static List<RightMenuItemModel> GetRightMenu()
+        return new List<RightMenuItemModel>
         {
-            return new List<RightMenuItemModel>
+            new RightMenuItemModel
             {
-                new RightMenuItemModel
-                {
-                    Name = "user",
-                    E2EId = "sign-out-dropdown",
-                    Link = "",
-                    Position = 0
-                },
-                new RightMenuItemModel
-                {
-                    Name = "User Management",
-                    LocaleName = "UserManagement",
-                    E2EId = "user-management-menu",
-                    Link = "/account-management/users",
-                    Position = 0,
-                    ParentId = 10
-                },
-                new RightMenuItemModel
-                {
-                    Name = "Settings",
-                    LocaleName = "Settings",
-                    E2EId = "settings",
-                    Link = "/account-management/settings",
-                    Position = 1,
-                    ParentId = 10
-                },
-                new RightMenuItemModel
-                {
-                    Name = "Security",
-                    LocaleName = "Security",
-                    E2EId = "security",
-                    Link = "/security",
-                    Position = 2,
-                    ParentId = 10
-                },
-                new RightMenuItemModel
-                {
-                    Name = "Change password",
-                    LocaleName = "ChangePassword",
-                    E2EId = "change-password",
-                    Link = "/account-management/change-password",
-                    Position = 3,
-                    ParentId = 10
-                },
-                new RightMenuItemModel
-                {
-                    Name = "Logout",
-                    LocaleName = "Logout",
-                    E2EId = "sign-out",
-                    Link = "/auth/sign-out",
-                    Position = 4,
-                    ParentId = 10
-                }
-            };
-        }
+                Name = "user",
+                E2EId = "sign-out-dropdown",
+                Link = "",
+                Position = 0
+            },
+            new RightMenuItemModel
+            {
+                Name = "User Management",
+                LocaleName = "UserManagement",
+                E2EId = "user-management-menu",
+                Link = "/account-management/users",
+                Position = 0,
+                ParentId = 10
+            },
+            new RightMenuItemModel
+            {
+                Name = "Settings",
+                LocaleName = "Settings",
+                E2EId = "settings",
+                Link = "/account-management/settings",
+                Position = 1,
+                ParentId = 10
+            },
+            new RightMenuItemModel
+            {
+                Name = "Security",
+                LocaleName = "Security",
+                E2EId = "security",
+                Link = "/security",
+                Position = 2,
+                ParentId = 10
+            },
+            new RightMenuItemModel
+            {
+                Name = "Change password",
+                LocaleName = "ChangePassword",
+                E2EId = "change-password",
+                Link = "/account-management/change-password",
+                Position = 3,
+                ParentId = 10
+            },
+            new RightMenuItemModel
+            {
+                Name = "Logout",
+                LocaleName = "Logout",
+                E2EId = "sign-out",
+                Link = "/auth/sign-out",
+                Position = 4,
+                ParentId = 10
+            }
+        };
     }
 }

@@ -18,39 +18,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
+namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor;
+
+using System.Collections.Generic;
+
+public class EformVisualEditorUpdateModel
 {
-    using System.Collections.Generic;
+    // parent checklist
+    public EformVisualEditorModel Checklist { get; set; }
 
-    public class EformVisualEditorUpdateModel
-    {
-        // parent checklist
-        public EformVisualEditorModel Checklist { get; set; }
+    // checklist ids for delete
+    public List<int> ChecklistForDelete { get; set; }
+        = new List<int>();
 
-        // checklist ids for delete
-        public List<int> ChecklistForDelete { get; set; }
-            = new List<int>();
+    // checklist models for create
+    public List<EformVisualEditorModel> ChecklistForCreate { get; set; }
+        = new List<EformVisualEditorModel>();
 
-        // checklist models for create
-        public List<EformVisualEditorModel> ChecklistForCreate { get; set; }
-            = new List<EformVisualEditorModel>();
+    // field ids for delete
+    public List<int> FieldForDelete { get; set; }
+        = new List<int>();
 
-        // field ids for delete
-        public List<int> FieldForDelete { get; set; }
-            = new List<int>();
+    // field models for create
+    public List<VisualEditorFields> FieldForCreate { get; set; }
+        = new List<VisualEditorFields>();
 
-        // field models for create
-        public List<VisualEditorFields> FieldForCreate { get; set; }
-            = new List<VisualEditorFields>();
+    // field models for update
+    public List<VisualEditorFields> FieldForUpdate { get; set; }
+        = new List<VisualEditorFields>();
 
-        // field models for update
-        public List<VisualEditorFields> FieldForUpdate { get; set; }
-            = new List<VisualEditorFields>();
+    // checklist models for update
+    public List<EformVisualEditorModel> ChecklistForUpdate { get; set; }
+        = new List<EformVisualEditorModel>();
 
-        // checklist models for update
-        public List<EformVisualEditorModel> ChecklistForUpdate { get; set; }
-            = new List<EformVisualEditorModel>();
-
-        public bool QuickSync { get; set; }
-	}
+    public bool QuickSync { get; set; }
 }

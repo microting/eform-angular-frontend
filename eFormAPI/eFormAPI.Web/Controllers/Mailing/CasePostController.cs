@@ -21,44 +21,43 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Controllers.Mailing
+namespace eFormAPI.Web.Controllers.Mailing;
+
+using System.Threading.Tasks;
+using Infrastructure.Models.Mailing;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Services.Mailing.CasePost;
+
+[Authorize]
+public class CasePostController : Controller
 {
-    using System.Threading.Tasks;
-    using Infrastructure.Models.Mailing;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Services.Mailing.CasePost;
+    private readonly ICasePostService _casePostService;
 
-    [Authorize]
-    public class CasePostController : Controller
+    public CasePostController(ICasePostService casePostService)
     {
-        private readonly ICasePostService _casePostService;
+        _casePostService = casePostService;
+    }
 
-        public CasePostController(ICasePostService casePostService)
-        {
-            _casePostService = casePostService;
-        }
+    [HttpGet]
+    [Route("api/cases/posts")]
+    public async Task<OperationDataResult<CasePostsListModel>> GetAllPosts(CasePostsRequest requestModel)
+    {
+        return await _casePostService.GetAllPosts(requestModel);
+    }
 
-        [HttpGet]
-        [Route("api/cases/posts")]
-        public async Task<OperationDataResult<CasePostsListModel>> GetAllPosts(CasePostsRequest requestModel)
-        {
-            return await _casePostService.GetAllPosts(requestModel);
-        }
+    [HttpGet]
+    [Route("api/cases/posts/view/{id}")]
+    public async Task<OperationDataResult<CasePostViewModel>> GetPostForView(int id)
+    {
+        return await _casePostService.GetPostForView(id);
+    }
 
-        [HttpGet]
-        [Route("api/cases/posts/view/{id}")]
-        public async Task<OperationDataResult<CasePostViewModel>> GetPostForView(int id)
-        {
-            return await _casePostService.GetPostForView(id);
-        }
-
-        [HttpPost]
-        [Route("api/cases/posts")]
-        public async Task<OperationResult> CreatePost([FromBody] CasePostCreateModel model)
-        {
-            return await _casePostService.CreatePost(model);
-        }
+    [HttpPost]
+    [Route("api/cases/posts")]
+    public async Task<OperationResult> CreatePost([FromBody] CasePostCreateModel model)
+    {
+        return await _casePostService.CreatePost(model);
     }
 }

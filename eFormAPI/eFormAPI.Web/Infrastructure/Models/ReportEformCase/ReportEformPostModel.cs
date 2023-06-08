@@ -22,23 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase
+namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase;
+
+using System;
+using System.Collections.Generic;
+
+public class ReportEformCasePostModel
 {
-    using System;
-    using System.Collections.Generic;
+    public int PostId { get; set; }
+    public int CaseId { get; set; }
+    public string Comment { get; set; }
 
-    public class ReportEformCasePostModel
-    {
-        public int PostId { get; set; }
-        public int CaseId { get; set; }
-        public string Comment { get; set; }
+    public List<string> SentTo { get; set; }
+        = new List<string>();
 
-        public List<string> SentTo { get; set; }
-            = new List<string>();
+    public List<string> SentToTags { get; set; }
+        = new List<string>();
 
-        public List<string> SentToTags { get; set; }
-            = new List<string>();
-
-        public DateTime? PostDate { get; set; }
-    }
+    public DateTime? PostDate { get; set; }
 }

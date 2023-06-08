@@ -23,76 +23,75 @@ SOFTWARE.
 */
 
 
-namespace eFormAPI.Web.Infrastructure.Helpers
+namespace eFormAPI.Web.Infrastructure.Helpers;
+
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+using System.Collections.Generic;
+using System.Linq;
+using Models.Reports;
+using Microting.eForm.Infrastructure.Constants;
+
+public class EformReportHelper
 {
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Models.Reports;
-    using Microting.eForm.Infrastructure.Constants;
-
-    public class EformReportHelper
+    private int TotalSize { get; set; } = EformReportConst.HeaderSize;
+    public EformMainElement AddPageBreaks(EformMainElement mainElement)
     {
-        private int TotalSize { get; set; } = EformReportConst.HeaderSize;
-        public EformMainElement AddPageBreaks(EformMainElement mainElement)
+        mainElement.ElementList = AddPageBreaksToElements(mainElement.ElementList);
+
+
+        return mainElement;
+    }
+
+    private List<EformReportElementModel> AddPageBreaksToElements(List<EformReportElementModel> eformElements)
+    {
+        foreach (var element in eformElements)
         {
-            mainElement.ElementList = AddPageBreaksToElements(mainElement.ElementList);
-
-
-            return mainElement;
-        }
-
-        private List<EformReportElementModel> AddPageBreaksToElements(List<EformReportElementModel> eformElements)
-        {
-            foreach (var element in eformElements)
+            if (element.ElementList.Any())
             {
-                if (element.ElementList.Any())
-                {
-                    element.ElementList = AddPageBreaksToElements(element.ElementList);
-                }
-
-                if (element.DataItemList.Any())
-                {
-                    element.DataItemList = AddPageBreaksToDataItems(element.DataItemList);
-                }
+                element.ElementList = AddPageBreaksToElements(element.ElementList);
             }
 
-
-            return eformElements;
+            if (element.DataItemList.Any())
+            {
+                element.DataItemList = AddPageBreaksToDataItems(element.DataItemList);
+            }
         }
 
-        private List<EformReportDataItemModel> AddPageBreaksToDataItems(
-            List<EformReportDataItemModel> dataItemList)
+
+        return eformElements;
+    }
+
+    private List<EformReportDataItemModel> AddPageBreaksToDataItems(
+        List<EformReportDataItemModel> dataItemList)
+    {
+        foreach (var dataItem in dataItemList)
         {
-            foreach (var dataItem in dataItemList)
+            // Check field type
+            if (dataItem.FieldType == Constants.FieldTypes.MultiSelect)
             {
-                // Check field type
-                if (dataItem.FieldType == Constants.FieldTypes.MultiSelect)
-                {
-                    for (var i = 0; i < dataItem.KeyValuePairList.Count; i++)
-                    {
-                        TotalSize += EformReportConst.ElementSize;
-                    }
-                }
-                else
+                for (var i = 0; i < dataItem.KeyValuePairList.Count; i++)
                 {
                     TotalSize += EformReportConst.ElementSize;
                 }
-
-                // Add spacing
-                if (TotalSize % EformReportConst.TotalPageSize == 0)
-                {
-                    dataItem.IsNewPageItem = true;
-                }
-
-                // Check if it's recursive
-                if (dataItem.DataItemList.Any())
-                {
-                    dataItem.DataItemList = AddPageBreaksToDataItems(dataItem.DataItemList);
-                }
-
             }
-            return dataItemList;
+            else
+            {
+                TotalSize += EformReportConst.ElementSize;
+            }
+
+            // Add spacing
+            if (TotalSize % EformReportConst.TotalPageSize == 0)
+            {
+                dataItem.IsNewPageItem = true;
+            }
+
+            // Check if it's recursive
+            if (dataItem.DataItemList.Any())
+            {
+                dataItem.DataItemList = AddPageBreaksToDataItems(dataItem.DataItemList);
+            }
+
         }
+        return dataItemList;
     }
 }

@@ -23,34 +23,33 @@ SOFTWARE.
 */
 
 
-namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase
+namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase;
+
+using System.Collections.Generic;
+using System;
+
+public class EFormCasesReportModel
 {
-    using System.Collections.Generic;
-    using System;
+    public EformReportHeaders TextHeaders { get; set; }
 
-    public class EFormCasesReportModel
-    {
-        public EformReportHeaders TextHeaders { get; set; }
+    public string TemplateName { get; set; }
 
-        public string TemplateName { get; set; }
+    public List<string> DescriptionBlocks { get; set; } =
+        new List<string>();
 
-        public List<string> DescriptionBlocks { get; set; } =
-            new List<string>();
+    public List<KeyValuePair<List<string>, List<string>>> ImageNames { get; set; } =
+        new List<KeyValuePair<List<string>, List<string>>>();
 
-        public List<KeyValuePair<List<string>, List<string>>> ImageNames { get; set; } =
-            new List<KeyValuePair<List<string>, List<string>>>();
+    /*public List<ReportEformCasePostModel> Posts { get; set; } =
+        new List<ReportEformCasePostModel>();*/
 
-        /*public List<ReportEformCasePostModel> Posts { get; set; } =
-            new List<ReportEformCasePostModel>();*/
+    public List<KeyValuePair<int, string>> ItemHeaders { get; set; } =
+        new List<KeyValuePair<int, string>>();
 
-        public List<KeyValuePair<int, string>> ItemHeaders { get; set; } =
-            new List<KeyValuePair<int, string>>();
+    public List<ReportEformCaseModel> Items { get; set; } =
+        new List<ReportEformCaseModel>();
 
-        public List<ReportEformCaseModel> Items { get; set; } =
-            new List<ReportEformCaseModel>();
+    public DateTime? FromDate { get; set; }
 
-        public DateTime? FromDate { get; set; }
-
-        public DateTime? ToDate { get; set; }
-    }
+    public DateTime? ToDate { get; set; }
 }

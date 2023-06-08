@@ -22,14 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Abstractions;
+
+using System.IO;
+using System.Threading.Tasks;
+using Infrastructure.Models.ReportEformCase;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+public interface IWordService
 {
-    using System.IO;
-    using System.Threading.Tasks;
-    using Infrastructure.Models.ReportEformCase;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    public interface IWordService
-    {
-        public Task<OperationDataResult<Stream>> GenerateWordDashboard(EFormCasesReportModel reportModel);
-    }
+    public Task<OperationDataResult<Stream>> GenerateWordDashboard(EFormCasesReportModel reportModel);
 }

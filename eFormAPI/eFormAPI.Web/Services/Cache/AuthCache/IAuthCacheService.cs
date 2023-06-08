@@ -21,14 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Services.Cache.AuthCache
-{
-    using Infrastructure.Models.Auth;
+namespace eFormAPI.Web.Services.Cache.AuthCache;
 
-    public interface IAuthCacheService
-    {
-        AuthItem TryGetValue(int userId);
-        void Set(AuthItem authItem, int userId);
-        void Remove(int userId);
-    }
+using Infrastructure.Models.Auth;
+
+public interface IAuthCacheService
+{
+    AuthItem TryGetValue(int userId);
+    void Set(AuthItem authItem, int userId);
+    void Remove(int userId);
 }

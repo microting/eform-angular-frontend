@@ -22,20 +22,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Mailing
-{
-    using System.Collections.Generic;
+namespace eFormAPI.Web.Infrastructure.Models.Mailing;
 
-    public class CasePostCreateModel
-    {
-        public int From { get; set; }
-        public List<int> ToRecipientsIds { get; set; }
-        public List<int> ToTagsIds { get; set; }
-        public string Subject { get; set; }
-        public string Text { get; set; }
-        public bool AttachReport { get; set; }
-        public bool AttachLinkToCase { get; set; }
-        public int CaseId { get; set; }
-        public int TemplateId { get; set; }
-    }
+using System.Collections.Generic;
+
+public class CasePostCreateModel
+{
+    public int From { get; set; }
+    public List<int> ToRecipientsIds { get; set; }
+    public List<int> ToTagsIds { get; set; }
+    public string Subject { get; set; }
+    public string Text { get; set; }
+    public bool AttachReport { get; set; }
+    public bool AttachLinkToCase { get; set; }
+    public int CaseId { get; set; }
+    public int TemplateId { get; set; }
 }

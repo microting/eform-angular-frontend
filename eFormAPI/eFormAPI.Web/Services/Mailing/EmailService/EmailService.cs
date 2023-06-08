@@ -22,83 +22,82 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.Mailing.EmailService
+namespace eFormAPI.Web.Services.Mailing.EmailService;
+
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Hosting.Helpers.DbOptions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+
+public class EmailService : IEmailService
 {
-    using System;
-    using System.IO;
-    using System.Threading.Tasks;
-    using Hosting.Helpers.DbOptions;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-    using SendGrid;
-    using SendGrid.Helpers.Mail;
+    private readonly IDbOptions<EmailSettings> _emailSettings;
 
-    public class EmailService : IEmailService
+    public EmailService(IDbOptions<EmailSettings> emailSettings)
     {
-        private readonly IDbOptions<EmailSettings> _emailSettings;
+        _emailSettings = emailSettings;
+    }
 
-        public EmailService(IDbOptions<EmailSettings> emailSettings)
+    public async Task SendAsync(
+        string fromEmail,
+        string fromName,
+        string subject,
+        string to,
+        string text = null,
+        string html = null)
+    {
+        try
         {
-            _emailSettings = emailSettings;
-        }
-
-        public async Task SendAsync(
-            string fromEmail,
-            string fromName,
-            string subject,
-            string to,
-            string text = null,
-            string html = null)
-        {
-            try
+            var client = new SendGridClient(_emailSettings.Value.SendGridKey);
+            var fromAddress = new EmailAddress(fromEmail.Replace(" ", ""), fromName);
+            var toAddress = new EmailAddress(to.Replace(" ", ""));
+            var msg = MailHelper.CreateSingleEmail(fromAddress, toAddress, subject, text, html);
+            var response = await client.SendEmailAsync(msg);
+            if (((int)response.StatusCode < 200) || ((int)response.StatusCode >= 300))
             {
-                var client = new SendGridClient(_emailSettings.Value.SendGridKey);
-                var fromAddress = new EmailAddress(fromEmail.Replace(" ", ""), fromName);
-                var toAddress = new EmailAddress(to.Replace(" ", ""));
-                var msg = MailHelper.CreateSingleEmail(fromAddress, toAddress, subject, text, html);
-                var response = await client.SendEmailAsync(msg);
-                if (((int)response.StatusCode < 200) || ((int)response.StatusCode >= 300))
-                {
-                    var responseText = await response.Body.ReadAsStringAsync();
-                    throw new Exception($"Status: {response.StatusCode}. Response: {responseText}");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to send email message", ex);
+                var responseText = await response.Body.ReadAsStringAsync();
+                throw new Exception($"Status: {response.StatusCode}. Response: {responseText}");
             }
         }
-
-        public async Task SendFileAsync(
-            string fromEmail,
-            string fromName,
-            string subject,
-            string to,
-            string fileName,
-            string text = null, string html = null)
+        catch (Exception ex)
         {
-            try
+            throw new Exception("Failed to send email message", ex);
+        }
+    }
+
+    public async Task SendFileAsync(
+        string fromEmail,
+        string fromName,
+        string subject,
+        string to,
+        string fileName,
+        string text = null, string html = null)
+    {
+        try
+        {
+            var client = new SendGridClient(_emailSettings.Value.SendGridKey);
+            var fromEmailAddress = new EmailAddress(fromEmail.Replace(" ", ""), fromName);
+            var toEmail = new EmailAddress(to.Replace(" ", ""));
+            var msg = MailHelper.CreateSingleEmail(fromEmailAddress, toEmail, subject, text, html);
+            var bytes = File.ReadAllBytes(fileName);
+            var file = Convert.ToBase64String(bytes);
+            msg.AddAttachment(Path.GetFileName(fileName), file);
+            var response = await client.SendEmailAsync(msg);
+            if (((int)response.StatusCode < 200) || ((int)response.StatusCode >= 300))
             {
-                var client = new SendGridClient(_emailSettings.Value.SendGridKey);
-                var fromEmailAddress = new EmailAddress(fromEmail.Replace(" ", ""), fromName);
-                var toEmail = new EmailAddress(to.Replace(" ", ""));
-                var msg = MailHelper.CreateSingleEmail(fromEmailAddress, toEmail, subject, text, html);
-                var bytes = File.ReadAllBytes(fileName);
-                var file = Convert.ToBase64String(bytes);
-                msg.AddAttachment(Path.GetFileName(fileName), file);
-                var response = await client.SendEmailAsync(msg);
-                if (((int)response.StatusCode < 200) || ((int)response.StatusCode >= 300))
-                {
-                    throw new Exception($"Status: {response.StatusCode}");
-                }
+                throw new Exception($"Status: {response.StatusCode}");
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to send email message", ex);
-            }
-            finally
-            {
-                File.Delete(fileName);
-            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Failed to send email message", ex);
+        }
+        finally
+        {
+            File.Delete(fileName);
         }
     }
 }

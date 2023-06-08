@@ -25,266 +25,265 @@ SOFTWARE.
 
 using System.Web;
 
-namespace eFormAPI.Web.Services
+namespace eFormAPI.Web.Services;
+
+using Microsoft.EntityFrameworkCore;
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Abstractions;
+using Hosting.Helpers.DbOptions;
+using Infrastructure.Models.Settings;
+using Infrastructure.Models.Settings.User;
+using Infrastructure.Models.Users;
+using Mailing.EmailService;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microting.eForm.Dto;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
+
+public class AccountService : IAccountService
 {
-    using Microsoft.EntityFrameworkCore;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Abstractions;
-    using Hosting.Helpers.DbOptions;
-    using Infrastructure.Models.Settings;
-    using Infrastructure.Models.Settings.User;
-    using Infrastructure.Models.Users;
-    using Mailing.EmailService;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
-    using Microting.eForm.Dto;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
-    using Microting.eFormApi.BasePn.Abstractions;
-    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
+    private readonly IEFormCoreService _coreHelper;
+    private readonly IUserService _userService;
+    private readonly IEmailSender _emailSender;
+    private readonly IDbOptions<ApplicationSettings> _appSettings;
+    private readonly ILogger<AccountService> _logger;
+    private readonly ILocalizationService _localizationService;
+    private readonly UserManager<EformUser> _userManager;
+    private readonly BaseDbContext _dbContext;
+    private readonly IEmailService _emailService;
 
-    public class AccountService : IAccountService
+    public AccountService(IEFormCoreService coreHelper,
+        UserManager<EformUser> userManager,
+        IUserService userService,
+        IDbOptions<ApplicationSettings> appSettings,
+        ILogger<AccountService> logger,
+        ILocalizationService localizationService,
+        IEmailSender emailSender,
+        BaseDbContext dbContext,
+        IEmailService emailService)
     {
-        private readonly IEFormCoreService _coreHelper;
-        private readonly IUserService _userService;
-        private readonly IEmailSender _emailSender;
-        private readonly IDbOptions<ApplicationSettings> _appSettings;
-        private readonly ILogger<AccountService> _logger;
-        private readonly ILocalizationService _localizationService;
-        private readonly UserManager<EformUser> _userManager;
-        private readonly BaseDbContext _dbContext;
-        private readonly IEmailService _emailService;
+        _coreHelper = coreHelper;
+        _userManager = userManager;
+        _userService = userService;
+        _appSettings = appSettings;
+        _logger = logger;
+        _localizationService = localizationService;
+        _emailSender = emailSender;
+        _dbContext = dbContext;
+        _emailService = emailService;
+    }
 
-        public AccountService(IEFormCoreService coreHelper,
-            UserManager<EformUser> userManager,
-            IUserService userService,
-            IDbOptions<ApplicationSettings> appSettings,
-            ILogger<AccountService> logger,
-            ILocalizationService localizationService,
-            IEmailSender emailSender,
-            BaseDbContext dbContext,
-            IEmailService emailService)
+    public async Task<UserInfoViewModel> GetUserInfo()
+    {
+        var user = await _userService.GetCurrentUserAsync();
+        if (user == null)
         {
-            _coreHelper = coreHelper;
-            _userManager = userManager;
-            _userService = userService;
-            _appSettings = appSettings;
-            _logger = logger;
-            _localizationService = localizationService;
-            _emailSender = emailSender;
-            _dbContext = dbContext;
-            _emailService = emailService;
+            return null;
         }
 
-        public async Task<UserInfoViewModel> GetUserInfo()
+        var roles = await _userManager.GetRolesAsync(user);
+        var role = roles.FirstOrDefault();
+        return new UserInfoViewModel
         {
-            var user = await _userService.GetCurrentUserAsync();
-            if (user == null)
-            {
-                return null;
-            }
+            Email = user.Email,
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Role = role
+        };
+    }
 
-            var roles = await _userManager.GetRolesAsync(user);
-            var role = roles.FirstOrDefault();
-            return new UserInfoViewModel
+    public async Task<OperationDataResult<UserSettingsModel>> GetUserSettings()
+    {
+        var user = await _userService.GetCurrentUserAsync();
+        if (user == null)
+        {
+            return new OperationDataResult<UserSettingsModel>(false, _localizationService.GetString("UserNotFound"));
+        }
+
+        var timeZone = string.IsNullOrEmpty(user.TimeZone) ? "Europe/Copenhagen" : user.TimeZone;
+        var formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats;
+        var darkTheme = user.DarkTheme;
+        var locale = string.IsNullOrEmpty(user.Locale) ? "da" : user.Locale;
+
+        var securityGroupRedirectLink = await _dbContext.SecurityGroupUsers
+            .Where(x => x.EformUserId == user.Id)
+            .OrderByDescending(x => x.CreatedAt)
+            .Select(x => x.SecurityGroup.RedirectLink)
+            .FirstOrDefaultAsync();
+
+        return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
+        {
+            Locale = locale,
+            DarkTheme = darkTheme,
+            Formats = formats,
+            TimeZone = timeZone,
+            LoginRedirectUrl = securityGroupRedirectLink
+        });
+    }
+
+    public OperationDataResult<TimeZonesModel> AllTimeZones()
+    {
+        TimeZonesModel timeZones = new TimeZonesModel();
+        timeZones.TimeZoneModels = new List<TimeZoneModel>();
+        foreach (TimeZoneInfo timeZoneInfo in TimeZoneInfo.GetSystemTimeZones().OrderBy(x => x.Id))
+        {
+            TimeZoneModel timeZoneModel = new TimeZoneModel()
             {
-                Email = user.Email,
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Role = role
+                Id = timeZoneInfo.Id,
+                Name = timeZoneInfo.Id
             };
+            timeZones.TimeZoneModels.Add(timeZoneModel);
+        }
+        return new OperationDataResult<TimeZonesModel>(true, timeZones);
+    }
+
+    public async Task<OperationResult> UpdateUserSettings(UserSettingsModel model)
+    {
+        var user = await _userService.GetCurrentUserAsync();
+        if (user == null)
+        {
+            return new OperationResult(false, _localizationService.GetString("UserNotFound"));
         }
 
-        public async Task<OperationDataResult<UserSettingsModel>> GetUserSettings()
+        user.Locale = model.Locale;
+        user.TimeZone = model.TimeZone;
+        user.Formats = model.Formats;
+        user.DarkTheme = model.DarkTheme;
+        var updateResult = await _userManager.UpdateAsync(user);
+        if (!updateResult.Succeeded)
         {
-            var user = await _userService.GetCurrentUserAsync();
-            if (user == null)
-            {
-                return new OperationDataResult<UserSettingsModel>(false, _localizationService.GetString("UserNotFound"));
-            }
-
-            var timeZone = string.IsNullOrEmpty(user.TimeZone) ? "Europe/Copenhagen" : user.TimeZone;
-            var formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats;
-            var darkTheme = user.DarkTheme;
-            var locale = string.IsNullOrEmpty(user.Locale) ? "da" : user.Locale;
-
-            var securityGroupRedirectLink = await _dbContext.SecurityGroupUsers
-                .Where(x => x.EformUserId == user.Id)
-                .OrderByDescending(x => x.CreatedAt)
-                .Select(x => x.SecurityGroup.RedirectLink)
-                .FirstOrDefaultAsync();
-
-            return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
-            {
-                Locale = locale,
-                DarkTheme = darkTheme,
-                Formats = formats,
-                TimeZone = timeZone,
-                LoginRedirectUrl = securityGroupRedirectLink
-            });
+            return new OperationResult(false,
+                $"Error while updating user settings: {string.Join(", ", updateResult.Errors.Select(x => x.Description).ToArray())}");
         }
 
-        public OperationDataResult<TimeZonesModel> AllTimeZones()
+        return new OperationResult(true);
+    }
+
+    public async Task<OperationResult> ChangePassword(ChangePasswordModel model)
+    {
+        var user = await _userService.GetCurrentUserAsync();
+
+        var result = await _userManager.ChangePasswordAsync(
+            user,
+            model.OldPassword,
+            model.NewPassword);
+
+        if (!result.Succeeded)
         {
-            TimeZonesModel timeZones = new TimeZonesModel();
-            timeZones.TimeZoneModels = new List<TimeZoneModel>();
-            foreach (TimeZoneInfo timeZoneInfo in TimeZoneInfo.GetSystemTimeZones().OrderBy(x => x.Id))
-            {
-                TimeZoneModel timeZoneModel = new TimeZoneModel()
-                {
-                    Id = timeZoneInfo.Id,
-                    Name = timeZoneInfo.Id
-                };
-                timeZones.TimeZoneModels.Add(timeZoneModel);
-            }
-            return new OperationDataResult<TimeZonesModel>(true, timeZones);
+            var errors = result.Errors.Select(x => x.Description).ToArray();
+            return new OperationResult(false, string.Join(" ", errors));
         }
 
-        public async Task<OperationResult> UpdateUserSettings(UserSettingsModel model)
+        return new OperationResult(true, _localizationService.GetString("PasswordSuccessfullyUpdated"));
+    }
+
+    public async Task<OperationResult> ForgotPassword(ForgotPasswordModel model)
+    {
+        var core = await _coreHelper.GetCore();
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null)
         {
-            var user = await _userService.GetCurrentUserAsync();
-            if (user == null)
-            {
-                return new OperationResult(false, _localizationService.GetString("UserNotFound"));
-            }
-
-            user.Locale = model.Locale;
-            user.TimeZone = model.TimeZone;
-            user.Formats = model.Formats;
-            user.DarkTheme = model.DarkTheme;
-            var updateResult = await _userManager.UpdateAsync(user);
-                if (!updateResult.Succeeded)
-            {
-                return new OperationResult(false,
-                    $"Error while updating user settings: {string.Join(", ", updateResult.Errors.Select(x => x.Description).ToArray())}");
-            }
-
-            return new OperationResult(true);
+            return new OperationResult(false, $"User with {model.Email} not found");
         }
 
-        public async Task<OperationResult> ChangePassword(ChangePasswordModel model)
-        {
-            var user = await _userService.GetCurrentUserAsync();
-
-            var result = await _userManager.ChangePasswordAsync(
-                user,
-                model.OldPassword,
-                model.NewPassword);
-
-            if (!result.Succeeded)
-            {
-                var errors = result.Errors.Select(x => x.Description).ToArray();
-                return new OperationResult(false, string.Join(" ", errors));
-            }
-
-            return new OperationResult(true, _localizationService.GetString("PasswordSuccessfullyUpdated"));
-        }
-
-        public async Task<OperationResult> ForgotPassword(ForgotPasswordModel model)
-        {
-            var core = await _coreHelper.GetCore();
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                return new OperationResult(false, $"User with {model.Email} not found");
-            }
-
-            var code = HttpUtility.UrlEncode(await _userManager.GeneratePasswordResetTokenAsync(user));
-            var link = await core.GetSdkSetting(Settings.httpServerAddress);
-            link = $"{link}/auth/restore-password-confirmation?userId={user.Id}&code={code}";
+        var code = HttpUtility.UrlEncode(await _userManager.GeneratePasswordResetTokenAsync(user));
+        var link = await core.GetSdkSetting(Settings.httpServerAddress);
+        link = $"{link}/auth/restore-password-confirmation?userId={user.Id}&code={code}";
 /*            await _emailSender.SendEmailAsync(user.Email, "EForm Password Reset",
                 "Please reset your password by clicking <a href=\"" + link + "\">here</a>");*/
 
-            var html = $"Hej {user.FirstName} {user.LastName}<br><br>" +
-                "Du har valgt at nulstille din adgangskode til Microting.<br>" +
-                "Klik på nedenstående link for at angive en ny adgangskode.<br><br>" +
-                $"<a href=\" {link}\">Angiv ny adgangskode</a><br><br>" +
-                "Hvis du ikke har anmodet om dette, så se venligst bort fra denne mail.<br><br>" +
-                "Din adgangskode forbliver uændret, indtil du laver en ny via linket herover.<br><br>" +
-                "Med venlig hilsen<br><br>" +
-                "Microting<br><br>" +
-                "Support: 66 11 10 66";
+        var html = $"Hej {user.FirstName} {user.LastName}<br><br>" +
+                   "Du har valgt at nulstille din adgangskode til Microting.<br>" +
+                   "Klik på nedenstående link for at angive en ny adgangskode.<br><br>" +
+                   $"<a href=\" {link}\">Angiv ny adgangskode</a><br><br>" +
+                   "Hvis du ikke har anmodet om dette, så se venligst bort fra denne mail.<br><br>" +
+                   "Din adgangskode forbliver uændret, indtil du laver en ny via linket herover.<br><br>" +
+                   "Med venlig hilsen<br><br>" +
+                   "Microting<br><br>" +
+                   "Support: 66 11 10 66";
 
-            await _emailService.SendAsync(
-                EformEmailConst.FromEmail,
-                "no-reply@microting.com",
-                "Nulstilling af adgangskode",
-                user.Email,
-                html: html);
+        await _emailService.SendAsync(
+            EformEmailConst.FromEmail,
+            "no-reply@microting.com",
+            "Nulstilling af adgangskode",
+            user.Email,
+            html: html);
 
+        return new OperationResult(true);
+    }
+
+
+    [HttpGet]
+    [AllowAnonymous]
+    [Route("reset-admin-password")]
+    public async Task<OperationResult> ResetAdminPassword(string code)
+    {
+        var securityCode = _appSettings.Value.SecurityCode;
+        if (string.IsNullOrEmpty(securityCode))
+        {
+            return new OperationResult(false, _localizationService.GetString("PleaseSetupSecurityCode"));
+        }
+
+        var defaultPassword = _appSettings.Value.DefaultPassword;
+        if (code != securityCode)
+        {
+            return new OperationResult(false, _localizationService.GetString("InvalidSecurityCode"));
+        }
+
+        var users = await _userManager.GetUsersInRoleAsync(EformRole.Admin);
+        var user = users.FirstOrDefault();
+
+        if (user == null)
+        {
+            return new OperationResult(false, _localizationService.GetString("AdminUserNotFound"));
+        }
+
+        var removeResult = await _userManager.RemovePasswordAsync(user);
+        if (!removeResult.Succeeded)
+        {
+            return new OperationResult(false,
+                _localizationService.GetString("ErrorWhileRemovingOldPassword") + ". \n" +
+                string.Join(" ", removeResult.Errors.Select(x=>x.Description).ToArray()));
+        }
+
+        var addPasswordResult = await _userManager.AddPasswordAsync(user, defaultPassword);
+        if (!addPasswordResult.Succeeded)
+        {
+            return new OperationResult(false,
+                _localizationService.GetString("ErrorWhileAddNewPassword") + ". \n" +
+                string.Join(" ", addPasswordResult.Errors.Select(x=>x.Description).ToArray()));
+        }
+
+        return new OperationResult(true, _localizationService.GetStringWithFormat("YourEmailPasswordHasBeenReset", user.Email));
+    }
+
+    public async Task<OperationResult> ResetPassword(Infrastructure.Models.ResetPasswordModel model)
+    {
+        var user = await _userManager.FindByIdAsync(model.UserId.ToString());
+        if (user == null)
+        {
+            return new OperationResult(false);
+        }
+
+        var result = await _userManager.ResetPasswordAsync(user, model.Code, model.NewPassword);
+        if (result.Succeeded)
+        {
             return new OperationResult(true);
         }
 
-
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("reset-admin-password")]
-        public async Task<OperationResult> ResetAdminPassword(string code)
-        {
-            var securityCode = _appSettings.Value.SecurityCode;
-            if (string.IsNullOrEmpty(securityCode))
-            {
-                return new OperationResult(false, _localizationService.GetString("PleaseSetupSecurityCode"));
-            }
-
-            var defaultPassword = _appSettings.Value.DefaultPassword;
-            if (code != securityCode)
-            {
-                return new OperationResult(false, _localizationService.GetString("InvalidSecurityCode"));
-            }
-
-            var users = await _userManager.GetUsersInRoleAsync(EformRole.Admin);
-            var user = users.FirstOrDefault();
-
-            if (user == null)
-            {
-                return new OperationResult(false, _localizationService.GetString("AdminUserNotFound"));
-            }
-
-            var removeResult = await _userManager.RemovePasswordAsync(user);
-            if (!removeResult.Succeeded)
-            {
-                return new OperationResult(false,
-                    _localizationService.GetString("ErrorWhileRemovingOldPassword") + ". \n" +
-                    string.Join(" ", removeResult.Errors.Select(x=>x.Description).ToArray()));
-            }
-
-            var addPasswordResult = await _userManager.AddPasswordAsync(user, defaultPassword);
-            if (!addPasswordResult.Succeeded)
-            {
-                return new OperationResult(false,
-                    _localizationService.GetString("ErrorWhileAddNewPassword") + ". \n" +
-                    string.Join(" ", addPasswordResult.Errors.Select(x=>x.Description).ToArray()));
-            }
-
-            return new OperationResult(true, _localizationService.GetStringWithFormat("YourEmailPasswordHasBeenReset", user.Email));
-        }
-
-        public async Task<OperationResult> ResetPassword(Infrastructure.Models.ResetPasswordModel model)
-        {
-            var user = await _userManager.FindByIdAsync(model.UserId.ToString());
-            if (user == null)
-            {
-                return new OperationResult(false);
-            }
-
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.NewPassword);
-            if (result.Succeeded)
-            {
-                return new OperationResult(true);
-            }
-
-            return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
-        }
+        return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
     }
 }

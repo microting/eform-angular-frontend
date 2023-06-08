@@ -22,14 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase
+namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase;
+
+public class EformReportHeaders
 {
-    public class EformReportHeaders
-    {
-        public string Header1 { get; set; }
-        public string Header2 { get; set; }
-        public string Header3 { get; set; }
-        public string Header4 { get; set; }
-        public string Header5 { get; set; }
-    }
+    public string Header1 { get; set; }
+    public string Header2 { get; set; }
+    public string Header3 { get; set; }
+    public string Header4 { get; set; }
+    public string Header5 { get; set; }
 }

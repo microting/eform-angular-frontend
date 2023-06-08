@@ -30,45 +30,44 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using eFormAPI.Web.Services.NavigationMenu;
 using System.Collections.Generic;
 
-namespace eFormAPI.Web.Controllers
+namespace eFormAPI.Web.Controllers;
+
+[Authorize]
+public class MenuController : Controller
 {
-    [Authorize]
-    public class MenuController : Controller
+    private readonly IMenuService _menuService;
+
+    public MenuController(IMenuService menuService)
     {
-        private readonly IMenuService _menuService;
+        _menuService = menuService;
+    }
 
-        public MenuController(IMenuService menuService)
-        {
-            _menuService = menuService;
-        }
+    [HttpGet]
+    [AllowAnonymous]
+    [Route("api/menu/current-user")]
+    public Task<OperationDataResult<MenuModel>> GetCurrentUserMenu()
+    {
+        return _menuService.GetCurrentUserMenu();
+    }
 
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("api/menu/current-user")]
-        public Task<OperationDataResult<MenuModel>> GetCurrentUserMenu()
-        {
-            return _menuService.GetCurrentUserMenu();
-        }
+    [HttpGet]
+    [Route("api/navigation-menu")]
+    public async Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu()
+    {
+        return await _menuService.GetCurrentNavigationMenu();
+    }
 
-        [HttpGet]
-        [Route("api/navigation-menu")]
-        public async Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu()
-        {
-            return await _menuService.GetCurrentNavigationMenu();
-        }
+    [HttpPut]
+    [Route("api/navigation-menu")]
+    public Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu([FromBody]List<NavigationMenuItemModel> menuItemModels)
+    {
+        return _menuService.UpdateCurrentUserMenu(menuItemModels);
+    }
 
-        [HttpPut]
-        [Route("api/navigation-menu")]
-        public Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu([FromBody]List<NavigationMenuItemModel> menuItemModels)
-        {
-            return _menuService.UpdateCurrentUserMenu(menuItemModels);
-        }
-
-        [HttpPost]
-        [Route("api/navigation-menu/reset")]
-        public Task<OperationResult> ResetCurrentUserMenu()
-        {
-            return _menuService.ResetCurrentUserMenu();
-        }
+    [HttpPost]
+    [Route("api/navigation-menu/reset")]
+    public Task<OperationResult> ResetCurrentUserMenu()
+    {
+        return _menuService.ResetCurrentUserMenu();
     }
 }

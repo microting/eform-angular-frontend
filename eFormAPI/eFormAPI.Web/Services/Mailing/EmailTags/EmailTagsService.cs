@@ -22,150 +22,149 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.Mailing.EmailTags
+namespace eFormAPI.Web.Services.Mailing.EmailTags;
+
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Abstractions;
+using Infrastructure.Models.Mailing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Mailing;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public class EmailTagsService : IEmailTagsService
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Abstractions;
-    using Infrastructure.Models.Mailing;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Logging;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Mailing;
-    using Microting.eFormApi.BasePn.Abstractions;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    private readonly ILogger<EmailTagsService> _logger;
+    private readonly IUserService _userService;
+    private readonly ILocalizationService _localizationService;
+    private readonly BaseDbContext _dbContext;
 
-    public class EmailTagsService : IEmailTagsService
+    public EmailTagsService(
+        ILogger<EmailTagsService> logger,
+        BaseDbContext dbContext,
+        ILocalizationService localizationService,
+        IUserService userService)
     {
-        private readonly ILogger<EmailTagsService> _logger;
-        private readonly IUserService _userService;
-        private readonly ILocalizationService _localizationService;
-        private readonly BaseDbContext _dbContext;
+        _logger = logger;
+        _dbContext = dbContext;
+        _localizationService = localizationService;
+        _userService = userService;
+    }
 
-        public EmailTagsService(
-            ILogger<EmailTagsService> logger,
-            BaseDbContext dbContext,
-            ILocalizationService localizationService,
-            IUserService userService)
+    public async Task<OperationDataResult<CommonDictionaryModel[]>> GetEmailTags()
+    {
+        try
         {
-            _logger = logger;
-            _dbContext = dbContext;
-            _localizationService = localizationService;
-            _userService = userService;
-        }
-
-        public async Task<OperationDataResult<CommonDictionaryModel[]>> GetEmailTags()
-        {
-            try
-            {
-                var emailTags = await _dbContext.EmailTags
-                    .AsNoTracking()
-                    .Select(x => new CommonDictionaryModel
-                    {
-                        Id = x.Id,
-                        Name = x.Name
-                    }).ToListAsync();
-
-                return new OperationDataResult<CommonDictionaryModel[]>(
-                    true,
-                    emailTags.ToArray());
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                _logger.LogError(e.Message);
-                return new OperationDataResult<CommonDictionaryModel[]>(
-                    false,
-                    _localizationService.GetString("ErrorWhileObtainingEmailTag"));
-            }
-        }
-        public async Task<OperationResult> UpdateEmailTag(EmailRecipientTagModel requestModel)
-        {
-            try
-            {
-                var emailTag = await _dbContext.EmailTags
-                    .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
-
-                if (emailTag == null)
+            var emailTags = await _dbContext.EmailTags
+                .AsNoTracking()
+                .Select(x => new CommonDictionaryModel
                 {
-                    return new OperationResult(false,
-                        _localizationService.GetString("EmailTagNotFound"));
-                }
+                    Id = x.Id,
+                    Name = x.Name
+                }).ToListAsync();
 
-                emailTag.Name = requestModel.Name;
-                emailTag.UpdatedAt = DateTime.UtcNow;
-                emailTag.UpdatedByUserId = _userService.UserId;
-
-                _dbContext.EmailTags.Update(emailTag);
-                await _dbContext.SaveChangesAsync();
-
-                return new OperationResult(true,
-                    _localizationService.GetString("EmailTagUpdatedSuccessfully"));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                _logger.LogError(e.Message);
-                return new OperationResult(false,
-                    _localizationService.GetString("ErrorWhileUpdatingEmailTag"));
-            }
+            return new OperationDataResult<CommonDictionaryModel[]>(
+                true,
+                emailTags.ToArray());
         }
-        public async Task<OperationResult> DeleteEmailTag(int id)
+        catch (Exception e)
         {
-            try
-            {
-                var emailTag = await _dbContext.EmailTags
-                    .FirstOrDefaultAsync(x => x.Id == id);
-
-                if (emailTag == null)
-                {
-                    return new OperationResult(false,
-                        _localizationService.GetString("EmailTagNotFound"));
-                }
-
-                _dbContext.EmailTags.Remove(emailTag);
-                await _dbContext.SaveChangesAsync();
-
-                return new OperationResult(true,
-                    _localizationService.GetString("EmailTagRemovedSuccessfully"));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                _logger.LogError(e.Message);
-                return new OperationResult(false,
-                    _localizationService.GetString("ErrorWhileRemovingEmailTag"));
-            }
+            Console.WriteLine(e);
+            _logger.LogError(e.Message);
+            return new OperationDataResult<CommonDictionaryModel[]>(
+                false,
+                _localizationService.GetString("ErrorWhileObtainingEmailTag"));
         }
-        public async Task<OperationResult> CreateEmailTag(EmailRecipientTagModel requestModel)
+    }
+    public async Task<OperationResult> UpdateEmailTag(EmailRecipientTagModel requestModel)
+    {
+        try
         {
-            try
-            {
-                var emailTag = new EmailTag
-                {
-                    Name = requestModel.Name,
-                    CreatedAt = DateTime.UtcNow,
-                    CreatedByUserId = _userService.UserId,
-                    UpdatedByUserId = _userService.UserId,
-                    UpdatedAt = DateTime.UtcNow,
-                    Version = 1
-                };
+            var emailTag = await _dbContext.EmailTags
+                .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
 
-                await _dbContext.EmailTags.AddAsync(emailTag);
-                await _dbContext.SaveChangesAsync();
-
-                return new OperationResult(true,
-                    _localizationService.GetString("EmailTagCreatedSuccessfully"));
-            }
-            catch (Exception e)
+            if (emailTag == null)
             {
-                Console.WriteLine(e);
-                _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString("ErrorWhileCreatingEmailTag"));
+                    _localizationService.GetString("EmailTagNotFound"));
             }
+
+            emailTag.Name = requestModel.Name;
+            emailTag.UpdatedAt = DateTime.UtcNow;
+            emailTag.UpdatedByUserId = _userService.UserId;
+
+            _dbContext.EmailTags.Update(emailTag);
+            await _dbContext.SaveChangesAsync();
+
+            return new OperationResult(true,
+                _localizationService.GetString("EmailTagUpdatedSuccessfully"));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            _logger.LogError(e.Message);
+            return new OperationResult(false,
+                _localizationService.GetString("ErrorWhileUpdatingEmailTag"));
+        }
+    }
+    public async Task<OperationResult> DeleteEmailTag(int id)
+    {
+        try
+        {
+            var emailTag = await _dbContext.EmailTags
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (emailTag == null)
+            {
+                return new OperationResult(false,
+                    _localizationService.GetString("EmailTagNotFound"));
+            }
+
+            _dbContext.EmailTags.Remove(emailTag);
+            await _dbContext.SaveChangesAsync();
+
+            return new OperationResult(true,
+                _localizationService.GetString("EmailTagRemovedSuccessfully"));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            _logger.LogError(e.Message);
+            return new OperationResult(false,
+                _localizationService.GetString("ErrorWhileRemovingEmailTag"));
+        }
+    }
+    public async Task<OperationResult> CreateEmailTag(EmailRecipientTagModel requestModel)
+    {
+        try
+        {
+            var emailTag = new EmailTag
+            {
+                Name = requestModel.Name,
+                CreatedAt = DateTime.UtcNow,
+                CreatedByUserId = _userService.UserId,
+                UpdatedByUserId = _userService.UserId,
+                UpdatedAt = DateTime.UtcNow,
+                Version = 1
+            };
+
+            await _dbContext.EmailTags.AddAsync(emailTag);
+            await _dbContext.SaveChangesAsync();
+
+            return new OperationResult(true,
+                _localizationService.GetString("EmailTagCreatedSuccessfully"));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            _logger.LogError(e.Message);
+            return new OperationResult(false,
+                _localizationService.GetString("ErrorWhileCreatingEmailTag"));
         }
     }
 }

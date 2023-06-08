@@ -23,15 +23,14 @@ SOFTWARE.
 */
 using Microsoft.Extensions.Configuration;
 
-namespace eFormAPI.Web.Hosting.Settings
+namespace eFormAPI.Web.Hosting.Settings;
+
+public static class ConfigurationBuilderExtensions
 {
-    public static class ConfigurationBuilderExtensions
+    public static IConfigurationBuilder AddEfConfiguration(
+        this IConfigurationBuilder builder,
+        string connectionString)
     {
-        public static IConfigurationBuilder AddEfConfiguration(
-            this IConfigurationBuilder builder,
-            string connectionString)
-        {
-            return builder.Add(new EfConfigurationSource(connectionString));
-        }
+        return builder.Add(new EfConfigurationSource(connectionString));
     }
 }

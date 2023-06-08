@@ -23,27 +23,26 @@ SOFTWARE.
 */
 
 
-namespace eFormAPI.Web.Abstractions.Eforms
+namespace eFormAPI.Web.Abstractions.Eforms;
+
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application.Case.CaseEdit;
+using System.Threading.Tasks;
+using Infrastructure.Models.Cases.Request;
+using Infrastructure.Models.Cases.Response;
+using Microting.eForm.Infrastructure.Models;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
+public interface ICasesService
 {
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.Case.CaseEdit;
-    using System.Threading.Tasks;
-    using Infrastructure.Models.Cases.Request;
-    using Infrastructure.Models.Cases.Response;
-    using Microting.eForm.Infrastructure.Models;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    Task<OperationDataResult<CaseListModel>> Index(CaseRequestModel requestModel);
 
-    public interface ICasesService
-    {
-        Task<OperationDataResult<CaseListModel>> Index(CaseRequestModel requestModel);
+    Task<OperationDataResult<ReplyElement>> Read(int id);
 
-        Task<OperationDataResult<ReplyElement>> Read(int id);
+    Task<OperationResult> Delete(int id);
 
-        Task<OperationResult> Delete(int id);
+    Task<OperationResult> Update(ReplyRequest model);
 
-        Task<OperationResult> Update(ReplyRequest model);
+    Task<OperationResult> Archive(int caseId);
 
-        Task<OperationResult> Archive(int caseId);
-
-        Task<OperationResult> Unarchive(int caseId);
-    }
+    Task<OperationResult> Unarchive(int caseId);
 }

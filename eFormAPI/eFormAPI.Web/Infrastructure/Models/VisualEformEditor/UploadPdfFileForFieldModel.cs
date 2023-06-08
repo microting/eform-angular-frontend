@@ -18,14 +18,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
+namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor;
+
+using Microsoft.AspNetCore.Http;
+
+public class UploadPdfFileForFieldModel
 {
-    using Microsoft.AspNetCore.Http;
+    public IFormFile File { get; set; }
 
-    public class UploadPdfFileForFieldModel
-    {
-        public IFormFile File { get; set; }
-
-        public int LanguageId { get; set; }
-    }
+    public int LanguageId { get; set; }
 }

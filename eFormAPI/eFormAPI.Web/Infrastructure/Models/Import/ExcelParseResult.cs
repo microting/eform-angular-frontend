@@ -21,15 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Import
+namespace eFormAPI.Web.Infrastructure.Models.Import;
+
+using System.Collections.Generic;
+
+public class ExcelParseResult
 {
-    using System.Collections.Generic;
+    public string Message { get; set; }
 
-    public class ExcelParseResult
-    {
-        public string Message { get; set; }
-
-        public List<ExcelParseErrorModel> Errors { get; set; }
-            = new List<ExcelParseErrorModel>();
-    }
+    public List<ExcelParseErrorModel> Errors { get; set; }
+        = new List<ExcelParseErrorModel>();
 }

@@ -22,12 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
-{
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor;
 
-    public class TranslationWithDefaultValue: CommonTranslationsModel
-    {
-        public string DefaultValue { get; set; }
-    }
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public class TranslationWithDefaultValue: CommonTranslationsModel
+{
+    public string DefaultValue { get; set; }
 }

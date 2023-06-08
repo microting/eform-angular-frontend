@@ -27,14 +27,13 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using eFormAPI.Web.Services.NavigationMenu;
 using System.Collections.Generic;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Abstractions;
+
+public interface IMenuService
 {
-    public interface IMenuService
-    {
-        Task<OperationDataResult<MenuModel>> GetCurrentUserMenu();
-        Task<OperationResult> ResetCurrentUserMenu();
-        Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu();
-        Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels);
+    Task<OperationDataResult<MenuModel>> GetCurrentUserMenu();
+    Task<OperationResult> ResetCurrentUserMenu();
+    Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu();
+    Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels);
        
-    }
 }

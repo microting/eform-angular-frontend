@@ -23,12 +23,11 @@ SOFTWARE.
 */
 using System.Collections.Generic;
 
-namespace eFormAPI.Web.Infrastructure.Models.Templates
+namespace eFormAPI.Web.Infrastructure.Models.Templates;
+
+public class DeployModel
 {
-    public class DeployModel
-    {
-        public int Id { get; set; }
-        public List<DeployCheckbox> DeployCheckboxes;
-        public int? FolderId { get; set; }
-    }
+    public int Id { get; set; }
+    public List<DeployCheckbox> DeployCheckboxes;
+    public int? FolderId { get; set; }
 }

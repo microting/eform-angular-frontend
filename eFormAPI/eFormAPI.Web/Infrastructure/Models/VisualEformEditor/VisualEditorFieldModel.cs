@@ -22,71 +22,70 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
+namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor;
+
+using System.Collections.Generic;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public class VisualEditorFieldModel
 {
-    using System.Collections.Generic;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    public int? Id { get; set; }
 
-    public class VisualEditorFieldModel
-    {
-        public int? Id { get; set; }
+    public int FieldType { get; set; }
 
-        public int FieldType { get; set; }
+    /// <summary>
+    /// Translates for label and description
+    /// for Number field - def value long. for saveButton - def value string
+    /// </summary>
+    public List<TranslationWithDefaultValue> Translations { get; set; }
+        = new();
 
-        /// <summary>
-        /// Translates for label and description
-        /// for Number field - def value long. for saveButton - def value string
-        /// </summary>
-        public List<TranslationWithDefaultValue> Translations { get; set; }
-            = new();
+    public string Color { get; set; }
 
-        public string Color { get; set; }
+    public bool Mandatory { get; set; }
 
-        public bool Mandatory { get; set; }
+    public int? Position { get; set; }
 
-        public int? Position { get; set; }
+    /// <summary>
+    /// for GroupOpenClose field
+    /// </summary>
+    public List<VisualEditorFieldModel> Fields { get; set; }
+        = new();
 
-        /// <summary>
-        /// for GroupOpenClose field
-        /// </summary>
-        public List<VisualEditorFieldModel> Fields { get; set; }
-            = new();
+    /// <summary>
+    /// for List field
+    /// </summary>
+    public List<FieldOptions> Options { get; set; }
+        = new();
 
-        /// <summary>
-        /// for List field
-        /// </summary>
-        public List<FieldOptions> Options { get; set; }
-            = new();
+    /// <summary>
+    /// for Number field - long. for Date - Date
+    /// </summary>
+    public string MinValue { get; set; }
 
-        /// <summary>
-        /// for Number field - long. for Date - Date
-        /// </summary>
-        public string MinValue { get; set; }
+    /// <summary>
+    /// for Number field - long. for Date - Date
+    /// </summary>
+    public string MaxValue { get; set; }
 
-        /// <summary>
-        /// for Number field - long. for Date - Date
-        /// </summary>
-        public string MaxValue { get; set; }
+    /// <summary>
+    /// for Number field
+    /// </summary>
+    public int? DecimalCount { get; set; }
 
-        /// <summary>
-        /// for Number field
-        /// </summary>
-        public int? DecimalCount { get; set; }
+    /// <summary>
+    /// for PDF field
+    /// </summary>
+    public List<CommonDictionaryModel> PdfFiles { get; set; }
+        = new();
 
-        /// <summary>
-        /// for PDF field
-        /// </summary>
-        public List<CommonDictionaryModel> PdfFiles { get; set; }
-            = new();
+    public int ChecklistId { get; set; }
 
-        public int ChecklistId { get; set; }
+    public int? TempId { get; set; }
 
-        public int? TempId { get; set; }
+    public int? ParentFieldId { get; set; }
 
-        public int? ParentFieldId { get; set; }
+    public string UnitName { get; set; }
 
-        public string UnitName { get; set; }
-
-        public int? EntityGroupId { get; set; }
-    }
+    public int? EntityGroupId { get; set; }
 }

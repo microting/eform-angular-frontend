@@ -27,17 +27,16 @@ using eFormAPI.Web.Infrastructure.Models.Permissions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-namespace eFormAPI.Web.Abstractions.Security
-{
-    public interface ISecurityGroupService
-    {
-        Task<OperationResult> CreateSecurityGroup(SecurityGroupCreateModel requestModel);
-        Task<OperationDataResult<SecurityGroupModel>> GetSecurityGroup(int id);
-        Task<OperationDataResult<Paged<SecurityGroupModel>>> GetSecurityGroups(SecurityGroupRequestModel requestModel);
-        Task<OperationDataResult<List<CommonDictionaryModel>>> GetSecurityGroupsDictionary();
-        Task<OperationResult> UpdateSecurityGroup(SecurityGroupUpdateModel requestModel);
-        Task<OperationResult> UpdateSecurityGroupSettings(SecurityGroupSettingsUpdateModel requestModel);
-        Task<OperationResult> DeleteSecurityGroup(int id);
+namespace eFormAPI.Web.Abstractions.Security;
 
-    }
+public interface ISecurityGroupService
+{
+    Task<OperationResult> CreateSecurityGroup(SecurityGroupCreateModel requestModel);
+    Task<OperationDataResult<SecurityGroupModel>> GetSecurityGroup(int id);
+    Task<OperationDataResult<Paged<SecurityGroupModel>>> GetSecurityGroups(SecurityGroupRequestModel requestModel);
+    Task<OperationDataResult<List<CommonDictionaryModel>>> GetSecurityGroupsDictionary();
+    Task<OperationResult> UpdateSecurityGroup(SecurityGroupUpdateModel requestModel);
+    Task<OperationResult> UpdateSecurityGroupSettings(SecurityGroupSettingsUpdateModel requestModel);
+    Task<OperationResult> DeleteSecurityGroup(int id);
+
 }

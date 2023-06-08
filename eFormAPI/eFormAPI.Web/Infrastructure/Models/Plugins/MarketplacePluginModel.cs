@@ -1,8 +1,7 @@
-﻿namespace eFormAPI.Web.Infrastructure.Models.Plugins
+﻿namespace eFormAPI.Web.Infrastructure.Models.Plugins;
+
+public class MarketplacePluginModel
 {
-    public class MarketplacePluginModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+    public int Id { get; set; }
+    public string Name { get; set; }
 }

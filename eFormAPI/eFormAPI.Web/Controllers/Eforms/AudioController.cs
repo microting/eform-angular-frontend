@@ -23,66 +23,65 @@ SOFTWARE.
 */
 
 
-namespace eFormAPI.Web.Controllers.Eforms
+namespace eFormAPI.Web.Controllers.Eforms;
+
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eForm.Dto;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+
+[Authorize]
+public class AudioController : Controller
 {
-    using System;
-    using System.IO;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eForm.Dto;
-    using Microting.eFormApi.BasePn.Abstractions;
-    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
+    private readonly IEFormCoreService _coreHelper;
 
-    [Authorize]
-    public class AudioController : Controller
+    public AudioController(IEFormCoreService coreHelper)
     {
-        private readonly IEFormCoreService _coreHelper;
+        _coreHelper = coreHelper;
+    }
 
-        public AudioController(IEFormCoreService coreHelper)
+    [HttpGet]
+    [Route("api/audio/eform-audio")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
+    public async Task<IActionResult> GetAudio(string fileName)
+    {
+        try
         {
-            _coreHelper = coreHelper;
+            var core = await _coreHelper.GetCore();
+
+            if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+            {
+                var ss = await core.GetFileFromS3Storage($"{fileName}");
+
+                Response.ContentLength = ss.ContentLength;
+
+                return File(ss.ResponseStream, ss.Headers.ContentType);
+            }
+
+            var filePath = PathHelper.GetAudioPath(fileName);
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound();
+            }
+
+            var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            //result.Content = new StreamContent(stream);
+            //result.Content.Headers.ContentType =
+            //    new MediaTypeHeaderValue("application/octet-stream");
+            //result.Content.Headers.ContentLength = stream.Length;
+            //result.Content.Headers.ContentRange = new ContentRangeHeaderValue(0, stream.Length);
+            Response.Headers.Add("Accept-Ranges", "bytes");
+            Response.Headers.Remove("Cache-Control");
+            return File(stream, "audio/wav");
         }
-
-        [HttpGet]
-        [Route("api/audio/eform-audio")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
-        public async Task<IActionResult> GetAudio(string fileName)
+        catch (Exception ex)
         {
-            try
-            {
-                var core = await _coreHelper.GetCore();
-
-                if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-                {
-                    var ss = await core.GetFileFromS3Storage($"{fileName}");
-
-                    Response.ContentLength = ss.ContentLength;
-
-                    return File(ss.ResponseStream, ss.Headers.ContentType);
-                }
-
-                var filePath = PathHelper.GetAudioPath(fileName);
-                if (!System.IO.File.Exists(filePath))
-                {
-                    return NotFound();
-                }
-
-                var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-                //result.Content = new StreamContent(stream);
-                //result.Content.Headers.ContentType =
-                //    new MediaTypeHeaderValue("application/octet-stream");
-                //result.Content.Headers.ContentLength = stream.Length;
-                //result.Content.Headers.ContentRange = new ContentRangeHeaderValue(0, stream.Length);
-                Response.Headers.Add("Accept-Ranges", "bytes");
-                Response.Headers.Remove("Cache-Control");
-                return File(stream, "audio/wav");
-            }
-            catch (Exception ex)
-            {
-                return NotFound($"Trying to find file at location: {fileName}, exception is: {ex.Message}");
-            }
+            return NotFound($"Trying to find file at location: {fileName}, exception is: {ex.Message}");
         }
     }
 }

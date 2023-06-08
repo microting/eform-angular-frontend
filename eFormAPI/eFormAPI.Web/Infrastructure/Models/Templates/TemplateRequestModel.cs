@@ -22,16 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Templates
-{
-    using System.Collections.Generic;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+namespace eFormAPI.Web.Infrastructure.Models.Templates;
 
-    public class TemplateRequestModel: FilterAndSortModel
-    {
-        //public int PageIndex { get; set; }
-        //public int PageSize { get; set; }
-        //public int Offset { get; set; }
-        public List<int> TagIds { get; set; }
-    }
+using System.Collections.Generic;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public class TemplateRequestModel: FilterAndSortModel
+{
+    //public int PageIndex { get; set; }
+    //public int PageSize { get; set; }
+    //public int Offset { get; set; }
+    public List<int> TagIds { get; set; }
 }

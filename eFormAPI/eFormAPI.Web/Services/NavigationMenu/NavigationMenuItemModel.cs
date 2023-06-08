@@ -22,30 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.NavigationMenu
+namespace eFormAPI.Web.Services.NavigationMenu;
+
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+using System.Collections.Generic;
+
+public class NavigationMenuItemModel
 {
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
-    using System.Collections.Generic;
+    public int Id { get; set; }
+    public string E2EId { get; set;}
+    public string Name { get; set; }
+    public string Link { get; set; }
+    public MenuItemTypeEnum Type { get; set; }
+    public int? RelatedTemplateItemId { get; set; }
+    public int? ParentId { get; set; }
+    public int Position { get; set; }
 
-    public class NavigationMenuItemModel
-    {
-        public int Id { get; set; }
-        public string E2EId { get; set;}
-        public string Name { get; set; }
-        public string Link { get; set; }
-        public MenuItemTypeEnum Type { get; set; }
-        public int? RelatedTemplateItemId { get; set; }
-        public int? ParentId { get; set; }
-        public int Position { get; set; }
+    public List<int> SecurityGroupsIds { get; set; }
+        = new List<int>();
+    public List<NavigationMenuItemModel> Children { get; set; } 
+        = new List<NavigationMenuItemModel>();
 
-        public List<int> SecurityGroupsIds { get; set; }
-            = new List<int>();
-        public List<NavigationMenuItemModel> Children { get; set; } 
-            = new List<NavigationMenuItemModel>();
+    public List<NavigationMenuTranslationModel> Translations { get; set; }
+        = new List<NavigationMenuTranslationModel>();
 
-        public List<NavigationMenuTranslationModel> Translations { get; set; }
-            = new List<NavigationMenuTranslationModel>();
-
-        public bool IsInternalLink { get; set; }
-    }
+    public bool IsInternalLink { get; set; }
 }

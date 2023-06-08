@@ -21,13 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Abstractions
-{
-    public interface ILocalizationService
-    {
-        string GetString(string key);
+namespace eFormAPI.Web.Abstractions;
 
-        string GetStringWithFormat(string format,
-           params object[] args);
-    }
+public interface ILocalizationService
+{
+    string GetString(string key);
+
+    string GetStringWithFormat(string format,
+        params object[] args);
 }

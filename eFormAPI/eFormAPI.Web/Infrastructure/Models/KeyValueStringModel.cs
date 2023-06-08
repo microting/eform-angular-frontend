@@ -1,8 +1,7 @@
-﻿namespace eFormAPI.Web.Infrastructure.Models
+﻿namespace eFormAPI.Web.Infrastructure.Models;
+
+public class KeyValueStringModel
 {
-    public class KeyValueStringModel
-    {
-        public string Key { get; set; }
-        public string Value { get; set; }
-    }
+    public string Key { get; set; }
+    public string Value { get; set; }
 }
