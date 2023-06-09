@@ -34,6 +34,8 @@ jobs:
       with:
         name: container
     - run: docker load -i container.tar
+    - uses: browser-actions/setup-chrome@v1
+    - run: chrome --version
     - name: Create docker network 🖧
       run: docker network create --driver bridge data
     - name: Start MariaDB

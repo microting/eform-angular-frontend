@@ -276,7 +276,7 @@ export class UserAdministrationRowObject {
     await browser.pause(500);
     await myEformsPage.Navbar.goToUserAdministration();
     await (await userAdministration.createNewUserBtn()).waitForClickable({ timeout: 40000 });
-    //await browser.pause(500);
+    await browser.pause(500);
   }
 
   public async edit(user: UserAdministrationObject, clickCancel = false) {
