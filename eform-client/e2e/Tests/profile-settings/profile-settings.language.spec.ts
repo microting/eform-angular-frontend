@@ -42,9 +42,11 @@ describe('Profile settings', function () {
     await myEformsPage.Navbar.goToProfileSettings();
     await profileSettings.chooseLanguage('Engelsk');
     await profileSettings.saveProfileSettings();
-    await browser.pause(1000);
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
     await myEformsPage.Navbar.goToMyEForms();
-    await browser.pause(1000);
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
     for (const translation of translationsEFormsPageEng) {
       expect(await (await $(translation.key)).getText()).eq(
         translation.value,
@@ -74,9 +76,11 @@ describe('Profile settings', function () {
     await myEformsPage.Navbar.goToProfileSettings();
     await profileSettings.chooseLanguage('Dansk');
     await profileSettings.saveProfileSettings();
-    await browser.pause(1000);
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
     await myEformsPage.Navbar.goToMyEForms();
-    await browser.pause(1000);
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
     for (const translation of translationsEFormsPageDan) {
       expect(await (await $(translation.key)).getText()).eq(
         translation.value,

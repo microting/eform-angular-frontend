@@ -204,7 +204,6 @@ export class Navbar {
     await (await this.signOutDropdown()).click();
     await (await this.userAdministrationBtn()).click();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
-    await browser.pause(500);
   }
 
   public async goToPasswordSettings() {
