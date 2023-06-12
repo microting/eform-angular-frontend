@@ -43,10 +43,11 @@ describe('Entity Select', function () {
     let selectableListRowObject = await selectableLists.getLastSelectableListObject();
     const data = { items: [generateRandmString()] };
     await selectableListRowObject.edit(data, false, false, false, true);
+    selectableListRowObject = await selectableLists.getLastSelectableListObject();
     await selectableListRowObject.openEdit();
     expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
     await selectableListRowObject.closeEdit();
-    selectableListRowObject = await selectableLists.getLastSelectableListObject();
+    //selectableListRowObject = await selectableLists.getLastSelectableListObject();
     // selectableLists.cleanupList();
   });
   // it('should make a new selectable list, with 1 item', async () => {

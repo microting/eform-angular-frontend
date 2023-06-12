@@ -366,10 +366,13 @@ class NavigationMenuPage {
       const i = data.translations.indexOf(translation);
       if (translation) {
         await (await this.editItemTranslation(indexInCreated, 0, i)).setValue(translation);
+        await browser.pause(500);
       }
     }
     await(await this.editItemSaveBtn()).click();
+    await browser.pause(500);
     await this.clickSaveMenuBtn();
+    await browser.pause(500);
   }
 }
 const navigationMenuPage = new NavigationMenuPage();
