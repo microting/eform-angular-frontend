@@ -2065,10 +2065,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-5.3.0.tgz#0ec9264cf54a527671d990eb874e030b55b70dcc"
   integrity sha512-CX6t4SYQ37lzxicAqsBtxA3OseeoVrh9cSJ5PFYam0GksYlupRfy1A+Q4aYD3zvcfECLc0zO2u+ZnR2UYKvCrw==
 
-"@swimlane/ngx-charts@20.1.2":
-  version "20.1.2"
-  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-20.1.2.tgz#54893957e4cbac6fe1e0d74f77cff268299b29f8"
-  integrity sha512-9uetDtBg++v96R9Nwgf8mvSu+6149FMQEm/jlpbcquUozfC5l+hO9i88tG3REOxnkGS10snGOCVUcPPY03nbxQ==
+"@swimlane/ngx-charts@20.4.0":
+  version "20.4.0"
+  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-20.4.0.tgz#1a3347d88e3d52eb6bd2c7ac1f17d209410e2e93"
+  integrity sha512-IqDhKoI1rmXPK6ej16JmZFHkhpmqglqJk7yLMcA1wDenZvGJiJmjBxgD3xeHuUuAId4sVIQqzOm1kwQxV4wmGw==
   dependencies:
     d3-array "^2.9.1"
     d3-brush "^2.1.0"
@@ -4350,10 +4350,10 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
-chromedriver@^114.0.1:
-  version "114.0.1"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-114.0.1.tgz#6b781922e74e2f6520cbd3e363dfabc41c4347f5"
-  integrity sha512-Srkyt7xv+RL9aSNVkmARm0tAfw84fIBKge9c1MCTiHfW0tjuNFdhKVlgD0TmPmwSKOeFJrTdd1Flf2hGWWKsUw==
+chromedriver@^113.0.0:
+  version "113.0.0"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-113.0.0.tgz#d4855f156ee51cea4282e04aadd29fa154e44dbb"
+  integrity sha512-UnQlt2kPicYXVNHPzy9HfcWvEbKJjjKAEaatdcnP/lCIRwuSoZFVLH0HVDAGdbraXp3dNVhfE2Qx7gw8TnHnPw==
   dependencies:
     "@testim/chrome-version" "^1.1.3"
     axios "^1.2.1"

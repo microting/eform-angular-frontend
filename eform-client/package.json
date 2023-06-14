@@ -68,7 +68,7 @@
     "@ngx-gallery/gallerize": "4.0.3",
     "@ngx-gallery/lightbox": "4.0.3",
     "@ngx-translate/core": "14.0.0",
-    "@swimlane/ngx-charts": "20.1.2",
+    "@swimlane/ngx-charts": "20.4.0",
     "@types/dragula": "3.7.1",
     "@types/file-saver": "2.0.5",
     "@userback/widget": "^0.3.0",
