@@ -4350,10 +4350,10 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
-chromedriver@^114.0.1:
-  version "114.0.1"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-114.0.1.tgz#6b781922e74e2f6520cbd3e363dfabc41c4347f5"
-  integrity sha512-Srkyt7xv+RL9aSNVkmARm0tAfw84fIBKge9c1MCTiHfW0tjuNFdhKVlgD0TmPmwSKOeFJrTdd1Flf2hGWWKsUw==
+chromedriver@^113.0.0:
+  version "113.0.0"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-113.0.0.tgz#d4855f156ee51cea4282e04aadd29fa154e44dbb"
+  integrity sha512-UnQlt2kPicYXVNHPzy9HfcWvEbKJjjKAEaatdcnP/lCIRwuSoZFVLH0HVDAGdbraXp3dNVhfE2Qx7gw8TnHnPw==
   dependencies:
     "@testim/chrome-version" "^1.1.3"
     axios "^1.2.1"
@@ -8813,10 +8813,10 @@ ngx-image-cropper@6.3.3:
   dependencies:
     tslib "^2.3.0"
 
-ngx-mask@^14.2.4:
-  version "14.2.4"
-  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-14.2.4.tgz#da7ba480d7c7f5be9ff34c35a288838c58d65bbd"
-  integrity sha512-158nAe2tyiZa2T8COoI6SvJCQHqpJ4+JW0amGcvVEYUBF6FIoYK66BlnOJURAOy5qry0d0N45w7J/LGsCBgZcg==
+ngx-mask@^16.1.4:
+  version "16.1.4"
+  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-16.1.4.tgz#7a0e07160087a8d7f45169efc12a2e6ff4808b41"
+  integrity sha512-+AtmjdS9o397xkhzj7u3qQd9aXL1kCLVqRmNW5cvXdDrn6GfHzXVLVpzzEgC177Bs+KWHM/Ym5iaUU0E4uN4Rw==
   dependencies:
     tslib "^2.3.0"
 
