@@ -16,17 +16,16 @@ export async function testSorting(
     array: WebdriverIO.Element[]
   ) => unknown
 ) {
-  //     this.tags = await Promise.all(list.map(element => element.getText()));
   if (!mapFunc) {
     mapFunc = async (ele) => await ele.getText();
   }
-  const elementsForSorting = await $$(htmlIdElementsForSorting);
-  const elementsBefore = await Promise.all(elementsForSorting.map(mapFunc));
+  const getElementsForSorting = async () => await $$(htmlIdElementsForSorting);
+  const elementsBefore = await Promise.all((await getElementsForSorting()).map(mapFunc));
   // check that sorting is correct in both directions
   for (let i = 0; i < 2; i++) {
     await tableHeader.click();
     await browser.pause(500);
-    const elementsAfter = await Promise.all(elementsForSorting.map(mapFunc));
+    const elementsAfter = await Promise.all((await getElementsForSorting()).map(mapFunc));
 
     // // get current direction of sorting
     const sortIcon = await tableHeader.$('.ng-trigger-leftPointer').getAttribute('style');
