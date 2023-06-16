@@ -18,22 +18,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
+namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor;
+
+using System.Collections.Generic;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public class FieldOptions
 {
-    using System.Collections.Generic;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    public int? Id { get; set; }
 
-    public class FieldOptions
-    {
-        public int? Id { get; set; }
+    public int DisplayOrder { get; set; }
 
-        public int DisplayOrder { get; set; }
+    public bool Selected { get; set; }
 
-        public bool Selected { get; set; }
+    public int Key { get; set; }
 
-        public int Key { get; set; }
-
-        public List<CommonTranslationsModel> Translates { get; set; }
-            = new List<CommonTranslationsModel>();
-    }
+    public List<CommonTranslationsModel> Translates { get; set; }
+        = new List<CommonTranslationsModel>();
 }

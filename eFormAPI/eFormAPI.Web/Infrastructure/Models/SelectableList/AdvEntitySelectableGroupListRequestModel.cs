@@ -21,16 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.SelectableList
+namespace eFormAPI.Web.Infrastructure.Models.SelectableList;
+
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public class AdvEntitySelectableGroupListRequestModel: PaginationModel
 {
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    public string Sort { get; set; }
 
-    public class AdvEntitySelectableGroupListRequestModel: PaginationModel
-    {
-        public string Sort { get; set; }
+    public string NameFilter { get; set; }
 
-        public string NameFilter { get; set; }
-
-        public bool IsSortDsc { get; set; }
-    }
+    public bool IsSortDsc { get; set; }
 }

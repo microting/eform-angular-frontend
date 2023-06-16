@@ -21,14 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
+namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+
+public class SwiftSettingsModel
 {
-    public class SwiftSettingsModel
-    {
-        public bool SwiftEnabled { get; set; }
-        public string SwiftUserName { get; set; }
-        public string SwiftPassword { get; set; }
-        public string SwiftEndpoint { get; set; }
-        public string KeystoneEndpoint { get; set; }
-    }
+    public bool SwiftEnabled { get; set; }
+    public string SwiftUserName { get; set; }
+    public string SwiftPassword { get; set; }
+    public string SwiftEndpoint { get; set; }
+    public string KeystoneEndpoint { get; set; }
 }

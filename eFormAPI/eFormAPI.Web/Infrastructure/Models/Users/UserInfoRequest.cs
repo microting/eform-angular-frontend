@@ -18,14 +18,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Users
+namespace eFormAPI.Web.Infrastructure.Models.Users;
+
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public class UserInfoRequest: PaginationModel
 {
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    public string Sort { get; set; }
 
-    public class UserInfoRequest: PaginationModel
-    {
-        public string Sort { get; set; }
-
-        public bool IsSortDsc { get; set; }
-    }
+    public bool IsSortDsc { get; set; }
 }

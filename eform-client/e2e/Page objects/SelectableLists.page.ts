@@ -7,7 +7,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async selectableListCount(): Promise<number> {
-    await browser.pause(500);
+    //await browser.pause(500);
     return (await $$('tbody > tr')).length;
   }
 
@@ -283,6 +283,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
       await browser.pause(500);
     }
     await (await this.entitySelectCreateBtn()).waitForDisplayed();
+    //await browser.pause(1000);
   }
 
   public async cleanupList() {
@@ -346,7 +347,7 @@ export class SelectableListRowObject {
     await this.editBtn.click();
     await browser.pause(1000);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
-    await browser.pause(1000);
+    //await browser.pause(1000);
   }
 
   async closeEdit(clickCancel = false) {
@@ -355,7 +356,7 @@ export class SelectableListRowObject {
       await browser.pause(1000);
     } else {
       await (await selectableLists.entitySelectEditCancelBtn()).click();
-      await browser.pause(1000);
+      //await browser.pause(500);
     }
     await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
     await browser.pause(1000);
@@ -421,7 +422,7 @@ export class SelectableListRowObject {
       }
     }
     await this.closeEdit(clickCancel);
-    await browser.pause(500);
+    //await browser.pause(500);
   }
 }
 

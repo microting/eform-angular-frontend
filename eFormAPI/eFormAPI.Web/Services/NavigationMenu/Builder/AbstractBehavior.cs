@@ -22,44 +22,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.NavigationMenu.Builder
+namespace eFormAPI.Web.Services.NavigationMenu.Builder;
+
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+
+public abstract class AbstractBehavior
 {
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+    protected readonly BaseDbContext _dbContext;
+    protected readonly int? _parentId;
+    public NavigationMenuItemModel MenuItemModel { get; set; }
 
-    public abstract class AbstractBehavior
+    public AbstractBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null)
     {
-        protected readonly BaseDbContext _dbContext;
-        protected readonly int? _parentId;
-        public NavigationMenuItemModel MenuItemModel { get; set; }
-
-        public AbstractBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null)
-        {
-            MenuItemModel = menuItemModel;
-            _dbContext = dbContext;
-            _parentId = parentId;
-        }
-
-        public abstract bool IsExecute();
-
-        public abstract void Setup(MenuItem menuItem);
-
-        protected void SetTranslations(int menuItemId)
-        {
-            foreach(var translationModel in MenuItemModel.Translations)
-            {
-                var menuItemTranslation = new MenuItemTranslation()
-                {
-                    MenuItemId = menuItemId,
-                    LocaleName = translationModel.LocaleName,
-                    Name = translationModel.Name,
-                    Language = translationModel.Language
-                };
-
-                _dbContext.MenuItemTranslations.Add(menuItemTranslation);
-                _dbContext.SaveChanges();
-            }
-        }
-
+        MenuItemModel = menuItemModel;
+        _dbContext = dbContext;
+        _parentId = parentId;
     }
+
+    public abstract bool IsExecute();
+
+    public abstract void Setup(MenuItem menuItem);
+
+    protected void SetTranslations(int menuItemId)
+    {
+        foreach(var translationModel in MenuItemModel.Translations)
+        {
+            var menuItemTranslation = new MenuItemTranslation()
+            {
+                MenuItemId = menuItemId,
+                LocaleName = translationModel.LocaleName,
+                Name = translationModel.Name,
+                Language = translationModel.Language
+            };
+
+            _dbContext.MenuItemTranslations.Add(menuItemTranslation);
+            _dbContext.SaveChanges();
+        }
+    }
+
 }

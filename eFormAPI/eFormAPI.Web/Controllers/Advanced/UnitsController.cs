@@ -22,56 +22,55 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Controllers.Advanced
+namespace eFormAPI.Web.Controllers.Advanced;
+
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions.Advanced;
+using Infrastructure.Models.Units;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eForm.Dto;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
+[Authorize]
+public class UnitsController : Controller
 {
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using eFormAPI.Web.Abstractions.Advanced;
-    using Infrastructure.Models.Units;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eForm.Dto;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    private readonly IUnitsService _unitsService;
 
-    [Authorize]
-    public class UnitsController : Controller
+    public UnitsController(IUnitsService unitsService)
     {
-        private readonly IUnitsService _unitsService;
+        _unitsService = unitsService;
+    }
 
-        public UnitsController(IUnitsService unitsService)
-        {
-            _unitsService = unitsService;
-        }
+    [HttpGet]
+    [Authorize(Policy = AuthConsts.EformPolicies.Units.Read)]
+    public Task<OperationDataResult<List<UnitModel>>> Index()
+    {
+        return _unitsService.Index();
+    }
 
-        [HttpGet]
-        [Authorize(Policy = AuthConsts.EformPolicies.Units.Read)]
-        public Task<OperationDataResult<List<UnitModel>>> Index()
-        {
-            return _unitsService.Index();
-        }
+    [HttpPost]
+    [Route("api/units/create")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
+    public Task<OperationResult> Create([FromBody] UnitModel model)
+    {
+        return _unitsService.Create(model);
+    }
 
-        [HttpPost]
-        [Route("api/units/create")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
-        public Task<OperationResult> Create([FromBody] UnitModel model)
-        {
-            return _unitsService.Create(model);
-        }
+    [HttpPut]
+    [Route("api/units/update")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
+    public Task<OperationResult> Update([FromBody] UnitModel model)
+    {
+        return _unitsService.Update(model);
+    }
 
-        [HttpPut]
-        [Route("api/units/update")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
-        public Task<OperationResult> Update([FromBody] UnitModel model)
-        {
-            return _unitsService.Update(model);
-        }
-
-        [HttpGet]
-        [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
-        public Task<OperationDataResult<UnitDto>> RequestOtp(int id)
-        {
-            return _unitsService.RequestOtp(id);
-        }
+    [HttpGet]
+    [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
+    public Task<OperationDataResult<UnitDto>> RequestOtp(int id)
+    {
+        return _unitsService.RequestOtp(id);
     }
 }

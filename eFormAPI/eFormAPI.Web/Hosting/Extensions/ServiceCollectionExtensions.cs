@@ -22,128 +22,127 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Hosting.Extensions
+namespace eFormAPI.Web.Hosting.Extensions;
+
+using System.Collections.Generic;
+using System.Linq;
+using Helpers.DbOptions;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
+using Microting.eFormApi.BasePn;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using Newtonsoft.Json.Serialization;
+
+public static class ServiceCollectionExtensions
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Helpers.DbOptions;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Options;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
-    using Microting.eFormApi.BasePn;
-    using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-    using Newtonsoft.Json.Serialization;
-
-    public static class ServiceCollectionExtensions
+    public static void ConfigureWritable<T>(
+        this IServiceCollection services,
+        IConfigurationSection section,
+        string file = "appsettings.json") where T : class, new()
     {
-        public static void ConfigureWritable<T>(
-            this IServiceCollection services,
-            IConfigurationSection section,
-            string file = "appsettings.json") where T : class, new()
+        services.Configure<T>(section);
+        services.AddTransient<IWritableOptions<T>>(provider =>
         {
-            services.Configure<T>(section);
-            services.AddTransient<IWritableOptions<T>>(provider =>
-            {
-                var environment = provider.GetService<IWebHostEnvironment>();
-                var options = provider.GetService<IOptionsMonitor<T>>();
-                return new WritableOptions<T>(environment, options, section.Key, file);
-            });
-        }
+            var environment = provider.GetService<IWebHostEnvironment>();
+            var options = provider.GetService<IOptionsMonitor<T>>();
+            return new WritableOptions<T>(environment, options, section.Key, file);
+        });
+    }
 
-        public static void ConfigureDbOptions<T>(
-            this IServiceCollection services,
-            IConfigurationSection section) where T : class, new()
+    public static void ConfigureDbOptions<T>(
+        this IServiceCollection services,
+        IConfigurationSection section) where T : class, new()
+    {
+        services.Configure<T>(section);
+        services.AddTransient<IDbOptions<T>>(provider =>
         {
-            services.Configure<T>(section);
-            services.AddTransient<IDbOptions<T>>(provider =>
-            {
-                var options = provider.GetService<IOptionsMonitor<T>>();
-                return new DbOptions<T>(options);
-            });
-        }
+            var options = provider.GetService<IOptionsMonitor<T>>();
+            return new DbOptions<T>(options);
+        });
+    }
 
-        public static void AddEFormPlugins(this IServiceCollection services,
-            List<IEformPlugin> plugins)
+    public static void AddEFormPlugins(this IServiceCollection services,
+        List<IEformPlugin> plugins)
+    {
+        foreach (var plugin in plugins)
         {
+            plugin.ConfigureServices(services);
+        }
+    }
+
+    public static void AddEFormMvc(this IServiceCollection services,
+        List<IEformPlugin> plugins)
+    {
+        var mvcBuilder = services.AddMvc()
+            .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver());
+
+        foreach (var plugin in plugins)
+        {
+            mvcBuilder.AddApplicationPart(plugin.PluginAssembly())
+                .AddControllersAsServices();
+        }
+    }
+
+    public static void AddEFormPluginsDbContext(this IServiceCollection services,
+        IConfiguration configuration,
+        List<IEformPlugin> plugins)
+    {
+        var connectionString = configuration.MyConnectionString();
+        if (!string.IsNullOrEmpty(connectionString) && connectionString != "...")
+        {
+            List<EformPlugin> eformPlugins;
+            var contextFactory = new BaseDbContextFactory();
+            using (var dbContext = contextFactory.CreateDbContext(new[] { configuration.MyConnectionString() }))
+            {
+                eformPlugins = dbContext.EformPlugins
+                    .AsNoTracking()
+                    .Where(x => x.ConnectionString != "...")
+                    .ToList();
+            }
+
             foreach (var plugin in plugins)
             {
-                plugin.ConfigureServices(services);
-            }
-        }
-
-        public static void AddEFormMvc(this IServiceCollection services,
-            List<IEformPlugin> plugins)
-        {
-            var mvcBuilder = services.AddMvc()
-                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver =
-                    new CamelCasePropertyNamesContractResolver());
-
-            foreach (var plugin in plugins)
-            {
-                mvcBuilder.AddApplicationPart(plugin.PluginAssembly())
-                    .AddControllersAsServices();
-            }
-        }
-
-        public static void AddEFormPluginsDbContext(this IServiceCollection services,
-            IConfiguration configuration,
-            List<IEformPlugin> plugins)
-        {
-            var connectionString = configuration.MyConnectionString();
-            if (!string.IsNullOrEmpty(connectionString) && connectionString != "...")
-            {
-                List<EformPlugin> eformPlugins;
-                var contextFactory = new BaseDbContextFactory();
-                using (var dbContext = contextFactory.CreateDbContext(new[] { configuration.MyConnectionString() }))
+                var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
+                if (eformPlugin?.ConnectionString != null)
                 {
-                    eformPlugins = dbContext.EformPlugins
-                        .AsNoTracking()
-                        .Where(x => x.ConnectionString != "...")
-                        .ToList();
-                }
+                    plugin.ConfigureDbContext(services, eformPlugin.ConnectionString);
 
-                foreach (var plugin in plugins)
-                {
-                    var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
-                    if (eformPlugin?.ConnectionString != null)
-                    {
-                        plugin.ConfigureDbContext(services, eformPlugin.ConnectionString);
-
-                        SetAdminGroupPluginPermissions(plugin, eformPlugin.ConnectionString);
-                    }
+                    SetAdminGroupPluginPermissions(plugin, eformPlugin.ConnectionString);
                 }
             }
         }
+    }
 
-        private static async void SetAdminGroupPluginPermissions(IEformPlugin plugin, string connectionString)
+    private static async void SetAdminGroupPluginPermissions(IEformPlugin plugin, string connectionString)
+    {
+        // Set all plugin permissions for EformAdmins security group
+        var permissionsManager = plugin.GetPermissionsManager(connectionString);
+        if (permissionsManager != null)
         {
-            // Set all plugin permissions for EformAdmins security group
-            var permissionsManager = plugin.GetPermissionsManager(connectionString);
-            if (permissionsManager != null)
+            var pluginPermissions = await permissionsManager.GetPluginPermissions();
+            await permissionsManager.SetPluginGroupPermissions(new List<PluginGroupPermissionsListModel>
             {
-                var pluginPermissions = await permissionsManager.GetPluginPermissions();
-                await permissionsManager.SetPluginGroupPermissions(new List<PluginGroupPermissionsListModel>
+                new()
                 {
-                    new()
-                    {
-                        GroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins,
-                        Permissions = pluginPermissions.Select(pp => new PluginGroupPermissionModel
-                            {
-                                ClaimName = pp.ClaimName,
-                                IsEnabled = true,
-                                PermissionId = pp.PermissionId,
-                                PermissionName = pp.PermissionName
-                            }
-                        ).ToList()
-                    }
-                });
-            }
+                    GroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins,
+                    Permissions = pluginPermissions.Select(pp => new PluginGroupPermissionModel
+                        {
+                            ClaimName = pp.ClaimName,
+                            IsEnabled = true,
+                            PermissionId = pp.PermissionId,
+                            PermissionName = pp.PermissionName
+                        }
+                    ).ToList()
+                }
+            });
         }
     }
 }

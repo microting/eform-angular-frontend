@@ -21,18 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
+namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+
+public class SDKSettingsModel
 {
-    public class SDKSettingsModel
-    {
-        public string CustomerNo { get; set; }
-        public string LogLevel { get; set; }
-        public string LogLimit { get; set; }
-        public string FileLocationPicture { get; set; }
-        public string FileLocationPdf { get; set; }
-        public string FileLocationReports { get; set; }
-        public string HttpServerAddress { get; set; }
+    public string CustomerNo { get; set; }
+    public string LogLevel { get; set; }
+    public string LogLimit { get; set; }
+    public string FileLocationPicture { get; set; }
+    public string FileLocationPdf { get; set; }
+    public string FileLocationReports { get; set; }
+    public string HttpServerAddress { get; set; }
         
         
-    }
 }

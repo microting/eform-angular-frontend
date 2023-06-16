@@ -23,20 +23,19 @@ SOFTWARE.
 */
 using Microsoft.Extensions.Configuration;
 
-namespace eFormAPI.Web.Hosting.Settings
+namespace eFormAPI.Web.Hosting.Settings;
+
+public class EfConfigurationSource : IConfigurationSource
 {
-    public class EfConfigurationSource : IConfigurationSource
+    private readonly string _connectionString;
+
+    public EfConfigurationSource(string connectionString)
     {
-        private readonly string _connectionString;
+        _connectionString = connectionString;
+    }
 
-        public EfConfigurationSource(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
-
-        public IConfigurationProvider Build(IConfigurationBuilder builder)
-        {
-            return new EfConfigurationProvider(_connectionString);
-        }
+    public IConfigurationProvider Build(IConfigurationBuilder builder)
+    {
+        return new EfConfigurationProvider(_connectionString);
     }
 }

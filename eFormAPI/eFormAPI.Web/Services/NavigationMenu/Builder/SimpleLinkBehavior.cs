@@ -22,47 +22,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.NavigationMenu.Builder
+namespace eFormAPI.Web.Services.NavigationMenu.Builder;
+
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+using System.Linq;
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+
+public class SimpleLinkBehavior : AbstractBehavior
 {
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
-    using System.Linq;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
-
-    public class SimpleLinkBehavior : AbstractBehavior
+    public SimpleLinkBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null)
+        : base(dbContext, menuItemModel, parentId)
     {
-        public SimpleLinkBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null)
-            : base(dbContext, menuItemModel, parentId)
+
+    }
+    public override bool IsExecute()
+        => MenuItemModel.Type == MenuItemTypeEnum.Link;
+
+    public override void Setup(MenuItem menuItem)
+    {
+        menuItem.Name = MenuItemModel.Name;
+        menuItem.MenuTemplateId = MenuItemModel.RelatedTemplateItemId.Value; // value must be
+        menuItem.E2EId = _dbContext.MenuTemplates.Single(x => x.Id == MenuItemModel.RelatedTemplateItemId).E2EId;
+        menuItem.ParentId = _parentId;
+
+        _dbContext.MenuItems.Add(menuItem);
+        _dbContext.SaveChanges();
+
+        //Set translation for menu item
+        SetTranslations(menuItem.Id);
+
+        foreach (var securityGroupId in MenuItemModel.SecurityGroupsIds)
         {
-
-        }
-        public override bool IsExecute()
-            => MenuItemModel.Type == MenuItemTypeEnum.Link;
-
-        public override void Setup(MenuItem menuItem)
-        {
-            menuItem.Name = MenuItemModel.Name;
-            menuItem.MenuTemplateId = MenuItemModel.RelatedTemplateItemId.Value; // value must be
-            menuItem.E2EId = _dbContext.MenuTemplates.Single(x => x.Id == MenuItemModel.RelatedTemplateItemId).E2EId;
-            menuItem.ParentId = _parentId;
-
-            _dbContext.MenuItems.Add(menuItem);
-            _dbContext.SaveChanges();
-
-            //Set translation for menu item
-            SetTranslations(menuItem.Id);
-
-            foreach (var securityGroupId in MenuItemModel.SecurityGroupsIds)
+            var menuItemSecurityGroup = new MenuItemSecurityGroup()
             {
-                var menuItemSecurityGroup = new MenuItemSecurityGroup()
-                {
-                    SecurityGroupId = securityGroupId,
-                    MenuItemId = menuItem.Id
-                };
+                SecurityGroupId = securityGroupId,
+                MenuItemId = menuItem.Id
+            };
 
-                _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
-                _dbContext.SaveChanges();
-            }
+            _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
+            _dbContext.SaveChanges();
         }
     }
 }

@@ -21,20 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Settings.Initial
+namespace eFormAPI.Web.Infrastructure.Models.Settings.Initial;
+
+public class AdminSetupModel
 {
-    public class AdminSetupModel
-    {
-        public string Email { get; set; }
+    public string Email { get; set; }
 
-        public string UserName { get; set; }
+    public string UserName { get; set; }
 
-        public string FirstName { get; set; }
+    public string FirstName { get; set; }
 
-        public string LastName { get; set; }
+    public string LastName { get; set; }
 
-        public string Password { get; set; }
+    public string Password { get; set; }
 
-        public bool DarkTheme { get; set; }
-    }
+    public bool DarkTheme { get; set; }
 }

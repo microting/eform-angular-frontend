@@ -22,28 +22,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.Import
+namespace eFormAPI.Web.Infrastructure.Models.Import;
+
+using System.Collections.Generic;
+
+public class EformImportExcelModel
 {
-    using System.Collections.Generic;
+    public string Name { get; set; }
+    public string EformXML { get; set; }
 
-    public class EformImportExcelModel
-    {
-        public string Name { get; set; }
-        public string EformXML { get; set; }
+    public int ExcelRow { get; set; }
 
-        public int ExcelRow { get; set; }
+    public List<string> Tags { get; set; }
+        = new List<string>();
 
-        public List<string> Tags { get; set; }
-            = new List<string>();
+    public string ReportH1 { get; set; }
 
-        public string ReportH1 { get; set; }
+    public string ReportH2 { get; set; }
 
-        public string ReportH2 { get; set; }
+    public string ReportH3 { get; set; }
 
-        public string ReportH3 { get; set; }
+    public string ReportH4 { get; set; }
 
-        public string ReportH4 { get; set; }
-
-        public string ReportH5 { get; set; }
-    }
+    public string ReportH5 { get; set; }
 }

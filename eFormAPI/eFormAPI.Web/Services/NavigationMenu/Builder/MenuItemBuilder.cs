@@ -22,52 +22,51 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.NavigationMenu.Builder
+namespace eFormAPI.Web.Services.NavigationMenu.Builder;
+
+using System.Collections.Generic;
+using System.Linq;
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+
+public class MenuItemBuilder
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+    public NavigationMenuItemModel MenuItemModel { get; set; }
 
-    public class MenuItemBuilder
+    private int currentPosition = 0;
+    private List<AbstractBehavior> _behaviors;
+
+    private readonly BaseDbContext _dbContext;
+
+    public MenuItemBuilder(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int currentPosition, int? parentId = null)
     {
-        public NavigationMenuItemModel MenuItemModel { get; set; }
-
-        private int currentPosition = 0;
-        private List<AbstractBehavior> _behaviors;
-
-        private readonly BaseDbContext _dbContext;
-
-        public MenuItemBuilder(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int currentPosition, int? parentId = null)
+        MenuItemModel = menuItemModel;
+        _dbContext = dbContext;
+        this.currentPosition = currentPosition;
+        _behaviors = new List<AbstractBehavior>()
         {
-            MenuItemModel = menuItemModel;
-            _dbContext = dbContext;
-            this.currentPosition = currentPosition;
-            _behaviors = new List<AbstractBehavior>()
-                {
-                    new SimpleLinkBehavior(_dbContext, MenuItemModel, parentId),
-                    new CustomLinkBehavior(_dbContext, MenuItemModel, parentId),
-                    new DropdownBehavior(_dbContext, MenuItemModel, parentId)
-                };
+            new SimpleLinkBehavior(_dbContext, MenuItemModel, parentId),
+            new CustomLinkBehavior(_dbContext, MenuItemModel, parentId),
+            new DropdownBehavior(_dbContext, MenuItemModel, parentId)
+        };
+    }
+
+    public MenuItem Build()
+    {
+        var menuItemParent = new MenuItem()
+        {
+            Position = currentPosition,
+            Type = MenuItemModel.Type,
+            Link = MenuItemModel.Link,
+            E2EId = MenuItemModel.E2EId,
+            IsInternalLink = MenuItemModel.IsInternalLink
+        };
+
+        foreach (var behavior in _behaviors.Where(behavior => behavior.IsExecute()))
+        {
+            behavior.Setup(menuItemParent);
         }
 
-        public MenuItem Build()
-        {
-            var menuItemParent = new MenuItem()
-            {
-                Position = currentPosition,
-                Type = MenuItemModel.Type,
-                Link = MenuItemModel.Link,
-                E2EId = MenuItemModel.E2EId,
-                IsInternalLink = MenuItemModel.IsInternalLink
-            };
-
-            foreach (var behavior in _behaviors.Where(behavior => behavior.IsExecute()))
-            {
-                behavior.Setup(menuItemParent);
-            }
-
-            return menuItemParent;
-        }
+        return menuItemParent;
     }
 }

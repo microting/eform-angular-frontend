@@ -22,106 +22,105 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Controllers.Eforms
+namespace eFormAPI.Web.Controllers.Eforms;
+
+using System.Text;
+using Infrastructure.Models.ReportEformCase;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using eFormAPI.Web.Abstractions.Eforms;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Infrastructure.Models;
+
+[Authorize]
+public class EformCaseReportController : Controller
 {
-    using System.Text;
-    using Infrastructure.Models.ReportEformCase;
-    using System.ComponentModel.DataAnnotations;
-    using System.Threading.Tasks;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using eFormAPI.Web.Abstractions.Eforms;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Http;
-    using Infrastructure.Models;
-
-    [Authorize]
-    public class EformCaseReportController : Controller
+    private readonly IEformCaseReportService _eformCaseReportService;
+    public EformCaseReportController(IEformCaseReportService eformCaseReportService)
     {
-        private readonly IEformCaseReportService _eformCaseReportService;
-        public EformCaseReportController(IEformCaseReportService eformCaseReportService)
-        {
-            _eformCaseReportService = eformCaseReportService;
-        }
+        _eformCaseReportService = eformCaseReportService;
+    }
 
-        /// <summary>
-        /// Get report case by eForm model
-        /// </summary>
-        /// <param name="eFormCaseReportRequesteFormId">request model</param>
-        /// <returns>Report case by eForm model</returns>
-        [HttpPost]
-        [Route("api/templates/docx-report")]
-        public async Task<OperationDataResult<EFormCasesReportModel>> GetReport([Required][FromBody] EFormCaseReportRequest eFormCaseReportRequesteFormId)
-        {
-            return await _eformCaseReportService.GetReportEformCases(eFormCaseReportRequesteFormId);
-        }
+    /// <summary>
+    /// Get report case by eForm model
+    /// </summary>
+    /// <param name="eFormCaseReportRequesteFormId">request model</param>
+    /// <returns>Report case by eForm model</returns>
+    [HttpPost]
+    [Route("api/templates/docx-report")]
+    public async Task<OperationDataResult<EFormCasesReportModel>> GetReport([Required][FromBody] EFormCaseReportRequest eFormCaseReportRequesteFormId)
+    {
+        return await _eformCaseReportService.GetReportEformCases(eFormCaseReportRequesteFormId);
+    }
 
-        /// <summary>
-        /// Get report case file by eForm
-        /// </summary>
-        /// <param name="eFormCaseReportRequestEFormId">request model</param>
-        /// <returns>Report file which cases by eForm</returns>
-        [HttpGet]
-        [Route("api/templates/docx-report/word")]
-        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task GetReportWord([Required] EFormCaseReportRequest eFormCaseReportRequestEFormId)
+    /// <summary>
+    /// Get report case file by eForm
+    /// </summary>
+    /// <param name="eFormCaseReportRequestEFormId">request model</param>
+    /// <returns>Report file which cases by eForm</returns>
+    [HttpGet]
+    [Route("api/templates/docx-report/word")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task GetReportWord([Required] EFormCaseReportRequest eFormCaseReportRequestEFormId)
+    {
+        var result = await _eformCaseReportService.GenerateReportFile(eFormCaseReportRequestEFormId);
+        const int bufferSize = 4086;
+        var buffer = new byte[bufferSize];
+        Response.OnStarting(async () =>
         {
-            var result = await _eformCaseReportService.GenerateReportFile(eFormCaseReportRequestEFormId);
-            const int bufferSize = 4086;
-            var buffer = new byte[bufferSize];
-            Response.OnStarting(async () =>
+            if (!result.Success)
             {
-                if (!result.Success)
+                Response.ContentLength = result.Message.Length;
+                Response.ContentType = "text/plain";
+                Response.StatusCode = 400;
+                var bytes = Encoding.UTF8.GetBytes(result.Message);
+                await Response.Body.WriteAsync(bytes, 0, result.Message.Length);
+                await Response.Body.FlushAsync();
+            }
+            else
+            {
+                using (var wordStream = result.Model)
                 {
-                    Response.ContentLength = result.Message.Length;
-                    Response.ContentType = "text/plain";
-                    Response.StatusCode = 400;
-                    var bytes = Encoding.UTF8.GetBytes(result.Message);
-                    await Response.Body.WriteAsync(bytes, 0, result.Message.Length);
-                    await Response.Body.FlushAsync();
-                }
-                else
-                {
-                    using (var wordStream = result.Model)
+                    int bytesRead;
+                    Response.ContentLength = wordStream.Length;
+                    Response.ContentType =
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                    while ((bytesRead = wordStream.Read(buffer, 0, buffer.Length)) > 0 &&
+                           !HttpContext.RequestAborted.IsCancellationRequested)
                     {
-                        int bytesRead;
-                        Response.ContentLength = wordStream.Length;
-                        Response.ContentType =
-                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                        while ((bytesRead = wordStream.Read(buffer, 0, buffer.Length)) > 0 &&
-                               !HttpContext.RequestAborted.IsCancellationRequested)
-                        {
-                            await Response.Body.WriteAsync(buffer, 0, bytesRead);
-                            await Response.Body.FlushAsync();
-                        }
+                        await Response.Body.WriteAsync(buffer, 0, bytesRead);
+                        await Response.Body.FlushAsync();
                     }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        /// <summary>
-        /// Update headers for report by Eform
-        /// </summary>
-        /// <param name="eformDocxReportHeadersModel">model with headers and templateId</param>
-        /// <returns>Operation result</returns>
-        [HttpPost]
-        [Route("/api/templates/docx-report/headers")]
-        public async Task<OperationResult> UpdateHeadersReport(
-            [FromBody] EformDocxReportHeadersModel eformDocxReportHeadersModel)
-        {
-            return await _eformCaseReportService.UpdateReportHeaders(eformDocxReportHeadersModel);
-        }
+    /// <summary>
+    /// Update headers for report by Eform
+    /// </summary>
+    /// <param name="eformDocxReportHeadersModel">model with headers and templateId</param>
+    /// <returns>Operation result</returns>
+    [HttpPost]
+    [Route("/api/templates/docx-report/headers")]
+    public async Task<OperationResult> UpdateHeadersReport(
+        [FromBody] EformDocxReportHeadersModel eformDocxReportHeadersModel)
+    {
+        return await _eformCaseReportService.UpdateReportHeaders(eformDocxReportHeadersModel);
+    }
 
-        /// <summary>
-        /// Get report headers by eForm Id
-        /// </summary>
-        /// <param name="templateId">template id</param>
-        /// <returns>model with headers and templateId</returns>
-        [HttpGet]
-        [Route("/api/templates/docx-report/headers/{templateId}")]
-        public async Task<OperationDataResult<EformDocxReportHeadersModel>> GetHeaderByEformId(int templateId)
-        {
-            return await _eformCaseReportService.GetReportHeadersByTemplateId(templateId);
-        }
+    /// <summary>
+    /// Get report headers by eForm Id
+    /// </summary>
+    /// <param name="templateId">template id</param>
+    /// <returns>model with headers and templateId</returns>
+    [HttpGet]
+    [Route("/api/templates/docx-report/headers/{templateId}")]
+    public async Task<OperationDataResult<EformDocxReportHeadersModel>> GetHeaderByEformId(int templateId)
+    {
+        return await _eformCaseReportService.GetReportHeadersByTemplateId(templateId);
     }
 }

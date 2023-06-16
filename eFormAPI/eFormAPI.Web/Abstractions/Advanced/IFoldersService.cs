@@ -21,25 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Abstractions.Advanced
+namespace eFormAPI.Web.Abstractions.Advanced;
+
+using Infrastructure.Models.Folders;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
+public interface IFoldersService
 {
-    using Infrastructure.Models.Folders;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    Task<OperationDataResult<List<FolderDtoModel>>> Index();
 
-    public interface IFoldersService
-    {
-        Task<OperationDataResult<List<FolderDtoModel>>> Index();
+    Task<OperationDataResult<List<FolderDtoModel>>> List();
 
-        Task<OperationDataResult<List<FolderDtoModel>>> List();
+    Task<OperationResult> Create(FolderCreateModel createModel);
 
-        Task<OperationResult> Create(FolderCreateModel createModel);
+    Task<OperationDataResult<FolderModel>> Read(int id);
 
-        Task<OperationDataResult<FolderModel>> Read(int id);
+    Task<OperationResult> Update(FolderUpdateModel folderUpdateModel);
 
-        Task<OperationResult> Update(FolderUpdateModel folderUpdateModel);
-
-        Task<OperationResult> Delete(int id);
-    }
+    Task<OperationResult> Delete(int id);
 }

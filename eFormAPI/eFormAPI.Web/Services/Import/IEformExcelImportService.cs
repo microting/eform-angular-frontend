@@ -22,14 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.Import
-{
-    using System.Collections.Generic;
-    using System.IO;
-    using Infrastructure.Models.Import;
+namespace eFormAPI.Web.Services.Import;
 
-    public interface IEformExcelImportService
-    {
-        List<EformImportExcelModel> EformImport(Stream excelStream);
-    }
+using System.Collections.Generic;
+using System.IO;
+using Infrastructure.Models.Import;
+
+public interface IEformExcelImportService
+{
+    List<EformImportExcelModel> EformImport(Stream excelStream);
 }

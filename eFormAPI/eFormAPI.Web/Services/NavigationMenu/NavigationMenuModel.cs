@@ -22,15 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.NavigationMenu
-{
-    using System.Collections.Generic;
+namespace eFormAPI.Web.Services.NavigationMenu;
 
-    public class NavigationMenuModel
-    {
-        public List<NavigationMenuTemplateModel> MenuTemplates { get; set; } 
-            = new List<NavigationMenuTemplateModel>();
-        public List<NavigationMenuItemModel> ActualMenu { get; set; } 
-            = new List<NavigationMenuItemModel>();
-    }
+using System.Collections.Generic;
+
+public class NavigationMenuModel
+{
+    public List<NavigationMenuTemplateModel> MenuTemplates { get; set; } 
+        = new List<NavigationMenuTemplateModel>();
+    public List<NavigationMenuItemModel> ActualMenu { get; set; } 
+        = new List<NavigationMenuItemModel>();
 }

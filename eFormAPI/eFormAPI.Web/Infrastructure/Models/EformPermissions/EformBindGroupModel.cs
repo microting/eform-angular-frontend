@@ -21,11 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.EformPermissions
+namespace eFormAPI.Web.Infrastructure.Models.EformPermissions;
+
+public class EformBindGroupModel
 {
-    public class EformBindGroupModel
-    {
-        public int EformId { get; set; }
-        public int GroupId { get; set; }
-    }
+    public int EformId { get; set; }
+    public int GroupId { get; set; }
 }

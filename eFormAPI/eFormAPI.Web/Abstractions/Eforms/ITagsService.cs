@@ -27,24 +27,23 @@ using eFormAPI.Web.Infrastructure.Models.Tags;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-namespace eFormAPI.Web.Abstractions.Eforms
+namespace eFormAPI.Web.Abstractions.Eforms;
+
+public interface ITagsService
 {
-    public interface ITagsService
-    {
-        Task<OperationDataResult<List<CommonDictionaryModel>>> Index();
+    Task<OperationDataResult<List<CommonDictionaryModel>>> Index();
 
-        Task<OperationResult> Delete(int tagId);
+    Task<OperationResult> Delete(int tagId);
 
-        Task<OperationResult> Create(string tagName);
+    Task<OperationResult> Create(string tagName);
 
-        Task<OperationResult> Update(UpdateTemplateTagsModel requestModel);
+    Task<OperationResult> Update(UpdateTemplateTagsModel requestModel);
 
-        Task<OperationDataResult<SavedTagsModel>> GetSavedTags();
+    Task<OperationDataResult<SavedTagsModel>> GetSavedTags();
 
-        Task<OperationResult> RemoveTagFromSaved(int tagId);
+    Task<OperationResult> RemoveTagFromSaved(int tagId);
 
-        Task<OperationResult> AddTagToSaved(SavedTagModel requestModel);
+    Task<OperationResult> AddTagToSaved(SavedTagModel requestModel);
 
-        Task<OperationResult> UpdateTag(CommonTagModel commonTagModel);
-    }
+    Task<OperationResult> UpdateTag(CommonTagModel commonTagModel);
 }

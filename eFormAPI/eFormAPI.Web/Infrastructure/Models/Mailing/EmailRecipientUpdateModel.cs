@@ -21,16 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Mailing
-{
-    using System.Collections.Generic;
+namespace eFormAPI.Web.Infrastructure.Models.Mailing;
 
-    public class EmailRecipientUpdateModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public List<int> TagsIds { get; set; }
-            = new List<int>();
-    }
+using System.Collections.Generic;
+
+public class EmailRecipientUpdateModel
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public List<int> TagsIds { get; set; }
+        = new List<int>();
 }

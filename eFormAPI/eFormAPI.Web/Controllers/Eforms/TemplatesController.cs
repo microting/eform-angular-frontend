@@ -22,117 +22,116 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Controllers.Eforms
+namespace eFormAPI.Web.Controllers.Eforms;
+
+using System;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions.Eforms;
+using Infrastructure.Models;
+using Infrastructure.Models.Templates;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using System.Collections.Generic;
+using Infrastructure.Models.Import;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+[Authorize]
+public class TemplatesController : Controller
 {
-    using System;
-    using System.Threading.Tasks;
-    using eFormAPI.Web.Abstractions.Eforms;
-    using Infrastructure.Models;
-    using Infrastructure.Models.Templates;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using System.Collections.Generic;
-    using Infrastructure.Models.Import;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    private readonly ITemplatesService _templatesService;
 
-    [Authorize]
-    public class TemplatesController : Controller
+    public TemplatesController(ITemplatesService templatesService)
     {
-        private readonly ITemplatesService _templatesService;
+        _templatesService = templatesService;
+    }
 
-        public TemplatesController(ITemplatesService templatesService)
+    [HttpPost]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
+    public async Task<IActionResult> Index([FromBody] TemplateRequestModel templateRequestModel)
+    {
+        try
         {
-            _templatesService = templatesService;
+            return Ok(await _templatesService.Index(templateRequestModel));
         }
+        catch (Exception)
+        {
+            return Unauthorized();
+        }
+    }
 
-        [HttpPost]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
-        public async Task<IActionResult> Index([FromBody] TemplateRequestModel templateRequestModel)
-        {
-            try
-            {
-                return Ok(await _templatesService.Index(templateRequestModel));
-            }
-            catch (Exception)
-            {
-                return Unauthorized();
-            }
-        }
+    [HttpPost]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
+    public async Task<OperationResult> Create([FromBody] EFormXmlModel eFormXmlModel)
+    {
+        return await _templatesService.Create(eFormXmlModel);
+    }
 
-        [HttpPost]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
-        public async Task<OperationResult> Create([FromBody] EFormXmlModel eFormXmlModel)
-        {
-            return await _templatesService.Create(eFormXmlModel);
-        }
+    [HttpPost]
+    [Route("api/templates/import")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
+    public async Task<OperationResult> Import(EformExcelUploadModel uploadModel)
+    {
+        return await _templatesService.Import(uploadModel.File.OpenReadStream());
+    }
 
-        [HttpPost]
-        [Route("api/templates/import")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
-        public async Task<OperationResult> Import(EformExcelUploadModel uploadModel)
-        {
-            return await _templatesService.Import(uploadModel.File.OpenReadStream());
-        }
+    [HttpPost]
+    [Route("api/templates/duplicate")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
+    public async Task<OperationDataResult<int>> Duplicate([FromBody]TemplateDuplicateRequestModel requestModel)
+    {
+        return await _templatesService.Duplicate(requestModel);
+    }
 
-        [HttpPost]
-        [Route("api/templates/duplicate")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
-        public async Task<OperationDataResult<int>> Duplicate([FromBody]TemplateDuplicateRequestModel requestModel)
+    [HttpGet]
+    [Route("api/templates/get/{id}")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
+    public async Task<IActionResult> Read(int id)
+    {
+        try
         {
-            return await _templatesService.Duplicate(requestModel);
+            return Ok(await _templatesService.Get(id));
         }
+        catch (Exception)
+        {
+            return Unauthorized();
+        }
+    }
 
-        [HttpGet]
-        [Route("api/templates/get/{id}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
-        public async Task<IActionResult> Read(int id)
-        {
-            try
-            {
-                return Ok(await _templatesService.Get(id));
-            }
-            catch (Exception)
-            {
-                return Unauthorized();
-            }
-        }
+    [HttpGet]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Delete)]
+    public async Task<OperationResult> Delete(int id)
+    {
+        return await _templatesService.Delete(id);
+    }
 
-        [HttpGet]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Delete)]
-        public async Task<OperationResult> Delete(int id)
+    [HttpGet]
+    [Route("api/templates/get-fields/{id}")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
+    public async Task<IActionResult> GetDataItems(int id)
+    {
+        try
         {
-            return await _templatesService.Delete(id);
+            return Ok(await _templatesService.GetFields(id));
         }
-
-        [HttpGet]
-        [Route("api/templates/get-fields/{id}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
-        public async Task<IActionResult> GetDataItems(int id)
+        catch (Exception)
         {
-            try
-            {
-                return Ok(await _templatesService.GetFields(id));
-            }
-            catch (Exception)
-            {
-                return Unauthorized();
-            }
+            return Unauthorized();
         }
+    }
         
-        [HttpPost]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingUpdate)]
-        public async Task<OperationResult> Deploy([FromBody] DeployModel deployModel)
-        {
-            return await _templatesService.Deploy(deployModel);
-        }
+    [HttpPost]
+    [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingUpdate)]
+    public async Task<OperationResult> Deploy([FromBody] DeployModel deployModel)
+    {
+        return await _templatesService.Deploy(deployModel);
+    }
 
-        [HttpGet]
-        [Route("api/templates/common-dictionary-templates")]
-        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetCommonDictionaryTemplates(string nameFilter, int idFilter)
-        {
-            return await _templatesService.GetDictionaryTemplates(nameFilter, idFilter);
-        }
+    [HttpGet]
+    [Route("api/templates/common-dictionary-templates")]
+    public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetCommonDictionaryTemplates(string nameFilter, int idFilter)
+    {
+        return await _templatesService.GetDictionaryTemplates(nameFilter, idFilter);
     }
 }

@@ -23,57 +23,56 @@ SOFTWARE.
 */
 
 
-namespace eFormAPI.Web.Hosting.Settings
+namespace eFormAPI.Web.Hosting.Settings;
+
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Seed.SeedItems;
+using Castle.Core.Internal;
+using Microsoft.Extensions.Configuration;
+using Microting.eFormApi.BasePn.Infrastructure.Delegates;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+
+public class EfConfigurationProvider : ConfigurationProvider
 {
-    using System.Linq;
-    using Microsoft.EntityFrameworkCore;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data.Seed.SeedItems;
-    using Castle.Core.Internal;
-    using Microsoft.Extensions.Configuration;
-    using Microting.eFormApi.BasePn.Infrastructure.Delegates;
-    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    private readonly string _connectionString;
 
-    public class EfConfigurationProvider : ConfigurationProvider
+    public EfConfigurationProvider(string connectionString)
     {
-        private readonly string _connectionString;
+        _connectionString = connectionString;
+        ReloadDbConfigurationDelegates.ReloadDbConfigurationDelegate += ReloadConfiguration;
+    }
 
-        public EfConfigurationProvider(string connectionString)
+    private void ReloadConfiguration()
+    {
+        Load();
+        OnReload();
+    }
+
+    // Load config data from EF DB.
+    public override void Load()
+    {
+        if (string.IsNullOrEmpty(_connectionString) || _connectionString == "...")
         {
-            _connectionString = connectionString;
-            ReloadDbConfigurationDelegates.ReloadDbConfigurationDelegate += ReloadConfiguration;
+            var seedData = ConfigurationSeed.Data;
+            Data = seedData.ToDictionary(
+                item => item.Id,
+                item => item.Value);
         }
-
-        private void ReloadConfiguration()
+        else
         {
-            Load();
-            OnReload();
-        }
-
-        // Load config data from EF DB.
-        public override void Load()
-        {
-            if (string.IsNullOrEmpty(_connectionString) || _connectionString == "...")
+            var contextFactory = new BaseDbContextFactory();
+            using (var dbContext = contextFactory.CreateDbContext(new[] {_connectionString}))
             {
-                var seedData = ConfigurationSeed.Data;
-                Data = seedData.ToDictionary(
-                    item => item.Id,
-                    item => item.Value);
-            }
-            else
-            {
-                var contextFactory = new BaseDbContextFactory();
-                using (var dbContext = contextFactory.CreateDbContext(new[] {_connectionString}))
+                if (dbContext.Database.GetPendingMigrations().Any())
                 {
-                    if (dbContext.Database.GetPendingMigrations().Any())
-                    {
-                        Log.LogEvent("Migrating Angular DB");
-                        dbContext.Database.Migrate();
-                    }
-                    Data = dbContext.ConfigurationValues
-                        .AsNoTracking()
-                        .ToDictionary(c => c.Id, c => c.Value);
+                    Log.LogEvent("Migrating Angular DB");
+                    dbContext.Database.Migrate();
                 }
+                Data = dbContext.ConfigurationValues
+                    .AsNoTracking()
+                    .ToDictionary(c => c.Id, c => c.Value);
             }
         }
     }

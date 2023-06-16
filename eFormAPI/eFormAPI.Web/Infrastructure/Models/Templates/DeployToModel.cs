@@ -24,11 +24,10 @@ SOFTWARE.
 using System.Collections.Generic;
 using Microting.eForm.Dto;
 
-namespace eFormAPI.Web.Infrastructure.Models.Templates
+namespace eFormAPI.Web.Infrastructure.Models.Templates;
+
+public class DeployToModel
 {
-    public class DeployToModel
-    {
-        public Template_Dto TemplateDto { get; set; }
-        public List<SiteNameDto> SiteNamesDto { get; set; }
-    }
+    public Template_Dto TemplateDto { get; set; }
+    public List<SiteNameDto> SiteNamesDto { get; set; }
 }

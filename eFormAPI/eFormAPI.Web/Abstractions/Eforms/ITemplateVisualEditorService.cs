@@ -18,18 +18,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Abstractions.Eforms
+namespace eFormAPI.Web.Abstractions.Eforms;
+
+using System.Threading.Tasks;
+using Infrastructure.Models.VisualEformEditor;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
+public interface ITemplateVisualEditorService
 {
-    using System.Threading.Tasks;
-    using Infrastructure.Models.VisualEformEditor;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    Task<OperationDataResult<EformVisualEditorModel>> ReadVisualTemplate(int id);
 
-    public interface ITemplateVisualEditorService
-    {
-        Task<OperationDataResult<EformVisualEditorModel>> ReadVisualTemplate(int id);
+    Task<OperationResult> CreateVisualTemplate(EformVisualEditorCreateModel model);
 
-        Task<OperationResult> CreateVisualTemplate(EformVisualEditorCreateModel model);
-
-        Task<OperationResult> UpdateVisualTemplate(EformVisualEditorUpdateModel model);
-    }
+    Task<OperationResult> UpdateVisualTemplate(EformVisualEditorUpdateModel model);
 }

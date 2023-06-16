@@ -48,6 +48,7 @@ class LoginPage extends Page {
     await (await this.loginBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     await $('#newEFormBtn').waitForDisplayed({ timeout: 60000 });
+    await $('#newEFormBtn').waitForClickable({ timeout: 60000 });
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
   }
   public async loginWithNewPassword(): Promise<void> {

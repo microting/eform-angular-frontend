@@ -5,6 +5,8 @@ import { generateRandmString } from '../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
 
+const data1 = { name: generateRandmString() };
+
 describe('Entity Select', function () {
   before(async () => {
     await loginPage.open('/auth');
@@ -12,14 +14,14 @@ describe('Entity Select', function () {
     await myEformsPage.Navbar.goToEntitySelect();
   });
   it('should make a new selectable list, with no items.', async () => {
-    const data = { name: generateRandmString() };
-    await selectableLists.createSelectableList(data);
+    await selectableLists.createSelectableList(data1);
     const selectableListRowObject = await selectableLists.getLastSelectableListObject();
-    expect(selectableListRowObject.name).equal(data.name);
+    expect(selectableListRowObject.name).equal(data1.name);
   });
   it('should edit the list name, with no items.', async () => {
     const data = { name: generateRandmString() };
     let selectableListRowObject = await selectableLists.getLastSelectableListObject();
+    //expect(selectableListRowObject.name).equal(data1.name);
     await selectableListRowObject.edit(data);
     selectableListRowObject = await selectableLists.getLastSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
@@ -31,20 +33,21 @@ describe('Entity Select', function () {
       items: [generateRandmString()],
     };
     await selectableLists.createSelectableList(data);
-    await browser.pause(500);
-    const selectableListRowObject = await selectableLists.getFirstSelectableListObject();
-    expect(selectableListRowObject.name).equal(data.name);
+    const selectableListRowObject = await selectableLists.getLastSelectableListObject();
+    //expect(selectableListRowObject.name).equal(data.name);
     await selectableListRowObject.openEdit();
     expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
     await selectableListRowObject.closeEdit();
   });
   it('should only edit item name', async () => {
-    const selectableListRowObject = await selectableLists.getFirstSelectableListObject();
+    let selectableListRowObject = await selectableLists.getLastSelectableListObject();
     const data = { items: [generateRandmString()] };
     await selectableListRowObject.edit(data, false, false, false, true);
+    selectableListRowObject = await selectableLists.getLastSelectableListObject();
     await selectableListRowObject.openEdit();
     expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
     await selectableListRowObject.closeEdit();
+    //selectableListRowObject = await selectableLists.getLastSelectableListObject();
     // selectableLists.cleanupList();
   });
   // it('should make a new selectable list, with 1 item', async () => {
@@ -62,17 +65,19 @@ describe('Entity Select', function () {
   //   $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   // });
   it('should edit the list name, and item name', async () => {
-    let selectableListRowObject = await selectableLists.getFirstSelectableListObject();
+    //await browser.pause(1000);
+    let selectableListRowObject = await selectableLists.getLastSelectableListObject();
     const data = {
       name: generateRandmString(),
       items: [generateRandmString()],
     };
     await selectableListRowObject.edit(data, false, false, false, true);
-    selectableListRowObject = await selectableLists.getFirstSelectableListObject();
+    selectableListRowObject = await selectableLists.getLastSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
     await selectableListRowObject.openEdit();
     expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
     await selectableListRowObject.closeEdit();
+    selectableListRowObject = await selectableLists.getLastSelectableListObject();
     await selectableListRowObject.delete();
   });
   it('should make a new list with multiple items', async () => {

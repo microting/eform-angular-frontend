@@ -24,129 +24,128 @@ SOFTWARE.
 
 using ClosedXML.Graphics;
 
-namespace eFormAPI.Web.Services.Import
+namespace eFormAPI.Web.Services.Import;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using ClosedXML.Excel;
+using Export;
+using Infrastructure.Models.Import;
+using Microsoft.Extensions.Logging;
+using Microting.EformAngularFrontendBase.Infrastructure.Const.Import;
+
+public class EformExcelImportService : IEformExcelImportService
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using ClosedXML.Excel;
-    using Export;
-    using Infrastructure.Models.Import;
-    using Microsoft.Extensions.Logging;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const.Import;
+    private readonly ILogger<EformExcelExportService> _logger;
 
-    public class EformExcelImportService : IEformExcelImportService
+    public EformExcelImportService(ILogger<EformExcelExportService> logger)
     {
-        private readonly ILogger<EformExcelExportService> _logger;
+        _logger = logger;
+    }
 
-        public EformExcelImportService(ILogger<EformExcelExportService> logger)
+
+    public List<EformImportExcelModel> EformImport(Stream excelStream)
+    {
+        try
         {
-            _logger = logger;
-        }
+            var result = new List<EformImportExcelModel>();
+            foreach (var fontFamily in SixLabors.Fonts.SystemFonts.Collection.Families)
+                Console.WriteLine(fontFamily.Name);
+            LoadOptions.DefaultGraphicEngine = new DefaultGraphicEngine("Carlito");
+            var workbook = new XLWorkbook(excelStream);
+            var worksheet = workbook.Worksheet(EformImportExcelConsts.EformsWorksheet);
+            var rows = worksheet.RangeUsed().RowsUsed();
 
-
-        public List<EformImportExcelModel> EformImport(Stream excelStream)
-        {
-            try
+            foreach (var row in rows.Skip(1)) // Skip header
             {
-                var result = new List<EformImportExcelModel>();
-                foreach (var fontFamily in SixLabors.Fonts.SystemFonts.Collection.Families)
-                    Console.WriteLine(fontFamily.Name);
-                LoadOptions.DefaultGraphicEngine = new DefaultGraphicEngine("Carlito");
-                var workbook = new XLWorkbook(excelStream);
-                var worksheet = workbook.Worksheet(EformImportExcelConsts.EformsWorksheet);
-                var rows = worksheet.RangeUsed().RowsUsed();
+                var name = row.Cell(EformImportExcelConsts.EformNameCol).Value.ToString();
 
-                foreach (var row in rows.Skip(1)) // Skip header
+                var tag1 = row.Cell(EformImportExcelConsts.Tag1Col).Value.ToString();
+                var tag2 = row.Cell(EformImportExcelConsts.Tag2Col).Value.ToString();
+                var tag3 = row.Cell(EformImportExcelConsts.Tag3Col).Value.ToString();
+                var tag4 = row.Cell(EformImportExcelConsts.Tag4Col).Value.ToString();
+                var tag5 = row.Cell(EformImportExcelConsts.Tag5Col).Value.ToString();
+                var tag6 = row.Cell(EformImportExcelConsts.Tag6Col).Value.ToString();
+                var tag7 = row.Cell(EformImportExcelConsts.Tag7Col).Value.ToString();
+                var tag8 = row.Cell(EformImportExcelConsts.Tag8Col).Value.ToString();
+                var tag9 = row.Cell(EformImportExcelConsts.Tag9Col).Value.ToString();
+                var tag10 = row.Cell(EformImportExcelConsts.Tag10Col).Value.ToString();
+
+                var xml = row.Cell(EformImportExcelConsts.EformXMLCol).Value.ToString();
+
+                var item = new EformImportExcelModel
                 {
-                    var name = row.Cell(EformImportExcelConsts.EformNameCol).Value.ToString();
+                    Name = name,
+                    EformXML = xml,
+                    ExcelRow = row.RowNumber()
+                };
 
-                    var tag1 = row.Cell(EformImportExcelConsts.Tag1Col).Value.ToString();
-                    var tag2 = row.Cell(EformImportExcelConsts.Tag2Col).Value.ToString();
-                    var tag3 = row.Cell(EformImportExcelConsts.Tag3Col).Value.ToString();
-                    var tag4 = row.Cell(EformImportExcelConsts.Tag4Col).Value.ToString();
-                    var tag5 = row.Cell(EformImportExcelConsts.Tag5Col).Value.ToString();
-                    var tag6 = row.Cell(EformImportExcelConsts.Tag6Col).Value.ToString();
-                    var tag7 = row.Cell(EformImportExcelConsts.Tag7Col).Value.ToString();
-                    var tag8 = row.Cell(EformImportExcelConsts.Tag8Col).Value.ToString();
-                    var tag9 = row.Cell(EformImportExcelConsts.Tag9Col).Value.ToString();
-                    var tag10 = row.Cell(EformImportExcelConsts.Tag10Col).Value.ToString();
-
-                    var xml = row.Cell(EformImportExcelConsts.EformXMLCol).Value.ToString();
-
-                    var item = new EformImportExcelModel
-                    {
-                        Name = name,
-                        EformXML = xml,
-                        ExcelRow = row.RowNumber()
-                    };
-
-                    if (!string.IsNullOrEmpty(tag1))
-                    {
-                        item.Tags.Add(tag1);
-                    }
-
-                    if (!string.IsNullOrEmpty(tag2))
-                    {
-                        item.Tags.Add(tag2);
-                    }
-
-                    if (!string.IsNullOrEmpty(tag3))
-                    {
-                        item.Tags.Add(tag3);
-                    }
-
-                    if (!string.IsNullOrEmpty(tag4))
-                    {
-                        item.Tags.Add(tag4);
-                    }
-
-                    if (!string.IsNullOrEmpty(tag5))
-                    {
-                        item.Tags.Add(tag5);
-                    }
-
-                    if (!string.IsNullOrEmpty(tag6))
-                    {
-                        item.Tags.Add(tag6);
-                    }
-
-                    if (!string.IsNullOrEmpty(tag7))
-                    {
-                        item.Tags.Add(tag7);
-                    }
-
-                    if (!string.IsNullOrEmpty(tag8))
-                    {
-                        item.Tags.Add(tag8);
-                    }
-
-                    if (!string.IsNullOrEmpty(tag9))
-                    {
-                        item.Tags.Add(tag9);
-                    }
-
-                    if (!string.IsNullOrEmpty(tag10))
-                    {
-                        item.Tags.Add(tag10);
-                    }
-
-                    item.ReportH1 = row.Cell(EformImportExcelConsts.ReportH1).Value.ToString();
-                    item.ReportH2 = row.Cell(EformImportExcelConsts.ReportH2).Value.ToString();
-                    item.ReportH3 = row.Cell(EformImportExcelConsts.ReportH3).Value.ToString();
-                    item.ReportH4 = row.Cell(EformImportExcelConsts.ReportH4).Value.ToString();
-
-                    result.Add(item);
+                if (!string.IsNullOrEmpty(tag1))
+                {
+                    item.Tags.Add(tag1);
                 }
 
-                return result;
+                if (!string.IsNullOrEmpty(tag2))
+                {
+                    item.Tags.Add(tag2);
+                }
+
+                if (!string.IsNullOrEmpty(tag3))
+                {
+                    item.Tags.Add(tag3);
+                }
+
+                if (!string.IsNullOrEmpty(tag4))
+                {
+                    item.Tags.Add(tag4);
+                }
+
+                if (!string.IsNullOrEmpty(tag5))
+                {
+                    item.Tags.Add(tag5);
+                }
+
+                if (!string.IsNullOrEmpty(tag6))
+                {
+                    item.Tags.Add(tag6);
+                }
+
+                if (!string.IsNullOrEmpty(tag7))
+                {
+                    item.Tags.Add(tag7);
+                }
+
+                if (!string.IsNullOrEmpty(tag8))
+                {
+                    item.Tags.Add(tag8);
+                }
+
+                if (!string.IsNullOrEmpty(tag9))
+                {
+                    item.Tags.Add(tag9);
+                }
+
+                if (!string.IsNullOrEmpty(tag10))
+                {
+                    item.Tags.Add(tag10);
+                }
+
+                item.ReportH1 = row.Cell(EformImportExcelConsts.ReportH1).Value.ToString();
+                item.ReportH2 = row.Cell(EformImportExcelConsts.ReportH2).Value.ToString();
+                item.ReportH3 = row.Cell(EformImportExcelConsts.ReportH3).Value.ToString();
+                item.ReportH4 = row.Cell(EformImportExcelConsts.ReportH4).Value.ToString();
+
+                result.Add(item);
             }
-            catch (Exception e)
-            {
-                _logger.LogError(e, e.Message);
-                throw;
-            }
+
+            return result;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            throw;
         }
     }
 }

@@ -23,14 +23,13 @@ SOFTWARE.
 */
 using System.Collections.Generic;
 
-namespace eFormAPI.Web.Infrastructure.Models.Reports
-{
-    public class EformMainElement
-    {
-        public int Id { get; set; }
-        public string Label { get; set; }
+namespace eFormAPI.Web.Infrastructure.Models.Reports;
 
-        public List<EformReportElementModel> ElementList { get; set; }
-            = new List<EformReportElementModel>();
-    }
+public class EformMainElement
+{
+    public int Id { get; set; }
+    public string Label { get; set; }
+
+    public List<EformReportElementModel> ElementList { get; set; }
+        = new List<EformReportElementModel>();
 }

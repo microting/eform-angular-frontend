@@ -22,100 +22,99 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Controllers.Eforms
+namespace eFormAPI.Web.Controllers.Eforms;
+
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application.Case.CaseEdit;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions.Eforms;
+using eFormAPI.Web.Abstractions.Security;
+using Infrastructure.Models.Cases.Request;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
+[Route("api/cases")]
+[Authorize]
+public class CasesController : Controller
 {
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.Case.CaseEdit;
-    using System.Threading.Tasks;
-    using eFormAPI.Web.Abstractions.Eforms;
-    using eFormAPI.Web.Abstractions.Security;
-    using Infrastructure.Models.Cases.Request;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    private readonly ICasesService _casesService;
+    private readonly IEformPermissionsService _permissionsService;
 
-    [Route("api/cases")]
-    [Authorize]
-    public class CasesController : Controller
+    public CasesController(ICasesService casesService,
+        IEformPermissionsService permissionsService)
     {
-        private readonly ICasesService _casesService;
-        private readonly IEformPermissionsService _permissionsService;
+        _casesService = casesService;
+        _permissionsService = permissionsService;
+    }
 
-        public CasesController(ICasesService casesService,
-            IEformPermissionsService permissionsService)
+    [HttpPost]
+    [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
+    public async Task<IActionResult> Index([FromBody] CaseRequestModel requestModel)
+    {
+        if (requestModel.TemplateId != null
+            && ! await _permissionsService.CheckEform((int) requestModel.TemplateId,
+                AuthConsts.EformClaims.CasesClaims.CasesRead))
         {
-            _casesService = casesService;
-            _permissionsService = permissionsService;
+            return Forbid();
         }
 
-        [HttpPost]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
-        public async Task<IActionResult> Index([FromBody] CaseRequestModel requestModel)
-        {
-            if (requestModel.TemplateId != null
-                && ! await _permissionsService.CheckEform((int) requestModel.TemplateId,
-                    AuthConsts.EformClaims.CasesClaims.CasesRead))
-            {
-                return Forbid();
-            }
+        return Ok(await _casesService.Index(requestModel));
+    }
 
-            return Ok(await _casesService.Index(requestModel));
-        }
-
-        [HttpGet]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
-        public async Task<IActionResult> Read(int id, int templateId)
-        {
-            if (! await _permissionsService.CheckEform(templateId, 
+    [HttpGet]
+    [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
+    public async Task<IActionResult> Read(int id, int templateId)
+    {
+        if (! await _permissionsService.CheckEform(templateId, 
                 AuthConsts.EformClaims.CasesClaims.CaseRead))
-            {
-                return Forbid();
-            }
-
-            return Ok(await _casesService.Read(id));
+        {
+            return Forbid();
         }
 
-        [HttpPut]
-        [Route("{templateId}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
-        public async Task<IActionResult> Update([FromBody] ReplyRequest model, int templateId)
-        {
-            if (!await _permissionsService.CheckEform(templateId,
+        return Ok(await _casesService.Read(id));
+    }
+
+    [HttpPut]
+    [Route("{templateId}")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
+    public async Task<IActionResult> Update([FromBody] ReplyRequest model, int templateId)
+    {
+        if (!await _permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.CasesClaims.CaseUpdate))
-            {
-                return Forbid();
-            }
-
-            return Ok(await _casesService.Update(model));
+        {
+            return Forbid();
         }
+
+        return Ok(await _casesService.Update(model));
+    }
         
-        [HttpDelete]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseDelete)]
-        public async Task<IActionResult> Delete(int id, int templateId)
-        {
-            if (! await _permissionsService.CheckEform(templateId,
+    [HttpDelete]
+    [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseDelete)]
+    public async Task<IActionResult> Delete(int id, int templateId)
+    {
+        if (! await _permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.CasesClaims.CaseDelete))
-            {
-                return Forbid();
-            }
-
-            return Ok(await _casesService.Delete(id));
-        }
-
-        [HttpPut]
-        [Route("archive")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
-        public async Task<OperationResult> Archive([FromBody]int caseId)
         {
-            return await _casesService.Archive(caseId);
+            return Forbid();
         }
 
-        [HttpPut]
-        [Route("unarchive")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
-        public async Task<OperationResult> Unarchive([FromBody] int caseId)
-        {
-            return await _casesService.Unarchive(caseId);
-        }
+        return Ok(await _casesService.Delete(id));
+    }
+
+    [HttpPut]
+    [Route("archive")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
+    public async Task<OperationResult> Archive([FromBody]int caseId)
+    {
+        return await _casesService.Archive(caseId);
+    }
+
+    [HttpPut]
+    [Route("unarchive")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
+    public async Task<OperationResult> Unarchive([FromBody] int caseId)
+    {
+        return await _casesService.Unarchive(caseId);
     }
 }

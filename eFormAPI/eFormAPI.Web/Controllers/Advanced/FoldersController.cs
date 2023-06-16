@@ -23,73 +23,72 @@ SOFTWARE.
 */
 
 
-namespace eFormAPI.Web.Controllers.Advanced
+namespace eFormAPI.Web.Controllers.Advanced;
+
+using Infrastructure.Models.Folders;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions.Advanced;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
+[Authorize]
+public class FoldersController: Controller
 {
-    using Infrastructure.Models.Folders;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using eFormAPI.Web.Abstractions.Advanced;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-
-    [Authorize]
-    public class FoldersController: Controller
-    {
-        private readonly IFoldersService _foldersService;
+    private readonly IFoldersService _foldersService;
         
-        public FoldersController(IFoldersService foldersService)
-        {
-            _foldersService = foldersService;
-        }
+    public FoldersController(IFoldersService foldersService)
+    {
+        _foldersService = foldersService;
+    }
 
-        [HttpGet]
-        [Route("api/folders")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<List<FolderDtoModel>>> Index()
-        {
-            return await _foldersService.Index();
-        }
+    [HttpGet]
+    [Route("api/folders")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
+    public async Task<OperationDataResult<List<FolderDtoModel>>> Index()
+    {
+        return await _foldersService.Index();
+    }
 
-        [HttpGet]
-        [Route("api/folders/list")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<List<FolderDtoModel>>> List()
-        {
-            return await _foldersService.List();
-        }
+    [HttpGet]
+    [Route("api/folders/list")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
+    public async Task<OperationDataResult<List<FolderDtoModel>>> List()
+    {
+        return await _foldersService.List();
+    }
 
-        [HttpPost]
-        [Route("api/folders")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
-        public async Task<OperationResult> Create([FromBody] FolderCreateModel createModel)
-        {
-            return await _foldersService.Create(createModel);
-        }
+    [HttpPost]
+    [Route("api/folders")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
+    public async Task<OperationResult> Create([FromBody] FolderCreateModel createModel)
+    {
+        return await _foldersService.Create(createModel);
+    }
 
-        [HttpGet]
-        [Route("api/folders/{id}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<FolderModel>> Read(int id)
-        {
-            return await _foldersService.Read(id);
-        }
+    [HttpGet]
+    [Route("api/folders/{id}")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
+    public async Task<OperationDataResult<FolderModel>> Read(int id)
+    {
+        return await _foldersService.Read(id);
+    }
 
-        [HttpPut]
-        [Route("api/folders")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
-        public async Task<OperationResult> Update([FromBody] FolderUpdateModel folderUpdateModel)
-        {
-            return await _foldersService.Update(folderUpdateModel);
-        }
+    [HttpPut]
+    [Route("api/folders")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
+    public async Task<OperationResult> Update([FromBody] FolderUpdateModel folderUpdateModel)
+    {
+        return await _foldersService.Update(folderUpdateModel);
+    }
 
-        [HttpDelete]
-        [Route("api/folders/{id}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Delete)]
-        public async Task<OperationResult> Delete(int id)
-        {
-            return await _foldersService.Delete(id);
-        }
+    [HttpDelete]
+    [Route("api/folders/{id}")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Sites.Delete)]
+    public async Task<OperationResult> Delete(int id)
+    {
+        return await _foldersService.Delete(id);
     }
 }

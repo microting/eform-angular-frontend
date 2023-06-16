@@ -23,25 +23,24 @@ SOFTWARE.
 */
 using System.Collections.Generic;
 
-namespace eFormAPI.Web.Infrastructure.Models.Templates
+namespace eFormAPI.Web.Infrastructure.Models.Templates;
+
+public class TemplateListModel
 {
-    public class TemplateListModel
+    public TemplateListModel()
     {
-        public TemplateListModel()
-        {
-        }
-
-        public TemplateListModel(int numOfElements, int pageNum, List<TemplateDto> templates)
-        {
-            NumOfElements = numOfElements;
-            PageNum = pageNum;
-            Templates = templates;
-        }
-
-        public int NumOfElements { get; set; }
-
-        public int PageNum { get; set; }
-
-        public List<TemplateDto> Templates { get; set; }
     }
+
+    public TemplateListModel(int numOfElements, int pageNum, List<TemplateDto> templates)
+    {
+        NumOfElements = numOfElements;
+        PageNum = pageNum;
+        Templates = templates;
+    }
+
+    public int NumOfElements { get; set; }
+
+    public int PageNum { get; set; }
+
+    public List<TemplateDto> Templates { get; set; }
 }

@@ -21,16 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Auth
+namespace eFormAPI.Web.Infrastructure.Models.Auth;
+
+using System.Collections.Generic;
+using System.Security.Claims;
+
+public class AuthItem
 {
-    using System.Collections.Generic;
-    using System.Security.Claims;
+    public long TimeStamp { get; set; }
 
-    public class AuthItem
-    {
-        public long TimeStamp { get; set; }
-
-        public List<Claim> Claims { get; set; }
-            = new List<Claim>();
-    }
+    public List<Claim> Claims { get; set; }
+        = new List<Claim>();
 }

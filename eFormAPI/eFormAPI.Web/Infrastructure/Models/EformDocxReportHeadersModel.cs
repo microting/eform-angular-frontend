@@ -22,22 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models
+namespace eFormAPI.Web.Infrastructure.Models;
+
+using System.ComponentModel.DataAnnotations;
+public class EformDocxReportHeadersModel
 {
-    using System.ComponentModel.DataAnnotations;
-    public class EformDocxReportHeadersModel
-    {
-        public string H1 { get; set; }
+    public string H1 { get; set; }
 
-        public string H2 { get; set; }
+    public string H2 { get; set; }
 
-        public string H3 { get; set; }
+    public string H3 { get; set; }
 
-        public string H4 { get; set; }
+    public string H4 { get; set; }
 
-        public string H5 { get; set; }
+    public string H5 { get; set; }
 
-        [Required]
-        public int TemplateId { get; set; }
-    }
+    [Required]
+    public int TemplateId { get; set; }
 }

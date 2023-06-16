@@ -21,27 +21,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Abstractions;
+
+public interface ISettingsService
 {
-    public interface ISettingsService
-    {
-        OperationResult ConnectionStringExist();
-        Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings();
-        OperationDataResult<string> GetDefaultLocale();
-        OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings();
-        OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings();
-        OperationDataResult<string> GetAssemblyVersion();
-        OperationDataResult<string> GetApplicationHostOs();
-        OperationDataResult<string> GetLatestVersion();
-        Task<OperationResult> ResetLoginPageSettings();
-        Task<OperationResult> ResetPageHeaderSettings();
-        Task<OperationResult> UpdateAdminSettings(AdminSettingsModel adminSettingsModel);
-        Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel);
-        Task<OperationResult> IntegrityCheck();
-    }
+    OperationResult ConnectionStringExist();
+    Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings();
+    OperationDataResult<string> GetDefaultLocale();
+    OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings();
+    OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings();
+    OperationDataResult<string> GetAssemblyVersion();
+    OperationDataResult<string> GetApplicationHostOs();
+    OperationDataResult<string> GetLatestVersion();
+    Task<OperationResult> ResetLoginPageSettings();
+    Task<OperationResult> ResetPageHeaderSettings();
+    Task<OperationResult> UpdateAdminSettings(AdminSettingsModel adminSettingsModel);
+    Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel);
+    Task<OperationResult> IntegrityCheck();
+    Task<OperationDataResult<LanguagesModel>> GetLanguages();
+    Task<OperationResult> UpdateLanguages(LanguagesModel languages);
 }

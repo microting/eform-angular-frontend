@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 
-namespace eFormAPI.Web.Infrastructure.Models.Settings
+namespace eFormAPI.Web.Infrastructure.Models.Settings;
+
+public class TimeZonesModel
 {
-    public class TimeZonesModel
-    {
-        public List<TimeZoneModel> TimeZoneModels { get; set; }
-    }
+    public List<TimeZoneModel> TimeZoneModels { get; set; }
 }

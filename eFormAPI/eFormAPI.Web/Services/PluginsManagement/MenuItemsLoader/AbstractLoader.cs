@@ -22,21 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
+namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
+
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+
+public abstract class AbstractLoader
 {
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
-
-    public abstract class AbstractLoader
+    private readonly BaseDbContext _dbContext;
+    public AbstractLoader(BaseDbContext dbContext)
     {
-        private readonly BaseDbContext _dbContext;
-        public AbstractLoader(BaseDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
-        public abstract bool IsExecute(PluginMenuItemModel menuItem);
-
-        public abstract void Load(PluginMenuItemModel menuItem, string pluginId, int? parentId);
+        _dbContext = dbContext;
     }
+
+    public abstract bool IsExecute(PluginMenuItemModel menuItem);
+
+    public abstract void Load(PluginMenuItemModel menuItem, string pluginId, int? parentId);
 }

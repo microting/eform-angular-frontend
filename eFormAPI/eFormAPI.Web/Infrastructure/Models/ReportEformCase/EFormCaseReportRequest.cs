@@ -22,18 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase
+namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase;
+
+using System.ComponentModel.DataAnnotations;
+public class EFormCaseReportRequest
 {
-    using System.ComponentModel.DataAnnotations;
-    public class EFormCaseReportRequest
-    {
-        [Required]
-        public int TemplateId { get; set; }
+    [Required]
+    public int TemplateId { get; set; }
 
-        [Required]
-        public string DateFrom { get; set; }
+    [Required]
+    public string DateFrom { get; set; }
 
-        [Required]
-        public string DateTo { get; set; }
-    }
+    [Required]
+    public string DateTo { get; set; }
 }

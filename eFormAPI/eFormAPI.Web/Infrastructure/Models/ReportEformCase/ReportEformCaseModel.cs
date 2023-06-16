@@ -23,29 +23,28 @@ SOFTWARE.
 */
 
 
-namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase
-{
-    using System;
-    using System.Collections.Generic;
+namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase;
+
+using System;
+using System.Collections.Generic;
     
-    public class ReportEformCaseModel
-    {
+public class ReportEformCaseModel
+{
 
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public DateTime? MicrotingSdkCaseDoneAt { get; set; }
+    public DateTime? MicrotingSdkCaseDoneAt { get; set; }
 
-        public int MicrotingSdkCaseId { get; set; }
+    public int MicrotingSdkCaseId { get; set; }
 
-        public int? EFormId { get; set; }
+    public int? EFormId { get; set; }
 
-        public string DoneBy { get; set; } // worker name
+    public string DoneBy { get; set; } // worker name
         
-        // public int PostsCount { get; set; } 
+    // public int PostsCount { get; set; } 
 
-        public int ImagesCount { get; set; }
+    public int ImagesCount { get; set; }
 
-        public List<string> CaseFields { get; set; }
-            = new List<string>();
-    }
+    public List<string> CaseFields { get; set; }
+        = new List<string>();
 }

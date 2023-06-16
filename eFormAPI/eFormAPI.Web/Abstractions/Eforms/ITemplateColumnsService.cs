@@ -26,12 +26,11 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models.Templates;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace eFormAPI.Web.Abstractions.Eforms
+namespace eFormAPI.Web.Abstractions.Eforms;
+
+public interface ITemplateColumnsService
 {
-    public interface ITemplateColumnsService
-    {
-        Task<OperationDataResult<List<TemplateColumnModel>>> GetAvailableColumns(int templateId);
-        Task<OperationDataResult<DisplayTemplateColumnsModel>> GetCurrentColumns(int templateId);
-        Task<OperationResult> UpdateColumns(UpdateTemplateColumnsModel model);
-    }
+    Task<OperationDataResult<List<TemplateColumnModel>>> GetAvailableColumns(int templateId);
+    Task<OperationDataResult<DisplayTemplateColumnsModel>> GetCurrentColumns(int templateId);
+    Task<OperationResult> UpdateColumns(UpdateTemplateColumnsModel model);
 }

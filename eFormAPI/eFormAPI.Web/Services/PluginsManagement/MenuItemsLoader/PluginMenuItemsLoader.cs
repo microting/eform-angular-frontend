@@ -22,39 +22,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
+namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
+
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+using System.Collections.Generic;
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
+
+public class PluginMenuItemsLoader
 {
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
-    using System.Collections.Generic;
-    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    private readonly BaseDbContext _dbContext;
+    private readonly List<AbstractLoader> _loaders;
+    private readonly string _pluginId;
 
-    public class PluginMenuItemsLoader
+    public PluginMenuItemsLoader(BaseDbContext dbContext, string pluginId)
     {
-        private readonly BaseDbContext _dbContext;
-        private readonly List<AbstractLoader> _loaders;
-        private readonly string _pluginId;
-
-        public PluginMenuItemsLoader(BaseDbContext dbContext, string pluginId)
+        _dbContext = dbContext;
+        _pluginId = pluginId;
+        _loaders = new List<AbstractLoader>()
         {
-            _dbContext = dbContext;
-            _pluginId = pluginId;
-            _loaders = new List<AbstractLoader>()
-            {
-                new SimpleLinkLoader(_dbContext),
-                new IsNotSimpleLinkLoader(_dbContext)
-            };
-        }
+            new SimpleLinkLoader(_dbContext),
+            new IsNotSimpleLinkLoader(_dbContext)
+        };
+    }
 
-        public void Load(List<PluginMenuItemModel> menuItems)
+    public void Load(List<PluginMenuItemModel> menuItems)
+    {
+        foreach(var menuItem in menuItems)
         {
-            foreach(var menuItem in menuItems)
+            foreach(var loader in _loaders)
             {
-                foreach(var loader in _loaders)
+                if (loader.IsExecute(menuItem))
                 {
-                    if (loader.IsExecute(menuItem))
-                    {
-                        loader.Load(menuItem, _pluginId, null);
-                    }
+                    loader.Load(menuItem, _pluginId, null);
                 }
             }
         }

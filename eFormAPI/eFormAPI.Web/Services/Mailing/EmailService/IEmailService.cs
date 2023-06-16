@@ -1,23 +1,22 @@
-﻿namespace eFormAPI.Web.Services.Mailing.EmailService
+﻿namespace eFormAPI.Web.Services.Mailing.EmailService;
+
+using System.Threading.Tasks;
+
+public interface IEmailService
 {
-    using System.Threading.Tasks;
+    Task SendAsync(
+        string fromEmail,
+        string fromName,
+        string subject,
+        string to,
+        string text = null,
+        string html = null);
 
-    public interface IEmailService
-    {
-        Task SendAsync(
-            string fromEmail,
-            string fromName,
-            string subject,
-            string to,
-            string text = null,
-            string html = null);
-
-        Task SendFileAsync(
-            string fromEmail,
-            string fromName,
-            string subject,
-            string to,
-            string fileName,
-            string text = null, string html = null);
-    }
+    Task SendFileAsync(
+        string fromEmail,
+        string fromName,
+        string subject,
+        string to,
+        string fileName,
+        string text = null, string html = null);
 }

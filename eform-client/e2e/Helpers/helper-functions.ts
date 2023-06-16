@@ -98,6 +98,7 @@ export async function selectValueInNgSelector(selector: WebdriverIO.Element, val
     valueForClick = await (
       await $('ng-dropdown-panel')
     ).$(`.ng-option`);
+    await valueForClick.waitForClickable({ timeout: 40000 });
     // valueForClick = await (
     //   await $('ng-dropdown-panel')
     // ).$(`//*[@class='ng-option-label ng-star-inserted' and contains(text(), '${value}')]`);

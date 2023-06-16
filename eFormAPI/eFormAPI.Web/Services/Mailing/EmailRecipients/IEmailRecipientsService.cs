@@ -21,22 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Services.Mailing.EmailRecipients
-{
-    using System.Threading.Tasks;
-    using Infrastructure.Models.Mailing;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+namespace eFormAPI.Web.Services.Mailing.EmailRecipients;
 
-    public interface IEmailRecipientsService
-    {
-        Task<OperationDataResult<Paged<EmailRecipientModel>>> GetEmailRecipients(
-            EmailRecipientsRequestModel requestModel);
-        Task<OperationResult> UpdateEmailRecipient(
-            EmailRecipientUpdateModel requestModel);
-        Task<OperationResult> DeleteEmailRecipient(int id);
-        Task<OperationResult> CreateEmailRecipient(EmailRecipientsCreateModel createModel);
-        Task<OperationDataResult<EmailRecipientTagCommonModel[]>> GetEmailRecipientsAndTags();
-        Task<OperationDataResult<CommonDictionaryModel[]>> GetSimpleEmailRecipients();
-    }
+using System.Threading.Tasks;
+using Infrastructure.Models.Mailing;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+public interface IEmailRecipientsService
+{
+    Task<OperationDataResult<Paged<EmailRecipientModel>>> GetEmailRecipients(
+        EmailRecipientsRequestModel requestModel);
+    Task<OperationResult> UpdateEmailRecipient(
+        EmailRecipientUpdateModel requestModel);
+    Task<OperationResult> DeleteEmailRecipient(int id);
+    Task<OperationResult> CreateEmailRecipient(EmailRecipientsCreateModel createModel);
+    Task<OperationDataResult<EmailRecipientTagCommonModel[]>> GetEmailRecipientsAndTags();
+    Task<OperationDataResult<CommonDictionaryModel[]>> GetSimpleEmailRecipients();
 }

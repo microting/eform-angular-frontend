@@ -22,92 +22,91 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Controllers.Advanced
+namespace eFormAPI.Web.Controllers.Advanced;
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions.Advanced;
+using Infrastructure.Models;
+using Infrastructure.Models.SearchableList;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+
+[Authorize]
+[Route("api/searchable-groups")]
+public class EntitySearchController : Controller
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using eFormAPI.Web.Abstractions.Advanced;
-    using Infrastructure.Models;
-    using Infrastructure.Models.SearchableList;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
+    private readonly IEntitySearchService _entitySearchService;
 
-    [Authorize]
-    [Route("api/searchable-groups")]
-    public class EntitySearchController : Controller
+    public EntitySearchController(IEntitySearchService entitySearchService)
     {
-        private readonly IEntitySearchService _entitySearchService;
+        _entitySearchService = entitySearchService;
+    }
 
-        public EntitySearchController(IEntitySearchService entitySearchService)
-        {
-            _entitySearchService = entitySearchService;
-        }
-
-        [HttpPost]
-        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Read)]
-        public Task<OperationDataResult<Paged<EntityGroup>>> Index(
-            [FromBody] AdvEntitySearchableGroupListRequestModel requestModel)
-        {
-            return _entitySearchService.Index(requestModel);
-        }
+    [HttpPost]
+    [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Read)]
+    public Task<OperationDataResult<Paged<EntityGroup>>> Index(
+        [FromBody] AdvEntitySearchableGroupListRequestModel requestModel)
+    {
+        return _entitySearchService.Index(requestModel);
+    }
         
-        [HttpPost]
-        [Route("create")]
-        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Create)]
-        public Task<OperationResult> Create([FromBody] AdvEntitySearchableGroupEditModel editModel)
-        {
-            return _entitySearchService.Create(editModel);
-        }
+    [HttpPost]
+    [Route("create")]
+    [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Create)]
+    public Task<OperationResult> Create([FromBody] AdvEntitySearchableGroupEditModel editModel)
+    {
+        return _entitySearchService.Create(editModel);
+    }
 
 
-        [HttpGet]
-        [Route("get/{entityGroupUid}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Read)]
-        public Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
-        {
-            return _entitySearchService.Read(entityGroupUid);
-        }
+    [HttpGet]
+    [Route("get/{entityGroupUid}")]
+    [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Read)]
+    public Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
+    {
+        return _entitySearchService.Read(entityGroupUid);
+    }
         
-        [HttpPost]
-        [Route("update")]
-        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Update)]
-        public Task<OperationResult> Update([FromBody] AdvEntitySearchableGroupEditModel editModel)
-        {
-            return _entitySearchService.Update(editModel);
-        }
+    [HttpPost]
+    [Route("update")]
+    [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Update)]
+    public Task<OperationResult> Update([FromBody] AdvEntitySearchableGroupEditModel editModel)
+    {
+        return _entitySearchService.Update(editModel);
+    }
 
-        [HttpGet]
-        [Route("delete/{entityGroupUid}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Delete)]
-        public Task<OperationResult> Delete(string entityGroupUid)
-        {
-            return _entitySearchService.Delete(entityGroupUid);
-        }
+    [HttpGet]
+    [Route("delete/{entityGroupUid}")]
+    [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Delete)]
+    public Task<OperationResult> Delete(string entityGroupUid)
+    {
+        return _entitySearchService.Delete(entityGroupUid);
+    }
 
-        [HttpGet]
-        [Route("dict/{entityGroupUid}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
-        public Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid,
-            string searchString)
-        {
-            return _entitySearchService.GetEntityGroupDictionary(entityGroupUid, searchString);
-        }
+    [HttpGet]
+    [Route("dict/{entityGroupUid}")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
+    public Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid,
+        string searchString)
+    {
+        return _entitySearchService.GetEntityGroupDictionary(entityGroupUid, searchString);
+    }
 
-        [HttpPost]
-        [Route("send")]
-        public Task<OperationResult> SendSearchableGroup(string entityGroupUid)
-        {
-            return _entitySearchService.SendSearchableGroup(entityGroupUid);
-        }
+    [HttpPost]
+    [Route("send")]
+    public Task<OperationResult> SendSearchableGroup(string entityGroupUid)
+    {
+        return _entitySearchService.SendSearchableGroup(entityGroupUid);
+    }
 
-        [HttpGet]
-        [Route("dict")]
-        public Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary([FromQuery] string searchString)
-        {
-            return _entitySearchService.GetEntityGroupsInDictionary(searchString);
-        }
+    [HttpGet]
+    [Route("dict")]
+    public Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary([FromQuery] string searchString)
+    {
+        return _entitySearchService.GetEntityGroupsInDictionary(searchString);
     }
 }

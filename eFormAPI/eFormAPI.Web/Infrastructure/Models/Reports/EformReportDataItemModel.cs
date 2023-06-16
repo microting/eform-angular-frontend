@@ -23,24 +23,23 @@ SOFTWARE.
 */
 using System.Collections.Generic;
 
-namespace eFormAPI.Web.Infrastructure.Models.Reports
+namespace eFormAPI.Web.Infrastructure.Models.Reports;
+
+public class EformReportDataItemModel
 {
-    public class EformReportDataItemModel
-    {
-        public int Id { get; set; }
-        public int DataItemId { get; set; }
+    public int Id { get; set; }
+    public int DataItemId { get; set; }
 
-        public string Label { get; set; }
-        public string FieldType { get; set; }
+    public string Label { get; set; }
+    public string FieldType { get; set; }
 
-        public int Position { get; set; }
-        public bool Visibility { get; set; }
-        public bool IsNewPageItem { get; set; }
+    public int Position { get; set; }
+    public bool Visibility { get; set; }
+    public bool IsNewPageItem { get; set; }
 
-        public List<EformKeyValuePairModel> KeyValuePairList { get; set; }
-            = new List<EformKeyValuePairModel>();
+    public List<EformKeyValuePairModel> KeyValuePairList { get; set; }
+        = new List<EformKeyValuePairModel>();
 
-        public List<EformReportDataItemModel> DataItemList =
-            new List<EformReportDataItemModel>();
-    }
+    public List<EformReportDataItemModel> DataItemList =
+        new List<EformReportDataItemModel>();
 }

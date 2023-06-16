@@ -21,11 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Settings.Initial
+namespace eFormAPI.Web.Infrastructure.Models.Settings.Initial;
+
+public class GeneralAppSetupSettingsModel
 {
-    public class GeneralAppSetupSettingsModel
-    {
-        public string DefaultLocale { get; set; }
-        public int CustomerNo { get; set; }
-    }
+    public string DefaultLocale { get; set; }
+    public int CustomerNo { get; set; }
 }

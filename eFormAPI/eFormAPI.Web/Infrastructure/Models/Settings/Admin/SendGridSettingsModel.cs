@@ -1,7 +1,6 @@
-﻿namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
+﻿namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+
+public class SendGridSettingsModel
 {
-    public class SendGridSettingsModel
-    {
-        public string ApiKey { get; set; }
-    }
+    public string ApiKey { get; set; }
 }

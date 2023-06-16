@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AppSettingsService} from 'src/app/common/services';
 import {AppSettingsQuery, AppSettingsStore} from './';
 import {map} from 'rxjs/operators';
-import {AdminSettingsModel} from 'src/app/common/models';
+import {AdminSettingsModel, LanguagesModel} from 'src/app/common/models';
 import {take} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
@@ -39,6 +39,13 @@ export class AppSettingsStateService {
         }));
       }
     });
+    this.getLanguages().subscribe((response) => {
+      if (response && response.success && response.model) {
+        this.store.update(() => ({
+          languagesModel: response.model,
+        }));
+      }
+    });
   }
 
   updateAdminSettings(adminSettings: AdminSettingsModel) {
@@ -67,5 +74,13 @@ export class AppSettingsStateService {
           return response;
         })
       );
+  }
+
+  getLanguages() {
+    return this.service.getLanguages();
+  }
+
+  updateLanguages(languages: LanguagesModel) {
+    return this.service.updateLanguages(languages);
   }
 }

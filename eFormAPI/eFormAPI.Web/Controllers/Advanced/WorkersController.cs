@@ -22,62 +22,61 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Controllers.Advanced
+namespace eFormAPI.Web.Controllers.Advanced;
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions.Advanced;
+using Infrastructure.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microting.eForm.Dto;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.EformAngularFrontendBase.Infrastructure.Const;
+
+[Authorize]
+public class WorkersController : Controller
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using eFormAPI.Web.Abstractions.Advanced;
-    using Infrastructure.Models;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microting.eForm.Dto;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.EformAngularFrontendBase.Infrastructure.Const;
+    private readonly IWorkersService _workersService;
 
-    [Authorize]
-    public class WorkersController : Controller
+    public WorkersController(IWorkersService workersService)
     {
-        private readonly IWorkersService _workersService;
+        _workersService = workersService;
+    }
 
-        public WorkersController(IWorkersService workersService)
-        {
-            _workersService = workersService;
-        }
+    [HttpGet]
+    [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
+    public async Task<OperationDataResult<List<WorkerDto>>> Index()
+    {
+        return await _workersService.Index();
+    }
 
-        [HttpGet]
-        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
-        public async Task<OperationDataResult<List<WorkerDto>>> Index()
-        {
-            return await _workersService.Index();
-        }
-
-        [HttpPost]
-        [Route("api/workers/create")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
-        public async Task<OperationResult> Сreate([FromBody] WorkerCreateModel model)
-        {
-            return await _workersService.Create(model);
-        }
+    [HttpPost]
+    [Route("api/workers/create")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
+    public async Task<OperationResult> Сreate([FromBody] WorkerCreateModel model)
+    {
+        return await _workersService.Create(model);
+    }
         
-        [HttpGet]
-        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
-        public async Task<OperationDataResult<WorkerDto>> Read(int id)
-        {
-            return await _workersService.Read(id);
-        }
+    [HttpGet]
+    [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
+    public async Task<OperationDataResult<WorkerDto>> Read(int id)
+    {
+        return await _workersService.Read(id);
+    }
 
-        [HttpPost]
-        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
-        public async Task<OperationResult> Update([FromBody] WorkerModel workerModel)
-        {
-            return await _workersService.Update(workerModel);
-        }
+    [HttpPost]
+    [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
+    public async Task<OperationResult> Update([FromBody] WorkerModel workerModel)
+    {
+        return await _workersService.Update(workerModel);
+    }
 
-        [HttpGet]
-        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Delete)]
-        public async Task<OperationResult> Delete(int id)
-        {
-            return await _workersService.Delete(id);
-        }
+    [HttpGet]
+    [Authorize(Policy = AuthConsts.EformPolicies.Workers.Delete)]
+    public async Task<OperationResult> Delete(int id)
+    {
+        return await _workersService.Delete(id);
     }
 }
