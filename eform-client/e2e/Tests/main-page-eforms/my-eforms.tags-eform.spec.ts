@@ -12,7 +12,6 @@ describe('Main page', function () {
   });
   it('should create eform', async () => {
     await (await myEformsPage.idSortBtn()).click();
-    await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     const rowCountBeforeCreation = await myEformsPage.rowNum();
     await myEformsPage.createNewEform(newEformLabel);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
@@ -24,7 +23,6 @@ describe('Main page', function () {
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
     await eform.editTagsBtn.click();
     await (await myEformsPage.tagEditSaveBtn()).click();
-    await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     expect(
       (await myEformsPage.getEformsRowObjByNameEForm(newEformLabel)).tags.length
     ).eq(0);

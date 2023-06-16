@@ -18,12 +18,10 @@ describe('Entity Search', function () {
     await searchableLists.createSearchableList_NoItem(name);
     const searchableList = await searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   });
   it('should delete the list', async () => {
     await searchableLists.deleteList();
     expect(await searchableLists.rowNum()).equal(0);
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   });
   it('should create a new searchable list with name and one item', async () => {
     await loginPage.open('/');
@@ -34,10 +32,8 @@ describe('Entity Search', function () {
     const searchableList = await searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
     await searchableList.editBtn.click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal(itemName);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   });
   it('should delete item from list.', async () => {
     await loginPage.open('/');
@@ -48,7 +44,6 @@ describe('Entity Search', function () {
     expect(await searchableLists.items()).equal(0);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
     await searchableLists.cleanup();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   });
   it('should make a new searchable list with multiple items', async () => {
     await loginPage.open('/');
@@ -58,7 +53,6 @@ describe('Entity Search', function () {
     await searchableLists.createSearchableList_MultipleItems(name, itemNames);
     const searchableList = await searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   });
   it('should delete a list with multiple items.', async () => {
     await loginPage.open('/');
@@ -66,8 +60,6 @@ describe('Entity Search', function () {
     await searchableLists.deleteList();
     await loginPage.open('/');
     await searchableLists.goToEntitySearchPage();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     expect(await searchableLists.rowNum()).equal(0);
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   });
 });

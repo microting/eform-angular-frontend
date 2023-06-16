@@ -19,7 +19,6 @@ describe('Entity Search', function () {
     const searchableList = await searchableLists.getFirstRowObject();
     expect((await searchableList.name)).equal(name);
     await searchableLists.cleanup();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should not create a new searchable list', async () => {
     const numRows = await searchableLists.rowNum();
@@ -34,13 +33,10 @@ describe('Entity Search', function () {
     const searchableList = await searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
     await searchableList.editBtn.click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(500);
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal(itemName);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await searchableLists.cleanup();
-    await ($('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should not make a new searchable list with one item', async () => {
     const numRows = await searchableLists.rowNum();
@@ -57,25 +53,18 @@ describe('Entity Search', function () {
     expect(searchableList.name).equal(name);
     await searchableList.editBtn.click();
     await browser.pause(500);
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal('a');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal('b');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal('c');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal('d');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal('e');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await searchableLists.entitySearchEditCancelBtn()).click();
     await searchableLists.cleanup();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   });
   it('should not create a searchable list with multiple items', async () => {
     const numRows = await searchableLists.rowNum();

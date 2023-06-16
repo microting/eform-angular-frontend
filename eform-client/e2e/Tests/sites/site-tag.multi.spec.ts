@@ -17,7 +17,6 @@ describe('Site tags', function () {
     await myEformsPage.Navbar.goToSites();
   });
   it('should create new tag', async () => {
-    await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await sitesPage.createTag([tagName]);
   });
   it('should assign tag', async () => {

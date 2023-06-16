@@ -107,10 +107,6 @@ class DeviceUsersPage extends PageWithNavbarPage {
     await (await this.createLastNameInput()).setValue(lastName);
     await browser.pause(500);
     await (await this.saveCreateBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({
-      timeout: 90000,
-      reverse: true,
-    });
     await (await this.newDeviceUserBtn()).waitForDisplayed({ timeout: 40000 });
   }
 
@@ -199,10 +195,6 @@ export class DeviceUsersRowObject {
       timeout: 40000,
     });
     await (await deviceUsersPage.saveDeleteBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({
-      timeout: 40000,
-      reverse: true,
-    });
     await (await deviceUsersPage.newDeviceUserBtn()).waitForDisplayed();
   }
 }

@@ -12,15 +12,12 @@ describe('Application settings page - site header section', function () {
   it('should change main text', async () => {
     await myEformsPage.Navbar.goToApplicationSettings();
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await applicationSettingsPage.LoginPage.mainTextInput()).setValue(
       ApplicationSettingsConstants.LoginPage.customMainText
     );
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await applicationSettingsPage.save();
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await applicationSettingsPage.Navbar.logout();
     await (await $('#username')).waitForDisplayed({ timeout: 40000 });
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
@@ -33,16 +30,13 @@ describe('Application settings page - site header section', function () {
     await loginPage.login();
     await loginPage.open('/application-settings');
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await applicationSettingsPage.LoginPage.secondaryTextInput()).setValue(
       ApplicationSettingsConstants.LoginPage.customSecondaryText
     );
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await applicationSettingsPage.save();
     // browser.pause(8000);
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await applicationSettingsPage.Navbar.logout();
     await (await $('#username')).waitForDisplayed({ timeout: 40000 });
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
@@ -55,14 +49,11 @@ describe('Application settings page - site header section', function () {
     await loginPage.login();
     await loginPage.open('/application-settings');
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn()).click();
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await applicationSettingsPage.save();
     // browser.pause(8000);
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await applicationSettingsPage.Navbar.logout();
     await (await $('#username')).waitForDisplayed({ timeout: 40000 });
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
@@ -75,13 +66,10 @@ describe('Application settings page - site header section', function () {
     await loginPage.login();
     await loginPage.open('/application-settings');
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn()).click();
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await applicationSettingsPage.save();
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await applicationSettingsPage.Navbar.logout();
     await (await $('#username')).waitForDisplayed({ timeout: 40000 });
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
@@ -94,13 +82,10 @@ describe('Application settings page - site header section', function () {
     await loginPage.login();
     await loginPage.open('/application-settings');
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await (await applicationSettingsPage.LoginPage.imageVisibilityToggler()).click();
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await applicationSettingsPage.save();
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await browser.pause(1000);
     await applicationSettingsPage.Navbar.logout();
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
@@ -113,10 +98,8 @@ describe('Application settings page - site header section', function () {
     await loginPage.login();
     await loginPage.open('/application-settings');
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await applicationSettingsPage.LoginPage.reset();
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     await applicationSettingsPage.Navbar.logout();
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(

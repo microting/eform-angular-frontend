@@ -88,7 +88,6 @@ describe('Entity Select', function () {
     await selectableLists.createSelectableList(data, true);
     const selectableListRowObject = await selectableLists.getLastSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should edit the list with multiple items', async () => {
     const data = {

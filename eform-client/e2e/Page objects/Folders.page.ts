@@ -357,7 +357,6 @@ class FoldersPage extends PageWithNavbarPage {
     if (!clickCancel) {
       await (await this.saveCreateBtn()).waitForClickable({ timeout: 40000 });
       await (await this.saveCreateBtn()).click();
-      await this.waitForSpinnerHide();
     } else {
       await (await this.cancelCreateBtn()).click();
     }
@@ -540,10 +539,6 @@ export class FoldersRowObject {
     }
     if (!clickCancel) {
       await (await foldersPage.saveCreateBtn()).click();
-      await (await $('#spinner-animation')).waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
     } else {
       (await foldersPage.cancelCreateBtn()).click();
     }
@@ -563,7 +558,6 @@ export class FoldersRowObject {
         timeout: 40000,
       });
       await (await foldersPage.saveDeleteBtn()).click();
-      await foldersPage.waitForSpinnerHide(2000);
     } else {
       await (await foldersPage.cancelDeleteBtn()).click();
     }
@@ -685,7 +679,6 @@ export class FoldersRowObject {
   async closeEditModal(clickCancel = false) {
     if (!clickCancel) {
       await (await foldersPage.saveEditBtn()).click();
-      await foldersPage.waitForSpinnerHide(40000);
     } else {
       await (await foldersPage.cancelEditBtn()).click();
     }
@@ -772,7 +765,6 @@ export class FoldersTreeRowObject {
         timeout: 40000,
       });
       await (await foldersPage.saveDeleteBtn()).click();
-      await foldersPage.waitForSpinnerHide(2000);
       await browser.pause(500);
     } else {
       await (await foldersPage.cancelDeleteBtn()).waitForClickable({
@@ -899,7 +891,6 @@ export class FoldersTreeRowObject {
     }
     if (!clickCancel) {
       await (await foldersPage.saveEditBtn()).click();
-      await foldersPage.waitForSpinnerHide(40000);
     } else {
       await (await foldersPage.cancelEditBtn()).click();
     }

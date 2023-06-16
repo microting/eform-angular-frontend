@@ -72,7 +72,6 @@ export class TagsModalPage extends Page {
     await (await this.newTagNameInput()).setValue(tagName);
     await (await this.newTagSaveBtn()).click();
     await browser.pause(500);
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await (await $('#newTagBtn')).waitForDisplayed({ timeout: 40000 });
   }
 
@@ -95,9 +94,7 @@ export class TagsModalPage extends Page {
     await (await this.editTagNameInput()).setValue(name);
     await (await this.tagEditSaveBtn()).click();
     await browser.pause(500);
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await (await $('#newTagBtn')).waitForDisplayed({ timeout: 40000 });
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
   public async cancelEditTag(rowNumber: number, name: string) {
@@ -115,7 +112,6 @@ export class TagsModalPage extends Page {
     const result = new TagRowObject();
     const rowObject = await result.getRow(rowNumber);
     await rowObject.deleteTag();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
   public async cancelDeleteTag(rowNumber: number) {
@@ -124,7 +120,6 @@ export class TagsModalPage extends Page {
     const rowObject = await result.getRow(rowNumber);
     await rowObject.deleteTag(true);
     await (await this.tagDeleteSaveCancelBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
   public async getTagByName(name: string) {
@@ -165,7 +160,6 @@ export class TagRowObject {
   public async editTagClick() {
     const editBtn = await this.editTagBtn;
     await editBtn.click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
   public async deleteTag(clickCancel = false) {
