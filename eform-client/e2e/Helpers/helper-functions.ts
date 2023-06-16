@@ -22,15 +22,12 @@ export async function testSorting(
   }
   const elementsForSorting = await $$(htmlIdElementsForSorting);
   const elementsBefore = await Promise.all(elementsForSorting.map(mapFunc));
-  const spinnerAnimation = await $('#spinner-animation');
   // check that sorting is correct in both directions
   for (let i = 0; i < 2; i++) {
     await tableHeader.click();
-    await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(500);
-    //
     const elementsAfter = await Promise.all(elementsForSorting.map(mapFunc));
-    //
+
     // // get current direction of sorting
     const sortIcon = await tableHeader.$('.ng-trigger-leftPointer').getAttribute('style');
     let sorted;
@@ -43,7 +40,6 @@ export async function testSorting(
     }
     expect(sorted, `Sort by ${sortBy} incorrect`).deep.equal(elementsAfter);
   }
-  await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
 }
 
 export function getRandomInt(min, max) {

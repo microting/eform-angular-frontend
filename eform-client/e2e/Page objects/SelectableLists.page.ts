@@ -277,17 +277,9 @@ export class SelectableListsPage extends PageWithNavbarPage {
     }
     if (!clickCancel) {
       await (await this.entitySelectCreateSaveBtn()).click();
-      await (await $('#spinner-animation')).waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
       await browser.pause(500);
     } else {
       await (await this.entitySelectCreateCancelBtn()).click();
-      await (await $('#spinner-animation')).waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
       await browser.pause(500);
     }
     await (await this.entitySelectCreateBtn()).waitForDisplayed();
@@ -342,10 +334,6 @@ export class SelectableListRowObject {
     await browser.pause(500);
     if (!clickCancel) {
       await (await selectableLists.entitySelectDeleteDeleteBtn()).click();
-      await (await $('#spinner-animation')).waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
       await browser.pause(500);
     } else {
       await (await selectableLists.entitySelectDeleteCancelBtn()).click();
@@ -356,7 +344,6 @@ export class SelectableListRowObject {
 
   async openEdit() {
     await this.editBtn.click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(1000);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
     await browser.pause(1000);
@@ -365,17 +352,12 @@ export class SelectableListRowObject {
   async closeEdit(clickCancel = false) {
     if (!clickCancel) {
       await (await selectableLists.entitySelectEditSaveBtn()).click();
-      await (await $('#spinner-animation')).waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
       await browser.pause(1000);
     } else {
       await (await selectableLists.entitySelectEditCancelBtn()).click();
       await browser.pause(1000);
     }
     await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(1000);
   }
 

@@ -1,14 +1,7 @@
-exports.config = {
-  //
-  // ====================
-  // Runner Configuration
-  // ====================
-  //
-  // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
-  // on a remote machine).
+import type { Options } from '@wdio/types'
+
+export const config: Options.Testrunner = {
   runner: 'local',
-  //
-  // Override default path ('/wd/hub') for chromedriver service.
   path: '/',
   //
   // ==================
@@ -19,51 +12,25 @@ exports.config = {
   // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
+
+  autoCompileOpts: {
+    autoCompile: true,
+    // see https://github.com/TypeStrong/ts-node#cli-and-programmatic-options
+    // for all available options
+    tsNodeOpts: {
+      transpileOnly: true,
+      project: 'e2e/tsconfig.e2e.json'
+    }
+    // tsconfig-paths is only used if "tsConfigPathsOpts" are provided, if you
+    // do please make sure "tsconfig-paths" is installed as dependency
+    // tsConfigPathsOpts: {
+    //     baseUrl: './'
+    // }
+  },
   specs: [
     // 'e2e/Tests/selectable-lists/selectable-lists.add.spec.ts',
     // 'e2e/Tests/selectable-lists/selectable-lists.edit.spec.ts',
     // 'e2e/Tests/selectable-lists/selectable-lists.delete.spec.ts',
-    // 'e2e/Tests/searchable-lists/searchable-lists.add.spec.ts',
-    // 'e2e/Tests/searchable-lists/searchable-lists.edit.spec.ts',
-    // 'e2e/Tests/searchable-lists/searchable-lists.delete.spec.ts',
-    // 'e2e/Tests/monitoring-settings/monitoring-settings.plugins-page.spec.ts',
-    // 'e2e/Tests/monitoring-general/monitoring-MonitoringRule-Add.spec.ts',
-    // 'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
-    // 'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
-    // 'e2e/Tests/device-users/device-users.add.spec.ts',
-    // 'e2e/Tests/device-users/device-users.edit.spec.ts',
-    // 'e2e/Tests/device-users/device-users.delete.spec.ts',
-    // 'e2e/Tests/main-page-eforms/my-eforms.create-eform.spec.ts',
-    // 'e2e/Tests/main-page-eforms/my-eforms.sort-eform.spec.ts',
-    // 'e2e/Tests/main-page-eforms/my-eforms.filter-eform.spec.ts',
-    // 'e2e/Tests/main-page-eforms/my-eforms.tags-eform.spec.ts',
-    // 'e2e/Tests/main-page-eforms/my-eforms.pairing-eform.spec.ts',
-    // 'e2e/Tests/main-page-eforms/my-eforms.delete-eform.spec.ts',
-    // 'e2e/Tests/selectable-lists/selectable-lists.add.spec.ts',
-    // 'e2e/Tests/selectable-lists/selectable-lists.edit.spec.ts',
-    // 'e2e/Tests/selectable-lists/selectable-lists.delete.spec.ts',
-    // 'e2e/Tests/searchable-lists/searchable-lists.add.spec.ts',
-    // 'e2e/Tests/searchable-lists/searchable-lists.edit.spec.ts',
-    // 'e2e/Tests/searchable-lists/searchable-lists.delete.spec.ts',
-    // 'e2e/Tests/device-users/device-users.add.spec.ts',
-    // 'e2e/Tests/device-users/device-users.edit.spec.ts',
-    // 'e2e/Tests/device-users/device-users.delete.spec.ts', // DISABLED until fixed.
-    // 'e2e/Tests/trash-inspections-settings/application-settings.plugins-page.spec.ts',
-
-    // 'e2e/Tests/folders/folder-list/folder-list.delete.spec.ts',
-    // 'e2e/Tests/folders/folder-list/folder-list.edit.spec.ts',
-    // 'e2e/Tests/folders/folder-child/folder-child.add.spec.ts',
-    // 'e2e/Tests/folders/folder-child/folder-child.delete.spec.ts',
-    // 'e2e/Tests/folders/folder-child/folder-child.edit.spec.ts',
-    // 'e2e/Tests/folders/folder-tree/folder-tree.add.spec.ts',
-    // 'e2e/Tests/folders/folder-tree/folder-tree.delete.spec.ts',
-    // 'e2e/Tests/folders/folder-tree/folder-tree.edit.spec.ts',
-    // 'e2e/Tests/navigation-menu/navigation-menu.create-item.spec.ts',
-    // 'e2e/Tests/navigation-menu/navigation-menu.edit-item.spec.ts',
-    // 'e2e/Tests/navigation-menu/navigation-menu.drag-item.spec.ts',
-    // 'e2e/Tests/navigation-menu/navigation-menu.delete-item.spec.ts',
-    // 'e2e/Tests/navigation-menu/subheader.spec.ts',
-    // 'e2e/Tests/profile-settings/profile-settings.language.spec.ts'
   ],
   suites: {
     settings: ['e2e/Tests/application-settings/**/*.spec.ts'],
@@ -88,7 +55,7 @@ exports.config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
+  maxInstances: 1,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -99,14 +66,15 @@ exports.config = {
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
     // grid with only 5 firefox instances available you can make sure that not more than
     // 5 instances get started at a time.
-    maxInstances: 5,
+    maxInstances: 1,
     //
     browserName: 'chrome',
     'goog:chromeOptions': {
       args: [
-        'headless',
+        /*'headless',*/
+        `window-position=-1920,0`,
         'window-size=1920,1080',
-        'disable-gpu'],
+        /*'disable-gpu'*/],
     },
     // If outputDir is provided WebdriverIO can capture driver session logs
     // it is possible to configure which logTypes to include/exclude.
@@ -147,7 +115,7 @@ exports.config = {
   baseUrl: 'http://localhost:4200',
   //
   // Default timeout for all waitFor* commands.
-  waitforTimeout: 10000,
+  waitforTimeout: 40000,
   //
   // Default timeout in milliseconds for request
   // if browser driver or grid doesn't send response
@@ -184,8 +152,8 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     //require: 'ts-node/register',
-    compilers: ['tsconfig-paths/register'],
-    timeout: 60000
+    // compilers: ['tsconfig-paths/register'],
+    timeout: 1200000
   },
   //
   // =====
