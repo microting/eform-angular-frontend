@@ -379,18 +379,6 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                 await UpdateFields(model.FieldForUpdate, sdkDbContext, core); // update fields
             }
 
-            var checklistIds = model.FieldForCreate
-                .Select(x => x.ChecklistId)
-                .Distinct()
-                .ToList();
-
-            foreach (var checklistId in checklistIds)
-            {
-                await CreateFields(checklistId, sdkDbContext,
-                    model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList(),
-                    core); // create new field
-            }
-
             if (model.ChecklistForDelete.Any())
             {
                 await DeleteCheckLists(model.ChecklistForDelete, sdkDbContext); // delete checklists
@@ -404,6 +392,18 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
             if (model.ChecklistForCreate.Any())
             {
                 await CreateChecklist(model, sdkDbContext, core); // create new checklists
+            }
+
+            var checklistIds = model.FieldForCreate
+                .Select(x => x.ChecklistId)
+                .Distinct()
+                .ToList();
+
+            foreach (var checklistId in checklistIds)
+            {
+                await CreateFields(checklistId, sdkDbContext,
+                    model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList(),
+                    core); // create new field
             }
 
             return new OperationResult(true,

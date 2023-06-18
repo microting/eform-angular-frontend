@@ -123,3 +123,11 @@ export function selectValueInNgSelector(selector: string, value: string, selecto
   cy.wait(500);
 }
 
+export function selectValueInNgSelectorNoSelector(value: string) {
+  cy.get('.ng-option .ng-star-inserted').each((item, index, list) => {
+    if (item.text().includes(value)) {
+      item.click();
+    }
+  });
+}
+
