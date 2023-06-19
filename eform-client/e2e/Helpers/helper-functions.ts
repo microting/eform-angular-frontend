@@ -16,21 +16,17 @@ export async function testSorting(
     array: WebdriverIO.Element[]
   ) => unknown
 ) {
-  //     this.tags = await Promise.all(list.map(element => element.getText()));
   if (!mapFunc) {
     mapFunc = async (ele) => await ele.getText();
   }
-  const elementsForSorting = await $$(htmlIdElementsForSorting);
-  const elementsBefore = await Promise.all(elementsForSorting.map(mapFunc));
-  const spinnerAnimation = await $('#spinner-animation');
+  const getElementsForSorting = async () => await $$(htmlIdElementsForSorting);
+  const elementsBefore = await Promise.all((await getElementsForSorting()).map(mapFunc));
   // check that sorting is correct in both directions
   for (let i = 0; i < 2; i++) {
     await tableHeader.click();
-    await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(500);
-    //
-    const elementsAfter = await Promise.all(elementsForSorting.map(mapFunc));
-    //
+    const elementsAfter = await Promise.all((await getElementsForSorting()).map(mapFunc));
+
     // // get current direction of sorting
     const sortIcon = await tableHeader.$('.ng-trigger-leftPointer').getAttribute('style');
     let sorted;
@@ -43,7 +39,6 @@ export async function testSorting(
     }
     expect(sorted, `Sort by ${sortBy} incorrect`).deep.equal(elementsAfter);
   }
-  await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
 }
 
 export function getRandomInt(min, max) {

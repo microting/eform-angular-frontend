@@ -152,7 +152,6 @@ class NavigationMenuPage {
     await navigationMenuSaveBtn.scrollIntoView();
     await navigationMenuSaveBtn.waitForClickable({ timeout: 40000 });
     await navigationMenuSaveBtn.click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   }
 
   public async openOnEditCreatedMenuItem(indexInCreatedMenuItems) {

@@ -41,25 +41,19 @@ class LoginPage extends Page {
 
   public async login(): Promise<void> {
     await (await this.usernameInput()).waitForDisplayed({ timeout: 60000 });
-    const spinnerAnimation = $('#spinner-animation');
-    await spinnerAnimation.waitForDisplayed({ timeout: 60000, reverse: true });
     await (await this.usernameInput()).setValue(LoginConstants.username);
     await (await this.passwordInput()).setValue(LoginConstants.password);
     await (await this.loginBtn()).click();
-    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
-    await $('#newEFormBtn').waitForDisplayed({ timeout: 60000 });
-    await $('#newEFormBtn').waitForClickable({ timeout: 60000 });
-    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
+    const newEFormBtn = await $('#newEFormBtn');
+    await newEFormBtn.waitForDisplayed({timeout: 60000});
+    await newEFormBtn.waitForClickable({timeout: 60000});
   }
   public async loginWithNewPassword(): Promise<void> {
     await (await this.usernameInput()).waitForDisplayed({ timeout: 60000 });
-    const spinnerAnimation = $('#spinner-animation');
-    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.usernameInput()).setValue(LoginConstants.username);
     await (await this.passwordInput()).setValue(LoginConstants.newPassword);
     await (await this.loginBtn()).click();
     await $('#newEFormBtn').waitForDisplayed({ timeout: 60000 });
-    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
   }
 
   public randomInt(min, max) {

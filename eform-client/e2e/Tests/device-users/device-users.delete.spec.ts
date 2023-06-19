@@ -17,9 +17,7 @@ describe('Device users page', function () {
     await lastDeviceUser.deleteBtn.waitForDisplayed({ timeout: 5000 });
     await lastDeviceUser.deleteBtn.waitForClickable({ timeout: 40000 });
     await lastDeviceUser.deleteBtn.click();
-    await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await deviceUsersPage.cancelDeleteBtn()).click();
-    await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumAfterCancelDelete = await deviceUsersPage.rowNum();
     expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
@@ -31,9 +29,7 @@ describe('Device users page', function () {
     const lastDeviceUser = await deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
     await lastDeviceUser.deleteBtn.waitForDisplayed({ timeout: 5000 });
     await lastDeviceUser.deleteBtn.click();
-    await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await (await deviceUsersPage.saveDeleteBtn()).click();
-    await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumAfterDelete = await deviceUsersPage.rowNum();
     expect(rowNumBeforeDelete, 'User deleted incorrectly').equal(
