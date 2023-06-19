@@ -229,10 +229,6 @@ class MyEformsPage extends PageWithNavbarPage {
     // Add existing tags
     const selectedTags: string[] = [];
     if (tagAddedNum > 0) {
-      await spinnerAnimation.waitForDisplayed({
-        timeout: 50000,
-        reverse: true,
-      });
       for (let i = 0; i < tagAddedNum; i++) {
         await (await this.createEformTagSelector()).click();
         await browser.pause(500);
@@ -393,7 +389,6 @@ class MyEformsRowObject {
 
   async pair(folder: FoldersRowObject, users: DeviceUsersRowObject[]) {
     console.log('Pairing eform');
-    const spinnerAnimation = $('#spinner-animation');
     if (await this.editPairEformBtn.isExisting()) {
       console.log('editPairEformBtn isExisting');
       await this.editPairEformBtn.click();
@@ -403,7 +398,6 @@ class MyEformsRowObject {
     }
     console.log('Parring clicked');
     await browser.pause(500);
-    await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await (await myEformsPage.cancelParingBtn()).waitForDisplayed({
       timeout: 40000,
     });
@@ -436,18 +430,12 @@ class MyEformsRowObject {
     }
     console.log('Users selected');
     await (await myEformsPage.saveParingBtn()).click();
-    await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(1000);
   }
 
   async unPair(users: DeviceUsersRowObject[]) {
-    const spinnerAnimation = $('#spinner-animation');
     this.editPairEformBtn.click();
     await browser.pause(1000);
-    await (await spinnerAnimation).waitForDisplayed({
-      timeout: 40000,
-      reverse: true,
-    });
     await (await myEformsPage.cancelParingBtn()).waitForDisplayed({
       timeout: 40000,
     });
@@ -459,7 +447,6 @@ class MyEformsRowObject {
       await browser.pause(1000);
     }
     await (await myEformsPage.saveParingBtn()).click();
-    await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(1000);
   }
 
@@ -467,11 +454,6 @@ class MyEformsRowObject {
     await this.goVisualEditorBtn.click();
     await browser.pause(500);
     await (await $('#manageTags')).waitForClickable({ timeout: 40000 });
-    const spinnerAnimation = $('#spinner-animation');
-    await (await spinnerAnimation).waitForDisplayed({
-      timeout: 40000,
-      reverse: true,
-    });
     await browser.pause(500);
   }
 }
