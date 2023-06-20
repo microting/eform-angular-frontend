@@ -10,7 +10,6 @@ describe('Main Page', function () {
   });
   it('should create eform', async () => {
     await (await myEformsPage.idSortBtn()).click();
-    await $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     const rowCountBeforeCreation = await myEformsPage.rowNum();
     const newEformLabel = Guid.create().toString();
     await myEformsPage.createNewEform(newEformLabel);

@@ -206,8 +206,6 @@ class MyEformsPage extends PageWithNavbarPage {
     tagAddedNum = 0,
     xml = ''
   ) {
-    const spinnerAnimation = await $('#spinner-animation');
-    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.newEformBtn()).click();
     await browser.pause(500);
     await (await this.xmlTextArea()).waitForDisplayed({ timeout: 40000 });
@@ -227,18 +225,10 @@ class MyEformsPage extends PageWithNavbarPage {
       await (await this.createEformNewTagInput()).setValue(
         newTagsList.join(',')
       );
-      await spinnerAnimation.waitForDisplayed({
-        timeout: 50000,
-        reverse: true,
-      });
     }
     // Add existing tags
     const selectedTags: string[] = [];
     if (tagAddedNum > 0) {
-      await spinnerAnimation.waitForDisplayed({
-        timeout: 50000,
-        reverse: true,
-      });
       for (let i = 0; i < tagAddedNum; i++) {
         await (await this.createEformTagSelector()).click();
         await browser.pause(500);
@@ -248,17 +238,12 @@ class MyEformsPage extends PageWithNavbarPage {
         await selectedTag.waitForClickable({ timeout: 40000 });
         await selectedTag.click();
         await browser.pause(500);
-        await spinnerAnimation.waitForDisplayed({
-          timeout: 50000,
-          reverse: true,
-        });
         (await $('#createEformBtn')).waitForDisplayed({ timeout: 10000 });
         // browser.pause(5000);
       }
     }
     await (await this.createEformBtn()).click();
     // browser.pause(14000);
-    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.newEformBtn()).waitForClickable({ timeout: 40000 });
     await browser.pause(500);
     return { added: addedTags, selected: selectedTags };
@@ -302,10 +287,6 @@ class MyEformsPage extends PageWithNavbarPage {
     await option.waitForDisplayed({ timeout: 10000 });
     await option.waitForClickable({ timeout: 10000 });
     await option.click();
-    await $('#spinner-animation').waitForDisplayed({
-      timeout: 40000,
-      reverse: true,
-    });
   }
 }
 
@@ -366,10 +347,6 @@ class MyEformsRowObject {
       await eFormDeleteDeleteBtn.waitForDisplayed({timeout: 40000});
       await eFormDeleteDeleteBtn.waitForClickable({timeout: 40000});
       await eFormDeleteDeleteBtn.click();
-      await $('#spinner-animation').waitForDisplayed({
-        timeout: 40000,
-        reverse: true,
-      });
       await browser.pause(500);
     }
   }
@@ -385,10 +362,6 @@ class MyEformsRowObject {
     await ngDropdownPanel.waitForClickable({ timeout: 40000 });
     await ngDropdownPanel.click();
     await (await myEformsPage.tagEditSaveBtn()).click();
-    await $('#spinner-animation').waitForDisplayed({
-      timeout: 40000,
-      reverse: true,
-    });
     await browser.pause(500);
   }
 
@@ -411,16 +384,11 @@ class MyEformsRowObject {
       }
     }
     await (await myEformsPage.tagEditSaveBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({
-      timeout: 40000,
-      reverse: true,
-    });
     await browser.pause(500);
   }
 
   async pair(folder: FoldersRowObject, users: DeviceUsersRowObject[]) {
     console.log('Pairing eform');
-    const spinnerAnimation = $('#spinner-animation');
     if (await this.editPairEformBtn.isExisting()) {
       console.log('editPairEformBtn isExisting');
       await this.editPairEformBtn.click();
@@ -430,7 +398,6 @@ class MyEformsRowObject {
     }
     console.log('Parring clicked');
     await browser.pause(500);
-    await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await (await myEformsPage.cancelParingBtn()).waitForDisplayed({
       timeout: 40000,
     });
@@ -463,18 +430,12 @@ class MyEformsRowObject {
     }
     console.log('Users selected');
     await (await myEformsPage.saveParingBtn()).click();
-    await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(1000);
   }
 
   async unPair(users: DeviceUsersRowObject[]) {
-    const spinnerAnimation = $('#spinner-animation');
     this.editPairEformBtn.click();
     await browser.pause(1000);
-    await (await spinnerAnimation).waitForDisplayed({
-      timeout: 40000,
-      reverse: true,
-    });
     await (await myEformsPage.cancelParingBtn()).waitForDisplayed({
       timeout: 40000,
     });
@@ -486,7 +447,6 @@ class MyEformsRowObject {
       await browser.pause(1000);
     }
     await (await myEformsPage.saveParingBtn()).click();
-    await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(1000);
   }
 
@@ -494,11 +454,6 @@ class MyEformsRowObject {
     await this.goVisualEditorBtn.click();
     await browser.pause(500);
     await (await $('#manageTags')).waitForClickable({ timeout: 40000 });
-    const spinnerAnimation = $('#spinner-animation');
-    await (await spinnerAnimation).waitForDisplayed({
-      timeout: 40000,
-      reverse: true,
-    });
     await browser.pause(500);
   }
 }

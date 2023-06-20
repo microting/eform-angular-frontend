@@ -179,10 +179,6 @@ export class UserAdministration extends PageWithNavbarPage {
       await (await this.createAdministrationUserCancelBtn()).click();
     } else {
       await (await this.createAdministrationUserBtn()).click();
-      await (await $('#spinner-animation')).waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
     }
     await (await this.createNewUserBtn()).waitForClickable({ timeout: 40000 });
   }
@@ -265,10 +261,6 @@ export class UserAdministrationRowObject {
       await browser.pause(500);
     } else {
       await (await userAdministration.editUserSaveBtn()).click();
-      await (await $('#spinner-animation')).waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
       await browser.pause(500);
     }
 
@@ -294,10 +286,6 @@ export class UserAdministrationRowObject {
       await (await userAdministration.userDeleteCancelBtn()).click();
     } else {
       await (await userAdministration.userDeleteBtn()).click();
-      await (await $('#spinner-animation')).waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
     }
     await (await userAdministration.createNewUserBtn()).waitForClickable({ timeout: 40000 });
   }

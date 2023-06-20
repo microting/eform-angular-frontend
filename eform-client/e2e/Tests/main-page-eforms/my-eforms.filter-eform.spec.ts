@@ -36,7 +36,6 @@ describe('My eforms', function () {
   it('should be able to see all eforms by leaving label input empty', async () => {
     await (await myEformsPage.eformFilter()).click();
     await browser.keys(['Control', 'a', 'Control', 'Delete']);
-    await $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
     await browser.pause(2000);
     expect(await myEformsPage.rowNum()).equal(3);
   });

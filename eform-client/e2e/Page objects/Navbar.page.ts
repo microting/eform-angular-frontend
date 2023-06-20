@@ -170,7 +170,6 @@ export class Navbar {
     await (await this.settingsBtn()).waitForClickable({ timeout: 5000 });
     await browser.pause(500);
     await (await this.settingsBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
     await browser.pause(500);
   }
 
