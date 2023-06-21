@@ -401,10 +401,28 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
 
             foreach (var checklistId in checklistIds)
             {
+                var fieldsForCreate = model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList();
+                var fieldsForCreateResult = model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList();
+
+                foreach (var fieldForCreate in fieldsForCreate)
+                {
+                    foreach (var field in fieldForCreate.Fields)
+                    {
+                        fieldsForCreateResult.RemoveAll(x => x.TempId == field.TempId);
+                    }
+                }
+                
                 await CreateFields(checklistId, sdkDbContext,
-                    model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList(),
-                    core); // create new field
+                    fieldsForCreateResult,
+                    core); // c
             }
+
+            // foreach (var checklistId in checklistIds)
+            // {
+            //     await CreateFields(checklistId, sdkDbContext,
+            //         model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList(),
+            //         core); // create new field
+            // }
 
             return new OperationResult(true,
                 _localizationService.GetString("EformSuccessfullyUpdated"));
@@ -1077,7 +1095,7 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
 
                 if (parentFieldId == null && field.ParentFieldId != null)
                 {
-                    var parentField = await sdkDbContext.Fields.FirstOrDefaultAsync(x => x.Id == field.ParentFieldId && x.CheckListId == eformId);
+                    var parentField = await sdkDbContext.Fields.AsNoTracking().FirstOrDefaultAsync(x => x.Id == field.ParentFieldId && x.CheckListId == eformId);
                     if (parentField != null)
                     {
                         parentFieldId = parentField.Id;
