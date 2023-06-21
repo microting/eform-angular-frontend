@@ -29,8 +29,9 @@ class LoginPage {
   login(username = loginConstants.username, password = loginConstants.password) {
     this.getUsernameInput().type(username);
     this.getPasswordInput().type(password);
+    cy.intercept('POST', '**/api/templates/index').as('login');
     this.getLoginButton().click();
-    cy.wait(5000);
+    cy.wait('@login', { timeout: 60000 });
     cy.get('#newEFormBtn').should('be.visible');
   }
 
