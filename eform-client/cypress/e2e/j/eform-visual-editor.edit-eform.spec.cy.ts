@@ -192,11 +192,67 @@ describe('My eforms', () => {
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
     /* ==== End Cypress Studio ==== */
   });
-  //
-  // it('should create an eForm with 2 levels, save and then add groups, then save and add fields in 2nd edit', function () {
-  //   cy.get('#eformsVisualEditor').click();
-  //   cy.wait(5000);
-  // });
+
+  it('should create an eForm with 2 levels, save and then add groups, then save and add fields in 2nd edit', function () {
+    cy.get('#eformsVisualEditor').click();
+    cy.wait(5000);
+    /* ==== Generated with Cypress Studio ==== */
+    // @ts-ignore
+    cy.get('#mainCheckListNameTranslation_0').clear('H');
+    cy.get('#mainCheckListNameTranslation_0').type('Hoved titel');
+    cy.get('#initialChecklistCreateBtn > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#newChecklistNameTranslation_0').clear();
+    cy.get('#newChecklistNameTranslation_0').type('lvl 1');
+    cy.get('#changeChecklistSaveBtn').click();
+    cy.get('#initialChecklistCreateBtn > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#newChecklistNameTranslation_0').clear();
+    cy.get('#newChecklistNameTranslation_0').type('lvl 1.1');
+    cy.get('#changeChecklistSaveBtn').click();
+    cy.get('#saveCreateEformBtn').click();
+    cy.wait(10000);
+    cy.get('#edit-eform-btn-0').click();
+    cy.wait(10000);
+    cy.get('#addNewNestedField0 > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('gr');
+    selectValueInNgSelectorNoSelector('Gruppe');
+    // @ts-ignore
+    cy.get('#fieldNameTranslation_0').clear('g');
+    cy.get('#fieldNameTranslation_0').type('group1');
+    cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
+    cy.get('#addNewNestedField1 > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('gr');
+    selectValueInNgSelectorNoSelector('Gruppe');
+    // @ts-ignore
+    cy.get('#fieldNameTranslation_0').clear('g');
+    cy.get('#fieldNameTranslation_0').type('group2');
+    cy.get('#changeFieldSaveBtn').click();
+    cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
+    cy.wait(10000);
+    cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
+    cy.wait(10000);
+    cy.get('#fields_0 > .field-group > #fieldSection0 > .mb-3 > .p-2 > .d-flex > #addNewNestedField > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('bi');
+    selectValueInNgSelectorNoSelector('Billed');
+    // @ts-ignore
+    cy.get('#fieldNameTranslation_0').clear('b');
+    cy.get('#fieldNameTranslation_0').type('billede 1');
+    cy.get('#changeFieldSaveBtn').click();
+    cy.get('#fields_1 > .field-group > #fieldSection0 > .mb-3 > .p-2 > .d-flex > #addNewNestedField > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('bi');
+    selectValueInNgSelectorNoSelector('Billed');
+    // @ts-ignore
+    cy.get('#fieldNameTranslation_0').clear('b');
+    cy.get('#fieldNameTranslation_0').type('billede 2');
+    cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
+    cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
+    cy.wait(10000);
+    cy.get('#edit-eform-btn-0').click();
+    /* ==== End Cypress Studio ==== */
+  });
   //
   // it('should create an eForm, save and then add 1 group, save and then add fields', function () {
   //   cy.get('#eformsVisualEditor').click();
