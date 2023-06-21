@@ -31,7 +31,6 @@ describe('My eforms', () => {
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
     cy.wait('@geteForm', { timeout: 60000 });
     cy.get('#languageCheckbox1 > .mat-checkbox-layout > .mat-checkbox-label').click();
-    cy.get('#languageCheckbox1-input').check();
     // @ts-ignore
     cy.get('#mainCheckListNameTranslation_1').clear('M');
     cy.get('#mainCheckListNameTranslation_1').type('Maintitle');
@@ -54,7 +53,6 @@ describe('My eforms', () => {
   });
 
   afterEach(() => {
-    cy.wait(5000);
     /* ==== Generated with Cypress Studio ==== */
     cy.get('#cancelEditBtn').click();
     cy.get('#delete-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
