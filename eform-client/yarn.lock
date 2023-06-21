@@ -8869,10 +8869,10 @@ ngx-editor@^15.3.0:
     prosemirror-view "1.30.1"
     tslib "^2.3.0"
 
-ngx-image-cropper@6.3.3:
-  version "6.3.3"
-  resolved "https://registry.yarnpkg.com/ngx-image-cropper/-/ngx-image-cropper-6.3.3.tgz#4ce0a8f97182ba4a8b8b5a7959fd248131d03dca"
-  integrity sha512-htAg8hfyLrAgXoDZJwP+Qh2mWANhFVD6zpq8GtSkbSAN0L98Umm4sDchvD/SG6Epdo7eTV+SpG3BTwEbGWNCYw==
+ngx-image-cropper@7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-image-cropper/-/ngx-image-cropper-7.0.1.tgz#3cecad24cb9e4a841d3d555ee5b23ea175abe9ca"
+  integrity sha512-Aij3z0bGZ1Em+P1nSOKskEwlTKCS2X4MVTTz9uNFZdyZbT91Xrz2tChgGc9d++w2sUsEhGnM2jP3RKNpZq9lsg==
   dependencies:
     tslib "^2.3.0"
 
