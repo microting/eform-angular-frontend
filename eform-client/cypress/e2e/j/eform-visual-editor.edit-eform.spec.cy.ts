@@ -15,8 +15,10 @@ describe('My eforms', () => {
 
   it('should create eform with 2 sub eForms and copied fields inside of them',() => {
     /* ==== Generated with Cypress Studio ==== */
+    cy.intercept('GET', '**/api/tags/index').as('getTags');
     cy.get('#eformsVisualEditor').click();
-    cy.wait(5000);
+    cy.wait('@getTags', { timeout: 60000 });
+    // cy.wait(5000);
     cy.get('.d-flex > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix').click();
     cy.get('#mainCheckListNameTranslation_0').clear();
     cy.get('#mainCheckListNameTranslation_0').type('Mit nye navn');
@@ -38,7 +40,7 @@ describe('My eforms', () => {
     cy.get('#addNewNestedField0 > .mat-button-wrapper > .mat-icon').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('bil');
-    cy.get('.cdk-drag').click();
+    selectValueInNgSelectorNoSelector('Billed');
     // @ts-ignore
     cy.get('#fieldNameTranslation_0').clear('b');
     cy.get('#fieldNameTranslation_0').type('billede 1');
@@ -88,15 +90,22 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('skriv et tal ');
     cy.get('#fieldNameTranslation_0').type('skriv et tal 2');
     cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
+    // /api/template-visual-editor/
+    cy.intercept('POST', '**/api/template-visual-editor/').as('saveeForm');
     cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
-    cy.wait(10000);
+    cy.wait('@saveeForm', { timeout: 60000 });
+    // cy.wait(10000);
+    cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
+    cy.wait('@geteForm', { timeout: 60000 });
     /* ==== End Cypress Studio ==== */
   });
 
   it('should create an eForm with 2 levels, save and then add fields in 2nd edit', function () {
+    Cypress.config('defaultCommandTimeout', 20000);
+    cy.intercept('GET', '**/api/tags/index').as('getTags');
     cy.get('#eformsVisualEditor').click();
-    cy.wait(5000);
+    cy.wait('@getTags', { timeout: 60000 });
     /* ==== Generated with Cypress Studio ==== */
     // @ts-ignore
     cy.get('#mainCheckListNameTranslation_0').clear('Hovedtitel');
@@ -109,9 +118,12 @@ describe('My eforms', () => {
     cy.get('#newChecklistNameTranslation_0').clear();
     cy.get('#newChecklistNameTranslation_0').type('Level 1.1');
     cy.get('#changeChecklistSaveBtn > .mat-button-wrapper').click();
-    cy.get('#saveCreateEformBtn').click();
-    cy.wait(10000);
+    cy.intercept('POST', '**/api/template-visual-editor/').as('saveeForm');
+    cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
+    cy.wait('@saveeForm', { timeout: 60000 });
+    cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
+    cy.wait('@geteForm', { timeout: 60000 });
     cy.get('#addNewNestedField0 > .mat-button-wrapper > .mat-icon').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('bi');
@@ -128,15 +140,19 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear();
     cy.get('#fieldNameTranslation_0').type('Billede 2');
     cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
-    cy.get('#saveCreateEformBtn').click();
-    cy.wait(10000);
+    cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
+    cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
+    cy.wait('@saveeForm', { timeout: 60000 });
+    cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
+    cy.wait('@geteForm', { timeout: 60000 });
     /* ==== End Cypress Studio ==== */
   });
 
   it('should create an eForm with 2 levels, save and then add groups and fields in 2nd edit', function () {
+    cy.intercept('GET', '**/api/tags/index').as('getTags');
     cy.get('#eformsVisualEditor').click();
-    cy.wait(5000);
+    cy.wait('@getTags', { timeout: 60000 });
     // @ts-ignore
     cy.get('#mainCheckListNameTranslation_0').clear('Hovedtitel');
     cy.get('#mainCheckListNameTranslation_0').type('Hovedtitel');
@@ -148,11 +164,13 @@ describe('My eforms', () => {
     cy.get('#newChecklistNameTranslation_0').clear();
     cy.get('#newChecklistNameTranslation_0').type('Level 1.1');
     cy.get('#changeChecklistSaveBtn > .mat-button-wrapper').click();
-    cy.get('#saveCreateEformBtn').click();
-    cy.wait(10000);
+    cy.intercept('POST', '**/api/template-visual-editor/').as('saveeForm');
+    cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
+    cy.wait('@saveeForm', { timeout: 60000 });
     /* ==== Generated with Cypress Studio ==== */
+    cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
-    cy.wait(5000);
+    cy.wait('@geteForm', { timeout: 60000 });
     cy.get('#addNewNestedField0').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('gr');
@@ -187,16 +205,83 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('B');
     cy.get('#fieldNameTranslation_0').type('Billed 2');
     cy.get('#changeFieldSaveBtn').click();
-    cy.get('#saveCreateEformBtn').click();
-    cy.wait(10000);
+    cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
+    cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
+    cy.wait('@saveeForm', { timeout: 60000 });
+    cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
+    cy.wait('@geteForm', { timeout: 60000 });
     /* ==== End Cypress Studio ==== */
   });
-  //
-  // it('should create an eForm with 2 levels, save and then add groups, then save and add fields in 2nd edit', function () {
-  //   cy.get('#eformsVisualEditor').click();
-  //   cy.wait(5000);
-  // });
+
+  it('should create an eForm with 2 levels, save and then add groups, then save and add fields in 2nd edit', function () {
+    cy.intercept('GET', '**/api/tags/index').as('getTags');
+    cy.get('#eformsVisualEditor').click();
+    cy.wait('@getTags', { timeout: 60000 });
+    /* ==== Generated with Cypress Studio ==== */
+    // @ts-ignore
+    cy.get('#mainCheckListNameTranslation_0').clear('H');
+    cy.get('#mainCheckListNameTranslation_0').type('Hoved titel');
+    cy.get('#initialChecklistCreateBtn > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#newChecklistNameTranslation_0').clear();
+    cy.get('#newChecklistNameTranslation_0').type('lvl 1');
+    cy.get('#changeChecklistSaveBtn').click();
+    cy.get('#initialChecklistCreateBtn > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#newChecklistNameTranslation_0').clear();
+    cy.get('#newChecklistNameTranslation_0').type('lvl 1.1');
+    cy.get('#changeChecklistSaveBtn').click();
+    cy.intercept('POST', '**/api/template-visual-editor/').as('saveeForm');
+    cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
+    cy.wait('@saveeForm', { timeout: 60000 });
+    cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
+    cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
+    cy.wait('@geteForm', { timeout: 60000 });
+    cy.get('#addNewNestedField0 > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('gr');
+    selectValueInNgSelectorNoSelector('Gruppe');
+    // @ts-ignore
+    cy.get('#fieldNameTranslation_0').clear('g');
+    cy.get('#fieldNameTranslation_0').type('group1');
+    cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
+    cy.get('#addNewNestedField1 > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('gr');
+    selectValueInNgSelectorNoSelector('Gruppe');
+    // @ts-ignore
+    cy.get('#fieldNameTranslation_0').clear('g');
+    cy.get('#fieldNameTranslation_0').type('group2');
+    cy.get('#changeFieldSaveBtn').click();
+    cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
+    cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
+    cy.wait('@saveeForm', { timeout: 60000 });
+    cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
+    cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
+    cy.wait('@geteForm', { timeout: 60000 });
+    cy.get('#fields_0 > .field-group > #fieldSection0 > .mb-3 > .p-2 > .d-flex > #addNewNestedField > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('bi');
+    selectValueInNgSelectorNoSelector('Billed');
+    // @ts-ignore
+    cy.get('#fieldNameTranslation_0').clear('b');
+    cy.get('#fieldNameTranslation_0').type('billede 1');
+    cy.get('#changeFieldSaveBtn').click();
+    cy.get('#fields_1 > .field-group > #fieldSection0 > .mb-3 > .p-2 > .d-flex > #addNewNestedField > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
+    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('bi');
+    selectValueInNgSelectorNoSelector('Billed');
+    // @ts-ignore
+    cy.get('#fieldNameTranslation_0').clear('b');
+    cy.get('#fieldNameTranslation_0').type('billede 2');
+    cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
+    cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
+    cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
+    cy.wait('@saveeForm', { timeout: 60000 });
+    cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
+    cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
+    cy.wait('@geteForm', { timeout: 60000 });
+    /* ==== End Cypress Studio ==== */
+  });
   //
   // it('should create an eForm, save and then add 1 group, save and then add fields', function () {
   //   cy.get('#eformsVisualEditor').click();
@@ -224,7 +309,6 @@ describe('My eforms', () => {
   // });
 
   afterEach(() => {
-    cy.wait(5000);
     /* ==== Generated with Cypress Studio ==== */
     cy.get('#cancelEditBtn').click();
     cy.get('#delete-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
