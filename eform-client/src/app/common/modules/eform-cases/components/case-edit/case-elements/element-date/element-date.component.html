@@ -1,19 +1,17 @@
-<mat-form-field [owlDateTimeTrigger]="dt1">
-  <mat-label>{{ 'Start date' | translate }}</mat-label>
-  <mat-icon matPrefix>calendar_today</mat-icon>
+<mat-form-field>
+  <mat-label>{{ 'Select date' | translate }}</mat-label>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <input
+    [required]="fieldValueObj.mandatory"
     matInput
-    [ngModel]="fieldValueObj.value"
-    required
-    type="text"
-    [owlDateTime]="dt1"
-    id="startDate"
-    name="startDate"
-    (dateTimeChange)="onDateSelected($event)"
+    [matDatepicker]="picker"
+    [value]="fieldValueObj.value"
+    (dateChange)="onDateSelected($event)"
+    (dateInput)="onDateSelected($event)"
+    (click)="picker.open()"
   >
+  <mat-datepicker #picker></mat-datepicker>
+  <mat-error class="text-warn" *ngIf="!fieldValueObj.value && fieldValueObj.mandatory">
+    {{'Date is required'| translate}}*
+  </mat-error>
 </mat-form-field>
-<owl-date-time
-  [pickerType]="'calendar'" #dt1
-  [firstDayOfWeek]="1">
-</owl-date-time>
-

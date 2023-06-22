@@ -1,5 +1,5 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import {Inject, Injectable, InjectionToken, Optional} from '@angular/core';
+import {DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
 import {
   addDays,
   addMonths,
@@ -18,9 +18,10 @@ import {
   toDate,
   parseJSON,
 } from 'date-fns';
-import { zonedTimeToUtc } from 'date-fns-tz';
-import { enUS } from 'date-fns/locale';
-import { EFORM_MAT_DATEFNS_LOCALES } from './eform-mat-datefns-locales';
+import {zonedTimeToUtc} from 'date-fns-tz';
+import {enUS} from 'date-fns/locale';
+import {EFORM_MAT_DATEFNS_LOCALES} from './eform-mat-datefns-locales';
+import {BehaviorSubject} from 'rxjs';
 
 export interface EformDateFnsDateAdapterOptions {
   useUtc?: boolean;
@@ -52,9 +53,36 @@ function range(start: number, end: number): number[] {
 
 const UTC_TIMEZONE = 'UTC';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class EformDateFnsDateAdapter extends DateAdapter<Date> {
   private _dateFnsLocale!: Locale;
+
+  constructor(
+    @Optional() @Inject(MAT_DATE_LOCALE) dateLocale: BehaviorSubject<string | Locale | null>,
+    @Optional() @Inject(EFORM_MAT_DATEFNS_LOCALES) private locales: Locale[] | null,
+    @Optional()
+    @Inject(EFORM_MAT_DATEFNS_DATE_ADAPTER_OPTIONS)
+    private options?: EformDateFnsDateAdapterOptions,
+  ) {
+    super();
+
+    if (!this.locales || this.locales.length === 0) {
+      this.locales = [enUS];
+    }
+
+    dateLocale?.subscribe(locale => locale && this.setLocale(locale))
+    if(!dateLocale) {
+      this.setLocale(enUS);
+    }
+
+/*    try {
+      this.setLocale(dateLocale || enUS);
+    } catch (_) {
+      this.setLocale(enUS);
+    }*/
+  }
 
   private getLocale = (localeCodeOrLocale: string | Locale): Locale => {
     if (localeCodeOrLocale && (localeCodeOrLocale as Locale).code) {
@@ -70,27 +98,7 @@ export class EformDateFnsDateAdapter extends DateAdapter<Date> {
       throw new Error(`locale '${localeCodeOrLocale}' does not exist in locales array. Add it to the EFORM_MAT_DATEFNS_LOCALES token.`);
     }
     return locale;
-  }
-
-  constructor(
-    @Optional() @Inject(MAT_DATE_LOCALE) dateLocale: string | null,
-    @Optional() @Inject(EFORM_MAT_DATEFNS_LOCALES) private locales: Locale[] | null,
-    @Optional()
-    @Inject(EFORM_MAT_DATEFNS_DATE_ADAPTER_OPTIONS)
-    private options?: EformDateFnsDateAdapterOptions
-  ) {
-    super();
-
-    if (!this.locales || this.locales.length === 0) {
-      this.locales = [enUS];
-    }
-
-    try {
-      this.setLocale(dateLocale || enUS);
-    } catch (err) {
-      this.setLocale(enUS);
-    }
-  }
+  };
 
   setLocale(locale: string | Locale) {
     if (!locale) {
@@ -160,7 +168,7 @@ export class EformDateFnsDateAdapter extends DateAdapter<Date> {
   }
 
   format(date: Date, displayFormat: string): string {
-    return format(date, displayFormat, { locale: this._dateFnsLocale });
+    return format(date, displayFormat, {locale: this._dateFnsLocale});
   }
 
   getDate(date: Date): number {

@@ -22,7 +22,6 @@ import {persistProvider} from 'src/app/modules/eforms/store';
 import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
-import {EformMatDateFnsDateModule} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -48,7 +47,6 @@ import {MatChipsModule} from '@angular/material/chips';
         EformSharedTagsModule,
         MatDatepickerModule,
         MatInputModule,
-        EformMatDateFnsDateModule,
         MatCheckboxModule,
         MatButtonModule,
         MatIconModule,

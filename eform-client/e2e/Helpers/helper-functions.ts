@@ -2,7 +2,7 @@ import { Guid } from 'guid-typescript';
 
 const expect = require('chai').expect;
 
-export function generateRandmString(length: number = 36) {
+export function generateRandmString(length: number = 36): string {
   return Guid.raw().toString().slice(0, length);
 }
 
@@ -41,7 +41,7 @@ export async function testSorting(
   }
 }
 
-export function getRandomInt(min, max) {
+export function getRandomInt(min: number, max: number): number {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
@@ -52,21 +52,22 @@ export async function selectDateOnDatePicker(
   month: number,
   day: number
 ) {
-  await browser.pause(1000);
-  await (await $(`.owl-dt-calendar-control-content span`)).click();
-  await browser.pause(1000);
-  await (
-    await $$(`tbody span.owl-dt-calendar-cell-content`)[year - 2016]
-  ).click();
-  await browser.pause(1000);
-  await (await $$(`span.owl-dt-calendar-cell-content`)[month - 1]).click();
-  await browser.pause(1000);
-  await (
-    await $$(
-      `span.owl-dt-calendar-cell-content:not(.owl-dt-calendar-cell-out)`
-    )[day - 1]
-  ).click();
-  await browser.pause(1000);
+  // need open selector years (selected year can be not needed year)
+  const selectYearAndMonthButton = await $(`.mat-calendar-period-button`);
+  await selectYearAndMonthButton.waitForClickable({timeout: 20000});
+  await selectYearAndMonthButton.click();
+  // select year. after select year we can select month
+  const yearForSelect = await $$(`mat-multi-year-view .mat-calendar-body-cell`)[year - 2016];
+  await yearForSelect.waitForClickable({timeout: 20000});
+  await yearForSelect.click();
+  // select month. after select month we can select day
+  const monthForSelect = await $$(`mat-year-view .mat-calendar-body-cell`)[month - 1];
+  await monthForSelect.waitForClickable({timeout: 20000});
+  await monthForSelect.click();
+  // select day
+  const dayForSelect = await $$(`mat-month-view .mat-calendar-body-cell`)[day - 1];
+  await dayForSelect.waitForClickable({timeout: 20000});
+  await dayForSelect.click();
 }
 
 export async function selectDateRangeOnDatePicker(
@@ -77,6 +78,7 @@ export async function selectDateRangeOnDatePicker(
   monthTo: number,
   dayTo: number,
 ) {
+  await (await $('.mat-datepicker-popup')).waitForDisplayed({timeout: 20000})
   await selectDateOnDatePicker(yearFrom, monthFrom, dayFrom);
   await selectDateOnDatePicker(yearTo, monthTo, dayTo);
 }
