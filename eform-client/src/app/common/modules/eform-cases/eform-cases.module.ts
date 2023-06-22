@@ -56,7 +56,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
-import {NgSelectModule} from '@ng-select/ng-select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
     imports: [
@@ -81,7 +81,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
         MatDialogModule,
         MatInputModule,
         MtxSelectModule,
-        NgSelectModule,
+        MatDatepickerModule,
     ],
   declarations: [
     CaseEditNavComponent,

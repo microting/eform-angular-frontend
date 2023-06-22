@@ -1,24 +1,19 @@
-/* eslint-disable no-console */
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {AuthStore} from '../store';
 import {AuthQuery} from '../query';
-import {
-  AppSettingsService,
-  AuthService,
-  UserSettingsService
-} from 'src/app/common/services';
-import {
-  LoginRequestModel,
-  UserClaimsModel,
-  UserInfoModel,
-} from 'src/app/common/models';
-import {Observable, take, zip} from 'rxjs';
+import {AppSettingsService, AuthService, UserSettingsService} from 'src/app/common/services';
+import {LoginRequestModel, UserClaimsModel, UserInfoModel,} from 'src/app/common/models';
+import {BehaviorSubject, Observable, take, zip} from 'rxjs';
 import {Router} from '@angular/router';
 import {snakeToCamel} from 'src/app/common/helpers';
 import {resetStores} from '@datorama/akita';
-import {applicationLanguages} from 'src/app/common/const';
+import {applicationLanguages, customDaLocale} from 'src/app/common/const';
+import {EformDateFnsDateAdapter} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter';
+import {Locale} from 'date-fns';
+import {da, de, enUS, uk} from 'date-fns/locale';
+import {MAT_DATE_LOCALE} from '@angular/material/core';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthStateService {
   private isRefreshing = false;
 
@@ -30,6 +25,7 @@ export class AuthStateService {
     private userSettings: UserSettingsService,
     // private appSettingsStore: AppSettingsStore,
     public settingsService: AppSettingsService,
+    @Inject(MAT_DATE_LOCALE) private  dateLocale: BehaviorSubject<string | Locale | null>
   ) {
   }
 
@@ -40,7 +36,6 @@ export class AuthStateService {
     // this.store = new AuthStore();
     this.service.login(loginInfo).subscribe((response) => {
       if (response) {
-        console.log('calling the update');
         // this.store.update((state) => {
         //   //console.log(`before AuthStateService.login.store.update \n ${JSON.stringify(state)}`);
         //   return {...state,
@@ -51,11 +46,12 @@ export class AuthStateService {
         //     role: response.role,
         //   },
         // }});
-        this.store.update({ token : {
-          accessToken: response.access_token,
-          tokenType: response.token_type,
-          expiresIn: response.expires_in,
-          role: response.role,
+        this.store.update({
+          token: {
+            accessToken: response.access_token,
+            tokenType: response.token_type,
+            expiresIn: response.expires_in,
+            role: response.role,
           }
         });
         // console.log(`after AuthStateService.login.store.update \n ${JSON.stringify(this.store._value())}`);
@@ -97,28 +93,29 @@ export class AuthStateService {
 
   getUserSettings() {
     // if (!this.isUserSettingsLoading) {
-      this.isUserSettingsLoading = true;
-      zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
-        this.isUserSettingsLoading = false;
-        // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-        this.store.update((state) => ({
-          ...state,
-          currentUser: {
-            ...state.currentUser,
-            darkTheme: userSettings.model.darkTheme,
-            locale: userSettings.model.locale,
-            loginRedirectUrl: userSettings.model.loginRedirectUrl,
-            claims: userClaims,
-          },
-        }));
-        // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-        if (userSettings.model.loginRedirectUrl) {
-          this.router
-            .navigate([
-              `/${userSettings.model.loginRedirectUrl}`,
-            ]).then();
-        }
-      });
+    this.isUserSettingsLoading = true;
+    zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+      this.isUserSettingsLoading = false;
+      // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
+      this.store.update((state) => ({
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          darkTheme: userSettings.model.darkTheme,
+          locale: userSettings.model.locale,
+          loginRedirectUrl: userSettings.model.loginRedirectUrl,
+          claims: userClaims,
+        },
+      }));
+      this.setLocale(userSettings.model.locale);
+      // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
+      if (userSettings.model.loginRedirectUrl) {
+        this.router
+          .navigate([
+            `/${userSettings.model.loginRedirectUrl}`,
+          ]).then();
+      }
+    });
     // }
   }
 
@@ -209,7 +206,7 @@ export class AuthStateService {
     return applicationLanguages.find(x => x.locale === this.query.currentSetting.currentUser.locale);
   }
 
-  get currentUserLanguageAsync(): Observable<{id: number, locale: string, text: string}> {
+  get currentUserLanguageAsync(): Observable<{ id: number, locale: string, text: string }> {
     return this.query.selectCurrentUserLanguage$;
   }
 
@@ -229,6 +226,7 @@ export class AuthStateService {
         locale: locale,
       },
     }));
+    this.setLocale(locale);
   }
 
   updateCurrentUserLocaleAndDarkTheme(locale: string, darkTheme: boolean) {
@@ -240,6 +238,7 @@ export class AuthStateService {
         darkTheme: darkTheme,
       },
     }));
+    this.setLocale(locale);
   }
 
   updateDarkTheme(darkTheme: boolean) {
@@ -300,5 +299,29 @@ export class AuthStateService {
 
   get loginRedirectUrl(): string {
     return this.query.currentSetting.currentUser.loginRedirectUrl;
+  }
+
+  private setLocale(locale: string) {
+    switch (locale) {
+      case 'en-US': {
+        this.dateLocale.next(enUS);
+        break;
+      }
+      case 'da': {
+        this.dateLocale.next(customDaLocale);
+        break;
+      }
+      case 'de-DE': {
+        this.dateLocale.next(de);
+        break;
+      }
+      case 'uk-UA': {
+        this.dateLocale.next(uk);
+        break;
+      }
+      default: {
+        this.dateLocale.next(enUS);
+      }
+    }
   }
 }

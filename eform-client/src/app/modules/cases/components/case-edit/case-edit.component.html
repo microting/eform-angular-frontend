@@ -11,19 +11,18 @@
         {{ 'Done at' | translate }}
       </mat-card-title>
       <mat-card-content>
-        <mat-form-field [owlDateTimeTrigger]="dt1">
+        <mat-form-field>
           <mat-label>{{ 'Select date' | translate }}</mat-label>
-          <mat-icon matPrefix>calendar_today</mat-icon>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <input
-            matInput
-            id="doneAt"
-            name="doneAt"
-            [owlDateTime]="dt1"
-            [(ngModel)]="replyElement.doneAt"
             required
-            type="text"
+            matInput
+            [matDatepicker]="picker"
+            [value]="replyElement.doneAt"
+            (dateChange)="replyElement.doneAt = $event.value"
+            (click)="picker.open()"
           >
-          <owl-date-time [pickerType]="'calendar'" #dt1 [firstDayOfWeek]="1"></owl-date-time>
+          <mat-datepicker #picker></mat-datepicker>
           <mat-error class="text-warn" *ngIf="!replyElement.doneAt">
             {{'Date is required'| translate}}*
           </mat-error>
@@ -46,22 +45,22 @@
         {{ replyElement.label }}
       </mat-card-title>
       <mat-card-content style="max-height: 50vh; overflow: auto;">
-          <div
-            *ngFor="let element of replyElement.elementList"
-            style="cursor: pointer"
-            routerLinkActive="active"
+        <div
+          *ngFor="let element of replyElement.elementList"
+          style="cursor: pointer"
+          routerLinkActive="active"
+        >
+          <a
+            mat-button
+            (click)="goToSection('#section' + element.id)"
+            class="d-flex w-100"
           >
-            <a
-              mat-button
-              (click)="goToSection('#section' + element.id)"
-              class="d-flex w-100"
-            >
-              {{ element.label }}
-            </a>
-            <ng-container *ngIf="element.elementList">
-              <app-case-edit-nav [element]="element"></app-case-edit-nav>
-            </ng-container>
-          </div>
+            {{ element.label }}
+          </a>
+          <ng-container *ngIf="element.elementList">
+            <app-case-edit-nav [element]="element"></app-case-edit-nav>
+          </ng-container>
+        </div>
       </mat-card-content>
       <mat-card-footer
         *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)"

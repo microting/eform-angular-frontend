@@ -47,6 +47,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {
+  EformDateFnsDateModule,
+  EformMatDateFnsDateModule
+} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
 
 @NgModule({
   declarations: [
@@ -97,6 +101,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     OwlNativeDateTimeModule,
     EformSharedModule,
     MatProgressSpinnerModule,
+    // EformDateFnsDateModule,
+    EformMatDateFnsDateModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],
