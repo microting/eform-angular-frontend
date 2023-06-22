@@ -34,12 +34,12 @@ jobs:
       with:
         name: container
     - run: docker load -i container.tar
-    - name: Create docker network 🖧
+    - name: Create docker network
       run: docker network create --driver bridge data
     - name: Start MariaDB
       run: |
-        docker pull mariadb:latest
-        docker run --name mariadbtest --network data -e MYSQL_ROOT_PASSWORD=secretpassword -p 3306 -d mariadb:latest
+        docker pull mariadb:10.8
+        docker run --name mariadbtest --network data -e MYSQL_ROOT_PASSWORD=secretpassword -p 3306 -d mariadb:10.8
     - name: Start rabbitmq
       run: |
         docker pull rabbitmq:latest
@@ -76,7 +76,6 @@ jobs:
     - name: testheadless2${{matrix.test}}
       run: cd eform-client && npm run testheadless2${{matrix.test}}
     - name: ${{matrix.test}} test
-      continue-on-error: true
       uses: cypress-io/github-action@v4
       with:
         start: echo 'hi'
@@ -110,7 +109,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Create docker network 🖧
+    - name: Create docker network
       run: docker network create --driver bridge --attachable data
     - name: Start MariaDB
       run: |

@@ -379,18 +379,6 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                 await UpdateFields(model.FieldForUpdate, sdkDbContext, core); // update fields
             }
 
-            var checklistIds = model.FieldForCreate
-                .Select(x => x.ChecklistId)
-                .Distinct()
-                .ToList();
-
-            foreach (var checklistId in checklistIds)
-            {
-                await CreateFields(checklistId, sdkDbContext,
-                    model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList(),
-                    core); // create new field
-            }
-
             if (model.ChecklistForDelete.Any())
             {
                 await DeleteCheckLists(model.ChecklistForDelete, sdkDbContext); // delete checklists
@@ -405,6 +393,36 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
             {
                 await CreateChecklist(model, sdkDbContext, core); // create new checklists
             }
+
+            var checklistIds = model.FieldForCreate
+                .Select(x => x.ChecklistId)
+                .Distinct()
+                .ToList();
+
+            foreach (var checklistId in checklistIds)
+            {
+                var fieldsForCreate = model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList();
+                var fieldsForCreateResult = model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList();
+
+                foreach (var fieldForCreate in fieldsForCreate)
+                {
+                    foreach (var field in fieldForCreate.Fields)
+                    {
+                        fieldsForCreateResult.RemoveAll(x => x.TempId == field.TempId);
+                    }
+                }
+                
+                await CreateFields(checklistId, sdkDbContext,
+                    fieldsForCreateResult,
+                    core); // c
+            }
+
+            // foreach (var checklistId in checklistIds)
+            // {
+            //     await CreateFields(checklistId, sdkDbContext,
+            //         model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList(),
+            //         core); // create new field
+            // }
 
             return new OperationResult(true,
                 _localizationService.GetString("EformSuccessfullyUpdated"));
@@ -1070,187 +1088,377 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
     {
         foreach (var field in fieldsList)
         {
-            var dbField = new Field
-            {
-                CheckListId = eformId,
-                Color = field.Color,
-                FieldTypeId = field.FieldType,
-                DecimalCount = field.DecimalCount,
-                DisplayIndex = field.Position,
-                MaxValue = field.MaxValue ?? null,
-                MinValue = field.MinValue ?? null,
-                Mandatory = Convert.ToInt16(field.Mandatory),
-                ParentFieldId = parentFieldId ?? field.ParentFieldId
-            };
-            await dbField.Create(sdkDbContext);
+            var checkListId = await sdkDbContext.CheckLists.FirstOrDefaultAsync(x => x.Id == eformId);
 
-            var fieldType = await sdkDbContext.FieldTypes
-                .Where(x => x.Id == field.FieldType)
-                .Select(x => x.Type)
-                .FirstAsync();
-            var hashAndLanguageIdList = new List<KeyValuePair<string, int>>();
-
-            switch (fieldType)
+            if (checkListId != null)
             {
-                case Constants.FieldTypes.Date:
+
+                if (parentFieldId == null && field.ParentFieldId != null)
                 {
-                    dbField.MaxValue = string.IsNullOrEmpty(dbField.MaxValue)
-                        ? DateTime.MaxValue.ToString("yyyy-MM-dd")
-                        : dbField.MaxValue;
-                    dbField.MinValue = string.IsNullOrEmpty(dbField.MinValue)
-                        ? DateTime.MinValue.ToString("yyyy-MM-dd")
-                        : dbField.MinValue;
-                    await dbField.Update(sdkDbContext);
-                    break;
-                }
-                case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
-                {
-                    var optionsForCreate = field.Options.Select(x =>
-                            new FieldOption
-                            {
-                                FieldId = dbField.Id,
-                                Selected = x.Selected,
-                                DisplayOrder = x.DisplayOrder.ToString(),
-                                Key = x.Key.ToString(),
-                                FieldOptionTranslations = x.Translates
-                                    .Select(y =>
-                                        new FieldOptionTranslation
-                                        {
-                                            LanguageId = y.LanguageId,
-                                            Text = y.Name
-                                        })
-                                    .ToList()
-                            })
-                        .ToList();
-                    foreach (var dbOption in optionsForCreate)
+                    var parentField = await sdkDbContext.Fields.AsNoTracking().FirstOrDefaultAsync(x => x.Id == field.ParentFieldId && x.CheckListId == eformId);
+                    if (parentField != null)
                     {
-                        await dbOption.Create(sdkDbContext);
-                        // foreach (var optionTranslation in dbOption.FieldOptionTranslations)
-                        // {
-                        //     optionTranslation.FieldOptionId = dbOption.Id;
-                        //     await optionTranslation.Create(sdkDbContext);
-                        // }
+                        parentFieldId = parentField.Id;
                     }
 
-                    break;
-                }
-                case Constants.FieldTypes.FieldGroup:
-                {
-                    await CreateFields(eformId, sdkDbContext, field.Fields, core, dbField.Id);
-                    break;
-                }
-                case Constants.FieldTypes.ShowPdf:
-                {
-                    if (field.PdfFiles.Any())
+                    var dbField = new Field
                     {
-                        var folder = Path.Combine(Path.GetTempPath(), "templates",
-                            Path.Combine("fields-pdf-files", eformId.ToString()));
-                        Directory.CreateDirectory(folder);
-                        foreach (var pdfFile in field.PdfFiles)
+                        CheckListId = eformId,
+                        Color = field.Color,
+                        FieldTypeId = field.FieldType,
+                        DecimalCount = field.DecimalCount,
+                        DisplayIndex = field.Position,
+                        MaxValue = field.MaxValue ?? null,
+                        MinValue = field.MinValue ?? null,
+                        Mandatory = Convert.ToInt16(field.Mandatory),
+                        ParentFieldId = parentFieldId ?? field.ParentFieldId
+                    };
+                    await dbField.Create(sdkDbContext);
+
+                    var fieldType = await sdkDbContext.FieldTypes
+                        .Where(x => x.Id == field.FieldType)
+                        .Select(x => x.Type)
+                        .FirstAsync();
+                    var hashAndLanguageIdList = new List<KeyValuePair<string, int>>();
+
+                    switch (fieldType)
+                    {
+                        case Constants.FieldTypes.Date:
                         {
-                            if (pdfFile.File != null)
+                            dbField.MaxValue = string.IsNullOrEmpty(dbField.MaxValue)
+                                ? DateTime.MaxValue.ToString("yyyy-MM-dd")
+                                : dbField.MaxValue;
+                            dbField.MinValue = string.IsNullOrEmpty(dbField.MinValue)
+                                ? DateTime.MinValue.ToString("yyyy-MM-dd")
+                                : dbField.MinValue;
+                            await dbField.Update(sdkDbContext);
+                            break;
+                        }
+                        case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
+                        {
+                            var optionsForCreate = field.Options.Select(x =>
+                                    new FieldOption
+                                    {
+                                        FieldId = dbField.Id,
+                                        Selected = x.Selected,
+                                        DisplayOrder = x.DisplayOrder.ToString(),
+                                        Key = x.Key.ToString(),
+                                        FieldOptionTranslations = x.Translates
+                                            .Select(y =>
+                                                new FieldOptionTranslation
+                                                {
+                                                    LanguageId = y.LanguageId,
+                                                    Text = y.Name
+                                                })
+                                            .ToList()
+                                    })
+                                .ToList();
+                            foreach (var dbOption in optionsForCreate)
                             {
-                                var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{eformId}.pdf");
-                                // ReSharper disable once UseAwaitUsing
-                                using (var
-                                       stream = new FileStream(filePath,
-                                           FileMode
-                                               .Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
-                                {
-                                    await pdfFile.File.CopyToAsync(stream);
-                                }
-
-                                await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
-                                hashAndLanguageIdList.Add(
-                                    new KeyValuePair<string, int>(await core.PdfUpload(filePath),
-                                        pdfFile.LanguageId));
-
-                                var uploadData = new UploadedData
-                                {
-                                    Checksum = hashAndLanguageIdList.Last().Key,
-                                    FileName = pdfFile.File.FileName,
-                                    FileLocation = filePath
-                                };
-                                await uploadData.Create(sdkDbContext);
+                                await dbOption.Create(sdkDbContext);
+                                // foreach (var optionTranslation in dbOption.FieldOptionTranslations)
+                                // {
+                                //     optionTranslation.FieldOptionId = dbOption.Id;
+                                //     await optionTranslation.Create(sdkDbContext);
+                                // }
                             }
+
+                            break;
+                        }
+                        case Constants.FieldTypes.ShowPdf:
+                        {
+                            if (field.PdfFiles.Any())
+                            {
+                                var folder = Path.Combine(Path.GetTempPath(), "templates",
+                                    Path.Combine("fields-pdf-files", eformId.ToString()));
+                                Directory.CreateDirectory(folder);
+                                foreach (var pdfFile in field.PdfFiles)
+                                {
+                                    if (pdfFile.File != null)
+                                    {
+                                        var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{eformId}.pdf");
+                                        // ReSharper disable once UseAwaitUsing
+                                        using (var
+                                               stream = new FileStream(filePath,
+                                                   FileMode
+                                                       .Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
+                                        {
+                                            await pdfFile.File.CopyToAsync(stream);
+                                        }
+
+                                        await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
+                                        hashAndLanguageIdList.Add(
+                                            new KeyValuePair<string, int>(await core.PdfUpload(filePath),
+                                                pdfFile.LanguageId));
+
+                                        var uploadData = new UploadedData
+                                        {
+                                            Checksum = hashAndLanguageIdList.Last().Key,
+                                            FileName = pdfFile.File.FileName,
+                                            FileLocation = filePath
+                                        };
+                                        await uploadData.Create(sdkDbContext);
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+                        case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
+                        {
+                            dbField.MaxValue = string.IsNullOrEmpty(field.MaxValue)
+                                ? int.MaxValue.ToString()
+                                : field.MaxValue;
+                            dbField.MinValue = string.IsNullOrEmpty(field.MinValue)
+                                ? int.MinValue.ToString()
+                                : field.MinValue;
+                            dbField.DecimalCount = field.DecimalCount ?? 0;
+                            dbField.UnitName = string.IsNullOrEmpty(field.UnitName) ? " " : field.UnitName;
+                            await dbField.Update(sdkDbContext);
+                            break;
+                        }
+                        case Constants.FieldTypes.EntitySearch or Constants.FieldTypes.EntitySelect:
+                        {
+                            dbField.EntityGroupId = field.EntityGroupId;
+                            break;
+                        }
+                        // ReSharper disable once RedundantEmptySwitchSection
+                        default:
+                        {
+                            break;
                         }
                     }
 
-                    break;
-                }
-                case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
-                {
-                    dbField.MaxValue = string.IsNullOrEmpty(field.MaxValue)
-                        ? int.MaxValue.ToString()
-                        : field.MaxValue;
-                    dbField.MinValue = string.IsNullOrEmpty(field.MinValue)
-                        ? int.MinValue.ToString()
-                        : field.MinValue;
-                    dbField.DecimalCount = field.DecimalCount ?? 0;
-                    dbField.UnitName = string.IsNullOrEmpty(field.UnitName) ? " " : field.UnitName;
-                    await dbField.Update(sdkDbContext);
-                    break;
-                }
-                //case Constants.FieldTypes.Date:
-                //{
-                //    dbField.MaxValue = field.MaxValue == null ? field.MaxValue : DateTime.Parse(field.MaxValue);
-                //    dbField.MinValue = field.MinValue == null ? field.MinValue : DateTime.Parse(field.MinValue);
-                //    await dbField.Update(sdkDbContext);
-                //        break;
-                //}
-                case Constants.FieldTypes.EntitySearch or Constants.FieldTypes.EntitySelect:
-                {
-                    dbField.EntityGroupId = field.EntityGroupId;
-                    break;
-                }
-                // ReSharper disable once RedundantEmptySwitchSection
-                default:
-                {
-                    break;
-                }
-            }
+                    var translates = field.Translations
+                        .Select(x =>
+                            new FieldTranslation
+                            {
+                                FieldId = dbField.Id,
+                                LanguageId = x.LanguageId,
+                                Text = x.Name,
+                                Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "")
+                                    .Replace("<div>", ""),
+                                DefaultValue = x.DefaultValue
+                            }).ToList();
+                    foreach (var fieldTranslation in translates)
+                    {
+                        if (fieldType == Constants.FieldTypes.ShowPdf)
+                        {
+                            var hash = hashAndLanguageIdList
+                                .Where(x => x.Value == fieldTranslation.LanguageId)
+                                .Select(x => x.Key)
+                                .FirstOrDefault();
+                            if (!string.IsNullOrEmpty(hash))
+                            {
+                                fieldTranslation.DefaultValue = hash; // for pdf
+                            }
+                        }
 
-            var translates = field.Translations
-                .Select(x =>
-                    new FieldTranslation
-                    {
-                        FieldId = dbField.Id,
-                        LanguageId = x.LanguageId,
-                        Text = x.Name,
-                        Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", ""),
-                        DefaultValue = x.DefaultValue
-                    }).ToList();
-            foreach (var fieldTranslation in translates)
-            {
-                if (fieldType == Constants.FieldTypes.ShowPdf)
-                {
-                    var hash = hashAndLanguageIdList
-                        .Where(x => x.Value == fieldTranslation.LanguageId)
-                        .Select(x => x.Key)
-                        .FirstOrDefault();
-                    if (!string.IsNullOrEmpty(hash))
-                    {
-                        fieldTranslation.DefaultValue = hash; // for pdf
+                        if (fieldType == Constants.FieldTypes.Number || fieldType == Constants.FieldTypes.NumberStepper)
+                        {
+                            if (string.IsNullOrEmpty(fieldTranslation.DefaultValue))
+                            {
+                                fieldTranslation.DefaultValue = "0";
+                            }
+                        }
+
+                        if (fieldType == Constants.FieldTypes.SaveButton)
+                        {
+                            if (string.IsNullOrEmpty(fieldTranslation.DefaultValue))
+                            {
+                                fieldTranslation.DefaultValue = "Save";
+                            }
+                        }
+
+                        await fieldTranslation.Create(sdkDbContext);
                     }
                 }
-
-                if (fieldType == Constants.FieldTypes.Number || fieldType == Constants.FieldTypes.NumberStepper)
+                else
                 {
-                    if (string.IsNullOrEmpty(fieldTranslation.DefaultValue))
+                    var dbField = new Field
                     {
-                        fieldTranslation.DefaultValue = "0";
+                        CheckListId = eformId,
+                        Color = field.Color,
+                        FieldTypeId = field.FieldType,
+                        DecimalCount = field.DecimalCount,
+                        DisplayIndex = field.Position,
+                        MaxValue = field.MaxValue ?? null,
+                        MinValue = field.MinValue ?? null,
+                        Mandatory = Convert.ToInt16(field.Mandatory),
+                        ParentFieldId = parentFieldId ?? field.ParentFieldId
+                    };
+                    await dbField.Create(sdkDbContext);
+
+                    var fieldType = await sdkDbContext.FieldTypes
+                        .Where(x => x.Id == field.FieldType)
+                        .Select(x => x.Type)
+                        .FirstAsync();
+                    var hashAndLanguageIdList = new List<KeyValuePair<string, int>>();
+
+                    switch (fieldType)
+                    {
+                        case Constants.FieldTypes.Date:
+                        {
+                            dbField.MaxValue = string.IsNullOrEmpty(dbField.MaxValue)
+                                ? DateTime.MaxValue.ToString("yyyy-MM-dd")
+                                : dbField.MaxValue;
+                            dbField.MinValue = string.IsNullOrEmpty(dbField.MinValue)
+                                ? DateTime.MinValue.ToString("yyyy-MM-dd")
+                                : dbField.MinValue;
+                            await dbField.Update(sdkDbContext);
+                            break;
+                        }
+                        case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
+                        {
+                            var optionsForCreate = field.Options.Select(x =>
+                                    new FieldOption
+                                    {
+                                        FieldId = dbField.Id,
+                                        Selected = x.Selected,
+                                        DisplayOrder = x.DisplayOrder.ToString(),
+                                        Key = x.Key.ToString(),
+                                        FieldOptionTranslations = x.Translates
+                                            .Select(y =>
+                                                new FieldOptionTranslation
+                                                {
+                                                    LanguageId = y.LanguageId,
+                                                    Text = y.Name
+                                                })
+                                            .ToList()
+                                    })
+                                .ToList();
+                            foreach (var dbOption in optionsForCreate)
+                            {
+                                await dbOption.Create(sdkDbContext);
+                                // foreach (var optionTranslation in dbOption.FieldOptionTranslations)
+                                // {
+                                //     optionTranslation.FieldOptionId = dbOption.Id;
+                                //     await optionTranslation.Create(sdkDbContext);
+                                // }
+                            }
+
+                            break;
+                        }
+                        case Constants.FieldTypes.FieldGroup:
+                        {
+                            await CreateFields(eformId, sdkDbContext, field.Fields, core, dbField.Id);
+                            break;
+                        }
+                        case Constants.FieldTypes.ShowPdf:
+                        {
+                            if (field.PdfFiles.Any())
+                            {
+                                var folder = Path.Combine(Path.GetTempPath(), "templates",
+                                    Path.Combine("fields-pdf-files", eformId.ToString()));
+                                Directory.CreateDirectory(folder);
+                                foreach (var pdfFile in field.PdfFiles)
+                                {
+                                    if (pdfFile.File != null)
+                                    {
+                                        var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{eformId}.pdf");
+                                        // ReSharper disable once UseAwaitUsing
+                                        using (var
+                                               stream = new FileStream(filePath,
+                                                   FileMode
+                                                       .Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
+                                        {
+                                            await pdfFile.File.CopyToAsync(stream);
+                                        }
+
+                                        await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
+                                        hashAndLanguageIdList.Add(
+                                            new KeyValuePair<string, int>(await core.PdfUpload(filePath),
+                                                pdfFile.LanguageId));
+
+                                        var uploadData = new UploadedData
+                                        {
+                                            Checksum = hashAndLanguageIdList.Last().Key,
+                                            FileName = pdfFile.File.FileName,
+                                            FileLocation = filePath
+                                        };
+                                        await uploadData.Create(sdkDbContext);
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+                        case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
+                        {
+                            dbField.MaxValue = string.IsNullOrEmpty(field.MaxValue)
+                                ? int.MaxValue.ToString()
+                                : field.MaxValue;
+                            dbField.MinValue = string.IsNullOrEmpty(field.MinValue)
+                                ? int.MinValue.ToString()
+                                : field.MinValue;
+                            dbField.DecimalCount = field.DecimalCount ?? 0;
+                            dbField.UnitName = string.IsNullOrEmpty(field.UnitName) ? " " : field.UnitName;
+                            await dbField.Update(sdkDbContext);
+                            break;
+                        }
+                        //case Constants.FieldTypes.Date:
+                        //{
+                        //    dbField.MaxValue = field.MaxValue == null ? field.MaxValue : DateTime.Parse(field.MaxValue);
+                        //    dbField.MinValue = field.MinValue == null ? field.MinValue : DateTime.Parse(field.MinValue);
+                        //    await dbField.Update(sdkDbContext);
+                        //        break;
+                        //}
+                        case Constants.FieldTypes.EntitySearch or Constants.FieldTypes.EntitySelect:
+                        {
+                            dbField.EntityGroupId = field.EntityGroupId;
+                            break;
+                        }
+                        // ReSharper disable once RedundantEmptySwitchSection
+                        default:
+                        {
+                            break;
+                        }
+                    }
+
+                    var translates = field.Translations
+                        .Select(x =>
+                            new FieldTranslation
+                            {
+                                FieldId = dbField.Id,
+                                LanguageId = x.LanguageId,
+                                Text = x.Name,
+                                Description = x.Description?.Replace("</div><div>", "<br>").Replace("</div>", "")
+                                    .Replace("<div>", ""),
+                                DefaultValue = x.DefaultValue
+                            }).ToList();
+                    foreach (var fieldTranslation in translates)
+                    {
+                        if (fieldType == Constants.FieldTypes.ShowPdf)
+                        {
+                            var hash = hashAndLanguageIdList
+                                .Where(x => x.Value == fieldTranslation.LanguageId)
+                                .Select(x => x.Key)
+                                .FirstOrDefault();
+                            if (!string.IsNullOrEmpty(hash))
+                            {
+                                fieldTranslation.DefaultValue = hash; // for pdf
+                            }
+                        }
+
+                        if (fieldType == Constants.FieldTypes.Number || fieldType == Constants.FieldTypes.NumberStepper)
+                        {
+                            if (string.IsNullOrEmpty(fieldTranslation.DefaultValue))
+                            {
+                                fieldTranslation.DefaultValue = "0";
+                            }
+                        }
+
+                        if (fieldType == Constants.FieldTypes.SaveButton)
+                        {
+                            if (string.IsNullOrEmpty(fieldTranslation.DefaultValue))
+                            {
+                                fieldTranslation.DefaultValue = "Save";
+                            }
+                        }
+
+                        await fieldTranslation.Create(sdkDbContext);
                     }
                 }
-
-                if (fieldType == Constants.FieldTypes.SaveButton)
-                {
-                    if (string.IsNullOrEmpty(fieldTranslation.DefaultValue))
-                    {
-                        fieldTranslation.DefaultValue = "Save";
-                    }
-                }
-
-                await fieldTranslation.Create(sdkDbContext);
             }
         }
     }
@@ -1474,8 +1682,8 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                 dbField.Id); // child fields to create when updating the checklist are **not added to the group field**
 
             model.FieldForCreate = model.FieldForCreate
-                .Where(x => x.ParentFieldId != fieldGroup.TempId ||
-                            x.TempId != fieldGroup.TempId) // delete created fields from mas
+                .Where(x => x.ParentFieldId != fieldGroup.TempId &&
+                            x.TempId != fieldGroup.TempId) // delete created fields from master list
                 .ToList();
         }
 
