@@ -58,9 +58,10 @@ import {AppMenuStateService, AuthStateService} from 'src/app/common/store';
 import {persistProviders} from 'src/app/common/store/persist.config';
 import {BaseService} from 'src/app/common/services/base.service';
 import {DateInterceptor} from 'src/app/common/interceptors/date.interceptor';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {EformDateFnsDateAdapter} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter';
 import {BehaviorSubject} from 'rxjs';
+import {EFORM_MAT_DATEFNS_LOCALES} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-locales';
 // Guards
 
 export let providers = [
@@ -116,8 +117,6 @@ export let providers = [
       counterPosition: 'bottom',
     },
   },
-  // {provide: DateAdapter<any>, useClass: EformDateFnsDateAdapter, deps: [MAT_DATE_LOCALE],},
-  {provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS},
   {provide: MAT_DATE_LOCALE, useValue: new BehaviorSubject(null)},
   AuthStateService,
   AppMenuStateService,
