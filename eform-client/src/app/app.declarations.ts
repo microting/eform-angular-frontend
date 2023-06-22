@@ -58,7 +58,6 @@ import {AppMenuStateService, AuthStateService} from 'src/app/common/store';
 import {persistProviders} from 'src/app/common/store/persist.config';
 import {BaseService} from 'src/app/common/services/base.service';
 import {DateInterceptor} from 'src/app/common/interceptors/date.interceptor';
-import {MAT_DATE_FNS_FORMATS, DateFnsAdapter} from '@angular/material-date-fns-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {EformDateFnsDateAdapter} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter';
 import {BehaviorSubject} from 'rxjs';
