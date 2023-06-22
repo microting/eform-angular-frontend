@@ -50,6 +50,18 @@ describe('My eforms', () => {
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
     cy.wait('@geteForm', { timeout: 60000 });
+    /* ==== Generated with Cypress Studio ==== */
+    cy.get('#mainCheckListNameTranslation_0').should('have.value', 'Hovedtitel');
+    cy.get('#mainCheckListNameTranslation_1').should('have.value', 'Maintitle');
+    cy.get('#editChecklistBtn0').click();
+    cy.get('#newChecklistNameTranslation_0').should('have.value', 'lvl 1');
+    cy.get('#newChecklistNameTranslation_1').should('have.value', 'lvl1e');
+    cy.get('#changeChecklistSaveCancelBtn').click();
+    cy.get('#editChecklistBtn1 > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#newChecklistNameTranslation_0').should('have.value', 'lvl 1.1');
+    cy.get('#newChecklistNameTranslation_1').should('have.value', 'lvl1.1e');
+    cy.get('#changeChecklistSaveCancelBtn > .mat-button-wrapper').click();
+    /* ==== End Cypress Studio ==== */
   });
 
   afterEach(() => {
