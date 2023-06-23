@@ -284,7 +284,44 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                              Description = translation.Description?.Replace("</div><div>", "<br>").Replace("</div>", "").Replace("<div>", "")
                          }))
             {
-                await newCheckListTranslation.Create(sdkDbContext);
+                //await newCheckListTranslation.Create(sdkDbContext);
+                var dbCheckListTranslation = await sdkDbContext.CheckListTranslations
+                    .Where(x => x.CheckListId == newCheckListTranslation.CheckListId)
+                    .Where(x => x.LanguageId == newCheckListTranslation.LanguageId)
+                    .FirstOrDefaultAsync();
+
+                if (dbCheckListTranslation == null)
+                {
+                    if (newCheckListTranslation.Text != null || newCheckListTranslation.Description != null)
+                    {
+                        await newCheckListTranslation.Create(sdkDbContext);
+                        if (parentEform != null)
+                        {
+                            var parentDbCheckListTranslation = await sdkDbContext.CheckListTranslations
+                                .Where(x => x.CheckListId == parentEform.Id)
+                                .Where(x => x.LanguageId == newCheckListTranslation.LanguageId)
+                                .FirstOrDefaultAsync();
+
+                            if (parentDbCheckListTranslation == null)
+                            {
+                                var parentCheckListTranslation = new CheckListTranslation
+                                {
+                                    CheckListId = parentEform.Id,
+                                    LanguageId = newCheckListTranslation.LanguageId,
+                                    Text = newCheckListTranslation.Text,
+                                    Description = newCheckListTranslation.Description
+                                };
+                                await parentCheckListTranslation.Create(sdkDbContext);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    dbCheckListTranslation.Text = newCheckListTranslation.Text;
+                    dbCheckListTranslation.Description = newCheckListTranslation.Description;
+                    await dbCheckListTranslation.Update(sdkDbContext);
+                }
             }
 
             // update translations
