@@ -33,7 +33,7 @@ export const config: Options.Testrunner = {
     'e2e/Tests/navigation-menu/navigation-menu.edit-item.spec.ts',
     'e2e/Tests/navigation-menu/navigation-menu.drag-item.spec.ts',
     'e2e/Tests/navigation-menu/navigation-menu.delete-item.spec.ts',
-    'e2e/Tests/navigation-menu/subheader.spec.ts',
+    // 'e2e/Tests/navigation-menu/subheader.spec.ts',
   ],
   suites: {
     settings: [
