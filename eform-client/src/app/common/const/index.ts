@@ -6,3 +6,4 @@ export * from './eforms-permissions.const';
 export * from './date-formats';
 export * from './hours-picker-array.const';
 export * from './icons.const';
+export * from './custom-date-fns-locales';

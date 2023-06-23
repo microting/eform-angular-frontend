@@ -1,5 +1,4 @@
 // noinspection JSIgnoredPromiseFromCall
-
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import {
   applicationLanguages,
@@ -11,6 +10,7 @@ import {
 } from '../../src/app/common/models';
 import myEformsPage from './MyEforms.page';
 import { eformVisualEditorElementColors } from '../../src/app/modules/eforms/eform-visual-editor/const';
+import {selectValueInNgSelector} from '../Helpers/helper-functions';
 
 class EformVisualEditorPage extends PageWithNavbarPage {
   constructor() {
@@ -205,16 +205,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       }
       if (checklist.tags) {
         for (let i = 0; i < checklist.tags.length; i++) {
-          (await (await this.mainCheckListTagsSelector()).$('input')).setValue(
-            checklist.tags[i]
-          );
-          await browser.pause(500);
-          const option = await (await this.mainCheckListTagsSelector()).$(
-            '.ng-option'
-          );
-          await option.waitForDisplayed({ timeout: 40000 });
-          await option.click();
-          await browser.pause(500);
+          await selectValueInNgSelector(await this.mainCheckListTagsSelector(), checklist.tags[i])
         }
       }
       if (checklist.fields) {
