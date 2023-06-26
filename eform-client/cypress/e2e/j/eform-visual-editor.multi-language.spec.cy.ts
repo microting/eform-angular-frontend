@@ -30,7 +30,7 @@ describe('My eforms', () => {
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
     cy.wait('@geteForm', { timeout: 60000 });
-    cy.get('#languageCheckbox1 > .mat-checkbox-layout > .mat-checkbox-label').click();
+    cy.get('#languageCheckbox1 > .mat-checkbox-layout').click();
     // @ts-ignore
     cy.get('#mainCheckListNameTranslation_1').clear('M');
     cy.get('#mainCheckListNameTranslation_1').type('Maintitle');
