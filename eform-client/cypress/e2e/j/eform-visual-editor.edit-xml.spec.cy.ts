@@ -53,7 +53,7 @@ describe('My eforms', () => {
     cy.intercept('POST', '**/api/templates/create').as('createeForm');
     cy.get('#createEformBtn > .mat-button-wrapper').click();
     cy.wait('@createeForm', { timeout: 60000 });
-    cy.get('.mat-sort-header-content > .ng-tns-c153-6').click();
+    //cy.get('.mat-sort-header-content > .ng-tns-c153-6').click();
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
     cy.wait('@geteForm', { timeout: 60000 });
