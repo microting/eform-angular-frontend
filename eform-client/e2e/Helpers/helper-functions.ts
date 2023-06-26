@@ -57,7 +57,8 @@ export async function selectDateOnDatePicker(
   await selectYearAndMonthButton.waitForClickable({timeout: 20000});
   await selectYearAndMonthButton.click();
   // select year. after select year we can select month
-  const yearForSelect = await $$(`mat-multi-year-view .mat-calendar-body-cell`)[year - 2016];
+  const yearStart = +(await (await $('mat-multi-year-view .mat-calendar-body-cell-content')).getText());
+  const yearForSelect = await $$(`mat-multi-year-view .mat-calendar-body-cell`)[year - yearStart];
   await yearForSelect.waitForClickable({timeout: 20000});
   await yearForSelect.click();
   // select month. after select month we can select day
