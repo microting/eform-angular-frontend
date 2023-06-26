@@ -8,6 +8,7 @@ describe(' Navigation menu - Drag item', function () {
     await loginPage.open('/');
     await loginPage.login();
     await myEformsPage.Navbar.goToMenuEditorPage();
+    await browser.pause(5000);
   });
   it('element must be created from custom dropdown which elements', async () => {
     const count = (await navigationMenuPage.menuItems()).length;
