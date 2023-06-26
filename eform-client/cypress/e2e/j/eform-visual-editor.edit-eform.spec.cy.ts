@@ -160,6 +160,7 @@ describe('My eforms', () => {
     cy.get('#newChecklistNameTranslation_0').clear();
     cy.get('#newChecklistNameTranslation_0').type('Level 1.1');
     cy.get('#changeChecklistSaveBtn > .mat-button-wrapper').click();
+    cy.wait(1000);
     cy.intercept('POST', '**/api/template-visual-editor/').as('saveeForm');
     cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
     cy.wait('@saveeForm', { timeout: 60000 });
