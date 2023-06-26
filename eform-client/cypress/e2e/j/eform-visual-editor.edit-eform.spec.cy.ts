@@ -239,8 +239,8 @@ describe('My eforms', () => {
     // @ts-ignore
     cy.get('#fieldNameTranslation_0').clear('g');
     cy.get('#fieldNameTranslation_0').type('group1');
-    cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
-    cy.get('#addNewNestedField1 > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#changeFieldSaveBtn').click();
+    cy.get('#addNewNestedField1').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('gr');
     selectValueInNgSelectorNoSelector('Gruppe');
