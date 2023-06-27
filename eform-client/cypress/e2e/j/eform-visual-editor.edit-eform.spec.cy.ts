@@ -128,7 +128,7 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('Billed');
     cy.get('#fieldNameTranslation_0').type('Billede 1');
     cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
-    cy.wait(1000);
+    cy.wait(2000);
     cy.get('#addNewNestedField1 > .mat-button-wrapper > .mat-icon').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('B');
