@@ -91,7 +91,7 @@
     "ngx-cookie-service": "14.0.1",
     "ngx-editor": "^15.3.0",
     "ngx-image-cropper": "6.3.3",
-    "ngx-mask": "^14.2.4",
+    "ngx-mask": "^16.2.0",
     "ngx-papaparse": "7.0.0",
     "ngx-slimscroll": "12.2.0",
     "ngx-toastr": "15.2.2",

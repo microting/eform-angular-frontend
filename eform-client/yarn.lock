@@ -8910,10 +8910,10 @@ ngx-image-cropper@6.3.3:
   dependencies:
     tslib "^2.3.0"
 
-ngx-mask@^14.2.4:
-  version "14.2.4"
-  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-14.2.4.tgz#da7ba480d7c7f5be9ff34c35a288838c58d65bbd"
-  integrity sha512-158nAe2tyiZa2T8COoI6SvJCQHqpJ4+JW0amGcvVEYUBF6FIoYK66BlnOJURAOy5qry0d0N45w7J/LGsCBgZcg==
+ngx-mask@^16.2.0:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-16.2.0.tgz#8900a4168429d09f9aa87fd64b59158f52e61eb9"
+  integrity sha512-mqUxuXp7oa9hFFH4E29m+R31fzT/ZxCmeuzf7boUQEFdsbgpaDtJ0WfqXzjTS0ljephgQ9XUGIyMtBCy7jgkWA==
   dependencies:
     tslib "^2.3.0"
 
