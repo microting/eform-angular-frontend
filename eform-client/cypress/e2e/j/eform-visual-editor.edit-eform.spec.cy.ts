@@ -304,6 +304,7 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('g');
     cy.get('#fieldNameTranslation_0').type('g1');
     cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
+    cy.wait(2000);
     cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
     cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
     cy.wait('@saveeForm', { timeout: 60000 });
