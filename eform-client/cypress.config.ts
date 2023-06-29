@@ -27,7 +27,7 @@ export default defineConfig({
     trashAssetsBeforeRuns: true,
     videoCompression: 32,
     videosFolder: 'cypress/videos',
-    video: false,
+    video: true,
     videoUploadOnPasses: false,
     downloadsFolder: 'cypress/downloads',
     chromeWebSecurity: true,

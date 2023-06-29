@@ -33,6 +33,7 @@ describe('My eforms', () => {
     cy.get('#defaultValueEdit0').clear('g');
     cy.get('#defaultValueEdit0').type('gem');
     cy.get('#changeFieldSaveBtn').click();
+    cy.wait(2000);
     cy.get('#addNewNestedField0 > .mat-button-wrapper > .mat-icon').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('bil');
@@ -80,6 +81,7 @@ describe('My eforms', () => {
     cy.get('#decimalCountEdit').clear();
     cy.get('#decimalCountEdit').type('2');
     cy.get('#changeFieldSaveBtn').click();
+    cy.wait(2000);
     cy.get('#fields_1 > app-visual-editor-field > #fieldSection1 > .mb-3 > .p-2 > .d-flex > #copyBtn > .mat-button-wrapper > .mat-icon').click();
     cy.get('#fields_1 > app-visual-editor-field > #fieldSection2 > .mb-3 > .p-2 > .d-flex > #editBtn > .mat-button-wrapper > .mat-icon').click();
     // @ts-ignore
@@ -128,6 +130,7 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('Billed');
     cy.get('#fieldNameTranslation_0').type('Billede 1');
     cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
+    cy.wait(2000);
     cy.get('#addNewNestedField1 > .mat-button-wrapper > .mat-icon').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('B');
@@ -160,6 +163,7 @@ describe('My eforms', () => {
     cy.get('#newChecklistNameTranslation_0').clear();
     cy.get('#newChecklistNameTranslation_0').type('Level 1.1');
     cy.get('#changeChecklistSaveBtn > .mat-button-wrapper').click();
+    cy.wait(1000);
     cy.intercept('POST', '**/api/template-visual-editor/').as('saveeForm');
     cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
     cy.wait('@saveeForm', { timeout: 60000 });
@@ -175,7 +179,8 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('G');
     cy.get('#fieldNameTranslation_0').type('Gruppe 1');
     cy.get('#changeFieldSaveBtn').click();
-    cy.get('#addNewNestedField1 > .mat-button-wrapper > .mat-icon').click();
+    cy.wait(2000);
+    cy.get('#addNewNestedField1').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('gr');
     selectValueInNgSelectorNoSelector('Gruppe');
@@ -183,6 +188,7 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('G');
     cy.get('#fieldNameTranslation_0').type('Gruppe 2');
     cy.get('#changeFieldSaveBtn').click();
+    cy.wait(2000);
     cy.get('#fields_0 > .field-group > #fieldSection0 > .mb-3 > .p-2 > .d-flex > #collapseToggleBtn > .mat-button-wrapper > .mat-icon').click();
     cy.get('#fields_1 > .field-group > #fieldSection0 > .mb-3 > .p-2 > .d-flex > #collapseToggleBtn > .mat-button-wrapper > .mat-icon').click();
     cy.get('#fields_0 > .field-group > #fieldSection0 > .mb-3 > .p-2 > .d-flex > #addNewNestedField > .mat-button-wrapper > .mat-icon').click();
@@ -201,6 +207,7 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('B');
     cy.get('#fieldNameTranslation_0').type('Billed 2');
     cy.get('#changeFieldSaveBtn').click();
+    cy.wait(2000);
     cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
     cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
     cy.wait('@saveeForm', { timeout: 60000 });
@@ -239,8 +246,9 @@ describe('My eforms', () => {
     // @ts-ignore
     cy.get('#fieldNameTranslation_0').clear('g');
     cy.get('#fieldNameTranslation_0').type('group1');
-    cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
-    cy.get('#addNewNestedField1 > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#changeFieldSaveBtn').click();
+    cy.wait(2000);
+    cy.get('#addNewNestedField1').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('gr');
     selectValueInNgSelectorNoSelector('Gruppe');
@@ -248,6 +256,7 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('g');
     cy.get('#fieldNameTranslation_0').type('group2');
     cy.get('#changeFieldSaveBtn').click();
+    cy.wait(2000);
     cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
     cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
     cy.wait('@saveeForm', { timeout: 60000 });
@@ -262,6 +271,7 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('b');
     cy.get('#fieldNameTranslation_0').type('billede 1');
     cy.get('#changeFieldSaveBtn').click();
+    cy.wait(2000);
     cy.get('#fields_1 > .field-group > #fieldSection0 > .mb-3 > .p-2 > .d-flex > #addNewNestedField > .mat-button-wrapper > .mat-icon').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('bi');
@@ -302,6 +312,7 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('g');
     cy.get('#fieldNameTranslation_0').type('g1');
     cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
+    cy.wait(2000);
     cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
     cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
     cy.wait('@saveeForm', { timeout: 60000 });
@@ -317,6 +328,7 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('b');
     cy.get('#fieldNameTranslation_0').type('b1');
     cy.get('#changeFieldSaveBtn').click();
+    cy.wait(2000);
     cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
     cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
     cy.wait('@saveeForm', { timeout: 60000 });
@@ -358,6 +370,7 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').clear('b');
     cy.get('#fieldNameTranslation_0').type('b1');
     cy.get('#changeFieldSaveBtn').click();
+    cy.wait(2000);
     cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
     cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
     cy.wait('@saveeForm', { timeout: 60000 });

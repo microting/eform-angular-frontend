@@ -75,7 +75,7 @@ jobs:
     - name: testheadless2${{matrix.test}}
       run: cd eform-client && npm run testheadless2${{matrix.test}}
     - name: ${{matrix.test}} test
-      uses: cypress-io/github-action@v4
+      uses: cypress-io/github-action@v5
       with:
         start: echo 'hi'
         wait-on: "http://localhost:4200"
@@ -96,7 +96,9 @@ jobs:
       if: ${{ failure() }}
       run: |
         cat docker_run_log
+    
     - name: Archive screenshot artifacts
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v3
       with:
         name: error Screenshots ${{matrix.test}}
