@@ -94,7 +94,7 @@
     "ngx-papaparse": "7.0.0",
     "ngx-slimscroll": "12.2.0",
     "ngx-toastr": "15.2.2",
-    "npm": "^9.6.7",
+    "npm": "^9.7.2",
     "pdf-lib": "^1.17.1",
     "ramda": "^0.29.0",
     "run": "^1.4.0",
