@@ -1760,14 +1760,14 @@
   resolved "https://registry.yarnpkg.com/@mattlewis92/dom-autoscroller/-/dom-autoscroller-2.4.2.tgz#ccb753fbcf6b3672b0273e0c3bda7924fe238013"
   integrity sha512-YbrUWREPGEjE/FU6foXcAT1YbVwqD/jkYnY1dFb0o4AxtP3s4xKBthlELjndZih8uwsDWgQZx1eNskRNe2BgZQ==
 
-"@ng-matero/extensions@^14.7.0":
-  version "14.7.0"
-  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-14.7.0.tgz#90f19f4c9886d0d1a18a107a9f5634e31f111f52"
-  integrity sha512-zPsBd0++p/JEu1XFnagRjEQ3oiVsOBDhFTz4ixS0LUS0Ox36DkP1EfxStW6rkCGyks+phTreMcnwIEEPZnDFnw==
+"@ng-matero/extensions@^14.8.1":
+  version "14.8.1"
+  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-14.8.1.tgz#19600a59d6b9e9e3e94d534c041f74d0c56441d4"
+  integrity sha512-DIZNAuZo34uGY2SlaptvwYThTXKGmv/RbY3wedqNRZfFLj3ivnQbyrV5HR3xyULFSV/W/E3EUi1UqcwNohLH/w==
   dependencies:
     "@ng-select/ng-select" "^9.0.0"
     ngx-color "^8.0.0"
-    photoviewer "^3.6.0"
+    photoviewer "^3.7.0"
     tslib "^2.3.0"
 
 "@ng-select/ng-select@10.0.4":
@@ -9654,7 +9654,7 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==
 
-photoviewer@^3.6.0:
+photoviewer@^3.7.0:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/photoviewer/-/photoviewer-3.7.1.tgz#773511a0562623bac30a9cf2bf4084a45ae1f9bb"
   integrity sha512-lvOfIBCP+KXMHA6/CN2e4tLYorH5mqhwzvxiJWIkYb/OSjkEVgLHHyWGSmNkAHS7MNh5KBfoDTT4vsfiDAWnaw==
