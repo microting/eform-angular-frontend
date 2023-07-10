@@ -13,3 +13,4 @@ export * from './eform-new-subheader/eform-new-subheader.component';
 export * from './entity-edit-create/entity-edit-create.component';
 export * from './entity-import-list/entity-import-list.component';
 export * from './delete-modal/delete-modal.component';
+export * from './eform-translation/eform-translation.component';
