@@ -43,7 +43,7 @@ export function findFullNameById(id: number, data: FolderDto[], path: string = '
 }
 
 /**
- Finds the full name of a folder by its ID in a hierarchical data structure.
+ Finds the full name of a folder by its name in a hierarchical data structure.
  @param {string} name - The name of the folder to search for.
  @param {FolderDto[]} data - The hierarchical data structure to search in.
  @param {string} [path=''] - The path to the current folder.
