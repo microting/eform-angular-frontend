@@ -7,10 +7,9 @@ import {BehaviorSubject, Observable, take, zip} from 'rxjs';
 import {Router} from '@angular/router';
 import {snakeToCamel} from 'src/app/common/helpers';
 import {resetStores} from '@datorama/akita';
-import {applicationLanguages, customDaLocale} from 'src/app/common/const';
-import {EformDateFnsDateAdapter} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter';
 import {Locale} from 'date-fns';
-import {da, de, enUS, uk} from 'date-fns/locale';
+import {applicationLanguages, customDaLocale} from 'src/app/common/const';
+import {de, enUS, es, fr, it, nb, nl, pl, sv, uk, ptBR, pt, fi} from 'date-fns/locale';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 
 @Injectable({providedIn: 'root'})
@@ -107,7 +106,7 @@ export class AuthStateService {
           claims: userClaims,
         },
       }));
-      this.setLocale(userSettings.model.locale);
+      this.setLocale();
       // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
       if (userSettings.model.loginRedirectUrl) {
         this.router
@@ -226,7 +225,7 @@ export class AuthStateService {
         locale: locale,
       },
     }));
-    this.setLocale(locale);
+    this.setLocale();
   }
 
   updateCurrentUserLocaleAndDarkTheme(locale: string, darkTheme: boolean) {
@@ -238,7 +237,7 @@ export class AuthStateService {
         darkTheme: darkTheme,
       },
     }));
-    this.setLocale(locale);
+    this.setLocale();
   }
 
   updateDarkTheme(darkTheme: boolean) {
@@ -301,26 +300,57 @@ export class AuthStateService {
     return this.query.currentSetting.currentUser.loginRedirectUrl;
   }
 
-  private setLocale(locale: string) {
-    switch (locale) {
-      case 'en-US': {
-        this.dateLocale.next(enUS);
-        break;
+  private setLocale() {
+    this.dateLocale.next(this.dateFnsLocale);
+  }
+
+  get dateFnsLocale(): Locale {
+    const currentLanguage = this.currentUserLanguage;
+    switch (currentLanguage.id) {
+      case 1: {
+        return customDaLocale;
       }
-      case 'da': {
-        this.dateLocale.next(customDaLocale);
-        break;
+      case 2: {
+        return enUS;
       }
-      case 'de-DE': {
-        this.dateLocale.next(de);
-        break;
+      case 3: {
+        return de;
       }
-      case 'uk-UA': {
-        this.dateLocale.next(uk);
-        break;
+      case 4: {
+        return uk;
+      }
+      case 5: {
+        return pl;
+      }
+      case 6: {
+        return nb; // it's (Bokmål) maybe need nn (Nynorsk)
+      }
+      case 7: {
+        return sv;
+      }
+      case 8: {
+        return es;
+      }
+      case 9: {
+        return fr;
+      }
+      case 10: {
+        return it;
+      }
+      case 11: {
+        return nl;
+      }
+      case 12: {
+        return ptBR;
+      }
+      case 13: {
+        return pt;
+      }
+      case 14: {
+        return fi;
       }
       default: {
-        this.dateLocale.next(enUS);
+        return enUS;
       }
     }
   }

@@ -19,6 +19,7 @@ import {
   EntityEditCreateComponent,
   EntityImportListComponent,
   DeleteModalComponent,
+  EformTranslationComponent
 } from './components';
 import {
   AuthImagePipe,
@@ -40,28 +41,30 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {FormattingTextEditorModule} from '../eform-imported/formatting-text-editor/formatting-text-editor.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule,
-        NgSelectModule,
-        FormsModule,
-        TreeModule,
-        RouterModule,
-        DragulaModule,
-        MatSortModule,
-        MatPaginatorModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        MatTreeModule,
-        MatMenuModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDialogModule,
-        MatTooltipModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    NgSelectModule,
+    FormsModule,
+    TreeModule,
+    RouterModule,
+    DragulaModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatTreeModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    MatTooltipModule,
+    FormattingTextEditorModule
+  ],
   declarations: [
     EformPaginationComponent,
     EformPageSizeComponent,// Added only in an transitive import until all plugins have been migrated to the new eform-pagination
@@ -81,6 +84,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     EntityEditCreateComponent,
     EntityImportListComponent,
     DeleteModalComponent,
+    EformTranslationComponent
   ],
   exports: [
     EformPaginationComponent,
@@ -101,6 +105,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     EntityEditCreateComponent,
     EntityImportListComponent,
     DeleteModalComponent,
+    EformTranslationComponent
   ],
 })
 export class EformSharedModule {
