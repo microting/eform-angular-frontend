@@ -211,7 +211,7 @@ export class ApiBaseService {
       return httpParams;
     }
     for (const param of Object.keys(params)) {
-      if (params[param] === 0 || params[param]) {
+      if (params[param] === 0 || R.isNotNil(params[param])) {
         httpParams = httpParams.set(param, params[param]);
       }
     }

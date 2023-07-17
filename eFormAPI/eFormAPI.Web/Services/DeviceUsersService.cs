@@ -81,8 +81,10 @@ public class DeviceUsersService : IDeviceUsersService
                         .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
                         .Select(y => y.CustomerNo)
                         .FirstOrDefault(),
-                    FirstName = x.SiteWorkers.FirstOrDefault(y => y.WorkflowState != Constants.WorkflowStates.Removed).Worker.FirstName,
-                    LastName = x.SiteWorkers.FirstOrDefault(y => y.WorkflowState != Constants.WorkflowStates.Removed).Worker.LastName,
+                    FirstName = x.SiteWorkers.FirstOrDefault(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Worker.FirstName,
+                    LastName = x.SiteWorkers.FirstOrDefault(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Worker.LastName,
                     LanguageId = x.LanguageId,
                     OtpCode = x.Units
                         .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
@@ -95,70 +97,22 @@ public class DeviceUsersService : IDeviceUsersService
                         .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
                         .Select(y => y.MicrotingUid)
                         .FirstOrDefault(),
-                    WorkerUid = x.SiteWorkers.FirstOrDefault(y => y.WorkflowState != Constants.WorkflowStates.Removed).Worker.MicrotingUid,
-                    Language = sdkDbContext.Languages.Where(y => y.Id == x.LanguageId).Select(y => y.Name).SingleOrDefault() ?? "Danish",
-                    LanguageCode = sdkDbContext.Languages.Where(y => y.Id == x.LanguageId).Select(y => y.LanguageCode).SingleOrDefault() ?? "da",
+                    WorkerUid = x.SiteWorkers.FirstOrDefault(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Worker.MicrotingUid,
+                    Language = sdkDbContext.Languages.Where(y => y.Id == x.LanguageId).Select(y => y.Name)
+                        .SingleOrDefault() ?? "Danish",
+                    LanguageCode = sdkDbContext.Languages.Where(y => y.Id == x.LanguageId).Select(y => y.LanguageCode)
+                        .SingleOrDefault() ?? "da",
                     IsLocked = x.IsLocked
                 })
                 .ToListAsync();
 
-
-            // foreach (var site in sites)
-            // {
-            //     var language = await sdkDbContext.Languages.SingleOrDefaultAsync(x => x.Id == site.LanguageId) ?? sdkDbContext.Languages.Single(x => x.LanguageCode == "da");
-            //     var siteWorkerId = await sdkDbContext.SiteWorkers
-            //         .Where(x => x.SiteId == site.Id)
-            //         .Include(x => x.Site)
-            //         .Include(x => x.Worker)
-            //         .Select(x => x.WorkerId)
-            //         .FirstOrDefaultAsync();
-            //     var worker = await sdkDbContext.Workers
-            //         .Where(x => x.Id == siteWorkerId)
-            //         .Select(x => new { x.MicrotingUid, x.FirstName, x.LastName })
-            //         .FirstOrDefaultAsync();
-            //     var unit = await sdkDbContext.Units
-            //         .Where(x => x.SiteId == site.Id)
-            //         .Select(x => new { x.CustomerNo, x.OtpCode, x.MicrotingUid })
-            //         .FirstOrDefaultAsync();
-            //
-            //     if (!string.IsNullOrEmpty(requestModel.NameFilter) && !worker.FirstName.ToLower().Contains(requestModel.NameFilter.ToLower())
-            //         && !worker.LastName.ToLower().Contains(requestModel.NameFilter.ToLower())
-            //         && !unit.MicrotingUid.ToString().ToLower().Contains(requestModel.NameFilter.ToLower()))
-            //     {
-            //         continue;
-            //     }
-            //
-            //     if (site.LanguageId == 0) // set default language id to danish
-            //     {
-            //         site.LanguageId = sdkDbContext.Languages
-            //             .Single(x => x.Name == "Danish").Id;
-            //         await site.Update(sdkDbContext);
-            //     }
-            //
-            //     deviceUsers.Add(
-            //         new DeviceUser
-            //         {
-            //             CustomerNo = unit.CustomerNo,
-            //             FirstName = worker?.FirstName,
-            //             LastName = worker?.LastName,
-            //             LanguageId = site.LanguageId,
-            //             OtpCode = unit.OtpCode,
-            //             SiteId = site.Id,
-            //             SiteUid = site.MicrotingUid,
-            //             SiteName = site.Name,
-            //             UnitId = unit.MicrotingUid,
-            //             WorkerUid = worker?.MicrotingUid,
-            //             Language = language.Name,
-            //             LanguageCode = language.LanguageCode,
-            //         });
-            // }
-
-            // var siteDto = await core.SiteReadAll(false);
             return new OperationDataResult<List<DeviceUser>>(true, deviceUsers);
         }
         catch (Exception ex)
         {
-            return new OperationDataResult<List<DeviceUser>>(false, _localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers") + " " + ex.Message);
+            return new OperationDataResult<List<DeviceUser>>(false,
+                _localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers") + " " + ex.Message);
         }
     }
 
@@ -175,12 +129,14 @@ public class DeviceUsersService : IDeviceUsersService
                 null, deviceUserModel.LanguageCode);
 
             var sdkDbContext = core.DbContextHelper.GetDbContext();
-            var id = await sdkDbContext.Sites.Where(x => x.MicrotingUid == siteDto.SiteId).Select(x => x.Id).FirstAsync();
+            var id = await sdkDbContext.Sites.Where(x => x.MicrotingUid == siteDto.SiteId).Select(x => x.Id)
+                .FirstAsync();
 
 
             return siteDto != null
                 ? new OperationDataResult<int>(true,
-                    _localizationService.GetStringWithFormat("DeviceUserParamCreatedSuccessfully", siteDto.SiteName), id)
+                    _localizationService.GetStringWithFormat("DeviceUserParamCreatedSuccessfully", siteDto.SiteName),
+                    id)
                 : new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
         }
         catch (Exception ex)
@@ -189,16 +145,19 @@ public class DeviceUsersService : IDeviceUsersService
             {
                 if (ex.InnerException.Message == "The remote server returned an error: (402) Payment Required.")
                 {
-                    return new OperationDataResult<int>(false, _localizationService.GetString("YouNeedToBuyMoreLicenses"));
+                    return new OperationDataResult<int>(false,
+                        _localizationService.GetString("YouNeedToBuyMoreLicenses"));
                 }
                 else
                 {
-                    return new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+                    return new OperationDataResult<int>(false,
+                        _localizationService.GetString("DeviceUserCouldNotBeCreated"));
                 }
             }
             catch
             {
-                return new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+                return new OperationDataResult<int>(false,
+                    _localizationService.GetString("DeviceUserCouldNotBeCreated"));
             }
         }
     }
@@ -272,7 +231,8 @@ public class DeviceUsersService : IDeviceUsersService
                     return isUpdated
                         ? new OperationResult(true, _localizationService.GetString("DeviceUserUpdatedSuccessfully"))
                         : new OperationResult(false,
-                            _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated", deviceUserModel.Id));
+                            _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated",
+                                deviceUserModel.Id));
                 }
 
                 return new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeObtained"));
@@ -295,13 +255,15 @@ public class DeviceUsersService : IDeviceUsersService
 
             return await core.SiteDelete(siteNameDto.SiteUId)
                 ? new OperationResult(true,
-                    _localizationService.GetStringWithFormat("DeviceUserParamDeletedSuccessfully", siteNameDto.SiteName))
+                    _localizationService.GetStringWithFormat("DeviceUserParamDeletedSuccessfully",
+                        siteNameDto.SiteName))
                 : new OperationResult(false,
                     _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", siteNameDto.SiteName));
         }
         catch (Exception)
         {
-            return new OperationResult(false, _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", id));
+            return new OperationResult(false,
+                _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", id));
         }
     }
 
@@ -327,7 +289,8 @@ public class DeviceUsersService : IDeviceUsersService
         }
         catch (Exception ex)
         {
-            return new OperationDataResult<List<CommonDictionaryModel>>(false, _localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers") + " " + ex.Message);
+            return new OperationDataResult<List<CommonDictionaryModel>>(false,
+                _localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers") + " " + ex.Message);
         }
     }
 }

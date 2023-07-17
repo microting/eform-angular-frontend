@@ -9,10 +9,12 @@ import {
   FolderUpdateModel,
 } from 'src/app/common/models';
 import { ApiBaseService } from 'src/app/common/services';
+import * as R from 'ramda';
 
 const FoldersMethods = {
   Folders: '/api/folders',
   FoldersList: '/api/folders/list',
+  FoldersCommonDictionaryModel: '/api/folders/common-dictionary-model',
 };
 
 @Injectable()
@@ -41,5 +43,17 @@ export class FoldersService {
 
   createFolder(model: FolderCreateModel): Observable<OperationResult> {
     return this.apiBaseService.post(FoldersMethods.Folders, model);
+  }
+
+  getFoldersAsCommonDictionaryModel(model: {
+    ids?: number[],
+    fullNames?: boolean,
+    getOnlyChildFolders?: boolean
+  }): Observable<OperationResult> {
+    return this.apiBaseService.get(FoldersMethods.FoldersCommonDictionaryModel, {
+      filterList: (!R.isNil(model.ids)) ? model.ids : [],
+      fullNames: (!R.isNil(model.fullNames)) ? model.fullNames : true,
+      getOnlyChildFolders: (!R.isNil(model.getOnlyChildFolders)) ? model.getOnlyChildFolders : true,
+    });
   }
 }
