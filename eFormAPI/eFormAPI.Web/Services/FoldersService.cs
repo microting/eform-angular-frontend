@@ -32,7 +32,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eForm.Infrastructure.Constants;
 using Microting.eForm.Infrastructure.Data.Entities;
-using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
@@ -122,7 +121,7 @@ public class FoldersService : IFoldersService
             var core = await _coreHelper.GetCore();
 
             var folderTranslations = createModel.Translations
-                .Select(x => new CommonTranslationsModel
+                .Select(x => new Microting.eForm.Infrastructure.Models.CommonTranslationsModel
                 {
                     Name = x.Name,
                     Description = x.Description,
@@ -183,7 +182,7 @@ public class FoldersService : IFoldersService
             var folder = await sdkDbContext.Folders.SingleOrDefaultAsync(x => x.Id == folderUpdateModel.Id);
 
             var folderTranslations = folderUpdateModel.Translations
-                .Select(x => new CommonTranslationsModel
+                .Select(x => new Microting.eForm.Infrastructure.Models.CommonTranslationsModel
                 {
                     Name = x.Name,
                     Description = x.Description,
