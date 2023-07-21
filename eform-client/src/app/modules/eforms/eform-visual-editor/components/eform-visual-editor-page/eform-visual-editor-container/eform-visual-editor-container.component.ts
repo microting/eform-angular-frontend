@@ -4,7 +4,6 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import * as R from 'ramda';
 import {Subscription} from 'rxjs';
 import {
-  applicationLanguages,
   EformFieldTypesEnum,
 } from 'src/app/common/const';
 import {
@@ -14,7 +13,7 @@ import {
   EformVisualEditorModel,
   EformVisualEditorRecursionChecklistModel,
   EformVisualEditorRecursionFieldModel,
-  EformVisualEditorUpdateModel,
+  EformVisualEditorUpdateModel, LanguagesModel,
 } from 'src/app/common/models';
 import {
   EformDocxReportService,
@@ -33,6 +32,8 @@ import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/comp
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {EformDocxReportHeaderEditorComponent} from 'src/app/modules/eforms/eform-docx-report/components';
+import {tap} from 'rxjs/operators';
+import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -63,6 +64,8 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   updateReportHeadersSub$: Subscription;
   updateHeadersSub$: Subscription;
   reportHeadersSub$: any;
+  getLanguagesSub$: Subscription;
+  appLanguages: LanguagesModel = new LanguagesModel();
 
   constructor(
     private dragulaService: DragulaService,
@@ -74,6 +77,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private overlay: Overlay,
     private reportService: EformDocxReportService,
+    private appSettingsStateService: AppSettingsStateService
   ) {
     this.dragulaService.createGroup('CHECK_LISTS', {
       moves: (el, container, handle) => {
@@ -116,22 +120,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getTags();
-
-    this.routerSub$ = this.route.params.subscribe((params) => {
-      this.selectedTemplateId = params['templateId'];
-      this.selectedLanguages = [
-        applicationLanguages.find(
-          (x) => x.locale === this.authStateService.currentUserLocale
-        ).id,
-      ];
-      if (this.selectedTemplateId) {
-        this.getVisualTemplate(this.selectedTemplateId);
-        this.getReportHeaders(this.selectedTemplateId);
-      } else {
-        this.initForm();
-      }
-    });
+    this.getEnabledLanguages();
   }
 
   getReportHeaders(templateId: number) {
@@ -791,5 +780,32 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     this.dragulaService.destroy('CHECK_LISTS');
     this.dragulaService.destroy('FIELDS');
     // this.dragulaService.destroy('NESTED_FIELDS');
+  }
+
+
+  getEnabledLanguages() {
+    this.getLanguagesSub$ = this.appSettingsStateService.getLanguages()
+      .pipe(tap(data => {
+        if (data && data.success && data.model) {
+          this.appLanguages = data.model;
+          this.getTags();
+
+          this.routerSub$ = this.route.params.subscribe((params) => {
+            this.selectedTemplateId = params['templateId'];
+            this.selectedLanguages = [
+              this.appLanguages.languages.find(
+                (x) => x.languageCode === this.authStateService.currentUserLocale
+              ).id,
+            ];
+            if (this.selectedTemplateId) {
+              this.getVisualTemplate(this.selectedTemplateId);
+              this.getReportHeaders(this.selectedTemplateId);
+            } else {
+              this.initForm();
+            }
+          });
+        }
+      }))
+      .subscribe();
   }
 }
