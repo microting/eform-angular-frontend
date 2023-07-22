@@ -29,12 +29,6 @@
         [clearable]="false"
         [(ngModel)]="simpleSiteModel.languageCode"
         [items]="activeLanguages">
-        <ng-template ng-label-tmp let-item="item">
-          {{item.name | translate}}
-        </ng-template>
-        <ng-template ng-option-tmp let-item="item">
-          {{item.name | translate}}
-        </ng-template>
       </mtx-select>
     </mat-form-field>
   </div>
