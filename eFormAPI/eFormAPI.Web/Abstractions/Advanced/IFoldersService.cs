@@ -21,6 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
 namespace eFormAPI.Web.Abstractions.Advanced;
 
 using Infrastructure.Models.Folders;
@@ -41,4 +44,7 @@ public interface IFoldersService
     Task<OperationResult> Update(FolderUpdateModel folderUpdateModel);
 
     Task<OperationResult> Delete(int id);
+
+    Task<OperationDataResult<List<CommonDictionaryModel>>> CommonDictionaryModel(bool fullname,
+        List<int> filterFolderIds, bool getOnlyChildFolders);
 }

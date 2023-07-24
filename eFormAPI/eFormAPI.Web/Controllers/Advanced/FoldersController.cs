@@ -23,6 +23,8 @@ SOFTWARE.
 */
 
 
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
 namespace eFormAPI.Web.Controllers.Advanced;
 
 using Infrastructure.Models.Folders;
@@ -35,6 +37,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 [Authorize]
+[Route("api/folders")]
 public class FoldersController: Controller
 {
     private readonly IFoldersService _foldersService;
@@ -45,7 +48,6 @@ public class FoldersController: Controller
     }
 
     [HttpGet]
-    [Route("api/folders")]
     [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
     public async Task<OperationDataResult<List<FolderDtoModel>>> Index()
     {
@@ -53,7 +55,7 @@ public class FoldersController: Controller
     }
 
     [HttpGet]
-    [Route("api/folders/list")]
+    [Route("list")]
     [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
     public async Task<OperationDataResult<List<FolderDtoModel>>> List()
     {
@@ -61,7 +63,6 @@ public class FoldersController: Controller
     }
 
     [HttpPost]
-    [Route("api/folders")]
     [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
     public async Task<OperationResult> Create([FromBody] FolderCreateModel createModel)
     {
@@ -69,7 +70,7 @@ public class FoldersController: Controller
     }
 
     [HttpGet]
-    [Route("api/folders/{id}")]
+    [Route("{id}")]
     [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
     public async Task<OperationDataResult<FolderModel>> Read(int id)
     {
@@ -77,7 +78,6 @@ public class FoldersController: Controller
     }
 
     [HttpPut]
-    [Route("api/folders")]
     [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
     public async Task<OperationResult> Update([FromBody] FolderUpdateModel folderUpdateModel)
     {
@@ -85,10 +85,19 @@ public class FoldersController: Controller
     }
 
     [HttpDelete]
-    [Route("api/folders/{id}")]
+    [Route("{id}")]
     [Authorize(Policy = AuthConsts.EformPolicies.Sites.Delete)]
     public async Task<OperationResult> Delete(int id)
     {
         return await _foldersService.Delete(id);
+    }
+
+
+    [HttpGet]
+    [Route("common-dictionary-model")]
+    [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
+    public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetCommonDictionaryModel([FromQuery] List<int> filterList, [FromQuery] bool fullNames = true, [FromQuery] bool getOnlyChildFolders = true)
+    {
+        return await _foldersService.CommonDictionaryModel(fullNames, filterList, getOnlyChildFolders);
     }
 }

@@ -108,6 +108,50 @@ export function selectDateRangeOnDatePicker(
   selectDateOnDatePicker(yearTo, monthTo, dayTo);
 }
 
+/**
+ * Selects a date on the new date picker widget.
+ * @param {number} year - Year value of the date to select.
+ * @param {number} month - Month value of the date to select.
+ * @param {number} day - Day value of the date to select.
+ */
+export function selectDateOnNewDatePicker(year: number, month: number, day: number) {
+  cy.wait(500); // cy.wait(500); - wait animations, but not require
+  // Click on the date picker widget's control button.
+  cy.get('.mat-calendar-period-button').click();
+  cy.wait(500);
+  cy.get('mat-multi-year-view .mat-calendar-body-cell-content').first().then(ele => {
+    const yearStart = +ele.text();
+    // select year
+    cy.get(`mat-multi-year-view .mat-calendar-body-cell:eq(${year - yearStart})`).click();
+    cy.wait(500);
+    // select month
+    cy.get(`mat-year-view .mat-calendar-body-cell:eq(${month - 1})`).click();
+    cy.wait(500);
+    // select day
+    cy.get(`mat-month-view .mat-calendar-body-cell:eq(${day - 1})`).click();
+    cy.wait(500);
+  });
+}
+
+/**
+ * Selects a date range on the new date picker widget.
+ * @param {number} yearFrom - Year value of the start date.
+ * @param {number} monthFrom - Month value of the start date.
+ * @param {number} dayFrom - Day value of the start date.
+ * @param {number} yearTo - Year value of the end date.
+ * @param {number} monthTo - Month value of the end date.
+ * @param {number} dayTo - Day value of the end date.
+ */
+export function selectDateRangeOnNewDatePicker(
+  yearFrom: number, monthFrom: number, dayFrom: number,
+  yearTo: number, monthTo: number, dayTo: number
+) {
+  // Select the start date.
+  selectDateOnNewDatePicker(yearFrom, monthFrom, dayFrom);
+  // Select the end date.
+  selectDateOnNewDatePicker(yearTo, monthTo, dayTo);
+}
+
 export function selectValueInNgSelector(selector: string, value: string, selectorInModal = false) {
   cy.get(selector).should('be.visible');
   cy.get(selector).find('input').should('be.visible').clear().type(value);

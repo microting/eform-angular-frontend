@@ -22,24 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-
 namespace eFormAPI.Web.Services;
 
-using System.Linq;
+using Abstractions;
+using Abstractions.Advanced;
 using Infrastructure.Helpers;
 using Infrastructure.Models.Folders;
 using Microsoft.EntityFrameworkCore;
-using Microting.eForm.Infrastructure.Constants;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Abstractions;
-using Abstractions.Advanced;
 using Microsoft.Extensions.Logging;
-using Microting.eForm.Infrastructure.Models;
+using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eForm.Infrastructure.Data.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class FoldersService : IFoldersService
 {
@@ -47,6 +46,7 @@ public class FoldersService : IFoldersService
     private readonly ILocalizationService _localizationService;
     private readonly ILogger<FoldersService> _logger;
     private readonly IUserService _userService;
+
     public FoldersService(IEFormCoreService coreHelper,
         ILocalizationService localizationService,
         IUserService userService,
@@ -73,7 +73,6 @@ public class FoldersService : IFoldersService
                 .OrderBy(x => x.Name)
                 .ToListAsync();
 
-
             return new OperationDataResult<List<FolderDtoModel>>(true, folders);
         }
         catch (Exception e)
@@ -92,21 +91,18 @@ public class FoldersService : IFoldersService
             var core = await _coreHelper.GetCore();
             await using var dbContext = core.DbContextHelper.GetDbContext();
             var language = await _userService.GetCurrentUserLanguage();
-            var folderQuery = dbContext.Folders
+            var folders = await dbContext.Folders
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Include(x => x.FolderTranslations)
                 .Where(x => x.FolderTranslations.Any(y =>
-                    y.LanguageId == language.Id && !string.IsNullOrEmpty(y.Name)));
-            var folders = await AddSelectToQueryForList(folderQuery, language.Id)
-                .OrderBy(x => x.Name)
+                    y.LanguageId == language.Id && !string.IsNullOrEmpty(y.Name)))
                 .ToListAsync();
 
-            var treeResult = new List<FolderDtoModel>();
-
-            if (folders.Count > 0)
-            {
-                treeResult = FoldersHelper.BuildTreeV2(folders);
-                //treeResult = folders.BuildTree().ToList();
-            }
+            var treeResult = folders
+                .Where(f => f.ParentId == null)
+                .Select(f => MapFolder(f, folders, language))
+                .OrderBy(x => x.Name)
+                .ToList();
             return new OperationDataResult<List<FolderDtoModel>>(true, treeResult);
         }
         catch (Exception e)
@@ -124,27 +120,8 @@ public class FoldersService : IFoldersService
         {
             var core = await _coreHelper.GetCore();
 
-            //var names = new List<KeyValuePair<string, string>>();
-            //var descriptions = new List<KeyValuePair<string, string>>();
-            //await using var sdkDbContext = core.DbContextHelper.GetDbContext();
-
-            //var languages = await sdkDbContext.Languages
-            //    .Select(x => new { x.LanguageCode, x.Id })
-            //    .ToListAsync();
-
-            //foreach (var folderTranslationModel in createModel.Translations)
-            //{
-            //    var languageCode = languages
-            //        .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
-            //    names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
-            //    descriptions.Add(
-            //        new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
-            //}
-
-            //await core.FolderCreate(names, descriptions, createModel.ParentId); // creating the folder in Danish as default
-
             var folderTranslations = createModel.Translations
-                .Select(x => new CommonTranslationsModel
+                .Select(x => new Microting.eForm.Infrastructure.Models.CommonTranslationsModel
                 {
                     Name = x.Name,
                     Description = x.Description,
@@ -201,31 +178,11 @@ public class FoldersService : IFoldersService
         try
         {
             await using var sdkDbContext = core.DbContextHelper.GetDbContext();
-            //var names = new List<KeyValuePair<string, string>>();
-            //var descriptions = new List<KeyValuePair<string, string>>();
-            //var languages = await sdkDbContext.Languages
-            //    .Select(x => new {x.LanguageCode, x.Id})
-            //    .ToListAsync();
-
-            //foreach (var folderTranslationModel in folderUpdateModel.Translations)
-            //{
-            //    var languageCode = languages
-            //        .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
-            //    names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
-            //    descriptions.Add(
-            //        new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
-            //}
 
             var folder = await sdkDbContext.Folders.SingleOrDefaultAsync(x => x.Id == folderUpdateModel.Id);
 
-            //await core.FolderUpdate(
-            //    folderUpdateModel.Id,
-            //    names,
-            //    descriptions,
-            //    folder.ParentId);
-
             var folderTranslations = folderUpdateModel.Translations
-                .Select(x => new CommonTranslationsModel
+                .Select(x => new Microting.eForm.Infrastructure.Models.CommonTranslationsModel
                 {
                     Name = x.Name,
                     Description = x.Description,
@@ -253,8 +210,6 @@ public class FoldersService : IFoldersService
         try
         {
             await FoldersHelper.DeleteFolder(core, sdkDbContext, id);
-            //await DeleteChildren(id);
-            //await core.FolderDelete(id);
             return new OperationResult(true);
         }
         catch (Exception e)
@@ -267,24 +222,34 @@ public class FoldersService : IFoldersService
         }
     }
 
-    //private async Task DeleteChildren(int id)
-    //{
-    //    var core = await _coreHelper.GetCore();
-    //    await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
-    //    var list = await dbContext.Folders.Where(x => x.ParentId == id).ToListAsync();
-    //    foreach (var folder in list)
-    //    {
-    //        var sublist = await dbContext.Folders.Where(x => x.ParentId == folder.Id).ToListAsync();
-    //        if (sublist.Any())
-    //        {
-    //            foreach (var subfolder in sublist)
-    //            {
-    //                await DeleteChildren(subfolder.Id);
-    //            }
-    //        }
-    //        await core.FolderDelete(folder.Id);
-    //    }
-    //}
+    public async Task<OperationDataResult<List<CommonDictionaryModel>>> CommonDictionaryModel(bool fullname, List<int> filterFolderIds, bool getOnlyChildFolders)
+    {
+        try
+        {
+            var core = await _coreHelper.GetCore();
+            await using var sdkDbContext = core.DbContextHelper.GetDbContext();
+            var userLanguage = await _userService.GetCurrentUserLanguage();
+            var folders = await sdkDbContext.Folders
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Include(x => x.FolderTranslations)
+                .ToListAsync();
+
+            var folderList = folders
+                .Where(f => f.ParentId == null)
+                .Select(f => MapFolder(f, folders, userLanguage))
+                .Where(x => !filterFolderIds.Any() || HaveFolderWithId(filterFolderIds, x))
+                .SelectMany(x => MapFolder(x, fullname, getOnlyChildFolders))
+                .ToList();
+            return new OperationDataResult<List<CommonDictionaryModel>>(true, folderList);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            return new OperationDataResult<List<CommonDictionaryModel>>(
+                false,
+                _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
+        }
+    }
 
     private static IQueryable<FolderModel> AddSelectToQueryForRead(IQueryable<Folder> query)
     {
@@ -320,5 +285,63 @@ public class FoldersService : IFoldersService
             ParentId = x.ParentId,
             UpdatedAt = x.UpdatedAt
         });
+    }
+
+    private static FolderDtoModel MapFolder(Folder folder, List<Folder> allFolders, Language userLanguage)
+    {
+        var propertyFolderModel = new FolderDtoModel
+        {
+            Id = folder.Id,
+            Name = folder.FolderTranslations
+                .Where(x => x.LanguageId == userLanguage.Id)
+                .Select(x => x.Name)
+                .FirstOrDefault(),
+            Description = folder.FolderTranslations
+                .Where(x => x.LanguageId == userLanguage.Id)
+                .Select(x => x.Description)
+                .FirstOrDefault(),
+            MicrotingUId = folder.MicrotingUid,
+            ParentId = folder.ParentId,
+            Children = new List<FolderDtoModel>(),
+        };
+
+        foreach (var childFolder in allFolders.Where(f => f.ParentId == folder.Id))
+        {
+            propertyFolderModel.Children.Add(MapFolder(childFolder, allFolders, userLanguage));
+        }
+
+        return propertyFolderModel;
+    }
+
+    private static List<CommonDictionaryModel> MapFolder(FolderDtoModel folder, bool useFullName = true, bool getOnlyChildFolders = true, string rootFolderName = "")
+    {
+        var result = new List<CommonDictionaryModel>();
+        var fullName = useFullName
+            ? string.IsNullOrEmpty(rootFolderName)
+                ? folder.Name
+                : $"{rootFolderName} - {folder.Name}"
+            : folder.Name;
+
+        if (!getOnlyChildFolders || !folder.Children.Any())
+        {
+            result.Add(new CommonDictionaryModel
+            {
+                Id = folder.Id,
+                Description = folder.Description,
+                Name = fullName
+            });
+        }
+
+        foreach (var childFolder in folder.Children)
+        {
+            result.AddRange(MapFolder(childFolder, useFullName, getOnlyChildFolders, fullName));
+        }
+
+        return result;
+    }
+
+    private static bool HaveFolderWithId(List<int> folderIds, FolderDtoModel folder)
+    {
+        return folderIds.Contains(folder.Id) || folder.Children.Any(f => HaveFolderWithId(folderIds, f));
     }
 }
