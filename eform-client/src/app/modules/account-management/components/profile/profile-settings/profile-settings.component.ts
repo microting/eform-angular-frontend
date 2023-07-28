@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EventBrokerService } from 'src/app/common/helpers';
 import { GoogleAuthInfoModel } from 'src/app/common/models/auth';
 import { UserSettingsModel } from 'src/app/common/models/settings';
 import {
@@ -9,13 +7,12 @@ import {
   UserSettingsService,
 } from 'src/app/common/services/auth';
 import { TimezonesModel } from 'src/app/common/models/common/timezones.model';
-import {
-  applicationLanguages,
-  applicationLanguages2,
-  applicationLanguagesTranslated
-} from 'src/app/common/const/application-languages.const';
 import { countries } from 'src/app/common/const/application-countries.const';
 import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
+import {tap} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
+import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
+import {LanguagesModel} from 'src/app/common/models';
 
 @Component({
   selector: 'app-profile-settings',
@@ -23,30 +20,25 @@ import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
   styleUrls: ['./profile-settings.component.scss'],
 })
 export class ProfileSettingsComponent implements OnInit {
-  get languages() {
-    return applicationLanguages2;
-  }
-
-  get countries() {
-    return countries;
-  }
 
   userSettingsModel: UserSettingsModel = new UserSettingsModel();
   googleAuthInfoModel: GoogleAuthInfoModel = new GoogleAuthInfoModel();
   timeZones: TimezonesModel = new TimezonesModel();
+  getLanguagesSub$: Subscription;
+  appLanguages: LanguagesModel = new LanguagesModel();
+  activeLanguages: Array<any> = [];
 
   constructor(
     public authStateService: AuthStateService,
     private googleAuthService: GoogleAuthService,
     private localeService: LocaleService,
     private userSettingsService: UserSettingsService,
-    private appMenuStateService: AppMenuStateService
+    private appMenuStateService: AppMenuStateService,
+    private appSettingsStateService: AppSettingsStateService
   ) {}
 
   ngOnInit() {
-    this.getTimeZones();
-    this.getGoogleAuthenticatorInfo();
-    this.getUserSettings();
+    this.getEnabledLanguages();
   }
 
   getGoogleAuthenticatorInfo() {
@@ -104,5 +96,27 @@ export class ProfileSettingsComponent implements OnInit {
         );
         this.appMenuStateService.getAppMenu();
       });
+  }
+
+  getEnabledLanguages() {
+    this.getLanguagesSub$ = this.appSettingsStateService.getLanguages()
+      .pipe(tap(data => {
+        if (data && data.success && data.model) {
+          this.appLanguages = data.model;
+          this.activeLanguages = this.appLanguages.languages.filter((x) => x.isActive);
+          this.getTimeZones();
+          this.getGoogleAuthenticatorInfo();
+          this.getUserSettings();
+        }
+      }))
+      .subscribe();
+  }
+
+  get languages() {
+    return this.appLanguages.languages.filter((x) => x.isActive);
+  }
+
+  get countries() {
+    return countries;
   }
 }

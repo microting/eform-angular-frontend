@@ -65,12 +65,13 @@
       <mtx-select
         *ngIf="authStateService.isAdmin"
         id="ProfileLanguageSelector"
-        [bindLabel]="'text'"
-        [bindValue]="'locale'"
+        [bindLabel]="'name'"
+        [bindValue]="'languageCode'"
         [clearable]="false"
         [(ngModel)]="userSettingsModel.locale"
-        [items]="languages"
-      ></mtx-select>
+        [items]="activeLanguages"
+      >
+      </mtx-select>
     </mat-form-field>
     <mat-form-field>
       <mat-label>{{ 'Formats' | translate }}</mat-label>

@@ -9,7 +9,7 @@
           [ngModel]="isLanguageSelected(language.id)"
           (ngModelChange)="onAddOrDeleteLanguage(language.id)"
         >
-          {{ language.text | translate }}
+          {{ language.name}}
         </mat-checkbox>
       </ng-container>
     </div>

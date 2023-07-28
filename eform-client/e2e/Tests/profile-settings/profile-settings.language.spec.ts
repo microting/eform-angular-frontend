@@ -40,7 +40,7 @@ describe('Profile settings', function () {
   });
   it('should set language to English', async () => {
     await myEformsPage.Navbar.goToProfileSettings();
-    await profileSettings.chooseLanguage('Engelsk');
+    await profileSettings.chooseLanguage('English');
     await profileSettings.saveProfileSettings();
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
     await myEformsPage.Navbar.goToMyEForms();
@@ -83,7 +83,7 @@ describe('Profile settings', function () {
         `element with selector ${translation.key} must be = ${
           translation.value
         }, but element text = ${await (await $(translation.key)).getText()}.
-      Language = Danish`
+      Language = Dansk`
       );
     }
   });
