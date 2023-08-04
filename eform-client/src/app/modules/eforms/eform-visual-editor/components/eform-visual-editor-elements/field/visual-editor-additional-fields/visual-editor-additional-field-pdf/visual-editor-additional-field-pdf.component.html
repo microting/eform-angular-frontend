@@ -1,5 +1,5 @@
 <ng-container *ngFor="let selectedLanguage of selectedLanguages; let i = index">
-  <mat-card *ngIf="isLanguageSelected(selectedLanguage) && getLanguage(translation.languageId) !== undefined">
+  <mat-card *ngIf="isLanguageSelected(selectedLanguage) && getLanguage(selectedLanguage) !== undefined">
     <mat-card-title>{{
       getLanguage(selectedLanguage).name | translate
       }}</mat-card-title>
