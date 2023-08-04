@@ -129,7 +129,7 @@
     "chai": "4.3.7",
     "chromedriver": "^115.0.0",
     "cypress": "^12.17.2",
-    "eslint": "^8.45.0",
+    "eslint": "^8.46.0",
     "fs-extra": "^11.1.0",
     "guid-typescript": "1.0.9",
     "mammoth": "^1.6.0",
