@@ -2744,10 +2744,10 @@
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-10.0.1.tgz#2f4f65bb08bc368ac39c96da7b2f09140b26851b"
   integrity sha512-/fvYntiO1GeICvqbQ3doGDIP97vWmvFt83GKguJ6prmQM2iXZfFcq6YE8KteFyRtX2/h5Hf91BYvPodJKFYv5Q==
 
-"@types/node@*", "@types/node@20.4.5", "@types/node@^20.1.0", "@types/node@^20.1.1":
-  version "20.4.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.5.tgz#9dc0a5cb1ccce4f7a731660935ab70b9c00a5d69"
-  integrity sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==
+"@types/node@*", "@types/node@20.4.7", "@types/node@^20.1.0", "@types/node@^20.1.1":
+  version "20.4.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.7.tgz#74d323a93f1391a63477b27b9aec56669c98b2ab"
+  integrity sha512-bUBrPjEry2QUTsnuEjzjbS7voGWCc30W0qzgMf90GPeDGFRakvrz47ju+oqDAKCXLUCe39u57/ORMl/O/04/9g==
 
 "@types/node@^14.14.31":
   version "14.18.47"
@@ -3217,13 +3217,6 @@
     "@types/node" "^18.0.0"
     got "^11.8.1"
 
-"@wdio/types@8.10.4":
-  version "8.10.4"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.10.4.tgz#b8a81ce2726d7c8ca3af8acd184b66793181c355"
-  integrity sha512-aLJ1QQW+hhALeRK3bvMLjIrlUVyhOs3Od+91pR4Z4pLwyeNG1bJZCJRD5bAJK/mm7CnFa0NsdixPS9jJxZcRrw==
-  dependencies:
-    "@types/node" "^20.1.0"
-
 "@wdio/types@8.14.0":
   version "8.14.0"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.14.0.tgz#9050fbcc94423429b13d21105bb82b18fc7e3fc7"
@@ -3238,16 +3231,6 @@
   dependencies:
     "@wdio/logger" "7.26.0"
     "@wdio/types" "7.30.2"
-    p-iteration "^1.1.8"
-
-"@wdio/utils@8.12.1":
-  version "8.12.1"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.12.1.tgz#052d4cb294ef3fae21762b61f979b3a75cb01194"
-  integrity sha512-VmF6O++84FTH3AKaVFyqn0MJA65/1G6dbm6p61KBqkD25LxaWo4398lCCbt264hzBIobtXRZoQ87bSxdfnlUKQ==
-  dependencies:
-    "@wdio/logger" "8.11.0"
-    "@wdio/types" "8.10.4"
-    import-meta-resolve "^3.0.0"
     p-iteration "^1.1.8"
 
 "@wdio/utils@8.14.0":
