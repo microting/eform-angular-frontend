@@ -7,13 +7,12 @@ import {
   Output,
 } from '@angular/core';
 import {
-  applicationLanguages,
   EformFieldTypesEnum,
 } from 'src/app/common/const';
 import {
   EformVisualEditorFieldModel,
   EformVisualEditorFieldsDnDRecursionModel,
-  EformVisualEditorRecursionFieldModel,
+  EformVisualEditorRecursionFieldModel, LanguagesModel,
 } from 'src/app/common/models';
 import {
   eformVisualEditorElementColors,
@@ -48,6 +47,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   @Output()
   copyField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   // dragulaElementContainerName = this.fieldIsNested ? 'NESTED_FIELDS' : 'FIELDS';
+  @Input() appLanguages: LanguagesModel = new LanguagesModel();
 
   get fieldTypes() {
     return EformFieldTypesEnum;
@@ -64,8 +64,8 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   }
 
   get getTranslation(): string {
-    const languageId = applicationLanguages.find(
-      (x) => x.locale === this.localeService.getCurrentUserLocale()
+    const languageId = this.appLanguages.languages.find(
+      (x) => x.languageCode === this.localeService.getCurrentUserLocale()
     ).id;
     const index = this.field.translations.findIndex((x) => x.languageId === languageId);
     if(index !== -1) {

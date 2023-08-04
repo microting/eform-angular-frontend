@@ -13,40 +13,43 @@
         </mat-checkbox>
       </ng-container>
     </div>
-    <ng-container
-      *ngFor="let translation of visualEditorModel.translations; let translationIndex = index"
-    >
-      <mat-card
-        *ngIf="isLanguageSelected(translation.languageId)"
-        class="mb-3"
+      <ng-container
+        *ngFor="let translation of visualEditorModel.translations; let translationIndex = index"
       >
-        <mat-card-title>
-          <h4>
-            {{ getLanguage(translation.languageId) | translate }}
-          </h4>
-        </mat-card-title>
-        <mat-card-content>
-          <div class="d-flex flex-column">
-            <mat-form-field class="mb-3">
-              <mat-label>{{ 'Name' | translate }}</mat-label>
-              <input
-                matInput
-                type="text"
-                id="mainCheckListNameTranslation_{{ translationIndex }}"
-                name="mainCheckListNameTranslation_{{ translationIndex }}"
-                [(ngModel)]="translation.name"
-              />
-            </mat-form-field>
-            <formatting-text-editor
-              [(value)]="translation.description"
-              [placeholder]="'Description' | translate"
-              id="mainCheckListDescriptionTranslation_{{ translationIndex }}"
-            >
-            </formatting-text-editor>
-          </div>
-        </mat-card-content>
-      </mat-card>
+        <ng-container *ngIf="getLanguage(translation.languageId) !== undefined">
+        <mat-card
+          *ngIf="isLanguageSelected(translation.languageId)"
+          class="mb-3"
+        >
+          <mat-card-title>
+            <h4>
+              {{ getLanguage(translation.languageId).name | translate }}
+            </h4>
+          </mat-card-title>
+          <mat-card-content>
+            <div class="d-flex flex-column">
+              <mat-form-field class="mb-3">
+                <mat-label>{{ 'Name' | translate }}</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  id="mainCheckListNameTranslation_{{ translationIndex }}"
+                  name="mainCheckListNameTranslation_{{ translationIndex }}"
+                  [(ngModel)]="translation.name"
+                />
+              </mat-form-field>
+              <formatting-text-editor
+                [(value)]="translation.description"
+                [placeholder]="'Description' | translate"
+                id="mainCheckListDescriptionTranslation_{{ translationIndex }}"
+              >
+              </formatting-text-editor>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
     </ng-container>
+
     <mat-form-field>
       <mat-label>{{ 'Selected tags' | translate }}</mat-label>
       <mtx-select

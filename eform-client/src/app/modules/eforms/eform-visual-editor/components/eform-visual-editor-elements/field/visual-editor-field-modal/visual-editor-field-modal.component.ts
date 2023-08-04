@@ -1,18 +1,17 @@
 import {
   Component,
-  Inject,
+  Inject, Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import {
-  applicationLanguages,
   EformFieldTypesEnum,
 } from 'src/app/common/const';
 import {
   EformVisualEditorFieldModel,
   EformVisualEditorFieldTypeModel,
   EformVisualEditorRecursionFieldModel,
-  EformVisualEditorTranslationWithDefaultValue,
+  EformVisualEditorTranslationWithDefaultValue, LanguagesModel,
 } from 'src/app/common/models';
 import {getTranslatedTypes} from '../../../../const/eform-visual-editor-element-types';
 import { fixTranslations } from 'src/app/common/helpers';
@@ -32,9 +31,15 @@ export class VisualEditorFieldModalComponent implements OnInit {
   recursionModel: EformVisualEditorRecursionFieldModel = new EformVisualEditorRecursionFieldModel();
   isFieldSelected = false;
   fieldTypes: EformVisualEditorFieldTypeModel[];
+  appLanguages: LanguagesModel = new LanguagesModel();
 
   get languages() {
-    return applicationLanguages;
+    //return applicationLanguages;
+    // wait for the appLanguages to be loaded
+    if (!this.appLanguages.languages) {
+      return [];
+    }
+    return this.appLanguages.languages.filter((x) => x.isActive);
   }
 
   setFieldTypes() {
@@ -84,9 +89,10 @@ export class VisualEditorFieldModalComponent implements OnInit {
     private authStateService: AuthStateService,
     private translateService: TranslateService,
     public dialogRef: MatDialogRef<VisualEditorFieldModalComponent>,
-    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionFieldModel }
+    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionFieldModel, appLanguages: LanguagesModel }
   ) {
     this.selectedLanguages = model.selectedLanguages;
+    this.appLanguages = model.appLanguages;
     // this.setSelectedLanguage();
     if (model.model) {
       this.recursionModel = R.clone(model.model);
@@ -95,15 +101,16 @@ export class VisualEditorFieldModalComponent implements OnInit {
       this.isFieldSelected = true;
       // if there are not enough translations
       this.recursionModel.field.translations = fixTranslations(
-        this.recursionModel.field.translations
-      ).map((x, i) => {
-        if (this.recursionModel.field.translations.length > i) {
-          // @ts-ignore
-          x.defaultValue =
-            this.recursionModel.field.translations[i].defaultValue ?? '';
-          return x as EformVisualEditorTranslationWithDefaultValue;
-        }
-      });
+        this.recursionModel.field.translations, this.appLanguages
+      ) as EformVisualEditorTranslationWithDefaultValue[];
+      //   .map((x, i) => {
+      //   if (this.recursionModel.field.translations.length > i) {
+      //     // @ts-ignore
+      //     x.defaultValue =
+      //       this.recursionModel.field.translations[i].defaultValue ?? '';
+      //     return x as EformVisualEditorTranslationWithDefaultValue;
+      //   }
+      // });
     } else {
       if (!model.model) {
         this.recursionModel = new EformVisualEditorRecursionFieldModel();
@@ -148,7 +155,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   initForm() {
     this.recursionModel.field = new EformVisualEditorFieldModel();
     this.recursionModel.field.translations = fixTranslations(
-      this.recursionModel.field.translations
+      this.recursionModel.field.translations, this.appLanguages
     ).map((x) => {
       // @ts-ignore
       x.defaultValue = '';
@@ -176,8 +183,8 @@ export class VisualEditorFieldModalComponent implements OnInit {
     return this.selectedLanguages.some((x) => x === languageId);
   }
 
-  getLanguage(languageId: number): string {
-    return this.languages.find((x) => x.id === languageId).text;
+  getLanguage(languageId: number): any {
+    return this.languages.find((x) => x.id === languageId);
   }
 
   updateFieldType(type: number) {

@@ -2,8 +2,8 @@
 <div mat-dialog-content class="need-wrapper">
   <ng-container *ngFor="let translation of recursionModel.checklist.translations; let translationIndex = index">
     <ng-container *ngIf="translation !== undefined">
-      <mat-card *ngIf="isLanguageSelected(translation.languageId)">
-        <mat-card-title>{{ getLanguage(translation.languageId) | translate }}</mat-card-title>
+      <mat-card *ngIf="isLanguageSelected(translation.languageId) && getLanguage(translation.languageId) !== undefined">
+        <mat-card-title>{{ getLanguage(translation.languageId).name | translate }}</mat-card-title>
         <mat-card-content>
           <div class="d-flex flex-column">
             <mat-form-field>

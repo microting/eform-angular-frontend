@@ -6,8 +6,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { EformVisualEditorFieldModel } from 'src/app/common/models';
-import { applicationLanguages } from 'src/app/common/const';
+import {EformVisualEditorFieldModel, LanguagesModel} from 'src/app/common/models';
 import * as R from 'ramda';
 
 @Component({
@@ -19,13 +18,23 @@ export class VisualEditorAdditionalFieldPdfComponent
   implements OnChanges, OnDestroy {
   @Input() field: EformVisualEditorFieldModel;
   @Input() selectedLanguages: number[];
+  @Input() appLanguages: LanguagesModel = new LanguagesModel();
+
+  get languages() {
+    //return applicationLanguages;
+    // wait for the appLanguages to be loaded
+    if (!this.appLanguages.languages) {
+      return [];
+    }
+    return this.appLanguages.languages.filter((x) => x.isActive);
+  }
 
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.field) {
       const sortByFn = R.sortBy(R.prop('id'));
-      applicationLanguages.forEach((x) => {
+      this.appLanguages.languages.forEach((x) => {
         const index = this.field.pdfFiles.findIndex(
           (y) => y.languageId === x.id || y.id === x.id
         );
@@ -51,8 +60,8 @@ export class VisualEditorAdditionalFieldPdfComponent
     return this.selectedLanguages.some((x) => x === languageId);
   }
 
-  getLanguage(languageId: number): string {
-    return applicationLanguages.find((x) => x.id === languageId).text;
+  getLanguage(languageId: number): any {
+    return this.languages.find((x) => x.id === languageId);
   }
 
   onFileSelected(event: Event, selectedLanguage: number) {

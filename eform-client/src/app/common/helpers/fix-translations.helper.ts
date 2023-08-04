@@ -1,5 +1,4 @@
-import {applicationLanguages} from 'src/app/common/const';
-import {CommonTranslationsModel} from 'src/app/common/models';
+import {CommonTranslationsModel, LanguagesModel} from 'src/app/common/models';
 
 /**
  * Fixes translations of objects.
@@ -8,10 +7,11 @@ import {CommonTranslationsModel} from 'src/app/common/models';
  * @returns List with all the locales that is in the application.
  */
 export function fixTranslations(
-  translations: CommonTranslationsModel[]
+  translations: CommonTranslationsModel[],
+  applicationLanguages: LanguagesModel
 ): CommonTranslationsModel[] {
-  if (translations.length < applicationLanguages.length) {
-    for (const language of applicationLanguages) {
+  if (translations.length < applicationLanguages.languages.length) {
+    for (const language of applicationLanguages.languages.filter((x) => x.isActive)) {
       if (!translations.find((x) => x.languageId === language.id)) {
         translations = [
           ...translations,

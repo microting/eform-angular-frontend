@@ -64,8 +64,8 @@
           "
   >
     <ng-container *ngIf="translation !== undefined">
-      <mat-card *ngIf="isLanguageSelected(translation.languageId)">
-        <mat-card-title>{{ getLanguage(translation.languageId) | translate }}</mat-card-title>
+      <mat-card *ngIf="isLanguageSelected(translation.languageId) && getLanguage(translation.languageId) !== undefined">
+        <mat-card-title>{{ getLanguage(translation.languageId).name | translate }}</mat-card-title>
         <mat-card-content>
           <div class="d-flex flex-column">
             <mat-form-field>
@@ -93,36 +93,42 @@
     *ngSwitchCase="eformFieldTypesEnum.Number"
     [field]="recursionModel.field"
     [selectedLanguages]="selectedLanguages"
+    [appLanguages]="appLanguages"
   >
   </app-visual-editor-additional-field-number>
   <app-visual-editor-additional-field-number
     *ngSwitchCase="eformFieldTypesEnum.NumberStepper"
     [field]="recursionModel.field"
     [selectedLanguages]="selectedLanguages"
+    [appLanguages]="appLanguages"
   >
   </app-visual-editor-additional-field-number>
   <app-visual-editor-additional-field-save-button
     *ngSwitchCase="eformFieldTypesEnum.SaveButton"
     [field]="recursionModel.field"
     [selectedLanguages]="selectedLanguages"
+    [appLanguages]="appLanguages"
   >
   </app-visual-editor-additional-field-save-button>
   <app-visual-editor-additional-field-pdf
     *ngSwitchCase="eformFieldTypesEnum.ShowPdf"
     [field]="recursionModel.field"
     [selectedLanguages]="selectedLanguages"
+    [appLanguages]="appLanguages"
   >
   </app-visual-editor-additional-field-pdf>
   <app-visual-editor-additional-field-options
     *ngSwitchCase="eformFieldTypesEnum.SingleSelect"
     [field]="recursionModel.field"
     [selectedLanguages]="selectedLanguages"
+    [appLanguages]="appLanguages"
   >
   </app-visual-editor-additional-field-options>
   <app-visual-editor-additional-field-options
     *ngSwitchCase="eformFieldTypesEnum.MultiSelect"
     [field]="recursionModel.field"
     [selectedLanguages]="selectedLanguages"
+    [appLanguages]="appLanguages"
   >
   </app-visual-editor-additional-field-options>
   <app-visual-editor-additional-field-entity-search

@@ -1,12 +1,11 @@
 import {
   Component,
-  Inject,
+  Inject, Input,
   OnInit,
 } from '@angular/core';
-import { applicationLanguages } from 'src/app/common/const';
 import {
   EformVisualEditorModel,
-  EformVisualEditorRecursionChecklistModel,
+  EformVisualEditorRecursionChecklistModel, LanguagesModel,
 } from 'src/app/common/models';
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
@@ -21,16 +20,23 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   selectedLanguages: number[];
   recursionModel: EformVisualEditorRecursionChecklistModel = new EformVisualEditorRecursionChecklistModel();
   isChecklistSelected = false;
+  @Input() appLanguages: LanguagesModel = new LanguagesModel();
 
   get languages() {
-    return applicationLanguages;
+    //return applicationLanguages;
+    // wait for the appLanguages to be loaded
+    if (!this.appLanguages.languages) {
+      return [];
+    }
+    return this.appLanguages.languages.filter((x) => x.isActive);
   }
 
   constructor(
     public dialogRef: MatDialogRef<VisualEditorChecklistModalComponent>,
-    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionChecklistModel }
+    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionChecklistModel, appLanguages: LanguagesModel }
   ) {
     this.selectedLanguages = model.selectedLanguages;
+    this.appLanguages = model.appLanguages;
     if (model.model) {
       this.recursionModel = R.clone(model.model);
       this.isChecklistSelected = false;
@@ -40,7 +46,7 @@ export class VisualEditorChecklistModalComponent implements OnInit {
 
       // if there are not enough translations
       this.recursionModel.checklist.translations = fixTranslations(
-        this.recursionModel.checklist.translations
+        this.recursionModel.checklist.translations, this.appLanguages
       );
     } else {
       if (!model.model) {
@@ -65,7 +71,7 @@ export class VisualEditorChecklistModalComponent implements OnInit {
 
   initForm() {
     this.recursionModel.checklist = new EformVisualEditorModel();
-    for (const language of applicationLanguages) {
+    for (const language of this.appLanguages.languages) {
       this.recursionModel.checklist.translations = [
         ...this.recursionModel.checklist.translations,
         { id: null, languageId: language.id, description: '', name: '' },
@@ -85,8 +91,8 @@ export class VisualEditorChecklistModalComponent implements OnInit {
     return this.selectedLanguages.some((x) => x === languageId);
   }
 
-  getLanguage(languageId: number): string {
-    return this.languages.find((x) => x.id === languageId).text;
+  getLanguage(languageId: number): any {
+    return this.languages.find((x) => x.id === languageId);
   }
 
   hide(result = false, model?: EformVisualEditorRecursionChecklistModel, create?: boolean) {

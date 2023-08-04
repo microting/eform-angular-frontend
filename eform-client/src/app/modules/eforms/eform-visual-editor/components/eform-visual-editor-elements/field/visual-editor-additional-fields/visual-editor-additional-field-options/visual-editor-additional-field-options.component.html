@@ -22,9 +22,9 @@
       {{ 'Add options' | translate }}
     </button>
     <div *ngFor="let selectedLanguage of selectedLanguages">
-      <mat-card *ngIf="isLanguageSelected(selectedLanguage)">
+      <mat-card *ngIf="isLanguageSelected(selectedLanguage) && getLanguage(selectedLanguage) !== undefined">
         <mat-card-header>{{
-          getLanguage(selectedLanguage) | translate
+          getLanguage(selectedLanguage).name | translate
           }}</mat-card-header>
         <mat-card-content>
           <mtx-grid

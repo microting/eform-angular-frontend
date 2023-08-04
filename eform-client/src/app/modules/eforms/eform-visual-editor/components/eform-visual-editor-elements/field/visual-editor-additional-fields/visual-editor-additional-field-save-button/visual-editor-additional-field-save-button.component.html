@@ -1,9 +1,9 @@
 <ng-container *ngFor="let translation of field.translations; let translationIndex = index">
   <mat-card
-    *ngIf="isLanguageSelected(translation.languageId)"
+    *ngIf="isLanguageSelected(translation.languageId) && getLanguage(translation.languageId) !== undefined"
   >
     <mat-card-title>{{
-      getLanguage(translation.languageId) | translate
+      getLanguage(translation.languageId).name | translate
       }}</mat-card-title>
     <mat-card-content>
       <mat-form-field>
