@@ -117,7 +117,7 @@
     "@types/chai": "4.3.5",
     "@types/d3": "7.4.0",
     "@types/mocha": "10.0.1",
-    "@types/node": "20.4.7",
+    "@types/node": "20.4.8",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "@wdio/cli": "8.14.4",
