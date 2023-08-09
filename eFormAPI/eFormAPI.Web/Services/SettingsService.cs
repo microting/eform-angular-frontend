@@ -296,10 +296,13 @@ public class SettingsService : ISettingsService
                 LanguageCode = x.LanguageCode,
                 IsActive = x.IsActive
             })
+            .OrderBy(x => x.LanguageCode)
             .ToListAsync();
 
-        LanguagesModel languagesModel = new LanguagesModel();
-        languagesModel.Languages = new List<LanguageModel>();
+        LanguagesModel languagesModel = new LanguagesModel
+        {
+            Languages = new List<LanguageModel>()
+        };
         languagesModel.Languages.AddRange(languages);
 
         return new OperationDataResult<LanguagesModel>(true, languagesModel);
