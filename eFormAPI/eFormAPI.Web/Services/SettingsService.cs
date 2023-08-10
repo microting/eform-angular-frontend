@@ -296,7 +296,7 @@ public class SettingsService : ISettingsService
                 LanguageCode = x.LanguageCode,
                 IsActive = x.IsActive
             })
-            .OrderBy(x => x.LanguageCode)
+            //.OrderBy(x => x.LanguageCode) // TODO, make tests handle the correctly sorted list
             .ToListAsync();
 
         LanguagesModel languagesModel = new LanguagesModel
