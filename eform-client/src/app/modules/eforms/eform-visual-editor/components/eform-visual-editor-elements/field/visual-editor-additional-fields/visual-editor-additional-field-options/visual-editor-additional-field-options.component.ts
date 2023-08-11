@@ -1,10 +1,9 @@
 import {Component, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   CommonTranslationsModel,
-  EformVisualEditorFieldModel,
+  EformVisualEditorFieldModel, LanguagesModel,
 } from 'src/app/common/models';
 import * as R from 'ramda';
-import {applicationLanguages} from 'src/app/common/const';
 import { MtxGridColumn } from '@ng-matero/extensions/grid';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {dialogConfigHelper} from 'src/app/common/helpers';
@@ -23,6 +22,16 @@ export class VisualEditorAdditionalFieldOptionsComponent
   implements OnInit, OnDestroy {
   @Input() field: EformVisualEditorFieldModel;
   @Input() selectedLanguages: number[];
+  @Input() appLanguages: LanguagesModel = new LanguagesModel();
+
+  get languages() {
+    //return applicationLanguages;
+    // wait for the appLanguages to be loaded
+    if (!this.appLanguages.languages) {
+      return [];
+    }
+    return this.appLanguages.languages.filter((x) => x.isActive);
+  }
   options: string;
   tableHeaders: MtxGridColumn[] = [
     { header: this.translateService.stream('Name'), field: 'name' },
@@ -43,8 +52,8 @@ export class VisualEditorAdditionalFieldOptionsComponent
     return this.selectedLanguages.some((x) => x === languageId);
   }
 
-  getLanguage(languageId: number): string {
-    return applicationLanguages.find((x) => x.id === languageId).text;
+  getLanguage(languageId: number): any {
+    return this.appLanguages.languages.find((x) => x.id === languageId);
   }
 
   parseOptions() {
@@ -53,12 +62,12 @@ export class VisualEditorAdditionalFieldOptionsComponent
       for (const parsedOption of parsedOptions) {
         const parsedTranslates = R.split('|', parsedOption);
         let translatesOptions: CommonTranslationsModel[] = [];
-        for (let i = 0; i < applicationLanguages.length; i++) {
+        for (let i = 0; i < this.appLanguages.languages.length; i++) {
           translatesOptions = [
             ...translatesOptions,
             {
               id: null,
-              languageId: applicationLanguages[i].id,
+              languageId: this.appLanguages.languages[i].id,
               description: '',
               name: parsedTranslates[i] || '',
             },
@@ -125,16 +134,16 @@ export class VisualEditorAdditionalFieldOptionsComponent
   getLanguageTooltip() {
     return R.join(
       ', ',
-      R.map((x) => x.text, applicationLanguages)
+      R.map((x) => x.text, this.languages)
     );
   }
 
   getExampleTooltip() {
     return `${R.join(
       '|',
-      R.map((x) => 'optionTranslate' + x.id, applicationLanguages)
+      R.map((x) => 'optionTranslate' + x.id, this.languages)
     )} it's one option with ${
-      applicationLanguages.length
+      this.languages.length
     } translations: ${this.getLanguageTooltip()}`;
   }
 

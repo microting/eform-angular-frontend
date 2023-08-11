@@ -13,12 +13,11 @@ import {
   EformVisualEditorFieldModel,
   EformVisualEditorModel,
   EformVisualEditorRecursionFieldModel,
-  EformVisualEditorRecursionChecklistModel,
+  EformVisualEditorRecursionChecklistModel, LanguagesModel,
 } from 'src/app/common/models';
 import { DragulaService } from 'ng2-dragula';
 import { AuthStateService } from 'src/app/common/store';
 import {
-  applicationLanguages,
   EformFieldTypesEnum,
 } from 'src/app/common/const';
 
@@ -51,6 +50,7 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   @Output()
   changeColorField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   // dragulaElementContainerName = UUID.UUID();
+  @Input() appLanguages: LanguagesModel = new LanguagesModel();
 
   composeIndexes(checklistIndex: number) {
     return [...this.checklistRecursionIndexes, checklistIndex];
@@ -61,8 +61,8 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   }
 
   get translationChecklistName(): string {
-    const language = applicationLanguages.find(
-      (x) => x.locale === this.authStateService.currentUserLocale
+    const language = this.appLanguages.languages.find(
+      (x) => x.languageCode === this.authStateService.currentUserLocale
     );
     const index = this.checklist.translations.findIndex(
       (x) => x.languageId === language.id

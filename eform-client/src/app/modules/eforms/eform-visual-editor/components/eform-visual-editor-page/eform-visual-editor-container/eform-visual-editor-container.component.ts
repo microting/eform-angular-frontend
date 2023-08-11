@@ -145,7 +145,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
           // drop repeats. ramda not found repeats, if array [2,1,2,3]
           this.selectedLanguages = this.selectedLanguages.filter((item, pos) => this.selectedLanguages.indexOf(item) === pos);
           this.visualEditorTemplateModel.translations = fixTranslations(
-            this.visualEditorTemplateModel.translations
+            this.visualEditorTemplateModel.translations, this.appLanguages
           );
         }
       });
@@ -161,7 +161,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.visualEditorTemplateModel.translations = fixTranslations(
-      this.visualEditorTemplateModel.translations
+      this.visualEditorTemplateModel.translations, this.appLanguages
     );
     // for (const language of applicationLanguages) {
     //   this.visualEditorTemplateModel = {
@@ -311,7 +311,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   showFieldModal(model?: EformVisualEditorRecursionFieldModel) {
     this.visualEditorFieldModalComponentAfterClosedSub$ = this.dialog.open(VisualEditorFieldModalComponent,
-      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages}), minWidth: 600})
+      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages, appLanguages: this.appLanguages}), minWidth: 600})
       .afterClosed()
       .subscribe(data => data.result ? (data.create ? this.onFieldCreate(data.model) : this.onFieldUpdate(data.model)) : undefined);
   }
@@ -325,7 +325,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   showChecklistModal(model?: EformVisualEditorRecursionChecklistModel) {
     this.visualEditorChecklistModalComponentAfterClosedSub$ = this.dialog.open(VisualEditorChecklistModalComponent,
-      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages}), minWidth: 500})
+      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages, appLanguages: this.appLanguages}), minWidth: 500})
       .afterClosed()
       .subscribe(data => data.result ? (data.create ? this.onCreateChecklist(data.model) : this.onUpdateChecklist(data.model)) : undefined);
   }

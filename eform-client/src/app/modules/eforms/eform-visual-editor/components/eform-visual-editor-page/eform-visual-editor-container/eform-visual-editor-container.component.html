@@ -99,6 +99,7 @@
                 "
         (copyNestedField)="onFieldCreate($event)"
         (changeColorField)="onFieldUpdate($event)"
+        [appLanguages]="appLanguages"
       ></app-visual-editor-checklist>
     </div>
     <div
@@ -127,6 +128,7 @@
         (copyField)="onFieldCreate($event)"
         (addNewField)="showFieldModal($event)"
         [class.field-group]="field.fieldType == fieldTypes.FieldGroup"
+        [appLanguages]="appLanguages"
       ></app-visual-editor-field>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <ng-container *ngFor="let selectedLanguage of selectedLanguages; let i = index">
-  <mat-card *ngIf="isLanguageSelected(selectedLanguage)">
+  <mat-card *ngIf="isLanguageSelected(selectedLanguage) && getLanguage(selectedLanguage) !== undefined">
     <mat-card-title>{{
-      getLanguage(selectedLanguage) | translate
+      getLanguage(selectedLanguage).name | translate
       }}</mat-card-title>
     <mat-card-content>
       <input

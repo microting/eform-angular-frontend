@@ -84,6 +84,7 @@
           (changeColor)="onChangeColorInNestedFieldInNestedChecklist($event)"
           (copyField)="onCopyNestedFieldInNestedChecklist($event)"
           [class.field-group]="field.fieldType == fieldTypes.FieldGroup"
+          [appLanguages]="appLanguages"
         ></app-visual-editor-field>
       </div>
       <ng-container *ngIf="checklist && checklist.checkLists">
@@ -106,6 +107,7 @@
           (deleteNestedField)="onDeleteNestedFieldInNestedChecklist($event)"
           (changeColorField)="onChangeColorInNestedFieldInNestedChecklist($event)"
           (copyNestedField)="onCopyNestedFieldInNestedChecklist($event)"
+          [appLanguages]="appLanguages"
         ></app-visual-editor-checklist>
       </ng-container>
     </div>

@@ -36,8 +36,9 @@ export class EformVisualEditorHeaderComponent implements OnInit {
     this.addOrDeleteLanguage.emit(languageId);
   }
 
-  getLanguage(languageId: number): string {
-    return this.languages.find((x) => x.id === languageId).name;
+  getLanguage(languageId: number): any {
+    const language = this.languages.find((x) => x.id === languageId);
+    return language;
   }
 
   isLanguageSelected(languageId: number): boolean {
