@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FoldersService } from 'src/app/common/services';
-import { FolderDto } from 'src/app/common/models';
+import {FolderDto, LanguagesModel} from 'src/app/common/models';
 import { AuthStateService } from 'src/app/common/store';
 import {FolderDeleteComponent, FolderEditCreateComponent} from '../';
 import {dialogConfigHelper} from 'src/app/common/helpers';

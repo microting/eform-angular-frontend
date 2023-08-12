@@ -8,14 +8,15 @@ import { TranslateService } from '@ngx-translate/core';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { applicationLanguages } from 'src/app/common/const';
 import { FoldersService, LocaleService } from 'src/app/common/services';
 import {
   FolderDto,
   FolderModel,
-  FolderUpdateModel,
+  FolderUpdateModel, LanguagesModel,
 } from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {tap} from 'rxjs/operators';
+import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -28,13 +29,20 @@ export class FolderEditCreateComponent implements OnInit, OnDestroy {
   selectedParentFolder: FolderModel;
   folderUpdateCreateModel = new FolderUpdateModel()
   edit = false;
+  appLanguages: LanguagesModel = new LanguagesModel();
 
   getFolderSub$: Subscription;
   updateFolderSub$: Subscription;
   getParentFolderSub$: Subscription;
+  getLanguagesSub$: Subscription;
+  localeService: LocaleService;
+  activeLanguages: Array<any> = [];
 
   get languages() {
-    return applicationLanguages;
+    if (!this.appLanguages.languages) {
+      return [];
+    }
+    return this.appLanguages.languages.filter((x) => x.isActive);
   }
 
   getParentTranslation(): string {
@@ -51,26 +59,27 @@ export class FolderEditCreateComponent implements OnInit, OnDestroy {
     private foldersService: FoldersService,
     private toastrService: ToastrService,
     private translateService: TranslateService,
-    localeService: LocaleService,
+    private _localeService: LocaleService,
     public dialogRef: MatDialogRef<FolderEditCreateComponent>,
+    private appSettingsStateService: AppSettingsStateService,
     @Inject(MAT_DIALOG_DATA) data: {folder?: FolderDto, create: boolean}
   ) {
-    this.selectedLanguage = applicationLanguages.find(
-      (x) => x.locale === localeService.getCurrentUserLocale()
-    ).id;
-    if(!data.create) {
-      this.edit = true;
-      this.getParentFolder(data.folder.parentId)
-      this.getFolder(data.folder.id);
-    } else {
-      this.edit = false;
-      this.getParentFolder(data.folder?.id)
-      this.initEditForm({
-        id: 0,
-        translations: [],
-        parentId: data.folder ? data.folder.id : null,
-      });
-    }
+    this.localeService = _localeService;
+    this.getEnabledLanguages(data);
+
+    // if(!data.create) {
+    //   this.edit = true;
+    //   this.getParentFolder(data.folder.parentId)
+    //   this.getFolder(data.folder.id);
+    // } else {
+    //   this.edit = false;
+    //   this.getParentFolder(data.folder?.id)
+    //   this.initEditForm({
+    //     id: 0,
+    //     translations: [],
+    //     parentId: data.folder ? data.folder.id : null,
+    //   });
+    // }
   }
 
   ngOnInit() {}
@@ -83,19 +92,19 @@ export class FolderEditCreateComponent implements OnInit, OnDestroy {
     };
 
     if(this.edit) {
-      for (let i = 0; i < applicationLanguages.length; i++) {
+      for (let i = 0; i < this.appLanguages.languages.length; i++) {
         const translations = model.translations.find(
-          (x) => x.languageId === applicationLanguages[i].id
+          (x) => x.languageId === this.appLanguages.languages[i].id
         );
         this.folderUpdateCreateModel.translations.push({
-          languageId: applicationLanguages[i].id,
+          languageId: this.appLanguages.languages[i].id,
           description: translations ? translations.description : '',
           name: translations ? translations.name : '',
         });
       }
     } else {
       let translations = [];
-      for (const language of applicationLanguages) {
+      for (const language of this.appLanguages.languages) {
         translations = [...translations, {languageId: language.id, description: '', name: ''},];
       }
       this.folderUpdateCreateModel.translations = translations;
@@ -174,6 +183,32 @@ export class FolderEditCreateComponent implements OnInit, OnDestroy {
       );
       return;
     }
+  }
+
+  getEnabledLanguages(argument:  {folder?: FolderDto, create: boolean}) {
+    this.getLanguagesSub$ = this.appSettingsStateService.getLanguages()
+      .pipe(tap(data => {
+        if (data && data.success && data.model) {
+          this.appLanguages = data.model;
+          this.activeLanguages = this.appLanguages.languages.filter((x) => x.isActive);
+          this.selectedLanguage = this.appLanguages.languages.find(
+            (x) => x.languageCode === this.localeService.getCurrentUserLocale()
+          ).id;
+          if(!argument.create) {
+            this.edit = true;
+            this.getParentFolder(argument.folder.parentId)
+            this.getFolder(argument.folder.id);
+          } else {
+            this.edit = false;
+            this.getParentFolder(argument.folder?.id)
+            this.initEditForm({
+              id: 0,
+              translations: [],
+              parentId: argument.folder ? argument.folder.id : null,
+            });
+          }
+        }
+      })).subscribe();
   }
 
   hide(result = false) {
