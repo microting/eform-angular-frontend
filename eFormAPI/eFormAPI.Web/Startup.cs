@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using eFormAPI.Web.Infrastructure.Models;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microting.eForm.Infrastructure.Factories;
@@ -274,9 +275,15 @@ public class Startup
                 }
             });
         });
-
-
-
+        try
+        {
+            var googleSection = Configuration.GetSection("GoogleTranslate");
+            services.Configure<GoogleTranslateOptions>(googleSection);
+        }
+        catch (Exception ex)
+        {
+            Log.LogException(ex.Message);
+        }
         ConnectServices(services);
 
         // plugins
@@ -387,6 +394,7 @@ public class Startup
         services.AddScoped<IEformCaseReportService, EformCaseReportService>();
         services.AddScoped<IWordService, WordService>();
         services.AddScoped<ITemplateVisualEditorService, TemplateVisualEditorService>();
+        services.AddScoped<ITranslationService, TranslationService>();
     }
 
     private ICollection<PluginPermissionModel> GetPluginsPermissions()

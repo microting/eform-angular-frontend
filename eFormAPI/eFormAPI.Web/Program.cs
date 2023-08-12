@@ -348,6 +348,9 @@ public class Program
             .AddEnvironmentVariables(prefix: "ASPNETCORE_")
             .Build();
 
+        Environment.SetEnvironmentVariable("API_KEY", defaultConfig["api-key"]);
+
+
         var port = defaultConfig.GetValue("port", 5000);
         var connectionString = defaultConfig.GetValue("ConnectionString", "");
         return WebHost.CreateDefaultBuilder(args)
