@@ -5,14 +5,14 @@ export const applicationLanguages: {
   locale: string;
   text: string;
 }[] = environment.production ? [
-  { id: 1, locale: 'da', text: 'Danish' },
+  { id: 1, locale: 'da', text: 'Dansk' },
   { id: 2, locale: 'en-US', text: 'English' },
-  { id: 3, locale: 'de-DE', text: 'German' },
+  { id: 3, locale: 'de-DE', text: 'Deutsch' },
   // { id: 4, locale: 'uk-UA', text: 'Ukrainian' },
 ] : [
-  { id: 1, locale: 'da', text: 'Danish' },
+  { id: 1, locale: 'da', text: 'Dansk' },
   { id: 2, locale: 'en-US', text: 'English' },
-  { id: 3, locale: 'de-DE', text: 'German' },
+  { id: 3, locale: 'de-DE', text: 'Deutsch' },
   // { id: 4, locale: 'uk-UA', text: 'Ukrainian' },
   // { id: 5, locale: 'pl-PL', text: 'Polish' },
   // { id: 6, locale: 'no-NO', text: 'Norwegian' },
@@ -33,13 +33,13 @@ export const applicationLanguagesTranslated: {
   text: string;
 }[] = environment.production ? [
   { id: 1, locale: 'da', text: 'Dansk' },
-  { id: 2, locale: 'en-US', text: 'Engelsk' },
-  { id: 3, locale: 'de-DE', text: 'Tysk' },
+  { id: 2, locale: 'en-US', text: 'English' },
+  { id: 3, locale: 'de-DE', text: 'Deutsch' },
   // { id: 4, locale: 'uk-UA', text: 'Ukrainian' },
 ] : [
   { id: 1, locale: 'da', text: 'Dansk' },
-  { id: 2, locale: 'en-US', text: 'Engelsk' },
-  { id: 3, locale: 'de-DE', text: 'Tysk' },
+  { id: 2, locale: 'en-US', text: 'English' },
+  { id: 3, locale: 'de-DE', text: 'Deutsch' },
 ];
 
 

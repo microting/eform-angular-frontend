@@ -1,5 +1,6 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import { applicationLanguages } from '../../src/app/common/const';
+import {selectValueInNgSelector} from "../Helpers/helper-functions";
 
 class FoldersPage extends PageWithNavbarPage {
   constructor() {
@@ -259,15 +260,17 @@ class FoldersPage extends PageWithNavbarPage {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
         const da = applicationLanguages[0];
-        await (await this.createLanguageSelector())
-          .$('input')
-          .setValue(da.text);
-        await browser.pause(500);
-        const value = (await this.createLanguageSelector()).$(
-          `.ng-option=${da.text}`
-        );
-        value.waitForDisplayed({ timeout: 40000 });
-        value.click();
+        await selectValueInNgSelector(await this.createLanguageSelector(), da.text);
+        // await (await this.createLanguageSelector())
+        //   .$('input')
+        //   .setValue(da.text);
+        // await browser.pause(500);
+        //await (await $(`//*["ng-dropdown-panel"]//*[text()="${da.text}"]`)).click();
+        // const value = (await this.createLanguageSelector()).$(
+        //   `.ng-option=${da.text}`
+        // );
+        // value.waitForDisplayed({ timeout: 40000 });
+        // value.click();
         await browser.pause(500);
         (
           await this.createNameInput(
@@ -282,15 +285,16 @@ class FoldersPage extends PageWithNavbarPage {
           const language = await applicationLanguages.find(
             (x) => x.text === nameConverted[i].language
           );
-          (await this.createLanguageSelector())
-            .$('input')
-            .setValue(language.text);
-          await browser.pause(500);
-          const value = (await this.createLanguageSelector()).$(
-            `.ng-option=${language.text}`
-          );
-          value.waitForDisplayed({ timeout: 40000 });
-          value.click();
+          await selectValueInNgSelector(await this.createLanguageSelector(), language.text);
+          // (await this.createLanguageSelector())
+          //   .$('input')
+          //   .setValue(language.text);
+          // await browser.pause(500);
+          // const value = (await this.createLanguageSelector()).$(
+          //   `.ng-option=${language.text}`
+          // );
+          // value.waitForDisplayed({ timeout: 40000 });
+          // value.click();
           await browser.pause(500);
           (
             await this.createNameInput(
@@ -306,15 +310,16 @@ class FoldersPage extends PageWithNavbarPage {
         const descriptionConvert = description as string;
         const da = applicationLanguages[0];
 
-        await (
-          await (await foldersPage.createLanguageSelector()).$('input')
-        ).setValue(da.text);
-        await browser.pause(500);
-        const value = await (await this.createLanguageSelector()).$(
-          `.ng-option=${da.text}`
-        );
-        value.waitForDisplayed({ timeout: 40000 });
-        value.click();
+        await selectValueInNgSelector(await this.createLanguageSelector(), da.text);
+        // await (
+        //   await (await foldersPage.createLanguageSelector()).$('input')
+        // ).setValue(da.text);
+        // await browser.pause(500);
+        // const value = await (await this.createLanguageSelector()).$(
+        //   `.ng-option=${da.text}`
+        // );
+        // value.waitForDisplayed({ timeout: 40000 });
+        // value.click();
         await browser.pause(500);
         (
           await this.createDescriptionInput(
@@ -332,15 +337,17 @@ class FoldersPage extends PageWithNavbarPage {
           const language = applicationLanguages.find(
             (x) => x.text === descriptionConvert[i].language
           );
-          (await this.createLanguageSelector())
-            .$('input')
-            .setValue(language.text);
-          await browser.pause(500);
-          const value = (await this.createLanguageSelector()).$(
-            `.ng-option=${language.text}`
-          );
-          value.waitForDisplayed({ timeout: 40000 });
-          value.click();
+
+          await selectValueInNgSelector(await this.createLanguageSelector(), language.text);
+          // (await this.createLanguageSelector())
+          //   .$('input')
+          //   .setValue(language.text);
+          // await browser.pause(500);
+          // const value = (await this.createLanguageSelector()).$(
+          //   `.ng-option=${language.text}`
+          // );
+          // value.waitForDisplayed({ timeout: 40000 });
+          // value.click();
           await browser.pause(500);
           (
             await this.createDescriptionInput(
@@ -360,10 +367,14 @@ class FoldersPage extends PageWithNavbarPage {
     } else {
       await (await this.cancelCreateBtn()).click();
     }
+    await $('#spinner-animation').waitForDisplayed({
+      timeout: 90000,
+      reverse: true,
+    });
     await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
     });
-    await browser.pause(500);
+    await browser.pause(1500);
   }
 }
 
