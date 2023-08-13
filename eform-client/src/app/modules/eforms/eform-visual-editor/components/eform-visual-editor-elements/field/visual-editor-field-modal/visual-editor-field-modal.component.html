@@ -68,6 +68,12 @@
         <mat-card-title>{{ getLanguage(translation.languageId).name | translate }}</mat-card-title>
         <mat-card-content>
           <div class="d-flex flex-column">
+            <button *ngIf="translationPossible && recursionModel.field.translations.indexOf(translation) !== 0"
+              mat-icon-button
+              (click)="translateFromEnglishTo(translation.languageId)"
+            >
+              <mat-icon>language</mat-icon>
+            </button>
             <mat-form-field>
               <mat-label>{{'Name' | translate }}</mat-label>
               <input
@@ -108,6 +114,7 @@
     [field]="recursionModel.field"
     [selectedLanguages]="selectedLanguages"
     [appLanguages]="appLanguages"
+    [translationPossible]="translationPossible"
   >
   </app-visual-editor-additional-field-save-button>
   <app-visual-editor-additional-field-pdf

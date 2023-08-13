@@ -28,6 +28,12 @@
           </mat-card-title>
           <mat-card-content>
             <div class="d-flex flex-column">
+              <button *ngIf="translationPossible && visualEditorModel.translations.indexOf(translation) !== 0"
+                mat-icon-button
+                (click)="translateFromEnglishTo(translation.languageId)"
+              >
+                <mat-icon>language</mat-icon>
+              </button>
               <mat-form-field class="mb-3">
                 <mat-label>{{ 'Name' | translate }}</mat-label>
                 <input

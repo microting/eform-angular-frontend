@@ -18,7 +18,7 @@ import {
 import {
   EformDocxReportService,
   EformTagService,
-  EformVisualEditorService,
+  EformVisualEditorService, TranslationService,
 } from 'src/app/common/services';
 import {dialogConfigHelper, fixTranslations} from 'src/app/common/helpers';
 import {
@@ -66,6 +66,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   reportHeadersSub$: any;
   getLanguagesSub$: Subscription;
   appLanguages: LanguagesModel = new LanguagesModel();
+  translationPossible: boolean;
 
   constructor(
     private dragulaService: DragulaService,
@@ -77,7 +78,8 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private overlay: Overlay,
     private reportService: EformDocxReportService,
-    private appSettingsStateService: AppSettingsStateService
+    private appSettingsStateService: AppSettingsStateService,
+    private translationService: TranslationService
   ) {
     this.dragulaService.createGroup('CHECK_LISTS', {
       moves: (el, container, handle) => {
@@ -311,7 +313,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   showFieldModal(model?: EformVisualEditorRecursionFieldModel) {
     this.visualEditorFieldModalComponentAfterClosedSub$ = this.dialog.open(VisualEditorFieldModalComponent,
-      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages, appLanguages: this.appLanguages}), minWidth: 600})
+      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages, appLanguages: this.appLanguages, translationPossible: this.translationPossible}), minWidth: 600})
       .afterClosed()
       .subscribe(data => data.result ? (data.create ? this.onFieldCreate(data.model) : this.onFieldUpdate(data.model)) : undefined);
   }
@@ -325,7 +327,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   showChecklistModal(model?: EformVisualEditorRecursionChecklistModel) {
     this.visualEditorChecklistModalComponentAfterClosedSub$ = this.dialog.open(VisualEditorChecklistModalComponent,
-      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages, appLanguages: this.appLanguages}), minWidth: 500})
+      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages, appLanguages: this.appLanguages, translationPossible: this.translationPossible}), minWidth: 500})
       .afterClosed()
       .subscribe(data => data.result ? (data.create ? this.onCreateChecklist(data.model) : this.onUpdateChecklist(data.model)) : undefined);
   }
@@ -797,12 +799,18 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
                 (x) => x.languageCode === this.authStateService.currentUserLocale
               ).id,
             ];
-            if (this.selectedTemplateId) {
-              this.getVisualTemplate(this.selectedTemplateId);
-              this.getReportHeaders(this.selectedTemplateId);
-            } else {
-              this.initForm();
+            this.translationService.translationPossible().subscribe((result) => {
+              if (result && result.success) {
+                this.translationPossible = result.model;
+                if (this.selectedTemplateId) {
+                  this.getVisualTemplate(this.selectedTemplateId);
+                  this.getReportHeaders(this.selectedTemplateId);
+                } else {
+                  this.initForm();
+                }
+              }
             }
+            );
           });
         }
       }))

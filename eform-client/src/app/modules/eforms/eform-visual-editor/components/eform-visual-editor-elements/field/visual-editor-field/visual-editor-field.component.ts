@@ -33,6 +33,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   @Input() checklistRecursionIndexes = [];
   @Input() parentFieldIndex?: number;
   @Input() fieldIsNested = false;
+  @Input() translationPossible: boolean;
   @Output()
   addNewField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   @Output()

@@ -19,19 +19,19 @@ public class TranslationController : Controller
         _translationService = translationService;
         _apiKey = options.Value.ApiKey;
     }
-    
+
     [HttpGet]
-    [Route("api/translatetext")]
+    [Route("api/get-translation")]
     public async Task<OperationDataResult<string>> TranslateText(string sourceText, string sourceLanguageCode, string targetLanguageCode)
     {
         return await _translationService.TranslateText(sourceText, sourceLanguageCode, targetLanguageCode, _apiKey);
     }
-    
+
     [HttpGet]
-    [Route("api/translatetextpossible")]
+    [Route("api/translation-possible")]
     public OperationDataResult<bool> TranslateTextPossible()
     {
-        return new OperationDataResult<bool>(!string.IsNullOrEmpty(_apiKey));
+        return new OperationDataResult<bool>(true, !string.IsNullOrEmpty(_apiKey));
     }
-    
+
 }

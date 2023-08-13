@@ -10,6 +10,7 @@ import {
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {TranslationRequestModel, TranslationService} from 'src/app/common/services';
 
 @Component({
   selector: 'app-visual-editor-checklist-modal',
@@ -21,6 +22,7 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   recursionModel: EformVisualEditorRecursionChecklistModel = new EformVisualEditorRecursionChecklistModel();
   isChecklistSelected = false;
   @Input() appLanguages: LanguagesModel = new LanguagesModel();
+  translationPossible = false;
 
   get languages() {
     //return applicationLanguages;
@@ -33,8 +35,10 @@ export class VisualEditorChecklistModalComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<VisualEditorChecklistModalComponent>,
-    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionChecklistModel, appLanguages: LanguagesModel }
+    private translationService: TranslationService,
+    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionChecklistModel, appLanguages: LanguagesModel, translationPossible: boolean }
   ) {
+    this.translationPossible = model.translationPossible;
     this.selectedLanguages = model.selectedLanguages;
     this.appLanguages = model.appLanguages;
     if (model.model) {
@@ -94,6 +98,20 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   getLanguage(languageId: number): any {
     return this.languages.find((x) => x.id === languageId);
   }
+
+  translateFromEnglishTo(targetLanguageId: number) {
+    const englishLanguageId = this.appLanguages.languages.find(x => x.name === 'Dansk').id;
+    this.translationService.getTranslation(new TranslationRequestModel({
+      sourceText: this.recursionModel.checklist.translations.find(x => x.languageId === englishLanguageId).name,
+      sourceLanguageCode: 'da',
+      targetLanguageCode: this.languages.find(x => x.id === targetLanguageId).languageCode,
+    })).subscribe((operationDataResult) => {
+      if (operationDataResult && operationDataResult.success) {
+        this.recursionModel.checklist.translations.find(x => x.languageId === targetLanguageId).name = operationDataResult.model;
+      }
+    });
+  }
+
 
   hide(result = false, model?: EformVisualEditorRecursionChecklistModel, create?: boolean) {
     this.dialogRef.close({result: result, create: create, model: result ? model : null});

@@ -11,9 +11,9 @@ public class TranslationService : ITranslationService
 {
     public TranslationService()
     {
-        
+
     }
-    
+
     public async Task<OperationDataResult<string>> TranslateText(string sourceText, string sourceLanguageCode,
         string targetLanguageCode, string apiKey)
     {
@@ -34,7 +34,7 @@ public class TranslationService : ITranslationService
             Console.WriteLine($"Translation: {responseObject.data.translations[0].translatedText}");
 
 
-            return new OperationDataResult<string>(true, responseObject.data.translations[0].translatedText);
+            return new OperationDataResult<string>(true, "",responseObject.data.translations[0].translatedText);
         }
         else
         {

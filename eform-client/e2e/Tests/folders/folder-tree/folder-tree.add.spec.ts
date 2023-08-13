@@ -36,7 +36,7 @@ describe('Create folder', function () {
       folderName[0]
     );
     expect(
-      (await folder.getDescription()).find((x) => x.language === 'Danish')
+      (await folder.getDescription()).find((x) => x.language === 'Dansk')
         .description,
       'Description of created folder is incorrect'
     ).equal(description);
