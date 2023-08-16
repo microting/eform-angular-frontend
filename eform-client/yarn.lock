@@ -3157,14 +3157,14 @@
   dependencies:
     "@types/node" "^20.1.0"
 
-"@wdio/reporter@8.14.0":
-  version "8.14.0"
-  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-8.14.0.tgz#1f597392370947f982e415d37cf305fcf9da4330"
-  integrity sha512-xzsHRlnb35vFB/zs04Zsuh2Y24DRDuLWTYA96PxDNqMIjhkqJbERTJWSlRwiBhyhz6N8NrwAQfghyh93d554eg==
+"@wdio/reporter@8.15.0":
+  version "8.15.0"
+  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-8.15.0.tgz#9f07cef7bde2edf7e045495e5e2ff8aab6ee1ac2"
+  integrity sha512-3NOsB3LDV2iDDELObIpEBcF1cGBnZ6KzbctQeyV409PfG4ROeJx6KoVzRO/P99Ya+JK4gMQ74Ug7TQ7/BS3boQ==
   dependencies:
     "@types/node" "^20.1.0"
     "@wdio/logger" "8.11.0"
-    "@wdio/types" "8.14.0"
+    "@wdio/types" "8.15.0"
     diff "^5.0.0"
     object-inspect "^1.12.0"
     supports-color "9.4.0"
@@ -3198,13 +3198,13 @@
     "@wdio/cli" "^7.1.2"
     typescript "^4.2.3"
 
-"@wdio/spec-reporter@8.14.0":
-  version "8.14.0"
-  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-8.14.0.tgz#8f4f6303182fd67632abfebb473689a1697967a9"
-  integrity sha512-LmDXAcA1Xy5Yd+0lxhsULfZwr0hqxjjwLO4Uys6qUyGGSUJpL8psF26sO8kFYLHBpDN0DNxzvNm7iIvPAtE1dw==
+"@wdio/spec-reporter@8.15.0":
+  version "8.15.0"
+  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-8.15.0.tgz#6e5a1cd700007cf3f07500a85f313574cf593d09"
+  integrity sha512-fVSldPg2aqiSywgDvp7KokbSD75O8HUGB5KCkd7RjTnnkg2QILHcy2kf3wMYDYg1ueE1bhBAnOhVHEkISIZENw==
   dependencies:
-    "@wdio/reporter" "8.14.0"
-    "@wdio/types" "8.14.0"
+    "@wdio/reporter" "8.15.0"
+    "@wdio/types" "8.15.0"
     chalk "^5.1.2"
     easy-table "^1.2.0"
     pretty-ms "^7.0.0"
@@ -3221,6 +3221,13 @@
   version "8.14.0"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.14.0.tgz#9050fbcc94423429b13d21105bb82b18fc7e3fc7"
   integrity sha512-Bhk3+3Sj47nnGwWjRMYSIp7pUFV/kOQ3o6ycwR4dKtUJpdMYLuQccWJNAp1AfM3g2mVZ07FindBgNkV5bED5zg==
+  dependencies:
+    "@types/node" "^20.1.0"
+
+"@wdio/types@8.15.0":
+  version "8.15.0"
+  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.15.0.tgz#f678c831957a2a05a3bc771df1702eae88a8e07c"
+  integrity sha512-W37Hogp6fTHg+wAdfPdpcMe2gm7LgL9eacSIuPI54CJ+fMrVlSB1I7x+RM6rMk2mccBXAmKL/cKe7y4YOX1PQA==
   dependencies:
     "@types/node" "^20.1.0"
 
