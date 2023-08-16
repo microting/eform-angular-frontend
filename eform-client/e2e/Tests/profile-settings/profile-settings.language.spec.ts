@@ -70,7 +70,7 @@ describe('Profile settings', function () {
   //     );
   //   }
   // });
-  it('should set language to Danish', async () => {
+  it('should set language to Dansk', async () => {
     await myEformsPage.Navbar.goToProfileSettings();
     await profileSettings.chooseLanguage('Dansk');
     await profileSettings.saveProfileSettings();

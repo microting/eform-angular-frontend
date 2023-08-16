@@ -48,6 +48,7 @@
     [selectedLanguages]="selectedLanguages"
     (addOrDeleteLanguage)="onAddOrDeleteLanguage($event)"
     [appLanguages]="appLanguages"
+    [translationPossible]="translationPossible"
   ></app-eform-visual-editor-header>
 </mat-card>
 <mat-card>
@@ -100,6 +101,7 @@
         (copyNestedField)="onFieldCreate($event)"
         (changeColorField)="onFieldUpdate($event)"
         [appLanguages]="appLanguages"
+        [translationPossible]="translationPossible"
       ></app-visual-editor-checklist>
     </div>
     <div
@@ -129,6 +131,7 @@
         (addNewField)="showFieldModal($event)"
         [class.field-group]="field.fieldType == fieldTypes.FieldGroup"
         [appLanguages]="appLanguages"
+        [translationPossible]="translationPossible"
       ></app-visual-editor-field>
     </div>
   </div>

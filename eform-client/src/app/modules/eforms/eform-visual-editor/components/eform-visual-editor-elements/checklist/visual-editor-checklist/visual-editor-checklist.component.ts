@@ -31,6 +31,7 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   @Input() checklistIndex = 0;
   @Input() checklistRecursionIndex = 0;
   @Input() checklistRecursionIndexes = [];
+  @Input() translationPossible: boolean;
   @Output()
   addNewNestedChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter();
   @Output()

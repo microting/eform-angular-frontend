@@ -8,11 +8,11 @@
           <mtx-select
             dropdownPosition="bottom"
             appendTo="body"
-            [bindLabel]="'text'"
+            [bindLabel]="'name'"
             [bindValue]="'id'"
             [clearable]="false"
             [(ngModel)]="selectedLanguage"
-            [items]="languages"
+            [items]="activeLanguages"
             id="createLanguageSelector">
           </mtx-select>
         </mat-form-field>

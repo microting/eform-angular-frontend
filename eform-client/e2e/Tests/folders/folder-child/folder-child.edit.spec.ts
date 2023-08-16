@@ -58,7 +58,7 @@ describe('Create folder', function () {
     await folder.expandChildren();
     const descriptionAfterEdit = await childFolder.getDescription();
     expect(
-      descriptionAfterEdit.find((x) => x.language === 'Danish').description,
+      descriptionAfterEdit.find((x) => x.language === 'Dansk').description,
       'Folder description has not changed',
       newDescription
     );
@@ -72,7 +72,7 @@ describe('Create folder', function () {
     );
     const childFolderBeforeEditDescription = (await childFolderBeforeEdit
       .getDescription())
-      .find((x) => x.language === 'Danish').description;
+      .find((x) => x.language === 'Dansk').description;
     await childFolderBeforeEdit.editFolderChild(newName, newDescription, true);
     const rowParentsCountAfterEditing = await foldersPage.rowNumParents();
     const childFolderAfterEdit = await foldersPage.getFolderFromTree(
@@ -81,7 +81,7 @@ describe('Create folder', function () {
     );
     const childFolderAfterEditDescription = (await childFolderAfterEdit
       .getDescription())
-      .find((x) => x.language === 'Danish').description;
+      .find((x) => x.language === 'Dansk').description;
     expect(rowParentsCountBeforeEditing).equal(rowParentsCountAfterEditing);
     expect(childFolderAfterEdit.nameTree, 'Name has been changed').equal(
       childFolderBeforeEdit.nameTree

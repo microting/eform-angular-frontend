@@ -4,6 +4,7 @@ import {
   EformVisualEditorModel, LanguagesModel,
 } from 'src/app/common/models';
 import {AuthStateService} from 'src/app/common/store';
+import {TranslationRequestModel, TranslationService} from 'src/app/common/services/translation.service';
 
 @Component({
   selector: 'app-eform-visual-editor-header',
@@ -17,6 +18,7 @@ export class EformVisualEditorHeaderComponent implements OnInit {
   @Input() availableTags: CommonDictionaryModel[];
   @Output() addOrDeleteLanguage: EventEmitter<number> = new EventEmitter();
   @Input() appLanguages: LanguagesModel = new LanguagesModel();
+  @Input() translationPossible: boolean;
 
   get languages() {
     //return applicationLanguages;
@@ -27,7 +29,8 @@ export class EformVisualEditorHeaderComponent implements OnInit {
     return this.appLanguages.languages.filter((x) => x.isActive);
   }
 
-  constructor(private authStateService: AuthStateService) {}
+  constructor(private authStateService: AuthStateService,
+              private translationService: TranslationService) {}
 
   ngOnInit() {
   }
@@ -51,5 +54,18 @@ export class EformVisualEditorHeaderComponent implements OnInit {
     //   return this.authStateService.isAdmin;
     // }
     return true;
+  }
+
+  translateFromEnglishTo(targetLanguageId: number) {
+    const englishLanguageId = this.appLanguages.languages.find(x => x.name === 'Dansk').id;
+    this.translationService.getTranslation(new TranslationRequestModel({
+      sourceText: this.visualEditorModel.translations.find(x => x.languageId === englishLanguageId).name,
+      sourceLanguageCode: 'da',
+      targetLanguageCode: this.languages.find(x => x.id === targetLanguageId).languageCode,
+    })).subscribe((operationDataResult) => {
+      if (operationDataResult && operationDataResult.success) {
+        this.visualEditorModel.translations.find(x => x.languageId === targetLanguageId).name = operationDataResult.model;
+      }
+    });
   }
 }

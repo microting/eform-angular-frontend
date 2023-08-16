@@ -19,6 +19,7 @@ import * as R from 'ramda';
 import {AuthStateService} from 'src/app/common/store';
 import {TranslateService} from '@ngx-translate/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {TranslationRequestModel, TranslationService} from 'src/app/common/services';
 
 @Component({
   selector: 'app-visual-editor-field-modal',
@@ -32,6 +33,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   isFieldSelected = false;
   fieldTypes: EformVisualEditorFieldTypeModel[];
   appLanguages: LanguagesModel = new LanguagesModel();
+  translationPossible = false;
 
   get languages() {
     //return applicationLanguages;
@@ -88,9 +90,11 @@ export class VisualEditorFieldModalComponent implements OnInit {
   constructor(
     private authStateService: AuthStateService,
     private translateService: TranslateService,
+    private translationService: TranslationService,
     public dialogRef: MatDialogRef<VisualEditorFieldModalComponent>,
-    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionFieldModel, appLanguages: LanguagesModel }
+    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionFieldModel, appLanguages: LanguagesModel, translationPossible: boolean }
   ) {
+    this.translationPossible = model.translationPossible;
     this.selectedLanguages = model.selectedLanguages;
     this.appLanguages = model.appLanguages;
     // this.setSelectedLanguage();
@@ -195,6 +199,28 @@ export class VisualEditorFieldModalComponent implements OnInit {
       this.recursionModel.field.entityGroupId = null;
     }
     this.recursionModel.field.fieldType = type;
+  }
+
+  translateFromEnglishTo(targetLanguageId: number) {
+    const englishLanguageId = this.appLanguages.languages.find(x => x.name === 'Dansk').id;
+    this.translationService.getTranslation(new TranslationRequestModel({
+      sourceText: this.recursionModel.field.translations.find(x => x.languageId === englishLanguageId).name,
+      sourceLanguageCode: 'da',
+      targetLanguageCode: this.languages.find(x => x.id === targetLanguageId).languageCode,
+    })).subscribe((operationDataResult) => {
+      if (operationDataResult && operationDataResult.success) {
+        this.recursionModel.field.translations.find(x => x.languageId === targetLanguageId).name = operationDataResult.model;
+      }
+    });
+    this.translationService.getTranslation(new TranslationRequestModel({
+      sourceText: this.recursionModel.field.translations.find(x => x.languageId === englishLanguageId).description,
+      sourceLanguageCode: 'da',
+      targetLanguageCode: this.languages.find(x => x.id === targetLanguageId).languageCode,
+    })).subscribe((operationDataResult) => {
+      if (operationDataResult && operationDataResult.success) {
+        this.recursionModel.field.translations.find(x => x.languageId === targetLanguageId).description = operationDataResult.model;
+      }
+    });
   }
 
   hide(result = false, model?: EformVisualEditorRecursionFieldModel, create?: boolean) {

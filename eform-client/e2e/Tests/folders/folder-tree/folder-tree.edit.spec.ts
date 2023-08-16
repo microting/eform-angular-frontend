@@ -19,7 +19,7 @@ describe('Folder page', function () {
     const folderBeforeEdit = await foldersPage.getFolderByName(name);
     const descriptionBeforeEdit = (await folderBeforeEdit
       .getDescription())
-      .find((x) => x.language === 'Danish').description;
+      .find((x) => x.language === 'Dansk').description;
     name = generateRandmString();
     await folderBeforeEdit.editFolder(name);
     console.log(name);
@@ -29,7 +29,7 @@ describe('Folder page', function () {
       'Name has been changed after changing only last name'
     ).equal(name);
     expect(
-      (await folderAfterEdit.getDescription()).find((x) => x.language === 'Danish')
+      (await folderAfterEdit.getDescription()).find((x) => x.language === 'Dansk')
         .description,
       'Description has been changed incorrectly'
     ).equal(descriptionBeforeEdit);
@@ -46,7 +46,7 @@ describe('Folder page', function () {
       'Name has been changed after changing only last name'
     ).equal(lastFolderBeforeEdit.name);
     expect(
-      (await folder.getDescription()).find((x) => x.language === 'Danish').description,
+      (await folder.getDescription()).find((x) => x.language === 'Dansk').description,
       'Description has been changed incorrectly'
     ).equal(newDescription);
   });
@@ -58,7 +58,7 @@ describe('Folder page', function () {
     const lastFolderPageBeforeEdit = await foldersPage.getFolderByName(name);
     const descriptionBeforeEdit = (await lastFolderPageBeforeEdit
       .getDescription())
-      .find((x) => x.language === 'Danish').description;
+      .find((x) => x.language === 'Dansk').description;
     await lastFolderPageBeforeEdit.editFolder(newName, newDescription, true);
     const lastFolderPageAfterEdit = await foldersPage.getFolderByName(name);
     expect(lastFolderPageAfterEdit.name, 'Name has been changed').equal(
@@ -67,7 +67,7 @@ describe('Folder page', function () {
     expect(
       (await lastFolderPageAfterEdit
         .getDescription())
-        .find((x) => x.language === 'Danish').description,
+        .find((x) => x.language === 'Dansk').description,
       'Description has been changed'
     ).equal(descriptionBeforeEdit);
   });

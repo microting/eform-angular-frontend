@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {EformVisualEditorFieldModel, LanguagesModel} from 'src/app/common/models';
+import {TranslationRequestModel, TranslationService} from 'src/app/common/services';
 
 @Component({
   selector: 'app-visual-editor-additional-field-save-button',
@@ -11,6 +12,7 @@ export class VisualEditorAdditionalFieldSaveButtonComponent
   @Input() field: EformVisualEditorFieldModel;
   @Input() selectedLanguages: number[];
   @Input() appLanguages: LanguagesModel = new LanguagesModel();
+  @Input() translationPossible = false;
 
   get languages() {
     //return applicationLanguages;
@@ -21,7 +23,8 @@ export class VisualEditorAdditionalFieldSaveButtonComponent
     return this.appLanguages.languages.filter((x) => x.isActive);
   }
 
-  constructor() {}
+  constructor(
+    private translationService: TranslationService) {}
 
   ngOnInit() {}
 
@@ -33,5 +36,18 @@ export class VisualEditorAdditionalFieldSaveButtonComponent
 
   getLanguage(languageId: number): any {
     return this.languages.find((x) => x.id === languageId);
+  }
+
+  translateFromEnglishTo(targetLanguageId: number) {
+    const englishLanguageId = this.appLanguages.languages.find(x => x.name === 'Dansk').id;
+    this.translationService.getTranslation(new TranslationRequestModel({
+      sourceText: this.field.translations.find(x => x.languageId === englishLanguageId).defaultValue,
+      sourceLanguageCode: 'da',
+      targetLanguageCode: this.languages.find(x => x.id === targetLanguageId).languageCode,
+    })).subscribe((operationDataResult) => {
+      if (operationDataResult && operationDataResult.success) {
+        this.field.translations.find(x => x.languageId === targetLanguageId).defaultValue = operationDataResult.model;
+      }
+    });
   }
 }
