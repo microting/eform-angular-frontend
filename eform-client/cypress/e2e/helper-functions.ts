@@ -152,6 +152,15 @@ export function selectDateRangeOnNewDatePicker(
   selectDateOnNewDatePicker(yearTo, monthTo, dayTo);
 }
 
+export function selectLanguage(selector: string, language) {
+  cy.get(selector).should('be.visible');
+  cy.get(selector).find('input').should('be.visible').clear().type(language);
+  const dropdown = cy.get(selector);
+  dropdown.click();
+  const valueForClick = cy.get(`.ng-option`); //.should('have.text', language);
+  valueForClick.should('be.visible').click();
+}
+
 export function selectValueInNgSelector(selector: string, value: string, selectorInModal = false) {
   cy.get(selector).should('be.visible');
   cy.get(selector).find('input').should('be.visible').clear().type(value);
