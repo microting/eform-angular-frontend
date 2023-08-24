@@ -173,9 +173,9 @@ export function selectValueInNgSelector(selector: string, value: string, selecto
   let valueForClick;
   // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)
   if (selectorInModal) {
-    valueForClick = cy.get(`.ng-option`).should('have.text', value);
+    valueForClick = cy.get(`.ng-option`).should('contain.text', value);
   } else {
-    valueForClick = cy.get(selector).find(`.ng-option`).should('have.text', value);
+    valueForClick = cy.get(selector).find(`.ng-option`).should('contain.text', value);
   }
   valueForClick.should('be.visible').click();
   cy.wait(500);
