@@ -199,11 +199,6 @@
     "@nx/devkit" "16.5.1"
     nx "16.5.1"
 
-"@angular-eslint/bundled-angular-compiler@16.1.0":
-  version "16.1.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-16.1.0.tgz#59fd1ff6423b02d6fa7eeb9ea30581a839471f2c"
-  integrity sha512-5EFAWXuFJADr3imo/ZYshY8s0K7U7wyysnE2LXnpT9PAi5rmkzt70UNZNRuamCbXr4tdIiu+fXWOj7tUuJKnnw==
-
 "@angular-eslint/bundled-angular-compiler@16.1.1":
   version "16.1.1"
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-16.1.1.tgz#d2dbf1bd4942cbb4b11fc3fd4055d1c57d0818c6"
@@ -220,14 +215,6 @@
     "@typescript-eslint/utils" "5.62.0"
     aria-query "5.3.0"
     axobject-query "3.1.1"
-
-"@angular-eslint/eslint-plugin@16.1.0":
-  version "16.1.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-16.1.0.tgz#23492eaad1d44dd90793cf0534c7177a028af226"
-  integrity sha512-BFzzJJlgQgWc8avdSBkaDWAzNSUqcwWy0L1iZSBdXGoIOxj72kLbwe99emb8M+rUfCveljQkeM2pcYu8XLbJIA==
-  dependencies:
-    "@angular-eslint/utils" "16.1.0"
-    "@typescript-eslint/utils" "5.62.0"
 
 "@angular-eslint/eslint-plugin@16.1.1":
   version "16.1.1"
@@ -257,14 +244,6 @@
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "16.1.1"
     eslint-scope "^7.0.0"
-
-"@angular-eslint/utils@16.1.0":
-  version "16.1.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-16.1.0.tgz#46e6aafc8b4ca0f6e86cca9ec36f61034f984974"
-  integrity sha512-u5XscYUq1F/7RuwyVIV2a280QL27lyQz434VYR+Np/oO21NGj5jxoRKb55xhXT9EFVs5Sy4JYeEUp6S75J/cUw==
-  dependencies:
-    "@angular-eslint/bundled-angular-compiler" "16.1.0"
-    "@typescript-eslint/utils" "5.62.0"
 
 "@angular-eslint/utils@16.1.1":
   version "16.1.1"
