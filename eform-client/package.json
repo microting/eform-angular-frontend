@@ -124,7 +124,7 @@
     "@wdio/local-runner": "8.15.6",
     "@wdio/mocha-framework": "8.15.4",
     "@wdio/schematics": "1.2.1",
-    "@wdio/spec-reporter": "8.15.0",
+    "@wdio/spec-reporter": "8.15.6",
     "angular-mocks": "1.8.3",
     "chai": "4.3.8",
     "chromedriver": "^115.0.1",
