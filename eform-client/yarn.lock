@@ -3117,16 +3117,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^7.1.0"
 
-"@wdio/mocha-framework@8.15.4":
-  version "8.15.4"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.15.4.tgz#ddd10c959caf7d22e1d609605e00bf7d1c390e76"
-  integrity sha512-l8L/OASiVWlDZo7itQ6rKCDhDGTpI+vz9tYACx7ohxezXZqy2Ev69j9dckGoGnwgHJ2cJYBtIUuTaXMiR1t+Aw==
+"@wdio/mocha-framework@8.15.6":
+  version "8.15.6"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.15.6.tgz#4290c4114ba66f61c62d61f6af6cc7f89f8b43a0"
+  integrity sha512-HBE1IQn+g1L7r1fUhFHWl0HNGWwcOZg3KeDyeBSTVcjE5MspK4FfhSanT3zT4dkNVTvUVbTY00uKfj8ArK4q8g==
   dependencies:
     "@types/mocha" "^10.0.0"
     "@types/node" "^20.1.0"
     "@wdio/logger" "8.11.0"
     "@wdio/types" "8.15.0"
-    "@wdio/utils" "8.15.4"
+    "@wdio/utils" "8.15.6"
     mocha "^10.0.0"
 
 "@wdio/protocols@7.27.0":
@@ -3228,25 +3228,6 @@
     "@wdio/logger" "7.26.0"
     "@wdio/types" "7.30.2"
     p-iteration "^1.1.8"
-
-"@wdio/utils@8.15.4":
-  version "8.15.4"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.15.4.tgz#4c7789e628f599adba988c7fcd4c535cc80e27ef"
-  integrity sha512-dYiiSmIR0drNoTDy6zQZanBAG/69PiBRFQsZiF56E+IJ9ikt0Oc88btNBwQP8jOI96q2qNwDlc46Lihei8xPxQ==
-  dependencies:
-    "@puppeteer/browsers" "^1.6.0"
-    "@wdio/logger" "8.11.0"
-    "@wdio/types" "8.15.0"
-    chrome-launcher "^1.0.0"
-    decamelize "^6.0.0"
-    deepmerge-ts "^5.1.0"
-    edgedriver "^5.3.3"
-    geckodriver "^4.2.0"
-    get-port "^7.0.0"
-    got "^13.0.0"
-    import-meta-resolve "^3.0.0"
-    safaridriver "^0.1.0"
-    wait-port "^1.0.4"
 
 "@wdio/utils@8.15.6":
   version "8.15.6"
@@ -4331,13 +4312,6 @@ callsites@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
-
-camaro@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/camaro/-/camaro-6.2.0.tgz#90a49bc146e41095d39e5c8b109a75882b19239b"
-  integrity sha512-81zTKgZb2LnkZKtLbIqLqBzQ6stWSlWC3I/lZd5u4NJVljDgMcsZqn9zZ+Yij/yNyiVpko0EhOKdYa6YAbOWrA==
-  dependencies:
-    piscina "^3.2.0"
 
 camelcase-keys@^3.0.0:
   version "3.0.0"
@@ -5739,19 +5713,6 @@ edge-paths@^3.0.5:
   dependencies:
     "@types/which" "^2.0.1"
     which "^2.0.2"
-
-edgedriver@^5.3.3:
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/edgedriver/-/edgedriver-5.3.3.tgz#d26a207305cd42ee9069b976c08132ab0780d8bb"
-  integrity sha512-Gfb0gzBhpiXaVqLsIkua3RItwfiEGHVt9lXYG4bySoSluDtqIvwFBnMAEHKBS+j16ebEJSQh475e20X2lfzgjg==
-  dependencies:
-    "@wdio/logger" "^8.11.0"
-    camaro "^6.2.0"
-    decamelize "^6.0.0"
-    edge-paths "^3.0.5"
-    node-fetch "^3.3.2"
-    unzipper "^0.10.14"
-    which "^3.0.1"
 
 edgedriver@^5.3.5:
   version "5.3.5"
@@ -9923,7 +9884,7 @@ pinkie@^2.0.0:
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
   integrity sha512-MnUuEycAemtSaeFSjXKW/aroV7akBbY+Sv+RkyqFjgAe73F+MR0TBWKBRDkmfWq/HiFmdavfZ1G7h4SPZXaCSg==
 
-piscina@3.2.0, piscina@^3.2.0:
+piscina@3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/piscina/-/piscina-3.2.0.tgz#f5a1dde0c05567775690cccefe59d9223924d154"
   integrity sha512-yn/jMdHRw+q2ZJhFhyqsmANcbF6V2QwmD84c6xRau+QpQOmtrBCoRGdvTfeuFDYXB5W2m6MfLkjkvQa9lUSmIA==
