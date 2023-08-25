@@ -76,16 +76,21 @@ export function testSorting(selectorTableHeader: string | Function, selectorColu
 export function selectDateOnDatePicker(year: number, month: number, day: number) {
   cy.wait(500);
   // Click on the date picker widget's control button.
-  cy.get('button.owl-dt-control-button .owl-dt-control-button-content span').click();
+  //cy.get('button.owl-dt-control-button .owl-dt-control-button-content span').click();
+  cy.get('.mat-focus-indicator.mat-calendar-period-button.mat-button.mat-button-base').click();
   cy.wait(500);
   // Click on the year cell of the date picker widget.
-  cy.get(`tbody span.owl-dt-calendar-cell-content:eq(${year - 2016})`).click();
+  //cy.get(`tbody span.owl-dt-calendar-cell-content:eq(${year - 2016})`).click();
+  cy.get(`tbody div.mat-calendar-body-cell-content.mat-focus-indicator:eq(${year - 2016})`).click();
   cy.wait(500);
   // Click on the month cell of the date picker widget.
-  cy.get(`span.owl-dt-calendar-cell-content:eq(${month - 1})`).click();
+  cy.get(`div.mat-calendar-body-cell-content.mat-focus-indicator:eq(${month - 1})`).click();
+  //cy.get(`span.owl-dt-calendar-cell-content:eq(${month - 1})`).click();
+  //cy.get(`span.owl-dt-calendar-cell-content:eq(${month - 1})`).click();
   cy.wait(500);
   // Click on the day cell of the date picker widget.
-  cy.get(`span.owl-dt-calendar-cell-content:not(.owl-dt-calendar-cell-out):eq(${day - 1})`).click();
+  //cy.get(`span.owl-dt-calendar-cell-content:not(.owl-dt-calendar-cell-out):eq(${day - 1})`).click();
+  cy.get(`div.mat-calendar-body-cell-content.mat-focus-indicator:not(.owl-dt-calendar-cell-out):eq(${day - 1})`).click();
   cy.wait(500);
 }
 
@@ -150,6 +155,15 @@ export function selectDateRangeOnNewDatePicker(
   selectDateOnNewDatePicker(yearFrom, monthFrom, dayFrom);
   // Select the end date.
   selectDateOnNewDatePicker(yearTo, monthTo, dayTo);
+}
+
+export function selectLanguage(selector: string, language) {
+  cy.get(selector).should('be.visible');
+  cy.get(selector).find('input').should('be.visible').clear().type(language);
+  const dropdown = cy.get(selector);
+  dropdown.click();
+  const valueForClick = cy.get(`.ng-option`); //.should('have.text', language);
+  valueForClick.should('be.visible').click();
 }
 
 export function selectValueInNgSelector(selector: string, value: string, selectorInModal = false) {
