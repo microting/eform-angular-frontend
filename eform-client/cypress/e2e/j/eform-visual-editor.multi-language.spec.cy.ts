@@ -23,6 +23,7 @@ describe('My eforms', () => {
     cy.get('#newChecklistNameTranslation_0').clear();
     cy.get('#newChecklistNameTranslation_0').type('lvl 1.1');
     cy.get('#changeChecklistSaveBtn').click();
+    cy.wait(2000);
     cy.intercept('POST', '**/api/template-visual-editor/').as('saveeForm');
     cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
     cy.wait('@saveeForm', { timeout: 60000 });
@@ -46,6 +47,7 @@ describe('My eforms', () => {
     cy.get('#changeChecklistSaveBtn > .mat-button-wrapper').click();
     cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
     cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
+    cy.wait(2000);
     cy.wait('@saveeForm', { timeout: 60000 });
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
