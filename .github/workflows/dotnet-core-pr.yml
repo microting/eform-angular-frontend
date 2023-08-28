@@ -22,7 +22,7 @@ jobs:
           path: container.tar
   test:
     needs: build
-    runs-on: ubuntu-latest-22.04
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
