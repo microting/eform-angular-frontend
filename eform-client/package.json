@@ -140,12 +140,11 @@
     "typescript": "4.9.5",
     "wdio-chromedriver-service": "^8.1.1",
     "webdriverio": "^8.15.4",
-    "xlsx": "^0.18.5"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
   },
   "browserslist": [
     "defaults",
-    "not IE 11",
-    "maintained node versions"
+    "not IE 11"
   ],
   "resolutions": {
     "prosemirror-codemirror-6": "^1.0.0",

@@ -5,7 +5,6 @@ on:
     branches: [ master, stable, angular14 ]
     paths-ignore:
     - '*.md'
-    - '.github/**'
 
 jobs:
   build:
@@ -23,7 +22,7 @@ jobs:
           path: container.tar
   test:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
@@ -47,7 +46,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18.12.1'
+        node-version: 'lts/*'
     - name: yarn install
       run: cd eform-client && yarn install
       if: steps.cache.outputs.cache-hit != 'true'
