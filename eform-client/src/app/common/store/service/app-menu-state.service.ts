@@ -63,6 +63,9 @@ export class AppMenuStateService {
       if (href.charAt(0) !== '/') {
         href = '/' + href;
       }
+      if (href.includes('?')) {
+        href = href.substring(0, href.indexOf('?'));
+      }
       let title = this.searchTitle(href, this.query.currentAppMenu.leftMenu);
       if (!title) {
         title = this.searchTitle(href, this.query.currentAppMenu.rightMenu);
