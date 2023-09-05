@@ -36,6 +36,25 @@
       [mode]="sidenavMode"
       [opened]="(authStateService.sideMenuOpenedAsync | async) === true">
       <app-navigation (clickOnLink)="onClickOnLink()"></app-navigation>
+      <footer class="footer stick-down">
+          <div id="footer-widgets">
+            <div class="d-flex justify-content-center p-3">
+              <a href="https://www.microting.com/terms-of-service" target="_blank">
+                {{'Terms of Service' | translate}}
+              </a> <span class="ml-2 mr-2"> | </span>
+              <a href="https://www.microting.com/privacy-policy" target="_blank">
+                {{'Privacy Policy' | translate}}
+              </a><span class="ml-2 mr-2"> | </span>
+              <a href="https://www.microting.com/data-protection-terms" target="_blank">
+                {{'Data Protection Terms (GDPR)' | translate}}
+              </a>
+              <b></b>
+            </div>
+          </div>
+        <div class="footer-copyright text-center p-2 copyright-section">
+          <div>© Microting A/S 2007 - {{date.getFullYear()}} <div class="footer-version">eForm Backend v{{version}}</div> </div>
+        </div>
+      </footer>
     </mat-drawer>
     <div class="mb-auto p-4">
       <app-userback-widget></app-userback-widget>
