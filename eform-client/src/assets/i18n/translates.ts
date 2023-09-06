@@ -1,14 +1,14 @@
 import { da } from './da';
-import { deDE } from './de-DE';
-import { enUS } from './en-US';
-import { ukUA } from './uk-UA';
-import { plPL } from './pl-PL';
-import { itIT } from './it-IT';
-import { nlNL } from './nl-NL';
-import { frFR } from "./fr-FR";
-import { noNO } from "./no-NO";
-import { svSE } from "./sv-SE";
-import { esES } from "./es-ES";
+import { deDE } from './deDE';
+import { enUS } from './enUS';
+import { ukUA } from './ukUA';
+import { plPL } from './plPL';
+import { itIT } from './itIT';
+import { nlNL } from './nlNL';
+import { frFR } from "./frFR";
+import { noNO } from "./noNO";
+import { svSE } from "./svSE";
+import { esES } from "./esES";
 
 export const translates = {
   'en-US': enUS,
