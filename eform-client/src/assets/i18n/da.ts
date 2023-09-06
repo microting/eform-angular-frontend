@@ -244,7 +244,7 @@ export const da = {
   "Entity search": "Søgbar enhed",
   "Entity select": "Valgbar enhed",
   UserManagement: "Brugeradministration",
-  Update: "Opdatering",
+  Update: "Opdater",
   Read: "Læs",
   "General Permissions": "Generelle Tilladelser",
   Column: "Kolonne",
