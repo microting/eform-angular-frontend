@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {AppMenuQuery, AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription, take, zip} from 'rxjs';
@@ -25,8 +25,6 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   sidenavMode: MatDrawerMode = 'side';
   mobileWidth = 660;
   openedChangeSub$: Subscription;
-  date = new Date();
-  version: string;
 
   constructor(
     public authStateService: AuthStateService,
@@ -45,7 +43,6 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.getAssemblyVersion();
     this.getSettings();
     this.loaderService.setLoading(true);
     this.localeService.initLocale();
@@ -132,13 +129,5 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.innerWidth < this.mobileWidth) {
       this.toggleDrawer(false);
     }
-  }
-
-  getAssemblyVersion() {
-    this.settingsService.getAssemblyVersion().subscribe(operation => {
-      if (operation && operation.success) {
-        this.version = operation.model;
-      }
-    });
   }
 }
