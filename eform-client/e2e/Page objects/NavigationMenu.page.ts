@@ -172,9 +172,10 @@ class NavigationMenuPage {
   }
 
   public async resetMenu() {
+    await (await $('.toast-success')).waitForDisplayed({ timeout: 50000, reverse: true });
     const resetBtn = await $('#resetBtn');
     await resetBtn.scrollIntoView();
-    await resetBtn.waitForClickable({ timeout: 40000 });
+    await resetBtn.waitForClickable({ timeout: 90000 });
     await resetBtn.click();
     await browser.pause(500);
     const deleteWorkerDeleteBtn = await $('#deleteWorkerDeleteBtn');
