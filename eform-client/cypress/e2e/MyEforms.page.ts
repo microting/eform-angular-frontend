@@ -80,15 +80,15 @@ class MyEformsPage extends PageWithNavbarPage {
     return ele;
   }
 
-  public cancelCreateEformBtn(): Promise<JQuery<HTMLElement>> {
+  public cancelCreateEformBtn() {
     return cy.get('#cancelCreateEformBtn').should('be.visible').should('be.enabled');
   }
 
-  tagEditSaveBtn(): Promise<JQuery<HTMLElement>> {
+  tagEditSaveBtn() {
     return cy.get('#tagEditSaveBtn').should('be.visible').should('be.enabled');
   }
 
-  tagEditSaveCancelBtn(): Promise<JQuery<HTMLElement>> {
+  tagEditSaveCancelBtn() {
     return cy.get('#tagEditSaveCancelBtn').should('be.visible').should('be.enabled');
   }
 
@@ -97,15 +97,15 @@ class MyEformsPage extends PageWithNavbarPage {
     return cy.get('#tagSelector').should('be.visible');
   }
 
-  saveParingBtn(): Promise<JQuery<HTMLElement>> {
+  saveParingBtn() {
     return cy.get('#saveParingBtn').should('be.visible').should('be.enabled');
   }
 
-  cancelParingBtn(): Promise<JQuery<HTMLElement>> {
+  cancelParingBtn() {
     return cy.get('#cancelParingBtn').should('be.visible').should('be.enabled');
   }
 
-  xlsxImportInput(): Promise<JQuery<HTMLElement>> {
+  xlsxImportInput() {
     return cy.get('#xlsxImportInput').should('be.visible');
   }
 
@@ -155,7 +155,6 @@ class MyEformsPage extends PageWithNavbarPage {
       cy.wait(500);
     }
     return myEformsRowObject.getRow(num);
-    return result.getRow(num);
   }
 
   public clearEFormTable() {
