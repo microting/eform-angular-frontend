@@ -15,34 +15,42 @@ export function getRandomInt(min: number, max: number): number {
 
 /**
  * This function tests the sorting functionality of a table
- * @param {string} selectorTableHeader - Selector for the table header containing the sorting arrow
- * @param {string} selectorColumnElementsForSorting - Selector for the table column to be sorted
+ * @param {string| GetElementFunction} selectorTableHeader - Selector for the table header containing the sorting arrow
+ * @param {string | GetElementFunction} selectorColumnElementsForSorting - Selector for the table column to be sorted
  * @param {string} sortBy - The name of the column being sorted (optional)
+ * @param cellsToStrings - function for map cells to strings
  */
-export function testSorting(selectorTableHeader: string | GetElementFunction, selectorColumnElementsForSorting: string, sortBy: string) {
-  const cellsToStrings = (cells$) => {
+export function testSorting(
+  selectorTableHeader: string | GetElementFunction,
+  selectorColumnElementsForSorting: string | GetElementFunction,
+  sortBy: string,
+  cellsToStrings = (cells$): string[] => {
     return _.map(cells$, (cell$): string => {
-      return cell$.textContent;
-    });
-  };
-
+      return cell$.textContent.includes('--') ? '' : cell$.textContent;
+    })},
+  ) {
   // Get table header
-  let tableHeader;
+  let tableHeader: GetElementFunction;
   if (typeof selectorTableHeader === 'string') {
     tableHeader = () => cy.get(selectorTableHeader).should('be.visible');
   } else {
     tableHeader = selectorTableHeader;
   }
 
+  let elementsForSorting: GetElementFunction;
   // Get all the elements to be sorted
-  const elementsForSorting = () => cy.get(selectorColumnElementsForSorting);
+  if(typeof selectorColumnElementsForSorting === 'string') {
+    elementsForSorting = () => cy.get(selectorColumnElementsForSorting);
+  } else {
+    elementsForSorting = selectorColumnElementsForSorting;
+  }
 
   elementsForSorting()
     .then(cellsToStrings)
     .then((elementsBefore: string[]) => {
       for (let i = 0; i < 2; i++) {
         // Click on the header to sort the table
-        tableHeader().find('.mat-sort-header-icon').should('exist').click();
+        tableHeader().find('.mat-sort-header-icon').should('exist').click({force: true});
 
         // Wait for a short time to ensure the table is sorted
         cy.wait(500);
@@ -61,7 +69,8 @@ export function testSorting(selectorTableHeader: string | GetElementFunction, se
             elementsForSorting()
               .then(cellsToStrings)
               .then((elementsAfter) => {
-                expect(elementsAfter, `Sort by ${sortBy} incorrect`).deep.eq(sorted);
+                cy.wrap(elementsAfter).should('deep.equal', sorted).log(`Sort by ${sortBy}`)
+                // expect(elementsAfter, `Sort by ${sortBy} incorrect`).deep.eq(sorted);
               });
           });
       }
@@ -185,11 +194,11 @@ export function selectValueInNgSelector(selector: string | GetElementFunction, v
   let valueForClick;
   // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)
   if (selectorInModal) {
-    valueForClick = cy.get(`.ng-option`).should('contain.text', value);
+    valueForClick = cy.get(`.ng-option`).contains(value);
   } else {
-    valueForClick = ngSelector().find(`.ng-option`).should('contain.text', value);
+    valueForClick = ngSelector().find(`.ng-option`).contains(value);
   }
-  valueForClick.first().should('be.visible').click();
+  valueForClick.first().scrollIntoView().should('be.visible').click();
   cy.wait(500);
 }
 
