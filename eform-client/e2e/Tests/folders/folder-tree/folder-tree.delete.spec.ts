@@ -18,7 +18,7 @@ describe('Delete folder', function () {
     await foldersPage.createNewFolder(nameFolder, description);
     const rowNumBeforeDelete = await foldersPage.rowNum();
 
-    await (await $('#folderTreeName')).waitForDisplayed({ timeout: 40000 });
+    await (await $('.folder-tree-name')).waitForDisplayed({ timeout: 40000 });
     const folder = await foldersPage.getFolderByName(nameFolder);
     await folder.delete();
     const rowNumAfterDelete = await foldersPage.rowNum();
@@ -40,7 +40,7 @@ describe('Delete folder', function () {
     expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
   });
   after('Should delete folder', async () => {
-    await (await $('#folderTreeName')).waitForDisplayed({ timeout: 40000 });
+    await (await $('.folder-tree-name')).waitForDisplayed({ timeout: 40000 });
     const folder = await foldersPage.getFolderByName(nameFolder);
     const countFoldersBeforeDelete = await foldersPage.rowNum();
     await folder.delete();
