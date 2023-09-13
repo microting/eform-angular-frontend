@@ -731,7 +731,7 @@ export class FoldersTreeRowObject {
         this.folderTreeElement = await element.$('#folderTreeId');
       } catch (e) {}
       try {
-        this.nameTree = await (await element.$('#folderTreeName')).getText();
+        this.nameTree = await (await element.$('.folder-tree-name')).getText();
       } catch (e) {}
     }
     return this;

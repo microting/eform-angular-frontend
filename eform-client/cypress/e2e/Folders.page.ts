@@ -602,7 +602,7 @@ export class FoldersTreeRowObject {
       } catch (e) {
       }
       try {
-        this.nameTree = element.find('#folderTreeName').text();
+        this.nameTree = element.find('.folder-tree-name').text();
       } catch (e) {
       }
     }
