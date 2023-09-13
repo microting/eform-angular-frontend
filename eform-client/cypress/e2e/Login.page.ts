@@ -33,6 +33,7 @@ class LoginPage {
     this.getLoginButton().click();
     cy.wait('@login', { timeout: 60000 });
     cy.get('#newEFormBtn').should('be.visible');
+    cy.log(`At this point we have a problem: if after this command there is a request to the menu site, it may not work correctly, because initially the side menu is fully open(after load in memory), and after clicking the whole category may disappear`)
   }
 
   loginWithNewPassword() {

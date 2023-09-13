@@ -1,7 +1,19 @@
-import { PageWithNavbarPage } from './PageWithNavbar.page';
-import { applicationLanguages } from '../../src/app/common/const';
+import {PageWithNavbarPage} from './PageWithNavbar.page';
+import {applicationLanguages} from '../../src/app/common/const/application-languages.const';
+import {selectValueInNgSelector} from 'cypress/e2e/helper-functions';
 
 class FoldersPage extends PageWithNavbarPage {
+
+  goToFoldersPage() {
+    this.Navbar.foldersBtn().then(($ele) => {
+      if (!$ele.is(':visible')) {
+        this.Navbar.advancedBtn().click();
+      }
+    });
+    this.Navbar.foldersBtn().click();
+    this.newFolderBtn().should('be.visible');
+  }
+
   newFolderBtn() {
     // @ts-ignore
     return cy.get('#newFolderBtn');
@@ -41,6 +53,7 @@ class FoldersPage extends PageWithNavbarPage {
       .wait(40000) // Wait for element to be displayed and clickable
       .click();
   }
+
   // @ts-ignore
   public createDescriptionInputPellStrikeThrough(
     translationIndex: number
@@ -222,8 +235,8 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   createNewFolder(
-    name,
-    description,
+    name: string | { name: string; language: string }[],
+    description?: string | { description: string; language: string }[],
     clickCancel = false
   ) {
     this.openCreateFolder(name, description);
@@ -235,60 +248,35 @@ class FoldersPage extends PageWithNavbarPage {
     description?: string | { description: string; language: string }[]
   ) {
     (this.newFolderBtn()).click();
-    // @ts-ignore
     cy.wait(500);
-    (this.cancelCreateBtn()).should('be.visible').timeout(10000);
+    (this.cancelCreateBtn()).should('be.visible').wait(10000);
     if (name) {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
         const da = applicationLanguages[0];
-        (this.createLanguageSelector())
-          .find('input')
-          .type(da.text);
-        // @ts-ignore
-        cy.wait(500);
-        const value = (this.createLanguageSelector()).find(
-          `.ng-option=${da.text}`
-        );
-        value.should('be.visible').timeout(40000);
-        value.click();
-        // @ts-ignore
-        cy.wait(500);
+        selectValueInNgSelector('#createLanguageSelector', da.text, true);
         (
           this.createNameInput(
             applicationLanguages.findIndex((x) => x.text === da.text)
           )
         ).type(nameConverted);
-        // @ts-ignore
         cy.wait(500);
-      }
-      if (typeof name === typeof []) {
+      }/* else if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
         for (let i = 0; i < nameConverted.length; i++) {
           const language = applicationLanguages.find(
             (x) => x.text === nameConverted[i].language
           );
-          (this.createLanguageSelector())
-            .find('input')
-            .type(language.text);
-          // @ts-ignore
-          cy.wait(500);
-          const value = (this.createLanguageSelector()).find(
-            `.ng-option=${language.text}`
-          );
-          value.should('be.visible').timeout(40000);
-          value.click();
-          // @ts-ignore
+          selectValueInNgSelector('#createLanguageSelector', language.text, true);
           cy.wait(500);
           (
             this.createNameInput(
               applicationLanguages.findIndex((x) => x.text === language.text)
             )
           ).type(nameConverted[i].name);
-          // @ts-ignore
           cy.wait(500);
         }
-      }
+      }*/
     }
     if (description) {
       if (typeof description === 'string') {
@@ -331,19 +319,14 @@ class FoldersPage extends PageWithNavbarPage {
 
   closeCreateFolder(clickCancel = false) {
     if (!clickCancel) {
-      // @ts-ignore
-      cy.get(this.saveCreateBtn()).should('be.visible').click();
-      this.waitForSpinnerHide();
+      this.saveCreateBtn().should('be.visible').click();
+      // this.waitForSpinnerHide();
     } else {
-      // @ts-ignore
-      cy.get(this.cancelCreateBtn()).should('be.visible').click();
+      this.cancelCreateBtn().should('be.visible').click();
     }
-    // @ts-ignore
-    cy.get(foldersPage.newFolderBtn()).should('be.visible');
-    // @ts-ignore
+    foldersPage.newFolderBtn().should('be.visible');
     cy.wait(500);
   }
-
 }
 
 const foldersPage = new FoldersPage();
@@ -357,6 +340,7 @@ class FoldersRowObject {
     this.rowNumber = null;
     this.dropdown = null;
   }
+
   folderElement;
   name;
   folderTreeOpenClose;
@@ -371,11 +355,13 @@ class FoldersRowObject {
       const element = cy.get('app-eform-tree-view-picker > mat-tree > mat-tree-node').eq(rowNum - 1);
       try {
         this.folderElement = element.find('.microting-uid');
-      } catch (e) {}
+      } catch (e) {
+      }
       this.dropdown = element.find('button.mat-menu-trigger');
       try {
         this.name = element.find('div > div').invoke('text');
-      } catch (e) {}
+      } catch (e) {
+      }
       this.folderTreeOpenClose = element.find('mat-tree-node');
     }
     return this;
@@ -600,7 +586,8 @@ class FoldersRowObject {
 }
 
 export class FoldersTreeRowObject {
-  constructor() {}
+  constructor() {
+  }
 
   folderTreeElement;
   nameTree;
@@ -612,10 +599,12 @@ export class FoldersTreeRowObject {
       this.dropdown = element.find('div button');
       try {
         this.folderTreeElement = element.find('#folderTreeId');
-      } catch (e) {}
+      } catch (e) {
+      }
       try {
         this.nameTree = element.find('#folderTreeName').text();
-      } catch (e) {}
+      } catch (e) {
+      }
     }
     return this;
   }
@@ -700,7 +689,7 @@ export class FoldersTreeRowObject {
         ((foldersPage.editLanguageSelector()).find('input')).type(da.text);
         cy.wait(500);
         const value = cy.get('ng-dropdown-panel').contains('.ng-option', da.text);
-        value.wait({ timeout: 40000 }).click();
+        value.wait({timeout: 40000}).click();
         cy.wait(500);
         (foldersPage.editNameInput(applicationLanguages.findIndex((x) => x.text === da.text))).type(nameConverted);
       }
@@ -711,7 +700,7 @@ export class FoldersTreeRowObject {
           (foldersPage.editLanguageSelector().find('input')).type(language.text);
           cy.wait(500);
           const value = cy.get('ng-dropdown-panel').contains('.ng-option', language.text);
-          value.wait({ timeout: 40000 }).click();
+          value.wait({timeout: 40000}).click();
           cy.wait(500);
           (foldersPage.editNameInput(applicationLanguages.findIndex((x) => x.text === language.text))).type(nameConverted[i].name);
         }
