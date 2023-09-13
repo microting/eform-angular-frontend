@@ -66,7 +66,7 @@ public class WordProcessor : IDisposable
     public void Dispose()
     {
         _wordProcessingDocument.Save();
-        _wordProcessingDocument.Close();
+        //_wordProcessingDocument.Close();
         _wordProcessingDocument.Dispose();
     }
 }
