@@ -5770,7 +5770,7 @@ domhandler@^4.2.0, domhandler@^4.3.1:
   dependencies:
     domelementtype "^2.2.0"
 
-dommatrix@^1.0.1:
+dommatrix@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/dommatrix/-/dommatrix-1.0.3.tgz#e7c18e8d6f3abdd1fef3dd4aa74c4d2e620a0525"
   integrity sha512-l32Xp/TLgWb8ReqbVJAFIvXmY7go4nTxxlWiAFyhoQw9RKEOHBZNnyGvJWqDVSPmq3Y9HlM4npqF/T6VMOXhww==
@@ -9089,13 +9089,13 @@ ng2-file-upload@3.0.0:
   dependencies:
     tslib "^2.3.0"
 
-ng2-pdf-viewer@^9.1.5:
-  version "9.1.5"
-  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-9.1.5.tgz#bcc9223eea96d2974f8c8377a333d45ff64a3caf"
-  integrity sha512-vg+ByLcAiV9aouj6XdZKsGfZljOP1IO2VGVEZtbqW83wKfFD3UzrplZH6fImIG3O7LVxH9jFZpHE7QnqmhrYtg==
+ng2-pdf-viewer@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-10.0.0.tgz#7f999ea3f6977f2639b531b04ae42a083e61226e"
+  integrity sha512-zEefcAsTpDoxFceQYs3ycPMaUAkt5UX4OcTstVQoNqRK6w+vOY+V8z8aFCuBwnt+7iN1EHaIpquOf4S9mWc04g==
   dependencies:
-    pdfjs-dist "~2.14.305"
-    tslib "^2.3.1"
+    pdfjs-dist "~2.16.105"
+    tslib "^2.3.0"
 
 ngx-auto-unsubscribe@3.0.1:
   version "3.0.1"
@@ -10012,12 +10012,12 @@ pdf-lib@^1.17.1:
     pako "^1.0.11"
     tslib "^1.11.1"
 
-pdfjs-dist@~2.14.305:
-  version "2.14.305"
-  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-2.14.305.tgz#ed2ecb439ff8af5446c90a310ebd30bc1a91df62"
-  integrity sha512-5f7i25J1dKIBczhgfxEgNxfYNIxXEdxqo6Qb4ehY7Ja+p6AI4uUmk/OcVGXfRGm2ys5iaJJhJUwBFwv6Jl/Qww==
+pdfjs-dist@~2.16.105:
+  version "2.16.105"
+  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-2.16.105.tgz#937b9c4a918f03f3979c88209d84c1ce90122c2a"
+  integrity sha512-J4dn41spsAwUxCpEoVf6GVoz908IAA3mYiLmNxg8J9kfRXc2jxpbUepcP0ocp0alVNLFthTAM8DZ1RaHh8sU0A==
   dependencies:
-    dommatrix "^1.0.1"
+    dommatrix "^1.0.3"
     web-streams-polyfill "^3.2.1"
 
 pend@~1.2.0:
