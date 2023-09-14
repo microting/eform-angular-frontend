@@ -126,7 +126,7 @@
     "@wdio/schematics": "1.2.1",
     "@wdio/spec-reporter": "8.15.0",
     "angular-mocks": "1.8.3",
-    "chai": "4.3.7",
+    "chai": "4.3.8",
     "chromedriver": "^115.0.1",
     "cypress": "^12.17.3",
     "eslint": "^8.47.0",
