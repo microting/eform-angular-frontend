@@ -24,14 +24,29 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+Cypress.Commands.add('checkApi', () => {
+  cy.request({
+    method: 'GET',
+    url: 'http://localhost:5000/api/settings/connection-string-exist',
+    timeout: 90000,
+    failOnStatusCode: true,
+    retryOnStatusCodeFailure: true,
+    retryOnNetworkFailure: true
+  })
+    .its('body')
+    .should('include', `"success": true`);
+});
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      checkApi(): Chainable;
+
+      // login(email: string, password: string): Chainable<void>
+      // drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+      // dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+      // visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
+    }
+  }
+}
+
