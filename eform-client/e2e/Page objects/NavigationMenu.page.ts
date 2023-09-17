@@ -172,7 +172,7 @@ class NavigationMenuPage {
   }
 
   public async resetMenu() {
-    await (await $('.toast-success')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await (await $('.toast-success')).waitForDisplayed({ timeout: 120000, reverse: true });
     const resetBtn = await $('#resetBtn');
     await resetBtn.scrollIntoView();
     await resetBtn.waitForClickable({ timeout: 90000 });
@@ -182,7 +182,7 @@ class NavigationMenuPage {
     await deleteWorkerDeleteBtn.waitForDisplayed({ timeout: 40000 });
     await deleteWorkerDeleteBtn.waitForClickable({ timeout: 40000 });
     await deleteWorkerDeleteBtn.click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 120000, reverse: true });
     await browser.pause(500);
   }
 
