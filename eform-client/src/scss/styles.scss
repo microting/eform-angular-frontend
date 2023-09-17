@@ -88,3 +88,8 @@ app-navigation mat-tree mat-nested-tree-node mat-accordion mat-expansion-panel m
   flex-direction: column;
   flex: 1 0 0;
 }
+
+.toast-bottom-right {
+  bottom: 0;
+  right: 0;
+}
