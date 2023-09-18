@@ -3233,16 +3233,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^7.1.0"
 
-"@wdio/mocha-framework@8.16.7":
-  version "8.16.7"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.16.7.tgz#4cc928e893861407fc2666ca4c6dc43bcb7a5af8"
-  integrity sha512-bhU7dfFNbWiRrC8HX7kJNEq7UM85UfDkUzhPG8I/PG5O3wciHLd3h0M/878n8VD4MSwnVglKpCkhOAK0b2DfNA==
+"@wdio/mocha-framework@8.16.10":
+  version "8.16.10"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.16.10.tgz#7711d71ee6221aad58c090a603a2f86f013d9dca"
+  integrity sha512-U0YZWNzmw5tYo8WdhRMd/M1nFT3YBTlW/CH7WUe1ofDQusP8946J3egRwU08xI/Sq0DtSfsTtGPbb+A4t8dy1Q==
   dependencies:
     "@types/mocha" "^10.0.0"
     "@types/node" "^20.1.0"
     "@wdio/logger" "8.11.0"
     "@wdio/types" "8.16.7"
-    "@wdio/utils" "8.16.7"
+    "@wdio/utils" "8.16.10"
     mocha "^10.0.0"
 
 "@wdio/protocols@7.27.0":
@@ -3343,6 +3343,26 @@
     "@wdio/logger" "7.26.0"
     "@wdio/types" "7.30.2"
     p-iteration "^1.1.8"
+
+"@wdio/utils@8.16.10":
+  version "8.16.10"
+  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.16.10.tgz#a270f1bfd0de5cd0424d64f5ed7fb3bffaf71f44"
+  integrity sha512-Y62gU3U0MO3HjPSUwfHEodcjuhhTrBT11QGlSbMOu8yhd1zv9vt293iaxgx/PA/Dcha8ITK1e5GI1EzFDixw3w==
+  dependencies:
+    "@puppeteer/browsers" "^1.6.0"
+    "@wdio/logger" "8.11.0"
+    "@wdio/types" "8.16.7"
+    decamelize "^6.0.0"
+    deepmerge-ts "^5.1.0"
+    edgedriver "^5.3.5"
+    geckodriver "^4.2.0"
+    get-port "^7.0.0"
+    got "^13.0.0"
+    import-meta-resolve "^3.0.0"
+    locate-app "^2.1.0"
+    safaridriver "^0.1.0"
+    split2 "^4.2.0"
+    wait-port "^1.0.4"
 
 "@wdio/utils@8.16.7":
   version "8.16.7"
@@ -11463,7 +11483,7 @@ spdy@^4.0.2:
     select-hose "^2.0.0"
     spdy-transport "^3.0.0"
 
-split2@^4.1.0:
+split2@^4.1.0, split2@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/split2/-/split2-4.2.0.tgz#c9c5920904d148bab0b9f67145f245a86aadbfa4"
   integrity sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==
