@@ -3331,10 +3331,10 @@
     "@wdio/cli" "^7.1.2"
     typescript "^4.2.3"
 
-"@wdio/spec-reporter@8.16.7":
-  version "8.16.7"
-  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-8.16.7.tgz#528ddb81fff228bf19c8ca64dcb37f27aa6939ab"
-  integrity sha512-oz9zdiCl+gVcnQwS9I0tdvV8N0PVgmnR06oAvf5HnLHDAexuSVrImfXdd04DZVR4dXjWazphCZY+67xJS+IPKQ==
+"@wdio/spec-reporter@8.16.9":
+  version "8.16.9"
+  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-8.16.9.tgz#8187379d81d07821d7b9d013d021e9d680a1b456"
+  integrity sha512-vFuFh3FOUT/etCY0ggOAd5ROpg8u6PIWHpEPickvZ0d623bdOpUpSXkZ9K1aMHIcPBU2Siw3z12vJlEG/wRe0w==
   dependencies:
     "@wdio/reporter" "8.16.7"
     "@wdio/types" "8.16.7"
