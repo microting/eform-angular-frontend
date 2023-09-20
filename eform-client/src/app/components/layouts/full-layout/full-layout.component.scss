@@ -9,6 +9,12 @@
   }
 }
 
+:host::ng-deep.mat-drawer-inner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 #sign-out-dropdown {
   //top: -4px;
 }
