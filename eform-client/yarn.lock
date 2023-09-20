@@ -3255,16 +3255,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^7.1.0"
 
-"@wdio/mocha-framework@8.16.7":
-  version "8.16.7"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.16.7.tgz#4cc928e893861407fc2666ca4c6dc43bcb7a5af8"
-  integrity sha512-bhU7dfFNbWiRrC8HX7kJNEq7UM85UfDkUzhPG8I/PG5O3wciHLd3h0M/878n8VD4MSwnVglKpCkhOAK0b2DfNA==
+"@wdio/mocha-framework@8.16.11":
+  version "8.16.11"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.16.11.tgz#d154f42b6c2066713839c1f7d8d21d3a30ea00a9"
+  integrity sha512-YcPa1mH60QRdrsW9rh53DxGT8MMb4LCQXb9J4W7fknpT/annv+I77B5XlhHVlfd1PxWr3L9Q8GblBR9Gvlp5Xw==
   dependencies:
     "@types/mocha" "^10.0.0"
     "@types/node" "^20.1.0"
     "@wdio/logger" "8.11.0"
     "@wdio/types" "8.16.7"
-    "@wdio/utils" "8.16.7"
+    "@wdio/utils" "8.16.11"
     mocha "^10.0.0"
 
 "@wdio/protocols@7.27.0":
