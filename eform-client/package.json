@@ -111,7 +111,7 @@
     "@angular-eslint/template-parser": "15.2.1",
     "@angular/cli": "16.1.6",
     "@angular/compiler-cli": "15.2.9",
-    "@angular/language-service": "15.2.9",
+    "@angular/language-service": "16.2.6",
     "@datorama/akita": "^8.0.1",
     "@datorama/akita-ngdevtools": "^7.0.0",
     "@types/chai": "4.3.5",
