@@ -1,9 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { GalleryModule } from '@ngx-gallery/core';
-import { GallerizeModule } from '@ngx-gallery/gallerize';
-import { LightboxModule } from '@ngx-gallery/lightbox';
 import { TranslateModule } from '@ngx-translate/core';
 import { EformCasesModule } from 'src/app/common/modules/eform-cases/eform-cases.module';
 import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
@@ -19,6 +16,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {LightboxModule} from 'ng-gallery/lightbox';
+import {GalleryModule} from 'ng-gallery';
 
 @NgModule({
   imports: [
@@ -27,7 +26,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     CasesRoutingModule,
     CommonModule,
     EformImportedModule,
-    GallerizeModule,
     LightboxModule,
     GalleryModule,
     FormsModule,

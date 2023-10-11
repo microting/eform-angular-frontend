@@ -14,23 +14,18 @@
 @include mat.core();
 
 // Define a typography
-$eform-typography: mat.define-typography-config(
-  $font-family: 'Roboto, "Helvetica Neue", sans-serif',
-    //$display-4: mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
-    //$display-3: mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
-    //$display-2: mat.define-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
-    //$display-1: mat.define-typography-level(34px, 40px, 400),
-  $headline: mat.define-typography-level(1.5rem, 1.2, 300),
-  $title: mat.define-typography-level(1.5rem, 1.2, 300),
-  $subheading-2: mat.define-typography-level(1.5rem, 1.2, 300),
-  $subheading-1: mat.define-typography-level(1.2rem, 1.2, 300),
-  $body-2: mat.define-typography-level(.8rem, 1.2, 300),
-  $body-1: mat.define-typography-level(1rem, 1.2, 300),
-  $caption: mat.define-typography-level(.8rem, 1.5, 300),
-  $button: mat.define-typography-level(14px, 1.15, 300),
-  $input: mat.define-typography-level(inherit, 1.125, 300));
+//$eform-typography: mat.define-typography-config(
+//  $font-family: 'Roboto, "Helvetica Neue", sans-serif',
+//  $headline-1: mat.define-typography-level(1.5rem, 1.2, 300),
+//  $headline-2: mat.define-typography-level(1.5rem, 1.2, 300),
+//  $headline-3: mat.define-typography-level(1.2rem, 1.2, 300),
+//  $body-2: mat.define-typography-level(.8rem, 1.2, 300),
+//  $body-1: mat.define-typography-level(1rem, 1.2, 300),
+//  $caption: mat.define-typography-level(.8rem, 1.5, 300),
+//  $button: mat.define-typography-level(14px, 1.15, 300),
+//);
 
-@include mat.core($eform-typography);
+@include mat.core();
 // Define a light theme
 $eform-light-primary: mat.define-palette(mat.$indigo-palette);
 $eform-light-accent: mat.define-palette(mat.$pink-palette);
@@ -39,7 +34,7 @@ $eform-light-theme: mat.define-light-theme((
     primary: $eform-light-primary,
     accent: $eform-light-accent,
   ),
-  typography: $eform-typography,
+  //typography: $eform-typography,
 ));
 
 // Define a dark theme
@@ -50,7 +45,7 @@ $eform-dark-theme: mat.define-dark-theme((
     primary: $eform-dark-primary,
     accent: $eform-dark-accent,
   ),
-  typography: $eform-typography,
+  //typography: $eform-typography,
 ));
 
 body {
@@ -65,7 +60,7 @@ body {
       @include ngx-toastr.theme($val);
       @include chart.theme($val);
       @include ng-datepicker.theme($val);
-      @include mtx.all-experimental-component-themes($val);
+      //@include mtx.all-experimental-component-themes($val);
     }
   }
 

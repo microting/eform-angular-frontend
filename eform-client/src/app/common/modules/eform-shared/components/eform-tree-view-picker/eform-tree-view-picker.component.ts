@@ -5,13 +5,10 @@ import {
   OnChanges, OnDestroy,
   Output,
   SimpleChanges,
-  ViewChild,
 } from '@angular/core';
 import { FolderDto } from 'src/app/common/models/dto/folder.dto';
-import { ITreeState, TreeComponent } from '@circlon/angular-tree-component';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import * as R from 'ramda';
 
 interface FlatNode {
   expandable: boolean;

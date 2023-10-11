@@ -53,7 +53,7 @@ import {
   LoaderInterceptor,
   UserClaimsInterceptor,
 } from 'src/app/common/interceptors';
-import {GALLERY_CONFIG} from '@ngx-gallery/core';
+//import {GALLERY_CONFIG} from '@ngx-gallery/core';
 import {AppMenuStateService, AuthStateService} from 'src/app/common/store';
 import {persistProviders} from 'src/app/common/store/persist.config';
 import {BaseService} from 'src/app/common/services/base.service';
@@ -111,12 +111,12 @@ export let providers = [
   {provide: HTTP_INTERCEPTORS, useClass: DateInterceptor, multi: true},
   {provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true},
   {provide: HTTP_INTERCEPTORS, useClass: UserClaimsInterceptor, multi: true},
-  {
-    provide: GALLERY_CONFIG,
-    useValue: {
-      counterPosition: 'bottom',
-    },
-  },
+  // {
+  //   provide: GALLERY_CONFIG,
+  //   useValue: {
+  //     counterPosition: 'bottom',
+  //   },
+  // },
   {provide: MAT_DATE_LOCALE, useValue: new BehaviorSubject(null)},
   AuthStateService,
   AppMenuStateService,

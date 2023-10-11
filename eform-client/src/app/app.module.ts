@@ -2,12 +2,11 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {GalleryModule} from '@ngx-gallery/core';
-import {GallerizeModule} from '@ngx-gallery/gallerize';
+// import {GalleryModule} from '@ngx-gallery/core';
+// import {GallerizeModule} from '@ngx-gallery/gallerize';
 import {TranslateModule} from '@ngx-translate/core';
-import {LightboxModule} from '@ngx-gallery/lightbox';
+//import {LightboxModule} from '@ngx-gallery/lightbox';
 import {DragulaModule} from 'ng2-dragula';
-import {NgxMaskModule} from 'ngx-mask';
 import {ToastrModule} from 'ngx-toastr';
 import {providers} from 'src/app/app.declarations';
 import {AppRoutingModule} from 'src/app/app.routing';
@@ -51,6 +50,8 @@ import {
   EformDateFnsDateModule,
   EformMatDateFnsDateModule
 } from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
+import {GalleryModule} from 'ng-gallery';
+import {LightboxModule} from 'ng-gallery/lightbox';
 
 @NgModule({
   declarations: [
@@ -79,10 +80,9 @@ import {
       positionClass: 'toast-bottom-right',
     }),
     DragulaModule.forRoot(),
-    NgxMaskModule.forRoot(),
     GalleryModule,
     LightboxModule,
-    GallerizeModule,
+    // GallerizeModule,
     NgxChartsModule,
     AkitaNgDevtools,
     environment.production ? [] : AkitaNgDevtools.forRoot(),

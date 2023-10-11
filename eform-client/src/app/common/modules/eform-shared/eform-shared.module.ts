@@ -26,7 +26,6 @@ import {
   AuthAudioPipe,
   SafeHtmlPipe,
 } from 'src/app/common/pipes';
-import {TreeModule} from '@circlon/angular-tree-component';
 import {EformTableHeadersComponent} from './components';
 import {RouterModule} from '@angular/router';
 import {DragulaModule} from 'ng2-dragula';
@@ -42,6 +41,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormattingTextEditorModule} from '../eform-imported/formatting-text-editor/formatting-text-editor.module';
+import {TreeModule} from '@ali-hm/angular-tree-component';
 
 @NgModule({
   imports: [

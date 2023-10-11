@@ -7,9 +7,7 @@ import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
-import { GalleryModule } from '@ngx-gallery/core';
-import { GallerizeModule } from '@ngx-gallery/gallerize';
-import { LightboxModule } from '@ngx-gallery/lightbox';
+import { GalleryModule } from 'ng-gallery';
 import { TranslateModule } from '@ngx-translate/core';
 import { MY_MOMENT_FORMATS } from 'src/app/common/helpers';
 import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
@@ -57,6 +55,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {LightboxModule} from 'ng-gallery/lightbox';
 
 @NgModule({
     imports: [
@@ -64,7 +63,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
         EformSharedModule,
         CommonModule,
         EformImportedModule,
-        GallerizeModule,
         LightboxModule,
         GalleryModule,
         OwlDateTimeModule,
