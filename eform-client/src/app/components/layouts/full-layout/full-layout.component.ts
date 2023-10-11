@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {AppMenuQuery, AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription, take, zip} from 'rxjs';

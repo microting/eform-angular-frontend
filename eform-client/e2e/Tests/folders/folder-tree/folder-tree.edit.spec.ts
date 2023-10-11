@@ -36,7 +36,7 @@ describe('Folder page', function () {
   });
   it('Should change description', async () => {
     const newDescription = generateRandmString();
-    await (await $('#folderTreeName')).waitForDisplayed({ timeout: 40000 });
+    await (await $('.folder-tree-name')).waitForDisplayed({ timeout: 40000 });
     const lastFolderBeforeEdit = await foldersPage.getFolderByName(name);
     await lastFolderBeforeEdit.editFolder(null, newDescription);
     await (await foldersPage.newFolderBtn()).waitForDisplayed({ timeout: 40000 });
@@ -51,7 +51,7 @@ describe('Folder page', function () {
     ).equal(newDescription);
   });
   it('Should not change name and description if cancel was clicked', async () => {
-    const folderTreeName = await $('#folderTreeName');
+    const folderTreeName = await $('.folder-tree-name');
     await folderTreeName.waitForDisplayed({ timeout: 40000 });
     const newName = generateRandmString();
     const newDescription = generateRandmString();

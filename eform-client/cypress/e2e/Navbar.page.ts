@@ -40,11 +40,11 @@ export class Navbar {
   }
 
   public foldersBtn() {
-    return cy.get('#folders').should('be.visible');
+    return cy.get('#folders');
   }
 
   public pluginsBtn() {
-    return cy.get('#plugins-settings').should('be.visible');
+    return cy.get('#plugins-settings');
   }
 
   public menuEditorBtn() {
@@ -162,23 +162,26 @@ export class Navbar {
   }
 
   public goToFolderPage() {
-    cy.get(`#folders`).should('be.visible').then(isDisplayed => {
+    this.foldersBtn().should('be.visible').then(isDisplayed => {
       if (isDisplayed) {
         this.foldersBtn().click();
         cy.wait(500);
-        this.waitForSpinnerHide();
       } else {
         this.advancedBtn();
         this.foldersBtn().should('be.visible').should('be.enabled').click();
-        this.waitForSpinnerHide();
         cy.wait(500);
       }
     });
   }
 
   public goToPluginsPage() {
-    this.advancedBtn();
+    this.pluginsBtn().then(($ele) => {
+      if (!$ele.is(':visible')) {
+        this.advancedBtn().click();
+      }
+    });
     this.pluginsBtn().click();
+    cy.get('app-installed-plugins-page .mat-row').should('be.visible'); // required need 1+ plugin
   }
 
   public goToMenuEditorPage() {

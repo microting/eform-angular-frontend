@@ -72,7 +72,12 @@ import {
     TranslateModule.forRoot(translateConfig),
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot({preventDuplicates: true}),
+    ToastrModule.forRoot({
+      autoDismiss: true,
+      timeOut: 3000,
+      preventDuplicates: true,
+      positionClass: 'toast-bottom-right',
+    }),
     DragulaModule.forRoot(),
     NgxMaskModule.forRoot(),
     GalleryModule,

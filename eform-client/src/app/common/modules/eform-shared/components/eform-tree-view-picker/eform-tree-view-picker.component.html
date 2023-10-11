@@ -30,7 +30,7 @@
       class="d-flex flex-row align-items-center cursor"
     >
       <mat-icon>folder_open</mat-icon>
-      <div style="margin-left: 8px;" id="folderTreeName">
+      <div style="margin-left: 8px;" class="folder-tree-name">
         {{node.name}}
       </div>
       <small class="microting-uid">({{ node.microtingUId }})</small>
@@ -76,7 +76,7 @@
       <div
         [ngClass]="{'selected-folder': selectedFolderIds.includes(node.id)}"
       >
-        <div id="folderTreeName">
+        <div  class="folder-tree-name">
           {{node.name}}
         </div>
       </div>

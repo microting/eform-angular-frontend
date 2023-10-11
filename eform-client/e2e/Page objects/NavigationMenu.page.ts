@@ -152,6 +152,7 @@ class NavigationMenuPage {
     await navigationMenuSaveBtn.scrollIntoView();
     await navigationMenuSaveBtn.waitForClickable({ timeout: 40000 });
     await navigationMenuSaveBtn.click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   }
 
   public async openOnEditCreatedMenuItem(indexInCreatedMenuItems) {
@@ -172,9 +173,18 @@ class NavigationMenuPage {
   }
 
   public async resetMenu() {
+    // const toaster = await $('.toast-success');
+    // await toaster.click();
+    //await (await $('.toast-success')).waitForDisplayed({ timeout: 90000, reverse: true });
+    //const elem = await $('#toast-container');
+    //await ele.click();
+    //await elem.waitForDisplayed({ timeout: 40000, reverse: true });
+    await browser.pause(1100);
+    await browser.pause(1200);
+    await browser.pause(1400);
     const resetBtn = await $('#resetBtn');
     await resetBtn.scrollIntoView();
-    await resetBtn.waitForClickable({ timeout: 40000 });
+    await resetBtn.waitForClickable({ timeout: 90000 });
     await resetBtn.click();
     await browser.pause(500);
     const deleteWorkerDeleteBtn = await $('#deleteWorkerDeleteBtn');

@@ -50,14 +50,14 @@
     <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="7.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="7.1.0" />
     <PackageReference Include="ClosedXML" Version="0.102.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.12" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="7.0.65" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="7.0.53" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="7.0.55" />
+    <PackageReference Include="Microting.eForm" Version="7.0.69" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="7.0.56" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="7.0.59" />
     <PackageReference Include="Microting.HtmlToOpenXml.dll" Version="2.3.1" />
     <PackageReference Include="PureOtp" Version="1.0.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />

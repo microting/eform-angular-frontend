@@ -1,10 +1,14 @@
 import { defineConfig } from 'cypress';
+const readXlsx = require('cypress/support/read-xlsx')
 
 export default defineConfig({
   e2e: {
     experimentalStudio: true,
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      on('task', {
+        'readXlsx': readXlsx.read
+      })
     },
     baseUrl: 'http://localhost:4200',
     viewportWidth: 1920,
@@ -31,6 +35,7 @@ export default defineConfig({
     videoUploadOnPasses: false,
     downloadsFolder: 'cypress/downloads',
     chromeWebSecurity: true,
+    experimentalOriginDependencies: true,
     scrollBehavior: 'top'
   },
 });
