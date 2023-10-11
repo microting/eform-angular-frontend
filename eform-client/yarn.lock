@@ -210,6 +210,11 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-16.1.0.tgz#59fd1ff6423b02d6fa7eeb9ea30581a839471f2c"
   integrity sha512-5EFAWXuFJADr3imo/ZYshY8s0K7U7wyysnE2LXnpT9PAi5rmkzt70UNZNRuamCbXr4tdIiu+fXWOj7tUuJKnnw==
 
+"@angular-eslint/bundled-angular-compiler@16.2.0":
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-16.2.0.tgz#09d0637d738850a2c6f0523f19632e992f790102"
+  integrity sha512-ct9orDYxkMl2+uvM7UBfgV28Dq57V4dEs+Drh7cD673JIMa6sXbgmd0QEtm8W3cmyK/jcTzmuoufxbH7hOxd6g==
+
 "@angular-eslint/eslint-plugin-template@16.1.0":
   version "16.1.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-16.1.0.tgz#3d88fba2baff4debf2d332fc3d2eea53a32b4efe"
@@ -228,6 +233,14 @@
   integrity sha512-BFzzJJlgQgWc8avdSBkaDWAzNSUqcwWy0L1iZSBdXGoIOxj72kLbwe99emb8M+rUfCveljQkeM2pcYu8XLbJIA==
   dependencies:
     "@angular-eslint/utils" "16.1.0"
+    "@typescript-eslint/utils" "5.62.0"
+
+"@angular-eslint/eslint-plugin@16.2.0":
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-16.2.0.tgz#2d61d087d208f347c9c472ecd9b0eee1fae1b21b"
+  integrity sha512-zdiAIox1T+B71HL+A8m+1jWdU34nvPGLhCRw/uZNwHzknsF4tYzNQ9W7T/SC/g/2s1yT2yNosEVNJSGSFvunJg==
+  dependencies:
+    "@angular-eslint/utils" "16.2.0"
     "@typescript-eslint/utils" "5.62.0"
 
 "@angular-eslint/schematics@16.1.0":
@@ -257,6 +270,14 @@
   integrity sha512-u5XscYUq1F/7RuwyVIV2a280QL27lyQz434VYR+Np/oO21NGj5jxoRKb55xhXT9EFVs5Sy4JYeEUp6S75J/cUw==
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "16.1.0"
+    "@typescript-eslint/utils" "5.62.0"
+
+"@angular-eslint/utils@16.2.0":
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-16.2.0.tgz#8e6f0c372200049b22bca37e5537034b6f8618d2"
+  integrity sha512-NxMRwnlIgzmbJQfWkfd9y3Sz0hzjFdK5LH44i+3D5NhpPdZ6SzwHAjMYWoYsmmNQX5tlDXoicYF9Mz9Wz8DJ/A==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "16.2.0"
     "@typescript-eslint/utils" "5.62.0"
 
 "@angular/animations@15.2.9":
@@ -3201,20 +3222,6 @@
     import-meta-resolve "^3.0.0"
     read-pkg-up "^10.0.0"
 
-"@wdio/config@8.17.0":
-  version "8.17.0"
-  resolved "https://registry.yarnpkg.com/@wdio/config/-/config-8.17.0.tgz#8842cdbb758843cf40caebdf4731a3b05eceecde"
-  integrity sha512-6qUgE99D8XSKSDdwLrpeEatJ133Ce0UPrIyTNdsIFOQ7vSmwBif+vmFDSa7mCt1+ay2hLYglEwVJ1r+48Ke/pw==
-  dependencies:
-    "@wdio/logger" "8.16.17"
-    "@wdio/types" "8.17.0"
-    "@wdio/utils" "8.17.0"
-    decamelize "^6.0.0"
-    deepmerge-ts "^5.0.0"
-    glob "^10.2.2"
-    import-meta-resolve "^3.0.0"
-    read-pkg-up "^10.0.0"
-
 "@wdio/globals@8.16.11", "@wdio/globals@^8.13.1":
   version "8.16.11"
   resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-8.16.11.tgz#c9f974b7b5403a2324d71c7201a128e2b8adec57"
@@ -3401,26 +3408,6 @@
     "@puppeteer/browsers" "^1.6.0"
     "@wdio/logger" "8.11.0"
     "@wdio/types" "8.16.7"
-    decamelize "^6.0.0"
-    deepmerge-ts "^5.1.0"
-    edgedriver "^5.3.5"
-    geckodriver "^4.2.0"
-    get-port "^7.0.0"
-    got "^13.0.0"
-    import-meta-resolve "^3.0.0"
-    locate-app "^2.1.0"
-    safaridriver "^0.1.0"
-    split2 "^4.2.0"
-    wait-port "^1.0.4"
-
-"@wdio/utils@8.17.0":
-  version "8.17.0"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.17.0.tgz#21f52b76bb9dfb0728440a780c910d3df4a614bc"
-  integrity sha512-WkXY+kSFOi/7tztB1uWVRfu6E/4TIEBYni+qCYTkaPI5903EDratkeakINuu63xL7WtYv9adt7ndtDVcsi1KTg==
-  dependencies:
-    "@puppeteer/browsers" "^1.6.0"
-    "@wdio/logger" "8.16.17"
-    "@wdio/types" "8.17.0"
     decamelize "^6.0.0"
     deepmerge-ts "^5.1.0"
     edgedriver "^5.3.5"
@@ -12430,23 +12417,6 @@ webdriver@8.17.0:
     ky "^0.33.0"
     ws "^8.8.0"
 
-webdriver@8.17.0:
-  version "8.17.0"
-  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-8.17.0.tgz#a3d741863dbecd85a940fcc123447c4eabd71fae"
-  integrity sha512-YxAOPJx4dxVOsN2A7XpFu1IzA12M3yO82oDCjauyPGJ7+TQgXGVqEuk0wtNzOn8Ok8uq7sPFkne5ASQBsH6cWg==
-  dependencies:
-    "@types/node" "^20.1.0"
-    "@types/ws" "^8.5.3"
-    "@wdio/config" "8.17.0"
-    "@wdio/logger" "8.16.17"
-    "@wdio/protocols" "8.16.5"
-    "@wdio/types" "8.17.0"
-    "@wdio/utils" "8.17.0"
-    deepmerge-ts "^5.1.0"
-    got "^ 12.6.1"
-    ky "^0.33.0"
-    ws "^8.8.0"
-
 webdriverio@7.32.4:
   version "7.32.4"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-7.32.4.tgz#23e46a6501a0295a2b0bdf3fd76d65b6cf8e2c35"
@@ -12510,37 +12480,7 @@ webdriverio@8.16.11:
     serialize-error "^11.0.1"
     webdriver "8.16.11"
 
-webdriverio@8.17.0:
-  version "8.17.0"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-8.17.0.tgz#a8ae376c275cc64e9fba09c970f0daee44c53b17"
-  integrity sha512-nn4OzRAJOxWYRQDdQNM/XQ9QKYWfUjhirFwB3GeQ5vEcqzvJmU0U0DMwlMjDYi6O6RMvkJY384+GA/0Dfiq3vg==
-  dependencies:
-    "@types/node" "^20.1.0"
-    "@wdio/config" "8.17.0"
-    "@wdio/logger" "8.16.17"
-    "@wdio/protocols" "8.16.5"
-    "@wdio/repl" "8.10.1"
-    "@wdio/types" "8.17.0"
-    "@wdio/utils" "8.17.0"
-    archiver "^6.0.0"
-    aria-query "^5.0.0"
-    css-shorthand-properties "^1.1.1"
-    css-value "^0.0.1"
-    devtools-protocol "^0.0.1206220"
-    grapheme-splitter "^1.0.2"
-    import-meta-resolve "^3.0.0"
-    is-plain-obj "^4.1.0"
-    lodash.clonedeep "^4.5.0"
-    lodash.zip "^4.2.0"
-    minimatch "^9.0.0"
-    puppeteer-core "^20.9.0"
-    query-selector-shadow-dom "^1.0.0"
-    resq "^1.9.1"
-    rgb2hex "0.2.5"
-    serialize-error "^11.0.1"
-    webdriver "8.17.0"
-
-webdriverio@^8.13.1, webdriverio@^8.17.0:
+webdriverio@8.17.0, webdriverio@^8.13.1, webdriverio@^8.17.0:
   version "8.17.0"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-8.17.0.tgz#a8ae376c275cc64e9fba09c970f0daee44c53b17"
   integrity sha512-nn4OzRAJOxWYRQDdQNM/XQ9QKYWfUjhirFwB3GeQ5vEcqzvJmU0U0DMwlMjDYi6O6RMvkJY384+GA/0Dfiq3vg==
