@@ -3092,10 +3092,10 @@
     "@typescript-eslint/types" "5.62.0"
     eslint-visitor-keys "^3.3.0"
 
-"@userback/widget@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@userback/widget/-/widget-0.3.0.tgz#78d194b124cf1a7710df3b2ceca1d2dff2cea5e5"
-  integrity sha512-hvVm6N8Pj9OvyMiZkFdLXSQcZ5oHMYOob8Ez0LCZEQJlz8DdWZpp4orYT56ql0vWdeviaeVJYsZrNXsEwbQmCQ==
+"@userback/widget@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@userback/widget/-/widget-0.3.1.tgz#dc8b689ed9f6571e2e3e20f7bb6ffda5cc8faaef"
+  integrity sha512-8/TrxHAOs/PMsgjpNJUMtCXzv3B8cFHXKCnqAwWeW7+iRtsgYQJ63WaVSb0peKPTcp3V3KyhrCdsvSW5Vkn0YA==
 
 "@wdio/cli@8.16.11":
   version "8.16.11"

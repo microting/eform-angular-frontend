@@ -71,7 +71,7 @@
     "@swimlane/ngx-charts": "20.4.1",
     "@types/dragula": "3.7.1",
     "@types/file-saver": "2.0.5",
-    "@userback/widget": "^0.3.0",
+    "@userback/widget": "^0.3.1",
     "angular-calendar": "0.31.0",
     "angular2-uuid": "1.1.1",
     "build": "^0.1.4",
