@@ -92,7 +92,9 @@ export class VisualEditorFieldModalComponent implements OnInit {
     private translateService: TranslateService,
     private translationService: TranslationService,
     public dialogRef: MatDialogRef<VisualEditorFieldModalComponent>,
-    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionFieldModel, appLanguages: LanguagesModel, translationPossible: boolean }
+    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[],
+      model?: EformVisualEditorRecursionFieldModel,
+      appLanguages: LanguagesModel, translationPossible: boolean }
   ) {
     this.translationPossible = model.translationPossible;
     this.selectedLanguages = model.selectedLanguages;

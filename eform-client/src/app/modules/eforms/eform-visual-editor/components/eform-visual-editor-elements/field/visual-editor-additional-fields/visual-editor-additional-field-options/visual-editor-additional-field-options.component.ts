@@ -49,7 +49,9 @@ export class VisualEditorAdditionalFieldOptionsComponent
   ngOnInit() {}
 
   isLanguageSelected(languageId: number): boolean {
-    return this.selectedLanguages.some((x) => x === languageId);
+    const language = this.selectedLanguages.some((x) => x === languageId);
+    const appLanguage = this.appLanguages.languages.some((x) => x.id === languageId && x.isActive);
+    return language && appLanguage;
   }
 
   getLanguage(languageId: number): any {
