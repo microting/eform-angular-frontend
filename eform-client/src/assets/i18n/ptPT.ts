@@ -397,4 +397,8 @@ export const ptPT = {
   Norwegian: 'norueguês',
   Dutch: 'Holandês',
   Finish: 'Terminar',
+  'Done at': 'Pronto à',
+  'Select date': 'Selecione a data',
+  Value: 'Valor',
+  'Please fill out this field': 'Por favor, preencha este campo',
 };

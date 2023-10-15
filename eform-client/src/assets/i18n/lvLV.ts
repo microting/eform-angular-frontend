@@ -397,4 +397,8 @@ export const lvLV = {
   Norwegian: 'norvēģu',
   Dutch: 'holandiešu valoda',
   Finish: 'Pabeigt',
+  'Done at': 'Parakstīts plkst',
+  'Select date': 'Izvēlieties datumu',
+  Value: 'Vērtība',
+  'Please fill out this field': 'Lūdzu, aizpildiet šo lauku',
 };

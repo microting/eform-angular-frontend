@@ -397,4 +397,8 @@ export const noNO = {
   Norwegian: 'norsk',
   Dutch: 'nederlandsk',
   Finish: 'Bli ferdig',
+  'Done at': 'Ferdig kl',
+  'Select date': 'Velg dato',
+  Value: 'Verdi',
+  'Please fill out this field': 'Vennligst fyll ut dette feltet',
 };

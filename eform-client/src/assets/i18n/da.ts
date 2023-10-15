@@ -433,4 +433,8 @@ export const da = {
   'New nested field': 'Nyt indlejret felt',
   'Swift enabled': 'Swift aktiveret',
   Finish: 'Afslut',
+  'Done at': 'Udført d.',
+  'Select date': 'Vælg dato',
+  Value: 'Værdi',
+  'Please fill out this field': 'Udfyld venligst dette felt',
 };

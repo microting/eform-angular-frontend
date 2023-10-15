@@ -397,4 +397,8 @@ export const hrHR = {
   Norwegian: 'norveški',
   Dutch: 'nizozemski',
   Finish: 'Završi',
+  'Done at': 'Dovršeno u',
+  'Select date': 'Odaberite datum',
+  Value: 'Vrijednost',
+  'Please fill out this field': 'Molimo ispunite ovo polje',
 };

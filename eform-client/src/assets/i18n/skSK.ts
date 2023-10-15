@@ -397,4 +397,8 @@ export const skSK = {
   Norwegian: 'nórsky',
   Dutch: 'holandský',
   Finish: 'Skončiť',
+  'Done at': 'Hotovo o',
+  'Select date': 'Vyberte dátum',
+  Value: 'Hodnota',
+  'Please fill out this field': 'Vyplňte toto pole',
 };
