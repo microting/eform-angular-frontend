@@ -401,4 +401,8 @@ export const enUS = {
   'Norwegian': 'Norwegian',
   'Dutch': 'Dutch',
   'Finish': 'Finish',
+  'Done at': 'Done at',
+  'Select date': 'Select date',
+  'Value': 'Value',
+  'Please fill out this field': 'Please fill out this field',
 };

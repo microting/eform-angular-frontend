@@ -64,6 +64,7 @@
     "@danielmoncada/angular-datetime-picker": "16.0.1",
     "@ng-matero/extensions": "^14.8.1",
     "@ng-select/ng-select": "10.0.4",
+    "@ngrx/store": "^16.3.0",
     "@ngx-gallery/core": "4.0.3",
     "@ngx-gallery/gallerize": "4.0.3",
     "@ngx-gallery/lightbox": "4.0.3",

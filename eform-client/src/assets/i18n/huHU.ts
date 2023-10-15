@@ -397,4 +397,8 @@ export const huHU = {
   Norwegian: 'norvég',
   Dutch: 'holland',
   Finish: 'Befejez',
+  'Done at': 'Készült:',
+  'Select date': 'Válassza ki a dátumot',
+  Value: 'Érték',
+  'Please fill out this field': 'Kérem töltse ki ezt a mezőt',
 };

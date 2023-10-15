@@ -397,4 +397,8 @@ export const itIT = {
   Norwegian: 'norvegese',
   Dutch: 'Olandese',
   Finish: 'Fine',
+  'Done at': 'Fatto a',
+  'Select date': 'Seleziona la data',
+  Value: 'Valore',
+  'Please fill out this field': 'Perfavore compila questo campo',
 };

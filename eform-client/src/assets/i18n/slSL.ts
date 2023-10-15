@@ -397,4 +397,8 @@ export const slSL = {
   Norwegian: 'norveški',
   Dutch: 'nizozemščina',
   Finish: 'Končaj',
+  'Done at': 'Končano ob',
+  'Select date': 'Izberite datum',
+  Value: 'Vrednost',
+  'Please fill out this field': 'Prosimo izpolnite to polje',
 };

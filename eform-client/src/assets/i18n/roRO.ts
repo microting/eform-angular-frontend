@@ -397,4 +397,8 @@ export const roRO = {
   Norwegian: 'norvegian',
   Dutch: 'olandeză',
   Finish: 'finalizarea',
+  'Done at': 'Realizat la',
+  'Select date': 'Selectați data',
+  Value: 'Valoare',
+  'Please fill out this field': 'Te rog sa completezi acest spatiu',
 };
