@@ -11,11 +11,14 @@ import {
   AuthStateService,
 } from 'src/app/common/store';
 import {AdminService, AuthService} from 'src/app/common/services';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {Router} from '@angular/router';
 import {filter} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {leftAppMenus} from 'src/app/state/app-menu/app-menu.selector';
+import {AppMenuState} from 'src/app/state/app-menu/app-menu.reducer';
 
 interface MenuNode {
   name: string;
@@ -44,13 +47,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   getAppMenuSub$: Subscription;
   getCurrentUserInfoSub$: Subscription;
+  public allAppMenus$ = this.store.select(leftAppMenus);
 
   constructor(
-    private authService: AuthService,
     private adminService: AdminService,
-    private appMenuService: AppMenuStateService,
     private authStateService: AuthStateService,
     public router: Router,
+    private store: Store,
   ) {
   }
 
@@ -63,9 +66,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
         .getCurrentUserInfo()
         .subscribe((result) => {
           this.authStateService.updateUserInfo(result);
-          this.appMenuService.getAppMenu();
-          this.getAppMenuSub$ = this.appMenuService.userMenuLeftAsync.subscribe(x => {
-            if (x !== undefined) {
+          //this.appMenuService.getAppMenu();
+          this.store.dispatch({type: '[AppMenu] Load AppMenu'});
+          this.getAppMenuSub$ = this.allAppMenus$.subscribe(x => {
+            if (x.length > 0) {
               this.menu.data = [...x];
               this.restoreOpenedMenu();
             }

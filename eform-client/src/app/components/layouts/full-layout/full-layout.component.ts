@@ -1,13 +1,17 @@
 import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {AppMenuQuery, AuthStateService} from 'src/app/common/store';
+import {AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {Subscription, take, zip} from 'rxjs';
+import {Observable, Subscription, take, zip} from 'rxjs';
 import {AppSettingsService, LoaderService, LocaleService} from 'src/app/common/services';
 import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
-import {HeaderSettingsModel} from 'src/app/common/models';
+import {HeaderSettingsModel, MenuItemModel} from 'src/app/common/models';
 import {MatDrawer, MatDrawerMode} from '@angular/material/sidenav';
 import {filter} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {rightAppMenus} from 'src/app/state/app-menu/app-menu.selector';
+import {AppState} from 'src/app/state/app.state';
+import {MatTreeNestedDataSource} from "@angular/material/tree";
 
 @AutoUnsubscribe()
 @Component({
@@ -30,7 +34,8 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     public authStateService: AuthStateService,
     private renderer: Renderer2,
     private localeService: LocaleService,
-    public appMenuQuery: AppMenuQuery,
+    //public appMenuQuery: AppMenuQuery,
+    private store: Store,
     public router: Router,
     private eventBrokerService: EventBrokerService,
     private settingsService: AppSettingsService,
@@ -41,6 +46,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getSettings();
       });
   }
+  public allAppMenus$ = this.store.select(rightAppMenus);
 
   ngOnInit() {
     this.getSettings();
@@ -53,6 +59,13 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         isDarkTheme
           ? this.switchToDarkTheme()
           : this.switchToLightTheme();
+        //this.allAppMenus$ = this.store.select(rightAppMenus);
+          // this.menu = new MatTreeNestedDataSource<MenuItemModel>();
+          // this.menu.data = data;
+          // this.menu.data.forEach(x => {
+          //   x.menuItems = x.menuItems.sort((a, b) => a.position - b.position);
+          // });
+        //});
       }
     );
   }

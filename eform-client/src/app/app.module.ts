@@ -51,6 +51,12 @@ import {
   EformDateFnsDateModule,
   EformMatDateFnsDateModule
 } from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
+import { StoreModule } from '@ngrx/store';
+import * as appMenuReducer from 'src/app/state/app-menu/app-menu.reducer';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {EffectsModule} from '@ngrx/effects';
+import * as appMenuEffects from 'src/app/state/app-menu/app-menu.effects';
+import {AppMenuEffects} from "src/app/state/app-menu/app-menu.effects";
 
 @NgModule({
   declarations: [
@@ -69,8 +75,16 @@ import {
     // Libs
     AppRoutingModule,
     BrowserModule,
-    TranslateModule.forRoot(translateConfig),
     HttpClientModule,
+    StoreModule.forRoot({
+      appMenus: appMenuReducer.reducer,
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
+    EffectsModule.forRoot(AppMenuEffects),
+    TranslateModule.forRoot(translateConfig),
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       autoDismiss: true,
@@ -84,7 +98,7 @@ import {
     LightboxModule,
     GallerizeModule,
     NgxChartsModule,
-    AkitaNgDevtools,
+    //AkitaNgDevtools,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     SharedPnModule,
     MatSidenavModule,
@@ -107,7 +121,7 @@ import {
     EformSharedModule,
     MatProgressSpinnerModule,
     // EformDateFnsDateModule,
-    EformMatDateFnsDateModule
+    EformMatDateFnsDateModule,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],

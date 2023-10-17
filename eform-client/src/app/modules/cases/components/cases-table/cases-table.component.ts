@@ -314,16 +314,17 @@ export class CasesTableComponent implements OnInit, OnDestroy {
 
   private setTitle() {
     const href = this.router.url;
-    this.appMenuSub$ = this.appMenuStateService.appMenuObservable.subscribe(
-      (appMenu) => {
-        if (appMenu) {
-          this.title = this.appMenuStateService.getTitleByUrl(href);
-          if (!this.title) {
-            this.title = this.currentTemplate.label;
-          }
-        }
-      }
-    );
+    // TODO: Fix this
+    // this.appMenuSub$ = this.appMenuStateService.appMenuObservable.subscribe(
+    //   (appMenu) => {
+    //     if (appMenu) {
+    //       this.title = this.appMenuStateService.getTitleByUrl(href);
+    //       if (!this.title) {
+    //         this.title = this.currentTemplate.label;
+    //       }
+    //     }
+    //   }
+    // );
   }
 
   onPaginationChanged(paginationModel: PaginationModel) {

@@ -20,7 +20,7 @@
           <mat-icon >settings</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <a mat-menu-item *ngFor="let menu of appMenuQuery.userMenuRight$ | async"
+          <a mat-menu-item *ngFor="let menu of allAppMenus$ | async"
              routerLink="{{ menu.link }}"
              [id]="menu.e2EId"
           ><!--color="{{this.router.url === menu.link ? 'accent' : ''}}"-->

@@ -58,22 +58,23 @@ export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
       }
 
       const href = this.router.url;
-      this.appMenuObservableSub$ = this.appMenuStateService.appMenuObservable.subscribe(
-        (appMenu) => {
-          if (appMenu) {
-            this.title = this.appMenuStateService.getTitleByUrl(href);
-            if (!this.title) {
-              this.getSingleEformSub$ = this.eFormService
-                .getSingle(this.selectedTemplateId)
-                .subscribe((data) => {
-                  if (data.success && data.model) {
-                    this.title = data.model.label;
-                  }
-                });
-            }
-          }
-        }
-      );
+      // TODO: Fix this
+      // this.appMenuObservableSub$ = this.appMenuStateService.appMenuObservable.subscribe(
+      //   (appMenu) => {
+      //     if (appMenu) {
+      //       this.title = this.appMenuStateService.getTitleByUrl(href);
+      //       if (!this.title) {
+      //         this.getSingleEformSub$ = this.eFormService
+      //           .getSingle(this.selectedTemplateId)
+      //           .subscribe((data) => {
+      //             if (data.success && data.model) {
+      //               this.title = data.model.label;
+      //             }
+      //           });
+      //       }
+      //     }
+      //   }
+      // );
     });
   }
 

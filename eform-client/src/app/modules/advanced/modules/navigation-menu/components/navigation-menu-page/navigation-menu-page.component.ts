@@ -24,6 +24,7 @@ import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
+import {Store} from '@ngrx/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -58,6 +59,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     private appMenuStateService: AppMenuStateService,
     private dialog: MatDialog,
     private overlay: Overlay,
+    private store: Store,
   ) {
     dragulaService.createGroup('MENU_ITEMS', {
       moves: (el, container, handle) => {
@@ -110,15 +112,11 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  getHeaderNavigationMenu() {
-    this.appMenuStateService.getAppMenu();
-  }
-
   updateNavigationMenu() {
     this.updateNavigationMenuSub$ = this.navigationMenuService
       .updateNavigationMenu(this.navigationMenuModel.actualMenu)
       .subscribe(() => {
-        this.getHeaderNavigationMenu();
+        this.store.dispatch({type: '[AppMenu] Load AppMenu'});
       });
   }
 
@@ -202,7 +200,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       .restNavigationMenu()
       .subscribe((data) => {
         if (data && data.success) {
-          this.getHeaderNavigationMenu();
+          this.store.dispatch({type: '[AppMenu] Load AppMenu'});
           this.getNavigationMenu();
         }
       });

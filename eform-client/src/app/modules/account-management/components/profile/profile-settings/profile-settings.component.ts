@@ -8,11 +8,12 @@ import {
 } from 'src/app/common/services/auth';
 import { TimezonesModel } from 'src/app/common/models/common/timezones.model';
 import { countries } from 'src/app/common/const/application-countries.const';
-import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
+import { AuthStateService } from 'src/app/common/store';
 import {tap} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import {LanguagesModel} from 'src/app/common/models';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-profile-settings',
@@ -33,7 +34,7 @@ export class ProfileSettingsComponent implements OnInit {
     private googleAuthService: GoogleAuthService,
     private localeService: LocaleService,
     private userSettingsService: UserSettingsService,
-    private appMenuStateService: AppMenuStateService,
+    private store: Store,
     private appSettingsStateService: AppSettingsStateService
   ) {}
 
@@ -94,7 +95,8 @@ export class ProfileSettingsComponent implements OnInit {
           this.userSettingsModel.locale,
           this.userSettingsModel.darkTheme
         );
-        this.appMenuStateService.getAppMenu();
+        this.store.dispatch({type: '[AppMenu] Load AppMenu'});
+        //this.appMenuStateService.getAppMenu();
       });
   }
 
