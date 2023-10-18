@@ -73,7 +73,7 @@
     "@ngx-gallery/lightbox": "4.0.3",
     "@ngx-translate/core": "14.0.0",
     "@swimlane/ngx-charts": "20.4.1",
-    "@types/dragula": "3.7.1",
+    "@types/dragula": "3.7.3",
     "@types/file-saver": "2.0.5",
     "@userback/widget": "^0.3.0",
     "angular-calendar": "0.31.0",
