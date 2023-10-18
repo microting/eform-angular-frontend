@@ -61,21 +61,22 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authStateService.isAuthAsync.pipe(filter(isAuth => isAuth === true)).subscribe(() => {
-      this.getCurrentUserInfoSub$ = this.adminService
-        .getCurrentUserInfo()
-        .subscribe((result) => {
-          this.authStateService.updateUserInfo(result);
-          //this.appMenuService.getAppMenu();
-          this.store.dispatch({type: '[AppMenu] Load AppMenu'});
-          this.getAppMenuSub$ = this.allAppMenus$.subscribe(x => {
-            if (x.length > 0) {
-              this.menu.data = [...x];
-              this.restoreOpenedMenu();
-            }
-          });
-        });
-    });
+    // TODO Fix this
+    // this.authStateService.isAuthAsync.pipe(filter(isAuth => isAuth === true)).subscribe(() => {
+    //   this.getCurrentUserInfoSub$ = this.adminService
+    //     .getCurrentUserInfo()
+    //     .subscribe((result) => {
+    //       this.authStateService.updateUserInfo(result);
+    //       //this.appMenuService.getAppMenu();
+    //       this.store.dispatch({type: '[AppMenu] Load AppMenu'});
+    //       this.getAppMenuSub$ = this.allAppMenus$.subscribe(x => {
+    //         if (x.length > 0) {
+    //           this.menu.data = [...x];
+    //           this.restoreOpenedMenu();
+    //         }
+    //       });
+    //     });
+    // });
   }
 
   checkGuards(guards: string[]) {

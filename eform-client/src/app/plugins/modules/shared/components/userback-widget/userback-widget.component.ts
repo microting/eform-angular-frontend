@@ -30,7 +30,8 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.isAuthSub$ = this.authStateService.isAuthAsync.subscribe((isAuth?: boolean) => this.onIsAuthAsync(isAuth));
+    // TODO: Fix this
+    // this.isAuthSub$ = this.authStateService.isAuthAsync.subscribe((isAuth?: boolean) => this.onIsAuthAsync(isAuth));
   }
 
   onIsAuthAsync(isAuth?: boolean) {

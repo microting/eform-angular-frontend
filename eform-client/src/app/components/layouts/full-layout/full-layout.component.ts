@@ -88,6 +88,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getSettings() {
+    // TODO: Fix this
     this.authStateService.isConnectionStringExist();
     zip(this.authStateService.isConnectionStringExistAsync, this.authStateService.isAuthAsync)
       .subscribe(([isConnectionStringExist, isAuth]) => {

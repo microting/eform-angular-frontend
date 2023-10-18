@@ -93,9 +93,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
-    this.isAuthAsyncSub$ = this.authStateService.isAuthAsync.pipe(filter((isAuth: boolean) => isAuth === true)).subscribe(() => {
-      this.router.navigate(['/']).then();
-    })
+    // TODO: Fix this
+    // this.isAuthAsyncSub$ = this.authStateService.isAuthAsync.pipe(filter((isAuth: boolean) => isAuth === true)).subscribe(() => {
+    //   this.router.navigate(['/']).then();
+    // });
   }
 
   ngOnDestroy(): void {

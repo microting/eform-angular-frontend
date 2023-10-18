@@ -1,6 +1,4 @@
 import {Inject, Injectable} from '@angular/core';
-import {AuthStore} from '../store';
-import {AuthQuery} from '../query';
 import {AppSettingsService, AuthService, UserSettingsService} from 'src/app/common/services';
 import {LoginRequestModel, UserClaimsModel, UserInfoModel,} from 'src/app/common/models';
 import {BehaviorSubject, Observable, take, zip} from 'rxjs';
@@ -11,16 +9,19 @@ import {Locale} from 'date-fns';
 import {applicationLanguages, customDaLocale} from 'src/app/common/const';
 import {de, enUS, es, fr, it, nb, nl, pl, sv, uk, ptBR, pt, fi} from 'date-fns/locale';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
+import {Store} from '@ngrx/store';
+import {selectAuthIsAuth} from 'src/app/state/auth/auth.selector';
 
 @Injectable({providedIn: 'root'})
 export class AuthStateService {
   private isRefreshing = false;
 
   constructor(
-    private store: AuthStore,
+    //private store: AuthStore,
     private service: AuthService,
-    private query: AuthQuery,
+    //private query: AuthQuery,
     private router: Router,
+    private authStore: Store,
     private userSettings: UserSettingsService,
     // private appSettingsStore: AppSettingsStore,
     public settingsService: AppSettingsService,
@@ -31,90 +32,96 @@ export class AuthStateService {
   isConnectionStringExistLoading = false;
   isUserSettingsLoading = false;
 
+  private selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  private selectConnectionStringExist$ = this.authStore.select(selectAuthIsAuth);
+
   login(loginInfo: LoginRequestModel) {
+    this.authStore.dispatch({type: '[Auth] Authenticate', payload: loginInfo});
     // this.store = new AuthStore();
-    this.service.login(loginInfo).subscribe((response) => {
-      if (response) {
-        // this.store.update((state) => {
-        //   //console.log(`before AuthStateService.login.store.update \n ${JSON.stringify(state)}`);
-        //   return {...state,
-        //   token: {
-        //     accessToken: response.access_token,
-        //     tokenType: response.token_type,
-        //     expiresIn: response.expires_in,
-        //     role: response.role,
-        //   },
-        // }});
-        this.store.update({
-          token: {
-            accessToken: response.access_token,
-            tokenType: response.token_type,
-            expiresIn: response.expires_in,
-            role: response.role,
-          }
-        });
-        // console.log(`after AuthStateService.login.store.update \n ${JSON.stringify(this.store._value())}`);
-        this.getUserSettings();
-      }
-    });
+    // this.service.login(loginInfo).subscribe((response) => {
+    //   if (response) {
+    //     // this.store.update((state) => {
+    //     //   //console.log(`before AuthStateService.login.store.update \n ${JSON.stringify(state)}`);
+    //     //   return {...state,
+    //     //   token: {
+    //     //     accessToken: response.access_token,
+    //     //     tokenType: response.token_type,
+    //     //     expiresIn: response.expires_in,
+    //     //     role: response.role,
+    //     //   },
+    //     // }});
+    //     this.store.update({
+    //       token: {
+    //         accessToken: response.access_token,
+    //         tokenType: response.token_type,
+    //         expiresIn: response.expires_in,
+    //         role: response.role,
+    //       }
+    //     });
+    //     // console.log(`after AuthStateService.login.store.update \n ${JSON.stringify(this.store._value())}`);
+    //     this.getUserSettings();
+    //   }
+    // });
   }
 
   refreshToken() {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.service.refreshToken().subscribe((response) => {
-        if (response) {
-          this.service.obtainUserClaims().subscribe((userClaims) => {
-            // console.log(`before AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
-            this.store.update((state) => ({
-              ...state,
-              token: {
-                accessToken: response.model.access_token,
-                tokenType: response.model.token_type,
-                expiresIn: response.model.expires_in,
-                role: response.model.role,
-              },
-              currentUser: {
-                ...state.currentUser,
-                claims: userClaims,
-              },
-            }));
-            // console.log(`after AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
-            this.isRefreshing = false;
-          });
-        } else {
-          this.logout();
-          this.isRefreshing = false;
-        }
-      });
-    }
+    this.authStore.dispatch({type: '[Auth] Refresh Token'});
+    // if (!this.isRefreshing) {
+    //   this.isRefreshing = true;
+    //   this.service.refreshToken().subscribe((response) => {
+    //     if (response) {
+    //       this.service.obtainUserClaims().subscribe((userClaims) => {
+    //         // console.log(`before AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
+    //         this.store.update((state) => ({
+    //           ...state,
+    //           token: {
+    //             accessToken: response.model.access_token,
+    //             tokenType: response.model.token_type,
+    //             expiresIn: response.model.expires_in,
+    //             role: response.model.role,
+    //           },
+    //           currentUser: {
+    //             ...state.currentUser,
+    //             claims: userClaims,
+    //           },
+    //         }));
+    //         // console.log(`after AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
+    //         this.isRefreshing = false;
+    //       });
+    //     } else {
+    //       this.logout();
+    //       this.isRefreshing = false;
+    //     }
+    //   });
+    // }
   }
 
   getUserSettings() {
     // if (!this.isUserSettingsLoading) {
-    this.isUserSettingsLoading = true;
-    zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
-      this.isUserSettingsLoading = false;
-      // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-      this.store.update((state) => ({
-        ...state,
-        currentUser: {
-          ...state.currentUser,
-          darkTheme: userSettings.model.darkTheme,
-          locale: userSettings.model.locale,
-          loginRedirectUrl: userSettings.model.loginRedirectUrl,
-          claims: userClaims,
-        },
-      }));
-      this.setLocale();
-      // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-      if (userSettings.model.loginRedirectUrl) {
-        this.router
-          .navigate([
-            `/${userSettings.model.loginRedirectUrl}`,
-          ]).then();
-      }
-    });
+    // TODO: need to fix this
+    // this.isUserSettingsLoading = true;
+    // zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+    //   this.isUserSettingsLoading = false;
+    //   // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
+    //   this.store.update((state) => ({
+    //     ...state,
+    //     currentUser: {
+    //       ...state.currentUser,
+    //       darkTheme: userSettings.model.darkTheme,
+    //       locale: userSettings.model.locale,
+    //       loginRedirectUrl: userSettings.model.loginRedirectUrl,
+    //       claims: userClaims,
+    //     },
+    //   }));
+    //   this.setLocale();
+    //   // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
+    //   if (userSettings.model.loginRedirectUrl) {
+    //     this.router
+    //       .navigate([
+    //         `/${userSettings.model.loginRedirectUrl}`,
+    //       ]).then();
+    //   }
+    // });
     // }
   }
 
@@ -126,31 +133,32 @@ export class AuthStateService {
   }
 
   isConnectionStringExist() {
-    // console.debug('isConnectionStringExist called');
+    console.debug('isConnectionStringExist called');
+    // TODO: need to fix this
     if (!this.isConnectionStringExistLoading) {
-      this.isConnectionStringExistLoading = true;
-      this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
-        (result) => {
-          if (!result || (result && !result.success)) {
-            this.store.update((state) => ({
-              connectionString: {
-                isConnectionStringExist: false,
-                count: state.connectionString.count + 1
-              }
-            }));
-            this.isConnectionStringExistLoading = false;
-          } else if (result && result.success) {
-            this.store.update((state) => ({
-              connectionString: {
-                isConnectionStringExist: true,
-                count: state.connectionString.count + 1
-              }
-            }));
-            this.isConnectionStringExistLoading = false;
-          }
-        }
-      );
-    }
+       this.isConnectionStringExistLoading = true;
+       this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
+         (result) => {
+           if (!result || (result && !result.success)) {
+    //         this.store.update((state) => ({
+    //           connectionString: {
+    //             isConnectionStringExist: false,
+    //             count: state.connectionString.count + 1
+    //           }
+    //         }));
+             this.isConnectionStringExistLoading = false;
+           } else if (result && result.success) {
+    //         this.store.update((state) => ({
+    //           connectionString: {
+    //             isConnectionStringExist: true,
+    //             count: state.connectionString.count + 1
+    //           }
+    //         }));
+             this.isConnectionStringExistLoading = false;
+           }
+         }
+       );
+     }
   }
 
   get isConnectionStringExistAsync(): Observable<boolean> {
@@ -161,12 +169,15 @@ export class AuthStateService {
     return this.query.selectIsConnectionStringExistWithCount$;
   }
 
-  get isAuth(): boolean {
-    return !!this.query.currentSetting.token.accessToken;
-  }
+  // get isAuth(): boolean {
+  //   this.selectIsAuth$.subscribe((isAuth: boolean) => {
+  //     return isAuth;
+  //   });
+  //   //return !!this.query.currentSetting.token.accessToken;
+  // }
 
   get isAuthAsync(): Observable<boolean> {
-    return this.query.selectIsAuth$;
+    return this.selectIsAuth$;
   }
 
   get bearerToken(): string {
@@ -229,45 +240,49 @@ export class AuthStateService {
   }
 
   updateCurrentUserLocaleAndDarkTheme(locale: string, darkTheme: boolean) {
-    this.store.update((state) => ({
-      ...state,
-      currentUser: {
-        ...state.currentUser,
-        locale: locale,
-        darkTheme: darkTheme,
-      },
-    }));
-    this.setLocale();
+    // TODO: need to fix this
+    // this.store.update((state) => ({
+    //   ...state,
+    //   currentUser: {
+    //     ...state.currentUser,
+    //     locale: locale,
+    //     darkTheme: darkTheme,
+    //   },
+    // }));
+    // this.setLocale();
   }
 
   updateDarkTheme(darkTheme: boolean) {
-    this.store.update((state) => ({
-      ...state,
-      currentUser: {
-        ...state.currentUser,
-        darkTheme: darkTheme,
-      },
-    }));
+    // TODO: need to fix this
+    // this.store.update((state) => ({
+    //   ...state,
+    //   currentUser: {
+    //     ...state.currentUser,
+    //     darkTheme: darkTheme,
+    //   },
+    // }));
   }
 
   updateUserInfo(userInfo: UserInfoModel) {
-    this.store.update((state) => ({
-      ...state,
-      currentUser: {
-        ...state.currentUser,
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName,
-        id: userInfo.id,
-        userName: userInfo.email,
-      },
-    }));
+    // TODO: need to fix this
+    // this.store.update((state) => ({
+    //   ...state,
+    //   currentUser: {
+    //     ...state.currentUser,
+    //     firstName: userInfo.firstName,
+    //     lastName: userInfo.lastName,
+    //     id: userInfo.id,
+    //     userName: userInfo.email,
+    //   },
+    // }));
   }
 
   updateSideMenuOpened(opened: boolean) {
-    this.store.update((state) => ({
-      ...state,
-      sideMenuOpened: opened,
-    }));
+    // TODO: need to fix this
+    // this.store.update((state) => ({
+    //   ...state,
+    //   sideMenuOpened: opened,
+    // }));
   }
 
   get currentUserClaimsAsync() {
@@ -296,9 +311,9 @@ export class AuthStateService {
     );
   }
 
-  get loginRedirectUrl(): string {
-    return this.query.currentSetting.currentUser.loginRedirectUrl;
-  }
+  // get loginRedirectUrl(): string {
+  //   return this.query.currentSetting.currentUser.loginRedirectUrl;
+  // }
 
   private setLocale() {
     this.dateLocale.next(this.dateFnsLocale);
