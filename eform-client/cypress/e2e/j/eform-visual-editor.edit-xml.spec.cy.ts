@@ -62,7 +62,9 @@ describe('My eforms', () => {
     // @ts-ignore
     cy.get('#mainCheckListNameTranslation_1').clear('C');
     cy.get('#mainCheckListNameTranslation_1').type('CheckBox');
+    cy.wait(2000);
     cy.get('#editBtn > .mat-button-wrapper > .mat-icon').click();
+    cy.wait(2000);
     // @ts-ignore
     cy.get('#fieldNameTranslation_1').clear('C');
     cy.get('#fieldNameTranslation_1').type('CheckBox eng');

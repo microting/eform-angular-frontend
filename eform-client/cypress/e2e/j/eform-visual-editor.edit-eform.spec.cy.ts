@@ -127,6 +127,7 @@ describe('My eforms', () => {
     cy.get('#addNewNestedField0 > .mat-button-wrapper > .mat-icon').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('bi');
+    cy.wait(1000);
     selectValueInNgSelectorNoSelector('Billed');
     // @ts-ignore
     cy.get('#fieldNameTranslation_0').clear('Billed');

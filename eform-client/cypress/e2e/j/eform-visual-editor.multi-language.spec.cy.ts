@@ -40,6 +40,7 @@ describe('My eforms', () => {
     cy.get('#newChecklistNameTranslation_1').clear('l');
     cy.get('#newChecklistNameTranslation_1').type('lvl1e');
     cy.get('#changeChecklistSaveBtn > .mat-button-wrapper').click();
+    cy.wait(2000);
     cy.get('#editChecklistBtn1').click();
     // @ts-ignore
     cy.get('#newChecklistNameTranslation_1').clear('l');
