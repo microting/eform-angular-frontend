@@ -124,7 +124,7 @@ describe('My eforms', () => {
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
     cy.wait('@geteForm', { timeout: 60000 });
-    cy.get('#addNewNestedField0 > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#addNewNestedField0 > .mat-button-wrapper > mat-icon').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('bi');
     cy.wait(1000);
@@ -134,7 +134,7 @@ describe('My eforms', () => {
     cy.get('#fieldNameTranslation_0').type('Billede 1');
     cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
     cy.wait(2000);
-    cy.get('#addNewNestedField1 > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#addNewNestedField1 > .mat-button-wrapper > mat-icon').click();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
     cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('B');
     selectValueInNgSelectorNoSelector('Billed');
