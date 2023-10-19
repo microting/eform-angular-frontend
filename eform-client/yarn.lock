@@ -1970,10 +1970,10 @@
     treeverse "^3.0.0"
     walk-up-path "^3.0.1"
 
-"@npmcli/config@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@npmcli/config/-/config-8.0.0.tgz#2d298c84026b7a946a3fad3f5ff280144ca72c50"
-  integrity sha512-a2ybqstXSCAbP7QghgGcOvLTBlaR3wWQyAmTfWXJld6qP6+vKQabTZQwzRPs00kKi870beNZHhV4Fvlca2l/uA==
+"@npmcli/config@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@npmcli/config/-/config-8.0.1.tgz#7918186541276946f1ea550a8e47abb7eafb7460"
+  integrity sha512-NKGmMYv/YTLwJr+qK9CvADSe82NTM9AFwFFpsZpVcPCT3XTdxvJBdXi8xvXWjHSCMb0Cb+7FtU/a5qqguCOhxA==
   dependencies:
     "@npmcli/map-workspaces" "^3.0.2"
     ci-info "^3.8.0"
@@ -3289,16 +3289,6 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/logger@8.11.0":
-  version "8.11.0"
-  resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-8.11.0.tgz#df28cb65d7b9e308a0cd1445a99adc8b5730174c"
-  integrity sha512-IsuKSaYi7NKEdgA57h8muzlN/MVp1dQG+V4C//7g4m03YJUnNQLvDhJzLjdeNTfvZy61U7foQSyt+3ktNzZkXA==
-  dependencies:
-    chalk "^5.1.2"
-    loglevel "^1.6.0"
-    loglevel-plugin-prefix "^0.8.4"
-    strip-ansi "^7.1.0"
-
 "@wdio/logger@8.16.17", "@wdio/logger@^8.1.0", "@wdio/logger@^8.11.0", "@wdio/logger@^8.16.17":
   version "8.16.17"
   resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-8.16.17.tgz#c2055857ed3e3cf12cfad843140fa79264c6a632"
@@ -3409,13 +3399,6 @@
     "@types/node" "^18.0.0"
     got "^11.8.1"
 
-"@wdio/types@8.16.7":
-  version "8.16.7"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.16.7.tgz#70be4974839a4fc6f5edd0953df9228a918362c3"
-  integrity sha512-s7fSO5CbrFdM5gsLgXzdCbZykJzZ7bpfxdW3v7NT0IQMABlv4cYpesK66DHQGjSG8Rr3LEqsMmpkt2TlMiwWVQ==
-  dependencies:
-    "@types/node" "^20.1.0"
-
 "@wdio/types@8.17.0":
   version "8.17.0"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.17.0.tgz#e7a5c458b39b80cfeb1a3d8c772b249b5780d090"
@@ -3439,26 +3422,6 @@
     "@wdio/types" "7.33.0"
     p-iteration "^1.1.8"
 
-"@wdio/utils@8.16.11":
-  version "8.16.11"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.16.11.tgz#02be50d1ed4b8aea14c966fd0305e179c4cef4f5"
-  integrity sha512-hV0p7sK2f6KuaFXYFZLFaRs4o/l2nxvB5z3c4umQ2P71/mms1k8h1A9hK+aMCHg2plPcKr74lzxsGhIT+pD1Zg==
-  dependencies:
-    "@puppeteer/browsers" "^1.6.0"
-    "@wdio/logger" "8.11.0"
-    "@wdio/types" "8.16.7"
-    decamelize "^6.0.0"
-    deepmerge-ts "^5.1.0"
-    edgedriver "^5.3.5"
-    geckodriver "^4.2.0"
-    get-port "^7.0.0"
-    got "^13.0.0"
-    import-meta-resolve "^3.0.0"
-    locate-app "^2.1.0"
-    safaridriver "^0.1.0"
-    split2 "^4.2.0"
-    wait-port "^1.0.4"
-
 "@wdio/utils@8.17.0":
   version "8.17.0"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.17.0.tgz#21f52b76bb9dfb0728440a780c910d3df4a614bc"
@@ -3467,26 +3430,6 @@
     "@puppeteer/browsers" "^1.6.0"
     "@wdio/logger" "8.16.17"
     "@wdio/types" "8.17.0"
-    decamelize "^6.0.0"
-    deepmerge-ts "^5.1.0"
-    edgedriver "^5.3.5"
-    geckodriver "^4.2.0"
-    get-port "^7.0.0"
-    got "^13.0.0"
-    import-meta-resolve "^3.0.0"
-    locate-app "^2.1.0"
-    safaridriver "^0.1.0"
-    split2 "^4.2.0"
-    wait-port "^1.0.4"
-
-"@wdio/utils@8.19.0":
-  version "8.19.0"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.19.0.tgz#ce458f93972e479972be36831a778058e46c538a"
-  integrity sha512-Pwpoc0yqFMtVVv7Wp5zAJKO8qNRcbVHRGOdc62UFpXD09+kvnwhsgCJcQPPQndCebbDgvhFok3rBcgYrjEz5rQ==
-  dependencies:
-    "@puppeteer/browsers" "^1.6.0"
-    "@wdio/logger" "8.16.17"
-    "@wdio/types" "8.19.0"
     decamelize "^6.0.0"
     deepmerge-ts "^5.1.0"
     edgedriver "^5.3.5"
@@ -4804,7 +4747,7 @@ chromium-bidi@0.4.16:
   dependencies:
     mitt "3.0.0"
 
-ci-info@^3.2.0, ci-info@^3.6.1, ci-info@^3.7.1, ci-info@^3.8.0:
+ci-info@^3.2.0, ci-info@^3.6.1, ci-info@^3.7.1, ci-info@^3.8.0, ci-info@^3.9.0:
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.9.0.tgz#4279a62028a7b1f262f3473fc9605f5e218c59b4"
   integrity sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==
@@ -9558,7 +9501,7 @@ npm-bundled@^3.0.0:
   dependencies:
     npm-normalize-package-bin "^3.0.0"
 
-npm-install-checks@^6.0.0, npm-install-checks@^6.2.0:
+npm-install-checks@^6.0.0, npm-install-checks@^6.2.0, npm-install-checks@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/npm-install-checks/-/npm-install-checks-6.3.0.tgz#046552d8920e801fa9f919cad569545d60e826fe"
   integrity sha512-W29RiK/xtpCGqn6f3ixfRYGk+zRyr+Ew9F2E20BfXxT5/euLdA/Nm7fO7OeTGuAmTs30cpgInyJ0cYe708YTZw==
@@ -9655,7 +9598,7 @@ npm-registry-fetch@^14.0.0:
     npm-package-arg "^10.0.0"
     proc-log "^3.0.0"
 
-npm-registry-fetch@^16.0.0:
+npm-registry-fetch@^16.0.0, npm-registry-fetch@^16.1.0:
   version "16.1.0"
   resolved "https://registry.yarnpkg.com/npm-registry-fetch/-/npm-registry-fetch-16.1.0.tgz#10227b7b36c97bc1cf2902a24e4f710cfe62803c"
   integrity sha512-PQCELXKt8Azvxnt5Y85GseQDJJlglTFM9L9U9gkv2y4e9s0k3GVDdOx3YoB6gm2Do0hlkzC39iCGXby+Wve1Bw==
@@ -9687,14 +9630,14 @@ npm-user-validate@^2.0.0:
   resolved "https://registry.yarnpkg.com/npm-user-validate/-/npm-user-validate-2.0.0.tgz#7b69bbbff6f7992a1d9a8968d52fd6b6db5431b6"
   integrity sha512-sSWeqAYJ2dUPStJB+AEj0DyLRltr/f6YNcvCA7phkB8/RMLMnVsQ41GMwHo/ERZLYNDsyB2wPm7pZo1mqPOl7Q==
 
-npm@^10.1.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/npm/-/npm-10.2.0.tgz#2e4f7aba9cd913de8747d45b3dd5fb43615a4139"
-  integrity sha512-Auyq6d4cfg/SY4URjZE2aePLOPzK4lUD+qyMxY/7HbxAvCnOCKtMlyLPcbLSOq9lhEGBZN800S1o+UmfjA5dTg==
+npm@^10.2.1:
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/npm/-/npm-10.2.1.tgz#41fd6626a08d4167b8639edd272ecf9735e7ceaf"
+  integrity sha512-YVh8UDw5lR2bPS6rrS0aPG9ZXKDWeaeO/zMoZMp7g3Thrho9cqEnSrcvg4Pic2QhDAQptAynx5KgrPgCSRscqg==
   dependencies:
     "@isaacs/string-locale-compare" "^1.1.0"
     "@npmcli/arborist" "^7.2.0"
-    "@npmcli/config" "^8.0.0"
+    "@npmcli/config" "^8.0.1"
     "@npmcli/fs" "^3.1.0"
     "@npmcli/map-workspaces" "^3.0.4"
     "@npmcli/package-json" "^5.0.0"
@@ -9705,7 +9648,7 @@ npm@^10.1.0:
     archy "~1.0.0"
     cacache "^18.0.0"
     chalk "^5.3.0"
-    ci-info "^3.8.0"
+    ci-info "^3.9.0"
     cli-columns "^4.0.0"
     cli-table3 "^0.6.3"
     columnify "^1.6.0"
@@ -9738,11 +9681,11 @@ npm@^10.1.0:
     nopt "^7.2.0"
     normalize-package-data "^6.0.0"
     npm-audit-report "^5.0.0"
-    npm-install-checks "^6.2.0"
+    npm-install-checks "^6.3.0"
     npm-package-arg "^11.0.1"
     npm-pick-manifest "^9.0.0"
     npm-profile "^9.0.0"
-    npm-registry-fetch "^16.0.0"
+    npm-registry-fetch "^16.1.0"
     npm-user-validate "^2.0.0"
     npmlog "^7.0.1"
     p-map "^4.0.0"
