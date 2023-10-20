@@ -32,6 +32,7 @@ describe('My eforms', () => {
     cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
     cy.wait('@geteForm', { timeout: 60000 });
     cy.get('#languageCheckbox1 > .mat-checkbox-layout').click();
+    cy.wait(2000);
     // @ts-ignore
     cy.get('#mainCheckListNameTranslation_1').clear('M');
     cy.get('#mainCheckListNameTranslation_1').type('Maintitle');
