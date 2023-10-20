@@ -29,7 +29,7 @@ export default defineConfig({
     screenshotOnRunFailure: false,
     screenshotsFolder: 'cypress/screenshots',
     trashAssetsBeforeRuns: true,
-    videoCompression: 32,
+    videoCompression: 0,
     videosFolder: 'cypress/videos',
     video: true,
     videoUploadOnPasses: false,

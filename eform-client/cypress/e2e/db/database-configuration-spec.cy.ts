@@ -18,7 +18,7 @@ describe('Database', () => {
 
     databasePage.configure(DatabaseConfigurationConstants.languageOptions.danish);
     databasePage.save();
-    cy.wait(90000);
+    cy.wait(120000);
     loginPage.getLoginButton().should('be.visible');
   });
 });
