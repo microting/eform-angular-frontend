@@ -18,13 +18,10 @@ describe('My eforms', () => {
   //   cy.get('#initialChecklistCreateBtn > .mat-button-wrapper > .mat-icon').click();
   //   cy.get('#newChecklistNameTranslation_0').clear();
   //   cy.get('#newChecklistNameTranslation_0').type('lvl 1');
-  //   cy.wait(500);
   //   cy.get('#changeChecklistSaveBtn > .mat-button-wrapper').click();
-  //   cy.wait(500);
   //   cy.get('#initialChecklistCreateBtn > .mat-button-wrapper > .mat-icon').click();
   //   cy.get('#newChecklistNameTranslation_0').clear();
   //   cy.get('#newChecklistNameTranslation_0').type('lvl 1.1');
-  //   cy.wait(500);
   //   cy.get('#changeChecklistSaveBtn').click();
   //   cy.wait(2000);
   //   cy.intercept('POST', '**/api/template-visual-editor/').as('saveeForm');
@@ -35,6 +32,7 @@ describe('My eforms', () => {
   //   cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
   //   cy.wait('@geteForm', { timeout: 60000 });
   //   cy.get('#languageCheckbox1 > .mat-checkbox-layout').click();
+  //   cy.wait(2000);
   //   // @ts-ignore
   //   cy.get('#mainCheckListNameTranslation_1').clear('M');
   //   cy.get('#mainCheckListNameTranslation_1').type('Maintitle');
@@ -48,9 +46,7 @@ describe('My eforms', () => {
   //   // @ts-ignore
   //   cy.get('#newChecklistNameTranslation_1').clear('l');
   //   cy.get('#newChecklistNameTranslation_1').type('lvl1.1e');
-  //   cy.wait(2000);
   //   cy.get('#changeChecklistSaveBtn > .mat-button-wrapper').click();
-  //   cy.wait(2000);
   //   cy.intercept('PUT', '**/api/template-visual-editor/').as('saveeForm');
   //   cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
   //   cy.wait(2000);
