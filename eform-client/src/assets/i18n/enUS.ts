@@ -405,4 +405,5 @@ export const enUS = {
   'Select date': 'Select date',
   'Value': 'Value',
   'Please fill out this field': 'Please fill out this field',
+  'Submitted date': 'Submitted date',
 };
