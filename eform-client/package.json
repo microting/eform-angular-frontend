@@ -63,7 +63,7 @@
     "@circlon/angular-tree-component": "^11.0.4",
     "@danielmoncada/angular-datetime-picker": "16.0.1",
     "@ng-matero/extensions": "^14.8.1",
-    "@ng-select/ng-select": "10.0.4",
+    "@ng-select/ng-select": "11.2.0",
     "@ngrx/store": "^15.4.0",
     "@ngrx/store-devtools": "^15.4.0",
     "@ngrx/effects": "^15.4.0",

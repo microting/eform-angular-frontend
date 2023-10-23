@@ -1824,10 +1824,10 @@
     photoviewer "^3.7.0"
     tslib "^2.3.0"
 
-"@ng-select/ng-select@10.0.4":
-  version "10.0.4"
-  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-10.0.4.tgz#46ab5e7bfcf6473868d1584cf5d7f63291346217"
-  integrity sha512-Vc/JIgcFkSgf47cX7+pQQo9HYhDktfqrY7o/ZPGMvu63P7E9d1MibVipqmcLbgms6Ac9lu621CDZPGHdxag7hA==
+"@ng-select/ng-select@11.2.0":
+  version "11.2.0"
+  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-11.2.0.tgz#33048ddeb6a524078f3134167d75137239bf1c6e"
+  integrity sha512-lTyw93kFdKGecp9eKmOP0PQSCaAJS8DCt4D60ns055+ixvRSp2fuXAuJUvn1e3gAsvpZor37osmYlOJ4LYwYIA==
   dependencies:
     tslib "^2.3.1"
 
