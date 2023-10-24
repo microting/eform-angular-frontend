@@ -63,7 +63,7 @@
         </div>
       </mat-card-content>
       <mat-card-footer
-        *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)"
+        *ngIf="selectCaseUpdate$ | async"
         class="d-flex justify-content-center align-items-center mt-2 mb-2"
       >
         <button

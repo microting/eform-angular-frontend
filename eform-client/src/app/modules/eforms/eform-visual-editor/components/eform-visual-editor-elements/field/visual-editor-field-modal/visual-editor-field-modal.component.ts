@@ -20,6 +20,8 @@ import {AuthStateService} from 'src/app/common/store';
 import {TranslateService} from '@ngx-translate/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TranslationRequestModel, TranslationService} from 'src/app/common/services';
+import {selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-visual-editor-field-modal',
@@ -34,6 +36,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   fieldTypes: EformVisualEditorFieldTypeModel[];
   appLanguages: LanguagesModel = new LanguagesModel();
   translationPossible = false;
+  public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
 
   get languages() {
     //return applicationLanguages;
@@ -60,9 +63,13 @@ export class VisualEditorFieldModalComponent implements OnInit {
     } else {
       this.fieldTypes = [...getTranslatedTypes(this.translateService)];
     }
-    if (!this.authStateService.isAdmin) {
-      this.fieldTypes = this.fieldTypes.filter(x => !typesForAdminOnly.includes(x.id));
-    }
+    this.selectCurrentUserIsAdmin$.subscribe((isAdmin) => {
+      if (isAdmin) {
+        this.fieldTypes = [...this.fieldTypes, ...getTranslatedTypes(this.translateService).filter(
+          (x) => typesForAdminOnly.includes(x.id)
+        )];
+      }
+    });
   }
 
   get eformFieldTypesEnum(): typeof EformFieldTypesEnum {
@@ -89,6 +96,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
 
   constructor(
     private authStateService: AuthStateService,
+    private authStore: Store,
     private translateService: TranslateService,
     private translationService: TranslationService,
     public dialogRef: MatDialogRef<VisualEditorFieldModalComponent>,

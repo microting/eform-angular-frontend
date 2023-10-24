@@ -8,6 +8,8 @@ import {FoldersService, SitesService, EFormService} from 'src/app/common/service
 import {AuthStateService} from 'src/app/common/store';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import {Store} from "@ngrx/store";
+import {selectCurrentUserClaimsEformsPairingRead} from 'src/app/state/auth/auth.selector';
 
 @Component({
   selector: 'app-eform-edit-paring-modal',
@@ -28,12 +30,10 @@ export class EformEditParingModalComponent implements OnInit {
   //   // { header: this.translateService.get('Select'), field: 'status' },
   // ];
   rowSelected: any[];
-
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
+  private selectCurrentUserClaimsEformsPairingRead$ = this.authStore.select(selectCurrentUserClaimsEformsPairingRead);
 
   constructor(
+    private authStore: Store,
     private foldersService: FoldersService,
     private eFormService: EFormService,
     private sitesService: SitesService,
@@ -53,14 +53,24 @@ export class EformEditParingModalComponent implements OnInit {
   }
 
   loadAllSites() {
-    if (this.userClaims.eformsPairingRead) {
-      this.sitesService.getAllSitesForPairing().subscribe((operation) => {
-        if (operation && operation.success) {
-          this.sitesDto = operation.model;
-          this.loadAllFolders();
-        }
-      });
-    }
+    this.selectCurrentUserClaimsEformsPairingRead$.subscribe((x) => {
+      if (x) {
+        this.sitesService.getAllSitesForPairing().subscribe((operation) => {
+          if (operation && operation.success) {
+            this.sitesDto = operation.model;
+            this.loadAllFolders();
+          }
+        });
+      }
+    });
+    // if (this.userClaims.eformsPairingRead) {
+    //   this.sitesService.getAllSitesForPairing().subscribe((operation) => {
+    //     if (operation && operation.success) {
+    //       this.sitesDto = operation.model;
+    //       this.loadAllFolders();
+    //     }
+    //   });
+    // }
   }
 
   addToArray(e: any, deployId: number) {

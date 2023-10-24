@@ -1,6 +1,13 @@
 import {UserClaimsModel} from 'src/app/common/models';
 import {createReducer, on} from '@ngrx/store';
-import {authenticate, loadAuthFailure, loadAuthSuccess, refreshToken} from 'src/app/state/auth/auth.actions';
+import {
+  authenticate,
+  ConnectionStringExistCount,
+  loadAuthFailure,
+  loadAuthSuccess,
+  refreshToken,
+  updateUserInfo
+} from 'src/app/state/auth/auth.actions';
 
 export interface AuthState {
   token: {
@@ -97,7 +104,7 @@ export const createInitialState: AuthState = {
     isConnectionStringExist: false,
     count: 0,
   },
-  sideMenuOpened: false,
+  sideMenuOpened: true,
   error: null,
   status: 'pending',
 };
@@ -114,13 +121,36 @@ export const _authReducer = createReducer(
     status: 'loading',
     }),
   ),
+  on(ConnectionStringExistCount, (state, {payload}) => ({
+    ...state,
+    status: 'success',
+    connectionString: {
+      isConnectionStringExist: payload.isConnectionStringExist,
+      count: payload.count,
+    },
+    })),
   on(loadAuthSuccess, (state, {payload}) => ({
     ...state,
     status: 'success',
-    token: payload.model.token,
-    currentUser: payload.model.currentUser,
-    connectionString: payload.model.connectionString,
+    error: null,
+    token: payload.token,
+    currentUser: payload.currentUser,
+    connectionString: {
+      isConnectionStringExist: true,
+      count: payload.count,
+    },
     })),
+  on(updateUserInfo, (state, {payload}) => ({
+    ...state,
+    status: 'success',
+    currentUser: {
+      ...state.currentUser,
+      darkTheme: payload.userSettings.model.darkTheme,
+      locale: payload.userSettings.model.locale,
+      loginRedirectUrl: payload.userSettings.model.loginRedirectUrl || '',
+      claims: payload.userClaims,
+    },
+  })),
   on(loadAuthFailure, (state, {payload}) => ({
     ...state,
     error: payload,

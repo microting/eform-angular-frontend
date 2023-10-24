@@ -8,6 +8,8 @@ import {AuthStateService} from 'src/app/common/store';
 import {ApiBaseService} from 'src/app/common/services';
 import {translates} from 'src/assets/i18n/translates';
 import {filter} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
 
 export let LocaleMethods = {
   // GoogleAuthenticatorInfo: 'api/auth/google-auth-info',
@@ -16,7 +18,9 @@ export let LocaleMethods = {
 
 @Injectable()
 export class LocaleService {
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
   constructor(
+    private authStore: Store,
     private apiBaseService: ApiBaseService,
     private authStateService: AuthStateService,
     private translateService: TranslateService,
@@ -35,7 +39,10 @@ export class LocaleService {
       arrayTranslate.push(translate);
     }
     this.translateService.addLangs(arrayTranslate);
-    let language = this.authStateService.currentUserLocale;
+    let language = '';
+    this.selectCurrentUserLocale$.subscribe((data) => {
+      language = data;
+    });
     this.translateService.setDefaultLang(applicationLanguages[1].locale);
     if (!language) {
       this.authStateService.updateUserLocale(applicationLanguages[1].locale);
@@ -50,7 +57,7 @@ export class LocaleService {
       this.translateService.use(language);
       this.initCookies(language);
     }
-    this.authStateService.currentUserLocaleAsync
+    this.selectCurrentUserLocale$
       .pipe(filter(x => !!x))
       .subscribe(x => {
         this.translateService.use(x);
@@ -100,6 +107,10 @@ export class LocaleService {
   }
 
   getCurrentUserLocale() {
-    return this.authStateService.currentUserLocale;
+    let language = '';
+    this.selectCurrentUserLocale$.subscribe((data) => {
+      language = data;
+    });
+    return language;
   }
 }

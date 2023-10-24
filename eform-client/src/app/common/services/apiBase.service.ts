@@ -5,13 +5,18 @@ import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AuthQuery } from 'src/app/common/store';
 import * as R from 'ramda';
+import {selectAuthIsAuth, selectBearerToken} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class ApiBaseService {
+  private selectBearerToken$ = this.authStore.select(selectBearerToken);
+  private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
   constructor(
     private http: HttpClient,
+    private authStore: Store,
     private toastrService: ToastrService,
-    private query: AuthQuery
+    // private query: AuthQuery
   ) {}
 
   public static objectToFormData(
@@ -199,9 +204,16 @@ export class ApiBaseService {
     } else {
       headers = headers.set('Content-Type', 'application/json');
     }
-    if (this.query.isAuth) {
-      headers.append('Authorization', this.query.bearerToken);
-    }
+    this.selectAuthIsAuth$.subscribe((isAuth) => {
+      if (isAuth) {
+        this.selectBearerToken$.subscribe((token) => {
+          headers.append('Authorization', 'Bearer ' + token);
+        });
+      }
+    });
+    // if (this.query.isAuth) {
+    //   headers.append('Authorization', bearerToken);
+    // }
     return headers;
   }
 

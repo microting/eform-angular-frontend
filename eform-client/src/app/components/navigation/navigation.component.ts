@@ -15,10 +15,12 @@ import {Observable, Subscription} from 'rxjs';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {Router} from '@angular/router';
-import {filter} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {leftAppMenus} from 'src/app/state/app-menu/app-menu.selector';
 import {AppMenuState} from 'src/app/state/app-menu/app-menu.reducer';
+import {selectAuthIsAuth, selectCurretnUserClaims} from 'src/app/state/auth/auth.selector';
+import {snakeToCamel} from "src/app/common/helpers";
 
 interface MenuNode {
   name: string;
@@ -47,13 +49,15 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   getAppMenuSub$: Subscription;
   getCurrentUserInfoSub$: Subscription;
-  public allAppMenus$ = this.store.select(leftAppMenus);
+  public allAppMenus$ = this.authStore.select(leftAppMenus);
+  private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  private selectCurrentUserClaims$ = this.authStore.select(selectCurretnUserClaims);
 
   constructor(
     private adminService: AdminService,
     private authStateService: AuthStateService,
     public router: Router,
-    private store: Store,
+    private authStore: Store,
   ) {
   }
 
@@ -62,29 +66,47 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // TODO Fix this
-    // this.authStateService.isAuthAsync.pipe(filter(isAuth => isAuth === true)).subscribe(() => {
-    //   this.getCurrentUserInfoSub$ = this.adminService
-    //     .getCurrentUserInfo()
-    //     .subscribe((result) => {
-    //       this.authStateService.updateUserInfo(result);
-    //       //this.appMenuService.getAppMenu();
-    //       this.store.dispatch({type: '[AppMenu] Load AppMenu'});
-    //       this.getAppMenuSub$ = this.allAppMenus$.subscribe(x => {
-    //         if (x.length > 0) {
-    //           this.menu.data = [...x];
-    //           this.restoreOpenedMenu();
-    //         }
-    //       });
-    //     });
+    this.selectAuthIsAuth$.pipe(filter(isAuth => isAuth === true)).subscribe(() => {
+      // this.getCurrentUserInfoSub$ = this.adminService
+      //   .getCurrentUserInfo()
+      //   .subscribe((result) => {
+      this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
+      this.getAppMenuSub$ = this.allAppMenus$.subscribe(x => {
+        if (x.length > 0) {
+          this.menu.data = [...x];
+          this.restoreOpenedMenu();
+        }
+      });
+    });
     // });
   }
 
-  checkGuards(guards: string[]) {
+  checkGuards(guards: string[]): Observable<boolean> {
+    //return new Observable<boolean>(x => x.next(true));
     if (guards.length === 0) {
-      return true;
+      return new Observable<boolean>(x => x.next(true));
     }
-
-    return guards.some((g) => this.authStateService.checkClaim(g));
+    return this.selectCurrentUserClaims$.pipe(map(x => {
+      for (const guard of guards) {
+        if (x[snakeToCamel(guard)]) {
+          return true;
+        }
+      }
+      return false;
+    }));
+    // return this.selectCurretnUserClaims$.pipe(x => {
+    //   console.log(x);
+    //   for (const guard of guards) {
+    //     if (x[guard]) {
+    //       return true;
+    //     }
+    //   }
+    // });
+    // if (guards.length === 0) {
+    //   return true;
+    // }
+    //
+    // return guards.some((g) => this.authStateService.checkClaim(g));
   }
 
   onClickOnNode() {

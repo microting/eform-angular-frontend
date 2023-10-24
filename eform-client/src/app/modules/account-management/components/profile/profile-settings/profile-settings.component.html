@@ -63,7 +63,7 @@
     <mat-form-field>
       <mat-label>{{ 'Language' | translate }}</mat-label>
       <mtx-select
-        *ngIf="authStateService.isAdmin"
+        *ngIf="selectCurrentUserIsAdmin$ | async"
         id="ProfileLanguageSelector"
         [bindLabel]="'name'"
         [bindValue]="'languageCode'"
@@ -76,7 +76,7 @@
     <mat-form-field>
       <mat-label>{{ 'Formats' | translate }}</mat-label>
       <mtx-select
-        *ngIf="authStateService.isAdmin"
+        *ngIf="selectCurrentUserIsAdmin$ | async"
         id="ProfileFormatSelector"
         [bindLabel]="'text'"
         [bindValue]="'id'"
@@ -88,7 +88,7 @@
     <mat-form-field>
       <mat-label>{{ 'Timezone' | translate }}</mat-label>
       <mtx-select
-        *ngIf="authStateService.isAdmin"
+        *ngIf="selectCurrentUserIsAdmin$ | async"
         id="ProfileTimeZoneSelector"
         [bindLabel]="'name'"
         [bindValue]="'id'"

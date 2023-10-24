@@ -16,6 +16,8 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import { TranslateService } from '@ngx-translate/core';
+import {Store} from '@ngrx/store';
+import {selectCurrentUserClaimsEntitySelectCreate} from 'src/app/state/auth/auth.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -26,10 +28,6 @@ import { TranslateService } from '@ngx-translate/core';
 export class EntitySelectComponent implements OnInit, OnDestroy{
   advEntitySelectableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();
   entitySelectRemoveComponentAfterClosedSub$: Subscription;
-
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
 
   tableHeaders: MtxGridColumn[] = [
     {header: this.translateService.stream('Id'), field: 'microtingUUID', sortProp: {id: 'Id'}, sortable: true, class: 'id'},
@@ -42,11 +40,13 @@ export class EntitySelectComponent implements OnInit, OnDestroy{
       class: 'description'
     },
     {header: this.translateService.stream('Actions'), field: 'actions'},
-  ]
+  ];
+  public selectCurrentUserClaimsEntitySelectCreate$ = this.authStore.select(selectCurrentUserClaimsEntitySelectCreate);
+  public selectCurrentUserClaimsEntitySelectUpdate$ = this.authStore.select(selectCurrentUserClaimsEntitySelectCreate);
+  public selectCurrentUserClaimsEntitySelectDelete$ = this.authStore.select(selectCurrentUserClaimsEntitySelectCreate);
 
   constructor(
-    private entitySelectService: EntitySelectService,
-    private authStateService: AuthStateService,
+    private authStore: Store,
     public entitySelectStateService: EntitySelectStateService,
     private dialog: MatDialog,
     private overlay: Overlay,

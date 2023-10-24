@@ -36,7 +36,7 @@
     <button
       mat-icon-button
       color="accent"
-      *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
+      *ngIf="selectCurrentUserClaimsCaseRead$ | async"
       [routerLink]="['/cases/edit/',row.id, currentTemplate.id]"
       matTooltip="{{ 'Edit Case' | translate }}"
     >
@@ -45,7 +45,7 @@
     <button
       mat-icon-button
       color="primary"
-      *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) &&
+      *ngIf="(selectCurrentUserClaimsCaseGetPdf$ | async) &&
         (currentTemplate.jasperExportEnabled || currentTemplate.docxExportEnabled)"
       (click)="downloadFile(row.id, 'pdf')"
       matTooltip="{{ 'Download PDF' | translate }}"
@@ -55,7 +55,7 @@
     <button
       mat-icon-button
       color="primary"
-      *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && currentTemplate.docxExportEnabled"
+      *ngIf="(selectCurrentUserClaimsCaseGetDocx$ | async) && currentTemplate.docxExportEnabled"
       (click)="downloadFile(row.id, 'docx')"
       matTooltip="{{ 'Download Docx' | translate }}"
     >
@@ -64,7 +64,7 @@
     <button
       mat-icon-button
       color="warn"
-      *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
+      *ngIf="selectCurrentUserClaimsCaseDelete$ | async"
       (click)="onDeleteClicked(row)"
       matTooltip="{{ 'Delete Case' | translate }}"
     >

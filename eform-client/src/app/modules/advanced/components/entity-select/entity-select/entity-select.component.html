@@ -4,7 +4,7 @@
     color="accent"
     id="entitySelectCreateBtn"
     matTooltip="{{ 'Create new selectable list' | translate }}"
-    *ngIf="userClaims.entitySelectCreate"
+    *ngIf="selectCurrentUserClaimsEntitySelectCreate$ | async"
     matTooltipPosition="left"
     [routerLink]="['/advanced/entity-select/create']"
   >
@@ -45,13 +45,13 @@
   (sortChange)="sortTable($event)">
 </mtx-grid>
 <ng-template #actionsTpl let-row>
-  <div *ngIf="userClaims.entitySelectDelete || userClaims.entitySelectUpdate">
+  <div *ngIf="(selectCurrentUserClaimsEntitySelectDelete$ | async) || (selectCurrentUserClaimsEntitySelectUpdate$ | async)">
     <button
       class="entitySelectEditBtn"
       mat-icon-button
       id="entitySelectEditBtn"
       matTooltip="{{ 'Edit' | translate }}"
-      [disabled]="!userClaims.entitySelectUpdate"
+      [disabled]="(selectCurrentUserClaimsEntitySelectUpdate$ | async) === false"
       [routerLink]="['/advanced/entity-select/edit/' + row.microtingUUID]"
     >
       <mat-icon>edit</mat-icon>
@@ -63,7 +63,7 @@
       id="entitySelectDeleteBtn"
       (click)="openModalSelectRemove(row)"
       matTooltip="{{ 'Remove' | translate }}"
-      [disabled]="!userClaims.entitySelectDelete || row.isLocked"
+      [disabled]="(selectCurrentUserClaimsEntitySelectDelete$ | async) === false || row.isLocked"
     >
       <mat-icon>delete</mat-icon>
     </button>

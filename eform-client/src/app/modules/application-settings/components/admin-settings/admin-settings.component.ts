@@ -7,6 +7,8 @@ import { AppSettingsService } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
 import {AppSettingsQuery, AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import * as R from 'ramda';
+import {selectBearerToken, selectCurrentUserIsAdmin} from "src/app/state/auth/auth.selector";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-admin-settings',
@@ -28,31 +30,32 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   othersSettings: { isEnableWidget: boolean } = {isEnableWidget: false};
   languagesModel: LanguagesModel = new LanguagesModel();
   previousAdminSettings: AdminSettingsModel;
+  private selectBearerToken$ = this.authStore.select(selectBearerToken);
+  private selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
 
   constructor(
     private settingsService: AppSettingsService,
+    private authStore: Store,
     private authStateService: AuthStateService,
     private eventBrokerService: EventBrokerService,
     private appSettingsStateService: AppSettingsStateService,
     private appSettingsQuery: AppSettingsQuery,
   ) {}
 
-  get currentRole(): string {
-    return this.authStateService.currentRole;
-  }
-
   ngAfterViewInit() {}
 
   ngOnInit() {
-    if (this.currentRole === 'admin') {
+    this.selectCurrentUserIsAdmin$.subscribe((isAdmin) => {
       this.getSettings();
-    }
+    });
+    let token = '';
+    this.selectBearerToken$.subscribe((bearerToken) => (token = bearerToken));
 
     const uploadOptionsLogin: FileUploaderOptions = {
       headers: [
         {
           name: 'Authorization',
-          value: this.authStateService.bearerToken
+          value: token
         }
       ],
       url: '/api/images/login-page-images',
@@ -61,7 +64,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
       headers: [
         {
           name: 'Authorization',
-          value: this.authStateService.bearerToken
+          value: token
         }
       ],
       url: '/api/images/eform-images',

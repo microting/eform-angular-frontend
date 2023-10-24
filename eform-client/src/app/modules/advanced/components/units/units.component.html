@@ -3,7 +3,7 @@
     mat-raised-button
     color="accent"
     id="unitCreateBtn"
-    *ngIf="userClaims.workersCreate"
+    *ngIf="selectCurrentUserClaimsSitesCreate$ | async"
     (click)="openCreateModal()"
   >
     {{ 'Create unit' | translate }}
@@ -36,7 +36,7 @@
     <button
       mat-icon-button
       color="warn"
-      *ngIf="userClaims.unitsUpdate"
+      *ngIf="selectCurrentUserClaimsSitesUpdate$ | async"
       matTooltip="{{ 'Get OTP code' | translate }}"
       (click)="openModalUnitsOtpCode(row)"
     >
@@ -71,7 +71,7 @@
       mat-icon-button
       color="warn"
       id="moveBtn_{{ index }}"
-      *ngIf="userClaims.sitesDelete && !row.isLocked"
+      *ngIf="(selectCurrentUserClaimsSitesDelete$ | async) && !row.isLocked"
       matTooltip="{{ 'Move unit' | translate }}"
       (click)="openMoveModal(row)"
     >

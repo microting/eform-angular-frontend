@@ -3,6 +3,12 @@ import {AuthStateService} from 'src/app/common/store';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Router} from '@angular/router';
+import {
+  selectConnectionStringExists,
+  selectConnectionStringWithCount,
+  selectIsDarkMode
+} from "src/app/state/auth/auth.selector";
+import {Store} from "@ngrx/store";
 
 @AutoUnsubscribe()
 @Component({
@@ -13,9 +19,12 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
   isDarkThemeAsync$: Subscription;
   isConnectionStringExistTrueSub$: Subscription;
   isConnectionStringExistFalseSub$: Subscription;
+  private selectIsDarkMode$ = this.authStore.select(selectIsDarkMode);
+  private selectConnectionStringWithCount$ = this.authStore.select(selectConnectionStringWithCount);
 
   constructor(
     public authStateService: AuthStateService,
+    private authStore: Store,
     private renderer: Renderer2,
     public router: Router,
   ) {
@@ -23,7 +32,7 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSettings();
-    this.isDarkThemeAsync$ = this.authStateService.isDarkThemeAsync.subscribe(
+    this.isDarkThemeAsync$ = this.selectIsDarkMode$.subscribe(
       (isDarkTheme) => {
         isDarkTheme
           ? this.switchToDarkTheme()
@@ -43,7 +52,7 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
   }
 
   getSettings() {
-    this.isConnectionStringExistTrueSub$ = this.authStateService.IsConnectionStringExistWithCountAsync
+    this.isConnectionStringExistTrueSub$ = this.selectConnectionStringWithCount$
       //.pipe(filter(connectionString => connectionString.isConnectionStringExist === true))
       .subscribe((connectionString) => {
         if (connectionString.isConnectionStringExist === true) {

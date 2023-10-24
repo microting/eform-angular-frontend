@@ -6,6 +6,8 @@ import {LoaderService} from 'src/app/common/services/loader.service';
 import {AuthStateService} from 'src/app/common/store';
 import {MatDialogRef} from '@angular/material/dialog';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {selectBearerToken, selectConnectionStringExists} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-eforms-bulk-import-modal',
@@ -15,11 +17,9 @@ import {MtxGridColumn} from '@ng-matero/extensions/grid';
 export class EformsBulkImportModalComponent implements OnInit {
   @ViewChild('xlsxEforms', {static: false})
   xlsxEformsInput: ElementRef;
-  xlsxEformsFileUploader: FileUploader = new FileUploader({
-    url: '/api/templates/import',
-    authToken: this.authStateService.bearerToken,
-  });
+  xlsxEformsFileUploader: FileUploader;
   errors: { row: number; col: number; message: string }[];
+  private selectBearerToken$ = this.authStore.select(selectBearerToken);
 
   tableHeaders: MtxGridColumn[] = [
     {header: this.translateService.stream('Column'), field: 'col'},
@@ -29,6 +29,7 @@ export class EformsBulkImportModalComponent implements OnInit {
 
   constructor(
     private toastrService: ToastrService,
+    private authStore: Store,
     private translateService: TranslateService,
     public loaderService: LoaderService,
     private authStateService: AuthStateService,
@@ -37,6 +38,14 @@ export class EformsBulkImportModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    let token = '';
+    this.selectBearerToken$.subscribe((bearerToken) => {
+      token = bearerToken;
+    });
+    this.xlsxEformsFileUploader = new FileUploader({
+      url: '/api/templates/import',
+      authToken: token,
+    });
     this.xlsxEformsFileUploader.clearQueue();
     this.xlsxEformsFileUploader.onSuccessItem = (item, response) => {
       const model = JSON.parse(response).model;

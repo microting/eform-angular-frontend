@@ -14,6 +14,7 @@ import {Subscription} from 'rxjs';
 import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import {LanguagesModel} from 'src/app/common/models';
 import {Store} from '@ngrx/store';
+import {selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 
 @Component({
   selector: 'app-profile-settings',
@@ -28,9 +29,11 @@ export class ProfileSettingsComponent implements OnInit {
   getLanguagesSub$: Subscription;
   appLanguages: LanguagesModel = new LanguagesModel();
   activeLanguages: Array<any> = [];
+  public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
 
   constructor(
     public authStateService: AuthStateService,
+    private authStore: Store,
     private googleAuthService: GoogleAuthService,
     private localeService: LocaleService,
     private userSettingsService: UserSettingsService,

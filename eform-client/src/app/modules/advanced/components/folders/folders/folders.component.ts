@@ -8,6 +8,8 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import { Subscription } from 'rxjs';
+import {Store} from "@ngrx/store";
+import {selectCurrentUserClaimsWorkersCreate} from 'src/app/state/auth/auth.selector';
 
 @Component({
   selector: 'app-folders',
@@ -19,10 +21,7 @@ export class FoldersComponent implements OnInit {
   folderDeleteComponentAfterClosedSub$: Subscription;
   folderEditComponentAfterClosedSub$: Subscription;
   folderCreateComponentAfterClosedSub$: Subscription;
-
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
+  public selectCurrentUserClaimsWorkersCreate$ = this.authStore.select(selectCurrentUserClaimsWorkersCreate);
 
   ngOnInit(): void {
     this.getInitialData();
@@ -34,9 +33,8 @@ export class FoldersComponent implements OnInit {
   }
 
   constructor(
+    private authStore: Store,
     private foldersService: FoldersService,
-    private router: Router,
-    private authStateService: AuthStateService,
     private dialog: MatDialog,
     private overlay: Overlay,
   ) {}

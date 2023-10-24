@@ -10,8 +10,12 @@ import {MatDrawer, MatDrawerMode} from '@angular/material/sidenav';
 import {filter} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {rightAppMenus} from 'src/app/state/app-menu/app-menu.selector';
-import {AppState} from 'src/app/state/app.state';
-import {MatTreeNestedDataSource} from "@angular/material/tree";
+import {
+  selectAuthIsAuth,
+  selectConnectionStringExists,
+  selectCurrentUserLocale,
+  selectIsDarkMode, selectSideMenuOpened
+} from 'src/app/state/auth/auth.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -29,11 +33,17 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   sidenavMode: MatDrawerMode = 'side';
   mobileWidth = 660;
   openedChangeSub$: Subscription;
+  public selectConnectionStringExists$ = this.authStore.select(selectConnectionStringExists);
+  private selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  private selectIsDarkMode$ = this.authStore.select(selectIsDarkMode);
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
+  public selectSideMenuOpened$ = this.authStore.select(selectSideMenuOpened);
 
   constructor(
     public authStateService: AuthStateService,
     private renderer: Renderer2,
     private localeService: LocaleService,
+    private authStore: Store,
     //public appMenuQuery: AppMenuQuery,
     private store: Store,
     public router: Router,
@@ -52,9 +62,9 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getSettings();
     this.loaderService.setLoading(true);
     this.localeService.initLocale();
-    this.authStateService.currentUserLocaleAsync.pipe(filter(x => !!x), take(1)).subscribe(_ => this.loaderService.setLoading(false))
+    this.selectCurrentUserLocale$.pipe(filter(x => !!x), take(1)).subscribe(_ => this.loaderService.setLoading(false))
     this.onResize({});
-    this.isDarkThemeAsync$ = this.authStateService.isDarkThemeAsync.subscribe(
+    this.isDarkThemeAsync$ = this.selectIsDarkMode$.subscribe(
       (isDarkTheme) => {
         isDarkTheme
           ? this.switchToDarkTheme()
@@ -90,7 +100,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   getSettings() {
     // TODO: Fix this
     this.authStateService.isConnectionStringExist();
-    zip(this.authStateService.isConnectionStringExistAsync, this.authStateService.isAuthAsync)
+    zip(this.selectConnectionStringExists$, this.selectIsAuth$)
       .subscribe(([isConnectionStringExist, isAuth]) => {
         if (isConnectionStringExist && isAuth) {
           this.authStateService.getUserSettings();

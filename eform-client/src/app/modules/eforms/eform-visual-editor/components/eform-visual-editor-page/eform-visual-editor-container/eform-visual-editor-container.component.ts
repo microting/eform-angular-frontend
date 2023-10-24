@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import * as R from 'ramda';
-import {Subscription} from 'rxjs';
+import {Subscription, take} from 'rxjs';
 import {
   EformFieldTypesEnum,
 } from 'src/app/common/const';
@@ -34,6 +34,8 @@ import {Overlay} from '@angular/cdk/overlay';
 import {EformDocxReportHeaderEditorComponent} from 'src/app/modules/eforms/eform-docx-report/components';
 import {tap} from 'rxjs/operators';
 import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
+import {selectCurrentUserIsAdmin, selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -67,6 +69,8 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   getLanguagesSub$: Subscription;
   appLanguages: LanguagesModel = new LanguagesModel();
   translationPossible: boolean;
+  public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
   constructor(
     private dragulaService: DragulaService,
@@ -75,6 +79,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     public authStateService: AuthStateService,
+    private authStore: Store,
     private dialog: MatDialog,
     private overlay: Overlay,
     private reportService: EformDocxReportService,
@@ -313,6 +318,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   showFieldModal(model?: EformVisualEditorRecursionFieldModel) {
     this.visualEditorFieldModalComponentAfterClosedSub$ = this.dialog.open(VisualEditorFieldModalComponent,
+      // eslint-disable-next-line max-len
       {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages, appLanguages: this.appLanguages, translationPossible: this.translationPossible}), minWidth: 600})
       .afterClosed()
       .subscribe(data => data.result ? (data.create ? this.onFieldCreate(data.model) : this.onFieldUpdate(data.model)) : undefined);
@@ -327,6 +333,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   showChecklistModal(model?: EformVisualEditorRecursionChecklistModel) {
     this.visualEditorChecklistModalComponentAfterClosedSub$ = this.dialog.open(VisualEditorChecklistModalComponent,
+      // eslint-disable-next-line max-len
       {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages, appLanguages: this.appLanguages, translationPossible: this.translationPossible}), minWidth: 500})
       .afterClosed()
       .subscribe(data => data.result ? (data.create ? this.onCreateChecklist(data.model) : this.onUpdateChecklist(data.model)) : undefined);
@@ -794,11 +801,18 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
           this.routerSub$ = this.route.params.subscribe((params) => {
             this.selectedTemplateId = params['templateId'];
-            this.selectedLanguages = [
-              this.appLanguages.languages.find(
-                (x) => x.languageCode === this.authStateService.currentUserLocale
-              ).id,
-            ];
+            this.selectCurrentUserLocale$.pipe(take(1)).subscribe((locale) => {
+              this.selectedLanguages = [
+                this.appLanguages.languages.find(
+                    (x) => x.languageCode === locale
+                ).id,
+                ];
+            });
+            // this.selectedLanguages = [
+            //   this.appLanguages.languages.find(
+            //     (x) => x.languageCode === this.authStateService.currentUserLocale
+            //   ).id,
+            // ];
             this.translationService.translationPossible().subscribe((result) => {
               if (result && result.success) {
                 this.translationPossible = result.model;

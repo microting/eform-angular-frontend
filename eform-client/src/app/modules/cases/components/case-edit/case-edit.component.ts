@@ -29,6 +29,8 @@ import {ToastrService} from 'ngx-toastr';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
+import {selectCurrentUserClaimsCaseUpdate, selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -56,16 +58,11 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   queryParamsSun$: Subscription;
   getSingleEformSun$: Subscription;
   onConfirmationPressedSub$: Subscription;
-
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
-
-  get userClaimsEnum() {
-    return UserClaimsEnum;
-  }
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
+  public selectCaseUpdate$ = this.authStore.select(selectCurrentUserClaimsCaseUpdate);
 
   constructor(
+    private authStore: Store,
     dateTimeAdapter: DateTimeAdapter<any>,
     activateRoute: ActivatedRoute,
     private casesService: CasesService,
@@ -84,7 +81,10 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     this.queryParamsSun$ = activateRoute.queryParams.subscribe((params) => {
       this.reverseRoute = params['reverseRoute'];
     });
-    dateTimeAdapter.setLocale(authStateService.currentUserLocale);
+    this.selectCurrentUserLocale$.subscribe((locale) => {
+      dateTimeAdapter.setLocale(locale);
+    });
+    // dateTimeAdapter.setLocale(authStateService.currentUserLocale);
   }
 
   ngOnInit() {
@@ -225,19 +225,19 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  canDeactivate(): Observable<boolean> | boolean {
-    if (
-      !this.isNoSaveExitAllowed &&
-      this.checkEformPermissions(UserClaimsEnum.caseUpdate)
-    ) {
-      const modalId = this.dialog.open(CaseEditConfirmationComponent,
-        {...dialogConfigHelper(this.overlay), minWidth: 600}).id;
-      this.onConfirmationPressedSub$ = this.dialog.getDialogById(modalId).componentInstance.onConfirmationPressed
-        .subscribe(x => this.confirmExit(x, modalId));
-      return this.dialog.getDialogById(modalId).componentInstance.navigateAwaySelection$;
-    }
-    return true;
-  }
+  // canDeactivate(): Observable<boolean> | boolean {
+  //   if (
+  //     !this.isNoSaveExitAllowed &&
+  //     this.checkEformPermissions(UserClaimsEnum.caseUpdate)
+  //   ) {
+  //     const modalId = this.dialog.open(CaseEditConfirmationComponent,
+  //       {...dialogConfigHelper(this.overlay), minWidth: 600}).id;
+  //     this.onConfirmationPressedSub$ = this.dialog.getDialogById(modalId).componentInstance.onConfirmationPressed
+  //       .subscribe(x => this.confirmExit(x, modalId));
+  //     return this.dialog.getDialogById(modalId).componentInstance.navigateAwaySelection$;
+  //   }
+  //   return true;
+  // }
 
   navigateToReverse() {
     if (this.reverseRoute) {
@@ -268,16 +268,6 @@ export class CaseEditComponent implements OnInit, OnDestroy {
             // // This is commented as loadCase is in 99% of the time the slowest
           }
         });
-    }
-  }
-
-  checkEformPermissions(permissionIndex: number) {
-    if (this.eformPermissionsSimpleModel.templateId) {
-      return this.eformPermissionsSimpleModel.permissionsSimpleList.find(
-        (x) => x === UserClaimsEnum[permissionIndex].toString()
-      );
-    } else {
-      return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
     }
   }
 }

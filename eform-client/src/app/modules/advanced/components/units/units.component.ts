@@ -9,6 +9,8 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import { TranslateService } from '@ngx-translate/core';
+import {Store} from "@ngrx/store";
+import {selectCurrentUserClaimsSitesCreate} from 'src/app/state/auth/auth.selector';
 
 @Component({
   selector: 'app-units',
@@ -34,15 +36,13 @@ export class UnitsComponent implements OnInit {
 
   unitCreateComponentAfterClosedSub$: Subscription;
   unitsOtpCodeComponentAfterClosedSub$: Subscription;
-  getCurrentUserClaimsAsyncSub$: Subscription;
-
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
+  public selectCurrentUserClaimsSitesCreate$ = this.authStore.select(selectCurrentUserClaimsSitesCreate);
+  public selectCurrentUserClaimsSitesUpdate$ = this.authStore.select(selectCurrentUserClaimsSitesCreate);
+  public selectCurrentUserClaimsSitesDelete$ = this.authStore.select(selectCurrentUserClaimsSitesCreate);
 
   constructor(
+    private authStore: Store,
     private unitsService: UnitsService,
-    private authStateService: AuthStateService,
     public dialog: MatDialog,
     private overlay: Overlay,
     private translateService: TranslateService,
@@ -51,8 +51,21 @@ export class UnitsComponent implements OnInit {
 
   ngOnInit() {
     this.loadAllUnits();
-    this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
-      if(x.sitesDelete || x.sitesUpdate) {
+    // this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
+    //   if(x.sitesDelete || x.sitesUpdate) {
+    //     this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+    //       {
+    //         header: this.translateService.stream('Actions'),
+    //         field: 'actions',
+    //       },
+    //     ];
+    //   }
+    // })
+
+    let actionsEnabled = false;
+    this.selectCurrentUserClaimsSitesDelete$.subscribe(x => {
+      if(x) {
+        actionsEnabled = true;
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
             header: this.translateService.stream('Actions'),
@@ -60,7 +73,17 @@ export class UnitsComponent implements OnInit {
           },
         ];
       }
-    })
+    });
+    this.selectCurrentUserClaimsSitesUpdate$.subscribe(x => {
+      if(x && !actionsEnabled) {
+        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+          {
+            header: this.translateService.stream('Actions'),
+            field: 'actions',
+          },
+        ];
+      }
+    });
   }
 
   loadAllUnits() {

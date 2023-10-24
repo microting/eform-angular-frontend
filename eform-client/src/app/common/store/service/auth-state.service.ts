@@ -10,7 +10,7 @@ import {applicationLanguages, customDaLocale} from 'src/app/common/const';
 import {de, enUS, es, fr, it, nb, nl, pl, sv, uk, ptBR, pt, fi} from 'date-fns/locale';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {Store} from '@ngrx/store';
-import {selectAuthIsAuth} from 'src/app/state/auth/auth.selector';
+import {selectAuthIsAuth, selectConnectionStringExists, selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
 
 @Injectable({providedIn: 'root'})
 export class AuthStateService {
@@ -33,13 +33,21 @@ export class AuthStateService {
   isUserSettingsLoading = false;
 
   private selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
-  private selectConnectionStringExist$ = this.authStore.select(selectAuthIsAuth);
+  private selectConnectionStringExists$ = this.authStore.select(selectConnectionStringExists);
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
   login(loginInfo: LoginRequestModel) {
-    this.authStore.dispatch({type: '[Auth] Authenticate', payload: loginInfo});
+    // this.authStore.dispatch({type: '[Auth] Authenticate', payload: loginInfo});
+    // TODO: need to fix this
     // this.store = new AuthStore();
-    // this.service.login(loginInfo).subscribe((response) => {
-    //   if (response) {
+    this.service.login(loginInfo).subscribe((response) => {
+      if (response) {
+        this.authStore.dispatch({type: '[Auth] Authenticate Success', payload:
+          // eslint-disable-next-line max-len
+            {token: {accessToken: response.access_token, tokenType: response.token_type, expiresIn: response.expires_in, role: response.role, id: response.id},
+            currentUser: {firstName: response.firstName, lastName: response.lastName, userName: response.userName},
+            count: 2}
+        });
     //     // this.store.update((state) => {
     //     //   //console.log(`before AuthStateService.login.store.update \n ${JSON.stringify(state)}`);
     //     //   return {...state,
@@ -59,13 +67,14 @@ export class AuthStateService {
     //       }
     //     });
     //     // console.log(`after AuthStateService.login.store.update \n ${JSON.stringify(this.store._value())}`);
-    //     this.getUserSettings();
-    //   }
-    // });
+        this.getUserSettings();
+      }
+    });
   }
 
   refreshToken() {
     this.authStore.dispatch({type: '[Auth] Refresh Token'});
+    // TODO need to fix this
     // if (!this.isRefreshing) {
     //   this.isRefreshing = true;
     //   this.service.refreshToken().subscribe((response) => {
@@ -97,11 +106,12 @@ export class AuthStateService {
   }
 
   getUserSettings() {
-    // if (!this.isUserSettingsLoading) {
+    if (!this.isUserSettingsLoading) {
     // TODO: need to fix this
-    // this.isUserSettingsLoading = true;
-    // zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
-    //   this.isUserSettingsLoading = false;
+    this.isUserSettingsLoading = true;
+    zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+      this.isUserSettingsLoading = false;
+      this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
     //   // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
     //   this.store.update((state) => ({
     //     ...state,
@@ -115,14 +125,19 @@ export class AuthStateService {
     //   }));
     //   this.setLocale();
     //   // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-    //   if (userSettings.model.loginRedirectUrl) {
-    //     this.router
-    //       .navigate([
-    //         `/${userSettings.model.loginRedirectUrl}`,
-    //       ]).then();
-    //   }
-    // });
-    // }
+
+      // this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
+      if (userSettings.model.loginRedirectUrl != null) {
+        this.router
+          .navigate([
+            `/${userSettings.model.loginRedirectUrl}`,
+          ]).then();
+      } else {
+        this.router
+          .navigate(['/']).then();
+      }
+    });
+    }
   }
 
   logout() {
@@ -140,6 +155,7 @@ export class AuthStateService {
        this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
          (result) => {
            if (!result || (result && !result.success)) {
+             this.authStore.dispatch({type: '[Auth] Connection String Exist Count', payload: {count: 1, isConnectionStringExist: false}});
     //         this.store.update((state) => ({
     //           connectionString: {
     //             isConnectionStringExist: false,
@@ -148,6 +164,7 @@ export class AuthStateService {
     //         }));
              this.isConnectionStringExistLoading = false;
            } else if (result && result.success) {
+             this.authStore.dispatch({type: '[Auth] Connection String Exist Count', payload: {count: 1, isConnectionStringExist: true}});
     //         this.store.update((state) => ({
     //           connectionString: {
     //             isConnectionStringExist: true,
@@ -161,13 +178,13 @@ export class AuthStateService {
      }
   }
 
-  get isConnectionStringExistAsync(): Observable<boolean> {
-    return this.query.selectIsConnectionStringExist$;
-  }
-
-  get IsConnectionStringExistWithCountAsync() {
-    return this.query.selectIsConnectionStringExistWithCount$;
-  }
+  // get isConnectionStringExistAsync(): Observable<boolean> {
+  //   return this.query.selectIsConnectionStringExist$;
+  // }
+  //
+  // get IsConnectionStringExistWithCountAsync() {
+  //   return this.query.selectIsConnectionStringExistWithCount$;
+  // }
 
   // get isAuth(): boolean {
   //   this.selectIsAuth$.subscribe((isAuth: boolean) => {
@@ -176,67 +193,68 @@ export class AuthStateService {
   //   //return !!this.query.currentSetting.token.accessToken;
   // }
 
-  get isAuthAsync(): Observable<boolean> {
-    return this.selectIsAuth$;
-  }
-
-  get bearerToken(): string {
-    return 'Bearer ' + this.query.currentSetting.token.accessToken;
-  }
-
-  get isAdmin(): boolean {
-    return this.query.currentSetting.token.role === 'admin';
-  }
-
-  get currentRole(): string {
-    return this.query.currentSetting.token.role;
-  }
-
-  get isDarkThemeAsync(): Observable<boolean> {
-    return this.query.selectDarkTheme$;
-  }
-
-  get currentUserFullName(): string {
-    return `${this.query.currentSetting.currentUser.firstName} ${this.query.currentSetting.currentUser.lastName}`;
-  }
-
-  get currentUserName(): string {
-    return this.query.currentSetting.currentUser.userName;
-  }
-
-  get currentUserFullNameAsync(): Observable<string> {
-    return this.query.selectFullName$;
-  }
-
-  get currentUserLocale(): string {
-    return this.query.currentSetting.currentUser.locale;
-  }
-
-  get currentUserLanguage(): { id: number; locale: string; text: string } {
-    return applicationLanguages.find(x => x.locale === this.query.currentSetting.currentUser.locale);
-  }
-
-  get currentUserLanguageAsync(): Observable<{ id: number, locale: string, text: string }> {
-    return this.query.selectCurrentUserLanguage$;
-  }
-
-  get currentUserLocaleAsync() {
-    return this.query.selectCurrentUserLocale$;
-  }
-
-  get sideMenuOpenedAsync() {
-    return this.query.selectSideMenuOpened$;
-  }
+  // get isAuthAsync(): Observable<boolean> {
+  //   return this.selectIsAuth$;
+  // }
+  //
+  // get bearerToken(): string {
+  //   return 'Bearer ' + this.query.currentSetting.token.accessToken;
+  // }
+  //
+  // get isAdmin(): boolean {
+  //   return this.query.currentSetting.token.role === 'admin';
+  // }
+  //
+  // get currentRole(): string {
+  //   return this.query.currentSetting.token.role;
+  // }
+  //
+  // get isDarkThemeAsync(): Observable<boolean> {
+  //   return this.query.selectDarkTheme$;
+  // }
+  //
+  // get currentUserFullName(): string {
+  //   return `${this.query.currentSetting.currentUser.firstName} ${this.query.currentSetting.currentUser.lastName}`;
+  // }
+  //
+  // get currentUserName(): string {
+  //   return this.query.currentSetting.currentUser.userName;
+  // }
+  //
+  // get currentUserFullNameAsync(): Observable<string> {
+  //   return this.query.selectFullName$;
+  // }
+  //
+  // get currentUserLocale(): string {
+  //   return this.query.currentSetting.currentUser.locale;
+  // }
+  //
+  // get currentUserLanguage(): { id: number; locale: string; text: string } {
+  //   return applicationLanguages.find(x => x.locale === this.query.currentSetting.currentUser.locale);
+  // }
+  //
+  // get currentUserLanguageAsync(): Observable<{ id: number, locale: string, text: string }> {
+  //   return this.query.selectCurrentUserLanguage$;
+  // }
+  //
+  // get currentUserLocaleAsync() {
+  //   return this.query.selectCurrentUserLocale$;
+  // }
+  //
+  // get sideMenuOpenedAsync() {
+  //   return this.query.selectSideMenuOpened$;
+  // }
 
   updateUserLocale(locale: string) {
-    this.store.update((state) => ({
-      ...state,
-      currentUser: {
-        ...state.currentUser,
-        locale: locale,
-      },
-    }));
-    this.setLocale();
+    // TODO: need to fix this
+    // this.store.update((state) => ({
+    //   ...state,
+    //   currentUser: {
+    //     ...state.currentUser,
+    //     locale: locale,
+    //   },
+    // }));
+    // this.setLocale();
   }
 
   updateCurrentUserLocaleAndDarkTheme(locale: string, darkTheme: boolean) {
@@ -285,13 +303,13 @@ export class AuthStateService {
     // }));
   }
 
-  get currentUserClaimsAsync() {
-    return this.query.selectCurrentUserClaims$;
-  }
-
-  get currentUserClaims(): UserClaimsModel {
-    return this.query.currentSetting.currentUser.claims;
-  }
+  // get currentUserClaimsAsync() {
+  //   return this.query.selectCurrentUserClaims$;
+  // }
+  //
+  // get currentUserClaims(): UserClaimsModel {
+  //   return this.query.currentSetting.currentUser.claims;
+  // }
 
   // updateUserClaims(userClaims: UserClaimsModel) {
   //   this.store.update((state) => ({
@@ -302,71 +320,71 @@ export class AuthStateService {
   //   }));
   // }
 
-  checkClaim(claimName: string): boolean {
-    const userClaims = this.currentUserClaims;
-    const normalizedClaimName = snakeToCamel(claimName);
-    return (
-      userClaims.hasOwnProperty(normalizedClaimName) &&
-      userClaims[normalizedClaimName] === 'True'
-    );
-  }
+  // checkClaim(claimName: string): boolean {
+  //   const userClaims = this.currentUserClaims;
+  //   const normalizedClaimName = snakeToCamel(claimName);
+  //   return (
+  //     userClaims.hasOwnProperty(normalizedClaimName) &&
+  //     userClaims[normalizedClaimName] === 'True'
+  //   );
+  // }
 
   // get loginRedirectUrl(): string {
   //   return this.query.currentSetting.currentUser.loginRedirectUrl;
   // }
 
-  private setLocale() {
-    this.dateLocale.next(this.dateFnsLocale);
-  }
-
-  get dateFnsLocale(): Locale {
-    const currentLanguage = this.currentUserLanguage;
-    switch (currentLanguage.id) {
-      case 1: {
-        return customDaLocale;
-      }
-      case 2: {
-        return enUS;
-      }
-      case 3: {
-        return de;
-      }
-      case 4: {
-        return uk;
-      }
-      case 5: {
-        return pl;
-      }
-      case 6: {
-        return nb; // it's (Bokmål) maybe need nn (Nynorsk)
-      }
-      case 7: {
-        return sv;
-      }
-      case 8: {
-        return es;
-      }
-      case 9: {
-        return fr;
-      }
-      case 10: {
-        return it;
-      }
-      case 11: {
-        return nl;
-      }
-      case 12: {
-        return ptBR;
-      }
-      case 13: {
-        return pt;
-      }
-      case 14: {
-        return fi;
-      }
-      default: {
-        return enUS;
-      }
-    }
-  }
+  // private setLocale() {
+  //   this.dateLocale.next(this.dateFnsLocale);
+  // }
+  //
+  // get dateFnsLocale(): Locale {
+  //   const currentLanguage = this.currentUserLanguage;
+  //   switch (currentLanguage.id) {
+  //     case 1: {
+  //       return customDaLocale;
+  //     }
+  //     case 2: {
+  //       return enUS;
+  //     }
+  //     case 3: {
+  //       return de;
+  //     }
+  //     case 4: {
+  //       return uk;
+  //     }
+  //     case 5: {
+  //       return pl;
+  //     }
+  //     case 6: {
+  //       return nb; // it's (Bokmål) maybe need nn (Nynorsk)
+  //     }
+  //     case 7: {
+  //       return sv;
+  //     }
+  //     case 8: {
+  //       return es;
+  //     }
+  //     case 9: {
+  //       return fr;
+  //     }
+  //     case 10: {
+  //       return it;
+  //     }
+  //     case 11: {
+  //       return nl;
+  //     }
+  //     case 12: {
+  //       return ptBR;
+  //     }
+  //     case 13: {
+  //       return pt;
+  //     }
+  //     case 14: {
+  //       return fi;
+  //     }
+  //     default: {
+  //       return enUS;
+  //     }
+  //   }
+  // }
 }

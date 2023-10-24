@@ -7,7 +7,7 @@ import {
   TemplateListModel,
   EformPermissionsSimpleModel,
   TemplateDto,
-  CommonDictionaryModel,
+  CommonDictionaryModel, UserClaimsModel,
 } from 'src/app/common/models';
 import {
   SecurityGroupEformsPermissionsService,
@@ -38,6 +38,8 @@ import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import { TranslateService } from '@ngx-translate/core';
+import {selectCurrentUserClaims, selectEformAllowManagingEformTags} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -70,10 +72,9 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   eformColumnsModalComponentAfterClosedSub$: Subscription;
   eformEditParingModalComponentAfterClosedSub$: Subscription;
   eformRemoveEformModalComponentAfterClosedSub$: Subscription;
-
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
+  private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
+  public selectEformAllowManagingEformTags$ = this.authStore.select(selectEformAllowManagingEformTags)
+  userClaims: UserClaimsModel;
 
   get userClaimsEnum() {
     return UserClaimsEnum;
@@ -101,12 +102,12 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
+    private authStore: Store,
     private eFormService: EFormService,
     private eFormTagService: EformTagService,
     private authService: AuthService,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
     public eformsStateService: EformsStateService,
-    public authStateService: AuthStateService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     public dialog: MatDialog,
@@ -121,6 +122,9 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     this.searchSubjectSub$ = this.searchSubject.pipe(debounceTime(500)).subscribe((val: string) => {
       this.eformsStateService.updateNameFilter(val);
       this.loadAllTags();
+    });
+    this.selectCurrentUserClaims$.subscribe((x) => {
+      this.userClaims = x;
     });
   }
 

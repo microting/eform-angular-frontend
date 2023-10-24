@@ -3,7 +3,7 @@
     mat-raised-button
     color="accent"
     id="newDeviceUserBtn"
-    *ngIf="userClaims.deviceUsersCreate"
+    *ngIf="selectCurrentUserClaimsDeviceUsersCreate$ | async"
     matTooltip="{{ 'Create Device User' | translate }}"
     (click)="openCreateModal()"
   >
@@ -65,7 +65,7 @@
     <button
       mat-icon-button
       color="warn"
-      *ngIf="userClaims.deviceUsersUpdate"
+      *ngIf="selectCurrentUserClaimsDeviceUsersUpdate$ | async"
       matTooltip="{{ 'New OTP' | translate }}"
       (click)="openOtpModal(row)"
     >
@@ -75,12 +75,12 @@
   <ng-container *ngIf="!row.unitId"> N/A</ng-container>
 </ng-template>
 <ng-template #actionsTpl let-row>
-  <div *ngIf="userClaims.deviceUsersDelete || userClaims.deviceUsersDelete">
+  <div *ngIf="(selectCurrentUserClaimsDeviceUsersUpdate$ | async) || (selectCurrentUserClaimsDeviceUsersDelete$ | async)">
     <button
       mat-icon-button
       id="editDeviceUserBtn"
       (click)="openEditModal(row)"
-      *ngIf="userClaims.deviceUsersUpdate && !row.isLocked"
+      *ngIf="(selectCurrentUserClaimsDeviceUsersUpdate$ | async) && !row.isLocked"
       matTooltip="{{ 'Edit Device User' | translate }}"
     >
       <mat-icon>edit</mat-icon>
@@ -90,7 +90,7 @@
       color="warn"
       id="deleteDeviceUserBtn"
       (click)="openDeleteDeviceUserModal(row)"
-      *ngIf="userClaims.deviceUsersDelete && !row.isLocked"
+      *ngIf="(selectCurrentUserClaimsDeviceUsersDelete$ | async) && !row.isLocked"
       matTooltip="{{ 'Delete Device User' | translate }}"
     >
       <mat-icon>delete</mat-icon>

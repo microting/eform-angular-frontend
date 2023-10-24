@@ -44,7 +44,7 @@ export class JwtInterceptor implements HttpInterceptor {
             map((bearerToken) => {
               request = request.clone({
                 setHeaders: {
-                  Authorization: bearerToken,
+                  Authorization: 'Bearer ' + bearerToken,
                 },
               });
               return request;

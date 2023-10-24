@@ -4,7 +4,7 @@
     color="accent"
     id="createEntitySearchBtn"
     matTooltip="{{ 'Create new searchable list' | translate }}"
-    *ngIf="userClaims.entitySearchCreate"
+    *ngIf="selectCurrentUserClaimsEntitySearchCreate$ | async"
     matTooltipPosition="left"
     [routerLink]="['/advanced/entity-search/create']"
   >
@@ -56,12 +56,12 @@
 
 
 <ng-template #actionsTpl let-row>
-  <div *ngIf="userClaims.entitySearchDelete || userClaims.entitySearchUpdate">
+  <div *ngIf="(selectCurrentUserClaimsEntitySearchDelete$ | async) || (selectCurrentUserClaimsEntitySearchUpdate$ | async)">
     <button
       mat-icon-button
       id="entitySearchUpdateBtn"
       matTooltip="{{ 'Edit' | translate }}"
-      [disabled]="!userClaims.entitySearchUpdate"
+      [disabled]="(selectCurrentUserClaimsEntitySearchUpdate$ | async) === false"
       [routerLink]="['/advanced/entity-search/edit/' + row.microtingUUID]"
     >
       <mat-icon>edit</mat-icon>
@@ -72,7 +72,7 @@
       id="entitySearchDeleteBtn"
       (click)="openModalSearchRemove(row)"
       matTooltip="{{ 'Remove' | translate }}"
-      [disabled]="!userClaims.entitySearchDelete || row.isLocked"
+      [disabled]="(selectCurrentUserClaimsEntitySearchDelete$ | async) === false || row.isLocked"
     >
       <mat-icon>delete</mat-icon>
     </button>

@@ -3,7 +3,7 @@
     mat-raised-button
     color="accent"
     (click)="openNewUserModal()"
-    *ngIf="userClaims.usersCreate"
+    *ngIf="selectCurrentUserClaimsUsersCreate$ | async"
     matTooltip="{{ 'Create user' | translate }}"
     id="createNewUserBtn"
   >
@@ -13,7 +13,7 @@
 
 <div class="d-flex flex-column">
   <mat-checkbox
-    *ngIf="authStateService.isAdmin"
+    *ngIf="selectCurrentUserIsAdmin$ | async"
     id="isChecked"
     (click)="checked($event)"
     [(ngModel)]="isChecked"
@@ -57,7 +57,7 @@
         mat-icon-button
         color="accent"
         (click)="openEditModal(row.id)"
-        *ngIf="userClaims.usersUpdate"
+        *ngIf="selectCurrentUserClaimsUsersUpdate$ | async"
         matTooltip="{{ 'Edit user' | translate }}"
         id="userAdministrationEditBtn-{{i}}"
       >
@@ -68,7 +68,7 @@
         [disabled]="row.id === 1"
         color="warn"
         (click)="openRemoveUserModal(row)"
-        *ngIf="userClaims.usersDelete"
+        *ngIf="selectCurrentUserClaimsUsersDelete$ | async"
         matTooltip="{{ 'Delete user' | translate }}"
         id="userAdministrationDeleteBtn-{{i}}"
       >
