@@ -114,15 +114,16 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             }
           }));
-        } else if (!isConnectionStringExist && !isAuth) {
-          this.logoImage = '../../../assets/images/logo.png';
-          this.headerSettingsModel.imageLinkVisible = true;
-          this.headerSettingsModel.mainTextVisible = true;
-          this.headerSettingsModel.secondaryTextVisible = true;
-          this.headerSettingsModel.mainText = 'eForm Backend';
-          this.headerSettingsModel.secondaryText = 'No more paper-forms and back-office data entry';
-          this.router.navigate(['/connection-string']).then();
         }
+        // else if (!isConnectionStringExist && !isAuth) {
+        //   this.logoImage = '../../../assets/images/logo.png';
+        //   this.headerSettingsModel.imageLinkVisible = true;
+        //   this.headerSettingsModel.mainTextVisible = true;
+        //   this.headerSettingsModel.secondaryTextVisible = true;
+        //   this.headerSettingsModel.mainText = 'eForm Backend';
+        //   this.headerSettingsModel.secondaryText = 'No more paper-forms and back-office data entry';
+        //   this.router.navigate(['/connection-string']).then();
+        // }
       });
   }
 

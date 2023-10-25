@@ -64,9 +64,12 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
             this.authStateService.isConnectionStringExist();
           }
         } else {
-          this.router
-            .navigate(['/connection-string'])
-            .then();
+          if (connectionString.count === 0) {
+            this.authStateService.isConnectionStringExist();
+          }
+          // this.router
+          //   .navigate(['/connection-string'])
+          //   .then();
         }
       });
 

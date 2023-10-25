@@ -155,7 +155,7 @@ export class AuthStateService {
        this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
          (result) => {
            if (!result || (result && !result.success)) {
-             this.authStore.dispatch({type: '[Auth] Connection String Exist Count', payload: {count: 1, isConnectionStringExist: false}});
+             this.authStore.dispatch({type: '[Auth] Connection String Exist Count', payload: {count: 2, isConnectionStringExist: false}});
     //         this.store.update((state) => ({
     //           connectionString: {
     //             isConnectionStringExist: false,
@@ -164,7 +164,7 @@ export class AuthStateService {
     //         }));
              this.isConnectionStringExistLoading = false;
            } else if (result && result.success) {
-             this.authStore.dispatch({type: '[Auth] Connection String Exist Count', payload: {count: 1, isConnectionStringExist: true}});
+             this.authStore.dispatch({type: '[Auth] Connection String Exist Count', payload: {count: 2, isConnectionStringExist: true}});
     //         this.store.update((state) => ({
     //           connectionString: {
     //             isConnectionStringExist: true,

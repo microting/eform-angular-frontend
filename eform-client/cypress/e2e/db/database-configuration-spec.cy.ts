@@ -4,7 +4,7 @@ import loginPage from '../Login.page';
 
 describe('Database', () => {
   it('should be configured successfully', () => {
-    cy.visit('http://localhost:4200');
+    cy.visit('http://localhost:4200/connection-string');
     databasePage.languageDropdown().should('be.visible');
     cy.wait(5000);
     databasePage.firstNameInput().should('be.visible');
