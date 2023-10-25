@@ -18,7 +18,7 @@ describe('User administration settings', function () {
     const user: UserAdministrationObject = {
       firstName: 'Foo',
       lastName: 'Bar',
-      password: 'Qq1234567$',
+      password: 'secretpassword',
     };
     let userObject = await userAdministration.getUserByNumber();
     await userObject.edit(user);
@@ -29,7 +29,7 @@ describe('User administration settings', function () {
     const user: UserAdministrationObject = {
       firstName: 'John',
       lastName: 'Smith',
-      password: 'Qq1234567$',
+      password: 'secretpassword',
     };
     let userObject = await userAdministration.getUserByNumber();
     await userObject.edit(user);

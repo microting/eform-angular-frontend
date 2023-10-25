@@ -17,7 +17,7 @@ export class PasswordSettings extends PageWithNavbarPage {
     return $('#changePasswordSaveBtn');
   }
   public async setNewPassword() {
-    await (await this.oldPasswordField()).addValue('Qq1234567$');
+    await (await this.oldPasswordField()).addValue('secretpassword');
     await browser.pause(1000);
     await (await this.newPasswordField()).addValue('2Times2WillDo');
     await browser.pause(1000);
@@ -30,9 +30,9 @@ export class PasswordSettings extends PageWithNavbarPage {
   public async revertToOldPassword() {
     await (await this.oldPasswordField()).addValue('2Times2WillDo');
     await browser.pause(1000);
-    await (await this.newPasswordField()).addValue('Qq1234567$');
+    await (await this.newPasswordField()).addValue('secretpassword');
     await browser.pause(1000);
-    await (await this.newPasswordConfirmationField()).addValue('Qq1234567$');
+    await (await this.newPasswordConfirmationField()).addValue('secretpassword');
     await browser.pause(1000);
     await (await this.saveBtn()).click();
     await browser.pause(2000);
