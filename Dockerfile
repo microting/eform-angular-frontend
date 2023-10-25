@@ -1,4 +1,4 @@
-FROM node:lts-bookworm-slim as node-env
+FROM node:18-bookworm-slim as node-env
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY eform-client ./
