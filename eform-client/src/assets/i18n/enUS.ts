@@ -406,4 +406,5 @@ export const enUS = {
   'Value': 'Value',
   'Please fill out this field': 'Please fill out this field',
   'Submitted date': 'Submitted date',
+  'Languages': 'Languages'
 };

@@ -7,8 +7,8 @@ import { AppSettingsService } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
 import {AppSettingsQuery, AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import * as R from 'ramda';
-import {selectBearerToken, selectCurrentUserIsAdmin} from "src/app/state/auth/auth.selector";
-import {Store} from "@ngrx/store";
+import {selectAuthIsAuth, selectBearerToken, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-admin-settings',
@@ -32,6 +32,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   previousAdminSettings: AdminSettingsModel;
   private selectBearerToken$ = this.authStore.select(selectBearerToken);
   private selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
+  public selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
 
   constructor(
     private settingsService: AppSettingsService,

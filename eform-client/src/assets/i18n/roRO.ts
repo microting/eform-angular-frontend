@@ -401,4 +401,6 @@ export const roRO = {
   'Select date': 'Selectați data',
   Value: 'Valoare',
   'Please fill out this field': 'Te rog sa completezi acest spatiu',
+  'Submitted date': 'Data depunerii',
+  Languages: 'Limbi',
 };

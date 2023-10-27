@@ -401,4 +401,6 @@ export const plPL = {
   'Select date': 'Wybierz datę',
   Value: 'Wartość',
   'Please fill out this field': 'Proszę wypełnić to pole',
+  'Submitted date': 'Zaakceptowana Data',
+  Languages: 'Języki',
 };

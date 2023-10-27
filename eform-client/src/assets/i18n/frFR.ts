@@ -401,4 +401,6 @@ export const frFR = {
   'Select date': 'Sélectionner une date',
   Value: 'Valeur',
   'Please fill out this field': 'Merci de remplir ce champ',
+  'Submitted date': 'Date proposée',
+  Languages: 'Langues',
 };

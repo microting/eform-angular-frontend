@@ -401,4 +401,6 @@ export const itIT = {
   'Select date': 'Seleziona la data',
   Value: 'Valore',
   'Please fill out this field': 'Perfavore compila questo campo',
+  'Submitted date': 'Data di invio',
+  Languages: 'Le lingue',
 };

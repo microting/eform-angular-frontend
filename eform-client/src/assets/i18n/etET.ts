@@ -401,4 +401,6 @@ export const etET = {
   'Select date': 'Valige kuupäev',
   Value: 'Väärtus',
   'Please fill out this field': 'Palun täitke see väli',
+  'Submitted date': 'Esitamise kuupäev',
+  Languages: 'Keeled',
 };

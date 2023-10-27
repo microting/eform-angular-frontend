@@ -401,4 +401,6 @@ export const deDE = {
   'Select date': 'Datum auswählen',
   Value: 'Wert',
   'Please fill out this field': 'Bitte füllen Sie dieses Feld aus',
+  'Submitted date': 'Datum der Einreichung',
+  Languages: 'Sprachen',
 };

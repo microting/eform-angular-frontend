@@ -401,4 +401,6 @@ export const huHU = {
   'Select date': 'Válassza ki a dátumot',
   Value: 'Érték',
   'Please fill out this field': 'Kérem töltse ki ezt a mezőt',
+  'Submitted date': 'Beküldés dátuma',
+  Languages: 'Nyelvek',
 };

@@ -401,4 +401,6 @@ export const nlNL = {
   'Select date': 'Selecteer een datum',
   Value: 'Waarde',
   'Please fill out this field': 'Vul alstublieft dit veld in',
+  'Submitted date': 'Datum ingediend',
+  Languages: 'Talen',
 };

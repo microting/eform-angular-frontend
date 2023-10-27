@@ -401,4 +401,6 @@ export const hrHR = {
   'Select date': 'Odaberite datum',
   Value: 'Vrijednost',
   'Please fill out this field': 'Molimo ispunite ovo polje',
+  'Submitted date': 'Datum predaje',
+  Languages: 'Jezici',
 };

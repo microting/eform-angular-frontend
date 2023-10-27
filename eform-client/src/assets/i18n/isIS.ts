@@ -401,4 +401,6 @@ export const isIS = {
   'Select date': 'Veldu dagsetningu',
   Value: 'Gildi',
   'Please fill out this field': 'Vinsamlegast fylltu út þennan reit',
+  'Submitted date': 'Lögð fram dagsetning',
+  Languages: 'Tungumál',
 };

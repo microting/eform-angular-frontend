@@ -401,4 +401,6 @@ export const csCZ = {
   'Select date': 'Vyberte datum',
   Value: 'Hodnota',
   'Please fill out this field': 'Prosím, vyplňte toto pole',
+  'Submitted date': 'Datum odevzdání',
+  Languages: 'Jazyky',
 };

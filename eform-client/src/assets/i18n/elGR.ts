@@ -401,4 +401,6 @@ export const elGR = {
   'Select date': 'Επιλέξτε ημερομηνία',
   Value: 'αξία',
   'Please fill out this field': 'Παρακαλώ συμπληρώστε αυτό το πεδίο',
+  'Submitted date': 'Ημερομηνία υποβολής',
+  Languages: 'Γλώσσες',
 };

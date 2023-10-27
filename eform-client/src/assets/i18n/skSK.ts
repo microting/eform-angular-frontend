@@ -401,4 +401,6 @@ export const skSK = {
   'Select date': 'Vyberte dátum',
   Value: 'Hodnota',
   'Please fill out this field': 'Vyplňte toto pole',
+  'Submitted date': 'Dátum odoslania',
+  Languages: 'Jazyky',
 };

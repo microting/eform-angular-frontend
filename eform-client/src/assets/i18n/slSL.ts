@@ -401,4 +401,6 @@ export const slSL = {
   'Select date': 'Izberite datum',
   Value: 'Vrednost',
   'Please fill out this field': 'Prosimo izpolnite to polje',
+  'Submitted date': 'Datum oddaje',
+  Languages: 'Jeziki',
 };

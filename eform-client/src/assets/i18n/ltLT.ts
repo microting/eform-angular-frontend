@@ -401,4 +401,6 @@ export const ltLT = {
   'Select date': 'Pasirinkite datą',
   Value: 'Vertė',
   'Please fill out this field': 'Užpildykite šį lauką',
+  'Submitted date': 'Pateikimo data',
+  Languages: 'Kalbos',
 };

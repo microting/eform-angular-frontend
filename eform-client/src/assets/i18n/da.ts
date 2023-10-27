@@ -437,4 +437,6 @@ export const da = {
   'Select date': 'Vælg dato',
   Value: 'Værdi',
   'Please fill out this field': 'Udfyld venligst dette felt',
+  'Submitted date': 'Indsendt dato',
+  Languages: 'Sprog',
 };

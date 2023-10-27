@@ -401,4 +401,6 @@ export const esES = {
   'Select date': 'Seleccione fecha',
   Value: 'Valor',
   'Please fill out this field': 'Por favor rellene este campo',
+  'Submitted date': 'Fecha de envío',
+  Languages: 'Idiomas',
 };

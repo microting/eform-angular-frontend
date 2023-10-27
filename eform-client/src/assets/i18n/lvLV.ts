@@ -401,4 +401,6 @@ export const lvLV = {
   'Select date': 'Izvēlieties datumu',
   Value: 'Vērtība',
   'Please fill out this field': 'Lūdzu, aizpildiet šo lauku',
+  'Submitted date': 'Iesniegšanas datums',
+  Languages: 'Valodas',
 };

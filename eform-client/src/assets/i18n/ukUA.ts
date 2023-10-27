@@ -401,4 +401,6 @@ export const ukUA = {
   'Select date': 'Виберіть дату',
   Value: 'Значення',
   'Please fill out this field': 'Будь ласка, заповніть це поле',
+  'Submitted date': 'Дата подання',
+  Languages: 'Мови',
 };

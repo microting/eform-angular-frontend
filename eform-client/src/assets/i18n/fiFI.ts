@@ -401,4 +401,6 @@ export const fiFI = {
   'Select date': 'Valitse päivämäärä',
   Value: 'Arvo',
   'Please fill out this field': 'Ole hyvä ja täytä tämä kenttä',
+  'Submitted date': 'Lähetyspäivämäärä',
+  Languages: 'Kieli (kielet',
 };
