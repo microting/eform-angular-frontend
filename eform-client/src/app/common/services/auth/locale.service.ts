@@ -22,8 +22,8 @@ export class LocaleService {
   constructor(
     private apiBaseService: ApiBaseService,
     // private authStateService: AuthStateService,
-    // private translateService: TranslateService,
-    // private cookieService: CookieService
+    private translateService: TranslateService,
+    private cookieService: CookieService
   ) {
   }
 
@@ -79,31 +79,31 @@ export class LocaleService {
   //   // this.translateService.use(localeName);
   // }
 
-  // initCookies(locale: string) {
-  //   this.translateService.setDefaultLang(applicationLanguages[1].locale);
-  //   let culture = this.buildCookieValue(applicationLanguages[1].locale);
-  //   if (locale === applicationLanguages[0].locale) {
-  //     culture = this.buildCookieValue(applicationLanguages[0].locale);
-  //   } else if (locale) {
-  //     culture = this.buildCookieValue(locale);
-  //   }
-  //   this.cookieService.set('culture', culture, 9999999, '/');
-  //   this.cookieService.set('locale', locale, 9999999, '/');
-  // }
+  initCookies(locale: string) {
+    this.translateService.setDefaultLang(applicationLanguages[1].locale);
+    let culture = this.buildCookieValue(applicationLanguages[1].locale);
+    if (locale === applicationLanguages[0].locale) {
+      culture = this.buildCookieValue(applicationLanguages[0].locale);
+    } else if (locale) {
+      culture = this.buildCookieValue(locale);
+    }
+    this.cookieService.set('culture', culture, 9999999, '/');
+    this.cookieService.set('locale', locale, 9999999, '/');
+  }
 
-  // buildCookieValue(locale: string) {
-  //   return 'c=' + locale + '|uic=' + locale;
-  // }
+  buildCookieValue(locale: string) {
+    return 'c=' + locale + '|uic=' + locale;
+  }
 
-  // updateCookies(locale: string) {
-  //   this.cookieService.set('locale', locale, 9999999, '/');
-  //   this.cookieService.set(
-  //     'culture',
-  //     this.buildCookieValue(locale),
-  //     9999999,
-  //     '/'
-  //   );
-  // }
+  updateCookies(locale: string) {
+    this.cookieService.set('locale', locale, 9999999, '/');
+    this.cookieService.set(
+      'culture',
+      this.buildCookieValue(locale),
+      9999999,
+      '/'
+    );
+  }
 
   // getCurrentUserLocale() {
   //   let language = '';

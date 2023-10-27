@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {AppSettingsService, AuthService, UserSettingsService} from 'src/app/common/services';
+import {AppSettingsService, AuthService, LocaleService, UserSettingsService} from 'src/app/common/services';
 import {LoginRequestModel, UserClaimsModel, UserInfoModel,} from 'src/app/common/models';
 import {BehaviorSubject, Observable, Subscription, take, zip} from 'rxjs';
 import {Router} from '@angular/router';
@@ -24,6 +24,7 @@ export class AuthStateService {
     private service: AuthService,
     //private query: AuthQuery,
     private translateService: TranslateService,
+    private localeService: LocaleService,
     private router: Router,
     private authStore: Store,
     private userSettings: UserSettingsService,
@@ -79,6 +80,7 @@ export class AuthStateService {
           //   this.setLocale();
           //   // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
           this.translateService.use(userSettings.model.locale);
+          this.localeService.initCookies(userSettings.model.locale);
           // this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
           if (userSettings.model.loginRedirectUrl != null) {
             this.router
@@ -95,38 +97,38 @@ export class AuthStateService {
     });
   }
 
-  initLocale() {
-    const arrayTranslate = [];
-    // eslint-disable-next-line guard-for-in
-    for (const translate in translates) {
-      arrayTranslate.push(translate);
-    }
-    this.translateService.addLangs(arrayTranslate);
-    let language = '';
-    this.selectCurrentUserLocale$.subscribe((data) => {
-      language = data;
-    });
-    this.translateService.setDefaultLang(applicationLanguages[1].locale);
-    if (!language) {
-      //this.authStateService.updateUserLocale(applicationLanguages[1].locale);
-      this.selectCurrentUserLocale$.subscribe((data) => {
-        language = data;
-        //this.authStateService.updateUserLocale(language);
-        this.translateService.use(language);
-        // Set cookies
-        //this.initCookies(language);
-      });
-    } else {
-      this.translateService.use(language);
-      //this.initCookies(language);
-    }
-    this.selectCurrentUserLocale$
-      .pipe(filter(x => !!x))
-      .subscribe(x => {
-        this.translateService.use(x);
-        //this.updateCookies(x);
-      });
-  }
+  // initLocale() {
+  //   const arrayTranslate = [];
+  //   // eslint-disable-next-line guard-for-in
+  //   for (const translate in translates) {
+  //     arrayTranslate.push(translate);
+  //   }
+  //   this.translateService.addLangs(arrayTranslate);
+  //   let language = '';
+  //   this.selectCurrentUserLocale$.subscribe((data) => {
+  //     language = data;
+  //   });
+  //   this.translateService.setDefaultLang(applicationLanguages[1].locale);
+  //   if (!language) {
+  //     //this.authStateService.updateUserLocale(applicationLanguages[1].locale);
+  //     this.selectCurrentUserLocale$.subscribe((data) => {
+  //       language = data;
+  //       //this.authStateService.updateUserLocale(language);
+  //       this.translateService.use(language);
+  //       // Set cookies
+  //       //this.initCookies(language);
+  //     });
+  //   } else {
+  //     this.translateService.use(language);
+  //     //this.initCookies(language);
+  //   }
+  //   this.selectCurrentUserLocale$
+  //     .pipe(filter(x => !!x))
+  //     .subscribe(x => {
+  //       this.translateService.use(x);
+  //       //this.updateCookies(x);
+  //     });
+  // }
 
   refreshToken() {
     this.authStore.dispatch({type: '[Auth] Refresh Token'});
