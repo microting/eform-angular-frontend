@@ -19,6 +19,7 @@ describe('Database', () => {
     databasePage.configure(DatabaseConfigurationConstants.languageOptions.danish);
     databasePage.save();
     cy.wait(120000);
+    cy.visit('http://localhost:4200');
     loginPage.getLoginButton().should('be.visible');
   });
 });

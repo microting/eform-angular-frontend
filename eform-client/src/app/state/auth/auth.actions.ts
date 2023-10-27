@@ -48,3 +48,8 @@ export const loadAuthFailure = createAction(
   '[Auth] Authenticate Failure',
   (payload: any) => ({payload})
 );
+
+export const browserReload = createAction(
+  '[Auth] Browser Reload',
+  (payload: any) => ({payload})
+);

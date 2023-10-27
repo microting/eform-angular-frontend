@@ -4,15 +4,24 @@ import {AppSettingsQuery, AppSettingsStore} from './';
 import {map} from 'rxjs/operators';
 import {AdminSettingsModel, LanguagesModel} from 'src/app/common/models';
 import {take} from 'rxjs';
+import { Store } from '@ngrx/store';
+import {selectAuthIsAuth} from 'src/app/state/auth/auth.selector';
 
 @Injectable({providedIn: 'root'})
 export class AppSettingsStateService {
+  public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
   constructor(
     private store: AppSettingsStore,
     private service: AppSettingsService,
-    private query: AppSettingsQuery
+    private query: AppSettingsQuery,
+    private authStore: Store
   ) {
-    this.getAllAppSettings();
+    this.selectIsAuth$.subscribe((isAuth) => {
+      if (isAuth) {
+        this.getAllAppSettings();
+      }
+    });
+    //this.getAllAppSettings();
   }
 
   getAdminSettings() {

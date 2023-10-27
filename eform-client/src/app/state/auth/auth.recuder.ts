@@ -116,9 +116,14 @@ export const _authReducer = createReducer(
     status: 'loading',
     }),
   ),
-  on(refreshToken, (state) => ({
+  on(refreshToken, (state, {payload}) => ({
     ...state,
     status: 'loading',
+    token: payload.token,
+    connectionString: {
+      isConnectionStringExist: true,
+      count: 2,
+    },
     }),
   ),
   on(ConnectionStringExistCount, (state, {payload}) => ({

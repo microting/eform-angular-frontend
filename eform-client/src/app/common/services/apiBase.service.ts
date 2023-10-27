@@ -204,13 +204,19 @@ export class ApiBaseService {
     } else {
       headers = headers.set('Content-Type', 'application/json');
     }
-    this.selectAuthIsAuth$.subscribe((isAuth) => {
-      if (isAuth) {
-        this.selectBearerToken$.subscribe((token) => {
-          headers.append('Authorization', 'Bearer ' + token);
-        });
-      }
-    });
+    //debugger;
+
+    const accessToken = JSON.parse(localStorage.getItem('token'));
+    if (accessToken) {
+      headers = headers.set('Authorization', 'Bearer ' + accessToken['accessToken']);
+    }
+    // this.selectAuthIsAuth$.subscribe((isAuth) => {
+    //   if (isAuth) {
+    //     this.selectBearerToken$.subscribe((token) => {
+    //       headers.append('Authorization', 'Bearer ' + token);
+    //     });
+    //   }
+    // });
     // if (this.query.isAuth) {
     //   headers.append('Authorization', bearerToken);
     // }

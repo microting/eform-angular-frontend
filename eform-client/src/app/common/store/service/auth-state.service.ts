@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {AppSettingsService, AuthService, UserSettingsService} from 'src/app/common/services';
 import {LoginRequestModel, UserClaimsModel, UserInfoModel,} from 'src/app/common/models';
-import {BehaviorSubject, Observable, take, zip} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription, take, zip} from 'rxjs';
 import {Router} from '@angular/router';
 import {snakeToCamel} from 'src/app/common/helpers';
 import {resetStores} from '@datorama/akita';
@@ -48,26 +48,45 @@ export class AuthStateService {
             currentUser: {firstName: response.firstName, lastName: response.lastName, userName: response.userName},
             count: 2}
         });
-    //     // this.store.update((state) => {
-    //     //   //console.log(`before AuthStateService.login.store.update \n ${JSON.stringify(state)}`);
-    //     //   return {...state,
-    //     //   token: {
-    //     //     accessToken: response.access_token,
-    //     //     tokenType: response.token_type,
-    //     //     expiresIn: response.expires_in,
-    //     //     role: response.role,
-    //     //   },
-    //     // }});
-    //     this.store.update({
-    //       token: {
-    //         accessToken: response.access_token,
-    //         tokenType: response.token_type,
-    //         expiresIn: response.expires_in,
-    //         role: response.role,
-    //       }
-    //     });
-    //     // console.log(`after AuthStateService.login.store.update \n ${JSON.stringify(this.store._value())}`);
-        this.getUserSettings();
+        // save the same token into local storage
+        localStorage.setItem('token',
+          JSON.stringify({
+            token: {
+              accessToken:response.access_token,
+              tokenType: response.token_type,
+              expiresIn: response.expires_in,
+              role: response.role,
+              id: response.id}
+          }));
+        zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+          this.isUserSettingsLoading = false;
+          this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
+          //   // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
+          //   this.store.update((state) => ({
+          //     ...state,
+          //     currentUser: {
+          //       ...state.currentUser,
+          //       darkTheme: userSettings.model.darkTheme,
+          //       locale: userSettings.model.locale,
+          //       loginRedirectUrl: userSettings.model.loginRedirectUrl,
+          //       claims: userClaims,
+          //     },
+          //   }));
+          //   this.setLocale();
+          //   // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
+
+          // this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
+          if (userSettings.model.loginRedirectUrl != null) {
+            this.router
+              .navigate([
+                `/${userSettings.model.loginRedirectUrl}`,
+              ]).then();
+          } else {
+            this.router
+              .navigate(['/']).then();
+          }
+        });
+        //this.getUserSettings();
       }
     });
   }
@@ -142,6 +161,7 @@ export class AuthStateService {
 
   logout() {
     // console.log(`before AuthStateService.logout \n ${JSON.stringify(this.store._value())}`);
+    localStorage.removeItem('token');
     resetStores();
     this.router.navigate(['/auth']).then();
     // console.log(`after AuthStateService.logout \n ${JSON.stringify(this.store._value())}`);
@@ -156,21 +176,9 @@ export class AuthStateService {
          (result) => {
            if (!result || (result && !result.success)) {
              this.authStore.dispatch({type: '[Auth] Connection String Exist Count', payload: {count: 2, isConnectionStringExist: false}});
-    //         this.store.update((state) => ({
-    //           connectionString: {
-    //             isConnectionStringExist: false,
-    //             count: state.connectionString.count + 1
-    //           }
-    //         }));
              this.isConnectionStringExistLoading = false;
            } else if (result && result.success) {
              this.authStore.dispatch({type: '[Auth] Connection String Exist Count', payload: {count: 2, isConnectionStringExist: true}});
-    //         this.store.update((state) => ({
-    //           connectionString: {
-    //             isConnectionStringExist: true,
-    //             count: state.connectionString.count + 1
-    //           }
-    //         }));
              this.isConnectionStringExistLoading = false;
            }
          }

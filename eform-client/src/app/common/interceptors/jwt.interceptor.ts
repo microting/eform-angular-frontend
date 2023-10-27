@@ -7,9 +7,9 @@ import {
 import { Injectable } from '@angular/core';
 import {Observable, of, take} from 'rxjs';
 import { AuthStateService } from 'src/app/common/store';
-import {Store} from "@ngrx/store";
-import {map, switchMap} from "rxjs/operators";
-import {selectAuthIsAuth, selectBearerToken} from "src/app/state/auth/auth.selector";
+import {Store} from '@ngrx/store';
+import {map, switchMap} from 'rxjs/operators';
+import {selectAuthIsAuth, selectBearerToken} from 'src/app/state/auth/auth.selector';
 
 // @Injectable()
 // export class JwtInterceptor implements HttpInterceptor {
