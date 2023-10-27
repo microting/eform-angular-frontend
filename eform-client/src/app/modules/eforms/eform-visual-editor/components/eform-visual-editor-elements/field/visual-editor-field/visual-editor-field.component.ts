@@ -21,8 +21,8 @@ import {
 import { LocaleService } from 'src/app/common/services';
 import {TranslateService} from '@ngx-translate/core';
 import {getRandomInt} from 'src/app/common/helpers';
-import {selectCurrentUserLanguageId} from "src/app/state/auth/auth.selector";
-import {Store} from "@ngrx/store";
+import {selectCurrentUserLanguageId} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-visual-editor-field',
@@ -69,8 +69,8 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
 
   get getTranslation(): string {
     let languageId = 0;
-    this.selectCurrentUserLanguageId$.subscribe((languageId) => {
-      languageId = languageId;
+    this.selectCurrentUserLanguageId$.subscribe((x) => {
+      languageId = x;
     });
     const index = this.field.translations.findIndex((x) => x.languageId === languageId);
     if(index !== -1) {

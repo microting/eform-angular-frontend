@@ -156,6 +156,7 @@ export const _authReducer = createReducer(
       locale: payload.userSettings.model.locale,
       loginRedirectUrl: payload.userSettings.model.loginRedirectUrl || '',
       claims: payload.userClaims,
+      languageId: payload.userSettings.model.languageId,
     },
   })),
   on(loadAuthFailure, (state, {payload}) => ({
