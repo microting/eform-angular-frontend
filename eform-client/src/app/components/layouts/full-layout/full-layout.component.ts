@@ -23,6 +23,7 @@ import {
   selectIsDarkMode, selectSideMenuOpened
 } from 'src/app/state/auth/auth.selector';
 import {refreshToken} from 'src/app/state/auth/auth.actions';
+import {TranslateService} from "@ngx-translate/core";
 
 @AutoUnsubscribe()
 @Component({
@@ -50,6 +51,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     public authStateService: AuthStateService,
     private renderer: Renderer2,
     private userSettings: UserSettingsService,
+    private translateService: TranslateService,
     private service: AuthService,
     private localeService: LocaleService,
     private authStore: Store,
@@ -167,6 +169,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
                     }
                   }
                 }));
+                this.translateService.use(userSettings.model.locale);
                 if (userSettings.model.loginRedirectUrl != null) {
                   this.router
                     .navigate([

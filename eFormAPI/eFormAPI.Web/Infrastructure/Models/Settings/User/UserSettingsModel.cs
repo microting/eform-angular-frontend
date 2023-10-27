@@ -26,6 +26,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Settings.User;
 public class UserSettingsModel
 {
     public string Locale { get; set; }
+    public int LanguageId { get; set; }
     public bool DarkTheme { get; set; }
     public string Formats { get; set; }
     public string TimeZone { get; set; }

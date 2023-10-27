@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
   ActivatedRouteSnapshot,
-  CanActivate,
+  CanActivateFn,
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
@@ -10,15 +10,17 @@ import {Store} from '@ngrx/store';
 import {selectAuthIsAuth, selectLoginRedirectUrl} from 'src/app/state/auth/auth.selector';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard {
   constructor(
     private router: Router,
     //private authStateService: AuthStateService
     private store: Store
-  ) {}
+  ) {
+  }
 
   private isAuth$ = this.store.select(selectAuthIsAuth);
   private loginRedirectUrl$ = this.store.select(selectLoginRedirectUrl);
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -38,6 +40,10 @@ export class AuthGuard implements CanActivate {
     //       .then();
     //     return false;
     //   }
-     return true;
+    return true;
   }
+}
+
+export const IsAdminGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
+  return inject(AuthGuard).canActivate(route, state);
 }

@@ -11,6 +11,9 @@ import {de, enUS, es, fr, it, nb, nl, pl, sv, uk, ptBR, pt, fi} from 'date-fns/l
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth, selectConnectionStringExists, selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
+import {TranslateService} from '@ngx-translate/core';
+import {translates} from 'src/assets/i18n/translates';
+import {filter} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class AuthStateService {
@@ -20,6 +23,7 @@ export class AuthStateService {
     //private store: AuthStore,
     private service: AuthService,
     //private query: AuthQuery,
+    private translateService: TranslateService,
     private router: Router,
     private authStore: Store,
     private userSettings: UserSettingsService,
@@ -74,7 +78,7 @@ export class AuthStateService {
           //   }));
           //   this.setLocale();
           //   // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-
+          this.translateService.use(userSettings.model.locale);
           // this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
           if (userSettings.model.loginRedirectUrl != null) {
             this.router
@@ -89,6 +93,39 @@ export class AuthStateService {
         //this.getUserSettings();
       }
     });
+  }
+
+  initLocale() {
+    const arrayTranslate = [];
+    // eslint-disable-next-line guard-for-in
+    for (const translate in translates) {
+      arrayTranslate.push(translate);
+    }
+    this.translateService.addLangs(arrayTranslate);
+    let language = '';
+    this.selectCurrentUserLocale$.subscribe((data) => {
+      language = data;
+    });
+    this.translateService.setDefaultLang(applicationLanguages[1].locale);
+    if (!language) {
+      //this.authStateService.updateUserLocale(applicationLanguages[1].locale);
+      this.selectCurrentUserLocale$.subscribe((data) => {
+        language = data;
+        //this.authStateService.updateUserLocale(language);
+        this.translateService.use(language);
+        // Set cookies
+        //this.initCookies(language);
+      });
+    } else {
+      this.translateService.use(language);
+      //this.initCookies(language);
+    }
+    this.selectCurrentUserLocale$
+      .pipe(filter(x => !!x))
+      .subscribe(x => {
+        this.translateService.use(x);
+        //this.updateCookies(x);
+      });
   }
 
   refreshToken() {

@@ -117,6 +117,13 @@ public class AccountService : IAccountService
         var formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats;
         var darkTheme = user.DarkTheme;
         var locale = string.IsNullOrEmpty(user.Locale) ? "da" : user.Locale;
+        var core = await _coreHelper.GetCore();
+        var dbContextHelper = core.DbContextHelper;
+        var dbContext = dbContextHelper.GetDbContext();
+        var languageId = await dbContext.Languages
+            .Where(x => x.LanguageCode == locale)
+            .Select(x => x.Id)
+            .FirstOrDefaultAsync();
 
         var securityGroupRedirectLink = await _dbContext.SecurityGroupUsers
             .Where(x => x.EformUserId == user.Id)
@@ -127,6 +134,7 @@ public class AccountService : IAccountService
         return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
         {
             Locale = locale,
+            LanguageId = languageId,
             DarkTheme = darkTheme,
             Formats = formats,
             TimeZone = timeZone,

@@ -7,7 +7,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import {Subscription, take} from 'rxjs';
 import { FoldersService, LocaleService } from 'src/app/common/services';
 import {
   FolderDto,
@@ -17,6 +17,8 @@ import {
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {tap} from 'rxjs/operators';
 import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
+import {selectCurrentUserLanguageId, selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -25,7 +27,7 @@ import {AppSettingsStateService} from 'src/app/modules/application-settings/comp
   styleUrls: ['./folder-edit-create.component.scss'],
 })
 export class FolderEditCreateComponent implements OnInit, OnDestroy {
-  selectedLanguage: number;
+  selectedLanguageId: number;
   selectedParentFolder: FolderModel;
   folderUpdateCreateModel = new FolderUpdateModel()
   edit = false;
@@ -37,6 +39,7 @@ export class FolderEditCreateComponent implements OnInit, OnDestroy {
   getLanguagesSub$: Subscription;
   localeService: LocaleService;
   activeLanguages: Array<any> = [];
+  private selectCurrentUserLanguageId$ = this.authStore.select(selectCurrentUserLanguageId);
 
   get languages() {
     if (!this.appLanguages.languages) {
@@ -46,8 +49,8 @@ export class FolderEditCreateComponent implements OnInit, OnDestroy {
   }
 
   getParentTranslation(): string {
-    if(this.selectedParentFolder && this.selectedLanguage){
-      const i = this.selectedParentFolder.translations.findIndex(x => x.languageId === this.selectedLanguage);
+    if(this.selectedParentFolder && this.selectedLanguageId){
+      const i = this.selectedParentFolder.translations.findIndex(x => x.languageId === this.selectedLanguageId);
       if(i !== -1) {
         return this.selectedParentFolder.translations[i].name;
       }
@@ -57,6 +60,7 @@ export class FolderEditCreateComponent implements OnInit, OnDestroy {
 
   constructor(
     private foldersService: FoldersService,
+    private authStore: Store,
     private toastrService: ToastrService,
     private translateService: TranslateService,
     private _localeService: LocaleService,
@@ -191,9 +195,18 @@ export class FolderEditCreateComponent implements OnInit, OnDestroy {
         if (data && data.success && data.model) {
           this.appLanguages = data.model;
           this.activeLanguages = this.appLanguages.languages.filter((x) => x.isActive);
-          this.selectedLanguage = this.appLanguages.languages.find(
-            (x) => x.languageCode === this.localeService.getCurrentUserLocale()
-          ).id;
+          // this.selectCurrentUserLocale$.pipe(take(1)).subscribe((locale) => {
+          //   this.selectedLanguage =
+          //     this.appLanguages.languages.find(
+          //       (x) => x.languageCode === locale
+          //     ).id;
+          // });
+          this.selectCurrentUserLanguageId$.subscribe((languageId) => {
+            this.selectedLanguageId = languageId;
+          });
+          // this.selectedLanguage = this.appLanguages.languages.find(
+          //   (x) => x.languageCode === this.localeService.getCurrentUserLocale()
+          // ).id;
           if(!argument.create) {
             this.edit = true;
             this.getParentFolder(argument.folder.parentId)

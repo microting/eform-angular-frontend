@@ -21,6 +21,8 @@ import {
 import { LocaleService } from 'src/app/common/services';
 import {TranslateService} from '@ngx-translate/core';
 import {getRandomInt} from 'src/app/common/helpers';
+import {selectCurrentUserLanguageId} from "src/app/state/auth/auth.selector";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-visual-editor-field',
@@ -49,6 +51,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   copyField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   // dragulaElementContainerName = this.fieldIsNested ? 'NESTED_FIELDS' : 'FIELDS';
   @Input() appLanguages: LanguagesModel = new LanguagesModel();
+  private selectCurrentUserLanguageId$ = this.authStore.select(selectCurrentUserLanguageId);
 
   get fieldTypes() {
     return EformFieldTypesEnum;
@@ -65,9 +68,10 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   }
 
   get getTranslation(): string {
-    const languageId = this.appLanguages.languages.find(
-      (x) => x.languageCode === this.localeService.getCurrentUserLocale()
-    ).id;
+    let languageId = 0;
+    this.selectCurrentUserLanguageId$.subscribe((languageId) => {
+      languageId = languageId;
+    });
     const index = this.field.translations.findIndex((x) => x.languageId === languageId);
     if(index !== -1) {
       return this.field.translations[index].name || '';
@@ -82,7 +86,10 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private localeService: LocaleService, private translateService: TranslateService) {}
+  constructor(
+    private authStore: Store,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
   }

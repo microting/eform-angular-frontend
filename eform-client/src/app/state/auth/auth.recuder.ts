@@ -22,6 +22,7 @@ export interface AuthState {
     id: number;
     userName: string;
     locale: string;
+    languageId: number;
     darkTheme: boolean;
     loginRedirectUrl: string;
     claims: UserClaimsModel;
@@ -48,6 +49,7 @@ export const createInitialState: AuthState = {
     id: 0,
     userName: '',
     locale: 'da', // TODO add env for test run
+    languageId: 0,
     darkTheme: false,
     loginRedirectUrl: '',
     claims: {

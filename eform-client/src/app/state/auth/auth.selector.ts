@@ -22,6 +22,8 @@ export const selectIsDarkMode
   = createSelector(selectAuth, (state: AuthState) => state.currentUser.darkTheme);
 export const selectCurrentUserLocale
   = createSelector(selectAuth, (state: AuthState) => state.currentUser.locale);
+export const selectCurrentUserLanguageId
+  = createSelector(selectAuth, (state: AuthState) => state.currentUser.languageId);
 export const selectCurrentUserName
   = createSelector(selectAuth, (state: AuthState) => state.currentUser.userName);
 export const selectCurrentUserFullName

@@ -94,10 +94,11 @@ export class ProfileSettingsComponent implements OnInit {
     this.userSettingsService
       .updateUserSettings(this.userSettingsModel)
       .subscribe((data) => {
-        this.localeService.updateCurrentUserLocaleAndDarkTheme(
-          this.userSettingsModel.locale,
-          this.userSettingsModel.darkTheme
-        );
+        // TODO fix this
+        // this.localeService.updateCurrentUserLocaleAndDarkTheme(
+        //   this.userSettingsModel.locale,
+        //   this.userSettingsModel.darkTheme
+        // );
         this.store.dispatch({type: '[AppMenu] Load AppMenu'});
         //this.appMenuStateService.getAppMenu();
       });

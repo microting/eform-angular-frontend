@@ -11,7 +11,7 @@
             [bindLabel]="'name'"
             [bindValue]="'id'"
             [clearable]="false"
-            [(ngModel)]="selectedLanguage"
+            [(ngModel)]="selectedLanguageId"
             [items]="activeLanguages"
             id="createLanguageSelector">
           </mtx-select>
@@ -36,7 +36,7 @@
             let translationIndex = index
           "
     >
-      <mat-card class="mb-1" *ngIf="translation !== undefined && selectedLanguage === translation.languageId">
+      <mat-card class="mb-1" *ngIf="translation !== undefined && selectedLanguageId === translation.languageId">
 <!--        <mat-card-title>{{ getLanguage(translation.languageId) | translate }}</mat-card-title>-->
         <mat-card-content>
           <div class="d-flex flex-column">
