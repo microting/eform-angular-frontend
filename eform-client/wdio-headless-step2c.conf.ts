@@ -274,7 +274,7 @@ export const config: Options.Testrunner = {
     const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
 
     //console.log('Saving screenshot to:', filePath);
-    //browser.saveScreenshot(filePath);
+    browser.saveScreenshot(filePath);
     //console.log('Saved screenshot to:', filePath);
   },
   /**
