@@ -5,7 +5,7 @@ import {
   ConnectionStringExistCount,
   loadAuthFailure,
   loadAuthSuccess,
-  refreshToken,
+  refreshToken, updateCurrentUserLocaleAndDarkTheme,
   updateUserInfo
 } from 'src/app/state/auth/auth.actions';
 
@@ -156,6 +156,16 @@ export const _authReducer = createReducer(
       locale: payload.userSettings.model.locale,
       loginRedirectUrl: payload.userSettings.model.loginRedirectUrl || '',
       claims: payload.userClaims,
+      languageId: payload.userSettings.model.languageId,
+    },
+  })),
+  on(updateCurrentUserLocaleAndDarkTheme, (state, {payload}) => ({
+    ...state,
+    status: 'success',
+    currentUser: {
+      ...state.currentUser,
+      darkTheme: payload.userSettings.model.darkTheme,
+      locale: payload.userSettings.model.locale,
       languageId: payload.userSettings.model.languageId,
     },
   })),

@@ -15,6 +15,7 @@ import {AppSettingsStateService} from 'src/app/modules/application-settings/comp
 import {LanguagesModel} from 'src/app/common/models';
 import {Store} from '@ngrx/store';
 import {selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-profile-settings',
@@ -36,8 +37,10 @@ export class ProfileSettingsComponent implements OnInit {
     private authStore: Store,
     private googleAuthService: GoogleAuthService,
     private localeService: LocaleService,
+    private translateService: TranslateService,
     private userSettingsService: UserSettingsService,
     private store: Store,
+    private userSettings: UserSettingsService,
     private appSettingsStateService: AppSettingsStateService
   ) {}
 
@@ -94,6 +97,19 @@ export class ProfileSettingsComponent implements OnInit {
     this.userSettingsService
       .updateUserSettings(this.userSettingsModel)
       .subscribe((data) => {
+        this.userSettings.getUserSettings().subscribe((data) => {
+          this.userSettingsModel = data.model;
+          this.store.dispatch({
+            type: '[Auth] Update Current User Locale And Dark Theme',
+            payload: {userSettings: {
+              model: {
+                darkTheme: this.userSettingsModel.darkTheme,
+                locale: this.userSettingsModel.locale,
+                languageId: this.userSettingsModel.languageId
+              }}}});
+
+          this.translateService.use(this.userSettingsModel.locale);
+        });
         // TODO fix this
         // this.localeService.updateCurrentUserLocaleAndDarkTheme(
         //   this.userSettingsModel.locale,
