@@ -4,7 +4,7 @@
     *matTreeNodeDef="let node"
     [matTreeNodePaddingIndent]="20"
     matTreeNodePadding="">
-    <ng-container *ngIf="checkGuards(node.guards)">
+    <ng-container *ngIf="checkGuards(node.guards) | async">
       <!-- use a disabled button to provide padding for tree leaf -->
       <a mat-button
          style="width: 100%"

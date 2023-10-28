@@ -1,77 +1,36 @@
 import {Injectable} from '@angular/core';
-import {AppMenuStore} from '../store';
-import {AppMenuQuery} from '../query';
-import {AppMenuService} from 'src/app/common/services';
-import {catchError} from 'rxjs/operators';
 import {MenuItemModel} from 'src/app/common/models';
+import {leftAppMenus, rightAppMenus} from 'src/app/state/app-menu/app-menu.selector';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class AppMenuStateService {
   constructor(
-    private store: AppMenuStore,
-    private service: AppMenuService,
-    private query: AppMenuQuery
+    private store: Store,
   ) {
-    this.query.selectLoading().subscribe(x => this.isLoading = x);
-    this.store.setLoading(false);
   }
-
-  isLoading: boolean;
-
-  getAppMenu() {
-    if (!this.isLoading) {
-      this.store.reset();
-      this.store.setLoading(true);
-      this.service.getAppMenuFromServer()
-        .pipe(
-          catchError((err, caught) => {
-            this.store.setLoading(false);
-            return caught;
-          })
-        )
-        .subscribe(
-          (response) => {
-            if (response && response.success && response.model) {
-              //if (!this.query.currentAppMenu) {
-                this.store.set({0: response.model});
-              //} else {
-              //  this.store.update(0, response.model);
-              //}
-            }
-            this.store.setLoading(false);
-          },
-        );
-    }
-  }
-
-  get appMenuObservable() {
-    return this.query.userMenu$;
-  }
-
-  get userMenuLeftAsync() {
-    return this.query.userMenuLeft$;
-  }
+  public rightAppMenus$ = this.store.select(rightAppMenus);
+  public leftAppMenus$ = this.store.select(leftAppMenus);
 
   getTitleByUrl(href: string): string {
-    if (
-      this.query.currentAppMenu &&
-      this.query.currentAppMenu.leftMenu &&
-      this.query.currentAppMenu.leftMenu.length > 0 &&
-      this.query.currentAppMenu.rightMenu &&
-      this.query.currentAppMenu.rightMenu.length > 0
-    ) {
       if (href.charAt(0) !== '/') {
         href = '/' + href;
       }
       if (href.includes('?')) {
         href = href.substring(0, href.indexOf('?'));
       }
-      let title = this.searchTitle(href, this.query.currentAppMenu.leftMenu);
-      if (!title) {
-        title = this.searchTitle(href, this.query.currentAppMenu.rightMenu);
+
+      let title = '';
+
+      this.leftAppMenus$.subscribe((leftMenu: MenuItemModel[]) => {
+        title = this.searchTitle(href, leftMenu);
+      });
+      if (title === '') {
+        this.rightAppMenus$.subscribe((rightMenu: MenuItemModel[]) => {
+          title = this.searchTitle(href, rightMenu);
+        });
       }
       return title;
-    }
   }
 
   private searchTitle(href: string, menuItems: MenuItemModel[]): string {

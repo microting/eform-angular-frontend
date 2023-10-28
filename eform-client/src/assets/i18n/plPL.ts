@@ -397,4 +397,10 @@ export const plPL = {
   Norwegian: 'norweski',
   Dutch: 'Holenderski',
   Finish: 'Skończyć',
+  'Done at': 'Zrobiono o godz',
+  'Select date': 'Wybierz datę',
+  Value: 'Wartość',
+  'Please fill out this field': 'Proszę wypełnić to pole',
+  'Submitted date': 'Zaakceptowana Data',
+  Languages: 'Języki',
 };

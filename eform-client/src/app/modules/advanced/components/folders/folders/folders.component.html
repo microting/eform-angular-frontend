@@ -17,7 +17,7 @@
       style="margin-top: 10px"
       id="newFolderBtn"
       (click)="openCreateModal()"
-      *ngIf="userClaims.workersCreate"
+      *ngIf="selectCurrentUserClaimsWorkersCreate$ | async"
     >
       <mat-icon>add</mat-icon>
       {{ 'Add new' | translate }}

@@ -8,6 +8,8 @@ import { AuthStateService } from 'src/app/common/store';
 import {MatIconRegistry} from '@angular/material/icon';
 import {WordIcon} from 'src/app/common/const';
 import {DomSanitizer} from '@angular/platform-browser';
+import {selectCurrentUserLocale} from "src/app/state/auth/auth.selector";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-eform-docx-report-header',
@@ -22,17 +24,21 @@ export class EformDocxReportHeaderComponent implements OnInit {
   @Input() range: Date[];
   @Input() templateId: number;
   generateForm: FormGroup;
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
   constructor(
     dateTimeAdapter: DateTimeAdapter<any>,
     private localeService: LocaleService,
+    private authStore: Store,
     private formBuilder: FormBuilder,
     authStateService: AuthStateService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
   ) {
     iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(WordIcon));
-    dateTimeAdapter.setLocale(authStateService.currentUserLocale);
+    this.selectCurrentUserLocale$.subscribe((locale) => {
+      dateTimeAdapter.setLocale(locale);
+    });
   }
 
   ngOnInit() {

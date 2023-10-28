@@ -55,7 +55,6 @@ import {
 } from 'src/app/common/interceptors';
 //import {GALLERY_CONFIG} from '@ngx-gallery/core';
 import {AppMenuStateService, AuthStateService} from 'src/app/common/store';
-import {persistProviders} from 'src/app/common/store/persist.config';
 import {BaseService} from 'src/app/common/services/base.service';
 import {DateInterceptor} from 'src/app/common/interceptors/date.interceptor';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -127,7 +126,6 @@ export let providers = [
     provide: LocationStrategy,
     useClass: PathLocationStrategy,
   },
-  ...persistProviders,
   BaseService,
   ApiBaseService,
 ];

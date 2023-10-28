@@ -1,3 +1,4 @@
+<ng-container *ngIf="selectAuthIsAuth$ | async">
 <eform-new-subheader [subtitle]="adminSettingsModel.assemblyVersion">
   <button
     mat-raised-button
@@ -299,3 +300,4 @@
 
   </div>
 </div>
+</ng-container>

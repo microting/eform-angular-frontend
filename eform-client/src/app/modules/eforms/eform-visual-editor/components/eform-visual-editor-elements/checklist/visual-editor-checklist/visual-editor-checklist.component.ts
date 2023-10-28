@@ -13,13 +13,16 @@ import {
   EformVisualEditorFieldModel,
   EformVisualEditorModel,
   EformVisualEditorRecursionFieldModel,
-  EformVisualEditorRecursionChecklistModel, LanguagesModel,
+  EformVisualEditorRecursionChecklistModel, LanguagesModel, LanguageModel,
 } from 'src/app/common/models';
 import { DragulaService } from 'ng2-dragula';
 import { AuthStateService } from 'src/app/common/store';
 import {
   EformFieldTypesEnum,
 } from 'src/app/common/const';
+import {selectCurrentUserLocale} from "src/app/state/auth/auth.selector";
+import {Store} from "@ngrx/store";
+import {take} from "rxjs";
 
 @Component({
   selector: 'app-visual-editor-checklist',
@@ -52,6 +55,7 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   changeColorField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   // dragulaElementContainerName = UUID.UUID();
   @Input() appLanguages: LanguagesModel = new LanguagesModel();
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
   composeIndexes(checklistIndex: number) {
     return [...this.checklistRecursionIndexes, checklistIndex];
@@ -62,9 +66,15 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   }
 
   get translationChecklistName(): string {
-    const language = this.appLanguages.languages.find(
-      (x) => x.languageCode === this.authStateService.currentUserLocale
-    );
+    // const language = this.appLanguages.languages.find(
+    //   (x) => x.languageCode === this.authStateService.currentUserLocale
+    // );
+    let language = new LanguageModel();
+    this.selectCurrentUserLocale$.pipe(take(1)).subscribe((locale) => {
+      language = this.appLanguages.languages.find(
+        (x) => x.languageCode === locale
+      );
+    });
     const index = this.checklist.translations.findIndex(
       (x) => x.languageId === language.id
     );
@@ -75,6 +85,7 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private authStore: Store,
     // private dragulaService: DragulaService,
     private authStateService: AuthStateService
   ) {

@@ -14,7 +14,7 @@
       id="eformsManageTagsBtn"
       (click)="openTagsModal()"
       matTooltip="{{ 'Manage tags' | translate }}"
-      *ngIf="authStateService.checkClaim('eformAllowManagingEformTags')"
+      *ngIf="selectEformAllowManagingEformTags$ | async"
     >
       <mat-icon>discount</mat-icon>
     </button>

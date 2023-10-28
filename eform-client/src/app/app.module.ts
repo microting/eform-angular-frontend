@@ -52,6 +52,13 @@ import {
 } from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
 import {GalleryModule} from 'ng-gallery';
 import {LightboxModule} from 'ng-gallery/lightbox';
+import { StoreModule } from '@ngrx/store';
+import * as appMenuReducer from 'src/app/state/app-menu/app-menu.reducer';
+import * as authReducer from 'src/app/state/auth/auth.recuder';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {EffectsModule} from '@ngrx/effects';
+import * as appMenuEffects from 'src/app/state/app-menu/app-menu.effects';
+import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
 
 @NgModule({
   declarations: [
@@ -70,8 +77,17 @@ import {LightboxModule} from 'ng-gallery/lightbox';
     // Libs
     AppRoutingModule,
     BrowserModule,
-    TranslateModule.forRoot(translateConfig),
     HttpClientModule,
+    StoreModule.forRoot({
+      appMenus: appMenuReducer.reducer,
+      authV2: authReducer.reducer,
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
+    EffectsModule.forRoot(AppMenuEffects),
+    TranslateModule.forRoot(translateConfig),
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       autoDismiss: true,
@@ -84,7 +100,7 @@ import {LightboxModule} from 'ng-gallery/lightbox';
     LightboxModule,
     // GallerizeModule,
     NgxChartsModule,
-    AkitaNgDevtools,
+    //AkitaNgDevtools,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     SharedPnModule,
     MatSidenavModule,
@@ -107,7 +123,7 @@ import {LightboxModule} from 'ng-gallery/lightbox';
     EformSharedModule,
     MatProgressSpinnerModule,
     // EformDateFnsDateModule,
-    EformMatDateFnsDateModule
+    EformMatDateFnsDateModule,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],

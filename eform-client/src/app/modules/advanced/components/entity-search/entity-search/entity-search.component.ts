@@ -16,6 +16,8 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {TranslateService} from '@ngx-translate/core';
+import {Store} from '@ngrx/store';
+import {selectCurrentUserClaimsEntitySearchCreate} from 'src/app/state/auth/auth.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -27,10 +29,6 @@ export class EntitySearchComponent implements OnInit, OnDestroy{
   advEntitySearchableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();
   entitySearchRemoveComponentAfterClosedSub$: Subscription;
 
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
-
   tableHeaders: MtxGridColumn[] = [
     {header: this.translateService.stream('Id'), field: 'microtingUUID', sortProp: {id: 'Id'}, sortable: true},
     {header: this.translateService.stream('Name'), sortProp: {id: 'Name'}, field: 'name', sortable: true},
@@ -41,9 +39,13 @@ export class EntitySearchComponent implements OnInit, OnDestroy{
       sortProp: {id: 'Description'}
     },
     {header: this.translateService.stream('Actions'), field: 'actions'},
-  ]
+  ];
+  public selectCurrentUserClaimsEntitySearchCreate$ = this.authStore.select(selectCurrentUserClaimsEntitySearchCreate);
+  public selectCurrentUserClaimsEntitySearchUpdate$ = this.authStore.select(selectCurrentUserClaimsEntitySearchCreate);
+  public selectCurrentUserClaimsEntitySearchDelete$ = this.authStore.select(selectCurrentUserClaimsEntitySearchCreate);
 
   constructor(
+    private authStore: Store,
     private entitySearchService: EntitySearchService,
     private authStateService: AuthStateService,
     public entitySearchStateService: EntitySearchStateService,

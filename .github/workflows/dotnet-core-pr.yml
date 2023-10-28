@@ -22,7 +22,7 @@ jobs:
           path: container.tar
   test:
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -46,12 +46,12 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 'lts/*'
+        node-version: 18
     - name: yarn install
       run: cd eform-client && yarn install
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Create errorShots directory
-      run: mkdir /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots      
+      run: mkdir eform-client/errorShots
     - name: Start the newly build Docker container
       id: docker-run
       run: docker run --name my-container -p 4200:5000 --network data microtingas/frontend-container:latest "/ConnectionString=host=mariadbtest;Database=420_Angular;user=root;password=secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;" > docker_run_log 2>&1 &
@@ -72,6 +72,7 @@ jobs:
         spec: cypress/e2e/db/*
         config-file: cypress.config.ts
         working-directory: eform-client
+        command-prefix: "--"
     - name: testheadless2${{matrix.test}}
       run: cd eform-client && npm run testheadless2${{matrix.test}}
     - name: ${{matrix.test}} test
@@ -85,6 +86,7 @@ jobs:
         spec: cypress/e2e/${{matrix.test}}/*
         config-file: cypress.config.ts
         working-directory: eform-client
+        command-prefix: "--"
     - name: Stop the newly build Docker container
       run: docker stop my-container
     - name: Get standard output
@@ -92,6 +94,21 @@ jobs:
         cat docker_run_log
         result=`cat docker_run_log | grep "Now listening on: http://0.0.0.0:5000" -m 1 | wc -l`
         if [ $result -ne 1 ];then exit 1; fi
+    - name: Stop mariadb
+      if: ${{ always() }}
+      continue-on-error: true
+      run: docker stop mariadbtest
+    - name: Stop rabbitmq
+      if: ${{ always() }}
+      continue-on-error: true
+      run: docker stop some-rabbit
+    - name: Remove old network
+      if: ${{ always() }}
+      continue-on-error: true
+      run: docker network rm data
+    - name: cleanup
+      if: ${{ always() }}
+      run: docker container prune --force
     - name: The job has failed
       if: ${{ failure() }}
       run: |
@@ -102,7 +119,7 @@ jobs:
       with:
         name: error Screenshots
         path: |
-          /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots/errorShots/chrome*.png
+          eform-client/cypress/videos/*.mp4
         retention-days: 2
   test-dotnet:
     runs-on: ubuntu-latest

@@ -28,6 +28,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {CaseRemoveModalComponent} from 'src/app/common/modules/eform-cases/components';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
+import {Store} from '@ngrx/store';
+import {selectCurrentUserClaimsCaseUpdate, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -35,17 +37,12 @@ import {Overlay} from '@angular/cdk/overlay';
   templateUrl: './cases-table.component.html',
 })
 export class CasesTableComponent implements OnInit, OnDestroy {
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
-
-  get userClaimsEnum() {
-    return UserClaimsEnum;
-  }
+  public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
 
   constructor(
     private activateRoute: ActivatedRoute,
     private casesService: CasesService,
+    private authStore: Store,
     private eFormService: EFormService,
     public authStateService: AuthStateService,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
@@ -71,6 +68,10 @@ export class CasesTableComponent implements OnInit, OnDestroy {
   tableHeaders: MtxGridColumn[];
   appMenuSub$: Subscription;
   caseRemoveModalComponentAfterClosedSub$: Subscription;
+  public selectCurrentUserClaimsCaseRead$ = this.authStore.select(selectCurrentUserClaimsCaseUpdate);
+  public selectCurrentUserClaimsCaseDelete$ = this.authStore.select(selectCurrentUserClaimsCaseUpdate);
+  public selectCurrentUserClaimsCaseGetPdf$ = this.authStore.select(selectCurrentUserClaimsCaseUpdate);
+  public selectCurrentUserClaimsCaseGetDocx$ = this.authStore.select(selectCurrentUserClaimsCaseUpdate);
 
   ngOnInit() {
     this.activateRoute.params.subscribe((params) => {
@@ -87,14 +88,18 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         type: 'date',
         typeParameter: {format: 'dd.MM.y HH:mm:ss'}
       },];
-    this.authStateService.isAdmin ? this.tableHeaders = [...this.tableHeaders, {
-      header: this.translateService.stream('CreatedAt'),
-      field: 'createdAt',
-      sortable: true,
-      sortProp: {id: 'CreatedAt'},
-      type: 'date',
-      typeParameter: {format: 'dd.MM.y HH:mm:ss'}
-    }] : undefined;
+    this.selectCurrentUserIsAdmin$.subscribe((isAdmin) => {
+      if (isAdmin) {
+        this.tableHeaders = [...this.tableHeaders, {
+          header: this.translateService.stream('CreatedAt'),
+          field: 'createdAt',
+          sortable: true,
+          sortProp: {id: 'CreatedAt'},
+          type: 'date',
+          typeParameter: {format: 'dd.MM.y HH:mm:ss'}
+        }];
+      }
+    });
     this.tableHeaders = [...this.tableHeaders, {
       header: this.translateService.stream('SiteId'),
       field: 'workerName',
@@ -124,10 +129,12 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     this.caseStateService.getCases().subscribe((operation) => {
       if (operation && operation.success) {
         this.caseListModel = operation.model;
-        composeCasesTableHeaders(
-          this.currentTemplate,
-          this.authStateService.isAdmin
-        );
+        this.selectCurrentUserIsAdmin$.subscribe((isAdmin) => {
+          composeCasesTableHeaders(
+            this.currentTemplate,
+            isAdmin
+          );
+        });
       }
     });
   }
@@ -176,16 +183,6 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkEformPermissions(permissionIndex: number) {
-    if (this.eformPermissionsSimpleModel.templateId) {
-      return this.eformPermissionsSimpleModel.permissionsSimpleList.find(
-        (x) => x === UserClaimsEnum[permissionIndex].toString()
-      );
-    } else {
-      return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
-    }
-  }
-
   onCaseDeleted() {
     this.caseStateService.onDelete();
     this.loadAllCases();
@@ -202,14 +199,18 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         type: 'date',
         typeParameter: {format: 'dd.MM.y HH:mm:ss'}
       },];
-    this.authStateService.isAdmin ? this.tableHeaders = [...this.tableHeaders, {
-      header: this.translateService.stream('CreatedAt'),
-      field: 'createdAt',
-      sortable: true,
-      sortProp: {id: 'CreatedAt'},
-      type: 'date',
-      typeParameter: {format: 'dd.MM.y HH:mm:ss'}
-    }] : undefined;
+    this.selectCurrentUserIsAdmin$.subscribe((isAdmin) => {
+      if (isAdmin) {
+        this.tableHeaders = [...this.tableHeaders, {
+          header: this.translateService.stream('CreatedAt'),
+          field: 'createdAt',
+          sortable: true,
+          sortProp: {id: 'CreatedAt'},
+          type: 'date',
+          typeParameter: {format: 'dd.MM.y HH:mm:ss'}
+        }];
+      }
+    });
     this.tableHeaders = [...this.tableHeaders, {
       header: this.translateService.stream('SiteId'),
       field: 'workerName',
@@ -314,16 +315,17 @@ export class CasesTableComponent implements OnInit, OnDestroy {
 
   private setTitle() {
     const href = this.router.url;
-    this.appMenuSub$ = this.appMenuStateService.appMenuObservable.subscribe(
-      (appMenu) => {
-        if (appMenu) {
-          this.title = this.appMenuStateService.getTitleByUrl(href);
-          if (!this.title) {
-            this.title = this.currentTemplate.label;
-          }
-        }
-      }
-    );
+    // TODO: Fix this
+    // this.appMenuSub$ = this.appMenuStateService.appMenuObservable.subscribe(
+    //   (appMenu) => {
+    //     if (appMenu) {
+    //       this.title = this.appMenuStateService.getTitleByUrl(href);
+    //       if (!this.title) {
+    //         this.title = this.currentTemplate.label;
+    //       }
+    //     }
+    //   }
+    // );
   }
 
   onPaginationChanged(paginationModel: PaginationModel) {

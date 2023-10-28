@@ -397,4 +397,10 @@ export const nlNL = {
   Norwegian: 'Noors',
   Dutch: 'Nederlands',
   Finish: 'Finish',
+  'Done at': 'Klaar om',
+  'Select date': 'Selecteer een datum',
+  Value: 'Waarde',
+  'Please fill out this field': 'Vul alstublieft dit veld in',
+  'Submitted date': 'Datum ingediend',
+  Languages: 'Talen',
 };

@@ -397,4 +397,10 @@ export const svSE = {
   Norwegian: 'norska',
   Dutch: 'holländska',
   Finish: 'Avsluta',
+  'Done at': 'Klar vid',
+  'Select date': 'Välj datum',
+  Value: 'Värde',
+  'Please fill out this field': 'Var vänlig fyll i det här fältet',
+  'Submitted date': 'Inlämningsdatum',
+  Languages: 'språk',
 };

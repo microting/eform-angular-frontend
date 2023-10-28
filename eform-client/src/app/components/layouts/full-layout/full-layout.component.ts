@@ -1,13 +1,29 @@
 import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {AppMenuQuery, AuthStateService} from 'src/app/common/store';
+import {AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {Subscription, take, zip} from 'rxjs';
-import {AppSettingsService, LoaderService, LocaleService} from 'src/app/common/services';
+import {Observable, Subscription, take, zip} from 'rxjs';
+import {
+  AppSettingsService,
+  AuthService,
+  LoaderService,
+  LocaleService,
+  UserSettingsService
+} from 'src/app/common/services';
 import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
-import {HeaderSettingsModel} from 'src/app/common/models';
+import {HeaderSettingsModel, MenuItemModel} from 'src/app/common/models';
 import {MatDrawer, MatDrawerMode} from '@angular/material/sidenav';
 import {filter} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {rightAppMenus} from 'src/app/state/app-menu/app-menu.selector';
+import {
+  selectAuthIsAuth,
+  selectConnectionStringExists,
+  selectCurrentUserLocale,
+  selectIsDarkMode, selectSideMenuOpened
+} from 'src/app/state/auth/auth.selector';
+import {refreshToken} from 'src/app/state/auth/auth.actions';
+import {TranslateService} from "@ngx-translate/core";
 
 @AutoUnsubscribe()
 @Component({
@@ -25,12 +41,22 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   sidenavMode: MatDrawerMode = 'side';
   mobileWidth = 660;
   openedChangeSub$: Subscription;
+  public selectConnectionStringExists$ = this.authStore.select(selectConnectionStringExists);
+  public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  private selectIsDarkMode$ = this.authStore.select(selectIsDarkMode);
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
+  public selectSideMenuOpened$ = this.authStore.select(selectSideMenuOpened);
 
   constructor(
     public authStateService: AuthStateService,
     private renderer: Renderer2,
+    private userSettings: UserSettingsService,
+    private translateService: TranslateService,
+    private service: AuthService,
     private localeService: LocaleService,
-    public appMenuQuery: AppMenuQuery,
+    private authStore: Store,
+    //public appMenuQuery: AppMenuQuery,
+    private store: Store,
     public router: Router,
     private eventBrokerService: EventBrokerService,
     private settingsService: AppSettingsService,
@@ -41,20 +67,14 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getSettings();
       });
   }
+  public allAppMenus$ = this.store.select(rightAppMenus);
 
   ngOnInit() {
-    this.getSettings();
     this.loaderService.setLoading(true);
-    this.localeService.initLocale();
-    this.authStateService.currentUserLocaleAsync.pipe(filter(x => !!x), take(1)).subscribe(_ => this.loaderService.setLoading(false))
+    this.getSettings();
+    //this.localeService.initLocale();
+    this.selectCurrentUserLocale$.pipe(filter(x => !!x), take(1)).subscribe(_ => this.loaderService.setLoading(false))
     this.onResize({});
-    this.isDarkThemeAsync$ = this.authStateService.isDarkThemeAsync.subscribe(
-      (isDarkTheme) => {
-        isDarkTheme
-          ? this.switchToDarkTheme()
-          : this.switchToLightTheme();
-      }
-    );
   }
 
   ngAfterViewInit() {
@@ -75,11 +95,37 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getSettings() {
-    this.authStateService.isConnectionStringExist();
-    zip(this.authStateService.isConnectionStringExistAsync, this.authStateService.isAuthAsync)
-      .subscribe(([isConnectionStringExist, isAuth]) => {
-        if (isConnectionStringExist && isAuth) {
-          this.authStateService.getUserSettings();
+    // TODO: Fix this
+    // load access_token from local storage
+    const accessToken = JSON.parse(localStorage.getItem('token'));
+    // put access_token to auth store
+    if (accessToken === null) {
+      this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
+        (result) => {
+          if (!result || (result && !result.success)) {
+            this.authStore.dispatch({type: '[Auth] Connection String Exist Count', payload: {count: 2, isConnectionStringExist: false}});
+          } else if (result && result.success) {
+            this.authStore.dispatch({type: '[Auth] Connection String Exist Count', payload: {count: 2, isConnectionStringExist: true}});
+            this.selectIsAuth$.pipe(take(1)).subscribe((isAuth) => {
+              if (isAuth) {
+                //this.authStateService.getUserSettings();
+              } else {
+                this.router.navigate(['/auth']).then();
+              }
+            });
+          }
+        }
+      );
+    } else {
+      this.selectIsAuth$.pipe(take(1)).subscribe((isAuth) => {
+        if (isAuth) {
+          this.isDarkThemeAsync$ = this.selectIsDarkMode$.subscribe(
+            (isDarkTheme) => {
+              isDarkTheme
+                ? this.switchToDarkTheme()
+                : this.switchToLightTheme();
+            }
+          );
           this.settingsService.getHeaderSettings().pipe(take(1)).subscribe((data => {
             if (data && data.success) {
               this.headerSettingsModel = data.model;
@@ -90,16 +136,103 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             }
           }));
-        } else if (!isConnectionStringExist && !isAuth) {
-          this.logoImage = '../../../assets/images/logo.png';
-          this.headerSettingsModel.imageLinkVisible = true;
-          this.headerSettingsModel.mainTextVisible = true;
-          this.headerSettingsModel.secondaryTextVisible = true;
-          this.headerSettingsModel.mainText = 'eForm Backend';
-          this.headerSettingsModel.secondaryText = 'No more paper-forms and back-office data entry';
-          this.router.navigate(['/connection-string']).then();
+        } else {
+          const accessTokenString = accessToken.token.accessToken;
+          const accessTokenRole = accessToken.token.role;
+          const accessTokenId = accessToken.token.id;
+          this.authStore.dispatch({type: '[Auth] Refresh Token', payload: {token:
+                {
+                  accessToken: accessTokenString,
+                  tokenType: null,
+                  expiresIn: null,
+                  role: accessTokenRole,
+                  id: accessTokenId}}});
+          this.selectIsAuth$.pipe(take(1)).subscribe((isAuth) => {
+            if (isAuth) {
+              zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+                //this.isUserSettingsLoading = false;
+                this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
+                this.isDarkThemeAsync$ = this.selectIsDarkMode$.subscribe(
+                  (isDarkTheme) => {
+                    isDarkTheme
+                      ? this.switchToDarkTheme()
+                      : this.switchToLightTheme();
+                  }
+                );
+                this.settingsService.getHeaderSettings().pipe(take(1)).subscribe((data => {
+                  if (data && data.success) {
+                    this.headerSettingsModel = data.model;
+                    if (this.headerSettingsModel.imageLink && this.headerSettingsModel.imageLinkVisible) {
+                      this.logoImage = 'api/images/eform-images?fileName=' + this.headerSettingsModel.imageLink;
+                    } else if (!this.headerSettingsModel.imageLink) {
+                      this.logoImage = '../../../assets/images/logo.png';
+                    }
+                  }
+                }));
+                this.translateService.use(userSettings.model.locale);
+                if (userSettings.model.loginRedirectUrl != null) {
+                  this.router
+                    .navigate([
+                      `/${userSettings.model.loginRedirectUrl}`,
+                    ]).then();
+                } else {
+                  this.router
+                    .navigate(['/']).then();
+                }
+              });
+              //this.authStateService.getUserSettings();
+            } else {
+              this.router.navigate(['/auth']).then();
+            }
+          });
+          //this.router.navigate(['/auth']).then();
         }
       });
+    }
+    // zip(this.selectConnectionStringExists$, this.selectIsAuth$)
+    //   .subscribe(([isConnectionStringExist, isAuth]) => {
+    //     if (isConnectionStringExist && isAuth) {
+    //       this.isDarkThemeAsync$ = this.selectIsDarkMode$.subscribe(
+    //         (isDarkTheme) => {
+    //           isDarkTheme
+    //             ? this.switchToDarkTheme()
+    //             : this.switchToLightTheme();
+    //           //this.allAppMenus$ = this.store.select(rightAppMenus);
+    //           // this.menu = new MatTreeNestedDataSource<MenuItemModel>();
+    //           // this.menu.data = data;
+    //           // this.menu.data.forEach(x => {
+    //           //   x.menuItems = x.menuItems.sort((a, b) => a.position - b.position);
+    //           // });
+    //           //});
+    //         }
+    //       );
+    //       debugger;
+    //       this.authStateService.getUserSettings();
+    //       this.settingsService.getHeaderSettings().pipe(take(1)).subscribe((data => {
+    //         if (data && data.success) {
+    //           this.headerSettingsModel = data.model;
+    //           if (this.headerSettingsModel.imageLink && this.headerSettingsModel.imageLinkVisible) {
+    //             this.logoImage = 'api/images/eform-images?fileName=' + this.headerSettingsModel.imageLink;
+    //           } else if (!this.headerSettingsModel.imageLink) {
+    //             this.logoImage = '../../../assets/images/logo.png';
+    //           }
+    //         }
+    //       }));
+    //     } else {
+    //       if (accessToken != null) {
+    //         this.store.dispatch(refreshToken({payload: accessToken}));
+    //       }
+    //     }
+    //     // else if (!isConnectionStringExist && !isAuth) {
+    //     //   this.logoImage = '../../../assets/images/logo.png';
+    //     //   this.headerSettingsModel.imageLinkVisible = true;
+    //     //   this.headerSettingsModel.mainTextVisible = true;
+    //     //   this.headerSettingsModel.secondaryTextVisible = true;
+    //     //   this.headerSettingsModel.mainText = 'eForm Backend';
+    //     //   this.headerSettingsModel.secondaryText = 'No more paper-forms and back-office data entry';
+    //     //   this.router.navigate(['/connection-string']).then();
+    //     // }
+    //   });
   }
 
   @HostListener('window:resize', ['$event'])

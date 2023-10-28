@@ -397,4 +397,10 @@ export const deDE = {
   Norwegian: 'norwegisch',
   Dutch: 'Niederländisch',
   Finish: 'Beenden',
+  'Done at': 'Fertig am',
+  'Select date': 'Datum auswählen',
+  Value: 'Wert',
+  'Please fill out this field': 'Bitte füllen Sie dieses Feld aus',
+  'Submitted date': 'Datum der Einreichung',
+  Languages: 'Sprachen',
 };

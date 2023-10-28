@@ -3,7 +3,7 @@
     mat-raised-button
     color="accent"
     id="workerCreateBtn"
-    *ngIf="userClaims.workersCreate"
+    *ngIf="selectCurrentUserClaimsWorkersCreate$ | async"
     (click)="openCreateModal()"
   >
     {{ 'Create Worker' | translate }}
@@ -22,12 +22,12 @@
   [showColumnMenuButton]="false">
 </mtx-grid>
 <ng-template #actionsTpl let-row>
-  <div *ngIf="userClaims.workersDelete || userClaims.workersUpdate">
+  <div *ngIf="(selectCurrentUserClaimsWorkersDelete$ | async) || (selectCurrentUserClaimsWorkersUpdate$ | async)">
     <button
       mat-icon-button
       id="workerEditBtn"
       (click)="openEditModal(row)"
-      *ngIf="userClaims.workersUpdate && !row.isLocked"
+      *ngIf="(selectCurrentUserClaimsWorkersUpdate$ | async) && !row.isLocked"
       matTooltip="{{ 'Edit Worker' | translate }}"
     >
       <mat-icon>edit</mat-icon>
@@ -37,7 +37,7 @@
       color="warn"
       id="workerDeleteBtn"
       (click)="openDeleteModal(row)"
-      *ngIf="userClaims.workersDelete && !row.isLocked"
+      *ngIf="(selectCurrentUserClaimsWorkersDelete$ | async) && !row.isLocked"
       matTooltip="{{ 'Delete Worker' | translate }}"
     >
       <mat-icon>delete</mat-icon>

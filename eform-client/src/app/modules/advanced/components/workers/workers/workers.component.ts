@@ -10,13 +10,14 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {WorkerDeleteComponent, WorkerEditCreateComponent} from '../';
 import {Subscription} from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import {Store} from '@ngrx/store';
+import {selectCurrentUserClaimsWorkersCreate} from 'src/app/state/auth/auth.selector';
 
 @Component({
   selector: 'app-workers',
   templateUrl: './workers.component.html',
 })
 export class WorkersComponent implements OnInit {
-  selectedWorkerDto: WorkerDto = new WorkerDto();
   workersDto: Array<WorkerDto> = [];
 
   tableHeaders: MtxGridColumn[] = [
@@ -28,16 +29,13 @@ export class WorkersComponent implements OnInit {
   ];
   editWorkerComponentAfterClosedSub$: Subscription;
   createWorkerComponentAfterClosedSub$: Subscription;
-  getCurrentUserClaimsAsyncSub$: Subscription;
-
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
+  public selectCurrentUserClaimsWorkersCreate$ = this.authStore.select(selectCurrentUserClaimsWorkersCreate);
+  public selectCurrentUserClaimsWorkersUpdate$ = this.authStore.select(selectCurrentUserClaimsWorkersCreate);
+  public selectCurrentUserClaimsWorkersDelete$ = this.authStore.select(selectCurrentUserClaimsWorkersCreate);
 
   constructor(
+    private authStore: Store,
     private workersService: WorkersService,
-    private router: Router,
-    private authStateService: AuthStateService,
     public dialog: MatDialog,
     private overlay: Overlay,
     private translateService: TranslateService,
@@ -46,8 +44,10 @@ export class WorkersComponent implements OnInit {
 
   ngOnInit() {
     this.loadAllWorkers();
-    this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
-      if(x.workersDelete || x.workersUpdate) {
+    let actionsEnabled = false;
+    this.selectCurrentUserClaimsWorkersDelete$.subscribe(x => {
+      if(x) {
+        actionsEnabled = true;
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
             header: this.translateService.stream('Actions'),
@@ -55,7 +55,27 @@ export class WorkersComponent implements OnInit {
           },
         ];
       }
-    })
+    });
+    this.selectCurrentUserClaimsWorkersUpdate$.subscribe(x => {
+      if(x && !actionsEnabled) {
+        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+          {
+            header: this.translateService.stream('Actions'),
+            field: 'actions',
+          },
+        ];
+      }
+    });
+    // this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
+    //   if(x.workersDelete || x.workersUpdate) {
+    //     this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+    //       {
+    //         header: this.translateService.stream('Actions'),
+    //         field: 'actions',
+    //       },
+    //     ];
+    //   }
+    // })
   }
 
   openEditModal(selectedWorker: WorkerDto) {

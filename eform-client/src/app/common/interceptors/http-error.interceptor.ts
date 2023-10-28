@@ -64,7 +64,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           this.toastrService.warning('403 - Forbidden');
           // console.error('403 - Forbidden');
           // console.error(error);
-          this.router.navigate(['/']).then();
+          localStorage.removeItem('token');
+          this.router.navigate(['/auth']).then();
+          //this.router.navigate(['/']).then();
           return throwError(() => errorMessage);
         }
         const body = error._body || '';

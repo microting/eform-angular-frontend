@@ -3,7 +3,9 @@ import {
   NavigationMenuItemModel,
   NavigationMenuTranslationModel,
 } from 'src/app/common/models/navigation-menu';
-import { AuthStateService } from 'src/app/common/store';
+import {take} from 'rxjs';
+import {selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-navigation-menu-item',
@@ -18,7 +20,10 @@ export class NavigationMenuItemComponent implements OnInit {
   itemDelete: EventEmitter<NavigationMenuItemModel> = new EventEmitter<NavigationMenuItemModel>();
   @Output()
   itemEdit: EventEmitter<NavigationMenuItemModel> = new EventEmitter<NavigationMenuItemModel>();
-  constructor(private authStateService: AuthStateService) {}
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
+  constructor(
+    private authStore: Store
+  ) {}
 
   ngOnInit(): void {}
 
@@ -31,8 +36,15 @@ export class NavigationMenuItemComponent implements OnInit {
   }
 
   getMenuTranslation(translations: NavigationMenuTranslationModel[]) {
+    let language = '';
+    this.selectCurrentUserLocale$.pipe(take(1)).subscribe((locale) => {
+      language = locale;
+    });
     return translations.find(
-      (x) => x.localeName === this.authStateService.currentUserLocale
+      (x) => x.localeName === language
     ).name;
+    // return translations.find(
+    //   (x) => x.localeName === this.authStateService.currentUserLocale
+    // ).name;
   }
 }

@@ -48,11 +48,11 @@
   </div>
 </ng-template>
 <ng-template #actionsTpl let-row>
-  <div *ngIf="userClaims.sitesDelete || userClaims.sitesUpdate">
+  <div *ngIf="(selectCurrentUserClaimsSitesDelete$ | async) || (selectCurrentUserClaimsSitesUpdate$ | async)">
     <button
       mat-icon-button
       id="editSiteBtn"
-      *ngIf="userClaims.sitesUpdate && !row.isLocked"
+      *ngIf="(selectCurrentUserClaimsSitesUpdate$ | async) && !row.isLocked"
       (click)="openEditModal(row)"
       matTooltip="{{ 'Edit site' | translate }}"
     >
@@ -62,7 +62,7 @@
       mat-icon-button
       color="warn"
       id="deleteSiteBtn"
-      *ngIf="userClaims.sitesDelete && !row.isLocked"
+      *ngIf="(selectCurrentUserClaimsSitesDelete$ | async) && !row.isLocked"
       (click)="openDeleteModal(row)"
       matTooltip="{{ 'Delete site' | translate }}"
     >

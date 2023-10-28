@@ -384,16 +384,12 @@ class MyEformsRowObject {
   }
 
   pair(folder, users) {
-    console.log('Pairing eform');
     const spinnerAnimation = cy.get('#spinner-animation');
     if (this.editPairEformBtn.should('exist')) {
-      console.log('editPairEformBtn isExisting');
       this.editPairEformBtn.click();
     } else {
-      console.log('addPairEformBtn isExisting');
       this.addPairEformBtn.click();
     }
-    console.log('Parring clicked');
     cy.wait(500);
     spinnerAnimation.should('not.exist', { timeout: 90000 });
     (myEformsPage.cancelParingBtn()).should('be.visible', { timeout: 40000 });
@@ -410,21 +406,15 @@ class MyEformsRowObject {
         cy.wait(1000);
       }
     }
-    console.log('Folder selected');
     myEformsPage.takeScreenshot();
     for (let i = 0; i < users.length; i++) {
-      console.log('Selecting user: ' + users[i].firstName);
       //const name = `#mat-checkbox-${i+2} > label > div.mat-checkbox-inner-container`;
       const checkbox = cy.get(`#checkbox${users[i].siteId}`);
-      console.log('Checkbox found ');
       checkbox.scrollIntoView();
-      console.log('Checkbox scrolled into view');
       //checkbox.should('be.visible').should('be.enabled');
       checkbox.click();
-      console.log('User selected ' + users[i].firstName);
       cy.wait(500);
     }
-    console.log('Users selected');
     (myEformsPage.saveParingBtn()).click();
     spinnerAnimation.should('not.exist', { timeout: 90000 });
     cy.wait(1000);

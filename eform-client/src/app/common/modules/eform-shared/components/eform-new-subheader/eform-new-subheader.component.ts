@@ -32,16 +32,17 @@ export class EformNewSubheaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   ngOnInit() {
-    this.appMenuSub$ = this.appMenuStateService.appMenuObservable.subscribe((appMenu) => {
-      if (appMenu && appMenu.rightMenu && appMenu.leftMenu) {
-        const notStaticTitle = this.appMenuStateService.getTitleByUrl(this.href);
-        if (notStaticTitle) {
-          this.getTranslatedTitleSub$ = this.translateService.get(notStaticTitle).subscribe(title => this.titleService.setTitle(title));
-        } else {
-          this.titleService.setTitle(this.title);
-        }
-      }
-    })
+    // TODO: Fix this
+    // this.appMenuSub$ = this.appMenuStateService.appMenuObservable.subscribe((appMenu) => {
+    //   if (appMenu && appMenu.rightMenu && appMenu.leftMenu) {
+    //     const notStaticTitle = this.appMenuStateService.getTitleByUrl(this.href);
+    //     if (notStaticTitle) {
+    //       this.getTranslatedTitleSub$ = this.translateService.get(notStaticTitle).subscribe(title => this.titleService.setTitle(title));
+    //     } else {
+    //       this.titleService.setTitle(this.title);
+    //     }
+    //   }
+    // })
     // if (!this.forceStaticTitle || !this.title) {
     //   const href = this.router.url;
     //   this.appMenuStateService.getAppMenu().subscribe((_) => {

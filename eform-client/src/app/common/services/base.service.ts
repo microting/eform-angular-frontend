@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { AuthState } from 'src/app/common/store';
 
 @Injectable()
 export class BaseService {
@@ -112,10 +111,10 @@ export class BaseService {
     } else {
       headers = headers.set('Content-Type', 'application/json');
     }
-    const user: AuthState = JSON.parse(localStorage.getItem('mainStore'));
+    const token = JSON.parse(localStorage.getItem('token'));
     // check user
-    if (user && user.token.accessToken) {
-      headers.append('Authorization', 'Bearer ' + user.token.accessToken);
+    if (token && token.token.accessToken) {
+      headers.append('Authorization', 'Bearer ' + token.token.accessToken);
     }
     // add localization
     return headers;
@@ -137,10 +136,10 @@ export class BaseService {
   private get formHeaders() {
     const headers: Headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const user: AuthState = JSON.parse(localStorage.getItem('mainStore'));
+    const token = JSON.parse(localStorage.getItem('token'));
     // check user
-    if (user && user.token.accessToken) {
-      headers.append('Authorization', 'Bearer ' + user.token.accessToken);
+    if (token && token.token.accessToken) {
+      headers.append('Authorization', 'Bearer ' + token.token.accessToken);
     }
     return headers;
   }
