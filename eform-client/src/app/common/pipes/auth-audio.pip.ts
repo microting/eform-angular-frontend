@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthStateService} from 'src/app/common/store';
 import {selectBearerToken} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import {firstValueFrom} from 'rxjs';
 
 @Pipe({
   name: 'authAudio',
