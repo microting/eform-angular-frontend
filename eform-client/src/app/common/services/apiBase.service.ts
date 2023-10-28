@@ -3,7 +3,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError} from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { AuthQuery } from 'src/app/common/store';
 import * as R from 'ramda';
 import {selectAuthIsAuth, selectBearerToken} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
@@ -27,7 +26,6 @@ export class ApiBaseService {
   ): FormData {
     const formData = form || new FormData();
     // eslint-disable-next-line guard-for-in
-    // tslint:disable-next-line:forin
     for (const property in object) {
       const changedNameProperty = needPascalStyle
         ? property[0].toUpperCase() + R.drop(1, property)

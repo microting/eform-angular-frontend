@@ -23,8 +23,10 @@ export class ClaimsGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> {
     const claim = UserClaimsEnum[route.data['requiredClaim']] as string;
+    console.log(claim);
     return this.checkGuards([claim]).pipe(
       map(x => {
+        console.log(claim);
         console.log(x);
         return !!(x && claim);
       }

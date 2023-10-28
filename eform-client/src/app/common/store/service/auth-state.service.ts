@@ -131,36 +131,48 @@ export class AuthStateService {
   // }
 
   refreshToken() {
-    this.authStore.dispatch({type: '[Auth] Refresh Token'});
+    // const accessToken = JSON.parse(localStorage.getItem('token'));
+    // const accessTokenString = accessToken.token.accessToken;
+    // const accessTokenRole = accessToken.token.role;
+    // const accessTokenId = accessToken.token.id;
+    // this.authStore.dispatch({type: '[Auth] Refresh Token', payload: {token:
+    //       {
+    //         accessToken: accessTokenString,
+    //         tokenType: null,
+    //         expiresIn: null,
+    //         role: accessTokenRole,
+    //         id: accessTokenId}}});
     // TODO need to fix this
-    // if (!this.isRefreshing) {
-    //   this.isRefreshing = true;
-    //   this.service.refreshToken().subscribe((response) => {
-    //     if (response) {
-    //       this.service.obtainUserClaims().subscribe((userClaims) => {
-    //         // console.log(`before AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
-    //         this.store.update((state) => ({
-    //           ...state,
-    //           token: {
-    //             accessToken: response.model.access_token,
-    //             tokenType: response.model.token_type,
-    //             expiresIn: response.model.expires_in,
-    //             role: response.model.role,
-    //           },
-    //           currentUser: {
-    //             ...state.currentUser,
-    //             claims: userClaims,
-    //           },
-    //         }));
-    //         // console.log(`after AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
-    //         this.isRefreshing = false;
-    //       });
-    //     } else {
-    //       this.logout();
-    //       this.isRefreshing = false;
-    //     }
-    //   });
-    // }
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      this.service.refreshToken().subscribe((response) => {
+        if (response) {
+          zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
+            .subscribe(([userSettings, userClaims]) => {
+            this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
+            //         // console.log(`before AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
+            //         this.store.update((state) => ({
+            //           ...state,
+            //           token: {
+            //             accessToken: response.model.access_token,
+            //             tokenType: response.model.token_type,
+            //             expiresIn: response.model.expires_in,
+            //             role: response.model.role,
+            //           },
+            //           currentUser: {
+            //             ...state.currentUser,
+            //             claims: userClaims,
+            //           },
+            //         }));
+            //         // console.log(`after AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
+            this.isRefreshing = false;
+          });
+        } else {
+          this.logout();
+          this.isRefreshing = false;
+        }
+      });
+    }
   }
 
   getUserSettings() {
