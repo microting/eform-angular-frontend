@@ -8,29 +8,29 @@ import {selectAuthIsAuth, selectCurretnUserClaims} from 'src/app/state/auth/auth
 
 @Injectable()
 export class AdminGuard {
-  private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  // private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
   constructor(
     private router: Router,
-    private authStore: Store
+    private store: Store
   ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean {
+  ): Observable<boolean> {
     // TODO: Fix this
-    return true;
-    // return this.selectAuthIsAuth$.pipe(
-    //   take(1), // Ensure the subscription is automatically unsubscribed after the first emission
-    //   tap((isAuth) => {
-    //     if (!isAuth) {
-    //       console.debug(`Let's kick the user out admin.guard`);
-    //       this.router.navigate(['/auth']).then();
-    //     }
-    //   }),
-    //   switchMap(() => this.selectAuthIsAuth$),
-    //   take(1) // Ensure the subscription is automatically unsubscribed after the first emission
-    // );
+    // return true;
+    return this.store.select(selectAuthIsAuth).pipe(
+      take(1), // Ensure the subscription is automatically unsubscribed after the first emission
+      tap((isAuth) => {
+        if (!isAuth) {
+          console.debug(`Let's kick the user out admin.guard`);
+          this.router.navigate(['/auth']).then();
+        }
+      }),
+      switchMap(() => this.store.select(selectAuthIsAuth)),
+      take(1) // Ensure the subscription is automatically unsubscribed after the first emission
+    );
   }
 
   // checkGuards(guards: string[]): Observable<boolean> {
@@ -45,6 +45,6 @@ export class AdminGuard {
   // }
 }
 
-export const IsAdminGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
+export const IsAdminGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
   return inject(AdminGuard).canActivate(route, state);
 }
