@@ -17,19 +17,20 @@ export class AdminGuard {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> {
+  ): boolean {
     // TODO: Fix this
-    return this.selectAuthIsAuth$.pipe(
-      take(1), // Ensure the subscription is automatically unsubscribed after the first emission
-      tap((isAuth) => {
-        if (!isAuth) {
-          console.debug(`Let's kick the user out admin.guard`);
-          this.router.navigate(['/auth']).then();
-        }
-      }),
-      switchMap(() => this.selectAuthIsAuth$),
-      take(1) // Ensure the subscription is automatically unsubscribed after the first emission
-    );
+    return true;
+    // return this.selectAuthIsAuth$.pipe(
+    //   take(1), // Ensure the subscription is automatically unsubscribed after the first emission
+    //   tap((isAuth) => {
+    //     if (!isAuth) {
+    //       console.debug(`Let's kick the user out admin.guard`);
+    //       this.router.navigate(['/auth']).then();
+    //     }
+    //   }),
+    //   switchMap(() => this.selectAuthIsAuth$),
+    //   take(1) // Ensure the subscription is automatically unsubscribed after the first emission
+    // );
   }
 
   // checkGuards(guards: string[]): Observable<boolean> {
@@ -44,6 +45,6 @@ export class AdminGuard {
   // }
 }
 
-export const IsAdminGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
+export const IsAdminGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
   return inject(AdminGuard).canActivate(route, state);
 }

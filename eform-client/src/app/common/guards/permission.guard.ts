@@ -19,26 +19,13 @@ export class PermissionGuard {
   canActivate (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot) : Observable<boolean> {
-    const requiredPermission = route.data['requiredPermission'];
+    let requiredPermission = route.data['requiredPermission'];
+    requiredPermission = requiredPermission.replace(/_([a-z])/g, function (g: string[]) { return g[1].toUpperCase(); });
     return this.checkGuards([requiredPermission]).pipe(
         map(x => {
-            console.log(x);
             return !!(x && requiredPermission);
           }
         ));
-    // return true;
-  //   TODO: Fix this
-  //   route: ActivatedRouteSnapshot,
-  //   state: RouterStateSnapshot
-  // ): Observable<boolean> {
-  //   const requiredPermission = route.data['requiredPermission'];
-  //   // return !requiredPermission || this.authStateService.checkClaim(requiredPermission);
-  //   return this.checkGuards([requiredPermission]).pipe(
-  //     map(x => {
-  //         console.log(x);
-  //         return !!(x && requiredPermission);
-  //       }
-  //     ));
   }
 
   checkGuards(guards: string[]): Observable<boolean> {

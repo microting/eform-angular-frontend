@@ -24,7 +24,6 @@ export class ClaimsGuard {
     const requiredPermission = UserClaimsEnum[route.data['requiredClaim']] as string;
     return this.checkGuards([requiredPermission]).pipe(
       map(x => {
-          console.log(x);
           return !!(x && requiredPermission);
         }
       ));
