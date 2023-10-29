@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {AdminGuard, AuthGuard, ClaimsGuard, IsAdminGuard} from 'src/app/common/guards';
+import {AdminGuard, AuthGuard, ClaimsGuard, IsAdminGuard, IsClaimsGuard} from 'src/app/common/guards';
 import { FullLayoutComponent, SimpleLayoutComponent, ConnectionSetupComponent} from './components';
 import { UserClaimsEnum } from 'src/app/common/const';
 
@@ -65,7 +65,7 @@ export const routes: Routes = [
       },
       {
         path: 'email-recipients',
-        canActivate: [ClaimsGuard],
+        canActivate: [IsClaimsGuard],
         data: { requiredClaim: UserClaimsEnum.emailRecipientRead },
         loadChildren: () =>
           import('./modules/email-recipients/email-recipients.module').then(

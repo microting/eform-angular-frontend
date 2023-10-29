@@ -44,6 +44,6 @@ export class AuthGuard {
   }
 }
 
-export const IsAdminGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
+export const IsAuthGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
   return inject(AuthGuard).canActivate(route, state);
 }

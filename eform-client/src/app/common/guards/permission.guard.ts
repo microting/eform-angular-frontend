@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
-  CanActivate,
+  ActivatedRouteSnapshot, CanActivateFn,
   RouterStateSnapshot,
 } from '@angular/router';
 import { AuthStateService } from 'src/app/common/store';
@@ -11,24 +10,35 @@ import {selectCurretnUserClaims} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
 @Injectable()
-export class PermissionGuard implements CanActivate {
+export class PermissionGuard {
   private selectCurrentUserClaims$ = this.authStore.select(selectCurretnUserClaims);
   constructor(
     private authStore: Store
   ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> {
+  canActivate (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot) : Observable<boolean> {
     const requiredPermission = route.data['requiredPermission'];
-    // return !requiredPermission || this.authStateService.checkClaim(requiredPermission);
     return this.checkGuards([requiredPermission]).pipe(
-      map(x => {
-          console.log(x);
-          return !!(x && requiredPermission);
-        }
-      ));
+        map(x => {
+            console.log(x);
+            return !!(x && requiredPermission);
+          }
+        ));
+    // return true;
+  //   TODO: Fix this
+  //   route: ActivatedRouteSnapshot,
+  //   state: RouterStateSnapshot
+  // ): Observable<boolean> {
+  //   const requiredPermission = route.data['requiredPermission'];
+  //   // return !requiredPermission || this.authStateService.checkClaim(requiredPermission);
+  //   return this.checkGuards([requiredPermission]).pipe(
+  //     map(x => {
+  //         console.log(x);
+  //         return !!(x && requiredPermission);
+  //       }
+  //     ));
   }
 
   checkGuards(guards: string[]): Observable<boolean> {
@@ -41,4 +51,9 @@ export class PermissionGuard implements CanActivate {
       return false;
     }));
   }
+}
+
+
+export const IsPermissionGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
+  return inject(PermissionGuard).canActivate(route, state);
 }

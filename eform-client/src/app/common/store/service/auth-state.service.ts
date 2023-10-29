@@ -10,7 +10,12 @@ import {applicationLanguages, customDaLocale} from 'src/app/common/const';
 import {de, enUS, es, fr, it, nb, nl, pl, sv, uk, ptBR, pt, fi} from 'date-fns/locale';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {Store} from '@ngrx/store';
-import {selectAuthIsAuth, selectConnectionStringExists, selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
+import {
+  selectAuthIsAuth,
+  selectConnectionStringExists,
+  selectCurrentUserLanguageId,
+  selectCurrentUserLocale
+} from 'src/app/state/auth/auth.selector';
 import {TranslateService} from '@ngx-translate/core';
 import {translates} from 'src/assets/i18n/translates';
 import {filter} from 'rxjs/operators';
@@ -40,6 +45,7 @@ export class AuthStateService {
   private selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
   private selectConnectionStringExists$ = this.authStore.select(selectConnectionStringExists);
   private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
+  private selectCurrentUserLanguageId$ = this.authStore.select(selectCurrentUserLanguageId)
 
   login(loginInfo: LoginRequestModel) {
     // this.authStore.dispatch({type: '[Auth] Authenticate', payload: loginInfo});
@@ -379,14 +385,16 @@ export class AuthStateService {
   //   }));
   // }
 
-  // checkClaim(claimName: string): boolean {
+  checkClaim(claimName: string): boolean {
+    // TODO: need to fix this
+    return true;
   //   const userClaims = this.currentUserClaims;
   //   const normalizedClaimName = snakeToCamel(claimName);
   //   return (
   //     userClaims.hasOwnProperty(normalizedClaimName) &&
   //     userClaims[normalizedClaimName] === 'True'
   //   );
-  // }
+  }
 
   // get loginRedirectUrl(): string {
   //   return this.query.currentSetting.currentUser.loginRedirectUrl;
@@ -396,54 +404,56 @@ export class AuthStateService {
   //   this.dateLocale.next(this.dateFnsLocale);
   // }
   //
-  // get dateFnsLocale(): Locale {
-  //   const currentLanguage = this.currentUserLanguage;
-  //   switch (currentLanguage.id) {
-  //     case 1: {
-  //       return customDaLocale;
-  //     }
-  //     case 2: {
-  //       return enUS;
-  //     }
-  //     case 3: {
-  //       return de;
-  //     }
-  //     case 4: {
-  //       return uk;
-  //     }
-  //     case 5: {
-  //       return pl;
-  //     }
-  //     case 6: {
-  //       return nb; // it's (Bokmål) maybe need nn (Nynorsk)
-  //     }
-  //     case 7: {
-  //       return sv;
-  //     }
-  //     case 8: {
-  //       return es;
-  //     }
-  //     case 9: {
-  //       return fr;
-  //     }
-  //     case 10: {
-  //       return it;
-  //     }
-  //     case 11: {
-  //       return nl;
-  //     }
-  //     case 12: {
-  //       return ptBR;
-  //     }
-  //     case 13: {
-  //       return pt;
-  //     }
-  //     case 14: {
-  //       return fi;
-  //     }
-  //     default: {
-  //       return enUS;
-  //     }
-  //   }
-  // }
+  get dateFnsLocale(): Locale {
+    let currentLanguageId = 1;
+    this.selectCurrentUserLanguageId$.subscribe((languageId) => currentLanguageId = languageId);
+    // const currentLanguage = this.currentUserLanguage;
+    switch (currentLanguageId) {
+      case 1: {
+        return customDaLocale;
+      }
+      case 2: {
+        return enUS;
+      }
+      case 3: {
+        return de;
+      }
+      case 4: {
+        return uk;
+      }
+      case 5: {
+        return pl;
+      }
+      case 6: {
+        return nb; // it's (Bokmål) maybe need nn (Nynorsk)
+      }
+      case 7: {
+        return sv;
+      }
+      case 8: {
+        return es;
+      }
+      case 9: {
+        return fr;
+      }
+      case 10: {
+        return it;
+      }
+      case 11: {
+        return nl;
+      }
+      case 12: {
+        return ptBR;
+      }
+      case 13: {
+        return pt;
+      }
+      case 14: {
+        return fi;
+      }
+      default: {
+        return enUS;
+      }
+    }
+  }
 }

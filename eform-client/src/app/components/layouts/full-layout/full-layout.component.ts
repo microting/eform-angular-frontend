@@ -23,7 +23,7 @@ import {
   selectIsDarkMode, selectSideMenuOpened
 } from 'src/app/state/auth/auth.selector';
 import {refreshToken} from 'src/app/state/auth/auth.actions';
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
