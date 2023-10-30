@@ -21,7 +21,7 @@
           matInput
           type="text"
           (ngModelChange)="onSearchChanged($event)"
-          [ngModel]="deviceUsersStateService.getNameFilter() | async"
+          [ngModel]="selectDeviceUsersNameFilter$ | async"
           id="labelInput"
         />
       </mat-form-field>
