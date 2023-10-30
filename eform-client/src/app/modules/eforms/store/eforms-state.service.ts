@@ -1,86 +1,110 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, zip} from 'rxjs';
 import { EFormService } from 'src/app/common/services';
 import {
+    CommonPaginationState,
+  FiltrationStateModel,
   OperationDataResult,
-  SortModel,
-  TemplateListModel,
+  TemplateListModel, TemplateRequestModel,
 } from 'src/app/common/models';
-import { arrayToggle } from '@datorama/akita';
-import { EformsStore, EformsQuery } from '../store';
-import { updateTableSort } from 'src/app/common/helpers';
+import {arrayToggle} from '@datorama/akita';
+import {updateTableSort} from 'src/app/common/helpers';
+import {Store} from '@ngrx/store';
+import {
+  selectEformsFilters, selectEformsPagination,
+  selectEformsTagIds
+} from 'src/app/state/eform/eform.selector';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class EformsStateService {
+  private selectEformsTagIds$ = this.store.select(selectEformsTagIds);
+  private selectEformsPagination$ = this.store.select(selectEformsPagination);
+  private selectEformsFilters$ = this.store.select(selectEformsFilters);
+
   constructor(
-    private store: EformsStore,
+    private store: Store,
     private service: EFormService,
-    private query: EformsQuery
-  ) {}
-
-/*  getSort(): Observable<SortModel> {
-    return this.query.selectSort$;
-  }*/
-
-  getActiveSort(): Observable<string> {
-    return this.query.selectActiveSort$;
-  }
-
-  getActiveSortDirection(): Observable<'asc' | 'desc'> {
-    return this.query.selectActiveSortDirection$;
-  }
-
-  getTagIds(): Observable<number[]> {
-    return this.query.selectTagIds$;
-  }
-
-  getNameFilter(): Observable<string> {
-    return this.query.selectNameFilter$;
+  ) {
   }
 
   updateNameFilter(nameFilter: string) {
-    this.store.update((state) => ({
-      filters: { ...state.filters, nameFilter: nameFilter },
-    }));
+    let currentFilters: FiltrationStateModel;
+    this.selectEformsFilters$.subscribe((filters) => {
+      if (filters === undefined) {
+        return;
+      }
+      currentFilters = filters;
+    }).unsubscribe();
+    this.store.dispatch({
+      type: '[Eform] Update Eform Filters', payload: {
+        filters: {nameFilter: nameFilter, tagIds: currentFilters.tagIds}
+      }
+    });
   }
 
   onSortTable(sort: string) {
+    let currentPagination: CommonPaginationState;
+    this.selectEformsPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
     const localPageSettings = updateTableSort(
       sort,
-      this.query.pageSetting.pagination.sort,
-      this.query.pageSetting.pagination.isSortDsc
+      currentPagination.sort,
+      currentPagination.isSortDsc
     );
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        isSortDsc: localPageSettings.isSortDsc,
-        sort: localPageSettings.sort,
-      },
-    }));
+    this.store.dispatch({
+      type: '[Eform] Update Eform Pagination', payload: {
+        pagination: {sort: localPageSettings.sort, isSortDsc: localPageSettings.isSortDsc}
+      }
+    });
   }
 
   addOrRemoveTagIds(id: number) {
-    this.store.update((state) => ({
-      filters: {
-        ...state.filters,
-        tagIds: arrayToggle(state.filters.tagIds, id),
-      },
-    }));
+    let currentTagIds: number[];
+    this.selectEformsTagIds$.subscribe((tagIds) => {
+      if (tagIds === undefined) {
+        return;
+      }
+      currentTagIds = tagIds;
+    }).unsubscribe();
+    this.store.dispatch({
+      type: '[Eform] Update Eform Filters', payload: {
+        filters: {tagIds: arrayToggle(currentTagIds, id)}
+      }
+    });
   }
 
   updateTagIds(tagIds: number[]) {
-    this.store.update((state) => ({
-      filters: { ...state.filters, tagIds: tagIds },
-    }));
+    let currentFilters: FiltrationStateModel;
+    this.selectEformsFilters$.subscribe((filters) => {
+      if (filters === undefined) {
+        return;
+      }
+      currentFilters = filters;
+    }).unsubscribe();
+    this.store.dispatch({type: '[Eform] Update Eform Filters', payload: {
+        filters: {tagIds: tagIds, nameFilter: currentFilters.nameFilter}}});
   }
 
   loadAllTemplates(): Observable<OperationDataResult<TemplateListModel>> {
-    return this.service.getAll({
-      ...this.query.pageSetting.pagination,
-      ...this.query.pageSetting.filters,
-      offset: 0,
-      pageIndex: 0,
-      pageSize: 100000,
+    let templateRequestModel = new TemplateRequestModel();
+    zip(this.selectEformsPagination$, this.selectEformsFilters$).subscribe(([pagination, filters]) => {
+      if (pagination === undefined || filters === undefined) {
+        return;
+      }
+      templateRequestModel = {
+        nameFilter: filters.nameFilter,
+        tagIds: filters.tagIds,
+        sort: pagination.sort,
+        isSortDsc: pagination.isSortDsc,
+        offset: 0,
+        pageIndex: 0,
+        pageSize: 100000,
+      }
     });
+    return this.service.getAll(templateRequestModel);
   }
 }

@@ -13,11 +13,9 @@ import {
   SecurityGroupEformsPermissionsService,
   EFormService,
   EformTagService,
-  AuthService,
 } from 'src/app/common/services';
 import {saveAs} from 'file-saver';
 import {EformsStateService} from '../../store';
-import {AuthStateService} from 'src/app/common/store';
 import {Sort} from '@angular/material/sort';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -40,6 +38,12 @@ import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import { TranslateService } from '@ngx-translate/core';
 import {selectCurrentUserClaims, selectEformAllowManagingEformTags} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import {
+  selectEformsIsSortDsc,
+  selectEformsNameFilter,
+  selectEformsSort,
+  selectEformsTagIds
+} from 'src/app/state/eform/eform.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -72,8 +76,13 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   eformColumnsModalComponentAfterClosedSub$: Subscription;
   eformEditParingModalComponentAfterClosedSub$: Subscription;
   eformRemoveEformModalComponentAfterClosedSub$: Subscription;
-  private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
-  public selectEformAllowManagingEformTags$ = this.authStore.select(selectEformAllowManagingEformTags)
+  private selectCurrentUserClaims$ = this.store.select(selectCurrentUserClaims);
+  public selectEformAllowManagingEformTags$ = this.store.select(selectEformAllowManagingEformTags)
+  public selectEformsTagIds$ = this.store.select(selectEformsTagIds);
+  public selectEformsNameFilter$ = this.store.select(selectEformsNameFilter);
+  public selectEformsSort$ = this.store.select(selectEformsSort);
+  public selectEformsIsSortDsc$ = this.store.select(selectEformsIsSortDsc);
+
   userClaims: UserClaimsModel;
 
   get userClaimsEnum() {
@@ -100,12 +109,10 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     {header: this.translateService.stream('Pairing'), field: 'pairingUpdate'},
     {header: this.translateService.stream('Actions'), field: 'actions'},
   ];
-
   constructor(
-    private authStore: Store,
+    private store: Store,
     private eFormService: EFormService,
     private eFormTagService: EformTagService,
-    private authService: AuthService,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
     public eformsStateService: EformsStateService,
     iconRegistry: MatIconRegistry,
