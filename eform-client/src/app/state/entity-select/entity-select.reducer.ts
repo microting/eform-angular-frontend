@@ -1,6 +1,9 @@
 import {CommonPaginationState, FiltrationStateModel} from 'src/app/common/models';
 import {createReducer, on} from '@ngrx/store';
-import {updateEntitySelectFilters} from 'src/app/state/entity-select/entity-select.actions';
+import {
+  updateEntitySelectFilters,
+  updateEntitySelectPagination, updateEntitySelectTotal
+} from 'src/app/state/entity-select/entity-select.actions';
 
 export interface EntitySelectState {
   pagination: CommonPaginationState;
@@ -11,7 +14,7 @@ export interface EntitySelectState {
 export const initialState: EntitySelectState = {
   pagination: {
     offset: 0,
-    pageSize: 10000,
+    pageSize: 10,
     pageIndex: 0,
     sort: 'Id',
     isSortDsc: false,
@@ -33,6 +36,27 @@ export const _entitySelectReducer = createReducer(
       tagIds: payload.filters.tagIds,
     },
   })),
+  on(updateEntitySelectPagination, (state, {payload}) => ({
+      ...state,
+      pagination: {
+        pageSize: payload.pagination.pageSize,
+        pageIndex: payload.pagination.pageIndex,
+        sort: payload.pagination.sort,
+        isSortDsc: payload.pagination.isSortDsc,
+        offset: payload.pagination.offset,
+        total: payload.pagination.total,
+      },
+    }),
+  ),
+  on(updateEntitySelectTotal, (state, {payload}) => ({
+      ...state,
+      total: payload.total,
+      pagination: {
+        ...state.pagination,
+        total: payload.total,
+      },
+    }),
+  ),
 );
 
 export function reducer(state: EntitySelectState | undefined, action: any) {
