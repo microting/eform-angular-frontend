@@ -56,9 +56,13 @@ import * as appMenuReducer from 'src/app/state/app-menu/app-menu.reducer';
 import * as authReducer from 'src/app/state/auth/auth.recuder';
 import * as eformReducer from 'src/app/state/eform/eform.reducer';
 import * as deviceUsersReducer from 'src/app/state/device-user/device-user.reducer';
+import * as appSettingsReducer from 'src/app/state/application-settings/application-settings.reducer';
+import * as emailRecipientsReducer from 'src/app/state/email-recipients/email-recipients.reducer';
+import * as securityReducer from 'src/app/state/security/security.reducer';
+import * as entitySearchReducer from 'src/app/state/entity-search/entity-search.reducer';
+import * as entitySelectReducer from 'src/app/state/entity-select/entity-select.reducer';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {EffectsModule} from '@ngrx/effects';
-import * as appMenuEffects from 'src/app/state/app-menu/app-menu.effects';
 import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
 
 @NgModule({
@@ -84,6 +88,11 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
       authV2: authReducer.reducer,
       eforms: eformReducer.reducer,
       deviceUsers: deviceUsersReducer.reducer,
+      appSettings: appSettingsReducer.reducer,
+      emailRecipients: emailRecipientsReducer.reducer,
+      security: securityReducer.reducer,
+      entitySearch: entitySearchReducer.reducer,
+      entitySelect: entitySelectReducer.reducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

@@ -20,6 +20,7 @@ export const initialState: EformsState = {
     pageIndex: 0,
     sort: 'Id',
     isSortDsc: false,
+    total: 0,
   },
   filters: {
     nameFilter: '',
@@ -59,6 +60,7 @@ export const _eformsReducer = createReducer(
       pageIndex: 0,
       sort: payload.pagination.sort,
       isSortDsc: payload.pagination.isSortDsc,
+      total: payload.pagination.total,
     },
     }))
 );

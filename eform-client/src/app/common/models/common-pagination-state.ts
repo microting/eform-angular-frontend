@@ -4,4 +4,5 @@ export class CommonPaginationState {
   sort: string;
   isSortDsc: boolean;
   pageIndex: number;
+  total: number;
 }

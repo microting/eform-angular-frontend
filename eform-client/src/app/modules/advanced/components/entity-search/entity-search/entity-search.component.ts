@@ -18,6 +18,11 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {TranslateService} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsEntitySearchCreate} from 'src/app/state/auth/auth.selector';
+import {
+  selectEntitySearchIsSortDsc,
+  selectEntitySearchNameFilter, selectEntitySearchPagination,
+  selectEntitySearchSort
+} from 'src/app/state/entity-search/entity-search.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -43,11 +48,13 @@ export class EntitySearchComponent implements OnInit, OnDestroy{
   public selectCurrentUserClaimsEntitySearchCreate$ = this.authStore.select(selectCurrentUserClaimsEntitySearchCreate);
   public selectCurrentUserClaimsEntitySearchUpdate$ = this.authStore.select(selectCurrentUserClaimsEntitySearchCreate);
   public selectCurrentUserClaimsEntitySearchDelete$ = this.authStore.select(selectCurrentUserClaimsEntitySearchCreate);
+  public selectEntitySearchNameFilter$ = this.authStore.select(selectEntitySearchNameFilter);
+  public selectEntitySearchSort$ = this.authStore.select(selectEntitySearchSort);
+  public selectEntitySearchIsSortDsc$ = this.authStore.select(selectEntitySearchIsSortDsc);
+  public selectEntitySearchPagination$ = this.authStore.select(selectEntitySearchPagination);
 
   constructor(
     private authStore: Store,
-    private entitySearchService: EntitySearchService,
-    private authStateService: AuthStateService,
     public entitySearchStateService: EntitySearchStateService,
     private dialog: MatDialog,
     private overlay: Overlay,
@@ -64,6 +71,7 @@ export class EntitySearchComponent implements OnInit, OnDestroy{
       .subscribe((data) => {
         if (data && data.model) {
           this.advEntitySearchableGroupListModel = data.model;
+          this.authStore.dispatch({type: '[EntitySearch] Update EntitySearch Total', payload: {total: data.model.total}});
         }
       });
   }
