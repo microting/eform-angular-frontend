@@ -18,7 +18,6 @@ import {
   EformDuplicateConfirmModalComponent,
 } from './components';
 import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
-import {persistProvider} from 'src/app/modules/eforms/store';
 import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
@@ -71,7 +70,6 @@ import {MatChipsModule} from '@angular/material/chips';
     EformsBulkImportModalComponent,
     EformDuplicateConfirmModalComponent,
   ],
-  providers: [persistProvider],
   exports: []
 })
 export class EFormsModule {

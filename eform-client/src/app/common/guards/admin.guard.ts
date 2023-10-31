@@ -8,10 +8,10 @@ import {selectAuthIsAuth, selectCurretnUserClaims} from 'src/app/state/auth/auth
 
 @Injectable()
 export class AdminGuard {
-  private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  // private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
   constructor(
     private router: Router,
-    private authStore: Store
+    private store: Store
   ) {}
 
   canActivate(
@@ -19,7 +19,8 @@ export class AdminGuard {
     state: RouterStateSnapshot
   ): Observable<boolean> {
     // TODO: Fix this
-    return this.selectAuthIsAuth$.pipe(
+    // return true;
+    return this.store.select(selectAuthIsAuth).pipe(
       take(1), // Ensure the subscription is automatically unsubscribed after the first emission
       tap((isAuth) => {
         if (!isAuth) {
@@ -27,7 +28,7 @@ export class AdminGuard {
           this.router.navigate(['/auth']).then();
         }
       }),
-      switchMap(() => this.selectAuthIsAuth$),
+      switchMap(() => this.store.select(selectAuthIsAuth)),
       take(1) // Ensure the subscription is automatically unsubscribed after the first emission
     );
   }

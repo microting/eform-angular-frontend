@@ -69,7 +69,8 @@ export class AuthStateService {
               role: response.role,
               id: response.id}
           }));
-        zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+        zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
+          .subscribe(([userSettings, userClaims]) => {
           this.isUserSettingsLoading = false;
           this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
           //   // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);

@@ -8,6 +8,8 @@ import {
 import { AuthStateService } from 'src/app/common/store';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth, selectLoginRedirectUrl} from 'src/app/state/auth/auth.selector';
+import {Observable, take} from "rxjs";
+import {switchMap, tap} from "rxjs/operators";
 
 @Injectable()
 export class AuthGuard {
