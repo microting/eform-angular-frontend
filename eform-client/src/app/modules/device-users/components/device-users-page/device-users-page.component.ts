@@ -15,8 +15,9 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {TranslateService} from '@ngx-translate/core';
 import {DeleteModalSettingModel, SiteDto} from 'src/app/common/models';
 import {DeleteModalComponent} from 'src/app/common/modules/eform-shared/components';
-import {Store} from "@ngrx/store";
+import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsDeviceUsersCreate} from 'src/app/state/auth/auth.selector';
+import {selectDeviceUsersFilters, selectDeviceUsersNameFilter} from "src/app/state/device-user/device-user.selector";
 
 @AutoUnsubscribe()
 @Component({
@@ -48,6 +49,7 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   public selectCurrentUserClaimsDeviceUsersCreate$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
   public selectCurrentUserClaimsDeviceUsersUpdate$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
   public selectCurrentUserClaimsDeviceUsersDelete$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
+  private selectDeviceUsersNameFilter$ = this.authStore.select(selectDeviceUsersNameFilter);
 
   constructor(
     private authStore: Store,

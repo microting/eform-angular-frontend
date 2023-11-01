@@ -30,6 +30,12 @@ import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsCaseUpdate, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
+import {
+  selectCasesIsSortDsc,
+  selectCasesNameFilter,
+  selectCasesPagination,
+  selectCasesSort
+} from 'src/app/state/cases/cases.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -38,6 +44,10 @@ import {selectCurrentUserClaimsCaseUpdate, selectCurrentUserIsAdmin} from 'src/a
 })
 export class CasesTableComponent implements OnInit, OnDestroy {
   public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
+  public selectCasesSort$ = this.authStore.select(selectCasesSort);
+  public selectCasesIsSortDsc$ = this.authStore.select(selectCasesIsSortDsc);
+  public selectCasesPagination$ = this.authStore.select(selectCasesPagination);
+  public selectCasesNameFilter$ = this.authStore.select(selectCasesNameFilter);
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -315,6 +325,10 @@ export class CasesTableComponent implements OnInit, OnDestroy {
 
   private setTitle() {
     const href = this.router.url;
+    this.title = this.appMenuStateService.getTitleByUrl(this.router.url);
+    if (!this.title) {
+      this.title = this.currentTemplate.label;
+    }
     // TODO: Fix this
     // this.appMenuSub$ = this.appMenuStateService.appMenuObservable.subscribe(
     //   (appMenu) => {

@@ -1,135 +1,128 @@
 import { Injectable } from '@angular/core';
 import { EmailRecipientsService } from 'src/app/common/services';
 import {
-  EmailRecipientModel,
+  CommonPaginationState,
+  EmailRecipientModel, EmailRecipientsRequestModel, FiltrationStateModel,
   OperationDataResult,
   Paged,
   PaginationModel,
 } from 'src/app/common/models';
-import { Observable } from 'rxjs';
-import { EmailRecipientsQuery, EmailRecipientsStore } from './';
-import { updateTableSort } from 'src/app/common/helpers';
-import { getOffset } from 'src/app/common/helpers/pagination.helper';
-import { arrayToggle } from '@datorama/akita';
-import { map } from 'rxjs/operators';
+import {Observable, zip} from 'rxjs';
+import {Store} from '@ngrx/store';
+import {map} from 'rxjs/operators';
+import {updateTableSort} from 'src/app/common/helpers';
+import {
+  selectEmailRecipientsFilters,
+  selectEmailRecipientsPagination
+} from 'src/app/state/email-recipients/email-recipiencts.selector';
 
 @Injectable({ providedIn: 'root' })
 export class EmailRecipientsStateService {
+  private emailRecipientsFilters$ = this.store.select(selectEmailRecipientsFilters);
+    private emailRecipientsPagination$ = this.store.select(selectEmailRecipientsPagination);
   constructor(
-    private store: EmailRecipientsStore,
+    private store: Store,
     private service: EmailRecipientsService,
-    private query: EmailRecipientsQuery
   ) {}
 
   getEmailRecipients(): Observable<
     OperationDataResult<Paged<EmailRecipientModel>>
   > {
-    return this.service
-      .getEmailRecipients({
-        ...this.query.pageSetting.pagination,
-        ...this.query.pageSetting.filters,
+    let emailRecipientsRequestModel = new EmailRecipientsRequestModel();
+    zip(this.emailRecipientsPagination$, this.emailRecipientsFilters$).subscribe(([pagination, filters]) => {
+        if (pagination === undefined || filters === undefined) {
+            return;
+        }
+        emailRecipientsRequestModel = {
+            sort: pagination.sort,
+            pageIndex: 0,
+            pageSize: pagination.pageSize,
+            isSortDsc: pagination.isSortDsc,
+            offset: pagination.offset,
+            tagIds: filters.tagIds,
+        }
+    }).unsubscribe();
+    return this.service.getEmailRecipients(emailRecipientsRequestModel).pipe(
+      map((response) => {
+        if (response && response.success && response.model) {
+          this.store.dispatch({type: '[EmailRecipients] Update EmailRecipients Total', payload: {total: response.model.total}});
+        }
+        return response;
       })
-      .pipe(
-        map((response) => {
-          if (response && response.success && response.model) {
-            this.store.update(() => ({
-              total: response.model.total,
-            }));
-          }
-          return response;
-        })
-      );
-  }
-
-  /*updatePageSize(pageSize: number) {
-    this.store.update((state) => ({
-      pagination: { ...state.pagination, pageSize: pageSize },
-    }));
-    this.checkOffset();
-  }*/
-
-  /*getPageSize(): Observable<number> {
-    return this.query.selectPageSize$;
-  }*/
-
-  // getSort(): Observable<SortModel> {
-  //   return this.query.selectSort$;
-  // }
-
-  getActiveSort(): Observable<string> {
-    return this.query.selectActiveSort$;
-  }
-
-  getActiveSortDirection(): Observable<'asc' | 'desc'> {
-    return this.query.selectActiveSortDirection$;
+    );
   }
 
   addOrRemoveTagIds(id: number) {
-    this.store.update((state) => ({
-      filters: {
-        ...state.filters,
-        tagIds: arrayToggle(state.filters.tagIds, id),
-      },
-    }));
-  }
-
-  getTagIds(): Observable<number[]> {
-    return this.query.selectTagIds$;
+    let currentFilters: FiltrationStateModel;
+    this.emailRecipientsFilters$.subscribe((filters) => {
+      if (filters === undefined) {
+        return;
+      }
+      currentFilters = filters;
+    }).unsubscribe();
+    const newTagIds = [...currentFilters.tagIds];
+    this.store.dispatch({
+      type: '[EmailRecipients] Update EmailRecipients Filters',
+      payload: {filters: {tagIds: newTagIds}}
+    });
   }
 
   onSortTable(sort: string) {
+    let currentPagination: CommonPaginationState;
+    this.emailRecipientsPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
     const localPageSetting = updateTableSort(
-      sort,
-      this.query.pageSetting.pagination.sort,
-      this.query.pageSetting.pagination.isSortDsc
-    );
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        isSortDsc: localPageSetting.isSortDsc,
-        sort: localPageSetting.sort,
-      },
-    }));
-  }
-
-  /*changePage(offset: number) {
-    this.store.update((state) => ({
-      pagination: { ...state.pagination, offset: offset },
-    }));
-  }*/
-
-  checkOffset() {
-    const newOffset = getOffset(
-      this.query.pageSetting.pagination.pageSize,
-      this.query.pageSetting.pagination.offset,
-      this.query.pageSetting.total
-    );
-    if (newOffset !== this.query.pageSetting.pagination.offset) {
-      this.store.update((state) => ({
-        pagination: { ...state.pagination, offset: newOffset },
-      }));
-    }
+        sort,
+        currentPagination.sort,
+        currentPagination.isSortDsc
+        );
+    this.store.dispatch({type: '[EmailRecipients] Update EmailRecipients Pagination', payload: {pagination: {
+          sort: localPageSetting.sort,
+          isSortDsc: localPageSetting.isSortDsc,
+          offset: currentPagination.offset,
+          pageIndex: currentPagination.pageIndex,
+          pageSize: currentPagination.pageSize,
+          total: currentPagination.total,
+        }}});
   }
 
   onDelete() {
-    this.store.update((state) => ({
-      total: state.total - 1,
-    }));
-    this.checkOffset();
-  }
-
-  getPagination(): Observable<PaginationModel> {
-    return this.query.selectPagination$;
+    let currentPagination: CommonPaginationState;
+    this.emailRecipientsPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
+    this.store.dispatch({type: '[EmailRecipients] Update EmailRecipients Pagination', payload: {pagination: {
+          sort: currentPagination.sort,
+          isSortDsc: currentPagination.isSortDsc,
+          offset: currentPagination.offset,
+          pageIndex: currentPagination.pageIndex,
+          pageSize: currentPagination.pageSize,
+          total: currentPagination.total - 1,
+        }}});
   }
 
   updatePagination(pagination: PaginationModel) {
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        pageSize: pagination.pageSize,
-        offset: pagination.offset,
-      },
-    }));
-    // this.checkOffset();
+    let currentPagination: CommonPaginationState;
+    this.emailRecipientsPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
+    this.store.dispatch({type: '[EmailRecipients] Update EmailRecipients Pagination', payload: {pagination: {
+          sort: currentPagination.sort,
+          isSortDsc: currentPagination.isSortDsc,
+          offset: pagination.offset,
+          pageIndex: currentPagination.pageIndex,
+          pageSize: pagination.pageSize,
+          total: currentPagination.total,
+        }}});
   }
 }

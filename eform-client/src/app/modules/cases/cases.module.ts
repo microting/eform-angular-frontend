@@ -7,7 +7,6 @@ import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { CasesRoutingModule } from './cases.routing';
 import { CaseEditComponent, CasesTableComponent } from './components';
-import { casesPersistProvider } from './components/store';
 import {MatSortModule} from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
@@ -40,8 +39,5 @@ import {GalleryModule} from 'ng-gallery';
     MatDatepickerModule,
   ],
   declarations: [CasesTableComponent, CaseEditComponent],
-  providers: [
-    casesPersistProvider,
-  ],
 })
 export class CasesModule {}

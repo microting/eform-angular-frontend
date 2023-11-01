@@ -26,7 +26,6 @@ import {
   FolderDeleteComponent,
 } from './components';
 import {EformImportedModule} from '../../common/modules/eform-imported/eform-imported.module';
-import {advancedPersistProviders} from './components/advansed-persist-providers';
 import {EformSharedTagsModule} from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCardModule} from '@angular/material/card';
@@ -83,7 +82,6 @@ import {MatChipsModule} from '@angular/material/chips';
     FolderEditCreateComponent,
     FolderDeleteComponent,
   ],
-  providers: [...advancedPersistProviders],
 })
 export class AdvancedModule {
 }

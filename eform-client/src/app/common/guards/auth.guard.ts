@@ -8,6 +8,8 @@ import {
 import { AuthStateService } from 'src/app/common/store';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth, selectLoginRedirectUrl} from 'src/app/state/auth/auth.selector';
+import {Observable, take} from "rxjs";
+import {switchMap, tap} from "rxjs/operators";
 
 @Injectable()
 export class AuthGuard {
@@ -44,6 +46,6 @@ export class AuthGuard {
   }
 }
 
-export const IsAdminGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
+export const IsAuthGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
   return inject(AuthGuard).canActivate(route, state);
 }

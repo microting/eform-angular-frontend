@@ -7,7 +7,7 @@ import {Subscription} from 'rxjs';
 import UserbackWidgetLoader, {UserbackWidget} from '@userback/widget';
 import {AppSettingsStateService, AppSettingsQuery} from 'src/app/modules/application-settings/components/store';
 import {UserbackWidgetSettingModel} from 'src/app/common/models';
-import {selectCurrentUserFullName, selectCurrentUserName} from 'src/app/state/auth/auth.selector';
+import {selectAuthIsAuth, selectCurrentUserFullName, selectCurrentUserName} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
 @Component({
@@ -22,6 +22,7 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
   private widget: UserbackWidget;
   private selectCurrentUserFullName$ = this.authStore.select(selectCurrentUserFullName);
   private selectCurrentUserName$ = this.authStore.select(selectCurrentUserName);
+  private selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
 
   isAuthSub$: Subscription;
   getUserbackWidgetIsEnabledSub$: Subscription;
@@ -36,7 +37,7 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // TODO: Fix this
-    // this.isAuthSub$ = this.authStateService.isAuthAsync.subscribe((isAuth?: boolean) => this.onIsAuthAsync(isAuth));
+    this.isAuthSub$ = this.selectIsAuth$.subscribe((isAuth?: boolean) => this.onIsAuthAsync(isAuth));
   }
 
   onIsAuthAsync(isAuth?: boolean) {

@@ -13,7 +13,6 @@ import {
   EmailRecipientsTagsComponent,
 } from './components';
 import {EformSharedTagsModule} from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
-import {emailRecipientsPersistProvider} from './components/store/email-recipients.store';
 import {MatSortModule} from '@angular/material/sort';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -49,7 +48,6 @@ import {MatDialogModule} from '@angular/material/dialog';
     MtxGridModule,
     MatDialogModule,
   ],
-  providers: [emailRecipientsPersistProvider],
 })
 export class EmailRecipientsModule {
 }

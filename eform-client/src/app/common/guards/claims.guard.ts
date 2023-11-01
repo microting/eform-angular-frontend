@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
-  CanActivate,
+  ActivatedRouteSnapshot, CanActivateFn,
   RouterStateSnapshot,
 } from '@angular/router';
 import { UserClaimsEnum } from 'src/app/common/const';
@@ -12,7 +11,7 @@ import {selectCurretnUserClaims} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
 @Injectable()
-export class ClaimsGuard implements CanActivate {
+export class ClaimsGuard {
   private selectCurrentUserClaims$ = this.authStore.select(selectCurretnUserClaims);
   constructor(
     private authStore: Store
@@ -22,15 +21,23 @@ export class ClaimsGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    const claim = UserClaimsEnum[route.data['requiredClaim']] as string;
-    console.log(claim);
-    return this.checkGuards([claim]).pipe(
+    const requiredPermission = UserClaimsEnum[route.data['requiredClaim']] as string;
+    return this.checkGuards([requiredPermission]).pipe(
       map(x => {
-        console.log(claim);
-        console.log(x);
-        return !!(x && claim);
-      }
-    ));
+          return !!(x && requiredPermission);
+        }
+      ));
+    // return true;
+    // TODO: Fix this
+    // const claim = UserClaimsEnum[route.data['requiredClaim']] as string;
+    // console.log(claim);
+    // return this.checkGuards([claim]).pipe(
+    //   map(x => {
+    //     console.log(claim);
+    //     console.log(x);
+    //     return !!(x && claim);
+    //   }
+    // ));
     // return !claim || this.checkGuards(claim);
     // return userClaims.hasOwnProperty(claim) && userClaims[claim] === 'True';
   }
@@ -45,4 +52,8 @@ export class ClaimsGuard implements CanActivate {
       return false;
     }));
   }
+}
+
+export const IsClaimsGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
+  return inject(ClaimsGuard).canActivate(route, state);
 }

@@ -21,7 +21,7 @@
           matInput
           type="text"
           (ngModelChange)="onSearchChanged($event)"
-          [ngModel]="entitySearchStateService.getNameFilter() | async"
+          [ngModel]="selectEntitySearchNameFilter$ | async"
           id="labelInput"
         />
       </mat-form-field>
@@ -40,8 +40,8 @@
   [showToolbar]="true"
   [showColumnMenuButton]="false"
   [toolbarTemplate]="toolbarTpl"
-  [sortActive]="entitySearchStateService.getActiveSort() | async"
-  [sortDirection]="entitySearchStateService.getActiveSortDirection() | async"
+  [sortActive]="selectEntitySearchSort$ | async"
+  [sortDirection]="selectEntitySearchIsSortDsc$ | async"
   (sortChange)="sortTable($event)">
 </mtx-grid>
 <ng-template #microtingUUIDTpl let-row let-i="index">
@@ -82,7 +82,7 @@
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <ng-template #paginatorTpl>
   <eform-pagination
-    [pagination]="entitySearchStateService.getPagination() | async"
+    [pagination]="selectEntitySearchPagination$ | async"
     (paginationChanged)="onPaginationChanged($event)"
   ></eform-pagination>
 </ng-template>

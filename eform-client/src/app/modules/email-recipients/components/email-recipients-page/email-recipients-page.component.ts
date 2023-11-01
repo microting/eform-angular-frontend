@@ -24,6 +24,12 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import { TranslateService } from '@ngx-translate/core';
+import {Store} from '@ngrx/store';
+import {
+  selectEmailRecipientsIsSortDsc,
+  selectEmailRecipientsPagination, selectEmailRecipientsSort,
+  selectEmailRecipientsTagIds
+} from "src/app/state/email-recipients/email-recipiencts.selector";
 
 @AutoUnsubscribe()
 @Component({
@@ -54,9 +60,15 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
     },
     {header: this.translateService.stream('Tags'), field: 'tags'},
     {header: this.translateService.stream('Actions'), field: 'actions'},
-  ]
+  ];
+  public selectEmailRecipientsNameFilter$ = this.store.select(selectEmailRecipientsPagination);
+  public selectEmailRecipientsSort$ = this.store.select(selectEmailRecipientsSort);
+  public selectEmailRecipientsIsSortDsc$ = this.store.select(selectEmailRecipientsIsSortDsc);
+  public selectEmailRecipientsPagination$ = this.store.select(selectEmailRecipientsPagination);
+  public selectEmailRecipientsTagIds$ = this.store.select(selectEmailRecipientsTagIds);
 
   constructor(
+    private store: Store,
     private emailRecipientsService: EmailRecipientsService,
     private tagsService: EmailRecipientsTagsService,
     public emailRecipientsStateService: EmailRecipientsStateService,

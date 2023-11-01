@@ -21,7 +21,7 @@
           matInput
           type="text"
           (ngModelChange)="onNameFilterChanged($event)"
-          [ngModel]="entitySelectStateService.getNameFilter() | async"
+          [ngModel]="selectEntitySelectNameFilter$ | async"
           id="labelInput"
         />
       </mat-form-field>
@@ -40,8 +40,8 @@
   [showToolbar]="true"
   [showColumnMenuButton]="false"
   [toolbarTemplate]="toolbarTpl"
-  [sortActive]="entitySelectStateService.getActiveSort() | async"
-  [sortDirection]="entitySelectStateService.getActiveSortDirection() | async"
+  [sortActive]="selectEntitySelectSort$ | async"
+  [sortDirection]="selectEntitySelectIsSortDsc$ | async"
   (sortChange)="sortTable($event)">
 </mtx-grid>
 <ng-template #actionsTpl let-row>
@@ -72,7 +72,7 @@
 
 <ng-template #paginatorTpl>
   <eform-pagination
-    [pagination]="entitySelectStateService.getPagination() | async"
+    [pagination]="selectEntitySelectPagination$ | async"
     (paginationChanged)="onPaginationChanged($event)"
   ></eform-pagination>
 </ng-template>
