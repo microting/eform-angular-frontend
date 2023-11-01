@@ -1,7 +1,8 @@
 import {createSelector} from '@ngrx/store';
 import {EntitySearchState} from 'src/app/state/entity-search/entity-search.reducer';
+import {AppState} from 'src/app/state/app.state';
 
-export const selectEntitySearchState = (state) => state.entitySearch;
+export const selectEntitySearchState = (state: AppState) => state.entitySearch;
 export const selectEntitySearchFilters =
   createSelector(selectEntitySearchState, (state: EntitySearchState  ) => state.filters);
 

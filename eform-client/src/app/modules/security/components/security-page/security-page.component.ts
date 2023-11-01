@@ -16,6 +16,12 @@ import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {SecurityGroupRemoveComponent, SecurityGroupSettingsComponent} from '../';
+import {Store} from "@ngrx/store";
+import {
+  selectSecurityIsSortDsc,
+  selectSecurityNameFilter, selectSecurityPagination,
+  selectSecuritySort
+} from "src/app/state/security/security.selector";
 
 @AutoUnsubscribe()
 @Component({
@@ -82,8 +88,13 @@ export class SecurityPageComponent implements OnInit, OnDestroy {
   updateSecurityGroupSettings$: Subscription;
   onSecurityGroupRemovedSub$: Subscription;
   settingsUpdateSub$: Subscription;
+  public selectSecurityNameFilter$ = this.store.select(selectSecurityNameFilter);
+  public selectSecuritySort$ = this.store.select(selectSecuritySort);
+  public selectSecurityIsSortDsc$ = this.store.select(selectSecurityIsSortDsc);
+  public selectSecurityPagination$ = this.store.select(selectSecurityPagination);
 
   constructor(
+    private store: Store,
     private securityGroupsService: SecurityGroupsService,
     public securityStateService: SecurityStateService,
     private translateService: TranslateService,

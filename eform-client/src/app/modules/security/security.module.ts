@@ -17,7 +17,6 @@ import {
   SecurityGroupEformsDeleteComponent,
   SecurityGroupSettingsComponent,
 } from './components';
-import { securityPersistProvider } from './components/store/security.store';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
@@ -57,6 +56,6 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     SecurityGroupEformsDeleteComponent,
     SecurityGroupSettingsComponent,
   ],
-  providers: [SecurityGroupGeneralPermissionsService, securityPersistProvider],
+  providers: [SecurityGroupGeneralPermissionsService],
 })
 export class SecurityModule {}
