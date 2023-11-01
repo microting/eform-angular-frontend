@@ -26,7 +26,7 @@
           class="custom"
           [dropdownPosition]="bottom"
           [items]="availableTags"
-          [ngModel]="emailRecipientsStateService.getTagIds() | async"
+          [ngModel]="selectEmailRecipientsTagIds$ | async"
           (add)="tagSelected($event.id)"
           (remove)="removeSavedTag($event)"
           [clearable]="false"
@@ -51,8 +51,8 @@
   [showToolbar]="true"
   [showColumnMenuButton]="false"
   [toolbarTemplate]="toolbarTpl"
-  [sortActive]="emailRecipientsStateService.getActiveSort() | async"
-  [sortDirection]="emailRecipientsStateService.getActiveSortDirection() | async"
+  [sortActive]="selectEmailRecipientsSort$ | async"
+  [sortDirection]="selectEmailRecipientsIsSortDsc$ | async"
   (sortChange)="onSortTable($event)">
 </mtx-grid>
 
@@ -91,7 +91,7 @@
 
 <ng-template #paginatorTpl>
   <eform-pagination
-    [pagination]="emailRecipientsStateService.getPagination() | async"
+    [pagination]="selectEmailRecipientsPagination$ | async"
     (paginationChanged)="onPaginationChanged($event)"
   ></eform-pagination>
 </ng-template>
