@@ -2,13 +2,17 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UUID } from 'angular2-uuid';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { EventBrokerService } from 'src/app/common/helpers';
-import {AdminSettingsModel, LanguagesModel} from 'src/app/common/models';
+import {AdminSettingsModel, HeaderSettingsModel, LanguagesModel, LoginPageSettingsModel} from 'src/app/common/models';
 import { AppSettingsService } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
-import {AppSettingsQuery, AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
+import { AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import * as R from 'ramda';
 import {selectAuthIsAuth, selectBearerToken, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import {
+  selectAllAppSettings,
+  selectAppSettings
+} from 'src/app/state/application-settings/application-settings.selector';
 
 @Component({
   selector: 'app-admin-settings',
@@ -33,6 +37,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   private selectBearerToken$ = this.authStore.select(selectBearerToken);
   private selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
   public selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  private selectAllAppSettings$ = this.authStore.select(selectAllAppSettings);
 
   constructor(
     private settingsService: AppSettingsService,
@@ -40,7 +45,6 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
     private authStateService: AuthStateService,
     private eventBrokerService: EventBrokerService,
     private appSettingsStateService: AppSettingsStateService,
-    private appSettingsQuery: AppSettingsQuery,
   ) {}
 
   ngAfterViewInit() {}
@@ -111,16 +115,41 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
 
   getSettings() {
     //this.appSettingsStateService.getAdminSettings();
-    this.appSettingsStateService.getAllAppSettings();
-    this.appSettingsQuery.selectAllSettings$.subscribe((allSettings) => {
-      const adminSettings = allSettings.adminSettings;
-      const othersSettings = allSettings.othersSettings;
-      this.initializeUploaders();
-      this.getLatestVersion();
-      if (adminSettings) {
-        this.adminSettingsModel = adminSettings;
-        this.previousAdminSettings = adminSettings;
-
+    // this.appSettingsStateService.getAllAppSettings();
+    this.selectAllAppSettings$.subscribe((allSettings) => {
+      this.adminSettingsModel.loginPageSettingsModel = new LoginPageSettingsModel();
+      this.adminSettingsModel.loginPageSettingsModel.mainText = allSettings.adminSettingsModel.loginPageSettingsModel.mainText;
+      this.adminSettingsModel.loginPageSettingsModel.mainTextVisible =
+        allSettings.adminSettingsModel.loginPageSettingsModel.mainTextVisible;
+      this.adminSettingsModel.loginPageSettingsModel.secondaryText = allSettings.adminSettingsModel.loginPageSettingsModel.secondaryText;
+      this.adminSettingsModel.loginPageSettingsModel.secondaryTextVisible =
+        allSettings.adminSettingsModel.loginPageSettingsModel.secondaryTextVisible;
+      this.adminSettingsModel.loginPageSettingsModel.imageLink = allSettings.adminSettingsModel.loginPageSettingsModel.imageLink;
+      this.adminSettingsModel.loginPageSettingsModel.imageLinkVisible =
+        allSettings.adminSettingsModel.loginPageSettingsModel.imageLinkVisible;
+      this.adminSettingsModel.headerSettingsModel = new HeaderSettingsModel();
+      this.adminSettingsModel.headerSettingsModel.mainText = allSettings.adminSettingsModel.headerSettingsModel.mainText;
+      this.adminSettingsModel.headerSettingsModel.mainTextVisible = allSettings.adminSettingsModel.headerSettingsModel.mainTextVisible;
+      this.adminSettingsModel.headerSettingsModel.secondaryText = allSettings.adminSettingsModel.headerSettingsModel.secondaryText;
+      this.adminSettingsModel.headerSettingsModel.secondaryTextVisible =
+        allSettings.adminSettingsModel.headerSettingsModel.secondaryTextVisible;
+      this.adminSettingsModel.headerSettingsModel.imageLink = allSettings.adminSettingsModel.headerSettingsModel.imageLink;
+      this.adminSettingsModel.headerSettingsModel.imageLinkVisible = allSettings.adminSettingsModel.headerSettingsModel.imageLinkVisible;
+      this.othersSettings.isEnableWidget = allSettings.othersSettings.isUserbackWidgetEnabled;
+      this.languagesModel.languages = [];
+      allSettings.languagesModel.languages.forEach((language) => {
+        this.languagesModel.languages.push(
+          {languageCode: language.languageCode, isActive: language.isActive, id: language.id, name: language.name});
+      });
+      this.previousAdminSettings = this.adminSettingsModel;
+    //   const adminSettings = allSettings.adminSettingsModel;
+    //   const othersSettings = allSettings.othersSettings;
+    this.initializeUploaders();
+    this.getLatestVersion();
+    //   if (adminSettings) {
+    //     this.adminSettingsModel = adminSettings;
+    //     this.previousAdminSettings = adminSettings;
+    //
         if (this.adminSettingsModel.headerSettingsModel.imageLink) {
           this.headerImageLink =
             'api/images/eform-images?fileName=' +
@@ -128,7 +157,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
         } else {
           this.headerImageLink = '../../../assets/images/logo.png';
         }
-
+    //
         if (this.adminSettingsModel.loginPageSettingsModel.imageLink) {
           this.loginPageImageLink =
             'api/images/login-page-images?fileName=' +
@@ -136,12 +165,12 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
         } else {
           this.loginPageImageLink = '../../../assets/images/eform-phone.jpg';
         }
-      }
-      if (othersSettings) {
-        this.othersSettings = {...this.othersSettings, isEnableWidget: othersSettings.isUserbackWidgetEnabled};
-      }
-      this.languagesModel = allSettings.languages;
-    });
+    //   }
+    //   if (othersSettings) {
+    //     this.othersSettings = {...this.othersSettings, isEnableWidget: othersSettings.isUserbackWidgetEnabled};
+    //   }
+    //   this.languagesModel = allSettings.languagesModel;
+    }).unsubscribe();
   }
 
   updateAdminSettings() {
