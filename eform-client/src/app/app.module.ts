@@ -61,6 +61,7 @@ import * as emailRecipientsReducer from 'src/app/state/email-recipients/email-re
 import * as securityReducer from 'src/app/state/security/security.reducer';
 import * as entitySearchReducer from 'src/app/state/entity-search/entity-search.reducer';
 import * as entitySelectReducer from 'src/app/state/entity-select/entity-select.reducer';
+import * as casesReducer from 'src/app/state/cases/cases.reducer';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {EffectsModule} from '@ngrx/effects';
 import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
@@ -93,6 +94,7 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
       security: securityReducer.reducer,
       entitySearch: entitySearchReducer.reducer,
       entitySelect: entitySelectReducer.reducer,
+      cases: casesReducer.reducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

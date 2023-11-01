@@ -7,6 +7,7 @@ import {EmailRecipientsState} from 'src/app/state/email-recipients/email-recipie
 import {SecurityState} from 'src/app/state/security/security.reducer';
 import {EntitySearchState} from 'src/app/state/entity-search/entity-search.reducer';
 import {EntitySelectState} from 'src/app/state/entity-select/entity-select.reducer';
+import {CasesState} from 'src/app/state/cases/cases.reducer';
 
 
 export interface AppState {
@@ -19,4 +20,5 @@ export interface AppState {
   security: SecurityState;
   entitySearch: EntitySearchState;
   entitySelect: EntitySelectState;
+  cases: CasesState;
 }

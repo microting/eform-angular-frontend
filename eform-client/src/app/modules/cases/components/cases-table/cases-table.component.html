@@ -8,7 +8,7 @@
         <input
           matInput
           type="text"
-          [ngModel]="caseStateService.getNameFilter() | async"
+          [ngModel]="selectCasesNameFilter$ | async"
           (ngModelChange)="onLabelInputChanged($event)"
           id="labelInput"
         />
@@ -16,21 +16,25 @@
     </div>
   </div>
 </ng-template>
-<mtx-grid
-  [data]="caseListModel.cases"
-  [columns]="tableHeaders"
-  [cellTemplate]="{actions: actionsTpl}"
-  [showPaginator]="true"
-  [paginationTemplate]="paginatorTpl"
-  [pageOnFront]="false"
-  [rowStriped]="true"
-  [showToolbar]="true"
-  [showColumnMenuButton]="false"
-  [toolbarTemplate]="toolbarTpl"
-  [sortActive]="caseStateService.getActiveSort() | async"
-  [sortDirection]="caseStateService.getActiveSortDirection() | async"
-  (sortChange)="sortTable($event)">
-</mtx-grid>
+<ng-container
+  *ngIf="caseListModel.cases.length > 0">
+  <mtx-grid
+    [data]="caseListModel.cases"
+    [columns]="tableHeaders"
+    [cellTemplate]="{actions: actionsTpl}"
+    [showPaginator]="true"
+    [paginationTemplate]="paginatorTpl"
+    [pageOnFront]="false"
+    [rowStriped]="true"
+    [showToolbar]="true"
+    [showColumnMenuButton]="false"
+    [toolbarTemplate]="toolbarTpl"
+    [sortActive]="selectCasesSort$ | async"
+    [sortDirection]="selectCasesIsSortDsc$ | async"
+    (sortChange)="sortTable($event)">
+  </mtx-grid>
+</ng-container>
+
 <ng-template #actionsTpl let-row>
   <div>
     <button
@@ -74,7 +78,7 @@
 </ng-template>
 <ng-template #paginatorTpl>
   <eform-pagination
-    [pagination]="caseStateService.getPagination() | async"
+    [pagination]="selectCasesPagination$ | async"
     (paginationChanged)="onPaginationChanged($event)"
   ></eform-pagination>
 </ng-template>
