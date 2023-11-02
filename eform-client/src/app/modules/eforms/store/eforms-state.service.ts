@@ -7,7 +7,6 @@ import {
   OperationDataResult,
   TemplateListModel, TemplateRequestModel,
 } from 'src/app/common/models';
-import {arrayToggle} from '@datorama/akita';
 import {updateTableSort} from 'src/app/common/helpers';
 import {Store} from '@ngrx/store';
 import {
@@ -72,7 +71,7 @@ export class EformsStateService {
     }).unsubscribe();
     this.store.dispatch({
       type: '[Eform] Update Eform Filters', payload: {
-        filters: {tagIds: arrayToggle(currentTagIds, id)}
+        filters: {tagIds: this.arrayToggle(currentTagIds, id)}
       }
     });
   }
@@ -107,4 +106,15 @@ export class EformsStateService {
     });
     return this.service.getAll(templateRequestModel);
   }
+
+  arrayToggle<T>(arr: T[], val: T, forced?: boolean): T[] {
+    if (forced && arr.includes(val)) {
+      return [...arr];
+    } else if (forced === false || arr.includes(val)) {
+      return arr.filter((v: typeof val) => v !== val);
+    }
+    return [...arr, val];
+  }
 }
+
+

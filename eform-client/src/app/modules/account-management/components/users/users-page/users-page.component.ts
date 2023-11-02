@@ -28,6 +28,12 @@ import {UserModalComponent, RemoveUserModalComponent} from 'src/app/modules/acco
 import {catchError} from 'rxjs/operators';
 import {selectCurrentUserClaimsUsersUpdate, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import {
+  selectUsersFilters,
+  selectUsersIsSortDsc,
+  selectUsersPagination,
+  selectUsersSort
+} from "src/app/state/users/users.selector";
 
 @AutoUnsubscribe()
 @Component({
@@ -56,6 +62,11 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   public selectCurrentUserClaimsUsersCreate$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
   public selectCurrentUserClaimsUsersUpdate$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
   public selectCurrentUserClaimsUsersDelete$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
+
+  public selectUsersPagination$ = this.authStore.select(selectUsersPagination);
+  public selectUsersFilters$ = this.authStore.select(selectUsersFilters);
+  public selectUsersSort$ = this.authStore.select(selectUsersSort);
+  public selectUsersIsSortDsc$ = this.authStore.select(selectUsersIsSortDsc);
 
   constructor(
     private adminService: AdminService,

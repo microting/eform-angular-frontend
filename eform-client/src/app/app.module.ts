@@ -28,7 +28,6 @@ import {
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
-import {AkitaNgDevtools} from '@datorama/akita-ngdevtools';
 import {environment} from 'src/environments/environment';
 // angular material modules
 import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
@@ -63,6 +62,7 @@ import * as securityReducer from 'src/app/state/security/security.reducer';
 import * as entitySearchReducer from 'src/app/state/entity-search/entity-search.reducer';
 import * as entitySelectReducer from 'src/app/state/entity-select/entity-select.reducer';
 import * as casesReducer from 'src/app/state/cases/cases.reducer';
+import * as usersReducer from 'src/app/state/users/users.reducer';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {EffectsModule} from '@ngrx/effects';
 import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
@@ -96,6 +96,7 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
       entitySearch: entitySearchReducer.reducer,
       entitySelect: entitySelectReducer.reducer,
       cases: casesReducer.reducer,
+      users: usersReducer.reducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
@@ -115,8 +116,6 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
     LightboxModule,
     // GallerizeModule,
     NgxChartsModule,
-    //AkitaNgDevtools,
-    environment.production ? [] : AkitaNgDevtools.forRoot(),
     SharedPnModule,
     MatSidenavModule,
     MatButtonModule,

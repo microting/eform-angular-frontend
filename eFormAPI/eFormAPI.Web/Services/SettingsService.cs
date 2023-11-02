@@ -458,14 +458,14 @@ public class SettingsService : ISettingsService
         try
         {
             var core = await _coreHelper.GetCore();
-            if (adminSettingsModel.SMTPSettingsModel != null)
+            if (adminSettingsModel.SendGridSettingsModel.ApiKey != null)
             {
                 await _emailSettings.UpdateDb(option =>
                 {
-                    option.SmtpHost = adminSettingsModel.SMTPSettingsModel.Host;
-                    option.SmtpPort = int.Parse(adminSettingsModel.SMTPSettingsModel.Port);
-                    option.Login = adminSettingsModel.SMTPSettingsModel.Login;
-                    option.Password = adminSettingsModel.SMTPSettingsModel.Password;
+                    // option.SmtpHost = adminSettingsModel.SMTPSettingsModel.Host;
+                    // option.SmtpPort = int.Parse(adminSettingsModel.SMTPSettingsModel.Port);
+                    // option.Login = adminSettingsModel.SMTPSettingsModel.Login;
+                    // option.Password = adminSettingsModel.SMTPSettingsModel.Password;
                     option.SendGridKey = adminSettingsModel.SendGridSettingsModel.ApiKey;
                 }, _dbContext);
             }
@@ -501,52 +501,52 @@ public class SettingsService : ISettingsService
                 await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SiteLink);
             }
 
-            if (adminSettingsModel.SwiftSettingsModel != null)
-            {
-                await core.SetSdkSetting(
-                    Settings.swiftEnabled,
-                    adminSettingsModel.SwiftSettingsModel.SwiftEnabled.ToString());
+            // if (adminSettingsModel.SwiftSettingsModel != null)
+            // {
+            //     await core.SetSdkSetting(
+            //         Settings.swiftEnabled,
+            //         adminSettingsModel.SwiftSettingsModel.SwiftEnabled.ToString());
+            //
+            //     await core.SetSdkSetting(
+            //         Settings.swiftUserName,
+            //         adminSettingsModel.SwiftSettingsModel.SwiftUserName);
+            //
+            //     if (adminSettingsModel.SwiftSettingsModel.SwiftPassword != "SOMESECRETPASSWORD")
+            //     {
+            //         await core.SetSdkSetting(Settings.swiftPassword,
+            //             adminSettingsModel.SwiftSettingsModel.SwiftPassword);
+            //     }
+            //
+            //     await core.SetSdkSetting(Settings.swiftEndPoint,
+            //         adminSettingsModel.SwiftSettingsModel.SwiftEndpoint);
+            //     await core.SetSdkSetting(Settings.keystoneEndPoint,
+            //         adminSettingsModel.SwiftSettingsModel.KeystoneEndpoint);
+            // }
 
-                await core.SetSdkSetting(
-                    Settings.swiftUserName,
-                    adminSettingsModel.SwiftSettingsModel.SwiftUserName);
-
-                if (adminSettingsModel.SwiftSettingsModel.SwiftPassword != "SOMESECRETPASSWORD")
-                {
-                    await core.SetSdkSetting(Settings.swiftPassword,
-                        adminSettingsModel.SwiftSettingsModel.SwiftPassword);
-                }
-
-                await core.SetSdkSetting(Settings.swiftEndPoint,
-                    adminSettingsModel.SwiftSettingsModel.SwiftEndpoint);
-                await core.SetSdkSetting(Settings.keystoneEndPoint,
-                    adminSettingsModel.SwiftSettingsModel.KeystoneEndpoint);
-            }
-
-            if (adminSettingsModel.SdkSettingsModel != null)
-            {
-                await core.SetSdkSetting(Settings.customerNo, adminSettingsModel.SdkSettingsModel.CustomerNo);
-                await core.SetSdkSetting(Settings.logLevel, adminSettingsModel.SdkSettingsModel.LogLevel);
-                await core.SetSdkSetting(Settings.logLimit, adminSettingsModel.SdkSettingsModel.LogLimit);
-                await core.SetSdkSetting(Settings.fileLocationPicture, adminSettingsModel.SdkSettingsModel.FileLocationPicture);
-                await core.SetSdkSetting(Settings.fileLocationPdf, adminSettingsModel.SdkSettingsModel.FileLocationPdf);
-                await core.SetSdkSetting(Settings.fileLocationJasper, adminSettingsModel.SdkSettingsModel.FileLocationReports);
-                await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SdkSettingsModel.HttpServerAddress);
-            }
-
-            if (adminSettingsModel.S3SettingsModel != null)
-            {
-                await core.SetSdkSetting(Settings.s3Enabled, adminSettingsModel.S3SettingsModel.S3Enabled.ToString());
-                await core.SetSdkSetting(Settings.s3AccessKeyId, adminSettingsModel.S3SettingsModel.S3AccessKeyId);
-                await core.SetSdkSetting(Settings.s3BucketName, adminSettingsModel.S3SettingsModel.S3BucketName);
-
-                if (adminSettingsModel.S3SettingsModel.S3SecrectAccessKey != "SOMESECRETPASSWORD")
-                {
-                    await core.SetSdkSetting(Settings.s3SecrectAccessKey, adminSettingsModel.S3SettingsModel.S3SecrectAccessKey);
-                }
-
-                await core.SetSdkSetting(Settings.s3Endpoint, adminSettingsModel.S3SettingsModel.S3Endpoint);
-            }
+            // if (adminSettingsModel.SdkSettingsModel != null)
+            // {
+            //     await core.SetSdkSetting(Settings.customerNo, adminSettingsModel.SdkSettingsModel.CustomerNo);
+            //     await core.SetSdkSetting(Settings.logLevel, adminSettingsModel.SdkSettingsModel.LogLevel);
+            //     await core.SetSdkSetting(Settings.logLimit, adminSettingsModel.SdkSettingsModel.LogLimit);
+            //     await core.SetSdkSetting(Settings.fileLocationPicture, adminSettingsModel.SdkSettingsModel.FileLocationPicture);
+            //     await core.SetSdkSetting(Settings.fileLocationPdf, adminSettingsModel.SdkSettingsModel.FileLocationPdf);
+            //     await core.SetSdkSetting(Settings.fileLocationJasper, adminSettingsModel.SdkSettingsModel.FileLocationReports);
+            //     await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SdkSettingsModel.HttpServerAddress);
+            // }
+            //
+            // if (adminSettingsModel.S3SettingsModel != null)
+            // {
+            //     await core.SetSdkSetting(Settings.s3Enabled, adminSettingsModel.S3SettingsModel.S3Enabled.ToString());
+            //     await core.SetSdkSetting(Settings.s3AccessKeyId, adminSettingsModel.S3SettingsModel.S3AccessKeyId);
+            //     await core.SetSdkSetting(Settings.s3BucketName, adminSettingsModel.S3SettingsModel.S3BucketName);
+            //
+            //     if (adminSettingsModel.S3SettingsModel.S3SecrectAccessKey != "SOMESECRETPASSWORD")
+            //     {
+            //         await core.SetSdkSetting(Settings.s3SecrectAccessKey, adminSettingsModel.S3SettingsModel.S3SecrectAccessKey);
+            //     }
+            //
+            //     await core.SetSdkSetting(Settings.s3Endpoint, adminSettingsModel.S3SettingsModel.S3Endpoint);
+            // }
 
             return new OperationResult(true, _localizationService.GetString("SettingsUpdatedSuccessfully"));
         }

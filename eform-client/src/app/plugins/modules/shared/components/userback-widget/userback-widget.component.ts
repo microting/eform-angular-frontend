@@ -5,10 +5,11 @@ import {
 import {AuthStateService} from 'src/app/common/store';
 import {Subscription} from 'rxjs';
 import UserbackWidgetLoader, {UserbackWidget} from '@userback/widget';
-import {AppSettingsStateService, AppSettingsQuery} from 'src/app/modules/application-settings/components/store';
+import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import {UserbackWidgetSettingModel} from 'src/app/common/models';
 import {selectAuthIsAuth, selectCurrentUserFullName, selectCurrentUserName} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import {selectOthersSettings} from 'src/app/state/application-settings/application-settings.selector';
 
 @Component({
   selector: 'app-userback-widget',
@@ -23,6 +24,7 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
   private selectCurrentUserFullName$ = this.authStore.select(selectCurrentUserFullName);
   private selectCurrentUserName$ = this.authStore.select(selectCurrentUserName);
   private selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  private selectOthersSettings$ = this.authStore.select(selectOthersSettings);
 
   isAuthSub$: Subscription;
   getUserbackWidgetIsEnabledSub$: Subscription;
@@ -30,7 +32,6 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
   constructor(
     private authStore: Store,
     private authStateService: AuthStateService,
-    private appSettingsQuery: AppSettingsQuery,
     private appSettingsStateService: AppSettingsStateService,
   ) {
   }
@@ -44,7 +45,7 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
     if (isAuth) {
       if (isAuth && !this.getUserbackWidgetIsEnabledSub$) {
         this.appSettingsStateService.getOtherSettings();
-        this.getUserbackWidgetIsEnabledSub$ = this.appSettingsQuery.selectOthersSettings$
+        this.getUserbackWidgetIsEnabledSub$ = this.selectOthersSettings$
           .subscribe((WidgetSettings) => WidgetSettings ? this.onSelectOthersSettings(WidgetSettings, isAuth) : void 0);
       }
     }

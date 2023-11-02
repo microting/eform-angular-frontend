@@ -8,6 +8,7 @@ import {SecurityState} from 'src/app/state/security/security.reducer';
 import {EntitySearchState} from 'src/app/state/entity-search/entity-search.reducer';
 import {EntitySelectState} from 'src/app/state/entity-select/entity-select.reducer';
 import {CasesState} from 'src/app/state/cases/cases.reducer';
+import {UsersState} from 'src/app/state/users/users.reducer';
 
 
 export interface AppState {
@@ -21,4 +22,5 @@ export interface AppState {
   entitySearch: EntitySearchState;
   entitySelect: EntitySelectState;
   cases: CasesState;
+  users: UsersState;
 }
