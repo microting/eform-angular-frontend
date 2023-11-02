@@ -94,9 +94,9 @@ export class UsersStateService {
           sort: currentPagination.sort,
           isSortDsc: currentPagination.isSortDsc,
           pageIndex: currentPagination.pageIndex,
-          offset: currentPagination.offset - 1,
+          offset: currentPagination.offset,
           pageSize: currentPagination.pageSize,
-          total: currentPagination.total,
+          total: (currentPagination.total - 1),
         },
       }
     });
