@@ -1,126 +1,126 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, zip} from 'rxjs';
 import {
+  CommonPaginationState,
   OperationDataResult,
   Paged,
   PaginationModel,
-  UserInfoModel,
+  UserInfoModel, UserInfoRequestModel,
 } from 'src/app/common/models';
-import { UsersQuery, UsersStore } from './';
 import { AdminService } from 'src/app/common/services';
 import { updateTableSort } from 'src/app/common/helpers';
-import { getOffset } from 'src/app/common/helpers/pagination.helper';
 import { map } from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {selectUsersFilters, selectUsersPagination} from 'src/app/state/users/users.selector';
 
 @Injectable({ providedIn: 'root' })
 export class UsersStateService {
+  private selectUsersPagination$ = this.store.select(selectUsersPagination);
+  private selectUsersFilters$ = this.store.select(selectUsersFilters);
   constructor(
-    private store: UsersStore,
+    private store: Store,
     private service: AdminService,
-    private query: UsersQuery
   ) {}
 
   getAllUsers(): Observable<OperationDataResult<Paged<UserInfoModel>>> {
-    return this.service
-      .getAllUsers({ ...this.query.pageSetting.pagination })
-      .pipe(
-        map((response) => {
-          if (response && response.success && response.model) {
-            this.store.update(() => ({
-              totalUsers: response.model.total,
-            }));
-          }
-          return response;
-        })
-      );
+    let userInfoRequestModel = new UserInfoRequestModel();
+    zip(this.selectUsersPagination$, this.selectUsersFilters$).subscribe(([pagination, filters]) => {
+      if (pagination === undefined || filters === undefined) {
+        return;
+      }
+      userInfoRequestModel = {
+        sort: pagination.sort,
+        isSortDsc: pagination.isSortDsc,
+        offset: pagination.offset,
+        pageSize: pagination.pageSize,
+      };
+    }).unsubscribe();
+    return this.service.getAllUsers(userInfoRequestModel).pipe(
+      map((response) => {
+        if (response && response.success && response.model) {
+          this.store.dispatch({
+            type: '[Users] Update Users Pagination', payload: {
+              pagination: {
+                sort: userInfoRequestModel.sort,
+                isSortDsc: userInfoRequestModel.isSortDsc,
+                offset: userInfoRequestModel.offset,
+                pageSize: userInfoRequestModel.pageSize,
+                total: response.model.total,
+              }
+            }
+          });
+        }
+        return response;
+      })
+    );
   }
-
-  // getIsSortDsc(): Observable<boolean> {
-  //   return this.query.selectIsSortDsc$;
-  // }
-
-  // getSort(): Observable<SortModel> {
-  //   return this.query.selectSort$;
-  // }
-
-  getActiveSort(): Observable<string> {
-    return this.query.selectActiveSort$;
-  }
-
-  getActiveSortDirection(): Observable<'asc' | 'desc'> {
-    return this.query.selectActiveSortDirection$;
-  }
-
-  // getOffset(): Observable<number> {
-  //   return this.query.selectOffset$;
-  // }
-
-  /*getPageSize(): Observable<number> {
-    return this.query.selectPageSize$;
-  }*/
-
-  /*updatePageSize(pageSize: number) {
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        pageSize: pageSize,
-      },
-    }));
-    this.checkOffset();
-  }*/
-
   onSortTable(sort: string) {
+    let currentPagination: CommonPaginationState;
+    this.selectUsersPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
     const localPageSettings = updateTableSort(
       sort,
-      this.query.pageSetting.pagination.sort,
-      this.query.pageSetting.pagination.isSortDsc
+      currentPagination.sort,
+      currentPagination.isSortDsc
     );
-    this.store.update((state) => ({
-      pagination: { ...state.pagination, sort: localPageSettings.sort },
-    }));
-  }
-
-  /*changePage(offset: number) {
-    this.store.update((state) => ({
-      pagination: { ...state.pagination, offset: offset },
-    }));
-  }*/
-
-  onDelete() {
-    this.store.update((state) => ({
-      totalUsers: state.totalUsers - 1,
-    }));
-    this.checkOffset();
-  }
-
-  checkOffset() {
-    const newOffset = getOffset(
-      this.query.pageSetting.pagination.pageSize,
-      this.query.pageSetting.pagination.offset,
-      this.query.pageSetting.totalUsers
-    );
-    if (newOffset !== this.query.pageSetting.pagination.offset) {
-      this.store.update((state) => ({
+    this.store.dispatch({
+      type: '[Users] Update Users Pagination', payload: {
         pagination: {
-          ...state.pagination,
-          offset: newOffset,
+          sort: localPageSettings.sort,
+          isSortDsc: localPageSettings.isSortDsc,
+          pageIndex: currentPagination.pageIndex,
+          offset: currentPagination.offset,
+          pageSize: currentPagination.pageSize,
+          total: currentPagination.total,
         },
-      }));
-    }
+      }
+    });
   }
-
-  getPagination(): Observable<PaginationModel> {
-    return this.query.selectPagination$;
+  onDelete() {
+    let currentPagination: CommonPaginationState;
+    this.selectUsersPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
+    this.store.dispatch({
+      type: '[Users] Update Users Pagination', payload: {
+        pagination: {
+          sort: currentPagination.sort,
+          isSortDsc: currentPagination.isSortDsc,
+          pageIndex: currentPagination.pageIndex,
+          offset: currentPagination.offset - 1,
+          pageSize: currentPagination.pageSize,
+          total: currentPagination.total,
+        },
+      }
+    });
   }
 
   updatePagination(pagination: PaginationModel) {
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        pageSize: pagination.pageSize,
-        offset: pagination.offset,
-      },
-    }));
-    // this.checkOffset();
+    let currentPagination: CommonPaginationState;
+    this.selectUsersPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
+    this.store.dispatch({
+      type: '[Users] Update Users Pagination', payload: {
+        pagination: {
+          sort: currentPagination.sort,
+          isSortDsc: currentPagination.isSortDsc,
+          offset: pagination.offset,
+          pageSize: pagination.pageSize,
+          pageIndex: currentPagination.pageIndex,
+          total: currentPagination.total,
+        },
+      }
+    });
   }
 }

@@ -3,8 +3,6 @@ import {AppSettingsService, AuthService, LocaleService, UserSettingsService} fro
 import {LoginRequestModel, UserClaimsModel, UserInfoModel,} from 'src/app/common/models';
 import {BehaviorSubject, Observable, Subscription, take, zip} from 'rxjs';
 import {Router} from '@angular/router';
-import {snakeToCamel} from 'src/app/common/helpers';
-import {resetStores} from '@datorama/akita';
 import {Locale} from 'date-fns';
 import {applicationLanguages, customDaLocale} from 'src/app/common/const';
 import {de, enUS, es, fr, it, nb, nl, pl, sv, uk, ptBR, pt, fi} from 'date-fns/locale';
@@ -17,23 +15,18 @@ import {
   selectCurrentUserLocale
 } from 'src/app/state/auth/auth.selector';
 import {TranslateService} from '@ngx-translate/core';
-import {translates} from 'src/assets/i18n/translates';
-import {filter} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class AuthStateService {
   private isRefreshing = false;
 
   constructor(
-    //private store: AuthStore,
     private service: AuthService,
-    //private query: AuthQuery,
     private translateService: TranslateService,
     private localeService: LocaleService,
     private router: Router,
     private authStore: Store,
     private userSettings: UserSettingsService,
-    // private appSettingsStore: AppSettingsStore,
     public settingsService: AppSettingsService,
     @Inject(MAT_DATE_LOCALE) private  dateLocale: BehaviorSubject<string | Locale | null>
   ) {
@@ -220,7 +213,6 @@ export class AuthStateService {
   logout() {
     // console.log(`before AuthStateService.logout \n ${JSON.stringify(this.store._value())}`);
     localStorage.removeItem('token');
-    resetStores();
     this.router.navigate(['/auth']).then();
     // console.log(`after AuthStateService.logout \n ${JSON.stringify(this.store._value())}`);
   }

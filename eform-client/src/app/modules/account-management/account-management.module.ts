@@ -11,7 +11,6 @@ import {
 } from './components';
 import {AccountManagementRouting} from './account-management.routing';
 import {TranslateModule} from '@ngx-translate/core';
-import {usersPersistProvider} from './components/users/store/users.store';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
@@ -51,7 +50,6 @@ import {MatIconModule} from '@angular/material/icon';
     UserModalComponent,
     RemoveUserModalComponent,
   ],
-  providers: [usersPersistProvider],
 })
 export class AccountManagementModule {
 }

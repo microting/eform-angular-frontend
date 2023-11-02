@@ -33,8 +33,8 @@
     [rowStriped]="true"
     [showToolbar]="false"
     [showColumnMenuButton]="false"
-    [sortActive]="usersStateService.getActiveSort() | async"
-    [sortDirection]="usersStateService.getActiveSortDirection() | async"
+    [sortActive]="selectUsersSort$ | async"
+    [sortDirection]="selectUsersIsSortDsc$ | async"
     (sortChange)="onSortTable($event)">
   </mtx-grid>
   <ng-template #idTpl let-row let-i="index">
@@ -80,7 +80,7 @@
 
   <ng-template #paginatorTpl>
     <eform-pagination
-      [pagination]="usersStateService.getPagination() | async"
+      [pagination]="selectUsersPagination$ | async"
       (paginationChanged)="onPaginationChanged($event)"
     ></eform-pagination>
   </ng-template>
