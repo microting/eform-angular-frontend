@@ -5,6 +5,14 @@ export const updateAdminSettings = createAction(
   (payload: any) => ({payload})
 );
 
+export const resetLoginPageSettings = createAction(
+  '[AppSettings] Reset login page settings'
+);
+
+export const resetHeaderSettings = createAction(
+  '[AppSettings] Reset header settings'
+);
+
 export const updateOthersSettings = createAction(
   '[AppSettings] Update Others Settings',
   (payload: any) => ({payload})

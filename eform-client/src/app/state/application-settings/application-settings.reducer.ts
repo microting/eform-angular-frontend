@@ -1,6 +1,13 @@
-import {AdminSettingsModel, LanguagesModel, UserbackWidgetSettingModel} from 'src/app/common/models';
+import {
+  AdminSettingsModel,
+  HeaderSettingsModel,
+  LanguagesModel, LoginPageSettingsModel,
+  UserbackWidgetSettingModel
+} from 'src/app/common/models';
 import {createReducer, on} from '@ngrx/store';
 import {
+  resetHeaderSettings,
+  resetLoginPageSettings,
   updateAdminSettings,
   updateLanguages,
   updateOthersSettings, updateUserbackWidgetSetting
@@ -28,6 +35,22 @@ export const _appSettingsReducer = createReducer(
     adminSettingsModel: payload,
     })
   ),
+  on(resetLoginPageSettings, (state) => ({
+    ...state,
+    adminSettingsModel: {
+      ...state.adminSettingsModel,
+      loginPageSettings: new LoginPageSettingsModel(),
+    },
+    })
+  ),
+    on(resetHeaderSettings, (state) => ({
+      ...state,
+      adminSettingsModel: {
+      ...state.adminSettingsModel,
+      headerSettings: new HeaderSettingsModel(),
+      },
+      })
+  ),
   on(updateOthersSettings, (state, {payload}) => ({
     ...state,
     othersSettings: payload,
@@ -48,6 +71,7 @@ export const _appSettingsReducer = createReducer(
     })
   ),
 );
+
 export function reducer(state: AppSettingsState | undefined, action: any) {
   return _appSettingsReducer(state, action);
 }

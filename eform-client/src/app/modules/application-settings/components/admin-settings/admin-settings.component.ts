@@ -9,10 +9,7 @@ import { AppSettingsStateService} from 'src/app/modules/application-settings/com
 import * as R from 'ramda';
 import {selectAuthIsAuth, selectBearerToken, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
-import {
-  selectAllAppSettings,
-  selectAppSettings
-} from 'src/app/state/application-settings/application-settings.selector';
+import {zip} from 'rxjs';
 
 @Component({
   selector: 'app-admin-settings',
@@ -37,7 +34,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   private selectBearerToken$ = this.authStore.select(selectBearerToken);
   private selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
   public selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
-  private selectAllAppSettings$ = this.authStore.select(selectAllAppSettings);
+  //private selectAllAppSettings$ = this.authStore.select(selectAllAppSettings);
 
   constructor(
     private settingsService: AppSettingsService,
@@ -45,6 +42,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
     private authStateService: AuthStateService,
     private eventBrokerService: EventBrokerService,
     private appSettingsStateService: AppSettingsStateService,
+    private service: AppSettingsService,
   ) {}
 
   ngAfterViewInit() {}
@@ -114,34 +112,46 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   }
 
   getSettings() {
+    zip(
+      this.service.getAdminSettings(),
+      this.service.getUserbackWidgetIsEnabled(),
+      this.service.getLanguages()).subscribe((
+        [adminSettings,
+          othersSettings,
+          languages]) => {
+this.adminSettingsModel = adminSettings.model;
+this.previousAdminSettings = adminSettings.model;
+this.othersSettings.isEnableWidget = othersSettings.model.isUserbackWidgetEnabled;
+this.languagesModel = languages.model;
+      });
     //this.appSettingsStateService.getAdminSettings();
     // this.appSettingsStateService.getAllAppSettings();
-    this.selectAllAppSettings$.subscribe((allSettings) => {
-      this.adminSettingsModel.loginPageSettingsModel = new LoginPageSettingsModel();
-      this.adminSettingsModel.loginPageSettingsModel.mainText = allSettings.adminSettingsModel.loginPageSettingsModel.mainText;
-      this.adminSettingsModel.loginPageSettingsModel.mainTextVisible =
-        allSettings.adminSettingsModel.loginPageSettingsModel.mainTextVisible;
-      this.adminSettingsModel.loginPageSettingsModel.secondaryText = allSettings.adminSettingsModel.loginPageSettingsModel.secondaryText;
-      this.adminSettingsModel.loginPageSettingsModel.secondaryTextVisible =
-        allSettings.adminSettingsModel.loginPageSettingsModel.secondaryTextVisible;
-      this.adminSettingsModel.loginPageSettingsModel.imageLink = allSettings.adminSettingsModel.loginPageSettingsModel.imageLink;
-      this.adminSettingsModel.loginPageSettingsModel.imageLinkVisible =
-        allSettings.adminSettingsModel.loginPageSettingsModel.imageLinkVisible;
-      this.adminSettingsModel.headerSettingsModel = new HeaderSettingsModel();
-      this.adminSettingsModel.headerSettingsModel.mainText = allSettings.adminSettingsModel.headerSettingsModel.mainText;
-      this.adminSettingsModel.headerSettingsModel.mainTextVisible = allSettings.adminSettingsModel.headerSettingsModel.mainTextVisible;
-      this.adminSettingsModel.headerSettingsModel.secondaryText = allSettings.adminSettingsModel.headerSettingsModel.secondaryText;
-      this.adminSettingsModel.headerSettingsModel.secondaryTextVisible =
-        allSettings.adminSettingsModel.headerSettingsModel.secondaryTextVisible;
-      this.adminSettingsModel.headerSettingsModel.imageLink = allSettings.adminSettingsModel.headerSettingsModel.imageLink;
-      this.adminSettingsModel.headerSettingsModel.imageLinkVisible = allSettings.adminSettingsModel.headerSettingsModel.imageLinkVisible;
-      this.othersSettings.isEnableWidget = allSettings.othersSettings.isUserbackWidgetEnabled;
-      this.languagesModel.languages = [];
-      allSettings.languagesModel.languages.forEach((language) => {
-        this.languagesModel.languages.push(
-          {languageCode: language.languageCode, isActive: language.isActive, id: language.id, name: language.name});
-      });
-      this.previousAdminSettings = this.adminSettingsModel;
+    // this.selectAllAppSettings$.subscribe((allSettings) => {
+    //   this.adminSettingsModel.loginPageSettingsModel = new LoginPageSettingsModel();
+    //   this.adminSettingsModel.loginPageSettingsModel.mainText = allSettings.adminSettingsModel.loginPageSettingsModel.mainText;
+    //   this.adminSettingsModel.loginPageSettingsModel.mainTextVisible =
+    //     allSettings.adminSettingsModel.loginPageSettingsModel.mainTextVisible;
+    //   this.adminSettingsModel.loginPageSettingsModel.secondaryText = allSettings.adminSettingsModel.loginPageSettingsModel.secondaryText;
+    //   this.adminSettingsModel.loginPageSettingsModel.secondaryTextVisible =
+    //     allSettings.adminSettingsModel.loginPageSettingsModel.secondaryTextVisible;
+    //   this.adminSettingsModel.loginPageSettingsModel.imageLink = allSettings.adminSettingsModel.loginPageSettingsModel.imageLink;
+    //   this.adminSettingsModel.loginPageSettingsModel.imageLinkVisible =
+    //     allSettings.adminSettingsModel.loginPageSettingsModel.imageLinkVisible;
+    //   this.adminSettingsModel.headerSettingsModel = new HeaderSettingsModel();
+    //   this.adminSettingsModel.headerSettingsModel.mainText = allSettings.adminSettingsModel.headerSettingsModel.mainText;
+    //   this.adminSettingsModel.headerSettingsModel.mainTextVisible = allSettings.adminSettingsModel.headerSettingsModel.mainTextVisible;
+    //   this.adminSettingsModel.headerSettingsModel.secondaryText = allSettings.adminSettingsModel.headerSettingsModel.secondaryText;
+    //   this.adminSettingsModel.headerSettingsModel.secondaryTextVisible =
+    //     allSettings.adminSettingsModel.headerSettingsModel.secondaryTextVisible;
+    //   this.adminSettingsModel.headerSettingsModel.imageLink = allSettings.adminSettingsModel.headerSettingsModel.imageLink;
+    //   this.adminSettingsModel.headerSettingsModel.imageLinkVisible = allSettings.adminSettingsModel.headerSettingsModel.imageLinkVisible;
+    //   this.othersSettings.isEnableWidget = allSettings.othersSettings.isUserbackWidgetEnabled;
+    //   this.languagesModel.languages = [];
+    //   allSettings.languagesModel.languages.forEach((language) => {
+    //     this.languagesModel.languages.push(
+    //       {languageCode: language.languageCode, isActive: language.isActive, id: language.id, name: language.name});
+    //   });
+    //   this.previousAdminSettings = this.adminSettingsModel;
     //   const adminSettings = allSettings.adminSettingsModel;
     //   const othersSettings = allSettings.othersSettings;
     this.initializeUploaders();
@@ -170,7 +180,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
     //     this.othersSettings = {...this.othersSettings, isEnableWidget: othersSettings.isUserbackWidgetEnabled};
     //   }
     //   this.languagesModel = allSettings.languagesModel;
-    }).unsubscribe();
+    //}).unsubscribe();
   }
 
   updateAdminSettings() {
@@ -209,7 +219,9 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   resetLoginPageSettings() {
     this.settingsService.resetLoginPageSettings().subscribe((operation) => {
       if (operation && operation.success) {
-        this.appSettingsStateService.getAllAppSettings();
+        //this.authStore.dispatch({type: '[AppSettings] Reset login page settings'});
+        //this.appSettingsStateService.getAllAppSettings();
+        this.getSettings();
       }
     });
   }
@@ -217,7 +229,9 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   resetHeaderSettings() {
     this.settingsService.resetHeaderSettings().subscribe((operation) => {
       if (operation && operation.success) {
+        //this.authStore.dispatch({type: '[AppSettings] Reset header settings'});
         this.appSettingsStateService.getAllAppSettings();
+        this.getSettings();
       }
     });
   }
