@@ -169,6 +169,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
                     }
                   }
                 }));
+                this.authStateService.setLocale();
                 this.translateService.use(userSettings.model.locale);
                 if (userSettings.model.loginRedirectUrl != null) {
                   this.router

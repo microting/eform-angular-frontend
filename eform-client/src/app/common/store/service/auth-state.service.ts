@@ -193,11 +193,12 @@ export class AuthStateService {
     //       claims: userClaims,
     //     },
     //   }));
-    //   this.setLocale();
+      this.setLocale();
     //   // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
 
       // this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
       if (userSettings.model.loginRedirectUrl != null) {
+        debugger;
         this.router
           .navigate([
             `/${userSettings.model.loginRedirectUrl}`,
@@ -393,9 +394,9 @@ export class AuthStateService {
   //   return this.query.currentSetting.currentUser.loginRedirectUrl;
   // }
 
-  // private setLocale() {
-  //   this.dateLocale.next(this.dateFnsLocale);
-  // }
+  public setLocale() {
+    this.dateLocale.next(this.dateFnsLocale);
+  }
   //
   get dateFnsLocale(): Locale {
     let currentLanguageId = 1;
