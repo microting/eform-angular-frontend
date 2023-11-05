@@ -44,7 +44,7 @@ export class EformsBulkImportModalComponent implements OnInit {
     });
     this.xlsxEformsFileUploader = new FileUploader({
       url: '/api/templates/import',
-      authToken: token,
+      authToken: 'Bearer '+token,
     });
     this.xlsxEformsFileUploader.clearQueue();
     this.xlsxEformsFileUploader.onSuccessItem = (item, response) => {
