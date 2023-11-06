@@ -9340,10 +9340,10 @@ ngx-color@^8.0.0:
     material-colors "^1.2.6"
     tslib "^2.3.0"
 
-ngx-cookie-service@14.0.1:
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-14.0.1.tgz#0c0f8a7ba91dbb68d3f8ad0f8808bbde4f6e55aa"
-  integrity sha512-PHjpA/bpp1ZgvQ2AWdXA6oxPQgE9k0WljQ7tvUH/u0Acl6p6akzF8kWlQiWxkgR3hBs7xB3paIsTk6GKdtakMg==
+ngx-cookie-service@16.1.0:
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-16.1.0.tgz#fb5cd62f8432fb5ce67bc29e25b56dcf91fa6c8f"
+  integrity sha512-FrzMjsGCHZCd2sEucigMaGyzImBL0l6gwWn6jmLBhcNVx0D7P8Yvtgk9aUptlqBrVKy4c2upglSa3Ogv3679bw==
   dependencies:
     tslib "^2.0.0"
 
