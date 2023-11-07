@@ -201,7 +201,11 @@ export class EformDateFnsDateAdapter extends DateAdapter<Date> {
   }
 
   getFirstDayOfWeek(): number {
-    return this._dateFnsLocale.options?.weekStartsOn ?? 0;
+    if (this._dateFnsLocale) {
+      return this._dateFnsLocale.options?.weekStartsOn ?? 0;
+    } else {
+      return 0;
+    }
   }
 
   getMonth(date: Date): number {
