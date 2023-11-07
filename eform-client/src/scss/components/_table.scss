@@ -30,13 +30,23 @@
   $is-dark-theme: map.get($color-config, 'is-dark');
   $background-powder-color: #b3d3ea;
   $background-yellow-color: #e6d178;
+  $background-red-light-color: #e67878;
+  $background-red-dark-color: #e64c4c;
   @if $is-dark-theme {
     $background-powder-color: #4c6071;
     $background-yellow-color: #7e6f3a;
+    $background-red-light-color: #e67878;
+    $background-red-dark-color: #e64c4c;
   }
   mtx-grid {
     .background-yellow {
       background-color: $background-yellow-color !important;
+    }
+    .background-red-light {
+      background-color: $background-red-light-color !important;
+    }
+    .background-red-dark {
+      background-color: $background-red-dark-color !important;
     }
 
     .background-powder {

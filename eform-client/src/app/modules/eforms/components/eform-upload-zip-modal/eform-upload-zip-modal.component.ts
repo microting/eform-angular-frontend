@@ -5,6 +5,8 @@ import {ToastrService} from 'ngx-toastr';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {AuthStateService} from 'src/app/common/store';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {selectBearerToken} from "src/app/state/auth/auth.selector";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-eform-upload-zip-modal',
@@ -12,13 +14,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./eform-upload-zip-modal.component.scss'],
 })
 export class EformUploadZipModalComponent implements OnInit {
-  zipFileUploader: FileUploader = new FileUploader({
-    url: '/api/template-files/upload-eform-zip',
-    authToken: this.authStateService.bearerToken,
-  });
+  zipFileUploader: FileUploader;
+  private selectBearerToken$ = this.authStore.select(selectBearerToken);
 
   constructor(
     private toastrService: ToastrService,
+    private authStore: Store,
     private translateService: TranslateService,
     private authStateService: AuthStateService,
     public dialogRef: MatDialogRef<EformUploadZipModalComponent>,
@@ -27,6 +28,14 @@ export class EformUploadZipModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    let token = '';
+    this.selectBearerToken$.subscribe((bearerToken) => {
+      token = bearerToken;
+    });
+    this.zipFileUploader  = new FileUploader({
+      url: '/api/template-files/upload-eform-zip',
+      authToken: token,
+    });
     this.zipFileUploader.onBuildItemForm = (item, form) => {
       form.append('templateId', this.selectedTemplate.id);
     };

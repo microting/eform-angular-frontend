@@ -8,11 +8,14 @@ import {
 } from 'src/app/common/services/auth';
 import { TimezonesModel } from 'src/app/common/models/common/timezones.model';
 import { countries } from 'src/app/common/const/application-countries.const';
-import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
+import { AuthStateService } from 'src/app/common/store';
 import {tap} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import {LanguagesModel} from 'src/app/common/models';
+import {Store} from '@ngrx/store';
+import {selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-profile-settings',
@@ -27,13 +30,17 @@ export class ProfileSettingsComponent implements OnInit {
   getLanguagesSub$: Subscription;
   appLanguages: LanguagesModel = new LanguagesModel();
   activeLanguages: Array<any> = [];
+  public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
 
   constructor(
     public authStateService: AuthStateService,
+    private authStore: Store,
     private googleAuthService: GoogleAuthService,
     private localeService: LocaleService,
+    private translateService: TranslateService,
     private userSettingsService: UserSettingsService,
-    private appMenuStateService: AppMenuStateService,
+    private store: Store,
+    private userSettings: UserSettingsService,
     private appSettingsStateService: AppSettingsStateService
   ) {}
 
@@ -90,11 +97,26 @@ export class ProfileSettingsComponent implements OnInit {
     this.userSettingsService
       .updateUserSettings(this.userSettingsModel)
       .subscribe((data) => {
-        this.localeService.updateCurrentUserLocaleAndDarkTheme(
-          this.userSettingsModel.locale,
-          this.userSettingsModel.darkTheme
-        );
-        this.appMenuStateService.getAppMenu();
+        this.userSettings.getUserSettings().subscribe((data) => {
+          this.userSettingsModel = data.model;
+          this.store.dispatch({
+            type: '[Auth] Update Current User Locale And Dark Theme',
+            payload: {userSettings: {
+              model: {
+                darkTheme: this.userSettingsModel.darkTheme,
+                locale: this.userSettingsModel.locale,
+                languageId: this.userSettingsModel.languageId
+              }}}});
+
+          this.translateService.use(this.userSettingsModel.locale);
+        });
+        // TODO fix this
+        // this.localeService.updateCurrentUserLocaleAndDarkTheme(
+        //   this.userSettingsModel.locale,
+        //   this.userSettingsModel.darkTheme
+        // );
+        this.store.dispatch({type: '[AppMenu] Load AppMenu'});
+        //this.appMenuStateService.getAppMenu();
       });
   }
 

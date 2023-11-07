@@ -19,9 +19,6 @@ import {
   CaseEditElementComponent,
   CaseEditNavComponent,
   CaseEditSwitchComponent,
-  // CasePostNewComponent,
-  // CasePostsPageComponent,
-  // CasePostViewComponent,
   CaseRemoveModalComponent,
   ElementAudioComponent,
   ElementCheckboxComponent,
@@ -45,7 +42,6 @@ import {
   AddPictureDialogComponent,
 } from './components';
 
-import { casePostsPersistProvider } from './components/case-posts/store';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
@@ -115,7 +111,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
   ],
   providers: [
     { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
-    casePostsPersistProvider,
   ],
   exports: [
     CaseEditNavComponent,

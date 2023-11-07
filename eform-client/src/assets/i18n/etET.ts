@@ -397,4 +397,10 @@ export const etET = {
   Norwegian: 'norra keel',
   Dutch: 'hollandi keel',
   Finish: 'Lõpetama',
+  'Done at': 'Tehtud kell',
+  'Select date': 'Valige kuupäev',
+  Value: 'Väärtus',
+  'Please fill out this field': 'Palun täitke see väli',
+  'Submitted date': 'Esitamise kuupäev',
+  Languages: 'Keeled',
 };

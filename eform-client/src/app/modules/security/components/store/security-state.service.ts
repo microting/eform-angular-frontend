@@ -1,143 +1,122 @@
 import { Injectable } from '@angular/core';
 import { SecurityGroupsService } from 'src/app/common/services';
-import { Observable } from 'rxjs';
-import { SecurityQuery, SecurityStore } from './';
+import {Observable, zip} from 'rxjs';
 import {
+  CommonPaginationState,
   OperationDataResult,
   Paged,
   PaginationModel,
-  SecurityGroupModel,
+  SecurityGroupModel, SecurityGroupsRequestModel,
 } from 'src/app/common/models';
 import { updateTableSort, getOffset } from 'src/app/common/helpers';
 import { map } from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {selectSecurityFilters, selectSecurityPagination} from 'src/app/state/security/security.selector';
 
 @Injectable({ providedIn: 'root' })
 export class SecurityStateService {
+  private selectSecurityFilters$ = this.store.select(selectSecurityFilters);
+  private selectSecurityPagination$ = this.store.select(selectSecurityPagination);
   constructor(
-    private store: SecurityStore,
+    private store: Store,
     private service: SecurityGroupsService,
-    private query: SecurityQuery
   ) {}
 
   getAllSecurityGroups(): Observable<
     OperationDataResult<Paged<SecurityGroupModel>>
   > {
+    let securityGroupsRequestModel = new SecurityGroupsRequestModel();
+    zip(this.selectSecurityPagination$, this.selectSecurityFilters$).subscribe(([pagination, filters]) => {
+      if (pagination === undefined || filters === undefined) {
+        return;
+      }
+      securityGroupsRequestModel = {
+        sort: pagination.sort,
+        nameFilter: filters.nameFilter,
+        pageIndex: 0,
+        pageSize: pagination.pageSize,
+        isSortDsc: pagination.isSortDsc,
+        offset: pagination.offset,
+      }
+    }).unsubscribe();
     return this.service
-      .getAllSecurityGroups({
-        ...this.query.pageSetting.pagination,
-        ...this.query.pageSetting.filters,
+      .getAllSecurityGroups(securityGroupsRequestModel).pipe(
+      map((response) => {
+        if (response && response.success && response.model) {
+          this.store.dispatch({type: '[Security] Update Security Total', payload: {total: response.model.total}});
+        }
+        return response;
       })
-      .pipe(
-        map((response) => {
-          if (response && response.success && response.model) {
-            this.store.update(() => ({
-              total: response.model.total,
-            }));
-          }
-          return response;
-        })
       );
   }
 
   updateNameFilter(nameFilter: string) {
-    this.store.update((state) => ({
-      filters: {
-        ...state.filters,
-        nameFilter: nameFilter,
-      },
-    }));
-    this.checkOffset();
+    let currentPagination: CommonPaginationState;
+    this.selectSecurityPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
+    this.store.dispatch({type: '[Security] Update Security Filters', payload: {filters: {nameFilter: nameFilter}}});
   }
-
-  /*updatePageSize(pageSize: number) {
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        pageSize: pageSize,
-      },
-    }));
-    this.checkOffset();
-  }*/
-
-  /*getPageSize(): Observable<number> {
-    return this.query.selectPageSize$;
-  }*/
-
-  // getSort(): Observable<SortModel> {
-  //   return this.query.selectSort$;
-  // }
-
-  getActiveSort(): Observable<string> {
-    return this.query.selectActiveSort$;
-  }
-
-  getActiveSortDirection(): Observable<'asc' | 'desc'> {
-    return this.query.selectActiveSortDirection$;
-  }
-
-  getNameFilter(): Observable<string> {
-    return this.query.selectNameFilter$;
-  }
-
-  /*changePage(offset: number) {
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        offset: offset,
-      },
-    }));
-  }*/
 
   onDelete() {
-    this.store.update((state) => ({
-      total: state.total - 1,
-    }));
-    this.checkOffset();
+    let currentPagination: CommonPaginationState;
+    this.selectSecurityPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
+    this.store.dispatch({type: '[Security] Update Security Pagination', payload: {pagination: {
+          sort: currentPagination.sort,
+          isSortDsc: currentPagination.isSortDsc,
+          offset: currentPagination.offset,
+          pageIndex: currentPagination.pageIndex,
+          pageSize: currentPagination.pageSize,
+          total: currentPagination.total - 1,
+        }}});
   }
 
   onSortTable(sort: string) {
-    const localPageSetting = updateTableSort(
+    let currentPagination: CommonPaginationState;
+    this.selectSecurityPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
+    const localPageSettings = updateTableSort(
       sort,
-      this.query.pageSetting.pagination.sort,
-      this.query.pageSetting.pagination.isSortDsc
+      currentPagination.sort,
+      currentPagination.isSortDsc
     );
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        ...localPageSetting,
-      },
-    }));
+    this.store.dispatch({type: '[Security] Update Security Pagination', payload: {pagination: {
+          sort: localPageSettings.sort,
+          isSortDsc: localPageSettings.isSortDsc,
+          offset: currentPagination.offset,
+          pageIndex: currentPagination.pageIndex,
+          pageSize: currentPagination.pageSize,
+          total: currentPagination.total,
+        }}});
   }
-
-  checkOffset() {
-    const newOffset = getOffset(
-      this.query.pageSetting.pagination.pageSize,
-      this.query.pageSetting.pagination.offset,
-      this.query.pageSetting.total
-    );
-    if (newOffset !== this.query.pageSetting.pagination.offset) {
-      this.store.update((state) => ({
-        pagination: {
-          ...state.pagination,
-          offset: newOffset,
-        },
-      }));
-    }
-  }
-
-  getPagination(): Observable<PaginationModel> {
-    return this.query.selectPagination$;
-  }
-
 
   updatePagination(pagination: PaginationModel) {
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        pageSize: pagination.pageSize,
-        offset: pagination.offset,
-      },
-    }));
-    // this.checkOffset();
+    let currentPagination: CommonPaginationState;
+    this.selectSecurityPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
+    this.store.dispatch({type: '[Security] Update Security Pagination', payload: {pagination: {
+          sort: currentPagination.sort,
+          isSortDsc: currentPagination.isSortDsc,
+          offset: pagination.offset,
+          pageIndex: currentPagination.pageIndex,
+          pageSize: pagination.pageSize,
+          total: currentPagination.total,
+        }}});
   }
 }

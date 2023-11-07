@@ -5,13 +5,13 @@ import {
   NavigationMenuItemModel,
   NavigationMenuModel,
   NavigationMenuTranslationModel,
-  CommonDictionaryModel,
+  CommonDictionaryModel, LanguageModel,
 } from 'src/app/common/models';
 import {
   NavigationMenuService,
   SecurityGroupsService,
 } from 'src/app/common/services';
-import { Subscription } from 'rxjs';
+import {Subscription, take} from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import {
@@ -24,6 +24,8 @@ import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
+import {Store} from '@ngrx/store';
+import {selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -45,12 +47,14 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   itemDeleteConfirmSub$: any;
   itemEditConfirmSub$: any;
   navigationMenuResetComponentAfterClosedSub$: Subscription;
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
   get menuItemTypes() {
     return NavigationMenuItemTypeEnum;
   }
 
   constructor(
+    private authStore: Store,
     private dragulaService: DragulaService,
     private navigationMenuService: NavigationMenuService,
     private securityGroupsService: SecurityGroupsService,
@@ -58,6 +62,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     private appMenuStateService: AppMenuStateService,
     private dialog: MatDialog,
     private overlay: Overlay,
+    private store: Store,
   ) {
     dragulaService.createGroup('MENU_ITEMS', {
       moves: (el, container, handle) => {
@@ -110,15 +115,11 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  getHeaderNavigationMenu() {
-    this.appMenuStateService.getAppMenu();
-  }
-
   updateNavigationMenu() {
     this.updateNavigationMenuSub$ = this.navigationMenuService
       .updateNavigationMenu(this.navigationMenuModel.actualMenu)
       .subscribe(() => {
-        this.getHeaderNavigationMenu();
+        this.store.dispatch({type: '[AppMenu] Load AppMenu'});
       });
   }
 
@@ -202,7 +203,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       .restNavigationMenu()
       .subscribe((data) => {
         if (data && data.success) {
-          this.getHeaderNavigationMenu();
+          this.store.dispatch({type: '[AppMenu] Load AppMenu'});
           this.getNavigationMenu();
         }
       });
@@ -214,8 +215,12 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   }
 
   getMenuTranslation(translations: NavigationMenuTranslationModel[]) {
+    let language = '';
+    this.selectCurrentUserLocale$.pipe(take(1)).subscribe((locale) => {
+      language = locale;
+    });
     return translations.find(
-      (x) => x.localeName === this.authStateService.currentUserLocale
+      (x) => x.localeName === language
     ).name;
   }
 

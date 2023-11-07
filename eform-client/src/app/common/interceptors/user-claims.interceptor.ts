@@ -21,7 +21,7 @@ export class UserClaimsInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse && event.headers.get('claimupdate')) {
-          this.authStateService.refreshToken();
+          //this.authStateService.refreshToken();
         }
       })
     );

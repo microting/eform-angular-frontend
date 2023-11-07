@@ -93,7 +93,7 @@ export class TagsModalPage extends Page {
     await browser.pause(500);
     await (await this.editTagNameInput()).setValue(name);
     await (await this.tagEditSaveBtn()).click();
-    await browser.pause(500);
+    await browser.pause(1000);
     await (await $('#newTagBtn')).waitForDisplayed({ timeout: 40000 });
   }
 

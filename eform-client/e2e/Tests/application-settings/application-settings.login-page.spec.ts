@@ -11,6 +11,8 @@ describe('Application settings page - site header section', function () {
   });
   it('should change main text', async () => {
     await myEformsPage.Navbar.goToApplicationSettings();
+    const spinnerAnimation = await $('#spinner-animation');
+    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.mainTextInput()).setValue(
       ApplicationSettingsConstants.LoginPage.customMainText
@@ -28,7 +30,10 @@ describe('Application settings page - site header section', function () {
   });
   it('should change secondary text', async () => {
     await loginPage.login();
-    await loginPage.open('/application-settings');
+    await myEformsPage.Navbar.goToApplicationSettings();
+    const spinnerAnimation = await $('#spinner-animation');
+    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
+    //await loginPage.open('/application-settings');
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.secondaryTextInput()).setValue(
       ApplicationSettingsConstants.LoginPage.customSecondaryText
@@ -47,7 +52,9 @@ describe('Application settings page - site header section', function () {
   });
   it('should hide main text', async () => {
     await loginPage.login();
-    await loginPage.open('/application-settings');
+    await myEformsPage.Navbar.goToApplicationSettings();
+    const spinnerAnimation = await $('#spinner-animation');
+    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn()).click();
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
@@ -64,7 +71,9 @@ describe('Application settings page - site header section', function () {
   });
   it('should hide secondary text', async () => {
     await loginPage.login();
-    await loginPage.open('/application-settings');
+    await myEformsPage.Navbar.goToApplicationSettings();
+    const spinnerAnimation = await $('#spinner-animation');
+    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn()).click();
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
@@ -80,7 +89,9 @@ describe('Application settings page - site header section', function () {
   });
   it('should hide image', async () => {
     await loginPage.login();
-    await loginPage.open('/application-settings');
+    await myEformsPage.Navbar.goToApplicationSettings();
+    const spinnerAnimation = await $('#spinner-animation');
+    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.imageVisibilityToggler()).click();
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
@@ -96,7 +107,9 @@ describe('Application settings page - site header section', function () {
   });
   it('should reset main text', async () => {
     await loginPage.login();
-    await loginPage.open('/application-settings');
+    await myEformsPage.Navbar.goToApplicationSettings();
+    const spinnerAnimation = await $('#spinner-animation');
+    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
     await applicationSettingsPage.LoginPage.reset();
     await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });

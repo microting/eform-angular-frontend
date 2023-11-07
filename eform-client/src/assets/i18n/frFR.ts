@@ -397,4 +397,10 @@ export const frFR = {
   Norwegian: 'norvégien',
   Dutch: 'Néerlandais',
   Finish: 'Finition',
+  'Done at': 'Fait à',
+  'Select date': 'Sélectionner une date',
+  Value: 'Valeur',
+  'Please fill out this field': 'Merci de remplir ce champ',
+  'Submitted date': 'Date proposée',
+  Languages: 'Langues',
 };

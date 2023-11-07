@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {AdminGuard, AuthGuard, ClaimsGuard} from 'src/app/common/guards';
+import {AdminGuard, AuthGuard, ClaimsGuard, IsAdminGuard, IsAuthGuard, IsClaimsGuard} from 'src/app/common/guards';
 import { FullLayoutComponent, SimpleLayoutComponent, ConnectionSetupComponent} from './components';
 import { UserClaimsEnum } from 'src/app/common/const';
 
@@ -14,13 +14,13 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        canActivate: [AuthGuard],
+        canActivate: [IsAuthGuard],
         loadChildren: () =>
           import('./modules/eforms/eforms.module').then((m) => m.EFormsModule),
       },
       {
         path: 'advanced',
-        canActivate: [AuthGuard],
+        canActivate: [IsAuthGuard],
         loadChildren: () =>
           import('./modules/advanced/advanced.module').then(
             (m) => m.AdvancedModule
@@ -28,7 +28,7 @@ export const routes: Routes = [
       },
       {
         path: 'device-users',
-        canActivate: [AuthGuard],
+        canActivate: [IsAuthGuard],
         loadChildren: () =>
           import('./modules/device-users/device-users.module').then(
             (m) => m.DeviceUsersModule
@@ -36,7 +36,7 @@ export const routes: Routes = [
       },
       {
         path: 'cases',
-        canActivate: [AuthGuard],
+        canActivate: [IsAuthGuard],
         loadChildren: () =>
           import('./modules/cases/cases.module').then((m) => m.CasesModule),
       },
@@ -49,7 +49,7 @@ export const routes: Routes = [
       },
       {
         path: 'plugins-settings',
-        canActivate: [AdminGuard],
+        canActivate: [IsAuthGuard],
         loadChildren: () =>
           import('./modules/plugins-management/plugins-management.module').then(
             (m) => m.PluginsManagementModule
@@ -57,7 +57,7 @@ export const routes: Routes = [
       },
       {
         path: 'account-management',
-        canActivate: [AuthGuard],
+        canActivate: [IsAuthGuard],
         loadChildren: () =>
           import('./modules/account-management/account-management.module').then(
             (m) => m.AccountManagementModule
@@ -65,7 +65,7 @@ export const routes: Routes = [
       },
       {
         path: 'email-recipients',
-        canActivate: [ClaimsGuard],
+        canActivate: [IsAuthGuard],
         data: { requiredClaim: UserClaimsEnum.emailRecipientRead },
         loadChildren: () =>
           import('./modules/email-recipients/email-recipients.module').then(
@@ -74,7 +74,7 @@ export const routes: Routes = [
       },
       {
         path: 'security',
-        canActivate: [AdminGuard],
+        canActivate: [IsAuthGuard],
         loadChildren: () =>
           import('./modules/security/security.module').then(
             (m) => m.SecurityModule
@@ -82,7 +82,7 @@ export const routes: Routes = [
       },
       {
         path: 'plugins',
-        canActivate: [AuthGuard],
+        canActivate: [IsAuthGuard],
         loadChildren: () =>
           import('./plugins/plugins.module').then((m) => m.PluginsModule),
       },

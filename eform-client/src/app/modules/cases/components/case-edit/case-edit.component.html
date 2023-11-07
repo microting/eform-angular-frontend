@@ -8,7 +8,7 @@
     <!-- Done at user editable -->
     <mat-card *ngIf="currentTemplate.isDoneAtEditable" class="mb-4">
       <mat-card-title>
-        {{ 'Done at' | translate }}
+        {{ 'Submitted date' | translate }}
       </mat-card-title>
       <mat-card-content>
         <mat-form-field>
@@ -63,7 +63,7 @@
         </div>
       </mat-card-content>
       <mat-card-footer
-        *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)"
+        *ngIf="selectCaseUpdate$ | async"
         class="d-flex justify-content-center align-items-center mt-2 mb-2"
       >
         <button

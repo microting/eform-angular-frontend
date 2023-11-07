@@ -1,6 +1,6 @@
 export default {
   username: 'admin',
-  password: 'Qq1234567$',
+  password: 'secretpassword',
   email: 'admin@admin.com',
   firstName: 'John',
   lastNAme: 'Smith',

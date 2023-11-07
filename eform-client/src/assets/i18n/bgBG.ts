@@ -397,4 +397,10 @@ export const bgBG = {
   Norwegian: 'норвежки',
   Dutch: 'холандски',
   Finish: 'завършек',
+  'Done at': 'Съставено в',
+  'Select date': 'Изберете дата',
+  Value: 'Стойност',
+  'Please fill out this field': 'Моля, попълнете това поле',
+  'Submitted date': 'Дата на подаване',
+  Languages: 'Езици',
 };

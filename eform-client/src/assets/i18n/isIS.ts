@@ -397,4 +397,10 @@ export const isIS = {
   Norwegian: 'norska',
   Dutch: 'hollenska',
   Finish: 'Klára',
+  'Done at': 'Gert kl',
+  'Select date': 'Veldu dagsetningu',
+  Value: 'Gildi',
+  'Please fill out this field': 'Vinsamlegast fylltu út þennan reit',
+  'Submitted date': 'Lögð fram dagsetning',
+  Languages: 'Tungumál',
 };

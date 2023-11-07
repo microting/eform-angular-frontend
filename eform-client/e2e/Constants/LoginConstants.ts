@@ -1,5 +1,5 @@
 export default {
   username: 'admin@admin.com',
-  password: 'Qq1234567$',
+  password: 'secretpassword',
   newPassword: '2Times2WillDo'
 };

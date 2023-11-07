@@ -11,7 +11,6 @@ import {
 } from 'src/app/common/models';
 import { normalizeUserClaimNames } from 'src/app/common/helpers';
 import { ApiBaseService } from 'src/app/common/services';
-import { AuthQuery } from 'src/app/common/store';
 import {HttpParams} from '@angular/common/http';
 
 export let AuthMethods = {
@@ -31,26 +30,7 @@ export let AuthMethods = {
 export class AuthService {
   constructor(
     private apiBaseService: ApiBaseService,
-    private authQuery: AuthQuery
   ) {}
-
-  get currentRole(): string {
-    if (this.authQuery.isAuth) {
-      return this.authQuery.currentSetting.token.role;
-    }
-    return '';
-  }
-
-  get currentUserFullName(): string {
-    if (this.authQuery.isAuth) {
-      return this.authQuery.currentUserFullName;
-    }
-    return '';
-  }
-
-  get userClaims(): UserClaimsModel {
-    return this.authQuery.currentSetting.currentUser.claims;
-  }
 
   login(loginInfo: LoginRequestModel): Observable<AuthResponseModel> {
     let body = new HttpParams();

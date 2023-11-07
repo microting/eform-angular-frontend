@@ -26,6 +26,14 @@ import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {UserModalComponent, RemoveUserModalComponent} from 'src/app/modules/account-management/components';
 import {catchError} from 'rxjs/operators';
+import {selectCurrentUserClaimsUsersUpdate, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
+import {
+  selectUsersFilters,
+  selectUsersIsSortDsc,
+  selectUsersPagination,
+  selectUsersSort
+} from "src/app/state/users/users.selector";
 
 @AutoUnsubscribe()
 @Component({
@@ -35,8 +43,8 @@ import {catchError} from 'rxjs/operators';
 export class UsersPageComponent implements OnInit, OnDestroy {
 
   userInfoModelList: Paged<UserInfoModel> = new Paged<UserInfoModel>();
-  selectedUser: UserInfoModel = new UserInfoModel();
   securityGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
+  public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
 
   spinnerStatus: boolean;
   isChecked = true;
@@ -48,17 +56,21 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     {header: this.translateService.stream('Role'), sortProp: {id: 'Role'}, field: 'role', sortable: true},
     {header: this.translateService.stream('Actions'), field: 'actions', sortable: false},
   ];
-  getCurrentUserClaimsAsyncSub$: Subscription;
   userDeletedSub$: Subscription;
   newUserModalComponentAfterClosedSub$: Subscription;
   editUserModalComponentAfterClosedSub$: Subscription;
+  public selectCurrentUserClaimsUsersCreate$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
+  public selectCurrentUserClaimsUsersUpdate$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
+  public selectCurrentUserClaimsUsersDelete$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
 
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
+  public selectUsersPagination$ = this.authStore.select(selectUsersPagination);
+  public selectUsersFilters$ = this.authStore.select(selectUsersFilters);
+  public selectUsersSort$ = this.authStore.select(selectUsersSort);
+  public selectUsersIsSortDsc$ = this.authStore.select(selectUsersIsSortDsc);
 
   constructor(
     private adminService: AdminService,
+    private authStore: Store,
     public authStateService: AuthStateService,
     private googleAuthService: GoogleAuthService,
     private securityGroupsService: SecurityGroupsService,

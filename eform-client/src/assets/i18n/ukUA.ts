@@ -397,4 +397,10 @@ export const ukUA = {
   Norwegian: 'норвезька',
   Dutch: 'голландська',
   Finish: 'Закінчити',
+  'Done at': 'Виконано о',
+  'Select date': 'Виберіть дату',
+  Value: 'Значення',
+  'Please fill out this field': 'Будь ласка, заповніть це поле',
+  'Submitted date': 'Дата подання',
+  Languages: 'Мови',
 };

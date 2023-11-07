@@ -3,15 +3,19 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError} from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { AuthQuery } from 'src/app/common/store';
 import * as R from 'ramda';
+import {selectAuthIsAuth, selectBearerToken} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class ApiBaseService {
+  private selectBearerToken$ = this.authStore.select(selectBearerToken);
+  private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
   constructor(
     private http: HttpClient,
+    private authStore: Store,
     private toastrService: ToastrService,
-    private query: AuthQuery
+    // private query: AuthQuery
   ) {}
 
   public static objectToFormData(
@@ -22,7 +26,6 @@ export class ApiBaseService {
   ): FormData {
     const formData = form || new FormData();
     // eslint-disable-next-line guard-for-in
-    // tslint:disable-next-line:forin
     for (const property in object) {
       const changedNameProperty = needPascalStyle
         ? property[0].toUpperCase() + R.drop(1, property)
@@ -199,9 +202,22 @@ export class ApiBaseService {
     } else {
       headers = headers.set('Content-Type', 'application/json');
     }
-    if (this.query.isAuth) {
-      headers.append('Authorization', this.query.bearerToken);
+    //debugger;
+
+    const accessToken = JSON.parse(localStorage.getItem('token'));
+    if (accessToken) {
+      headers = headers.set('Authorization', 'Bearer ' + accessToken['accessToken']);
     }
+    // this.selectAuthIsAuth$.subscribe((isAuth) => {
+    //   if (isAuth) {
+    //     this.selectBearerToken$.subscribe((token) => {
+    //       headers.append('Authorization', 'Bearer ' + token);
+    //     });
+    //   }
+    // });
+    // if (this.query.isAuth) {
+    //   headers.append('Authorization', bearerToken);
+    // }
     return headers;
   }
 

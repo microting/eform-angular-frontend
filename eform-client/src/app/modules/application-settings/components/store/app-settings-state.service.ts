@@ -1,18 +1,26 @@
 import {Injectable} from '@angular/core';
 import {AppSettingsService} from 'src/app/common/services';
-import {AppSettingsQuery, AppSettingsStore} from './';
 import {map} from 'rxjs/operators';
 import {AdminSettingsModel, LanguagesModel} from 'src/app/common/models';
 import {take} from 'rxjs';
+import { Store } from '@ngrx/store';
+import {selectAuthIsAuth} from 'src/app/state/auth/auth.selector';
 
 @Injectable({providedIn: 'root'})
 export class AppSettingsStateService {
+  public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
   constructor(
-    private store: AppSettingsStore,
+    //private store: AppSettingsStore,
     private service: AppSettingsService,
-    private query: AppSettingsQuery
+    //private query: AppSettingsQuery,
+    private authStore: Store
   ) {
-    this.getAllAppSettings();
+    this.selectIsAuth$.subscribe((isAuth) => {
+      if (isAuth) {
+        this.getAllAppSettings();
+      }
+    });
+    //this.getAllAppSettings();
   }
 
   getAdminSettings() {
@@ -26,24 +34,28 @@ export class AppSettingsStateService {
   getAllAppSettings() {
     this.getAdminSettings().subscribe((response) => {
       if (response && response.success && response.model) {
-        this.store.update(() => ({
-          adminSettingsModel: response.model,
-        }));
+        //debugger;
+        this.authStore.dispatch({type: '[AppSettings] Update AdminSettings', payload: response.model});
+        // this.store.update(() => ({
+        //   adminSettingsModel: response.model,
+        // }));
       }
       return response;
     });
     this.getOtherSettings().subscribe((response) => {
       if (response && response.success && response.model) {
-        this.store.update((state) => ({
-          othersSettings: {...state.othersSettings, ...response.model},
-        }));
+        this.authStore.dispatch({type: '[AppSettings] Update OthersSettings', payload: response.model});
+        // this.store.update((state) => ({
+        //   othersSettings: {...state.othersSettings, ...response.model},
+        // }));
       }
     });
     this.getLanguages().subscribe((response) => {
       if (response && response.success && response.model) {
-        this.store.update(() => ({
-          languagesModel: response.model,
-        }));
+        this.authStore.dispatch({type: '[AppSettings] Update Languages', payload: response.model});
+        // this.store.update(() => ({
+        //   languagesModel: response.model,
+        // }));
       }
     });
   }
@@ -53,9 +65,10 @@ export class AppSettingsStateService {
       .pipe(
         map((response) => {
           if (response && response.success) {
-            this.store.update(() => ({
-              adminSettingsModel: adminSettings,
-            }));
+            this.authStore.dispatch({type: '[AppSettings] Update AdminSettings', payload: adminSettings});
+            // this.store.update(() => ({
+            //   adminSettingsModel: adminSettings,
+            // }));
           }
           return response;
         })
@@ -67,9 +80,10 @@ export class AppSettingsStateService {
       .pipe(
         map((response) => {
           if (response && response.success) {
-            this.store.update((state) => ({
-              othersSettings: {...state.othersSettings, isUserbackWidgetEnabled: UserbackWidgetIsEnabled},
-            }));
+            this.authStore.dispatch({type: '[AppSettings] Update Userback Widget Setting', payload: {isUserbackWidgetEnabled: UserbackWidgetIsEnabled}});
+            // this.store.update((state) => ({
+            //   othersSettings: {...state.othersSettings, isUserbackWidgetEnabled: UserbackWidgetIsEnabled},
+            // }));
           }
           return response;
         })

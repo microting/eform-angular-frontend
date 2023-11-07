@@ -7,17 +7,15 @@ import {
   TemplateListModel,
   EformPermissionsSimpleModel,
   TemplateDto,
-  CommonDictionaryModel,
+  CommonDictionaryModel, UserClaimsModel,
 } from 'src/app/common/models';
 import {
   SecurityGroupEformsPermissionsService,
   EFormService,
   EformTagService,
-  AuthService,
 } from 'src/app/common/services';
 import {saveAs} from 'file-saver';
 import {EformsStateService} from '../../store';
-import {AuthStateService} from 'src/app/common/store';
 import {Sort} from '@angular/material/sort';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -38,6 +36,14 @@ import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import { TranslateService } from '@ngx-translate/core';
+import {selectCurrentUserClaims, selectEformAllowManagingEformTags} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
+import {
+  selectEformsIsSortDsc,
+  selectEformsNameFilter,
+  selectEformsSort,
+  selectEformsTagIds
+} from 'src/app/state/eform/eform.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -70,10 +76,14 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   eformColumnsModalComponentAfterClosedSub$: Subscription;
   eformEditParingModalComponentAfterClosedSub$: Subscription;
   eformRemoveEformModalComponentAfterClosedSub$: Subscription;
+  private selectCurrentUserClaims$ = this.store.select(selectCurrentUserClaims);
+  public selectEformAllowManagingEformTags$ = this.store.select(selectEformAllowManagingEformTags)
+  public selectEformsTagIds$ = this.store.select(selectEformsTagIds);
+  public selectEformsNameFilter$ = this.store.select(selectEformsNameFilter);
+  public selectEformsSort$ = this.store.select(selectEformsSort);
+  public selectEformsIsSortDsc$ = this.store.select(selectEformsIsSortDsc);
 
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
+  userClaims: UserClaimsModel;
 
   get userClaimsEnum() {
     return UserClaimsEnum;
@@ -99,14 +109,12 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     {header: this.translateService.stream('Pairing'), field: 'pairingUpdate'},
     {header: this.translateService.stream('Actions'), field: 'actions'},
   ];
-
   constructor(
+    private store: Store,
     private eFormService: EFormService,
     private eFormTagService: EformTagService,
-    private authService: AuthService,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
     public eformsStateService: EformsStateService,
-    public authStateService: AuthStateService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     public dialog: MatDialog,
@@ -121,6 +129,9 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     this.searchSubjectSub$ = this.searchSubject.pipe(debounceTime(500)).subscribe((val: string) => {
       this.eformsStateService.updateNameFilter(val);
       this.loadAllTags();
+    });
+    this.selectCurrentUserClaims$.subscribe((x) => {
+      this.userClaims = x;
     });
   }
 

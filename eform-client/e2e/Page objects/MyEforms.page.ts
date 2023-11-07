@@ -388,15 +388,11 @@ class MyEformsRowObject {
   }
 
   async pair(folder: FoldersRowObject, users: DeviceUsersRowObject[]) {
-    console.log('Pairing eform');
     if (await this.editPairEformBtn.isExisting()) {
-      console.log('editPairEformBtn isExisting');
       await this.editPairEformBtn.click();
     } else {
-      console.log('addPairEformBtn isExisting');
       await this.addPairEformBtn.click();
     }
-    console.log('Parring clicked');
     await browser.pause(500);
     await (await myEformsPage.cancelParingBtn()).waitForDisplayed({
       timeout: 40000,
@@ -414,21 +410,15 @@ class MyEformsRowObject {
         await browser.pause(1000);
       }
     }
-    console.log('Folder selected');
     await myEformsPage.takeScreenshot();
     for (let i = 0; i < users.length; i++) {
-      console.log('Selecting user: ' + users[i].firstName);
       //const name = `#mat-checkbox-${i+2} > label > div.mat-checkbox-inner-container`;
       const checkbox = await $(`#checkbox${users[i].siteId}`);
-      console.log('Checkbox found ');
       await checkbox.scrollIntoView();
-      console.log('Checkbox scrolled into view');
       //await checkbox.waitForClickable({ timeout: 40000 });
       await checkbox.click();
-      console.log('User selected ' + users[i].firstName);
       await browser.pause(500);
     }
-    console.log('Users selected');
     await (await myEformsPage.saveParingBtn()).click();
     await browser.pause(1000);
   }

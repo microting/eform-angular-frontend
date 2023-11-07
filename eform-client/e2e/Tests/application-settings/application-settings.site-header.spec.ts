@@ -65,6 +65,8 @@ describe('Application settings page - site header section', function () {
   // });
   it('should hide image', async () => {
     await myEformsPage.Navbar.goToApplicationSettings();
+    const spinnerAnimation = await $('#spinner-animation');
+    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
     await (await applicationSettingsPage.SiteHeader.imageVisibilityToggler()).click();
     await applicationSettingsPage.save();

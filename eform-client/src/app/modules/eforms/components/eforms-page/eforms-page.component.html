@@ -14,7 +14,7 @@
       id="eformsManageTagsBtn"
       (click)="openTagsModal()"
       matTooltip="{{ 'Manage tags' | translate }}"
-      *ngIf="authStateService.checkClaim('eformAllowManagingEformTags')"
+      *ngIf="selectEformAllowManagingEformTags$ | async"
     >
       <mat-icon>discount</mat-icon>
     </button>
@@ -48,7 +48,7 @@
         <input
           matInput
           type="text"
-          [ngModel]="eformsStateService.getNameFilter() | async"
+          [ngModel]="selectEformsNameFilter$ | async"
           (ngModelChange)="onLabelInputChanged($event)"
           id="labelInput"
         />
@@ -61,7 +61,7 @@
           class="custom"
           [dropdownPosition]="'bottom'"
           [items]="availableTags"
-          [ngModel]="eformsStateService.getTagIds() | async"
+          [ngModel]="selectEformsTagIds$ | async"
           (add)="saveTag($event)"
           (remove)="removeSavedTag($event)"
           [clearable]="false"
@@ -104,8 +104,8 @@
   [showToolbar]="true"
   [showColumnMenuButton]="false"
   [toolbarTemplate]="toolbarTpl"
-  [sortActive]="eformsStateService.getActiveSort() | async"
-  [sortDirection]="eformsStateService.getActiveSortDirection() | async"
+  [sortActive]="selectEformsSort$ | async"
+  [sortDirection]="selectEformsIsSortDsc$ | async"
   (sortChange)="sortTable($event)">
 </mtx-grid>
 <ng-template #labelTpl let-row let-i="index">

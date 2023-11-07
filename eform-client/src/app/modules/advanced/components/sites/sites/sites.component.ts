@@ -14,6 +14,8 @@ import {SiteDeleteComponent, SiteEditComponent} from 'src/app/modules/advanced/c
 import { TranslateService } from '@ngx-translate/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
+import {Store} from "@ngrx/store";
+import {selectCurrentUserClaimsSitesDelete, selectCurrentUserClaimsSitesUpdate} from "src/app/state/auth/auth.selector";
 
 @AutoUnsubscribe()
 @Component({
@@ -21,11 +23,10 @@ import {Subscription} from 'rxjs';
   templateUrl: './sites.component.html',
 })
 export class SitesComponent implements OnInit, OnDestroy {
-  get userClaims() {
-    return this.authStateService.currentUserClaims;
-  }
-
+  private selectCurrentUserClaimsSitesUpdate$ = this.authStore.select(selectCurrentUserClaimsSitesUpdate);
+  private selectCurrentUserClaimsSitesDelete$ = this.authStore.select(selectCurrentUserClaimsSitesDelete);
   constructor(
+    private authStore: Store,
     private sitesService: SitesService,
     private authStateService: AuthStateService,
     private eFormTagService: EformTagService,
@@ -53,8 +54,10 @@ export class SitesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // this.loadAllSites();
     this.loadAllTags();
-    this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
-      if(x.sitesDelete || x.sitesUpdate) {
+    let actionsAdded = false;
+    this.selectCurrentUserClaimsSitesUpdate$.subscribe(x => {
+      if (x) {
+        actionsAdded = true;
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
             header: this.translateService.stream('Actions'),
@@ -62,7 +65,26 @@ export class SitesComponent implements OnInit, OnDestroy {
           },
         ];
       }
-    })
+    });
+    this.selectCurrentUserClaimsSitesDelete$.subscribe(x => {
+      if (x && !actionsAdded) {
+        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+          {
+            header: this.translateService.stream('Actions'),
+            field: 'actions',
+          },
+        ];
+      }
+    });
+    //   if(x.sitesDelete || x.sitesUpdate) {
+    //     this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+    //       {
+    //         header: this.translateService.stream('Actions'),
+    //         field: 'actions',
+    //       },
+    //     ];
+    //   }
+    // })
   }
 
   openEditModal(siteNameDto: SiteNameDto) {

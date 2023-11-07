@@ -397,4 +397,10 @@ export const ltLT = {
   Norwegian: 'norvegų',
   Dutch: 'olandų',
   Finish: 'Baigti',
+  'Done at': 'Priimta',
+  'Select date': 'Pasirinkite datą',
+  Value: 'Vertė',
+  'Please fill out this field': 'Užpildykite šį lauką',
+  'Submitted date': 'Pateikimo data',
+  Languages: 'Kalbos',
 };

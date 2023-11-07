@@ -27,23 +27,14 @@ describe('Main page', function () {
     await myEformsPage.createNewEform('test Eform');
   });
   it('should pair several device users', async () => {
-    console.log('Pairing several device users');
     await (await myEformsPage.idSortBtn()).click();
-    console.log('Clicking on eform sort id');
     const spinnerAnimation = await $('#spinner-animation');
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     await browser.pause(1000);
-    console.log('Getting first eform');
     let eform = await myEformsPage.getFirstMyEformsRowObj();
-    console.log('Got first eform');
-    console.log('Pairing eform');
     await eform.pair(folders[0], users);
-    console.log('Paired eform');
     //await (await myEformsPage.getFirstMyEformsRowObj()).pair(folders[0], users);
-    console.log('Getting first eform');
     eform = await myEformsPage.getFirstMyEformsRowObj();
-    console.log('Got first eform');
-    console.log('Checking if eform is paired');
     await eform.editPairEformBtn.click();
     //await (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });

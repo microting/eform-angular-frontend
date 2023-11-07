@@ -1,10 +1,10 @@
 export class CasesRequestModel {
   public sort: string;
-  nameFilter: string;
-  pageSize: number;
-  isSortDsc: boolean;
-  offset: number;
-  templateId: number;
+  public nameFilter: string;
+  public pageSize: number;
+  public isSortDsc: boolean;
+  public offset: number;
+  public templateId: number;
 
   constructor() {
     this.sort = 'id';
@@ -12,5 +12,6 @@ export class CasesRequestModel {
     this.isSortDsc = true;
     this.pageSize = 1000;
     this.offset = 0;
+    this.templateId = 0;
   }
 }

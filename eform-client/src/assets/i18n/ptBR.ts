@@ -397,4 +397,10 @@ export const ptBR = {
   Norwegian: 'norueguês',
   Dutch: 'Holandês',
   Finish: 'Terminar',
+  'Done at': 'Pronto à',
+  'Select date': 'Selecione a data',
+  Value: 'Valor',
+  'Please fill out this field': 'Por favor, preencha este campo',
+  'Submitted date': 'Data de envio',
+  Languages: 'línguas',
 };

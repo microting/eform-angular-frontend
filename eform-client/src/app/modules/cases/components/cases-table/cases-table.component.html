@@ -8,7 +8,7 @@
         <input
           matInput
           type="text"
-          [ngModel]="caseStateService.getNameFilter() | async"
+          [ngModel]="selectCasesNameFilter$ | async"
           (ngModelChange)="onLabelInputChanged($event)"
           id="labelInput"
         />
@@ -16,27 +16,31 @@
     </div>
   </div>
 </ng-template>
-<mtx-grid
-  [data]="caseListModel.cases"
-  [columns]="tableHeaders"
-  [cellTemplate]="{actions: actionsTpl}"
-  [showPaginator]="true"
-  [paginationTemplate]="paginatorTpl"
-  [pageOnFront]="false"
-  [rowStriped]="true"
-  [showToolbar]="true"
-  [showColumnMenuButton]="false"
-  [toolbarTemplate]="toolbarTpl"
-  [sortActive]="caseStateService.getActiveSort() | async"
-  [sortDirection]="caseStateService.getActiveSortDirection() | async"
-  (sortChange)="sortTable($event)">
-</mtx-grid>
+<ng-container
+  *ngIf="caseListModel.cases.length > 0">
+  <mtx-grid
+    [data]="caseListModel.cases"
+    [columns]="tableHeaders"
+    [cellTemplate]="{actions: actionsTpl}"
+    [showPaginator]="true"
+    [paginationTemplate]="paginatorTpl"
+    [pageOnFront]="false"
+    [rowStriped]="true"
+    [showToolbar]="true"
+    [showColumnMenuButton]="false"
+    [toolbarTemplate]="toolbarTpl"
+    [sortActive]="selectCasesSort$ | async"
+    [sortDirection]="selectCasesIsSortDsc$ | async"
+    (sortChange)="sortTable($event)">
+  </mtx-grid>
+</ng-container>
+
 <ng-template #actionsTpl let-row>
   <div>
     <button
       mat-icon-button
       color="accent"
-      *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
+      *ngIf="selectCurrentUserClaimsCaseRead$ | async"
       [routerLink]="['/cases/edit/',row.id, currentTemplate.id]"
       matTooltip="{{ 'Edit Case' | translate }}"
     >
@@ -45,7 +49,7 @@
     <button
       mat-icon-button
       color="primary"
-      *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) &&
+      *ngIf="(selectCurrentUserClaimsCaseGetPdf$ | async) &&
         (currentTemplate.jasperExportEnabled || currentTemplate.docxExportEnabled)"
       (click)="downloadFile(row.id, 'pdf')"
       matTooltip="{{ 'Download PDF' | translate }}"
@@ -55,7 +59,7 @@
     <button
       mat-icon-button
       color="primary"
-      *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && currentTemplate.docxExportEnabled"
+      *ngIf="(selectCurrentUserClaimsCaseGetDocx$ | async) && currentTemplate.docxExportEnabled"
       (click)="downloadFile(row.id, 'docx')"
       matTooltip="{{ 'Download Docx' | translate }}"
     >
@@ -64,7 +68,7 @@
     <button
       mat-icon-button
       color="warn"
-      *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
+      *ngIf="selectCurrentUserClaimsCaseDelete$ | async"
       (click)="onDeleteClicked(row)"
       matTooltip="{{ 'Delete Case' | translate }}"
     >
@@ -74,7 +78,7 @@
 </ng-template>
 <ng-template #paginatorTpl>
   <eform-pagination
-    [pagination]="caseStateService.getPagination() | async"
+    [pagination]="selectCasesPagination$ | async"
     (paginationChanged)="onPaginationChanged($event)"
   ></eform-pagination>
 </ng-template>

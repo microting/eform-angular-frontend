@@ -4,7 +4,7 @@ import loginPage from '../Login.page';
 
 describe('Database', () => {
   it('should be configured successfully', () => {
-    cy.visit('http://localhost:4200');
+    cy.visit('http://localhost:4200/connection-string');
     databasePage.languageDropdown().should('be.visible');
     cy.wait(5000);
     databasePage.firstNameInput().should('be.visible');
@@ -18,7 +18,8 @@ describe('Database', () => {
 
     databasePage.configure(DatabaseConfigurationConstants.languageOptions.danish);
     databasePage.save();
-    cy.wait(90000);
+    cy.wait(120000);
+    cy.visit('http://localhost:4200');
     loginPage.getLoginButton().should('be.visible');
   });
 });

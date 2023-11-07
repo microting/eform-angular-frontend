@@ -5,6 +5,8 @@ import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
 import {LocaleService} from 'src/app/common/services';
 import {format} from 'date-fns';
 import {AuthStateService} from 'src/app/common/store';
+import {selectCurrentUserLocale} from "src/app/state/auth/auth.selector";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-eform-xlsx-report-header',
@@ -17,13 +19,17 @@ export class EformXlsxReportHeaderComponent implements OnInit {
   @Input() range: Date[];
   @Input() templateId: number;
   generateForm: FormGroup;
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
   constructor(
     dateTimeAdapter: DateTimeAdapter<any>,
+    private authStore: Store,
     private localeService: LocaleService,
     authStateService: AuthStateService
   ) {
-    dateTimeAdapter.setLocale(authStateService.currentUserLocale);
+    this.selectCurrentUserLocale$.subscribe((locale) => {
+      dateTimeAdapter.setLocale(locale);
+    });
   }
 
   ngOnInit() {

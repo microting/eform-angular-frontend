@@ -1,4 +1,4 @@
-<div class="h-100 d-flex flex-column">
+<div class="h-100 d-flex flex-column" *ngIf="selectIsAuth$ | async">
   <!--  <app-header></app-header>-->
   <mat-toolbar style="padding-top: 5px; padding-bottom: 5px" class="d-flex align-items-center">
     <div *ngIf="headerSettingsModel.imageLinkVisible" class="d-flex">
@@ -7,7 +7,7 @@
              *ngIf="headerSettingsModel.imageLinkVisible" alt="">
       </div>
     </div>
-    <button mat-icon-button (click)="toggleDrawer()" [hidden]="(authStateService.isConnectionStringExistAsync | async) === false">
+    <button mat-icon-button (click)="toggleDrawer()" [hidden]="(selectConnectionStringExists$ | async) === false">
       <mat-icon>menu</mat-icon>
     </button>
     <span class="spacer"></span>
@@ -20,7 +20,7 @@
           <mat-icon >settings</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <a mat-menu-item *ngFor="let menu of appMenuQuery.userMenuRight$ | async"
+          <a mat-menu-item *ngFor="let menu of allAppMenus$ | async"
              routerLink="{{ menu.link }}"
              [id]="menu.e2EId"
           ><!--color="{{this.router.url === menu.link ? 'accent' : ''}}"-->
@@ -34,11 +34,11 @@
     <mat-drawer
       #drawer
       [mode]="sidenavMode"
-      [opened]="(authStateService.sideMenuOpenedAsync | async) === true">
+      [opened]="(selectSideMenuOpened$ | async) === true">
       <app-navigation (clickOnLink)="onClickOnLink()"></app-navigation>
       <app-footer></app-footer>
     </mat-drawer>
-    <div class="mb-auto p-4">
+    <div class="mb-auto p-4" *ngIf="selectIsAuth$ | async">
       <app-userback-widget></app-userback-widget>
       <router-outlet></router-outlet>
     </div>

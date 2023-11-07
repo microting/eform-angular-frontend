@@ -397,4 +397,10 @@ export const elGR = {
   Norwegian: 'Νορβηγός',
   Dutch: 'Ολλανδός',
   Finish: 'Φινίρισμα',
+  'Done at': 'Έγινε στις',
+  'Select date': 'Επιλέξτε ημερομηνία',
+  Value: 'αξία',
+  'Please fill out this field': 'Παρακαλώ συμπληρώστε αυτό το πεδίο',
+  'Submitted date': 'Ημερομηνία υποβολής',
+  Languages: 'Γλώσσες',
 };

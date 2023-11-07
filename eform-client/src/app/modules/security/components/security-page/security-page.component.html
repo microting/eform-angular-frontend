@@ -18,7 +18,7 @@
         <input
           matInput
           type="text"
-          [ngModel]="securityStateService.getNameFilter() | async"
+          [ngModel]="selectSecurityNameFilter$ | async"
           (ngModelChange)="onLabelInputChanged($event)"
           id="searchInput"
         />
@@ -37,14 +37,14 @@
   [showToolbar]="true"
   [showColumnMenuButton]="false"
   [toolbarTemplate]="toolbarTpl"
-  [sortActive]="securityStateService.getActiveSort() | async"
-  [sortDirection]="securityStateService.getActiveSortDirection() | async"
+  [sortActive]="selectSecuritySort$ | async"
+  [sortDirection]="selectSecurityIsSortDsc$ | async"
   (sortChange)="onSortTable($event)">
 </mtx-grid>
 
 <ng-template #paginatorTpl>
   <eform-pagination
-    [pagination]="securityStateService.getPagination() | async"
+    [pagination]="selectSecurityPagination$ | async"
     (paginationChanged)="onPaginationChanged($event)"
   ></eform-pagination>
 </ng-template>

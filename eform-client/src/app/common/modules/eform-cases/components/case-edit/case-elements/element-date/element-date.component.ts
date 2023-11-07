@@ -3,6 +3,8 @@ import { format } from 'date-fns';
 import { FieldValueDto } from 'src/app/common/models';
 import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
 import {AuthStateService} from 'src/app/common/store';
+import {selectCurrentUserLocale, selectIsDarkMode} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -12,11 +14,16 @@ import {AuthStateService} from 'src/app/common/store';
 })
 export class ElementDateComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();
+  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
   constructor(
+    private authStore: Store,
     dateTimeAdapter: DateTimeAdapter<any>, private authStateService: AuthStateService
   ) {
-    dateTimeAdapter.setLocale(authStateService.currentUserLocale);
+    this.selectCurrentUserLocale$.subscribe((locale) => {
+      dateTimeAdapter.setLocale(locale);
+    });
+    // dateTimeAdapter.setLocale(authStateService.currentUserLocale);
   }
 
   @Input()

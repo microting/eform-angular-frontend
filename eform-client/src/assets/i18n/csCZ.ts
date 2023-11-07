@@ -397,4 +397,10 @@ export const csCZ = {
   Norwegian: 'norský',
   Dutch: 'holandský',
   Finish: 'Dokončit',
+  'Done at': 'Dokončeno v',
+  'Select date': 'Vyberte datum',
+  Value: 'Hodnota',
+  'Please fill out this field': 'Prosím, vyplňte toto pole',
+  'Submitted date': 'Datum odevzdání',
+  Languages: 'Jazyky',
 };
