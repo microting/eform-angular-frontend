@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: 'edit/:id/:templateId',
     component: CaseEditComponent,
-    canDeactivate: [CanDeactivateGuard]
+    //canDeactivate: [CanDeactivateGuard]
   },
   // {
   //   path: 'posts/:id/:templateId/:postAction',

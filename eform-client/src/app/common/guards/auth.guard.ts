@@ -2,22 +2,17 @@ import {inject, Injectable} from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivateFn,
-  Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { AuthStateService } from 'src/app/common/store';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth, selectLoginRedirectUrl} from 'src/app/state/auth/auth.selector';
-import {Observable, take} from "rxjs";
-import {switchMap, tap} from "rxjs/operators";
 
 @Injectable()
 export class AuthGuard {
   constructor(
-    private router: Router,
-    //private authStateService: AuthStateService
     private store: Store
   ) {
+    console.log('AuthGuard - constructor');
   }
 
   private isAuth$ = this.store.select(selectAuthIsAuth);
@@ -27,6 +22,7 @@ export class AuthGuard {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
+    console.log('AuthGuard - canActivate');
     // TODO: Fix this
     //   if (!this.isAuth$) {
     //     console.debug(`Let's kick the user out auth.guard`);
@@ -47,5 +43,6 @@ export class AuthGuard {
 }
 
 export const IsAuthGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
+  console.log('AuthGuard - IsAuthGuard');
   return inject(AuthGuard).canActivate(route, state);
 }
