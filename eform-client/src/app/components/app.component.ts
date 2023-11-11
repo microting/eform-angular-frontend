@@ -12,6 +12,7 @@ export class AppComponent {
     ngTitle: Title,
     titleService: TitleService,
   ) {
+    console.log('AppComponent - constructor');
     const defaultTitle = 'eForm Backend';
     titleService.title.subscribe(title => {
       if(title && title !== defaultTitle) {

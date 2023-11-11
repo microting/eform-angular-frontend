@@ -20,11 +20,13 @@ export class LoaderInterceptor implements HttpInterceptor {
   // This is the constructor for the class
   // It takes a LoaderService as a parameter
   constructor(private loaderService: LoaderService) {
+    console.log('LoaderInterceptor - constructor');
   }
 
   // This method removes a request from the requests array
   // It takes an HttpRequest as a parameter
   removeRequest(req: HttpRequest<any>) {
+    console.log('LoaderInterceptor - removeRequest');
     const i = this.requests.indexOf(req);
     if (i >= 0) {
       this.requests.splice(i, 1);
@@ -36,6 +38,7 @@ export class LoaderInterceptor implements HttpInterceptor {
   // This method intercepts an HTTP request and returns an Observable of the HTTP event
   // It takes an HttpRequest and an HttpHandler as parameters
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log('LoaderInterceptor - intercept');
     // This adds the request to the requests array
     this.requests.push(req);
 

@@ -108,7 +108,7 @@ export const routes: Routes = [
     ]
   },
   // otherwise redirect to home
-  { path: '**', redirectTo: '' },
+  //{ path: '**', redirectTo: '' },
 ];
 
 @NgModule({
@@ -119,4 +119,8 @@ export const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+  constructor() {
+    console.log('AppRoutingModule - constructor');
+  }
+}

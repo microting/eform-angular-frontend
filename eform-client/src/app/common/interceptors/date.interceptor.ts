@@ -7,6 +7,7 @@ import {parseJSON} from 'date-fns';
 @Injectable()
 export class DateInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log('DateInterceptor - intercept');
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {

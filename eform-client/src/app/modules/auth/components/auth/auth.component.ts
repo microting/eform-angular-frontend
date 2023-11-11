@@ -22,9 +22,11 @@ export class AuthComponent implements OnInit {
     public settingsService: AppSettingsService,
     // private authService: AuthStateService,
   ) {
+    console.log('AuthComponent - constructor');
   }
 
   ngOnInit() {
+    console.log('AuthComponent - ngOnInit');
     this.getInitialData();
     this.router.events.subscribe(_ => {
       if(

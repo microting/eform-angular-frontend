@@ -70,6 +70,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   public allAppMenus$ = this.store.select(rightAppMenus);
 
   ngOnInit() {
+    console.log('FullLayoutComponent - ngOnInit');
     this.loaderService.setLoading(true);
     this.getSettings();
     //this.localeService.initLocale();
@@ -78,6 +79,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log('FullLayoutComponent - afterViewInit');
     if (this.drawer) {
       this.openedChangeSub$ = this.drawer.openedChange.subscribe(opened => this.authStateService.updateSideMenuOpened(opened));
     }
@@ -97,6 +99,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getSettings() {
+    console.log('FullLayoutComponent - getSettings');
     // TODO: Fix this
     // load access_token from local storage
     const accessToken = JSON.parse(localStorage.getItem('token'));

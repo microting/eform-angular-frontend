@@ -32,9 +32,12 @@ import {selectAuthIsAuth, selectBearerToken} from 'src/app/state/auth/auth.selec
 // }
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+    console.log('JwtInterceptor - constructor');
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log('JwtInterceptor - intercept');
     return this.store.select(selectAuthIsAuth).pipe(
       take(1), // Ensure the subscription is automatically unsubscribed after the first emission
       switchMap((isAuth) => {

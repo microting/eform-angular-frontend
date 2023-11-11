@@ -18,12 +18,15 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     private toastrService: ToastrService,
     private router: Router,
     private authStateService: AuthStateService
-  ) {}
+  ) {
+    console.log('HttpErrorInterceptor - constructor');
+  }
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    console.log('HttpErrorInterceptor - intercept');
     // Define a maximum number of retries and a delay between each retry
     const count = 0;
     const delay = 15000; // 10 seconds in milliseconds
