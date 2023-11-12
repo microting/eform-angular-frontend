@@ -1,7 +1,8 @@
 import {createSelector} from '@ngrx/store';
 import {AuthState} from 'src/app/state/auth/auth.recuder';
+import {AppState} from 'src/app/state/app.state';
 
-export const selectAuth = (state) => state.authV2;
+export const selectAuth = (state: AppState) => state.auth;
 export const selectAuthIsAuth
   = createSelector(selectAuth, (state: AuthState) => state.token.accessToken !== '');
 export const selectBearerToken

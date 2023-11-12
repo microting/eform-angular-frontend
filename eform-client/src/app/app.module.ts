@@ -87,7 +87,7 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
     HttpClientModule,
     StoreModule.forRoot({
       appMenus: appMenuReducer.reducer,
-      authV2: authReducer.reducer,
+      auth: authReducer.reducer,
       eforms: eformReducer.reducer,
       deviceUsers: deviceUsersReducer.reducer,
       appSettings: appSettingsReducer.reducer,

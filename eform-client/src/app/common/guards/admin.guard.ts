@@ -12,12 +12,15 @@ export class AdminGuard {
   constructor(
     private router: Router,
     private store: Store
-  ) {}
+  ) {
+    console.log('AdminGuard - constructor');
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
+    console.log('AdminGuard - canActivate');
     // TODO: Fix this
     // return true;
     return this.store.select(selectAuthIsAuth).pipe(

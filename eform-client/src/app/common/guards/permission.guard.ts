@@ -14,11 +14,14 @@ export class PermissionGuard {
   private selectCurrentUserClaims$ = this.authStore.select(selectCurretnUserClaims);
   constructor(
     private authStore: Store
-  ) {}
+  ) {
+    console.log('PermissionGuard - constructor');
+  }
 
   canActivate (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot) : Observable<boolean> {
+    console.log('PermissionGuard - canActivate');
     let requiredPermission = route.data['requiredPermission'];
     requiredPermission = requiredPermission.replace(/_([a-z])/g, function (g: string[]) { return g[1].toUpperCase(); });
     return this.checkGuards([requiredPermission]).pipe(
@@ -29,6 +32,7 @@ export class PermissionGuard {
   }
 
   checkGuards(guards: string[]): Observable<boolean> {
+    console.log('PermissionGuard - checkGuards');
     return this.selectCurrentUserClaims$.pipe(map(x => {
       for (const guard of guards) {
         if (x[guard]) {
@@ -42,5 +46,6 @@ export class PermissionGuard {
 
 
 export const IsPermissionGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
+  console.log('PermissionGuard - IsPermissionGuard');
   return inject(PermissionGuard).canActivate(route, state);
 }
