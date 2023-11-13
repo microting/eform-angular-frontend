@@ -1,5 +1,5 @@
 //const path = require("path");
-import type { Options } from '@wdio/types'
+import type { Options } from '@wdio/types';
 
 export const config: Options.Testrunner = {
   runner: 'local',
@@ -148,7 +148,7 @@ export const config: Options.Testrunner = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ['chromedriver'],
+  services: ['docker'],
   //chromeDriverArgs: ['--whitelisted-ips', '--port=9515', '--url-base=\'/\''], // default for ChromeDriver
   //chromeDriverLogs: './',
   //
