@@ -49,10 +49,9 @@ export class VisualEditorFieldModalComponent implements OnInit {
 
   setFieldTypes() {
     const typesForAdminOnly = [
-      EformFieldTypesEnum.Text,
       EformFieldTypesEnum.Audio,
       EformFieldTypesEnum.Movie,
-      EformFieldTypesEnum.MultiSelect
+      EformFieldTypesEnum.NumberStepper,
     ];
     if (this.recursionModel.fieldIsNested) {
       this.fieldTypes = [
