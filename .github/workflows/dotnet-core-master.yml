@@ -120,6 +120,14 @@ jobs:
       with:
         name: error Screenshots ${{matrix.test}}
         path: |
+          eform-client/chrome*.png
+        retention-days: 2        
+    - name: Archive video artifacts
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: error Screenshots ${{matrix.test}}
+        path: |
           eform-client/cypress/videos/*.mp4
         retention-days: 2
   test-dotnet:
