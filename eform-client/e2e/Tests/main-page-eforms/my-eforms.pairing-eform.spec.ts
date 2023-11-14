@@ -88,7 +88,10 @@ describe('Main page', function () {
   });
   after(async () => {
     await loginPage.open('/');
-    await myEformsPage.Navbar.goToMyEForms();
+    const newEFormBtn = await $('#newEFormBtn');
+    await newEFormBtn.waitForDisplayed({timeout: 60000});
+    await newEFormBtn.waitForClickable({timeout: 60000});
+    //await myEformsPage.Navbar.goToMyEForms();
     await (await myEformsPage.getEformsRowObjByNameEForm('test Eform')).deleteEForm();
     await myEformsPage.Navbar.goToDeviceUsersPage();
     for (let i = 0; i < users.length; i++) {
