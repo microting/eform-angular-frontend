@@ -20,8 +20,10 @@ describe('Entity Search', function () {
     expect(searchableList.name).equal(name);
   });
   it('should delete the list', async () => {
+    const currentRowNum = await searchableLists.rowNum();
     await searchableLists.deleteList();
-    expect(await searchableLists.rowNum()).equal(0);
+    await browser.pause(1000);
+    expect(await searchableLists.rowNum()).equal(currentRowNum - 1);
   });
   it('should create a new searchable list with name and one item', async () => {
     await loginPage.open('/');
@@ -57,9 +59,10 @@ describe('Entity Search', function () {
   it('should delete a list with multiple items.', async () => {
     await loginPage.open('/');
     await searchableLists.goToEntitySearchPage();
+    const currentRowNum = await searchableLists.rowNum();
     await searchableLists.deleteList();
     await loginPage.open('/');
     await searchableLists.goToEntitySearchPage();
-    expect(await searchableLists.rowNum()).equal(0);
+    expect(await searchableLists.rowNum()).equal(currentRowNum - 1);
   });
 });
