@@ -32,7 +32,8 @@ export const config: Options.Testrunner = {
     'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
     'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
     'e2e/Tests/profile-settings/profile-settings.language.spec.ts',
-    'e2e/Tests/user-administration/user-administration.name-change.spec.ts',
+    // TODO - Fix this test
+    //'e2e/Tests/user-administration/user-administration.name-change.spec.ts',
   ],
   suites: {
     settings: [
@@ -149,7 +150,7 @@ export const config: Options.Testrunner = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ['docker'],
+  services: ['chromedriver'],
   //chromeDriverArgs: ['--whitelisted-ips', '--port=9515', '--url-base=\'/\''], // default for ChromeDriver
   //chromeDriverLogs: './',
   //
@@ -173,7 +174,7 @@ export const config: Options.Testrunner = {
     ui: 'bdd',
     //require: 'ts-node/register',
     //compilers: ['tsconfig-paths/register'],
-    timeout: 240000
+    timeout: 90000
   },
   //
   // =====

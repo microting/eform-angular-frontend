@@ -12,7 +12,6 @@ class MyEformsPage extends PageWithNavbarPage {
   constructor() {
     super();
   }
-
   public async newEformBtn(): Promise<WebdriverIO.Element> {
     const el = await $('#newEFormBtn');
     await el.waitForDisplayed({ timeout: 40000 });

@@ -59,9 +59,7 @@ describe('Entity Search', function () {
     const newName = 'New Name';
     const newItemNames = 'f\ng\nh\ni\nj';
     let rowNumber = await searchableLists.rowNum();
-    if (rowNumber > 1) {
-      rowNumber = rowNumber - 1;
-    }
+    rowNumber = rowNumber - 1;
     await (await searchableLists.entitySearchEditBtn(rowNumber)).click();
     await browser.pause(500);
     await (await $('#editName')).waitForDisplayed({ timeout: 40000 });
