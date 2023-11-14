@@ -245,6 +245,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await (await this.entitySearchCreateSaveBtn()).click();
     await browser.pause(500);
     await (await this.createEntitySearchBtn()).waitForDisplayed({timeout: 90000});
+    await browser.pause(1500);
   }
 
   public async createSearchableList_OneItem(name, itemName) {
@@ -261,6 +262,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await (await this.entitySearchCreateSaveBtn()).click();
     await browser.pause(500);
     await (await this.createEntitySearchBtn()).waitForDisplayed({timeout: 90000});
+    await browser.pause(1500);
   }
 
   public async createSearchableList_MultipleItems(name, itemNames) {
@@ -279,6 +281,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await (await this.entitySearchCreateSaveBtn()).click();
     await browser.pause(500);
     await (await this.createEntitySearchBtn()).waitForDisplayed({timeout: 90000});
+    await browser.pause(1500);
   }
 
   public async createSearchableList_NoItem_Cancels(name) {
