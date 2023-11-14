@@ -1,9 +1,11 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
+import MyEformsPage from "./MyEforms.page";
 
 export class SearchableListsPage extends PageWithNavbarPage {
   constructor() {
     super();
   }
+
 
   public async rowNum(): Promise<number> {
     await browser.pause(500);
@@ -123,6 +125,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   public async entitySearchEditBtn(i = 0): Promise<WebdriverIO.Element> {
+    await this.takeScreenshot();
     const ele = await $$('#entitySearchUpdateBtn')[i];
     await ele.waitForDisplayed({timeout: 40000});
     await ele.waitForClickable({timeout: 40000});
@@ -250,6 +253,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async createSearchableList_OneItem(name, itemName) {
     await (await this.createEntitySearchBtn()).click();
+    await this.takeScreenshot();
     await $('#editName').waitForDisplayed({timeout: 40000});
     await (await this.entitySearchCreateName()).setValue(name);
     await browser.pause(500);
@@ -311,6 +315,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await (await this.entitySearchCreateCancelBtn()).click();
     await browser.pause(500);
     await (await this.createEntitySearchBtn()).waitForDisplayed({timeout: 90000});
+    await browser.pause(1500);
   }
 
   public async createSearchableList_MultipleItems_Cancels(name, itemNames) {
@@ -333,9 +338,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async editSearchableListNameOnly(newName) {
     let rowNumber = await this.rowNum();
-    if (rowNumber > 1) {
-      rowNumber = rowNumber - 1;
-    }
+    rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({timeout: 200000});
@@ -349,9 +352,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async editSearchableListNameOnly_Cancels(newName) {
     let rowNumber = await this.rowNum();
-    if (rowNumber > 1) {
-      rowNumber = rowNumber - 1;
-    }
+    rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({timeout: 200000});
@@ -365,9 +366,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async editSearchableListNameAndItem(newName, newItemName) {
     let rowNumber = await this.rowNum();
-    if (rowNumber > 1) {
-      rowNumber = rowNumber - 1;
-    }
+    rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await browser.pause(500);
     await $('#editName').waitForClickable({timeout: 200000});
@@ -383,9 +382,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async editSearchableListOnlyItem(newItemName) {
     let rowNumber = await this.rowNum();
-    if (rowNumber > 1) {
-      rowNumber = rowNumber - 1;
-    }
+    rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({timeout: 200000});
@@ -397,9 +394,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async editSearchableListNameAndItem_Cancels(newName, newItemName) {
     let rowNumber = await this.rowNum();
-    if (rowNumber > 1) {
-      rowNumber = rowNumber - 1;
-    }
+    rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({timeout: 200000});
@@ -415,9 +410,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async editSearchableListNameAndItem_CancelsBoth(newName, newItemName) {
     let rowNumber = await this.rowNum();
-    if (rowNumber > 1) {
-      rowNumber = rowNumber - 1;
-    }
+    rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({timeout: 200000});
@@ -433,9 +426,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async editSearchableListNameAndItem_CancelsItemName(newName, newItemName) {
     let rowNumber = await this.rowNum();
-    if (rowNumber > 1) {
-      rowNumber = rowNumber - 1;
-    }
+    rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({timeout: 200000});
@@ -449,9 +440,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async deleteItemFromList() {
     let rowNumber = await this.rowNum();
-    if (rowNumber > 1) {
-      rowNumber = rowNumber - 1;
-    }
+    rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await browser.pause(500);
     await $('#editName').waitForDisplayed({timeout: 200000});

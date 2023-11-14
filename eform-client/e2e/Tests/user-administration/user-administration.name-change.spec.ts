@@ -12,9 +12,9 @@ describe('User administration settings', function () {
   before(async () => {
     await loginPage.open('/');
     await loginPage.login();
-    await myEformsPage.Navbar.goToUserAdministration();
   });
   it('should set name to Foo Bar', async () => {
+    await myEformsPage.Navbar.goToUserAdministration();
     const user: UserAdministrationObject = {
       firstName: 'Foo',
       lastName: 'Bar',
