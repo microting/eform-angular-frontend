@@ -244,7 +244,7 @@ export const config: Options.Testrunner = {
    * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) ends.
    * @param {Object} test test details
    */
-  afterTest: function (test, context, { error, result, duration, passed, retries }) {
+  afterTest(test, context, { error, result, duration, passed, retries }) {
     const path = require('path');
 
     // if test passed, ignore, else take and save screenshot.
@@ -273,9 +273,9 @@ export const config: Options.Testrunner = {
 
     const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
 
-    //console.log('Saving screenshot to:', filePath);
-    //browser.saveScreenshot(filePath);
-    //console.log('Saved screenshot to:', filePath);
+    console.log('Saving screenshot to:', filePath);
+    browser.saveScreenshot(filePath);
+    console.log('Saved screenshot to:', filePath);
   },
   /**
    * Hook that gets executed after the suite has ended
