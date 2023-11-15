@@ -345,7 +345,8 @@ export class SelectableListRowObject {
 
   async openEdit() {
     await this.editBtn.click();
-    await browser.pause(1000);
+    await selectableLists.takeScreenshot();
+    await browser.pause(2000);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
     //await browser.pause(1000);
   }
