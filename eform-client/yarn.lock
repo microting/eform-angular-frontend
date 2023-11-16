@@ -182,6 +182,11 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-15.2.1.tgz#7c77a4a19942868d844372b5b3b562c0d630de1e"
   integrity sha512-LO7Am8eVCr7oh6a0VmKSL7K03CnQEQhFO7Wt/YtbfYOxVjrbwmYLwJn+wZPOT7A02t/BttOD/WXuDrOWtSMQ/Q==
 
+"@angular-eslint/bundled-angular-compiler@17.1.0":
+  version "17.1.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-17.1.0.tgz#71494f60ddb0cfabb047446a1d8a914f6a83eae4"
+  integrity sha512-Y+CN/8nQZaYjsb2b2sXbkQr0LrgBWhCzyLZ+rLfnLE60B9k4GeDt5b7z/OdSObi1xozXfqiaAZ1eXo0iQMN3JA==
+
 "@angular-eslint/eslint-plugin-template@15.2.1":
   version "15.2.1"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-15.2.1.tgz#af39f66e9d971d7f7635add9cf1a396f1766fd64"
@@ -213,12 +218,12 @@
     strip-json-comments "3.1.1"
     tmp "0.2.1"
 
-"@angular-eslint/template-parser@15.2.1":
-  version "15.2.1"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-15.2.1.tgz#dbe4978afdcea81b9d5cac3d672c20de5821dc54"
-  integrity sha512-ViCi79gC2aKJecmYLkOT+QlT5WMRNXeYz0Dr9Pr8qXzIbY0oAWE7nOT5jkXwQ9oUk+ybtGCWHma5JVJWVJsIog==
+"@angular-eslint/template-parser@17.1.0":
+  version "17.1.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-17.1.0.tgz#27b670b6ec1b1b8d1fc01a23d3ab53cc54bc1e3c"
+  integrity sha512-CTxzB3stjynngTabdO8xTkiPc6Jvo15C2fxb1pYIlDIH2LgPJJxxCHi+IAt9oJpJOPa8QjLVF9VAXE3fLKAcpg==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "15.2.1"
+    "@angular-eslint/bundled-angular-compiler" "17.1.0"
     eslint-scope "^7.0.0"
 
 "@angular-eslint/utils@15.2.1":
