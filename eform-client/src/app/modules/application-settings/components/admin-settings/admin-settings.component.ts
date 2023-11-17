@@ -58,7 +58,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
       headers: [
         {
           name: 'Authorization',
-          value: token
+          value: 'Bearer ' + token,
         }
       ],
       url: '/api/images/login-page-images',
@@ -67,7 +67,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
       headers: [
         {
           name: 'Authorization',
-          value: token
+          value: 'Bearer ' + token,
         }
       ],
       url: '/api/images/eform-images',
