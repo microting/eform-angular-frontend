@@ -105,10 +105,10 @@ export const routes: Routes = [
         path: '',
         component: ConnectionSetupComponent
       }
-    ]
+    ],
   },
   // otherwise redirect to home
-  //{ path: '**', redirectTo: '' },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
