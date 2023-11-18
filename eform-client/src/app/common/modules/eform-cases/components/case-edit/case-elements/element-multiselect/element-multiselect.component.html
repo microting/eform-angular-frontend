@@ -1,11 +1,17 @@
-<ng-container *ngFor="let item of fieldValueObj.keyValuePairList">
+<ng-container *ngFor="let item of (fieldValueObj.keyValuePairList)">
   <div class="mb-2">
     <mat-checkbox
       (click)="updateCheckedOptions(item, $event)"
       name="checkbox{{item.key}}"
       id="checkbox{{item.key}}"
-      [(ngModel)]="item.selected">
+      [(ngModel)]=item.selected>
       {{item.value}}
     </mat-checkbox>
   </div>
+<!--  <label class="md-checkbox">-->
+<!--    <input (click)="updateCheckedOptions(item, $event)" [checked]="item.selected" value="{{item.selected}}" type="checkbox"/>-->
+<!--    <span class="md-checkbox&#45;&#45;fake"></span>-->
+<!--    <div>{{item.key}} - {{item.value}} - {{item.selected}}</div>-->
+<!--  </label>-->
+
 </ng-container>
