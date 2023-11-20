@@ -87,8 +87,12 @@ describe('Main page', function () {
     await (await myEformsPage.cancelParingBtn()).click();
   });
   after(async () => {
-    await loginPage.open('/');
-    await myEformsPage.Navbar.goToMyEForms();
+    await browser.pause(1000);
+    //await loginPage.open('/');
+    //const newEFormBtn = await $('#newEFormBtn');
+    //await newEFormBtn.waitForDisplayed({timeout: 60000});
+    //await newEFormBtn.waitForClickable({timeout: 60000});
+    //await myEformsPage.Navbar.goToMyEForms();
     await (await myEformsPage.getEformsRowObjByNameEForm('test Eform')).deleteEForm();
     await myEformsPage.Navbar.goToDeviceUsersPage();
     for (let i = 0; i < users.length; i++) {

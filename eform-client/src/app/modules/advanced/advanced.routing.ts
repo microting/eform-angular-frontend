@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {UserClaimsEnum} from 'src/app/common/const';
-import {ClaimsGuard} from 'src/app/common/guards/claims.guard';
+import {ClaimsGuard, IsClaimsGuard} from 'src/app/common/guards/claims.guard';
 import {
   EntitySearchComponent,
   EntitySelectComponent,
@@ -17,61 +17,61 @@ const routes: Routes = [
   {
     path: 'units',
     component: UnitsComponent,
-    canActivate: [ClaimsGuard],
+    canActivate: [IsClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.unitsRead}
   },
   {
     path: 'sites',
     component: SitesComponent,
-    canActivate: [ClaimsGuard],
+    canActivate: [IsClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.sitesRead}
   },
   {
     path: 'workers',
     component: WorkersComponent,
-    canActivate: [ClaimsGuard],
+    canActivate: [IsClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.workersRead}
   },
   {
     path: 'entity-search',
     component: EntitySearchComponent,
-    canActivate: [ClaimsGuard],
+    canActivate: [IsClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.entitySearchRead}
   },
   {
     path: 'entity-search/edit/:id',
     component: EntityEditCreateComponent,
-    canActivate: [ClaimsGuard],
+    canActivate: [IsClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.entitySearchRead, header: 'searchable'}
   },
   {
     path: 'entity-search/create',
     component: EntityEditCreateComponent,
-    canActivate: [ClaimsGuard],
+    canActivate: [IsClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.entitySearchRead, header: 'searchable'}
   },
   {
     path: 'entity-select',
     component: EntitySelectComponent,
-    canActivate: [ClaimsGuard],
+    canActivate: [IsClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.entitySelectRead}
   },
   {
     path: 'entity-select/edit/:id',
     component: EntityEditCreateComponent,
-    canActivate: [ClaimsGuard],
+    canActivate: [IsClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.entitySelectUpdate, header: 'selectable'}
   },
   {
     path: 'entity-select/create',
     component: EntityEditCreateComponent,
-    canActivate: [ClaimsGuard],
+    canActivate: [IsClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.entitySelectUpdate, header: 'selectable'}
   },
   {
     path: 'folders',
     component: FoldersComponent,
-    canActivate: [ClaimsGuard],
+    canActivate: [IsClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.entitySelectRead}
   },
   {

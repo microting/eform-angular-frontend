@@ -1,29 +1,35 @@
 import {inject, Injectable} from '@angular/core';
 import {
-  ActivatedRouteSnapshot, CanActivateFn,
+  ActivatedRouteSnapshot, CanActivateFn, Router,
   RouterStateSnapshot,
 } from '@angular/router';
 import { UserClaimsEnum } from 'src/app/common/const';
 import { AuthStateService } from 'src/app/common/store';
-import {Observable} from 'rxjs';
+import {Observable, take} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {selectCurretnUserClaims} from 'src/app/state/auth/auth.selector';
+import {selectAuthIsAuth, selectCurretnUserClaims} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
 @Injectable()
 export class ClaimsGuard {
   private selectCurrentUserClaims$ = this.authStore.select(selectCurretnUserClaims);
+  public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
   constructor(
+    private router: Router,
     private authStore: Store
-  ) {}
+  ) {
+    console.log('ClaimsGuard - constructor');}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
+    console.log('ClaimsGuard - canActivate');
     const requiredPermission = UserClaimsEnum[route.data['requiredClaim']] as string;
     return this.checkGuards([requiredPermission]).pipe(
       map(x => {
+        console.log(requiredPermission);
+        console.log(x);
           return !!(x && requiredPermission);
         }
       ));
@@ -43,6 +49,7 @@ export class ClaimsGuard {
   }
 
   checkGuards(guards: string[]): Observable<boolean> {
+    console.log('ClaimsGuard - checkGuards');
     return this.selectCurrentUserClaims$.pipe(map(x => {
       for (const guard of guards) {
         if (x[guard]) {
@@ -55,5 +62,6 @@ export class ClaimsGuard {
 }
 
 export const IsClaimsGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
+  console.log('ClaimsGuard - IsClaimsGuard');
   return inject(ClaimsGuard).canActivate(route, state);
 }

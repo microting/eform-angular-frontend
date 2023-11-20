@@ -58,7 +58,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
       headers: [
         {
           name: 'Authorization',
-          value: token
+          value: 'Bearer ' + token,
         }
       ],
       url: '/api/images/login-page-images',
@@ -67,7 +67,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
       headers: [
         {
           name: 'Authorization',
-          value: token
+          value: 'Bearer ' + token,
         }
       ],
       url: '/api/images/eform-images',
@@ -192,6 +192,7 @@ this.languagesModel = languages.model;
     }
 
     //if (!R.equals(this.adminSettingsModel, this.previousAdminSettings)) { // TODO: fix this, it doesn't work
+    this.adminSettingsModel.siteLink = this.adminSettingsModel.sdkSettingsModel.httpServerAddress;
       this.appSettingsStateService
         .updateAdminSettings(this.adminSettingsModel)
         .subscribe((operation) => {

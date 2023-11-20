@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {UserClaimsEnum} from 'src/app/common/const';
-import {ClaimsGuard} from 'src/app/common/guards/claims.guard';
+import {ClaimsGuard, IsClaimsGuard} from 'src/app/common/guards/claims.guard';
 import {DeviceUsersPageComponent} from './components';
 
 const routes: Routes = [
   {
     path: '',
     component: DeviceUsersPageComponent,
-    canActivate: [ClaimsGuard],
+    canActivate: [IsClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.deviceUsersRead}
   }
 ];

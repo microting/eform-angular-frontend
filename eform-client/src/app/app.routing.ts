@@ -105,7 +105,7 @@ export const routes: Routes = [
         path: '',
         component: ConnectionSetupComponent
       }
-    ]
+    ],
   },
   // otherwise redirect to home
   { path: '**', redirectTo: '' },
@@ -119,4 +119,8 @@ export const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+  constructor() {
+    console.log('AppRoutingModule - constructor');
+  }
+}

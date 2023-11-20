@@ -7,7 +7,8 @@ import {GallerizeModule} from '@ngx-gallery/gallerize';
 import {TranslateModule} from '@ngx-translate/core';
 import {LightboxModule} from '@ngx-gallery/lightbox';
 import {DragulaModule} from 'ng2-dragula';
-import {NgxMaskModule} from 'ngx-mask';
+// TODO fix ngx-mask
+//import {NgxMaskModule} from 'ngx-mask';
 import {ToastrModule} from 'ngx-toastr';
 import {providers} from 'src/app/app.declarations';
 import {AppRoutingModule} from 'src/app/app.routing';
@@ -86,7 +87,7 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
     HttpClientModule,
     StoreModule.forRoot({
       appMenus: appMenuReducer.reducer,
-      authV2: authReducer.reducer,
+      auth: authReducer.reducer,
       eforms: eformReducer.reducer,
       deviceUsers: deviceUsersReducer.reducer,
       appSettings: appSettingsReducer.reducer,
@@ -111,7 +112,8 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
       positionClass: 'toast-bottom-right',
     }),
     DragulaModule.forRoot(),
-    NgxMaskModule.forRoot(),
+    // TODO fix ngx-mask
+    // NgxMaskModule.forRoot(),
     GalleryModule,
     LightboxModule,
     GallerizeModule,
@@ -145,5 +147,6 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
 })
 export class AppModule {
   constructor() {
+    console.log('AppModule - constructor');
   }
 }

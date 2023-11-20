@@ -30,6 +30,7 @@ export class AuthStateService {
     public settingsService: AppSettingsService,
     @Inject(MAT_DATE_LOCALE) private  dateLocale: BehaviorSubject<string | Locale | null>
   ) {
+    console.log('auth-state.service.ts - constructor');
   }
 
   isConnectionStringExistLoading = false;
@@ -41,6 +42,7 @@ export class AuthStateService {
   private selectCurrentUserLanguageId$ = this.authStore.select(selectCurrentUserLanguageId)
 
   login(loginInfo: LoginRequestModel) {
+    console.log('auth-state.service.ts - login');
     // this.authStore.dispatch({type: '[Auth] Authenticate', payload: loginInfo});
     // TODO: need to fix this
     // this.store = new AuthStore();

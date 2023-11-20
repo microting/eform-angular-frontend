@@ -1,6 +1,6 @@
 import loginPage from '../../Page objects/Login.page';
 import { Guid } from 'guid-typescript';
-import searchableLists from '../../Page objects/SearchableLists.page';
+import searchableLists, {SearchableListRowObject} from '../../Page objects/SearchableLists.page';
 
 const expect = require('chai').expect;
 
@@ -58,7 +58,9 @@ describe('Entity Search', function () {
   it('should edit a searchable list with multiple items', async () => {
     const newName = 'New Name';
     const newItemNames = 'f\ng\nh\ni\nj';
-    await (await searchableLists.entitySearchEditBtn()).click();
+    let rowNumber = await searchableLists.rowNum();
+    rowNumber = rowNumber - 1;
+    await (await searchableLists.entitySearchEditBtn(rowNumber)).click();
     await browser.pause(500);
     await (await $('#editName')).waitForDisplayed({ timeout: 40000 });
     await (await searchableLists.entitySearchEditNameBox()).clearValue();
@@ -81,8 +83,14 @@ describe('Entity Search', function () {
     await (await searchableLists.entitySearchEditImportItemSaveBtn()).click();
     await browser.pause(500);
     await (await searchableLists.entitySearchEditSaveBtn()).click();
-    await browser.pause(500);
-    const searchableList = await searchableLists.getFirstRowObject();
+    await browser.pause(1500);
+    rowNumber = await searchableLists.rowNum();
+    // if (rowNumber > 1) {
+    //   rowNumber = rowNumber - 1;
+    // }
+    const obj = new SearchableListRowObject();
+    const row = await obj.getRow(rowNumber);
+    const searchableList = row;
     expect(searchableList.name).equal(newName);
     await searchableList.editBtn.click();
     await browser.pause(500);

@@ -25,6 +25,7 @@ export class LocaleService {
     private translateService: TranslateService,
     private cookieService: CookieService
   ) {
+    console.log('LocaleService - constructor');
   }
 
   getDefaultLocale(): Observable<OperationDataResult<any>> {
@@ -80,6 +81,7 @@ export class LocaleService {
   // }
 
   initCookies(locale: string) {
+    console.log('LocaleService - initCookies');
     this.translateService.setDefaultLang(applicationLanguages[1].locale);
     let culture = this.buildCookieValue(applicationLanguages[1].locale);
     if (locale === applicationLanguages[0].locale) {
@@ -92,6 +94,7 @@ export class LocaleService {
   }
 
   buildCookieValue(locale: string) {
+    console.log('LocaleService - buildCookieValue');
     return 'c=' + locale + '|uic=' + locale;
   }
 

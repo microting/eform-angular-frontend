@@ -1,4 +1,29 @@
+import path from "path";
+
 export class Navbar {
+
+  public async takeScreenshot() {
+    const timestamp = new Date().toLocaleString('iso', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).replace(/[ ]/g, '--').replace(':', '-');
+
+    // get current test title and clean it, to use it as file name
+    const filename = encodeURIComponent(
+      `chrome-${timestamp}`.replace(/[/]/g, '__')
+    ).replace(/%../, '.');
+
+    const filePath = path.resolve('./', `${filename}.png`);
+
+    console.log('Saving screenshot to:', filePath);
+    await browser.saveScreenshot(filePath);
+    console.log('Saved screenshot to:', filePath);
+  }
+
   public async header() {
     const ele = await $(`#header`);
     await ele.waitForDisplayed({ timeout: 40000 });
@@ -14,8 +39,8 @@ export class Navbar {
 
   public async signOutDropdown(): Promise<WebdriverIO.Element> {
     const ele = await $(`#sign-out-dropdown`);
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    // await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -196,7 +221,10 @@ export class Navbar {
 
   public async goToUserAdministration() {
     await (await this.signOutDropdown()).click();
+    await (await this.userAdministrationBtn()).waitForDisplayed({ timeout: 5000 });
+    await (await this.userAdministrationBtn()).waitForClickable({ timeout: 5000 });
     await (await this.userAdministrationBtn()).click();
+    await browser.pause(500);
   }
 
   public async goToPasswordSettings() {

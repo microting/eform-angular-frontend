@@ -20,12 +20,14 @@ describe('Entity Search', function () {
     expect(searchableList.name).equal(name);
   });
   it('should delete the list', async () => {
+    const currentRowNum = await searchableLists.rowNum();
     await searchableLists.deleteList();
-    expect(await searchableLists.rowNum()).equal(0);
+    await browser.pause(1000);
+    expect(await searchableLists.rowNum()).equal(currentRowNum - 1);
   });
   it('should create a new searchable list with name and one item', async () => {
-    await loginPage.open('/');
-    await searchableLists.goToEntitySearchPage();
+    //await loginPage.open('/');
+    //await searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
     await searchableLists.createSearchableList_OneItem(name, itemName);
@@ -36,8 +38,8 @@ describe('Entity Search', function () {
     await (await searchableLists.entitySearchEditCancelBtn()).click();
   });
   it('should delete item from list.', async () => {
-    await loginPage.open('/');
-    await searchableLists.goToEntitySearchPage();
+    //await loginPage.open('/');
+    //await searchableLists.goToEntitySearchPage();
     await searchableLists.deleteItemFromList();
     await (await searchableLists.entitySearchEditBtn()).click();
     await (await $('#editName')).waitForDisplayed({ timeout: 40000 });
@@ -46,8 +48,8 @@ describe('Entity Search', function () {
     await searchableLists.cleanup();
   });
   it('should make a new searchable list with multiple items', async () => {
-    await loginPage.open('/');
-    await searchableLists.goToEntitySearchPage();
+    //await loginPage.open('/');
+    //await searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemNames = ['a \n', 'b\n', 'c\n', 'd\n', 'e'];
     await searchableLists.createSearchableList_MultipleItems(name, itemNames);
@@ -55,11 +57,12 @@ describe('Entity Search', function () {
     expect(searchableList.name).equal(name);
   });
   it('should delete a list with multiple items.', async () => {
-    await loginPage.open('/');
-    await searchableLists.goToEntitySearchPage();
+    //await loginPage.open('/');
+    //await searchableLists.goToEntitySearchPage();
+    const currentRowNum = await searchableLists.rowNum();
     await searchableLists.deleteList();
-    await loginPage.open('/');
-    await searchableLists.goToEntitySearchPage();
-    expect(await searchableLists.rowNum()).equal(0);
+    // await loginPage.open('/');
+    // await searchableLists.goToEntitySearchPage();
+    expect(await searchableLists.rowNum()).equal(currentRowNum - 1);
   });
 });

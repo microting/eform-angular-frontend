@@ -30,9 +30,11 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
     public settingsService: AppSettingsService,
     public router: Router,
   ) {
+    console.log('SimpleLayoutComponent - constructor');
   }
 
   ngOnInit() {
+    console.log('SimpleLayoutComponent - ngOnInit');
     this.getSettings();
     this.isDarkThemeAsync$ = this.selectIsDarkMode$.subscribe(
       (isDarkTheme) => {

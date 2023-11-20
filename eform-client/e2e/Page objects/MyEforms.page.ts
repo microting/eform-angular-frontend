@@ -12,29 +12,6 @@ class MyEformsPage extends PageWithNavbarPage {
   constructor() {
     super();
   }
-
-  public async takeScreenshot() {
-    const timestamp = new Date().toLocaleString('iso', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    }).replace(/[ ]/g, '--').replace(':', '-');
-
-    // get current test title and clean it, to use it as file name
-    const filename = encodeURIComponent(
-      `chrome-${timestamp}`.replace(/[/]/g, '__')
-    ).replace(/%../, '.');
-
-    const filePath = path.resolve('./', `${filename}.png`);
-
-    console.log('Saving screenshot to:', filePath);
-    await browser.saveScreenshot(filePath);
-    console.log('Saved screenshot to:', filePath);
-  }
-
   public async newEformBtn(): Promise<WebdriverIO.Element> {
     const el = await $('#newEFormBtn');
     await el.waitForDisplayed({ timeout: 40000 });
@@ -410,7 +387,6 @@ class MyEformsRowObject {
         await browser.pause(1000);
       }
     }
-    await myEformsPage.takeScreenshot();
     for (let i = 0; i < users.length; i++) {
       //const name = `#mat-checkbox-${i+2} > label > div.mat-checkbox-inner-container`;
       const checkbox = await $(`#checkbox${users[i].siteId}`);

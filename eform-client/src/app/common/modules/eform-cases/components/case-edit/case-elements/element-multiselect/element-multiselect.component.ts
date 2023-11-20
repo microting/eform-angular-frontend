@@ -9,6 +9,7 @@ import {FieldValueDto} from 'src/app/common/models';
 })
 export class ElementMultiselectComponent implements OnInit {
   fieldValueObj: FieldValueDto = new FieldValueDto();
+  firstTime: boolean = true;
 
   @Input()
   get fieldValue() {
@@ -30,11 +31,24 @@ export class ElementMultiselectComponent implements OnInit {
     if (!item || !e.target) {
       return;
     }
-    item.selected = !!e.target.checked;
-    this.refreshValue();
+    const str = [];
+    this.fieldValueObj.keyValuePairList.forEach(x => {
+      if (x.key === item.key && !item.selected) {
+        str.push(x.key);
+      }
+      if (x.key !== item.key && x.selected) {
+        str.push(x.key);
+      }
+    });
+    this.fieldValueObj.value = str.join('|');
+    this.fieldValue = this.fieldValueObj;
   }
 
   initCheckBoxes() {
+    if (!this.firstTime) {
+      return;
+    }
+    this.firstTime = false
     const str = this.fieldValueObj.value;
     if (!str) {
       return;
@@ -47,15 +61,5 @@ export class ElementMultiselectComponent implements OnInit {
 
   arrayContains(needle, arrhaystack) {
     return (arrhaystack.indexOf(needle) > -1);
-  }
-
-  refreshValue() {
-    const str = [];
-    this.fieldValueObj.keyValuePairList.forEach(x => {
-      if (x.selected) {
-        str.push(x.key);
-      }
-    });
-    this.fieldValueObj.value = str.join('|');
   }
 }
