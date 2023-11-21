@@ -11,7 +11,6 @@ import {TranslateModule} from '@ngx-translate/core';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
 import {EformDocxReportRouting} from './eform-docx-report.routing';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -20,6 +19,7 @@ import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -29,22 +29,22 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     EformDocxReportImagesComponent,
     EformDocxReportHeaderEditorComponent,
   ],
-    imports: [
-        CommonModule,
-        TranslateModule,
-        EformSharedModule,
-        RouterModule,
-        ReactiveFormsModule,
-        OwlDateTimeModule,
-        EformDocxReportRouting,
-        FormsModule,
-        MatButtonModule,
-        MatInputModule,
-        MatIconModule,
-        MtxGridModule,
-        MatDialogModule,
-        MatCardModule,
-        MatTooltipModule,
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    EformSharedModule,
+    RouterModule,
+    ReactiveFormsModule,
+    EformDocxReportRouting,
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+    MtxGridModule,
+    MatDialogModule,
+    MatCardModule,
+    MatTooltipModule,
+    MatDatepickerModule,
+  ],
 })
 export class EformDocxReportModule {}

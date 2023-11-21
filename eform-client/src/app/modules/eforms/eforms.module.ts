@@ -17,7 +17,6 @@ import {
   EformUploadZipModalComponent,
   EformDuplicateConfirmModalComponent,
 } from './components';
-import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
 import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
@@ -42,7 +41,6 @@ import {MatChipsModule} from '@angular/material/chips';
         FileUploadModule,
         FormsModule,
         TranslateModule.forChild(),
-        OwlDateTimeModule,
         EformSharedTagsModule,
         MatDatepickerModule,
         MatInputModule,

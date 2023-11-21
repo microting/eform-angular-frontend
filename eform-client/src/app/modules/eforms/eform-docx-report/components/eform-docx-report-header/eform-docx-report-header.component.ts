@@ -1,15 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { EformDocxReportGenerateModel } from 'src/app/common/models';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
-import { LocaleService } from 'src/app/common/services';
-import { format } from 'date-fns';
-import { AuthStateService } from 'src/app/common/store';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {EformDocxReportGenerateModel} from 'src/app/common/models';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {format} from 'date-fns';
 import {MatIconRegistry} from '@angular/material/icon';
 import {WordIcon} from 'src/app/common/const';
 import {DomSanitizer} from '@angular/platform-browser';
-import {selectCurrentUserLocale} from "src/app/state/auth/auth.selector";
-import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-eform-docx-report-header',
@@ -24,26 +19,18 @@ export class EformDocxReportHeaderComponent implements OnInit {
   @Input() range: Date[];
   @Input() templateId: number;
   generateForm: FormGroup;
-  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
   constructor(
-    dateTimeAdapter: DateTimeAdapter<any>,
-    private localeService: LocaleService,
-    private authStore: Store,
-    private formBuilder: FormBuilder,
-    authStateService: AuthStateService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
   ) {
     iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(WordIcon));
-    this.selectCurrentUserLocale$.subscribe((locale) => {
-      dateTimeAdapter.setLocale(locale);
-    });
   }
 
   ngOnInit() {
-    this.generateForm = this.formBuilder.group({
-      dateRange: ['', Validators.required],
+    this.generateForm = new FormGroup({
+      startDate: new FormControl<Date | null>(null, Validators.required),
+      endDate: new FormControl<Date | null>(null, Validators.required),
     });
   }
 
@@ -57,10 +44,10 @@ export class EformDocxReportHeaderComponent implements OnInit {
     this.downloadReport.emit(model);
   }
 
-  private extractData(formValue: any): EformDocxReportGenerateModel {
+  private extractData(formValue: { startDate: Date, endDate: Date }): EformDocxReportGenerateModel {
     return new EformDocxReportGenerateModel({
-      dateFrom: format(formValue.dateRange[0], 'yyyy-MM-dd'),
-      dateTo: format(formValue.dateRange[1], 'yyyy-MM-dd'),
+      dateFrom: format(formValue.startDate, 'yyyy-MM-dd'),
+      dateTo: format(formValue.endDate, 'yyyy-MM-dd'),
       templateId: this.templateId,
     });
   }
