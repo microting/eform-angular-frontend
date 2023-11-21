@@ -3225,7 +3225,7 @@
     expect-webdriverio "^4.2.5"
     webdriverio "8.20.4"
 
-"@wdio/globals@^8.23.1":
+"@wdio/globals@8.23.3", "@wdio/globals@^8.23.1":
   version "8.23.3"
   resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-8.23.3.tgz#fc6ef4c98817d560265bc2c5ba5a4b757c04dbdb"
   integrity sha512-pmsR82CvbQu2zonwsIblsvNv+wOL0hCm4eJmCzLEMQ9WBB36kO28im8B/itsh/XKzqvQ1aidhCUdSSHFwFwZsQ==
@@ -3233,16 +3233,16 @@
     expect-webdriverio "^4.5.1"
     webdriverio "8.23.3"
 
-"@wdio/local-runner@8.20.5":
-  version "8.20.5"
-  resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-8.20.5.tgz#61caeb03a42e17b5651a3212d9bd3c6e34c75bc3"
-  integrity sha512-lm5eyirDiSuxLkwe1fkMXjPd54Ortp5i8wfJPlAImyG9fxU5CY8D9V1bkjpDqOkd4RLmUk1z4mp9gJWghrAd0Q==
+"@wdio/local-runner@8.23.3":
+  version "8.23.3"
+  resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-8.23.3.tgz#e86ac4e27822489cd0d1da5cce6fbac94b107abf"
+  integrity sha512-ELiD+zWR7PxvV+kIjnlIh2pUZ2dWSld7c6XeKff/e+YLnhc3AG7+/b3ml+JhLrtQqFt6X43V9IV9lfbNRiHWoQ==
   dependencies:
     "@types/node" "^20.1.0"
     "@wdio/logger" "8.16.17"
-    "@wdio/repl" "8.10.1"
-    "@wdio/runner" "8.20.5"
-    "@wdio/types" "8.20.0"
+    "@wdio/repl" "8.23.1"
+    "@wdio/runner" "8.23.3"
+    "@wdio/types" "8.23.1"
     async-exit-hook "^2.0.1"
     split2 "^4.1.0"
     stream-buffers "^3.0.2"
@@ -3326,22 +3326,22 @@
     diff "^5.0.0"
     object-inspect "^1.12.0"
 
-"@wdio/runner@8.20.5":
-  version "8.20.5"
-  resolved "https://registry.yarnpkg.com/@wdio/runner/-/runner-8.20.5.tgz#71d79bfca7261161b6acd5be75856c422a119e23"
-  integrity sha512-JmH9995lI4FB95vQ2/l4oAJ3zoo49PIhZutNcwu98o2DDFWPxSGsOPRKI/B5u5OvJ0OkK0AzcN6XdJAfAPZSfA==
+"@wdio/runner@8.23.3":
+  version "8.23.3"
+  resolved "https://registry.yarnpkg.com/@wdio/runner/-/runner-8.23.3.tgz#86f90dae5e48bb93085a41e6b665006f20724c21"
+  integrity sha512-vbSNfEvgMcDdWgBoRSo2GRiV8ccsh5QJYP8b5FfRoHBAvC4OZV6ZVx9Xzh7QsEfSaXXA9G/vaUGX0PPrS0gmgQ==
   dependencies:
     "@types/node" "^20.1.0"
-    "@wdio/config" "8.20.3"
-    "@wdio/globals" "8.20.5"
+    "@wdio/config" "8.23.1"
+    "@wdio/globals" "8.23.3"
     "@wdio/logger" "8.16.17"
-    "@wdio/types" "8.20.0"
-    "@wdio/utils" "8.20.3"
+    "@wdio/types" "8.23.1"
+    "@wdio/utils" "8.23.1"
     deepmerge-ts "^5.0.0"
-    expect-webdriverio "^4.2.5"
+    expect-webdriverio "^4.5.1"
     gaze "^1.1.2"
-    webdriver "8.20.4"
-    webdriverio "8.20.4"
+    webdriver "8.23.1"
+    webdriverio "8.23.3"
 
 "@wdio/schematics@1.2.1":
   version "1.2.1"
