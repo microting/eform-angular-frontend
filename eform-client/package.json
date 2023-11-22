@@ -6,6 +6,7 @@
     "start": "ng serve --proxy-config proxy.config.json",
     "start-port": "ng serve --port 4300 --proxy-config proxy.config.json",
     "build": "ng build",
+    "sentrysourcemap": "yarn sentry:sourcemaps",
     "test": "./node_modules/.bin/wdio wdio.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
     "test2": "wdio wdio-step2.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
     "testheadless": "./node_modules/.bin/wdio wdio-headless.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
@@ -42,7 +43,8 @@
     "lint": "ng lint eform-angular",
     "e2e": "ng e2e",
     "run-cypress": "npx cypress run --browser chrome",
-    "open-cypress": "npx cypress open"
+    "open-cypress": "npx cypress open",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org microting-as --project frontend ./dist && sentry-cli sourcemaps upload --org microting-as --project frontend ./dist"
   },
   "prettier": {
     "singleQuote": true
@@ -73,6 +75,7 @@
     "@ngx-gallery/lightbox": "4.0.3",
     "@ngx-translate/core": "14.0.0",
     "@sentry/angular-ivy": "^7.81.1",
+    "@sentry/cli": "^2.21.5",
     "@swimlane/ngx-charts": "20.4.1",
     "@types/dragula": "3.7.1",
     "@types/file-saver": "2.0.5",

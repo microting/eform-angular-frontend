@@ -2,8 +2,10 @@ FROM node:18-bookworm-slim as node-env
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY eform-client ./
+RUN apt-get update
+RUN apt-get -y -q install ca-certificates
 RUN yarn install
-RUN npm run build
+RUN yarn build
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0-bookworm-slim AS build-env
 WORKDIR /app
