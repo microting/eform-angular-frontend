@@ -30,7 +30,6 @@ export class AppComponent {
     ngTitle: Title,
     titleService: TitleService,
   ) {
-    // http://localhost:4200/auth/restore-password-confirmation?userId=1&code=CfDJ8ChPLcxuk45Lmzyewz%2fSttc6c0L9YlEIhf5rQgNonMpYQwaWr4Q%2bzHRh4c8dBOFBY41MmehxKE%2bdDPS%2fkMu07yrt536Egt%2f3McuMwqMOa3YXCixKfxrJGroJ%2bXSoSQJCmVps14kD02qv4H5%2b3AvOCxBHSi7u4B7lU4QfxR4OIeV6%2fCpjBCn1Ea%2fU%2bPufy5g%2bAA%3d%3d
     router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         console.log('NavigationStart', event);
