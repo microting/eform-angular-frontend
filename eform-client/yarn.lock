@@ -2661,10 +2661,10 @@
     "@types/d3-transition" "*"
     "@types/d3-zoom" "*"
 
-"@types/dragula@3.7.1":
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/@types/dragula/-/dragula-3.7.1.tgz#79940c2b9a9f0bc5f7d0c486f2cb56651f73170c"
-  integrity sha512-hbMEG5+wZEwV6NK4cbexldLWEvYNox8PywM9ICIeCTM99g8nJxccE3C8vvl66TCfnN+R8ioNdOrHWJT+5X0pvw==
+"@types/dragula@3.7.4":
+  version "3.7.4"
+  resolved "https://registry.yarnpkg.com/@types/dragula/-/dragula-3.7.4.tgz#b374f6a2a4fcf4b885581a783cfd9a010510fd67"
+  integrity sha512-cjg5MNq8CnXyJTScWM2t9fc0FC77rrBxYBs6/R3FiwW9NOTdHPB2nJq52I0tfxiBnhFb451S2j5ok4wW7sKmvA==
 
 "@types/dragula@^2.1.34":
   version "2.1.39"
