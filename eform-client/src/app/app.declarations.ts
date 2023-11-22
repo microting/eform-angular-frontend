@@ -61,6 +61,9 @@ import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {EformDateFnsDateAdapter} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter';
 import {BehaviorSubject} from 'rxjs';
 import {EFORM_MAT_DATEFNS_LOCALES} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-locales';
+import {APP_INITIALIZER, ErrorHandler} from '@angular/core';
+import * as Sentry from '@sentry/angular-ivy';
+import {Router} from '@angular/router';
 // Guards
 
 export let providers = [
@@ -117,6 +120,21 @@ export let providers = [
     },
   },
   {provide: MAT_DATE_LOCALE, useValue: new BehaviorSubject(null)},
+  {
+    provide: ErrorHandler,
+    useValue: Sentry.createErrorHandler({
+      showDialog: false,
+    }),
+  }, {
+    provide: Sentry.TraceService,
+    deps: [Router],
+  },
+  {
+    provide: APP_INITIALIZER,
+    useFactory: () => () => {},
+    deps: [Sentry.TraceService],
+    multi: true,
+  },
   AuthStateService,
   AppMenuStateService,
   // Helpers

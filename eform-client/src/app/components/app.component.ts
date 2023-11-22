@@ -34,42 +34,48 @@ export class AppComponent {
       if (event instanceof NavigationStart) {
         console.log('NavigationStart', event);
         if (event.id === 1) {
-        const accessToken = JSON.parse(localStorage.getItem('token'));
-        if (accessToken === null) {
-          console.log('NavigationStart - accessToken === null');
-          this.router.navigate(['/auth']).then();
-        } else {
-          console.log('NavigationStart - accessToken !== null');
-          const accessTokenString = accessToken.token.accessToken;
-          const accessTokenRole = accessToken.token.role;
-          const accessTokenId = accessToken.token.id;
-          this.authStore.dispatch({
-            type: '[Auth] Refresh Token', payload: {
-              token:
-                {
-                  accessToken: accessTokenString,
-                  tokenType: null,
-                  expiresIn: null,
-                  role: accessTokenRole,
-                  id: accessTokenId
+          if (event.url.includes('auth')) {
+            console.log('NavigationStart - auth');
+            // this.authStore.dispatch({type: '[Auth] Logout'});
+            // this.router.navigate(['/auth']).then();
+          } else {
+            const accessToken = JSON.parse(localStorage.getItem('token'));
+            if (accessToken === null) {
+              console.log('NavigationStart - accessToken === null');
+              this.router.navigate(['/auth']).then();
+            } else {
+              console.log('NavigationStart - accessToken !== null');
+              const accessTokenString = accessToken.token.accessToken;
+              const accessTokenRole = accessToken.token.role;
+              const accessTokenId = accessToken.token.id;
+              this.authStore.dispatch({
+                type: '[Auth] Refresh Token', payload: {
+                  token:
+                    {
+                      accessToken: accessTokenString,
+                      tokenType: null,
+                      expiresIn: null,
+                      role: accessTokenRole,
+                      id: accessTokenId
+                    }
                 }
-            }
-          });
-          this.selectIsAuth$.pipe(take(1)).subscribe((isAuth) => {
-            if (isAuth) {
-              zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
-                //this.isUserSettingsLoading = false;
-                this.authStore.dispatch({
-                  type: '[Auth] Update User Info',
-                  payload: {userSettings: userSettings, userClaims: userClaims}
-                })
-                this.authStateService.setLocale();
-                this.translateService.use(userSettings.model.locale);
-                this.router.navigate(event.url.split('/')).then();
+              });
+              this.selectIsAuth$.pipe(take(1)).subscribe((isAuth) => {
+                if (isAuth) {
+                  zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+                    //this.isUserSettingsLoading = false;
+                    this.authStore.dispatch({
+                      type: '[Auth] Update User Info',
+                      payload: {userSettings: userSettings, userClaims: userClaims}
+                    })
+                    this.authStateService.setLocale();
+                    this.translateService.use(userSettings.model.locale);
+                    this.router.navigate(event.url.split('/')).then();
+                  });
+                }
               });
             }
-          });
-        }
+          }
         }
       }
     });
