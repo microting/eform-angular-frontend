@@ -1,17 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import {
-  OWL_DATE_TIME_FORMATS,
-  OwlDateTimeModule,
-  OwlNativeDateTimeModule,
-} from '@danielmoncada/angular-datetime-picker';
 import { GalleryModule } from '@ngx-gallery/core';
 import { GallerizeModule } from '@ngx-gallery/gallerize';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import { TranslateModule } from '@ngx-translate/core';
-import { MY_MOMENT_FORMATS } from 'src/app/common/helpers';
 import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {
@@ -55,30 +49,29 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
-    imports: [
-        TranslateModule,
-        EformSharedModule,
-        CommonModule,
-        EformImportedModule,
-        GallerizeModule,
-        LightboxModule,
-        GalleryModule,
-        OwlDateTimeModule,
-        OwlNativeDateTimeModule,
-        FormsModule,
-        RouterModule,
-        MatSortModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        MatRadioModule,
-        MatTooltipModule,
-        MatDialogModule,
-        MatInputModule,
-        MtxSelectModule,
-        MatDatepickerModule,
-    ],
+  imports: [
+    TranslateModule,
+    EformSharedModule,
+    CommonModule,
+    EformImportedModule,
+    GallerizeModule,
+    LightboxModule,
+    GalleryModule,
+    FormsModule,
+    RouterModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatRadioModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatInputModule,
+    MtxSelectModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     CaseEditNavComponent,
     CaseEditSwitchComponent,
@@ -109,9 +102,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     DeletePictureDialogComponent,
     AddPictureDialogComponent,
   ],
-  providers: [
-    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
-  ],
+  providers: [],
   exports: [
     CaseEditNavComponent,
     CaseEditSwitchComponent,

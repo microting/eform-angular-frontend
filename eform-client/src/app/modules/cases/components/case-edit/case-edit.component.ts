@@ -5,9 +5,8 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { UserClaimsEnum } from 'src/app/common/const';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 import {
   CaseEditRequest,
   ReplyElementDto,
@@ -15,21 +14,17 @@ import {
   ReplyRequest,
   TemplateDto, ElementDto, DataItemDto,
 } from 'src/app/common/models';
-import {CaseEditConfirmationComponent, CaseEditElementComponent} from 'src/app/common/modules/eform-cases/components';
+import {CaseEditElementComponent} from 'src/app/common/modules/eform-cases/components';
 import {
   CasesService,
   EFormService,
   SecurityGroupEformsPermissionsService,
 } from 'src/app/common/services';
-import { AuthStateService } from 'src/app/common/store';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import * as R from 'ramda';
 import {ToastrService} from 'ngx-toastr';
 import {MatDialog} from '@angular/material/dialog';
-import {Overlay} from '@angular/cdk/overlay';
-import {dialogConfigHelper} from 'src/app/common/helpers';
-import {selectCurrentUserClaimsCaseUpdate, selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
+import {selectCurrentUserClaimsCaseUpdate} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
 @AutoUnsubscribe()
@@ -58,21 +53,17 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   queryParamsSun$: Subscription;
   getSingleEformSun$: Subscription;
   onConfirmationPressedSub$: Subscription;
-  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
   public selectCaseUpdate$ = this.authStore.select(selectCurrentUserClaimsCaseUpdate);
 
   constructor(
     private authStore: Store,
-    dateTimeAdapter: DateTimeAdapter<any>,
     activateRoute: ActivatedRoute,
     private casesService: CasesService,
     private eFormService: EFormService,
     private router: Router,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-    private authStateService: AuthStateService,
     private toastrService: ToastrService,
     private dialog: MatDialog,
-    private overlay: Overlay,
   ) {
     this.activatedRouteSub$ = activateRoute.params.subscribe((params) => {
       this.id = +params['id'];
@@ -81,17 +72,14 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     this.queryParamsSun$ = activateRoute.queryParams.subscribe((params) => {
       this.reverseRoute = params['reverseRoute'];
     });
-    this.selectCurrentUserLocale$.subscribe((locale) => {
-      dateTimeAdapter.setLocale(locale);
-    });
-    // dateTimeAdapter.setLocale(authStateService.currentUserLocale);
   }
 
   ngOnInit() {
     this.loadTemplateInfo();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+  }
 
   loadCase() {
     if (!this.id || this.id === 0) {
@@ -121,18 +109,18 @@ export class CaseEditComponent implements OnInit, OnDestroy {
             if (dataItem.elementList !== undefined || dataItem.dataItemList !== undefined) {
               dataItem = dataItem as ElementDto;
               // R.set(R.lensPath([...pathForLens, 'extraPictures']), dataItem.extraPictures, this.replyElement);
-              if(dataItem.elementList) {
+              if (dataItem.elementList) {
                 for (let i = 0; i < dataItem.elementList.length; i++) {
                   fn([...pathForLens, 'elementList', i]);
                 }
               }
-              if(dataItem.dataItemList) {
+              if (dataItem.dataItemList) {
                 for (let i = 0; i < dataItem.dataItemList.length; i++) {
                   fn([...pathForLens, 'dataItemList', i]);
                 }
               }
             } else { // @ts-ignore
-              if(dataItem.fieldType !== undefined){
+              if (dataItem.fieldType !== undefined) {
                 dataItem = dataItem as DataItemDto;
                 if (dataItem.fieldType === 'FieldContainer') {
                   for (let i = 0; i < dataItem.dataItemList.length; i++) {
@@ -146,8 +134,8 @@ export class CaseEditComponent implements OnInit, OnDestroy {
                 }
               }
             }
-          }
-          for (let i = 0; i < operation.model.elementList.length; i++){
+          };
+          for (let i = 0; i < operation.model.elementList.length; i++) {
             fn(['elementList', i]);
           }
         }
@@ -155,7 +143,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   }
 
   saveCase(navigateToPosts?: boolean) {
-    if(this.currentTemplate.isDoneAtEditable && !this.replyElement.doneAt){
+    if (this.currentTemplate.isDoneAtEditable && !this.replyElement.doneAt) {
       this.toastrService.error('Date is required.', 'Error');
       return;
     }

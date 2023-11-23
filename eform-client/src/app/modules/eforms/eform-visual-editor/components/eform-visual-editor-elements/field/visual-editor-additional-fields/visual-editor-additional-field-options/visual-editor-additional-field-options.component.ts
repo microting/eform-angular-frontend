@@ -1,16 +1,16 @@
-import {Component, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {
   CommonTranslationsModel,
   EformVisualEditorFieldModel, LanguagesModel,
 } from 'src/app/common/models';
 import * as R from 'ramda';
-import { MtxGridColumn } from '@ng-matero/extensions/grid';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Overlay} from '@angular/cdk/overlay';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -32,10 +32,11 @@ export class VisualEditorAdditionalFieldOptionsComponent
     }
     return this.appLanguages.languages.filter((x) => x.isActive);
   }
+
   options: string;
   tableHeaders: MtxGridColumn[] = [
-    { header: this.translateService.stream('Name'), field: 'name' },
-    { header: this.translateService.stream('Actions'), field: 'actions' },
+    {header: this.translateService.stream('Name'), field: 'name'},
+    {header: this.translateService.stream('Actions'), field: 'actions'},
   ];
   visualEditorAdditionalFieldOptionEditComponentAfterClosedSub$: Subscription;
   visualEditorAdditionalFieldOptionDeleteComponentAfterClosedSub$: Subscription;
@@ -44,9 +45,11 @@ export class VisualEditorAdditionalFieldOptionsComponent
     private dialog: MatDialog,
     private overlay: Overlay,
     private translateService: TranslateService,
-    ) {}
+  ) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   isLanguageSelected(languageId: number): boolean {
     const language = this.selectedLanguages.some((x) => x === languageId);
@@ -136,7 +139,7 @@ export class VisualEditorAdditionalFieldOptionsComponent
   getLanguageTooltip() {
     return R.join(
       ', ',
-      R.map((x) => x.text, this.languages)
+      R.map((x) => x.name, this.languages)
     );
   }
 
@@ -149,7 +152,8 @@ export class VisualEditorAdditionalFieldOptionsComponent
     } translations: ${this.getLanguageTooltip()}`;
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+  }
 }
 
 @Component({
@@ -188,8 +192,10 @@ export class VisualEditorAdditionalFieldOptionsComponent
 export class VisualEditorAdditionalFieldOptionEditComponent {
   constructor(
     public dialogRef: MatDialogRef<VisualEditorAdditionalFieldOptionEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public fieldOptionForEdit = { selectedLanguage: 0, name: '', indexOption: 0, }
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public fieldOptionForEdit = {selectedLanguage: 0, name: '', indexOption: 0,}
+  ) {
+  }
+
   hide(result = false) {
     this.dialogRef.close({result: result, model: result ? this.fieldOptionForEdit : null});
   }
@@ -201,7 +207,8 @@ export class VisualEditorAdditionalFieldOptionEditComponent {
     <div mat-dialog-title>
       {{ 'Are you sure you want to delete it' | translate }}?
     </div>
-    <div mat-dialog-content><b class="text-warn">{{'If you delete one translation, you will delete the option completely' | translate}}</b></div>
+    <div mat-dialog-content><b class="text-warn">{{'If you delete one translation, you will delete the option completely' | translate}}</b>
+    </div>
     <div mat-dialog-actions class="d-flex flex-row justify-content-end">
       <button
         mat-raised-button
@@ -225,7 +232,9 @@ export class VisualEditorAdditionalFieldOptionDeleteComponent {
   constructor(
     public dialogRef: MatDialogRef<VisualEditorAdditionalFieldOptionDeleteComponent>,
     @Inject(MAT_DIALOG_DATA) public indexOptionForDelete: number,
-  ) {}
+  ) {
+  }
+
   hide(result = false) {
     this.dialogRef.close({result: result, model: result ? this.indexOptionForDelete : null});
   }

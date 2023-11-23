@@ -1,10 +1,7 @@
 import { Component, Input} from '@angular/core';
-import { format } from 'date-fns';
+import {format, set} from 'date-fns';
 import { FieldValueDto } from 'src/app/common/models';
-import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
-import {AuthStateService} from 'src/app/common/store';
-import {selectCurrentUserLocale, selectIsDarkMode} from 'src/app/state/auth/auth.selector';
-import {Store} from '@ngrx/store';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -14,16 +11,8 @@ import {Store} from '@ngrx/store';
 })
 export class ElementDateComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();
-  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
-  constructor(
-    private authStore: Store,
-    dateTimeAdapter: DateTimeAdapter<any>, private authStateService: AuthStateService
-  ) {
-    this.selectCurrentUserLocale$.subscribe((locale) => {
-      dateTimeAdapter.setLocale(locale);
-    });
-    // dateTimeAdapter.setLocale(authStateService.currentUserLocale);
+  constructor() {
   }
 
   @Input()
@@ -35,7 +24,17 @@ export class ElementDateComponent {
     this.fieldValueObj = val;
   }
 
-  onDateSelected(e: any) {
-    this.fieldValueObj.value = format(e.value, 'yyyy-MM-dd');
+  onDateSelected(e: MatDatepickerInputEvent<any, any>) {
+    let date = e.value;
+    date = format(set(date, {
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      milliseconds: 0,
+      date: date.getDate(),
+      year: date.getFullYear(),
+      month: date.getMonth(),
+    }), 'yyyy-MM-dd');
+    this.fieldValueObj.value = date;
   }
 }

@@ -7,7 +7,7 @@ import {
   loadAuthSuccess,
   refreshToken, updateCurrentUserLocaleAndDarkTheme,
   updateUserInfo
-} from 'src/app/state/auth/auth.actions';
+} from './auth.actions';
 
 export interface AuthState {
   token: {
