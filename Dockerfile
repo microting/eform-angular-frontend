@@ -1,11 +1,14 @@
 FROM node:18-bookworm-slim as node-env
+
 WORKDIR /app
+ARG SENTRY_AUTH_TOKEN
 ENV PATH /app/node_modules/.bin:$PATH
 COPY eform-client ./
 RUN apt-get update
 RUN apt-get -y -q install ca-certificates
 RUN yarn install
 RUN yarn build
+RUN yarn sentrysourcemap
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0-bookworm-slim AS build-env
 WORKDIR /app
