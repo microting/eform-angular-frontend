@@ -50,6 +50,7 @@ export const _casesReducer = createReducer(
   on(updateCasesFilters, (state, {payload}) => ({
     ...state,
     filters: {
+      ...state.filters,
       nameFilter: payload.filters.nameFilter,
       tagIds: payload.filters.tagIds,
     },

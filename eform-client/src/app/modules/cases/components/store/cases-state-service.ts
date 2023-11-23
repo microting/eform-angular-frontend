@@ -115,7 +115,14 @@ export class CasesStateService {
     );
     this.store.dispatch({
       type: '[Cases] Update Cases Pagination', payload: {
-        pagination: {sort: localPageSettings.sort, isSortDsc: localPageSettings.isSortDsc}
+        pagination: {
+          offset: currentPagination.offset,
+          pageSize: currentPagination.pageSize,
+          pageIndex: currentPagination.pageIndex,
+          sort: localPageSettings.sort,
+          isSortDsc: localPageSettings.isSortDsc,
+          total: currentPagination.total,
+        }
       }
     });
   }
