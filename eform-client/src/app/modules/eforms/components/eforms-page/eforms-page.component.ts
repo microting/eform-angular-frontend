@@ -36,7 +36,11 @@ import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import { TranslateService } from '@ngx-translate/core';
-import {selectCurrentUserClaims, selectEformAllowManagingEformTags} from 'src/app/state/auth/auth.selector';
+import {
+  selectCurrentUserClaims,
+  selectCurrentUserClaimsEformsCreate, selectCurrentUserClaimsEformsReadTags,
+  selectEformAllowManagingEformTags
+} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 import {
   selectEformsIsSortDsc,
@@ -78,6 +82,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   eformRemoveEformModalComponentAfterClosedSub$: Subscription;
   private selectCurrentUserClaims$ = this.store.select(selectCurrentUserClaims);
   public selectEformAllowManagingEformTags$ = this.store.select(selectEformAllowManagingEformTags)
+  public selectCurrentUserClaimsEformsCreate$ = this.store.select(selectCurrentUserClaimsEformsCreate);
+  public selectCurrentUserClaimsEformsReadTags$ = this.store.select(selectCurrentUserClaimsEformsReadTags);
   public selectEformsTagIds$ = this.store.select(selectEformsTagIds);
   public selectEformsNameFilter$ = this.store.select(selectEformsNameFilter);
   public selectEformsSort$ = this.store.select(selectEformsSort);
