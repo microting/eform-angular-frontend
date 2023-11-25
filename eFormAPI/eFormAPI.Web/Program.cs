@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Runtime.InteropServices;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 using Sentry;
 
@@ -417,6 +418,26 @@ public class Program
                 var contextFactory = new BaseDbContextFactory();
                 if (_defaultConnectionString != "...")
                 {
+                    string pattern = @"Database=(\d+)_Angular;";
+                    Match match = Regex.Match(_defaultConnectionString!, pattern);
+
+                    if (match.Success)
+                    {
+                        string numberString = match.Groups[1].Value;
+                        int number = int.Parse(numberString);
+                        SentrySdk.ConfigureScope(scope =>
+                        {
+                            scope.SetTag("customerNo", number.ToString());
+                            Console.WriteLine("customerNo: " + number);
+                            scope.SetTag("osVersion", Environment.OSVersion.ToString());
+                            Console.WriteLine("osVersion: " + Environment.OSVersion);
+                            scope.SetTag("osArchitecture", RuntimeInformation.OSArchitecture.ToString());
+                            Console.WriteLine("osArchitecture: " + RuntimeInformation.OSArchitecture);
+                            scope.SetTag("osName", RuntimeInformation.OSDescription);
+                            Console.WriteLine("osName: " + RuntimeInformation.OSDescription);
+                        });
+                    }
+
                     using var dbContext = contextFactory.CreateDbContext(new[] {_defaultConnectionString});
                     foreach (var plugin in EnabledPlugins)
                     {
