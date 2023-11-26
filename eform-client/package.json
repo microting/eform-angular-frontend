@@ -44,7 +44,7 @@
     "e2e": "ng e2e",
     "run-cypress": "npx cypress run --browser chrome",
     "open-cypress": "npx cypress open",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org microting-as --project frontend ./dist && sentry-cli sourcemaps upload --org microting-as --project frontend ./dist"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org microting-as --project angular-frontend ./dist && sentry-cli sourcemaps upload --org microting-as --project angular-frontend ./dist"
   },
   "prettier": {
     "singleQuote": true
