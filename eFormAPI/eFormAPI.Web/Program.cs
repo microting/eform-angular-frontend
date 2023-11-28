@@ -296,7 +296,7 @@ public class Program
                             dbContext.EformPlugins.Update(eformPlugin);
                             await dbContext.SaveChangesAsync();
 
-                            var pluginMenu = pluginObject.GetNavigationMenu(scope.ServiceProvider);
+                            var pluginMenu = pluginObject.GetNavigationMenu(scope.ServiceProvider).OrderBy(x => x.Position).ToList();
 
                             // Load to database all navigation menu from plugin by id
                             var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, pluginId);
