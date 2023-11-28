@@ -213,7 +213,7 @@ public class PluginsManagementService : IPluginsManagementService
                 _localizationService.GetString("PluginNotFound"));
         }
 
-        var pluginMenu = plugin.GetNavigationMenu(_serviceProvider);
+        var pluginMenu = plugin.GetNavigationMenu(_serviceProvider).OrderBy(x => x.Position).ToList();
 
         // get all menu templates from plugin
         var menuTemplatesFromPlugin = new List<PluginMenuTemplateModel>();
@@ -354,7 +354,7 @@ public class PluginsManagementService : IPluginsManagementService
                 _localizationService.GetString("PluginNotFound"));
         }
 
-        var pluginMenu = plugin.GetNavigationMenu(_serviceProvider);
+        var pluginMenu = plugin.GetNavigationMenu(_serviceProvider).OrderBy(x => x.Position).ToList();
 
         // Load to database all navigation menu from plugin by id
         var pluginMenuItemsLoader = new PluginMenuItemsLoader(_dbContext, pluginId);
