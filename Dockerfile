@@ -8,7 +8,7 @@ RUN apt-get update
 RUN apt-get -y -q install ca-certificates
 RUN yarn install
 RUN yarn build
-RUN yarn sentrysourcemap
+RUN if [ -n "$SENTRY_AUTH_TOKEN" ]; then yarn sentrysourcemap; else echo "SENTRY_AUTH_TOKEN is not set"; fi
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0-bookworm-slim AS build-env
 WORKDIR /app
