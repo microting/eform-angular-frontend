@@ -370,12 +370,19 @@ public class Program
 
     private static IWebHost BuildWebHost(string[] args)
     {
+        Console.WriteLine("BuildWebHost");
+        // print all args
+        foreach (var arg in args)
+        {
+            Console.WriteLine("arg: " + arg);
+        }
         var defaultConfig = new ConfigurationBuilder()
             .AddCommandLine(args)
             .AddEnvironmentVariables(prefix: "ASPNETCORE_")
             .Build();
 
         Environment.SetEnvironmentVariable("API_KEY", defaultConfig["api-key"]);
+        Console.WriteLine("API_KEY: " + defaultConfig["api-key"]);
 
 
         var port = defaultConfig.GetValue("port", 5000);
