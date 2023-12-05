@@ -11,8 +11,8 @@ export default defineConfig({
       })
     },
     baseUrl: 'http://localhost:4200',
-    viewportWidth: 3840,
-    viewportHeight: 2160,
+    viewportWidth: 1920,
+    viewportHeight: 1280,
     waitForAnimations: true,
     animationDistanceThreshold: 1,
     retries: {
@@ -29,7 +29,7 @@ export default defineConfig({
     screenshotOnRunFailure: false,
     screenshotsFolder: 'cypress/screenshots',
     trashAssetsBeforeRuns: true,
-    videoCompression: 0,
+    videoCompression: false,
     videosFolder: 'cypress/videos',
     video: true,
     downloadsFolder: 'cypress/downloads',

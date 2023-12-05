@@ -58,13 +58,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         }
         // Handle 401 — Unauthorized
         if (error.status === 401) {
-          //this.toastrService.warning('401 - Unauthorized');
-          // console.error('401 - Unauthorized');
-          // console.error(error);
+          this.toastrService.warning('401 - Unauthorized');
+          console.error('401 - Unauthorized');
+          console.error(error);
           this.authStateService.logout();
           return throwError(() => errorMessage);
         } else if (error.status === 403) {
-          this.toastrService.warning('403 - Forbidden');
+          //this.toastrService.warning('403 - Forbidden');
           // console.error('403 - Forbidden');
           // console.error(error);
           localStorage.removeItem('token');
