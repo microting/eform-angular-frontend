@@ -69,7 +69,6 @@ export class AppComponent {
                   zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
                     .subscribe(([userSettings, userClaims]) => {
                       if (userClaims === null) {
-                        debugger;
                         localStorage.removeItem('token');
                         this.router.navigate(['/auth']).then();
                       } else {

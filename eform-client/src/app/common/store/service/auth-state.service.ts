@@ -69,7 +69,6 @@ export class AuthStateService {
         zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
           .subscribe(([userSettings, userClaims]) => {
           if (userClaims === null) {
-            debugger;
             this.logout();
           } else {
             this.isUserSettingsLoading = false;

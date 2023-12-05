@@ -9,7 +9,7 @@ import {
 } from 'src/app/common/models';
 import { SettingsModel } from 'src/app/common/models/settings';
 import { ApiBaseService } from 'src/app/common/services';
-import {LanguagesModel} from "src/app/common/models/common/languages.model";
+import {LanguagesModel} from 'src/app/common/models/common/languages.model';
 
 const SettingsMethods = {
   UpdateConnectionString: '/api/settings/connection-string',

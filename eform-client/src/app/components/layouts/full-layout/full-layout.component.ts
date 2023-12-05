@@ -161,7 +161,6 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
                 .subscribe(([userSettings, userClaims]) => {
                 //this.isUserSettingsLoading = false;
                   if (userClaims === null) {
-                    debugger;
                     localStorage.removeItem('token');
                     this.router.navigate(['/auth']).then();
                   } else {

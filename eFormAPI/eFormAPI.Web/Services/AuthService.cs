@@ -275,8 +275,10 @@ public class AuthService : IAuthService
 
             if (auth == null)
             {
-                // TODO if user info is null
-                return new OperationDataResult<Dictionary<string, string>>(true, result);
+                // since auth is not found return unauthorized
+                throw new Exception("Current user not found!");
+
+                //return new OperationDataResult<Dictionary<string, string>>(true, result);
             }
 
             foreach (var authClaim in auth.Claims)
