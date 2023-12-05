@@ -1765,7 +1765,7 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@ljharb/through@^2.3.9":
+"@ljharb/through@^2.3.11":
   version "2.3.11"
   resolved "https://registry.yarnpkg.com/@ljharb/through/-/through-2.3.11.tgz#783600ff12c06f21a76cc26e33abd0b1595092f9"
   integrity sha512-ccfcIDlogiXNq5KcbAwbaO7lMh3Tm1i3khMPYpxlK8hH/W53zN81KM9coerRLOnTGu3nfXIniAmQbRI9OxbC0w==
@@ -3238,18 +3238,18 @@
   resolved "https://registry.yarnpkg.com/@userback/widget/-/widget-0.3.1.tgz#dc8b689ed9f6571e2e3e20f7bb6ffda5cc8faaef"
   integrity sha512-8/TrxHAOs/PMsgjpNJUMtCXzv3B8cFHXKCnqAwWeW7+iRtsgYQJ63WaVSb0peKPTcp3V3KyhrCdsvSW5Vkn0YA==
 
-"@wdio/cli@8.20.5":
-  version "8.20.5"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-8.20.5.tgz#fa76541b7368eb77599bb93b7630443d6fb7db84"
-  integrity sha512-Z5wAf8gJMBZGK15pRVFbX8TOIEk7cOXKb9Gjs9pP3DOgx3+xpGlLmgrbLg/wB+rMXA4eu7bt5ZUItPWAWmq6IQ==
+"@wdio/cli@8.24.6":
+  version "8.24.6"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-8.24.6.tgz#1f709a949783b100e574be8cb2ebaf681399ed64"
+  integrity sha512-QXRiP1FeGaSmUO24pFhyzP6lZY/FsZAhXyofl3r6TGwTlnw9i4S7C4Te2qQcccgAQq03rdSK058YURPwbiKhmg==
   dependencies:
     "@types/node" "^20.1.1"
-    "@wdio/config" "8.20.3"
-    "@wdio/globals" "8.20.5"
+    "@wdio/config" "8.24.6"
+    "@wdio/globals" "8.24.6"
     "@wdio/logger" "8.16.17"
-    "@wdio/protocols" "8.20.4"
-    "@wdio/types" "8.20.0"
-    "@wdio/utils" "8.20.3"
+    "@wdio/protocols" "8.23.0"
+    "@wdio/types" "8.24.2"
+    "@wdio/utils" "8.24.6"
     async-exit-hook "^2.0.1"
     chalk "^5.2.0"
     chokidar "^3.5.3"
@@ -3259,13 +3259,13 @@
     ejs "^3.1.9"
     execa "^8.0.1"
     import-meta-resolve "^3.0.0"
-    inquirer "9.2.11"
+    inquirer "9.2.12"
     lodash.flattendeep "^4.4.0"
     lodash.pickby "^4.6.0"
     lodash.union "^4.6.0"
-    read-pkg-up "10.1.0"
+    read-pkg-up "^10.0.0"
     recursive-readdir "^2.2.3"
-    webdriverio "8.20.4"
+    webdriverio "8.24.6"
     yargs "^17.7.2"
 
 "@wdio/cli@^7.1.2":
@@ -3349,7 +3349,7 @@
     expect-webdriverio "^4.2.5"
     webdriverio "8.20.4"
 
-"@wdio/globals@^8.23.1":
+"@wdio/globals@8.24.6", "@wdio/globals@^8.23.1":
   version "8.24.6"
   resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-8.24.6.tgz#1b838b4bb4e5f3f208a5f9bba1aac8fc3b630b69"
   integrity sha512-v5Sjyix9ddrxPM8DCf0vADUxr21Fx7nWVYS6Z/gkTEhuQbi5svjs6EGjMmErO6tp3CY4SNTUiz+ZFJw9YH4Swg==
@@ -7784,12 +7784,12 @@ inquirer@8.2.4:
     through "^2.3.6"
     wrap-ansi "^7.0.0"
 
-inquirer@9.2.11:
-  version "9.2.11"
-  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-9.2.11.tgz#e9003755c233a414fceda1891c23bd622cad4a95"
-  integrity sha512-B2LafrnnhbRzCWfAdOXisUzL89Kg8cVJlYmhqoi3flSiV/TveO+nsXwgKr9h9PIo+J1hz7nBSk6gegRIMBBf7g==
+inquirer@9.2.12:
+  version "9.2.12"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-9.2.12.tgz#0348e9311765b7c93fce143bb1c0ef1ae879b1d7"
+  integrity sha512-mg3Fh9g2zfuVWJn6lhST0O7x4n03k7G8Tx5nvikJkbq8/CK47WDVm+UznF0G6s5Zi0KcyUisr6DU8T67N5U+1Q==
   dependencies:
-    "@ljharb/through" "^2.3.9"
+    "@ljharb/through" "^2.3.11"
     ansi-escapes "^4.3.2"
     chalk "^5.3.0"
     cli-cursor "^3.1.0"
@@ -10957,15 +10957,6 @@ read-package-json@^7.0.0:
     normalize-package-data "^6.0.0"
     npm-normalize-package-bin "^3.0.0"
 
-read-pkg-up@10.1.0, read-pkg-up@^10.0.0:
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-10.1.0.tgz#2d13ab732d2f05d6e8094167c2112e2ee50644f4"
-  integrity sha512-aNtBq4jR8NawpKJQldrQcSW9y/d+KWH4v24HWkHljOZ7H0av+YTGANBzRh9A5pw7v/bLVsLVPpOhJ7gHNVy8lA==
-  dependencies:
-    find-up "^6.3.0"
-    read-pkg "^8.1.0"
-    type-fest "^4.2.0"
-
 read-pkg-up@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-1.0.1.tgz#9d63c13276c065918d57f002a57f40a1b643fb02"
@@ -10973,6 +10964,15 @@ read-pkg-up@^1.0.1:
   dependencies:
     find-up "^1.0.0"
     read-pkg "^1.0.0"
+
+read-pkg-up@^10.0.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-10.1.0.tgz#2d13ab732d2f05d6e8094167c2112e2ee50644f4"
+  integrity sha512-aNtBq4jR8NawpKJQldrQcSW9y/d+KWH4v24HWkHljOZ7H0av+YTGANBzRh9A5pw7v/bLVsLVPpOhJ7gHNVy8lA==
+  dependencies:
+    find-up "^6.3.0"
+    read-pkg "^8.1.0"
+    type-fest "^4.2.0"
 
 read-pkg@^1.0.0:
   version "1.1.0"
