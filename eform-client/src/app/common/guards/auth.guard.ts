@@ -5,7 +5,12 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import {Store} from '@ngrx/store';
-import {selectAuthIsAuth, selectLoginRedirectUrl} from 'src/app/state/auth/auth.selector';
+import {
+  selectAuthIsAuth,
+  selectAuthIsLoading,
+  selectAuthIsSuccess,
+  selectLoginRedirectUrl
+} from 'src/app/state/auth/auth.selector';
 
 @Injectable()
 export class AuthGuard {
@@ -15,6 +20,8 @@ export class AuthGuard {
     console.log('AuthGuard - constructor');
   }
 
+  private selectAuthIsLoading$ = this.store.select(selectAuthIsLoading);
+  private selectAuthIsSuccess$ = this.store.select(selectAuthIsSuccess);
   private isAuth$ = this.store.select(selectAuthIsAuth);
   private loginRedirectUrl$ = this.store.select(selectLoginRedirectUrl);
 
