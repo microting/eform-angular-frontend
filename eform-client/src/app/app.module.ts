@@ -25,6 +25,10 @@ import {
   ConnectionSetupComponent,
 } from './components';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {
+  OwlDateTimeModule,
+  OwlNativeDateTimeModule,
+} from '@danielmoncada/angular-datetime-picker';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {environment} from 'src/environments/environment';
 // angular material modules
@@ -130,6 +134,8 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
     MatInputModule,
     // Modules
     PluginsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     EformSharedModule,
     MatProgressSpinnerModule,
     // EformDateFnsDateModule,

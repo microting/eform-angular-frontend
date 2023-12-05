@@ -1443,6 +1443,13 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
+"@danielmoncada/angular-datetime-picker@16.0.1":
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/@danielmoncada/angular-datetime-picker/-/angular-datetime-picker-16.0.1.tgz#fddb2aee9503702bb11c992e8c7d962b8a967056"
+  integrity sha512-HvpGYYdeGpnLQtBc0yyQ3QBiS/2rpUbJiCy7Lempk0jVEvUaW1ICPgL40ss+FlMP+R/3pZHzLxrSA9cr1H2N8A==
+  dependencies:
+    tslib "^2.3.1"
+
 "@discoveryjs/json-ext@0.5.7":
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
@@ -3374,10 +3381,20 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/logger@8.16.17", "@wdio/logger@^8.1.0", "@wdio/logger@^8.11.0", "@wdio/logger@^8.16.17":
+"@wdio/logger@8.16.17":
   version "8.16.17"
   resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-8.16.17.tgz#c2055857ed3e3cf12cfad843140fa79264c6a632"
   integrity sha512-zeQ41z3T+b4IsrriZZipayXxLNDuGsm7TdExaviNGojPVrIsQUCSd/FvlLHM32b7ZrMyInHenu/zx1cjAZO71g==
+  dependencies:
+    chalk "^5.1.2"
+    loglevel "^1.6.0"
+    loglevel-plugin-prefix "^0.8.4"
+    strip-ansi "^7.1.0"
+
+"@wdio/logger@^8.1.0", "@wdio/logger@^8.11.0", "@wdio/logger@^8.16.17":
+  version "8.24.8"
+  resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-8.24.8.tgz#1c561a9ec9f6da94c0a04cdd5466b1e563fe775f"
+  integrity sha512-qr+8SjKyKdTGbZVLpDfvK89RV6pKh5Dv+CKzo/TIZaKzN3FKhglW40jVm90OoXdY/xhYoDwOFrl7BLO9Df2Jtw==
   dependencies:
     chalk "^5.1.2"
     loglevel "^1.6.0"
