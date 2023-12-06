@@ -41,3 +41,6 @@ errorShots/
 browserslist
 ChromeDriver.txt
 cypress/videos/
+
+# Sentry Config File
+.sentryclirc

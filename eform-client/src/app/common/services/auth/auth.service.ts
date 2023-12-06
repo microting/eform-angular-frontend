@@ -86,7 +86,11 @@ export class AuthService {
   obtainUserClaims(): Observable<UserClaimsModel> {
     return this.apiBaseService.get(AuthMethods.Claims).pipe(
       map((result) => {
-        return normalizeUserClaimNames(result.model);
+        if (result.success) {
+          return normalizeUserClaimNames(result.model);
+        } else {
+          return null;
+        }
       })
     );
   }

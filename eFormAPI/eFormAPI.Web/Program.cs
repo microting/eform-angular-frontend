@@ -22,7 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Runtime.InteropServices;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+using Sentry;
 
 namespace eFormAPI.Web;
 
@@ -57,6 +59,7 @@ using Microting.eForm.Dto;
 using Newtonsoft.Json;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
+using Sentry;
 
 public class Program
 {
@@ -68,6 +71,30 @@ public class Program
 
     public static void Main(string[] args)
     {
+        SentrySdk.Init(options =>
+        {
+            // A Sentry Data Source Name (DSN) is required.
+            // See https://docs.sentry.io/product/sentry-basics/dsn-explainer/
+            // You can set it in the SENTRY_DSN environment variable, or you can set it in code here.
+            options.Dsn = "https://a20910d51f605d94e956163ffbf9dd5a@o4506241219428352.ingest.sentry.io/4506279162019840";
+
+            // When debug is enabled, the Sentry client will emit detailed debugging information to the console.
+            // This might be helpful, or might interfere with the normal operation of your application.
+            // We enable it here for demonstration purposes when first trying Sentry.
+            // You shouldn't do this in your applications unless you're troubleshooting issues with Sentry.
+            options.Debug = false;
+
+            // This option is recommended. It enables Sentry's "Release Health" feature.
+            options.AutoSessionTracking = true;
+
+            // This option is recommended for client applications only. It ensures all threads use the same global scope.
+            // If you're writing a background service of any kind, you should remove this.
+            options.IsGlobalModeEnabled = false;
+
+            // This option will enable Sentry's tracing features. You still need to start transactions and spans.
+            options.EnableTracing = true;
+        });
+
         var host = BuildWebHost(args);
         InitializeSettings(host, args).Wait();
 
@@ -269,7 +296,7 @@ public class Program
                             dbContext.EformPlugins.Update(eformPlugin);
                             await dbContext.SaveChangesAsync();
 
-                            var pluginMenu = pluginObject.GetNavigationMenu(scope.ServiceProvider);
+                            var pluginMenu = pluginObject.GetNavigationMenu(scope.ServiceProvider).OrderBy(x => x.Position).ToList();
 
                             // Load to database all navigation menu from plugin by id
                             var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, pluginId);
@@ -343,12 +370,19 @@ public class Program
 
     private static IWebHost BuildWebHost(string[] args)
     {
+        Console.WriteLine("BuildWebHost");
+        // print all args
+        foreach (var arg in args)
+        {
+            Console.WriteLine("arg: " + arg);
+        }
         var defaultConfig = new ConfigurationBuilder()
             .AddCommandLine(args)
             .AddEnvironmentVariables(prefix: "ASPNETCORE_")
             .Build();
 
         Environment.SetEnvironmentVariable("API_KEY", defaultConfig["api-key"]);
+        Console.WriteLine("API_KEY: " + defaultConfig["api-key"]);
 
 
         var port = defaultConfig.GetValue("port", 5000);
@@ -391,6 +425,26 @@ public class Program
                 var contextFactory = new BaseDbContextFactory();
                 if (_defaultConnectionString != "...")
                 {
+                    string pattern = @"Database=(\d+)_Angular;";
+                    Match match = Regex.Match(_defaultConnectionString!, pattern);
+
+                    if (match.Success)
+                    {
+                        string numberString = match.Groups[1].Value;
+                        int number = int.Parse(numberString);
+                        SentrySdk.ConfigureScope(scope =>
+                        {
+                            scope.SetTag("customerNo", number.ToString());
+                            Console.WriteLine("customerNo: " + number);
+                            scope.SetTag("osVersion", Environment.OSVersion.ToString());
+                            Console.WriteLine("osVersion: " + Environment.OSVersion);
+                            scope.SetTag("osArchitecture", RuntimeInformation.OSArchitecture.ToString());
+                            Console.WriteLine("osArchitecture: " + RuntimeInformation.OSArchitecture);
+                            scope.SetTag("osName", RuntimeInformation.OSDescription);
+                            Console.WriteLine("osName: " + RuntimeInformation.OSDescription);
+                        });
+                    }
+
                     using var dbContext = contextFactory.CreateDbContext(new[] {_defaultConnectionString});
                     foreach (var plugin in EnabledPlugins)
                     {

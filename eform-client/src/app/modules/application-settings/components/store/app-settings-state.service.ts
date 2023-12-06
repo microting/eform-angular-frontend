@@ -15,11 +15,11 @@ export class AppSettingsStateService {
     //private query: AppSettingsQuery,
     private authStore: Store
   ) {
-    this.selectIsAuth$.subscribe((isAuth) => {
-      if (isAuth) {
-        this.getAllAppSettings();
-      }
-    });
+    // this.selectIsAuth$.subscribe((isAuth) => {
+    //   if (isAuth) {
+    //     this.getAllAppSettings();
+    //   }
+    // });
     //this.getAllAppSettings();
   }
 

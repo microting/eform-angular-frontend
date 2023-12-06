@@ -406,7 +406,7 @@ public class MenuService : IMenuService
 
         foreach (var plugin in Program.EnabledPlugins)
         {
-            var pluginMenu = plugin.GetNavigationMenu(_serviceProvider);
+            var pluginMenu = plugin.GetNavigationMenu(_serviceProvider).OrderBy(x => x.Position).ToList();
 
             var currentPosition = _dbContext.MenuItems.Where(x => x.ParentId == null).Max(x => x.Position) + 1;
             foreach (var pluginMenuItem in pluginMenu)

@@ -1,9 +1,14 @@
 FROM node:18-bookworm-slim as node-env
+
 WORKDIR /app
+ARG SENTRY_AUTH_TOKEN
 ENV PATH /app/node_modules/.bin:$PATH
 COPY eform-client ./
+RUN apt-get update
+RUN apt-get -y -q install ca-certificates
 RUN yarn install
-RUN npm run build
+RUN yarn build
+RUN if [ -n "$SENTRY_AUTH_TOKEN" ]; then yarn sentrysourcemap; else echo "SENTRY_AUTH_TOKEN is not set"; fi
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0-bookworm-slim AS build-env
 WORKDIR /app

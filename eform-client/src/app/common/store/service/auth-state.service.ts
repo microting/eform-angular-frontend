@@ -30,6 +30,7 @@ export class AuthStateService {
     public settingsService: AppSettingsService,
     @Inject(MAT_DATE_LOCALE) private  dateLocale: BehaviorSubject<string | Locale | null>
   ) {
+    // eslint-disable-next-line no-console
     console.log('auth-state.service.ts - constructor');
   }
 
@@ -42,6 +43,7 @@ export class AuthStateService {
   private selectCurrentUserLanguageId$ = this.authStore.select(selectCurrentUserLanguageId)
 
   login(loginInfo: LoginRequestModel) {
+    // eslint-disable-next-line no-console
     console.log('auth-state.service.ts - login');
     // this.authStore.dispatch({type: '[Auth] Authenticate', payload: loginInfo});
     // TODO: need to fix this
@@ -66,32 +68,39 @@ export class AuthStateService {
           }));
         zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
           .subscribe(([userSettings, userClaims]) => {
-          this.isUserSettingsLoading = false;
-          this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
-          //   // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-          //   this.store.update((state) => ({
-          //     ...state,
-          //     currentUser: {
-          //       ...state.currentUser,
-          //       darkTheme: userSettings.model.darkTheme,
-          //       locale: userSettings.model.locale,
-          //       loginRedirectUrl: userSettings.model.loginRedirectUrl,
-          //       claims: userClaims,
-          //     },
-          //   }));
-          //   this.setLocale();
-          //   // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-          this.translateService.use(userSettings.model.locale);
-          this.localeService.initCookies(userSettings.model.locale);
-          // this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
-          if (userSettings.model.loginRedirectUrl != null) {
-            this.router
-              .navigate([
-                `/${userSettings.model.loginRedirectUrl}`,
-              ]).then();
+          if (userClaims === null) {
+            this.logout();
           } else {
-            this.router
-              .navigate(['/']).then();
+            this.isUserSettingsLoading = false;
+            this.authStore.dispatch({
+              type: '[Auth] Update User Info',
+              payload: {userSettings: userSettings, userClaims: userClaims}
+            })
+            //   // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
+            //   this.store.update((state) => ({
+            //     ...state,
+            //     currentUser: {
+            //       ...state.currentUser,
+            //       darkTheme: userSettings.model.darkTheme,
+            //       locale: userSettings.model.locale,
+            //       loginRedirectUrl: userSettings.model.loginRedirectUrl,
+            //       claims: userClaims,
+            //     },
+            //   }));
+            //   this.setLocale();
+            //   // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
+            this.translateService.use(userSettings.model.locale);
+            this.localeService.initCookies(userSettings.model.locale);
+            // this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
+            if (userSettings.model.loginRedirectUrl != null) {
+              this.router
+                .navigate([
+                  `/${userSettings.model.loginRedirectUrl}`,
+                ]).then();
+            } else {
+              this.router
+                .navigate(['/']).then();
+            }
           }
         });
         //this.getUserSettings();
@@ -132,86 +141,86 @@ export class AuthStateService {
   //     });
   // }
 
-  refreshToken() {
-    // const accessToken = JSON.parse(localStorage.getItem('token'));
-    // const accessTokenString = accessToken.token.accessToken;
-    // const accessTokenRole = accessToken.token.role;
-    // const accessTokenId = accessToken.token.id;
-    // this.authStore.dispatch({type: '[Auth] Refresh Token', payload: {token:
-    //       {
-    //         accessToken: accessTokenString,
-    //         tokenType: null,
-    //         expiresIn: null,
-    //         role: accessTokenRole,
-    //         id: accessTokenId}}});
-    // TODO need to fix this
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.service.refreshToken().subscribe((response) => {
-        if (response) {
-          zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
-            .subscribe(([userSettings, userClaims]) => {
-            this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
-            //         // console.log(`before AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
-            //         this.store.update((state) => ({
-            //           ...state,
-            //           token: {
-            //             accessToken: response.model.access_token,
-            //             tokenType: response.model.token_type,
-            //             expiresIn: response.model.expires_in,
-            //             role: response.model.role,
-            //           },
-            //           currentUser: {
-            //             ...state.currentUser,
-            //             claims: userClaims,
-            //           },
-            //         }));
-            //         // console.log(`after AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
-            this.isRefreshing = false;
-          });
-        } else {
-          this.logout();
-          this.isRefreshing = false;
-        }
-      });
-    }
-  }
+  // refreshToken() {
+  //   // const accessToken = JSON.parse(localStorage.getItem('token'));
+  //   // const accessTokenString = accessToken.token.accessToken;
+  //   // const accessTokenRole = accessToken.token.role;
+  //   // const accessTokenId = accessToken.token.id;
+  //   // this.authStore.dispatch({type: '[Auth] Refresh Token', payload: {token:
+  //   //       {
+  //   //         accessToken: accessTokenString,
+  //   //         tokenType: null,
+  //   //         expiresIn: null,
+  //   //         role: accessTokenRole,
+  //   //         id: accessTokenId}}});
+  //   // TODO need to fix this
+  //   if (!this.isRefreshing) {
+  //     this.isRefreshing = true;
+  //     this.service.refreshToken().subscribe((response) => {
+  //       if (response) {
+  //         zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
+  //           .subscribe(([userSettings, userClaims]) => {
+  //           this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
+  //           //         // console.log(`before AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
+  //           //         this.store.update((state) => ({
+  //           //           ...state,
+  //           //           token: {
+  //           //             accessToken: response.model.access_token,
+  //           //             tokenType: response.model.token_type,
+  //           //             expiresIn: response.model.expires_in,
+  //           //             role: response.model.role,
+  //           //           },
+  //           //           currentUser: {
+  //           //             ...state.currentUser,
+  //           //             claims: userClaims,
+  //           //           },
+  //           //         }));
+  //           //         // console.log(`after AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
+  //           this.isRefreshing = false;
+  //         });
+  //       } else {
+  //         this.logout();
+  //         this.isRefreshing = false;
+  //       }
+  //     });
+  //   }
+  // }
 
-  getUserSettings() {
-    if (!this.isUserSettingsLoading) {
-    // TODO: need to fix this
-    this.isUserSettingsLoading = true;
-    zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
-      this.isUserSettingsLoading = false;
-      this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
-    //   // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-    //   this.store.update((state) => ({
-    //     ...state,
-    //     currentUser: {
-    //       ...state.currentUser,
-    //       darkTheme: userSettings.model.darkTheme,
-    //       locale: userSettings.model.locale,
-    //       loginRedirectUrl: userSettings.model.loginRedirectUrl,
-    //       claims: userClaims,
-    //     },
-    //   }));
-      this.setLocale();
-    //   // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-
-      // this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
-      if (userSettings.model.loginRedirectUrl != null) {
-        debugger;
-        this.router
-          .navigate([
-            `/${userSettings.model.loginRedirectUrl}`,
-          ]).then();
-      } else {
-        this.router
-          .navigate(['/']).then();
-      }
-    });
-    }
-  }
+  // getUserSettings() {
+  //   if (!this.isUserSettingsLoading) {
+  //   // TODO: need to fix this
+  //   this.isUserSettingsLoading = true;
+  //   zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+  //     this.isUserSettingsLoading = false;
+  //     this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
+  //   //   // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
+  //   //   this.store.update((state) => ({
+  //   //     ...state,
+  //   //     currentUser: {
+  //   //       ...state.currentUser,
+  //   //       darkTheme: userSettings.model.darkTheme,
+  //   //       locale: userSettings.model.locale,
+  //   //       loginRedirectUrl: userSettings.model.loginRedirectUrl,
+  //   //       claims: userClaims,
+  //   //     },
+  //   //   }));
+  //     this.setLocale();
+  //   //   // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
+  //
+  //     // this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
+  //     if (userSettings.model.loginRedirectUrl != null) {
+  //       debugger;
+  //       this.router
+  //         .navigate([
+  //           `/${userSettings.model.loginRedirectUrl}`,
+  //         ]).then();
+  //     } else {
+  //       this.router
+  //         .navigate(['/']).then();
+  //     }
+  //   });
+  //   }
+  // }
 
   logout() {
     // console.log(`before AuthStateService.logout \n ${JSON.stringify(this.store._value())}`);

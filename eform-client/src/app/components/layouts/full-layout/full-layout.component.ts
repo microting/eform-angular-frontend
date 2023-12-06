@@ -70,6 +70,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   public allAppMenus$ = this.store.select(rightAppMenus);
 
   ngOnInit() {
+    // eslint-disable-next-line no-console
     console.log('FullLayoutComponent - ngOnInit');
     this.loaderService.setLoading(true);
     this.getSettings();
@@ -79,6 +80,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    // eslint-disable-next-line no-console
     console.log('FullLayoutComponent - afterViewInit');
     if (this.drawer) {
       this.openedChangeSub$ = this.drawer.openedChange.subscribe(opened => this.authStateService.updateSideMenuOpened(opened));
@@ -99,6 +101,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getSettings() {
+    // eslint-disable-next-line no-console
     console.log('FullLayoutComponent - getSettings');
     // TODO: Fix this
     // load access_token from local storage
@@ -154,8 +157,13 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
                   id: accessTokenId}}});
           this.selectIsAuth$.pipe(take(1)).subscribe((isAuth) => {
             if (isAuth) {
-              zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
+              zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
+                .subscribe(([userSettings, userClaims]) => {
                 //this.isUserSettingsLoading = false;
+                  if (userClaims === null) {
+                    localStorage.removeItem('token');
+                    this.router.navigate(['/auth']).then();
+                  } else {
                 this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
                 this.isDarkThemeAsync$ = this.selectIsDarkMode$.subscribe(
                   (isDarkTheme) => {
@@ -184,7 +192,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
                 } else {
                   this.router
                     .navigate(['/']).then();
-                }
+                }}
               });
               //this.authStateService.getUserSettings();
             } else {

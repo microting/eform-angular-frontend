@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using Microsoft.AspNetCore.Authorization;
@@ -73,7 +74,16 @@ public class AuthController : Controller
     [Route("api/auth/claims")]
     public OperationResult GetCurrentUserClaims()
     {
-        return _authService.GetCurrentUserClaims();
+        try
+        {
+            return _authService.GetCurrentUserClaims();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new OperationResult(false, _localizationService.GetString("ErrorWhileObtainingCurrentUserClaims"));
+        }
     }
 
     [HttpGet]
