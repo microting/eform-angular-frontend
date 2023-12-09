@@ -2,7 +2,7 @@ name: Pull requests
 
 on:
   pull_request:
-    branches: [ master, stable, angular14 ]
+    branches: [ master, stable, angular15, angular16, angular17 ]
     paths-ignore:
     - '*.md'
 
