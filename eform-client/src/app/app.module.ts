@@ -82,7 +82,6 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
   ],
   imports: [
     // Libs
-    AppRoutingModule,
     BrowserModule,
     HttpClientModule,
     StoreModule.forRoot({
@@ -103,6 +102,7 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     EffectsModule.forRoot(AppMenuEffects),
+    AppRoutingModule,
     TranslateModule.forRoot(translateConfig),
     BrowserAnimationsModule,
     ToastrModule.forRoot({

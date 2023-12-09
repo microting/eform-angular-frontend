@@ -83,7 +83,7 @@ export class AppComponent {
                         })
                         this.authStateService.setLocale();
                         this.translateService.use(userSettings.model.locale);
-                        //this.router.navigate(event.url.split('/')).then();}
+                        this.router.navigate(event.url.split('/'));
                       }
                   });
                 }
