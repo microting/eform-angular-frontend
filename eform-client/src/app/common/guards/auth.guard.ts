@@ -29,6 +29,7 @@ export class AuthGuard {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
+    // eslint-disable-next-line
     console.log('AuthGuard - canActivate');
     // TODO: Fix this
     //   if (!this.isAuth$) {
@@ -50,6 +51,7 @@ export class AuthGuard {
 }
 
 export const IsAuthGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
+  // eslint-disable-next-line
   console.log('AuthGuard - IsAuthGuard');
   return inject(AuthGuard).canActivate(route, state);
 }
