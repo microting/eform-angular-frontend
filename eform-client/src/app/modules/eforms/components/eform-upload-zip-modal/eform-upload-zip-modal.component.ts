@@ -34,7 +34,7 @@ export class EformUploadZipModalComponent implements OnInit {
     });
     this.zipFileUploader  = new FileUploader({
       url: '/api/template-files/upload-eform-zip',
-      authToken: token,
+      authToken: 'Bearer '+token,
     });
     this.zipFileUploader.onBuildItemForm = (item, form) => {
       form.append('templateId', this.selectedTemplate.id);

@@ -2,7 +2,7 @@ name: Master/Stable
 
 on:
   push:
-    branches: [ master, stable, angular14 ]
+    branches: [ master, stable, angular15, angular16, angular17 ]
     paths-ignore:
     - '*.md'
 
@@ -46,7 +46,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: 18.18.2
     - name: yarn install
       run: cd eform-client && yarn install
     - name: Create errorShots directory
