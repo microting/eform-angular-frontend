@@ -1,5 +1,5 @@
-import { nodes as basicNodes, marks as basicMarkers } from 'ngx-editor';
-import { Schema, NodeSpec, MarkSpec } from 'prosemirror-model';
+import {nodes as basicNodes, marks as basicMarkers} from 'ngx-editor';
+import {Schema, NodeSpec, MarkSpec} from 'prosemirror-model';
 
 const paragraph: NodeSpec = {
   content: 'inline*',
@@ -22,34 +22,34 @@ const nodes = Object.assign({}, basicNodes, {
   bullet_list: {},
 });
 
-const markes = {
+const marks = {
   strong: {
     toDOM() {
       return ['b', 0];
     },
-    parseDOM: [{ tag: 'b' }],
-  },
+    parseDOM: [{tag: 'b'}],
+  } as MarkSpec,
   em: {
     toDOM() {
       return ['i', 0];
     },
-    parseDOM: [{ tag: 'i' }],
-  },
+    parseDOM: [{tag: 'i'}],
+  } as MarkSpec,
   s: {
     toDOM() {
       return ['s', 0];
     },
-    parseDOM: [{ tag: 's' }],
-  },
+    parseDOM: [{tag: 's'}],
+  } as MarkSpec,
   u: {
     toDOM() {
       return ['u', 0];
     },
-    parseDOM: [{ tag: 'u' }],
-  },
+    parseDOM: [{tag: 'u'}],
+  } as MarkSpec,
 };
 
-const myMarks = Object.assign({}, basicMarkers, markes);
+const myMarks = Object.assign({}, basicMarkers, marks);
 
 const schema = new Schema({
   nodes: nodes,
