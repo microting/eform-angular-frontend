@@ -2,9 +2,9 @@
   <mat-card
     *ngIf="isLanguageSelected(translation.languageId) && getLanguage(translation.languageId) !== undefined"
   >
-    <mat-card-title>{{
+    <mat-card-header>{{
       getLanguage(translation.languageId).name | translate
-      }}</mat-card-title>
+      }}</mat-card-header>
     <mat-card-content>
       <button
         *ngIf="translationPossible && field.translations.indexOf(translation) !== 0"

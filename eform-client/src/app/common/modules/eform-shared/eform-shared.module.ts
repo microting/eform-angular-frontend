@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {TranslateModule} from '@ngx-translate/core';
-
 import {
   DateFormatterComponent,
   EformCollapseToggleComponent,
@@ -19,14 +18,14 @@ import {
   EntityEditCreateComponent,
   EntityImportListComponent,
   DeleteModalComponent,
-  EformTranslationComponent
+  EformTranslationComponent,
+  EformTagComponent
 } from './components';
 import {
   AuthImagePipe,
   AuthAudioPipe,
   SafeHtmlPipe,
 } from 'src/app/common/pipes';
-import {TreeModule} from '@circlon/angular-tree-component';
 import {EformTableHeadersComponent} from './components';
 import {RouterModule} from '@angular/router';
 import {DragulaModule} from 'ng2-dragula';
@@ -49,7 +48,6 @@ import {FormattingTextEditorModule} from '../eform-imported/formatting-text-edit
     TranslateModule,
     NgSelectModule,
     FormsModule,
-    TreeModule,
     RouterModule,
     DragulaModule,
     MatSortModule,
@@ -84,7 +82,8 @@ import {FormattingTextEditorModule} from '../eform-imported/formatting-text-edit
     EntityEditCreateComponent,
     EntityImportListComponent,
     DeleteModalComponent,
-    EformTranslationComponent
+    EformTranslationComponent,
+    EformTagComponent
   ],
   exports: [
     EformPaginationComponent,
@@ -105,7 +104,8 @@ import {FormattingTextEditorModule} from '../eform-imported/formatting-text-edit
     EntityEditCreateComponent,
     EntityImportListComponent,
     DeleteModalComponent,
-    EformTranslationComponent
+    EformTranslationComponent,
+    EformTagComponent
   ],
 })
 export class EformSharedModule {

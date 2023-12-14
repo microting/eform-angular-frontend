@@ -53,7 +53,7 @@ import {
   LoaderInterceptor,
   UserClaimsInterceptor,
 } from 'src/app/common/interceptors';
-import {GALLERY_CONFIG} from '@ngx-gallery/core';
+import {GALLERY_CONFIG} from 'ng-gallery';
 import {AppMenuStateService, AuthStateService} from 'src/app/common/store';
 import {BaseService} from 'src/app/common/services/base.service';
 import {DateInterceptor} from 'src/app/common/interceptors/date.interceptor';

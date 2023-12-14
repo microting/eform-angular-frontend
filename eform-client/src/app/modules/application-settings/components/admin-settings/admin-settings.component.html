@@ -15,20 +15,20 @@
 <div class="d-flex flex-column">
   <div class="flex-cards">
     <mat-card class="mat-card-50">
-      <mat-card-title>
-        <h4 class="d-flex">
+      <mat-card-header class="d-flex">
+        <h4>
           {{ 'Login Page' | translate }}
-          <span class="spacer"></span>
-          <button
-            mat-icon-button
-            id="loginPageReset"
-            (click)="resetLoginPageSettings()"
-            matTooltip="{{ 'Reset' | translate }}"
-          >
-            <mat-icon>undo</mat-icon>
-          </button>
         </h4>
-      </mat-card-title>
+        <span class="spacer"></span>
+        <button
+          mat-icon-button
+          id="loginPageReset"
+          (click)="resetLoginPageSettings()"
+          matTooltip="{{ 'Reset' | translate }}"
+        >
+          <mat-icon>undo</mat-icon>
+        </button>
+      </mat-card-header>
       <mat-card-content>
         <mat-form-field>
           <mat-label>{{'Main Text' | translate}}</mat-label>
@@ -123,20 +123,20 @@
       </mat-card-content>
     </mat-card>
     <mat-card class="mat-card-50">
-      <mat-card-title>
+      <mat-card-header>
         <h4 class="d-flex">
           {{ 'Site header' | translate }}
-          <span class="spacer"></span>
-          <button
-            mat-icon-button
-            id="siteHeaderReset"
-            (click)="resetHeaderSettings()"
-            matTooltip="{{ 'Reset' | translate }}"
-          >
-            <mat-icon>undo</mat-icon>
-          </button>
         </h4>
-      </mat-card-title>
+        <span class="spacer"></span>
+        <button
+          mat-icon-button
+          id="siteHeaderReset"
+          (click)="resetHeaderSettings()"
+          matTooltip="{{ 'Reset' | translate }}"
+        >
+          <mat-icon>undo</mat-icon>
+        </button>
+      </mat-card-header>
       <mat-card-content>
         <mat-form-field>
           <mat-label>{{'Main Text' | translate}}</mat-label>
@@ -234,11 +234,11 @@
   </div>
   <div class="flex-cards mt-4">
     <mat-card class="mat-card-50">
-      <mat-card-title>
+      <mat-card-header>
         <h4>
           {{ 'SDK information' | translate }}
         </h4>
-      </mat-card-title>
+      </mat-card-header>
       <mat-card-content>
         <mat-form-field>
           <mat-label>{{'Customer no' | translate}}</mat-label>
@@ -278,12 +278,12 @@
       </mat-card-content>
     </mat-card>
     <mat-card class="mat-card-50">
-      <mat-card-title>
+      <mat-card-header>
         <h4>{{ 'Languages' | translate }}</h4>
-      </mat-card-title>
+      </mat-card-header>
       <mat-card-content>
         <ng-container *ngFor="let language of languagesModel.languages">
-          <p>
+          <p class="p-0 pb-2 m-0">
             <mat-checkbox
               [(ngModel)]="language.isActive"
               [ngModelOptions]="{standalone: true}">
@@ -293,11 +293,6 @@
         </ng-container>
       </mat-card-content>
     </mat-card>
-  </div>
-
-  <div class="flex-cards mt-4">
-
-
   </div>
 </div>
 </ng-container>

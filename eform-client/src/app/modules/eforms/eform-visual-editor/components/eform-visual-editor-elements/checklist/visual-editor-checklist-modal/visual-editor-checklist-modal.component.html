@@ -3,7 +3,7 @@
   <ng-container *ngFor="let translation of recursionModel.checklist.translations; let translationIndex = index">
     <ng-container *ngIf="translation !== undefined">
       <mat-card *ngIf="isLanguageSelected(translation.languageId) && getLanguage(translation.languageId) !== undefined">
-        <mat-card-title>{{ getLanguage(translation.languageId).name | translate }}</mat-card-title>
+        <mat-card-header>{{ getLanguage(translation.languageId).name | translate }}</mat-card-header>
         <mat-card-content>
           <button *ngIf="translationPossible && recursionModel.checklist.translations.indexOf(translation) !== 0"
             mat-icon-button

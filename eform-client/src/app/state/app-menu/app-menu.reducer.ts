@@ -1,37 +1,38 @@
 import {createReducer, on} from '@ngrx/store';
-import {loadAppMenu, loadAppMenuFailure, loadAppMenuSuccess} from 'src/app/state/app-menu/app-menu.actions';
+import {loadAppMenu, loadAppMenuFailure, loadAppMenuSuccess} from './app-menu.actions';
 import {MenuItemModel} from 'src/app/common/models';
+import {StoreStatusEnum} from 'src/app/common/const';
 
 export interface AppMenuState {
   leftMenu: MenuItemModel[];
   rightMenu: MenuItemModel[];
   error: string;
-  status: 'pending' | 'loading' | 'error' | 'success';
+  status: StoreStatusEnum;
 }
 
 export const initialState: AppMenuState = {
   leftMenu: [],
   rightMenu: [{ menuItems: [], e2EId: '', isInternalLink: false, link: '', name: '', position: 0, guards: [] }],
   error: null,
-  status: 'pending',
+  status: StoreStatusEnum.Pending,
 }
 
 export const _appMenuReducer = createReducer(
   initialState,
   on(loadAppMenu, (state) => ({
     ...state,
-    status: 'loading',
+    status: StoreStatusEnum.Loading,
   })),
   on(loadAppMenuSuccess, (state, {payload}) => ({
     ...state,
     leftMenu: payload.model.leftMenu,
     rightMenu: payload.model.rightMenu,
-    status: 'success',
+    status: StoreStatusEnum.Success,
     })),
   on(loadAppMenuFailure, (state, {payload}) => ({
     ...state,
     error: payload,
-    status: 'error',
+    status: StoreStatusEnum.Error,
     }))
 );
 

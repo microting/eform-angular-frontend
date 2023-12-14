@@ -7,7 +7,7 @@ import {
   TemplateListModel,
   EformPermissionsSimpleModel,
   TemplateDto,
-  CommonDictionaryModel, UserClaimsModel,
+  CommonDictionaryModel, UserClaimsModel, SharedTagModel,
 } from 'src/app/common/models';
 import {
   SecurityGroupEformsPermissionsService,
@@ -310,5 +310,9 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     this.eformDuplicateConfirmModalComponentAfterClosedSub$ = this.dialog.open(EformDuplicateConfirmModalComponent, {
       ...dialogConfigHelper(this.overlay, templateDto),
     }).afterClosed().subscribe(data => data ? this.loadAllTemplates() : undefined);
+  }
+
+  getTags(template: TemplateDto): SharedTagModel[] {
+    return template.tags.map(x => ({id: x.key, name: x.value} as SharedTagModel));
   }
 }

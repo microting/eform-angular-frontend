@@ -1,5 +1,5 @@
 @import "../../../../scss/utilities/colors";
-
+@import "../../../../scss/utilities/variables";
 .mat-drawer {
   max-width: 15vw;
 }
@@ -15,6 +15,14 @@
   justify-content: space-between;
 }
 
-#sign-out-dropdown {
-  //top: -4px;
+.tag {
+  width: $icon-size + $icon-size + $icon-size;
+  justify-content: space-between;
+  height: $icon-size + 5px;
+  .mat-mdc-icon-button {
+    padding: 0 ;
+    width: $icon-size;
+    height: $icon-size;
+    display: flex;
+  }
 }

@@ -3,16 +3,25 @@
 @import "utilities";
 @import "libs/index";
 
+$eform-font-family: Roboto, "Helvetica Neue", sans-serif;
 // h-100 for base elements
 html, body {
   height: 100vh;
   margin: 0;
+  --theme-body-font-color: var(--black-800);
+  font-family: $eform-font-family;
+
+  .mat-mdc-option {
+    font-size: unset !important;
+  }
 }
 
 b, strong {
   font-weight: 500;
 }
-
+h2 {
+  font-weight: 300;
+}
 .spacer {
   flex: 1 1 auto;
 }
@@ -35,31 +44,23 @@ b, strong {
   }
 }
 
-body {
-  --theme-body-font-color: var(--black-800);
-}
-
 body, .theme-light {
   --black-800: #242729;
   --blue-600: #0077cc;
   --theme-body-font-color: var(--black-800);
-
-  .mat-option {
-    font-size: unset !important;
-  }
 }
 
 a {
   text-decoration: none;
 }
 
-.mat-icon-button .mat-icon {
-  width: 18px;
-  height: 18px;
-  font-size: 18px;
-  line-height: 18px !important;
+.mat-icon {
+  width: $icon-size !important;
+  height: $icon-size !important;
+  font-size: $icon-size;
+  line-height: $icon-size !important;
 }
-.mat-menu-item .mat-icon {
+.mat-mdc-menu-item .mat-icon {
   width: 18px;
   height: 18px;
   font-size: 18px;
@@ -76,11 +77,6 @@ a {
 
 .reportCaseUnarchive {
   color: green !important;
-}
-
-app-navigation mat-tree mat-nested-tree-node mat-accordion mat-expansion-panel mat-tree-node span{ // in table styles
-  white-space: initial;
-  //line-height: 1.4em;
 }
 
 .flex-column {

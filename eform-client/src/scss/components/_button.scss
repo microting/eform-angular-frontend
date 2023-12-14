@@ -32,9 +32,9 @@
   }
 }
 
-@each $key in mat-button-base, mat-slide-toggle {
-  .#{$key} + .mat-button-base {
-    @if($key==mat-slide-toggle){
+@each $key in mat-mdc-button-base, mat-mdc-slide-toggle {
+  .#{$key} + .mat-mdc-button-base {
+    @if($key==mat-mdc-slide-toggle){
       margin-left: 1rem;
     } @else {
       margin-left: 0.5rem;

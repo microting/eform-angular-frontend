@@ -48,9 +48,9 @@
         *ngIf="isLanguageSelected(translation.languageId) && getLanguage(translation.languageId) !== undefined"
       >
         <ng-container>
-          <mat-card-title>{{
+          <mat-card-header>{{
             getLanguage(translation.languageId).name | translate
-          }}</mat-card-title>
+          }}</mat-card-header>
           <mat-card-content>
             <mat-form-field>
               <mat-label>{{ 'Default value' | translate }}</mat-label>

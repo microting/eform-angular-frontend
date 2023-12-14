@@ -1,5 +1,5 @@
 <mat-card class="mb-2 mt-2">
-  <mat-card-title style="font-size: 1.5rem;">
+  <mat-card-header class="py-3 d-flex align-items-center justify-content-start">
     <mat-icon
       id="dragHandle{{templateIndex}}_{{itemIndex}}"
       class="dragula-handle align-middle"
@@ -7,41 +7,5 @@
       menu
     </mat-icon>
     {{ item.name }}
-  </mat-card-title>
+  </mat-card-header>
 </mat-card>
-
-<!--<div class="card mb-2 mt-2">
-  <div class="card-header">
-    <div class="d-flex justify-content-between align-items-center">
-      <div>
-        <i
-          id="dragHandle{{templateIndex}}_{{itemIndex}}"
-          class="material-icons md-36 dragula-handle align-middle"
-          style="cursor: all-scroll"
-        >
-          drag_handle
-        </i>
-        {{ item.name }}
-      </div>
-    </div>
-  </div>
-
-  <div mdbCollapse #collapse="bs-collapse">
-    <div class="card-body">
-      <div class="md-form">
-        <input
-          mdbInput
-          [disabled]="true"
-          [ngModel]="item.link"
-          type="text"
-          id="templateMenuItemLink{{templateIndex}}_{{ itemIndex }}"
-          name="templateMenuItemLink{{templateIndex}}_{{ itemIndex }}"
-          class="form-control"
-        />
-        <label for="templateMenuItemLink{{templateIndex}}_{{ itemIndex }}">{{
-          'Link' | translate
-          }}</label>
-      </div>
-    </div>
-  </div>
-</div>-->

@@ -1,7 +1,7 @@
 <ng-container *ngIf="dataItemList">
   <ng-container *ngFor="let dataItem of dataItemList; let i = index">
     <mat-card class="mb-3" *ngIf="dataItem.fieldType != 'SaveButton' ">
-      <mat-card-title
+      <mat-card-header
         *ngIf="dataItem.fieldType != 'FieldContainer' && dataItem.fieldType != 'SaveButton'"
         style="font-size: 1.5rem; color: black;"
         [ngStyle]="{'background-color': dataItem.color ? '#' + dataItem.color : ''}"
@@ -11,7 +11,7 @@
         <i>
           <div [innerHtml]="dataItem.description.inderValue"></div>
         </i>
-      </mat-card-title>
+      </mat-card-header>
       <ng-container [ngSwitch]="dataItem.fieldType">
         <ng-container *ngSwitchCase="'Picture'">
           <mat-card-content>

@@ -5,9 +5,11 @@ import {
   ConnectionStringExistCount,
   loadAuthFailure,
   loadAuthSuccess,
-  refreshToken, updateCurrentUserLocaleAndDarkTheme,
+  refreshToken,
+  updateCurrentUserLocaleAndDarkTheme,
   updateUserInfo
 } from './auth.actions';
+import {StoreStatusEnum} from 'src/app/common/const';
 
 export interface AuthState {
   token: {
@@ -33,7 +35,7 @@ export interface AuthState {
   };
   sideMenuOpened: boolean;
   error: string;
-  status: 'pending' | 'loading' | 'error' | 'success';
+  status: StoreStatusEnum;
 }
 
 export const createInitialState: AuthState = {
@@ -108,19 +110,19 @@ export const createInitialState: AuthState = {
   },
   sideMenuOpened: true,
   error: null,
-  status: 'pending',
+  status: StoreStatusEnum.Pending,
 };
 
 export const _authReducer = createReducer(
   createInitialState,
   on(authenticate, (state) => ({
     ...state,
-    status: 'loading',
+    status: StoreStatusEnum.Loading,
     }),
   ),
   on(refreshToken, (state, {payload}) => ({
     ...state,
-    status: 'loading',
+    status: StoreStatusEnum.Loading,
     token: payload.token,
     connectionString: {
       isConnectionStringExist: true,
@@ -130,7 +132,7 @@ export const _authReducer = createReducer(
   ),
   on(ConnectionStringExistCount, (state, {payload}) => ({
     ...state,
-    status: 'success',
+    status: StoreStatusEnum.Success,
     connectionString: {
       isConnectionStringExist: payload.isConnectionStringExist,
       count: payload.count,
@@ -138,7 +140,7 @@ export const _authReducer = createReducer(
     })),
   on(loadAuthSuccess, (state, {payload}) => ({
     ...state,
-    status: 'success',
+    status: StoreStatusEnum.Success,
     error: null,
     token: payload.token,
     currentUser: payload.currentUser,
@@ -149,7 +151,7 @@ export const _authReducer = createReducer(
     })),
   on(updateUserInfo, (state, {payload}) => ({
     ...state,
-    status: 'success',
+    status: StoreStatusEnum.Success,
     currentUser: {
       ...state.currentUser,
       darkTheme: payload.userSettings.model.darkTheme,
@@ -161,7 +163,7 @@ export const _authReducer = createReducer(
   })),
   on(updateCurrentUserLocaleAndDarkTheme, (state, {payload}) => ({
     ...state,
-    status: 'success',
+    status: StoreStatusEnum.Success,
     currentUser: {
       ...state.currentUser,
       darkTheme: payload.userSettings.model.darkTheme,
@@ -172,7 +174,7 @@ export const _authReducer = createReducer(
   on(loadAuthFailure, (state, {payload}) => ({
     ...state,
     error: payload,
-    status: 'error',
+    status: StoreStatusEnum.Error,
     })),
 );
 export function reducer(state: AuthState | undefined, action: any) {

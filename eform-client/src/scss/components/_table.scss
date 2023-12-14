@@ -6,11 +6,11 @@
   border: 0 !important;
   outline: 1px solid rgba(255,255,255,0.2);
 
-  .mat-standard-chip {
+  .mat-mdc-standard-chip {
     height: unset;
   }
 
-  .mat-cell.selected {
+  .mat-mdc-cell.selected {
     box-shadow: none !important;
   }
 
@@ -54,10 +54,26 @@
     }
   }
 }
+@mixin typography($theme) {
+  $typography-config: mat.get-typography-config($theme);
+  $header-text: map.get($typography-config, 'subtitle-2');
+  $normal-text: map.get($typography-config, 'body-2');
+  mtx-grid thead * {
+    @each $prop, $value in $header-text {
+      $prop: $value;
+    }
+  }
+  mtx-grid tbody * {
+    @each $prop, $value in $normal-text {
+      $prop: $value;
+    }
+  }
+}
 
 @mixin theme($theme) {
   $color-config: mat.get-color-config($theme);
   @if $color-config != null {
     @include color($theme);
+    @include typography($theme);
   }
 }

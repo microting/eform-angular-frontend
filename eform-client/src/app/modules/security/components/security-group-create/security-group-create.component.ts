@@ -6,7 +6,7 @@ import {
   Paged,
 } from 'src/app/common/models';
 import { SecurityGroupsService, AdminService } from 'src/app/common/services';
-import {MtxSelectComponent} from '@ng-matero/extensions/select';
+import {MtxSelect} from '@ng-matero/extensions/select';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -67,7 +67,7 @@ export class SecurityGroupCreateComponent implements OnInit {
       });
   }
 
-  addUserToGroup(usersSelector: MtxSelectComponent) {
+  addUserToGroup(usersSelector: MtxSelect) {
     const selectedUser = <any>usersSelector.ngSelect.selectedValues[0];
     if(selectedUser) {
       this.securityGroupUsers = [...this.securityGroupUsers, {

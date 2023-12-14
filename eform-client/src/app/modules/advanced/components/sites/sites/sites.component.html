@@ -39,12 +39,12 @@
 </ng-template>
 <ng-template #tagsTpl let-row>
   <div id="tags">
-    <mat-chip-list>
+    <mat-chip-listbox>
       <mat-chip *ngFor="let tag of row.tags" color="primary">
         <mat-icon>discount</mat-icon>
         <span>{{ getTagName(tag) }}</span>
       </mat-chip>
-    </mat-chip-list>
+    </mat-chip-listbox>
   </div>
 </ng-template>
 <ng-template #actionsTpl let-row>

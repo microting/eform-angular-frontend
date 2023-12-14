@@ -1,14 +1,13 @@
 <mat-card class="mb-2 mt-2" id="menuItemTemplate">
-  <mat-card-title style="font-size: 1.5rem; display: flex; align-items: center;">
+  <mat-card-header class="py-2 d-flex align-items-center justify-content-start">
     <mat-icon
       style="cursor: all-scroll"
       id="drag_handle{{firstLevelIndex}}_{{secondLevelIndex}}"
-      class="md-36 dragula-handle align-middle">menu
+      class="md-36 dragula-handle align-middle"
+    >menu
     </mat-icon>
     {{ item.name }}
-    {{
-    item.translations.length > 0 ? '/ ' + getMenuTranslation(item.translations) : ' '
-    }}
+    {{ item.translations.length > 0 ? '/ ' + getMenuTranslation(item.translations) : ' ' }}
     <div class="spacer"></div>
     <div>
       <button
@@ -28,42 +27,5 @@
         <mat-icon>delete</mat-icon>
       </button>
     </div>
-  </mat-card-title>
+  </mat-card-header>
 </mat-card>
-
-<!--<div class="card mb-2 mt-2" id="menuItemTemplate">
-  <div class="card-header">
-    <div class="d-flex justify-content-between align-items-center">
-      <div>
-        <i
-          class="material-icons md-36 dragula-handle align-middle"
-          style="cursor: all-scroll"
-          id="drag_handle{{firstLevelIndex}}_{{secondLevelIndex}}"
-        >
-          drag_handle
-        </i>
-        {{ item.name }}
-        {{
-          item.translations.length > 0 ? '/ ' + getMenuTranslation(item.translations) : ' '
-        }}
-      </div>
-      <div>
-        <fa-icon
-          id="editBtn"
-          icon="pen"
-          class="mr-2"
-          [fixedWidth]="true"
-          style="cursor: pointer"
-          (click)="edit()"
-        ></fa-icon>
-        <fa-icon
-          id="deleteBtn"
-          icon="trash-alt"
-          [fixedWidth]="true"
-          style="cursor: pointer"
-          (click)="delete()"
-        ></fa-icon>
-      </div>
-    </div>
-  </div>
-</div>-->

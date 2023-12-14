@@ -21,11 +21,11 @@
           *ngIf="isLanguageSelected(translation.languageId)"
           class="mb-3"
         >
-          <mat-card-title>
+          <mat-card-header>
             <h4>
               {{ getLanguage(translation.languageId).name | translate }}
             </h4>
-          </mat-card-title>
+          </mat-card-header>
           <mat-card-content>
             <div class="d-flex flex-column">
               <button *ngIf="translationPossible && visualEditorModel.translations.indexOf(translation) !== 0"
