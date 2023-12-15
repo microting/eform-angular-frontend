@@ -51,7 +51,7 @@ const marks = {
 
 const myMarks = Object.assign({}, basicMarkers, marks);
 
-const schema = new Schema({
+const schema = new Schema<'text' | 'doc' | 'paragraph' | 'horizontal_rule' | 'heading' | 'hard_break' | 'code_block' | 'list_item' | 'ordered_list' | 'bullet_list', 'link' | 'code' | 'em' | 's' | 'strong' | 'u' | 'text_color' | 'text_background_color'>({
   nodes: nodes,
   marks: myMarks,
 });

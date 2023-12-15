@@ -1,6 +1,5 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
-@import 'src/scss/libs/theme';
 
 :host .mat-mdc-button-base ~ .mat-mdc-button-base {
    margin-left: 0;
@@ -21,7 +20,7 @@ mat-mdc-tree-node.mat-mdc-tree-node {
 }
 
 .microting-uid {
-  color: mat.get-color-from-palette($eform-light-primary, 300);
+  color: mat.get-color-from-palette(mat.$indigo-palette, 300);
   margin-left: .5rem;
 }
 

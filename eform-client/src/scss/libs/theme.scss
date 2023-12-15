@@ -73,14 +73,7 @@ $eform-typography: mat.define-typography-config(
     $font-size: 16px,
     $line-height: 1.15,
     $letter-spacing: $letter-spacing,
-  )/*,
-  $input: mat.define-typography-level(
-    $font-family: $eform-font-family,
-    $font-weight: 300,
-    $font-size: inherit,
-    $line-height: 1.125,
-    $letter-spacing: normal,
-  )*/);
+  ));
 
 // Define a light theme
 $eform-light-primary: mat.define-palette(mat.$indigo-palette);

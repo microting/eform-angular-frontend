@@ -75,8 +75,8 @@
     "@sentry/angular-ivy": "^7.86.0",
     "@sentry/cli": "latest",
     "@swimlane/ngx-charts": "20.5.0",
+    "@types/ramda": "^0.29.9",
     "@userback/widget": "^0.3.1",
-    "angular2-uuid": "1.1.1",
     "build": "^0.1.4",
     "core-js": "3.33.1",
     "d3": "7.8.5",
@@ -104,6 +104,7 @@
     "run": "^1.4.0",
     "rxjs": "7.8.1",
     "tslib": "^2.6.1",
+    "uuid": "9.0.1",
     "zone.js": "^0.13.3"
   },
   "devDependencies": {
@@ -122,6 +123,7 @@
     "@types/file-saver": "2.0.5",
     "@types/mocha": "10.0.3",
     "@types/node": "20.8.9",
+    "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "@wdio/cli": "8.20.5",
