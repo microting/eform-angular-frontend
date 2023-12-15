@@ -1,4 +1,4 @@
-import {nodes as basicNodes, marks as basicMarkers} from 'ngx-editor';
+import {nodes as basicNodes, marks as basicMarkers, schema as ngxEditorSchema} from 'ngx-editor';
 import {Schema, NodeSpec, MarkSpec} from 'prosemirror-model';
 
 const paragraph: NodeSpec = {
@@ -51,7 +51,7 @@ const marks = {
 
 const myMarks = Object.assign({}, basicMarkers, marks);
 
-const schema = new Schema<'text' | 'doc' | 'paragraph' | 'horizontal_rule' | 'heading' | 'hard_break' | 'code_block' | 'list_item' | 'ordered_list' | 'bullet_list', 'link' | 'code' | 'em' | 's' | 'strong' | 'u' | 'text_color' | 'text_background_color'>({
+const schema: typeof ngxEditorSchema = new Schema({
   nodes: nodes,
   marks: myMarks,
 });

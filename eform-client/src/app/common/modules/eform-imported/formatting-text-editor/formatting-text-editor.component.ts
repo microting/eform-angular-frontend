@@ -41,7 +41,7 @@ export class FormattingTextEditorComponent implements OnInit, OnDestroy, OnChang
   }
 
   ngOnInit() {
-    this.editor = new Editor({schema});
+    this.editor = new Editor({schema: schema});
     this.form = new FormGroup({
       editorContent: new FormControl({
         value: toDoc(this.value, schema),
