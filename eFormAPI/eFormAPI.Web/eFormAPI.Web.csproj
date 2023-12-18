@@ -46,7 +46,7 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="7.0.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="8.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="7.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="7.1.0" />
     <PackageReference Include="ClosedXML" Version="0.102.1" />
