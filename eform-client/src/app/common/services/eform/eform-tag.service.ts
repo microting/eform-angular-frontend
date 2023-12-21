@@ -28,7 +28,7 @@ export class EformTagService {
     return this.apiBaseService.get(TemplateTagMethods.TagIndex);
   }
 
-  getSavedTags(): Observable<OperationDataResult<any>> {
+  getSavedTags(): Observable<OperationDataResult<{ tagList:{tagId: number, tagName: string}[] }>> {
     return this.apiBaseService.get(TemplateTagMethods.SavedTags);
   }
 

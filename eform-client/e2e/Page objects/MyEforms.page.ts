@@ -299,7 +299,7 @@ class MyEformsRowObject {
       this.eFormName = await val.getText();
     } catch (e) {}
     const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[currentPosition];
-    this.tags = await $$(`#eform-tag-` + (currentPosition) + ` span`);
+    this.tags = await this.element.$$('.mat-column-tags .tag span');
     // this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
     this.editTagsBtn = (await $$('#eform-edit-btn-' + (currentPosition)))[0];
     this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[
@@ -309,15 +309,16 @@ class MyEformsRowObject {
       currentPosition
     ].$('#eform-add-btn-' + (currentPosition));
     this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (currentPosition)))[0];
-    this.deleteBtn = (await $$('#delete-eform-btn-' + (currentPosition)))[0];
+    this.deleteBtn = await this.element.$('.mat-column-actions [id^="delete-eform-btn"]');
     this.uploadZipArchiveBtn = (await $$('#upload-zip-btn-' + (currentPosition)))[0];
-    this.goVisualEditorBtn = await $(`#edit-eform-btn-${currentPosition}`);
+    this.goVisualEditorBtn = await this.element.$('.mat-column-actions [id^="edit-eform-btn"]');
     return this;
   }
 
   async deleteEForm() {
     if(await this.deleteBtn) {
       await (await this.deleteBtn).scrollIntoView();
+      await (await this.deleteBtn).waitForClickable({timeout: 40000});
       await (await this.deleteBtn).click();
       await browser.pause(500);
       const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');

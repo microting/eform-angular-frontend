@@ -90,6 +90,7 @@ describe('My eforms', function () {
     expect(eform.tags.length).equal(tagAddedNum);
     expect(tagsTexts).to.include.members(addedAndSelectedTags.selected);
     await myEformsPage.removeTags(arrayNamesTag);
+    await browser.pause(2000);
     const countBeforeDelete = await myEformsPage.rowNum();
     await eform.deleteEForm();
     expect(countBeforeDelete - 1).eq(await myEformsPage.rowNum());

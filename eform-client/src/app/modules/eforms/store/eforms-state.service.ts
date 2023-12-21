@@ -13,6 +13,7 @@ import {
   selectEformsFilters, selectEformsPagination,
   selectEformsTagIds
 } from 'src/app/state/eform/eform.selector';
+import {AppState} from 'src/app/state/app.state';
 
 @Injectable({providedIn: 'root'})
 export class EformsStateService {
@@ -21,7 +22,7 @@ export class EformsStateService {
   private selectEformsFilters$ = this.store.select(selectEformsFilters);
 
   constructor(
-    private store: Store,
+    private store: Store<AppState>,
     private service: EFormService,
   ) {
   }

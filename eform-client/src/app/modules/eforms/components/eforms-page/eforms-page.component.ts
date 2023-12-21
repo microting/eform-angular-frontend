@@ -174,7 +174,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     // }
   }
 
-  saveTag(e: any) {
+  saveTag(e: CommonDictionaryModel) {
     const savedTagModel = new SavedTagModel();
     savedTagModel.tagId = e.id;
     savedTagModel.tagName = e.name;
@@ -186,10 +186,10 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  removeSavedTag(e: any) {
-    this.deleteSavedTagSub$ = this.eFormTagService.deleteSavedTag(e.value.id).subscribe((data) => {
+  removeSavedTag(e: CommonDictionaryModel) {
+    this.deleteSavedTagSub$ = this.eFormTagService.deleteSavedTag(e.id).subscribe((data) => {
       if (data && data.success) {
-        this.eformsStateService.addOrRemoveTagIds(e.value.id);
+        this.eformsStateService.addOrRemoveTagIds(e.id);
         this.loadAllTemplates();
       }
     });
