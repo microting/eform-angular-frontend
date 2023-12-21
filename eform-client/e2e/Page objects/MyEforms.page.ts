@@ -288,7 +288,7 @@ class MyEformsRowObject {
 
   async getRow(rowNum: number) {
     const currentPosition = rowNum - 1;
-    this.element = (await $$('#mainPageEFormsTableBody tr.mat-row'))[currentPosition];
+    this.element = (await $$('#mainPageEFormsTableBody tr.mat-mdc-row'))[currentPosition];
     this.id = +(await (await $$('#eform-id-' + (currentPosition)))[0].getText());
     try {
       const val = (await $$('#eform-created-at-' + (currentPosition)))[0];
@@ -298,14 +298,14 @@ class MyEformsRowObject {
       const val = (await $$('#eform-label-' + (currentPosition)))[0];
       this.eFormName = await val.getText();
     } catch (e) {}
-    const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-row`))[currentPosition];
+    const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[currentPosition];
     this.tags = await $$(`#eform-tag-` + (currentPosition) + ` span`);
     // this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
     this.editTagsBtn = (await $$('#eform-edit-btn-' + (currentPosition)))[0];
-    this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-row`))[
+    this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[
       currentPosition
     ].$('#eform-pairing-btn-' + (currentPosition));
-    this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-row`))[
+    this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[
       currentPosition
     ].$('#eform-add-btn-' + (currentPosition));
     this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (currentPosition)))[0];
