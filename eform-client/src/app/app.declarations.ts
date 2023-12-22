@@ -64,6 +64,10 @@ import {EFORM_MAT_DATEFNS_LOCALES} from 'src/app/common/modules/eform-date-adapt
 import {APP_INITIALIZER, ErrorHandler} from '@angular/core';
 import * as Sentry from '@sentry/angular-ivy';
 import {Router} from '@angular/router';
+import {MatPaginatorIntl} from '@angular/material/paginator';
+import {
+  CustomMatPaginatorIntl
+} from './common/modules/eform-shared/components/eform-pagination/mat_paginator_intl';
 // Guards
 
 export let providers = [
@@ -146,4 +150,8 @@ export let providers = [
   },
   BaseService,
   ApiBaseService,
+  {
+    provide: MatPaginatorIntl,
+    useClass: CustomMatPaginatorIntl,
+  },
 ];
