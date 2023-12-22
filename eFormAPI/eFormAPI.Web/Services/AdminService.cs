@@ -231,7 +231,9 @@ public class AdminService : IAdminService
                 Locale = "da",
                 EmailConfirmed = true,
                 TwoFactorEnabled = false,
-                IsGoogleAuthenticatorEnabled = false
+                IsGoogleAuthenticatorEnabled = false,
+                TimeZone = "Europe/Copenhagen",
+                Formats = "de-DE"
             };
 
             var result = await _userManager.CreateAsync(user, userRegisterModel.Password);

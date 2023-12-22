@@ -161,6 +161,16 @@ public class AuthService : IAuthService
             return new OperationDataResult<EformAuthorizeResult>(false,
                 $"Role for user {model.Username} not found");
         }
+        if (user.TimeZone == null)
+        {
+            user.TimeZone = "Europe/Copenhagen";
+            await _userManager.UpdateAsync(user);
+        }
+        if (user.Formats == null)
+        {
+            user.Formats = "de-DE";
+            await _userManager.UpdateAsync(user);
+        }
 
         return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
         {
