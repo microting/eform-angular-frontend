@@ -34,4 +34,5 @@ public class UserRegisterModel
     public string PasswordConfimation { get; set; }
     public string Role { get; set; }
     public int? GroupId { get; set; }
+    public bool IsDeviceUser { get; set; }
 }
