@@ -403,4 +403,6 @@ export const nlNL = {
   'Please fill out this field': 'Vul alstublieft dit veld in',
   'Submitted date': 'Datum ingediend',
   Languages: 'Talen',
+  'Uploading progress:': 'Voortgang uploaden:',
+  'Choose file': 'Kies bestand',
 };

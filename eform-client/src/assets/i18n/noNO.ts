@@ -403,4 +403,6 @@ export const noNO = {
   'Please fill out this field': 'Vennligst fyll ut dette feltet',
   'Submitted date': 'Innsendt dato',
   Languages: 'Språk',
+  'Uploading progress:': 'Opplastingsfremdrift:',
+  'Choose file': 'Velg Fil',
 };

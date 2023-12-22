@@ -403,4 +403,6 @@ export const isIS = {
   'Please fill out this field': 'Vinsamlegast fylltu út þennan reit',
   'Submitted date': 'Lögð fram dagsetning',
   Languages: 'Tungumál',
+  'Uploading progress:': 'Upphleðsla framvinda:',
+  'Choose file': 'Veldu skrá',
 };

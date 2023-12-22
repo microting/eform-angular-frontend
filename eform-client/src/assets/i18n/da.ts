@@ -81,7 +81,7 @@ export const da = {
   'Delete eForm': 'Slet eForm',
   'Upload ZIP archive': 'Upload ZIP-arkiv',
   'Upload template ZIP': 'Upload eForm ZIP',
-  'Uploading progress': 'Overførselsstatus',
+  'Uploading progress:': 'Upload status:',
   'Save eForm': 'Gem eForm',
   'Device user': 'Enhedsbruger',
   'Check to pair': 'Marker for at parre',
@@ -183,7 +183,7 @@ export const da = {
   'New OTP for': 'Ny OTP til',
   Loading: 'Indlæser',
   Pending: 'Afventer',
-  Upload: 'Vælg fil',
+  Upload: 'Upload',
   Role: 'Rolle',
   'New list': 'Ny liste',
   'Name is required': 'Navn skal udfyldes',
@@ -439,4 +439,5 @@ export const da = {
   'Please fill out this field': 'Udfyld venligst dette felt',
   'Submitted date': 'Indsendt dato',
   Languages: 'Sprog',
+  'Choose file': 'Vælg fil',
 };

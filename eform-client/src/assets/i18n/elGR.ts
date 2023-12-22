@@ -403,4 +403,6 @@ export const elGR = {
   'Please fill out this field': 'Παρακαλώ συμπληρώστε αυτό το πεδίο',
   'Submitted date': 'Ημερομηνία υποβολής',
   Languages: 'Γλώσσες',
+  'Uploading progress:': 'Πρόοδος μεταφόρτωσης:',
+  'Choose file': 'Επιλέξτε το αρχείο',
 };

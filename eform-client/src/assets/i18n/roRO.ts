@@ -403,4 +403,6 @@ export const roRO = {
   'Please fill out this field': 'Te rog sa completezi acest spatiu',
   'Submitted date': 'Data depunerii',
   Languages: 'Limbi',
+  'Uploading progress:': 'Progresul încărcării:',
+  'Choose file': 'Alege fișierul',
 };

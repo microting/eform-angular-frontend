@@ -403,4 +403,6 @@ export const ukUA = {
   'Please fill out this field': 'Будь ласка, заповніть це поле',
   'Submitted date': 'Дата подання',
   Languages: 'Мови',
+  'Uploading progress:': 'Хід завантаження:',
+  'Choose file': 'Виберіть файл',
 };

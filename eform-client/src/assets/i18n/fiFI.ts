@@ -403,4 +403,6 @@ export const fiFI = {
   'Please fill out this field': 'Ole hyvä ja täytä tämä kenttä',
   'Submitted date': 'Lähetyspäivämäärä',
   Languages: 'Kieli (kielet',
+  'Uploading progress:': 'Latauksen edistyminen:',
+  'Choose file': 'Valitse tiedosto',
 };

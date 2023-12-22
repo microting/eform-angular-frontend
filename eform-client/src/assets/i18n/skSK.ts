@@ -403,4 +403,6 @@ export const skSK = {
   'Please fill out this field': 'Vyplňte toto pole',
   'Submitted date': 'Dátum odoslania',
   Languages: 'Jazyky',
+  'Uploading progress:': 'Priebeh nahrávania:',
+  'Choose file': 'Vyberte súbor',
 };

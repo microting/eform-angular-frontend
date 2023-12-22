@@ -66,7 +66,7 @@ export const enUS = {
   'Delete eForm': 'Delete eForm',
   'Upload ZIP archive': 'Upload ZIP archive',
   'Upload template ZIP': 'Upload template ZIP',
-  'Uploading progress': 'Uploading progress',
+  'Uploading progress:': 'Uploading progress:',
   'Save eForm': 'Save eForm',
   'Device user': 'Device user',
   'Check to pair': 'Check to pair',
@@ -406,5 +406,6 @@ export const enUS = {
   'Value': 'Value',
   'Please fill out this field': 'Please fill out this field',
   'Submitted date': 'Submitted date',
-  'Languages': 'Languages'
+  'Languages': 'Languages',
+  'Choose file': 'Choose file',
 };

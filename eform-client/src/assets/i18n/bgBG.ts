@@ -403,4 +403,6 @@ export const bgBG = {
   'Please fill out this field': 'Моля, попълнете това поле',
   'Submitted date': 'Дата на подаване',
   Languages: 'Езици',
+  'Uploading progress:': 'Напредък на качването:',
+  'Choose file': 'Изберете файл',
 };

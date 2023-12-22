@@ -403,4 +403,6 @@ export const huHU = {
   'Please fill out this field': 'Kérem töltse ki ezt a mezőt',
   'Submitted date': 'Beküldés dátuma',
   Languages: 'Nyelvek',
+  'Uploading progress:': 'Feltöltés folyamata:',
+  'Choose file': 'Válassz fájlt',
 };

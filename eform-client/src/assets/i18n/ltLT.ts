@@ -403,4 +403,6 @@ export const ltLT = {
   'Please fill out this field': 'Užpildykite šį lauką',
   'Submitted date': 'Pateikimo data',
   Languages: 'Kalbos',
+  'Uploading progress:': 'Įkėlimo eiga:',
+  'Choose file': 'Pasirinkti failą',
 };

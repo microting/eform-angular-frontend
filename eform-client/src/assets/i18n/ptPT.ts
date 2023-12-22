@@ -403,4 +403,6 @@ export const ptPT = {
   'Please fill out this field': 'Por favor, preencha este campo',
   'Submitted date': 'Data de envio',
   Languages: 'línguas',
+  'Uploading progress:': 'Progresso do upload:',
+  'Choose file': 'Escolher arquivo',
 };

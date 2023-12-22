@@ -403,4 +403,6 @@ export const esES = {
   'Please fill out this field': 'Por favor rellene este campo',
   'Submitted date': 'Fecha de envío',
   Languages: 'Idiomas',
+  'Uploading progress:': 'Progreso de la carga:',
+  'Choose file': 'Elija el archivo',
 };

@@ -403,4 +403,6 @@ export const frFR = {
   'Please fill out this field': 'Merci de remplir ce champ',
   'Submitted date': 'Date proposée',
   Languages: 'Langues',
+  'Uploading progress:': 'Progression du téléchargement :',
+  'Choose file': 'Choisir le fichier',
 };

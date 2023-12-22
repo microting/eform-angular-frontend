@@ -403,4 +403,6 @@ export const deDE = {
   'Please fill out this field': 'Bitte füllen Sie dieses Feld aus',
   'Submitted date': 'Datum der Einreichung',
   Languages: 'Sprachen',
+  'Uploading progress:': 'Fortschritt beim Hochladen:',
+  'Choose file': 'Datei wählen',
 };

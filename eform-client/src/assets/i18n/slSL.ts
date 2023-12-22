@@ -403,4 +403,6 @@ export const slSL = {
   'Please fill out this field': 'Prosimo izpolnite to polje',
   'Submitted date': 'Datum oddaje',
   Languages: 'Jeziki',
+  'Uploading progress:': 'Napredek nalaganja:',
+  'Choose file': 'Izberite datoteko',
 };

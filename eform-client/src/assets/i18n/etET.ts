@@ -403,4 +403,6 @@ export const etET = {
   'Please fill out this field': 'Palun täitke see väli',
   'Submitted date': 'Esitamise kuupäev',
   Languages: 'Keeled',
+  'Uploading progress:': 'Üleslaadimise edenemine:',
+  'Choose file': 'Vali fail',
 };

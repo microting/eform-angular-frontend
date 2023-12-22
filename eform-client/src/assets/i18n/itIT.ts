@@ -403,4 +403,6 @@ export const itIT = {
   'Please fill out this field': 'Perfavore compila questo campo',
   'Submitted date': 'Data di invio',
   Languages: 'Le lingue',
+  'Uploading progress:': 'Avanzamento caricamento:',
+  'Choose file': 'Scegli il file',
 };

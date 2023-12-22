@@ -403,4 +403,6 @@ export const hrHR = {
   'Please fill out this field': 'Molimo ispunite ovo polje',
   'Submitted date': 'Datum predaje',
   Languages: 'Jezici',
+  'Uploading progress:': 'Napredak učitavanja:',
+  'Choose file': 'Odaberite datoteku',
 };

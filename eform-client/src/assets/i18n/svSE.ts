@@ -403,4 +403,6 @@ export const svSE = {
   'Please fill out this field': 'Var vänlig fyll i det här fältet',
   'Submitted date': 'Inlämningsdatum',
   Languages: 'språk',
+  'Uploading progress:': 'Uppladdningsförlopp:',
+  'Choose file': 'Välj FIL',
 };

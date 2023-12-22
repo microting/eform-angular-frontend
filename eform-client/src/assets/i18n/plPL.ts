@@ -403,4 +403,6 @@ export const plPL = {
   'Please fill out this field': 'Proszę wypełnić to pole',
   'Submitted date': 'Zaakceptowana Data',
   Languages: 'Języki',
+  'Uploading progress:': 'Postęp przesyłania:',
+  'Choose file': 'Wybierz plik',
 };

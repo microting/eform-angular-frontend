@@ -403,4 +403,6 @@ export const csCZ = {
   'Please fill out this field': 'Prosím, vyplňte toto pole',
   'Submitted date': 'Datum odevzdání',
   Languages: 'Jazyky',
+  'Uploading progress:': 'Průběh nahrávání:',
+  'Choose file': 'Vyberte soubor',
 };
