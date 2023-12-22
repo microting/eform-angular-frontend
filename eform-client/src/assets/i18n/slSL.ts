@@ -405,4 +405,9 @@ export const slSL = {
   Languages: 'Jeziki',
   'Uploading progress:': 'Napredek nalaganja:',
   'Choose file': 'Izberite datoteko',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Predmetov na stran',
+  'PAGINATOR.NEXT_PAGE': 'Naslednja stran',
+  'PAGINATOR.PREVIOUS_PAGE': 'Prejšnja stran',
+  'PAGINATOR.OF_LABEL': 'od',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'od',
 };

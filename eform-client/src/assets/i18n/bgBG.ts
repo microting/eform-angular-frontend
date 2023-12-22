@@ -405,4 +405,9 @@ export const bgBG = {
   Languages: 'Езици',
   'Uploading progress:': 'Напредък на качването:',
   'Choose file': 'Изберете файл',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Елементи на страница',
+  'PAGINATOR.NEXT_PAGE': 'Следваща страница',
+  'PAGINATOR.PREVIOUS_PAGE': 'Предишна страница',
+  'PAGINATOR.OF_LABEL': 'на',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'на',
 };

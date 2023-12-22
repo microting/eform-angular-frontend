@@ -405,4 +405,9 @@ export const svSE = {
   Languages: 'språk',
   'Uploading progress:': 'Uppladdningsförlopp:',
   'Choose file': 'Välj FIL',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Objekt per sida',
+  'PAGINATOR.NEXT_PAGE': 'Nästa sida',
+  'PAGINATOR.PREVIOUS_PAGE': 'Föregående sida',
+  'PAGINATOR.OF_LABEL': 'av',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'av',
 };

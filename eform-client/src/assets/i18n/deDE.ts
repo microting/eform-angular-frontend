@@ -405,4 +405,9 @@ export const deDE = {
   Languages: 'Sprachen',
   'Uploading progress:': 'Fortschritt beim Hochladen:',
   'Choose file': 'Datei wählen',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Objekte pro Seite',
+  'PAGINATOR.NEXT_PAGE': 'Nächste Seite',
+  'PAGINATOR.PREVIOUS_PAGE': 'Vorherige Seite',
+  'PAGINATOR.OF_LABEL': 'von',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'von',
 };

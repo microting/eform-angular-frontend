@@ -405,4 +405,9 @@ export const frFR = {
   Languages: 'Langues',
   'Uploading progress:': 'Progression du téléchargement :',
   'Choose file': 'Choisir le fichier',
+  'PAGINATOR.ITEMS_PER_PAGE': 'objets par page',
+  'PAGINATOR.NEXT_PAGE': 'Page suivante',
+  'PAGINATOR.PREVIOUS_PAGE': 'Page précédente',
+  'PAGINATOR.OF_LABEL': 'de',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'de',
 };

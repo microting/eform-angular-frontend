@@ -405,4 +405,9 @@ export const plPL = {
   Languages: 'Języki',
   'Uploading progress:': 'Postęp przesyłania:',
   'Choose file': 'Wybierz plik',
+  'PAGINATOR.ITEMS_PER_PAGE': 'przedmioty na stronę',
+  'PAGINATOR.NEXT_PAGE': 'Następna strona',
+  'PAGINATOR.PREVIOUS_PAGE': 'Poprzednia strona',
+  'PAGINATOR.OF_LABEL': 'z',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'z',
 };

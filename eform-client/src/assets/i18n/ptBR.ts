@@ -405,4 +405,9 @@ export const ptBR = {
   Languages: 'línguas',
   'Uploading progress:': 'Progresso do upload:',
   'Choose file': 'Escolher arquivo',
+  'PAGINATOR.ITEMS_PER_PAGE': 'itens por página',
+  'PAGINATOR.NEXT_PAGE': 'Próxima página',
+  'PAGINATOR.PREVIOUS_PAGE': 'Página anterior',
+  'PAGINATOR.OF_LABEL': 'de',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'de',
 };

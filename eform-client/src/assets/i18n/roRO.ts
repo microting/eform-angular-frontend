@@ -405,4 +405,9 @@ export const roRO = {
   Languages: 'Limbi',
   'Uploading progress:': 'Progresul încărcării:',
   'Choose file': 'Alege fișierul',
+  'PAGINATOR.ITEMS_PER_PAGE': 'articole pe pagină',
+  'PAGINATOR.NEXT_PAGE': 'Pagina următoare',
+  'PAGINATOR.PREVIOUS_PAGE': 'Pagina anterioară',
+  'PAGINATOR.OF_LABEL': 'de',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'de',
 };

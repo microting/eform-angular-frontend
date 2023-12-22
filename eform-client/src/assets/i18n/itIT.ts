@@ -405,4 +405,9 @@ export const itIT = {
   Languages: 'Le lingue',
   'Uploading progress:': 'Avanzamento caricamento:',
   'Choose file': 'Scegli il file',
+  'PAGINATOR.ITEMS_PER_PAGE': 'oggetti per pagina',
+  'PAGINATOR.NEXT_PAGE': 'Pagina successiva',
+  'PAGINATOR.PREVIOUS_PAGE': 'Pagina precedente',
+  'PAGINATOR.OF_LABEL': 'Di',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'Di',
 };

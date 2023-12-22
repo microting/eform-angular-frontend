@@ -405,4 +405,9 @@ export const hrHR = {
   Languages: 'Jezici',
   'Uploading progress:': 'Napredak učitavanja:',
   'Choose file': 'Odaberite datoteku',
+  'PAGINATOR.ITEMS_PER_PAGE': 'stavke po stranici',
+  'PAGINATOR.NEXT_PAGE': 'Sljedeća stranica',
+  'PAGINATOR.PREVIOUS_PAGE': 'Prethodna stranica',
+  'PAGINATOR.OF_LABEL': 'od',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'od',
 };

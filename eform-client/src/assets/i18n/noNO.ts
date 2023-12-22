@@ -405,4 +405,9 @@ export const noNO = {
   Languages: 'Språk',
   'Uploading progress:': 'Opplastingsfremdrift:',
   'Choose file': 'Velg Fil',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Elementer per side',
+  'PAGINATOR.NEXT_PAGE': 'Neste side',
+  'PAGINATOR.PREVIOUS_PAGE': 'Forrige side',
+  'PAGINATOR.OF_LABEL': 'av',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'av',
 };

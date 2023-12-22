@@ -440,4 +440,9 @@ export const da = {
   'Submitted date': 'Indsendt dato',
   Languages: 'Sprog',
   'Choose file': 'Vælg fil',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Rækker pr. side:',
+  'PAGINATOR.NEXT_PAGE': 'Næste side',
+  'PAGINATOR.PREVIOUS_PAGE': 'Forrige side',
+  'PAGINATOR.OF_LABEL': 'af',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'af',
 };

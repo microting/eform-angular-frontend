@@ -405,4 +405,9 @@ export const esES = {
   Languages: 'Idiomas',
   'Uploading progress:': 'Progreso de la carga:',
   'Choose file': 'Elija el archivo',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Artículos por página',
+  'PAGINATOR.NEXT_PAGE': 'Siguiente página',
+  'PAGINATOR.PREVIOUS_PAGE': 'Pagina anterior',
+  'PAGINATOR.OF_LABEL': 'de',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'de',
 };

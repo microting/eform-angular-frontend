@@ -408,4 +408,9 @@ export const enUS = {
   'Submitted date': 'Submitted date',
   'Languages': 'Languages',
   'Choose file': 'Choose file',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Items per page',
+  'PAGINATOR.NEXT_PAGE': 'Next page',
+  'PAGINATOR.PREVIOUS_PAGE': 'Previous page',
+  'PAGINATOR.OF_LABEL': 'of',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'of',
 };

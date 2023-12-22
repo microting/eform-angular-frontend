@@ -405,4 +405,9 @@ export const isIS = {
   Languages: 'Tungumál',
   'Uploading progress:': 'Upphleðsla framvinda:',
   'Choose file': 'Veldu skrá',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Atriði á síðu',
+  'PAGINATOR.NEXT_PAGE': 'Næsta síða',
+  'PAGINATOR.PREVIOUS_PAGE': 'Fyrri síða',
+  'PAGINATOR.OF_LABEL': 'af',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'af',
 };

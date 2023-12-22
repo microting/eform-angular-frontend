@@ -405,4 +405,9 @@ export const ltLT = {
   Languages: 'Kalbos',
   'Uploading progress:': 'Įkėlimo eiga:',
   'Choose file': 'Pasirinkti failą',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Prekės puslapyje',
+  'PAGINATOR.NEXT_PAGE': 'Kitas puslapis',
+  'PAGINATOR.PREVIOUS_PAGE': 'Ankstesnis puslapis',
+  'PAGINATOR.OF_LABEL': 'apie',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'apie',
 };
