@@ -41,4 +41,5 @@ public interface IAccountService
     Task<OperationResult> ResetPassword(Infrastructure.Models.ResetPasswordModel model);
     Task<OperationResult> UpdateUserSettings(UserSettingsModel model);
     OperationDataResult<TimeZonesModel> AllTimeZones();
+    Task<OperationResult> AdminChangePassword(ChangePasswordModel model);
 }

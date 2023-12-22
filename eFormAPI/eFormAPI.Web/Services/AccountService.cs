@@ -198,6 +198,21 @@ public class AccountService : IAccountService
         return new OperationResult(true, _localizationService.GetString("PasswordSuccessfullyUpdated"));
     }
 
+    public async Task<OperationResult> AdminChangePassword(ChangePasswordModel model)
+    {
+        var user = await _userService.GetCurrentUserAsync();
+
+        await _userManager.RemovePasswordAsync(user);
+        var result = await _userManager.AddPasswordAsync(user, model.NewPassword);
+        if (!result.Succeeded)
+        {
+            var errors = result.Errors.Select(x => x.Description).ToArray();
+            return new OperationResult(false, string.Join(" ", errors));
+        }
+
+        return new OperationResult(true, _localizationService.GetString("PasswordSuccessfullyUpdated"));
+    }
+
     public async Task<OperationResult> ForgotPassword(ForgotPasswordModel model)
     {
         var core = await _coreHelper.GetCore();

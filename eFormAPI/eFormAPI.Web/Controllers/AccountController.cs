@@ -83,6 +83,19 @@ public class AccountController : Controller
         return await _accountService.ChangePassword(model);
     }
 
+    [HttpPost]
+    [Route("api/account/change-password-admin")]
+    public async Task<OperationResult> ChangePasswordAdmin([FromBody] ChangePasswordModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            var allErrors = ModelState.Values.SelectMany(v => v.Errors).Select(x => x.ErrorMessage);
+            return new OperationResult(false, string.Join(" ", allErrors));
+        }
+
+        return await _accountService.AdminChangePassword(model);
+    }
+
     // POST: /account/forgot-password
     [HttpPost]
     [Route("api/account/forgot-password")]

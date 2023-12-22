@@ -24,7 +24,11 @@ import {TranslateService} from '@ngx-translate/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
-import {UserModalComponent, RemoveUserModalComponent} from 'src/app/modules/account-management/components';
+import {
+  UserModalComponent,
+  RemoveUserModalComponent,
+  UserSetPasswordComponent
+} from 'src/app/modules/account-management/components';
 import {catchError} from 'rxjs/operators';
 import {selectCurrentUserClaimsUsersUpdate, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
@@ -63,6 +67,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   userDeletedSub$: Subscription;
   newUserModalComponentAfterClosedSub$: Subscription;
   editUserModalComponentAfterClosedSub$: Subscription;
+  setUserPasswordModalComponentAfterClosedSub$: Subscription;
   public selectCurrentUserClaimsUsersCreate$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
   public selectCurrentUserClaimsUsersUpdate$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
   public selectCurrentUserClaimsUsersDelete$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
@@ -179,6 +184,14 @@ export class UsersPageComponent implements OnInit, OnDestroy {
       .subscribe(x => this.onUserDeleted(x, modalId));
   }
 
+  openSetPasswordModal(selectedUser: UserInfoModel) {
+
+    const modalId = this.dialog.open(UserSetPasswordComponent,
+      dialogConfigHelper(this.overlay, selectedUser)).id;
+    this.setUserPasswordModalComponentAfterClosedSub$ = this.dialog.getDialogById(modalId).componentInstance.userPasswordSet
+      .subscribe(x => this.dialog.getDialogById(modalId).close());
+  }
+
   checked(e: any) {
     if (e.target && e.target.checked) {
       this.adminService.enableTwoFactorAuth().pipe(catchError(
@@ -229,4 +242,20 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
   }
+
+  openResetPasswordModal(id) {
+    this.adminService.resetPassword(id).subscribe((data) => {
+      if (data.success) {
+        this.getUserInfoList();
+      }
+    });
+  }
+
+  // openSetPasswordModal(id) {
+  //   // this.adminService.resetPassword(id).subscribe((data) => {
+  //   //   if (data.success) {
+  //   //     this.getUserInfoList();
+  //   //   }
+  //   // });
+  // }
 }

@@ -21,6 +21,7 @@ export let AuthMethods = {
   CheckToken: '/auth/is-token-actual',
   Restore: '/auth/restore',
   ChangePassword: 'api/account/change-password',
+  ChangePasswordAdmin: 'api/account/change-password-admin',
   RestoreUserPassword: '/api/account/reset-password',
   EmailRecoveryLink: '/api/account/forgot-password',
   ResetAdminPassword: '/api/account/reset-admin-password',
@@ -105,6 +106,14 @@ export class AuthService {
 
   changePassword(model: ChangePasswordModel): Observable<any> {
     return this.apiBaseService.post(AuthMethods.ChangePassword, model).pipe(
+      map((result) => {
+        return result;
+      })
+    );
+  }
+
+  changePasswordAdmin(model: ChangePasswordModel): Observable<any> {
+    return this.apiBaseService.post(AuthMethods.ChangePasswordAdmin, model).pipe(
       map((result) => {
         return result;
       })
