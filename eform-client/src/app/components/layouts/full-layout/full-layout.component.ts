@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {Observable, Subscription, take, zip} from 'rxjs';
+import {Subscription, take, zip} from 'rxjs';
 import {
   AppSettingsService,
   AuthService,
@@ -22,7 +22,6 @@ import {
   selectCurrentUserLocale,
   selectIsDarkMode, selectSideMenuOpened
 } from 'src/app/state/auth/auth.selector';
-import {refreshToken} from 'src/app/state/auth/auth.actions';
 import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
@@ -144,6 +143,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             }
           }));
+          this.authStateService.setLocale();
         } else {
           const accessTokenString = accessToken.token.accessToken;
           const accessTokenRole = accessToken.token.role;
@@ -203,50 +203,6 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
     }
-    // zip(this.selectConnectionStringExists$, this.selectIsAuth$)
-    //   .subscribe(([isConnectionStringExist, isAuth]) => {
-    //     if (isConnectionStringExist && isAuth) {
-    //       this.isDarkThemeAsync$ = this.selectIsDarkMode$.subscribe(
-    //         (isDarkTheme) => {
-    //           isDarkTheme
-    //             ? this.switchToDarkTheme()
-    //             : this.switchToLightTheme();
-    //           //this.allAppMenus$ = this.store.select(rightAppMenus);
-    //           // this.menu = new MatTreeNestedDataSource<MenuItemModel>();
-    //           // this.menu.data = data;
-    //           // this.menu.data.forEach(x => {
-    //           //   x.menuItems = x.menuItems.sort((a, b) => a.position - b.position);
-    //           // });
-    //           //});
-    //         }
-    //       );
-    //       debugger;
-    //       this.authStateService.getUserSettings();
-    //       this.settingsService.getHeaderSettings().pipe(take(1)).subscribe((data => {
-    //         if (data && data.success) {
-    //           this.headerSettingsModel = data.model;
-    //           if (this.headerSettingsModel.imageLink && this.headerSettingsModel.imageLinkVisible) {
-    //             this.logoImage = 'api/images/eform-images?fileName=' + this.headerSettingsModel.imageLink;
-    //           } else if (!this.headerSettingsModel.imageLink) {
-    //             this.logoImage = '../../../assets/images/logo.png';
-    //           }
-    //         }
-    //       }));
-    //     } else {
-    //       if (accessToken != null) {
-    //         this.store.dispatch(refreshToken({payload: accessToken}));
-    //       }
-    //     }
-    //     // else if (!isConnectionStringExist && !isAuth) {
-    //     //   this.logoImage = '../../../assets/images/logo.png';
-    //     //   this.headerSettingsModel.imageLinkVisible = true;
-    //     //   this.headerSettingsModel.mainTextVisible = true;
-    //     //   this.headerSettingsModel.secondaryTextVisible = true;
-    //     //   this.headerSettingsModel.mainText = 'eForm Backend';
-    //     //   this.headerSettingsModel.secondaryText = 'No more paper-forms and back-office data entry';
-    //     //   this.router.navigate(['/connection-string']).then();
-    //     // }
-    //   });
   }
 
   @HostListener('window:resize', ['$event'])
