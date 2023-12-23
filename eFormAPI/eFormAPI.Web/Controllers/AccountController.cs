@@ -25,6 +25,7 @@ SOFTWARE.
 using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Infrastructure.Models.Settings;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.Users;
@@ -85,7 +86,7 @@ public class AccountController : Controller
 
     [HttpPost]
     [Route("api/account/change-password-admin")]
-    public async Task<OperationResult> ChangePasswordAdmin([FromBody] ChangePasswordModel model)
+    public async Task<OperationResult> ChangePasswordAdmin([FromBody] ChangePasswordAdminModel model)
     {
         if (!ModelState.IsValid)
         {

@@ -24,6 +24,7 @@ SOFTWARE.
 
 
 using System.Web;
+using eFormAPI.Web.Infrastructure.Models.Auth;
 
 namespace eFormAPI.Web.Services;
 
@@ -198,9 +199,9 @@ public class AccountService : IAccountService
         return new OperationResult(true, _localizationService.GetString("PasswordSuccessfullyUpdated"));
     }
 
-    public async Task<OperationResult> AdminChangePassword(ChangePasswordModel model)
+    public async Task<OperationResult> AdminChangePassword(ChangePasswordAdminModel model)
     {
-        var user = await _userService.GetCurrentUserAsync();
+        var user = await _userService.GetByUsernameAsync(model.Email);
 
         await _userManager.RemovePasswordAsync(user);
         var result = await _userManager.AddPasswordAsync(user, model.NewPassword);

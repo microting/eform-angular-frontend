@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Infrastructure.Models.Settings;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.Users;
@@ -41,5 +42,5 @@ public interface IAccountService
     Task<OperationResult> ResetPassword(Infrastructure.Models.ResetPasswordModel model);
     Task<OperationResult> UpdateUserSettings(UserSettingsModel model);
     OperationDataResult<TimeZonesModel> AllTimeZones();
-    Task<OperationResult> AdminChangePassword(ChangePasswordModel model);
+    Task<OperationResult> AdminChangePassword(ChangePasswordAdminModel model);
 }

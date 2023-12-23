@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {ChangePasswordModel, UserInfoModel} from 'src/app/common/models';
-import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {UserInfoModel} from 'src/app/common/models';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from 'src/app/common/services';
+import {ChangePasswordAdminModel} from 'src/app/common/models/user/change-password-admin.model';
 
 @Component({
   selector: 'app-user-set-password',
@@ -10,7 +11,7 @@ import {AuthService} from 'src/app/common/services';
 })
 export class UserSetPasswordComponent implements OnInit {
   setPasswordForm: FormGroup;
-  changePasswordModel: ChangePasswordModel = new ChangePasswordModel();
+  changePasswordModel: ChangePasswordAdminModel = new ChangePasswordAdminModel();
   userPasswordSet: EventEmitter<UserInfoModel> = new EventEmitter<UserInfoModel>();
   constructor(private authService: AuthService,
               private fb: FormBuilder,
@@ -31,7 +32,7 @@ export class UserSetPasswordComponent implements OnInit {
 
   setPassword() {
     this.changePasswordModel = this.setPasswordForm.getRawValue();
-    this.changePasswordModel.oldPassword = 'abc123456';
+    this.changePasswordModel.email = this.selectedUser.email;
     this.authService.changePasswordAdmin(this.changePasswordModel).subscribe(
       (data) => {},
     );
