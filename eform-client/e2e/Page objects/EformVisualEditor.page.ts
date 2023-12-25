@@ -1,4 +1,5 @@
-// noinspection JSIgnoredPromiseFromCall
+// noinspection JSIgnoredPromiseFromCall, ES6PreferShortImport
+
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import {
   applicationLanguages,
@@ -171,8 +172,8 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   async selectedLanguages(): Promise<number[]> {
     const selectedLanguages = [];
     for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = await $(`#languageCheckbox${i}-input`);
-      if ((await checkbox.getAttribute('aria-checked')) === true.toString()) {
+      const checkbox = await $(`#languageCheckbox${applicationLanguages[i].id}-input`);
+      if ((await checkbox.getProperty('checked')) === true) {
         selectedLanguages.push(i);
       }
     }
@@ -189,15 +190,15 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     if (checklist) {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
-          await this.clickLanguageCheckbox(true, i);
+          await this.clickLanguageCheckbox(true, checklist.translations[i].languageId);
           await browser.pause(500);
           await (
-            await this.mainCheckListNameTranslationByLanguageId(i)
+            await this.mainCheckListNameTranslationByLanguageId(checklist.translations[i].languageId)
           ).setValue(checklist.translations[i].name);
           await browser.pause(500);
           await (
             await (
-              await this.mainCheckListDescriptionTranslationByLanguageId(i)
+              await this.mainCheckListDescriptionTranslationByLanguageId(checklist.translations[i].languageId)
             ).$(`.NgxEditor__Content`)
           ).setValue(checklist.translations[i].description);
           await browser.pause(500);
@@ -395,7 +396,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   async openAllLanguages() {
     //for (let i = 0; i < applicationLanguages.length; i++) {
     for (let i = 0; i < 3; i++) { // for now only 3 languages
-      await this.clickLanguageCheckbox(true, i);
+      await this.clickLanguageCheckbox(true, i + 1);
     }
   }
 
@@ -455,18 +456,18 @@ export class MainCheckListRowObj {
       this.checklists.push(await clRow.load());
     }
     for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = await $(`#languageCheckbox${i}-input`);
-      if ((await checkbox.getAttribute('aria-checked')) !== false.toString()) {
+      const checkbox = await $(`#languageCheckbox${applicationLanguages[i].id}-input`);
+      if ((await checkbox.getProperty('checked')) === true) {
         this.translations.push({
           languageId: i,
           name:
              await (
-             await $(`#mainCheckListNameTranslation_${i}`)
+             await $(`#mainCheckListNameTranslation_${applicationLanguages[i].id}`)
            ).getValue(),
           description:
              await (
              await $(
-               `#mainCheckListDescriptionTranslation_${i} .NgxEditor__Content`
+               `#mainCheckListDescriptionTranslation_${applicationLanguages[i].id} .NgxEditor__Content`
              )
            ).getText(),
           id: null,
@@ -479,16 +480,16 @@ export class MainCheckListRowObj {
     if (checklist) {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
-          const checkbox = await $(`#languageCheckbox${i}`);
+          const checkbox = await $(`#languageCheckbox${checklist.translations[i].languageId}`);
           if ((await checkbox.getValue()) === false.toString()) {
             await (await checkbox.$('..')).click();
           }
-          await (await $(`#mainCheckListNameTranslation_${i}`)).setValue(
+          await (await $(`#mainCheckListNameTranslation_${checklist.translations[i].languageId}`)).setValue(
             checklist.translations[i].name
           );
           await (
             await $(
-              `#mainCheckListDescriptionTranslation_${i} .NgxEditor__Content`
+              `#mainCheckListDescriptionTranslation_${checklist.translations[i].languageId} .NgxEditor__Content`
             )
           ).setValue(checklist.translations[i].description);
         }
@@ -833,13 +834,13 @@ export class ChecklistRowObj {
     await browser.pause(500);
     if (translations) {
       for (let i = 0; i < translations.length; i++) {
-        await (await $(`#newChecklistNameTranslation_${i}`)).setValue(
+        await (await $(`#newChecklistNameTranslation_${translations[i].languageId}`)).setValue(
           translations[i].name
         );
         await browser.pause(500);
         await (
           await $(
-            `#newChecklistDescriptionTranslation_${i} .NgxEditor__Content`
+            `#newChecklistDescriptionTranslation_${translations[i].languageId} .NgxEditor__Content`
           )
         ).setValue(translations[i].description);
         await browser.pause(500);

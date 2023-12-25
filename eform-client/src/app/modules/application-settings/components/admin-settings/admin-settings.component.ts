@@ -10,6 +10,7 @@ import * as R from 'ramda';
 import {selectAuthIsAuth, selectBearerToken, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 import {zip} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-settings',
@@ -115,15 +116,17 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
     zip(
       this.service.getAdminSettings(),
       this.service.getUserbackWidgetIsEnabled(),
-      this.service.getLanguages()).subscribe((
-      [adminSettings,
-        othersSettings,
-        languages]) => {
-      this.adminSettingsModel = adminSettings.model;
-      this.previousAdminSettings = {...adminSettings.model};
-      this.othersSettings.isEnableWidget = othersSettings.model.isUserbackWidgetEnabled;
-      this.languagesModel = languages.model;
-    });
+      this.service.getLanguages())
+      .pipe(tap((
+        [adminSettings,
+          othersSettings,
+          languages]) => {
+        this.adminSettingsModel = R.clone(adminSettings.model);
+        this.previousAdminSettings = R.clone(adminSettings.model);
+        this.othersSettings.isEnableWidget = othersSettings.model.isUserbackWidgetEnabled;
+        this.languagesModel = languages.model;
+      }))
+      .subscribe();
     //this.appSettingsStateService.getAdminSettings();
     // this.appSettingsStateService.getAllAppSettings();
     // this.selectAllAppSettings$.subscribe((allSettings) => {

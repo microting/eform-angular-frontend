@@ -1,11 +1,11 @@
 <section>
   <mat-card-content class="p-3">
     <div class="d-grid grid-3-columns pb-2">
-      <ng-container *ngFor="let language of languages; let index = index; first as isFirst">
+      <ng-container *ngFor="let language of languages">
         <mat-checkbox
           *ngIf="displayCheckbox(language.id)"
-          id="languageCheckbox{{ index }}"
-          name="languageCheckbox{{ index }}"
+          id="languageCheckbox{{ language.id }}"
+          name="languageCheckbox{{ language.id }}"
           [ngModel]="isLanguageSelected(language.id)"
           (ngModelChange)="onAddOrDeleteLanguage(language.id)"
         >
@@ -14,7 +14,7 @@
       </ng-container>
     </div>
       <ng-container
-        *ngFor="let translation of visualEditorModel.translations; let translationIndex = index"
+        *ngFor="let translation of visualEditorModel.translations"
       >
         <ng-container *ngIf="getLanguage(translation.languageId) !== undefined">
         <mat-card
@@ -39,15 +39,15 @@
                 <input
                   matInput
                   type="text"
-                  id="mainCheckListNameTranslation_{{ translationIndex }}"
-                  name="mainCheckListNameTranslation_{{ translationIndex }}"
+                  id="mainCheckListNameTranslation_{{ translation.languageId }}"
+                  name="mainCheckListNameTranslation_{{ translation.languageId }}"
                   [(ngModel)]="translation.name"
                 />
               </mat-form-field>
               <formatting-text-editor
                 [(value)]="translation.description"
                 [placeholder]="'Description' | translate"
-                id="mainCheckListDescriptionTranslation_{{ translationIndex }}"
+                id="mainCheckListDescriptionTranslation_{{ translation.languageId }}"
               >
               </formatting-text-editor>
             </div>
