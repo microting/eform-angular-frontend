@@ -1,7 +1,7 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Input, OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -9,33 +9,46 @@ import {
   EntityItemModel,
 } from 'src/app/common/models';
 import {getRandomInt} from 'src/app/common/helpers';
+import {DragulaService} from 'ng2-dragula';
 
 @Component({
   selector: 'app-entity-list-elements',
   templateUrl: './entity-list-elements.component.html',
   styleUrls: ['./entity-list-elements.component.scss'],
 })
-export class EntityListElementsComponent implements OnInit {
-  @Input() entityItemModels: Array<EntityItemModel> = [];
+export class EntityListElementsComponent implements OnInit, OnDestroy {
+  @Input() entityItemModels: EntityItemModel[] = [];
   @Output() entityItemModelsChanged: EventEmitter<Array<EntityItemModel>> =
     new EventEmitter<Array<EntityItemModel>>();
   @Output() openEditNameModal: EventEmitter<EntityItemModel> =
     new EventEmitter<EntityItemModel>();
-  constructor() {
+  constructor(private dragulaService: DragulaService,) {
+    this.dragulaService.createGroup('ITEMS', {
+      moves: (el, container, handle) => {
+        return handle.classList.contains('dragula-handle') && container.classList.contains('dragula-container');
+      },
+      isContainer: (el) => {
+        return el.classList.contains('dragula-container');
+      },
+      accepts: (target) => {
+        return target.classList.contains('dragula-item') || target.parentElement.classList.contains('dragula-container');
+      },
+      direction: 'vertical'
+    });
   }
 
   ngOnInit() {
   }
 
-  deleteAdvEntitySelectableItem(tempId: number) {
+  deleteEntityItem(tempId: number) {
     this.entityItemModels = this.entityItemModels.filter(
       (x) => x.tempId !== tempId
     );
-    this.actualizeAdvEntitySelectableItemPositions();
+    this.actualizeEntityItemsPositions();
     this.entityItemModelsChanged.emit(this.entityItemModels);
   }
 
-  actualizeAdvEntitySelectableItemPositions() {
+  actualizeEntityItemsPositions() {
     for (let i = 0; i < this.entityItemModels.length; i++) {
       this.entityItemModels[i].entityItemUId = i.toString();
       this.entityItemModels[i].displayIndex = i;
@@ -47,7 +60,7 @@ export class EntityListElementsComponent implements OnInit {
   }
 
   dragulaPositionChanged() {
-    this.actualizeAdvEntitySelectableItemPositions();
+    this.actualizeEntityItemsPositions();
     this.entityItemModelsChanged.emit(this.entityItemModels);
   }
 
@@ -61,5 +74,9 @@ export class EntityListElementsComponent implements OnInit {
       return this.getRandId();
     }
     return randId;
+  }
+
+  ngOnDestroy(): void {
+    this.dragulaService.destroy('ITEMS');
   }
 }

@@ -1,36 +1,36 @@
-<div class="w-100 pt-2">
+<div
+  class="w-100 mt-2 dragula-container"
+  dragula="ITEMS"
+  [(dragulaModel)]="entityItemModels"
+  (dragulaModelChange)="dragulaPositionChanged()"
+>
   <div
-    dragula="ITEMS"
-    [(dragulaModel)]="entityItemModels"
-    (dragulaModelChange)="dragulaPositionChanged()"
+    *ngFor="let entityItem of entityItemModels"
+    class="d-flex justify-content-between align-items-center m-2 dragula-item"
   >
-    <div
-      *ngFor="let entityItem of entityItemModels"
-      class="d-flex justify-content-between align-items-center pb-2 pt-2">
-      <button mat-icon-button>
-        <mat-icon>drag_handle</mat-icon>
+    <mat-icon class="dragula-handle cursor-pointer">drag_handle</mat-icon>
+    <div id="createEntityItemName">{{ entityItem.name }}</div>
+    <div style="display: flex; align-items: center;">
+      <mat-icon
+        style="width: 40px;"
+        *ngIf="!entityItem.name"
+        matTooltip="{{ 'Name is required' | translate }}!"
+      >report_problem</mat-icon>
+      <button
+        style="margin-left: 0.5rem;"
+        mat-icon-button
+        color="accent"
+        id="entityItemEditBtn"
+        (click)="onOpenModalEditName(entityItem)">
+        <mat-icon >edit</mat-icon>
       </button>
-      <div id="createEntityItemName">{{ entityItem.name }}</div>
-      <div style="display: flex; align-items: center;">
-        <mat-icon
-          style="width: 40px;"
-          *ngIf="!entityItem.name"
-          matTooltip="{{ 'Name is required' | translate }}!"
-        >report_problem</mat-icon>
-        <button
-          style="margin-left: 0.5rem;"
-          mat-icon-button
-          color="accent"
-          id="entityItemEditBtn">
-          <mat-icon (click)="onOpenModalEditName(entityItem)">edit</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="warn"
-          id="entityItemDeleteBtn">
-          <mat-icon (click)="deleteAdvEntitySelectableItem(entityItem.tempId)">delete</mat-icon>
-        </button>
-      </div>
+      <button
+        mat-icon-button
+        color="warn"
+        id="entityItemDeleteBtn"
+        (click)="deleteEntityItem(entityItem.tempId)">
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
   </div>
 </div>
