@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
@@ -8,19 +8,19 @@ import {MatDialogRef} from '@angular/material/dialog';
 })
 export class EntityImportListComponent implements OnInit {
   importString = '';
-
+  public importStringSubmit: EventEmitter<string> = new EventEmitter<string>();
   constructor(public dialogRef: MatDialogRef<EntityImportListComponent>,) { }
 
   ngOnInit() {
   }
 
-
-  hide(result = false) {
-    this.dialogRef.close({result, data: result ? this.importString : ''});
+  hide() {
+    this.dialogRef.close();
   }
 
   submitImport() {
-    this.hide(true);
+    this.importStringSubmit.emit(this.importString);
+    this.hide();
   }
 
 }

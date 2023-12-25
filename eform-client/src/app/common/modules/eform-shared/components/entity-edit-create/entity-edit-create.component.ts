@@ -37,7 +37,6 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
   selectedGroupId: number;
   edit: boolean;
 
-  items = [];
   activateRouteDataSub$: Subscription;
   activateRouteParamsSub$: Subscription;
   getEntitySelectableGroupSub$: Subscription;
@@ -46,8 +45,8 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
   createEntitySearchableGroupSub$: Subscription;
   updateEntitySelectableGroupSub$: Subscription;
   updateEntitySearchableGroupSub$: Subscription;
-  entitySearchImportListComponentAfterClosedSub$: Subscription;
-  entityItemEditNameComponentAfterClosedSub$: Subscription;
+  entitySearchImportListComponentImportStringSubmitSub$: Subscription;
+  entityItemEditNameComponentChangedSub$: Subscription;
 
   get title(): string {
     return `${this.edit ? 'Edit' : 'Create'} ${this.header} list`
@@ -219,16 +218,23 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
     }
   }
 
-  onOpenEditNameModal(model: EntityItemModel) {
-    this.entityItemEditNameComponentAfterClosedSub$ = this.dialog.open(EntityItemEditNameComponent,
-      {...dialogConfigHelper(this.overlay, model), minWidth: 500})
-      .afterClosed().subscribe(data => data.result ? this.onItemUpdated(data.data) : undefined);
+  openEditNameModal(model: EntityItemModel) {
+    const modal = this.dialog.open(EntityItemEditNameComponent,
+      {...dialogConfigHelper(this.overlay, model), minWidth: 500});
+    if(this.entityItemEditNameComponentChangedSub$) {
+      this.entityItemEditNameComponentChangedSub$.unsubscribe(); // unsub before create new sub
+    }
+    this.entityItemEditNameComponentChangedSub$ = modal.componentInstance.changedEntityItem.subscribe(x => this.onItemUpdated(x));
   }
 
   openImportEntityGroup() {
-    this.entitySearchImportListComponentAfterClosedSub$ = this.dialog.open(EntityImportListComponent,
-      {...dialogConfigHelper(this.overlay), minWidth: 500})
-      .afterClosed().subscribe(data => data.result ? this.importEntityGroup(data.data) : undefined);
+    const modal = this.dialog.open(EntityImportListComponent,
+      {...dialogConfigHelper(this.overlay), minWidth: 500});
+    if(this.entitySearchImportListComponentImportStringSubmitSub$) {
+      this.entitySearchImportListComponentImportStringSubmitSub$.unsubscribe(); // unsub before create new sub
+    }
+    this.entitySearchImportListComponentImportStringSubmitSub$ = modal.componentInstance.importStringSubmit
+      .subscribe(x => this.importEntityGroup(x));
   }
 
   getRandId(): number{

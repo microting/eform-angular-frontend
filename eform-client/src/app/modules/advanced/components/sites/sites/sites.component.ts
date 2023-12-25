@@ -3,19 +3,19 @@ import {
   SiteNameDto,
   CommonDictionaryModel,
 } from 'src/app/common/models';
-import { EformsTagsComponent } from 'src/app/common/modules/eform-shared-tags/components';
-import { EformTagService, SitesService } from 'src/app/common/services';
-import { AuthStateService } from 'src/app/common/store';
+import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/components';
+import {EformTagService, SitesService} from 'src/app/common/services';
+import {AuthStateService} from 'src/app/common/store';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {SiteDeleteComponent, SiteEditComponent} from 'src/app/modules/advanced/components';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
-import {Store} from "@ngrx/store";
-import {selectCurrentUserClaimsSitesDelete, selectCurrentUserClaimsSitesUpdate} from "src/app/state/auth/auth.selector";
+import {Store} from '@ngrx/store';
+import {selectCurrentUserClaimsSitesDelete, selectCurrentUserClaimsSitesUpdate} from 'src/app/state/auth/auth.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -25,6 +25,7 @@ import {selectCurrentUserClaimsSitesDelete, selectCurrentUserClaimsSitesUpdate} 
 export class SitesComponent implements OnInit, OnDestroy {
   private selectCurrentUserClaimsSitesUpdate$ = this.authStore.select(selectCurrentUserClaimsSitesUpdate);
   private selectCurrentUserClaimsSitesDelete$ = this.authStore.select(selectCurrentUserClaimsSitesDelete);
+
   constructor(
     private authStore: Store,
     private sitesService: SitesService,
@@ -33,8 +34,10 @@ export class SitesComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private overlay: Overlay,
     private translateService: TranslateService,
-  ) {}
-  @ViewChild('modalTags', { static: true }) modalSiteTags: EformsTagsComponent;
+  ) {
+  }
+
+  @ViewChild('modalTags', {static: true}) modalSiteTags: EformsTagsComponent;
   sitesDto: Array<SiteNameDto> = [];
   availableTags: Array<CommonDictionaryModel> = [];
   siteEditComponentAfterClosedSub$: Subscription;
@@ -43,9 +46,9 @@ export class SitesComponent implements OnInit, OnDestroy {
   tableHeaders: MtxGridColumn[] = [
     {header: this.translateService.stream('Microting UID'), field: 'siteUId'},
     {header: this.translateService.stream('Name'), field: 'siteName'},
-    { header: this.translateService.stream('Units'), field: 'units', },
-    { header: this.translateService.stream('Tags'), field: 'tags', },
-  ]
+    {header: this.translateService.stream('Units'), field: 'units',},
+    {header: this.translateService.stream('Tags'), field: 'tags',},
+  ];
 
   getTagName(tagId: number): string {
     return this.availableTags.find((x) => x.id === tagId).name;
@@ -123,6 +126,10 @@ export class SitesComponent implements OnInit, OnDestroy {
         this.loadAllSites();
       }
     });
+  }
+
+  getTagsBySiteDto(site: SiteNameDto): CommonDictionaryModel[] {
+    return this.availableTags.filter(x => site.tags.some(y => y === x.id));;
   }
 
   ngOnDestroy(): void {

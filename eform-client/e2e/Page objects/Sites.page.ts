@@ -152,10 +152,14 @@ export class SitesRowObject {
       this.siteId = +(await this.element.$('#siteUUId')).getText();
       this.units = await (await this.element.$('#units')).getText();
       this.siteName = await (await this.element.$('#siteName')).getText();
-      const list = (await (await this.element
-        .$('mat-chip-list'))
-        .$$('mat-chip > span'));
-      this.tags = await Promise.all(list.map(element => element.getText()));
+      let list = [];
+      try {
+        list = (await (await this.element.$('#tags')).$$('span'));
+      }catch (e) {
+      }
+      if(list) {
+        this.tags = await Promise.all(list.map(element => element.getText()));
+      }
       // .map((element) => element.getText());
       this.editBtn = await this.element.$('#editSiteBtn');
       this.deleteBtn = await this.element.$('#deleteSiteBtn');
