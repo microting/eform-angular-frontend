@@ -15,88 +15,61 @@ describe('My eforms', () => {
     cy.get('#eformsVisualEditor').click();
     cy.wait('@getTags', { timeout: 60000 });
     // cy.wait(5000);
-    cy.get('.d-flex > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix').click();
-    cy.get('#mainCheckListNameTranslation_0').clear();
-    cy.get('#mainCheckListNameTranslation_0').type('Mit nye navn');
+    cy.get('#mainCheckListNameTranslation_1').click().clear().type('Mit nye navn');
     cy.get('#initialChecklistCreateBtn').click();
-    cy.get('#newChecklistNameTranslation_0').clear();
-    cy.get('#newChecklistNameTranslation_0').type('Første niveau');
-    cy.get('#changeChecklistSaveBtn > .mat-button-wrapper').click();
-    cy.get('#addNewNestedField0 > .mat-button-wrapper > .mat-icon').click();
-    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
-    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('gem');
+    cy.get('#newChecklistNameTranslation_0').clear().type('Første niveau');
+    cy.get('#changeChecklistSaveBtn').click();
+    cy.get('#addNewNestedField0').click();
+    cy.get('#fieldTypeSelector input').clear().type('gem');
     selectValueInNgSelectorNoSelector('GemKnap');
-    // @ts-ignore
-    cy.get('#fieldNameTranslation_0').clear('g');
-    cy.get('#fieldNameTranslation_0').type('gem');
-    // @ts-ignore
-    cy.get('#defaultValueEdit0').clear('g');
-    cy.get('#defaultValueEdit0').type('gem');
+    cy.get('#fieldNameTranslation_0').clear().type('gem');
+    cy.get('#defaultValueEdit0').clear().type('gem');
     cy.get('#changeFieldSaveBtn').click();
     cy.wait(2000);
-    cy.get('#addNewNestedField0 > .mat-button-wrapper > .mat-icon').click();
-    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
-    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('bil');
+    cy.get('#addNewNestedField0').click();
+    cy.get('#fieldTypeSelector input').clear().type('bil');
     selectValueInNgSelectorNoSelector('Billed');
-    // @ts-ignore
-    cy.get('#fieldNameTranslation_0').clear('b');
-    cy.get('#fieldNameTranslation_0').type('billede 1');
-    cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
-    cy.get('#fieldSection1 > .mb-3 > .p-2 > .d-flex > #copyBtn > .mat-button-wrapper > .mat-icon').click();
-    cy.get('#fieldSection2 > .mb-3 > .p-2 > .d-flex > #editBtn > .mat-button-wrapper > .mat-icon').click();
-    // @ts-ignore
-    cy.get('#fieldNameTranslation_0').clear('billede ');
-    cy.get('#fieldNameTranslation_0').type('billede 2');
-    cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
-    cy.get('#initialChecklistCreateBtn > .mat-button-wrapper > .mat-icon').click();
-    cy.get('#newChecklistNameTranslation_0').clear();
-    cy.get('#newChecklistNameTranslation_0').type('andet niveau');
+    cy.get('#fieldNameTranslation_0').clear().type('billede 1');
+    cy.get('#changeFieldSaveBtn').click();
+    cy.get('#fieldSection1 #copyBtn').click();
+    cy.get('#fieldSection2 #editBtn').click();
+    cy.get('#fieldNameTranslation_0').clear().type('billede 2');
+    cy.get('#changeFieldSaveBtn').click();
+    cy.get('#initialChecklistCreateBtn').click();
+    cy.get('#newChecklistNameTranslation_0').clear().type('andet niveau');
     cy.get('#changeChecklistSaveBtn').click();
     cy.wait(2000);
-    cy.get('#addNewNestedField1 > .mat-button-wrapper > .mat-icon').click();
-    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').clear();
-    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('tæller');
+    cy.get('#addNewNestedField0').click();
+    cy.get('#fieldTypeSelector input').clear().type('tæller');
     selectValueInNgSelectorNoSelector('Tæller');
     cy.get('#fieldNameTranslation_0').type('tæl op');
-    cy.get('[style="padding-right: 1rem;"] > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix').click();
-    cy.get('#minValueEdit').clear();
-    cy.get('#minValueEdit').type('2');
-    // @ts-ignore
-    cy.get('#maxValueEdit').clear('1');
-    cy.get('#maxValueEdit').type('10');
-    cy.get('app-visual-editor-additional-field-number.ng-star-inserted > :nth-child(1) > :nth-child(1) > :nth-child(1) > .mat-form-field-hide-placeholder > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix').click();
-    cy.get('#decimalCountEdit').clear();
-    cy.get('#decimalCountEdit').type('2');
-    cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
-    cy.wait(2000);
-    cy.get('#addNewNestedField1 > .mat-button-wrapper > .mat-icon').click();
-    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').click();
-    cy.get('#fieldTypeSelector > .ng-select-searchable > .ng-select-container > .ng-value-container > .ng-input > input').type('Numerisk');
-    selectValueInNgSelectorNoSelector('Numerisk');
-    cy.get('#fieldNameTranslation_0').clear();
-    cy.get('#fieldNameTranslation_0').type('skriv et tal');
-    // @ts-ignore
-    cy.get('#minValueEdit').clear('0');
-    cy.get('#minValueEdit').type('0');
-    cy.get('#maxValueEdit').clear();
-    cy.get('#maxValueEdit').type('10');
-    cy.get('#decimalCountEdit').clear();
-    cy.get('#decimalCountEdit').type('2');
+    cy.get('#minValueEdit').click().clear().type('2');
+    cy.get('#maxValueEdit').click().clear().type('10');
+    cy.get('#decimalCountEdit').click().clear().type('2');
     cy.get('#changeFieldSaveBtn').click();
     cy.wait(2000);
-    cy.get('#fields_1 > app-visual-editor-field > #fieldSection1 > .mb-3 > .p-2 > .d-flex > #copyBtn > .mat-button-wrapper > .mat-icon').click();
-    cy.get('#fields_1 > app-visual-editor-field > #fieldSection2 > .mb-3 > .p-2 > .d-flex > #editBtn > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#addNewNestedField0').click();
+    cy.get('#fieldTypeSelector input').click().type('Numerisk');
+    selectValueInNgSelectorNoSelector('Numerisk');
+    cy.get('#fieldNameTranslation_0').clear().type('skriv et tal');
+    cy.get('#minValueEdit').clear().type('0');
+    cy.get('#maxValueEdit').clear().type('10');
+    cy.get('#decimalCountEdit').clear().type('2');
+    cy.get('#changeFieldSaveBtn').click();
+    cy.wait(2000);
+    cy.get('#fields_0 #fieldSection1 #copyBtn').click();
+    cy.get('#fields_0 #fieldSection2 #editBtn').click();
     // @ts-ignore
     cy.get('#fieldNameTranslation_0').clear('skriv et tal ');
     cy.get('#fieldNameTranslation_0').type('skriv et tal 2');
-    cy.get('#changeFieldSaveBtn > .mat-button-wrapper').click();
+    cy.get('#changeFieldSaveBtn').click();
     // /api/template-visual-editor/
     cy.intercept('POST', '**/api/template-visual-editor/').as('saveeForm');
-    cy.get('#saveCreateEformBtn > .mat-button-wrapper').click();
+    cy.get('#saveCreateEformBtn').click();
     cy.wait('@saveeForm', { timeout: 60000 });
     // cy.wait(10000);
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#edit-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
+    cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
     /* ==== End Cypress Studio ==== */
   });
@@ -539,8 +512,8 @@ describe('My eforms', () => {
   afterEach(() => {
     /* ==== Generated with Cypress Studio ==== */
     cy.get('#cancelEditBtn').click();
-    cy.get('#delete-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
-    cy.get('#eFormDeleteDeleteBtn > .mat-button-wrapper').click();
+    cy.get('#delete-eform-btn-0').click();
+    cy.get('#eFormDeleteDeleteBtn').click();
     /* ==== End Cypress Studio ==== */
   });
 });

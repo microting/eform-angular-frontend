@@ -1,5 +1,5 @@
-import loginPage from 'cypress/e2e/Login.page';
-import {generateRandmString} from 'cypress/e2e/helper-functions';
+import loginPage from '../Login.page';
+import {generateRandmString} from '../helper-functions';
 
 describe('Subheader test', function () {
   beforeEach(() => {
