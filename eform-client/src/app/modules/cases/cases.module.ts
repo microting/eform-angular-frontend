@@ -1,15 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { GalleryModule } from '@ngx-gallery/core';
-import { GallerizeModule } from '@ngx-gallery/gallerize';
-import { LightboxModule } from '@ngx-gallery/lightbox';
-import { TranslateModule } from '@ngx-translate/core';
-import { EformCasesModule } from 'src/app/common/modules/eform-cases/eform-cases.module';
-import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
-import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
-import { CasesRoutingModule } from './cases.routing';
-import { CaseEditComponent, CasesTableComponent } from './components';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {GalleryModule} from 'ng-gallery';
+import {LightboxModule} from 'ng-gallery/lightbox';
+import {TranslateModule} from '@ngx-translate/core';
+import {EformCasesModule} from 'src/app/common/modules/eform-cases/eform-cases.module';
+import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
+import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
+import {CasesRoutingModule} from './cases.routing';
+import {CaseEditComponent, CasesTableComponent} from './components';
 import {MatSortModule} from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
@@ -26,7 +25,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     CasesRoutingModule,
     CommonModule,
     EformImportedModule,
-    GallerizeModule,
     LightboxModule,
     GalleryModule,
     FormsModule,
@@ -42,4 +40,5 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
   ],
   declarations: [CasesTableComponent, CaseEditComponent],
 })
-export class CasesModule {}
+export class CasesModule {
+}

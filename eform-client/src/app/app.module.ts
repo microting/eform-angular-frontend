@@ -2,10 +2,9 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {GalleryModule} from '@ngx-gallery/core';
-import {GallerizeModule} from '@ngx-gallery/gallerize';
+import {GalleryModule} from 'ng-gallery';
 import {TranslateModule} from '@ngx-translate/core';
-import {LightboxModule} from '@ngx-gallery/lightbox';
+import {LightboxModule} from 'ng-gallery/lightbox';
 import {DragulaModule} from 'ng2-dragula';
 // TODO fix ngx-mask
 //import {NgxMaskModule} from 'ngx-mask';
@@ -39,7 +38,6 @@ import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
-import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {FormsModule} from '@angular/forms';
@@ -48,7 +46,6 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {
-  EformDateFnsDateModule,
   EformMatDateFnsDateModule
 } from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
 import { StoreModule } from '@ngrx/store';
@@ -82,7 +79,6 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
   ],
   imports: [
     // Libs
-    AppRoutingModule,
     BrowserModule,
     HttpClientModule,
     StoreModule.forRoot({
@@ -103,6 +99,7 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     EffectsModule.forRoot(AppMenuEffects),
+    AppRoutingModule,
     TranslateModule.forRoot(translateConfig),
     BrowserAnimationsModule,
     ToastrModule.forRoot({
@@ -116,7 +113,6 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
     // NgxMaskModule.forRoot(),
     GalleryModule,
     LightboxModule,
-    GallerizeModule,
     NgxChartsModule,
     SharedPnModule,
     MatSidenavModule,
@@ -125,7 +121,6 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
     MatIconModule,
     MatToolbarModule,
     MatMenuModule,
-    MatChipsModule,
     MatExpansionModule,
     MtxSelectModule,
     FormsModule,

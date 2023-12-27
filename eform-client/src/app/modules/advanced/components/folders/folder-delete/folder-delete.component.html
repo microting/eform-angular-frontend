@@ -1,35 +1,35 @@
 <h3 mat-dialog-title>{{'Are you sure you want to delete the folder' | translate}}?</h3>
 <div mat-dialog-content>
-  <div class="d-flex flex-row justify-content-between">
-    <div class="d-flex flex-column">
+  <div class="d-flex flex-row justify-content-between mb-2">
+    <div class="d-flex flex-column justify-content-center">
       <p>ID</p>
     </div>
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column justify-content-center">
       <strong>{{selectedFolderDto.id}}</strong>
     </div>
   </div>
-  <div class="d-flex flex-row justify-content-between">
-    <div class="d-flex flex-column">
+  <div class="d-flex flex-row justify-content-between mb-2" *ngIf="selectedFolderDto.createdAt">
+    <div class="d-flex flex-column justify-content-center">
       <p>{{'Creation Date' | translate}}</p>
     </div>
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column justify-content-center">
       <strong><date-formatter [date]="selectedFolderDto.createdAt" [Format]="'datetime'"></date-formatter></strong>
     </div>
   </div>
-  <div class="d-flex flex-row justify-content-between">
-    <div class="d-flex flex-column">
+  <div class="d-flex flex-row justify-content-between mb-2">
+    <div class="d-flex flex-column justify-content-center">
       <p>{{'Name' | translate}}</p>
     </div>
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column justify-content-center">
       <strong>{{selectedFolderDto.name}}</strong>
     </div>
   </div>
-  <div class="d-flex flex-row justify-content-between">
-    <div class="d-flex flex-column">
+  <div class="d-flex flex-row justify-content-between mb-2">
+    <div class="d-flex flex-column justify-content-center">
       <p>{{'Description' | translate}}</p>
     </div>
-    <div class="d-flex flex-column">
-      <strong>{{selectedFolderDto.description}}</strong>
+    <div class="d-flex flex-column justify-content-center">
+      <strong [innerHTML]="selectedFolderDto.description"></strong>
     </div>
   </div>
 </div>

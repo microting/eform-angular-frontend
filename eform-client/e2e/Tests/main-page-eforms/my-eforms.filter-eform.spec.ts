@@ -59,8 +59,10 @@ describe('My eforms', function () {
     await browser.pause(500);
     let lastTag = await $('#tagSelector ng-select > div > div > .ng-value > span.ng-value-icon');
     await lastTag.click();
+    await browser.pause(500);
     lastTag = await $('#tagSelector ng-select > div > div > .ng-value > span.ng-value-icon');
     await lastTag.click();
+    await browser.pause(500);
     await myEformsPage.removeTags([testTag1, testTag2]);
     await browser.pause(500);
     for (let i = 0; i < namesEForms.length; i++) {

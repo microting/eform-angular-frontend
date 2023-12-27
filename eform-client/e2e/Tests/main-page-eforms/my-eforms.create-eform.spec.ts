@@ -89,10 +89,10 @@ describe('My eforms', function () {
     }));
     expect(eform.tags.length).equal(tagAddedNum);
     expect(tagsTexts).to.include.members(addedAndSelectedTags.selected);
-    await myEformsPage.removeTags(arrayNamesTag);
     const countBeforeDelete = await myEformsPage.rowNum();
     await eform.deleteEForm();
     expect(countBeforeDelete - 1).eq(await myEformsPage.rowNum());
+    await myEformsPage.removeTags(arrayNamesTag);
   });
   it('should not create eform if xml is empty', async () => {
     await (await myEformsPage.newEformBtn()).click();

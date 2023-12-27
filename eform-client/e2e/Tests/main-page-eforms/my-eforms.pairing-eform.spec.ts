@@ -73,15 +73,15 @@ describe('Main page', function () {
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].getText())) {
         expect(
-          await (await $(`#checkbox${users[1].siteId}-input`)).getAttribute('aria-checked'),
+          await (await $(`#checkbox${users[1].siteId}-input`)).getProperty('checked'),
           `User ${users[1].siteId} paired`
-        ).eq('false');
+        ).eq(false);
       }
       if (users[0].siteId === +siteIds[i].getText()) {
         expect(
-          await (await $(`#checkbox${users[0].siteId}-input`)).getAttribute('aria-checked'),
+          await (await $(`#checkbox${users[0].siteId}-input`)).getProperty('checked'),
           `User ${users[0].siteId} not paired`
-        ).eq('true');
+        ).eq(true);
       }
     }
     await (await myEformsPage.cancelParingBtn()).click();

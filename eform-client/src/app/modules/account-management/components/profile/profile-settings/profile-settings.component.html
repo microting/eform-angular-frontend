@@ -12,14 +12,11 @@
   </div>
 </eform-new-subheader>
 
-<div style="
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-">
-  <mat-card>
-    <mat-card-title> {{ 'Google Authenticator' | translate }}</mat-card-title>
+<div class="d-flex flex-row justify-content-between align-items-start">
+  <mat-card class="p-3">
+    <mat-card-header>
+      <mat-card-title>{{ 'Google Authenticator' | translate }}</mat-card-title>
+    </mat-card-header>
     <div class="mb-1">
       <mat-checkbox
         id="2fauthForsed"
@@ -58,8 +55,10 @@
     </ng-container>
   </mat-card>
 
-  <mat-card>
-    <mat-card-title> {{ 'General' | translate }}</mat-card-title>
+  <mat-card class="p-3">
+    <mat-card-header>
+      <mat-card-title>{{ 'General' | translate }}</mat-card-title>
+    </mat-card-header>
     <mat-form-field>
       <mat-label>{{ 'Language' | translate }}</mat-label>
       <mtx-select

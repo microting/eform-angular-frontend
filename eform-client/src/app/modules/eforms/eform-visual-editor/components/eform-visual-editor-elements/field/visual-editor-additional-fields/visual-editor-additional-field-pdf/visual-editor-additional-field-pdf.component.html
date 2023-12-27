@@ -1,8 +1,8 @@
 <ng-container *ngFor="let selectedLanguage of selectedLanguages; let i = index">
   <mat-card *ngIf="isLanguageSelected(selectedLanguage) && getLanguage(selectedLanguage) !== undefined">
-    <mat-card-title>{{
+    <mat-card-header>{{
       getLanguage(selectedLanguage).name | translate
-      }}</mat-card-title>
+      }}</mat-card-header>
     <mat-card-content>
       <input
         type="file"

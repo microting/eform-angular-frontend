@@ -113,7 +113,6 @@
 <ng-template #idTpl let-row let-i="index">
   <div class="eform-id" id="eform-id-{{i}}">{{row.id}}</div>
 </ng-template>
-
 <ng-template #createdAtTpl let-row let-i="index">
   <date-formatter
     id="eform-created-at-{{i}}"
@@ -141,12 +140,7 @@
       <ng-container
         *ngIf="checkEformPermissions(row.id, userClaimsEnum.eformsReadTags)"
       >
-        <mat-chip-list>
-          <mat-chip *ngFor="let tag of row.tags" color="primary" id="eform-tag-{{i}}">
-            <mat-icon>discount</mat-icon>
-            <span>{{ tag.value }}</span>
-          </mat-chip>
-        </mat-chip-list>
+        <app-eform-tag [tags]="getTags(row)"/>
       </ng-container>
     </div>
   </div>

@@ -1,5 +1,5 @@
-import loginPage from 'cypress/e2e/Login.page';
-import {generateRandmString} from 'cypress/e2e/helper-functions';
+import loginPage from '../Login.page';
+import {generateRandmString} from '../helper-functions';
 
 describe('Subheader test', function () {
   beforeEach(() => {
@@ -21,8 +21,8 @@ describe('Subheader test', function () {
     cy.get('#editBtn').first().click();
     cy.wait(300);
     cy.get('#editItemTranslation0_0_1').should('have.value', 'Mine eForms').type(`{selectall}{backspace}${testValue}`);
-    cy.get('#editItemSaveBtn > .mat-button-wrapper').click();
-    cy.get('#navigationMenuSaveBtn > .mat-button-wrapper').click();
+    cy.get('#editItemSaveBtn').click();
+    cy.get('#navigationMenuSaveBtn').click();
     cy.get('#my-eforms').should('have.text', ` ${testValue} `).click();
     cy.get('h2').should('have.text', ` ${testValue} `);
   });

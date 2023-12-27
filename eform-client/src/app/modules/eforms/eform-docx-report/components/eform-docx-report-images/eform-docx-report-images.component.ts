@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
-import {Gallery, GalleryItem, ImageItem} from '@ngx-gallery/core';
+import {Gallery, GalleryItem, ImageItem} from 'ng-gallery';
 import {Subscription} from 'rxjs';
-import {Lightbox} from '@ngx-gallery/lightbox';
+import {Lightbox} from 'ng-gallery/lightbox';
 import {TemplateFilesService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {catchError} from 'rxjs/operators';
@@ -54,10 +54,10 @@ export class EformDocxReportImagesComponent implements OnDestroy, OnChanges {
   openPicture(i: any) {
     this.updateGallery();
     if (this.galleryImages.length > 1) {
-      this.gallery.ref('lightbox', {counterPosition: 'bottom', loadingMode: 'indeterminate'}).load(this.galleryImages);
+      this.gallery.ref('lightbox', {counterPosition: 'bottom'/*, loadingMode: 'indeterminate'*/}).load(this.galleryImages);
       this.lightbox.open(i);
     } else {
-      this.gallery.ref('lightbox', {counter: false, loadingMode: 'indeterminate'}).load(this.galleryImages);
+      this.gallery.ref('lightbox', {counter: false/*, loadingMode: 'indeterminate'*/}).load(this.galleryImages);
       this.lightbox.open(i);
     }
   }

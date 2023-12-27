@@ -7,9 +7,9 @@
   <div class="mr-4 d-flex flex-column">
     <!-- Done at user editable -->
     <mat-card *ngIf="currentTemplate.isDoneAtEditable" class="mb-4">
-      <mat-card-title>
+      <mat-card-header>
         {{ 'Submitted date' | translate }}
-      </mat-card-title>
+      </mat-card-header>
       <mat-card-content>
         <mat-form-field>
           <mat-label>{{ 'Select date' | translate }}</mat-label>
@@ -41,9 +41,9 @@
   <!-- Right section with navigation -->
   <div>
     <mat-card style=" position: sticky; top: 0;">
-      <mat-card-title>
+      <mat-card-header>
         {{ replyElement.label }}
-      </mat-card-title>
+      </mat-card-header>
       <mat-card-content style="max-height: 50vh; overflow: auto;">
         <div
           *ngFor="let element of replyElement.elementList"

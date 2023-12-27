@@ -93,11 +93,13 @@ export class CasesStateService {
       }
       currentPagination = pagination;
     }).unsubscribe();
-    this.store.dispatch({
-      type: '[Cases] Update Cases Pagination', payload: {
-        pagination: {offset: currentPagination.offset - 1}
-      }
-    });
+    if (currentPagination.offset !== 0) {
+      this.store.dispatch({
+        type: '[Cases] Update Cases Pagination', payload: {
+          pagination: {offset: currentPagination.offset - 1}
+        }
+      });
+    }
   }
 
   onSortTable(sort: string) {

@@ -5,9 +5,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
-import { UUID } from 'angular2-uuid';
 import {
   EformVisualEditorFieldsDnDRecursionModel,
   EformVisualEditorFieldModel,
@@ -15,14 +13,13 @@ import {
   EformVisualEditorRecursionFieldModel,
   EformVisualEditorRecursionChecklistModel, LanguagesModel, LanguageModel,
 } from 'src/app/common/models';
-import { DragulaService } from 'ng2-dragula';
 import { AuthStateService } from 'src/app/common/store';
 import {
   EformFieldTypesEnum,
 } from 'src/app/common/const';
-import {selectCurrentUserLocale} from "src/app/state/auth/auth.selector";
-import {Store} from "@ngrx/store";
-import {take} from "rxjs";
+import {selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
+import {take} from 'rxjs';
 
 @Component({
   selector: 'app-visual-editor-checklist',

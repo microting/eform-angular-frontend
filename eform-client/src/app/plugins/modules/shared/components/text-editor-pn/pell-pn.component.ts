@@ -17,11 +17,11 @@ import * as pell from './pell-pn';
   encapsulation: ViewEncapsulation.None,
   styles: [
     `
-      div p {
-        margin: 0;
-        padding: 0;
-      }
-    `,
+           div p {
+             margin: 0;
+             padding: 0;
+           }
+         `,
   ],
 })
 export class PellPnComponent implements OnInit, AfterViewInit, OnChanges {

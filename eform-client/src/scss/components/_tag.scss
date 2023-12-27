@@ -1,0 +1,51 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import "../utilities";
+
+.tag {
+  min-width: $icon-size;
+  height: $icon-size;
+  color: #fff;
+  background: gray;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: fit-content;
+  padding: 5px;
+  border-radius: $icon-size;
+}
+.tag ~ .tag {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+  $background: map.get($theme, 'background');
+  $foreground: map.get($color-config, foreground);
+  $label-color: mat.get-color-from-palette($foreground, primary-text);
+
+  .tag {
+    background-color: scale-color(map.get($background, 'card'), $lightness: +15%);
+    color: $label-color;
+  }
+}
+@mixin typography($theme) {
+  $typography-config: mat.get-typography-config($theme);
+  $header-text: map.get($typography-config, 'subtitle-2');
+  $normal-text: map.get($typography-config, 'body-2');
+  .tag * {
+    @each $prop, $value in $normal-text {
+      $prop: $value;
+    }
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+    @include typography($theme);
+  }
+}

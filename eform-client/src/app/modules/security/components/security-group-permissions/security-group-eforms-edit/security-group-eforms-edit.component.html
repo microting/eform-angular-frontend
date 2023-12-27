@@ -1,7 +1,7 @@
 <h3 mat-dialog-title>{{ eformSecurityModel.label + ' ' + ('Permissions' | translate) }}</h3>
 <div mat-dialog-content>
   <mat-card *ngFor="let permissionType of eformSecurityModel.permissionTypes" class="mb-2">
-    <mat-card-title>{{permissionType.name | translate}}</mat-card-title>
+    <mat-card-header>{{permissionType.name | translate}}</mat-card-header>
     <mat-card-content>
       <div class="mb-2" *ngFor="let permission of permissionType.permissions">
         <mat-checkbox

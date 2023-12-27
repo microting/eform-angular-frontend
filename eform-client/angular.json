@@ -141,7 +141,6 @@
       }
     }
   },
-  "defaultProject": "eform-angular",
   "cli": {
     "analytics": "067abb0b-3798-4fd0-b9dc-ad2ae4b91cdf"
   }

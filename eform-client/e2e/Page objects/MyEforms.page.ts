@@ -1,21 +1,20 @@
 // noinspection JSIgnoredPromiseFromCall
 
-import { PageWithNavbarPage } from './PageWithNavbar.page';
+import {PageWithNavbarPage} from './PageWithNavbar.page';
 import XMLForEform from '../Constants/XMLForEform';
-import { FoldersRowObject } from './Folders.page';
-import { DeviceUsersRowObject } from './DeviceUsers.page';
+import {FoldersRowObject} from './Folders.page';
+import {DeviceUsersRowObject} from './DeviceUsers.page';
 import tagsModalPage from './TagsModal.page';
-//import path from 'path';
-const path = require('path');
 
 class MyEformsPage extends PageWithNavbarPage {
   constructor() {
     super();
   }
+
   public async newEformBtn(): Promise<WebdriverIO.Element> {
     const el = await $('#newEFormBtn');
-    await el.waitForDisplayed({ timeout: 40000 });
-    await el.waitForClickable({ timeout: 90000 });
+    await el.waitForDisplayed({timeout: 40000});
+    await el.waitForClickable({timeout: 90000});
     return el;
   }
 
@@ -27,22 +26,22 @@ class MyEformsPage extends PageWithNavbarPage {
 
   public async idSortBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('.eform-id-header .mat-header-cell-inner .mat-sort-header');
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({timeout: 40000});
+    await ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public async createdAtSortBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('.eform-created-at-header .mat-header-cell-inner .mat-sort-header');
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({timeout: 40000});
+    await ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public async eformNameSortBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('.eform-name-header .mat-header-cell-inner .mat-sort-header');
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({timeout: 40000});
+    await ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
@@ -53,15 +52,15 @@ class MyEformsPage extends PageWithNavbarPage {
   // Create eform modal
   public async createEformTagSelector(): Promise<WebdriverIO.Element> {
     const ele = await $('#createEFormMultiSelector');
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({timeout: 40000});
+    await ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public async importEformsBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#importEformsBtn');
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({timeout: 40000});
+    await ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
@@ -71,14 +70,14 @@ class MyEformsPage extends PageWithNavbarPage {
 
   public async xmlTextArea(): Promise<WebdriverIO.Element> {
     const ele = await $('#eFormXml');
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({timeout: 40000});
+    await ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public async createEformBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#createEformBtn');
-    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForDisplayed({timeout: 40000});
     return ele;
   }
 
@@ -88,13 +87,13 @@ class MyEformsPage extends PageWithNavbarPage {
 
   async tagEditSaveBtn(): Promise<WebdriverIO.Element> {
     const el = await $('#tagEditSaveBtn');
-    await el.waitForClickable({ timeout: 30000 });
+    await el.waitForClickable({timeout: 30000});
     return el;
   }
 
   async tagEditSaveCancelBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#tagEditSaveCancelBtn');
-    await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
@@ -102,6 +101,7 @@ class MyEformsPage extends PageWithNavbarPage {
     // ele.waitForDisplayed({timeout: 40000});
     return $('#tagSelector');
   }
+
   async saveParingBtn(): Promise<WebdriverIO.Element> {
     return $('#saveParingBtn');
   }
@@ -116,8 +116,8 @@ class MyEformsPage extends PageWithNavbarPage {
 
   async eformsManageTagsBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#eformsManageTagsBtn');
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({timeout: 40000});
+    await ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
@@ -185,7 +185,7 @@ class MyEformsPage extends PageWithNavbarPage {
   ) {
     await (await this.newEformBtn()).click();
     await browser.pause(500);
-    await (await this.xmlTextArea()).waitForDisplayed({ timeout: 40000 });
+    await (await this.xmlTextArea()).waitForDisplayed({timeout: 40000});
     // Create replaced xml and insert it in textarea
     if (!xml) {
       xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
@@ -211,19 +211,19 @@ class MyEformsPage extends PageWithNavbarPage {
         await browser.pause(500);
         const selectedTag = await $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(await selectedTag.getText());
-        await selectedTag.waitForDisplayed({ timeout: 40000 });
-        await selectedTag.waitForClickable({ timeout: 40000 });
+        await selectedTag.waitForDisplayed({timeout: 40000});
+        await selectedTag.waitForClickable({timeout: 40000});
         await selectedTag.click();
         await browser.pause(500);
-        (await $('#createEformBtn')).waitForDisplayed({ timeout: 10000 });
+        (await $('#createEformBtn')).waitForDisplayed({timeout: 10000});
         // browser.pause(5000);
       }
     }
     await (await this.createEformBtn()).click();
     // browser.pause(14000);
-    await (await this.newEformBtn()).waitForClickable({ timeout: 40000 });
+    await (await this.newEformBtn()).waitForClickable({timeout: 40000});
     await browser.pause(500);
-    return { added: addedTags, selected: selectedTags };
+    return {added: addedTags, selected: selectedTags};
   }
 
   async createNewTag(nameTag: string) {
@@ -239,7 +239,7 @@ class MyEformsPage extends PageWithNavbarPage {
       await tagsModalPage.createTag(nameTags[i]);
     }
     await tagsModalPage.closeTagModal();
-    await (await this.newEformBtn()).waitForClickable({ timeout: 40000 });
+    await (await this.newEformBtn()).waitForClickable({timeout: 40000});
   }
 
   async removeTag(nameTag: string) {
@@ -249,20 +249,20 @@ class MyEformsPage extends PageWithNavbarPage {
   async removeTags(nameTags: string[]) {
     await (await this.eformsManageTagsBtn()).click();
     const closeBtn = await tagsModalPage.tagsModalCloseBtn();
-    await closeBtn.waitForDisplayed({ timeout: 40000 });
+    await closeBtn.waitForDisplayed({timeout: 40000});
     for (let i = 0; i < nameTags.length; i++) {
       const tag = await tagsModalPage.getTagByName(nameTags[i]);
       await tag.deleteTag();
     }
     await tagsModalPage.closeTagModal();
-    await (await this.newEformBtn()).waitForClickable({ timeout: 40000 });
+    await (await this.newEformBtn()).waitForClickable({timeout: 40000});
   }
 
   async enterTagFilter(nameTag: string) {
     await (await (await this.tagSelector()).$('input')).setValue(nameTag);
     const option = await $('ng-dropdown-panel .ng-option');
-    await option.waitForDisplayed({ timeout: 10000 });
-    await option.waitForClickable({ timeout: 10000 });
+    await option.waitForDisplayed({timeout: 10000});
+    await option.waitForClickable({timeout: 10000});
     await option.click();
   }
 }
@@ -271,7 +271,8 @@ const myEformsPage = new MyEformsPage();
 export default myEformsPage;
 
 class MyEformsRowObject {
-  constructor() {}
+  constructor() {
+  }
 
   element: WebdriverIO.Element;
   id: number;
@@ -288,36 +289,39 @@ class MyEformsRowObject {
 
   async getRow(rowNum: number) {
     const currentPosition = rowNum - 1;
-    this.element = (await $$('#mainPageEFormsTableBody tr.mat-row'))[currentPosition];
+    this.element = (await $$('#mainPageEFormsTableBody tr.mat-mdc-row'))[currentPosition];
     this.id = +(await (await $$('#eform-id-' + (currentPosition)))[0].getText());
     try {
       const val = (await $$('#eform-created-at-' + (currentPosition)))[0];
       this.createdAt = new Date(await val.getText());
-    } catch (e) {}
+    } catch (e) {
+    }
     try {
       const val = (await $$('#eform-label-' + (currentPosition)))[0];
       this.eFormName = await val.getText();
-    } catch (e) {}
-    const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-row`))[currentPosition];
-    this.tags = await $$(`#eform-tag-` + (currentPosition) + ` span`);
+    } catch (e) {
+    }
+    const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[currentPosition];
+    this.tags = await this.element.$$('.mat-column-tags .tag span');
     // this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
     this.editTagsBtn = (await $$('#eform-edit-btn-' + (currentPosition)))[0];
-    this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-row`))[
+    this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[
       currentPosition
-    ].$('#eform-pairing-btn-' + (currentPosition));
-    this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-row`))[
+      ].$('#eform-pairing-btn-' + (currentPosition));
+    this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[
       currentPosition
-    ].$('#eform-add-btn-' + (currentPosition));
+      ].$('#eform-add-btn-' + (currentPosition));
     this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (currentPosition)))[0];
-    this.deleteBtn = (await $$('#delete-eform-btn-' + (currentPosition)))[0];
+    this.deleteBtn = await this.element.$('.mat-column-actions [id^="delete-eform-btn"]');
     this.uploadZipArchiveBtn = (await $$('#upload-zip-btn-' + (currentPosition)))[0];
-    this.goVisualEditorBtn = await $(`#edit-eform-btn-${currentPosition}`);
+    this.goVisualEditorBtn = await this.element.$('.mat-column-actions [id^="edit-eform-btn"]');
     return this;
   }
 
   async deleteEForm() {
-    if(await this.deleteBtn) {
+    if (await this.deleteBtn) {
       await (await this.deleteBtn).scrollIntoView();
+      await (await this.deleteBtn).waitForClickable({timeout: 40000});
       await (await this.deleteBtn).click();
       await browser.pause(500);
       const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');
@@ -329,21 +333,21 @@ class MyEformsRowObject {
   }
 
   async addTag(tag: string) {
-    await this.editTagsBtn.waitForClickable({ timeout: 40000 });
+    await this.editTagsBtn.waitForClickable({timeout: 40000});
     await this.editTagsBtn.click();
     await browser.pause(500);
     const tagSelector = await $('app-eform-edit-tags-modal #tagSelector input');
-    await tagSelector.waitForDisplayed({ timeout: 40000 });
+    await tagSelector.waitForDisplayed({timeout: 40000});
     await tagSelector.setValue(tag);
     const ngDropdownPanel = await $('.ng-option');
-    await ngDropdownPanel.waitForClickable({ timeout: 40000 });
+    await ngDropdownPanel.waitForClickable({timeout: 40000});
     await ngDropdownPanel.click();
     await (await myEformsPage.tagEditSaveBtn()).click();
     await browser.pause(500);
   }
 
   async deleteTags(tags: string[]) {
-    this.editTagsBtn.waitForClickable({ timeout: 40000 });
+    this.editTagsBtn.waitForClickable({timeout: 40000});
     this.editTagsBtn.click();
     await (await $('app-eform-edit-tags-modal #tagSelector')).waitForDisplayed({
       timeout: 40000,
@@ -408,7 +412,7 @@ class MyEformsRowObject {
     for (let i = 0; i < users.length; i++) {
       const checkbox = await $(`#checkbox${users[i].siteId}`);
       await checkbox.scrollIntoView();
-      await (await checkbox.$('..')).waitForClickable({ timeout: 40000 });
+      await (await checkbox.$('..')).waitForClickable({timeout: 40000});
       await (await checkbox.$('..')).click();
       await browser.pause(1000);
     }
@@ -419,7 +423,7 @@ class MyEformsRowObject {
   async goToVisualEditor() {
     await this.goVisualEditorBtn.click();
     await browser.pause(500);
-    await (await $('#manageTags')).waitForClickable({ timeout: 40000 });
+    await (await $('#manageTags')).waitForClickable({timeout: 40000});
     await browser.pause(500);
   }
 }

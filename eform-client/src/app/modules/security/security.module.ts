@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
-import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
-import { SecurityGroupGeneralPermissionsService } from 'src/app/common/services';
-import { SecurityRouting } from './security.routing';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {TranslateModule} from '@ngx-translate/core';
+import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
+import {SecurityGroupGeneralPermissionsService} from 'src/app/common/services';
+import {SecurityRouting} from './security.routing';
 import {
   SecurityPageComponent,
   SecurityGroupCreateComponent,
@@ -58,4 +58,5 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
   ],
   providers: [SecurityGroupGeneralPermissionsService],
 })
-export class SecurityModule {}
+export class SecurityModule {
+}

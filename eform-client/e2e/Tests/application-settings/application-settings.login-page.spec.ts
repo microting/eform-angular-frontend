@@ -11,17 +11,16 @@ describe('Application settings page - site header section', function () {
   });
   it('should change main text', async () => {
     await myEformsPage.Navbar.goToApplicationSettings();
-    const spinnerAnimation = await $('#spinner-animation');
-    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
+    await loginPage.waitForSpinnerHide(40000);
+    await (await applicationSettingsPage.LoginPage.mainTextInput()).waitForDisplayed({ timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.mainTextInput()).setValue(
       ApplicationSettingsConstants.LoginPage.customMainText
     );
-    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
     await applicationSettingsPage.save();
-    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
     await applicationSettingsPage.Navbar.logout();
-    await (await $('#username')).waitForDisplayed({ timeout: 40000 });
+    await (await loginPage.usernameInput()).waitForDisplayed({ timeout: 40000 });
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(
       await (await loginPage.mainText()).getText(),
@@ -31,19 +30,16 @@ describe('Application settings page - site header section', function () {
   it('should change secondary text', async () => {
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
-    const spinnerAnimation = await $('#spinner-animation');
-    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    //await loginPage.open('/application-settings');
-    await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
+    await loginPage.waitForSpinnerHide(40000);
+    await (await applicationSettingsPage.LoginPage.secondaryTextInput()).waitForDisplayed({ timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.secondaryTextInput()).setValue(
       ApplicationSettingsConstants.LoginPage.customSecondaryText
     );
-    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
     await applicationSettingsPage.save();
-    // browser.pause(8000);
-    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
     await applicationSettingsPage.Navbar.logout();
-    await (await $('#username')).waitForDisplayed({ timeout: 40000 });
+    await (await loginPage.usernameInput()).waitForDisplayed({ timeout: 40000 });
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(
       await (await loginPage.secondaryText()).getText(),
@@ -53,16 +49,15 @@ describe('Application settings page - site header section', function () {
   it('should hide main text', async () => {
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
-    const spinnerAnimation = await $('#spinner-animation');
-    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
+    await loginPage.waitForSpinnerHide(40000);
+    await (await applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn()).waitForDisplayed({ timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn()).click();
-    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
     await applicationSettingsPage.save();
     // browser.pause(8000);
-    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
     await applicationSettingsPage.Navbar.logout();
-    await (await $('#username')).waitForDisplayed({ timeout: 40000 });
+    await (await loginPage.usernameInput()).waitForDisplayed({ timeout: 40000 });
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(
       await (await loginPage.mainText()).isDisplayed(),
@@ -72,15 +67,14 @@ describe('Application settings page - site header section', function () {
   it('should hide secondary text', async () => {
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
-    const spinnerAnimation = await $('#spinner-animation');
-    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
+    await loginPage.waitForSpinnerHide(40000);
+    await (await applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn()).waitForDisplayed({ timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn()).click();
-    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
     await applicationSettingsPage.save();
-    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
     await applicationSettingsPage.Navbar.logout();
-    await (await $('#username')).waitForDisplayed({ timeout: 40000 });
+    await (await loginPage.usernameInput()).waitForDisplayed({ timeout: 40000 });
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(
       await (await loginPage.secondaryText()).isDisplayed(),
@@ -90,13 +84,12 @@ describe('Application settings page - site header section', function () {
   it('should hide image', async () => {
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
-    const spinnerAnimation = await $('#spinner-animation');
-    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
+    await loginPage.waitForSpinnerHide(40000);
+    await (await applicationSettingsPage.LoginPage.imageVisibilityToggler()).waitForDisplayed({ timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.imageVisibilityToggler()).click();
-    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
     await applicationSettingsPage.save();
-    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
     await browser.pause(1000);
     await applicationSettingsPage.Navbar.logout();
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
@@ -108,11 +101,10 @@ describe('Application settings page - site header section', function () {
   it('should reset main text', async () => {
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
-    const spinnerAnimation = await $('#spinner-animation');
-    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
+    await loginPage.waitForSpinnerHide(40000);
+    await (await applicationSettingsPage.SiteHeader.mainTextInput()).waitForDisplayed({ timeout: 240000 });
     await applicationSettingsPage.LoginPage.reset();
-    await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 240000 });
+    await (await applicationSettingsPage.SiteHeader.mainTextInput()).waitForDisplayed({ timeout: 240000 });
     await applicationSettingsPage.Navbar.logout();
     expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(

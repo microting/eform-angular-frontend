@@ -20,27 +20,28 @@ class LoginPage extends Page {
 
   public async usernameInput(): Promise<WebdriverIO.Element> {
     const ele = await $('#username');
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    // await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public async passwordInput(): Promise<WebdriverIO.Element> {
     const ele = await $('#password');
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    // await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public async loginBtn(): Promise<WebdriverIO.Element> {
     const ele = await $('#loginBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public async login(): Promise<void> {
-    await (await this.usernameInput()).waitForDisplayed({ timeout: 60000 });
+    await (await this.loginBtn()).waitForDisplayed({ timeout: 60000 });
+    // await (await this.usernameInput()).waitForDisplayed({ timeout: 60000 });
     await (await this.usernameInput()).setValue(LoginConstants.username);
     await (await this.passwordInput()).setValue(LoginConstants.password);
     await (await this.loginBtn()).click();

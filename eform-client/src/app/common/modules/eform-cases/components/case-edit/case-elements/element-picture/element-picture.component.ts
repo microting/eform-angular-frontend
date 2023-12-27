@@ -8,8 +8,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {Gallery, GalleryItem, ImageItem} from '@ngx-gallery/core';
-import {Lightbox} from '@ngx-gallery/lightbox';
+import {Gallery, GalleryItem, ImageItem} from 'ng-gallery';
+import {Lightbox} from 'ng-gallery/lightbox';
 import {FieldValueDto} from 'src/app/common/models';
 import {TemplateFilesService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
@@ -146,10 +146,10 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
   openPicture(i: any) {
     this.updateGallery();
     if (this.galleryImages.length > 1) {
-      this.gallery.ref('lightbox', {counterPosition: 'bottom', loadingMode: 'indeterminate'}).load(this.galleryImages);
+      this.gallery.ref('lightbox', {counterPosition: 'bottom'/*, loadingMode: 'indeterminate'*/}).load(this.galleryImages);
       this.lightbox.open(i);
     } else {
-      this.gallery.ref('lightbox', {counter: false, loadingMode: 'indeterminate'}).load(this.galleryImages);
+      this.gallery.ref('lightbox', {counter: false/*, loadingMode: 'indeterminate'*/}).load(this.galleryImages);
       this.lightbox.open(i);
     }
   }

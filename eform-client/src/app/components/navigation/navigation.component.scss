@@ -1,5 +1,3 @@
-@import "../../../scss/utilities/colors";
-
 mat-tree {
   mat-tree-node {
     display: inline-flex;
@@ -10,6 +8,7 @@ mat-tree {
       min-height: 48px;
       display: flex;
       align-items: center;
+      justify-content: start;
 
       span {
         white-space: initial;
@@ -41,12 +40,19 @@ mat-tree {
             }
           }
         }
+
+        mat-tree-node {
+          span {
+            white-space: initial;
+            //line-height: 1.4em;
+          }
+        }
       }
     }
   }
 }
 
-.mat-menu-item, .mat-icon-button {
+.mat-mdc-menu-item, .mat-mdc-icon-button {
   .mat-icon {
     width: 18px;
     height: 18px;

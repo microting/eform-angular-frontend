@@ -43,17 +43,17 @@
 }
 
 .need-wrapper {
-  mat-form-field ~ mat-form-field {
+  .mat-mdc-form-field ~ .mat-mdc-form-field {
     padding-left: 1rem;
   }
-  &.flex-column mat-form-field ~ formatting-text-editor {
+  &.flex-column mat-mdc-form-field ~ formatting-text-editor {
     padding-top: 1rem;
   }
-  &.flex-row mat-form-field ~ formatting-text-editor {
+  &.flex-row mat-mdc-form-field ~ formatting-text-editor {
     padding-left: 1rem;
   }
 
-  .mat-card ~ .mat-card {
+  .mat-mdc-card ~ .mat-mdc-card {
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
@@ -65,7 +65,7 @@
     flex-wrap: wrap;
   }
 
-  .need-wrapper mat-form-field ~ .mat-form-field {
+  .need-wrapper .mat-mdc-form-field ~ .mat-mdc-form-field {
     padding-left: 0 !important;
   }
 }

@@ -11,24 +11,20 @@
       <mat-icon>menu</mat-icon>
     </button>
     <span class="spacer"></span>
-    <mat-chip-list>
-      <mat-chip style="padding: 0" color="primary" selected>
-        <mat-chip-avatar>
-          <mat-icon>account_circle</mat-icon>
-        </mat-chip-avatar>
-        <button mat-icon-button [matMenuTriggerFor]="menu" id="sign-out-dropdown">
-          <mat-icon >settings</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <a mat-menu-item *ngFor="let menu of allAppMenus$ | async"
-             routerLink="{{ menu.link }}"
-             [id]="menu.e2EId"
-          ><!--color="{{this.router.url === menu.link ? 'accent' : ''}}"-->
-            {{ menu.name }}
-          </a>
-        </mat-menu>
-      </mat-chip>
-    </mat-chip-list>
+    <div class="tag">
+      <mat-icon>account_circle</mat-icon>
+      <button mat-icon-button [matMenuTriggerFor]="menu" id="sign-out-dropdown">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <a mat-menu-item *ngFor="let menu of allAppMenus$ | async"
+           routerLink="{{ menu.link }}"
+           [id]="menu.e2EId"
+        ><!--color="{{this.router.url === menu.link ? 'accent' : ''}}"-->
+          {{ menu.name }}
+        </a>
+      </mat-menu>
+    </div>
   </mat-toolbar>
   <mat-drawer-container autosize style="height: 100%;">
     <mat-drawer

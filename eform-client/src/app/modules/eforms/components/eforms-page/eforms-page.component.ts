@@ -7,7 +7,7 @@ import {
   TemplateListModel,
   EformPermissionsSimpleModel,
   TemplateDto,
-  CommonDictionaryModel, UserClaimsModel,
+  CommonDictionaryModel, UserClaimsModel, SharedTagModel,
 } from 'src/app/common/models';
 import {
   SecurityGroupEformsPermissionsService,
@@ -174,7 +174,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     // }
   }
 
-  saveTag(e: any) {
+  saveTag(e: CommonDictionaryModel) {
     const savedTagModel = new SavedTagModel();
     savedTagModel.tagId = e.id;
     savedTagModel.tagName = e.name;
@@ -186,10 +186,10 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  removeSavedTag(e: any) {
-    this.deleteSavedTagSub$ = this.eFormTagService.deleteSavedTag(e.value.id).subscribe((data) => {
+  removeSavedTag(e: CommonDictionaryModel) {
+    this.deleteSavedTagSub$ = this.eFormTagService.deleteSavedTag(e.id).subscribe((data) => {
       if (data && data.success) {
-        this.eformsStateService.addOrRemoveTagIds(e.value.id);
+        this.eformsStateService.addOrRemoveTagIds(e.id);
         this.loadAllTemplates();
       }
     });
@@ -310,5 +310,9 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     this.eformDuplicateConfirmModalComponentAfterClosedSub$ = this.dialog.open(EformDuplicateConfirmModalComponent, {
       ...dialogConfigHelper(this.overlay, templateDto),
     }).afterClosed().subscribe(data => data ? this.loadAllTemplates() : undefined);
+  }
+
+  getTags(template: TemplateDto): SharedTagModel[] {
+    return template.tags.map(x => ({id: x.key, name: x.value} as SharedTagModel));
   }
 }

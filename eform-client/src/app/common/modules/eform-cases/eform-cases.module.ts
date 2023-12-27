@@ -2,9 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { GalleryModule } from '@ngx-gallery/core';
-import { GallerizeModule } from '@ngx-gallery/gallerize';
-import { LightboxModule } from '@ngx-gallery/lightbox';
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
 import { TranslateModule } from '@ngx-translate/core';
 import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
@@ -54,7 +53,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     EformSharedModule,
     CommonModule,
     EformImportedModule,
-    GallerizeModule,
     LightboxModule,
     GalleryModule,
     FormsModule,

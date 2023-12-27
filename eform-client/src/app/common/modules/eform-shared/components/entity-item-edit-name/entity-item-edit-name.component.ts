@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit} from '@angular/core';
 import {EntityItemModel} from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
@@ -9,6 +9,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 })
 export class EntityItemEditNameComponent implements OnInit {
   public selectedEntityItemModel: EntityItemModel = new EntityItemModel();
+  public changedEntityItem: EventEmitter<EntityItemModel> = new EventEmitter<EntityItemModel>();
   constructor(
     public dialogRef: MatDialogRef<EntityItemEditNameComponent>,
     @Inject(MAT_DIALOG_DATA) selectedEntityItemModel: EntityItemModel = new EntityItemModel()
@@ -19,8 +20,12 @@ export class EntityItemEditNameComponent implements OnInit {
   ngOnInit() {
   }
 
-  hide(result = false) {
-    this.dialogRef.close({result, data: result ? this.selectedEntityItemModel : null});
+  hide() {
+    this.dialogRef.close();
     this.selectedEntityItemModel = new EntityItemModel();
+  }
+
+  emitValue() {
+    this.changedEntityItem.emit(this.selectedEntityItemModel);
   }
 }

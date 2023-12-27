@@ -398,7 +398,7 @@ export class FoldersRowObject {
         this.folderElement = await element.$('.microting-uid');
       } catch (e) {
       }
-      this.dropdown = await element.$('button.mat-menu-trigger');
+      this.dropdown = await element.$('button.mat-mdc-menu-trigger');
       try {
         this.name = await (await element.$('div > div')).getText();
       } catch (e) {
