@@ -64,6 +64,7 @@ import {EFORM_MAT_DATEFNS_LOCALES} from 'src/app/common/modules/eform-date-adapt
 import {APP_INITIALIZER, ErrorHandler} from '@angular/core';
 import * as Sentry from '@sentry/angular-ivy';
 import {Router} from '@angular/router';
+import {provideEnvironmentNgxMask} from "ngx-mask";
 // Guards
 
 export let providers = [
@@ -146,4 +147,5 @@ export let providers = [
   },
   BaseService,
   ApiBaseService,
+  provideEnvironmentNgxMask(),
 ];
