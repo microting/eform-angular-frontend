@@ -1,4 +1,5 @@
 import {createAction} from '@ngrx/store';
+import {CommonPaginationState, FiltrationStateModel} from 'src/app/common/models';
 
 export const loadEforms = createAction(
   '[Eform] Load Eforms'
@@ -16,10 +17,10 @@ export const loadEformsFailure = createAction(
 
 export const updateEformFilters = createAction(
   '[Eform] Update Eform Filters',
-  (payload: any) => ({payload})
+  (payload: { filters: FiltrationStateModel }) => ({payload})
 );
 
 export const updateEformPagination = createAction(
   '[Eform] Update Eform Pagination',
-  (payload: any) => ({payload})
+  (payload: { pagination: CommonPaginationState }) => ({payload})
 );

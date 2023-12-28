@@ -1,9 +1,13 @@
-import {createSelector} from '@ngrx/store';
-import {AuthState} from 'src/app/state/auth/auth.recuder';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {AUTH_REDUCER_NODE, AuthState} from 'src/app/state/auth/auth.recuder';
 import {AppState} from 'src/app/state/app.state';
+
+export const authFeatureSelector = createFeatureSelector<AuthState>(AUTH_REDUCER_NODE);
 
 export const selectAuth = (state: AppState) => state.auth;
 
+export const selectAuthState
+  = createSelector(selectAuth, (state: AuthState) => state);
 export const selectAuthIsLoading
   = createSelector(selectAuth, (state: AuthState) => state.status === 'loading');
 export const selectAuthIsSuccess

@@ -1,6 +1,5 @@
 import {createSelector} from '@ngrx/store';
-import {AppMenuState} from 'src/app/state/app-menu/app-menu.reducer';
-import {AppState} from 'src/app/state/app.state';
+import {AppMenuState, AppState} from '../';
 
 export const selectAppMenus = (state: AppState) => state.appMenus;
 export const rightAppMenus = createSelector(

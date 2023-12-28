@@ -1,8 +1,9 @@
 import {createAction} from '@ngrx/store';
+import {AdminSettingsModel, LanguagesModel, UserbackWidgetSettingModel} from 'src/app/common/models';
 
 export const updateAdminSettings = createAction(
   '[AppSettings] Update AdminSettings',
-  (payload: any) => ({payload})
+  (payload: AdminSettingsModel) => ({payload})
 );
 
 export const resetLoginPageSettings = createAction(
@@ -15,15 +16,15 @@ export const resetHeaderSettings = createAction(
 
 export const updateOthersSettings = createAction(
   '[AppSettings] Update Others Settings',
-  (payload: any) => ({payload})
+  (payload: UserbackWidgetSettingModel) => ({payload})
 );
 
 export const updateLanguages = createAction(
   '[AppSettings] Update Languages',
-  (payload: any) => ({payload})
+  (payload: LanguagesModel) => ({payload})
 );
 
 export const updateUserbackWidgetSetting = createAction(
   '[AppSettings] Update Userback Widget Setting',
-  (payload: any) => ({payload})
+  (payload: {isUserbackWidgetEnabled?: boolean, userbackToken?: string}) => ({payload})
 );

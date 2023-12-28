@@ -1,64 +1,77 @@
-import { Injectable } from '@angular/core';
-import { CasesService, EFormService } from 'src/app/common/services';
-import {Observable, zip} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {CasesService, EFormService} from 'src/app/common/services';
+import {Observable} from 'rxjs';
 import {
-  CaseListModel, CasesRequestModel, CommonPaginationState, FiltrationStateModel,
+  CaseListModel,
+  CasesRequestModel,
+  CommonPaginationState,
+  FiltrationStateModel,
   OperationDataResult,
   PaginationModel,
   TemplateDto,
 } from 'src/app/common/models';
-import { updateTableSort } from 'src/app/common/helpers';
-import { map } from 'rxjs/operators';
+import {updateTableSort} from 'src/app/common/helpers';
+import {filter, map, tap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
-import {selectCasesFilters, selectCasesPagination, selectCasesTagIds} from 'src/app/state/cases/cases.selector';
+import {
+  updateCasesFilters,
+  updateCasesPagination,
+  selectCasesFilters,
+  selectCasesPagination
+} from 'src/app/state';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class CasesStateService {
   private selectCasesPagination$ = this.store.select(selectCasesPagination);
   private selectCasesFilters$ = this.store.select(selectCasesFilters);
+
   constructor(
     private store: Store,
     private service: CasesService,
     private eFormService: EFormService
-  ) {}
+  ) {
+    this.selectCasesPagination$.pipe(
+      filter(x => !!x),
+      tap(x => this.currentPagination = x)
+    ).subscribe();
+
+    this.selectCasesFilters$.pipe(
+      filter(x => !!x),
+      tap(x => this.currentFiltration = x)
+    ).subscribe();
+  }
 
   private templateId: number;
+  private currentPagination: CommonPaginationState;
+  private currentFiltration: FiltrationStateModel;
 
   loadTemplateData(): Observable<OperationDataResult<TemplateDto>> {
     return this.eFormService.getSingle(this.templateId);
   }
 
   getCases(): Observable<OperationDataResult<CaseListModel>> {
-    let casesRequestModel = new CasesRequestModel();
-    zip(this.selectCasesPagination$, this.selectCasesFilters$).subscribe(([pagination, filters]) => {
-      if (pagination === undefined || filters === undefined) {
-        return;
-      }
-      casesRequestModel = {
-        sort: pagination.sort,
-        isSortDsc: pagination.isSortDsc,
-        offset: pagination.offset,
-        pageSize: pagination.pageSize,
-        nameFilter: filters.nameFilter,
-        templateId: this.templateId,
-      };
-    }).unsubscribe();
+    const casesRequestModel: CasesRequestModel = {
+      sort: this.currentPagination.sort,
+      isSortDsc: this.currentPagination.isSortDsc,
+      offset: this.currentPagination.offset,
+      pageSize: this.currentPagination.pageSize,
+      nameFilter: this.currentFiltration.nameFilter,
+      templateId: this.templateId,
+    };
     return this.service.getCases(casesRequestModel).pipe(
       map((response) => {
         if (response && response.success && response.model) {
-          this.store.dispatch({
-            type: '[Cases] Update Cases Pagination', payload: {
+          this.store.dispatch(
+            updateCasesPagination({
               pagination: {
                 sort: casesRequestModel.sort,
                 isSortDsc: casesRequestModel.isSortDsc,
                 offset: casesRequestModel.offset,
                 pageSize: casesRequestModel.pageSize,
-                nameFilter: casesRequestModel.nameFilter,
-                templateId: casesRequestModel.templateId,
+                pageIndex: this.currentPagination.pageIndex,
                 total: response.model.numOfElements,
               }
-            }
-          });
+            }));
         }
         return response;
       })
@@ -70,84 +83,48 @@ export class CasesStateService {
   }
 
   updateNameFilter(nameFilter: string) {
-    let currentFilters: FiltrationStateModel;
-    this.selectCasesFilters$.subscribe((filters) => {
-      if (filters === undefined) {
-        return;
-      }
-      currentFilters = filters;
-    }).unsubscribe();
-    this.store.dispatch({
-      type: '[Cases] Update Cases Filters', payload: {
-        filters: {nameFilter: nameFilter, tagIds: currentFilters.tagIds}
-      }
-    });
+    this.store.dispatch(updateCasesFilters({
+      filters: {nameFilter: nameFilter, tagIds: this.currentFiltration.tagIds}
+    }));
   }
 
 
   onDelete() {
-    let currentPagination: CommonPaginationState;
-    this.selectCasesPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
-    if (currentPagination.offset !== 0) {
-      this.store.dispatch({
-        type: '[Cases] Update Cases Pagination', payload: {
-          pagination: {offset: currentPagination.offset - 1}
-        }
-      });
+    if (this.currentPagination.offset !== 0) {
+      this.store.dispatch(
+        updateCasesPagination({
+          pagination: {
+            ...this.currentPagination,
+            offset: this.currentPagination.offset - 1,
+          }
+        }));
     }
   }
 
   onSortTable(sort: string) {
-    let currentPagination: CommonPaginationState;
-    this.selectCasesPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
     const localPageSettings = updateTableSort(
       sort,
-      currentPagination.sort,
-      currentPagination.isSortDsc
+      this.currentPagination.sort,
+      this.currentPagination.isSortDsc
     );
-    this.store.dispatch({
-      type: '[Cases] Update Cases Pagination', payload: {
+    this.store.dispatch(
+      updateCasesPagination({
         pagination: {
-          offset: currentPagination.offset,
-          pageSize: currentPagination.pageSize,
-          pageIndex: currentPagination.pageIndex,
+          ...this.currentPagination,
           sort: localPageSettings.sort,
           isSortDsc: localPageSettings.isSortDsc,
-          total: currentPagination.total,
         }
-      }
-    });
+      }));
   }
 
   updatePagination(pagination: PaginationModel) {
-    let currentPagination: CommonPaginationState;
-    this.selectCasesPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
-    this.store.dispatch({
-      type: '[Cases] Update Cases Pagination', payload: {
+    this.store.dispatch(
+      updateCasesPagination({
         pagination: {
-          sort: currentPagination.sort,
-          isSortDsc: currentPagination.isSortDsc,
+          ...this.currentPagination,
           offset: pagination.offset,
-          pageIndex: currentPagination.pageIndex,
           pageSize: pagination.pageSize,
-          total: currentPagination.total,
         }
-      }
-    });
+      }));
   }
 }

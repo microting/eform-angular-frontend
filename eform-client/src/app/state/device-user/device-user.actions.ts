@@ -1,4 +1,5 @@
 import {createAction} from '@ngrx/store';
+import {DeviceUsersFilters} from 'src/app/state';
 
 export const loadDeviceUsers = createAction(
   '[DeviceUser] Load DeviceUsers'
@@ -6,5 +7,5 @@ export const loadDeviceUsers = createAction(
 
 export const updateDeviceUserFilters = createAction(
   '[DeviceUser] Update DeviceUser Filters',
-  (payload: any) => ({payload})
+  (payload: DeviceUsersFilters) => ({payload})
 );

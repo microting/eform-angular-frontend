@@ -1,4 +1,5 @@
 import {createAction} from '@ngrx/store';
+import {CommonPaginationState, FiltrationStateModel} from 'src/app/common/models';
 
 export const loadCases = createAction(
   '[Cases] Load Cases'
@@ -16,10 +17,10 @@ export const loadCasesFailure = createAction(
 
 export const updateCasesFilters = createAction(
   '[Cases] Update Cases Filters',
-  (payload: any) => ({payload})
+  (payload: { filters: FiltrationStateModel }) => ({payload})
 );
 
 export const updateCasesPagination = createAction(
   '[Cases] Update Cases Pagination',
-  (payload: any) => ({payload})
+  (payload: { pagination: CommonPaginationState }) => ({payload})
 );

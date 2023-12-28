@@ -2,33 +2,39 @@ import {UserClaimsModel} from 'src/app/common/models';
 import {createReducer, on} from '@ngrx/store';
 import {
   authenticate,
-  ConnectionStringExistCount,
-  loadAuthFailure,
-  loadAuthSuccess,
+  connectionStringExistCount,
+  loadAuthFailure, loadAuthState,
+  loadAuthSuccess, logout,
   refreshToken,
-  updateCurrentUserLocaleAndDarkTheme,
+  updateCurrentUserLocaleAndDarkTheme, updateSideMenuOpened,
   updateUserInfo
-} from './auth.actions';
+} from './';
 import {StoreStatusEnum} from 'src/app/common/const';
 
+export const AUTH_REDUCER_NODE = 'auth';
+
+export interface AuthCurrentUser {
+  firstName: string;
+  lastName: string;
+  id: number;
+  userName: string;
+  locale?: string;
+  languageId?: number;
+  darkTheme?: boolean;
+  loginRedirectUrl?: string;
+  claims?: UserClaimsModel;
+}
+
+export interface AuthToken {
+  accessToken: string;
+  expiresIn: any;
+  tokenType: string;
+  role: string;
+}
+
 export interface AuthState {
-  token: {
-    accessToken: string;
-    expiresIn: any;
-    tokenType: string;
-    role: string;
-  };
-  currentUser: {
-    firstName: string;
-    lastName: string;
-    id: number;
-    userName: string;
-    locale: string;
-    languageId: number;
-    darkTheme: boolean;
-    loginRedirectUrl: string;
-    claims: UserClaimsModel;
-  };
+  token: AuthToken;
+  currentUser: AuthCurrentUser;
   connectionString: {
     isConnectionStringExist: boolean;
     count: number;
@@ -38,7 +44,7 @@ export interface AuthState {
   status: StoreStatusEnum;
 }
 
-export const createInitialState: AuthState = {
+export const authInitialState: AuthState = {
   token: {
     accessToken: '',
     expiresIn: '',
@@ -113,24 +119,14 @@ export const createInitialState: AuthState = {
   status: StoreStatusEnum.Pending,
 };
 
-export const _authReducer = createReducer(
-  createInitialState,
+const _authReducer = createReducer(
+  authInitialState,
   on(authenticate, (state) => ({
     ...state,
     status: StoreStatusEnum.Loading,
     }),
   ),
-  on(refreshToken, (state, {payload}) => ({
-    ...state,
-    status: StoreStatusEnum.Loading,
-    token: payload.token,
-    connectionString: {
-      isConnectionStringExist: true,
-      count: 2,
-    },
-    }),
-  ),
-  on(ConnectionStringExistCount, (state, {payload}) => ({
+  on(connectionStringExistCount, (state, {payload}) => ({
     ...state,
     status: StoreStatusEnum.Success,
     connectionString: {
@@ -176,7 +172,17 @@ export const _authReducer = createReducer(
     error: payload,
     status: StoreStatusEnum.Error,
     })),
+  on(loadAuthState, (_, {payload}) => ({
+    ...payload.state,
+  })),
+  on(logout, () => ({
+    ...authInitialState
+  })),
+  on(updateSideMenuOpened, (state, {payload}) => ({
+    ...state,
+    sideMenuOpened: payload.sideMenuIsOpened,
+  })),
 );
-export function reducer(state: AuthState | undefined, action: any) {
+export function authReducer(state: AuthState | undefined, action: any) {
   return _authReducer(state, action);
 }

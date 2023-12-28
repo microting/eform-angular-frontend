@@ -1,16 +1,18 @@
 import {createAction} from '@ngrx/store';
+import {CommonPaginationState} from 'src/app/common/models';
+import {EntitySearchFiltration} from 'src/app/state';
 
 export const updateEntitySearchFilters = createAction(
   '[EntitySearch] Update EntitySearch Filters',
-  (payload: any) => ({payload})
+  (payload: { filters: EntitySearchFiltration }) => ({payload})
 );
 
 export const updateEntitySearchPagination = createAction(
   '[EntitySearch] Update EntitySearch Pagination',
-  (payload: any) => ({payload})
+  (payload: {pagination: CommonPaginationState}) => ({payload})
 );
 
 export const updateEntitySearchTotal = createAction(
   '[EntitySearch] Update EntitySearch Total',
-  (payload: any) => ({payload})
+  (payload: { total: number }) => ({payload})
 );

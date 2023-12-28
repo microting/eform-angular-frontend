@@ -2,29 +2,28 @@ import { Injectable } from '@angular/core';
 import { DeviceUserService } from 'src/app/common/services';
 import { OperationDataResult, SiteDto } from 'src/app/common/models';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {filter, map, tap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
-import {selectDeviceUsersFilters} from 'src/app/state/device-user/device-user.selector';
+import {updateDeviceUserFilters, selectDeviceUsersFilters, DeviceUsersFilters} from 'src/app/state';
 
 @Injectable({ providedIn: 'root' })
 export class DeviceUsersStateService {
   private selectDeviceUsersFilters$ = this.store.select(selectDeviceUsersFilters);
+  currentFilters: DeviceUsersFilters;
   constructor(
     private service: DeviceUserService,
     private store: Store,
-  ) {}
+  ) {
+    this.selectDeviceUsersFilters$.pipe(
+      filter(x => !!x),
+      tap(x => this.currentFilters = x)
+    ).subscribe()
+  }
 
   getDeviceUsersFiltered(): Observable<OperationDataResult<Array<SiteDto>>> {
-    let currentFilters: any;
-    this.selectDeviceUsersFilters$.subscribe((filters) => {
-      if (filters === undefined) {
-        return;
-      }
-      currentFilters = filters;
-    }).unsubscribe();
     return this.service
       .getDeviceUsersFiltered({
-        ...currentFilters,
+        ...this.currentFilters,
       })
       .pipe(
         map((response) => {
@@ -34,6 +33,6 @@ export class DeviceUsersStateService {
   }
 
   updateNameFilter(nameFilter: string) {
-    this.store.dispatch({type: '[DeviceUser] Update DeviceUser Filters', payload: {filters: {nameFilter: nameFilter}}});
+    this.store.dispatch(updateDeviceUserFilters({nameFilter: nameFilter}));
   }
 }

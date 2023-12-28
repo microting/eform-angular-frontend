@@ -1,4 +1,10 @@
 import {createAction} from '@ngrx/store';
+import {
+  OperationDataResult,
+  UserClaimsModel,
+  UserSettingsModel
+} from 'src/app/common/models';
+import {AuthCurrentUser, AuthState, AuthToken} from 'src/app/state';
 
 
 export const authenticate = createAction(
@@ -8,7 +14,6 @@ export const authenticate = createAction(
 
 export const refreshToken = createAction(
   '[Auth] Refresh Token',
-  (payload: any) => ({payload})
 );
 
 export const updateUserLocale = createAction(
@@ -25,28 +30,37 @@ export const updateDarkTheme = createAction(
 );
 export const updateUserInfo = createAction(
   '[Auth] Update User Info',
-  (payload: any) => ({payload})
+  (payload: { userSettings: OperationDataResult<UserSettingsModel>, userClaims: UserClaimsModel }) => ({payload})
 );
 export const updateSideMenuOpened = createAction(
   '[Auth] Update Side Menu Opened',
-  (payload: any) => ({payload})
+  (payload: { sideMenuIsOpened: boolean }) => ({payload})
 );
 export const ConnectionStringExist = createAction(
   '[Auth] Connection String Exist',
   (payload: any) => ({payload})
 );
-export const ConnectionStringExistCount = createAction(
+export const connectionStringExistCount = createAction(
   '[Auth] Connection String Exist Count',
-  (payload: any) => ({payload})
+  (payload: { isConnectionStringExist: boolean, count: number }) => ({payload})
 );
 export const loadAuthSuccess = createAction(
   '[Auth] Authenticate Success',
-  (payload: any) => ({payload})
+  (payload: { token: AuthToken, currentUser: AuthCurrentUser, count: number }) => ({payload})
 );
 
 export const loadAuthFailure = createAction(
   '[Auth] Authenticate Failure',
   (payload: any) => ({payload})
+);
+
+export const loadAuthState = createAction(
+  '[Auth] Load Auth State',
+  (payload: { state: AuthState }) => ({payload})
+);
+
+export const logout = createAction(
+  '[Auth] Logout',
 );
 
 export const browserReload = createAction(

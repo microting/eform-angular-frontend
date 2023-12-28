@@ -1,4 +1,5 @@
 import {createAction} from '@ngrx/store';
+import {OperationDataResult, UserMenuModel} from 'src/app/common/models';
 
 export const loadAppMenu = createAction(
   '[AppMenu] Load AppMenu'
@@ -6,7 +7,7 @@ export const loadAppMenu = createAction(
 
 export const loadAppMenuSuccess = createAction(
   '[AppMenu] Load AppMenu Success',
-  (payload: any) => ({payload})
+  (payload: OperationDataResult<UserMenuModel>) => ({payload})
 );
 
 export const loadAppMenuFailure = createAction(

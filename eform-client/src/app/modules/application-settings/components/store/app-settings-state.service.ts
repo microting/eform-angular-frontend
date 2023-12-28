@@ -1,26 +1,20 @@
 import {Injectable} from '@angular/core';
 import {AppSettingsService} from 'src/app/common/services';
-import {map} from 'rxjs/operators';
 import {AdminSettingsModel, LanguagesModel} from 'src/app/common/models';
-import {take} from 'rxjs';
-import { Store } from '@ngrx/store';
-import {selectAuthIsAuth} from 'src/app/state/auth/auth.selector';
+import {take, zip, tap} from 'rxjs';
+import {Store} from '@ngrx/store';
+import {
+  updateAdminSettings,
+  updateOthersSettings,
+  updateLanguages, updateUserbackWidgetSetting
+} from 'src/app/state';
 
 @Injectable({providedIn: 'root'})
 export class AppSettingsStateService {
-  public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
   constructor(
-    //private store: AppSettingsStore,
     private service: AppSettingsService,
-    //private query: AppSettingsQuery,
     private authStore: Store
   ) {
-    // this.selectIsAuth$.subscribe((isAuth) => {
-    //   if (isAuth) {
-    //     this.getAllAppSettings();
-    //   }
-    // });
-    //this.getAllAppSettings();
   }
 
   getAdminSettings() {
@@ -32,45 +26,30 @@ export class AppSettingsStateService {
   }
 
   getAllAppSettings() {
-    this.getAdminSettings().subscribe((response) => {
-      if (response && response.success && response.model) {
-        //debugger;
-        this.authStore.dispatch({type: '[AppSettings] Update AdminSettings', payload: response.model});
-        // this.store.update(() => ({
-        //   adminSettingsModel: response.model,
-        // }));
+    zip(
+      this.getAdminSettings(),
+      this.getOtherSettings(),
+      this.getLanguages()
+    ).pipe(tap(([adminSettings, otherSettings, languages]) => {
+      if (adminSettings && adminSettings.success && adminSettings.model) {
+        this.authStore.dispatch(updateAdminSettings(adminSettings.model));
       }
-      return response;
-    });
-    this.getOtherSettings().subscribe((response) => {
-      if (response && response.success && response.model) {
-        this.authStore.dispatch({type: '[AppSettings] Update OthersSettings', payload: response.model});
-        // this.store.update((state) => ({
-        //   othersSettings: {...state.othersSettings, ...response.model},
-        // }));
+      if (otherSettings && otherSettings.success && otherSettings.model) {
+        this.authStore.dispatch(updateOthersSettings(otherSettings.model));
       }
-    });
-    this.getLanguages().subscribe((response) => {
-      if (response && response.success && response.model) {
-        this.authStore.dispatch({type: '[AppSettings] Update Languages', payload: response.model});
-        // this.store.update(() => ({
-        //   languagesModel: response.model,
-        // }));
+      if (languages && languages.success && languages.model) {
+        this.authStore.dispatch(updateLanguages(languages.model));
       }
-    });
+    })).subscribe();
   }
 
   updateAdminSettings(adminSettings: AdminSettingsModel) {
     return this.service.updateAdminSettings(adminSettings)
       .pipe(
-        map((response) => {
+        tap((response) => {
           if (response && response.success) {
-            this.authStore.dispatch({type: '[AppSettings] Update AdminSettings', payload: adminSettings});
-            // this.store.update(() => ({
-            //   adminSettingsModel: adminSettings,
-            // }));
+            this.authStore.dispatch(updateAdminSettings(adminSettings));
           }
-          return response;
         })
       );
   }
@@ -78,14 +57,10 @@ export class AppSettingsStateService {
   updateUserbackWidgetIsEnabled(UserbackWidgetIsEnabled: boolean) {
     return this.service.updateUserbackWidgetIsEnabled(UserbackWidgetIsEnabled)
       .pipe(
-        map((response) => {
+        tap((response) => {
           if (response && response.success) {
-            this.authStore.dispatch({type: '[AppSettings] Update Userback Widget Setting', payload: {isUserbackWidgetEnabled: UserbackWidgetIsEnabled}});
-            // this.store.update((state) => ({
-            //   othersSettings: {...state.othersSettings, isUserbackWidgetEnabled: UserbackWidgetIsEnabled},
-            // }));
+            this.authStore.dispatch(updateUserbackWidgetSetting({isUserbackWidgetEnabled: UserbackWidgetIsEnabled}));
           }
-          return response;
         })
       );
   }

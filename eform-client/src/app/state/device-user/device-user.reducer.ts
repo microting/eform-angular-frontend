@@ -1,29 +1,30 @@
-import {FiltrationStateModel} from 'src/app/common/models';
-import {updateDeviceUserFilters} from 'src/app/state/device-user/device-user.actions';
+import {updateDeviceUserFilters} from './';
 import {createReducer, on} from '@ngrx/store';
 
-export interface DeviceUsersState {
-  filters: FiltrationStateModel;
+export interface DeviceUsersFilters {
+  nameFilter: string
 }
 
-export const initialState: DeviceUsersState = {
+export interface DeviceUsersState {
+  filters: DeviceUsersFilters;
+}
+
+export const deviceUsersInitialState: DeviceUsersState = {
   filters: {
-    tagIds: [],
     nameFilter: '',
   },
 }
 
-export const _deviceUsersReducer = createReducer(
-  initialState,
+const _deviceUsersReducer = createReducer(
+  deviceUsersInitialState,
   on(updateDeviceUserFilters, (state, {payload}) => ({
     ...state,
     filters: {
-      nameFilter: payload.filters.nameFilter,
-      tagIds: payload.filters.tagIds,
+      nameFilter: payload.nameFilter,
     },
   })),
 );
 
-export function reducer(state: DeviceUsersState | undefined, action: any) {
+export function deviceUsersReducer(state: DeviceUsersState | undefined, action: any) {
   return _deviceUsersReducer(state, action);
 }

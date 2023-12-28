@@ -1,55 +1,36 @@
 import {inject, Injectable} from '@angular/core';
 import {
-  ActivatedRouteSnapshot, CanActivateFn, Router,
+  ActivatedRouteSnapshot, CanActivateFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { UserClaimsEnum } from 'src/app/common/const';
-import { AuthStateService } from 'src/app/common/store';
-import {Observable, take} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {UserClaimsEnum} from 'src/app/common/const';
 import {
-  selectAuthIsAuth,
-  selectAuthIsLoading,
-  selectAuthIsSuccess,
   selectCurretnUserClaims
-} from 'src/app/state/auth/auth.selector';
+} from 'src/app/state';
 import {Store} from '@ngrx/store';
+import {UserClaimsModel} from 'src/app/common/models';
 
 @Injectable()
 export class ClaimsGuard {
 
-  private selectAuthIsLoading$ = this.store.select(selectAuthIsLoading);
-  private selectAuthIsSuccess$ = this.store.select(selectAuthIsSuccess);
+  private claims: UserClaimsModel;
   private selectCurrentUserClaims$ = this.store.select(selectCurretnUserClaims);
-  public selectIsAuth$ = this.store.select(selectAuthIsAuth);
+
   constructor(
-    private router: Router,
     private store: Store
   ) {
-    // eslint-disable-next-line no-console
-    console.log('ClaimsGuard - constructor');}
+    this.selectCurrentUserClaims$.subscribe(x => this.claims = x);
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    // eslint-disable-next-line no-console
-    console.log('ClaimsGuard - canActivate');
     const requiredPermission = UserClaimsEnum[route.data['requiredClaim']] as string;
-    // eslint-disable-next-line no-console
-    console.log('ClaimsGuard - canActivate - requiredPermission: ' + requiredPermission);
-    let allowed = false;
-    this.selectCurrentUserClaims$.subscribe(x => {
-      if (x[requiredPermission]) {
-        allowed = true;
-      }
-    });
-    return allowed;
+    return this.claims[requiredPermission];
   }
 }
 
 export const IsClaimsGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
-  // eslint-disable-next-line no-console
-  console.log('ClaimsGuard - IsClaimsGuard');
   return inject(ClaimsGuard).canActivate(route, state);
-}
+};

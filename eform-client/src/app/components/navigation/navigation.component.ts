@@ -21,6 +21,7 @@ import {leftAppMenus} from 'src/app/state/app-menu/app-menu.selector';
 import {AppMenuState} from 'src/app/state/app-menu/app-menu.reducer';
 import {selectAuthIsAuth, selectCurretnUserClaims} from 'src/app/state/auth/auth.selector';
 import {snakeToCamel} from "src/app/common/helpers";
+import {loadAppMenu} from 'src/app/state';
 
 interface MenuNode {
   name: string;
@@ -70,7 +71,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
       // this.getCurrentUserInfoSub$ = this.adminService
       //   .getCurrentUserInfo()
       //   .subscribe((result) => {
-      this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
+      this.authStore.dispatch(loadAppMenu());
       this.getAppMenuSub$ = this.allAppMenus$.subscribe(x => {
         if (x.length > 0) {
           this.menu.data = [...x];

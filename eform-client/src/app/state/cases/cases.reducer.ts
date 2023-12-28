@@ -6,7 +6,7 @@ import {
   loadCasesSuccess,
   updateCasesFilters,
   updateCasesPagination
-} from 'src/app/state/cases/cases.actions';
+} from './';
 
 export interface CasesState {
   pagination: CommonPaginationState;
@@ -14,7 +14,7 @@ export interface CasesState {
   total: number;
 }
 
-export const initialState: CasesState = {
+export const casesInitialState: CasesState = {
   pagination: {
     pageSize: 10,
     sort: 'Id',
@@ -30,19 +30,19 @@ export const initialState: CasesState = {
   total: 0,
 };
 
-export const _casesReducer = createReducer(
-  initialState,
-  on(loadCases, (state) => ({
+const _casesReducer = createReducer(
+  casesInitialState,
+  on(loadCases, (state) => ({ // TODO it's work?
     ...state,
     status: 'loading',
   })),
-  on(loadCasesSuccess, (state, {payload}) => ({
+  on(loadCasesSuccess, (state, {payload}) => ({ // TODO it's work?
     ...state,
     cases: payload.model,
     totalCount: payload.total,
     status: 'success',
   })),
-  on(loadCasesFailure, (state, {payload}) => ({
+  on(loadCasesFailure, (state, {payload}) => ({ // TODO it's work?
     ...state,
     error: payload,
     status: 'error',
@@ -67,6 +67,6 @@ export const _casesReducer = createReducer(
     },
   })));
 
-export function reducer(state: CasesState | undefined, action: any) {
+export function casesReducer(state: CasesState | undefined, action: any) {
   return _casesReducer(state, action);
 }

@@ -1,7 +1,8 @@
 import {
   AdminSettingsModel,
   HeaderSettingsModel,
-  LanguagesModel, LoginPageSettingsModel,
+  LanguagesModel,
+  LoginPageSettingsModel,
   UserbackWidgetSettingModel
 } from 'src/app/common/models';
 import {createReducer, on} from '@ngrx/store';
@@ -10,8 +11,9 @@ import {
   resetLoginPageSettings,
   updateAdminSettings,
   updateLanguages,
-  updateOthersSettings, updateUserbackWidgetSetting
-} from 'src/app/state/application-settings/application-settings.actions';
+  updateOthersSettings,
+  updateUserbackWidgetSetting
+} from './';
 
 export interface AppSettingsState {
   adminSettingsModel: AdminSettingsModel;
@@ -19,7 +21,7 @@ export interface AppSettingsState {
   languagesModel: LanguagesModel;
 }
 
-export const initialState: AppSettingsState = {
+export const appSettingsInitialState: AppSettingsState = {
   adminSettingsModel: new AdminSettingsModel(),
   othersSettings: {
     isUserbackWidgetEnabled: false,
@@ -28,50 +30,50 @@ export const initialState: AppSettingsState = {
   languagesModel: new LanguagesModel(),
 };
 
-export const _appSettingsReducer = createReducer(
-  initialState,
+const _appSettingsReducer = createReducer(
+  appSettingsInitialState,
   on(updateAdminSettings, (state, {payload}) => ({
-    ...state,
-    adminSettingsModel: payload,
+      ...state,
+      adminSettingsModel: payload,
     })
   ),
   on(resetLoginPageSettings, (state) => ({
-    ...state,
-    adminSettingsModel: {
-      ...state.adminSettingsModel,
-      loginPageSettings: new LoginPageSettingsModel(),
-    },
-    })
-  ),
-    on(resetHeaderSettings, (state) => ({
       ...state,
       adminSettingsModel: {
-      ...state.adminSettingsModel,
-      headerSettings: new HeaderSettingsModel(),
+        ...state.adminSettingsModel,
+        loginPageSettings: new LoginPageSettingsModel(),
       },
-      })
+    })
+  ),
+  on(resetHeaderSettings, (state) => ({
+      ...state,
+      adminSettingsModel: {
+        ...state.adminSettingsModel,
+        headerSettings: new HeaderSettingsModel(),
+      },
+    })
   ),
   on(updateOthersSettings, (state, {payload}) => ({
-    ...state,
-    othersSettings: payload,
+      ...state,
+      othersSettings: payload,
     }
-    )),
+  )),
   on(updateLanguages, (state, {payload}) => ({
-    ...state,
-    languagesModel: payload,
+      ...state,
+      languagesModel: payload,
     })
   ),
   on(updateUserbackWidgetSetting, (state, {payload}) => ({
-    ...state,
-    othersSettings: {
-      ...state.othersSettings,
-      isUserbackWidgetEnabled: payload.isUserbackWidgetEnabled,
-      userbackToken: payload.userbackToken,
-    },
+      ...state,
+      othersSettings: {
+        ...state.othersSettings,
+        isUserbackWidgetEnabled: payload.isUserbackWidgetEnabled,
+        userbackToken: payload.userbackToken,
+      },
     })
   ),
 );
 
-export function reducer(state: AppSettingsState | undefined, action: any) {
+export function appSettingsReducer(state: AppSettingsState | undefined, action: any) {
   return _appSettingsReducer(state, action);
 }

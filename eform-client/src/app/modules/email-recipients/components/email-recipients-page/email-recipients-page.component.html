@@ -24,7 +24,6 @@
         <mat-label>{{ 'Tags' | translate }}</mat-label>
         <mtx-select
           class="custom"
-          [dropdownPosition]="bottom"
           [items]="availableTags"
           [ngModel]="selectEmailRecipientsTagIds$ | async"
           (add)="tagSelected($event.id)"
@@ -34,7 +33,8 @@
           [bindValue]="'id'"
           id="tagSelector"
           [multiple]="true"
-        ></mtx-select>
+          appendTo="body"
+        />
       </mat-form-field>
     </div>
   </div>
@@ -53,8 +53,8 @@
   [toolbarTemplate]="toolbarTpl"
   [sortActive]="selectEmailRecipientsSort$ | async"
   [sortDirection]="selectEmailRecipientsIsSortDsc$ | async"
-  (sortChange)="onSortTable($event)">
-</mtx-grid>
+  (sortChange)="onSortTable($event)"
+/>
 
 <ng-template #actionsTpl let-row>
   <button
@@ -77,27 +77,18 @@
 </ng-template>
 
 <ng-template #tagsTpl let-row>
-  <ng-container *ngFor="let tag of row.tags; let i = index">
-    <span
-      class="badge badge-primary mb-1"
-      style="cursor: pointer"
-      (click)="tagSelected(tag.id)"
-    >
-      <mat-icon [inline]="true">discount</mat-icon>
-      {{ tag.name }}
-    </span>
-  </ng-container>
+  <app-eform-tag [tags]="row.tags" (clickOnTag)="tagSelected($event)"/>
 </ng-template>
 
 <ng-template #paginatorTpl>
   <eform-pagination
     [pagination]="selectEmailRecipientsPagination$ | async"
     (paginationChanged)="onPaginationChanged($event)"
-  ></eform-pagination>
+  />
 </ng-template>
 
 <app-email-recipients-tags
   #recipientsTagsModal
   [availableTags]="availableTags"
   (tagsChanged)="getTags()"
-></app-email-recipients-tags>
+/>

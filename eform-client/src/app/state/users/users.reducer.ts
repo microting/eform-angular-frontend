@@ -1,15 +1,13 @@
-import {CommonPaginationState, FiltrationStateModel} from 'src/app/common/models';
+import {CommonPaginationState} from 'src/app/common/models';
 import {Action, createReducer, on} from '@ngrx/store';
-import {loadUsers, updateUsersPagination} from "src/app/state/users/users.actions";
-import {updateCasesPagination} from "src/app/state/cases/cases.actions";
+import {updateUsersPagination, updateUsersTotal} from './';
 
 export interface UsersState {
   pagination: CommonPaginationState;
-  filters: FiltrationStateModel;
   total: number;
 }
 
-export const initialState: UsersState = {
+export const usersInitialState: UsersState = {
   pagination: {
     sort: 'Id',
     isSortDsc: false,
@@ -18,18 +16,11 @@ export const initialState: UsersState = {
     offset: 0,
     total: 0,
   },
-  filters: {
-    nameFilter: '',
-    tagIds: [],
-  },
   total: 0,
-}
+};
 
-export const usersReducer = createReducer(
-  initialState,
-  on(loadUsers, (state) => ({
-    ...state,
-    })),
+const _usersReducer = createReducer(
+  usersInitialState,
   on(updateUsersPagination, (state, {payload}) => ({
     ...state,
     pagination: {
@@ -41,8 +32,16 @@ export const usersReducer = createReducer(
       total: payload.pagination.total,
     },
   })),
+  on(updateUsersTotal, (state, {payload}) => ({
+    ...state,
+    total: payload.total,
+    pagination: {
+      ...state.pagination,
+      total: payload.total,
+    },
+  })),
 );
 
-export function reducer(state: UsersState | undefined, action: Action) {
-  return usersReducer(state, action);
+export function usersReducer(state: UsersState | undefined, action: Action) {
+  return _usersReducer(state, action);
 }

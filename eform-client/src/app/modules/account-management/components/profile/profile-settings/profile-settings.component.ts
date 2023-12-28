@@ -14,8 +14,8 @@ import {Subscription} from 'rxjs';
 import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import {LanguagesModel} from 'src/app/common/models';
 import {Store} from '@ngrx/store';
-import {selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateService} from '@ngx-translate/core';
+import {loadAppMenu, selectCurrentUserIsAdmin} from 'src/app/state';
 
 @Component({
   selector: 'app-profile-settings',
@@ -115,7 +115,7 @@ export class ProfileSettingsComponent implements OnInit {
         //   this.userSettingsModel.locale,
         //   this.userSettingsModel.darkTheme
         // );
-        this.store.dispatch({type: '[AppMenu] Load AppMenu'});
+        this.store.dispatch(loadAppMenu());
         //this.appMenuStateService.getAppMenu();
       });
   }

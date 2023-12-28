@@ -4,8 +4,7 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import {RetryConfig, Observable, retry, throwError} from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import {RetryConfig, Observable, retry, throwError, catchError} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {AuthStateService} from 'src/app/common/store';
@@ -30,7 +29,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     // Define a maximum number of retries and a delay between each retry
     const count = 0;
     const delay = 15000; // 10 seconds in milliseconds
-    const retryConfig: RetryConfig = { count, delay };
+    const retryConfig: RetryConfig = {count, delay};
 
     // Return the next handler, with retry logic applied
     return next.handle(request).pipe(

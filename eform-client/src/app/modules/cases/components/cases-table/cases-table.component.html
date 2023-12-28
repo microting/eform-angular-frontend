@@ -1,4 +1,4 @@
-<eform-new-subheader [title]="title" [forceStaticTitle]="true"></eform-new-subheader>
+<eform-new-subheader [title]="title" [forceStaticTitle]="true"/>
 
 <ng-template #toolbarTpl>
   <div class="d-flex flex-row justify-content-start flex-nowrap">
@@ -31,8 +31,8 @@
     [toolbarTemplate]="toolbarTpl"
     [sortActive]="selectCasesSort$ | async"
     [sortDirection]="selectCasesIsSortDsc$ | async"
-    (sortChange)="sortTable($event)">
-  </mtx-grid>
+    (sortChange)="sortTable($event)"
+  />
 </ng-container>
 
 <ng-template #actionsTpl let-row>
@@ -80,5 +80,5 @@
   <eform-pagination
     [pagination]="selectCasesPagination$ | async"
     (paginationChanged)="onPaginationChanged($event)"
-  ></eform-pagination>
+  />
 </ng-template>

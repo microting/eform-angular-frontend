@@ -1,6 +1,6 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PdfIcon, UserClaimsEnum, WordIcon} from 'src/app/common/const';
+import {PdfIcon, WordIcon} from 'src/app/common/const';
 import {composeCasesTableHeaders, dialogConfigHelper} from 'src/app/common/helpers';
 import {
   PageSettingsModel,
@@ -12,7 +12,6 @@ import {
 } from 'src/app/common/models';
 import {
   EFormService,
-  CasesService,
   SecurityGroupEformsPermissionsService,
 } from 'src/app/common/services';
 import {saveAs} from 'file-saver';
@@ -29,13 +28,14 @@ import {CaseRemoveModalComponent} from 'src/app/common/modules/eform-cases/compo
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {Store} from '@ngrx/store';
-import {selectCurrentUserClaimsCaseUpdate, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 import {
   selectCasesIsSortDsc,
   selectCasesNameFilter,
   selectCasesPagination,
-  selectCasesSort
-} from 'src/app/state/cases/cases.selector';
+  selectCasesSort,
+  selectCurrentUserClaimsCaseUpdate,
+  selectCurrentUserIsAdmin
+} from 'src/app/state';
 
 @AutoUnsubscribe()
 @Component({
@@ -51,7 +51,6 @@ export class CasesTableComponent implements OnInit, OnDestroy {
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private casesService: CasesService,
     private authStore: Store,
     private eFormService: EFormService,
     public authStateService: AuthStateService,
@@ -76,7 +75,6 @@ export class CasesTableComponent implements OnInit, OnDestroy {
   title: string;
 
   tableHeaders: MtxGridColumn[];
-  appMenuSub$: Subscription;
   caseRemoveModalComponentAfterClosedSub$: Subscription;
   public selectCurrentUserClaimsCaseRead$ = this.authStore.select(selectCurrentUserClaimsCaseUpdate);
   public selectCurrentUserClaimsCaseDelete$ = this.authStore.select(selectCurrentUserClaimsCaseUpdate);
@@ -329,17 +327,6 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     if (!this.title) {
       this.title = this.currentTemplate.label;
     }
-    // TODO: Fix this
-    // this.appMenuSub$ = this.appMenuStateService.appMenuObservable.subscribe(
-    //   (appMenu) => {
-    //     if (appMenu) {
-    //       this.title = this.appMenuStateService.getTitleByUrl(href);
-    //       if (!this.title) {
-    //         this.title = this.currentTemplate.label;
-    //       }
-    //     }
-    //   }
-    // );
   }
 
   onPaginationChanged(paginationModel: PaginationModel) {

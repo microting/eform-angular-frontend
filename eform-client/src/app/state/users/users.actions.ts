@@ -1,25 +1,12 @@
 import {createAction} from '@ngrx/store';
-
-export const loadUsers = createAction(
-  '[Users] Load Users'
-);
-
-export const loadUsersSuccess = createAction(
-  '[Users] Load Users Success',
-  (payload: any) => ({payload})
-);
-
-export const loadUsersFailure = createAction(
-  '[Users] Load Users Failure',
-  (payload: any) => ({payload})
-);
+import {CommonPaginationState} from 'src/app/common/models';
 
 export const updateUsersPagination = createAction(
   '[Users] Update Users Pagination',
-  (payload: any) => ({payload})
+  (payload: { pagination: CommonPaginationState }) => ({payload})
 );
 
-export const updateUsersFilters = createAction(
-  '[Users] Update Users Filters',
-  (payload: any) => ({payload})
+export const updateUsersTotal = createAction(
+  '[Users] Update Users Total',
+  (payload: { total: number }) => ({payload})
 );

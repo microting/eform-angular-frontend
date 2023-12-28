@@ -9,10 +9,10 @@ import {DragulaModule} from 'ng2-dragula';
 // TODO fix ngx-mask
 //import {NgxMaskModule} from 'ngx-mask';
 import {ToastrModule} from 'ngx-toastr';
-import {providers} from 'src/app/app.declarations';
-import {AppRoutingModule} from 'src/app/app.routing';
-import {translateConfig} from 'src/app/common/helpers';
-import {PluginsModule} from 'src/app/plugins/plugins.module';
+import {providers} from './app.declarations';
+import {AppRoutingModule} from './app.routing';
+import {translateConfig} from './common/helpers';
+import {PluginsModule} from './plugins/plugins.module';
 import {
   AppComponent,
   FooterComponent,
@@ -28,10 +28,10 @@ import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
-import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
+import {EformSharedModule} from './common/modules/eform-shared/eform-shared.module';
 import {environment} from 'src/environments/environment';
 // angular material modules
-import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
+import {SharedPnModule} from './plugins/modules/shared/shared-pn.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTreeModule} from '@angular/material/tree';
@@ -47,22 +47,24 @@ import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {
   EformMatDateFnsDateModule
-} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
-import { StoreModule } from '@ngrx/store';
-import * as appMenuReducer from 'src/app/state/app-menu/app-menu.reducer';
-import * as authReducer from 'src/app/state/auth/auth.recuder';
-import * as eformReducer from 'src/app/state/eform/eform.reducer';
-import * as deviceUsersReducer from 'src/app/state/device-user/device-user.reducer';
-import * as appSettingsReducer from 'src/app/state/application-settings/application-settings.reducer';
-import * as emailRecipientsReducer from 'src/app/state/email-recipients/email-recipients.reducer';
-import * as securityReducer from 'src/app/state/security/security.reducer';
-import * as entitySearchReducer from 'src/app/state/entity-search/entity-search.reducer';
-import * as entitySelectReducer from 'src/app/state/entity-select/entity-select.reducer';
-import * as casesReducer from 'src/app/state/cases/cases.reducer';
-import * as usersReducer from 'src/app/state/users/users.reducer';
+} from './common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
+import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {EffectsModule} from '@ngrx/effects';
-import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
+import {
+  appMenuReducer,
+  AppMenuEffects,
+  appSettingsReducer,
+  authReducer,
+  casesReducer,
+  deviceUsersReducer,
+  eformReducer,
+  emailRecipientsReducer,
+  entitySearchReducer,
+  entitySelectReducer,
+  securityReducer,
+  usersReducer
+} from './state'
 
 @NgModule({
   declarations: [
@@ -82,17 +84,17 @@ import {AppMenuEffects} from 'src/app/state/app-menu/app-menu.effects';
     BrowserModule,
     HttpClientModule,
     StoreModule.forRoot({
-      appMenus: appMenuReducer.reducer,
-      auth: authReducer.reducer,
-      eforms: eformReducer.reducer,
-      deviceUsers: deviceUsersReducer.reducer,
-      appSettings: appSettingsReducer.reducer,
-      emailRecipients: emailRecipientsReducer.reducer,
-      security: securityReducer.reducer,
-      entitySearch: entitySearchReducer.reducer,
-      entitySelect: entitySelectReducer.reducer,
-      cases: casesReducer.reducer,
-      users: usersReducer.reducer,
+      appMenus: appMenuReducer,
+      auth: authReducer,
+      eforms: eformReducer,
+      deviceUsers: deviceUsersReducer,
+      appSettings: appSettingsReducer,
+      emailRecipients: emailRecipientsReducer,
+      security: securityReducer,
+      entitySearch: entitySearchReducer,
+      entitySelect: entitySelectReducer,
+      cases: casesReducer,
+      users: usersReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

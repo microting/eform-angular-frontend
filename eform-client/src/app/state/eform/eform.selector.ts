@@ -1,7 +1,7 @@
-import {EformsState} from 'src/app/state/eform/eform.reducer';
 import {createSelector} from '@ngrx/store';
+import {AppState, EformsState} from 'src/app/state';
 
-export const selectEforms = (state) => state.eforms;
+export const selectEforms = (state: AppState) => state.eforms;
 export const selectEformsTagIds =
   createSelector(selectEforms, (state: EformsState) => state.filters.tagIds);
 export const selectEformsNameFilter =
