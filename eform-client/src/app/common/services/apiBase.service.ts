@@ -1,22 +1,27 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
-import { Observable, throwError} from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import {ToastrService} from 'ngx-toastr';
+import {Observable, throwError} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
 import * as R from 'ramda';
-import {selectAuthIsAuth, selectBearerToken} from 'src/app/state/auth/auth.selector';
+import {selectAuthIsAuth, selectBearerToken} from 'src/app/state';
 import {Store} from '@ngrx/store';
 
 @Injectable()
 export class ApiBaseService {
   private selectBearerToken$ = this.authStore.select(selectBearerToken);
   private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  private currentBearerToken: string = '';
+  private isAuth: boolean = false;
+
   constructor(
     private http: HttpClient,
     private authStore: Store,
     private toastrService: ToastrService,
-    // private query: AuthQuery
-  ) {}
+  ) {
+    this.selectBearerToken$.subscribe(x => this.currentBearerToken = x);
+    this.selectAuthIsAuth$.subscribe(x => this.isAuth = x);
+  }
 
   public static objectToFormData(
     object: Object,
@@ -85,7 +90,7 @@ export class ApiBaseService {
   public post<T>(method: string, body: any): Observable<any> {
     const model = JSON.stringify(body);
     return this.http
-      .post(method, model, { headers: this.setHeaders() })
+      .post(method, model, {headers: this.setHeaders()})
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
@@ -127,7 +132,7 @@ export class ApiBaseService {
   public put<T>(method: string, body: any): Observable<any> {
     const model = JSON.stringify(body);
     return this.http
-      .put(method, model, { headers: this.setHeaders() })
+      .put(method, model, {headers: this.setHeaders()})
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
@@ -202,22 +207,10 @@ export class ApiBaseService {
     } else {
       headers = headers.set('Content-Type', 'application/json');
     }
-    //debugger;
 
-    const accessToken = JSON.parse(localStorage.getItem('token'));
-    if (accessToken) {
-      headers = headers.set('Authorization', 'Bearer ' + accessToken['accessToken']);
+    if (this.isAuth && this.currentBearerToken) {
+      headers = headers.set('Authorization', `Bearer ${this.currentBearerToken}`);
     }
-    // this.selectAuthIsAuth$.subscribe((isAuth) => {
-    //   if (isAuth) {
-    //     this.selectBearerToken$.subscribe((token) => {
-    //       headers.append('Authorization', 'Bearer ' + token);
-    //     });
-    //   }
-    // });
-    // if (this.query.isAuth) {
-    //   headers.append('Authorization', bearerToken);
-    // }
     return headers;
   }
 

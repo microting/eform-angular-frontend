@@ -6,14 +6,14 @@ import {
   loadEformsSuccess,
   updateEformFilters,
   updateEformPagination
-} from 'src/app/state/eform/eform.actions';
+} from './';
 
 export interface EformsState {
   pagination: CommonPaginationState;
   filters: FiltrationStateModel;
 }
 
-export const initialState: EformsState = {
+export const eformsInitialState: EformsState = {
   pagination: {
     offset: 0,
     pageSize: 10000,
@@ -26,32 +26,32 @@ export const initialState: EformsState = {
     nameFilter: '',
     tagIds: [],
   },
-}
+};
 
-export const _eformsReducer = createReducer(
-  initialState,
-  on(loadEforms, (state) => ({
+const _eformsReducer = createReducer(
+  eformsInitialState,
+  on(loadEforms, (state) => ({ // TODO it's work?
     ...state,
     status: 'loading',
   })),
-  on(loadEformsSuccess, (state, {payload}) => ({
+  on(loadEformsSuccess, (state, {payload}) => ({ // TODO it's work?
     ...state,
     eforms: payload.model,
     totalCount: payload.total,
     status: 'success',
-    })),
-  on(loadEformsFailure, (state, {payload}) => ({
+  })),
+  on(loadEformsFailure, (state, {payload}) => ({ // TODO it's work?
     ...state,
     error: payload,
     status: 'error',
-    })),
+  })),
   on(updateEformFilters, (state, {payload}) => ({
     ...state,
     filters: {
       nameFilter: payload.filters.nameFilter,
       tagIds: payload.filters.tagIds,
     },
-    })),
+  })),
   on(updateEformPagination, (state, {payload}) => ({
     ...state,
     pagination: {
@@ -62,9 +62,9 @@ export const _eformsReducer = createReducer(
       isSortDsc: payload.pagination.isSortDsc,
       total: payload.pagination.total,
     },
-    }))
+  }))
 );
 
-export function reducer(state: EformsState | undefined, action: any) {
+export function eformReducer(state: EformsState | undefined, action: any) {
   return _eformsReducer(state, action);
 }

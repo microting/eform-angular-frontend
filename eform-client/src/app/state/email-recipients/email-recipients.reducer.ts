@@ -1,38 +1,41 @@
-import {CommonPaginationState, FiltrationStateModel} from 'src/app/common/models';
+import {CommonPaginationState} from 'src/app/common/models';
 import {createReducer, on} from '@ngrx/store';
 import {
   emailRecipientsUpdateFilters,
-  emailRecipientsUpdatePagination, emailRecipientsUpdateTotal
-} from 'src/app/state/email-recipients/email-recipients.actions';
+  emailRecipientsUpdatePagination,
+  emailRecipientsUpdateTotal
+} from './';
 
 export interface EmailRecipientsState {
   pagination: CommonPaginationState;
-  filters: FiltrationStateModel;
+  filters: EmailRecipientsFilters;
   total: number;
 }
 
-export const initialState: EmailRecipientsState = {
+export interface EmailRecipientsFilters {
+  tagIds: number[],
+}
+
+export const emailRecipientsInitialState: EmailRecipientsState = {
   pagination: {
     offset: 0,
-    pageSize: 10000,
+    pageSize: 10,
     pageIndex: 0,
     sort: 'Id',
     isSortDsc: false,
     total: 0,
   },
   filters: {
-    nameFilter: '',
     tagIds: [],
   },
   total: 0,
 };
 
-export const _emailRecipientsReducer = createReducer(
-  initialState,
+const _emailRecipientsReducer = createReducer(
+  emailRecipientsInitialState,
   on(emailRecipientsUpdateFilters, (state, {payload}) => ({
     ...state,
     filters: {
-      nameFilter: payload.filters.nameFilter,
       tagIds: payload.filters.tagIds,
     }
   })),
@@ -55,6 +58,6 @@ export const _emailRecipientsReducer = createReducer(
     }})),
 );
 
-export function reducer(state: EmailRecipientsState | undefined, action: any) {
+export function emailRecipientsReducer(state: EmailRecipientsState | undefined, action: any) {
   return _emailRecipientsReducer(state, action);
 }

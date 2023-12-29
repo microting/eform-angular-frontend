@@ -1,17 +1,21 @@
-import {CommonPaginationState, FiltrationStateModel} from 'src/app/common/models';
-import {Action, createReducer, on} from '@ngrx/store';
+import {CommonPaginationState} from 'src/app/common/models';
+import {createReducer, on} from '@ngrx/store';
 import {
   updateSecurityFilters,
   updateSecurityPagination,
   updateSecurityTotal
-} from "src/app/state/security/security.actions";
+} from './';
 
 export interface SecurityState {
   pagination: CommonPaginationState;
-  filters: FiltrationStateModel;
+  filters: SecurityFilters;
 }
 
-export const initialState: SecurityState = {
+export interface SecurityFilters {
+  nameFilter: string;
+}
+
+export const securityInitialState: SecurityState = {
   pagination: {
     offset: 0,
     pageSize: 10000,
@@ -22,19 +26,17 @@ export const initialState: SecurityState = {
   },
   filters: {
     nameFilter: '',
-    tagIds: [],
   },
-}
+};
 
-export const _securityReducer = createReducer(
-  initialState,
+const _securityReducer = createReducer(
+  securityInitialState,
   on(updateSecurityFilters, (state, {payload}) => ({
     ...state,
     filters: {
       nameFilter: payload.filters.nameFilter,
-      tagIds: payload.filters.tagIds,
     },
-    })),
+  })),
   on(updateSecurityPagination, (state, {payload}) => ({
     ...state,
     pagination: {
@@ -45,18 +47,16 @@ export const _securityReducer = createReducer(
       offset: payload.pagination.offset,
       total: payload.pagination.total,
     },
-    }),
-  ),
+  })),
   on(updateSecurityTotal, (state, {payload}) => ({
     ...state,
     pagination: {
       ...state.pagination,
       total: payload.total,
     },
-    }),
-  ),
+  })),
 );
 
-export function reducer(state: SecurityState | undefined, action: any) {
+export function securityReducer(state: SecurityState | undefined, action: any) {
   return _securityReducer(state, action);
 }

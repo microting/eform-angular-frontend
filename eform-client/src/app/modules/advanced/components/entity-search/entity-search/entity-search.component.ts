@@ -4,9 +4,7 @@ import {
   Paged,
   PaginationModel,
 } from 'src/app/common/models';
-import { EntitySearchService } from 'src/app/common/services';
-import { EntitySearchStateService } from '../store';
-import { AuthStateService } from 'src/app/common/store';
+import {EntitySearchStateService} from '../store';
 import {Sort} from '@angular/material/sort';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {MatDialog} from '@angular/material/dialog';
@@ -17,12 +15,14 @@ import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {TranslateService} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
-import {selectCurrentUserClaimsEntitySearchCreate} from 'src/app/state/auth/auth.selector';
 import {
   selectEntitySearchIsSortDsc,
-  selectEntitySearchNameFilter, selectEntitySearchPagination,
-  selectEntitySearchSort
-} from 'src/app/state/entity-search/entity-search.selector';
+  selectCurrentUserClaimsEntitySearchCreate,
+  selectEntitySearchNameFilter,
+  selectEntitySearchPagination,
+  selectEntitySearchSort,
+  updateEntitySearchTotal
+} from 'src/app/state';
 
 @AutoUnsubscribe()
 @Component({
@@ -30,7 +30,7 @@ import {
   templateUrl: './entity-search.component.html',
   styleUrls: ['./entity-search.component.scss'],
 })
-export class EntitySearchComponent implements OnInit, OnDestroy{
+export class EntitySearchComponent implements OnInit, OnDestroy {
   advEntitySearchableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();
   entitySearchRemoveComponentAfterClosedSub$: Subscription;
 
@@ -45,21 +45,22 @@ export class EntitySearchComponent implements OnInit, OnDestroy{
     },
     {header: this.translateService.stream('Actions'), field: 'actions'},
   ];
-  public selectCurrentUserClaimsEntitySearchCreate$ = this.authStore.select(selectCurrentUserClaimsEntitySearchCreate);
-  public selectCurrentUserClaimsEntitySearchUpdate$ = this.authStore.select(selectCurrentUserClaimsEntitySearchCreate);
-  public selectCurrentUserClaimsEntitySearchDelete$ = this.authStore.select(selectCurrentUserClaimsEntitySearchCreate);
-  public selectEntitySearchNameFilter$ = this.authStore.select(selectEntitySearchNameFilter);
-  public selectEntitySearchSort$ = this.authStore.select(selectEntitySearchSort);
-  public selectEntitySearchIsSortDsc$ = this.authStore.select(selectEntitySearchIsSortDsc);
-  public selectEntitySearchPagination$ = this.authStore.select(selectEntitySearchPagination);
+  public selectCurrentUserClaimsEntitySearchCreate$ = this.store.select(selectCurrentUserClaimsEntitySearchCreate);
+  public selectCurrentUserClaimsEntitySearchUpdate$ = this.store.select(selectCurrentUserClaimsEntitySearchCreate);
+  public selectCurrentUserClaimsEntitySearchDelete$ = this.store.select(selectCurrentUserClaimsEntitySearchCreate);
+  public selectEntitySearchNameFilter$ = this.store.select(selectEntitySearchNameFilter);
+  public selectEntitySearchSort$ = this.store.select(selectEntitySearchSort);
+  public selectEntitySearchIsSortDsc$ = this.store.select(selectEntitySearchIsSortDsc);
+  public selectEntitySearchPagination$ = this.store.select(selectEntitySearchPagination);
 
   constructor(
-    private authStore: Store,
+    private store: Store,
     public entitySearchStateService: EntitySearchStateService,
     private dialog: MatDialog,
     private overlay: Overlay,
     private translateService: TranslateService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.getEntitySearchableGroupList();
@@ -71,7 +72,7 @@ export class EntitySearchComponent implements OnInit, OnDestroy{
       .subscribe((data) => {
         if (data && data.model) {
           this.advEntitySearchableGroupListModel = data.model;
-          this.authStore.dispatch({type: '[EntitySearch] Update EntitySearch Total', payload: {total: data.model.total}});
+          this.store.dispatch(updateEntitySearchTotal({total: data.model.total}));
         }
       });
   }

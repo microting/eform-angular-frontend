@@ -1,109 +1,83 @@
 import {Injectable} from '@angular/core';
 import {EntitySelectService} from 'src/app/common/services';
 import {
-  AdvEntitySelectableGroupListRequestModel, CommonPaginationState,
+  AdvEntitySelectableGroupListRequestModel,
+  CommonPaginationState,
   EntityGroupModel,
   OperationDataResult,
   Paged,
   PaginationModel,
 } from 'src/app/common/models';
-import {Observable, zip} from 'rxjs';
+import {Observable} from 'rxjs';
 import {updateTableSort} from 'src/app/common/helpers';
 import {Store} from '@ngrx/store';
 import {
+  EntitySelectFilters,
   selectEntitySelectFilters,
-  selectEntitySelectPagination
-} from 'src/app/state/entity-select/entity-select.selector';
+  selectEntitySelectPagination,
+  updateEntitySelectFilters,
+  updateEntitySelectPagination,
+  updateEntitySelectTotal
+} from 'src/app/state';
 
 @Injectable({providedIn: 'root'})
 export class EntitySelectStateService {
   private selectEntitySelectFilters$ = this.store.select(selectEntitySelectFilters);
   private selectEntitySelectPagination$ = this.store.select(selectEntitySelectPagination);
+  currentPagination: CommonPaginationState;
+  currentFilters: EntitySelectFilters;
+
   constructor(
     private store: Store,
     private service: EntitySelectService,
   ) {
+    this.selectEntitySelectPagination$.subscribe(x => this.currentPagination = x);
+    this.selectEntitySelectFilters$.subscribe(x => this.currentFilters = x);
   }
 
   getEntitySelectableGroupList(): Observable<OperationDataResult<Paged<EntityGroupModel>>> {
-    let advEntitySelectableGroupListRequestModel = new AdvEntitySelectableGroupListRequestModel();
-    zip(this.selectEntitySelectPagination$, this.selectEntitySelectFilters$).subscribe(([pagination, filters]) => {
-      if (pagination === undefined || filters === undefined) {
-        return;
-      }
-      advEntitySelectableGroupListRequestModel = {
-        sort: pagination.sort,
-        nameFilter: filters.nameFilter,
-        pageIndex: 0,
-        pageSize: pagination.pageSize,
-        isSortDsc: pagination.isSortDsc,
-        offset: pagination.offset,
-      }
-    }).unsubscribe();
+    let advEntitySelectableGroupListRequestModel: AdvEntitySelectableGroupListRequestModel = {
+      sort: this.currentPagination.sort,
+      nameFilter: this.currentFilters.nameFilter,
+      pageIndex: 0,
+      pageSize: this.currentPagination.pageSize,
+      isSortDsc: this.currentPagination.isSortDsc,
+      offset: this.currentPagination.offset,
+    };
     return this.service
       .getEntitySelectableGroupList(advEntitySelectableGroupListRequestModel);
   }
 
   updateNameFilter(nameFilter: string) {
-    this.store.dispatch({type: '[EntitySelect] Update EntitySelect Filters', payload: {filters: {nameFilter: nameFilter}}})
+    this.store.dispatch(updateEntitySelectFilters({filters: {nameFilter: nameFilter}}));
   }
 
   onDelete() {
-    let currentPagination: CommonPaginationState;
-    this.selectEntitySelectPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
-    this.store.dispatch({type: '[EntitySelect] Update EntitySelect Pagination', payload: {pagination: {
-          sort: currentPagination.sort,
-          isSortDsc: currentPagination.isSortDsc,
-          offset: currentPagination.offset,
-          pageIndex: currentPagination.pageIndex,
-          pageSize: currentPagination.pageSize,
-          total: currentPagination.total - 1,
-        }}});
+    this.store.dispatch(updateEntitySelectTotal({total: this.currentPagination.total - 1}));
   }
 
   onSortTable(sort: string) {
-    let currentPagination: CommonPaginationState;
-    this.selectEntitySelectPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
     const localPageSettings = updateTableSort(
       sort,
-      currentPagination.sort,
-      currentPagination.isSortDsc
+      this.currentPagination.sort,
+      this.currentPagination.isSortDsc
     );
-    this.store.dispatch({type: '[EntitySelect] Update EntitySelect Pagination', payload: {pagination: {
-          sort: localPageSettings.sort,
-          isSortDsc: localPageSettings.isSortDsc,
-          offset: currentPagination.offset,
-          pageIndex: currentPagination.pageIndex,
-          pageSize: currentPagination.pageSize,
-          total: currentPagination.total,
-        }}});
+    this.store.dispatch(updateEntitySelectPagination({
+      pagination: {
+        ...this.currentPagination,
+        sort: localPageSettings.sort,
+        isSortDsc: localPageSettings.isSortDsc
+      }
+    }));
   }
 
   updatePagination(pagination: PaginationModel) {
-    let currentPagination: CommonPaginationState;
-    this.selectEntitySelectPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
+    this.store.dispatch(updateEntitySelectPagination({
+      pagination: {
+        ...this.currentPagination,
+        offset: pagination.offset,
+        pageSize: pagination.pageSize,
       }
-      currentPagination = pagination;
-    }).unsubscribe();
-    this.store.dispatch({type: '[EntitySelect] Update EntitySelect Pagination', payload: {pagination: {
-          sort: currentPagination.sort,
-          isSortDsc: currentPagination.isSortDsc,
-          offset: pagination.offset,
-          pageIndex: currentPagination.pageIndex,
-          pageSize: pagination.pageSize,
-          total: currentPagination.total,
-        }}});
+    }));
   }
 }

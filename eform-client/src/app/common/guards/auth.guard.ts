@@ -1,27 +1,27 @@
 import {inject, Injectable} from '@angular/core';
 import {
   ActivatedRouteSnapshot,
-  CanActivateFn,
+  CanActivateFn, Router,
   RouterStateSnapshot,
 } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {
   selectAuthIsAuth,
-  selectAuthIsLoading,
-  selectAuthIsSuccess,
   selectLoginRedirectUrl
-} from 'src/app/state/auth/auth.selector';
+} from 'src/app/state';
 
 @Injectable()
 export class AuthGuard {
   constructor(
-    private store: Store
+    private store: Store,
+    private router: Router,
   ) {
-    console.log('AuthGuard - constructor');
+    this.isAuth$.subscribe(x => this.isAuth = x);
+    this.loginRedirectUrl$.subscribe(x => this.loginRedirectUrl = x);
   }
 
-  private selectAuthIsLoading$ = this.store.select(selectAuthIsLoading);
-  private selectAuthIsSuccess$ = this.store.select(selectAuthIsSuccess);
+  private isAuth: boolean = false;
+  private loginRedirectUrl: string = '';
   private isAuth$ = this.store.select(selectAuthIsAuth);
   private loginRedirectUrl$ = this.store.select(selectLoginRedirectUrl);
 
@@ -29,29 +29,24 @@ export class AuthGuard {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    // eslint-disable-next-line
-    console.log('AuthGuard - canActivate');
-    // TODO: Fix this
-    //   if (!this.isAuth$) {
-    //     console.debug(`Let's kick the user out auth.guard`);
-    //     this.router.navigate(['/auth']).then();
-    //     return false;
-    //   }
-    //   if (
-    //     this.loginRedirectUrl$ &&
-    //     (state.url === '/' || state.url === '/auth')
-    //   ) {
-    //     this.router
-    //       .navigate([`/${this.loginRedirectUrl$}`])
-    //       .then();
-    //     return false;
-    //   }
+      if (!this.isAuth) {
+        console.debug(`Let's kick the user out auth.guard`);
+        this.router.navigate(['/auth']).then();
+        return false;
+      }
+      if (
+        this.loginRedirectUrl &&
+        (state.url === '/' || state.url === '/auth')
+      ) {
+        this.router
+          .navigate([`/${this.loginRedirectUrl}`])
+          .then();
+        return false;
+      }
     return true;
   }
 }
 
 export const IsAuthGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
-  // eslint-disable-next-line
-  console.log('AuthGuard - IsAuthGuard');
   return inject(AuthGuard).canActivate(route, state);
 }

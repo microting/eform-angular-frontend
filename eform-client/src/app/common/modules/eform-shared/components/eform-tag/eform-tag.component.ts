@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {SharedTagModel} from 'src/app/common/models';
 
 @Component({
@@ -11,7 +11,12 @@ export class EformTagComponent implements OnInit {
 
   @Input() tags: SharedTagModel[] = [];
   @Input() id: string = '';
+  @Output() clickOnTag: EventEmitter<number> = new EventEmitter<number>();
+
   ngOnInit() {
   }
 
+  onClickTag(id: number) {
+    this.clickOnTag.emit(id);
+  }
 }

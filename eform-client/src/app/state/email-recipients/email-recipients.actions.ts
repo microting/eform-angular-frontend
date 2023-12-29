@@ -1,16 +1,18 @@
 import {createAction} from '@ngrx/store';
+import {CommonPaginationState} from 'src/app/common/models';
+import {EmailRecipientsFilters} from '../';
 
 export const emailRecipientsUpdateFilters = createAction(
   '[EmailRecipients] Update Filters',
-  (payload: any) => ({payload})
+  (payload: { filters: EmailRecipientsFilters }) => ({payload})
 );
 
 export const emailRecipientsUpdatePagination = createAction(
   '[EmailRecipients] Update Pagination',
-  (payload: any) => ({payload})
+  (payload: { pagination: CommonPaginationState }) => ({payload})
 );
 
 export const emailRecipientsUpdateTotal = createAction(
   '[EmailRecipients] Update Total',
-  (payload: any) => ({payload})
+  (payload: { total: number }) => ({payload})
 );

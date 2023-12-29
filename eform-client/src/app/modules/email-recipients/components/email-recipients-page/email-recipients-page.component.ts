@@ -131,7 +131,7 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   }
 
   removeSavedTag(e: any) {
-    this.emailRecipientsStateService.addOrRemoveTagIds(e.value.id);
+    this.emailRecipientsStateService.addOrRemoveTagIds(e.id);
     this.getEmailRecipients();
   }
 

@@ -1,120 +1,75 @@
-import { Injectable } from '@angular/core';
-import {Observable, zip} from 'rxjs';
-import { EFormService } from 'src/app/common/services';
+import {Injectable} from '@angular/core';
+import {Observable, } from 'rxjs';
+import {EFormService} from 'src/app/common/services';
 import {
-    CommonPaginationState,
+  CommonPaginationState,
   FiltrationStateModel,
   OperationDataResult,
-  TemplateListModel, TemplateRequestModel,
+  TemplateListModel,
+  TemplateRequestModel,
 } from 'src/app/common/models';
-import {updateTableSort} from 'src/app/common/helpers';
+import {arrayToggle, updateTableSort} from 'src/app/common/helpers';
 import {Store} from '@ngrx/store';
 import {
-  selectEformsFilters, selectEformsPagination,
-  selectEformsTagIds
-} from 'src/app/state/eform/eform.selector';
-import {AppState} from 'src/app/state/app.state';
+  AppState,
+  selectEformsFilters,
+  selectEformsPagination,
+  updateEformFilters,
+  updateEformPagination
+} from 'src/app/state';
 
 @Injectable({providedIn: 'root'})
 export class EformsStateService {
-  private selectEformsTagIds$ = this.store.select(selectEformsTagIds);
   private selectEformsPagination$ = this.store.select(selectEformsPagination);
   private selectEformsFilters$ = this.store.select(selectEformsFilters);
+  private currentFilters: FiltrationStateModel = new FiltrationStateModel();
+  private currentPagination: CommonPaginationState = new CommonPaginationState();
 
   constructor(
     private store: Store<AppState>,
     private service: EFormService,
   ) {
+    this.selectEformsPagination$.subscribe(x => this.currentPagination = x);
+    this.selectEformsFilters$.subscribe(x => this.currentFilters = x);
   }
 
   updateNameFilter(nameFilter: string) {
-    let currentFilters: FiltrationStateModel;
-    this.selectEformsFilters$.subscribe((filters) => {
-      if (filters === undefined) {
-        return;
-      }
-      currentFilters = filters;
-    }).unsubscribe();
-    this.store.dispatch({
-      type: '[Eform] Update Eform Filters', payload: {
-        filters: {nameFilter: nameFilter, tagIds: currentFilters.tagIds}
-      }
-    });
+    this.store.dispatch(updateEformFilters({filters: {...this.currentFilters, nameFilter: nameFilter}}));
   }
 
   onSortTable(sort: string) {
-    let currentPagination: CommonPaginationState;
-    this.selectEformsPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
     const localPageSettings = updateTableSort(
       sort,
-      currentPagination.sort,
-      currentPagination.isSortDsc
+      this.currentPagination.sort,
+      this.currentPagination.isSortDsc
     );
-    this.store.dispatch({
-      type: '[Eform] Update Eform Pagination', payload: {
-        pagination: {sort: localPageSettings.sort, isSortDsc: localPageSettings.isSortDsc}
-      }
-    });
+    this.store.dispatch(updateEformPagination({
+      pagination: {
+        ...this.currentPagination,
+        sort: localPageSettings.sort,
+        isSortDsc: localPageSettings.isSortDsc,
+      }}));
   }
 
   addOrRemoveTagIds(id: number) {
-    let currentTagIds: number[];
-    this.selectEformsTagIds$.subscribe((tagIds) => {
-      if (tagIds === undefined) {
-        return;
-      }
-      currentTagIds = tagIds;
-    }).unsubscribe();
-    this.store.dispatch({
-      type: '[Eform] Update Eform Filters', payload: {
-        filters: {tagIds: this.arrayToggle(currentTagIds, id)}
-      }
-    });
+    this.store.dispatch(updateEformFilters({filters: {...this.currentFilters, tagIds: arrayToggle(this.currentFilters.tagIds, id)}}));
   }
 
   updateTagIds(tagIds: number[]) {
-    let currentFilters: FiltrationStateModel;
-    this.selectEformsFilters$.subscribe((filters) => {
-      if (filters === undefined) {
-        return;
-      }
-      currentFilters = filters;
-    }).unsubscribe();
-    this.store.dispatch({type: '[Eform] Update Eform Filters', payload: {
-        filters: {tagIds: tagIds, nameFilter: currentFilters.nameFilter}}});
+    this.store.dispatch(updateEformFilters({filters: {...this.currentFilters, tagIds: tagIds}}));
   }
 
   loadAllTemplates(): Observable<OperationDataResult<TemplateListModel>> {
-    let templateRequestModel = new TemplateRequestModel();
-    zip(this.selectEformsPagination$, this.selectEformsFilters$).subscribe(([pagination, filters]) => {
-      if (pagination === undefined || filters === undefined) {
-        return;
-      }
-      templateRequestModel = {
-        nameFilter: filters.nameFilter,
-        tagIds: filters.tagIds,
-        sort: pagination.sort,
-        isSortDsc: pagination.isSortDsc,
-        offset: 0,
-        pageIndex: 0,
-        pageSize: 100000,
-      }
-    });
+    const templateRequestModel: TemplateRequestModel = {
+      nameFilter: this.currentFilters.nameFilter,
+      tagIds: this.currentFilters.tagIds,
+      sort: this.currentPagination.sort,
+      isSortDsc: this.currentPagination.isSortDsc,
+      offset: 0,
+      pageIndex: 0,
+      pageSize: 100000,
+    };
     return this.service.getAll(templateRequestModel);
-  }
-
-  arrayToggle<T>(arr: T[], val: T, forced?: boolean): T[] {
-    if (forced && arr.includes(val)) {
-      return [...arr];
-    } else if (forced === false || arr.includes(val)) {
-      return arr.filter((v: typeof val) => v !== val);
-    }
-    return [...arr, val];
   }
 }
 

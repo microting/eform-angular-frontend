@@ -14,8 +14,8 @@ import {
   AdminService,
   GoogleAuthService,
 } from 'src/app/common/services';
-import { UsersStateService } from '../store';
-import { AuthStateService } from 'src/app/common/store';
+import {UsersStateService} from '../store';
+import {AuthStateService} from 'src/app/common/store';
 import {Sort} from '@angular/material/sort';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
@@ -26,14 +26,14 @@ import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {UserModalComponent, RemoveUserModalComponent} from 'src/app/modules/account-management/components';
 import {catchError} from 'rxjs/operators';
-import {selectCurrentUserClaimsUsersUpdate, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 import {
-  selectUsersFilters,
   selectUsersIsSortDsc,
   selectUsersPagination,
-  selectUsersSort
-} from "src/app/state/users/users.selector";
+  selectUsersSort,
+  selectCurrentUserClaimsUsersUpdate,
+  selectCurrentUserIsAdmin
+} from 'src/app/state';
 
 @AutoUnsubscribe()
 @Component({
@@ -44,7 +44,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   userInfoModelList: Paged<UserInfoModel> = new Paged<UserInfoModel>();
   securityGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
-  public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
+  public selectCurrentUserIsAdmin$ = this.store.select(selectCurrentUserIsAdmin);
 
   spinnerStatus: boolean;
   isChecked = true;
@@ -52,25 +52,29 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   tableHeaders: MtxGridColumn[] = [
     {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true},
     {header: this.translateService.stream('Email'), sortProp: {id: 'Email'}, field: 'email', sortable: true},
-    {header: this.translateService.stream('Full Name'), field: 'fullName', sortable: false, formatter: rowData => `${rowData.firstName} ${rowData.lastName}`},
+    {
+      header: this.translateService.stream('Full Name'),
+      field: 'fullName',
+      sortable: false,
+      formatter: rowData => `${rowData.firstName} ${rowData.lastName}`
+    },
     {header: this.translateService.stream('Role'), sortProp: {id: 'Role'}, field: 'role', sortable: true},
     {header: this.translateService.stream('Actions'), field: 'actions', sortable: false},
   ];
   userDeletedSub$: Subscription;
   newUserModalComponentAfterClosedSub$: Subscription;
   editUserModalComponentAfterClosedSub$: Subscription;
-  public selectCurrentUserClaimsUsersCreate$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
-  public selectCurrentUserClaimsUsersUpdate$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
-  public selectCurrentUserClaimsUsersDelete$ = this.authStore.select(selectCurrentUserClaimsUsersUpdate);
+  public selectCurrentUserClaimsUsersCreate$ = this.store.select(selectCurrentUserClaimsUsersUpdate);
+  public selectCurrentUserClaimsUsersUpdate$ = this.store.select(selectCurrentUserClaimsUsersUpdate);
+  public selectCurrentUserClaimsUsersDelete$ = this.store.select(selectCurrentUserClaimsUsersUpdate);
 
-  public selectUsersPagination$ = this.authStore.select(selectUsersPagination);
-  public selectUsersFilters$ = this.authStore.select(selectUsersFilters);
-  public selectUsersSort$ = this.authStore.select(selectUsersSort);
-  public selectUsersIsSortDsc$ = this.authStore.select(selectUsersIsSortDsc);
+  public selectUsersPagination$ = this.store.select(selectUsersPagination);
+  public selectUsersSort$ = this.store.select(selectUsersSort);
+  public selectUsersIsSortDsc$ = this.store.select(selectUsersIsSortDsc);
 
   constructor(
     private adminService: AdminService,
-    private authStore: Store,
+    private store: Store,
     public authStateService: AuthStateService,
     private googleAuthService: GoogleAuthService,
     private securityGroupsService: SecurityGroupsService,
@@ -78,7 +82,8 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private dialog: MatDialog,
     private overlay: Overlay,
-  ) {}
+  ) {
+  }
 
 
   ngOnInit() {
@@ -124,10 +129,10 @@ export class UsersPageComponent implements OnInit, OnDestroy {
           return caught;
         }))
       .subscribe(
-      (data) => {
-        this.isChecked = data.model;
-      },
-    );
+        (data) => {
+          this.isChecked = data.model;
+        },
+      );
   }
 
   getUserInfoList() {
@@ -136,7 +141,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
         if (data && data.model) {
           this.userInfoModelList = data.model;
         }
-    });
+      });
   }
 
   getSecurityGroups() {
@@ -183,10 +188,10 @@ export class UsersPageComponent implements OnInit, OnDestroy {
           return caught;
         }))
         .subscribe(
-        () => {
-          this.isChecked = true;
-        }
-      );
+          () => {
+            this.isChecked = true;
+          }
+        );
     } else if (e.target && !e.target.checked) {
       this.adminService.disableTwoFactorAuth().pipe(catchError(
         (error, caught) => {
@@ -194,10 +199,10 @@ export class UsersPageComponent implements OnInit, OnDestroy {
           return caught;
         }))
         .subscribe(
-        () => {
-          this.isChecked = false;
-        },
-      );
+          () => {
+            this.isChecked = false;
+          },
+        );
     } else {
       return;
     }

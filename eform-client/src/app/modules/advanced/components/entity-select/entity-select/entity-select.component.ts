@@ -1,12 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { EntitySelectService } from 'src/app/common/services';
 import {
   Paged,
   EntityGroupModel,
   PaginationModel,
 } from 'src/app/common/models';
-import { AuthStateService } from 'src/app/common/store';
-import { EntitySelectStateService } from '../store';
+import {EntitySelectStateService} from '../store';
 import {Sort} from '@angular/material/sort';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {MatDialog} from '@angular/material/dialog';
@@ -15,14 +13,18 @@ import {EntitySelectRemoveComponent} from '../';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
-import {selectCurrentUserClaimsEntitySelectCreate} from 'src/app/state/auth/auth.selector';
 import {
+  selectCurrentUserClaimsEntitySelectCreate,
+  selectCurrentUserClaimsEntitySelectDelete,
+  selectCurrentUserClaimsEntitySelectUpdate,
   selectEntitySelectIsSortDsc,
-  selectEntitySelectNameFilter, selectEntitySelectPagination,
-  selectEntitySelectSort
-} from 'src/app/state/entity-select/entity-select.selector';
+  selectEntitySelectNameFilter,
+  selectEntitySelectPagination,
+  selectEntitySelectSort,
+  updateEntitySelectTotal
+} from 'src/app/state';
 
 @AutoUnsubscribe()
 @Component({
@@ -30,7 +32,7 @@ import {
   templateUrl: './entity-select.component.html',
   styleUrls: ['./entity-select.component.scss'],
 })
-export class EntitySelectComponent implements OnInit, OnDestroy{
+export class EntitySelectComponent implements OnInit, OnDestroy {
   advEntitySelectableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();
   entitySelectRemoveComponentAfterClosedSub$: Subscription;
 
@@ -46,21 +48,22 @@ export class EntitySelectComponent implements OnInit, OnDestroy{
     },
     {header: this.translateService.stream('Actions'), field: 'actions'},
   ];
-  public selectCurrentUserClaimsEntitySelectCreate$ = this.authStore.select(selectCurrentUserClaimsEntitySelectCreate);
-  public selectCurrentUserClaimsEntitySelectUpdate$ = this.authStore.select(selectCurrentUserClaimsEntitySelectCreate);
-  public selectCurrentUserClaimsEntitySelectDelete$ = this.authStore.select(selectCurrentUserClaimsEntitySelectCreate);
-  public selectEntitySelectSort$ = this.authStore.select(selectEntitySelectSort);
-  public selectEntitySelectIsSortDsc$ = this.authStore.select(selectEntitySelectIsSortDsc);
-  public selectEntitySelectNameFilter$ = this.authStore.select(selectEntitySelectNameFilter);
-  public selectEntitySelectPagination$ = this.authStore.select(selectEntitySelectPagination);
+  public selectCurrentUserClaimsEntitySelectCreate$ = this.store.select(selectCurrentUserClaimsEntitySelectCreate);
+  public selectCurrentUserClaimsEntitySelectUpdate$ = this.store.select(selectCurrentUserClaimsEntitySelectUpdate);
+  public selectCurrentUserClaimsEntitySelectDelete$ = this.store.select(selectCurrentUserClaimsEntitySelectDelete);
+  public selectEntitySelectSort$ = this.store.select(selectEntitySelectSort);
+  public selectEntitySelectIsSortDsc$ = this.store.select(selectEntitySelectIsSortDsc);
+  public selectEntitySelectNameFilter$ = this.store.select(selectEntitySelectNameFilter);
+  public selectEntitySelectPagination$ = this.store.select(selectEntitySelectPagination);
 
   constructor(
-    private authStore: Store,
+    private store: Store,
     public entitySelectStateService: EntitySelectStateService,
     private dialog: MatDialog,
     private overlay: Overlay,
     private translateService: TranslateService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.getEntitySelectableGroupList();
@@ -72,7 +75,7 @@ export class EntitySelectComponent implements OnInit, OnDestroy{
       .subscribe((data) => {
         if (data && data.model) {
           this.advEntitySelectableGroupListModel = data.model;
-          this.authStore.dispatch({type: '[EntitySelect] Update EntitySelect Total', payload: {total: data.model.total}});
+          this.store.dispatch(updateEntitySelectTotal({total: data.model.total}));
         }
       });
   }
@@ -105,6 +108,4 @@ export class EntitySelectComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
   }
-
-  protected readonly selectEntitySelectIsSortDsc = selectEntitySelectIsSortDsc;
 }

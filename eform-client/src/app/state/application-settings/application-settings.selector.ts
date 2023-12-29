@@ -1,4 +1,4 @@
-import {AppState} from 'src/app/state/app.state';
+import {AppState} from '../';
 
 export const selectAppSettings = (state: AppState) => state.appSettings;
 

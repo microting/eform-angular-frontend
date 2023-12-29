@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-start flex-wrap">
-  <div class="tag" *ngFor="let tag of tags" [id]="id">
+  <div class="tag" *ngFor="let tag of tags" [id]="id" (click)="onClickTag(tag.id)">
     <mat-icon>discount</mat-icon>
     <span>{{ tag.name }}</span>
   </div>

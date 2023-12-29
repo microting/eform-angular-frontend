@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {MenuItemModel} from 'src/app/common/models';
-import {leftAppMenus, rightAppMenus} from 'src/app/state/app-menu/app-menu.selector';
+import {leftAppMenus, rightAppMenus} from 'src/app/state';
 import {Store} from '@ngrx/store';
 
 @Injectable()

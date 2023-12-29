@@ -1,4 +1,4 @@
-import {AppState} from 'src/app/state/app.state';
+import {AppState} from '../';
 import {createSelector} from '@ngrx/store';
 
 export const emailRecipientsState = (state: AppState) => state.emailRecipients;

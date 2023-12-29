@@ -5,7 +5,7 @@ import {
   NavigationMenuItemModel,
   NavigationMenuModel,
   NavigationMenuTranslationModel,
-  CommonDictionaryModel, LanguageModel,
+  CommonDictionaryModel,
 } from 'src/app/common/models';
 import {
   NavigationMenuService,
@@ -25,7 +25,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Store} from '@ngrx/store';
-import {selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
+import {loadAppMenu, selectCurrentUserLocale} from 'src/app/state';
 
 @AutoUnsubscribe()
 @Component({
@@ -119,7 +119,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     this.updateNavigationMenuSub$ = this.navigationMenuService
       .updateNavigationMenu(this.navigationMenuModel.actualMenu)
       .subscribe(() => {
-        this.store.dispatch({type: '[AppMenu] Load AppMenu'});
+        this.store.dispatch(loadAppMenu());
       });
   }
 
@@ -203,7 +203,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       .restNavigationMenu()
       .subscribe((data) => {
         if (data && data.success) {
-          this.store.dispatch({type: '[AppMenu] Load AppMenu'});
+          this.store.dispatch(loadAppMenu());
           this.getNavigationMenu();
         }
       });

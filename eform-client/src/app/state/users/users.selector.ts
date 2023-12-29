@@ -1,4 +1,4 @@
-import {AppState} from 'src/app/state/app.state';
+import {AppState} from 'src/app/state';
 import {createSelector} from '@ngrx/store';
 
 export const selectUsers = (state: AppState) => state.users;
@@ -9,4 +9,3 @@ export const selectUsersIsSortDsc = createSelector(selectUsers, (state) => state
 export const selectUsersOffset = createSelector(selectUsers, (state) => state.pagination.offset);
 export const selectUsersPageSize = createSelector(selectUsers, (state) => state.pagination.pageSize);
 export const selectUsersPageIndex = createSelector(selectUsers, (state) => state.pagination.pageIndex);
-export const selectUsersFilters = createSelector(selectUsers, (state) => state.filters);

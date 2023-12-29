@@ -1,7 +1,7 @@
 import {createSelector} from '@ngrx/store';
-import {EntitySelectState} from 'src/app/state/entity-select/entity-select.reducer';
+import {AppState, EntitySelectState} from '../';
 
-export const selectEntitySelectState = (state) => state.entitySelect;
+export const selectEntitySelectState = (state: AppState) => state.entitySelect;
 export const selectEntitySelectFilters =
   createSelector(selectEntitySelectState, (state: EntitySelectState) => state.filters);
 
@@ -21,5 +21,3 @@ export const selectEntitySelectPageSize =
   createSelector(selectEntitySelectState, (state: EntitySelectState) => state.pagination.pageSize);
 export const selectEntitySelectPageIndex =
   createSelector(selectEntitySelectState, (state: EntitySelectState) => state.pagination.pageIndex);
-export const selectEntitySelectTagIds =
-  createSelector(selectEntitySelectState, (state: EntitySelectState) => state.filters.tagIds);
