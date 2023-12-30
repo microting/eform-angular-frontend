@@ -25,6 +25,7 @@ SOFTWARE.
 using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Infrastructure.Models.Settings;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.Users;
@@ -81,6 +82,19 @@ public class AccountController : Controller
         }
 
         return await _accountService.ChangePassword(model);
+    }
+
+    [HttpPost]
+    [Route("api/account/change-password-admin")]
+    public async Task<OperationResult> ChangePasswordAdmin([FromBody] ChangePasswordAdminModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            var allErrors = ModelState.Values.SelectMany(v => v.Errors).Select(x => x.ErrorMessage);
+            return new OperationResult(false, string.Join(" ", allErrors));
+        }
+
+        return await _accountService.AdminChangePassword(model);
     }
 
     // POST: /account/forgot-password

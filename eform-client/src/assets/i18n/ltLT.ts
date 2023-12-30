@@ -403,4 +403,11 @@ export const ltLT = {
   'Please fill out this field': 'Užpildykite šį lauką',
   'Submitted date': 'Pateikimo data',
   Languages: 'Kalbos',
+  'Uploading progress:': 'Įkėlimo eiga:',
+  'Choose file': 'Pasirinkti failą',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Prekės puslapyje',
+  'PAGINATOR.NEXT_PAGE': 'Kitas puslapis',
+  'PAGINATOR.PREVIOUS_PAGE': 'Ankstesnis puslapis',
+  'PAGINATOR.OF_LABEL': 'apie',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'apie',
 };

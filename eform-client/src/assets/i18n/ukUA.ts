@@ -403,4 +403,11 @@ export const ukUA = {
   'Please fill out this field': 'Будь ласка, заповніть це поле',
   'Submitted date': 'Дата подання',
   Languages: 'Мови',
+  'Uploading progress:': 'Хід завантаження:',
+  'Choose file': 'Виберіть файл',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Елементів на сторінці',
+  'PAGINATOR.NEXT_PAGE': 'Наступна сторінка',
+  'PAGINATOR.PREVIOUS_PAGE': 'Попередня сторінка',
+  'PAGINATOR.OF_LABEL': 'з',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'з',
 };

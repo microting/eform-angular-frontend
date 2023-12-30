@@ -7,6 +7,7 @@
         <input
         matInput
         type="text"
+        [disabled]="userModel.isDeviceUser"
         [(ngModel)]="userModel.firstName"
         [id]="edit ? 'editFirstName' : 'createFirstName'"
         [name]="edit ? 'editFirstName' : 'createFirstName'"
@@ -17,6 +18,7 @@
         <input
           matInput
           type="text"
+          [disabled]="userModel.isDeviceUser"
           [(ngModel)]="userModel.lastName"
           [name]="edit ? 'editLastName' : 'createLastName'"
           [id]="edit ? 'editLastName' : 'createLastName'"
@@ -36,7 +38,7 @@
           [name]="edit ? 'emailEdit' : 'createEmail'"
         >
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="!edit">
         <mat-label>{{ 'New password' | translate }}</mat-label>
         <input
           matInput

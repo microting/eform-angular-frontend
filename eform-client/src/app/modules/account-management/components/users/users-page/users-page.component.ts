@@ -24,7 +24,11 @@ import {TranslateService} from '@ngx-translate/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
-import {UserModalComponent, RemoveUserModalComponent} from 'src/app/modules/account-management/components';
+import {
+  UserModalComponent,
+  RemoveUserModalComponent,
+  UserSetPasswordComponent
+} from 'src/app/modules/account-management/components';
 import {catchError} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {
@@ -59,11 +63,16 @@ export class UsersPageComponent implements OnInit, OnDestroy {
       formatter: rowData => `${rowData.firstName} ${rowData.lastName}`
     },
     {header: this.translateService.stream('Role'), sortProp: {id: 'Role'}, field: 'role', sortable: true},
+    {header: this.translateService.stream('Language'), sortProp: {id: 'Language'}, field: 'language', sortable: true},
+    {header: this.translateService.stream('Time Zone'), sortProp: {id: 'TimeZone'}, field: 'timeZone', sortable: true},
+    {header: this.translateService.stream('Formats'), sortProp: {id: 'Formats'}, field: 'formats', sortable: true},
+    {header: this.translateService.stream('Dark Theme'), sortProp: {id: 'DarkTheme'}, field: 'darkTheme', sortable: true, type: 'boolean', formatter: rowData => rowData.darkTheme ? `<span class="material-icons">done</span>` : `<span></span>`},
     {header: this.translateService.stream('Actions'), field: 'actions', sortable: false},
   ];
   userDeletedSub$: Subscription;
   newUserModalComponentAfterClosedSub$: Subscription;
   editUserModalComponentAfterClosedSub$: Subscription;
+  setUserPasswordModalComponentAfterClosedSub$: Subscription;
   public selectCurrentUserClaimsUsersCreate$ = this.store.select(selectCurrentUserClaimsUsersUpdate);
   public selectCurrentUserClaimsUsersUpdate$ = this.store.select(selectCurrentUserClaimsUsersUpdate);
   public selectCurrentUserClaimsUsersDelete$ = this.store.select(selectCurrentUserClaimsUsersUpdate);
@@ -180,6 +189,14 @@ export class UsersPageComponent implements OnInit, OnDestroy {
       .subscribe(x => this.onUserDeleted(x, modalId));
   }
 
+  openSetPasswordModal(selectedUser: UserInfoModel) {
+
+    const modalId = this.dialog.open(UserSetPasswordComponent,
+      dialogConfigHelper(this.overlay, selectedUser)).id;
+    this.setUserPasswordModalComponentAfterClosedSub$ = this.dialog.getDialogById(modalId).componentInstance.userPasswordSet
+      .subscribe(x => this.dialog.getDialogById(modalId).close());
+  }
+
   checked(e: any) {
     if (e.target && e.target.checked) {
       this.adminService.enableTwoFactorAuth().pipe(catchError(
@@ -230,4 +247,20 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
   }
+
+  openResetPasswordModal(id) {
+    this.adminService.resetPassword(id).subscribe((data) => {
+      if (data.success) {
+        this.getUserInfoList();
+      }
+    });
+  }
+
+  // openSetPasswordModal(id) {
+  //   // this.adminService.resetPassword(id).subscribe((data) => {
+  //   //   if (data.success) {
+  //   //     this.getUserInfoList();
+  //   //   }
+  //   // });
+  // }
 }

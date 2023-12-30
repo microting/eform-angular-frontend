@@ -403,4 +403,11 @@ export const lvLV = {
   'Please fill out this field': 'Lūdzu, aizpildiet šo lauku',
   'Submitted date': 'Iesniegšanas datums',
   Languages: 'Valodas',
+  'Uploading progress:': 'Augšupielādes norise:',
+  'Choose file': 'Izvēlēties failu',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Vienumi vienā lapā',
+  'PAGINATOR.NEXT_PAGE': 'Nākamā lapaspuse',
+  'PAGINATOR.PREVIOUS_PAGE': 'Iepriekšējā lapa',
+  'PAGINATOR.OF_LABEL': 'no',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'no',
 };

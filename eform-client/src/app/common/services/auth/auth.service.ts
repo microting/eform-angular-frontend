@@ -12,6 +12,7 @@ import {
 import { normalizeUserClaimNames } from 'src/app/common/helpers';
 import { ApiBaseService } from 'src/app/common/services';
 import {HttpParams} from '@angular/common/http';
+import {ChangePasswordAdminModel} from "src/app/common/models/user/change-password-admin.model";
 
 export let AuthMethods = {
   Login: 'api/auth/token',
@@ -21,6 +22,7 @@ export let AuthMethods = {
   CheckToken: '/auth/is-token-actual',
   Restore: '/auth/restore',
   ChangePassword: 'api/account/change-password',
+  ChangePasswordAdmin: 'api/account/change-password-admin',
   RestoreUserPassword: '/api/account/reset-password',
   EmailRecoveryLink: '/api/account/forgot-password',
   ResetAdminPassword: '/api/account/reset-admin-password',
@@ -105,6 +107,14 @@ export class AuthService {
 
   changePassword(model: ChangePasswordModel): Observable<any> {
     return this.apiBaseService.post(AuthMethods.ChangePassword, model).pipe(
+      map((result) => {
+        return result;
+      })
+    );
+  }
+
+  changePasswordAdmin(model: ChangePasswordAdminModel): Observable<any> {
+    return this.apiBaseService.post(AuthMethods.ChangePasswordAdmin, model).pipe(
       map((result) => {
         return result;
       })

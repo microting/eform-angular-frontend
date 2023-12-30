@@ -403,4 +403,11 @@ export const elGR = {
   'Please fill out this field': 'Παρακαλώ συμπληρώστε αυτό το πεδίο',
   'Submitted date': 'Ημερομηνία υποβολής',
   Languages: 'Γλώσσες',
+  'Uploading progress:': 'Πρόοδος μεταφόρτωσης:',
+  'Choose file': 'Επιλέξτε το αρχείο',
+  'PAGINATOR.ITEMS_PER_PAGE': 'αντικείμενα ανά σελίδα',
+  'PAGINATOR.NEXT_PAGE': 'Επόμενη σελίδα',
+  'PAGINATOR.PREVIOUS_PAGE': 'Προηγούμενη σελίδα',
+  'PAGINATOR.OF_LABEL': 'του',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'του',
 };

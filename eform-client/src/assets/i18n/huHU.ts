@@ -403,4 +403,11 @@ export const huHU = {
   'Please fill out this field': 'Kérem töltse ki ezt a mezőt',
   'Submitted date': 'Beküldés dátuma',
   Languages: 'Nyelvek',
+  'Uploading progress:': 'Feltöltés folyamata:',
+  'Choose file': 'Válassz fájlt',
+  'PAGINATOR.ITEMS_PER_PAGE': 'oldalankénti tételek',
+  'PAGINATOR.NEXT_PAGE': 'Következő oldal',
+  'PAGINATOR.PREVIOUS_PAGE': 'Előző oldal',
+  'PAGINATOR.OF_LABEL': 'nak,-nek',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'nak,-nek',
 };

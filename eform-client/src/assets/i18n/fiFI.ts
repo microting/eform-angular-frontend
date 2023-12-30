@@ -403,4 +403,11 @@ export const fiFI = {
   'Please fill out this field': 'Ole hyvä ja täytä tämä kenttä',
   'Submitted date': 'Lähetyspäivämäärä',
   Languages: 'Kieli (kielet',
+  'Uploading progress:': 'Latauksen edistyminen:',
+  'Choose file': 'Valitse tiedosto',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Kohteita per sivu',
+  'PAGINATOR.NEXT_PAGE': 'Seuraava sivu',
+  'PAGINATOR.PREVIOUS_PAGE': 'Edellinen sivu',
+  'PAGINATOR.OF_LABEL': '/',
+  'PAGINATOR.RANGE_PAGE_LABEL': '/',
 };

@@ -65,6 +65,10 @@ import {APP_INITIALIZER, ErrorHandler} from '@angular/core';
 import * as Sentry from '@sentry/angular-ivy';
 import {Router} from '@angular/router';
 import {provideEnvironmentNgxMask} from "ngx-mask";
+import {MatPaginatorIntl} from '@angular/material/paginator';
+import {
+  CustomMatPaginatorIntl
+} from './common/modules/eform-shared/components/eform-pagination/mat_paginator_intl';
 // Guards
 
 export let providers = [
@@ -147,5 +151,9 @@ export let providers = [
   },
   BaseService,
   ApiBaseService,
+  {
+    provide: MatPaginatorIntl,
+    useClass: CustomMatPaginatorIntl,
+  },
   provideEnvironmentNgxMask(),
 ];

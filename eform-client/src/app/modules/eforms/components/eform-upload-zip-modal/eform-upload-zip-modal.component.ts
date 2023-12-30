@@ -5,11 +5,11 @@ import {ToastrService} from 'ngx-toastr';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {AuthStateService} from 'src/app/common/store';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {selectBearerToken} from "src/app/state/auth/auth.selector";
-import {Store} from "@ngrx/store";
+import {selectBearerToken} from 'src/app/state/auth/auth.selector';
+import {Store} from '@ngrx/store';
 
 @Component({
-  selector: 'app-eform-upload-zip-modal',
+  selector: 'app-eform-uplo ad-zip-modal',
   templateUrl: './eform-upload-zip-modal.component.html',
   styleUrls: ['./eform-upload-zip-modal.component.scss'],
 })

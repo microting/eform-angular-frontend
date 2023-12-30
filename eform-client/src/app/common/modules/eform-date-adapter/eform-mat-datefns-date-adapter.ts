@@ -19,7 +19,7 @@ import {
   parseJSON,
 } from 'date-fns';
 import {zonedTimeToUtc} from 'date-fns-tz';
-import {enUS} from 'date-fns/locale';
+import {da} from 'date-fns/locale';
 import {EFORM_MAT_DATEFNS_LOCALES} from './eform-mat-datefns-locales';
 import {BehaviorSubject} from 'rxjs';
 
@@ -69,19 +69,13 @@ export class EformDateFnsDateAdapter extends DateAdapter<Date> {
     super();
 
     if (!this.locales || this.locales.length === 0) {
-      this.locales = [enUS];
+      this.locales = [da];
     }
 
-    dateLocale?.subscribe(locale => locale && this.setLocale(locale))
+    dateLocale?.subscribe(locale => locale && this.setLocale(locale));
     if(!dateLocale) {
-      this.setLocale(enUS);
+      this.setLocale(da);
     }
-
-/*    try {
-      this.setLocale(dateLocale || enUS);
-    } catch (_) {
-      this.setLocale(enUS);
-    }*/
   }
 
   private getLocale = (localeCodeOrLocale: string | Locale): Locale => {

@@ -76,6 +76,11 @@ export class SecurityGroupCreateComponent implements OnInit {
         lastName: selectedUser.lastName,
         email: selectedUser.email,
         role: '',
+        darkTheme: selectedUser.darkTheme,
+        isDeviceUser: selectedUser.isDeviceUser,
+        language: selectedUser.language,
+        timeZone: selectedUser.timeZone,
+        formats: selectedUser.formats,
       }];
       usersSelector.ngSelect.clearModel();
       // Updating user list after working with model

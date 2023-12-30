@@ -403,4 +403,11 @@ export const etET = {
   'Please fill out this field': 'Palun täitke see väli',
   'Submitted date': 'Esitamise kuupäev',
   Languages: 'Keeled',
+  'Uploading progress:': 'Üleslaadimise edenemine:',
+  'Choose file': 'Vali fail',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Üksusi lehel',
+  'PAGINATOR.NEXT_PAGE': 'Järgmine leht',
+  'PAGINATOR.PREVIOUS_PAGE': 'Eelmine leht',
+  'PAGINATOR.OF_LABEL': 'kohta',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'kohta',
 };
