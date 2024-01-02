@@ -208,7 +208,14 @@ public class Startup
         services.ConfigureDbOptions<EmailSettings>(Configuration.GetSection("EmailSettings"));
         services.ConfigureDbOptions<LoginPageSettings>(Configuration.GetSection("LoginPageSettings"));
         services.ConfigureDbOptions<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
-        services.ConfigureDbOptions<ConnectionStringsSdk>(Configuration.GetSection("ConnectionStringsSdk"));
+        var bla = Configuration.GetSection("ConnectionStringsSdk");
+        if (Configuration.MyConnectionString().Contains("127.0.0.1"))
+        {
+            bla.GetSection("SdkConnection").Value = bla.GetSection("SdkConnection")!.Value.Replace(
+                "mariadb-cluster-mariadb-galera",
+                "127.0.0.1");
+        }
+        services.ConfigureDbOptions<ConnectionStringsSdk>(bla);
         services.ConfigureDbOptions<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
         services.ConfigureDbOptions<PluginStoreSettings>(Configuration.GetSection("PluginStoreSettings"));
         // Database plugins options
@@ -419,6 +426,12 @@ public class Startup
                     var plugin = Program.EnabledPlugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
                     if (plugin != null)
                     {
+                        if (Configuration.MyConnectionString().Contains("127.0.0.1"))
+                        {
+                            eformPlugin.ConnectionString = eformPlugin.ConnectionString.Replace(
+                                "mariadb-cluster-mariadb-galera",
+                                "127.0.0.1");
+                        }
                         var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
                         if(permissionsManager != null)
                         {

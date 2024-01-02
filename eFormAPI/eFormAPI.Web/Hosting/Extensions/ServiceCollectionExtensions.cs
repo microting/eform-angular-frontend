@@ -113,6 +113,13 @@ public static class ServiceCollectionExtensions
                 var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
                 if (eformPlugin?.ConnectionString != null)
                 {
+
+                    if (connectionString.Contains("127.0.0.1"))
+                    {
+                        eformPlugin.ConnectionString = eformPlugin.ConnectionString.Replace(
+                            "mariadb-cluster-mariadb-galera",
+                            "127.0.0.1");
+                    }
                     plugin.ConfigureDbContext(services, eformPlugin.ConnectionString);
 
                     SetAdminGroupPluginPermissions(plugin, eformPlugin.ConnectionString);
