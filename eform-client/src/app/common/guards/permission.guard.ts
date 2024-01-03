@@ -3,15 +3,14 @@ import {
   ActivatedRouteSnapshot, CanActivateFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { AuthStateService } from 'src/app/common/store';
 import {Observable, take} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
   selectAuthIsAuth,
   selectAuthIsLoading,
   selectAuthIsSuccess,
-  selectCurretnUserClaims
-} from 'src/app/state/auth/auth.selector';
+  selectCurrentUserClaims
+} from 'src/app/state';
 import {Store} from '@ngrx/store';
 
 @Injectable()
@@ -19,7 +18,7 @@ export class PermissionGuard {
   private selectAuthIsLoading$ = this.store.select(selectAuthIsLoading);
   private selectAuthIsSuccess$ = this.store.select(selectAuthIsSuccess);
   public selectIsAuth$ = this.store.select(selectAuthIsAuth);
-  private selectCurrentUserClaims$ = this.store.select(selectCurretnUserClaims);
+  private selectCurrentUserClaims$ = this.store.select(selectCurrentUserClaims);
   constructor(
     private store: Store
   ) {

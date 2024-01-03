@@ -1,6 +1,6 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {AUTH_REDUCER_NODE, AuthState} from 'src/app/state/auth/auth.recuder';
-import {AppState} from 'src/app/state/app.state';
+import {AppState} from 'src/app/state';
 
 export const authFeatureSelector = createFeatureSelector<AuthState>(AUTH_REDUCER_NODE);
 
@@ -12,124 +12,124 @@ export const selectAuthIsLoading
   = createSelector(selectAuth, (state: AuthState) => state.status === 'loading');
 export const selectAuthIsSuccess
   = createSelector(selectAuth, (state: AuthState) => state.status === 'success');
+export const selectAuthToken
+  = createSelector(selectAuth, (state: AuthState) => state.token);
 export const selectAuthIsAuth
-  = createSelector(selectAuth, (state: AuthState) => state.token.accessToken !== '');
+  = createSelector(selectAuth, (state: AuthState) => state.token && state.token.accessToken && state.token.accessToken !== '');
 export const selectBearerToken
-  = createSelector(selectAuth, (state: AuthState) => state.token.accessToken);
+  = createSelector(selectAuthToken, (state) => state.accessToken);
 export const selectAuthUser
   = createSelector(selectAuth, (state: AuthState) => state.currentUser);
 export const selectAuthError
   = createSelector(selectAuth, (state: AuthState) => state.error);
-export const selectConnectionStringExists
-  = createSelector(selectAuth, (state: AuthState) => state.connectionString.isConnectionStringExist);
 export const selectConnectionStringWithCount
   = createSelector(selectAuth, (state: AuthState) => state.connectionString);
+export const selectConnectionStringExists
+  = createSelector(selectConnectionStringWithCount, (state) => state.isConnectionStringExist);
 export const selectLoginRedirectUrl
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.loginRedirectUrl);
+  = createSelector(selectAuthUser, (state) => state.loginRedirectUrl);
 export const selectSideMenuOpened
   = createSelector(selectAuth, (state: AuthState) => state.sideMenuOpened);
 export const selectIsDarkMode
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.darkTheme);
+  = createSelector(selectAuthUser, (state) => state.darkTheme);
 export const selectCurrentUserLocale
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.locale);
+  = createSelector(selectAuthUser, (state) => state.locale);
 export const selectCurrentUserLanguageId
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.languageId);
+  = createSelector(selectAuthUser, (state) => state.languageId);
 export const selectCurrentUserName
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.userName);
+  = createSelector(selectAuthUser, (state) => state.userName);
 export const selectCurrentUserFullName
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.firstName + ' ' + state.currentUser.lastName);
+  = createSelector(selectAuthUser, (state) => `${state.firstName} ${state.lastName}`);
 export const selectCurrentUserIsAdmin
-  = createSelector(selectAuth, (state: AuthState) => state.token.role === 'Admin');
-export const selectCurretnUserClaims
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims);
-export const selectCurrentUserClaimsUsersUpdate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.usersUpdate);
-export const selectCurrentUserClaimsUsersDelete
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.usersDelete);
-export const selectCurrentUserClaimsUsersCreate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.usersCreate);
+  = createSelector(selectAuthToken, (state) => state.role === 'Admin');
 export const selectCurrentUserClaims
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims);
+  = createSelector(selectAuthUser, (state) => state.claims);
+export const selectCurrentUserClaimsUsersUpdate
+  = createSelector(selectCurrentUserClaims, (state) => state.usersUpdate);
+export const selectCurrentUserClaimsUsersDelete
+  = createSelector(selectCurrentUserClaims, (state) => state.usersDelete);
+export const selectCurrentUserClaimsUsersCreate
+  = createSelector(selectCurrentUserClaims, (state) => state.usersCreate);
 export const selectCurrentUserClaimsCaseUpdate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.caseUpdate);
+  = createSelector(selectCurrentUserClaims, (state) => state.caseUpdate);
 export const selectCaseDelete
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.caseDelete);
+  = createSelector(selectCurrentUserClaims, (state) => state.caseDelete);
 export const selectCaseGetPdf
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.caseGetPdf);
+  = createSelector(selectCurrentUserClaims, (state) => state.caseGetPdf);
 export const selectCaseGetDocx
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.caseGetDocx);
+  = createSelector(selectCurrentUserClaims, (state) => state.caseGetDocx);
 export const selectCaseGetPptx
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.caseGetPptx);
+  = createSelector(selectCurrentUserClaims, (state) => state.caseGetPptx);
 export const selectCurrentUserClaimsUnitsRead
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.unitsRead);
+  = createSelector(selectCurrentUserClaims, (state) => state.unitsRead);
 export const selectCurrentUserClaimsUnitsUpdate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.unitsUpdate);
+  = createSelector(selectCurrentUserClaims, (state) => state.unitsUpdate);
 export const selectCurrentUserClaimsSitesCreate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.sitesCreate);
+  = createSelector(selectCurrentUserClaims, (state) => state.sitesCreate);
 export const selectCurrentUserClaimsSitesRead
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.sitesRead);
+  = createSelector(selectCurrentUserClaims, (state) => state.sitesRead);
 export const selectCurrentUserClaimsSitesUpdate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.sitesUpdate);
+  = createSelector(selectCurrentUserClaims, (state) => state.sitesUpdate);
 export const selectCurrentUserClaimsSitesDelete
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.sitesDelete);
+  = createSelector(selectCurrentUserClaims, (state) => state.sitesDelete);
 export const selectCurrentUserClaimsWorkersCreate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.workersCreate);
+  = createSelector(selectCurrentUserClaims, (state) => state.workersCreate);
 export const selectCurrentUserClaimsWorkersRead
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.workersRead);
+  = createSelector(selectCurrentUserClaims, (state) => state.workersRead);
 export const selectCurrentUserClaimsWorkersUpdate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.workersUpdate);
+  = createSelector(selectCurrentUserClaims, (state) => state.workersUpdate);
 export const selectCurrentUserClaimsWorkersDelete
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.workersDelete);
+  = createSelector(selectCurrentUserClaims, (state) => state.workersDelete);
 export const selectCurrentUserClaimsEntitySearchCreate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.entitySearchCreate);
+  = createSelector(selectCurrentUserClaims, (state) => state.entitySearchCreate);
 export const selectCurrentUserClaimsEntitySearchRead
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.entitySearchRead);
+  = createSelector(selectCurrentUserClaims, (state) => state.entitySearchRead);
 export const selectCurrentUserClaimsEntitySearchUpdate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.entitySearchUpdate);
+  = createSelector(selectCurrentUserClaims, (state) => state.entitySearchUpdate);
 export const selectCurrentUserClaimsEntitySearchDelete
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.entitySearchDelete);
+  = createSelector(selectCurrentUserClaims, (state) => state.entitySearchDelete);
 export const selectCurrentUserClaimsEntitySelectCreate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.entitySelectCreate);
+  = createSelector(selectCurrentUserClaims, (state) => state.entitySelectCreate);
 export const selectCurrentUserClaimsEntitySelectRead
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.entitySelectRead);
+  = createSelector(selectCurrentUserClaims, (state) => state.entitySelectRead);
 export const selectCurrentUserClaimsEntitySelectUpdate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.entitySelectUpdate);
+  = createSelector(selectCurrentUserClaims, (state) => state.entitySelectUpdate);
 export const selectCurrentUserClaimsEntitySelectDelete
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.entitySelectDelete);
+  = createSelector(selectCurrentUserClaims, (state) => state.entitySelectDelete);
 export const selectCurrentUserClaimsEformsCreate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsCreate);
+  = createSelector(selectCurrentUserClaims, (state) => state.eformsCreate);
 export const selectEformAllowManagingEformTags
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformAllowManagingEformTags);
+  = createSelector(selectCurrentUserClaims, (state) => state.eformAllowManagingEformTags);
 export const selectCurrentUserClaimsDeviceUsersRead
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.deviceUsersRead);
+  = createSelector(selectCurrentUserClaims, (state) => state.deviceUsersRead);
 export const selectCurrentUserClaimsDeviceUsersUpdate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.deviceUsersUpdate);
+  = createSelector(selectCurrentUserClaims, (state) => state.deviceUsersUpdate);
 export const selectCurrentUserClaimsDeviceUsersDelete
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.deviceUsersDelete);
+  = createSelector(selectCurrentUserClaims, (state) => state.deviceUsersDelete);
 export const selectCurrentUserClaimsDeviceUsersCreate
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.deviceUsersCreate);
+  = createSelector(selectCurrentUserClaims, (state) => state.deviceUsersCreate);
 export const selectCurrentUserClaimsEformsRead
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsRead);
+  = createSelector(selectCurrentUserClaims, (state) => state.eformsRead);
 export const selectCurrentUserClaimsEformsDelete
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsDelete);
+  = createSelector(selectCurrentUserClaims, (state) => state.eformsDelete);
 export const selectCurrentUserClaimsEformsUpdateColumns
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsUpdateColumns);
+  = createSelector(selectCurrentUserClaims, (state) => state.eformsUpdateColumns);
 export const selectCurrentUserClaimsEformsDownloadXml =
-  createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsDownloadXml);
+  createSelector(selectCurrentUserClaims, (state) => state.eformsDownloadXml);
 export const selectCurrentUserClaimsEformsUploadZip =
-  createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsUploadZip);
+  createSelector(selectCurrentUserClaims, (state) => state.eformsUploadZip);
 export const selectCurrentUserClaimsEformsPairingUpdate =
-  createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsPairingUpdate);
+  createSelector(selectCurrentUserClaims, (state) => state.eformsPairingUpdate);
 export const selectCurrentUserClaimsEformsUpdateTags =
-  createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsUpdateTags);
+  createSelector(selectCurrentUserClaims, (state) => state.eformsUpdateTags);
 export const selectCurrentUserClaimsEformsPairingRead
-  = createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsPairingRead);
+  = createSelector(selectCurrentUserClaims, (state) => state.eformsPairingRead);
 export const selectCurrentUserClaimsEformsReadTags =
-  createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsReadTags);
+  createSelector(selectCurrentUserClaims, (state) => state.eformsReadTags);
 export const selectCurrentUserClaimsEformsGetCsv =
-  createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsGetCsv);
+  createSelector(selectCurrentUserClaims, (state) => state.eformsGetCsv);
 export const selectCurrentUserClaimsEformsReadJasperReport =
-  createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsReadJasperReport);
+  createSelector(selectCurrentUserClaims, (state) => state.eformsReadJasperReport);
 export const selectCurrentUserClaimsEformsUpdateJasperReport =
-  createSelector(selectAuth, (state: AuthState) => state.currentUser.claims.eformsUpdateJasperReport);
+  createSelector(selectCurrentUserClaims, (state) => state.eformsUpdateJasperReport);
 

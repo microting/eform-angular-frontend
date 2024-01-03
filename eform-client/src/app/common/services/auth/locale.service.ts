@@ -4,12 +4,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs';
 import {OperationDataResult} from 'src/app/common/models';
 import {applicationLanguages} from 'src/app/common/const';
-import {AuthStateService} from 'src/app/common/store';
 import {ApiBaseService} from 'src/app/common/services';
-import {translates} from 'src/assets/i18n/translates';
-import {filter} from 'rxjs/operators';
-import {Store} from '@ngrx/store';
-import {selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
 
 export let LocaleMethods = {
   // GoogleAuthenticatorInfo: 'api/auth/google-auth-info',
@@ -94,7 +89,6 @@ export class LocaleService {
   }
 
   buildCookieValue(locale: string) {
-    console.log('LocaleService - buildCookieValue');
     return 'c=' + locale + '|uic=' + locale;
   }
 

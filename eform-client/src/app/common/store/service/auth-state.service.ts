@@ -1,10 +1,10 @@
 import {Inject, Injectable} from '@angular/core';
 import {AppSettingsService, AuthService, LocaleService, UserSettingsService} from 'src/app/common/services';
 import {LoginRequestModel, UserClaimsModel, UserInfoModel,} from 'src/app/common/models';
-import {BehaviorSubject, Observable, Subscription, take, zip} from 'rxjs';
+import {BehaviorSubject, take, zip} from 'rxjs';
 import {Router} from '@angular/router';
 import {Locale} from 'date-fns';
-import {applicationLanguages, customDaLocale} from 'src/app/common/const';
+import {customDaLocale} from 'src/app/common/const';
 import {de, enUS, es, fr, it, nb, nl, pl, sv, uk, ptBR, pt, fi} from 'date-fns/locale';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {Store} from '@ngrx/store';
@@ -15,8 +15,9 @@ import {
   selectCurrentUserLocale
 } from 'src/app/state/auth/auth.selector';
 import {TranslateService} from '@ngx-translate/core';
-import {connectionStringExistCount, loadAuthSuccess, logout, updateSideMenuOpened, updateUserInfo} from 'src/app/state';
+import {connectionStringExistCount, loadAuthSuccess, logout, refreshToken, updateSideMenuOpened, updateUserInfo} from 'src/app/state';
 import {snakeToCamel} from 'src/app/common/helpers';
+import {debounceTime, filter, tap} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class AuthStateService {
@@ -32,60 +33,65 @@ export class AuthStateService {
     private authStore: Store,
     private userSettings: UserSettingsService,
     public settingsService: AppSettingsService,
-    @Inject(MAT_DATE_LOCALE) private  dateLocale: BehaviorSubject<string | Locale | null>
+    @Inject(MAT_DATE_LOCALE) private dateLocale: BehaviorSubject<string | Locale | null>
   ) {
     this.selectCurrentUserLanguageId$.subscribe((languageId) => this.currentLanguageId = languageId);
     this.selectCurrentUserClaims$.subscribe((claims) => this.claims = claims);
   }
 
   isConnectionStringExistLoading = false;
-  isUserSettingsLoading = false;
 
   private selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
   private selectConnectionStringExists$ = this.authStore.select(selectConnectionStringExists);
   private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
-  private selectCurrentUserLanguageId$ = this.authStore.select(selectCurrentUserLanguageId)
-  private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims)
+  private selectCurrentUserLanguageId$ = this.authStore.select(selectCurrentUserLanguageId);
+  private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
 
   login(loginInfo: LoginRequestModel) {
-    this.service.login(loginInfo).subscribe((response) => {
-      if (response) {
-        this.authStore.dispatch(loadAuthSuccess(
-          {
-            token: {
-              accessToken: response.access_token,
-              tokenType: response.token_type,
-              expiresIn: response.expires_in,
-              role: response.role
-            },
-            currentUser: {firstName: response.firstName, lastName: response.lastName, userName: response.userName, id: response.id},
-            count: 2
-          })
-        );
-        zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
-          .subscribe(([userSettings, userClaims]) => {
-          if (userClaims === null) {
-            this.logout();
-          } else {
-            this.isUserSettingsLoading = false;
-            this.authStore.dispatch(updateUserInfo({userSettings: userSettings, userClaims: userClaims}));
-            this.translateService.use(userSettings.model.locale);
-            this.localeService.initCookies(userSettings.model.locale);
-            // this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
-            if (userSettings.model.loginRedirectUrl != null) {
-              this.router
-                .navigate([
-                  `/${userSettings.model.loginRedirectUrl}`,
-                ]).then();
-            } else {
-              this.router
-                .navigate(['/']).then();
-            }
-          }
-        });
-        //this.getUserSettings();
-      }
-    });
+    this.service.login(loginInfo)
+      .pipe(
+        filter(x => !!x),
+        tap((response) => {
+          this.authStore.dispatch(loadAuthSuccess({
+              token: {
+                accessToken: response.accessToken,
+                tokenType: response.tokenType,
+                expiresIn: response.expiresIn,
+                role: response.role
+              },
+              currentUser: {firstName: response.firstName, lastName: response.lastName, userName: response.userName, id: response.id},
+              count: 2
+            })
+          );
+        }),
+        take(1),
+        tap(() => {
+          zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
+            .pipe(
+              take(1),
+              tap(([userSettings, userClaims]) => {
+                if (userClaims === null) {
+                  this.logout();
+                } else {
+                  this.authStore.dispatch(updateUserInfo({userSettings: userSettings, userClaims: userClaims}));
+                  this.translateService.use(userSettings.model.locale);
+                  this.localeService.initCookies(userSettings.model.locale);
+                  if (userSettings.model.loginRedirectUrl != null) {
+                    this.router
+                      .navigate([
+                        `/${userSettings.model.loginRedirectUrl}`,
+                      ]).then();
+                  } else {
+                    this.router
+                      .navigate(['/']).then();
+                  }
+                }
+              }),
+            )
+            .subscribe();
+        })
+      )
+      .subscribe();
   }
 
   // initLocale() {
@@ -121,50 +127,26 @@ export class AuthStateService {
   //     });
   // }
 
-  // refreshToken() {
-  //   // const accessToken = JSON.parse(localStorage.getItem('token'));
-  //   // const accessTokenString = accessToken.token.accessToken;
-  //   // const accessTokenRole = accessToken.token.role;
-  //   // const accessTokenId = accessToken.token.id;
-  //   // this.authStore.dispatch({type: '[Auth] Refresh Token', payload: {token:
-  //   //       {
-  //   //         accessToken: accessTokenString,
-  //   //         tokenType: null,
-  //   //         expiresIn: null,
-  //   //         role: accessTokenRole,
-  //   //         id: accessTokenId}}});
-  //   // TODO need to fix this
-  //   if (!this.isRefreshing) {
-  //     this.isRefreshing = true;
-  //     this.service.refreshToken().subscribe((response) => {
-  //       if (response) {
-  //         zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
-  //           .subscribe(([userSettings, userClaims]) => {
-  //           this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
-  //           //         // console.log(`before AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
-  //           //         this.store.update((state) => ({
-  //           //           ...state,
-  //           //           token: {
-  //           //             accessToken: response.model.access_token,
-  //           //             tokenType: response.model.token_type,
-  //           //             expiresIn: response.model.expires_in,
-  //           //             role: response.model.role,
-  //           //           },
-  //           //           currentUser: {
-  //           //             ...state.currentUser,
-  //           //             claims: userClaims,
-  //           //           },
-  //           //         }));
-  //           //         // console.log(`after AuthStateService.refreshToken.store.update \n ${JSON.stringify(this.store._value())}`);
-  //           this.isRefreshing = false;
-  //         });
-  //       } else {
-  //         this.logout();
-  //         this.isRefreshing = false;
-  //       }
-  //     });
-  //   }
-  // }
+  refreshToken() {
+    // TODO need to fix this
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      this.authStore.dispatch(refreshToken());
+      this.service.refreshToken().subscribe((response) => {
+        if (response) {
+          zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
+            .pipe(take(1))
+            .subscribe(([userSettings, userClaims]) => {
+              this.authStore.dispatch(updateUserInfo({userSettings: userSettings, userClaims: userClaims}));
+              this.isRefreshing = false;
+            });
+        } else {
+          this.logout();
+          this.isRefreshing = false;
+        }
+      });
+    }
+  }
 
   // getUserSettings() {
   //   if (!this.isUserSettingsLoading) {
@@ -211,19 +193,19 @@ export class AuthStateService {
     console.debug('isConnectionStringExist called');
     // TODO: need to fix this
     if (!this.isConnectionStringExistLoading) {
-       this.isConnectionStringExistLoading = true;
-       this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
-         (result) => {
-           if (!result || (result && !result.success)) {
-             this.authStore.dispatch(connectionStringExistCount({count: 2, isConnectionStringExist: false}));
-             this.isConnectionStringExistLoading = false;
-           } else if (result && result.success) {
-             this.authStore.dispatch(connectionStringExistCount({count: 2, isConnectionStringExist: true}));
-             this.isConnectionStringExistLoading = false;
-           }
-         }
-       );
-     }
+      this.isConnectionStringExistLoading = true;
+      this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
+        (result) => {
+          if (!result || (result && !result.success)) {
+            this.authStore.dispatch(connectionStringExistCount({count: 2, isConnectionStringExist: false}));
+            this.isConnectionStringExistLoading = false;
+          } else if (result && result.success) {
+            this.authStore.dispatch(connectionStringExistCount({count: 2, isConnectionStringExist: true}));
+            this.isConnectionStringExistLoading = false;
+          }
+        }
+      );
+    }
   }
 
   updateUserLocale(locale: string) {
@@ -292,7 +274,7 @@ export class AuthStateService {
   public setLocale() {
     this.dateLocale.next(this.dateFnsLocale);
   }
-  //
+
   get dateFnsLocale(): Locale {
     switch (this.currentLanguageId) {
       case 1: {

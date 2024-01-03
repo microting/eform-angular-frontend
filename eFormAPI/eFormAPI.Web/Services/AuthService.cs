@@ -165,9 +165,10 @@ public class AuthService : IAuthService
         return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
         {
             Id = user.Id,
-            access_token = token,
-            userName = user.UserName,
-            role = roleList.FirstOrDefault(),
+            AccessToken = token.token,
+            UserName = user.UserName,
+            Role = roleList.FirstOrDefault(),
+            ExpiresIn = token.expireIn,
             FirstName = user.FirstName,
             LastName = user.LastName
         });
@@ -191,13 +192,16 @@ public class AuthService : IAuthService
         return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
         {
             Id = user.Id,
-            access_token = token,
-            userName = user.UserName,
-            role = roleList.FirstOrDefault()
+            AccessToken = token.token,
+            UserName = user.UserName,
+            Role = roleList.FirstOrDefault(),
+            ExpiresIn = token.expireIn,
+            FirstName = user.FirstName,
+            LastName = user.LastName
         });
     }
 
-    public async Task<string> GenerateToken(EformUser user)
+    public async Task<(string token, DateTime expireIn)> GenerateToken(EformUser user)
     {
         if (user != null)
         {
@@ -205,8 +209,8 @@ public class AuthService : IAuthService
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(AuthConsts.ClaimLastUpdateKey, timeStamp.ToString())
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new(AuthConsts.ClaimLastUpdateKey, timeStamp.ToString())
             };
 
             if (!string.IsNullOrEmpty(user.Locale))
@@ -247,16 +251,17 @@ public class AuthService : IAuthService
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.Value.SigningKey));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expireIn = DateTime.Now.AddHours(24);
             var token = new JwtSecurityToken(_tokenOptions.Value.Issuer,
                 _tokenOptions.Value.Issuer,
                 claims.ToArray(),
-                expires: DateTime.Now.AddHours(24),
+                expires: expireIn,
                 signingCredentials: credentials);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return (new JwtSecurityTokenHandler().WriteToken(token), expireIn);
         }
 
-        return null;
+        return (null, DateTime.Now);
     }
 
 

@@ -11,7 +11,7 @@ import {
 } from './';
 import {StoreStatusEnum} from 'src/app/common/const';
 
-export const AUTH_REDUCER_NODE = 'auth';
+export const AUTH_REDUCER_NODE: string = 'auth';
 
 export interface AuthCurrentUser {
   firstName: string;
@@ -27,7 +27,7 @@ export interface AuthCurrentUser {
 
 export interface AuthToken {
   accessToken: string;
-  expiresIn: any;
+  expiresIn: Date;
   tokenType: string;
   role: string;
 }
@@ -47,7 +47,7 @@ export interface AuthState {
 export const authInitialState: AuthState = {
   token: {
     accessToken: '',
-    expiresIn: '',
+    expiresIn: null,
     tokenType: '',
     role: '',
   },
@@ -122,8 +122,8 @@ export const authInitialState: AuthState = {
 const _authReducer = createReducer(
   authInitialState,
   on(authenticate, (state) => ({
-    ...state,
-    status: StoreStatusEnum.Loading,
+      ...state,
+      status: StoreStatusEnum.Loading,
     }),
   ),
   on(connectionStringExistCount, (state, {payload}) => ({
@@ -133,18 +133,21 @@ const _authReducer = createReducer(
       isConnectionStringExist: payload.isConnectionStringExist,
       count: payload.count,
     },
-    })),
+  })),
   on(loadAuthSuccess, (state, {payload}) => ({
     ...state,
     status: StoreStatusEnum.Success,
     error: null,
     token: payload.token,
-    currentUser: payload.currentUser,
+    currentUser: {
+      ...state.currentUser,
+      ...payload.currentUser
+    },
     connectionString: {
       isConnectionStringExist: true,
       count: payload.count,
     },
-    })),
+  })),
   on(updateUserInfo, (state, {payload}) => ({
     ...state,
     status: StoreStatusEnum.Success,
@@ -171,18 +174,23 @@ const _authReducer = createReducer(
     ...state,
     error: payload,
     status: StoreStatusEnum.Error,
-    })),
+  })),
   on(loadAuthState, (_, {payload}) => ({
     ...payload.state,
   })),
   on(logout, () => ({
     ...authInitialState
   })),
+  on(refreshToken, (state) => ({
+    ...state,
+    status: StoreStatusEnum.Loading,
+  })),
   on(updateSideMenuOpened, (state, {payload}) => ({
     ...state,
     sideMenuOpened: payload.sideMenuIsOpened,
   })),
 );
+
 export function authReducer(state: AuthState | undefined, action: any) {
   return _authReducer(state, action);
 }
