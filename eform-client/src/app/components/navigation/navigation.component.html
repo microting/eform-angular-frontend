@@ -11,7 +11,7 @@
          color="{{this.router.url === node.link ? 'accent' : ''}}"
          *ngIf="node.isInternalLink"
          routerLink="{{ node.link }}"
-         class="nav-link"
+         class="nav-link px-3"
          [id]="node.e2EId"
          (click)="onClickOnNode()"
       >
@@ -19,7 +19,7 @@
       </a>
       <a mat-button
          *ngIf="!node.isInternalLink"
-         class="nav-link"
+         class="nav-link px-3"
          target="_blank"
          [href]="node.link"
          (click)="onClickOnNode()"
