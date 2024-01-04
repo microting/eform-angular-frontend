@@ -12,7 +12,7 @@
   flex-wrap: nowrap;
   align-items: center;
   width: fit-content;
-  padding: 5px;
+  padding: 5px 10px;
   border-radius: $icon-size;
 }
 .tag ~ .tag {
@@ -23,12 +23,26 @@
 @mixin color($theme) {
   $color-config: mat.get-color-config($theme);
   $background: map.get($theme, 'background');
+  $is-dark-theme: map.get($color-config, 'is-dark');
   $foreground: map.get($color-config, foreground);
-  $label-color: mat.get-color-from-palette($foreground, primary-text);
+  $text-color: mat.get-color-from-palette($foreground, text);
+  $icon-color: mat.get-color-from-palette($foreground, icon);
+  $disabled-button: mat.get-color-from-palette($background, disabled-button);
+
+  $background-color: scale-color(map.get($background, 'card'), $lightness: +15%);
+  @if $is-dark-theme {
+    $background-color: scale-color(map.get($background, 'card'), $lightness: -15%);
+  }
 
   .tag {
-    background-color: scale-color(map.get($background, 'card'), $lightness: +15%);
-    color: $label-color;
+    background-color: $background-color;
+    color: $text-color;
+    border-color: $disabled-button;
+    border-width: .5px;
+    border-style: solid;
+    mat-icon {
+      color: $icon-color;
+    }
   }
 }
 @mixin typography($theme) {

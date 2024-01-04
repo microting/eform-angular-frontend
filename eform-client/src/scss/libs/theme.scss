@@ -13,6 +13,8 @@
 
 @include mat.core();
 
+mat.$theme-ignore-duplication-warnings: true;
+
 $letter-spacing: normal;
 $eform-font-family: Roboto, "Helvetica Neue", sans-serif;
 // Define a typography
@@ -42,14 +44,14 @@ $eform-typography: mat.define-typography-config(
   $subtitle-2: mat.define-typography-level(
     $font-family: $eform-font-family,
     $font-weight: 300,
-    $font-size: 1.13rem,
+    $font-size: 12.8px, // font size for: table header
     $line-height: 1.2,
     $letter-spacing: $letter-spacing,
   ),
   $body-1: mat.define-typography-level(
     $font-family: $eform-font-family,
     $font-weight: 300,
-    $font-size: 1.1rem,
+    $font-size: 16px, // font size for: default level text, text in table
     $line-height: 1.2,
     $letter-spacing: $letter-spacing,
   ),
@@ -70,7 +72,7 @@ $eform-typography: mat.define-typography-config(
   $button: mat.define-typography-level(
     $font-family: $eform-font-family,
     $font-weight: 300,
-    $font-size: 16px,
+    $font-size: 14px, //  font size for: button text, button icon(?)
     $line-height: 1.15,
     $letter-spacing: $letter-spacing,
   ));
