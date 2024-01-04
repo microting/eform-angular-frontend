@@ -8,7 +8,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./entity-item-edit-name.component.scss']
 })
 export class EntityItemEditNameComponent implements OnInit {
-  public selectedEntityItemModel: EntityItemModel = new EntityItemModel();
+  selectedEntityItemModel: EntityItemModel = new EntityItemModel();
   public changedEntityItem: EventEmitter<EntityItemModel> = new EventEmitter<EntityItemModel>();
   constructor(
     public dialogRef: MatDialogRef<EntityItemEditNameComponent>,
@@ -26,6 +26,7 @@ export class EntityItemEditNameComponent implements OnInit {
   }
 
   emitValue() {
-    this.changedEntityItem.emit(this.selectedEntityItemModel);
+    this.dialogRef.close({result: true, data: this.selectedEntityItemModel});
+    //this.changedEntityItem.emit(this.selectedEntityItemModel);
   }
 }
