@@ -1,7 +1,7 @@
 export class AuthResponseModel {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
+  accessToken: string;
+  tokenType: string;
+  expiresIn: Date;
   role: string;
   firstName: string;
   lastName: string;
@@ -9,9 +9,9 @@ export class AuthResponseModel {
   id: number;
 
   constructor(user: any) {
-    this.access_token = user.access_token;
-    this.token_type = user.token_type;
-    this.expires_in = user.expires_in;
+    this.accessToken = user.accessToken;
+    this.tokenType = user.tokenType;
+    this.expiresIn = user.expiresIn;
     this.role = user.role;
     this.firstName = user.firstName;
     this.lastName = user.lastName;

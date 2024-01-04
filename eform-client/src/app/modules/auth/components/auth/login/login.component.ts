@@ -21,6 +21,8 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription, take} from 'rxjs';
 import {TitleService} from 'src/app/common/services';
 import {TranslateService} from '@ngx-translate/core';
+import {Store} from '@ngrx/store';
+import {selectAuthIsAuth} from 'src/app/state';
 
 @AutoUnsubscribe()
 @Component({
@@ -42,6 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   showAdminResetForm = false;
   error: string;
   isAuthAsyncSub$: Subscription;
+  private selectIsAuth$ = this.store.select(selectAuthIsAuth);
 
   constructor(
     private router: Router,
@@ -54,6 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authStateService: AuthStateService,
     private titleService: TitleService,
     private translateService: TranslateService,
+    private store: Store,
   ) {}
 
   login() {
@@ -93,10 +97,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
-    // TODO: Fix this
-    // this.isAuthAsyncSub$ = this.authStateService.isAuthAsync.pipe(filter((isAuth: boolean) => isAuth === true)).subscribe(() => {
-    //   this.router.navigate(['/']).then();
-    // });
+    this.isAuthAsyncSub$ = this.selectIsAuth$.pipe(filter((isAuth: boolean) => isAuth === true)).subscribe(() => {
+      this.router.navigate(['/']).then();
+    });
   }
 
   ngOnDestroy(): void {

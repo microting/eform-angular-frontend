@@ -1,10 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
-import { AuthStateService } from 'src/app/common/store';
 import {Observable, take} from 'rxjs';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
-import {selectAuthIsAuth, selectCurretnUserClaims} from 'src/app/state/auth/auth.selector';
+import {selectAuthIsAuth} from 'src/app/state';
 
 @Injectable()
 export class AdminGuard {

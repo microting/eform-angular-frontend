@@ -1,14 +1,16 @@
+/* eslint-disable no-console */
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor,
+  HttpInterceptor, HttpErrorResponse,
 } from '@angular/common/http';
 import {RetryConfig, Observable, retry, throwError, catchError} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {AuthStateService} from 'src/app/common/store';
 import {Injectable} from '@angular/core';
+import {AuthMethods} from 'src/app/common/services';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -36,48 +38,44 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       // Retry on HTTP 504 errors up to the maximum number of retries
       retry(retryConfig),
       // Handle 400 - Bad Request
-      catchError((error) => {
+      catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (error.status === 400) {
-          let errors;
-          if (error._body) {
-            errors = error._body;
-          } else {
-            errors = error.error;
-          }
-          if (errors && errors.length > 0) {
-            errors.forEach((errorItem) => {
-              this.toastrService.error(errorItem.errorMessage, 'Error', {
-                timeOut: 10000,
+        switch (error.status) {
+          case 400: {
+            let errors;
+            // @ts-ignore
+            errors = error._body || error.error;
+            if (errors && errors.length > 0) {
+              errors.forEach((errorItem) => {
+                this.toastrService.error(errorItem.errorMessage, 'Error', {
+                  timeOut: 10000,
+                });
+                console.error(errorItem);
               });
-              console.error(errorItem);
+            }
+            return throwError(() => errorMessage);
+          }
+          case 401: { // Handle 401 — Unauthorized
+            console.error('401 - Unauthorized');
+            console.error(error);
+            this.authStateService.logout();
+            return throwError(() => errorMessage);
+          }
+          case 403: { // Handle 403 — Forbidden
+            //this.toastrService.warning('403 - Forbidden');
+            console.error('403 - Forbidden');
+            console.error(error);
+            this.authStateService.logout();
+            return throwError(() => errorMessage);
+          }
+          default: {
+            // @ts-ignore
+            const body = error._body || '';
+            errorMessage = `${error.status} - ${error.statusText || ''} ${body}`;
+            this.toastrService.error(errorMessage, 'Error', {
+              timeOut: 10000,
             });
           }
-          return throwError(() => errorMessage);
-        }
-        // Handle 401 — Unauthorized
-        if (error.status === 401) {
-          this.toastrService.warning('401 - Unauthorized');
-          console.error('401 - Unauthorized');
-          console.error(error);
-          this.authStateService.logout();
-          return throwError(() => errorMessage);
-        } else if (error.status === 403) {
-          //this.toastrService.warning('403 - Forbidden');
-          // console.error('403 - Forbidden');
-          // console.error(error);
-          localStorage.removeItem('token');
-          this.router.navigate(['/auth']).then();
-          //this.router.navigate(['/']).then();
-          return throwError(() => errorMessage);
-        }
-        const body = error._body || '';
-        // console.error(errorMessage);
-        if (error.status !== undefined) {
-          errorMessage = `${error.status} - ${error.statusText || ''} ${body}`;
-          this.toastrService.error(errorMessage, 'Error', {
-            timeOut: 10000,
-          });
         }
       })
     );

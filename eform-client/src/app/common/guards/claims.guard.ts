@@ -5,7 +5,7 @@ import {
 } from '@angular/router';
 import {UserClaimsEnum} from 'src/app/common/const';
 import {
-  selectCurretnUserClaims
+  selectCurrentUserClaims,
 } from 'src/app/state';
 import {Store} from '@ngrx/store';
 import {UserClaimsModel} from 'src/app/common/models';
@@ -14,7 +14,7 @@ import {UserClaimsModel} from 'src/app/common/models';
 export class ClaimsGuard {
 
   private claims: UserClaimsModel;
-  private selectCurrentUserClaims$ = this.store.select(selectCurretnUserClaims);
+  private selectCurrentUserClaims$ = this.store.select(selectCurrentUserClaims);
 
   constructor(
     private store: Store

@@ -17,11 +17,8 @@ import {NestedTreeControl} from '@angular/cdk/tree';
 import {Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
-import {leftAppMenus} from 'src/app/state/app-menu/app-menu.selector';
-import {AppMenuState} from 'src/app/state/app-menu/app-menu.reducer';
-import {selectAuthIsAuth, selectCurretnUserClaims} from 'src/app/state/auth/auth.selector';
-import {snakeToCamel} from "src/app/common/helpers";
-import {loadAppMenu} from 'src/app/state';
+import {selectAuthIsAuth, selectCurrentUserClaims, leftAppMenus, loadAppMenu} from 'src/app/state';
+import {snakeToCamel} from 'src/app/common/helpers';
 
 interface MenuNode {
   name: string;
@@ -52,7 +49,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   getCurrentUserInfoSub$: Subscription;
   public allAppMenus$ = this.authStore.select(leftAppMenus);
   private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
-  private selectCurrentUserClaims$ = this.authStore.select(selectCurretnUserClaims);
+  private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
 
   constructor(
     private adminService: AdminService,
