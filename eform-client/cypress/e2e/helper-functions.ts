@@ -136,20 +136,20 @@ export function selectDateRangeOnDatePicker(
 export function selectDateOnNewDatePicker(year: number, month: number, day: number) {
   cy.wait(500); // cy.wait(500); - wait animations, but not require
   // Click on the date picker widget's control button.
-  cy.get('.mat-focus-indicator.mat-calendar-period-button.mat-button.mat-button-base').click();
+  cy.get('.mat-calendar-controls > .mat-calendar-period-button').click();
   cy.wait(500);
   // calculate start year(generate dynamically in view)
   cy.get('mat-multi-year-view .mat-calendar-body-cell-content').first().invoke('text').then(startYear => {
     cy.log(`Start year in calendar view is: ${+startYear}`)
     // Click on the year cell of the date picker widget.
-    cy.get(`tbody div.mat-calendar-body-cell-content.mat-focus-indicator:eq(${year - (+startYear)})`).click();
+    cy.get(`tbody span.mat-calendar-body-cell-content.mat-focus-indicator:eq(${year - (+startYear)})`).click();
     cy.wait(500);
   })
   // Click on the month cell of the date picker widget.
-  cy.get(`div.mat-calendar-body-cell-content.mat-focus-indicator:eq(${month - 1})`).click();
+  cy.get(`span.mat-calendar-body-cell-content.mat-focus-indicator:eq(${month - 1})`).click();
   cy.wait(500);
   // Click on the day cell of the date picker widget.
-  cy.get(`div.mat-calendar-body-cell-content.mat-focus-indicator:not(.owl-dt-calendar-cell-out):eq(${day - 1})`).click();
+  cy.get(`span.mat-calendar-body-cell-content.mat-focus-indicator:not(.owl-dt-calendar-cell-out):eq(${day - 1})`).click();
   cy.wait(500);
 }
 
@@ -181,7 +181,7 @@ export function selectLanguage(selector: string, language) {
   valueForClick.should('be.visible').click();
 }
 
-export function selectValueInNgSelector(selector: string | GetElementFunction, value: string, selectorInModal = false) {
+export function selectValueInNgSelector(selector: string | GetElementFunction, value: string, selectorInModal = false, intercept = false) {
   let ngSelector: GetElementFunction;
   if (typeof selector === 'string') {
     ngSelector = () => cy.get(selector);
@@ -189,7 +189,13 @@ export function selectValueInNgSelector(selector: string | GetElementFunction, v
     ngSelector = selector;
   }
   ngSelector().should('be.visible');
+  if (intercept) {
+    cy.intercept('POST', '**').as('getItems');
+  }
   ngSelector().find('input').should('be.visible').clear().type(value);
+  if (intercept) {
+    cy.wait('@getItems', {timeout: 60000});
+  }
   cy.wait(500);
   let valueForClick;
   // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)
