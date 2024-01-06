@@ -100,8 +100,9 @@ export async function selectValueInNgSelector(selector: WebdriverIO.Element, val
   await selector.waitForDisplayed({ timeout: 40000 });
   const input = await selector.$('input');
   await input.waitForDisplayed({ timeout: 40000 })
+  await browser.pause(1500);
   await input.setValue(value);
-  await browser.pause(500);
+  await browser.pause(1500);
   let valueForClick: WebdriverIO.Element;
   await $('ng-dropdown-panel').waitForDisplayed({ timeout: 40000 });
   // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)
