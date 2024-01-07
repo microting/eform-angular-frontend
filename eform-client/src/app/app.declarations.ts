@@ -69,6 +69,7 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {
   CustomMatPaginatorIntl
 } from './common/modules/eform-shared/components/eform-pagination/mat_paginator_intl';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
 // Guards
 
 export let providers = [
@@ -156,4 +157,5 @@ export let providers = [
     useClass: CustomMatPaginatorIntl,
   },
   provideEnvironmentNgxMask(),
+  { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } }
 ];
