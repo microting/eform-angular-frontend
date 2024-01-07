@@ -98,7 +98,7 @@
     "ngx-mask": "^16.4.2",
     "ngx-papaparse": "8.0.0",
     "ngx-slimscroll": "12.2.0",
-    "ngx-toastr": "16.2.0",
+    "ngx-toastr": "18.0.0",
     "npm": "latest",
     "pdf-lib": "^1.17.1",
     "ramda": "^0.29.1",
