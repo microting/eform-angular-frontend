@@ -66,7 +66,7 @@
     "@angular/platform-browser-dynamic": "16.2.12",
     "@angular/router": "16.2.12",
     "@danielmoncada/angular-datetime-picker": "16.0.1",
-    "@ng-matero/extensions": "^16.3.2",
+    "@ng-matero/extensions": "^17.0.0",
     "@ngrx/effects": "16.3.0",
     "@ngrx/entity": "16.3.0",
     "@ngrx/store": "16.3.0",
