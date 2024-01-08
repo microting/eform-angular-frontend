@@ -14,7 +14,7 @@
     <div class="tag">
       <mat-icon>account_circle</mat-icon>
       <button mat-icon-button [matMenuTriggerFor]="menu" id="sign-out-dropdown">
-        <mat-icon>settings</mat-icon>
+        <mat-icon style="padding-top: 5px !important; padding-left: 5px !important;">settings</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
         <a mat-menu-item *ngFor="let menu of allAppMenus$ | async"
