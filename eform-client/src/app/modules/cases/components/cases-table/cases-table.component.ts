@@ -232,7 +232,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         sortable: true,
         sortProp: {id: 'FieldValue1'},
       formatter: (record: CaseModel) => {
-        return record.fieldValue1;
+        return record.fieldValue1 !== null ? record.fieldValue1.replace(/(\r\n|\n|\r)/gm, '<br>') : '';
       }
       }] : undefined;
     this.currentTemplate.field2 && this.currentTemplate.field2.label
@@ -242,7 +242,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         sortable: true,
         sortProp: {id: 'FieldValue2'},
         formatter: (record: CaseModel) => {
-          return record.fieldValue2;
+          return record.fieldValue2 !== null ? record.fieldValue2.replace(/(\r\n|\n|\r)/gm, '<br>') : '';
         },
       }] : undefined;
     this.currentTemplate.field3 && this.currentTemplate.field3.label
@@ -252,7 +252,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         sortable: true,
         sortProp: {id: 'FieldValue3'},
         formatter: (record: CaseModel) => {
-          return record.fieldValue3;
+          return record.fieldValue3 !== null ? record.fieldValue3.replace(/(\r\n|\n|\r)/gm, '<br>') : '';
         }
       }] : undefined;
     this.currentTemplate.field4 && this.currentTemplate.field4.label
@@ -262,7 +262,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         sortable: true,
         sortProp: {id: 'FieldValue4'},
         formatter: (record: CaseModel) => {
-          return record.fieldValue4;
+          return record.fieldValue4 !== null ? record.fieldValue4.replace(/(\r\n|\n|\r)/gm, '<br>') : '';
         }
       }] : undefined;
     this.currentTemplate.field5 && this.currentTemplate.field5.label
@@ -272,7 +272,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         sortable: true,
         sortProp: {id: 'FieldValue5'},
         formatter: (record: CaseModel) => {
-          return record.fieldValue5;
+          return record.fieldValue5 !== null ? record.fieldValue5.replace(/(\r\n|\n|\r)/gm, '<br>') : '';
         }
       }] : undefined;
     this.currentTemplate.field6 && this.currentTemplate.field6.label
@@ -282,7 +282,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         sortable: true,
         sortProp: {id: 'FieldValue6'},
         formatter: (record: CaseModel) => {
-          return record.fieldValue6;
+          return record.fieldValue6 !== null ? record.fieldValue6.replace(/(\r\n|\n|\r)/gm, '<br>') : '';
         }
       }] : undefined;
     this.currentTemplate.field7 && this.currentTemplate.field7.label
@@ -292,7 +292,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         sortable: true,
         sortProp: {id: 'FieldValue7'},
         formatter: (record: CaseModel) => {
-          return record.fieldValue7;
+          return record.fieldValue7 !== null ? record.fieldValue7.replace(/(\r\n|\n|\r)/gm, '<br>') : '';
         }
       }] : undefined;
     this.currentTemplate.field8 && this.currentTemplate.field8.label
@@ -302,7 +302,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         sortable: true,
         sortProp: {id: 'FieldValue8'},
         formatter: (record: CaseModel) => {
-          return record.fieldValue8;
+          return record.fieldValue8 !== null ? record.fieldValue8.replace(/(\r\n|\n|\r)/gm, '<br>') : '';
         }
       }] : undefined;
     this.currentTemplate.field9 && this.currentTemplate.field9.label
@@ -312,7 +312,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         sortable: true,
         sortProp: {id: 'FieldValue9'},
         formatter: (record: CaseModel) => {
-          return record.fieldValue9;
+          return record.fieldValue9 !== null ? record.fieldValue9.replace(/(\r\n|\n|\r)/gm, '<br>') : '';
         }
       }] : undefined;
     this.tableHeaders = [
