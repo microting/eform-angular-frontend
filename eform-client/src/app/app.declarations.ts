@@ -157,5 +157,4 @@ export let providers = [
     useClass: CustomMatPaginatorIntl,
   },
   provideEnvironmentNgxMask(),
-  { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } }
 ];
