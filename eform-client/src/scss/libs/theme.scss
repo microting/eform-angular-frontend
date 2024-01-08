@@ -124,3 +124,13 @@ body {
     font-weight: 400;
   }
 }
+
+.mdc-evolution-chip__action {
+  padding-top: 3px !important;
+  padding-bottom: 0px !important;
+}
+
+.mdc-evolution-chip__text-label > span {
+  position: relative;
+  top: -4px;
+}
