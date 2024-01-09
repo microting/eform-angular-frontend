@@ -36,7 +36,8 @@ class PluginPage extends PageWithNavbarPage {
     switchElement.click(); // call warning modal
     this.pluginOKBtn().should('be.visible')
       .should('be.enabled').click(); // button in warning modal
-    cy.wait(msForWait); // wait for server migrate db plugin
+    cy.wait(msForWait); // wait for server
+    cy.visit('http://localhost:4200');// migrate db plugin
     loginPage.login();
     this.Navbar.goToPluginsPage();
   }
