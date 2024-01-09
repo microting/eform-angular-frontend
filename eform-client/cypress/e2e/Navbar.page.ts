@@ -181,7 +181,7 @@ export class Navbar {
       }
     });
     this.pluginsBtn().click();
-    cy.get('app-installed-plugins-page .mat-row').should('be.visible'); // required need 1+ plugin
+    cy.get('app-installed-plugins-page .mat-mdc-row').should('be.visible'); // required need 1+ plugin
   }
 
   public goToMenuEditorPage() {

@@ -7,7 +7,7 @@ class PluginPage extends PageWithNavbarPage {
   }
 
   public rowNum(): Cypress.Chainable<number> {
-    return cy.get('.mat-row').its('length').should('be.gt', 0);
+    return cy.get('.mat-mdc-row').its('length').should('be.gt', 0);
   }
 
   public marketplaceBtn(): Cypress.Chainable<JQuery<HTMLElement>> {
@@ -29,14 +29,15 @@ class PluginPage extends PageWithNavbarPage {
   }
 
   public enablePluginByName(pluginName: string, msForWait: number = 100000) {
-    let row = cy.contains('.mat-row', pluginName).first();
+    let row = cy.contains('.mat-mdc-row', pluginName).first();
     let switchElement = row
       .find('.mat-column-actions button')
       .should('contain.text', 'toggle_off');  // plugin is disabled
     switchElement.click(); // call warning modal
     this.pluginOKBtn().should('be.visible')
       .should('be.enabled').click(); // button in warning modal
-    cy.wait(msForWait); // wait for server migrate db plugin
+    cy.wait(msForWait); // wait for server
+    cy.visit('http://localhost:4200');// migrate db plugin
     loginPage.login();
     this.Navbar.goToPluginsPage();
   }
