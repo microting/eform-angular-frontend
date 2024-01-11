@@ -99,7 +99,12 @@ public class AdminService : IAdminService
                 LastName = x.LastName,
                 Id = x.Id,
                 UserName = x.UserName,
-                Email = x.Email
+                Email = x.Email,
+                DarkTheme = x.DarkTheme,
+                Language = x.Locale,
+                TimeZone = x.TimeZone,
+                Formats = x.Formats,
+                IsDeviceUser = false
             });
 
             // sort
@@ -127,8 +132,10 @@ public class AdminService : IAdminService
 
             foreach (UserInfoViewModel userInfoViewModel in userResult)
             {
-                if (!userInfoViewModel.Email.Contains("microting.com"))
+                if (!userInfoViewModel.Email.Contains("microting.com") && !userInfoViewModel.Email.Contains("admin.com"))
                 {
+                    userInfoViewModel.IsDeviceUser = true;
+
                     if (sdkDbContext.Workers.Any(x =>
                             x.FirstName == userInfoViewModel.FirstName
                             && x.LastName == userInfoViewModel.LastName
@@ -224,7 +231,9 @@ public class AdminService : IAdminService
                 Locale = "da",
                 EmailConfirmed = true,
                 TwoFactorEnabled = false,
-                IsGoogleAuthenticatorEnabled = false
+                IsGoogleAuthenticatorEnabled = false,
+                TimeZone = "Europe/Copenhagen",
+                Formats = "de-DE"
             };
 
             var result = await _userManager.CreateAsync(user, userRegisterModel.Password);
@@ -293,6 +302,10 @@ public class AdminService : IAdminService
                 return new OperationDataResult<UserRegisterModel>(false,
                     _localizationService.GetString("UserNotFound"));
             }
+            var core = await _coreHelper.GetCore();
+            var sdkDbContext = core.DbContextHelper.GetDbContext();
+            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
+                                                                          && x.WorkflowState != Constants.WorkflowStates.Removed);
 
             var result = new UserRegisterModel()
             {
@@ -300,7 +313,8 @@ public class AdminService : IAdminService
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                UserName = user.UserName
+                UserName = user.UserName,
+                IsDeviceUser = site != null
             };
             // get role
             var roles = await _userManager.GetRolesAsync(user);

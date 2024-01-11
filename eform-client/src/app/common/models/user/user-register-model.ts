@@ -7,4 +7,5 @@ export class UserRegisterModel {
   groupId: number;
   role: string;
   userName: string;
+  isDeviceUser: boolean;
 }

@@ -74,6 +74,14 @@
       >
         <mat-icon>delete</mat-icon>
       </button>
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="openSetPasswordModal(row)"
+        matTooltip="{{ 'Set password' | translate }}"
+        id="userAdministrationResetPasswordBtn-{{i}}">
+        <mat-icon>vpn_key</mat-icon>
+      </button>
     </div>
   </ng-template>
 

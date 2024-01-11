@@ -403,4 +403,11 @@ export const skSK = {
   'Please fill out this field': 'Vyplňte toto pole',
   'Submitted date': 'Dátum odoslania',
   Languages: 'Jazyky',
+  'Uploading progress:': 'Priebeh nahrávania:',
+  'Choose file': 'Vyberte súbor',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Položky na stránku',
+  'PAGINATOR.NEXT_PAGE': 'Ďalšia strana',
+  'PAGINATOR.PREVIOUS_PAGE': 'Predchádzajúca strana',
+  'PAGINATOR.OF_LABEL': 'z',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'z',
 };

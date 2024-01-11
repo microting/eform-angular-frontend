@@ -403,4 +403,11 @@ export const csCZ = {
   'Please fill out this field': 'Prosím, vyplňte toto pole',
   'Submitted date': 'Datum odevzdání',
   Languages: 'Jazyky',
+  'Uploading progress:': 'Průběh nahrávání:',
+  'Choose file': 'Vyberte soubor',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Položek na stránce',
+  'PAGINATOR.NEXT_PAGE': 'Další strana',
+  'PAGINATOR.PREVIOUS_PAGE': 'Předchozí stránka',
+  'PAGINATOR.OF_LABEL': 'z',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'z',
 };

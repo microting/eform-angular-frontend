@@ -55,19 +55,31 @@ export async function selectDateOnDatePicker(
   // need open selector years (selected year can be not needed year)
   const selectYearAndMonthButton = await $(`.mat-calendar-period-button`);
   await selectYearAndMonthButton.waitForClickable({timeout: 20000});
+  await browser.pause(1000);
   await selectYearAndMonthButton.click();
   // select year. after select year we can select month
   const yearStart = +(await (await $('mat-multi-year-view .mat-calendar-body-cell-content')).getText());
   const yearForSelect = await $$(`mat-multi-year-view .mat-calendar-body-cell`)[year - yearStart];
   await yearForSelect.waitForClickable({timeout: 20000});
+  await browser.pause(1000);
   await yearForSelect.click();
   // select month. after select month we can select day
-  const monthForSelect = await $$(`mat-year-view .mat-calendar-body-cell`)[month - 1];
-  await monthForSelect.waitForClickable({timeout: 20000});
-  await monthForSelect.click();
+  if (month > 1) {
+    const monthForSelect = await $$(`mat-year-view .mat-calendar-body-cell`)[month - 1];
+    await monthForSelect.waitForClickable({timeout: 20000});
+    await browser.pause(1000);
+    await monthForSelect.click();
+  }
+  else {
+    const monthForSelect = await $$(`mat-year-view .mat-calendar-body-cell`)[month];
+    await monthForSelect.waitForClickable({timeout: 20000});
+    await browser.pause(1000);
+    await monthForSelect.click();
+  }
   // select day
   const dayForSelect = await $$(`mat-month-view .mat-calendar-body-cell`)[day - 1];
   await dayForSelect.waitForClickable({timeout: 20000});
+  await browser.pause(1000);
   await dayForSelect.click();
 }
 
@@ -88,8 +100,9 @@ export async function selectValueInNgSelector(selector: WebdriverIO.Element, val
   await selector.waitForDisplayed({ timeout: 40000 });
   const input = await selector.$('input');
   await input.waitForDisplayed({ timeout: 40000 })
+  await browser.pause(1500);
   await input.setValue(value);
-  await browser.pause(500);
+  await browser.pause(1500);
   let valueForClick: WebdriverIO.Element;
   await $('ng-dropdown-panel').waitForDisplayed({ timeout: 40000 });
   // if selector in modal or have [appendTo]="'body'" - options not on selector, need find global(or on body, but not on selector)

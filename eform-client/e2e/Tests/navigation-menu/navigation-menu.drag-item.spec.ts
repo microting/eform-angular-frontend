@@ -84,7 +84,7 @@ describe(' Navigation menu - Drag item', function () {
     await navigationMenuPage.clickSaveMenuBtn();
     await browser.pause(500);
 
-    const itemsBeforeSwap = ['menu\nDevice Users / test2Dan\nedit\ndelete', 'menu\nSites / test0Dan\nedit\ndelete', 'menu\nWorkers / test1Dan\nedit\ndelete'];
+    const itemsBeforeSwap = ['menu\nSites / test2Dan\nedit\ndelete', 'menu\nDevice Users / test0Dan\nedit\ndelete', 'menu\nWorkers / test1Dan\nedit\ndelete'];
     // tslint:disable-next-line:max-line-length
     for (let i = 0; i < (await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItems()).length - 1)).length; i++) {
       const elem = (await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItems()).length - 1))[i];

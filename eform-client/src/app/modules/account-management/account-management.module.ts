@@ -7,7 +7,7 @@ import {
   UserModalComponent,
   ProfileSettingsComponent,
   RemoveUserModalComponent,
-  UsersPageComponent,
+  UsersPageComponent, UserSetPasswordComponent,
 } from './components';
 import {AccountManagementRouting} from './account-management.routing';
 import {TranslateModule} from '@ngx-translate/core';
@@ -49,6 +49,7 @@ import {MatIconModule} from '@angular/material/icon';
     UsersPageComponent,
     UserModalComponent,
     RemoveUserModalComponent,
+    UserSetPasswordComponent,
   ],
 })
 export class AccountManagementModule {

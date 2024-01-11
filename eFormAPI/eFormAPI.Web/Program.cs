@@ -453,6 +453,13 @@ public class Program
 
                         if (pluginEntity != null && !string.IsNullOrEmpty(pluginEntity.ConnectionString))
                         {
+                            if (_defaultConnectionString.Contains("127.0.0.1"))
+                            {
+                                pluginEntity.ConnectionString = pluginEntity.ConnectionString.Replace(
+                                    "mariadb-cluster-mariadb-galera",
+                                    "127.0.0.1");
+                            }
+
                             plugin.AddPluginConfig(config, pluginEntity.ConnectionString);
                         }
                     }

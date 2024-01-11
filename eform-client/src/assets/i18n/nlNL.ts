@@ -403,4 +403,11 @@ export const nlNL = {
   'Please fill out this field': 'Vul alstublieft dit veld in',
   'Submitted date': 'Datum ingediend',
   Languages: 'Talen',
+  'Uploading progress:': 'Voortgang uploaden:',
+  'Choose file': 'Kies bestand',
+  'PAGINATOR.ITEMS_PER_PAGE': 'Artikelen per pagina',
+  'PAGINATOR.NEXT_PAGE': 'Volgende bladzijde',
+  'PAGINATOR.PREVIOUS_PAGE': 'Vorige bladzijde',
+  'PAGINATOR.OF_LABEL': 'van',
+  'PAGINATOR.RANGE_PAGE_LABEL': 'van',
 };

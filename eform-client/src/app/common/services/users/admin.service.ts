@@ -69,4 +69,8 @@ export class AdminService {
   disableTwoFactorAuth(): Observable<OperationResult> {
     return this.apiBaseService.get(AdminMethods.DisableTwoFactorAuth);
   }
+
+  resetPassword(id) {
+    return this.apiBaseService.get('/api/admin/reset-password/' + id);
+  }
 }
