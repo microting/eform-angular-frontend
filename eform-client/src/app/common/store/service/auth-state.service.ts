@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {AppSettingsService, AuthService, LocaleService, UserSettingsService} from 'src/app/common/services';
-import {LoginRequestModel, UserClaimsModel, UserInfoModel,} from 'src/app/common/models';
-import {BehaviorSubject, take, zip} from 'rxjs';
+import {AuthResponseModel, LoginRequestModel, OperationDataResult, UserClaimsModel, UserInfoModel,} from 'src/app/common/models';
+import {BehaviorSubject, catchError, of, switchMap, take, zip} from 'rxjs';
 import {Router} from '@angular/router';
 import {Locale} from 'date-fns';
 import {customDaLocale} from 'src/app/common/const';
@@ -15,9 +15,16 @@ import {
   selectCurrentUserLocale
 } from 'src/app/state/auth/auth.selector';
 import {TranslateService} from '@ngx-translate/core';
-import {connectionStringExistCount, loadAuthSuccess, logout, refreshToken, updateSideMenuOpened, updateUserInfo} from 'src/app/state';
+import {
+  connectionStringExistCount,
+  loadAuthFailure,
+  loadAuthSuccess,
+  logout,
+  updateSideMenuOpened,
+  updateUserInfo
+} from 'src/app/state';
 import {snakeToCamel} from 'src/app/common/helpers';
-import {debounceTime, filter, tap} from 'rxjs/operators';
+import {filter, tap} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class AuthStateService {
@@ -128,24 +135,43 @@ export class AuthStateService {
   // }
 
   refreshToken() {
-    // TODO need to fix this
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.authStore.dispatch(refreshToken());
-      this.service.refreshToken().subscribe((response) => {
-        if (response) {
+    return this.service.refreshToken().pipe(
+      tap((auth: OperationDataResult<AuthResponseModel>) => (this.authStore.dispatch(loadAuthSuccess({
+        token: {
+          accessToken: auth.model.accessToken,
+          tokenType: auth.model.tokenType,
+          role: auth.model.role,
+          expiresIn: auth.model.expiresIn,
+        },
+        currentUser: {
+          id: auth.model.id,
+          userName: auth.model.userName,
+          firstName: auth.model.firstName,
+          lastName: auth.model.lastName,
+        },
+        count: 2,
+      })))),
+      switchMap((response) => {
+        if (response && response.success && response.model) {
           zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
             .pipe(take(1))
             .subscribe(([userSettings, userClaims]) => {
               this.authStore.dispatch(updateUserInfo({userSettings: userSettings, userClaims: userClaims}));
               this.isRefreshing = false;
             });
+          return of(response);
         } else {
           this.logout();
           this.isRefreshing = false;
+          return of(null);
         }
-      });
-    }
+      }),
+      catchError((error: any) => {
+        this.logout();
+        this.isRefreshing = false;
+        return of(loadAuthFailure(error));
+      }),
+    )
   }
 
   // getUserSettings() {
