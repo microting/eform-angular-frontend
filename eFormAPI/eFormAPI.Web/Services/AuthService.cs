@@ -277,37 +277,29 @@ public class AuthService : IAuthService
 
     public OperationDataResult<Dictionary<string, string>> GetCurrentUserClaims()
     {
-        try
+        var result = new Dictionary<string, string>();
+        var userId = _userService.UserId;
+        if (userId < 1)
         {
-            var result = new Dictionary<string, string>();
-            var userId = _userService.UserId;
-            if (userId < 1)
-            {
-                throw new Exception("Current user not found!");
-            }
-
-            var auth = _authCacheService.TryGetValue(_userService.UserId);
-
-            if (auth == null)
-            {
-                // since auth is not found return unauthorized
-                throw new Exception("Current user not found!");
-
-                //return new OperationDataResult<Dictionary<string, string>>(true, result);
-            }
-
-            foreach (var authClaim in auth.Claims)
-            {
-                result.Add(authClaim.Type, authClaim.Value);
-            }
-
-            return new OperationDataResult<Dictionary<string, string>>(true, result);
+            throw new Exception("Current user not found!");
         }
-        catch (Exception e)
+
+        var auth = _authCacheService.TryGetValue(_userService.UserId);
+
+        if (auth == null)
         {
-            _logger.LogError(e.Message);
-            return new OperationDataResult<Dictionary<string, string>>(false, e.Message);
+            // since auth is not found return unauthorized
+            throw new Exception("Current user not found!");
+
+            //return new OperationDataResult<Dictionary<string, string>>(true, result);
         }
+
+        foreach (var authClaim in auth.Claims)
+        {
+            result.Add(authClaim.Type, authClaim.Value);
+        }
+
+        return new OperationDataResult<Dictionary<string, string>>(true, result);
     }
 
     public OperationResult LogOut()
