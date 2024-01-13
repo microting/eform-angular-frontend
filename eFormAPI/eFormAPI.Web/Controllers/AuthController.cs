@@ -25,7 +25,9 @@ SOFTWARE.
 using System;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -72,17 +74,17 @@ public class AuthController : Controller
 
     [HttpGet]
     [Route("api/auth/claims")]
-    public OperationResult GetCurrentUserClaims()
+    public IActionResult GetCurrentUserClaims()
     {
         try
         {
-            return _authService.GetCurrentUserClaims();
+            return Ok(_authService.GetCurrentUserClaims());
 
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileObtainingCurrentUserClaims"));
+            return Forbid();
         }
     }
 

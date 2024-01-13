@@ -5,12 +5,20 @@ import {
   HttpEvent,
   HttpInterceptor, HttpErrorResponse,
 } from '@angular/common/http';
-import {RetryConfig, Observable, retry, throwError, catchError} from 'rxjs';
+import {
+  RetryConfig,
+  Observable,
+  retry,
+  throwError,
+  catchError,
+  switchMap
+} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {AuthStateService} from 'src/app/common/store';
 import {Injectable} from '@angular/core';
 import {AuthMethods} from 'src/app/common/services';
+import {AuthResponseModel, OperationDataResult} from 'src/app/common/models';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -18,7 +26,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(
     private toastrService: ToastrService,
     private router: Router,
-    private authStateService: AuthStateService
+    private authStateService: AuthStateService,
   ) {
     // console.log('HttpErrorInterceptor - constructor');
   }
@@ -65,7 +73,29 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             //this.toastrService.warning('403 - Forbidden');
             console.error('403 - Forbidden');
             console.error(error);
-            this.authStateService.logout();
+            // Try refresh token
+            if(!request.url.includes(AuthMethods.RefreshToken)) {
+              // this.authStore.dispatch(refreshToken());
+              return this.authStateService.refreshToken().pipe(
+                switchMap((response: OperationDataResult<AuthResponseModel>) => {
+                  // if refresh token success, update token in request and retry request
+                  let newReq = null;
+                  if(request.headers.has('Authorization')) {
+                    const headers = request.headers.set('Authorization', `Bearer ${response.model.accessToken}`);
+                    newReq = request.clone({ headers: headers });
+                  }
+                  return next.handle(newReq || request);
+                }),
+                catchError((refreshError) => {
+                  // if refresh token is failed - logout
+                  console.error('Token refresh failed', refreshError);
+                  this.authStateService.logout();
+                  return throwError(() => errorMessage);
+                })
+              );
+            } else {
+              this.authStateService.logout();
+            }
             return throwError(() => errorMessage);
           }
           default: {
