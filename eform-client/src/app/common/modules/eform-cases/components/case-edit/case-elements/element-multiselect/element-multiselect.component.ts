@@ -33,7 +33,7 @@ export class ElementMultiselectComponent implements OnInit {
     }
     const str = [];
     this.fieldValueObj.keyValuePairList.forEach(x => {
-      if (x.key === item.key && !item.selected) {
+      if (x.key === item.key && item.selected) {
         str.push(x.key);
       }
       if (x.key !== item.key && x.selected) {
