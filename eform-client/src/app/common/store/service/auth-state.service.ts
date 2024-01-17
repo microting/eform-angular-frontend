@@ -4,7 +4,7 @@ import {AuthResponseModel, LoginRequestModel, OperationDataResult, UserClaimsMod
 import {BehaviorSubject, catchError, of, switchMap, take, zip} from 'rxjs';
 import {Router} from '@angular/router';
 import {Locale} from 'date-fns';
-import {customDaLocale} from 'src/app/common/const';
+import {applicationLanguages, customDaLocale} from 'src/app/common/const';
 import {de, enUS, es, fr, it, nb, nl, pl, sv, uk, ptBR, pt, fi} from 'date-fns/locale';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {Store} from '@ngrx/store';
@@ -19,12 +19,13 @@ import {
   connectionStringExistCount,
   loadAuthFailure,
   loadAuthSuccess,
-  logout,
+  logout, updateCurrentUserLocaleAndDarkTheme, updateDarkTheme,
   updateSideMenuOpened,
-  updateUserInfo
+  updateUserInfo, updateUserLocale
 } from 'src/app/state';
 import {snakeToCamel} from 'src/app/common/helpers';
 import {filter, tap} from 'rxjs/operators';
+import {translates} from 'src/assets/i18n/translates';
 
 @Injectable({providedIn: 'root'})
 export class AuthStateService {
@@ -101,38 +102,34 @@ export class AuthStateService {
       .subscribe();
   }
 
-  // initLocale() {
-  //   const arrayTranslate = [];
-  //   // eslint-disable-next-line guard-for-in
-  //   for (const translate in translates) {
-  //     arrayTranslate.push(translate);
-  //   }
-  //   this.translateService.addLangs(arrayTranslate);
-  //   let language = '';
-  //   this.selectCurrentUserLocale$.subscribe((data) => {
-  //     language = data;
-  //   });
-  //   this.translateService.setDefaultLang(applicationLanguages[1].locale);
-  //   if (!language) {
-  //     //this.authStateService.updateUserLocale(applicationLanguages[1].locale);
-  //     this.selectCurrentUserLocale$.subscribe((data) => {
-  //       language = data;
-  //       //this.authStateService.updateUserLocale(language);
-  //       this.translateService.use(language);
-  //       // Set cookies
-  //       //this.initCookies(language);
-  //     });
-  //   } else {
-  //     this.translateService.use(language);
-  //     //this.initCookies(language);
-  //   }
-  //   this.selectCurrentUserLocale$
-  //     .pipe(filter(x => !!x))
-  //     .subscribe(x => {
-  //       this.translateService.use(x);
-  //       //this.updateCookies(x);
-  //     });
-  // }
+  initLocale() {
+    const arrayTranslate = [];
+    // eslint-disable-next-line guard-for-in
+    for (const translate in translates) {
+      arrayTranslate.push(translate);
+    }
+    this.translateService.addLangs(arrayTranslate);
+    let language = '';
+    this.selectCurrentUserLocale$.subscribe((data) => {
+      language = data;
+    });
+    this.translateService.setDefaultLang(applicationLanguages[1].locale);
+    if (!language) {
+      const daLocale = applicationLanguages[1].locale;
+      this.updateUserLocale(daLocale);
+      this.translateService.use(daLocale);
+    } else {
+      this.updateUserLocale(language);
+      this.translateService.use(language);
+      //this.initCookies(language);
+    }
+    this.selectCurrentUserLocale$
+      .pipe(filter(x => !!x))
+      .subscribe(x => {
+        this.translateService.use(x);
+        //this.updateCookies(x);
+      });
+  }
 
   refreshToken() {
     return this.service.refreshToken().pipe(
@@ -235,39 +232,19 @@ export class AuthStateService {
   }
 
   updateUserLocale(locale: string) {
-    // TODO: need to fix this
-    // this.store.update((state) => ({
-    //   ...state,
-    //   currentUser: {
-    //     ...state.currentUser,
-    //     locale: locale,
-    //   },
-    // }));
-    // this.setLocale();
+    const languageId = applicationLanguages.find(x => x.locale === locale).id;
+    this.authStore.dispatch(updateUserLocale({locale: locale, languageId: languageId}));
+    this.setLocale();
   }
 
   updateCurrentUserLocaleAndDarkTheme(locale: string, darkTheme: boolean) {
-    // TODO: need to fix this
-    // this.store.update((state) => ({
-    //   ...state,
-    //   currentUser: {
-    //     ...state.currentUser,
-    //     locale: locale,
-    //     darkTheme: darkTheme,
-    //   },
-    // }));
-    // this.setLocale();
+    const languageId = applicationLanguages.find(x => x.locale === locale).id;
+    this.authStore.dispatch(updateCurrentUserLocaleAndDarkTheme({locale: locale, languageId: languageId, darkTheme: darkTheme}));
+    this.setLocale();
   }
 
   updateDarkTheme(darkTheme: boolean) {
-    // TODO: need to fix this
-    // this.store.update((state) => ({
-    //   ...state,
-    //   currentUser: {
-    //     ...state.currentUser,
-    //     darkTheme: darkTheme,
-    //   },
-    // }));
+    this.authStore.dispatch(updateDarkTheme(darkTheme));
   }
 
   updateUserInfo(userInfo: UserInfoModel) {

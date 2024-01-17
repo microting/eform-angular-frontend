@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {of, Subscription, take} from 'rxjs';
+import {of, Subscription, take, tap} from 'rxjs';
 import {
   AppSettingsService,
   AuthService,
@@ -75,7 +75,14 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loaderService.setLoading(true);
     of(null).pipe(debounceTime(1500)).subscribe(() => this.getSettings());
     //this.localeService.initLocale();
-    this.selectCurrentUserLocale$.pipe(filter(x => !!x), take(1)).subscribe(_ => this.loaderService.setLoading(false));
+    this.selectCurrentUserLocale$.pipe(
+      filter(x => !!x),
+      take(1),
+      tap(() => {
+        this.authStateService.initLocale();
+        this.loaderService.setLoading(false)
+      })
+    ).subscribe();
     this.onResize({});
   }
 

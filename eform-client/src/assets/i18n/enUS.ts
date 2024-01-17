@@ -413,4 +413,5 @@ export const enUS = {
   'PAGINATOR.PREVIOUS_PAGE': 'Previous page',
   'PAGINATOR.OF_LABEL': 'of',
   'PAGINATOR.RANGE_PAGE_LABEL': 'of',
+  'PAGINATOR.PAGE': 'Page',
 };

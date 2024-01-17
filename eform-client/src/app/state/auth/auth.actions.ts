@@ -18,17 +18,17 @@ export const refreshToken = createAction(
 
 export const updateUserLocale = createAction(
   '[Auth] Update User Locale',
-  (payload: any) => ({payload})
+  (payload: {locale: string, languageId: number}) => ({payload})
 );
 
 export const updateCurrentUserLocaleAndDarkTheme = createAction(
   '[Auth] Update Current User Locale And Dark Theme',
-  (payload: any) => ({payload})
+  (payload: {locale: string, darkTheme: boolean, languageId: number}) => ({payload})
 );
 
 export const updateDarkTheme = createAction(
   '[Auth] Update Dark Theme',
-  (payload: any) => ({payload})
+  (payload: boolean) => ({payload})
 );
 
 export const updateUserInfo = createAction(
