@@ -6,8 +6,8 @@ import {
   loadAuthFailure, loadAuthState,
   loadAuthSuccess, logout,
   refreshToken,
-  updateCurrentUserLocaleAndDarkTheme, updateSideMenuOpened,
-  updateUserInfo
+  updateCurrentUserLocaleAndDarkTheme, updateDarkTheme, updateSideMenuOpened,
+  updateUserInfo, updateUserLocale
 } from './';
 import {StoreStatusEnum} from 'src/app/common/const';
 
@@ -165,9 +165,9 @@ const _authReducer = createReducer(
     status: StoreStatusEnum.Success,
     currentUser: {
       ...state.currentUser,
-      darkTheme: payload.userSettings.model.darkTheme,
-      locale: payload.userSettings.model.locale,
-      languageId: payload.userSettings.model.languageId,
+      darkTheme: payload.darkTheme,
+      locale: payload.locale,
+      languageId: payload.languageId,
     },
   })),
   on(loadAuthFailure, (state, {payload}) => ({
@@ -188,6 +188,21 @@ const _authReducer = createReducer(
   on(updateSideMenuOpened, (state, {payload}) => ({
     ...state,
     sideMenuOpened: payload.sideMenuIsOpened,
+  })),
+  on(updateUserLocale, (state, {payload}) => ({
+    ...state,
+    currentUser: {
+      ...state.currentUser,
+      locale: payload.locale,
+      languageId: payload.languageId,
+    }
+  })),
+  on(updateDarkTheme, (state, {payload}) => ({
+    ...state,
+    currentUser: {
+      ...state.currentUser,
+      darkTheme: payload
+    }
   })),
 );
 

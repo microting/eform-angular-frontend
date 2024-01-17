@@ -30,7 +30,7 @@ import {EformTableHeadersComponent} from './components';
 import {RouterModule} from '@angular/router';
 import {DragulaModule} from 'ng2-dragula';
 import {MatSortModule} from '@angular/material/sort';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
@@ -41,6 +41,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormattingTextEditorModule} from '../eform-imported/formatting-text-editor/formatting-text-editor.module';
+import {CustomMatPaginatorIntl} from './components/eform-pagination/mat_paginator_intl';
 
 @NgModule({
   imports: [
@@ -107,6 +108,7 @@ import {FormattingTextEditorModule} from '../eform-imported/formatting-text-edit
     EformTranslationComponent,
     EformTagComponent
   ],
+  providers: [{provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl}],
 })
 export class EformSharedModule {
 }
