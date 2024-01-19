@@ -1,13 +1,13 @@
 import {
   Component,
-  EventEmitter,
+  EventEmitter, Injectable,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { PaginationModel } from 'src/app/common/models';
+import {PaginationModel} from 'src/app/common/models';
 import {PageEvent} from '@angular/material/paginator';
 
 @Component({
@@ -22,8 +22,6 @@ export class EformPaginationComponent implements OnInit, OnChanges {
   @Input() pageSizeOptions: number[] = [5, 10, 100, 1000, 100000];
   @Input() pagination: PaginationModel;
 
-  // totalPages: number;
-
   getCurrentPage(): number {
     return Math.floor(this.pagination.offset / this.pagination.pageSize);
   }
@@ -37,26 +35,16 @@ export class EformPaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // if (changes.pagination && !changes.pagination.firstChange) {
-    //   if (this.pagination) {
-    //     this.totalPages = this.getTotalPages(this.pagination.pageSize, this.pagination.total);
-    //   }
-    // }
   }
 
   ngOnInit() {
-    // if (this.pagination) {
-    //   this.totalPages = this.getTotalPages(this.pagination.pageSize, this.pagination.total);
-    // }
   }
 
   changePage(pageEvent: PageEvent) {
-    // if(this.isValidPageNumber(pageEvent.pageIndex, this.getTotalPages(pageEvent.pageSize, this.pagination.total))) {
-      this.paginationChanged.emit({
-        pageSize: pageEvent.pageSize,
-        offset: pageEvent.pageIndex * pageEvent.pageSize,
-        total: this.pagination.total,
-      });
-    // }
+    this.paginationChanged.emit({
+      pageSize: pageEvent.pageSize,
+      offset: pageEvent.pageIndex * pageEvent.pageSize,
+      total: this.pagination.total,
+    });
   }
 }
