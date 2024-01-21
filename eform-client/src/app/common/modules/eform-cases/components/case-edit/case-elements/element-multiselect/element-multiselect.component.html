@@ -2,8 +2,8 @@
   <div class="mb-2">
     <mat-checkbox
       (click)="updateCheckedOptions(item, $event)"
-      name="checkbox{{item.key}}"
-      id="checkbox{{item.key}}"
+      name="{{fieldValueObj.id}}checkbox{{item.key}}"
+      id="{{fieldValueObj.id}}checkbox{{item.key}}"
       [(ngModel)]=item.selected>
       {{item.value}}
     </mat-checkbox>
