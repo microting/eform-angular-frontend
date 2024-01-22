@@ -36,6 +36,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 [Authorize]
+[Route("api/tags")]
 public class TagsController : Controller
 {
     private readonly ITagsService _tagsService;
@@ -49,7 +50,7 @@ public class TagsController : Controller
     }
 
     [HttpGet]
-    [Route("api/tags/index")]
+    [Route("index")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ReadTags)]
     public async Task<OperationDataResult<List<CommonDictionaryModel>>> Index()
     {
@@ -57,7 +58,7 @@ public class TagsController : Controller
     }
         
     [HttpPost]
-    [Route("api/tags")]
+    [Route("")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
     public async Task<OperationResult> Create([FromBody] CommonTagModel tag)
     {
@@ -66,7 +67,7 @@ public class TagsController : Controller
 
 
     [HttpPost]
-    [Route("api/tags/template")]
+    [Route("template")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
     public async Task<IActionResult> Update([FromBody] UpdateTemplateTagsModel requestModel)
     {
@@ -80,7 +81,6 @@ public class TagsController : Controller
     }
 
     [HttpDelete]
-    [Route("api/tags")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
     public async Task<OperationResult> DeleteTag(int tagId)
     {
@@ -90,28 +90,27 @@ public class TagsController : Controller
         
 
     [HttpGet]
-    [Route("api/tags/saved")]
+    [Route("saved")]
     public async Task<OperationDataResult<SavedTagsModel>> GetSavedTags()
     {
         return await _tagsService.GetSavedTags();
     }
 
     [HttpPut]
-    [Route("api/tags/saved")]
+    [Route("saved")]
     public async Task<OperationResult> AddTagToSaved([FromBody] SavedTagModel model)
     {
         return await _tagsService.AddTagToSaved(model);
     }
 
     [HttpDelete]
-    [Route("api/tags/saved")]
+    [Route("saved")]
     public async Task<OperationResult> RemoveTagFromSaved(int tagId)
     {
         return await _tagsService.RemoveTagFromSaved(tagId);
     }
 
     [HttpPut]
-    [Route("api/tags")]
     public async Task<OperationResult> UpdateTag([FromBody] CommonTagModel commonTagModel)
     {
         return await _tagsService.UpdateTag(commonTagModel);

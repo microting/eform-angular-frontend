@@ -32,6 +32,8 @@ export class AuthStateService {
   private isRefreshing = false;
   private currentLanguageId = 1;
   private claims: UserClaimsModel;
+  private localeIsInited = false;
+  private defaultLocale = applicationLanguages[1];
 
   constructor(
     private service: AuthService,
@@ -71,64 +73,58 @@ export class AuthStateService {
               count: 2
             })
           );
+          this.selectIsAuth$.pipe( // run after update auth info in store
+            filter(x => x === true),
+            take(1),
+            tap(() => {
+              zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
+                .pipe(
+                  take(1),
+                  tap(([userSettings, userClaims]) => {
+                    if (userClaims === null) {
+                      this.logout();
+                    } else {
+                      this.authStore.dispatch(updateUserInfo({userSettings: userSettings, userClaims: userClaims}));
+                      this.translateService.use(userSettings.model.locale);
+                      this.localeService.initCookies(userSettings.model.locale);
+                      if (userSettings.model.loginRedirectUrl != null) {
+                        this.router
+                          .navigate([
+                            `/${userSettings.model.loginRedirectUrl}`,
+                          ]).then();
+                      } else {
+                        this.router
+                          .navigate(['/']).then();
+                      }
+                    }
+                  }),
+                )
+                .subscribe();
+            }),
+          ).subscribe();
         }),
         take(1),
-        tap(() => {
-          zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
-            .pipe(
-              take(1),
-              tap(([userSettings, userClaims]) => {
-                if (userClaims === null) {
-                  this.logout();
-                } else {
-                  this.authStore.dispatch(updateUserInfo({userSettings: userSettings, userClaims: userClaims}));
-                  this.translateService.use(userSettings.model.locale);
-                  this.localeService.initCookies(userSettings.model.locale);
-                  if (userSettings.model.loginRedirectUrl != null) {
-                    this.router
-                      .navigate([
-                        `/${userSettings.model.loginRedirectUrl}`,
-                      ]).then();
-                  } else {
-                    this.router
-                      .navigate(['/']).then();
-                  }
-                }
-              }),
-            )
-            .subscribe();
-        })
       )
       .subscribe();
   }
 
   initLocale() {
-    const arrayTranslate = [];
-    // eslint-disable-next-line guard-for-in
-    for (const translate in translates) {
-      arrayTranslate.push(translate);
+    if (!this.localeIsInited) {
+      this.localeIsInited = true;
+      const arrayTranslate = Object.keys(translates);
+      this.translateService.addLangs(arrayTranslate);
+      this.translateService.setDefaultLang(this.defaultLocale.locale);
+      const enLocale = applicationLanguages[1].locale;
+      this.updateUserLocale(enLocale);
+      this.translateService.use(enLocale);
+      this.selectCurrentUserLocale$
+        .pipe(filter(x => !!x))
+        .subscribe(x => {
+          this.translateService.use(x);
+          this.setLocale();
+          //this.updateCookies(x);
+        });
     }
-    this.translateService.addLangs(arrayTranslate);
-    let language = '';
-    this.selectCurrentUserLocale$.subscribe((data) => {
-      language = data;
-    });
-    this.translateService.setDefaultLang(applicationLanguages[1].locale);
-    if (!language) {
-      const daLocale = applicationLanguages[1].locale;
-      this.updateUserLocale(daLocale);
-      this.translateService.use(daLocale);
-    } else {
-      this.updateUserLocale(language);
-      this.translateService.use(language);
-      //this.initCookies(language);
-    }
-    this.selectCurrentUserLocale$
-      .pipe(filter(x => !!x))
-      .subscribe(x => {
-        this.translateService.use(x);
-        //this.updateCookies(x);
-      });
   }
 
   refreshToken() {
@@ -168,53 +164,17 @@ export class AuthStateService {
         this.isRefreshing = false;
         return of(loadAuthFailure(error));
       }),
-    )
+    );
   }
-
-  // getUserSettings() {
-  //   if (!this.isUserSettingsLoading) {
-  //   // TODO: need to fix this
-  //   this.isUserSettingsLoading = true;
-  //   zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims()).subscribe(([userSettings, userClaims]) => {
-  //     this.isUserSettingsLoading = false;
-  //     this.authStore.dispatch({type: '[Auth] Update User Info', payload: {userSettings: userSettings, userClaims: userClaims}})
-  //   //   // console.log(`before AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-  //   //   this.store.update((state) => ({
-  //   //     ...state,
-  //   //     currentUser: {
-  //   //       ...state.currentUser,
-  //   //       darkTheme: userSettings.model.darkTheme,
-  //   //       locale: userSettings.model.locale,
-  //   //       loginRedirectUrl: userSettings.model.loginRedirectUrl,
-  //   //       claims: userClaims,
-  //   //     },
-  //   //   }));
-  //     this.setLocale();
-  //   //   // console.log(`after AuthStateService.getUserSettings.store.update \n ${JSON.stringify(this.store._value())}`);
-  //
-  //     // this.authStore.dispatch({type: '[AppMenu] Load AppMenu'});
-  //     if (userSettings.model.loginRedirectUrl != null) {
-  //       debugger;
-  //       this.router
-  //         .navigate([
-  //           `/${userSettings.model.loginRedirectUrl}`,
-  //         ]).then();
-  //     } else {
-  //       this.router
-  //         .navigate(['/']).then();
-  //     }
-  //   });
-  //   }
-  // }
 
   logout() {
     this.authStore.dispatch(logout());
+    this.updateCurrentUserLocaleAndDarkTheme(this.defaultLocale.locale, false); // update locale to default locale and theme
     this.router.navigate(['/auth']).then();
   }
 
   isConnectionStringExist() {
     console.debug('isConnectionStringExist called');
-    // TODO: need to fix this
     if (!this.isConnectionStringExistLoading) {
       this.isConnectionStringExistLoading = true;
       this.settingsService.connectionStringExist().pipe(take(1)).subscribe(
@@ -234,31 +194,15 @@ export class AuthStateService {
   updateUserLocale(locale: string) {
     const languageId = applicationLanguages.find(x => x.locale === locale).id;
     this.authStore.dispatch(updateUserLocale({locale: locale, languageId: languageId}));
-    this.setLocale();
   }
 
   updateCurrentUserLocaleAndDarkTheme(locale: string, darkTheme: boolean) {
     const languageId = applicationLanguages.find(x => x.locale === locale).id;
     this.authStore.dispatch(updateCurrentUserLocaleAndDarkTheme({locale: locale, languageId: languageId, darkTheme: darkTheme}));
-    this.setLocale();
   }
 
   updateDarkTheme(darkTheme: boolean) {
     this.authStore.dispatch(updateDarkTheme(darkTheme));
-  }
-
-  updateUserInfo(userInfo: UserInfoModel) {
-    // TODO: need to fix this
-    // this.store.update((state) => ({
-    //   ...state,
-    //   currentUser: {
-    //     ...state.currentUser,
-    //     firstName: userInfo.firstName,
-    //     lastName: userInfo.lastName,
-    //     id: userInfo.id,
-    //     userName: userInfo.email,
-    //   },
-    // }));
   }
 
   updateSideMenuOpened(opened: boolean) {
