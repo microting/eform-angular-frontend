@@ -6,8 +6,6 @@ export const authFeatureSelector = createFeatureSelector<AuthState>(AUTH_REDUCER
 
 export const selectAuth = (state: AppState) => state.auth;
 
-export const selectAuthState
-  = createSelector(selectAuth, (state: AuthState) => state);
 export const selectAuthIsLoading
   = createSelector(selectAuth, (state: AuthState) => state.status === 'loading');
 export const selectAuthIsSuccess
@@ -15,7 +13,9 @@ export const selectAuthIsSuccess
 export const selectAuthToken
   = createSelector(selectAuth, (state: AuthState) => state.token);
 export const selectAuthIsAuth
-  = createSelector(selectAuth, (state: AuthState) => state.token && state.token.accessToken && state.token.accessToken !== '');
+  = createSelector(selectAuth, (state: AuthState) => !!(state.token && state.token.accessToken && state.token.accessToken !== ''));
+export const selectAuthIsAdmin
+  = createSelector(selectAuth, (state: AuthState) => !!(state.token && state.token.role && state.token.role === 'admin'));
 export const selectBearerToken
   = createSelector(selectAuthToken, (state) => state.accessToken);
 export const selectAuthUser

@@ -1,15 +1,15 @@
 import {createAction} from '@ngrx/store';
 import {
+  LoginRequestModel,
   OperationDataResult,
   UserClaimsModel,
   UserSettingsModel
 } from 'src/app/common/models';
 import {AuthCurrentUser, AuthState, AuthToken} from 'src/app/state';
 
-
 export const authenticate = createAction(
   '[Auth] Authenticate',
-  (payload: any) => ({payload})
+  (payload: LoginRequestModel) => ({payload})
 );
 
 export const refreshToken = createAction(
