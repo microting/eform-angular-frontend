@@ -1,50 +1,38 @@
 import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable, take} from 'rxjs';
-import {map, switchMap, tap} from 'rxjs/operators';
+import {switchMap, tap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
-import {selectAuthIsAuth} from 'src/app/state';
+import {selectAuthIsAdmin, selectAuthIsAuth} from 'src/app/state';
+import {AuthStateService} from 'src/app/common/store';
 
 @Injectable()
 export class AdminGuard {
-  // private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
   constructor(
     private router: Router,
-    private store: Store
+    private store: Store,
+    private authStateService: AuthStateService,
   ) {
-    console.log('AdminGuard - constructor');
+    console.debug('AdminGuard - constructor');
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    console.log('AdminGuard - canActivate');
-    // TODO: Fix this
-    // return true;
+    console.debug('AdminGuard - canActivate');
     return this.store.select(selectAuthIsAuth).pipe(
       take(1), // Ensure the subscription is automatically unsubscribed after the first emission
       tap((isAuth) => {
         if (!isAuth) {
           console.debug(`Let's kick the user out admin.guard`);
-          this.router.navigate(['/auth']).then();
+          this.authStateService.logout();
         }
       }),
-      switchMap(() => this.store.select(selectAuthIsAuth)),
+      switchMap(() => this.store.select(selectAuthIsAdmin)),
       take(1) // Ensure the subscription is automatically unsubscribed after the first emission
     );
   }
-
-  // checkGuards(guards: string[]): Observable<boolean> {
-  //   return this.selectCurrentUserClaims$.pipe(map(x => {
-  //     for (const guard of guards) {
-  //       if (x[guard]) {
-  //         return true;
-  //       }
-  //     }
-  //     return false;
-  //   }));
-  // }
 }
 
 export const IsAdminGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {

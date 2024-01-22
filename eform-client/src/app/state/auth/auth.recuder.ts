@@ -179,7 +179,8 @@ const _authReducer = createReducer(
     ...payload.state,
   })),
   on(logout, () => ({
-    ...authInitialState
+    ...authInitialState,
+    status: StoreStatusEnum.Success,
   })),
   on(refreshToken, (state) => ({
     ...state,
