@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {EventType, NavigationEnd, Router} from '@angular/router';
 import {LoginPageSettingsModel} from 'src/app/common/models';
 import {AppSettingsService} from 'src/app/common/services';
 import {GoogleAuthService} from 'src/app/common/services';
 import {take} from 'rxjs';
+import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-auth',
@@ -22,20 +23,18 @@ export class AuthComponent implements OnInit {
     public settingsService: AppSettingsService,
     // private authService: AuthStateService,
   ) {
-    console.log('AuthComponent - constructor');
+    console.debug('AuthComponent - constructor');
   }
 
   ngOnInit() {
-    console.log('AuthComponent - ngOnInit');
+    console.debug('AuthComponent - ngOnInit');
     this.getInitialData();
-    this.router.events.subscribe(_ => {
-      if(
-        this.router.url.includes('reset-admin-password') ||
+    this.router.events
+      .pipe(filter(x => x.type === EventType.NavigationEnd))
+      .subscribe(() => {
+      this.onForgotPasswordPage = this.router.url.includes('reset-admin-password') ||
         this.router.url.includes('restore-password-confirmation') ||
-        this.router.url.includes('restore-password')
-      ) {
-        this.onForgotPasswordPage = true;
-      }
+        this.router.url.includes('restore-password');
     })
   }
 

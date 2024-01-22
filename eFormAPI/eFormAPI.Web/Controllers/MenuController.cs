@@ -43,7 +43,6 @@ public class MenuController : Controller
     }
 
     [HttpGet]
-    [AllowAnonymous]
     [Route("api/menu/current-user")]
     public Task<OperationDataResult<MenuModel>> GetCurrentUserMenu()
     {

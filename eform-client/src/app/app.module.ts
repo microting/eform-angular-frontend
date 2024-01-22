@@ -144,7 +144,6 @@ import {
 })
 export class AppModule {
   constructor() {
-    // eslint-disable-next-line
-    console.log('AppModule - constructor');
+    console.debug('AppModule - constructor');
   }
 }

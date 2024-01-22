@@ -4,10 +4,7 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {of, Subscription, take, tap} from 'rxjs';
 import {
   AppSettingsService,
-  AuthService,
   LoaderService,
-  LocaleService,
-  UserSettingsService
 } from 'src/app/common/services';
 import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
@@ -23,7 +20,6 @@ import {
   selectSideMenuOpened,
   rightAppMenus,
 } from 'src/app/state';
-import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -35,7 +31,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('drawer') drawer: MatDrawer;
   isDarkThemeAsync$: Subscription;
   private brokerListener: any;
-  logoImage: any;
+  logoImage: string;
   headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;
   innerWidth = window.innerWidth;
   sidenavMode: MatDrawerMode = 'side';
@@ -50,10 +46,6 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public authStateService: AuthStateService,
     private renderer: Renderer2,
-    private userSettings: UserSettingsService,
-    private translateService: TranslateService,
-    private service: AuthService,
-    private localeService: LocaleService,
     private authStore: Store,
     private store: Store,
     public router: Router,
@@ -70,11 +62,9 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   public allAppMenus$ = this.store.select(rightAppMenus);
 
   ngOnInit() {
-    // eslint-disable-next-line no-console
-    console.log('FullLayoutComponent - ngOnInit');
+    console.debug('FullLayoutComponent - ngOnInit');
     this.loaderService.setLoading(true);
     of(null).pipe(debounceTime(1500)).subscribe(() => this.getSettings());
-    //this.localeService.initLocale();
     this.selectCurrentUserLocale$.pipe(
       filter(x => !!x),
       take(1),
@@ -87,8 +77,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // eslint-disable-next-line no-console
-    console.log('FullLayoutComponent - afterViewInit');
+    console.debug('FullLayoutComponent - afterViewInit');
     if (this.drawer) {
       this.openedChangeSub$ = this.drawer.openedChange.subscribe(opened => this.authStateService.updateSideMenuOpened(opened));
     }

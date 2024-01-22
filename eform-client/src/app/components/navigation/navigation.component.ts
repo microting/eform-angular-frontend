@@ -6,11 +6,6 @@ import {
   Output,
 } from '@angular/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {
-  AppMenuStateService,
-  AuthStateService,
-} from 'src/app/common/store';
-import {AdminService, AuthService} from 'src/app/common/services';
 import {Observable, Subscription} from 'rxjs';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {NestedTreeControl} from '@angular/cdk/tree';
@@ -46,14 +41,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
   menu = new MatTreeNestedDataSource<MenuNode>();
 
   getAppMenuSub$: Subscription;
-  getCurrentUserInfoSub$: Subscription;
   public allAppMenus$ = this.authStore.select(leftAppMenus);
   private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
   private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
 
   constructor(
-    private adminService: AdminService,
-    private authStateService: AuthStateService,
     public router: Router,
     private authStore: Store,
   ) {
@@ -63,11 +55,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // TODO Fix this
     this.selectAuthIsAuth$.pipe(filter(isAuth => isAuth === true)).subscribe(() => {
-      // this.getCurrentUserInfoSub$ = this.adminService
-      //   .getCurrentUserInfo()
-      //   .subscribe((result) => {
       this.authStore.dispatch(loadAppMenu());
       this.getAppMenuSub$ = this.allAppMenus$.subscribe(x => {
         if (x.length > 0) {
@@ -76,7 +64,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
         }
       });
     });
-    // });
   }
 
   checkGuards(guards: string[]): Observable<boolean> {

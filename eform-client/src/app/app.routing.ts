@@ -121,7 +121,6 @@ export const routes: Routes = [
 })
 export class AppRoutingModule {
   constructor() {
-    // eslint-disable-next-line no-console
-    console.log('AppRoutingModule - constructor');
+    console.debug('AppRoutingModule - constructor');
   }
 }
