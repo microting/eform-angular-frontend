@@ -4251,6 +4251,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^7.1.0"
 
+"@wdio/logger@8.28.0":
+  version "8.28.0"
+  resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-8.28.0.tgz#ab97ee1a9f6a30305e1a07ff2b67fa23e1281e73"
+  integrity sha512-/s6zNCqwy1hoc+K4SJypis0Ud0dlJ+urOelJFO1x0G0rwDRWyFiUP6ijTaCcFxAm29jYEcEPWijl2xkVIHwOyA==
+  dependencies:
+    chalk "^5.1.2"
+    loglevel "^1.6.0"
+    loglevel-plugin-prefix "^0.8.4"
+    strip-ansi "^7.1.0"
+
 "@wdio/mocha-framework@8.20.3":
   version "8.20.3"
   resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.20.3.tgz#fb13d8471f9ffdbe23cc76a424346dbcf6d33658"
@@ -4299,14 +4309,14 @@
   dependencies:
     "@types/node" "^20.1.0"
 
-"@wdio/reporter@8.19.0":
-  version "8.19.0"
-  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-8.19.0.tgz#217b9110bed0601da4ef239fa515bb82c30fbc2f"
-  integrity sha512-fRECsIIryM+2xnjcYDXx1j3c8GkPtBi5/dqowYPKW1bdm/SMCOBZviZVbihpw7zSgo+cGAMbFXEO9HDVcMqSjg==
+"@wdio/reporter@8.29.0":
+  version "8.29.0"
+  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-8.29.0.tgz#e6de5a1c414e1be4aa9a57a0d21842d9d0267cc9"
+  integrity sha512-CtxcHtVCGM76pxwuXJ+0FH48dPWka9kJ7SZZ8SIGdzBX59saLuPMDzdXTENpcefb/8/jxAulZDWtc11/hylJOw==
   dependencies:
     "@types/node" "^20.1.0"
-    "@wdio/logger" "8.16.17"
-    "@wdio/types" "8.19.0"
+    "@wdio/logger" "8.28.0"
+    "@wdio/types" "8.29.0"
     diff "^5.0.0"
     object-inspect "^1.12.0"
 
@@ -4339,13 +4349,13 @@
     "@wdio/cli" "^7.1.2"
     typescript "^4.2.3"
 
-"@wdio/spec-reporter@8.19.0":
-  version "8.19.0"
-  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-8.19.0.tgz#2691cbb01cf6ed171da27690128f153684870c2c"
-  integrity sha512-3QV1AEJM/Utr8EitSpQI3JfNhGYryLVaQpIy4u/LxDj2NjHAebhs4eoEwsc1nUrtl0YXt5y6L5LopmxTpILDMw==
+"@wdio/spec-reporter@8.29.0":
+  version "8.29.0"
+  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-8.29.0.tgz#817d52e48a47090c2065f273989b6868217c44b3"
+  integrity sha512-usOGAmuJ7GY1a/yU9RzGhkO2a8uQ5L2P/ZYCyie597SLco01sl0i/W41ZHltkhNAj8S/TANrQQ6uJg5jRa1LYA==
   dependencies:
-    "@wdio/reporter" "8.19.0"
-    "@wdio/types" "8.19.0"
+    "@wdio/reporter" "8.29.0"
+    "@wdio/types" "8.29.0"
     chalk "^5.1.2"
     easy-table "^1.2.0"
     pretty-ms "^7.0.0"
@@ -4358,13 +4368,6 @@
     "@types/node" "^18.0.0"
     got "^11.8.1"
 
-"@wdio/types@8.19.0":
-  version "8.19.0"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.19.0.tgz#929f8ae209cc93789106b1721192aaa24fc5f5ba"
-  integrity sha512-L2DCjRkOYEkEcZewBMCCLrsFJIYzo+kUcoV8iX3oDH711pxdC6hJIK8r7EeeLDPklNHqnxGniVY/+04lpOoqmg==
-  dependencies:
-    "@types/node" "^20.1.0"
-
 "@wdio/types@8.20.0":
   version "8.20.0"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.20.0.tgz#e219bc08d452dcaca6245deb828d6554b683f03c"
@@ -4376,6 +4379,13 @@
   version "8.26.3"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.26.3.tgz#dd1beddc43b91f36cac04ba477b4e9b663a31a73"
   integrity sha512-WOxvSV4sKJ5QCRNTJHeKCzgO2TZmcK1eDlJ+FObt9Pnt+4pCRy/881eVY/Aj2bozn2hhzq0AK/h6oPAUV/gjCg==
+  dependencies:
+    "@types/node" "^20.1.0"
+
+"@wdio/types@8.29.0":
+  version "8.29.0"
+  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.29.0.tgz#c2b5bb061515fa47cee5857158dbd2efa345d7f8"
+  integrity sha512-jNOmYRHAfGBxx3a9ojnt0mWeiePT5zfafsvW2tdbwH0FyLG/S0tzJN7nB2g3ErG6xaRTf93SZu12Z4lytHDd+w==
   dependencies:
     "@types/node" "^20.1.0"
 
