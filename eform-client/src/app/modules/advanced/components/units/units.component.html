@@ -1,14 +1,14 @@
-<eform-new-subheader>
-  <button
-    mat-raised-button
-    color="accent"
-    id="unitCreateBtn"
-    *ngIf="selectCurrentUserClaimsSitesCreate$ | async"
-    (click)="openCreateModal()"
-  >
-    {{ 'Create unit' | translate }}
-  </button>
-</eform-new-subheader>
+<!--<eform-new-subheader>-->
+<!--  <button-->
+<!--    mat-raised-button-->
+<!--    color="accent"-->
+<!--    id="unitCreateBtn"-->
+<!--    *ngIf="selectCurrentUserClaimsSitesCreate$ | async"-->
+<!--    (click)="openCreateModal()"-->
+<!--  >-->
+<!--    {{ 'Create unit' | translate }}-->
+<!--  </button>-->
+<!--</eform-new-subheader>-->
 <br />
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 
@@ -18,9 +18,6 @@
   [columns]="tableHeaders"
   [cellTemplate]="{
   otpCode: otpCodeTpl,
-  syncDelay: syncDelayTpl,
-  syncDialog: syncDialogTpl,
-  push: pushTpl,
   actions: actionsTpl}"
   [showPaginator]="false"
   [pageOnFront]="false"
@@ -36,7 +33,6 @@
     <button
       mat-icon-button
       color="warn"
-      *ngIf="selectCurrentUserClaimsSitesUpdate$ | async"
       matTooltip="{{ 'Get OTP code' | translate }}"
       (click)="openModalUnitsOtpCode(row)"
     >
@@ -71,7 +67,6 @@
       mat-icon-button
       color="warn"
       id="moveBtn_{{ index }}"
-      *ngIf="(selectCurrentUserClaimsSitesDelete$ | async) && !row.isLocked"
       matTooltip="{{ 'Move unit' | translate }}"
       (click)="openMoveModal(row)"
     >
