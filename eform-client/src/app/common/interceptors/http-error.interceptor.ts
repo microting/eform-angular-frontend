@@ -100,9 +100,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             // @ts-ignore
             const body = error._body || '';
             errorMessage = `${error.status} - ${error.statusText || ''} ${body}`;
-            this.toastrService.error(errorMessage, 'Error', {
-              timeOut: 10000,
-            });
+            if (errorMessage !== 'undefined -  ') {
+              this.toastrService.error(errorMessage, 'Error', {
+                timeOut: 10000,
+              });
+            }
           }
         }
       })

@@ -410,4 +410,6 @@ export const skSK = {
   'PAGINATOR.PREVIOUS_PAGE': 'Predchádzajúca strana',
   'PAGINATOR.OF_LABEL': 'z',
   'PAGINATOR.RANGE_PAGE_LABEL': 'z',
+  'PAGINATOR.PAGE': 'Stránka',
+  'No data in selected period': 'Žiadne údaje vo vybranom období',
 };

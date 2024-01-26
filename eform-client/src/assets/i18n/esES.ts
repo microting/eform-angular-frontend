@@ -410,4 +410,6 @@ export const esES = {
   'PAGINATOR.PREVIOUS_PAGE': 'Pagina anterior',
   'PAGINATOR.OF_LABEL': 'de',
   'PAGINATOR.RANGE_PAGE_LABEL': 'de',
+  'PAGINATOR.PAGE': 'Página',
+  'No data in selected period': 'Sin datos en el periodo seleccionado',
 };

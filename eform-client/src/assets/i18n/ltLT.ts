@@ -410,4 +410,6 @@ export const ltLT = {
   'PAGINATOR.PREVIOUS_PAGE': 'Ankstesnis puslapis',
   'PAGINATOR.OF_LABEL': 'apie',
   'PAGINATOR.RANGE_PAGE_LABEL': 'apie',
+  'PAGINATOR.PAGE': 'Puslapis',
+  'No data in selected period': 'Pasirinktu laikotarpiu duomenų nėra',
 };

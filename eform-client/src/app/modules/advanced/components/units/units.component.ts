@@ -9,7 +9,7 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import { TranslateService } from '@ngx-translate/core';
-import {Store} from "@ngrx/store";
+import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsSitesCreate} from 'src/app/state/auth/auth.selector';
 
 @Component({

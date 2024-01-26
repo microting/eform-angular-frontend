@@ -410,4 +410,6 @@ export const csCZ = {
   'PAGINATOR.PREVIOUS_PAGE': 'Předchozí stránka',
   'PAGINATOR.OF_LABEL': 'z',
   'PAGINATOR.RANGE_PAGE_LABEL': 'z',
+  'PAGINATOR.PAGE': 'Strana',
+  'No data in selected period': 'Žádná data ve vybraném období',
 };

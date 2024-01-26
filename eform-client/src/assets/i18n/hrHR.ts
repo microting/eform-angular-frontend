@@ -410,4 +410,6 @@ export const hrHR = {
   'PAGINATOR.PREVIOUS_PAGE': 'Prethodna stranica',
   'PAGINATOR.OF_LABEL': 'od',
   'PAGINATOR.RANGE_PAGE_LABEL': 'od',
+  'PAGINATOR.PAGE': 'Stranica',
+  'No data in selected period': 'Nema podataka u odabranom razdoblju',
 };

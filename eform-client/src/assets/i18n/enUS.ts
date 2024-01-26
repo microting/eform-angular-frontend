@@ -414,4 +414,5 @@ export const enUS = {
   'PAGINATOR.OF_LABEL': 'of',
   'PAGINATOR.RANGE_PAGE_LABEL': 'of',
   'PAGINATOR.PAGE': 'Page',
+  'No data in selected period': 'No data in selected period',
 };

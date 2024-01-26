@@ -410,4 +410,6 @@ export const ptBR = {
   'PAGINATOR.PREVIOUS_PAGE': 'Página anterior',
   'PAGINATOR.OF_LABEL': 'de',
   'PAGINATOR.RANGE_PAGE_LABEL': 'de',
+  'PAGINATOR.PAGE': 'Página',
+  'No data in selected period': 'Nenhum dado no período selecionado',
 };

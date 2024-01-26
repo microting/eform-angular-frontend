@@ -410,4 +410,6 @@ export const lvLV = {
   'PAGINATOR.PREVIOUS_PAGE': 'Iepriekšējā lapa',
   'PAGINATOR.OF_LABEL': 'no',
   'PAGINATOR.RANGE_PAGE_LABEL': 'no',
+  'PAGINATOR.PAGE': 'Lappuse',
+  'No data in selected period': 'Nav datu atlasītajā periodā',
 };

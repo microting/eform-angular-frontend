@@ -410,4 +410,6 @@ export const etET = {
   'PAGINATOR.PREVIOUS_PAGE': 'Eelmine leht',
   'PAGINATOR.OF_LABEL': 'kohta',
   'PAGINATOR.RANGE_PAGE_LABEL': 'kohta',
+  'PAGINATOR.PAGE': 'Lehekülg',
+  'No data in selected period': 'Valitud perioodil andmeid pole',
 };

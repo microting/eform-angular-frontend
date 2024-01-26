@@ -410,4 +410,6 @@ export const nlNL = {
   'PAGINATOR.PREVIOUS_PAGE': 'Vorige bladzijde',
   'PAGINATOR.OF_LABEL': 'van',
   'PAGINATOR.RANGE_PAGE_LABEL': 'van',
+  'PAGINATOR.PAGE': 'Bladzijde',
+  'No data in selected period': 'Geen gegevens in geselecteerde periode',
 };

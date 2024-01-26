@@ -410,4 +410,6 @@ export const ukUA = {
   'PAGINATOR.PREVIOUS_PAGE': 'Попередня сторінка',
   'PAGINATOR.OF_LABEL': 'з',
   'PAGINATOR.RANGE_PAGE_LABEL': 'з',
+  'PAGINATOR.PAGE': 'Сторінка',
+  'No data in selected period': 'Немає даних за вибраний період',
 };

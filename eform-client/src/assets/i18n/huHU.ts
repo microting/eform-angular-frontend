@@ -410,4 +410,6 @@ export const huHU = {
   'PAGINATOR.PREVIOUS_PAGE': 'Előző oldal',
   'PAGINATOR.OF_LABEL': 'nak,-nek',
   'PAGINATOR.RANGE_PAGE_LABEL': 'nak,-nek',
+  'PAGINATOR.PAGE': 'oldal',
+  'No data in selected period': 'Nincs adat a kiválasztott időszakban',
 };

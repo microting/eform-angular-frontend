@@ -16,6 +16,7 @@ import {parseISO} from 'date-fns';
 import {saveAs} from 'file-saver';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {catchError} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -35,6 +36,7 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
   activatedRouteSub$: Subscription;
 
   constructor(
+    private translateService: TranslateService,
     private emailRecipientsService: EmailRecipientsService,
     private activateRoute: ActivatedRoute,
     private reportService: EformDocxReportService,
@@ -86,7 +88,7 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
       .downloadReport(model)
       .pipe(catchError(
         (error, caught) => {
-          this.toastrService.error('Error downloading report');
+          this.toastrService.info(this.translateService.instant('No data in selected period'));
           return caught;
         }))
       .subscribe(
