@@ -1538,13 +1538,6 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@danielmoncada/angular-datetime-picker@16.0.1":
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/@danielmoncada/angular-datetime-picker/-/angular-datetime-picker-16.0.1.tgz#fddb2aee9503702bb11c992e8c7d962b8a967056"
-  integrity sha512-HvpGYYdeGpnLQtBc0yyQ3QBiS/2rpUbJiCy7Lempk0jVEvUaW1ICPgL40ss+FlMP+R/3pZHzLxrSA9cr1H2N8A==
-  dependencies:
-    tslib "^2.3.1"
-
 "@discoveryjs/json-ext@0.5.7":
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
