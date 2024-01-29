@@ -410,4 +410,6 @@ export const roRO = {
   'PAGINATOR.PREVIOUS_PAGE': 'Pagina anterioară',
   'PAGINATOR.OF_LABEL': 'de',
   'PAGINATOR.RANGE_PAGE_LABEL': 'de',
+  'PAGINATOR.PAGE': 'Pagină',
+  'No data in selected period': 'Nu există date în perioada selectată',
 };

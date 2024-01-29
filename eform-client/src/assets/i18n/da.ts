@@ -445,4 +445,6 @@ export const da = {
   'PAGINATOR.PREVIOUS_PAGE': 'Forrige side',
   'PAGINATOR.OF_LABEL': 'af',
   'PAGINATOR.RANGE_PAGE_LABEL': 'af',
+  'PAGINATOR.PAGE': 'Side',
+  'No data in selected period': 'Ingen data i den valgte periode',
 };

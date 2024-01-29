@@ -17,6 +17,7 @@
 >
   <mat-card-content>
     <img
+      style="max-height: 300px; max-width: 300px; object-fit: cover;"
       mat-card-image
       (click)="openPicture(i)"
       [src]="image.src | authImage | async"

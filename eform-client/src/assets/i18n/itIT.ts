@@ -410,4 +410,6 @@ export const itIT = {
   'PAGINATOR.PREVIOUS_PAGE': 'Pagina precedente',
   'PAGINATOR.OF_LABEL': 'Di',
   'PAGINATOR.RANGE_PAGE_LABEL': 'Di',
+  'PAGINATOR.PAGE': 'Pagina',
+  'No data in selected period': 'Nessun dato nel periodo selezionato',
 };

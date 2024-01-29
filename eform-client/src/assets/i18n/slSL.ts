@@ -410,4 +410,6 @@ export const slSL = {
   'PAGINATOR.PREVIOUS_PAGE': 'Prejšnja stran',
   'PAGINATOR.OF_LABEL': 'od',
   'PAGINATOR.RANGE_PAGE_LABEL': 'od',
+  'PAGINATOR.PAGE': 'Stran',
+  'No data in selected period': 'V izbranem obdobju ni podatkov',
 };

@@ -410,4 +410,6 @@ export const isIS = {
   'PAGINATOR.PREVIOUS_PAGE': 'Fyrri síða',
   'PAGINATOR.OF_LABEL': 'af',
   'PAGINATOR.RANGE_PAGE_LABEL': 'af',
+  'PAGINATOR.PAGE': 'Bls',
+  'No data in selected period': 'Engin gögn á valnu tímabili',
 };

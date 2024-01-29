@@ -410,4 +410,6 @@ export const bgBG = {
   'PAGINATOR.PREVIOUS_PAGE': 'Предишна страница',
   'PAGINATOR.OF_LABEL': 'на',
   'PAGINATOR.RANGE_PAGE_LABEL': 'на',
+  'PAGINATOR.PAGE': 'Страница',
+  'No data in selected period': 'Няма данни за избрания период',
 };

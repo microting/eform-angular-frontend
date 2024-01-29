@@ -410,4 +410,6 @@ export const fiFI = {
   'PAGINATOR.PREVIOUS_PAGE': 'Edellinen sivu',
   'PAGINATOR.OF_LABEL': '/',
   'PAGINATOR.RANGE_PAGE_LABEL': '/',
+  'PAGINATOR.PAGE': 'Sivu',
+  'No data in selected period': 'Ei tietoja valitulta ajanjaksolta',
 };

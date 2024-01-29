@@ -410,4 +410,6 @@ export const svSE = {
   'PAGINATOR.PREVIOUS_PAGE': 'Föregående sida',
   'PAGINATOR.OF_LABEL': 'av',
   'PAGINATOR.RANGE_PAGE_LABEL': 'av',
+  'PAGINATOR.PAGE': 'Sida',
+  'No data in selected period': 'Ingen data under den valda perioden',
 };
