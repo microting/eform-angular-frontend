@@ -11904,10 +11904,10 @@ run-sequence@2.2.1:
     fancy-log "^1.3.2"
     plugin-error "^0.1.2"
 
-run@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/run/-/run-1.4.0.tgz#e17d9e9043ab2fe17776cb299e1237f38f0b4ffa"
-  integrity sha512-962oBW07IjQ9SizyMHdoteVbDKt/e2nEsnTRZ0WjK/zs+jfQQICqH0qj0D5lqZNuy0JkbzfA6IOqw0Sk7C3DlQ==
+run@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/run/-/run-1.5.0.tgz#1933b3e9d4008836d800035f43e265ab8a83c5bf"
+  integrity sha512-CBPzeX6JQZUdhZpSFyNt2vUk44ivKMWZYCNBYoZYEE46mL9nf6WyMP3320WnzIrJuo89+njiUvlo83jUEXjXLg==
   dependencies:
     minimatch "*"
 
