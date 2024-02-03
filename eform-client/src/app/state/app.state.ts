@@ -10,6 +10,7 @@ import {
   EntitySelectState,
   CasesState,
   UsersState,
+  PluginsState,
 } from './';
 
 export interface AppState {
@@ -24,4 +25,5 @@ export interface AppState {
   entitySelect: EntitySelectState;
   cases: CasesState;
   users: UsersState;
+  plugins: PluginsState;
 }
