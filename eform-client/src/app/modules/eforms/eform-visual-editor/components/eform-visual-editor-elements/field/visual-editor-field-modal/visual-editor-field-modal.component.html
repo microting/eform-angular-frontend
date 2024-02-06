@@ -102,6 +102,12 @@
     [appLanguages]="appLanguages"
   >
   </app-visual-editor-additional-field-number>
+  <app-visual-editor-additional-field-date
+    *ngSwitchCase="eformFieldTypesEnum.Date"
+    [field]="recursionModel.field"
+    [selectedLanguages]="selectedLanguages"
+    [appLanguages]="appLanguages">
+  </app-visual-editor-additional-field-date>
   <app-visual-editor-additional-field-number
     *ngSwitchCase="eformFieldTypesEnum.NumberStepper"
     [field]="recursionModel.field"
