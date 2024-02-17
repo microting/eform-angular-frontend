@@ -158,7 +158,12 @@ export class SitesRowObject {
       }catch (e) {
       }
       if(list) {
-        this.tags = await Promise.all(list.map(element => element.getText()));
+        let tagsTexts = [];
+        for (let i = 0; i < list.length; i++) {
+          tagsTexts.push(await list[i].getText());
+        }
+        this.tags = tagsTexts;
+        //this.tags = await Promise.all(list.map(element => element.getText()));
       }
       // .map((element) => element.getText());
       this.editBtn = await this.element.$('#editSiteBtn');
