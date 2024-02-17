@@ -1925,7 +1925,7 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@ljharb/through@^2.3.12", "@ljharb/through@^2.3.9":
+"@ljharb/through@^2.3.11", "@ljharb/through@^2.3.9":
   version "2.3.12"
   resolved "https://registry.yarnpkg.com/@ljharb/through/-/through-2.3.12.tgz#c418c43060eee193adce48b15c2206096a28e9ea"
   integrity sha512-ajo/heTlG3QgC8EGP6APIejksVAYt4ayz4tqoP3MolFELzcH1x1fzwEYRJTPO0IELutZ5HQ0c26/GqAYy79u3g==
@@ -3942,17 +3942,17 @@
     pathe "^1.1.1"
     pretty-format "^29.7.0"
 
-"@wdio/cli@8.31.1":
-  version "8.31.1"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-8.31.1.tgz#c126fe6e2c8341133b29e4c68817ae9c512c0b18"
-  integrity sha512-UnAoXjUrgRTfFq7TSnnMSuA80V8G7yW/d5zo59RtzrHdrGr6QVWJfnt6aLueXJJ6SnouVA6yU2rcsXPOvGpUIA==
+"@wdio/cli@8.32.1":
+  version "8.32.1"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-8.32.1.tgz#7fdb863b5bafb3a7abbfc421a7b61ba6fd5542eb"
+  integrity sha512-cHQEDvl5zDZneB4uiZKOBfp0gTNA5ovRG/C5xKFSK+du8CTDRWEuEmeEoDuftb62vr4R96wnhRWpLPXmqL3vrw==
   dependencies:
     "@types/node" "^20.1.1"
     "@vitest/snapshot" "^1.2.1"
     "@wdio/config" "8.31.1"
-    "@wdio/globals" "8.31.1"
+    "@wdio/globals" "8.32.1"
     "@wdio/logger" "8.28.0"
-    "@wdio/protocols" "8.29.7"
+    "@wdio/protocols" "8.32.0"
     "@wdio/types" "8.31.1"
     "@wdio/utils" "8.31.1"
     async-exit-hook "^2.0.1"
@@ -3963,13 +3963,13 @@
     ejs "^3.1.9"
     execa "^8.0.1"
     import-meta-resolve "^4.0.0"
-    inquirer "9.2.14"
+    inquirer "9.2.12"
     lodash.flattendeep "^4.4.0"
     lodash.pickby "^4.6.0"
     lodash.union "^4.6.0"
     read-pkg-up "^10.0.0"
     recursive-readdir "^2.2.3"
-    webdriverio "8.31.1"
+    webdriverio "8.32.1"
     yargs "^17.7.2"
 
 "@wdio/config@8.31.1":
@@ -3993,7 +3993,7 @@
     expect-webdriverio "^4.11.2"
     webdriverio "8.31.1"
 
-"@wdio/globals@^8.29.3":
+"@wdio/globals@8.32.1", "@wdio/globals@^8.29.3":
   version "8.32.1"
   resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-8.32.1.tgz#3d3540c41bf536296910a772ddc5ce1ae6770a0d"
   integrity sha512-1GuZ336tEZWPbLoAK7l8c/QM6wc75pw0C5KsIowYmRjCuNDN2bvPzVDspXlQhlvnJVY++pQJYG6Pc9toGXCrMw==
@@ -8015,18 +8015,18 @@ inquirer@9.2.11:
     strip-ansi "^6.0.1"
     wrap-ansi "^6.2.0"
 
-inquirer@9.2.14:
-  version "9.2.14"
-  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-9.2.14.tgz#b55474f1e4f5f0eb28b2f75f09c082209f0cc2ca"
-  integrity sha512-4ByIMt677Iz5AvjyKrDpzaepIyMewNvDcvwpVVRZNmy9dLakVoVgdCHZXbK1SlVJra1db0JZ6XkJyHsanpdrdQ==
+inquirer@9.2.12:
+  version "9.2.12"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-9.2.12.tgz#0348e9311765b7c93fce143bb1c0ef1ae879b1d7"
+  integrity sha512-mg3Fh9g2zfuVWJn6lhST0O7x4n03k7G8Tx5nvikJkbq8/CK47WDVm+UznF0G6s5Zi0KcyUisr6DU8T67N5U+1Q==
   dependencies:
-    "@ljharb/through" "^2.3.12"
+    "@ljharb/through" "^2.3.11"
     ansi-escapes "^4.3.2"
     chalk "^5.3.0"
     cli-cursor "^3.1.0"
     cli-width "^4.1.0"
     external-editor "^3.1.0"
-    figures "^3.2.0"
+    figures "^5.0.0"
     lodash "^4.17.21"
     mute-stream "1.0.0"
     ora "^5.4.1"
