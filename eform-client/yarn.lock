@@ -9047,10 +9047,10 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
-mammoth@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/mammoth/-/mammoth-1.6.0.tgz#3a80e016b3d1374c9404eb841048c70295276532"
-  integrity sha512-jOwbj6BwJzxCf6jr2l1zmSemniIkLnchvELXnDJCANlJawhzyIKObIq48B8kWEPLgUUh57k7FtEO3DHFQMnjMg==
+mammoth@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/mammoth/-/mammoth-1.7.0.tgz#e59b2d89a4907595906429c9d3313729d67afca7"
+  integrity sha512-ptFhft61dqieLffpdpHD7PUS0cX9YvHQIO3n3ejRhj1bi5Na+RL5wovtNHHXAK6Oj554XfGrVcyTuxgegN6umw==
   dependencies:
     "@xmldom/xmldom" "^0.8.6"
     argparse "~1.0.3"
