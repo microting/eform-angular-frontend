@@ -4,3 +4,4 @@ export * from './visual-editor-additional-field-pdf/visual-editor-additional-fie
 export * from './visual-editor-additional-field-options/visual-editor-additional-field-options.component';
 export * from './visual-editor-additional-field-entity-search/visual-editor-additional-field-entity-search.component';
 export * from './visual-editor-additional-field-entity-select/visual-editor-additional-field-entity-select.component';
+export * from './visual-editor-additional-field-date/visual-editor-additional-field-date.component';

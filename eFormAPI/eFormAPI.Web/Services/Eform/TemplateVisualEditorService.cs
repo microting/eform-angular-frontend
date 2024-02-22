@@ -1051,12 +1051,12 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                 }
                 case Constants.FieldTypes.Date:
                 {
-                    editorField.MaxValue = string.IsNullOrEmpty(editorField.MaxValue)
+                    editorField.MaxValue = string.IsNullOrEmpty(field.MaxValue)
                         ? DateTime.MaxValue.ToString("yyyy-MM-dd")
-                        : editorField.MaxValue;
-                    editorField.MinValue = string.IsNullOrEmpty(editorField.MinValue)
+                        : field.MaxValue;
+                    editorField.MinValue = string.IsNullOrEmpty(field.MinValue)
                         ? DateTime.MinValue.ToString("yyyy-MM-dd")
-                        : editorField.MinValue;
+                        : field.MinValue;
                     findFields.Add(editorField);
                     break;
                 }

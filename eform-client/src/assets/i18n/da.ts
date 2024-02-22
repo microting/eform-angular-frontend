@@ -66,7 +66,7 @@ export const da = {
   Mandatory: 'Obligatorisk',
   Type: 'Type',
   Label: 'Navn',
-  Tags: 'Tags',
+  Tags: 'Etiketter',
   'eForm Name': 'eForm Navn',
   Pairing: 'Parring',
   Actions: 'Handlinger',

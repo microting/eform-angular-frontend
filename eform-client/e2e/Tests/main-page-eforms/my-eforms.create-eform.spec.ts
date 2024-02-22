@@ -39,9 +39,10 @@ describe('My eforms', function () {
     await myEformsPage.createNewEform(newEformLabel, [createdTags]);
     arrayNamesTag = [...arrayNamesTag, ...createdTags];
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
-    const tagsTexts: string[] = await Promise.all(eform.tags.map(async (item): Promise<string> => {
-      return await item.getText();
-    }));
+    let tagsTexts = [];
+    for (let i = 0; i < eform.tags.length; i++) {
+      tagsTexts.push(await eform.tags[i].getText());
+    }
     expect(eform.tags.length).equal(createdTags.length);
     expect(tagsTexts).to.include.members(createdTags);
     const countBeforeDelete = await myEformsPage.rowNum();
@@ -55,9 +56,10 @@ describe('My eforms', function () {
     const addedAndSelectedTags = await myEformsPage.createNewEform(newEformLabel, [createdTags], tagAddedNum);
     arrayNamesTag = [...arrayNamesTag, ...createdTags];
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
-    const tagsTexts: string[] = await Promise.all(eform.tags.map(async (item): Promise<string> => {
-      return await item.getText();
-    }));
+    let tagsTexts = [];
+    for (let i = 0; i < eform.tags.length; i++) {
+      tagsTexts.push(await eform.tags[i].getText());
+    }
     expect(eform.tags.length).equal(createdTags.length + tagAddedNum);
     expect(tagsTexts).to.include.members(createdTags);
     expect(tagsTexts).to.include.members(addedAndSelectedTags.selected);
@@ -70,9 +72,10 @@ describe('My eforms', function () {
     const tagAddedNum = 1;
     const addedAndSelectedTags = await myEformsPage.createNewEform(newEformLabel, [], tagAddedNum);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
-    const tagsTexts: string[] = await Promise.all(eform.tags.map(async (item): Promise<string> => {
-      return await item.getText();
-    }));
+    let tagsTexts = [];
+    for (let i = 0; i < eform.tags.length; i++) {
+      tagsTexts.push(await eform.tags[i].getText());
+    }
     expect(eform.tags.length).equal(tagAddedNum);
     expect(tagsTexts).to.include.members(addedAndSelectedTags.selected);
     const countBeforeDelete = await myEformsPage.rowNum();
@@ -84,9 +87,10 @@ describe('My eforms', function () {
     const tagAddedNum = 2;
     const addedAndSelectedTags = await myEformsPage.createNewEform(newEformLabel, [], tagAddedNum);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
-    const tagsTexts: string[] = await Promise.all(eform.tags.map(async (item): Promise<string> => {
-      return await item.getText();
-    }));
+    let tagsTexts = [];
+    for (let i = 0; i < eform.tags.length; i++) {
+      tagsTexts.push(await eform.tags[i].getText());
+    }
     expect(eform.tags.length).equal(tagAddedNum);
     expect(tagsTexts).to.include.members(addedAndSelectedTags.selected);
     const countBeforeDelete = await myEformsPage.rowNum();

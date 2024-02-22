@@ -23,6 +23,7 @@ import {
   VisualEditorAdditionalFieldEntitySelectComponent,
   VisualEditorAdditionalFieldOptionEditComponent,
   VisualEditorAdditionalFieldOptionDeleteComponent,
+  VisualEditorAdditionalFieldDateComponent,
 } from './components';
 import {EformVisualEditorRouting} from './eform-visual-editor.routing';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -37,6 +38,7 @@ import {MtxPopoverModule} from '@ng-matero/extensions/popover';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     VisualEditorAdditionalFieldEntitySelectComponent,
     VisualEditorAdditionalFieldOptionEditComponent,
     VisualEditorAdditionalFieldOptionDeleteComponent,
+    VisualEditorAdditionalFieldDateComponent,
   ],
   imports: [
     CommonModule,
@@ -79,6 +82,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     DragDropModule,
     MtxGridModule,
     MatSlideToggleModule,
+    MatDatepickerModule,
   ],
 })
 export class EformVisualEditorModule {

@@ -20,13 +20,23 @@ export async function testSorting(
     mapFunc = async (ele) => await ele.getText();
   }
   const getElementsForSorting = async () => await $$(htmlIdElementsForSorting);
-  const elementsBefore = await Promise.all((await getElementsForSorting()).map(mapFunc));
+  //const elementsBefore = await Promise.all((await getElementsForSorting()).map(mapFunc));
+  const elements = await getElementsForSorting(); // Assuming this returns a list of elements
+  let elementsBefore = [];
+  for (let i = 0; i < elements.length; i++) {
+    elementsBefore.push(await elements[i].getText());
+  }
+
   // check that sorting is correct in both directions
   for (let i = 0; i < 2; i++) {
     await tableHeader.click();
     await browser.pause(500);
-    const elementsAfter = await Promise.all((await getElementsForSorting()).map(mapFunc));
-
+    //const elementsAfter = await Promise.all((await getElementsForSorting()).map(mapFunc));
+    const elements = await getElementsForSorting(); // Assuming this returns a list of elements
+    let elementsAfter = [];
+    for (let i = 0; i < elements.length; i++) {
+      elementsAfter.push(await elements[i].getText());
+    }
     // // get current direction of sorting
     const sortIcon = await tableHeader.$('.ng-trigger-leftPointer').getAttribute('style');
     let sorted;
