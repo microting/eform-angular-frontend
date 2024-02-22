@@ -113,6 +113,9 @@ export class AuthStateService {
       this.localeIsInited = true;
       const arrayTranslate = Object.keys(translates);
       this.translateService.addLangs(arrayTranslate);
+      arrayTranslate.forEach(translateName => {
+        this.translateService.setTranslation(translateName, translates[translateName], true);
+      })
       this.translateService.setDefaultLang(this.defaultLocale.locale);
       const enLocale = applicationLanguages[1].locale;
       this.updateUserLocale(enLocale);
