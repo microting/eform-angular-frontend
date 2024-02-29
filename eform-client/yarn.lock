@@ -4703,7 +4703,7 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.12.0.tgz#ce1c9d143389679e253b314241ea9aa5cec980d3"
   integrity sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==
 
-axios@^1.5.1, axios@^1.6.5:
+axios@^1.5.1, axios@^1.6.7:
   version "1.6.7"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.7.tgz#7b48c2e27c96f9c68a2f8f31e2ab19f59b06b0a7"
   integrity sha512-/hDJGff6/c7u0hDkvkGxR/oy6CbCs8ziCsC7SqmhjfozqiJGc8Z11wrv9z9lYfY4K8l+H9TpjcMDX0xOZmx+RA==
@@ -5199,16 +5199,16 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
-chromedriver@^121.0.1:
-  version "121.0.1"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-121.0.1.tgz#b2830083efa39b627e7a50d6978c81d62edff58b"
-  integrity sha512-7y/RLV3tKNpNf/Ye74eOF7gyrCA78qq3i6JjrMJ4xovc2XZaw4a3cZA6+2PflGX/0HttYiKJV2WO611JROGNaw==
+chromedriver@^122.0.4:
+  version "122.0.4"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-122.0.4.tgz#6abc9d3c553575986f7668a5a38fd510a877d56d"
+  integrity sha512-MxkaWaxCqefHyh9UorGzl1F6ZNBgC7pqgT0piAysLZdw20ojSgJ62ljG8SFbhDJqBTegKbmuioa6MQ1m4Czdsg==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
-    axios "^1.6.5"
+    axios "^1.6.7"
     compare-versions "^6.1.0"
     extract-zip "^2.0.1"
-    https-proxy-agent "^5.0.1"
+    proxy-agent "^6.4.0"
     proxy-from-env "^1.1.0"
     tcp-port-used "^1.0.2"
 
@@ -7822,7 +7822,7 @@ http2-wrapper@^2.1.10:
     quick-lru "^5.1.1"
     resolve-alpn "^1.2.0"
 
-https-proxy-agent@5.0.1, https-proxy-agent@^5.0.0, https-proxy-agent@^5.0.1:
+https-proxy-agent@5.0.1, https-proxy-agent@^5.0.0:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-5.0.1.tgz#c59ef224a04fe8b754f3db0063a25ea30d0005d6"
   integrity sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==
@@ -10602,7 +10602,7 @@ proxy-addr@~2.0.7:
     forwarded "0.2.0"
     ipaddr.js "1.9.1"
 
-proxy-agent@6.4.0:
+proxy-agent@6.4.0, proxy-agent@^6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/proxy-agent/-/proxy-agent-6.4.0.tgz#b4e2dd51dee2b377748aef8d45604c2d7608652d"
   integrity sha512-u0piLU+nCOHMgGjRbimiXmA9kM/L9EHh3zL81xCdp7m+Y2pHIsnmbdDoEDoAz5geaonNR6q6+yOPQs6n4T6sBQ==
