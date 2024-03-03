@@ -410,4 +410,6 @@ export const plPL = {
   'PAGINATOR.PREVIOUS_PAGE': 'Poprzednia strona',
   'PAGINATOR.OF_LABEL': 'z',
   'PAGINATOR.RANGE_PAGE_LABEL': 'z',
+  'PAGINATOR.PAGE': 'Strona',
+  'No data in selected period': 'Brak danych w wybranym okresie',
 };

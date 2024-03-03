@@ -10,3 +10,4 @@ export * from './entity-search';
 export * from './entity-select';
 export * from './security';
 export * from './users';
+export * from './plugins';

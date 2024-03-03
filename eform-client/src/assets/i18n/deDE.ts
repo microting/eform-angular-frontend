@@ -410,4 +410,6 @@ export const deDE = {
   'PAGINATOR.PREVIOUS_PAGE': 'Vorherige Seite',
   'PAGINATOR.OF_LABEL': 'von',
   'PAGINATOR.RANGE_PAGE_LABEL': 'von',
+  'PAGINATOR.PAGE': 'Seite',
+  'No data in selected period': 'Keine Daten im ausgewählten Zeitraum',
 };

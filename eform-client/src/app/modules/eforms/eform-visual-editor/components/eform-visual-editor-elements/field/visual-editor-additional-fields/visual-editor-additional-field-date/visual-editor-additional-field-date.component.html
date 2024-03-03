@@ -1,0 +1,58 @@
+<mat-card>
+  <mat-card-content>
+    <div class="d-flex flex-column">
+      <div class="d-flex flex-row justify-content-between">
+        <div class="d-flex flex-column flex-grow-1 pr-3">
+          <mat-form-field>
+            <mat-label>{{ 'Min value' | translate }}</mat-label>
+            <mat-datepicker-toggle matSuffix [for]="pickerminValue"></mat-datepicker-toggle>
+            <input
+              [required]="true"
+              matInput
+              [matDatepicker]="pickerminValue"
+              [(ngModel)]="field.minValue"
+              (dateChange)="onDateSelectedMin($event)"
+              (dateInput)="onDateSelectedMin($event)"
+              (click)="pickerminValue.open()"
+              id="minValueEdit"
+            >
+            <mat-datepicker #pickerminValue></mat-datepicker>
+            <mat-error></mat-error>
+<!--            <input-->
+<!--            matInput-->
+<!--            [(ngModel)]="field.minValue"-->
+<!--            [required]="true"-->
+<!--            type="number"-->
+<!--            id="minValueEdit"-->
+<!--            >-->
+          </mat-form-field>
+        </div>
+        <div class="d-flex flex-column flex-grow-1 pl-3">
+          <mat-form-field>
+            <mat-label>{{ 'Max value' | translate }}</mat-label>
+            <mat-datepicker-toggle matSuffix [for]="pickermaxValue"></mat-datepicker-toggle>
+            <input
+              [required]="true"
+              matInput
+              [matDatepicker]="pickermaxValue"
+              [(ngModel)]="field.maxValue"
+              (dateChange)="onDateSelectedMax($event)"
+              (dateInput)="onDateSelectedMax($event)"
+              (click)="pickermaxValue.open()"
+              id="maxValueEdit"
+            >
+            <mat-datepicker #pickermaxValue></mat-datepicker>
+            <mat-error></mat-error>
+<!--            <input-->
+<!--              matInput-->
+<!--              [(ngModel)]="field.maxValue"-->
+<!--              [required]="true"-->
+<!--              type="number"-->
+<!--              id="maxValueEdit"-->
+<!--            >-->
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

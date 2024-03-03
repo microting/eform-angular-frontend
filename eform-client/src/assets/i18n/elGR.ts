@@ -410,4 +410,6 @@ export const elGR = {
   'PAGINATOR.PREVIOUS_PAGE': 'Προηγούμενη σελίδα',
   'PAGINATOR.OF_LABEL': 'του',
   'PAGINATOR.RANGE_PAGE_LABEL': 'του',
+  'PAGINATOR.PAGE': 'Σελίδα',
+  'No data in selected period': 'Δεν υπάρχουν δεδομένα στην επιλεγμένη περίοδο',
 };

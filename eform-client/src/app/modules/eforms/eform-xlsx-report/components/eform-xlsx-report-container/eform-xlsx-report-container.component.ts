@@ -8,6 +8,7 @@ import { EFormService } from 'src/app/common/services';
 import { EformDocxReportGenerateModel } from 'src/app/common/models';
 import { AppMenuStateService } from 'src/app/common/store';
 import {ToastrService} from 'ngx-toastr';
+import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -28,6 +29,7 @@ export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
   appMenuObservableSub$: Subscription;
 
   constructor(
+    private translateService: TranslateService,
     private activateRoute: ActivatedRoute,
     private router: Router,
     private appMenuStateService: AppMenuStateService,
@@ -89,7 +91,7 @@ export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
           saveAs(blob, `template_${this.selectedTemplateId}.xlsx`);
         },
         (_) => {
-          this.toastrService.error('Error downloading report');
+          this.toastrService.info(this.translateService.instant('No data in selected period'));
         });
   }
 

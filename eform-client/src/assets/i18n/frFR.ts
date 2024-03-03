@@ -410,4 +410,6 @@ export const frFR = {
   'PAGINATOR.PREVIOUS_PAGE': 'Page précédente',
   'PAGINATOR.OF_LABEL': 'de',
   'PAGINATOR.RANGE_PAGE_LABEL': 'de',
+  'PAGINATOR.PAGE': 'Page',
+  'No data in selected period': 'Aucune donnée dans la période sélectionnée',
 };

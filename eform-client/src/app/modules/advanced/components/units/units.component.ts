@@ -9,7 +9,7 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import { TranslateService } from '@ngx-translate/core';
-import {Store} from "@ngrx/store";
+import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsSitesCreate} from 'src/app/state/auth/auth.selector';
 
 @Component({
@@ -26,19 +26,13 @@ export class UnitsComponent implements OnInit {
     {header: this.translateService.stream('OS'), field: 'os',},
     {header: this.translateService.stream('OS Version'), field: 'osVersion',},
     {header: this.translateService.stream('Model'), field: 'model'},
-    {header: this.translateService.stream('InSight Version'), field: 'inSightVersion'},
-    {header: this.translateService.stream('eForm Version'), field: 'eFormVersion'},
+    {header: this.translateService.stream('app Version'), field: 'eFormVersion'},
     {header: this.translateService.stream('Customer no & OTP'), field: 'otpCode'},
-    {header: this.translateService.stream('Sync delay'), field: 'syncDelay'},
-    {header: this.translateService.stream('Sync dialog'), field: 'syncDialog'},
-    {header: this.translateService.stream('Push'), field: 'push'},
+    {header: this.translateService.stream('Actions'), field: 'actions'},
   ];
 
   unitCreateComponentAfterClosedSub$: Subscription;
   unitsOtpCodeComponentAfterClosedSub$: Subscription;
-  public selectCurrentUserClaimsSitesCreate$ = this.authStore.select(selectCurrentUserClaimsSitesCreate);
-  public selectCurrentUserClaimsSitesUpdate$ = this.authStore.select(selectCurrentUserClaimsSitesCreate);
-  public selectCurrentUserClaimsSitesDelete$ = this.authStore.select(selectCurrentUserClaimsSitesCreate);
 
   constructor(
     private authStore: Store,
@@ -62,28 +56,28 @@ export class UnitsComponent implements OnInit {
     //   }
     // })
 
-    let actionsEnabled = false;
-    this.selectCurrentUserClaimsSitesDelete$.subscribe(x => {
-      if(x) {
-        actionsEnabled = true;
-        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
-          {
-            header: this.translateService.stream('Actions'),
-            field: 'actions',
-          },
-        ];
-      }
-    });
-    this.selectCurrentUserClaimsSitesUpdate$.subscribe(x => {
-      if(x && !actionsEnabled) {
-        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
-          {
-            header: this.translateService.stream('Actions'),
-            field: 'actions',
-          },
-        ];
-      }
-    });
+    // let actionsEnabled = false;
+    // this.selectCurrentUserClaimsSitesDelete$.subscribe(x => {
+    //   if(x) {
+    //     actionsEnabled = true;
+    //     this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+    //       {
+    //         header: this.translateService.stream('Actions'),
+    //         field: 'actions',
+    //       },
+    //     ];
+    //   }
+    // });
+    // this.selectCurrentUserClaimsSitesUpdate$.subscribe(x => {
+    //   if(x && !actionsEnabled) {
+    //     this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
+    //       {
+    //         header: this.translateService.stream('Actions'),
+    //         field: 'actions',
+    //       },
+    //     ];
+    //   }
+    // });
   }
 
   loadAllUnits() {

@@ -24,10 +24,6 @@ import {
   ConnectionSetupComponent,
 } from './components';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-import {
-  OwlDateTimeModule,
-  OwlNativeDateTimeModule,
-} from '@danielmoncada/angular-datetime-picker';
 import {EformSharedModule} from './common/modules/eform-shared/eform-shared.module';
 import {environment} from 'src/environments/environment';
 // angular material modules
@@ -52,8 +48,8 @@ import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {EffectsModule} from '@ngrx/effects';
 import {
-  appMenuReducer,
   AppMenuEffects,
+  appMenuReducer,
   appSettingsReducer,
   authReducer,
   casesReducer,
@@ -62,9 +58,10 @@ import {
   emailRecipientsReducer,
   entitySearchReducer,
   entitySelectReducer,
+  pluginsReducer,
   securityReducer,
-  usersReducer
-} from './state'
+  usersReducer,
+} from './state';
 
 @NgModule({
   declarations: [
@@ -85,15 +82,16 @@ import {
     HttpClientModule,
     StoreModule.forRoot({
       appMenus: appMenuReducer,
-      auth: authReducer,
-      eforms: eformReducer,
-      deviceUsers: deviceUsersReducer,
       appSettings: appSettingsReducer,
+      auth: authReducer,
+      cases: casesReducer,
+      deviceUsers: deviceUsersReducer,
+      eforms: eformReducer,
       emailRecipients: emailRecipientsReducer,
-      security: securityReducer,
       entitySearch: entitySearchReducer,
       entitySelect: entitySelectReducer,
-      cases: casesReducer,
+      plugins: pluginsReducer,
+      security: securityReducer,
       users: usersReducer,
     }),
     StoreDevtoolsModule.instrument({
@@ -131,8 +129,6 @@ import {
     MatInputModule,
     // Modules
     PluginsModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
     EformSharedModule,
     MatProgressSpinnerModule,
     // EformDateFnsDateModule,
