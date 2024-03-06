@@ -125,6 +125,14 @@ public class DeviceUsersService : IDeviceUsersService
 
         try
         {
+            var site = await db.Sites.SingleOrDefaultAsync(x => x.Name == deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName && x.WorkflowState != Constants.WorkflowStates.Removed);
+
+            if (site != null)
+            {
+                return new OperationDataResult<int>(false,
+                    _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", siteName));
+            }
+
             var siteDto = await core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
                 null, deviceUserModel.LanguageCode);
 

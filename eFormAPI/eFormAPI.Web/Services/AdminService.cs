@@ -216,6 +216,15 @@ public class AdminService : IAdminService
                     _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.Email));
             }
 
+            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userRegisterModel.FirstName + " " + userRegisterModel.LastName
+                                                                          && x.WorkflowState != Constants.WorkflowStates.Removed);
+
+            if (site != null)
+            {
+                return new OperationResult(false,
+                    _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.FirstName + " " + userRegisterModel.LastName));
+            }
+
             if (userRegisterModel.Role != EformRole.Admin && !_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId))
             {
                 return new OperationResult(false,
@@ -256,8 +265,7 @@ public class AdminService : IAdminService
                 await _dbContext.SaveChangesAsync();
             }
 
-            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userRegisterModel.FirstName + " " + userRegisterModel.LastName
-                                                                          && x.WorkflowState != Constants.WorkflowStates.Removed);
+
             if (site == null) {
                 await core.SiteCreate($"{userRegisterModel.FirstName} {userRegisterModel.LastName}", userRegisterModel.FirstName, userRegisterModel.LastName,
                     null, "da");
