@@ -50,7 +50,11 @@ export class AppComponent implements OnInit, OnDestroy {
             }
           });
       } else {
-        this.authStateService.logout();
+        if (this.router.url.includes('reset-admin-password') ||
+          this.router.url.includes('restore-password-confirmation') ||
+          this.router.url.includes('restore-password')) {} else {
+          this.authStateService.logout();
+        }
       }
     });
     this.subChangeTitle();
