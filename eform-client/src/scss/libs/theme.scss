@@ -172,3 +172,8 @@ body {
 //  height: var(--mdc-icon-button-state-layer-size);
 //  padding: 8px !important;
 //}
+
+
+.microting-uid {
+  color: mat.get-color-from-palette(mat.$indigo-palette, 300);
+}
