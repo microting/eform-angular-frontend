@@ -331,7 +331,6 @@ public class TemplateFilesController : Controller
             var core = await _coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var caseDb = await sdkDbContext.Cases
-                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .Where(x => x.Id == caseId)
                 .FirstOrDefaultAsync();
             var field = await sdkDbContext.Fields
