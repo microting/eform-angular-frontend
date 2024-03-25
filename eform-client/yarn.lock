@@ -313,10 +313,10 @@
     fast-glob "3.3.1"
     yargs "^17.2.1"
 
-"@angular/material@17.1.0":
-  version "17.1.0"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-17.1.0.tgz#8fb18160c53dcf9c325504b9d7277d8989837c69"
-  integrity sha512-PzHTXAHuap4K7fteQhpR5+BCLV3jSpT9mhaN9evDGYqXS6iMcEX/9RBR7jVqtW2/5pnDopUioBc7pf0JWWI4JA==
+"@angular/material@17.3.1":
+  version "17.3.1"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-17.3.1.tgz#208e19ce78c470ffd83b46c6d0b106bf45bb95a5"
+  integrity sha512-Md1OnO0/sQvK5GkTQyE4v1DAaMswXt1TnjjY07KG7cICTrUN8lc0a2P9dMjlSFXIhxC7PTlNH6plSZ1uspbU8Q==
   dependencies:
     "@material/animation" "15.0.0-canary.7f224ddd4.0"
     "@material/auto-init" "15.0.0-canary.7f224ddd4.0"
