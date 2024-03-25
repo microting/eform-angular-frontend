@@ -9553,10 +9553,10 @@ ngx-slimscroll@12.2.0:
   dependencies:
     tslib "^2.2.0"
 
-ngx-toastr@16.2.0:
-  version "16.2.0"
-  resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-16.2.0.tgz#f138c31c3b6960a1059aeea7133a44e4db95db79"
-  integrity sha512-7X6UhOKiaUeC2eTOsUqctZH0ZWKG8VlzDxWJhdEF1N3kPod46SU/Vn2l0hbt8EDwTjxHKfKyevU2idkYDoZYog==
+ngx-toastr@18.0.0:
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-18.0.0.tgz#0016e897108817eb6b2ee16ff130b4c42fc214b0"
+  integrity sha512-jZ3rOG6kygl8ittY8OltIMSo47P1VStuS01igm3MZXK6InJwHVvxU7wDHI/HGMlXSyNvWncyOuFHnnMEAifsew==
   dependencies:
     tslib "^2.3.0"
 
