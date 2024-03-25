@@ -4036,19 +4036,19 @@
     pathe "^1.1.1"
     pretty-format "^29.7.0"
 
-"@wdio/cli@8.33.1":
-  version "8.33.1"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-8.33.1.tgz#94dad615bb284f5b037fea3f1ba66c0a7bff7eef"
-  integrity sha512-Ngt5R6YAmErkSKnWLWt1JilLIKDPIB0P93bzQhb9bQhmg1arFBcl75uiwe6kf6T355vzcNslMaEJyeuqGChmCg==
+"@wdio/cli@8.35.1":
+  version "8.35.1"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-8.35.1.tgz#7d9ec012560483564dac231a52117d7959c42bb0"
+  integrity sha512-cdFmd6P/eQJdP2lChQ+Fa9b1c2p0bDIPmetVHGCuHiW8ZPkanrvBFtHMUhMu44a1koni9LvN/hu7vIJ/aAC+Rg==
   dependencies:
     "@types/node" "^20.1.1"
     "@vitest/snapshot" "^1.2.1"
-    "@wdio/config" "8.33.1"
-    "@wdio/globals" "8.33.1"
+    "@wdio/config" "8.35.0"
+    "@wdio/globals" "8.35.1"
     "@wdio/logger" "8.28.0"
     "@wdio/protocols" "8.32.0"
     "@wdio/types" "8.32.4"
-    "@wdio/utils" "8.33.1"
+    "@wdio/utils" "8.35.0"
     async-exit-hook "^2.0.1"
     chalk "^5.2.0"
     chokidar "^3.5.3"
@@ -4063,7 +4063,7 @@
     lodash.union "^4.6.0"
     read-pkg-up "10.0.0"
     recursive-readdir "^2.2.3"
-    webdriverio "8.33.1"
+    webdriverio "8.35.1"
     yargs "^17.7.2"
 
 "@wdio/config@8.33.1":
@@ -4100,7 +4100,7 @@
     expect-webdriverio "^4.11.2"
     webdriverio "8.33.1"
 
-"@wdio/globals@^8.29.3":
+"@wdio/globals@8.35.1", "@wdio/globals@^8.29.3":
   version "8.35.1"
   resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-8.35.1.tgz#ad3e7ab274d7bbb29844921eb98056b0fffe0eed"
   integrity sha512-T3IUFcKXRU9WWleAV72DGFWUiXSSr8SBvpc2cUJrvZ5Je9R2gEsrts5eHCY7amXtfeylfMgy5EayGMajgcna6A==
