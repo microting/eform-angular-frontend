@@ -2,7 +2,7 @@ import loginPage from '../../Page objects/Login.page';
 import navigationMenuPage from '../../Page objects/NavigationMenu.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 
-const expect = require('chai').expect;
+import {expect} from 'chai';
 describe(' Navigation menu - Edit item', function () {
   before(async () => {
     await loginPage.open('/');

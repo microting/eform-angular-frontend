@@ -5,7 +5,7 @@ import userAdministration, {
 } from '../../Page objects/UserAdministration.page';
 import { generateRandmString } from '../../Helpers/helper-functions';
 
-const expect = require('chai').expect;
+import {expect} from 'chai';
 
 describe('User administration settings', function () {
   const randomPassword = generateRandmString();

@@ -2,7 +2,7 @@ import loginPage from '../Login.page';
 import {myEformsPage} from '../MyEforms.page';
 import { generateRandmString } from '../helper-functions';
 
-const expect = require('chai').expect;
+import {expect} from 'chai';
 const testTag1 = 'Test tag';
 const testTag2 = 'Tag for test';
 const countCreateEForm = 3;

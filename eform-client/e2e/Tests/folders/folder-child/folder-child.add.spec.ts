@@ -3,7 +3,7 @@ import myEformsPage from '../../../Page objects/MyEforms.page';
 import foldersPage from '../../../Page objects/Folders.page';
 import { generateRandmString } from '../../../Helpers/helper-functions';
 
-const expect = require('chai').expect;
+import {expect} from 'chai';
 const nameFolder = generateRandmString();
 
 describe('Create folder', function () {

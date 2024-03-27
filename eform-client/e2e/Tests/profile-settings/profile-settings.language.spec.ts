@@ -2,7 +2,7 @@ import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import profileSettings from '../../Page objects/ProfileSettings.page';
 
-const expect = require('chai').expect;
+import {expect} from 'chai';
 const translationsEFormsPageEng: Array<{ key: string; value: string }> = [
   { key: 'eform-new-subheader h2', value: 'My eForms' },
   //{ key: '#newEFormBtn', value: 'NEW EFORM' },

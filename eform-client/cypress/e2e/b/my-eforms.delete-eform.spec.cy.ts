@@ -2,7 +2,7 @@ import loginPage from '../Login.page';
 import {myEformsPage} from '../MyEforms.page';
 import {Guid} from 'guid-typescript';
 
-const expect = require('chai').expect;
+import {expect} from 'chai';
 describe('Main Page', function () {
   before(() => {
     cy.visit('http://localhost:4200');

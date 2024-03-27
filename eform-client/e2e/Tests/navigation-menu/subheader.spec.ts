@@ -3,7 +3,7 @@ import navigationMenuPage from '../../Page objects/NavigationMenu.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 
 let translation = '';
-const expect = require('chai').expect;
+import {expect} from 'chai';
 describe('Subheader test', function () {
   before(async () => {
     await loginPage.open('/');

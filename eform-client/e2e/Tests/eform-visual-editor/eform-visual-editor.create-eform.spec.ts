@@ -13,7 +13,7 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 import XMLForEformFractions from '../../Constants/XMLForEformFractions';
 import { afterEach, beforeEach } from 'mocha';
 
-const expect = require('chai').expect;
+import {expect} from 'chai';
 
 describe('Visual editor page', function () {
   before(async () => {

@@ -5,7 +5,7 @@ import deviceUsersPage, {
 } from '../../Page objects/DeviceUsers.page';
 import foldersPage, { FoldersRowObject } from '../../Page objects/Folders.page';
 
-const expect = require('chai').expect;
+import {expect} from 'chai';
 const users = new Array<DeviceUsersRowObject>();
 const folders = new Array<FoldersRowObject>();
 describe('Main page', function () {
