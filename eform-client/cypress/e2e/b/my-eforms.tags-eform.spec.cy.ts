@@ -2,7 +2,7 @@ import loginPage from '../Login.page';
 import {myEformsPage} from '../MyEforms.page';
 import { generateRandmString } from '../helper-functions';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 const testTag = 'Test tag';
 const newEformLabel = generateRandmString();
 describe('Main page', function () {

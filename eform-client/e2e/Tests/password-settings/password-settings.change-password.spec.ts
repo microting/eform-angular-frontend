@@ -2,7 +2,7 @@ import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import passwordSettings from '../../Page objects/PasswordSettings.page';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 describe('Password settings', function () {
   before(async () => {

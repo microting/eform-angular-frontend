@@ -1,6 +1,6 @@
 import { Guid } from 'guid-typescript';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 export function generateRandmString(length: number = 36): string {
   return Guid.raw().toString().slice(0, length);

@@ -5,7 +5,7 @@ import deviceUsersPage, {
 } from '../../Page objects/DeviceUsers.page';
 import { generateRandmString } from '../../Helpers/helper-functions';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 const nameDeviceUser = generateRandmString();
 let countDeviceUsersBeforeCreating = 0;
 

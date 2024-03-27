@@ -2,7 +2,7 @@ import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import {Guid} from 'guid-typescript';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 let arrayNamesTag = new Array<string>();
 before(async () => {
   await loginPage.open('/');

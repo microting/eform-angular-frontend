@@ -3,7 +3,7 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 import workers from '../../Page objects/Workers.page';
 import deviceUsersPage from '../../Page objects/DeviceUsers.page';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 describe('Workers page ', function () {
   before(async () => {

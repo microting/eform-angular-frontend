@@ -2,7 +2,7 @@ import loginPage from '../../Page objects/Login.page';
 import { Guid } from 'guid-typescript';
 import searchableLists from '../../Page objects/SearchableLists.page';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 describe('Entity Search', function () {
   before(async () => {

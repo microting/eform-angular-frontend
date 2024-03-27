@@ -4,7 +4,7 @@ import foldersPage from '../../../Page objects/Folders.page';
 import { generateRandmString } from '../../../Helpers/helper-functions';
 import { applicationLanguages } from '../../../../src/app/common/const';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 const folderName = [
   generateRandmString(),
   generateRandmString(),

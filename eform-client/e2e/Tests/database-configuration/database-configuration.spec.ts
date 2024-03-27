@@ -2,7 +2,7 @@ import databasePage from '../../Page objects/Database.page';
 import DatabaseConfigurationConstants from '../../Constants/DatabaseConfigurationConstants';
 import loginPage from '../../Page objects/Login.page';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 describe('Database', function () {
   it('should be configured successfully', async () => {

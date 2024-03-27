@@ -3,7 +3,7 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 import selectableLists from '../../Page objects/SelectableLists.page';
 import { testSorting } from '../../Helpers/helper-functions';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 describe('Entity Select Sort', function () {
   before(async () => {

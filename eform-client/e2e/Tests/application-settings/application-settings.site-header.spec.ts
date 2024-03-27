@@ -3,7 +3,7 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 import applicationSettingsPage from '../../Page objects/ApplicationSettings.page';
 import ApplicationSettingsConstants from '../../Constants/ApplicationSettingsConstants';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 describe('Application settings page - site header section', function () {
   before('Login', async () => {

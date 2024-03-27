@@ -4,7 +4,7 @@ import deviceUsersPage from '../DeviceUsers.page';
 import { generateRandmString } from '../helper-functions';
 import sitesPage from '../Sites.page';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 const tagName = generateRandmString();
 
 describe('Site tags', function () {

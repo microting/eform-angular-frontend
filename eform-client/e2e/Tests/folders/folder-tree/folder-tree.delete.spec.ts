@@ -3,7 +3,7 @@ import myEformsPage from '../../../Page objects/MyEforms.page';
 import foldersPage from '../../../Page objects/Folders.page';
 import { generateRandmString } from '../../../Helpers/helper-functions';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 let nameFolder = generateRandmString();
 
 describe('Delete folder', function () {

@@ -3,7 +3,7 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 import deviceUsersPage from '../../Page objects/DeviceUsers.page';
 import { Guid } from 'guid-typescript';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 describe('Device users page', function () {
   before(async () => {

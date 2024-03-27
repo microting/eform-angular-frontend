@@ -15,7 +15,7 @@ import { afterEach, beforeEach } from 'mocha';
 import {Guid} from 'guid-typescript';
 import XMLForEformSimple from '../../Constants/XMLForEformSimple';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 describe('Visual editor page', function () {
   before(async () => {
