@@ -7,4 +7,5 @@ export class ReplyRequest {
   doneAt: Date;
   isDoneAtEditable: boolean;
   extraId: number;
+  siteId: number;
 }
