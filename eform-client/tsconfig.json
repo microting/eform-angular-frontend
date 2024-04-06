@@ -20,8 +20,8 @@
     "types": [
       "node",
       "webdriverio/async",
+      "@wdio/globals/types",
       "@wdio/mocha-framework",
-      "expect-webdriverio",
       "cypress"
     ],
     "target": "es2020",

@@ -1,6 +1,7 @@
 import Page from './Page';
 import loginPage from './Login.page';
 import myEformsPage from './MyEforms.page';
+import { $ } from '@wdio/globals';
 
 class PluginPage extends Page {
   constructor() {

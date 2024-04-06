@@ -1,6 +1,7 @@
 import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import { testSorting } from '../../Helpers/helper-functions';
+import { $ } from '@wdio/globals';
 
 describe('Main page', function () {
   before(async () => {

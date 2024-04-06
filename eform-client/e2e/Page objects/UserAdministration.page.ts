@@ -1,6 +1,7 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import loginPage from './Login.page';
 import myEformsPage from './MyEforms.page';
+import { $ } from '@wdio/globals';
 
 export class UserAdministration extends PageWithNavbarPage {
   constructor() {

@@ -1,4 +1,5 @@
-import path from "path";
+import path from 'path';
+import { $ } from '@wdio/globals';
 
 export class Navbar {
 

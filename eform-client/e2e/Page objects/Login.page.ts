@@ -1,5 +1,6 @@
 import Page from './Page';
 import LoginConstants from '../Constants/LoginConstants';
+import { $ } from '@wdio/globals';
 
 class LoginPage extends Page {
   constructor() {

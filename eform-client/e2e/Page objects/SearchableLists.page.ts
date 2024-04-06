@@ -1,5 +1,5 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
-import MyEformsPage from "./MyEforms.page";
+import { $ } from '@wdio/globals';
 
 export class SearchableListsPage extends PageWithNavbarPage {
   constructor() {
@@ -125,7 +125,6 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   public async entitySearchEditBtn(i = 0): Promise<WebdriverIO.Element> {
-    await this.takeScreenshot();
     const ele = await $$('#entitySearchUpdateBtn')[i];
     await ele.waitForDisplayed({timeout: 40000});
     await ele.waitForClickable({timeout: 40000});
@@ -253,7 +252,6 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async createSearchableList_OneItem(name, itemName) {
     await (await this.createEntitySearchBtn()).click();
-    await this.takeScreenshot();
     await $('#editName').waitForDisplayed({timeout: 40000});
     await (await this.entitySearchCreateName()).setValue(name);
     await browser.pause(500);

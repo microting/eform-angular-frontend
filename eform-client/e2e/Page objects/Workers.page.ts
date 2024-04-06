@@ -1,5 +1,6 @@
 import {PageWithNavbarPage} from './PageWithNavbar.page';
 import {DeviceUsersRowObject} from './DeviceUsers.page';
+import { $ } from '@wdio/globals';
 
 export class Workers extends PageWithNavbarPage {
   constructor() {

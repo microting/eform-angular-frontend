@@ -3,6 +3,7 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 import deviceUsersPage from '../../Page objects/DeviceUsers.page';
 import { generateRandmString } from '../../Helpers/helper-functions';
 import sitesPage from '../../Page objects/Sites.page';
+import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
 const tagName = generateRandmString();

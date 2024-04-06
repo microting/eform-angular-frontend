@@ -1,5 +1,6 @@
 //const path = require("path");
 import type { Options } from '@wdio/types';
+import { $ } from '@wdio/globals';
 
 export const config: Options.Testrunner = {
   runner: 'local',

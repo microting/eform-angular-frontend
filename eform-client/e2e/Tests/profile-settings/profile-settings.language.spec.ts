@@ -1,6 +1,7 @@
 import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import profileSettings from '../../Page objects/ProfileSettings.page';
+import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
 const translationsEFormsPageEng: Array<{ key: string; value: string }> = [

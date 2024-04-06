@@ -1,5 +1,6 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import tagsModalPage from './TagsModal.page';
+import { $ } from '@wdio/globals';
 
 class SitesPage extends PageWithNavbarPage {
   constructor() {
@@ -152,7 +153,7 @@ export class SitesRowObject {
       this.siteId = +(await this.element.$('#siteUUId')).getText();
       this.units = await (await this.element.$('#units')).getText();
       this.siteName = await (await this.element.$('#siteName')).getText();
-      let list = [];
+      let list = null;
       try {
         list = (await (await this.element.$('#tags')).$$('span'));
       }catch (e) {

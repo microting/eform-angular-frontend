@@ -1,5 +1,6 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import { expect } from 'chai';
+import { $ } from '@wdio/globals';
 
 class DeviceUsersPage extends PageWithNavbarPage {
   constructor() {

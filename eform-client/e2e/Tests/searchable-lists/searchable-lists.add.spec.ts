@@ -1,6 +1,7 @@
 import loginPage from '../../Page objects/Login.page';
 import { Guid } from 'guid-typescript';
 import searchableLists from '../../Page objects/SearchableLists.page';
+import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
 

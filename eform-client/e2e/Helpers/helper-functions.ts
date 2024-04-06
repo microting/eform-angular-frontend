@@ -1,4 +1,5 @@
 import { Guid } from 'guid-typescript';
+import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
 

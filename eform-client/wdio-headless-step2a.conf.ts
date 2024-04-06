@@ -1,5 +1,6 @@
 //const path = require("path");
 import type { Options } from '@wdio/types'
+import { $ } from '@wdio/globals';
 
 export const config: Options.Testrunner = {
   runner: 'local',
@@ -273,9 +274,9 @@ export const config: Options.Testrunner = {
 
     const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
 
-    //console.log('Saving screenshot to:', filePath);
-    //browser.saveScreenshot(filePath);
-    //console.log('Saved screenshot to:', filePath);
+    console.log('Saving screenshot to:', filePath);
+    browser.saveScreenshot(filePath);
+    console.log('Saved screenshot to:', filePath);
   },
   /**
    * Hook that gets executed after the suite has ended

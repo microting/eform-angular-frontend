@@ -12,6 +12,7 @@ import {
 import myEformsPage from './MyEforms.page';
 import { eformVisualEditorElementColors } from '../../src/app/modules/eforms/eform-visual-editor/const';
 import {selectValueInNgSelector} from '../Helpers/helper-functions';
+import { $ } from '@wdio/globals';
 
 class EformVisualEditorPage extends PageWithNavbarPage {
   constructor() {

@@ -1,6 +1,7 @@
 import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import { generateRandmString } from '../../Helpers/helper-functions';
+import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
 const testTag = 'Test tag';

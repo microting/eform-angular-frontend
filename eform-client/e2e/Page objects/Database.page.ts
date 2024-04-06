@@ -1,5 +1,6 @@
 import Page from './Page';
 import DatabaseConfigurationConstants from '../Constants/DatabaseConfigurationConstants';
+import { $ } from '@wdio/globals';
 
 class DatabasePage extends Page {
   constructor() {

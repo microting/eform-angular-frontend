@@ -2,6 +2,7 @@ import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import applicationSettingsPage from '../../Page objects/ApplicationSettings.page';
 import ApplicationSettingsConstants from '../../Constants/ApplicationSettingsConstants';
+import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
 

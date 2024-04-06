@@ -1,4 +1,5 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
+import { $ } from '@wdio/globals';
 
 export class ApplicationSettingsPage extends PageWithNavbarPage {
   public LoginPage: LoginPageSettings;

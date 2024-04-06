@@ -1,6 +1,7 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import { applicationLanguages } from '../../src/app/common/const';
 import {selectValueInNgSelector} from "../Helpers/helper-functions";
+import { $ } from '@wdio/globals';
 
 class FoldersPage extends PageWithNavbarPage {
   constructor() {

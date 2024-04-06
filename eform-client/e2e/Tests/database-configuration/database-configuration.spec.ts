@@ -1,6 +1,7 @@
 import databasePage from '../../Page objects/Database.page';
 import DatabaseConfigurationConstants from '../../Constants/DatabaseConfigurationConstants';
 import loginPage from '../../Page objects/Login.page';
+import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
 

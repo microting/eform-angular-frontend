@@ -5,6 +5,7 @@ import XMLForEform from '../Constants/XMLForEform';
 import {FoldersRowObject} from './Folders.page';
 import {DeviceUsersRowObject} from './DeviceUsers.page';
 import tagsModalPage from './TagsModal.page';
+import { $ } from '@wdio/globals';
 
 class MyEformsPage extends PageWithNavbarPage {
   constructor() {
@@ -191,6 +192,7 @@ class MyEformsPage extends PageWithNavbarPage {
       xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
     }
     await browser.execute(function (xmlText) {
+      // @ts-ignore
       (<HTMLInputElement>document.getElementById('eFormXml')).value = xmlText;
     }, xml);
     await browser.pause(200);
@@ -278,7 +280,7 @@ class MyEformsRowObject {
   id: number;
   createdAt: Date;
   eFormName: string;
-  tags: Array<any>;
+  tags: any;
   editTagsBtn: WebdriverIO.Element;
   addPairEformBtn: WebdriverIO.Element;
   editPairEformBtn: WebdriverIO.Element;

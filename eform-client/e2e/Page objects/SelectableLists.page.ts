@@ -1,5 +1,6 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import { generateRandmString } from '../Helpers/helper-functions';
+import { $ } from '@wdio/globals';
 
 export class SelectableListsPage extends PageWithNavbarPage {
   constructor() {
@@ -345,7 +346,6 @@ export class SelectableListRowObject {
 
   async openEdit() {
     await this.editBtn.click();
-    await selectableLists.takeScreenshot();
     await browser.pause(2000);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
     //await browser.pause(1000);

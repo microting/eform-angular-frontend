@@ -3,6 +3,7 @@ import myEformsPage from '../../../Page objects/MyEforms.page';
 import foldersPage from '../../../Page objects/Folders.page';
 import { generateRandmString } from '../../../Helpers/helper-functions';
 import { applicationLanguages } from '../../../../src/app/common/const';
+import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
 const folderName = [

@@ -1,4 +1,5 @@
 import {PageWithNavbarPage} from './PageWithNavbar.page';
+import { $ } from '@wdio/globals';
 
 export class PasswordSettings extends PageWithNavbarPage {
   constructor() {

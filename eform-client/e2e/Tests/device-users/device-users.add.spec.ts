@@ -4,6 +4,7 @@ import deviceUsersPage, {
   DeviceUsersRowObject,
 } from '../../Page objects/DeviceUsers.page';
 import { generateRandmString } from '../../Helpers/helper-functions';
+import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
 const nameDeviceUser = generateRandmString();

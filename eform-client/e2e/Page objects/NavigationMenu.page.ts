@@ -1,3 +1,6 @@
+
+import { $ } from '@wdio/globals';
+
 class NavigationMenuPage {
   public async menuItemsChilds(): Promise<WebdriverIO.ElementArray> {
     await browser.pause(1000);

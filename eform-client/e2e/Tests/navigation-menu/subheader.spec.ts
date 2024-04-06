@@ -1,6 +1,7 @@
 import loginPage from '../../Page objects/Login.page';
 import navigationMenuPage from '../../Page objects/NavigationMenu.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
+import { $ } from '@wdio/globals';
 
 let translation = '';
 const expect = require('chai').expect;
