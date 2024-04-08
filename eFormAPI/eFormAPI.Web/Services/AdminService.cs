@@ -388,10 +388,14 @@ public class AdminService : IAdminService
 
             var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
                                                                           && x.WorkflowState != Constants.WorkflowStates.Removed);
-            var language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+            if (site != null)
+            {
+                var language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
 
-            await core.SiteUpdate((int)site.MicrotingUid, $"{userRegisterModel.FirstName} {userRegisterModel.LastName}", userRegisterModel.FirstName, userRegisterModel.LastName, userRegisterModel.Email, language.LanguageCode);
-
+                await core.SiteUpdate((int)site.MicrotingUid,
+                    $"{userRegisterModel.FirstName} {userRegisterModel.LastName}", userRegisterModel.FirstName,
+                    userRegisterModel.LastName, userRegisterModel.Email, language.LanguageCode);
+            }
             user.Email = userRegisterModel.Email;
             user.EmailConfirmed = true;
             user.UserName = userRegisterModel.Email;
