@@ -2635,10 +2635,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@ngrx/store-devtools@17.1.0":
-  version "17.1.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-17.1.0.tgz#0c2f470b5fb8aa78581d37553456bef0112dee89"
-  integrity sha512-sJxyyrMul6lh555PHjbCwk3uaw7bVOX1RNw7rPDpZSiD+CQwvtnD3xZxzx2Q21v7OPMlqr/ncjzbht9lSiGDRw==
+"@ngrx/store-devtools@17.1.1":
+  version "17.1.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-17.1.1.tgz#dcbb221da64282f79df696edfe1518e8b6659291"
+  integrity sha512-MCzM44wHzc0eY6FSvPQwuXn1HFst8Y4Ckq7jvlPA202nJYwMZQQJReI5KQNHfGiqe0RpZKov0FUmy6sIyOOt2A==
   dependencies:
     tslib "^2.0.0"
 
