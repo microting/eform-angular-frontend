@@ -216,10 +216,11 @@ public class AdminService : IAdminService
                     _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.Email));
             }
 
-            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userRegisterModel.FirstName + " " + userRegisterModel.LastName
-                                                                          && x.WorkflowState != Constants.WorkflowStates.Removed);
+            var dbUser = await _dbContext.Users
+                .SingleOrDefaultAsync(x => x.FirstName == userRegisterModel.FirstName
+                                           && x.LastName == userRegisterModel.LastName);
 
-            if (site != null)
+            if (dbUser != null)
             {
                 return new OperationResult(false,
                     _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.FirstName + " " + userRegisterModel.LastName));
@@ -265,11 +266,9 @@ public class AdminService : IAdminService
                 await _dbContext.SaveChangesAsync();
             }
 
+            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userRegisterModel.FirstName + " " + userRegisterModel.LastName
+                                                                          && x.WorkflowState != Constants.WorkflowStates.Removed);
 
-            if (site == null) {
-                await core.SiteCreate($"{userRegisterModel.FirstName} {userRegisterModel.LastName}", userRegisterModel.FirstName, userRegisterModel.LastName,
-                    null, "da");
-            }
             if (site != null)
             {
                 site.IsLocked = true;
