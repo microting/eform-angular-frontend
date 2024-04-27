@@ -175,12 +175,17 @@ export class Navbar {
   }
 
   public goToPluginsPage() {
-    this.pluginsBtn().then(($ele) => {
-      if (!$ele.is(':visible')) {
-        this.advancedBtn().click();
+    this.advancedBtn();
+    this.pluginsBtn().should('be.visible').then(isDisplayed => {
+      if (isDisplayed) {
+        this.pluginsBtn().click();
+        cy.wait(500);
+      } else {
+        this.advancedBtn();
+        this.pluginsBtn().should('be.visible').should('be.enabled').click();
+        cy.wait(500);
       }
     });
-    this.pluginsBtn().click();
     cy.get('app-installed-plugins-page .mat-mdc-row').should('be.visible'); // required need 1+ plugin
   }
 
