@@ -242,6 +242,7 @@ export class Navbar {
   public async goToEntitySelect() {
     await this.advancedDropdownClick();
     await (await this.entitySelectBtn()).click();
+    await this.waitForSpinnerHide();
     await browser.pause(500);
   }
 
@@ -282,5 +283,13 @@ export class Navbar {
   public async goToSecurity() {
     await (await this.signOutDropdown()).click();
     await (await this.securityBtn()).click();
+  }
+
+  public async spinnerAnimation() {
+    return await $('#spinner-animation');
+  }
+
+  public async waitForSpinnerHide(timeout: number = 90000) {
+    await (await this.spinnerAnimation()).waitForDisplayed({timeout: timeout, reverse: true});
   }
 }
