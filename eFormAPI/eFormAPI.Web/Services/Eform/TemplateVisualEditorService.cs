@@ -821,7 +821,7 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                         fieldType.Type == Constants.FieldTypes.Number)
                     {
                         dbFieldTranslation.DefaultValue = string.IsNullOrEmpty(dbFieldTranslation.DefaultValue)
-                            ? "0"
+                            ? ""
                             : dbFieldTranslation.DefaultValue;
                     }
 
