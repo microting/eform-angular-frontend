@@ -12321,7 +12321,7 @@ webdriver@8.36.1:
     ky "^0.33.0"
     ws "^8.8.0"
 
-webdriverio@8.35.1, webdriverio@^8.29.3, webdriverio@^8.31.1:
+webdriverio@8.35.1:
   version "8.35.1"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-8.35.1.tgz#1b46e496399e59db29c02aa26515607c606ce760"
   integrity sha512-YAuKR4JERGiMqCJmm5fEVZ160iiFPyupwALqfXfzrYVcEmKltKPFY/oUCArmi6Uzqd+Sa2Kp9WZtz2Eu1R76JA==
@@ -12351,7 +12351,7 @@ webdriverio@8.35.1, webdriverio@^8.29.3, webdriverio@^8.31.1:
     serialize-error "^11.0.1"
     webdriver "8.35.0"
 
-webdriverio@8.36.1:
+webdriverio@8.36.1, webdriverio@^8.29.3, webdriverio@^8.36.1:
   version "8.36.1"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-8.36.1.tgz#67f6f5e7d383878910d51e8362b003bab45623c6"
   integrity sha512-vzE09oFQeMbOYJ/75jZ13sDIljzC3HH7uoUJKAMAEtyrn/bu1F9Sg/4IDEsvQaRD3pz3ae6SkRld33lcQk6HJA==

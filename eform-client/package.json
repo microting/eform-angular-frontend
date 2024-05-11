@@ -145,7 +145,7 @@
     "typescript": "5.3.3",
     "wdio-chromedriver-service": "^8.1.1",
     "wdio-docker-service": "^3.2.1",
-    "webdriverio": "^8.31.1",
+    "webdriverio": "^8.36.1",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
   },
   "browserslist": [
