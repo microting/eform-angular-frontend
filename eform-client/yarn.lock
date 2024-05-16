@@ -138,6 +138,11 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-17.4.0.tgz#d526c76f3505178a9dace60f39390bb8669536e0"
   integrity sha512-cYEJs4PO+QLDt1wfgWh9q8OjOphnoe1OTTFtMqm9lHl0AkBynPnFA6ghiiG5NaT03l7HXi2TQ23rLFlXl3JOBg==
 
+"@angular-eslint/bundled-angular-compiler@17.4.1":
+  version "17.4.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-17.4.1.tgz#87572adcf1332edc8965ae2d79dab5bbc7fe3253"
+  integrity sha512-QKQGspxsyMHRwvzqo+Fj42TS/vmnwOHuWC6EN+5KBx3cuImahqFHQW842zVy9f65jfH2xDnNWJ+NW+Tzcgg+pQ==
+
 "@angular-eslint/eslint-plugin-template@17.4.0":
   version "17.4.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-17.4.0.tgz#bcf303fabdaeb07f473bacc552f9d6ef0243e163"
@@ -145,6 +150,18 @@
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "17.4.0"
     "@angular-eslint/utils" "17.4.0"
+    "@typescript-eslint/type-utils" "7.8.0"
+    "@typescript-eslint/utils" "7.8.0"
+    aria-query "5.3.0"
+    axobject-query "4.0.0"
+
+"@angular-eslint/eslint-plugin-template@17.4.1":
+  version "17.4.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-17.4.1.tgz#073594241323f37de98f6b2185abe3e0b904cbfb"
+  integrity sha512-oYP7yzOpn63g1Mpwc8F8ERiywaGRhAs27ttI9t+5NXaLrwHSfc/AJleC7jjkB5xu1p88JY1mb4oIYOjeZAhHIg==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "17.4.1"
+    "@angular-eslint/utils" "17.4.1"
     "@typescript-eslint/type-utils" "7.8.0"
     "@typescript-eslint/utils" "7.8.0"
     aria-query "5.3.0"
@@ -186,6 +203,14 @@
   integrity sha512-lHgRXyT878fauDITygraICDM6RHLb51QAJ3gWNZLr7SXcywsZg5d3rxRPCjrCnjgdxNPU0fJ+VJZ5AMt5Ibn7w==
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "17.4.0"
+    "@typescript-eslint/utils" "7.8.0"
+
+"@angular-eslint/utils@17.4.1":
+  version "17.4.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-17.4.1.tgz#0483553b92865c95dfbfef74aa1d09dc914ae2a4"
+  integrity sha512-ptpWSrN7hfLtbStOB5vlwjh088WRu+sT1XIXCROrX5uXR5sQMu5ZitnoObSe+Of+1lugguPvMvFm/pzTMp3LIg==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "17.4.1"
     "@typescript-eslint/utils" "7.8.0"
 
 "@angular/animations@17.3.1":
