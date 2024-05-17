@@ -412,4 +412,12 @@ export const itIT = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'Di',
   'PAGINATOR.PAGE': 'Pagina',
   'No data in selected period': 'Nessun dato nel periodo selezionato',
+  'Dark theme': 'Tema scuro',
+  Formats: 'Formati',
+  'Save settings': 'Salva le impostazioni',
+  'No records found': 'Nessun record trovato',
+  'Time zone': 'Fuso orario',
+  'Set password': 'Impostare la password',
+  'Edit user': 'Modifica utente',
+  'Create user': 'Creare un utente',
 };

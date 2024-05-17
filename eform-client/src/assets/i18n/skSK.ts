@@ -412,4 +412,12 @@ export const skSK = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'z',
   'PAGINATOR.PAGE': 'Stránka',
   'No data in selected period': 'Žiadne údaje vo vybranom období',
+  'Dark theme': 'Tmavá téma',
+  Formats: 'Formáty',
+  'Save settings': 'Uložiť nastavenia',
+  'No records found': 'Nenašli sa žiadne záznamy',
+  'Time zone': 'Časové pásmo',
+  'Set password': 'Nastaviť heslo',
+  'Edit user': 'Upraviť používateľa',
+  'Create user': 'Vytvoriť používateľa',
 };

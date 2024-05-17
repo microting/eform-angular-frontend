@@ -412,4 +412,12 @@ export const csCZ = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'z',
   'PAGINATOR.PAGE': 'Strana',
   'No data in selected period': 'Žádná data ve vybraném období',
+  'Dark theme': 'Tmavé téma',
+  Formats: 'Formáty',
+  'Save settings': 'Uložit nastavení',
+  'No records found': 'Nenalezeny žádné záznamy',
+  'Time zone': 'Časové pásmo',
+  'Set password': 'Nastavit heslo',
+  'Edit user': 'Upravit uživatele',
+  'Create user': 'Vytvořit uživatele',
 };

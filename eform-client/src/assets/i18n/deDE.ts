@@ -412,4 +412,12 @@ export const deDE = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'von',
   'PAGINATOR.PAGE': 'Seite',
   'No data in selected period': 'Keine Daten im ausgewählten Zeitraum',
+  'Dark theme': 'Dunkles Thema',
+  Formats: 'Formate',
+  'Save settings': 'Einstellungen speichern',
+  'No records found': 'Keine Aufzeichnungen gefunden',
+  'Time zone': 'Zeitzone',
+  'Set password': 'Passwort festlegen',
+  'Edit user': 'Benutzer bearbeiten',
+  'Create user': 'Benutzer erstellen',
 };

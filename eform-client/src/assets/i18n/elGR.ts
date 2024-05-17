@@ -412,4 +412,12 @@ export const elGR = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'του',
   'PAGINATOR.PAGE': 'Σελίδα',
   'No data in selected period': 'Δεν υπάρχουν δεδομένα στην επιλεγμένη περίοδο',
+  'Dark theme': 'Σκοτεινό θέμα',
+  Formats: 'Μορφές',
+  'Save settings': 'Αποθήκευση ρυθμίσεων',
+  'No records found': 'Δεν βρέθηκαν καταγραφές',
+  'Time zone': 'Ζώνη ώρας',
+  'Set password': 'Ορίστε κωδικό',
+  'Edit user': 'Επεξεργασία χρήστη',
+  'Create user': 'Δημιουργία χρήστη',
 };

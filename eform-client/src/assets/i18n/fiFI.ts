@@ -412,4 +412,12 @@ export const fiFI = {
   'PAGINATOR.RANGE_PAGE_LABEL': '/',
   'PAGINATOR.PAGE': 'Sivu',
   'No data in selected period': 'Ei tietoja valitulta ajanjaksolta',
+  'Dark theme': 'Tumma teema',
+  Formats: 'Muodot',
+  'Save settings': 'Tallenna asetukset',
+  'No records found': 'Merkintöjä ei löydy',
+  'Time zone': 'Aikavyöhyke',
+  'Set password': 'Aseta salasana',
+  'Edit user': 'Muokkaa käyttäjää',
+  'Create user': 'Luo käyttäjä',
 };

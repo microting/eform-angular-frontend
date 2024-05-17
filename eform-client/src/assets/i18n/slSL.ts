@@ -412,4 +412,12 @@ export const slSL = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'od',
   'PAGINATOR.PAGE': 'Stran',
   'No data in selected period': 'V izbranem obdobju ni podatkov',
+  'Dark theme': 'Temna tema',
+  Formats: 'Formati',
+  'Save settings': 'Shrani nastavitve',
+  'No records found': 'Ni najdenih zapisov',
+  'Time zone': 'Časovni pas',
+  'Set password': 'Nastavi geslo',
+  'Edit user': 'Uredi uporabnika',
+  'Create user': 'Ustvari uporabnika',
 };

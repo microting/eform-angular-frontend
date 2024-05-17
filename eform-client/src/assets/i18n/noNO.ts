@@ -412,4 +412,12 @@ export const noNO = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'av',
   'PAGINATOR.PAGE': 'Side',
   'No data in selected period': 'Ingen data i valgt periode',
+  'Dark theme': 'Mørkt tema',
+  Formats: 'Formater',
+  'Save settings': 'Lagre innstillinger',
+  'No records found': 'Ingen opptak funnet',
+  'Time zone': 'Tidssone',
+  'Set password': 'Lag et passord',
+  'Edit user': 'Rediger bruker',
+  'Create user': 'Opprett bruker',
 };

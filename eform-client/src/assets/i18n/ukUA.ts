@@ -412,4 +412,12 @@ export const ukUA = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'з',
   'PAGINATOR.PAGE': 'Сторінка',
   'No data in selected period': 'Немає даних за вибраний період',
+  'Dark theme': 'Темна тема',
+  Formats: 'Формати',
+  'Save settings': 'Зберегти налаштування',
+  'No records found': 'Записів не знайдено',
+  'Time zone': 'Часовий пояс',
+  'Set password': 'Встановити пароль',
+  'Edit user': 'Редагувати користувача',
+  'Create user': 'Створити користувача',
 };

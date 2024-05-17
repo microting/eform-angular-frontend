@@ -412,4 +412,12 @@ export const hrHR = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'od',
   'PAGINATOR.PAGE': 'Stranica',
   'No data in selected period': 'Nema podataka u odabranom razdoblju',
+  'Dark theme': 'Tamna tema',
+  Formats: 'Formati',
+  'Save settings': 'Spremi postavke',
+  'No records found': 'Nema pronađenih zapisa',
+  'Time zone': 'Vremenska zona',
+  'Set password': 'Postavi lozinku',
+  'Edit user': 'Uredi korisnika',
+  'Create user': 'Stvori korisnika',
 };

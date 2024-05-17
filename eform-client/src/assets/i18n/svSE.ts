@@ -412,4 +412,12 @@ export const svSE = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'av',
   'PAGINATOR.PAGE': 'Sida',
   'No data in selected period': 'Ingen data under den valda perioden',
+  'Dark theme': 'Mörkt tema',
+  Formats: 'Format',
+  'Save settings': 'Spara inställningar',
+  'No records found': 'Inga uppgifter funna',
+  'Time zone': 'Tidszon',
+  'Set password': 'Välj lösenord',
+  'Edit user': 'Redigera användare',
+  'Create user': 'Skapa användare',
 };

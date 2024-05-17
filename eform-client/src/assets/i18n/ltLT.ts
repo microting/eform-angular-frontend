@@ -412,4 +412,12 @@ export const ltLT = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'apie',
   'PAGINATOR.PAGE': 'Puslapis',
   'No data in selected period': 'Pasirinktu laikotarpiu duomenų nėra',
+  'Dark theme': 'Tamsi tema',
+  Formats: 'Formatai',
+  'Save settings': 'Išsaugoti nustatymus',
+  'No records found': 'įrašų nerasta',
+  'Time zone': 'Laiko zona',
+  'Set password': 'Nustatyti slaptažodį',
+  'Edit user': 'Redaguoti naudotoją',
+  'Create user': 'Sukurti vartotoją',
 };

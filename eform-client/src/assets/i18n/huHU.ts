@@ -412,4 +412,12 @@ export const huHU = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'nak,-nek',
   'PAGINATOR.PAGE': 'oldal',
   'No data in selected period': 'Nincs adat a kiválasztott időszakban',
+  'Dark theme': 'Sötét téma',
+  Formats: 'Formátumok',
+  'Save settings': 'Beállítások mentése',
+  'No records found': 'Nincs találat',
+  'Time zone': 'Időzóna',
+  'Set password': 'Állítsd be a jelszót',
+  'Edit user': 'Felhasználó szerkesztése',
+  'Create user': 'Felhasználó létrehozása',
 };
