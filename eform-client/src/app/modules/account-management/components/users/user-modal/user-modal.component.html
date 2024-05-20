@@ -94,7 +94,7 @@
     (click)="edit ? updateUser() : createUser()"
     [id]="edit ? 'editUserSaveBtn' : 'createAdministrationUserBtn'"
   >
-    {{ edit ? 'Save' : 'Create' | translate }}
+    {{ (edit ? 'Save' : 'Create') | translate }}
   </button>
   <button
     mat-raised-button

@@ -412,4 +412,12 @@ export const bgBG = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'на',
   'PAGINATOR.PAGE': 'Страница',
   'No data in selected period': 'Няма данни за избрания период',
+  'Dark theme': 'Тъмна тема',
+  Formats: 'Формати',
+  'Save settings': 'Запазете настройките',
+  'No records found': 'не са намерени записи',
+  'Time zone': 'Часова зона',
+  'Set password': 'Задайте парола',
+  'Edit user': 'Редактиране на потребител',
+  'Create user': 'Създаване на потребител',
 };

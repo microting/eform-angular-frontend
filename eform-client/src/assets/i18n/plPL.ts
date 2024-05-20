@@ -412,4 +412,12 @@ export const plPL = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'z',
   'PAGINATOR.PAGE': 'Strona',
   'No data in selected period': 'Brak danych w wybranym okresie',
+  'Dark theme': 'ciemny schemat',
+  Formats: 'Formaty',
+  'Save settings': 'Zapisz ustawienia',
+  'No records found': 'Nic nie znaleziono',
+  'Time zone': 'Strefa czasowa',
+  'Set password': 'Ustaw hasło',
+  'Edit user': 'Edytuj użytkownika',
+  'Create user': 'Stwórz użytkownika',
 };

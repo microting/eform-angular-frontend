@@ -412,4 +412,12 @@ export const roRO = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'de',
   'PAGINATOR.PAGE': 'Pagină',
   'No data in selected period': 'Nu există date în perioada selectată',
+  'Dark theme': 'Tema întunecată',
+  Formats: 'Formate',
+  'Save settings': 'Salvează setările',
+  'No records found': 'Nu au fost găsite',
+  'Time zone': 'Fus orar',
+  'Set password': 'Seteaza parola',
+  'Edit user': 'Editați utilizatorul',
+  'Create user': 'Creaza utilizator',
 };

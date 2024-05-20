@@ -412,4 +412,12 @@ export const frFR = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'de',
   'PAGINATOR.PAGE': 'Page',
   'No data in selected period': 'Aucune donnée dans la période sélectionnée',
+  'Dark theme': 'Thème sombre',
+  Formats: 'Formats',
+  'Save settings': 'Enregistrer les paramètres',
+  'No records found': 'Aucun enregistrement trouvé',
+  'Time zone': 'Fuseau horaire',
+  'Set password': 'Définir le mot de passe',
+  'Edit user': 'Modifier l&#39;utilisateur',
+  'Create user': 'Créer un utilisateur',
 };

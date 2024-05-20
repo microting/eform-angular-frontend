@@ -412,4 +412,12 @@ export const nlNL = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'van',
   'PAGINATOR.PAGE': 'Bladzijde',
   'No data in selected period': 'Geen gegevens in geselecteerde periode',
+  'Dark theme': 'Donker thema',
+  Formats: 'Formaten',
+  'Save settings': 'Instellingen opslaan',
+  'No records found': 'Geen verslagen gevonden',
+  'Time zone': 'Tijdzone',
+  'Set password': 'Stel een wachtwoord in',
+  'Edit user': 'Bewerk gebruiker',
+  'Create user': 'Gebruiker aanmaken',
 };

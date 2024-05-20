@@ -412,4 +412,12 @@ export const etET = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'kohta',
   'PAGINATOR.PAGE': 'Lehekülg',
   'No data in selected period': 'Valitud perioodil andmeid pole',
+  'Dark theme': 'Tume teema',
+  Formats: 'Vormingud',
+  'Save settings': 'Salvesta sätted',
+  'No records found': 'Kirjeid ei leitud',
+  'Time zone': 'Ajavöönd',
+  'Set password': 'Määra parool',
+  'Edit user': 'Muuda kasutajat',
+  'Create user': 'Loo kasutaja',
 };

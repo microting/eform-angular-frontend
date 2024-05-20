@@ -64,9 +64,9 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     },
     {header: this.translateService.stream('Role'), sortProp: {id: 'Role'}, field: 'role', sortable: true},
     {header: this.translateService.stream('Language'), sortProp: {id: 'Language'}, field: 'language', sortable: true},
-    {header: this.translateService.stream('Time Zone'), sortProp: {id: 'TimeZone'}, field: 'timeZone', sortable: true},
+    {header: this.translateService.stream('Time zone'), sortProp: {id: 'TimeZone'}, field: 'timeZone', sortable: true},
     {header: this.translateService.stream('Formats'), sortProp: {id: 'Formats'}, field: 'formats', sortable: true},
-    {header: this.translateService.stream('Dark Theme'), sortProp: {id: 'DarkTheme'}, field: 'darkTheme', sortable: true, type: 'boolean', formatter: rowData => rowData.darkTheme ? `<span class="material-icons">done</span>` : `<span></span>`},
+    {header: this.translateService.stream('Dark theme'), sortProp: {id: 'DarkTheme'}, field: 'darkTheme', sortable: true, type: 'boolean', formatter: rowData => rowData.darkTheme ? `<span class="material-icons">done</span>` : `<span></span>`},
     {header: this.translateService.stream('Actions'), field: 'actions', sortable: false},
   ];
   userDeletedSub$: Subscription;

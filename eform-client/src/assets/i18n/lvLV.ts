@@ -412,4 +412,12 @@ export const lvLV = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'no',
   'PAGINATOR.PAGE': 'Lappuse',
   'No data in selected period': 'Nav datu atlasītajā periodā',
+  'Dark theme': 'Tumša tēma',
+  Formats: 'Formāti',
+  'Save settings': 'Saglabāt iestatījumus',
+  'No records found': 'Ieraksti nav atrasti',
+  'Time zone': 'Laika zona',
+  'Set password': 'Uzstādīt paroli',
+  'Edit user': 'Rediģēt lietotāju',
+  'Create user': 'Izveidot lietotāju',
 };

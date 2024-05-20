@@ -412,4 +412,12 @@ export const ptBR = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'de',
   'PAGINATOR.PAGE': 'Página',
   'No data in selected period': 'Nenhum dado no período selecionado',
+  'Dark theme': 'Tema escuro',
+  Formats: 'Formatos',
+  'Save settings': 'Salvar configurações',
+  'No records found': 'Nenhum registro foi encontrado',
+  'Time zone': 'Fuso horário',
+  'Set password': 'Configurar senha',
+  'Edit user': 'Editar usuário',
+  'Create user': 'Criar usuário',
 };

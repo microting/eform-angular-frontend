@@ -415,4 +415,12 @@ export const enUS = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'of',
   'PAGINATOR.PAGE': 'Page',
   'No data in selected period': 'No data in selected period',
+  'Dark theme': 'Dark theme',
+  'Formats': 'Formats',
+  'Save settings': 'Save settings',
+  'No records found': 'No records found',
+  'Time zone': 'Time zone',
+  'Set password': 'Set password',
+  'Edit user': 'Edit user',
+  'Create user': 'Create user',
 };

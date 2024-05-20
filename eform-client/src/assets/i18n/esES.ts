@@ -412,4 +412,12 @@ export const esES = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'de',
   'PAGINATOR.PAGE': 'Página',
   'No data in selected period': 'Sin datos en el periodo seleccionado',
+  'Dark theme': 'tema oscuro',
+  Formats: 'Formatos',
+  'Save settings': 'Guardar ajustes',
+  'No records found': 'No se encontraron registros',
+  'Time zone': 'Zona horaria',
+  'Set password': 'Configurar la clave',
+  'Edit user': 'Editar usuario',
+  'Create user': 'Crear usuario',
 };

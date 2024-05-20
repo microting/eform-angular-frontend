@@ -447,4 +447,11 @@ export const da = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'af',
   'PAGINATOR.PAGE': 'Side',
   'No data in selected period': 'Ingen data i den valgte periode',
+  Formats: 'Formater',
+  'Save settings': 'Gem indstillinger',
+  'No records found': 'Ingen registreringer fundet',
+  'Time zone': 'Tidszone',
+  'Set password': 'Indstil adgangskode',
+  'Edit user': 'Rediger bruger',
+  'Create user': 'Opret bruger',
 };

@@ -412,4 +412,12 @@ export const isIS = {
   'PAGINATOR.RANGE_PAGE_LABEL': 'af',
   'PAGINATOR.PAGE': 'Bls',
   'No data in selected period': 'Engin gögn á valnu tímabili',
+  'Dark theme': 'Dökkt þema',
+  Formats: 'Snið',
+  'Save settings': 'Vista stillingar',
+  'No records found': 'Engar færslur fundust',
+  'Time zone': 'Tímabelti',
+  'Set password': 'Stilltu lykilorð',
+  'Edit user': 'Breyta notanda',
+  'Create user': 'Búa til notanda',
 };
