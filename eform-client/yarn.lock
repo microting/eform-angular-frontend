@@ -189,12 +189,12 @@
     strip-json-comments "3.1.1"
     tmp "0.2.3"
 
-"@angular-eslint/template-parser@17.4.0":
-  version "17.4.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-17.4.0.tgz#481b4f7eefbf802b5d2ac92d824d51da98dbe1be"
-  integrity sha512-vT/Tg8dl6Uy++MS9lPS0l37SynH3EaMcggDiTJqn15pIb4ePO65fafOIIKKYG+BN6R6iFe/g9mH/9nb8ohlzdQ==
+"@angular-eslint/template-parser@17.4.1":
+  version "17.4.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-17.4.1.tgz#173816992aa189b9f614293a303f1151f1995b07"
+  integrity sha512-fJQpwQXexgs7Z3yYpQAfuAkFB2Y5H8SSlo+eAPPafOOPpPSIm/yP4dQ2e06tE8zWB5yjYnVBMJnUKSmG5GJSDw==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "17.4.0"
+    "@angular-eslint/bundled-angular-compiler" "17.4.1"
     eslint-scope "^8.0.0"
 
 "@angular-eslint/utils@17.4.0":
