@@ -67,7 +67,7 @@
     "@angular/router": "17.3.1",
     "@ng-matero/extensions": "17.3.2",
     "@ngrx/effects": "17.1.1",
-    "@ngrx/entity": "17.1.1",
+    "@ngrx/entity": "17.2.0",
     "@ngrx/store": "17.2.0",
     "@ngrx/store-devtools": "17.1.0",
     "@ngx-translate/core": "15.0.0",

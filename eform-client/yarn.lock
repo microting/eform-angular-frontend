@@ -2637,10 +2637,10 @@
     "@ngrx/operators" "17.0.0-beta.0"
     tslib "^2.0.0"
 
-"@ngrx/entity@17.1.1":
-  version "17.1.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-17.1.1.tgz#835e52c5638b08c028a20c2779b88feb9417dd7f"
-  integrity sha512-MNjJY2K0Ci6RS64AEEy4P8nYWVP8EQnt5/Rjy4IQ8IAjw2zFlDSiOJA5xmFcWTk9v0m8x9YZ/7clVGA4Es69kA==
+"@ngrx/entity@17.2.0":
+  version "17.2.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-17.2.0.tgz#5b9a01bd237f247a9901824824352c7e09c1bbeb"
+  integrity sha512-epXgojGXCrVMNrFdv60704iRUU+pYkE1qHBppP/wqKbZZIZHaagsg2jy8/ptDP7U3udvVq0z9suc1s+zpmL2EA==
   dependencies:
     tslib "^2.0.0"
 
