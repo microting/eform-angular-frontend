@@ -2649,10 +2649,10 @@
   dependencies:
     tslib "^2.3.1"
 
-"@ngrx/effects@17.1.1":
-  version "17.1.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-17.1.1.tgz#308942c131eae21da529c112476b0b212313c1a3"
-  integrity sha512-VDNVI70wfEwqoNliffAiMhsPry0CWKkifCLmfzr+SZEEdAaPEBr4FtRrrdcdq/ovmkcgoWukkH2MBljbCyHwtA==
+"@ngrx/effects@17.2.0":
+  version "17.2.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-17.2.0.tgz#37cec0b696cd7b14600f64e2ed0d9e47f5de10f1"
+  integrity sha512-tXDJNsuBtbvI/7+vYnkDKKpUvLbopw1U5G6LoPnKNrbTPsPcUGmCqF5Su/ZoRN3BhXjt2j+eoeVdpBkxdxMRgg==
   dependencies:
     "@ngrx/operators" "17.0.0-beta.0"
     tslib "^2.0.0"
