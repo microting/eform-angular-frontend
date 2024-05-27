@@ -4149,16 +4149,6 @@
     split2 "^4.1.0"
     stream-buffers "^3.0.2"
 
-"@wdio/logger@8.28.0":
-  version "8.28.0"
-  resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-8.28.0.tgz#ab97ee1a9f6a30305e1a07ff2b67fa23e1281e73"
-  integrity sha512-/s6zNCqwy1hoc+K4SJypis0Ud0dlJ+urOelJFO1x0G0rwDRWyFiUP6ijTaCcFxAm29jYEcEPWijl2xkVIHwOyA==
-  dependencies:
-    chalk "^5.1.2"
-    loglevel "^1.6.0"
-    loglevel-plugin-prefix "^0.8.4"
-    strip-ansi "^7.1.0"
-
 "@wdio/logger@8.38.0", "@wdio/logger@^8.1.0", "@wdio/logger@^8.28.0":
   version "8.38.0"
   resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-8.38.0.tgz#a96406267e800bef9c58ac95de00f42ab0d3ac5c"
@@ -4179,16 +4169,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@^8.36.1":
-  version "8.36.1"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.36.1.tgz#c5c2381c58376b35fe0a346fb114239f3c2a1735"
-  integrity sha512-G0h5AeneMNtoh9CcVQ82OCKj0axxUOEotEcInDu8V6UJbUywNJVL/bdTMKdaq5i84Hnc+s1LUKmLvN95F+lHGA==
+"@wdio/mocha-framework@^8.38.0":
+  version "8.38.0"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.38.0.tgz#f822fa54cf9860021475a9b6838496f04c0093d2"
+  integrity sha512-LWwKslKIxqhQNskdffcS6QbxN45PzJN21b5zByELbEYd9PIGNbuXXqueVE09RwEAzBHtL86ZhSpFclAB+ulsBw==
   dependencies:
     "@types/mocha" "^10.0.0"
     "@types/node" "^20.1.0"
-    "@wdio/logger" "8.28.0"
-    "@wdio/types" "8.36.1"
-    "@wdio/utils" "8.36.1"
+    "@wdio/logger" "8.38.0"
+    "@wdio/types" "8.37.0"
+    "@wdio/utils" "8.38.0"
     mocha "^10.0.0"
 
 "@wdio/protocols@8.38.0":
@@ -4242,38 +4232,12 @@
     easy-table "^1.2.0"
     pretty-ms "^7.0.0"
 
-"@wdio/types@8.36.1":
-  version "8.36.1"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.36.1.tgz#5fa8dc05c0ce416b11b7a073fee0f319f533a70f"
-  integrity sha512-kKtyJbypasKo/VQuJ6dTQQwFtHE9qoygjoCZjrQCLGraRSjOEiqZHPR0497wbeCvcgHIYyImbmcylqZNGUE0CQ==
-  dependencies:
-    "@types/node" "^20.1.0"
-
 "@wdio/types@8.37.0":
   version "8.37.0"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.37.0.tgz#b027a05ab1dd3f376db8557b0d1c48af6a05ecb0"
   integrity sha512-36kmSlZcVhsMlbhaSCQUfL51iG81FlbzW4Dfkz4903cDkxmh64bgxydZbRB5aPLnJzzR7tI3chIME8zSVZFR8w==
   dependencies:
     "@types/node" "^20.1.0"
-
-"@wdio/utils@8.36.1":
-  version "8.36.1"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.36.1.tgz#b6b1e00c45963d1be8c7a9a65d90f7eeb65d6dbf"
-  integrity sha512-xmgPHU11/o9n2FeRmDFkPRC0okiwA1i2xOcR2c3aSpuk99XkAm9RaMn/6u9LFaqsCpgaVxazcYEGSceO7U4hZA==
-  dependencies:
-    "@puppeteer/browsers" "^1.6.0"
-    "@wdio/logger" "8.28.0"
-    "@wdio/types" "8.36.1"
-    decamelize "^6.0.0"
-    deepmerge-ts "^5.1.0"
-    edgedriver "^5.3.5"
-    geckodriver "^4.3.1"
-    get-port "^7.0.0"
-    import-meta-resolve "^4.0.0"
-    locate-app "^2.1.0"
-    safaridriver "^0.1.0"
-    split2 "^4.2.0"
-    wait-port "^1.0.4"
 
 "@wdio/utils@8.38.0":
   version "8.38.0"
@@ -6520,18 +6484,6 @@ edge-paths@^3.0.5:
   dependencies:
     "@types/which" "^2.0.1"
     which "^2.0.2"
-
-edgedriver@^5.3.5:
-  version "5.3.10"
-  resolved "https://registry.yarnpkg.com/edgedriver/-/edgedriver-5.3.10.tgz#400460cb03c6a9616bb65dc9908ffb326c794bf7"
-  integrity sha512-RFSHYMNtcF1PjaGZCA2rdQQ8hSTLPZgcYgeY1V6dC+tR4NhZXwFAku+8hCbRYh7ZlwKKrTbVu9FwknjFddIuuw==
-  dependencies:
-    "@wdio/logger" "^8.28.0"
-    decamelize "^6.0.0"
-    edge-paths "^3.0.5"
-    node-fetch "^3.3.2"
-    unzipper "^0.10.14"
-    which "^4.0.0"
 
 edgedriver@^5.5.0:
   version "5.5.0"
