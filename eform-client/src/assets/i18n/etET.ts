@@ -420,4 +420,5 @@ export const etET = {
   'Set password': 'Määra parool',
   'Edit user': 'Muuda kasutajat',
   'Create user': 'Loo kasutaja',
+  'Done button enabled': 'Valmis nupp on lubatud',
 };

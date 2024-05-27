@@ -420,4 +420,5 @@ export const huHU = {
   'Set password': 'Állítsd be a jelszót',
   'Edit user': 'Felhasználó szerkesztése',
   'Create user': 'Felhasználó létrehozása',
+  'Done button enabled': 'Kész gomb engedélyezve',
 };

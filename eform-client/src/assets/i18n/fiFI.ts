@@ -420,4 +420,5 @@ export const fiFI = {
   'Set password': 'Aseta salasana',
   'Edit user': 'Muokkaa käyttäjää',
   'Create user': 'Luo käyttäjä',
+  'Done button enabled': 'Valmis-painike käytössä',
 };

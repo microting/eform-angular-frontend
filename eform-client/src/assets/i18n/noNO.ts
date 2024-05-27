@@ -420,4 +420,5 @@ export const noNO = {
   'Set password': 'Lag et passord',
   'Edit user': 'Rediger bruker',
   'Create user': 'Opprett bruker',
+  'Done button enabled': 'Ferdig-knappen aktivert',
 };

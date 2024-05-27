@@ -420,4 +420,5 @@ export const bgBG = {
   'Set password': 'Задайте парола',
   'Edit user': 'Редактиране на потребител',
   'Create user': 'Създаване на потребител',
+  'Done button enabled': 'Бутонът Готово е активиран',
 };

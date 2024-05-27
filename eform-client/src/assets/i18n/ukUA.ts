@@ -420,4 +420,5 @@ export const ukUA = {
   'Set password': 'Встановити пароль',
   'Edit user': 'Редагувати користувача',
   'Create user': 'Створити користувача',
+  'Done button enabled': 'Кнопку Готово ввімкнено',
 };

@@ -420,4 +420,5 @@ export const hrHR = {
   'Set password': 'Postavi lozinku',
   'Edit user': 'Uredi korisnika',
   'Create user': 'Stvori korisnika',
+  'Done button enabled': 'Omogućen je gumb Gotovo',
 };

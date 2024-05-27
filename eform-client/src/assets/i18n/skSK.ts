@@ -420,4 +420,5 @@ export const skSK = {
   'Set password': 'Nastaviť heslo',
   'Edit user': 'Upraviť používateľa',
   'Create user': 'Vytvoriť používateľa',
+  'Done button enabled': 'Povolené tlačidlo Hotovo',
 };

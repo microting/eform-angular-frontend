@@ -423,4 +423,5 @@ export const enUS = {
   'Set password': 'Set password',
   'Edit user': 'Edit user',
   'Create user': 'Create user',
+  'Done button enabled': 'Done button enabled',
 };

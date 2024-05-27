@@ -420,4 +420,5 @@ export const esES = {
   'Set password': 'Configurar la clave',
   'Edit user': 'Editar usuario',
   'Create user': 'Crear usuario',
+  'Done button enabled': 'Botón Listo habilitado',
 };

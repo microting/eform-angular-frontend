@@ -46,4 +46,6 @@ public class EformVisualEditorModel
     public int? ParentChecklistId { get; set; }
 
     public bool QuickSync { get; set; }
+
+    public bool DoneButtonEnabled { get; set; }
 }

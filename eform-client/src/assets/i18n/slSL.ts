@@ -420,4 +420,5 @@ export const slSL = {
   'Set password': 'Nastavi geslo',
   'Edit user': 'Uredi uporabnika',
   'Create user': 'Ustvari uporabnika',
+  'Done button enabled': 'Gumb Končano je omogočen',
 };

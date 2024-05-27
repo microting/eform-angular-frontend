@@ -89,7 +89,8 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                     {
                         x.Taggings,
                         x.Translations,
-                        quickSync = x.QuickSyncEnabled == 1
+                        quickSync = x.QuickSyncEnabled == 1,
+                        doneButtonEnabled = x.DoneButtonEnabled == 1
                     })
                     .FirstOrDefaultAsync();
 
@@ -110,6 +111,7 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                     .Select(x => (int)x.TagId).ToList();
 
                 eform.QuickSync = (bool)checklist?.quickSync;
+                eform.DoneButtonEnabled = (bool)checklist?.doneButtonEnabled;
 
                 return new OperationDataResult<EformVisualEditorModel>(true, eform);
             } else {
@@ -132,17 +134,6 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
             var core = await _coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
 
-            short doneButtonEnabled = 1;
-
-            foreach (var visualEditorFields in model.Fields)
-            {
-                var fieldType = await sdkDbContext.FieldTypes
-                    .Where(x => x.Id == visualEditorFields.FieldType)
-                    .Select(x => x.Type)
-                    .FirstAsync();
-                if (fieldType == Constants.FieldTypes.SaveButton) doneButtonEnabled = 0;
-            }
-
             // create main checkList
             var newCheckList = new CheckList
             {
@@ -151,7 +142,7 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                 ReviewEnabled = 0,
                 ManualSync = 0,
                 ExtraFieldsEnabled = 0,
-                DoneButtonEnabled = doneButtonEnabled,
+                DoneButtonEnabled = model.DoneButtonEnabled ? (short)1 : (short)0,
                 ApprovalEnabled = 0,
                 MultiApproval = 0,
                 FastNavigation = 0,
@@ -174,7 +165,7 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                 ParentId = newCheckList.Id,
                 ReviewEnabled = 0,
                 ExtraFieldsEnabled = 0,
-                DoneButtonEnabled = doneButtonEnabled,
+                DoneButtonEnabled = model.DoneButtonEnabled ? (short)1 : (short)0,
                 ApprovalEnabled = 0,
                 IsEditable = true,
                 IsLocked = false
@@ -244,11 +235,6 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
             var core = await _coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
 
-            var fieldTypeSaveButton = await sdkDbContext.FieldTypes
-                .Where(x => x.Type == Constants.FieldTypes.SaveButton)
-                .Select(x => x.Id)
-                .FirstAsync();
-
             CheckList parentEform = null;
             var dbEform = await sdkDbContext.CheckLists
                 .Where(x => x.Id == model.Checklist.Id)
@@ -260,8 +246,6 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
             if (dbEform == null)
                 return new OperationDataResult<EformVisualEditorModel>(false,
                     _localizationService.GetString("EformNotFound"));
-
-            await UpdateDoneButtonForCheckList(dbEform.Id, sdkDbContext);
 
             if (dbEform.ParentId != null)
             {
@@ -369,8 +353,10 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
 
             // convert bool to short
             eformWithTags.QuickSyncEnabled = model.Checklist.QuickSync ? (short)1 : (short)0;
+            eformWithTags.DoneButtonEnabled = model.Checklist.DoneButtonEnabled ? (short)1 : (short)0;
             await eformWithTags.Update(sdkDbContext);
             dbEform.QuickSyncEnabled = eformWithTags.QuickSyncEnabled;
+            dbEform.DoneButtonEnabled = eformWithTags.DoneButtonEnabled;
             await dbEform.Update(sdkDbContext);
 
             //tagging
@@ -472,34 +458,6 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
         }
     }
 
-    private async Task UpdateDoneButtonForCheckList(int checkListId, MicrotingDbContext sdkDbContext)
-    {
-        var children = await sdkDbContext.CheckLists.Where(x => x.ParentId == checkListId).ToListAsync();
-        if (children.Count > 0)
-        {
-            foreach (var child in children)
-            {
-                await UpdateDoneButtonForCheckList(child.Id, sdkDbContext);
-            }
-        }
-        else
-        {
-
-            var fieldTypeSaveButton = await sdkDbContext.FieldTypes
-                .Where(x => x.Type == Constants.FieldTypes.SaveButton)
-                .Select(x => x.Id)
-                .FirstAsync();
-            var checkList = await sdkDbContext.CheckLists.SingleAsync(x => x.Id == checkListId);
-            var doneButtonEnabled = (await sdkDbContext.Fields
-                .Where(x => x.CheckListId == checkListId)
-                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                .Where(x => x.FieldTypeId == fieldTypeSaveButton)
-                .ToListAsync()).Any() ? 0 : 1;
-            checkList.DoneButtonEnabled = (short?)doneButtonEnabled;
-            await checkList.Update(sdkDbContext);
-        }
-    }
-
     private static async Task DeleteCheckLists(List<int> checklistsForDelete, MicrotingDbContext sdkDbContext)
     {
         var eforms = await sdkDbContext.CheckLists
@@ -541,7 +499,7 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
             if (eform != null)
             {
                 eform.DisplayIndex = visualEditorModel.Position;
-                eform.DoneButtonEnabled = visualEditorModel.Fields.Any(x => x.FieldType == saveButtonFieldTypeid) ? (short?)0 : (short?)1;
+                eform.DoneButtonEnabled = visualEditorModel.DoneButtonEnabled ? (short)1 : (short)0;
                 await eform.Update(sdkDbContext);
 
                 // create translations if need
@@ -1575,17 +1533,6 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
     private static async Task CreateChecklist(EformVisualEditorUpdateModel model, MicrotingDbContext sdkDbContext,
         Core core)
     {
-        short doneButtonEnabled = 1;
-
-        foreach (var visualEditorFields in model.FieldForCreate)
-        {
-            var fieldType = await sdkDbContext.FieldTypes
-                .Where(x => x.Id == visualEditorFields.FieldType)
-                .Select(x => x.Type)
-                .FirstAsync();
-            if (fieldType == Constants.FieldTypes.SaveButton) doneButtonEnabled = 0;
-        }
-
         foreach (var checklistForCreate in model.ChecklistForCreate)
         {
             // create checkList
@@ -1595,7 +1542,7 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                 ParentId = checklistForCreate.ParentChecklistId,
                 ReviewEnabled = 0,
                 ExtraFieldsEnabled = 0,
-                DoneButtonEnabled = doneButtonEnabled,
+                DoneButtonEnabled = checklistForCreate.DoneButtonEnabled ? (short)1 : (short)0,
                 ApprovalEnabled = 0,
                 IsEditable = true,
                 IsLocked = false
@@ -1641,7 +1588,7 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
                 ParentId = parentId,
                 ReviewEnabled = 0,
                 ExtraFieldsEnabled = 0,
-                DoneButtonEnabled = 0,
+                DoneButtonEnabled = visualEditorModel.DoneButtonEnabled ? (short)1 : (short)0,
                 ApprovalEnabled = 0,
                 IsLocked = false,
                 IsEditable = true

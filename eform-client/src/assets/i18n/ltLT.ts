@@ -420,4 +420,5 @@ export const ltLT = {
   'Set password': 'Nustatyti slaptažodį',
   'Edit user': 'Redaguoti naudotoją',
   'Create user': 'Sukurti vartotoją',
+  'Done button enabled': 'Mygtukas Atlikta įjungtas',
 };

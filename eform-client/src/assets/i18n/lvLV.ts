@@ -420,4 +420,5 @@ export const lvLV = {
   'Set password': 'Uzstādīt paroli',
   'Edit user': 'Rediģēt lietotāju',
   'Create user': 'Izveidot lietotāju',
+  'Done button enabled': 'Poga Gatavs ir iespējota',
 };

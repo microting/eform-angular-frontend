@@ -420,4 +420,5 @@ export const ptPT = {
   'Set password': 'Configurar senha',
   'Edit user': 'Editar usuário',
   'Create user': 'Criar usuário',
+  'Done button enabled': 'Botão Concluído ativado',
 };

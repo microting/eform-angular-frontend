@@ -420,4 +420,5 @@ export const plPL = {
   'Set password': 'Ustaw hasło',
   'Edit user': 'Edytuj użytkownika',
   'Create user': 'Stwórz użytkownika',
+  'Done button enabled': 'Przycisk Gotowe włączony',
 };

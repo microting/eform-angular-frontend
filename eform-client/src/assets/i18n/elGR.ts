@@ -420,4 +420,5 @@ export const elGR = {
   'Set password': 'Ορίστε κωδικό',
   'Edit user': 'Επεξεργασία χρήστη',
   'Create user': 'Δημιουργία χρήστη',
+  'Done button enabled': 'Ενεργοποιήθηκε το κουμπί Τέλος',
 };

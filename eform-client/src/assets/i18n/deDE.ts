@@ -420,4 +420,5 @@ export const deDE = {
   'Set password': 'Passwort festlegen',
   'Edit user': 'Benutzer bearbeiten',
   'Create user': 'Benutzer erstellen',
+  'Done button enabled': 'Schaltfläche „Fertig“ aktiviert',
 };

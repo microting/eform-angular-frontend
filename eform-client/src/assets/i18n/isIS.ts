@@ -420,4 +420,5 @@ export const isIS = {
   'Set password': 'Stilltu lykilorð',
   'Edit user': 'Breyta notanda',
   'Create user': 'Búa til notanda',
+  'Done button enabled': 'Lokið hnappur virkur',
 };

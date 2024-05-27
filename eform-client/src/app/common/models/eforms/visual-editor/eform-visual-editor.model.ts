@@ -15,6 +15,7 @@ export class EformVisualEditorModel {
   tempId?: number = getRandomInt(1000, 10000);
   parentChecklistId?: number;
   quickSync: boolean = false;
+  doneButtonEnabled: boolean = false;
 
   // only for create
   docxReportHeaders?: EformDocxReportHeadersModel;

@@ -420,4 +420,5 @@ export const roRO = {
   'Set password': 'Seteaza parola',
   'Edit user': 'Editați utilizatorul',
   'Create user': 'Creaza utilizator',
+  'Done button enabled': 'Butonul Terminat este activat',
 };

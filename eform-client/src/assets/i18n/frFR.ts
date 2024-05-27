@@ -420,4 +420,5 @@ export const frFR = {
   'Set password': 'Définir le mot de passe',
   'Edit user': 'Modifier l&#39;utilisateur',
   'Create user': 'Créer un utilisateur',
+  'Done button enabled': 'Bouton Terminé activé',
 };

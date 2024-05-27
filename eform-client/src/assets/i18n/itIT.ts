@@ -420,4 +420,5 @@ export const itIT = {
   'Set password': 'Impostare la password',
   'Edit user': 'Modifica utente',
   'Create user': 'Creare un utente',
+  'Done button enabled': 'Pulsante Fine abilitato',
 };

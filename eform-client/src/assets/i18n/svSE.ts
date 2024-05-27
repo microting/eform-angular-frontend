@@ -420,4 +420,5 @@ export const svSE = {
   'Set password': 'Välj lösenord',
   'Edit user': 'Redigera användare',
   'Create user': 'Skapa användare',
+  'Done button enabled': 'Klar-knappen aktiverad',
 };

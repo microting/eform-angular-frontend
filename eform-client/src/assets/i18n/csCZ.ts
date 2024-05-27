@@ -420,4 +420,5 @@ export const csCZ = {
   'Set password': 'Nastavit heslo',
   'Edit user': 'Upravit uživatele',
   'Create user': 'Vytvořit uživatele',
+  'Done button enabled': 'Tlačítko Hotovo aktivováno',
 };

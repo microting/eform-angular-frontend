@@ -454,4 +454,5 @@ export const da = {
   'Set password': 'Indstil adgangskode',
   'Edit user': 'Rediger bruger',
   'Create user': 'Opret bruger',
+  'Done button enabled': 'Flueben i toppen af eForm',
 };

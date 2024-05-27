@@ -51,5 +51,7 @@ public class EformVisualEditorCreateModel
 
     public bool QuickSync { get; set; }
 
+    public bool DoneButtonEnabled { get; set; }
+
     public EformDocxReportHeadersModel DocxReportHeaders { get; set; }
 }

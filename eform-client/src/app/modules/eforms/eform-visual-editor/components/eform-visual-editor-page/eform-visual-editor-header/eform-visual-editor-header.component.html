@@ -77,5 +77,13 @@
       [(ngModel)]="visualEditorModel.quickSync">
       {{ "Quick sync" | translate }}
     </mat-slide-toggle>
+    <span>&nbsp;</span>
+    <mat-slide-toggle
+      color="primary"
+      id="mainCheckListDoneButtonEnabledToggle"
+      [checked]="visualEditorModel.doneButtonEnabled"
+      [(ngModel)]="visualEditorModel.doneButtonEnabled">
+      {{ "Done button enabled" | translate }}
+    </mat-slide-toggle>
   </mat-card-content>
 </section>

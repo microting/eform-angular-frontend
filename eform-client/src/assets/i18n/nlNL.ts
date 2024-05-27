@@ -420,4 +420,5 @@ export const nlNL = {
   'Set password': 'Stel een wachtwoord in',
   'Edit user': 'Bewerk gebruiker',
   'Create user': 'Gebruiker aanmaken',
+  'Done button enabled': 'Knop Gereed ingeschakeld',
 };
