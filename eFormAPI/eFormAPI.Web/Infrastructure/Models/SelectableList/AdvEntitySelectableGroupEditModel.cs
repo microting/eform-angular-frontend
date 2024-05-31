@@ -21,6 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+#nullable enable
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Microting.eForm.Infrastructure.Models;
@@ -32,5 +34,5 @@ public class AdvEntitySelectableGroupEditModel
     public string Name { get; set; }
     public string GroupUid { get; set; }
     public string Description { get; set; }
-    [CanBeNull] public List<EntityItem> EntityItemModels { get; set; }
+    public List<EntityItem>? EntityItemModels { get; set; }
 }
