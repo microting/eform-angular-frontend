@@ -2632,10 +2632,10 @@
     "@material/theme" "15.0.0-canary.7f224ddd4.0"
     tslib "^2.1.0"
 
-"@ng-matero/extensions@17.3.2":
-  version "17.3.2"
-  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-17.3.2.tgz#47fab01adea38f1ff7f72921685858e0fc031048"
-  integrity sha512-SKv7JdAuzU+0QMGgURJeqhbRWIps8AblhNmDjB/Y9e8+QCt0eycbrXQ723YBV+k6RxtzluTL12NaEoOzjlzI3w==
+"@ng-matero/extensions@17.3.3":
+  version "17.3.3"
+  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-17.3.3.tgz#df5f82a80cf1481fa2e807570e9bfe19018e78a8"
+  integrity sha512-9EGWh0GT38LsJtwjjChb2G46YvC9mAqMU+nJl3vJnCOsxTuXUf/v3LppBtsjV3/W6woxjY8a2Tn9SkT3IFmNaQ==
   dependencies:
     "@ng-select/ng-select" "^12.0.0"
     ngx-color "^9.0.0"
