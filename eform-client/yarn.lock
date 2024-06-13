@@ -305,10 +305,10 @@
     fast-glob "3.3.2"
     yargs "^17.2.1"
 
-"@angular/material@17.3.1":
-  version "17.3.1"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-17.3.1.tgz#208e19ce78c470ffd83b46c6d0b106bf45bb95a5"
-  integrity sha512-Md1OnO0/sQvK5GkTQyE4v1DAaMswXt1TnjjY07KG7cICTrUN8lc0a2P9dMjlSFXIhxC7PTlNH6plSZ1uspbU8Q==
+"@angular/material@18.0.3":
+  version "18.0.3"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-18.0.3.tgz#9760a332badd9140464278822825f12b396f8a52"
+  integrity sha512-VIlK+0CxreAkDmr05TKelTr11I7yUtGPwRTFaWfQtXNkYEwGE1iuZGz3Iz8otxvHsTLC74Er4vMSYndwJvMyjQ==
   dependencies:
     "@material/animation" "15.0.0-canary.7f224ddd4.0"
     "@material/auto-init" "15.0.0-canary.7f224ddd4.0"
@@ -353,6 +353,7 @@
     "@material/tab-scroller" "15.0.0-canary.7f224ddd4.0"
     "@material/textfield" "15.0.0-canary.7f224ddd4.0"
     "@material/theme" "15.0.0-canary.7f224ddd4.0"
+    "@material/tokens" "15.0.0-canary.7f224ddd4.0"
     "@material/tooltip" "15.0.0-canary.7f224ddd4.0"
     "@material/top-app-bar" "15.0.0-canary.7f224ddd4.0"
     "@material/touch-target" "15.0.0-canary.7f224ddd4.0"
