@@ -4169,16 +4169,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@^8.38.0":
-  version "8.38.0"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.38.0.tgz#f822fa54cf9860021475a9b6838496f04c0093d2"
-  integrity sha512-LWwKslKIxqhQNskdffcS6QbxN45PzJN21b5zByELbEYd9PIGNbuXXqueVE09RwEAzBHtL86ZhSpFclAB+ulsBw==
+"@wdio/mocha-framework@^8.38.2":
+  version "8.38.2"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-8.38.2.tgz#5174546406f435a696b301a3efc1ac4704c6d036"
+  integrity sha512-qJmRL5E6/ypjCUACH4hvCAAmTdU4YUrUlp9o/IKvTIAHMnZPE0/HgUFixCeu8Mop+rdzTPVBrbqxpRDdSnraYA==
   dependencies:
     "@types/mocha" "^10.0.0"
     "@types/node" "^20.1.0"
     "@wdio/logger" "8.38.0"
-    "@wdio/types" "8.37.0"
-    "@wdio/utils" "8.38.0"
+    "@wdio/types" "8.38.2"
+    "@wdio/utils" "8.38.2"
     mocha "^10.0.0"
 
 "@wdio/protocols@8.38.0":
@@ -4232,38 +4232,12 @@
     easy-table "^1.2.0"
     pretty-ms "^7.0.0"
 
-"@wdio/types@8.37.0":
-  version "8.37.0"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.37.0.tgz#b027a05ab1dd3f376db8557b0d1c48af6a05ecb0"
-  integrity sha512-36kmSlZcVhsMlbhaSCQUfL51iG81FlbzW4Dfkz4903cDkxmh64bgxydZbRB5aPLnJzzR7tI3chIME8zSVZFR8w==
-  dependencies:
-    "@types/node" "^20.1.0"
-
 "@wdio/types@8.38.2":
   version "8.38.2"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-8.38.2.tgz#00d6874ced6bc2b081d3d0d43808f95861bb0705"
   integrity sha512-+wj1c1OSLdnN4WO5b44Ih4263dTl/eSwMGSI4/pCgIyXIuYQH38JQ+6WRa+c8vJEskUzboq2cSgEQumVZ39ozQ==
   dependencies:
     "@types/node" "^20.1.0"
-
-"@wdio/utils@8.38.0":
-  version "8.38.0"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.38.0.tgz#3867cc4327ce34ae2c792ea398df8b89f2846d17"
-  integrity sha512-ios7MpyJk4kGW9ZOYxbPpdwVZBI7SzccIgiirqSf8rvJi62VpDA2nfa7i7BY1rs9p7lnenF8phwnuVFGMCoL0w==
-  dependencies:
-    "@puppeteer/browsers" "^1.6.0"
-    "@wdio/logger" "8.38.0"
-    "@wdio/types" "8.37.0"
-    decamelize "^6.0.0"
-    deepmerge-ts "^5.1.0"
-    edgedriver "^5.5.0"
-    geckodriver "^4.3.1"
-    get-port "^7.0.0"
-    import-meta-resolve "^4.0.0"
-    locate-app "^2.1.0"
-    safaridriver "^0.1.0"
-    split2 "^4.2.0"
-    wait-port "^1.0.4"
 
 "@wdio/utils@8.38.2":
   version "8.38.2"
