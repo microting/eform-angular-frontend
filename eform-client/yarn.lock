@@ -3793,7 +3793,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^20.1.0", "@types/node@^20.1.1", "@types/node@^20.11.28", "@types/node@^20.12.13":
+"@types/node@*", "@types/node@^20.1.0", "@types/node@^20.1.1", "@types/node@^20.11.28", "@types/node@^20.14.2":
   version "20.14.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.14.2.tgz#a5f4d2bcb4b6a87bffcaa717718c5a0f208f4a18"
   integrity sha512-xyu6WAMVwv6AKFLB+e/7ySZVr/0zLCzOa7rSpq6jNwpqOrUbcACDWC+53d4n2QHOnDou0fbIsg8wZu/sxrnI4Q==
@@ -4068,7 +4068,7 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@userback/widget@^0.3.1":
+"@userback/widget@^0.3.4":
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/@userback/widget/-/widget-0.3.4.tgz#c66b6f9135e3ccc9ab75f33ae0f7b0520561afe0"
   integrity sha512-YPbGGmcbA8BEXuLqspZrjiAIrRwBKfzJOWxHSNBA7v2Vbuyk57GeqI0VWvA0OA4kdgtT+wwTX8+acUsaj2eKCw==
@@ -4087,7 +4087,7 @@
     pathe "^1.1.1"
     pretty-format "^29.7.0"
 
-"@wdio/cli@^8.38.1":
+"@wdio/cli@^8.38.2":
   version "8.38.2"
   resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-8.38.2.tgz#a9c7cfa3df7ad18815a6e8024bfb2f90afba09ed"
   integrity sha512-p9y6jxmpmw53OoB9v/uTLwMetmz7Q0K7NewdVONgmeTY/ERpkU15qL3fMw1rXb+E+vrV8dlce4srnXroec6SFA==
@@ -4138,7 +4138,7 @@
     expect-webdriverio "^4.11.2"
     webdriverio "8.38.2"
 
-"@wdio/local-runner@^8.38.0":
+"@wdio/local-runner@^8.38.2":
   version "8.38.2"
   resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-8.38.2.tgz#8539d27f1e43619cbedec4c1ab72447c454613bd"
   integrity sha512-syW+R5VUHJ3GBkQGFcNYe6MYwWRgklc9W7A83xQDTvKWFNHCetLvc8AtKZ54vs8MItBejjU+Oh94ZNbNX1pBcg==
@@ -4224,7 +4224,7 @@
     webdriver "8.38.2"
     webdriverio "8.38.2"
 
-"@wdio/spec-reporter@^8.38.0":
+"@wdio/spec-reporter@^8.38.2":
   version "8.38.2"
   resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-8.38.2.tgz#703983f9f9279e9dcef9f5e95610fa63ca0fabc1"
   integrity sha512-Dntk+lmrp+0I3HRRWkkXED+smshvgsW5cdLKwJhEJ1liI48MdBpdNGf9IHTVckE6nfxcWDyFI4icD9qYv/5bFA==
@@ -5794,10 +5794,10 @@ custom-event@^1.0.0:
   resolved "https://registry.yarnpkg.com/custom-event/-/custom-event-1.0.1.tgz#5d02a46850adf1b4a317946a3928fccb5bfd0425"
   integrity sha512-GAj5FOq0Hd+RsCGVJxZuKaIDXDf3h6GQoNEjFgbLLI/trgtavwUbSnZ5pVfg27DVCaWjIohryS0JFwIJyT2cMg==
 
-cypress@13.10.0:
-  version "13.10.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-13.10.0.tgz#0cfdb54eb046a30c78998e41effb635a50326935"
-  integrity sha512-tOhwRlurVOQbMduX+KonoMeQILs2cwR3yHGGENoFvvSoLUBHmJ8b9/n21gFSDqjlOJ+SRVcwuh+fG/JDsHsT6Q==
+cypress@13.11.0:
+  version "13.11.0"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-13.11.0.tgz#17097366390424cba5db6bf0ee5e97503f036e07"
+  integrity sha512-NXXogbAxVlVje4XHX+Cx5eMFZv4Dho/2rIcdBHg9CNPFUGZdM4cRdgIgM7USmNYsC12XY0bZENEQ+KBk72fl+A==
   dependencies:
     "@cypress/request" "^3.0.0"
     "@cypress/xvfb" "^1.2.4"
@@ -10717,7 +10717,7 @@ quick-lru@^5.1.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
-ramda@^0.30.0:
+ramda@^0.30.1:
   version "0.30.1"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.30.1.tgz#7108ac95673062b060025052cd5143ae8fc605bf"
   integrity sha512-tEF5I22zJnuclswcZMc8bDIrwRHRzf+NqVEmqg50ShAZMP7MWeR/RGDthfM/p+BlqvF2fXAzpn8i+SJcYD3alw==
@@ -11987,7 +11987,7 @@ tslib@^1.11.1, tslib@^1.8.1:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.0, tslib@^2.0.1, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.4.0, tslib@^2.4.1, tslib@^2.6.1, tslib@^2.6.2:
+tslib@^2.0.0, tslib@^2.0.1, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.4.0, tslib@^2.4.1, tslib@^2.6.1, tslib@^2.6.2, tslib@^2.6.3:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.3.tgz#0438f810ad7a9edcde7a241c3d80db693c8cbfe0"
   integrity sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==
@@ -12771,7 +12771,7 @@ zip-stream@^6.0.1:
     compress-commons "^6.0.2"
     readable-stream "^4.0.0"
 
-zone.js@^0.14.6:
+zone.js@^0.14.7:
   version "0.14.7"
   resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.14.7.tgz#4a9a70599109663b1921165663bbac521995eef3"
   integrity sha512-0w6DGkX2BPuiK/NLf+4A8FLE43QwBfuqz2dVgi/40Rj1WmqUskCqj329O/pwrqFJLG5X8wkeG2RhIAro441xtg==
