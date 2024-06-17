@@ -104,7 +104,7 @@
     "run": "^1.4.0",
     "rxjs": "7.8.1",
     "tslib": "^2.6.3",
-    "uuid": "9.0.1",
+    "uuid": "10.0.0",
     "zone.js": "^0.14.7"
   },
   "devDependencies": {
@@ -137,7 +137,7 @@
     "eslint": "^8.52.0",
     "fs-extra": "^11.1.0",
     "guid-typescript": "^1.0.9",
-    "mammoth": "^1.7.2",
+    "mammoth": "^1.8.0",
     "path": "^0.12.7",
     "run-sequence": "^2.2.1",
     "ts-node": "10.9.2",
