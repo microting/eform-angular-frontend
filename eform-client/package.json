@@ -133,7 +133,7 @@
     "angular-mocks": "^1.8.3",
     "chai": "^4.3.10",
     "chromedriver": "^125.0.2",
-    "cypress": "13.10.0",
+    "cypress": "13.11.0",
     "eslint": "^8.52.0",
     "fs-extra": "^11.1.0",
     "guid-typescript": "^1.0.9",
