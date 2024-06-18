@@ -129,7 +129,7 @@
     "@wdio/cli": "^8.38.2",
     "@wdio/local-runner": "^8.38.2",
     "@wdio/mocha-framework": "^8.38.0",
-    "@wdio/spec-reporter": "^8.38.2",
+    "@wdio/spec-reporter": "^8.39.0",
     "angular-mocks": "^1.8.3",
     "chai": "^4.3.10",
     "chromedriver": "^125.0.2",
