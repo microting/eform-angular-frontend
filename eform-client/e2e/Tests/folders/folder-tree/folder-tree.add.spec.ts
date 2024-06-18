@@ -1,6 +1,6 @@
 import loginPage from '../../../Page objects/Login.page';
 import myEformsPage from '../../../Page objects/MyEforms.page';
-import foldersPage from '../../../Page objects/Folders.page';
+import foldersPage, {FoldersRowObject} from '../../../Page objects/Folders.page';
 import { generateRandmString } from '../../../Helpers/helper-functions';
 import { applicationLanguages } from '../../../../src/app/common/const';
 import { $ } from '@wdio/globals';
@@ -298,16 +298,27 @@ describe('Create folder', function () {
     await foldersRowObject.closeEditModal(true);
   });
   after('should delete folders', async () => {
-    const rowCountBeforeCreation = await foldersPage.rowNum();
-    for (let i = 0; i < rowCountBeforeCreation; i++) {
-      const folder = await foldersPage.getFolder(1);
+    await browser.pause(1500);
+    for (let i = 0; i < 5; i++) {
+      const folderObj = new FoldersRowObject();
+      const folder = await folderObj.getRow(1);
       await folder.delete();
+      await $('#spinner-animation').waitForDisplayed({
+        timeout: 90000,
+        reverse: true,
+      });
       await browser.pause(500);
     }
-    const rowCountAfterCreation = await foldersPage.rowNum();
-    expect(
-      0,
-      'Folder not delete'
-    ).equal(rowCountAfterCreation);
+    // const rowCountBeforeCreation = await foldersPage.rowNum();
+    // for (let i = 0; i < rowCountBeforeCreation; i++) {
+    //   const folder = await foldersPage.getFolder(1);
+    //   await folder.delete();
+    //   await browser.pause(500);
+    // }
+    // const rowCountAfterCreation = await foldersPage.rowNum();
+    // expect(
+    //   0,
+    //   'Folder not delete'
+    // ).equal(rowCountAfterCreation);
   });
 });

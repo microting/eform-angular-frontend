@@ -36,7 +36,7 @@ class FoldersPage extends PageWithNavbarPage {
     translationIndex: number
   ): Promise<WebdriverIO.Element> {
     const ele = await (await this.createDescription(translationIndex)).$(
-      'div[title="Bold"]'
+      'button[title="Bold"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -47,7 +47,7 @@ class FoldersPage extends PageWithNavbarPage {
     translationIndex: number
   ): Promise<WebdriverIO.Element> {
     const ele = await (await this.createDescription(translationIndex)).$(
-      'div[title="Underline"]'
+      'button[title="Underline"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -58,7 +58,7 @@ class FoldersPage extends PageWithNavbarPage {
     translationIndex: number
   ): Promise<WebdriverIO.Element> {
     const ele = await (await this.createDescription(translationIndex)).$(
-      'div[title="Italic"]'
+      'button[title="Italic"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -69,7 +69,7 @@ class FoldersPage extends PageWithNavbarPage {
     translationIndex: number
   ): Promise<WebdriverIO.Element> {
     const ele = await (await this.createDescription(translationIndex)).$(
-      'div[title="Strike"]'
+      'button[title="Strike"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -78,7 +78,7 @@ class FoldersPage extends PageWithNavbarPage {
 
   public async editDescriptionInputPellBold(translationIndex: number) {
     const ele = await (await this.editDescription(translationIndex)).$(
-      'div[title="Bold"]'
+      'button[title="Bold"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -87,7 +87,7 @@ class FoldersPage extends PageWithNavbarPage {
 
   public async editDescriptionInputPellUnderline(translationIndex: number) {
     const ele = await (await this.editDescription(translationIndex)).$(
-      'div[title="Underline"]'
+      'button[title="Underline"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -96,7 +96,7 @@ class FoldersPage extends PageWithNavbarPage {
 
   public async editDescriptionInputPellItalic(translationIndex: number) {
     const ele = await (await this.editDescription(translationIndex)).$(
-      'div[title="Italic"]'
+      'button[title="Italic"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
@@ -105,7 +105,7 @@ class FoldersPage extends PageWithNavbarPage {
 
   public async editDescriptionInputPellStrikeThrough(translationIndex: number) {
     const ele = await (await this.editDescription(translationIndex)).$(
-      'div[title="Strike"]'
+      'button[title="Strike"]'
     );
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
