@@ -140,13 +140,13 @@
     ora "5.4.1"
     rxjs "7.8.1"
 
-"@angular-eslint/builder@17.5.1":
-  version "17.5.1"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-17.5.1.tgz#20617e4316ecc4459dde6bf0272d33879a587b8f"
-  integrity sha512-PWnH1t/Tdrdh+JwTJ87iXW//n1DPf3zF2MeKKfw8tiNOKjmCReL09KTabv+1Tbnm5B0ih6eOWCUG1N9VmcCubg==
+"@angular-eslint/builder@18.0.1":
+  version "18.0.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-18.0.1.tgz#0318a105677f4d0274e7cfe897454c4b04d857f0"
+  integrity sha512-b/VUeTQznAmGdwP4OyPWyegqSRWub7E8/WXBqojrSFyLkFhpTiHpk/3/5G3LsgTb0zBfyAsqkA0yaadsHu9pjA==
   dependencies:
-    "@nx/devkit" "^17.2.8 || ^18.0.0 || ^19.0.0"
-    nx "^17.2.8 || ^18.0.0 || ^19.0.0"
+    "@nx/devkit" "^19.0.6"
+    nx "^19.0.6"
 
 "@angular-eslint/bundled-angular-compiler@17.5.1":
   version "17.5.1"
@@ -2957,7 +2957,7 @@
     nx "19.3.0"
     tslib "^2.3.0"
 
-"@nx/devkit@19.3.0", "@nx/devkit@^17.2.8 || ^18.0.0 || ^19.0.0":
+"@nx/devkit@19.3.0", "@nx/devkit@^17.2.8 || ^18.0.0 || ^19.0.0", "@nx/devkit@^19.0.6":
   version "19.3.0"
   resolved "https://registry.yarnpkg.com/@nx/devkit/-/devkit-19.3.0.tgz#d26abf0ff4a875cfdfdd6292e9a7abad3c57066b"
   integrity sha512-Natya5nzvHH0qTOIL1w/EZtwMgDx87Dgz0LgeY7te2fULaNFcj5fVrP+mUKEJZR+NccO7GPumT2RPhuEl9rPnQ==
@@ -9856,7 +9856,7 @@ nth-check@^2.0.1:
   dependencies:
     boolbase "^1.0.0"
 
-nx@19.3.0, "nx@^17.2.8 || ^18.0.0 || ^19.0.0":
+nx@19.3.0, "nx@^17.2.8 || ^18.0.0 || ^19.0.0", nx@^19.0.6:
   version "19.3.0"
   resolved "https://registry.yarnpkg.com/nx/-/nx-19.3.0.tgz#b26d0b1b62baaa8e9623226df97f23753e94c625"
   integrity sha512-WILWiROUkZWwuPJ12tP24Z0NULPEhxFN9i55/fECuVXYaFtkg6FvEne9C4d4bRqhZPcbrz6WhHnzE3NhdjH7XQ==
