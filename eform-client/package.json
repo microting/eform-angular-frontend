@@ -69,7 +69,7 @@
     "@ngrx/effects": "17.2.0",
     "@ngrx/entity": "17.2.0",
     "@ngrx/store": "17.2.0",
-    "@ngrx/store-devtools": "17.1.0",
+    "@ngrx/store-devtools": "18.0.1",
     "@ngx-translate/core": "15.0.0",
     "@sentry/angular-ivy": "^7.114.0",
     "@sentry/cli": "latest",
