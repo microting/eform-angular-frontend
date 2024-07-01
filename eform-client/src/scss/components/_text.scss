@@ -33,20 +33,20 @@ a {
 }
 
 @mixin color($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   $warn-palette: map.get($color-config, 'warn');
   $accent-palette: map.get($color-config, 'accent');
   $primary-palette: map.get($color-config, 'primary');
 
   @each $key, $val in (('warn', $warn-palette), ('accent', $accent-palette), ('primary', $primary-palette)) {
     .text-#{$key} {
-      color: mat.get-color-from-palette($val, 500);
+      color: mat.m2-get-color-from-palette($val, 500);
     }
   }
 }
 
 @mixin theme($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   @if $color-config != null {
     @include color($theme);
   }

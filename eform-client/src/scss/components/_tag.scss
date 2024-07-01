@@ -21,13 +21,13 @@
 }
 
 @mixin color($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   $background: map.get($theme, 'background');
   $is-dark-theme: map.get($color-config, 'is-dark');
   $foreground: map.get($color-config, foreground);
-  $text-color: mat.get-color-from-palette($foreground, text);
-  $icon-color: mat.get-color-from-palette($foreground, icon);
-  $disabled-button: mat.get-color-from-palette($background, disabled-button);
+  $text-color: mat.m2-get-color-from-palette($foreground, text);
+  $icon-color: mat.m2-get-color-from-palette($foreground, icon);
+  $disabled-button: mat.m2-get-color-from-palette($background, disabled-button);
 
   $background-color: scale-color(map.get($background, 'card'), $lightness: +15%);
   @if $is-dark-theme {
@@ -46,7 +46,7 @@
   }
 }
 @mixin typography($theme) {
-  $typography-config: mat.get-typography-config($theme);
+  $typography-config: mat.m2-get-typography-config($theme);
   $header-text: map.get($typography-config, 'subtitle-2');
   $normal-text: map.get($typography-config, 'body-2');
   .tag * {
@@ -57,7 +57,7 @@
 }
 
 @mixin theme($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   @if $color-config != null {
     @include color($theme);
     @include typography($theme);

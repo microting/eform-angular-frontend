@@ -26,7 +26,7 @@
 }
 
 @mixin color($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   $is-dark-theme: map.get($color-config, 'is-dark');
   $background-powder-color: #b3d3ea;
   $background-yellow-color: #e6d178;
@@ -55,7 +55,7 @@
   }
 }
 @mixin typography($theme) {
-  $typography-config: mat.get-typography-config($theme);
+  $typography-config: mat.m2-get-typography-config($theme);
   $header-text: map.get($typography-config, 'subtitle-2');
   $normal-text: map.get($typography-config, 'body-2');
   mtx-grid thead * {
@@ -71,7 +71,7 @@
 }
 
 @mixin theme($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   @if $color-config != null {
     @include color($theme);
     @include typography($theme);

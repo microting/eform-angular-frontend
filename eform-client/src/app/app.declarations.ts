@@ -62,14 +62,14 @@ import {EformDateFnsDateAdapter} from 'src/app/common/modules/eform-date-adapter
 import {BehaviorSubject} from 'rxjs';
 import {EFORM_MAT_DATEFNS_LOCALES} from 'src/app/common/modules/eform-date-adapter/eform-mat-datefns-locales';
 import {APP_INITIALIZER, ErrorHandler} from '@angular/core';
-import * as Sentry from '@sentry/angular-ivy';
+import * as Sentry from '@sentry/angular';
 import {Router} from '@angular/router';
-import {provideEnvironmentNgxMask} from "ngx-mask";
+import {provideEnvironmentNgxMask} from 'ngx-mask';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {
   CustomMatPaginatorIntl
 } from './common/modules/eform-shared/components/eform-pagination/mat_paginator_intl';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 // Guards
 
 export let providers = [

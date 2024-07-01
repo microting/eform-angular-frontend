@@ -16,16 +16,16 @@ mat-mdc-tree-node.mat-mdc-tree-node {
 }
 
 .selected-folder {
-  color: mat.get-color-from-palette(mat.$pink-palette, 300);
+  color: mat.m2-get-color-from-palette(mat.$m2-pink-palette, 300);
 }
 
 .microting-uid {
-  color: mat.get-color-from-palette(mat.$indigo-palette, 300);
+  color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 300);
   margin-left: .5rem;
 }
 
 .folder:hover {
-  color: mat.get-color-from-palette(mat.$pink-palette, 300);
+  color: mat.m2-get-color-from-palette(mat.$m2-pink-palette, 300);
   transition: color .5s;
 }
 

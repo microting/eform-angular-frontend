@@ -2,11 +2,11 @@
 @use '@angular/material' as mat;
 
 @mixin color($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   $is-dark-theme: map.get($color-config, 'is-dark');
 
   $foreground: map.get($color-config, foreground);
-  $label-color: mat.get-color-from-palette($foreground, secondary-text);
+  $label-color: mat.m2-get-color-from-palette($foreground, secondary-text);
 
   $primary-palette: map.get($color-config, 'primary');
   $background: map.get($theme, 'background');
@@ -18,11 +18,11 @@
   .NgxEditor {
     color: if($is-dark-theme, white, black);
     background-color: map.get($background, 'card');
-    border-bottom: 1px solid mat.get-color-from-palette($primary-palette, 50) !important;
+    border-bottom: 1px solid mat.m2-get-color-from-palette($primary-palette, 50) !important;
 
     &:focus-within:not([readonly]) {
-      box-shadow: 0 1px 0 0 mat.get-color-from-palette($primary-palette, 500) !important;
-      border-bottom: 1px solid mat.get-color-from-palette($primary-palette, 500) !important;
+      box-shadow: 0 1px 0 0 mat.m2-get-color-from-palette($primary-palette, 500) !important;
+      border-bottom: 1px solid mat.m2-get-color-from-palette($primary-palette, 500) !important;
     }
     .NgxEditor__Placeholder:before {
       color: $label-color;
@@ -31,7 +31,7 @@
 }
 
 @mixin theme($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   @if $color-config != null {
     @include color($theme);
   }
