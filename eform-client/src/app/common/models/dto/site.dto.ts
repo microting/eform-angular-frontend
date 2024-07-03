@@ -12,4 +12,6 @@ export class SiteDto {
   language: string;
   languageCode: string;
   isLocked: boolean;
+  pinCode: string;
+  employeeNo: string;
 }

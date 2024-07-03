@@ -39,4 +39,6 @@ public class DeviceUser
     public string Language { get; set; }
     public string LanguageCode { get; set; }
     public bool IsLocked { get; set; }
+    public string PinCode { get; set; }
+    public string EmployeeNo { get; set; }
 }
