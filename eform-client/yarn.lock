@@ -9402,10 +9402,10 @@ ngx-editor@^17.0.1:
     prosemirror-view "^1.33.6"
     tslib "^2.3.0"
 
-ngx-mask@^17.0.9:
-  version "17.0.9"
-  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-17.0.9.tgz#219ec422ce96c806af8beb150d0a2109fed0efa9"
-  integrity sha512-/Z5hLNtmxxBdVeB6B72wpn6KaVbrnPMl8GJoka8iodDXTaGQ8/BeNOVsOYETLl9o6RmoN4hzCbBdNt0S3unnig==
+ngx-mask@^17.1.1:
+  version "17.1.1"
+  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-17.1.1.tgz#de34c9f23be28abfe69f2d19f425e568b4879dcf"
+  integrity sha512-VxH3FZt3TlQBPl6LaBFZ19HbN7M4Ad3b+6TwjDwolWoHmk5nNdB1zE/6jEZCO57Xf80HNVms5zJL/LA6dkfu/Q==
   dependencies:
     tslib "^2.3.0"
 
