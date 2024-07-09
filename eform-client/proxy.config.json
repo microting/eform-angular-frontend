@@ -1,11 +1,11 @@
 {
-  "/api/*":{
+  "/api/**":{
     "target": "http://0.0.0.0:5000",
     "secure": false,
     "logLevel": "debug",
     "proxyTimeout": 3600000
   },
-  "/output/*":{
+  "/output/**":{
     "target": "http://0.0.0.0:5000",
     "secure": false,
     "logLevel": "debug",
