@@ -30,6 +30,7 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 })
 export class ElementPictureComponent implements OnChanges, OnDestroy {
   @Input() fieldValues: Array<FieldValueDto> = [];
+  @Input() fieldId: number;
   @Output() pictureUpdated: EventEmitter<void> = new EventEmitter<void>();
   buttonsLocked = false;
   geoObjects = [];
@@ -155,7 +156,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
   }
 
   addPicture(newImage: File, modalId: string) {
-    const fieldId = this.fieldValues.map(x => x.fieldId)[0];
+    const fieldId = this.fieldId;
     this.addImageSub$ = this.imageService
       .addNewImage(fieldId, this.caseId, newImage)
       .subscribe(data => {

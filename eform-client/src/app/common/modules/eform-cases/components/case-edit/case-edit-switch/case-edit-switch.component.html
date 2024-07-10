@@ -15,7 +15,7 @@
       <ng-container [ngSwitch]="dataItem.fieldType">
         <ng-container *ngSwitchCase="'Picture'">
           <mat-card-content>
-            <element-picture [fieldValues]="dataItem.fieldValues" (pictureUpdated)="emitNeedUpdate()"></element-picture>
+            <element-picture [fieldValues]="dataItem.fieldValues" [fieldId]="dataItem.id" (pictureUpdated)="emitNeedUpdate()"></element-picture>
           </mat-card-content>
         </ng-container>
         <ng-container *ngSwitchCase="'CheckBox'">

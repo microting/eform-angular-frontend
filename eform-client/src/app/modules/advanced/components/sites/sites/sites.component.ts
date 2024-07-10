@@ -63,6 +63,7 @@ export class SitesComponent implements OnInit, OnDestroy {
         actionsAdded = true;
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
+            pinned: 'right',
             header: this.translateService.stream('Actions'),
             field: 'actions',
           },
@@ -73,6 +74,7 @@ export class SitesComponent implements OnInit, OnDestroy {
       if (x && !actionsAdded) {
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
+            pinned: 'right',
             header: this.translateService.stream('Actions'),
             field: 'actions',
           },

@@ -46,7 +46,9 @@ export class EntitySelectComponent implements OnInit, OnDestroy {
       sortProp: {id: 'Description'},
       class: 'description'
     },
-    {header: this.translateService.stream('Actions'), field: 'actions'},
+    {
+      pinned: 'right',
+      header: this.translateService.stream('Actions'), field: 'actions'},
   ];
   public selectCurrentUserClaimsEntitySelectCreate$ = this.store.select(selectCurrentUserClaimsEntitySelectCreate);
   public selectCurrentUserClaimsEntitySelectUpdate$ = this.store.select(selectCurrentUserClaimsEntitySelectUpdate);

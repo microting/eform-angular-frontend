@@ -317,7 +317,9 @@ export class CasesTableComponent implements OnInit, OnDestroy {
       }] : undefined;
     this.tableHeaders = [
       ...this.tableHeaders,
-      { header: this.translateService.stream('Actions'), field: 'actions', },
+      {
+        pinned: 'right',
+        header: this.translateService.stream('Actions'), field: 'actions', },
     ];
   }
 

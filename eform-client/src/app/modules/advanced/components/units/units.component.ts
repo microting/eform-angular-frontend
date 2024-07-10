@@ -28,7 +28,9 @@ export class UnitsComponent implements OnInit {
     {header: this.translateService.stream('Model'), field: 'model'},
     {header: this.translateService.stream('app Version'), field: 'eFormVersion'},
     {header: this.translateService.stream('Customer no & OTP'), field: 'otpCode'},
-    {header: this.translateService.stream('Actions'), field: 'actions'},
+    {
+      pinned: 'right',
+      header: this.translateService.stream('Actions'), field: 'actions'},
   ];
 
   unitCreateComponentAfterClosedSub$: Subscription;

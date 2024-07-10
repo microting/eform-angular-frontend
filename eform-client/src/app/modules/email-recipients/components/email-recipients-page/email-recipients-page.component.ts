@@ -59,7 +59,9 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
       sortProp: {id: 'Email'}
     },
     {header: this.translateService.stream('Tags'), field: 'tags'},
-    {header: this.translateService.stream('Actions'), field: 'actions'},
+    {
+      pinned: 'right',
+      header: this.translateService.stream('Actions'), field: 'actions'},
   ];
   public selectEmailRecipientsNameFilter$ = this.store.select(selectEmailRecipientsPagination);
   public selectEmailRecipientsSort$ = this.store.select(selectEmailRecipientsSort);

@@ -50,6 +50,7 @@ export class WorkersComponent implements OnInit {
         actionsEnabled = true;
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
+            pinned: 'right',
             header: this.translateService.stream('Actions'),
             field: 'actions',
           },
@@ -60,6 +61,7 @@ export class WorkersComponent implements OnInit {
       if(x && !actionsEnabled) {
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
+            pinned: 'right',
             header: this.translateService.stream('Actions'),
             field: 'actions',
           },

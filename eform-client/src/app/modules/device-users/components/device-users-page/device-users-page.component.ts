@@ -69,6 +69,7 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
         actionsEnabled = true;
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
+            pinned: 'right',
             header: this.translateService.stream('Actions'),
             field: 'actions',
           },
@@ -79,6 +80,7 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
       if(x && !actionsEnabled) {
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
+            pinned: 'right',
             header: this.translateService.stream('Actions'),
             field: 'actions',
           },

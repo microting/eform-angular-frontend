@@ -43,7 +43,9 @@ export class EntitySearchComponent implements OnInit, OnDestroy {
       sortable: true,
       sortProp: {id: 'Description'}
     },
-    {header: this.translateService.stream('Actions'), field: 'actions'},
+    {
+      pinned: 'right',
+      header: this.translateService.stream('Actions'), field: 'actions'},
   ];
   public selectCurrentUserClaimsEntitySearchCreate$ = this.store.select(selectCurrentUserClaimsEntitySearchCreate);
   public selectCurrentUserClaimsEntitySearchUpdate$ = this.store.select(selectCurrentUserClaimsEntitySearchCreate);

@@ -42,7 +42,9 @@ export class InstalledPluginsPageComponent implements OnInit, OnDestroy{
     {header: this.translateService.stream('Name'), field: 'name',},
     {header: this.translateService.stream('Version'), field: 'version',},
     {header: this.translateService.stream('Newest version available'), field: 'versionAvailable'},
-    {header: this.translateService.stream('Actions'), field: 'actions'},
+    {
+      pinned: 'right',
+      header: this.translateService.stream('Actions'), field: 'actions'},
   ];
   installedPluginModalComponentAfterClosedSub$: Subscription;
   installedPluginPermissionsComponentAfterClosedSub$: Subscription;
