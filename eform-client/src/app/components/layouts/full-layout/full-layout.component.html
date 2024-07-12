@@ -17,12 +17,16 @@
         <mat-icon style="padding-top: 2px !important; padding-left: 5px !important;">settings</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <a mat-menu-item *ngFor="let menu of allAppMenus$ | async"
-           routerLink="{{ menu.link }}"
-           [id]="menu.e2EId"
-        ><!--color="{{this.router.url === menu.link ? 'accent' : ''}}"-->
-          {{ menu.name }}
-        </a>
+        <ng-container *ngFor="let menu of allAppMenus$ | async">
+          <ng-container *ngIf="checkGuards(menu.guards) | async">
+            <a mat-menu-item
+               routerLink="{{ menu.link }}"
+               [id]="menu.e2EId"
+            ><!--color="{{this.router.url === menu.link ? 'accent' : ''}}"-->
+              {{ menu.name }}
+            </a>
+          </ng-container>
+        </ng-container>
       </mat-menu>
     </div>
   </mat-toolbar>

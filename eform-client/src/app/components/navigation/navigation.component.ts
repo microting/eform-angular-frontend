@@ -67,7 +67,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   checkGuards(guards: string[]): Observable<boolean> {
-    //return new Observable<boolean>(x => x.next(true));
     if (guards.length === 0) {
       return new Observable<boolean>(x => x.next(true));
     }
@@ -79,19 +78,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
       }
       return false;
     }));
-    // return this.selectCurretnUserClaims$.pipe(x => {
-    //   console.log(x);
-    //   for (const guard of guards) {
-    //     if (x[guard]) {
-    //       return true;
-    //     }
-    //   }
-    // });
-    // if (guards.length === 0) {
-    //   return true;
-    // }
-    //
-    // return guards.some((g) => this.authStateService.checkClaim(g));
   }
 
   onClickOnNode() {

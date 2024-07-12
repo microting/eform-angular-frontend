@@ -1,16 +1,16 @@
 import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {of, Subscription, take, tap} from 'rxjs';
+import {Observable, of, Subscription, take, tap} from 'rxjs';
 import {
   AppSettingsService,
   LoaderService,
 } from 'src/app/common/services';
 import {Router} from '@angular/router';
-import {EventBrokerService} from 'src/app/common/helpers';
+import {EventBrokerService, snakeToCamel} from 'src/app/common/helpers';
 import {HeaderSettingsModel} from 'src/app/common/models';
 import {MatDrawer, MatDrawerMode} from '@angular/material/sidenav';
-import {debounceTime, filter} from 'rxjs/operators';
+import {debounceTime, filter, map} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {
   selectAuthIsAuth,
@@ -18,7 +18,7 @@ import {
   selectCurrentUserLocale,
   selectIsDarkMode,
   selectSideMenuOpened,
-  rightAppMenus,
+  rightAppMenus, selectCurrentUserClaims,
 } from 'src/app/state';
 
 @AutoUnsubscribe()
@@ -42,6 +42,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   private selectIsDarkMode$ = this.authStore.select(selectIsDarkMode);
   private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
   public selectSideMenuOpened$ = this.authStore.select(selectSideMenuOpened);
+  private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
 
   constructor(
     public authStateService: AuthStateService,
@@ -151,5 +152,19 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.innerWidth < this.mobileWidth) {
       this.toggleDrawer(false);
     }
+  }
+
+  checkGuards(guards: string[]): Observable<boolean> {
+    if (guards.length === 0) {
+      return new Observable<boolean>(x => x.next(true));
+    }
+    return this.selectCurrentUserClaims$.pipe(map(x => {
+      for (const guard of guards) {
+        if (x[snakeToCamel(guard)]) {
+          return true;
+        }
+      }
+      return false;
+    }));
   }
 }

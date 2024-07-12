@@ -13,7 +13,7 @@
 </eform-new-subheader>
 
 <div class="d-flex flex-row justify-content-between align-items-start">
-  <mat-card class="p-3">
+  <mat-card class="p-3" *ngIf="selectCurrentUserIsAdmin$ | async">
     <mat-card-header>
       <mat-card-title>{{ 'Google Authenticator' | translate }}</mat-card-title>
     </mat-card-header>
@@ -71,7 +71,7 @@
       >
       </mtx-select>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field *ngIf="selectCurrentUserIsAdmin$ | async">
       <mat-label>{{ 'Formats' | translate }}</mat-label>
       <mtx-select
         id="ProfileFormatSelector"
@@ -82,7 +82,7 @@
         [items]="countries"
       ></mtx-select>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field *ngIf="selectCurrentUserIsAdmin$ | async">
       <mat-label>{{ 'Timezone' | translate }}</mat-label>
       <mtx-select
         id="ProfileTimeZoneSelector"
