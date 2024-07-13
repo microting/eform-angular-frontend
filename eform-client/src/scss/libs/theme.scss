@@ -175,3 +175,7 @@ body {
 .microting-uid {
   color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 300);
 }
+
+.mat-sort-header-content {
+  text-align: start !important;
+}
