@@ -29,6 +29,7 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
     this.getSettings();
     this.switchToLightTheme();
     this.authStateService.initLocale();
+    console.debug('SimpleLayoutComponent - ngOnInit - done');
   }
 
   switchToLightTheme() {
