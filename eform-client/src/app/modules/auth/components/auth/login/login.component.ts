@@ -76,6 +76,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const userLocale: string = navigator.language || navigator.languages[0];
+    this.authStateService.updateUserLocale(userLocale);
+    this.translateService.setDefaultLang(userLocale);
+    this.translateService.use(userLocale);
     this.translateService.get('Login').pipe(take(1)).subscribe(translate => this.titleService.setTitle(translate));
     this.formLogin = new FormGroup({
       username: new FormControl('', Validators.required),

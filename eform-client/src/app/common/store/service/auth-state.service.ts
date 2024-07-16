@@ -172,7 +172,8 @@ export class AuthStateService {
 
   logout() {
     this.authStore.dispatch(logout());
-    this.updateCurrentUserLocaleAndDarkTheme(this.defaultLocale.locale, false); // update locale to default locale and theme
+    const userLocale: string = navigator.language || navigator.languages[0];
+    this.updateCurrentUserLocaleAndDarkTheme(userLocale, false); // update locale to default locale and theme
     this.router.navigate(['/auth']).then();
   }
 

@@ -33,7 +33,7 @@ export class RestorePasswordConfirmationComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.debug('RestorePasswordComponent - ngOnInit');
+    console.debug('RestorePasswordConfirmationComponent - ngOnInit');
     this.route.queryParams.subscribe((params) => {
       this.form = new FormGroup({
         newPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -46,7 +46,7 @@ export class RestorePasswordConfirmationComponent implements OnInit, OnDestroy {
     this.authtStateService.updateUserLocale(userLocale);
     this.translateService.setDefaultLang(userLocale);
     this.translateService.use(userLocale);
-    console.debug('RestorePasswordComponent - ngOnInit - done');
+    console.debug('RestorePasswordConfirmationComponent - ngOnInit - done');
   }
   passwordConfirming(c: AbstractControl): { invalid: boolean } {
     if (c.get('newPassword').value !== c.get('newPasswordConfirm').value) {
