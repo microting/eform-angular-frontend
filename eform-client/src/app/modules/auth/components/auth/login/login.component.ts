@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
-  AbstractControl,
+  AbstractControl, FormBuilder,
   FormControl,
   FormGroup,
   Validators,
@@ -25,7 +25,7 @@ import {selectAuthIsAuth} from 'src/app/state';
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  formLogin: FormGroup<{ password: FormControl<string | null>, username: FormControl<string | null> }>;
+  formLogin: FormGroup;
   googleAuthenticatorModel: GoogleAuthenticatorModel = new GoogleAuthenticatorModel();
 
   showLoginForm = true;
@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private titleService: TitleService,
     private translateService: TranslateService,
     private store: Store,
+    private fb: FormBuilder,
   ) {
   }
 
@@ -76,14 +77,27 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const userLocale: string = navigator.language || navigator.languages[0];
-    this.authStateService.updateUserLocale(userLocale);
-    this.translateService.setDefaultLang(userLocale);
-    this.translateService.use(userLocale);
+    try {
+      let userLocale: string = navigator.language || navigator.languages[0];
+      if (userLocale.includes('en')) {
+        userLocale = 'en-US';
+      } else {
+        if (userLocale.includes('da')) {
+          userLocale = 'da';
+        } else {
+          userLocale = 'en-US';
+        }
+      }
+      this.authStateService.updateUserLocale(userLocale);
+      this.translateService.setDefaultLang(userLocale);
+      this.translateService.use(userLocale);
+    } catch (e) {
+      console.error('Error in ngOnInit: ', e);
+    }
     this.translateService.get('Login').pipe(take(1)).subscribe(translate => this.titleService.setTitle(translate));
-    this.formLogin = new FormGroup({
+    this.formLogin = this.fb.group({
       username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
+      password: new FormControl('', Validators.required),
     });
     this.isAuthAsyncSub$ = this.selectIsAuth$.pipe(filter((isAuth: boolean) => isAuth === true)).subscribe(() => {
       this.router.navigate(['/']).then();

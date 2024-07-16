@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
-  AbstractControl,
+  AbstractControl, FormBuilder,
   FormControl,
   FormGroup,
   Validators,
@@ -10,8 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import { PasswordRestoreModel } from 'src/app/common/models/auth';
 import { AppSettingsService, AuthService } from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {AuthStateService} from "src/app/common/store";
-import {TranslateService} from "@ngx-translate/core";
+import {AuthStateService} from 'src/app/common/store';
+import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -29,20 +29,30 @@ export class RestorePasswordConfirmationComponent implements OnInit, OnDestroy {
     private settingsService: AppSettingsService,
     private toastrService: ToastrService,
     private route: ActivatedRoute,
+    private fb: FormBuilder,
   private authtStateService: AuthStateService
   ) {}
 
   ngOnInit() {
     console.debug('RestorePasswordConfirmationComponent - ngOnInit');
     this.route.queryParams.subscribe((params) => {
-      this.form = new FormGroup({
-        newPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
-        newPasswordConfirm: new FormControl('', [Validators.required]),
-        userId: new FormControl(params['userId']),
-        code: new FormControl(params['code']),
+      this.form = this.fb.group({
+        newPassword: ['', [Validators.required, Validators.minLength(6)]],
+        newPasswordConfirm: ['', [Validators.required]],
+        userId: [params['userId']],
+        code: [params['code']],
       }, {validators: this.passwordConfirming});
     });
-    const userLocale: string = navigator.language || navigator.languages[0];
+    let userLocale: string = navigator.language || navigator.languages[0];
+    if (userLocale.includes('en')) {
+      userLocale = 'en-US';
+    } else {
+      if (userLocale.includes('da')) {
+        userLocale = 'da';
+      } else {
+        userLocale = 'en-US';
+      }
+    }
     this.authtStateService.updateUserLocale(userLocale);
     this.translateService.setDefaultLang(userLocale);
     this.translateService.use(userLocale);

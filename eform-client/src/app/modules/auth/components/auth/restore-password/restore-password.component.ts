@@ -36,7 +36,16 @@ export class RestorePasswordComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
     });
     this.email = this.formRestore.get('email');
-    const userLocale: string = navigator.language || navigator.languages[0];
+    let userLocale: string = navigator.language || navigator.languages[0];
+    if (userLocale.includes('en')) {
+      userLocale = 'en-US';
+    } else {
+      if (userLocale.includes('da')) {
+        userLocale = 'da';
+      } else {
+        userLocale = 'en-US';
+      }
+    }
     this.authtStateService.updateUserLocale(userLocale);
     this.translateService.setDefaultLang(userLocale);
     this.translateService.use(userLocale);

@@ -1,5 +1,5 @@
 <div>
-  <form [formGroup]="formLogin" (ngSubmit)="submitLoginForm()" class="d-flex flex-column align-items-center"><!--style="font-size: 1rem;"-->
+  <form [formGroup]="formLogin" class="d-flex flex-column align-items-center"><!--style="font-size: 1rem;"-->
     <mat-form-field>
       <mat-label>{{ 'Username' | translate }}</mat-label>
       <mat-icon matPrefix>person</mat-icon>
@@ -30,6 +30,7 @@
       mat-raised-button
       color="accent"
       style="text-transform: uppercase;"
+      (click)="submitLoginForm()"
     >
       {{ 'Login' | translate }}
     </button>

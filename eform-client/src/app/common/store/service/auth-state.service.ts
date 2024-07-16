@@ -172,7 +172,21 @@ export class AuthStateService {
 
   logout() {
     this.authStore.dispatch(logout());
-    const userLocale: string = navigator.language || navigator.languages[0];
+    let userLocale: string = this.defaultLocale.locale;
+    try {
+      userLocale = navigator.language || navigator.languages[0];
+      if (userLocale.includes('en')) {
+        userLocale = 'en-US';
+      } else {
+        if (userLocale.includes('da')) {
+          userLocale = 'da';
+        } else {
+          userLocale = 'en-US';
+        }
+      }
+    } catch (e) {
+      console.error('Error in logout: ', e);
+    }
     this.updateCurrentUserLocaleAndDarkTheme(userLocale, false); // update locale to default locale and theme
     this.router.navigate(['/auth']).then();
   }
