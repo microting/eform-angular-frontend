@@ -78,6 +78,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   get mandatoryIsNotNeed(): boolean {
     return (
       this.recursionModel.field.fieldType === EformFieldTypesEnum.None ||
+      this.recursionModel.field.fieldType === EformFieldTypesEnum.CheckBox ||
       this.recursionModel.field.fieldType === EformFieldTypesEnum.FieldGroup ||
       this.recursionModel.field.fieldType === EformFieldTypesEnum.Audio ||
       this.recursionModel.field.fieldType === EformFieldTypesEnum.ShowPdf ||
