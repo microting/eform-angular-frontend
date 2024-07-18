@@ -26,6 +26,7 @@ import {
 import {snakeToCamel} from 'src/app/common/helpers';
 import {filter, tap} from 'rxjs/operators';
 import {translates} from 'src/assets/i18n/translates';
+import {Platform} from '@angular/cdk/platform';
 
 @Injectable({providedIn: 'root'})
 export class AuthStateService {
@@ -34,8 +35,10 @@ export class AuthStateService {
   private claims: UserClaimsModel;
   private localeIsInited = false;
   private defaultLocale = applicationLanguages[1];
+  platformInfo: string;
 
   constructor(
+    private platform: Platform,
     private service: AuthService,
     private translateService: TranslateService,
     private localeService: LocaleService,
@@ -45,6 +48,7 @@ export class AuthStateService {
     public settingsService: AppSettingsService,
     @Inject(MAT_DATE_LOCALE) private dateLocale: BehaviorSubject<string | Locale | null>
   ) {
+    this.platformInfo = this.getPlatformInfo();
     this.selectCurrentUserLanguageId$.subscribe((languageId) => this.currentLanguageId = languageId);
     this.selectCurrentUserClaims$.subscribe((claims) => this.claims = claims);
   }
@@ -73,6 +77,7 @@ export class AuthStateService {
               count: 2
             })
           );
+          this.authStore.dispatch(updateSideMenuOpened({sideMenuIsOpened: !this.isMobilePlatform()}));
           this.selectIsAuth$.pipe( // run after update auth info in store
             filter(x => x === true),
             take(1),
@@ -288,5 +293,34 @@ export class AuthStateService {
         return enUS;
       }
     }
+  }
+
+  getPlatformInfo(): string {
+    if (this.platform.ANDROID) {
+      return 'Android';
+    } else if (this.platform.IOS) {
+      return 'iOS';
+    } else if (this.platform.isBrowser) {
+      return this.getDesktopPlatform();
+    } else {
+      return 'Unknown platform';
+    }
+  }
+
+  private getDesktopPlatform(): string {
+    const userAgent = window.navigator.userAgent;
+    if (userAgent.includes('Win')) {
+      return 'Windows';
+    } else if (userAgent.includes('Mac')) {
+      return 'macOS';
+    } else if (userAgent.includes('Linux')) {
+      return 'Linux';
+    } else {
+      return 'Unknown desktop platform';
+    }
+  }
+
+  private isMobilePlatform(): boolean {
+    return this.platform.ANDROID || this.platform.IOS;
   }
 }
