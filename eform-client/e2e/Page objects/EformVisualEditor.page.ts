@@ -2,7 +2,7 @@
 
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import {
-  applicationLanguages,
+  applicationLanguagesTranslated,
   EformFieldTypesEnum,
 } from '../../src/app/common/const';
 import {
@@ -172,8 +172,8 @@ class EformVisualEditorPage extends PageWithNavbarPage {
 
   async selectedLanguages(): Promise<number[]> {
     const selectedLanguages = [];
-    for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = await $(`#languageCheckbox${applicationLanguages[i].id}-input`);
+    for (let i = 0; i < applicationLanguagesTranslated.length; i++) {
+      const checkbox = await $(`#languageCheckbox${applicationLanguagesTranslated[i].id}-input`);
       if ((await checkbox.getProperty('checked')) === true) {
         selectedLanguages.push(i);
       }
@@ -395,7 +395,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   }
 
   async openAllLanguages() {
-    //for (let i = 0; i < applicationLanguages.length; i++) {
+    //for (let i = 0; i < applicationLanguagesTranslated.length; i++) {
     for (let i = 0; i < 3; i++) { // for now only 3 languages
       await this.clickLanguageCheckbox(true, i + 1);
     }
@@ -456,19 +456,19 @@ export class MainCheckListRowObj {
       const clRow = new ChecklistRowObj(i);
       this.checklists.push(await clRow.load());
     }
-    for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = await $(`#languageCheckbox${applicationLanguages[i].id}-input`);
+    for (let i = 0; i < applicationLanguagesTranslated.length; i++) {
+      const checkbox = await $(`#languageCheckbox${applicationLanguagesTranslated[i].id}-input`);
       if ((await checkbox.getProperty('checked')) === true) {
         this.translations.push({
           languageId: i,
           name:
              await (
-             await $(`#mainCheckListNameTranslation_${applicationLanguages[i].id}`)
+             await $(`#mainCheckListNameTranslation_${applicationLanguagesTranslated[i].id}`)
            ).getValue(),
           description:
              await (
              await $(
-               `#mainCheckListDescriptionTranslation_${applicationLanguages[i].id} .NgxEditor__Content`
+               `#mainCheckListDescriptionTranslation_${applicationLanguagesTranslated[i].id} .NgxEditor__Content`
              )
            ).getText(),
           id: null,
