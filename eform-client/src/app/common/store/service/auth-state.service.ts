@@ -180,15 +180,6 @@ export class AuthStateService {
     let userLocale: string = this.defaultLocale.locale;
     try {
       userLocale = navigator.language || navigator.languages[0];
-      if (userLocale.includes('en')) {
-        userLocale = 'en-US';
-      } else {
-        if (userLocale.includes('da')) {
-          userLocale = 'da';
-        } else {
-          userLocale = 'en-US';
-        }
-      }
     } catch (e) {
       console.error('Error in logout: ', e);
     }
@@ -215,13 +206,31 @@ export class AuthStateService {
   }
 
   updateUserLocale(locale: string) {
-    const languageId = applicationLanguages.find(x => x.locale === locale).id;
-    this.authStore.dispatch(updateUserLocale({locale: locale, languageId: languageId}));
+    try {
+      if (locale.includes('-')) {
+        locale = locale.split('-')[0];
+      }
+      const languageId = applicationLanguages.find(x => x.locale.split('-')[0] === locale).id;
+      this.authStore.dispatch(updateUserLocale({locale: locale, languageId: languageId}));
+    } catch (e) {
+      console.error('Error in updateUserLocale: ', e);
+      const languageId = applicationLanguages.find(x => x.locale === 'en-US').id;
+      this.authStore.dispatch(updateUserLocale({locale: locale, languageId: languageId}));
+    }
   }
 
   updateCurrentUserLocaleAndDarkTheme(locale: string, darkTheme: boolean) {
-    const languageId = applicationLanguages.find(x => x.locale === locale).id;
-    this.authStore.dispatch(updateCurrentUserLocaleAndDarkTheme({locale: locale, languageId: languageId, darkTheme: darkTheme}));
+    try {
+      if (locale.includes('-')) {
+        locale = locale.split('-')[0];
+      }
+      const languageId = applicationLanguages.find(x => x.locale.split('-')[0] === locale).id;
+      this.authStore.dispatch(updateCurrentUserLocaleAndDarkTheme({locale: locale, languageId: languageId, darkTheme: darkTheme}));
+    } catch (e) {
+      console.error('Error in updateUserLocale: ', e);
+      const languageId = applicationLanguages.find(x => x.locale === 'en-US').id;
+      this.authStore.dispatch(updateCurrentUserLocaleAndDarkTheme({locale: locale, languageId: languageId, darkTheme: darkTheme}));
+    }
   }
 
   updateDarkTheme(darkTheme: boolean) {

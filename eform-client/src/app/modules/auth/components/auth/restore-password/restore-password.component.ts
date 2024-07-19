@@ -11,6 +11,7 @@ import { AppSettingsService } from 'src/app/common/services/settings';
 import { AuthService } from 'src/app/common/services/auth';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthStateService} from 'src/app/common/store';
+import {applicationLanguages} from "src/app/common/const";
 
 @Component({
   selector: 'app-restore-password',
@@ -27,7 +28,7 @@ export class RestorePasswordComponent implements OnInit {
     private settingsService: AppSettingsService,
     private fb: FormBuilder,
     private toastrService: ToastrService,
-    private authtStateService: AuthStateService
+    private authStateService: AuthStateService
   ) {}
 
   ngOnInit() {
@@ -37,18 +38,13 @@ export class RestorePasswordComponent implements OnInit {
     });
     this.email = this.formRestore.get('email');
     let userLocale: string = navigator.language || navigator.languages[0];
-    if (userLocale.includes('en')) {
-      userLocale = 'en-US';
-    } else {
-      if (userLocale.includes('da')) {
-        userLocale = 'da';
-      } else {
-        userLocale = 'en-US';
-      }
+    this.authStateService.updateUserLocale(userLocale);
+    if (userLocale.includes('-')) {
+      userLocale = userLocale.split('-')[0];
     }
-    this.authtStateService.updateUserLocale(userLocale);
-    this.translateService.setDefaultLang(userLocale);
-    this.translateService.use(userLocale);
+    const locale = applicationLanguages.find(x => x.locale.split('-')[0] === userLocale).locale;
+    this.translateService.setDefaultLang(locale);
+    this.translateService.use(locale);
     console.debug('RestorePasswordComponent - ngOnInit - done');
   }
 

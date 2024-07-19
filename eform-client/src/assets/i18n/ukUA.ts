@@ -163,7 +163,7 @@ export const ukUA = {
   'New User': 'Новий користувач',
   'Edit User': 'Редагувати користувача',
   'Left empty if want to keep old': 'Залишити порожнім, якщо хочете зберегти старе',
-  Username: 'Ім&#39;я користувача',
+  Username: "Ім'я користувача",
   Email: 'Електронна пошта',
   Status: 'Статус',
   'change will logout you from the application': 'зміна призведе до виходу з програми',

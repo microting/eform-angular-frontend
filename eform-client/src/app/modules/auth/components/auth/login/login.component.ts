@@ -18,6 +18,7 @@ import {TitleService, GoogleAuthService} from 'src/app/common/services';
 import {TranslateService} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth} from 'src/app/state';
+import {applicationLanguages} from "src/app/common/const";
 
 @AutoUnsubscribe()
 @Component({
@@ -79,18 +80,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
     try {
       let userLocale: string = navigator.language || navigator.languages[0];
-      if (userLocale.includes('en')) {
-        userLocale = 'en-US';
-      } else {
-        if (userLocale.includes('da')) {
-          userLocale = 'da';
-        } else {
-          userLocale = 'en-US';
-        }
-      }
       this.authStateService.updateUserLocale(userLocale);
-      this.translateService.setDefaultLang(userLocale);
-      this.translateService.use(userLocale);
+      if (userLocale.includes('-')) {
+        userLocale = userLocale.split('-')[0];
+      }
+      const locale = applicationLanguages.find(x => x.locale.split('-')[0] === userLocale).locale;
+      this.translateService.setDefaultLang(locale);
+      this.translateService.use(locale);
     } catch (e) {
       console.error('Error in ngOnInit: ', e);
     }
