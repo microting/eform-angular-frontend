@@ -1,5 +1,5 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
-import { applicationLanguages } from '../../src/app/common/const';
+import {applicationLanguagesTranslated} from '../../src/app/common/const';
 import {selectValueInNgSelector} from "../Helpers/helper-functions";
 import { $ } from '@wdio/globals';
 
@@ -260,7 +260,7 @@ class FoldersPage extends PageWithNavbarPage {
     if (name) {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
-        const da = applicationLanguages[0];
+        const da = applicationLanguagesTranslated[0];
         await selectValueInNgSelector(await this.createLanguageSelector(), da.text);
         // await (await this.createLanguageSelector())
         //   .$('input')
@@ -275,7 +275,7 @@ class FoldersPage extends PageWithNavbarPage {
         await browser.pause(500);
         (
           await this.createNameInput(
-            applicationLanguages.findIndex((x) => x.text === da.text)
+            applicationLanguagesTranslated.findIndex((x) => x.text === da.text)
           )
         ).setValue(nameConverted);
         await browser.pause(500);
@@ -283,7 +283,7 @@ class FoldersPage extends PageWithNavbarPage {
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
         for (let i = 0; i > nameConverted.length; i++) {
-          const language = await applicationLanguages.find(
+          const language = await applicationLanguagesTranslated.find(
             (x) => x.text === nameConverted[i].language
           );
           await selectValueInNgSelector(await this.createLanguageSelector(), language.text);
@@ -299,7 +299,7 @@ class FoldersPage extends PageWithNavbarPage {
           await browser.pause(500);
           (
             await this.createNameInput(
-              applicationLanguages.findIndex((x) => x.text === language.text)
+              applicationLanguagesTranslated.findIndex((x) => x.text === language.text)
             )
           ).setValue(nameConverted[i].name);
           await browser.pause(500);
@@ -309,7 +309,7 @@ class FoldersPage extends PageWithNavbarPage {
     if (description) {
       if (typeof description === typeof '') {
         const descriptionConvert = description as string;
-        const da = applicationLanguages[0];
+        const da = applicationLanguagesTranslated[0];
 
         await selectValueInNgSelector(await this.createLanguageSelector(), da.text);
         // await (
@@ -324,7 +324,7 @@ class FoldersPage extends PageWithNavbarPage {
         await browser.pause(500);
         (
           await this.createDescriptionInput(
-            applicationLanguages.findIndex((x) => x.text === da.text)
+            applicationLanguagesTranslated.findIndex((x) => x.text === da.text)
           )
         ).setValue(descriptionConvert);
         await browser.pause(500);
@@ -335,7 +335,7 @@ class FoldersPage extends PageWithNavbarPage {
           language: string;
         }[];
         for (let i = 0; i > descriptionConvert.length; i++) {
-          const language = applicationLanguages.find(
+          const language = applicationLanguagesTranslated.find(
             (x) => x.text === descriptionConvert[i].language
           );
 
@@ -352,7 +352,7 @@ class FoldersPage extends PageWithNavbarPage {
           await browser.pause(500);
           (
             await this.createDescriptionInput(
-              applicationLanguages.findIndex((x) => x.text === language.text)
+              applicationLanguagesTranslated.findIndex((x) => x.text === language.text)
             )
           ).setValue(descriptionConvert[i].description);
           await browser.pause(500);
@@ -413,8 +413,8 @@ export class FoldersRowObject {
     await this.openEditModal();
     const descriptions = new Array<{ description: string; language: string }>();
 
-    for (let i = 0; i < applicationLanguages.length; i++) {
-      const language = applicationLanguages[i];
+    for (let i = 0; i < applicationLanguagesTranslated.length; i++) {
+      const language = applicationLanguagesTranslated[i];
       await (
         await (await foldersPage.editLanguageSelector()).$('input')
       ).setValue(language.text);
@@ -428,7 +428,7 @@ export class FoldersRowObject {
       descriptions.push({
         description: await (
           await foldersPage.editDescriptionInput(
-            applicationLanguages.findIndex((x) => x.text === language.text)
+            applicationLanguagesTranslated.findIndex((x) => x.text === language.text)
           )
         ).getText(),
         language: language.text,
@@ -457,7 +457,7 @@ export class FoldersRowObject {
     if (name) {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
-        const da = applicationLanguages[0];
+        const da = applicationLanguagesTranslated[0];
         await (
           await (await foldersPage.createLanguageSelector()).$('input')
         ).setValue(da.text);
@@ -470,7 +470,7 @@ export class FoldersRowObject {
         await browser.pause(500);
         (
           await foldersPage.createNameInput(
-            applicationLanguages.findIndex((x) => x.text === da.text)
+            applicationLanguagesTranslated.findIndex((x) => x.text === da.text)
           )
         ).setValue(nameConverted);
         await browser.pause(500);
@@ -478,7 +478,7 @@ export class FoldersRowObject {
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
         for (let i = 0; i > nameConverted.length; i++) {
-          const language = applicationLanguages.find(
+          const language = applicationLanguagesTranslated.find(
             (x) => x.text === nameConverted[i].language
           );
           await (
@@ -493,7 +493,7 @@ export class FoldersRowObject {
           await browser.pause(500);
           (
             await foldersPage.createNameInput(
-              applicationLanguages.findIndex((x) => x.text === language.text)
+              applicationLanguagesTranslated.findIndex((x) => x.text === language.text)
             )
           ).setValue(nameConverted[i].name);
           await browser.pause(500);
@@ -503,7 +503,7 @@ export class FoldersRowObject {
     if (description != null) {
       if (typeof description === typeof '') {
         const descriptionConvert = description as string;
-        const da = applicationLanguages[0];
+        const da = applicationLanguagesTranslated[0];
         await (
           await (await foldersPage.createLanguageSelector()).$('input')
         ).setValue(da.text);
@@ -516,7 +516,7 @@ export class FoldersRowObject {
         await browser.pause(500);
         (
           await foldersPage.createDescriptionInput(
-            applicationLanguages.findIndex((x) => x.text === da.text)
+            applicationLanguagesTranslated.findIndex((x) => x.text === da.text)
           )
         ).setValue(descriptionConvert);
         await browser.pause(500);
@@ -527,7 +527,7 @@ export class FoldersRowObject {
           language: string;
         }[];
         for (let i = 0; i > descriptionConvert.length; i++) {
-          const language = applicationLanguages.find(
+          const language = applicationLanguagesTranslated.find(
             (x) => x.text === descriptionConvert[i].language
           );
           await (
@@ -542,7 +542,7 @@ export class FoldersRowObject {
           await browser.pause(500);
           (
             await foldersPage.createDescriptionInput(
-              applicationLanguages.findIndex((x) => x.text === language.text)
+              applicationLanguagesTranslated.findIndex((x) => x.text === language.text)
             )
           ).setValue(descriptionConvert[i].description);
           await browser.pause(500);
@@ -573,6 +573,10 @@ export class FoldersRowObject {
     } else {
       await (await foldersPage.cancelDeleteBtn()).click();
     }
+    await $('#spinner-animation').waitForDisplayed({
+      timeout: 90000,
+      reverse: true,
+    });
     await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
     });
@@ -601,7 +605,7 @@ export class FoldersRowObject {
     if (name) {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
-        const da = applicationLanguages[0];
+        const da = applicationLanguagesTranslated[0];
         await (
           await (await foldersPage.editLanguageSelector()).$('input')
         ).setValue(da.text);
@@ -612,7 +616,7 @@ export class FoldersRowObject {
         await value.click();
         await (
           await foldersPage.editNameInput(
-            applicationLanguages.findIndex((x) => x.text === da.text)
+            applicationLanguagesTranslated.findIndex((x) => x.text === da.text)
           )
         ).setValue(nameConverted);
         await browser.pause(500);
@@ -620,7 +624,7 @@ export class FoldersRowObject {
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
         for (let i = 0; i > nameConverted.length; i++) {
-          const language = applicationLanguages.find(
+          const language = applicationLanguagesTranslated.find(
             (x) => x.text === nameConverted[i].language
           );
           await (
@@ -633,7 +637,7 @@ export class FoldersRowObject {
           await value.click();
           await (
             await foldersPage.editNameInput(
-              applicationLanguages.findIndex((x) => x.text === language.text)
+              applicationLanguagesTranslated.findIndex((x) => x.text === language.text)
             )
           ).setValue(nameConverted[i].name);
           await browser.pause(500);
@@ -643,7 +647,7 @@ export class FoldersRowObject {
     if (description) {
       if (typeof description === typeof '') {
         const descriptionConvert = description as string;
-        const da = applicationLanguages[0];
+        const da = applicationLanguagesTranslated[0];
         await (
           await (await foldersPage.editLanguageSelector()).$('input')
         ).setValue(da.text);
@@ -654,7 +658,7 @@ export class FoldersRowObject {
         await value.click();
         await (
           await foldersPage.editDescriptionInput(
-            applicationLanguages.findIndex((x) => x.text === da.text)
+            applicationLanguagesTranslated.findIndex((x) => x.text === da.text)
           )
         ).setValue(descriptionConvert);
         await browser.pause(500);
@@ -665,7 +669,7 @@ export class FoldersRowObject {
           language: string;
         }[];
         for (let i = 0; i > descriptionConvert.length; i++) {
-          const language = applicationLanguages.find(
+          const language = applicationLanguagesTranslated.find(
             (x) => x.text === descriptionConvert[i].language
           );
           await (
@@ -678,7 +682,7 @@ export class FoldersRowObject {
           await value.click();
           await (
             await foldersPage.editDescriptionInput(
-              applicationLanguages.findIndex((x) => x.text === language.text)
+              applicationLanguagesTranslated.findIndex((x) => x.text === language.text)
             )
           ).setValue(descriptionConvert[i].description);
           await browser.pause(500);
@@ -742,8 +746,8 @@ export class FoldersTreeRowObject {
     await this.openEditModal();
     const descriptions = new Array<{ description: string; language: string }>();
 
-    for (let i = 0; i < applicationLanguages.length; i++) {
-      const language = applicationLanguages[i];
+    for (let i = 0; i < applicationLanguagesTranslated.length; i++) {
+      const language = applicationLanguagesTranslated[i];
       await (await foldersPage.editLanguageSelector())
         .$('input')
         .setValue(language.text);
@@ -755,7 +759,7 @@ export class FoldersTreeRowObject {
       descriptions.push({
         description: await (
           await foldersPage.editDescriptionInput(
-            applicationLanguages.findIndex((x) => x.text === language.text)
+            applicationLanguagesTranslated.findIndex((x) => x.text === language.text)
           )
         ).getText(),
         language: language.text,
@@ -813,7 +817,7 @@ export class FoldersTreeRowObject {
     if (name != null) {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
-        const da = applicationLanguages[0];
+        const da = applicationLanguagesTranslated[0];
         await (
           await (await foldersPage.editLanguageSelector()).$('input')
         ).setValue(da.text);
@@ -826,14 +830,14 @@ export class FoldersTreeRowObject {
         await browser.pause(500);
         await (
           await foldersPage.editNameInput(
-            applicationLanguages.findIndex((x) => x.text === da.text)
+            applicationLanguagesTranslated.findIndex((x) => x.text === da.text)
           )
         ).setValue(nameConverted);
       }
       if (typeof name === typeof []) {
         const nameConverted = name as { name: string; language: string }[];
         for (let i = 0; i > nameConverted.length; i++) {
-          const language = applicationLanguages.find(
+          const language = applicationLanguagesTranslated.find(
             (x) => x.text === nameConverted[i].language
           );
           await (await foldersPage.editLanguageSelector())
@@ -848,7 +852,7 @@ export class FoldersTreeRowObject {
           await browser.pause(500);
           await (
             await foldersPage.editNameInput(
-              applicationLanguages.findIndex((x) => x.text === language.text)
+              applicationLanguagesTranslated.findIndex((x) => x.text === language.text)
             )
           ).setValue(nameConverted[i].name);
         }
@@ -857,7 +861,7 @@ export class FoldersTreeRowObject {
     if (description != null) {
       if (typeof description === typeof '') {
         const descriptionConvert = description as string;
-        const da = applicationLanguages[0];
+        const da = applicationLanguagesTranslated[0];
         await (
           await (await foldersPage.editLanguageSelector()).$('input')
         ).setValue(da.text);
@@ -870,7 +874,7 @@ export class FoldersTreeRowObject {
         await browser.pause(500);
         await (
           await foldersPage.editDescriptionInput(
-            applicationLanguages.findIndex((x) => x.text === da.text)
+            applicationLanguagesTranslated.findIndex((x) => x.text === da.text)
           )
         ).setValue(descriptionConvert);
       }
@@ -880,7 +884,7 @@ export class FoldersTreeRowObject {
           language: string;
         }[];
         for (let i = 0; i > descriptionConvert.length; i++) {
-          const language = applicationLanguages.find(
+          const language = applicationLanguagesTranslated.find(
             (x) => x.text === descriptionConvert[i].language
           );
           await (await foldersPage.editLanguageSelector())
@@ -895,7 +899,7 @@ export class FoldersTreeRowObject {
           await browser.pause(500);
           await (
             await foldersPage.editDescriptionInput(
-              applicationLanguages.findIndex((x) => x.text === language.text)
+              applicationLanguagesTranslated.findIndex((x) => x.text === language.text)
             )
           ).setValue(descriptionConvert[i].description);
         }
