@@ -752,5 +752,23 @@
   </data>
   <data name="PasswordSuccessfullyUpdated" xml:space="preserve">
     <value>Adgangskode opdateret</value>
+  </data><data name="UserNotFound" xml:space="preserve">
+    <value>User with {0} not found</value>
+  </data>
+    <data name="ForgotPasswordEmailSubject" xml:space="preserve">
+      <value>Nulstilling af adgangskode</value>
+  </data>
+    <data name="ForgotPasswordEmailHtml" xml:space="preserve">
+      <value><![CDATA[
+          Hej {0} {1}<br><br>
+          Du har valgt at nulstille din adgangskode til Microting.<br>
+          Klik på nedenstående link for at angive en ny adgangskode.<br><br>
+          <a href="{2}">Angiv ny adgangskode</a><br><br>
+          Hvis du ikke har anmodet om dette, så se venligst bort fra denne mail.<br><br>
+          Din adgangskode forbliver uændret, indtil du laver en ny via linket herover.<br><br>
+          Med venlig hilsen<br><br>
+          Microting<br><br>
+          Support: 66 11 10 66
+      ]]></value>
   </data>
 </root>

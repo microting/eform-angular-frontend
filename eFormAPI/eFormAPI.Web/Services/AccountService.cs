@@ -23,8 +23,10 @@ SOFTWARE.
 */
 
 
+using System.Globalization;
 using System.Web;
 using eFormAPI.Web.Infrastructure.Models.Auth;
+using Microsoft.Extensions.Localization;
 
 namespace eFormAPI.Web.Services;
 
@@ -223,26 +225,30 @@ public class AccountService : IAccountService
             return new OperationResult(false, $"User with {model.Email} not found");
         }
 
+        // Set the culture based on user locale
+        if (!string.IsNullOrEmpty(user.Locale))
+        {
+            var culture = new CultureInfo(user.Locale);
+            CultureInfo.CurrentCulture = culture;
+            CultureInfo.CurrentUICulture = culture;
+        }
+
+
         var code = HttpUtility.UrlEncode(await _userManager.GeneratePasswordResetTokenAsync(user));
         var link = await core.GetSdkSetting(Settings.httpServerAddress);
         link = $"{link}/auth/restore-password-confirmation?userId={user.Id}&code={code}";
 /*            await _emailSender.SendEmailAsync(user.Email, "EForm Password Reset",
                 "Please reset your password by clicking <a href=\"" + link + "\">here</a>");*/
 
-        var html = $"Hej {user.FirstName} {user.LastName}<br><br>" +
-                   "Du har valgt at nulstille din adgangskode til Microting.<br>" +
-                   "Klik på nedenstående link for at angive en ny adgangskode.<br><br>" +
-                   $"<a href=\" {link}\">Angiv ny adgangskode</a><br><br>" +
-                   "Hvis du ikke har anmodet om dette, så se venligst bort fra denne mail.<br><br>" +
-                   "Din adgangskode forbliver uændret, indtil du laver en ny via linket herover.<br><br>" +
-                   "Med venlig hilsen<br><br>" +
-                   "Microting<br><br>" +
-                   "Support: 66 11 10 66";
+        var html = string.Format(_localizationService.GetString("ForgotPasswordEmailHtml"),
+            user.FirstName,
+            user.LastName,
+            link);
 
         await _emailService.SendAsync(
             EformEmailConst.FromEmail,
             "no-reply@microting.com",
-            "Nulstilling af adgangskode",
+            _localizationService.GetString("ForgotPasswordEmailSubject"),
             user.Email,
             html: html);
 

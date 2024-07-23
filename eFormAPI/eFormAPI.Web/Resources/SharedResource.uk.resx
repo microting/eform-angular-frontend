@@ -755,4 +755,23 @@
   <data name="PasswordSuccessfullyUpdated" xml:space="preserve">
     <value>Пароль оновлено</value>
   </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Користувача з {0} не знайдено</value>
+  </data>
+  <data name="ForgotPasswordEmailSubject" xml:space="preserve">
+    <value>Скидання пароля</value>
+  </data>
+  <data name="ForgotPasswordEmailHtml" xml:space="preserve">
+    <value><![CDATA[
+      Привіт {0} {1},<br><br>
+      Ви запросили скидання пароля для Microting.<br>
+      Натисніть на посилання нижче, щоб встановити новий пароль.<br><br>
+      <a href="{2}">Встановити новий пароль</a><br><br>
+      Якщо ви не запитували цього, будь ласка, ігноруйте цей лист.<br><br>
+      Ваш пароль залишиться незмінним, доки ви не встановите новий через посилання вище.<br><br>
+      З найкращими побажаннями,<br><br>
+      Microting<br><br>
+      Підтримка: 66 11 10 66
+    ]]></value>
+  </data>
 </root>

@@ -747,4 +747,23 @@
   <data name="PasswordSuccessfullyUpdated" xml:space="preserve">
     <value>Passwort aktualisiert</value>
   </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Benutzer mit {0} nicht gefunden</value>
+  </data>
+  <data name="ForgotPasswordEmailSubject" xml:space="preserve">
+    <value>Passwort zurücksetzen</value>
+  </data>
+  <data name="ForgotPasswordEmailHtml" xml:space="preserve">
+    <value><![CDATA[
+      Hallo {0} {1},<br><br>
+      Sie haben angefordert, Ihr Passwort für Microting zurückzusetzen.<br>
+      Klicken Sie auf den unten stehenden Link, um ein neues Passwort festzulegen.<br><br>
+      <a href="{2}">Neues Passwort festlegen</a><br><br>
+      Wenn Sie dies nicht angefordert haben, ignorieren Sie bitte diese E-Mail.<br><br>
+      Ihr Passwort bleibt unverändert, bis Sie über den obigen Link ein neues festlegen.<br><br>
+      Mit freundlichen Grüßen,<br><br>
+      Microting<br><br>
+      Support: 66 11 10 66
+    ]]></value>
+  </data>
 </root>
