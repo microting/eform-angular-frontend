@@ -155,7 +155,7 @@ export const deDE = {
   Language: 'Sprache',
   'Force users to use 2-f-auth': 'Erzwingen Sie, dass Benutzer 2-f-auth verwenden',
   'Old password': 'Altes Kennwort',
-  'New password': 'Neues Passwort (mindestens 6 Zeichen)',
+  'New password': 'Neues Passwort',
   'New password confirmation': 'Neue Passwortbestätigung (mindestens 6 Zeichen)',
   'Confirm new password': 'Neues Passwort bestätigen (mindestens 6 Zeichen)',
   'Enter new password': 'Geben Sie ein neues Passwort ein (mindestens 6 Zeichen)',

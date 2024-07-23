@@ -155,7 +155,7 @@ export const skSK = {
   Language: 'Jazyk',
   'Force users to use 2-f-auth': 'Vynútiť používateľom používanie 2-f-auth',
   'Old password': 'Staré heslo',
-  'New password': 'Nové heslo (min. 6 znakov)',
+  'New password': 'Nové heslo',
   'New password confirmation': 'Potvrdenie nového hesla (min. 6 znakov)',
   'Confirm new password': 'Potvrďte nové heslo (min. 6 znakov)',
   'Enter new password': 'Zadajte nové heslo (min. 6 znakov)',

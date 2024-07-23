@@ -152,7 +152,7 @@ export const da = {
   Language: 'Sprog',
   'Force users to use 2-f-auth': 'Tving brugere til at bruge tofaktorautentisering (2-f-auth)',
   'Old password': 'Gammel adgangskode',
-  'New password': 'Ny adgangskode (mindst 6 tegn)',
+  'New password': 'Ny adgangskode',
   'New password confirmation': 'Gentag ny adgangskode (mindst 6 tegn)',
   'Confirm Password': 'Gentag ny adgangskode',
   'Confirm new password': 'Bekræft ny adgangskode',

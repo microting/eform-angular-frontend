@@ -155,7 +155,7 @@ export const etET = {
   Language: 'Keel',
   'Force users to use 2-f-auth': 'Sundida kasutajaid kasutama 2-f-auth',
   'Old password': 'Vana parool',
-  'New password': 'Uus parool (vähemalt 6 tähemärki)',
+  'New password': 'Uus parool',
   'New password confirmation': 'Uue parooli kinnitus (vähemalt 6 tähemärki)',
   'Confirm new password': 'Kinnitage uus parool (vähemalt 6 tähemärki)',
   'Enter new password': 'Sisestage uus parool (vähemalt 6 tähemärki)',

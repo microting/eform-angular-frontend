@@ -155,7 +155,7 @@ export const ltLT = {
   Language: 'Kalba',
   'Force users to use 2-f-auth': 'Priverskite vartotojus naudoti 2-f-auth',
   'Old password': 'Senas slaptažodis',
-  'New password': 'Naujas slaptažodis (mažiausiai 6 simboliai)',
+  'New password': 'Naujas slaptažodis',
   'New password confirmation': 'Naujo slaptažodžio patvirtinimas (mažiausiai 6 simboliai)',
   'Confirm new password': 'Patvirtinkite naują slaptažodį (mažiausiai 6 simboliai)',
   'Enter new password': 'Įveskite naują slaptažodį (mažiausiai 6 simboliai)',

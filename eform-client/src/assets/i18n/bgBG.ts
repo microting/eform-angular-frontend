@@ -155,7 +155,7 @@ export const bgBG = {
   Language: 'език',
   'Force users to use 2-f-auth': 'Принуждавайте потребителите да използват 2-f-auth',
   'Old password': 'Стара парола',
-  'New password': 'Нова парола (мин. 6 знака)',
+  'New password': 'Нова парола',
   'New password confirmation': 'Потвърждение на нова парола (мин. 6 знака)',
   'Confirm new password': 'Потвърдете новата парола (мин. 6 знака)',
   'Enter new password': 'Въведете нова парола (мин. 6 знака)',
