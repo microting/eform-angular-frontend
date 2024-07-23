@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Admin felhasználó nem található</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Nem lehet megnyitni az adatbázist</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Az elsődleges adminisztrátor felhasználó nem törölhető</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Nem lehet beolvasni a beállításokat a web.config fájlból</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Nem lehet frissíteni a web.config beállításait</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>A tokot nem lehetett eltávolítani</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Az esetet nem sikerült frissíteni</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Az ügy frissítve lett</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Az ügy betöltése nem sikerült</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>A(z) {0}. számú eset sikeresen törölve</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Ellenőrizze a csatlakozási karakterláncot</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>A folytatás előtt ellenőrizze a beállításokat</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Az oszlopok frissítve lettek</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>A kapcsolati karakterlánc már létezik</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>A Core nem indul el</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Nem sikerült beírni a kapcsolati karakterláncot a /bin/Input.txt fájlba</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Az eszközfelhasználót nem sikerült létrehozni</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Az ilyen felhasználói felülettel rendelkező eszközfelhasználót nem sikerült megszerezni</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Az eszköz felhasználóját nem sikerült frissíteni</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Az eszköz felhasználói felhasználói felülete nem található</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>A(z) „{0}” azonosítójú eszközfelhasználót nem sikerült törölni</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>A(z) "{0}" eszközfelhasználó nem törölhető</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>A(z) {0} azonosítójú eszközfelhasználó nem szerkeszthető</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>A(z) {0} azonosítójú eszközfelhasználót nem sikerült frissíteni</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>„{0}” eszközfelhasználó sikeresen létrehozva</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>„{0}” eszközfelhasználó sikeresen törölve</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Az eszközfelhasználó sikeresen frissítve</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>Nem sikerült létrehozni az e-űrlapot</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>A(z) "{0}" e-űrlap nem törölhető</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>A(z) "{0}" e-űrlap sikeresen létrehozva</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>A(z) "{0}" e-űrlap sikeresen törölve</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Hiba a kereshető lista törlésekor</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Hiba a kereshető lista lekérésekor</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Hiba az új jelszó hozzáadása közben</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Hiba történt az SDK fájl létrehozásakor</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Hiba a(z) „{0}” címke létrehozásakor</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Hiba a felhasználó létrehozásakor</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Hiba a dolgozó létrehozásakor</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Hiba a kiválasztható lista törlésekor</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Hiba a címke törlése közben</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Hiba történt a felhasználó törlése közben</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Hiba az oszlopok lekérésekor</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Hiba a kiválasztható lista lekérésekor</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Hiba a címkék beszerzése közben</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Hiba a felhasználók lekérésekor</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Hiba a régi jelszó eltávolítása közben</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Hiba a kép elforgatásakor</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Hiba az oszlopok frissítésekor</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Hiba a felhasználói PSK frissítésekor</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Hiba a sabloncímkék frissítésekor</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Hiba a felhasználó frissítésekor</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Fájl nem található</value>
+    </data>
+    <data name="FolderError">
+        <value>Mappa hiba</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>A kép sikeresen törölve</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>A kép nem lett törölve</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>A kép sikeresen elforgatva</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Érvénytelen kérelem</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Érvénytelen biztonsági kód</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>Érvénytelen felhasználónév vagy jelszó</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>A fő kapcsolati karakterlánc érvénytelen</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Az új OTP sikeresen létrehozva</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} sikeresen létrehozva</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} sikeresen törölve</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>„{0}” sikeresen párosítva</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} frissítve</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Kérjük, állítsa be a biztonsági kódot a szerveren</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>A kötelező mezők nincsenek kitöltve</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Szerep szükséges</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>Az SDK-kapcsolati karakterlánc érvénytelen</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>A kereshető lista létrehozása nem sikerült</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>A kereshető lista betöltése nem sikerült</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>A kiválasztható csoport betöltése nem sikerült</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>A kiválasztható lista létrehozása nem sikerült</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>A beállítások frissítése sikeresen megtörtént</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>A(z) "{0}" webhely nem törölhető</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>A(z) {0} azonosítójú webhely nem frissíthető</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>A(z) "{0}" webhely sikeresen törölve</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>A(z) {0} azonosítójú webhely nem található</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>A(z) {0} azonosítójú dolgozót nem sikerült törölni</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>A címke sikeresen törölve</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>"{0}" címke sikeresen létrehozva</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>A sabloncímkék frissítése sikeresen megtörtént</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>A(z) „{0}” egység OTP-kérelme nem teljesíthető</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Az egység sikeresen létrehozva</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Hiba az egység létrehozásakor</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>A felhasználó név vagy jelszó helytelen</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Felhasználó nem található</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>{0} felhasználó nem található</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>{0} felhasználó törölve</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>A(z) {0} felhasználó már létezik</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>A(z) {0} felhasználó létrejött</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>{0} felhasználó frissítve</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>A(z) "{0 {1}" dolgozó nem törölhető</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>A(z) {0} azonosítójú dolgozót nem lehet frissíteni</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>"{0} {1}" dolgozó sikeresen törölve</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>A(z) {0} azonosítójú dolgozó frissítve</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Munkavállaló sikeresen létrehozva</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>További egységek hozzáadásához további licenceket kell vásárolnia.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Az Ön e-mail címe: {0}. A jelszó visszaállítva.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Biztonsági csoport nem található</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Nem tekintheti meg, módosíthatja vagy törölheti az adminisztrátort</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Hiba az engedélyek beszerzése közben</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Hiba az engedélyek frissítésekor</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Az engedélyek sikeresen frissítve</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>A kapcsolati karakterlánc nem létezik</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>Az e-űrlap már a csoportban van</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>Az elektronikus űrlapot törölték a csoportból</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>Az e-űrlap nem található</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Hiba az eform csoporthoz kötésekor</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Hiba a biztonsági csoport létrehozásakor</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Hiba történt az e-űrlap csoportból való törlésekor</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Hiba a biztonsági csoport törlése közben</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Hiba az elérhető e-űrlapok beszerzése közben</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Hiba történt az elektronikus űrlap adatainak lekérése közben</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Hiba a biztonsági csoport lekérése közben</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Hiba a biztonsági csoportok lekérése közben</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Hiba a felhasználói menü lekérésekor</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Hiba a biztonsági csoport frissítésekor</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Az eform engedélye frissítve lett</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>A biztonsági csoport sikeresen létrehozva</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>A biztonsági csoport neve üres</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>A biztonsági csoport sikeresen eltávolítva</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>A biztonsági csoport sikeresen frissítve</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Hiba a mentett címkék lekérése közben</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Hiba történt a mentett címkék eltávolítása közben</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Hiba a címke mentése közben</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Érvénytelen címkeazonosító</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Érvénytelen címkenév</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>A mentett címke nem található</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>A címke már mentve</value>
+    </data>
+    <data name="Advanced">
+        <value>Fejlett</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Alkalmazás beállítások</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Jelszó módosítása</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Eszközfelhasználók</value>
+    </data>
+    <data name="Logout">
+        <value>Kijelentkezés</value>
+    </data>
+    <data name="MyEforms">
+        <value>Saját e-űrlapjaim</value>
+    </data>
+    <data name="SearchableList">
+        <value>Kereshető lista</value>
+    </data>
+    <data name="Security">
+        <value>Biztonság</value>
+    </data>
+    <data name="SelectableList">
+        <value>Választható lista</value>
+    </data>
+    <data name="Settings">
+        <value>Beállítások</value>
+    </data>
+    <data name="Sites">
+        <value>Webhelyek</value>
+    </data>
+    <data name="Units">
+        <value>Egységek</value>
+    </data>
+    <data name="UserManagement">
+        <value>Felhasználókezelés</value>
+    </data>
+    <data name="Workers">
+        <value>Munkások</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Beépülő modulok</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Az Eform jelentés nem található</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>Az elemlista nincs megadva</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Hiba történt a jelentés adatainak lekérése közben</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Hiba a jelentés frissítésekor</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>A jelentés sikeresen frissítve</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>A sablon nem található</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Hiba a bővítmények betöltése közben</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Hiba a bővítmény beállításainak frissítésekor</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>A beépülő modul nem található</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Nem tekintheti meg, nem módosíthatja vagy törölheti az elsődleges rendszergazdát</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Az elsődleges rendszergazda szerepköre nem módosítható</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>A szerepkör nem található</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Hiba a bővítmény telepítése közben</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Hiba a beépülő modulok listája lekérése közben</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Hiba a webhelyek lekérésekor</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Hiba a címkék frissítésekor</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Címke nem található</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>A címke sikeresen frissítve</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>E-mail címzettek</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>Az e-mail címzett sikeresen létrehozva</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Az e-mail címzettje nem található</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>Az e-mail címzettje sikeresen eltávolítva</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>Az e-mail címzettje sikeresen frissítve</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>Az e-mail címke sikeresen létrehozva</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>Az e-mail címke nem található</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>Az e-mail címke sikeresen eltávolítva</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>Az e-mail címke sikeresen frissítve</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Hiba történt az e-mail címzettjének létrehozásakor</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Hiba az e-mail címke létrehozásakor</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Hiba az e-mail címzettjeinek lekérése közben</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Hiba az e-mail címke lekérésekor</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Hiba történt az e-mail címzettjének eltávolítása közben</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Hiba történt az e-mail címke eltávolítása közben</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Hiba történt az e-mail címzettjének frissítésekor</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Hiba az e-mail címke frissítésekor</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Hiba a bejegyzés létrehozásakor</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Hiba a bejegyzések beolvasása közben</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Hiba történt a bejegyzés megtekintési adatainak lekérése közben</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>A bejegyzés sikeresen létrehozva</value>
+    </data>
+    <data name="PostNotFound">
+        <value>A bejegyzés nem található</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Az eset nem található</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>A SendGrid kulcsot hozzá kell adni a beállításokhoz</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Adat nem található!</value>
+    </data>
+    <data name="eFormReport">
+        <value>e-űrlap jelentés</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Hiba az excel fájl exportálása közben!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Az Excel sablon nem található a tárhelyen!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Hiba a mappa létrehozásakor</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Hiba történt a mappák adatainak lekérése közben</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Hiba a mappa eltávolítása közben</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Hiba a mappa frissítése közben</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>A mappa nem található</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>A navigációs menü sikeresen frissítve.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Az importálás sikeresen befejeződött</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>A(z) {0} nevű e-űrlap már létezik</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>A(z) {0} nevű e-űrlap már létezik az importált dokumentumban</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Az esetek nem találhatók</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Hiba a jelentésfájl generálásakor</value>
+    </data>
+    <data name="CaseId">
+        <value>Ügyazonosító</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Létrehozva:</value>
+    </data>
+    <data name="DoneBy">
+        <value>Által végzett</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Jelentés időszaka</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Hiba a címke frissítése közben</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>A kép sikeresen frissítve</value>
+    </data>
+    <data name="Folders">
+        <value>Mappák</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>Az e-űrlap frissítve</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>e-űrlap létrehozva</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>A jelszó sikeresen frissítve</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Jelszó visszaállítása</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Szia {0} {1}!&lt;br&gt;&lt;br&gt; A Microting jelszavának visszaállítását kérte.&lt;br&gt; Új jelszó
+            beállításához kattintson az alábbi linkre.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Állítson be új jelszót&lt;/a&gt;&lt;br&gt;&lt;br&gt;
+            Ha nem Ön kérte ezt, kérjük, hagyja figyelmen kívül ezt az e-mailt.&lt;br&gt;&lt;br&gt; Jelszava változatlan
+            marad mindaddig, amíg be nem állít egy újat a fenti linken keresztül.&lt;br&gt;&lt;br&gt; Üdvözlettel,&lt;br&gt;&lt;br&gt;
+            Mikroálás&lt;br&gt;&lt;br&gt; Támogatás: 66 11 10 66
+        </value>
+    </data>
+</root>

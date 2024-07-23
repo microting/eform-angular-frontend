@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Administratorbruker ikke funnet</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Kan ikke åpne databasen</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Kan ikke slette primær administratorbruker</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Kan ikke hente innstillinger fra web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Kan ikke oppdatere innstillingene i web.config</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Saken kunne ikke fjernes</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Saken kunne ikke oppdateres</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Saken er oppdatert</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Sakslasting mislyktes</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Sak #{0} ble slettet</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Sjekk tilkoblingsstrengen</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Sjekk innstillingene før du fortsetter</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Kolonnene ble oppdatert</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Tilkoblingsstrengen eksisterer allerede</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Core er ikke startet</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Kunne ikke skrive tilkoblingsstreng i /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Enhetsbruker kunne ikke opprettes</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Enhetsbruker med slik UId kunne ikke skaffes</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Enhetsbruker kunne ikke oppdateres</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Finner ikke enhetens brukergrensesnitt</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Enhetsbruker med ID "{0}" kunne ikke slettes</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Enhetsbruker «{0}» kunne ikke slettes</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Enhetsbruker med ID {0} kunne ikke redigeres</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Enhetsbruker med ID {0} kunne ikke oppdateres</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Enhetsbrukeren «{0}» ble opprettet</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Enhetsbruker «{0}» ble slettet</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Enhetsbruker er oppdatert</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>eForm kunne ikke opprettes</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>eForm "{0}" kunne ikke slettes</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>eForm "{0}" ble opprettet</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>eForm "{0}" ble slettet</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Feil ved sletting av søkbar liste</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Feil ved henting av søkbar liste</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Feil under å legge til nytt passord</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Feil under oppretting av fil for SDK</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Feil under oppretting av «{0}»-taggen</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Feil ved opprettelse av bruker</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Feil under oppretting av arbeider</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Feil ved sletting av valgbar liste</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Feil under sletting av tag</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Feil under sletting av bruker</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Feil under innhenting av kolonner</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Feil ved henting av valgbar liste</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Feil under innhenting av tagger</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Feil ved innhenting av brukere</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Feil under fjerning av gammelt passord</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Feil under rotering av bildet</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Feil under oppdatering av kolonner</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Feil under oppdatering av bruker PSK</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Feil under oppdatering av maletiketter</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Feil ved oppdatering av bruker</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Fil ikke funnet</value>
+    </data>
+    <data name="FolderError">
+        <value>Mappefeil</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Bildet ble slettet</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Bildet ble ikke slettet</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Bildet ble rotert</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Ugyldig forespørsel</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Ugyldig sikkerhetskode</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>Ugyldig brukernavn eller passord</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Hovedtilkoblingsstrengen er ugyldig</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Ny engangskode opprettet</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} ble opprettet</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} ble slettet</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>«{0}» ble sammenkoblet</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} oppdatert</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Vennligst konfigurer sikkerhetskoden på serveren</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Obligatoriske felter fylles ikke ut</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Rolle er påkrevd</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>SDK-tilkoblingsstrengen er ugyldig</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Opprettelsen av en søkbar liste mislyktes</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Søkbar listeinnlasting mislyktes</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Valgbar gruppeinnlasting mislyktes</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Oppretting av valgbar liste mislyktes</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Innstillingene ble oppdatert</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Nettstedet "{0}" kunne ikke slettes</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Nettstedet med ID {0} kunne ikke oppdateres</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Nettstedet "{0}" ble slettet</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Fant ikke nettsted med ID {0}</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Arbeider med ID {0} kunne ikke slettes</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Taggen er slettet</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Taggen «{0}» ble opprettet</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Malkoder ble oppdatert</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Enhet "{0}" OTP-forespørsel kunne ikke fullføres</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Enheten ble opprettet</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Feil under oppretting av enhet</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Brukernavn eller passord er feil</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Bruker ikke funnet</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Finner ikke brukeren {0}</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Bruker {0} ble slettet</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Brukeren {0} eksisterer allerede</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Brukeren {0} ble opprettet</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Bruker {0} ble oppdatert</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Arbeider «{0 {1}» kan ikke slettes</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Arbeider med ID {0} kan ikke oppdateres</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Arbeider «{0} {1}» ble slettet</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Arbeider med ID {0} ble oppdatert</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Arbeider ble opprettet</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Du må kjøpe flere lisenser for å legge til flere enheter.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Din e-post: {0}. Passordet er tilbakestilt.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Finner ikke sikkerhetsgruppen</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Du kan ikke se, endre eller slette admin</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Feil under innhenting av tillatelser</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Feil under oppdatering av tillatelser</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Tillatelsene ble oppdatert</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Tilkoblingsstrengen eksisterer ikke</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>eForm allerede i gruppe</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>eForm er slettet fra gruppen</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>eForm ikke funnet</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Feil under binding av eform til gruppe</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Feil under opprettelse av sikkerhetsgruppe</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Feil under sletting av eform fra gruppen</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Feil under sletting av sikkerhetsgruppe</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Feil under henting av tilgjengelige e-skjemaer</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Feil under innhenting av eform info</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Feil under henting av sikkerhetsgruppe</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Feil under henting av sikkerhetsgrupper</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Feil under henting av brukermenyen</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Feil under oppdatering av sikkerhetsgruppe</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Tillatelse til eform er oppdatert</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Sikkerhetsgruppen ble opprettet</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Sikkerhetsgruppenavnet er tomt</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Sikkerhetsgruppen ble fjernet</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Sikkerhetsgruppen ble oppdatert</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Feil under henting av lagrede tagger</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Feil under fjerning av lagrede tagger</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Feil under lagring av tag</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Ugyldig tag-ID</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Ugyldig merkenavn</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Lagret tag ble ikke funnet</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Tagget er allerede lagret</value>
+    </data>
+    <data name="Advanced">
+        <value>Avansert</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Applikasjon innstillinger</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Bytt passord</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Enhetsbrukere</value>
+    </data>
+    <data name="Logout">
+        <value>Logg ut</value>
+    </data>
+    <data name="MyEforms">
+        <value>Mine e-skjemaer</value>
+    </data>
+    <data name="SearchableList">
+        <value>Søkbar liste</value>
+    </data>
+    <data name="Security">
+        <value>Sikkerhet</value>
+    </data>
+    <data name="SelectableList">
+        <value>Valgbar liste</value>
+    </data>
+    <data name="Settings">
+        <value>Innstillinger</value>
+    </data>
+    <data name="Sites">
+        <value>Nettsteder</value>
+    </data>
+    <data name="Units">
+        <value>Enheter</value>
+    </data>
+    <data name="UserManagement">
+        <value>brukeradministrasjon</value>
+    </data>
+    <data name="Workers">
+        <value>Arbeidere</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Plugins</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Eform-rapport ikke funnet</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>Elementliste ikke oppgitt</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Feil under innhenting av rapportinformasjon</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Feil under oppdatering av rapporten</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Rapporten er oppdatert</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Malen ble ikke funnet</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Feil under innlasting av plugins</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Feil under oppdatering av plugin-innstillingene</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Finner ikke plugin</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Du kan ikke se, endre eller slette primær administrator</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Det er ikke mulig å endre rolle for primær administrator</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Rollen ble ikke funnet</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Feil under utføring av plugin-installasjon</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Feil under henting av programtilleggsliste</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Feil under henting av nettsteder</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Feil under oppdatering av tagger</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Merket ble ikke funnet</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Taggen er oppdatert</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>E-postmottakere</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>E-postmottaker opprettet</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Finner ikke e-postmottaker</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>E-postmottakeren ble fjernet</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>E-postmottakeren er oppdatert</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>E-post-tag ble opprettet</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>Finner ikke e-post-tag</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>E-post-tag ble fjernet</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>E-postkoden ble oppdatert</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Feil under oppretting av e-postmottaker</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Feil under oppretting av e-post-tag</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Feil under henting av e-postmottakere</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Feil under henting av e-post-tag</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Feil under fjerning av e-postmottaker</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Feil under fjerning av e-post-tag</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Feil under oppdatering av e-postmottaker</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Feil under oppdatering av e-post-tag</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Feil under oppretting av innlegg</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Feil under henting av innlegg</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Feil under innhenting av postvisningsinformasjon</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Innlegget ble opprettet</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Finner ikke innlegget</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Saken ble ikke funnet</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>SendGrid-nøkkelen skal legges til i innstillingene</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Data ikke funnet!</value>
+    </data>
+    <data name="eFormReport">
+        <value>eForm rapport</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Feil under eksport av excel-fil!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Finner ikke Excel-mal i lagring!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Feil under oppretting av mappe</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Feil under innhenting av mappeinformasjon</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Feil under fjerning av mappe</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Feil under oppdatering av mappe</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Finner ikke mappe</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Navigasjonsmenyen ble oppdatert.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Importen er fullført</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>eForm med navnet {0} eksisterer allerede</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>eForm med navnet {0} finnes allerede i det importerte dokumentet</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Saker ikke funnet</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Feil under generering av rapportfil</value>
+    </data>
+    <data name="CaseId">
+        <value>Saks-ID</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Opprettet kl</value>
+    </data>
+    <data name="DoneBy">
+        <value>Gjøres ved å</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Rapportperiode</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Feil under oppdatering av taggen</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Bildet ble oppdatert</value>
+    </data>
+    <data name="Folders">
+        <value>Mapper</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>eForm oppdatert</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>eForm opprettet</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Passordet ble oppdatert</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Reset passord</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Hei {0} {1}&lt;br&gt;&lt;br&gt; Du har bedt om å tilbakestille passordet ditt for Microting.&lt;br&gt; Klikk
+            på lenken nedenfor for å angi et nytt passord.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Angi nytt passord&lt;/a&gt;&lt;br&gt;&lt;br&gt;
+            Hvis du ikke har bedt om dette, kan du ignorere denne e-posten.&lt;br&gt;&lt;br&gt; Passordet ditt forblir
+            uendret til du angir et nytt via lenken ovenfor.&lt;br&gt;&lt;br&gt; Med vennlig hilsen,&lt;br&gt;&lt;br&gt;
+            Mikroting&lt;br&gt;&lt;br&gt; Support: 66 11 10 66
+        </value>
+    </data>
+</root>

@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Administraatorist kasutajat ei leitud</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Andmebaasi ei saa avada</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Peamist administraatorist kasutajat ei saa kustutada</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Seadeid ei saa saidilt web.config hankida</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Web.config seadeid ei saa värskendada</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Korpust ei saanud eemaldada</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Juhtumit ei saanud värskendada</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Juhtumit on värskendatud</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Juhtumi laadimine ebaõnnestus</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Juhtumi nr {0} kustutamine õnnestus</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Kontrollige ühenduse stringi</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Enne jätkamist kontrollige seadeid</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Veerge värskendati</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Ühendusstring on juba olemas</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Tuum ei ole käivitatud</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Ühendusstringi ei saanud faili /bin/Input.txt kirjutada</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Seadme kasutajat ei saanud luua</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Sellise UI-ga seadme kasutajat ei õnnestunud hankida</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Seadme kasutajat ei saanud värskendada</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Seadme kasutaja UI-d ei leitud</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Seadme kasutajat ID-ga "{0}" ei saanud kustutada</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Seadme kasutajat "{0}" ei saanud kustutada</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Seadme kasutajat ID-ga {0} ei saanud redigeerida</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Seadme kasutajat ID-ga {0} ei saanud värskendada</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Seadme kasutaja "{0}" loomine õnnestus</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Seadme kasutaja "{0}" kustutamine õnnestus</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Seadme kasutaja värskendamine õnnestus</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>E-vormi ei saanud luua</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>E-vormi "{0}" ei saanud kustutada</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>E-vorm "{0}" on edukalt loodud</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>E-vorm "{0}" kustutati edukalt</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Viga otsitava loendi kustutamisel</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Viga otsitava loendi hankimisel</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Viga uue parooli lisamisel</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Viga SDK faili loomisel</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Viga märgendi "{0}" loomisel</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Viga kasutaja loomisel</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Viga töötaja loomisel</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Viga valitava loendi kustutamisel</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Viga sildi kustutamisel</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Viga kasutaja kustutamisel</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Viga veergude hankimisel</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Viga valitava loendi hankimisel</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Viga siltide hankimisel</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Viga kasutajate hankimisel</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Viga vana parooli eemaldamisel</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Viga pildi pööramisel</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Viga veergude värskendamisel</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Viga kasutaja PSK värskendamisel</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Viga malli siltide värskendamisel</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Viga kasutaja värskendamisel</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Faili ei leitud</value>
+    </data>
+    <data name="FolderError">
+        <value>Kausta viga</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Pildi kustutamine õnnestus</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Pilti ei kustutatud</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Pildi pööramine õnnestus</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Kehtetu taotlus</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Vale turvakood</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>Vale kasutajanimi või parool</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Peamine ühenduse string on kehtetu</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Uus OTP loodud õnnestus</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} loodud edukalt</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} kustutati edukalt</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>"{0}" on edukalt seotud</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} on värskendatud</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Seadistage serveris turvakood</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Kohustuslikud väljad ei ole täidetud</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Roll on nõutav</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>SDK ühenduse string on kehtetu</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Otsitava loendi loomine ebaõnnestus</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Otsitava loendi laadimine ebaõnnestus</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Valitava rühma laadimine ebaõnnestus</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Valitava loendi loomine ebaõnnestus</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Seadete värskendamine õnnestus</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Saiti "{0}" ei saanud kustutada</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Saiti ID-ga {0} ei saanud värskendada</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Saidi "{0}" kustutamine õnnestus</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Saiti ID-ga {0} ei leitud</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Töötajat ID-ga {0} ei saanud kustutada</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Sildi kustutamine õnnestus</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Märgendi "{0}" loomine õnnestus</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Malli siltide värskendamine õnnestus</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Üksuse „{0}” OTP-taotlust ei saanud täita</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Üksus on edukalt loodud</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Viga üksuse loomisel</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Kasutajanimi või parool on vale</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Kasutajat ei leitud</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Kasutajat {0} ei leitud</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Kasutaja {0} kustutati</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Kasutaja {0} on juba olemas</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Kasutaja {0} on loodud</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Kasutajat {0} värskendati</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Töötajat "{0 {1}" ei saa kustutada</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Töötajat ID-ga {0} ei saa värskendada</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Töötaja "{0} {1}" kustutamine õnnestus</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Töötaja ID-ga {0} on värskendatud</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Töötaja loomine õnnestus</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Täiendavate üksuste lisamiseks peate ostma rohkem litsentse.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Teie e-posti aadress: {0}. Parool on lähtestatud.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Turvagruppi ei leitud</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Te ei saa administraatorit vaadata, muuta ega kustutada</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Lubade hankimisel tekkis viga</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Lubade värskendamisel ilmnes viga</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Lubade värskendamine õnnestus</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Ühendusstringi ei eksisteeri</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>e-vorm juba rühmas</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>E-vorm on rühmast kustutatud</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>E-vormi ei leitud</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Viga e-vormi sidumisel rühmaga</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Viga turvarühma loomisel</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>E-vormi rühmast kustutamisel tekkis viga</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Viga turvarühma kustutamisel</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Viga saadaolevate e-vormide hankimisel</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Viga e-vormi teabe hankimisel</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Viga turvarühma hankimisel</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Viga turvarühmade hankimisel</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Viga kasutajamenüü hankimisel</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Viga turvarühma värskendamisel</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>E-vormi luba on värskendatud</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Turvarühma loomine õnnestus</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Turvagrupi nimi on tühi</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Turvarühma eemaldamine õnnestus</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Turvarühma värskendamine õnnestus</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Viga salvestatud siltide hankimisel</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Viga salvestatud siltide eemaldamisel</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Viga sildi salvestamisel</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Kehtetu sildi ID</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Kehtetu sildi nimi</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Salvestatud silti ei leitud</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Silt on juba salvestatud</value>
+    </data>
+    <data name="Advanced">
+        <value>Täiustatud</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Rakenduse seaded</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Muuda salasõna</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Seadme kasutajad</value>
+    </data>
+    <data name="Logout">
+        <value>Logi välja</value>
+    </data>
+    <data name="MyEforms">
+        <value>Minu e-vormid</value>
+    </data>
+    <data name="SearchableList">
+        <value>Otsitav nimekiri</value>
+    </data>
+    <data name="Security">
+        <value>Turvalisus</value>
+    </data>
+    <data name="SelectableList">
+        <value>Valitav loend</value>
+    </data>
+    <data name="Settings">
+        <value>Seaded</value>
+    </data>
+    <data name="Sites">
+        <value>saidid</value>
+    </data>
+    <data name="Units">
+        <value>Ühikud</value>
+    </data>
+    <data name="UserManagement">
+        <value>Kasutajate haldamine</value>
+    </data>
+    <data name="Workers">
+        <value>Töölised</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Pluginad</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Eformi aruannet ei leitud</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>Elementide loendit ei pakuta</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Viga aruande teabe hankimisel</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Viga aruande värskendamisel</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Aruande värskendamine õnnestus</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Malli ei leitud</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Viga pistikprogrammide laadimisel</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Viga pistikprogrammi seadete värskendamisel</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Pluginat ei leitud</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Peamist administraatorit ei saa vaadata, muuta ega kustutada</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Peamise administraatori rolli ei ole võimalik muuta</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Rolli ei leitud</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Viga pistikprogrammi installimisel</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Viga pistikprogrammide loendi hankimisel</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Viga saitide hankimisel</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Viga siltide värskendamisel</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Märgendit ei leitud</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Märgendi värskendamine õnnestus</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>Meili saajad</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>Meili adressaadi loomine õnnestus</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Meili adressaati ei leitud</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>Meili saaja eemaldamine õnnestus</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>Meili adressaadi värskendamine õnnestus</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>Meilimärgendi loomine õnnestus</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>E-posti märgendit ei leitud</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>E-posti märgendi eemaldamine õnnestus</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>E-posti märgendi värskendamine õnnestus</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Viga meili adressaadi loomisel</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Viga meilisildi loomisel</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Viga meili adressaatide hankimisel</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Viga meilisildi hankimisel</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Viga meili adressaadi eemaldamisel</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Viga meili märgendi eemaldamisel</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Viga meili adressaadi värskendamisel</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Viga meilimärgendi värskendamisel</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Viga postituse loomisel</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Viga postituste hankimisel</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Viga postituse kuvamise teabe hankimisel</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Postituse loomine õnnestus</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Postitust ei leitud</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Juhtumit ei leitud</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>SendGridi võti tuleks lisada seadetesse</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Andmeid ei leitud!</value>
+    </data>
+    <data name="eFormReport">
+        <value>e-vormi aruanne</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Viga Exceli faili eksportimisel!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Exceli malli ei leitud laost!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Viga kausta loomisel</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Viga kaustade teabe hankimisel</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Viga kausta eemaldamisel</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Viga kausta värskendamisel</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Kausta ei leitud</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Navigeerimismenüü värskendamine õnnestus.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Import on edukalt lõpule viidud</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>E-vorm nimega {0} on juba olemas</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>E-vorm nimega {0} on imporditud dokumendis juba olemas</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Juhtumeid ei leitud</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Viga aruandefaili loomisel</value>
+    </data>
+    <data name="CaseId">
+        <value>Juhtumi ID</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Loodud kl</value>
+    </data>
+    <data name="DoneBy">
+        <value>Teostatud</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Aruandeperiood</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Viga sildi värskendamisel</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Pildi värskendamine õnnestus</value>
+    </data>
+    <data name="Folders">
+        <value>Kaustad</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>e-vormi värskendati</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>e-vorm loodud</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Parool edukalt värskendatud</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Parooli lähtestamine</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Tere, {0} {1}!&lt;br&gt;&lt;br&gt; Olete taotlenud Microtingi parooli lähtestamist.&lt;br&gt; Uue parooli
+            määramiseks klõpsake alloleval lingil.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Määra uus parool&lt;/a&gt;&lt;br&gt;&lt;br&gt;
+            Kui te seda ei taotlenud, ignoreerige seda meili.&lt;br&gt;&lt;br&gt; Teie parool jääb muutumatuks, kuni
+            määrate ülaltoodud lingi kaudu uue.&lt;br&gt;&lt;br&gt; Parimate soovidega,&lt;br&gt;&lt;br&gt; Mikrotimine&lt;br&gt;&lt;br&gt;
+            Tugi: 66 11 10 66
+        </value>
+    </data>
+</root>

@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Stjórnandi notandi fannst ekki</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Getur ekki opnað gagnagrunn</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Ekki er hægt að eyða aðalstjórnandanotanda</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Get ekki fengið stillingar frá web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Ekki er hægt að uppfæra stillingar í web.config</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Ekki var hægt að fjarlægja málið</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Ekki tókst að uppfæra mál</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Málið hefur verið uppfært</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Hleðsla máls mistókst</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Máli #{0} eytt</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Athugaðu tengistreng</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Athugaðu stillingar áður en þú heldur áfram</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Dálkar voru uppfærðir</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Tengistrengur er þegar til</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Kjarni er ekki byrjaður</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Gat ekki skrifað tengistreng í /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Ekki tókst að búa til notanda tækisins</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Ekki var hægt að nálgast notanda tækis með slíkt notendaviðmót</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Ekki var hægt að uppfæra notanda tækisins</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Notendaviðmót tækis fannst ekki</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Ekki var hægt að eyða tækisnotanda með auðkenninu „{0}“</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Ekki var hægt að eyða tækisnotandanum „{0}“</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Ekki var hægt að breyta tækisnotanda með auðkenni {0}</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Ekki var hægt að uppfæra notanda tækis með auðkenni {0}</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Tækjanotandinn "{0}" var búinn til</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Tækjanotandanum "{0}" var eytt</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Tækjanotandi uppfærður</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>Ekki var hægt að búa til rafrænt form</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>Ekki var hægt að eyða rafrænu formi „{0}“</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>Rafrænt form "{0}" var búið til</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>Rafrænu forminu "{0}" var eytt</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Villa við að eyða leitarhæfum lista</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Villa við að fá leitarhæfan lista</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Villa við að bæta við nýju lykilorði</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Villa við að búa til skrá fyrir SDK</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Villa við að búa til „{0}“ merki</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Villa við að búa til notanda</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Villa við að búa til starfsmann</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Villa við að eyða lista sem hægt er að velja</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Villa við að eyða merkinu</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Villa við að eyða notanda</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Villa við að sækja dálka</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Villa við að fá valanlegan lista</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Villa við að sækja merki</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Villa við að ná í notendur</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Villa við að fjarlægja gamalt lykilorð</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Villa við að snúa mynd</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Villa við að uppfæra dálka</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Villa við að uppfæra notanda PSK</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Villa við að uppfæra sniðmátsmerki</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Villa við að uppfæra notanda</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Skjal finnst ekki</value>
+    </data>
+    <data name="FolderError">
+        <value>Villa í möppu</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Mynd eytt</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Mynd var ekki eytt</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Myndinni var snúið</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>ógild beiðni</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Ógildur öryggiskóði</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>Rangt notandanafn eða lykilorð</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Aðaltengistrengur er ógildur</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Nýtt OTP búið til</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} búið til</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} eytt</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>„{0}“ var parað</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} uppfært</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Vinsamlegast settu upp öryggiskóða á þjóninum</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Nauðsynlegir reitir eru ekki útfylltir</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Hlutverk er áskilið</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>SDK tengistrengur er ógildur</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Mistókst að búa til leitarhæfan lista</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Mistókst að hlaða lista sem hægt er að leita að</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Hleðsla hóps sem hægt er að velja mistókst</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Mistókst að búa til lista sem hægt er að velja</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Stillingar uppfærðar</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Ekki var hægt að eyða síðunni "{0}".</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Ekki var hægt að uppfæra síðu með auðkenni {0}</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Vefsvæðinu "{0}" eytt</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Vefsvæði með auðkenni {0} fannst ekki</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Ekki var hægt að eyða starfsmanni með auðkennið {0}</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Merki eytt</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Merkið "{0}" búið til</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Sniðmátsmerki voru uppfærð með góðum árangri</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Ekki var hægt að ljúka við beiðni um einingu „{0}“</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Eining var búin til</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Villa við að búa til einingu</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Notandanafn eða lykilorð er rangt</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Notandi finnst ekki</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Notandi {0} fannst ekki</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Notandanum {0} var eytt</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Notandinn {0} er þegar til</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Notandinn {0} var búinn til</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Notandi {0} var uppfærður</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Ekki er hægt að eyða starfsmanni „{0 {1}“</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Ekki er hægt að uppfæra starfsmann með auðkennið {0}</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Vinnumanni „{0} {1}“ var eytt</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Starfsmaður með auðkenni {0} var uppfærður</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Starfsmaður var búinn til</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Þú þarft að kaupa fleiri leyfi til að bæta við fleiri einingum.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Netfangið þitt: {0}. Lykilorð hefur verið endurstillt.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Öryggishópur fannst ekki</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Þú getur ekki skoðað, breytt eða eytt stjórnanda</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Villa við að fá heimildir</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Villa við að uppfæra heimildir</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Heimildir uppfærðar</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Tengistrengur er ekki til</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>eForm þegar í hóp</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>Rafrænu formi hefur verið eytt úr hópnum</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>Rafrænt form fannst ekki</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Villa við að binda eform við hóp</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Villa við að búa til öryggishóp</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Villa við að eyða eform úr hópnum</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Villa við að eyða öryggishópi</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Villa við að sækja tiltæk rafræn eyðublöð</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Villa við að fá upplýsingar um eform</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Villa við að sækja öryggishóp</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Villa við að sækja öryggishópa</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Villa við að sækja notendavalmynd</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Villa við að uppfæra öryggishóp</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Leyfi fyrir eform hefur verið uppfært</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Öryggishópur var búinn til</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Nafn öryggishóps er tómt</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Öryggishópur var fjarlægður</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Öryggishópur uppfærður</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Villa við að sækja vistuð merki</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Villa við að fjarlægja vistuð merki</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Villa við að vista merkið</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Ógilt auðkenni merkis</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Ógilt nafn merkis</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Vistað merki fannst ekki</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Merki þegar vistað</value>
+    </data>
+    <data name="Advanced">
+        <value>Ítarlegri</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Stillingar forrita</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Breyta lykilorði</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Notendur tækis</value>
+    </data>
+    <data name="Logout">
+        <value>Að skrá þig út</value>
+    </data>
+    <data name="MyEforms">
+        <value>E-eyðublöðin mín</value>
+    </data>
+    <data name="SearchableList">
+        <value>Leitanlegur listi</value>
+    </data>
+    <data name="Security">
+        <value>Öryggi</value>
+    </data>
+    <data name="SelectableList">
+        <value>Listi sem hægt er að velja</value>
+    </data>
+    <data name="Settings">
+        <value>Stillingar</value>
+    </data>
+    <data name="Sites">
+        <value>Síður</value>
+    </data>
+    <data name="Units">
+        <value>Einingar</value>
+    </data>
+    <data name="UserManagement">
+        <value>Notendastjórnun</value>
+    </data>
+    <data name="Workers">
+        <value>Verkamenn</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Viðbætur</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Eform skýrsla fannst ekki</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>Elementlisti ekki veittur</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Villa við að sækja skýrsluupplýsingar</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Villa við að uppfæra skýrslu</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Skýrsla uppfærð með góðum árangri</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Sniðmát fannst ekki</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Villa við að hlaða viðbætur</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Villa við að uppfæra stillingar viðbótarinnar</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Viðbót fannst ekki</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Þú getur ekki skoðað, breytt eða eytt aðalstjórnanda</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Það er ekki hægt að skipta um hlutverk fyrir aðalstjórnanda</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Hlutverk fannst ekki</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Villa við að keyra uppsetningu viðbótarinnar</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Villa við að ná í viðbótalista</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Villa við að sækja síður</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Villa við að uppfæra merki</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Merki fannst ekki</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Merki uppfært</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>Viðtakendur tölvupósts</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>Tölvupóstviðtakandi búinn til</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Viðtakandi tölvupósts fannst ekki</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>Viðtakanda tölvupósts tókst að fjarlægja</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>Tölvupóstviðtakandi uppfærður</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>Tölvupóstmerki búið til</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>Tölvupóstmerki fannst ekki</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>Tölvupóstmerki fjarlægt</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>Tölvupóstmerki uppfært</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Villa við að búa til tölvupóstviðtakanda</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Villa við að búa til tölvupóstmerki</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Villa við að ná í viðtakendur tölvupósts</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Villa við að sækja tölvupóstmerki</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Villa við að fjarlægja viðtakanda tölvupósts</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Villa við að fjarlægja tölvupóstmerki</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Villa við að uppfæra viðtakanda tölvupósts</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Villa við að uppfæra tölvupóstmerki</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Villa við að búa til færslu</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Villa við að sækja færslur</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Villa við að sækja upplýsingar um færsluskoðun</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Færslan var búin til</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Færsla fannst ekki</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Mál fannst ekki</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>SendGrid lykli ætti að vera bætt við stillingar</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Gögn fundust ekki!</value>
+    </data>
+    <data name="eFormReport">
+        <value>eForm skýrsla</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Villa við útflutning á excel skrá!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Excel sniðmát fannst ekki í geymslu!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Villa við að búa til möppu</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Villa við að sækja upplýsingar um möppur</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Villa við að fjarlægja möppu</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Villa við að uppfæra möppu</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Mappa fannst ekki</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Leiðsöguvalmynd var uppfærð.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Innflutningi lokið</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>Rafrænt form með nafni {0} er þegar til</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>Rafrænt form með nafni {0} er þegar til í innflutta skjalinu</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Mál fundust ekki</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Villa við að búa til skýrsluskrá</value>
+    </data>
+    <data name="CaseId">
+        <value>Málsauðkenni</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Búið til á</value>
+    </data>
+    <data name="DoneBy">
+        <value>Gert af</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Skýrslutímabil</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Villa við að uppfæra merki</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Mynd var uppfærð</value>
+    </data>
+    <data name="Folders">
+        <value>Möppur</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>eForm uppfært</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>eForm búið til</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Lykilorðið uppfært</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Endurstilla lykilorð</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Hæ {0} {1},&lt;br&gt;&lt;br&gt; Þú hefur beðið um að endurstilla lykilorðið þitt fyrir Microting.&lt;br&gt;
+            Smelltu á hlekkinn hér að neðan til að setja nýtt lykilorð.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Stilltu
+            nýtt lykilorð&lt;/a&gt;&lt;br&gt;&lt;br&gt; Ef þú baðst ekki um þetta skaltu hunsa þennan tölvupóst.&lt;br&gt;&lt;br&gt;
+            Lykilorðið þitt verður óbreytt þar til þú setur nýtt í gegnum hlekkinn hér að ofan.&lt;br&gt;&lt;br&gt;
+            Bestu kveðjur,&lt;br&gt;&lt;br&gt; Microting&lt;br&gt;&lt;br&gt; Stuðningur: 66 11 10 66
+        </value>
+    </data>
+</root>

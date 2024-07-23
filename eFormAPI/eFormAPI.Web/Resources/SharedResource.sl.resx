@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Uporabnika skrbnika ni mogoče najti</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Ni mogoče odpreti baze podatkov</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Primarnega skrbniškega uporabnika ni mogoče izbrisati</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Ni mogoče pridobiti nastavitev iz web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Ni mogoče posodobiti nastavitev v web.config</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Etuija ni bilo mogoče odstraniti</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Primera ni bilo mogoče posodobiti</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Primer je posodobljen</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Nalaganje ohišja ni uspelo</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Primer št. {0} je bil uspešno izbrisan</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Preverite povezovalni niz</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Preverite nastavitve, preden nadaljujete</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Stolpci so bili posodobljeni</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Povezavni niz že obstaja</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Core se ne zažene</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Povezavnega niza ni bilo mogoče zapisati v /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Uporabnika naprave ni bilo mogoče ustvariti</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Uporabnika naprave s takšnim uporabniškim vmesnikom ni bilo mogoče pridobiti</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Uporabnika naprave ni bilo mogoče posodobiti</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Uporabniški uporabniški vmesnik naprave ni bil najden</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Uporabnika naprave z ID-jem »{0}« ni bilo mogoče izbrisati</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Uporabnika naprave »{0}« ni bilo mogoče izbrisati</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Uporabnika naprave z ID-jem {0} ni bilo mogoče urediti</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Uporabnika naprave z ID-jem {0} ni bilo mogoče posodobiti</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Uporabnik naprave »{0}« je bil uspešno ustvarjen</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Uporabnik naprave »{0}« je bil uspešno izbrisan</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Uporabnik naprave je uspešno posodobljen</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>e-obrazca ni bilo mogoče ustvariti</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>e-obrazca »{0}« ni bilo mogoče izbrisati</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>e-obrazec »{0}« je bil uspešno ustvarjen</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>e-obrazec »{0}« je bil uspešno izbrisan</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Napaka pri brisanju seznama, po katerem je mogoče iskati</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Napaka pri pridobivanju seznama, po katerem je mogoče iskati</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Napaka pri dodajanju novega gesla</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Napaka pri ustvarjanju datoteke za SDK</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Napaka pri ustvarjanju oznake »{0}«.</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Napaka pri ustvarjanju uporabnika</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Napaka pri ustvarjanju delavca</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Napaka pri brisanju izbirnega seznama</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Napaka pri brisanju oznake</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Napaka pri brisanju uporabnika</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Napaka pri pridobivanju stolpcev</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Napaka pri pridobivanju izbirnega seznama</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Napaka pri pridobivanju oznak</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Napaka pri pridobivanju uporabnikov</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Napaka pri odstranjevanju starega gesla</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Napaka pri obračanju slike</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Napaka pri posodabljanju stolpcev</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Napaka pri posodabljanju uporabniškega PSK</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Napaka pri posodabljanju oznak predloge</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Napaka pri posodabljanju uporabnika</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Datoteka ni najdena</value>
+    </data>
+    <data name="FolderError">
+        <value>Napaka mape</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Slika je bila uspešno izbrisana</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Slika ni bila izbrisana</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Slika je bila uspešno zasukana</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Neveljavna Zahteva</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Neveljavna varnostna koda</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>napačno uporabniško ime ali geslo</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Glavni povezovalni niz ni veljaven</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Novo enkratno geslo je bilo uspešno ustvarjeno</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} je uspešno ustvarjen</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} je uspešno izbrisan</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>»{0}« je uspešno seznanjen</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} posodobljeno</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Nastavite varnostno kodo na strežniku</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Obvezna polja niso izpolnjena</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Zahtevana je vloga</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>Povezavni niz SDK ni veljaven</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Ustvarjanje iskalnega seznama ni uspelo</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Nalaganje iskalnega seznama ni uspelo</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Nalaganje izbirne skupine ni uspelo</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Ustvarjanje izbirnega seznama ni uspelo</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Nastavitve so bile uspešno posodobljene</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Spletnega mesta »{0}« ni bilo mogoče izbrisati</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Spletnega mesta z ID-jem {0} ni bilo mogoče posodobiti</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Spletno mesto »{0}« je bilo uspešno izbrisano</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Spletnega mesta z ID-jem {0} ni mogoče najti</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Delavca z ID-jem {0} ni bilo mogoče izbrisati</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Oznaka je bila uspešno izbrisana</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Oznaka »{0}« je bila uspešno ustvarjena</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Oznake predloge so bile uspešno posodobljene</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Zahteve OTP za enoto »{0}« ni bilo mogoče dokončati</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Enota je bila uspešno ustvarjena</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Napaka pri ustvarjanju enote</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Uporabniško ime ali geslo ni pravilno</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Uporabnik ni najden</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Uporabnika {0} ni mogoče najti</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Uporabnik {0} je bil izbrisan</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Uporabnik {0} že obstaja</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Uporabnik {0} je bil ustvarjen</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Uporabnik {0} je bil posodobljen</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Delavca »{0 {1}« ni mogoče izbrisati</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Delavca z ID-jem {0} ni mogoče posodobiti</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Delavec »{0} {1}« je bil uspešno izbrisan</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Delavec z ID-jem {0} je bil posodobljen</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Delavec je bil uspešno ustvarjen</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Če želite dodati dodatne enote, morate kupiti več licenc.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Vaš e-poštni naslov: {0}. Geslo je bilo ponastavljeno.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Varnostne skupine ni mogoče najti</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Ne morete si ogledati, spremeniti ali izbrisati skrbnika</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Napaka pri pridobivanju dovoljenj</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Napaka pri posodabljanju dovoljenj</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Dovoljenja so bila uspešno posodobljena</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Niz povezave ne obstaja</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>eForm je že v skupini</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>eForm je bil izbrisan iz skupine</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>e-obrazca ni bilo mogoče najti</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Napaka pri povezovanju eform s skupino</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Napaka pri ustvarjanju varnostne skupine</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Napaka pri brisanju eform iz skupine</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Napaka pri brisanju varnostne skupine</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Napaka pri pridobivanju razpoložljivih e-obrazcev</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Napaka pri pridobivanju informacij o eformi</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Napaka pri pridobivanju varnostne skupine</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Napaka pri pridobivanju varnostnih skupin</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Napaka pri pridobivanju uporabniškega menija</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Napaka pri posodabljanju varnostne skupine</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Dovoljenje za eform je bilo posodobljeno</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Varnostna skupina je bila uspešno ustvarjena</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Ime varnostne skupine je prazno</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Varnostna skupina je bila uspešno odstranjena</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Varnostna skupina je bila uspešno posodobljena</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Napaka pri pridobivanju shranjenih oznak</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Napaka pri odstranjevanju shranjenih oznak</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Napaka pri shranjevanju oznake</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Neveljaven ID oznake</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Neveljavno ime oznake</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Shranjene oznake ni mogoče najti</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Oznaka je že shranjena</value>
+    </data>
+    <data name="Advanced">
+        <value>Napredno</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Nastavitve aplikacije</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Spremeni geslo</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Uporabniki naprave</value>
+    </data>
+    <data name="Logout">
+        <value>Odjava</value>
+    </data>
+    <data name="MyEforms">
+        <value>Moji e-obrazci</value>
+    </data>
+    <data name="SearchableList">
+        <value>Iskalni seznam</value>
+    </data>
+    <data name="Security">
+        <value>Varnost</value>
+    </data>
+    <data name="SelectableList">
+        <value>Izbirni seznam</value>
+    </data>
+    <data name="Settings">
+        <value>nastavitve</value>
+    </data>
+    <data name="Sites">
+        <value>Spletna mesta</value>
+    </data>
+    <data name="Units">
+        <value>Enote</value>
+    </data>
+    <data name="UserManagement">
+        <value>Upravljanje uporabnikov</value>
+    </data>
+    <data name="Workers">
+        <value>delavci</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Vtičniki</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Eform poročilo ni bilo mogoče najti</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>ElementList ni na voljo</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Napaka pri pridobivanju informacij o poročilu</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Napaka pri posodabljanju poročila</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Poročilo je bilo uspešno posodobljeno</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Predloge ni mogoče najti</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Napaka pri nalaganju vtičnikov</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Napaka pri posodabljanju nastavitev vtičnika</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Vtičnika ni bilo mogoče najti</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Ne morete si ogledati, spremeniti ali izbrisati primarnega skrbnika</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Vloge primarnega skrbnika ni mogoče spremeniti</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Vloga ni najdena</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Napaka med izvajanjem namestitve vtičnika</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Napaka pri pridobivanju seznama vtičnikov</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Napaka pri pridobivanju spletnih mest</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Napaka pri posodabljanju oznak</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Oznake ni mogoče najti</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Oznaka je bila uspešno posodobljena</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>Prejemniki e-pošte</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>E-poštno sporočilo prejemnika je bilo uspešno ustvarjeno</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Prejemnik e-pošte ni bil najden</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>Prejemnik e-pošte je bil uspešno odstranjen</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>Prejemnik e-pošte je bil uspešno posodobljen</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>E-poštna oznaka je bila uspešno ustvarjena</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>E-poštna oznaka ni bila najdena</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>E-poštna oznaka je bila uspešno odstranjena</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>E-poštna oznaka je bila uspešno posodobljena</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Napaka pri ustvarjanju prejemnika e-pošte</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Napaka pri ustvarjanju e-poštne oznake</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Napaka pri pridobivanju prejemnikov e-pošte</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Napaka pri pridobivanju e-poštne oznake</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Napaka pri odstranjevanju prejemnika e-pošte</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Napaka pri odstranjevanju e-poštne oznake</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Napaka pri posodabljanju prejemnika e-pošte</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Napaka pri posodabljanju e-poštne oznake</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Napaka pri ustvarjanju objave</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Napaka pri pridobivanju objav</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Napaka pri pridobivanju informacij o ogledu objave</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Objava je bila uspešno ustvarjena</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Objava ni bila najdena</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Zadeva ni najdena</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>V nastavitve je treba dodati ključ SendGrid</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Podatkov ni mogoče najti!</value>
+    </data>
+    <data name="eFormReport">
+        <value>Poročilo eForm</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Napaka pri izvozu excel datoteke!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Excelove predloge ni mogoče najti v shrambi!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Napaka pri ustvarjanju mape</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Napaka pri pridobivanju informacij o mapah</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Napaka pri odstranjevanju mape</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Napaka pri posodabljanju mape</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Mape ni mogoče najti</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Navigacijski meni je bil uspešno posodobljen.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Uvoz je bil uspešno končan</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>e-obrazec z imenom {0} že obstaja</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>e-obrazec z imenom {0} že obstaja v uvoženem dokumentu</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Primeri niso bili najdeni</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Napaka pri ustvarjanju datoteke poročila</value>
+    </data>
+    <data name="CaseId">
+        <value>ID primera</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Ustvarjeno pri</value>
+    </data>
+    <data name="DoneBy">
+        <value>Opravil</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Obdobje poročila</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Napaka pri posodobitvi oznake</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Slika je bila uspešno posodobljena</value>
+    </data>
+    <data name="Folders">
+        <value>Mape</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>eForm posodobljen</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>e-obrazec ustvarjen</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Geslo je bilo uspešno posodobljeno</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Resetiranje gesla</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Pozdravljeni {0} {1},&lt;br&gt;&lt;br&gt; Zahtevali ste ponastavitev gesla za Microting.&lt;br&gt; Za
+            nastavitev novega gesla kliknite spodnjo povezavo.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Nastavite novo
+            geslo&lt;/a&gt;&lt;br&gt;&lt;br&gt; Če tega niste zahtevali, prezrite to e-pošto.&lt;br&gt;&lt;br&gt; Vaše
+            geslo bo ostalo nespremenjeno, dokler ne nastavite novega prek zgornje povezave.&lt;br&gt;&lt;br&gt; Lep
+            pozdrav,&lt;br&gt;&lt;br&gt; Mikrotiranje&lt;br&gt;&lt;br&gt; Podpora: 66 11 10 66
+        </value>
+    </data>
+</root>
