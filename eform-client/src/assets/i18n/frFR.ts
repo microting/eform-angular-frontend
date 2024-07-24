@@ -155,7 +155,7 @@ export const frFR = {
   Language: 'Langue',
   'Force users to use 2-f-auth': 'Forcer les utilisateurs à utiliser l&#39;authentification 2-f',
   'Old password': 'Ancien mot de passe',
-  'New password': 'Nouveau mot de passe (min 6 caractères)',
+  'New password': 'Nouveau mot de passe',
   'New password confirmation': 'Confirmation du nouveau mot de passe (min 6 caractères)',
   'Confirm new password': 'Confirmer le nouveau mot de passe (min 6 caractères)',
   'Enter new password': 'Entrez le nouveau mot de passe (min 6 caractères)',

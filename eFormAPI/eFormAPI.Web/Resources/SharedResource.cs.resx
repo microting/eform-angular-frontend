@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Administrátor nebyl nalezen</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Nelze otevřít databázi</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Primárního administrátora nelze smazat</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Nelze získat nastavení z web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Nelze aktualizovat nastavení v souboru web.config</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Pouzdro se nepodařilo odstranit</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Případ se nepodařilo aktualizovat</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Případ byl aktualizován</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Načítání pouzdra se nezdařilo</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Případ č. {0} byl úspěšně smazán</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Zkontrolujte připojovací řetězec</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Před pokračováním zkontrolujte nastavení</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Sloupce byly aktualizovány</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Připojovací řetězec již existuje</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Jádro není spuštěno</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Nelze zapsat připojovací řetězec do /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Uživatele zařízení nelze vytvořit</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Uživatele zařízení s takovým UId se nepodařilo získat</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Uživatele zařízení se nepodařilo aktualizovat</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Uživatelské uživatelské rozhraní zařízení nebylo nalezeno</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Uživatele zařízení s ID „{0}“ nelze smazat</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Uživatele zařízení „{0}“ nelze smazat</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Uživatele zařízení s ID {0} nelze upravit</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Uživatele zařízení s ID {0} nelze aktualizovat</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Uživatel zařízení „{0}“ byl úspěšně vytvořen</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Uživatel zařízení „{0}“ byl úspěšně smazán</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Uživatel zařízení byl úspěšně aktualizován</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>Elektronický formulář nelze vytvořit</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>Elektronický formulář „{0}“ nelze smazat</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>Elektronický formulář „{0}“ byl úspěšně vytvořen</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>Elektronický formulář „{0}“ byl úspěšně smazán</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Chyba při mazání prohledávatelného seznamu</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Chyba při získávání prohledávatelného seznamu</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Chyba při přidávání nového hesla</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Chyba při vytváření souboru pro SDK</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Chyba při vytváření značky „{0}“.</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Chyba při vytváření uživatele</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Chyba při vytváření pracovníka</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Chyba při mazání seznamu volitelných položek</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Při mazání štítku došlo k chybě</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Chyba při mazání uživatele</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Chyba při získávání sloupců</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Chyba při získávání volitelného seznamu</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Chyba při získávání značek</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Chyba při získávání uživatelů</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Chyba při odstraňování starého hesla</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Chyba při otáčení obrázku</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Chyba při aktualizaci sloupců</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Chyba při aktualizaci uživatelského PSK</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Chyba při aktualizaci značek šablony</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Chyba při aktualizaci uživatele</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Soubor nenalezen</value>
+    </data>
+    <data name="FolderError">
+        <value>Chyba složky</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Obrázek byl úspěšně smazán</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Obrázek nebyl smazán</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Obrázek byl úspěšně otočen</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>neplatná žádost</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Neplatný bezpečnostní kód</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>Neplatné uživatelské jméno či heslo</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Hlavní připojovací řetězec je neplatný</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Nové jednorázové heslo bylo úspěšně vytvořeno</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} bylo úspěšně vytvořeno</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} úspěšně smazáno</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>„{0}“ bylo úspěšně spárováno</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} aktualizováno</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Nastavte bezpečnostní kód na serveru</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Povinná pole nejsou vyplněna</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Role je povinná</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>Připojovací řetězec SDK je neplatný</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Vytvoření prohledávatelného seznamu se nezdařilo</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Načítání prohledávatelného seznamu se nezdařilo</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Načítání volitelné skupiny se nezdařilo</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Vytvoření volitelného seznamu se nezdařilo</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Nastavení byla úspěšně aktualizována</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Stránky „{0}“ nelze smazat</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Stránky s ID {0} nelze aktualizovat</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Web „{0}“ byl úspěšně smazán</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Stránky s ID {0} nebyly nalezeny</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Pracovníka s ID {0} nelze smazat</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Značka byla úspěšně smazána</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Značka „{0}“ byla úspěšně vytvořena</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Značky šablony byly úspěšně aktualizovány</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Požadavek na OTP jednotky „{0}“ nelze dokončit</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Jednotka byla úspěšně vytvořena</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Chyba při vytváření jednotky</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Uživatelské jméno nebo heslo je nesprávné</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Uživatel nenalezen</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Uživatel {0} nebyl nalezen</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Uživatel {0} byl smazán</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Uživatel {0} již existuje</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Uživatel {0} byl vytvořen</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Uživatel {0} byl aktualizován</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Pracovníka „{0 {1}“ nelze smazat</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Pracovníka s ID {0} nelze aktualizovat</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Pracovník „{0} {1}“ byl úspěšně smazán</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Pracovník s ID {0} byl aktualizován</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Pracovník byl úspěšně vytvořen</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Chcete-li přidat další jednotky, musíte si zakoupit další licence.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Váš e-mail: {0}. Heslo bylo resetováno.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Skupina zabezpečení nenalezena</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Nemůžete zobrazit, změnit nebo smazat správce</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Chyba při získávání oprávnění</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Chyba při aktualizaci oprávnění</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Oprávnění byla úspěšně aktualizována</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Připojovací řetězec neexistuje</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>eFormulář je již ve skupině</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>eFormulář byl smazán ze skupiny</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>eFormulář nebyl nalezen</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Chyba při vázání eformu ke skupině</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Chyba při vytváření skupiny zabezpečení</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Chyba při odstraňování formuláře ze skupiny</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Chyba při odstraňování skupiny zabezpečení</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Chyba při získávání dostupných elektronických formulářů</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Chyba při získávání informací z formuláře</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Chyba při získávání skupiny zabezpečení</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Chyba při získávání skupin zabezpečení</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Chyba při získávání uživatelské nabídky</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Chyba při aktualizaci skupiny zabezpečení</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Oprávnění pro eform bylo aktualizováno</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Skupina zabezpečení byla úspěšně vytvořena</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Název skupiny zabezpečení je prázdný</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Skupina zabezpečení byla úspěšně odstraněna</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Skupina zabezpečení byla úspěšně aktualizována</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Chyba při získávání uložených značek</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Při odstraňování uložených značek došlo k chybě</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Chyba při ukládání značky</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Neplatné ID značky</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Neplatný název značky</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Uložená značka nebyla nalezena</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Značka již uložena</value>
+    </data>
+    <data name="Advanced">
+        <value>Pokročilý</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Nastavení aplikace</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Změnit heslo</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Uživatelé zařízení</value>
+    </data>
+    <data name="Logout">
+        <value>Odhlásit se</value>
+    </data>
+    <data name="MyEforms">
+        <value>Moje elektronické formuláře</value>
+    </data>
+    <data name="SearchableList">
+        <value>Prohledávatelný seznam</value>
+    </data>
+    <data name="Security">
+        <value>Bezpečnostní</value>
+    </data>
+    <data name="SelectableList">
+        <value>Volitelný seznam</value>
+    </data>
+    <data name="Settings">
+        <value>Nastavení</value>
+    </data>
+    <data name="Sites">
+        <value>Weby</value>
+    </data>
+    <data name="Units">
+        <value>Jednotky</value>
+    </data>
+    <data name="UserManagement">
+        <value>správa uživatelů</value>
+    </data>
+    <data name="Workers">
+        <value>Dělníci</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Pluginy</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Zpráva Eform nebyla nalezena</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>ElementList nebyl poskytnut</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Chyba při získávání informací o přehledu</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Chyba při aktualizaci přehledu</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Zpráva byla úspěšně aktualizována</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Šablona nenalezena</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Chyba při načítání pluginů</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Chyba při aktualizaci nastavení pluginu</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Plugin nenalezen</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Primárního správce nelze zobrazit, změnit ani smazat</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Není možné změnit roli primárního administrátora</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Role nenalezena</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Chyba při provádění instalace pluginu</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Chyba při získávání seznamu pluginů</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Chyba při získávání stránek</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Chyba při aktualizaci značek</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Značka nenalezena</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Značka byla úspěšně aktualizována</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>Příjemci e-mailu</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>Příjemce e-mailu byl úspěšně vytvořen</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Příjemce e-mailu nebyl nalezen</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>Příjemce e-mailu byl úspěšně odebrán</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>Příjemce e-mailu byl úspěšně aktualizován</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>E-mailová značka byla úspěšně vytvořena</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>E-mailová značka nebyla nalezena</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>E-mailová značka byla úspěšně odstraněna</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>E-mailová značka byla úspěšně aktualizována</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Chyba při vytváření příjemce e-mailu</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Chyba při vytváření e-mailové značky</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Chyba při získávání příjemců e-mailu</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Chyba při získávání e-mailové značky</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Chyba při odebírání příjemce e-mailu</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Chyba při odstraňování e-mailové značky</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Chyba při aktualizaci příjemce e-mailu</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Chyba při aktualizaci e-mailové značky</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Chyba při vytváření příspěvku</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Chyba při získávání příspěvků</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Chyba při získávání informací o zobrazení příspěvku</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Příspěvek byl úspěšně vytvořen</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Příspěvek nenalezen</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Případ nenalezen</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>Klíč SendGrid by měl být přidán do nastavení</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Data nebyla nalezena!</value>
+    </data>
+    <data name="eFormReport">
+        <value>Zpráva elektronického formuláře</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Chyba při exportu excelového souboru!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Excel šablona nebyla nalezena v úložišti!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Chyba při vytváření složky</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Chyba při získávání informací o složkách</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Chyba při odstraňování složky</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Chyba při aktualizaci složky</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Složka nenalezena</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Navigační nabídka byla úspěšně aktualizována.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Import byl úspěšně dokončen</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>Elektronický formulář s názvem {0} již existuje</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>Elektronický formulář s názvem {0} již v importovaném dokumentu existuje</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Případy nenalezeny</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Chyba při generování souboru přehledu</value>
+    </data>
+    <data name="CaseId">
+        <value>ID případu</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Vytvořeno v</value>
+    </data>
+    <data name="DoneBy">
+        <value>Hotovo</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Období vykazování</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Chyba při aktualizaci značky</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Obrázek byl úspěšně aktualizován</value>
+    </data>
+    <data name="Folders">
+        <value>Složky</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>eFormulář aktualizován</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>eFormulář vytvořen</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Heslo bylo úspěšně aktualizováno</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Resetovat heslo</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Dobrý den, {0} {1},&lt;br&gt;&lt;br&gt; Požádali jste o resetování hesla pro Microting.&lt;br&gt; Kliknutím
+            na odkaz níže nastavíte nové heslo.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Nastavte nové heslo&lt;/a&gt;&lt;br&gt;&lt;br&gt;
+            Pokud jste o to nepožádali, ignorujte prosím tento e-mail.&lt;br&gt;&lt;br&gt; Vaše heslo zůstane nezměněno,
+            dokud si pomocí výše uvedeného odkazu nenastavíte nové.&lt;br&gt;&lt;br&gt; S pozdravem,&lt;br&gt;&lt;br&gt;
+            Mikrotování&lt;br&gt;&lt;br&gt; Podpora: 66 11 10 66
+        </value>
+    </data>
+</root>

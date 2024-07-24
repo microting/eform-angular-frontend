@@ -155,7 +155,7 @@ export const itIT = {
   Language: 'Lingua',
   'Force users to use 2-f-auth': 'Forza gli utenti a utilizzare 2-f-auth',
   'Old password': 'Vecchia password',
-  'New password': 'Nuova password (minimo 6 caratteri)',
+  'New password': 'Nuova password',
   'New password confirmation': 'Conferma nuova password (min 6 caratteri)',
   'Confirm new password': 'Conferma nuova password (min 6 caratteri)',
   'Enter new password': 'Inserisci la nuova password (minimo 6 caratteri)',

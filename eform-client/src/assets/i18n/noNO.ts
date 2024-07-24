@@ -155,7 +155,7 @@ export const noNO = {
   Language: 'Språk',
   'Force users to use 2-f-auth': 'Tving brukere til å bruke 2-f-auth',
   'Old password': 'Gammelt passord',
-  'New password': 'Nytt passord (minst 6 tegn)',
+  'New password': 'Nytt passord',
   'New password confirmation': 'Nytt passordbekreftelse (minst 6 tegn)',
   'Confirm new password': 'Bekreft nytt passord (minst 6 tegn)',
   'Enter new password': 'Skriv inn nytt passord (minst 6 tegn)',

@@ -155,7 +155,7 @@ export const slSL = {
   Language: 'Jezik',
   'Force users to use 2-f-auth': 'Prisili uporabnike k uporabi 2-f-avt',
   'Old password': 'Staro geslo',
-  'New password': 'Novo geslo (najmanj 6 znakov)',
+  'New password': 'Novo geslo',
   'New password confirmation': 'Potrditev novega gesla (najmanj 6 znakov)',
   'Confirm new password': 'Potrdite novo geslo (najmanj 6 znakov)',
   'Enter new password': 'Vnesite novo geslo (najmanj 6 znakov)',

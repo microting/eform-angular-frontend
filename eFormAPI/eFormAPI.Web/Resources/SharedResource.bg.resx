@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Администраторът не е намерен</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Не може да се отвори база данни</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Не може да се изтрие основен администраторски потребител</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Не мога да получа настройки от web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Не мога да актуализирам настройките в web.config</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Случаят не можа да бъде премахнат</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Случаят не можа да бъде актуализиран</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Случаят е актуализиран</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Зареждането на кутията не бе успешно</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Случай #{0} изтрит успешно</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Проверете низа за връзка</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Проверете настройките, преди да продължите</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Колоните бяха актуализирани</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Вече съществува низ за връзка</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Ядрото не е стартирано</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Не може да се запише низ за връзка в /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Потребителят на устройството не можа да бъде създаден</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Потребител на устройство с такъв UId не може да бъде получен</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Потребителят на устройството не можа да бъде актуализиран</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Потребителският интерфейс на устройството не е намерен</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Потребителят на устройството с идентификатор „{0}“ не можа да бъде изтрит</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Потребителят на устройството „{0}“ не можа да бъде изтрит</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Потребителят на устройството с идентификатор {0} не можа да бъде редактиран</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Потребителят на устройството с идентификатор {0} не можа да бъде актуализиран</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Потребителят на устройството „{0}“ е създаден успешно</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Потребителят на устройството „{0}“ е изтрит успешно</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Потребителят на устройството е актуализиран успешно</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>eForm не можа да бъде създаден</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>Електронният формуляр „{0}“ не можа да бъде изтрит</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>Електронният формуляр „{0}“ е създаден успешно</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>Електронният формуляр „{0}“ е изтрит успешно</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Грешка при изтриване на списък с възможности за търсене</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Грешка при получаване на списък за търсене</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Грешка при добавяне на нова парола</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Грешка при създаване на файл за SDK</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Грешка при създаването на маркер „{0}“.</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Грешка при създаване на потребител</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Грешка при създаването на работник</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Грешка при изтриване на списък с възможности за избор</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Грешка при изтриване на маркер</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Грешка при изтриване на потребител</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Грешка при получаване на колони</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Грешка при получаване на списък с възможности за избор</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Грешка при получаване на маркери</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Грешка при получаване на потребители</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Грешка при премахването на старата парола</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Грешка при завъртане на изображението</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Грешка при актуализиране на колони</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Грешка при актуализиране на потребителския PSK</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Грешка при актуализиране на шаблонни етикети</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Грешка при актуализиране на потребителя</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Файлът не е намерен</value>
+    </data>
+    <data name="FolderError">
+        <value>Грешка в папката</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Изображението е изтрито успешно</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Изображението не беше изтрито</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Изображението е завъртяно успешно</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Невалидна заявка</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Невалиден код за сигурност</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>Невалидно потребителско име или парола</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Основният низ за връзка е невалиден</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Нов OTP е създаден успешно</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} е създаден успешно</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} изтрит успешно</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>„{0}“ се сдвои успешно</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} актуализиран</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Моля, задайте код за сигурност на сървъра</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Задължителните полета не са попълнени</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Изисква се роля</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>Низът за свързване на SDK е невалиден</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Създаването на списък с възможност за търсене не бе успешно</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Неуспешно зареждане на списък с възможност за търсене</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Неуспешно зареждане на избираема група</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Създаването на избираем списък не бе успешно</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Настройките са актуализирани успешно</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Сайтът „{0}“ не можа да бъде изтрит</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Сайтът с идентификатор {0} не можа да бъде актуализиран</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Сайтът „{0}“ е изтрит успешно</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Сайтът с идентификатор {0} не е намерен</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Работник с идентификатор {0} не можа да бъде изтрит</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Етикетът е изтрит успешно</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Етикетът „{0}“ е създаден успешно</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Етикетите на шаблона бяха актуализирани успешно</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Заявката за еднократна парола за елемент „{0}“ не можа да бъде изпълнена</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Единицата е създадена успешно</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Грешка при създаването на единица</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Потребителско име или парола не е правилна</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Потребителят не е намерен</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Потребителят {0} не е намерен</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Потребител {0} бе изтрит</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Потребител {0} вече съществува</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Потребител {0} бе създаден</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Потребител {0} бе актуализиран</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Работникът „{0 {1}“ не може да бъде изтрит</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Работник с идентификатор {0} не може да бъде актуализиран</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Работникът „{0} {1}“ е изтрит успешно</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Работник с идентификатор {0} бе актуализиран</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Работникът е създаден успешно</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Трябва да закупите повече лицензи, за да добавите допълнителни единици.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Вашият имейл: {0}. Паролата е нулирана.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Групата за сигурност не е намерена</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Не можете да преглеждате, променяте или изтривате администратор</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Грешка при получаване на разрешения</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Грешка при актуализиране на разрешенията</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Разрешенията са актуализирани успешно</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Низът за връзка не съществува</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>eForm вече е в групата</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>eForm е изтрит от групата</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>eForm не е намерен</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Грешка при свързването на eform към групата</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Грешка при създаване на група за сигурност</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Грешка при изтриването на eform от групата</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Грешка при изтриването на групата за сигурност</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Грешка при получаване на налични електронни формуляри</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Грешка при получаване на информация за eform</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Грешка при получаване на група за сигурност</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Грешка при получаване на групи за сигурност</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Грешка при получаване на потребителското меню</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Грешка при актуализиране на групата за сигурност</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Разрешението за eform е актуализирано</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Групата за сигурност е създадена успешно</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Името на групата за сигурност е празно</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Групата за сигурност е премахната успешно</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Групата за сигурност е актуализирана успешно</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Грешка при получаване на запазени етикети</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Грешка при премахването на запазени етикети</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Грешка при запазване на етикет</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Невалиден идентификатор на етикет</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Невалидно име на етикет</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Запазеният етикет не е намерен</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Етикетът вече е запазен</value>
+    </data>
+    <data name="Advanced">
+        <value>Разширено</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Настройки на приложението</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Промяна на паролата</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Потребители на устройството</value>
+    </data>
+    <data name="Logout">
+        <value>Излез от профила си</value>
+    </data>
+    <data name="MyEforms">
+        <value>Моите електронни формуляри</value>
+    </data>
+    <data name="SearchableList">
+        <value>Списък с възможност за търсене</value>
+    </data>
+    <data name="Security">
+        <value>Сигурност</value>
+    </data>
+    <data name="SelectableList">
+        <value>Списък за избор</value>
+    </data>
+    <data name="Settings">
+        <value>Настройки</value>
+    </data>
+    <data name="Sites">
+        <value>сайтове</value>
+    </data>
+    <data name="Units">
+        <value>Единици</value>
+    </data>
+    <data name="UserManagement">
+        <value>Управление на потребители</value>
+    </data>
+    <data name="Workers">
+        <value>работници</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Плъгини</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Eform отчет не е намерен</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>ElementList не е предоставен</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Грешка при получаване на информация за отчета</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Грешка при актуализиране на отчета</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Отчетът е актуализиран успешно</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Шаблонът не е намерен</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Грешка при зареждане на добавки</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Грешка при актуализиране на настройките на приставката</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Приставката не е намерена</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Не можете да преглеждате, променяте или изтривате основния администратор</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Не е възможно да промените ролята на основния администратор</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Ролята не е намерена</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Грешка при изпълнение на инсталирането на приставката</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Грешка при получаване на списък с добавки</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Грешка при получаване на сайтове</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Грешка при актуализиране на маркери</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Етикетът не е намерен</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Етикетът е актуализиран успешно</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>Получатели на имейл</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>Имейл получателят е създаден успешно</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Получателят на имейл не е намерен</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>Получателят на имейл е премахнат успешно</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>Получателят на имейл е актуализиран успешно</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>Имейл маркерът е създаден успешно</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>Етикетът за имейл не е намерен</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>Имейл етикетът е премахнат успешно</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>Имейл маркерът е актуализиран успешно</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Грешка при създаването на имейл получател</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Грешка при създаването на имейл етикет</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Грешка при получаване на имейл получатели</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Грешка при получаване на имейл етикет</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Грешка при премахването на получателя на имейла</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Грешка при премахване на имейл етикет</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Грешка при актуализиране на получателя на имейла</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Грешка при актуализиране на имейл етикет</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Грешка при създаване на публикация</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Грешка при получаване на публикации</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Грешка при получаване на информация за преглед на публикацията</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Публикацията е създадена успешно</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Публикацията не е намерена</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Случаят не е намерен</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>Ключът SendGrid трябва да се добави към настройките</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Данните не са намерени!</value>
+    </data>
+    <data name="eFormReport">
+        <value>eForm отчет</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Грешка при експортиране на excel файл!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Шаблонът на Excel не е намерен в хранилището!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Грешка при създаване на папка</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Грешка при получаване на информация за папките</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Грешка при премахване на папка</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Грешка при актуализиране на папката</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Папката не е намерена</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Навигационното меню беше успешно актуализирано.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Импортирането завърши успешно</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>Електронен формуляр с име {0} вече съществува</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>Електронен формуляр с име {0} вече съществува в импортирания документ</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Случаите не са намерени</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Грешка при генериране на отчетен файл</value>
+    </data>
+    <data name="CaseId">
+        <value>ID на случай</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Създаден Ат</value>
+    </data>
+    <data name="DoneBy">
+        <value>Направено от</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Отчетен период</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Грешка при актуализиране на маркера</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Изображението е актуализирано успешно</value>
+    </data>
+    <data name="Folders">
+        <value>Папки</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>eForm актуализиран</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>Създаден е eForm</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Паролата е актуализирана успешно</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Нулиране на парола</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Здравейте {0} {1},&lt;br&gt;&lt;br&gt; Вие поискахте да нулирате паролата си за Microting.&lt;br&gt;
+            Щракнете върху връзката по-долу, за да зададете нова парола.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Задайте
+            нова парола&lt;/a&gt;&lt;br&gt;&lt;br&gt; Ако не сте поискали това, моля, игнорирайте този имейл.&lt;br&gt;&lt;br&gt;
+            Вашата парола ще остане непроменена, докато не зададете нова чрез връзката по-горе.&lt;br&gt;&lt;br&gt; С
+            Най-Добри Пожелания,&lt;br&gt;&lt;br&gt; Микротиране&lt;br&gt;&lt;br&gt; Поддръжка: 66 11 10 66
+        </value>
+    </data>
+</root>

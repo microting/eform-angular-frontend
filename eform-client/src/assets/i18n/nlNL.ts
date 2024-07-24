@@ -155,7 +155,7 @@ export const nlNL = {
   Language: 'Taal',
   'Force users to use 2-f-auth': 'Dwing gebruikers om 2-f-authenticatie te gebruiken',
   'Old password': 'Oud Wachtwoord',
-  'New password': 'Nieuw wachtwoord (min. 6 tekens)',
+  'New password': 'Nieuw wachtwoord',
   'New password confirmation': 'Bevestiging van nieuw wachtwoord (min. 6 tekens)',
   'Confirm new password': 'Bevestig nieuw wachtwoord (min. 6 tekens)',
   'Enter new password': 'Voer een nieuw wachtwoord in (min. 6 tekens)',

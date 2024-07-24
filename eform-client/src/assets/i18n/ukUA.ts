@@ -155,7 +155,7 @@ export const ukUA = {
   Language: 'Мова',
   'Force users to use 2-f-auth': 'Змусити користувачів використовувати 2-f-автентифікацію',
   'Old password': 'Старий пароль',
-  'New password': 'Новий пароль (мінімум 6 символів)',
+  'New password': 'Новий пароль',
   'New password confirmation': 'Підтвердження нового пароля (мінімум 6 символів)',
   'Confirm new password': 'Підтвердьте новий пароль (мінімум 6 символів)',
   'Enter new password': 'Введіть новий пароль (мінімум 6 символів)',

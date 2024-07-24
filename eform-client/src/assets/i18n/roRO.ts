@@ -155,7 +155,7 @@ export const roRO = {
   Language: 'Limba',
   'Force users to use 2-f-auth': 'Forțați utilizatorii să folosească 2-f-auth',
   'Old password': 'Parola veche',
-  'New password': 'Parolă nouă (min 6 caractere)',
+  'New password': 'Parolă nouă',
   'New password confirmation': 'Confirmarea parolei noi (min 6 caractere)',
   'Confirm new password': 'Confirmați parola nouă (min 6 caractere)',
   'Enter new password': 'Introduceți o nouă parolă (min 6 caractere)',

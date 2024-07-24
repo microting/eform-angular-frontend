@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Järjestelmänvalvojaa ei löydy</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Tietokantaa ei voi avata</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Ensisijaista järjestelmänvalvojaa ei voi poistaa</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Asetuksia ei voi hakea osoitteesta web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Web.config-asetuksia ei voi päivittää</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Tapausta ei voitu poistaa</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Tapausta ei voitu päivittää</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Tapaus on päivitetty</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Tapauksen lataus epäonnistui</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Tapaus #{0} poistettu onnistuneesti</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Tarkista yhteysmerkkijono</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Tarkista asetukset ennen kuin jatkat</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Sarakkeet päivitettiin</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Yhteysmerkkijono on jo olemassa</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Core ei ole käynnistynyt</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Yhteysmerkkijonoa ei voitu kirjoittaa tiedostoon /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Laitteen käyttäjää ei voitu luoda</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Laitteen käyttäjää, jolla on tällainen käyttöliittymä, ei voitu saada</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Laitteen käyttäjää ei voitu päivittää</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Laitteen käyttäjän UI-tunnusta ei löydy</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Laitteen käyttäjää, jonka tunnus on "{0}", ei voitu poistaa</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Laitteen käyttäjää "{0}" ei voitu poistaa</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Laitteen käyttäjää, jonka tunnus on {0}, ei voitu muokata</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Laitteen käyttäjää, jonka tunnus on {0}, ei voitu päivittää</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Laitteen käyttäjä "{0}" luotiin onnistuneesti</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Laitteen käyttäjän "{0}" poistaminen onnistui</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Laitteen käyttäjän päivitys onnistui</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>Sähköistä lomaketta ei voitu luoda</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>Sähköistä lomaketta "{0}" ei voitu poistaa</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>Sähköinen lomake "{0}" luotiin onnistuneesti</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>Sähköisen lomakkeen "{0}" poistaminen onnistui</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Virhe poistettaessa haettavaa luetteloa</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Virhe haettaessa luetteloa</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Virhe lisättäessä uutta salasanaa</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Virhe luotaessa tiedostoa SDK:lle</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Virhe luotaessa tunnistetta "{0}".</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Virhe luotaessa käyttäjää</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Virhe luotaessa työntekijää</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Virhe poistettaessa valittavissa olevaa luetteloa</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Virhe poistettaessa tunnistetta</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Virhe poistettaessa käyttäjää</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Virhe haettaessa sarakkeita</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Virhe haettaessa valittavaa luetteloa</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Virhe haettaessa tunnisteita</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Virhe haettaessa käyttäjiä</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Virhe poistettaessa vanhaa salasanaa</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Virhe kuvaa käännettäessä</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Virhe päivitettäessä sarakkeita</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Virhe päivitettäessä käyttäjän PSK:ta</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Virhe päivitettäessä mallitunnisteita</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Virhe päivitettäessä käyttäjää</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Tiedostoa ei löytynyt</value>
+    </data>
+    <data name="FolderError">
+        <value>Kansiovirhe</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Kuvan poistaminen onnistui</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Kuvaa ei poistettu</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Kuvan kierto onnistui</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Virheellinen pyyntö</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Virheellinen suojakoodi</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>väärä käyttäjänimi tai salasana</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Pääyhteysmerkkijono on virheellinen</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Uusi OTP luotiin onnistuneesti</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} luotu onnistuneesti</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} poistettu onnistuneesti</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>"{0}" pariliitoksen muodostaminen onnistui</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} päivitetty</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Aseta suojakoodi palvelimelle</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Pakollisia kenttiä ei ole täytetty</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Rooli vaaditaan</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>SDK-yhteysmerkkijono on virheellinen</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Haettavan luettelon luominen epäonnistui</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Haettavan luettelon lataus epäonnistui</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Valittavan ryhmän lataus epäonnistui</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Valittavan luettelon luominen epäonnistui</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Asetukset päivitetty onnistuneesti</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Sivustoa "{0}" ei voitu poistaa</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Sivustoa, jonka tunnus on {0}, ei voitu päivittää</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Sivuston "{0}" poistaminen onnistui</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Sivustoa, jonka tunnus on {0}, ei löydy</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Työntekijää, jonka tunnus on {0}, ei voitu poistaa</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Tunnisteen poistaminen onnistui</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Tagi "{0}" luotiin onnistuneesti</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Mallin tagit päivitettiin onnistuneesti</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Yksikön "{0}" OTP-pyyntöä ei voitu suorittaa</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Yksikkö luotiin onnistuneesti</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Virhe luotaessa yksikköä</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Käyttäjätunnus tai salasana on väärä</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Käyttäjää ei löydy</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Käyttäjää {0} ei löydy</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Käyttäjä {0} poistettiin</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Käyttäjä {0} on jo olemassa</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Käyttäjä {0} luotiin</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Käyttäjä {0} päivitettiin</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Työntekijää "{0 {1}" ei voi poistaa</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Työntekijää, jonka tunnus on {0}, ei voi päivittää</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Työntekijän "{0} {1}" poistaminen onnistui</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Työntekijä, jonka tunnus on {0}, päivitettiin</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Työntekijän luominen onnistui</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Sinun on ostettava lisää lisenssejä, jotta voit lisätä uusia yksiköitä.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Sähköpostiosoitteesi: {0}. Salasana on nollattu.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Suojausryhmää ei löydy</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Et voi tarkastella, muuttaa tai poistaa järjestelmänvalvojaa</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Virhe haettaessa käyttöoikeuksia</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Virhe päivitettäessä käyttöoikeuksia</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Käyttöoikeudet päivitetty onnistuneesti</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Yhteysmerkkijonoa ei ole olemassa</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>eForm jo ryhmässä</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>Sähköinen lomake on poistettu ryhmästä</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>Sähköistä lomaketta ei löydy</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Virhe sidottaessa e-lomaketta ryhmään</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Virhe luotaessa suojausryhmää</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Virhe poistettaessa e-lomaketta ryhmästä</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Virhe poistettaessa suojausryhmää</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Virhe haettaessa käytettävissä olevia sähköisiä lomakkeita</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Virhe haettaessa lomakkeen tietoja</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Virhe haettaessa suojausryhmää</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Virhe haettaessa suojausryhmiä</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Virhe haettaessa käyttäjävalikkoa</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Virhe päivitettäessä suojausryhmää</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Eformin käyttöoikeus on päivitetty</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Suojausryhmän luominen onnistui</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Suojausryhmän nimi on tyhjä</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Suojausryhmän poistaminen onnistui</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Suojausryhmän päivitys onnistui</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Virhe haettaessa tallennettuja tunnisteita</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Virhe poistettaessa tallennettuja tunnisteita</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Virhe tallennettaessa tunnistetta</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Virheellinen tagin tunnus</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Virheellinen tunnisteen nimi</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Tallennettua tunnistetta ei löydy</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Tunniste on jo tallennettu</value>
+    </data>
+    <data name="Advanced">
+        <value>Pitkälle kehittynyt</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Sovellusasetukset</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Vaihda salasana</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Laitteen käyttäjät</value>
+    </data>
+    <data name="Logout">
+        <value>Kirjautua ulos</value>
+    </data>
+    <data name="MyEforms">
+        <value>Omat sähköiset lomakkeet</value>
+    </data>
+    <data name="SearchableList">
+        <value>Haettavissa oleva lista</value>
+    </data>
+    <data name="Security">
+        <value>Turvallisuus</value>
+    </data>
+    <data name="SelectableList">
+        <value>Valittavissa oleva lista</value>
+    </data>
+    <data name="Settings">
+        <value>asetukset</value>
+    </data>
+    <data name="Sites">
+        <value>Sivustot</value>
+    </data>
+    <data name="Units">
+        <value>Yksiköt</value>
+    </data>
+    <data name="UserManagement">
+        <value>Käyttäjien hallinta</value>
+    </data>
+    <data name="Workers">
+        <value>Työntekijät</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Plugins</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Eform-raporttia ei löydy</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>Element List ei toimitettu</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Virhe haettaessa raportin tietoja</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Virhe päivitettäessä raporttia</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Raportti päivitetty onnistuneesti</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Mallia ei löydy</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Virhe ladattaessa laajennuksia</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Virhe päivitettäessä laajennuksen asetuksia</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Plugin ei löydy</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Et voi tarkastella, muuttaa tai poistaa ensisijaista järjestelmänvalvojaa</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Ensisijaisen järjestelmänvalvojan roolia ei voi vaihtaa</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Roolia ei löytynyt</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Virhe suoritettaessa laajennuksen asennusta</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Virhe haettaessa laajennusluetteloa</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Virhe haettaessa sivustoja</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Virhe päivitettäessä tunnisteita</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Tunnistetta ei löydy</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Tunnisteen päivitys onnistui</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>Sähköpostin vastaanottajat</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>Sähköpostin vastaanottajan luominen onnistui</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Sähköpostin vastaanottajaa ei löydy</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>Sähköpostin vastaanottajan poistaminen onnistui</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>Sähköpostin vastaanottajan päivitys onnistui</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>Sähköpostitunnisteen luominen onnistui</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>Sähköpostitunnistetta ei löydy</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>Sähköpostitunniste poistettu onnistuneesti</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>Sähköpostitunnisteen päivitys onnistui</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Virhe luotaessa sähköpostin vastaanottajaa</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Virhe luotaessa sähköpostitunnistetta</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Virhe haettaessa sähköpostin vastaanottajia</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Virhe haettaessa sähköpostitunnistetta</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Virhe poistettaessa sähköpostin vastaanottajaa</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Virhe poistettaessa sähköpostitunnistetta</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Virhe päivitettäessä sähköpostin vastaanottajaa</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Virhe päivitettäessä sähköpostitunnistetta</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Virhe luotaessa viestiä</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Virhe haettaessa viestejä</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Virhe haettaessa tekstin katselutietoja</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Viesti luotiin onnistuneesti</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Viestiä ei löydy</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Tapausta ei löydy</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>SendGrid-avain tulee lisätä asetuksiin</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Tietoja ei löydy!</value>
+    </data>
+    <data name="eFormReport">
+        <value>eForm-raportti</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Virhe vietäessä excel-tiedostoa!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Excel-mallia ei löydy varastosta!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Virhe luotaessa kansiota</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Virhe haettaessa kansioiden tietoja</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Virhe poistettaessa kansiota</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Virhe kansiota päivitettäessä</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Kansiota ei löydy</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Navigointivalikko päivitettiin onnistuneesti.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Tuonti onnistui</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>Sähköinen lomake, jonka nimi on {0}, on jo olemassa</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>Sähköinen lomake, jonka nimi on {0}, on jo tuodussa asiakirjassa</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Tapauksia ei löytynyt</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Virhe luotaessa raporttitiedostoa</value>
+    </data>
+    <data name="CaseId">
+        <value>Tapaus tunnus</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Luotu klo</value>
+    </data>
+    <data name="DoneBy">
+        <value>Tehnyt</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Raportointijakso</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Virhe tunnisteen päivityksessä</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Kuvan päivitys onnistui</value>
+    </data>
+    <data name="Folders">
+        <value>Kansiot</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>Sähköinen lomake päivitetty</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>eForm luotu</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Salasana päivitetty onnistuneesti</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Salasanan nollaus</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Hei {0} {1},&lt;br&gt;&lt;br&gt; Olet pyytänyt Microtingin salasanan vaihtamista.&lt;br&gt; Napsauta alla
+            olevaa linkkiä asettaaksesi uuden salasanan.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Aseta uusi salasana&lt;/a&gt;&lt;br&gt;&lt;br&gt;
+            Jos et ole pyytänyt tätä, jätä tämä sähköposti huomioimatta.&lt;br&gt;&lt;br&gt; Salasanasi pysyy
+            muuttumattomana, kunnes asetat uuden yllä olevan linkin kautta.&lt;br&gt;&lt;br&gt; Parhain terveisin,&lt;br&gt;&lt;br&gt;
+            Mikrotointi&lt;br&gt;&lt;br&gt; Tuki: 66 11 10 66
+        </value>
+    </data>
+</root>

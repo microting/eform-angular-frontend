@@ -155,7 +155,7 @@ export const plPL = {
   Language: 'Język',
   'Force users to use 2-f-auth': 'Zmuszaj użytkowników do korzystania z uwierzytelniania 2-f',
   'Old password': 'Stare hasło',
-  'New password': 'Nowe hasło: (minimum 6 znaków)',
+  'New password': 'Nowe hasło',
   'New password confirmation': 'Potwierdzenie nowego hasła (min. 6 znaków)',
   'Confirm new password': 'Potwierdź nowe hasło (min. 6 znaków)',
   'Enter new password': 'Wpisz nowe hasło (min. 6 znaków)',

@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Administrator nije pronađen</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Ne mogu otvoriti bazu podataka</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Nije moguće izbrisati primarnog administratorskog korisnika</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Ne mogu dobiti postavke iz web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Ne mogu ažurirati postavke u web.config</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Kućište nije bilo moguće ukloniti</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Slučaj se ne može ažurirati</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Slučaj je ažuriran</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Učitavanje kućišta nije uspjelo</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Slučaj #{0} uspješno izbrisan</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Provjerite niz veze</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Prije nastavka provjerite postavke</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Stupci su ažurirani</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Niz veze već postoji</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Core nije pokrenut</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Nije moguće napisati niz veze u /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Nije moguće stvoriti korisnika uređaja</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Nije moguće dobiti korisnika uređaja s takvim UId-om</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Korisnik uređaja nije se mogao ažurirati</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Korisničko korisničko sučelje uređaja nije pronađeno</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Korisnik uređaja s ID-om "{0}" nije mogao biti izbrisan</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Korisnik uređaja "{0}" nije mogao biti izbrisan</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Korisnik uređaja s ID-om {0} nije se mogao urediti</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Korisnik uređaja s ID-om {0} nije mogao biti ažuriran</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Korisnik uređaja "{0}" uspješno je kreiran</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Korisnik uređaja "{0}" uspješno je izbrisan</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Korisnik uređaja je uspješno ažuriran</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>Nije moguće izraditi eForm</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>eObrazac "{0}" nije moguće izbrisati</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>e-obrazac "{0}" uspješno je kreiran</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>e-obrazac "{0}" uspješno je izbrisan</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Pogreška prilikom brisanja popisa koji se može pretraživati</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Pogreška prilikom dobivanja popisa koji se može pretraživati</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Pogreška prilikom dodavanja nove lozinke</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Pogreška prilikom izrade datoteke za SDK</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Pogreška prilikom izrade oznake "{0}".</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Pogreška prilikom kreiranja korisnika</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Pogreška prilikom kreiranja radnika</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Pogreška prilikom brisanja popisa koji se može odabrati</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Pogreška prilikom brisanja oznake</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Pogreška prilikom brisanja korisnika</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Pogreška prilikom dobivanja stupaca</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Pogreška prilikom dobivanja popisa koji se može odabrati</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Pogreška prilikom dobivanja oznaka</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Pogreška prilikom dobivanja korisnika</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Pogreška prilikom uklanjanja stare zaporke</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Pogreška pri okretanju slike</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Pogreška prilikom ažuriranja stupaca</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Pogreška prilikom ažuriranja korisničkog PSK-a</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Pogreška prilikom ažuriranja oznaka predloška</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Pogreška prilikom ažuriranja korisnika</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Datoteka nije pronađena</value>
+    </data>
+    <data name="FolderError">
+        <value>Pogreška mape</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Slika je uspješno izbrisana</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Slika nije izbrisana</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Slika je uspješno zakrenuta</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Neispravan zahtjev</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Nevažeći sigurnosni kod</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>Neispravno korisničko ime ili lozinka</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Niz glavne veze nije valjan</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Novi OTP je uspješno kreiran</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} je uspješno izrađen</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} uspješno izbrisano</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>"{0}" je uspješno uparen</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} ažuriran</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Molimo postavite sigurnosni kod na poslužitelju</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Obavezna polja nisu popunjena</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Uloga je obavezna</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>Niz veze SDK-a nije valjan</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Stvaranje pretraživog popisa nije uspjelo</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Učitavanje popisa koji se može pretraživati nije uspjelo</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Učitavanje odabrane grupe nije uspjelo</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Stvaranje popisa koji se može odabrati nije uspjelo</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Postavke su uspješno ažurirane</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Web mjesto "{0}" nije bilo moguće izbrisati</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Web mjesto s ID-om {0} nije bilo moguće ažurirati</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Web mjesto "{0}" uspješno je izbrisano</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Stranica s ID-om {0} nije pronađena</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Radnika s ID-om {0} nije bilo moguće izbrisati</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Oznaka je uspješno izbrisana</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Oznaka "{0}" uspješno je stvorena</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Oznake predloška uspješno su ažurirane</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>OTP zahtjev za jedinicu "{0}" nije mogao biti dovršen</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Jedinica je uspješno kreirana</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Pogreška prilikom izrade jedinice</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Korisničko ime ili lozinka su netočni</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Korisnik nije pronađen</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Korisnik {0} nije pronađen</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Korisnik {0} je izbrisan</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Korisnik {0} već postoji</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Korisnik {0} je stvoren</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Korisnik {0} je ažuriran</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Radnik "{0 {1}" ne može se izbrisati</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Radnik s ID-om {0} ne može se ažurirati</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Radnik "{0} {1}" uspješno je izbrisan</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Radnik s ID-om {0} je ažuriran</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Radnik je uspješno kreiran</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Morate kupiti više licenci da biste dodali dodatne jedinice.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Vaša e-pošta: {0}. Lozinka je poništena.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Sigurnosna grupa nije pronađena</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Ne možete vidjeti, promijeniti ili izbrisati administratora</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Pogreška prilikom dobivanja dopuštenja</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Pogreška prilikom ažuriranja dopuštenja</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Dopuštenja su uspješno ažurirana</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Niz veze ne postoji</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>eForm je već u grupi</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>eForm je izbrisan iz grupe</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>eForm nije pronađen</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Pogreška prilikom povezivanja eforma s grupom</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Pogreška prilikom stvaranja sigurnosne grupe</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Pogreška prilikom brisanja eforme iz grupe</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Pogreška prilikom brisanja sigurnosne grupe</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Pogreška prilikom dobivanja dostupnih e-obrazaca</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Pogreška prilikom dobivanja podataka o eformi</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Pogreška prilikom dobivanja sigurnosne grupe</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Pogreška prilikom dobivanja sigurnosnih grupa</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Pogreška prilikom dobivanja korisničkog izbornika</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Pogreška prilikom ažuriranja sigurnosne grupe</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Dozvola za eform je ažurirana</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Sigurnosna grupa uspješno je stvorena</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Naziv sigurnosne grupe je prazan</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Sigurnosna grupa uspješno je uklonjena</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Sigurnosna grupa uspješno je ažurirana</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Pogreška prilikom dobivanja spremljenih oznaka</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Pogreška prilikom uklanjanja spremljenih oznaka</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Pogreška prilikom spremanja oznake</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Nevažeći ID oznake</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Nevažeći naziv oznake</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Spremljena oznaka nije pronađena</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Oznaka je već spremljena</value>
+    </data>
+    <data name="Advanced">
+        <value>Napredna</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Postavke aplikacije</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Promjena lozinke</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Korisnici uređaja</value>
+    </data>
+    <data name="Logout">
+        <value>Odjavite se</value>
+    </data>
+    <data name="MyEforms">
+        <value>Moji e-obrasci</value>
+    </data>
+    <data name="SearchableList">
+        <value>Pretraživi popis</value>
+    </data>
+    <data name="Security">
+        <value>Sigurnost</value>
+    </data>
+    <data name="SelectableList">
+        <value>Popis koji se može odabrati</value>
+    </data>
+    <data name="Settings">
+        <value>postavke</value>
+    </data>
+    <data name="Sites">
+        <value>Stranice</value>
+    </data>
+    <data name="Units">
+        <value>Jedinice</value>
+    </data>
+    <data name="UserManagement">
+        <value>Upravljanje korisnicima</value>
+    </data>
+    <data name="Workers">
+        <value>Radnici</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Dodaci</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Eform izvještaj nije pronađen</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>ElementList nije dostavljen</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Pogreška prilikom dobivanja informacija o izvješću</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Pogreška prilikom ažuriranja izvješća</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Izvješće je uspješno ažurirano</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Predložak nije pronađen</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Pogreška prilikom učitavanja dodataka</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Pogreška prilikom ažuriranja postavki dodatka</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Dodatak nije pronađen</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Ne možete vidjeti, promijeniti ili izbrisati primarnog administratora</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Nije moguće promijeniti ulogu primarnog administratora</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Uloga nije pronađena</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Pogreška tijekom izvođenja instalacije dodatka</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Pogreška prilikom dobivanja popisa dodataka</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Pogreška prilikom preuzimanja web stranica</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Pogreška prilikom ažuriranja oznaka</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Oznaka nije pronađena</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Oznaka je uspješno ažurirana</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>Primatelji e-pošte</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>Primatelj e-pošte uspješno je kreiran</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Primatelj e-pošte nije pronađen</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>Primatelj e-pošte uspješno je uklonjen</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>Primatelj e-pošte uspješno je ažuriran</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>Oznaka e-pošte uspješno je stvorena</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>Oznaka e-pošte nije pronađena</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>Oznaka e-pošte uspješno je uklonjena</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>Oznaka e-pošte uspješno je ažurirana</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Pogreška prilikom kreiranja primatelja e-pošte</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Pogreška prilikom izrade oznake e-pošte</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Pogreška prilikom dobivanja primatelja e-pošte</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Pogreška prilikom dobivanja oznake e-pošte</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Pogreška prilikom uklanjanja primatelja e-pošte</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Pogreška prilikom uklanjanja oznake e-pošte</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Pogreška prilikom ažuriranja primatelja e-pošte</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Pogreška prilikom ažuriranja oznake e-pošte</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Pogreška prilikom izrade objave</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Pogreška prilikom dobivanja objava</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Pogreška prilikom dobivanja informacija o prikazu posta</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Post je uspješno kreiran</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Post nije pronađen</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Slučaj nije pronađen</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>Ključ SendGrid treba dodati u postavke</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Podaci nisu pronađeni!</value>
+    </data>
+    <data name="eFormReport">
+        <value>eForm izvješće</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Greška prilikom izvoza excel datoteke!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Excel predložak nije pronađen u pohrani!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Pogreška prilikom izrade mape</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Pogreška prilikom dobivanja informacija o mapama</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Pogreška prilikom uklanjanja mape</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Pogreška prilikom ažuriranja mape</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Mapa nije pronađena</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Navigacijski izbornik je uspješno ažuriran.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Uvoz je uspješno završen</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>eObrazac pod nazivom {0} već postoji</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>eObrazac pod nazivom {0} već postoji u uvezenom dokumentu</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Slučajevi nisu pronađeni</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Pogreška prilikom generiranja datoteke izvješća</value>
+    </data>
+    <data name="CaseId">
+        <value>ID slučaja</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Stvoreno u</value>
+    </data>
+    <data name="DoneBy">
+        <value>Učinio</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Razdoblje izvješća</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Pogreška prilikom ažuriranja oznake</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Slika je uspješno ažurirana</value>
+    </data>
+    <data name="Folders">
+        <value>mape</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>eObrazac ažuriran</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>eForm kreiran</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Lozinka je uspješno ažurirana</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Ponovno postavljanje lozinke</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Bok {0} {1},&lt;br&gt;&lt;br&gt; Zatražili ste ponovno postavljanje lozinke za Microting.&lt;br&gt; Kliknite
+            donju vezu za postavljanje nove lozinke.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Postavite novu lozinku&lt;/a&gt;&lt;br&gt;&lt;br&gt;
+            Ako to niste zatražili, zanemarite ovu e-poruku.&lt;br&gt;&lt;br&gt; Vaša lozinka ostat će nepromijenjena
+            dok ne postavite novu putem gornje veze.&lt;br&gt;&lt;br&gt; Lijepi Pozdrav,&lt;br&gt;&lt;br&gt;
+            mikrotiranje&lt;br&gt;&lt;br&gt; Podrška: 66 11 10 66
+        </value>
+    </data>
+</root>

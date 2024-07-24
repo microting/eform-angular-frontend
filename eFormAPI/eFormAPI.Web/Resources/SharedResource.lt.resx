@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Administratoriaus vartotojas nerastas</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Nepavyksta atidaryti duomenų bazės</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Nepavyko ištrinti pagrindinio administratoriaus vartotojo</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Nepavyksta gauti nustatymų iš web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Nepavyksta atnaujinti web.config nustatymų</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Dėklo pašalinti nepavyko</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Nepavyko atnaujinti bylos</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Byla buvo atnaujinta</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Nepavyko įkelti dėklo</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Atvejis Nr. {0} sėkmingai ištrintas</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Patikrinkite ryšio eilutę</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Prieš tęsdami patikrinkite nustatymus</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Stulpeliai buvo atnaujinti</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Ryšio eilutė jau yra</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Branduolys nepradėtas</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Nepavyko įrašyti ryšio eilutės faile /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Nepavyko sukurti įrenginio naudotojo</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Nepavyko gauti įrenginio naudotojo su tokiu UI</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Nepavyko atnaujinti įrenginio naudotojo</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Įrenginio vartotojo vartotojo sąsaja nerasta</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Nepavyko ištrinti įrenginio naudotojo, kurio ID „{0}“.</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Nepavyko ištrinti įrenginio naudotojo „{0}“.</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Nepavyko redaguoti įrenginio naudotojo, kurio ID {0}</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Nepavyko atnaujinti įrenginio naudotojo, kurio ID {0}</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Įrenginio naudotojas „{0}“ sėkmingai sukurtas</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Įrenginio naudotojas „{0}“ sėkmingai ištrintas</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Įrenginio naudotojas sėkmingai atnaujintas</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>Nepavyko sukurti el. formos</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>El. formos „{0}“ nepavyko ištrinti</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>El. forma „{0}“ sėkmingai sukurta</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>El. forma „{0}“ sėkmingai ištrinta</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Klaida ištrinant sąrašą, kuriame galima ieškoti</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Klaida ieškant sąrašą</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Klaida pridedant naują slaptažodį</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Klaida kuriant SDK failą</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Klaida kuriant žymą „{0}“.</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Klaida kuriant vartotoją</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Klaida kuriant darbuotoją</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Klaida ištrinant pasirenkamą sąrašą</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Trinant žymą įvyko klaida</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Trinant naudotoją įvyko klaida</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Klaida gaunant stulpelius</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Klaida gaunant pasirenkamą sąrašą</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Klaida gaunant žymas</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Klaida gaunant naudotojus</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Klaida šalinant seną slaptažodį</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Sukant vaizdą įvyko klaida</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Klaida atnaujinant stulpelius</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Klaida atnaujinant vartotojo PSK</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Klaida atnaujinant šablono žymas</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Klaida atnaujinant naudotoją</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Failas nerastas</value>
+    </data>
+    <data name="FolderError">
+        <value>Aplanko klaida</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Vaizdas sėkmingai ištrintas</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Vaizdas nebuvo ištrintas</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Vaizdas sėkmingai pasuktas</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Neteisingas Prašymas</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Neteisingas saugos kodas</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>Neteisingas prisijungimo vardas arba slaptažodis</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Pagrindinė ryšio eilutė neteisinga</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Naujas vienkartinis slaptažodis sėkmingai sukurtas</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} sėkmingai sukurta</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} sėkmingai ištrinta</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>„{0}“ sėkmingai susietas</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} atnaujinta</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Nustatykite saugos kodą serveryje</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Privalomi laukai nepildyti</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Reikalingas vaidmuo</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>SDK ryšio eilutė neteisinga</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Nepavyko sukurti ieškomo sąrašo</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Sąrašo, kuriame galima ieškoti, įkelti nepavyko</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Nepavyko įkelti pasirinktos grupės</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Nepavyko sukurti pasirenkamo sąrašo</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Nustatymai sėkmingai atnaujinti</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Svetainės „{0}“ nepavyko ištrinti</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Svetainės su ID {0} atnaujinti nepavyko</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Svetainė „{0}“ sėkmingai ištrinta</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Svetainė su ID {0} nerasta</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Darbuotojo, kurio ID {0}, ištrinti nepavyko</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Žyma sėkmingai ištrinta</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Žyma „{0}“ sėkmingai sukurta</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Šablonų žymos sėkmingai atnaujintos</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Nepavyko užbaigti vieneto „{0}“ vienkartinio ryšio užklausos</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Vienetas sėkmingai sukurtas</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Kuriant vienetą įvyko klaida</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Vartotojo vardas arba slaptažodis yra neteisingas</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Vartotojas nerastas</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Vartotojas {0} nerastas</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Vartotojas {0} buvo ištrintas</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Naudotojas {0} jau egzistuoja</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Sukurtas naudotojas {0}</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Vartotojas {0} buvo atnaujintas</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Darbuotojo „{0 {1}“ ištrinti negalima</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Darbuotojo, kurio ID {0}, atnaujinti negalima</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Darbuotojas „{0} {1}“ sėkmingai ištrintas</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Darbuotojas, kurio ID {0}, buvo atnaujintas</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Darbuotojas sėkmingai sukurtas</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Norėdami pridėti papildomų vienetų, turite nusipirkti daugiau licencijų.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Jūsų el. pašto adresas: {0}. Slaptažodis nustatytas iš naujo.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Apsaugos grupė nerasta</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Negalite peržiūrėti, keisti ar ištrinti administratoriaus</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Klaida gaunant leidimus</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Klaida atnaujinant leidimus</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Leidimai sėkmingai atnaujinti</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Ryšio eilutė neegzistuoja</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>El. forma jau yra grupėje</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>El. forma buvo ištrinta iš grupės</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>El. forma nerasta</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Klaida susiejant eformą su grupe</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Klaida kuriant saugos grupę</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Klaida ištrinant el. formą iš grupės</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Trinant saugos grupę įvyko klaida</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Klaida gaunant galimas el. formas</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Klaida gaunant eformos informaciją</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Klaida gaunant saugos grupę</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Klaida gaunant saugos grupes</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Klaida gaunant vartotojo meniu</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Klaida atnaujinant saugos grupę</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Leidimas naudoti e-formą buvo atnaujintas</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Saugos grupė sėkmingai sukurta</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Saugos grupės pavadinimas tuščias</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Saugos grupė sėkmingai pašalinta</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Saugos grupė sėkmingai atnaujinta</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Klaida gaunant išsaugotas žymas</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Klaida šalinant išsaugotas žymas</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Išsaugant žymą įvyko klaida</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Neteisingas žymos ID</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Neteisingas žymos pavadinimas</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Išsaugota žyma nerasta</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Žyma jau išsaugota</value>
+    </data>
+    <data name="Advanced">
+        <value>Išplėstinė</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Programos nustatymai</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Pakeisti slaptažodį</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Įrenginio vartotojai</value>
+    </data>
+    <data name="Logout">
+        <value>Atsijungti</value>
+    </data>
+    <data name="MyEforms">
+        <value>Mano el. formos</value>
+    </data>
+    <data name="SearchableList">
+        <value>Ieškomas sąrašas</value>
+    </data>
+    <data name="Security">
+        <value>Saugumas</value>
+    </data>
+    <data name="SelectableList">
+        <value>Pasirenkamas sąrašas</value>
+    </data>
+    <data name="Settings">
+        <value>Nustatymai</value>
+    </data>
+    <data name="Sites">
+        <value>Svetainės</value>
+    </data>
+    <data name="Units">
+        <value>Vienetai</value>
+    </data>
+    <data name="UserManagement">
+        <value>Vartotojo valdymas</value>
+    </data>
+    <data name="Workers">
+        <value>Darbininkai</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Papildiniai</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Eform ataskaita nerasta</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>Elementų sąrašas nepateiktas</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Klaida gaunant ataskaitos informaciją</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Klaida atnaujinant ataskaitą</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Ataskaita sėkmingai atnaujinta</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Šablonas nerastas</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Klaida įkeliant papildinius</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Klaida atnaujinant papildinio nustatymus</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Papildinys nerastas</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Negalite peržiūrėti, keisti ar ištrinti pagrindinio administratoriaus</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Neįmanoma pakeisti pagrindinio administratoriaus vaidmens</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Vaidmuo nerastas</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Klaida diegiant papildinį</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Klaida gaunant papildinių sąrašą</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Klaida gaunant svetaines</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Klaida atnaujinant žymas</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Žyma nerasta</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Žyma sėkmingai atnaujinta</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>El. pašto gavėjai</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>El. pašto gavėjas sėkmingai sukurtas</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>El. pašto gavėjas nerastas</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>El. pašto gavėjas sėkmingai pašalintas</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>El. pašto gavėjas sėkmingai atnaujintas</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>El. pašto žyma sėkmingai sukurta</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>El. pašto žyma nerasta</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>El. pašto žyma sėkmingai pašalinta</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>El. pašto žyma sėkmingai atnaujinta</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Klaida kuriant el. pašto gavėją</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Klaida kuriant el. pašto žymą</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Gaunant el. pašto gavėjus įvyko klaida</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Klaida gaunant el. pašto žymą</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Klaida šalinant el. pašto gavėją</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Klaida šalinant el. pašto žymą</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Klaida atnaujinant el. pašto gavėją</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Klaida atnaujinant el. pašto žymą</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Kuriant įrašą įvyko klaida</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Klaida gaunant įrašus</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Klaida gaunant įrašo peržiūros informaciją</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Įrašas sėkmingai sukurtas</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Įrašas nerastas</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Byla nerasta</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>„SendGrid“ raktas turėtų būti įtrauktas į nustatymus</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Duomenų nerasta!</value>
+    </data>
+    <data name="eFormReport">
+        <value>e-formos ataskaita</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Eksportuojant „Excel“ failą įvyko klaida!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>„Excel“ šablonas saugykloje nerastas!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Klaida kuriant aplanką</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Klaida gaunant informaciją apie aplankus</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Klaida šalinant aplanką</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Klaida atnaujinant aplanką</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Aplankas nerastas</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Naršymo meniu buvo sėkmingai atnaujintas.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Importavimas sėkmingai baigtas</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>El. forma pavadinimu {0} jau yra</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>El. forma pavadinimu {0} jau yra importuotame dokumente</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Bylų nerasta</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Klaida generuojant ataskaitos failą</value>
+    </data>
+    <data name="CaseId">
+        <value>Atvejo ID</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Sukurta</value>
+    </data>
+    <data name="DoneBy">
+        <value>Padaryta</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Ataskaitinis laikotarpis</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Atnaujinant žymą įvyko klaida</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Vaizdas sėkmingai atnaujintas</value>
+    </data>
+    <data name="Folders">
+        <value>Aplankai</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>El. forma atnaujinta</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>Sukurta el. forma</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Slaptažodis sėkmingai atnaujintas</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Slaptažodžio nustatymas iš naujo</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Sveiki, {0} {1},&lt;br&gt;&lt;br&gt; Prašėte iš naujo nustatyti Microting slaptažodį.&lt;br&gt; Spustelėkite
+            toliau pateiktą nuorodą, kad nustatytumėte naują slaptažodį.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Nustatykite
+            naują slaptažodį&lt;/a&gt;&lt;br&gt;&lt;br&gt; Jei to neprašėte, nekreipkite dėmesio į šį el. laišką.&lt;br&gt;&lt;br&gt;
+            Jūsų slaptažodis išliks nepakitęs, kol nenustatysite naujo naudodami aukščiau pateiktą nuorodą.&lt;br&gt;&lt;br&gt;
+            Geriausi linkėjimai,&lt;br&gt;&lt;br&gt; Mikrotizavimas&lt;br&gt;&lt;br&gt; Pagalba: 66 11 10 66
+        </value>
+    </data>
+</root>

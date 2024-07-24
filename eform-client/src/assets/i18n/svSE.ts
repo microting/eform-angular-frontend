@@ -155,7 +155,7 @@ export const svSE = {
   Language: 'Språk',
   'Force users to use 2-f-auth': 'Tvinga användare att använda 2-f-auth',
   'Old password': 'Gammalt lösenord',
-  'New password': 'Nytt lösenord (minst 6 tecken)',
+  'New password': 'Nytt lösenord',
   'New password confirmation': 'Bekräftelse av nytt lösenord (minst 6 tecken)',
   'Confirm new password': 'Bekräfta nytt lösenord (minst 6 tecken)',
   'Enter new password': 'Ange nytt lösenord (minst 6 tecken)',

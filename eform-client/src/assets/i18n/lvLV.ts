@@ -155,7 +155,7 @@ export const lvLV = {
   Language: 'Valoda',
   'Force users to use 2-f-auth': 'Piespiediet lietotājus izmantot 2-f-auth',
   'Old password': 'Vecā parole',
-  'New password': 'Jauna parole (vismaz 6 rakstzīmes)',
+  'New password': 'Jauna parole',
   'New password confirmation': 'Jaunas paroles apstiprināšana (vismaz 6 rakstzīmes)',
   'Confirm new password': 'Apstipriniet jauno paroli (vismaz 6 rakstzīmes)',
   'Enter new password': 'Ievadiet jauno paroli (vismaz 6 rakstzīmes)',

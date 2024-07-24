@@ -155,7 +155,7 @@ export const esES = {
   Language: 'Idioma',
   'Force users to use 2-f-auth': 'Obligar a los usuarios a utilizar 2-f-auth',
   'Old password': 'Contraseña anterior',
-  'New password': 'Nueva contraseña: (minimo 6 caracteres)',
+  'New password': 'Nueva contraseña',
   'New password confirmation': 'Confirmación de nueva contraseña (mínimo 6 caracteres)',
   'Confirm new password': 'Confirmar nueva contraseña (mínimo 6 caracteres)',
   'Enter new password': 'Ingrese una nueva contraseña (mínimo 6 caracteres)',

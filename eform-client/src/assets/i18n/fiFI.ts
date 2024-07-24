@@ -155,7 +155,7 @@ export const fiFI = {
   Language: 'Kieli',
   'Force users to use 2-f-auth': 'Pakota käyttäjät käyttämään 2-f-auth',
   'Old password': 'Vanha salasana',
-  'New password': 'Uusi salasana (vähintään 6 merkkiä)',
+  'New password': 'Uusi salasana',
   'New password confirmation': 'Uuden salasanan vahvistus (vähintään 6 merkkiä)',
   'Confirm new password': 'Vahvista uusi salasana (vähintään 6 merkkiä)',
   'Enter new password': 'Anna uusi salasana (vähintään 6 merkkiä)',

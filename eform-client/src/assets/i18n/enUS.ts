@@ -155,7 +155,7 @@ export const enUS = {
   Language: 'Language',
   'Force users to use 2-f-auth': 'Force users to use 2-f-auth',
   'Old password': 'Old password',
-  'New password': 'New password (min 6 characters)',
+  'New password': 'New password',
   'New password confirmation': 'New password confirmation (min 6 characters)',
   'Confirm new password': 'Confirm new password (min 6 characters)',
   'Enter new password': 'Enter new password (min 6 characters)',

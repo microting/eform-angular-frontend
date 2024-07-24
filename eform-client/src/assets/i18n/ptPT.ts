@@ -155,7 +155,7 @@ export const ptPT = {
   Language: 'Linguagem',
   'Force users to use 2-f-auth': 'Forçar os usuários a usar 2-f-auth',
   'Old password': 'Senha Antiga',
-  'New password': 'Nova senha (mínimo 6 caracteres)',
+  'New password': 'Nova senha',
   'New password confirmation': 'Confirmação de nova senha (mínimo 6 caracteres)',
   'Confirm new password': 'Confirme a nova senha (mínimo 6 caracteres)',
   'Enter new password': 'Digite a nova senha (mínimo 6 caracteres)',

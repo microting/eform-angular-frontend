@@ -1,0 +1,652 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Ο χρήστης διαχειριστή δεν βρέθηκε</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Δεν είναι δυνατό το άνοιγμα της βάσης δεδομένων</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Δεν είναι δυνατή η διαγραφή του κύριου χρήστη διαχειριστή</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Δεν είναι δυνατή η λήψη ρυθμίσεων από το web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Δεν είναι δυνατή η ενημέρωση των ρυθμίσεων στο web.config</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Δεν ήταν δυνατή η αφαίρεση της θήκης</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Δεν ήταν δυνατή η ενημέρωση της υπόθεσης</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Η υπόθεση έχει ενημερωθεί</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Η φόρτωση της υπόθεσης απέτυχε</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Η υπόθεση #{0} διαγράφηκε με επιτυχία</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Ελέγξτε τη συμβολοσειρά σύνδεσης</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Ελέγξτε τις ρυθμίσεις πριν προχωρήσετε</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Οι στήλες ενημερώθηκαν</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Η συμβολοσειρά σύνδεσης υπάρχει ήδη</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Ο πυρήνας δεν έχει ξεκινήσει</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Δεν ήταν δυνατή η εγγραφή συμβολοσειράς σύνδεσης στο /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Δεν ήταν δυνατή η δημιουργία χρήστη συσκευής</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Δεν ήταν δυνατή η απόκτηση χρήστη συσκευής με τέτοιο UId</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Δεν ήταν δυνατή η ενημέρωση του χρήστη συσκευής</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Το UI χρήστη της συσκευής δεν βρέθηκε</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Δεν ήταν δυνατή η διαγραφή του χρήστη συσκευής με αναγνωριστικό "{0}".</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Δεν ήταν δυνατή η διαγραφή του χρήστη συσκευής "{0}".</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Δεν ήταν δυνατή η επεξεργασία του χρήστη συσκευής με αναγνωριστικό {0}</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Δεν ήταν δυνατή η ενημέρωση του χρήστη συσκευής με αναγνωριστικό {0}</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Ο χρήστης συσκευής "{0}" δημιουργήθηκε με επιτυχία</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Ο χρήστης συσκευής "{0}" διαγράφηκε με επιτυχία</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Ο χρήστης συσκευής ενημερώθηκε με επιτυχία</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>Δεν ήταν δυνατή η δημιουργία eForm</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>Δεν ήταν δυνατή η διαγραφή του eForm "{0}".</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>Το eForm "{0}" δημιουργήθηκε με επιτυχία</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>Το eForm "{0}" διαγράφηκε με επιτυχία</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Σφάλμα κατά τη διαγραφή της λίστας με δυνατότητα αναζήτησης</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Σφάλμα κατά τη λήψη της λίστας με δυνατότητα αναζήτησης</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Σφάλμα κατά την προσθήκη νέου κωδικού πρόσβασης</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Σφάλμα κατά τη δημιουργία αρχείου για SDK</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Σφάλμα κατά τη δημιουργία της ετικέτας "{0}".</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Σφάλμα κατά τη δημιουργία χρήστη</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Σφάλμα κατά τη δημιουργία του εργάτη</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Σφάλμα κατά τη διαγραφή της λίστας με δυνατότητα επιλογής</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Σφάλμα κατά τη διαγραφή της ετικέτας</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Σφάλμα κατά τη διαγραφή χρήστη</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Σφάλμα κατά τη λήψη στηλών</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Σφάλμα κατά τη λήψη της λίστας επιλογής</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Σφάλμα κατά τη λήψη ετικετών</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Σφάλμα κατά την απόκτηση χρηστών</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Σφάλμα κατά την αφαίρεση του παλιού κωδικού πρόσβασης</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Σφάλμα κατά την περιστροφή της εικόνας</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Σφάλμα κατά την ενημέρωση στηλών</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Σφάλμα κατά την ενημέρωση του PSK χρήστη</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Σφάλμα κατά την ενημέρωση των ετικετών προτύπων</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Σφάλμα κατά την ενημέρωση του χρήστη</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Το αρχείο δε βρέθηκε</value>
+    </data>
+    <data name="FolderError">
+        <value>Σφάλμα φακέλου</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Η εικόνα διαγράφηκε με επιτυχία</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Η εικόνα δεν διαγράφηκε</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Η εικόνα περιστράφηκε με επιτυχία</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Άκυρη Αίτηση</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Μη έγκυρος κωδικός ασφαλείας</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>μη έγκυρο όνομα ή κωδικός</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Η κύρια συμβολοσειρά σύνδεσης δεν είναι έγκυρη</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Νέο OTP δημιουργήθηκε με επιτυχία</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>Το {0} δημιουργήθηκε με επιτυχία</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>Το {0} διαγράφηκε με επιτυχία</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>Η σύζευξη "{0}" έγινε με επιτυχία</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} ενημερώθηκε</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Ρυθμίστε τον κωδικό ασφαλείας στον διακομιστή</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Τα υποχρεωτικά πεδία δεν συμπληρώνονται</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Απαιτείται ρόλος</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>Η συμβολοσειρά σύνδεσης SDK δεν είναι έγκυρη</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Η δημιουργία λίστας με δυνατότητα αναζήτησης απέτυχε</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Η φόρτωση της λίστας με δυνατότητα αναζήτησης απέτυχε</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Η φόρτωση της επιλεγμένης ομάδας απέτυχε</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Η δημιουργία λίστας με δυνατότητα επιλογής απέτυχε</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Οι ρυθμίσεις ενημερώθηκαν με επιτυχία</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Δεν ήταν δυνατή η διαγραφή του ιστότοπου "{0}".</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Δεν ήταν δυνατή η ενημέρωση του ιστότοπου με αναγνωριστικό {0}</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Ο ιστότοπος "{0}" διαγράφηκε με επιτυχία</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Ο ιστότοπος με το αναγνωριστικό {0} δεν βρέθηκε</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Δεν ήταν δυνατή η διαγραφή του εργαζόμενου με αναγνωριστικό {0}</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Η ετικέτα διαγράφηκε με επιτυχία</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Η ετικέτα "{0}" δημιουργήθηκε με επιτυχία</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Οι ετικέτες προτύπου ενημερώθηκαν με επιτυχία</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Δεν ήταν δυνατή η ολοκλήρωση του αιτήματος OTP της ενότητας "{0}".</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Η μονάδα δημιουργήθηκε με επιτυχία</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Σφάλμα κατά τη δημιουργία μονάδας</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Ονομα χρήστη ή κωδικός πρόσβασης είναι εσφαλμένος</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Ο χρήστης δεν βρέθηκε</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Ο χρήστης {0} δεν βρέθηκε</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Ο χρήστης {0} διαγράφηκε</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Ο χρήστης {0} υπάρχει ήδη</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Ο χρήστης {0} δημιουργήθηκε</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Ο χρήστης {0} ενημερώθηκε</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Δεν είναι δυνατή η διαγραφή του εργαζόμενου "{0 {1}".</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Δεν είναι δυνατή η ενημέρωση του εργαζόμενου με αναγνωριστικό {0}</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Ο εργαζόμενος "{0} {1}" διαγράφηκε με επιτυχία</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Ο εργαζόμενος με αναγνωριστικό {0} ενημερώθηκε</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Το Worker δημιουργήθηκε με επιτυχία</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Πρέπει να αγοράσετε περισσότερες άδειες για να προστεθούν επιπλέον μονάδες.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Το email σας: {0}. Ο κωδικός πρόσβασης επαναφέρθηκε.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Η ομάδα ασφαλείας δεν βρέθηκε</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Δεν μπορείτε να δείτε, να αλλάξετε ή να διαγράψετε διαχειριστή</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Σφάλμα κατά τη λήψη αδειών</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Σφάλμα κατά την ενημέρωση των αδειών</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Τα δικαιώματα ενημερώθηκαν με επιτυχία</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Η συμβολοσειρά σύνδεσης δεν υπάρχει</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>Η ηλεκτρονική φόρμα είναι ήδη στην ομάδα</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>Το eForm έχει διαγραφεί από την ομάδα</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>Η ηλεκτρονική φόρμα δεν βρέθηκε</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Σφάλμα κατά τη σύνδεση της eform στην ομάδα</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Σφάλμα κατά τη δημιουργία ομάδας ασφαλείας</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Σφάλμα κατά τη διαγραφή eform από την ομάδα</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Σφάλμα κατά τη διαγραφή της ομάδας ασφαλείας</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Σφάλμα κατά τη λήψη διαθέσιμων ηλεκτρονικών φορμών</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Σφάλμα κατά τη λήψη πληροφοριών eform</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Σφάλμα κατά τη λήψη της ομάδας ασφαλείας</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Σφάλμα κατά τη λήψη ομάδων ασφαλείας</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Σφάλμα κατά τη λήψη του μενού χρήστη</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Σφάλμα κατά την ενημέρωση της ομάδας ασφαλείας</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Η άδεια για το eform έχει ενημερωθεί</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Η ομάδα ασφαλείας δημιουργήθηκε με επιτυχία</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Το όνομα της ομάδας ασφαλείας είναι κενό</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Η ομάδα ασφαλείας καταργήθηκε με επιτυχία</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Η ομάδα ασφαλείας ενημερώθηκε με επιτυχία</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Σφάλμα κατά τη λήψη αποθηκευμένων ετικετών</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Σφάλμα κατά την αφαίρεση αποθηκευμένων ετικετών</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Σφάλμα κατά την αποθήκευση της ετικέτας</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Μη έγκυρο αναγνωριστικό ετικέτας</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Μη έγκυρο όνομα ετικέτας</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Η αποθηκευμένη ετικέτα δεν βρέθηκε</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Η ετικέτα έχει ήδη αποθηκευτεί</value>
+    </data>
+    <data name="Advanced">
+        <value>Προχωρημένος</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Ρυθμίσεις εφαρμογής</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Άλλαξε κωδικό</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Χρήστες συσκευών</value>
+    </data>
+    <data name="Logout">
+        <value>Αποσύνδεση</value>
+    </data>
+    <data name="MyEforms">
+        <value>Οι ηλεκτρονικές μου φόρμες</value>
+    </data>
+    <data name="SearchableList">
+        <value>Λίστα με δυνατότητα αναζήτησης</value>
+    </data>
+    <data name="Security">
+        <value>Ασφάλεια</value>
+    </data>
+    <data name="SelectableList">
+        <value>Επιλογή λίστας</value>
+    </data>
+    <data name="Settings">
+        <value>Ρυθμίσεις</value>
+    </data>
+    <data name="Sites">
+        <value>Τοποθεσίες</value>
+    </data>
+    <data name="Units">
+        <value>Μονάδες</value>
+    </data>
+    <data name="UserManagement">
+        <value>Διαχείριση χρηστών</value>
+    </data>
+    <data name="Workers">
+        <value>Εργάτες</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Πρόσθετα</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Η αναφορά Eform δεν βρέθηκε</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>Η Λίστα στοιχείων δεν παρέχεται</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Σφάλμα κατά τη λήψη πληροφοριών αναφοράς</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Σφάλμα κατά την ενημέρωση της αναφοράς</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Η αναφορά ενημερώθηκε με επιτυχία</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Το πρότυπο δεν βρέθηκε</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Σφάλμα κατά τη φόρτωση των προσθηκών</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Σφάλμα κατά την ενημέρωση των ρυθμίσεων της προσθήκης</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Το πρόσθετο δεν βρέθηκε</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Δεν μπορείτε να δείτε, να αλλάξετε ή να διαγράψετε τον κύριο διαχειριστή</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Δεν είναι δυνατή η αλλαγή ρόλου για τον κύριο διαχειριστή</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Ο ρόλος δεν βρέθηκε</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Σφάλμα κατά την εκτέλεση της εγκατάστασης της προσθήκης</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Σφάλμα κατά τη λήψη της λίστας προσθηκών</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Σφάλμα κατά τη λήψη τοποθεσιών</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Σφάλμα κατά την ενημέρωση των ετικετών</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Η ετικέτα δεν βρέθηκε</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Η ετικέτα ενημερώθηκε με επιτυχία</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>Παραλήπτες email</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>Ο παραλήπτης email δημιουργήθηκε με επιτυχία</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Δεν βρέθηκε ο παραλήπτης του email</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>Ο παραλήπτης email καταργήθηκε με επιτυχία</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>Ο παραλήπτης email ενημερώθηκε με επιτυχία</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>Η ετικέτα email δημιουργήθηκε με επιτυχία</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>Η ετικέτα email δεν βρέθηκε</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>Η ετικέτα email καταργήθηκε με επιτυχία</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>Η ετικέτα email ενημερώθηκε με επιτυχία</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Σφάλμα κατά τη δημιουργία παραλήπτη email</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Σφάλμα κατά τη δημιουργία ετικέτας email</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Σφάλμα κατά τη λήψη παραληπτών email</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Σφάλμα κατά τη λήψη ετικέτας email</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Σφάλμα κατά την κατάργηση του παραλήπτη email</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Σφάλμα κατά την κατάργηση της ετικέτας email</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Σφάλμα κατά την ενημέρωση του παραλήπτη email</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Σφάλμα κατά την ενημέρωση της ετικέτας email</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Σφάλμα κατά τη δημιουργία ανάρτησης</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Σφάλμα κατά τη λήψη αναρτήσεων</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Σφάλμα κατά τη λήψη πληροφοριών προβολής ανάρτησης</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Η ανάρτηση δημιουργήθηκε με επιτυχία</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Η ανάρτηση δεν βρέθηκε</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Η υπόθεση δεν βρέθηκε</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>Το κλειδί SendGrid πρέπει να προστεθεί στις ρυθμίσεις</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Τα δεδομένα δεν βρέθηκαν!</value>
+    </data>
+    <data name="eFormReport">
+        <value>Έκθεση eForm</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Σφάλμα κατά την εξαγωγή αρχείου excel!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Το πρότυπο Excel δεν βρέθηκε στον αποθηκευτικό χώρο!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Σφάλμα κατά τη δημιουργία φακέλου</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Σφάλμα κατά τη λήψη πληροφοριών φακέλων</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Σφάλμα κατά την αφαίρεση του φακέλου</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Σφάλμα κατά την ενημέρωση του φακέλου</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Ο φάκελος δεν βρέθηκε</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Το μενού πλοήγησης ενημερώθηκε με επιτυχία.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Η εισαγωγή ολοκληρώθηκε με επιτυχία</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>Το eForm με όνομα {0} υπάρχει ήδη</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>Το eForm με όνομα {0} υπάρχει ήδη στο εισαγόμενο έγγραφο</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Δεν βρέθηκαν περιπτώσεις</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Σφάλμα κατά τη δημιουργία αρχείου αναφοράς</value>
+    </data>
+    <data name="CaseId">
+        <value>Ταυτότητα υπόθεσης</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Δημιουργήθηκε στο</value>
+    </data>
+    <data name="DoneBy">
+        <value>Γίνεται από</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Περίοδος αναφοράς</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Σφάλμα κατά την ενημέρωση της ετικέτας</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Η εικόνα ενημερώθηκε με επιτυχία</value>
+    </data>
+    <data name="Folders">
+        <value>Φάκελοι</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>Το eForm ενημερώθηκε</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>Δημιουργήθηκε το eForm</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Ο κωδικός πρόσβασης ενημερώθηκε με επιτυχία</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>ΕΠΑΝΑΦΟΡΑ ΚΩΔΙΚΟΥ</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Γεια σας {0} {1},&lt;br&gt;&lt;br&gt; Έχετε ζητήσει να επαναφέρετε τον κωδικό πρόσβασής σας για το
+            Microting.&lt;br&gt; Κάντε κλικ στον παρακάτω σύνδεσμο για να ορίσετε νέο κωδικό πρόσβασης.&lt;br&gt;&lt;br&gt;
+            &lt;a href="{2}"&gt;Ορίστε νέο κωδικό πρόσβασης&lt;/a&gt;&lt;br&gt;&lt;br&gt; Εάν δεν το ζητήσατε εσείς,
+            αγνοήστε αυτό το μήνυμα ηλεκτρονικού ταχυδρομείου.&lt;br&gt;&lt;br&gt; Ο κωδικός πρόσβασής σας θα παραμείνει
+            αμετάβλητος μέχρι να ορίσετε νέο μέσω του παραπάνω συνδέσμου.&lt;br&gt;&lt;br&gt; Τις καλύτερες ευχές,&lt;br&gt;&lt;br&gt;
+            Microting&lt;br&gt;&lt;br&gt; Υποστήριξη: 66 11 10 66
+        </value>
+    </data>
+</root>

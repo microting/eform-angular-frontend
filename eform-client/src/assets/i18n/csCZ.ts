@@ -155,7 +155,7 @@ export const csCZ = {
   Language: 'Jazyk',
   'Force users to use 2-f-auth': 'Přinutit uživatele používat 2-f-auth',
   'Old password': 'Staré heslo',
-  'New password': 'Nové heslo (min. 6 znaků)',
+  'New password': 'Nové heslo',
   'New password confirmation': 'Potvrzení nového hesla (min. 6 znaků)',
   'Confirm new password': 'Potvrďte nové heslo (min. 6 znaků)',
   'Enter new password': 'Zadejte nové heslo (min. 6 znaků)',

@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Nie znaleziono administratora</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Nie można otworzyć bazy danych</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Nie można usunąć głównego administratora</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Nie można uzyskać ustawień z pliku web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Nie można zaktualizować ustawień w pliku web.config</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Nie udało się usunąć obudowy</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Nie udało się zaktualizować sprawy</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Sprawa została zaktualizowana</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Ładowanie sprawy nie powiodło się</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Sprawa nr {0} została pomyślnie usunięta</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Sprawdź ciąg połączenia</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Sprawdź ustawienia przed kontynuowaniem</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Kolumny zostały zaktualizowane</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Parametry połączenia już istnieją</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Rdzeń nie został uruchomiony</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Nie można zapisać parametrów połączenia w /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Nie można utworzyć użytkownika urządzenia</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Nie można uzyskać użytkownika urządzenia z takim identyfikatorem UID</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Nie można zaktualizować użytkownika urządzenia</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Nie znaleziono identyfikatora użytkownika urządzenia</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Nie można usunąć użytkownika urządzenia o identyfikatorze „{0}”.</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Nie można usunąć użytkownika urządzenia „{0}”.</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Nie można edytować użytkownika urządzenia o identyfikatorze {0}</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Nie można zaktualizować użytkownika urządzenia o identyfikatorze {0}</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Pomyślnie utworzono użytkownika urządzenia „{0}”.</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Użytkownik urządzenia „{0}” został pomyślnie usunięty</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Użytkownik urządzenia został pomyślnie zaktualizowany</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>Nie można utworzyć e-formularza</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>Nie można usunąć e-formularza „{0}”.</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>Formularz eForm „{0}” został utworzony pomyślnie</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>Formularz eForm „{0}” został pomyślnie usunięty</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Błąd podczas usuwania listy, którą można przeszukiwać</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Błąd podczas uzyskiwania listy z możliwością przeszukiwania</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Błąd podczas dodawania nowego hasła</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Błąd podczas tworzenia pliku dla SDK</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Błąd podczas tworzenia tagu „{0}”.</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Błąd podczas tworzenia użytkownika</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Błąd podczas tworzenia pracownika</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Błąd podczas usuwania listy do wyboru</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Błąd podczas usuwania tagu</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Błąd podczas usuwania użytkownika</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Błąd podczas uzyskiwania kolumn</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Błąd podczas uzyskiwania listy do wyboru</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Błąd podczas uzyskiwania tagów</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Błąd podczas uzyskiwania użytkowników</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Błąd podczas usuwania starego hasła</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Błąd podczas obracania obrazu</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Błąd podczas aktualizowania kolumn</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Błąd podczas aktualizacji użytkownika PSK</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Błąd podczas aktualizowania tagów szablonu</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Błąd podczas aktualizacji użytkownika</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Nie znaleziono pliku</value>
+    </data>
+    <data name="FolderError">
+        <value>Błąd folderu</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Obraz został pomyślnie usunięty</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Obraz nie został usunięty</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Obraz został obrócony pomyślnie</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Nieprawidłowe żądanie</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>nieprawidłowy kod bezpieczeństwa</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>Nieprawidłowa nazwa użytkownika lub hasło</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Główny ciąg połączenia jest nieprawidłowy</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Pomyślnie utworzono nowe hasło jednorazowe</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>Pomyślnie utworzono {0}</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>Pomyślnie usunięto {0}</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>Pomyślnie sparowano „{0}”.</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>Zaktualizowano {0}</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Proszę ustawić kod zabezpieczający na serwerze</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Wymagane pola nie są wypełnione</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Rola jest wymagana</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>Parametry połączenia pakietu SDK są nieprawidłowe</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Nie udało się utworzyć listy z możliwością przeszukiwania</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Nie udało się wczytać listy z możliwością przeszukiwania</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Ładowanie wybranej grupy nie powiodło się</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Tworzenie listy do wyboru nie powiodło się</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Ustawienia zostały pomyślnie zaktualizowane</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Nie można usunąć witryny „{0}”.</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Nie można zaktualizować witryny o identyfikatorze {0}</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Witryna „{0}” została pomyślnie usunięta</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Nie znaleziono witryny o identyfikatorze {0}</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Nie można usunąć pracownika o identyfikatorze {0}</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Tag został pomyślnie usunięty</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Tag „{0}” został utworzony pomyślnie</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Tagi szablonu zostały pomyślnie zaktualizowane</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Nie można ukończyć żądania OTP jednostki „{0}”.</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Jednostka została pomyślnie utworzona</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Błąd podczas tworzenia jednostki</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Nazwa użytkownika lub hasło jest niepoprawne</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Użytkownik nie znaleziony</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Nie znaleziono użytkownika {0}</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Użytkownik {0} został usunięty</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Użytkownik {0} już istnieje</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Użytkownik {0} został utworzony</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Użytkownik {0} został zaktualizowany</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Nie można usunąć pracownika „{0 {1}”.</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Nie można zaktualizować pracownika o identyfikatorze {0}</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Proces roboczy „{0} {1}” został pomyślnie usunięty</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Zaktualizowano pracownika o identyfikatorze {0}</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Proces roboczy został pomyślnie utworzony</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Aby dodać kolejne jednostki, należy kupić więcej licencji.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Twój e-mail: {0}. Hasło zostało zresetowane.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Nie znaleziono grupy zabezpieczeń</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Nie możesz przeglądać, zmieniać ani usuwać administratora</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Błąd podczas uzyskiwania uprawnień</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Błąd podczas aktualizowania uprawnień</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Uprawnienia zostały pomyślnie zaktualizowane</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Parametry połączenia nie istnieją</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>eForm już w grupie</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>eForm został usunięty z grupy</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>Nie znaleziono e-formularza</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Błąd podczas wiązania e-formularza z grupą</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Błąd podczas tworzenia grupy zabezpieczeń</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Błąd podczas usuwania e-formy z grupy</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Błąd podczas usuwania grupy zabezpieczeń</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Błąd podczas uzyskiwania dostępnych e-formularzy</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Błąd podczas uzyskiwania informacji e-form</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Błąd podczas uzyskiwania grupy zabezpieczeń</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Błąd podczas uzyskiwania grup zabezpieczeń</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Błąd podczas uzyskiwania menu użytkownika</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Błąd podczas aktualizowania grupy zabezpieczeń</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Zaktualizowano uprawnienia dla eform</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Grupa zabezpieczeń została utworzona pomyślnie</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Nazwa grupy zabezpieczeń jest pusta</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Grupa zabezpieczeń została pomyślnie usunięta</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Grupa zabezpieczeń została pomyślnie zaktualizowana</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Błąd podczas uzyskiwania zapisanych tagów</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Błąd podczas usuwania zapisanych tagów</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Błąd podczas zapisywania tagu</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Nieprawidłowy identyfikator tagu</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Nieprawidłowa nazwa tagu</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Nie znaleziono zapisanego tagu</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Tag już zapisany</value>
+    </data>
+    <data name="Advanced">
+        <value>Zaawansowany</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Ustawienia aplikacji</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Zmień hasło</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Użytkownicy urządzenia</value>
+    </data>
+    <data name="Logout">
+        <value>Wyloguj</value>
+    </data>
+    <data name="MyEforms">
+        <value>Moje e-formularze</value>
+    </data>
+    <data name="SearchableList">
+        <value>Lista z możliwością przeszukiwania</value>
+    </data>
+    <data name="Security">
+        <value>Bezpieczeństwo</value>
+    </data>
+    <data name="SelectableList">
+        <value>Lista do wyboru</value>
+    </data>
+    <data name="Settings">
+        <value>Ustawienia</value>
+    </data>
+    <data name="Sites">
+        <value>Witryny</value>
+    </data>
+    <data name="Units">
+        <value>Jednostki</value>
+    </data>
+    <data name="UserManagement">
+        <value>Zarządzanie użytkownikami</value>
+    </data>
+    <data name="Workers">
+        <value>Pracownicy</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Wtyczki</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Nie znaleziono raportu Eform</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>Nie podano listy elementów</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Błąd podczas uzyskiwania informacji z raportu</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Błąd podczas aktualizacji raportu</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Raport został pomyślnie zaktualizowany</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Nie znaleziono szablonu</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Błąd podczas ładowania wtyczek</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Błąd podczas aktualizacji ustawień wtyczki</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Nie znaleziono wtyczki</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Nie możesz przeglądać, zmieniać ani usuwać administratora głównego</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Nie można zmienić roli głównego administratora</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Nie znaleziono roli</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Błąd podczas instalacji wtyczki</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Błąd podczas uzyskiwania listy wtyczek</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Błąd podczas uzyskiwania witryn</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Błąd podczas aktualizacji tagów</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Nie znaleziono tagu</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Tag został pomyślnie zaktualizowany</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>Odbiorcy e-maili</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>Odbiorca wiadomości e-mail został utworzony pomyślnie</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Nie znaleziono odbiorcy e-maila</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>Odbiorca wiadomości e-mail został pomyślnie usunięty</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>Odbiorca wiadomości e-mail został pomyślnie zaktualizowany</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>Tag e-mail został utworzony pomyślnie</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>Nie znaleziono tagu e-mail</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>Tag e-mail został pomyślnie usunięty</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>Tag e-mail został pomyślnie zaktualizowany</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Błąd podczas tworzenia odbiorcy wiadomości e-mail</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Błąd podczas tworzenia tagu e-mail</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Błąd podczas uzyskiwania odbiorców wiadomości e-mail</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Błąd podczas uzyskiwania tagu e-mail</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Błąd podczas usuwania odbiorcy wiadomości e-mail</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Błąd podczas usuwania tagu e-mail</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Błąd podczas aktualizowania odbiorcy wiadomości e-mail</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Błąd podczas aktualizowania tagu e-mail</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Błąd podczas tworzenia posta</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Błąd podczas uzyskiwania postów</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Błąd podczas uzyskiwania informacji o wyświetleniu wpisu</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Post został utworzony pomyślnie</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Nie znaleziono wpisu</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Nie znaleziono przypadku</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>Do ustawień należy dodać klucz SendGrid</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Dane nieodnalezione!</value>
+    </data>
+    <data name="eFormReport">
+        <value>Raport e-formularza</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Błąd podczas eksportowania pliku Excel!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Nie znaleziono szablonu Excel w pamięci!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Błąd podczas tworzenia folderu</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Błąd podczas uzyskiwania informacji o folderach</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Błąd podczas usuwania folderu</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Błąd podczas aktualizacji folderu</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Nie znaleziono folderu</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Menu nawigacyjne zostało pomyślnie zaktualizowane.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Import zakończył się pomyślnie</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>Formularz eForm o nazwie {0} już istnieje</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>Formularz eForm o nazwie {0} już istnieje w importowanym dokumencie</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Nie znaleziono przypadków</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Błąd podczas generowania pliku raportu</value>
+    </data>
+    <data name="CaseId">
+        <value>ID sprawy</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Utworzono o godz</value>
+    </data>
+    <data name="DoneBy">
+        <value>Wykonane przez</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Okres raportu</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Błąd podczas aktualizacji tagu</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Obraz został pomyślnie zaktualizowany</value>
+    </data>
+    <data name="Folders">
+        <value>Lornetka składana</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>Zaktualizowano e-formularz</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>Utworzono e-formularz</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Hasło zostało pomyślnie zaktualizowane</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Resetowania hasła</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Cześć {0} {1},&lt;br&gt;&lt;br&gt; Poprosiłeś o zresetowanie hasła do Microting.&lt;br&gt; Kliknij poniższy
+            link, aby ustawić nowe hasło.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Ustaw nowe hasło&lt;/a&gt;&lt;br&gt;&lt;br&gt;
+            Jeśli nie prosiłeś o to, zignoruj tę wiadomość e-mail.&lt;br&gt;&lt;br&gt; Twoje hasło pozostanie
+            niezmienione, dopóki nie ustawisz nowego za pomocą powyższego linku.&lt;br&gt;&lt;br&gt; Z wyrazami
+            szacunku,&lt;br&gt;&lt;br&gt; Mikroting&lt;br&gt;&lt;br&gt; Wsparcie: 66 11 10 66
+        </value>
+    </data>
+</root>

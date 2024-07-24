@@ -155,7 +155,7 @@ export const huHU = {
   Language: 'Nyelv',
   'Force users to use 2-f-auth': 'A felhasználók kényszerítése a 2-f-auth használatára',
   'Old password': 'Régi jelszó',
-  'New password': 'Új jelszó (minimum 6 karakter)',
+  'New password': 'Új jelszó',
   'New password confirmation': 'Új jelszó megerősítése (minimum 6 karakter)',
   'Confirm new password': 'Új jelszó megerősítése (minimum 6 karakter)',
   'Enter new password': 'Írja be az új jelszót (minimum 6 karakter)',

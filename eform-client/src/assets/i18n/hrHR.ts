@@ -155,7 +155,7 @@ export const hrHR = {
   Language: 'Jezik',
   'Force users to use 2-f-auth': 'Prisilite korisnike da koriste 2-f-auth',
   'Old password': 'Stara lozinka',
-  'New password': 'Nova lozinka (najmanje 6 znakova)',
+  'New password': 'Nova lozinka',
   'New password confirmation': 'Potvrda nove lozinke (najmanje 6 znakova)',
   'Confirm new password': 'Potvrdite novu lozinku (najmanje 6 znakova)',
   'Enter new password': 'Unesite novu lozinku (najmanje 6 znakova)',

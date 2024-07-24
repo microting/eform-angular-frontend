@@ -1,0 +1,652 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Beheerder niet gevonden</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Kan database niet openen</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Kan primaire beheerdersgebruiker niet verwijderen</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Kan instellingen niet verkrijgen van web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Kan instellingen in web.config niet updaten</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>De behuizing kon niet worden verwijderd</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Case kan niet worden bijgewerkt</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Casus is bijgewerkt</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Het laden van een case is mislukt</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Case #{0} is succesvol verwijderd</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Controleer de verbindingsreeks</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Controleer de instellingen voordat u verdergaat</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Kolommen zijn bijgewerkt</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Er bestaat al een verbindingsreeks</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Kern is niet gestart</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Kon de verbindingsreeks niet schrijven in /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Apparaatgebruiker kan niet worden aangemaakt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Apparaatgebruiker met een dergelijke UId kon niet worden verkregen</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Apparaatgebruiker kan niet worden bijgewerkt</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Apparaatgebruikers-UId niet gevonden</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Apparaatgebruiker met id '{0}' kan niet worden verwijderd</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Apparaatgebruiker '{0}' kan niet worden verwijderd</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Apparaatgebruiker met id {0} kan niet worden bewerkt</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Apparaatgebruiker met id {0} kan niet worden bijgewerkt</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Apparaatgebruiker '{0}' is succesvol aangemaakt</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Apparaatgebruiker "{0}" is succesvol verwijderd</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Apparaatgebruiker succesvol bijgewerkt</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>eForm kan niet worden gemaakt</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>eForm "{0}" kan niet worden verwijderd</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>eForm "{0}" is succesvol aangemaakt</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>eForm "{0}" is succesvol verwijderd</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Fout bij het verwijderen van doorzoekbare lijst</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Fout bij het verkrijgen van een doorzoekbare lijst</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Fout bij het toevoegen van een nieuw wachtwoord</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Fout bij het maken van een bestand voor SDK</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Fout bij het maken van de tag '{0}'</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Fout bij het aanmaken van gebruiker</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Fout bij het aanmaken van werknemer</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Fout bij het verwijderen van selecteerbare lijst</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Fout bij het verwijderen van tag</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Fout bij het verwijderen van gebruiker</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Fout bij het ophalen van kolommen</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Fout bij het verkrijgen van een selecteerbare lijst</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Fout bij het verkrijgen van tags</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Fout bij het verkrijgen van gebruikers</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Fout bij het verwijderen van het oude wachtwoord</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Fout bij het roteren van afbeelding</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Fout bij het updaten van kolommen</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Fout bij het updaten van gebruiker PSK</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Fout bij het updaten van sjabloontags</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Fout bij het updaten van de gebruiker</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Bestand niet gevonden</value>
+    </data>
+    <data name="FolderError">
+        <value>Mapfout</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Afbeelding succesvol verwijderd</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Afbeelding is niet verwijderd</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Afbeelding is succesvol geroteerd</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>ongeldig verzoek</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>ongeldige beveiligings code</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>ongeldige gebruikersnaam of wachtwoord</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Hoofdverbindingsreeks is ongeldig</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Nieuwe OTP is succesvol aangemaakt</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} is succesvol aangemaakt</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} is succesvol verwijderd</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>"{0}" is succesvol gekoppeld</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} bijgewerkt</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Stel de beveiligingscode in op de server</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Verplichte velden zijn niet ingevuld</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Rol is vereist</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>SDK-verbindingsreeks is ongeldig</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Maken van doorzoekbare lijst is mislukt</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Laden van doorzoekbare lijst mislukt</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Laden van selecteerbare groepen mislukt</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Het maken van een selecteerbare lijst is mislukt</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Instellingen zijn succesvol bijgewerkt</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Site '{0}' kan niet worden verwijderd</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Site met id {0} kan niet worden bijgewerkt</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Site "{0}" is succesvol verwijderd</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Site met id {0} niet gevonden</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Werknemer met id {0} kan niet worden verwijderd</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Tag succesvol verwijderd</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Tag "{0}" is succesvol aangemaakt</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Sjabloontags zijn succesvol bijgewerkt</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Eenheid '{0}' OTP-verzoek kan niet worden voltooid</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Eenheid is succesvol aangemaakt</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Fout bij het maken van een eenheid</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Gebruikersnaam of wachtwoord is onjuist</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Gebruiker niet gevonden</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Gebruiker {0} niet gevonden</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Gebruiker {0} is verwijderd</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Gebruiker {0} bestaat al</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Gebruiker {0} is gemaakt</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Gebruiker {0} is bijgewerkt</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Werknemer '{0 {1}' kan niet worden verwijderd</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Werknemer met ID {0} kan niet worden bijgewerkt</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Werknemer "{0} {1}" is succesvol verwijderd</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Werknemer met ID {0} is bijgewerkt</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Werknemer is succesvol aangemaakt</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>U moet meer licenties kopen om extra eenheden toe te voegen.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Uw e-mailadres: {0}. Wachtwoord is opnieuw ingesteld.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Beveiligingsgroep niet gevonden</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>U kunt de beheerder niet bekijken, wijzigen of verwijderen</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Fout bij het verkrijgen van machtigingen</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Fout bij het updaten van machtigingen</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Machtigingen zijn succesvol bijgewerkt</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Verbindingsreeks bestaat niet</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>eForm al in groep</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>eForm is verwijderd uit de groep</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>e-formulier niet gevonden</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Fout bij het binden van eform aan groep</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Fout bij het maken van een beveiligingsgroep</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Fout bij het verwijderen van eform uit de groep</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Fout bij het verwijderen van de beveiligingsgroep</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Fout bij het verkrijgen van beschikbare eForms</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Fout bij het verkrijgen van e-formulierinformatie</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Fout bij het ophalen van de beveiligingsgroep</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Fout bij het verkrijgen van beveiligingsgroepen</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Fout bij het verkrijgen van het gebruikersmenu</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Fout bij het updaten van de beveiligingsgroep</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Toestemming voor e-formulier is bijgewerkt</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Beveiligingsgroep is succesvol aangemaakt</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Naam van beveiligingsgroep is leeg</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Beveiligingsgroep is succesvol verwijderd</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Beveiligingsgroep is succesvol bijgewerkt</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Fout bij het ophalen van opgeslagen tags</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Fout bij het verwijderen van opgeslagen tags</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Fout bij het opslaan van tag</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Ongeldige tag-ID</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Ongeldige tagnaam</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Opgeslagen tag niet gevonden</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Tag al opgeslagen</value>
+    </data>
+    <data name="Advanced">
+        <value>Geavanceerd</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Applicatie instellingen</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Verander wachtwoord</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Apparaatgebruikers</value>
+    </data>
+    <data name="Logout">
+        <value>Uitloggen</value>
+    </data>
+    <data name="MyEforms">
+        <value>Mijn eForms</value>
+    </data>
+    <data name="SearchableList">
+        <value>Doorzoekbare lijst</value>
+    </data>
+    <data name="Security">
+        <value>Beveiliging</value>
+    </data>
+    <data name="SelectableList">
+        <value>Selecteerbare lijst</value>
+    </data>
+    <data name="Settings">
+        <value>Instellingen</value>
+    </data>
+    <data name="Sites">
+        <value>Sites</value>
+    </data>
+    <data name="Units">
+        <value>Eenheden</value>
+    </data>
+    <data name="UserManagement">
+        <value>Gebruikersbeheer</value>
+    </data>
+    <data name="Workers">
+        <value>Werknemers</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Plug-ins</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Eform-rapport niet gevonden</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>ElementList niet opgegeven</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Fout bij het verkrijgen van rapportinformatie</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Fout bij het updaten van het rapport</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Rapport is succesvol bijgewerkt</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Sjabloon niet gevonden</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Fout bij het laden van plug-ins</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Fout bij het updaten van plug-ininstellingen</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Plug-in niet gevonden</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>U kunt de primaire beheerder niet bekijken, wijzigen of verwijderen</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Het is niet mogelijk om de rol van de primaire beheerder te wijzigen</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Rol niet gevonden</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Fout tijdens het uitvoeren van de installatie van de plug-in</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Fout bij het verkrijgen van de plug-inlijst</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Fout bij het ophalen van sites</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Fout bij het updaten van tags</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Label niet gevonden</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Tag is succesvol bijgewerkt</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>E-mailontvangers</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>E-mailontvanger is succesvol aangemaakt</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>E-mailontvanger niet gevonden</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>E-mailontvanger is succesvol verwijderd</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>E-mailontvanger succesvol bijgewerkt</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>E-mailtag is succesvol aangemaakt</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>E-mailtag niet gevonden</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>E-mailtag is succesvol verwijderd</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>E-mailtag is succesvol bijgewerkt</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Fout bij het aanmaken van een e-mailontvanger</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Fout bij het maken van een e-mailtag</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Fout bij het ophalen van e-mailontvangers</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Fout bij het ophalen van de e-mailtag</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Fout bij het verwijderen van de e-mailontvanger</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Fout bij het verwijderen van de e-mailtag</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Fout bij het bijwerken van de e-mailontvanger</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Fout bij het updaten van de e-mailtag</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Fout bij het maken van een bericht</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Fout bij het ophalen van berichten</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Fout bij het verkrijgen van berichtweergave-informatie</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Bericht is succesvol aangemaakt</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Bericht niet gevonden</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Casus niet gevonden</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>De SendGrid-sleutel moet aan de instellingen worden toegevoegd</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Data niet gevonden!</value>
+    </data>
+    <data name="eFormReport">
+        <value>eForm-rapport</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Fout bij het exporteren van Excel-bestand!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Excel-sjabloon niet gevonden in opslag!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Fout bij het maken van een map</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Fout bij het verkrijgen van mapinformatie</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Fout bij het verwijderen van de map</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Fout bij het updaten van de map</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Map niet gevonden</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Het navigatiemenu is succesvol bijgewerkt.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Importeren is succesvol afgerond</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>eForm met naam {0} bestaat al</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>eForm met naam {0} bestaat al in het geïmporteerde document</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Gevallen niet gevonden</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Fout bij het genereren van rapportbestand</value>
+    </data>
+    <data name="CaseId">
+        <value>Casus-ID</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Gemaakt bij</value>
+    </data>
+    <data name="DoneBy">
+        <value>Gedaan door</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Rapportperiode</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Fout bij het updaten van de tag</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Afbeelding succesvol bijgewerkt</value>
+    </data>
+    <data name="Folders">
+        <value>Mappen</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>eForm bijgewerkt</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>eForm aangemaakt</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Wachtwoord succesvol bijgewerkt</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Wachtwoord reset</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Hallo {0} {1},&lt;br&gt;&lt;br&gt; U heeft verzocht om uw wachtwoord voor Microting opnieuw in te stellen.&lt;br&gt;
+            Klik op onderstaande link om een nieuw wachtwoord in te stellen.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Nieuw
+            wachtwoord instellen&lt;/a&gt;&lt;br&gt;&lt;br&gt; Als u hier niet om heeft gevraagd, kunt u deze e-mail
+            negeren.&lt;br&gt;&lt;br&gt; Uw wachtwoord blijft ongewijzigd totdat u via bovenstaande link een nieuw
+            wachtwoord instelt.&lt;br&gt;&lt;br&gt; Hartelijke groeten,&lt;br&gt;&lt;br&gt; Microten&lt;br&gt;&lt;br&gt;
+            Ondersteuning: 66 11 10 66
+        </value>
+    </data>
+</root>

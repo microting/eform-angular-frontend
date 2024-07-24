@@ -155,7 +155,7 @@ export const isIS = {
   Language: 'Tungumál',
   'Force users to use 2-f-auth': 'Þvingaðu notendur til að nota 2-f-auth',
   'Old password': 'Gamalt lykilorð',
-  'New password': 'Nýtt lykilorð (lágmark 6 stafir)',
+  'New password': 'Nýtt lykilorð',
   'New password confirmation': 'Staðfesting nýtt lykilorð (lágmark 6 stafir)',
   'Confirm new password': 'Staðfestu nýtt lykilorð (lágmark 6 stafir)',
   'Enter new password': 'Sláðu inn nýtt lykilorð (lágmark 6 stafir)',

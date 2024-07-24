@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Administratörsanvändare hittades inte</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Kan inte öppna databasen</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Det går inte att ta bort primär administratörsanvändare</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Det går inte att hämta inställningar från web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Det går inte att uppdatera inställningarna i web.config</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Fodralet kunde inte tas bort</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Fallet kunde inte uppdateras</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Fallet har uppdaterats</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Det gick inte att ladda ärendet</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Fall #{0} har raderats</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Kontrollera anslutningssträngen</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Kontrollera inställningarna innan du fortsätter</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Kolumner uppdaterades</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Anslutningssträng finns redan</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Core startas inte</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Kunde inte skriva anslutningssträng i /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Det gick inte att skapa enhetsanvändare</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Enhetsanvändare med sådan UId kunde inte erhållas</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Enhetsanvändaren kunde inte uppdateras</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Enhetens användargränssnitt hittades inte</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Enhetsanvändare med id "{0}" kunde inte raderas</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Enhetsanvändaren "{0}" kunde inte raderas</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Enhetsanvändare med id {0} kunde inte redigeras</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Enhetsanvändare med id {0} kunde inte uppdateras</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Enhetsanvändaren "{0}" har skapats</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Enhetsanvändaren "{0}" har tagits bort</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Enhetsanvändaren har uppdaterats</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>eForm kunde inte skapas</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>eForm "{0}" kunde inte raderas</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>eForm "{0}" skapades framgångsrikt</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>eForm "{0}" har tagits bort</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Fel vid borttagning av sökbar lista</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Fel vid erhållande av sökbar lista</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Fel när nytt lösenord skulle läggas till</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Fel när filen skapades för SDK</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Fel när "{0}"-taggen skapades</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Fel vid skapande av användare</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Det gick inte att skapa arbetare</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Fel vid radering av valbar lista</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Det gick inte att ta bort taggen</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Fel vid borttagning av användare</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Fel när kolumner hämtades</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Fel vid erhållande av valbar lista</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Det gick inte att hämta taggar</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Fel när du skaffade användare</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Fel när det gamla lösenordet skulle tas bort</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Fel när bilden skulle roteras</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Fel vid uppdatering av kolumner</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Fel vid uppdatering av användarens PSK</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Fel vid uppdatering av malltaggar</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Fel vid uppdatering av användare</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Filen hittades inte</value>
+    </data>
+    <data name="FolderError">
+        <value>Mappfel</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Bilden har raderats</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Bilden togs inte bort</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Bilden har roterats</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Ogiltig Förfrågan</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Ogiltig säkerhetskod</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>Ogiltigt användarnamn eller lösenord</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Huvudanslutningssträngen är ogiltig</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Ny OTP har skapats</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} skapades framgångsrikt</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} har tagits bort</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>"{0}" har parats</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} uppdaterad</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Vänligen ställ in säkerhetskoden på servern</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Obligatoriska fält är inte ifyllda</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Roll krävs</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>SDK-anslutningssträngen är ogiltig</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Det gick inte att skapa en sökbar lista</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Sökbar listladdning misslyckades</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Valbar gruppladdning misslyckades</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Det gick inte att skapa valbar lista</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Inställningarna har uppdaterats</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Webbplatsen "{0}" kunde inte raderas</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Webbplatsen med id {0} kunde inte uppdateras</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Webbplatsen "{0}" har tagits bort</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Webbplatsen med id {0} hittades inte</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Arbetaren med id {0} kunde inte raderas</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Taggen har tagits bort</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Taggen "{0}" har skapats</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Malltaggar har uppdaterats</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Enheten "{0}" OTP-begäran kunde inte slutföras</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Enheten har skapats</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Fel när enheten skapades</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Användarnamn eller lösenord är felaktigt</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Användaren hittades inte</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Användaren {0} hittades inte</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Användaren {0} togs bort</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Användaren {0} finns redan</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Användaren {0} skapades</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Användaren {0} har uppdaterats</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Arbetaren "{0 {1}" kan inte tas bort</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Arbetare med id {0} kan inte uppdateras</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Arbetaren "{0} {1}" har tagits bort</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Arbetare med id {0} uppdaterades</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Arbetaren skapades framgångsrikt</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Du måste köpa fler licenser för att ytterligare enheter ska läggas till.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Din e-post: {0}. Lösenordet har återställts.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Säkerhetsgruppen hittades inte</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Du kan inte visa, ändra eller ta bort admin</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Fel vid erhållande av behörigheter</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Fel vid uppdatering av behörigheter</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Behörigheterna har uppdaterats</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Anslutningssträngen finns inte</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>eForm redan i grupp</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>eForm har tagits bort från gruppen</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>eForm hittades inte</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Fel vid bindning av eform till grupp</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Fel när säkerhetsgruppen skapades</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Fel när eform skulle tas bort från gruppen</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Fel vid borttagning av säkerhetsgrupp</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Fel när tillgängliga e-formulär skulle hämtas</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Fel vid hämtning av eform-information</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Det gick inte att hämta säkerhetsgruppen</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Fel vid hämtning av säkerhetsgrupper</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Fel när användarmenyn hämtades</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Fel vid uppdatering av säkerhetsgrupp</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Tillstånd för eform har uppdaterats</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Säkerhetsgruppen har skapats</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Säkerhetsgruppens namn är tomt</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Säkerhetsgruppen har tagits bort</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Säkerhetsgruppen har uppdaterats</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Det gick inte att hämta sparade taggar</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Fel när sparade taggar skulle tas bort</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Det gick inte att spara taggen</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Ogiltigt tagg-id</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Ogiltigt taggnamn</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Den sparade taggen hittades inte</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Taggen har redan sparats</value>
+    </data>
+    <data name="Advanced">
+        <value>Avancerad</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Applikationsinställningar</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Ändra lösenord</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Enhetsanvändare</value>
+    </data>
+    <data name="Logout">
+        <value>Logga ut</value>
+    </data>
+    <data name="MyEforms">
+        <value>Mina e-formulär</value>
+    </data>
+    <data name="SearchableList">
+        <value>Sökbar lista</value>
+    </data>
+    <data name="Security">
+        <value>säkerhet</value>
+    </data>
+    <data name="SelectableList">
+        <value>Valbar lista</value>
+    </data>
+    <data name="Settings">
+        <value>inställningar</value>
+    </data>
+    <data name="Sites">
+        <value>Webbplatser</value>
+    </data>
+    <data name="Units">
+        <value>Enheter</value>
+    </data>
+    <data name="UserManagement">
+        <value>Användarhantering</value>
+    </data>
+    <data name="Workers">
+        <value>Arbetare</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Plugins</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Eform-rapporten hittades inte</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>ElementList tillhandahålls inte</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Det gick inte att hämta rapportinformation</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Fel vid uppdatering av rapporten</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Rapporten har uppdaterats</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Mallen hittades inte</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Fel vid laddning av plugins</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Fel vid uppdatering av plugininställningar</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Plugin hittades inte</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Du kan inte visa, ändra eller ta bort primär administratör</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Det går inte att ändra roll för primär administratör</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Rollen hittades inte</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Fel när plugin-installationen kördes</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Fel när pluginlistan hämtades</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Det gick inte att hämta webbplatser</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Fel vid uppdatering av taggar</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Taggen hittades inte</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Taggen har uppdaterats</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>E-postmottagare</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>E-postmottagaren har skapats</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>E-postmottagaren hittades inte</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>E-postmottagaren har tagits bort</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>E-postmottagaren har uppdaterats</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>E-posttaggen har skapats</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>E-posttaggen hittades inte</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>E-posttaggen har tagits bort</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>E-posttaggen har uppdaterats</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Det gick inte att skapa e-postmottagare</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Fel när e-posttaggen skapades</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Det gick inte att hämta e-postmottagare</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Fel när e-posttaggen skulle hämtas</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Fel när e-postmottagaren skulle tas bort</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Fel när e-posttaggen skulle tas bort</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Fel vid uppdatering av e-postmottagare</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Fel vid uppdatering av e-posttagg</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Fel när inlägget skapades</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Det gick inte att hämta inlägg</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Det gick inte att hämta information om inläggsvisning</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Inlägget har skapats</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Inlägget hittades inte</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Fallet hittades inte</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>SendGrid-nyckeln bör läggas till i inställningarna</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Data hittades inte!</value>
+    </data>
+    <data name="eFormReport">
+        <value>eForm Rapport</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Fel vid export av excel-fil!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Excel-mall hittades inte i lagringen!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Fel när mappen skapades</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Fel vid hämtning av mappinformation</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Fel när mappen skulle tas bort</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Fel vid uppdatering av mapp</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Mappen hittades inte</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Navigationsmenyn har uppdaterats.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Importen slutfördes</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>eForm med namnet {0} finns redan</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>eForm med namnet {0} finns redan i det importerade dokumentet</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Hittade inte fall</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Fel vid generering av rapportfil</value>
+    </data>
+    <data name="CaseId">
+        <value>Ärende ID</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Skapad vid</value>
+    </data>
+    <data name="DoneBy">
+        <value>Gjord av</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Rapportperiod</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Fel vid uppdatering av taggen</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Bilden har uppdaterats</value>
+    </data>
+    <data name="Folders">
+        <value>Mappar</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>eForm uppdaterad</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>eForm skapat</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Lösenordet har uppdaterats</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Lösenordsåterställning</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Hej {0} {1}!&lt;br&gt;&lt;br&gt; Du har begärt att få återställa ditt lösenord för Microting.&lt;br&gt;
+            Klicka på länken nedan för att ange ett nytt lösenord.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Ange nytt
+            lösenord&lt;/a&gt;&lt;br&gt;&lt;br&gt; Om du inte har begärt detta, ignorera det här e-postmeddelandet.&lt;br&gt;&lt;br&gt;
+            Ditt lösenord kommer att förbli oförändrat tills du ställer in ett nytt via länken ovan.&lt;br&gt;&lt;br&gt;
+            Vänliga hälsningar,&lt;br&gt;&lt;br&gt; Microting&lt;br&gt;&lt;br&gt; Support: 66 11 10 66
+        </value>
+    </data>
+</root>

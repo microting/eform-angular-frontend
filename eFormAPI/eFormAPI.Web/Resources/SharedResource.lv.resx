@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Administrators lietotājs nav atrasts</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Nevar atvērt datu bāzi</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Nevar izdzēst primāro administratoru</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Nevar iegūt iestatījumus no web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Nevar atjaunināt iestatījumus vietnē web.config</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Lietu nevarēja noņemt</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Lietu nevarēja atjaunināt</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Lieta ir atjaunināta</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Lietas ielāde neizdevās</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Lieta Nr. {0} veiksmīgi izdzēsta</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Pārbaudiet savienojuma virkni</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Pirms turpināt, pārbaudiet iestatījumus</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Kolonnas tika atjauninātas</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Savienojuma virkne jau pastāv</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Kodols nav palaists</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Nevarēja ierakstīt savienojuma virkni failā /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Ierīces lietotāju nevarēja izveidot</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Nevarēja iegūt ierīces lietotāju ar šādu UI</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Ierīces lietotāju nevarēja atjaunināt</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>Ierīces lietotāja UI nav atrasts</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Ierīces lietotāju ar ID "{0}" nevarēja izdzēst</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Ierīces lietotāju "{0}" nevarēja izdzēst</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Ierīces lietotāju ar ID {0} nevarēja rediģēt</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Ierīces lietotāju ar ID {0} nevarēja atjaunināt</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Ierīces lietotājs “{0}” ir veiksmīgi izveidots</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Ierīces lietotājs “{0}” ir veiksmīgi izdzēsts</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Ierīces lietotājs ir veiksmīgi atjaunināts</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>Nevarēja izveidot e-veidlapu</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>E-veidlapu "{0}" nevarēja izdzēst</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>E-veidlapa "{0}" ir veiksmīgi izveidota</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>E-veidlapa "{0}" ir veiksmīgi izdzēsta</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Dzēšot meklējamo sarakstu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Iegūstot meklējamo sarakstu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Pievienojot jaunu paroli, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Veidojot failu SDK, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Veidojot tagu "{0}", radās kļūda</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Kļūda, veidojot lietotāju</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Veidojot darbinieku, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Dzēšot atlasāmo sarakstu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Dzēšot atzīmi, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Dzēšot lietotāju, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Kļūda, iegūstot kolonnas</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Kļūda, iegūstot atlasāmo sarakstu</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Iegūstot tagus, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Kļūda, iegūstot lietotājus</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Noņemot veco paroli, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Pagriežot attēlu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Atjauninot kolonnas, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Kļūda, atjauninot lietotāja PSK</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Atjauninot veidņu tagus, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Kļūda, atjauninot lietotāju</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Fails nav atrasts</value>
+    </data>
+    <data name="FolderError">
+        <value>Mapes kļūda</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Attēls veiksmīgi izdzēsts</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Attēls netika izdzēsts</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Attēls ir veiksmīgi pagriezts</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>Nederīgs pieprasījums</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>Nederīgs drošības kods</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>nederīgs lietotājvārds vai parole</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Galvenā savienojuma virkne nav derīga</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>Jauns OTP ir veiksmīgi izveidots</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} ir veiksmīgi izveidots</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} veiksmīgi izdzēsts</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>"{0}" ir veiksmīgi savienots pārī</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} atjaunināts</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Lūdzu, iestatiet drošības kodu serverī</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Obligātie lauki nav aizpildīti</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Nepieciešama loma</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>SDK savienojuma virkne nav derīga</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Meklējamā saraksta izveide neizdevās</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Meklējamā saraksta ielāde neizdevās</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Atlasāmās grupas ielāde neizdevās</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Atlasāmā saraksta izveide neizdevās</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Iestatījumi ir veiksmīgi atjaunināti</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Vietni "{0}" nevarēja izdzēst</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Vietni ar ID {0} nevarēja atjaunināt</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Vietne "{0}" ir veiksmīgi izdzēsta</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Vietne ar ID {0} nav atrasta</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Darbinieku ar ID {0} nevarēja izdzēst</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Tags veiksmīgi izdzēsts</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Tags "{0}" ir veiksmīgi izveidots</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Veidnes tagi tika veiksmīgi atjaunināti</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Vienības "{0}" OTP pieprasījumu nevarēja izpildīt</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Vienība tika veiksmīgi izveidota</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Vienības izveides laikā radās kļūda</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Lietotājvārds vai parole ir nepareiza</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Lietotājs nav atrasts</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Lietotājs {0} nav atrasts</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Lietotājs {0} tika izdzēsts</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Lietotājs {0} jau pastāv</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Tika izveidots lietotājs {0}</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Lietotājs {0} tika atjaunināts</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Darbinieku "{0 {1}" nevar izdzēst</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Darbinieku ar ID {0} nevar atjaunināt</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Darbinieks "{0} {1}" ir veiksmīgi izdzēsts</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Darbinieks ar ID {0} tika atjaunināts</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Darbinieks tika veiksmīgi izveidots</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Lai pievienotu papildu vienības, jums ir jāiegādājas vairāk licenču.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>Jūsu e-pasts: {0}. Parole ir atiestatīta.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Drošības grupa nav atrasta</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Jūs nevarat skatīt, mainīt vai dzēst administratoru</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Iegūstot atļaujas, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Atjauninot atļaujas, radās kļūda</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Atļaujas ir veiksmīgi atjauninātas</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Savienojuma virkne neeksistē</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>e-veidlapa jau ir grupā</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>E-veidlapa ir izdzēsta no grupas</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>e-veidlapa nav atrasta</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Saistot e-veidlapu grupai, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Veidojot drošības grupu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Dzēšot e-veidlapu no grupas, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Dzēšot drošības grupu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Iegūstot pieejamās e-veidlapas, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Iegūstot e-formas informāciju, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Iegūstot drošības grupu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Iegūstot drošības grupas, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Iegūstot lietotāja izvēlni, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Atjauninot drošības grupu, radās kļūda</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Atļauja eform ir atjaunināta</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Drošības grupa ir veiksmīgi izveidota</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Drošības grupas nosaukums ir tukšs</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Drošības grupa veiksmīgi noņemta</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Drošības grupa ir veiksmīgi atjaunināta</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Iegūstot saglabātos tagus, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Noņemot saglabātās atzīmes, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Saglabājot atzīmi, radās kļūda</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>Nederīgs taga ID</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Nederīgs taga nosaukums</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Saglabātā atzīme nav atrasta</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Atzīme jau ir saglabāta</value>
+    </data>
+    <data name="Advanced">
+        <value>Papildu</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Lietojumprogrammu iestatījumi</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Mainīt paroli</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Ierīces lietotāji</value>
+    </data>
+    <data name="Logout">
+        <value>Izlogoties</value>
+    </data>
+    <data name="MyEforms">
+        <value>Manas e-veidlapas</value>
+    </data>
+    <data name="SearchableList">
+        <value>Meklējams saraksts</value>
+    </data>
+    <data name="Security">
+        <value>Drošība</value>
+    </data>
+    <data name="SelectableList">
+        <value>Atlasāms saraksts</value>
+    </data>
+    <data name="Settings">
+        <value>Iestatījumi</value>
+    </data>
+    <data name="Sites">
+        <value>Vietnes</value>
+    </data>
+    <data name="Units">
+        <value>Vienības</value>
+    </data>
+    <data name="UserManagement">
+        <value>Lietotāju pārvaldība</value>
+    </data>
+    <data name="Workers">
+        <value>Strādnieki</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Spraudņi</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Eform pārskats nav atrasts</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>ElementList nav nodrošināts</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Iegūstot pārskata informāciju, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Atjauninot pārskatu, radās kļūda</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Pārskats ir veiksmīgi atjaunināts</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Veidne nav atrasta</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Ielādējot spraudņus, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Kļūda, atjauninot spraudņa iestatījumus</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Spraudnis nav atrasts</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Jūs nevarat skatīt, mainīt vai dzēst galveno administratoru</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Nav iespējams mainīt galvenā administratora lomu</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Loma nav atrasta</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Kļūda, izpildot spraudņa instalēšanu</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Iegūstot spraudņu sarakstu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Iegūstot vietnes, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Atjauninot tagus, radās kļūda</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Tags nav atrasts</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Tags ir veiksmīgi atjaunināts</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>E-pasta adresāti</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>E-pasta adresāts ir veiksmīgi izveidots</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>E-pasta adresāts nav atrasts</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>E-pasta adresāts ir veiksmīgi noņemts</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>E-pasta adresāts ir veiksmīgi atjaunināts</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>E-pasta atzīme ir veiksmīgi izveidota</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>E-pasta atzīme nav atrasta</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>E-pasta atzīme ir veiksmīgi noņemta</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>E-pasta atzīme ir veiksmīgi atjaunināta</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Veidojot e-pasta adresātu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Veidojot e-pasta tagu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Iegūstot e-pasta adresātus, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Iegūstot e-pasta tagu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Noņemot e-pasta adresātu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Noņemot e-pasta tagu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Atjauninot e-pasta adresātu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Atjauninot e-pasta tagu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Veidojot ziņu, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Iegūstot ziņas, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Iegūstot ziņas skatījuma informāciju, radās kļūda</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Ziņa ir veiksmīgi izveidota</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Ziņa nav atrasta</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Lieta nav atrasta</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>SendGrid atslēga jāpievieno iestatījumiem</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Dati nav atrasti!</value>
+    </data>
+    <data name="eFormReport">
+        <value>e-veidlapas ziņojums</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Eksportējot Excel failu, radās kļūda!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Excel veidne krātuvē nav atrasta!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Veidojot mapi, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Iegūstot informāciju par mapēm, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Noņemot mapi, radās kļūda</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Atjauninot mapi, radās kļūda</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Mape nav atrasta</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Navigācijas izvēlne tika veiksmīgi atjaunināta.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Importēšana ir veiksmīgi pabeigta</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>E-veidlapa ar nosaukumu {0} jau pastāv</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>Importētajā dokumentā jau ir e-veidlapa ar nosaukumu {0}</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Gadījumi nav atrasti</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Kļūda, ģenerējot atskaites failu</value>
+    </data>
+    <data name="CaseId">
+        <value>Lietas ID</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Izveidots plkst</value>
+    </data>
+    <data name="DoneBy">
+        <value>Pabeidza</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Pārskata periods</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Atjauninot tagu, radās kļūda</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Attēls ir veiksmīgi atjaunināts</value>
+    </data>
+    <data name="Folders">
+        <value>Mapes</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>Atjaunināta e-veidlapa</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>Izveidota e-veidlapa</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Parole veiksmīgi atjaunināta</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Paroles atiestatīšana</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Sveiki, {0} {1}!&lt;br&gt;&lt;br&gt; Jūs esat pieprasījis atiestatīt savu Microting paroli.&lt;br&gt;
+            Noklikšķiniet uz tālāk esošās saites, lai iestatītu jaunu paroli.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Iestatiet
+            jaunu paroli&lt;/a&gt;&lt;br&gt;&lt;br&gt; Ja jūs to nepieprasījāt, lūdzu, ignorējiet šo e-pasta ziņojumu.&lt;br&gt;&lt;br&gt;
+            Jūsu parole paliks nemainīga, līdz iestatīsiet jaunu, izmantojot iepriekš norādīto saiti.&lt;br&gt;&lt;br&gt;
+            Ar laba vēlējumiem,&lt;br&gt;&lt;br&gt; Mikrotēšana&lt;br&gt;&lt;br&gt; Atbalsts: 66 11 10 66
+        </value>
+    </data>
+</root>

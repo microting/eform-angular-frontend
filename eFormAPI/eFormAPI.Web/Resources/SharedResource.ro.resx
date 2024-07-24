@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <data name="AdminUserNotFound">
+        <value>Utilizatorul administrator nu a fost găsit</value>
+    </data>
+    <data name="CannotOpenDatabes">
+        <value>Nu se poate deschide baza de date</value>
+    </data>
+    <data name="CantDeletePrimaryAdminUser">
+        <value>Nu se poate șterge utilizatorul administrator principal</value>
+    </data>
+    <data name="CantObtainSettingsFromWebConfig">
+        <value>Nu pot obține setări de la web.config</value>
+    </data>
+    <data name="CantUpdateSettingsInWebConfig">
+        <value>Nu se pot actualiza setările în web.config</value>
+    </data>
+    <data name="CaseCouldNotBeRemoved">
+        <value>Carcasa nu a putut fi eliminată</value>
+    </data>
+    <data name="CaseCouldNotBeUpdated">
+        <value>Cazul nu a putut fi actualizat</value>
+    </data>
+    <data name="CaseHasBeenUpdated">
+        <value>Cazul a fost actualizat</value>
+    </data>
+    <data name="CaseLoadingFailed">
+        <value>Încărcarea cazului nu a reușit</value>
+    </data>
+    <data name="CaseParamDeletedSuccessfully">
+        <value>Cazul #{0} a fost șters cu succes</value>
+    </data>
+    <data name="CheckConnectionString">
+        <value>Verificați șirul de conexiune</value>
+    </data>
+    <data name="CheckSettingsBeforeProceed">
+        <value>Verificați setările înainte de a continua</value>
+    </data>
+    <data name="ColumnsWereUpdated">
+        <value>Coloanele au fost actualizate</value>
+    </data>
+    <data name="ConnectionStringAlreadyExist">
+        <value>Șirul de conexiune există deja</value>
+    </data>
+    <data name="CoreIsNotStarted">
+        <value>Core nu este pornit</value>
+    </data>
+    <data name="CouldNotWriteConnectionString">
+        <value>Nu s-a putut scrie șirul de conexiune în /bin/Input.txt</value>
+    </data>
+    <data name="DeviceUserCouldNotBeCreated">
+        <value>Utilizatorul dispozitivului nu a putut fi creat</value>
+    </data>
+    <data name="DeviceUserCouldNotBeObtained">
+        <value>Utilizatorul dispozitivului cu un astfel de UId nu a putut fi obținut</value>
+    </data>
+    <data name="DeviceUserCouldNotBeUpdated">
+        <value>Utilizatorul dispozitivului nu a putut fi actualizat</value>
+    </data>
+    <data name="DeviceUserNotFound">
+        <value>ID-ul utilizatorului dispozitivului nu a fost găsit</value>
+    </data>
+    <data name="DeviceUserPa">
+        <value>Utilizatorul dispozitivului cu id-ul „{0}” nu a putut fi șters</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeDeleted">
+        <value>Utilizatorul dispozitivului „{0}” nu a putut fi șters</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeEdited">
+        <value>Utilizatorul dispozitivului cu id-ul {0} nu a putut fi editat</value>
+    </data>
+    <data name="DeviceUserParamCouldNotBeUpdated">
+        <value>Utilizatorul dispozitivului cu id-ul {0} nu a putut fi actualizat</value>
+    </data>
+    <data name="DeviceUserParamCreatedSuccessfully">
+        <value>Utilizatorul dispozitivului „{0}” a fost creat cu succes</value>
+    </data>
+    <data name="DeviceUserParamDeletedSuccessfully">
+        <value>Utilizatorul dispozitivului „{0}” a fost șters cu succes</value>
+    </data>
+    <data name="DeviceUserUpdatedSuccessfully">
+        <value>Utilizatorul dispozitivului a fost actualizat cu succes</value>
+    </data>
+    <data name="eFormCouldNotBeCreated">
+        <value>Formularul electronic nu a putut fi creat</value>
+    </data>
+    <data name="eFormParamCouldNotBeDeleted">
+        <value>Formularul electronic „{0}” nu a putut fi șters</value>
+    </data>
+    <data name="eFormParamCreatedSuccessfully">
+        <value>Formularul electronic „{0}” a fost creat cu succes</value>
+    </data>
+    <data name="eFormParamDeletedSuccessfully">
+        <value>Formularul electronic „{0}” a fost șters cu succes</value>
+    </data>
+    <data name="ErrorWhenDeletingSearchableList">
+        <value>Eroare la ștergerea listei de căutare</value>
+    </data>
+    <data name="ErrorWhenObtainingSearchableList">
+        <value>Eroare la obținerea listei de căutare</value>
+    </data>
+    <data name="ErrorWhileAddNewPassword">
+        <value>Eroare la adăugarea unei noi parole</value>
+    </data>
+    <data name="ErrorWhileCreatingFileForSDK">
+        <value>Eroare la crearea fișierului pentru SDK</value>
+    </data>
+    <data name="ErrorWhileCreatingParamTag">
+        <value>Eroare la crearea etichetei „{0}”.</value>
+    </data>
+    <data name="ErrorWhileCreatingUser">
+        <value>Eroare la crearea utilizatorului</value>
+    </data>
+    <data name="ErrorWhileCreatingWorker">
+        <value>Eroare la crearea lucrătorului</value>
+    </data>
+    <data name="ErrorWhileDeletingSelectableList">
+        <value>Eroare la ștergerea listei selectabile</value>
+    </data>
+    <data name="ErrorWhileDeletingTag">
+        <value>Eroare la ștergerea etichetei</value>
+    </data>
+    <data name="ErrorWhileDeletingUser">
+        <value>Eroare la ștergerea utilizatorului</value>
+    </data>
+    <data name="ErrorWhileObtainColumns">
+        <value>Eroare la obținerea coloanelor</value>
+    </data>
+    <data name="ErrorWhileObtainSelectableList">
+        <value>Eroare la obținerea listei selectabile</value>
+    </data>
+    <data name="ErrorWhileObtainTags">
+        <value>Eroare la obținerea etichetelor</value>
+    </data>
+    <data name="ErrorWhileObtainUsers">
+        <value>Eroare la obținerea utilizatorilor</value>
+    </data>
+    <data name="ErrorWhileRemovingOldPassword">
+        <value>Eroare la eliminarea parolei vechi</value>
+    </data>
+    <data name="ErrorWhileRotateImage">
+        <value>Eroare la rotirea imaginii</value>
+    </data>
+    <data name="ErrorWhileUpdatingColumns">
+        <value>Eroare la actualizarea coloanelor</value>
+    </data>
+    <data name="ErrorWhileUpdatingPSK">
+        <value>Eroare la actualizarea utilizatorului PSK</value>
+    </data>
+    <data name="ErrorWhileUpdatingTemplateTags">
+        <value>Eroare la actualizarea etichetelor șablonului</value>
+    </data>
+    <data name="ErrorWhileUpdatingUser">
+        <value>Eroare la actualizarea utilizatorului</value>
+    </data>
+    <data name="FileNotFound">
+        <value>Fișierul nu a fost găsit</value>
+    </data>
+    <data name="FolderError">
+        <value>Eroare de folder</value>
+    </data>
+    <data name="ImageDeletedSuccessfully">
+        <value>Imaginea a fost ștearsă cu succes</value>
+    </data>
+    <data name="ImageNotDeleted">
+        <value>Imaginea nu a fost ștearsă</value>
+    </data>
+    <data name="ImageRotatedSuccessfully">
+        <value>Imaginea a fost rotită cu succes</value>
+    </data>
+    <data name="InvalidRequest">
+        <value>cerere invalida</value>
+    </data>
+    <data name="InvalidSecurityCode">
+        <value>cod de securitate invalid</value>
+    </data>
+    <data name="InvalidUserNameOrPassword">
+        <value>nume de utilizator sau parola incorecte</value>
+    </data>
+    <data name="MainConnectionStringIsInvalid">
+        <value>Șirul de conexiune principal este nevalid</value>
+    </data>
+    <data name="NewOTPCreatedSuccessfully">
+        <value>OTP nou creat cu succes</value>
+    </data>
+    <data name="ParamCreatedSuccessfully">
+        <value>{0} creat cu succes</value>
+    </data>
+    <data name="ParamDeletedSuccessfully">
+        <value>{0} a fost șters cu succes</value>
+    </data>
+    <data name="ParamPairedSuccessfully">
+        <value>„{0}” a fost asociat cu succes</value>
+    </data>
+    <data name="ParamUpdatedSuccessfully">
+        <value>{0} actualizat</value>
+    </data>
+    <data name="PleaseSetupSecurityCode">
+        <value>Vă rugăm să configurați codul de securitate pe server</value>
+    </data>
+    <data name="RequestFieldsAreNotFilled">
+        <value>Câmpurile obligatorii nu sunt completate</value>
+    </data>
+    <data name="RoleIsRequired">
+        <value>Rolul este necesar</value>
+    </data>
+    <data name="SDKConnectionStringIsInvalid">
+        <value>Șirul de conexiune SDK este nevalid</value>
+    </data>
+    <data name="SearchableListCreationFailed">
+        <value>Crearea listei care poate fi căutată a eșuat</value>
+    </data>
+    <data name="SearchableListLoadingFailed">
+        <value>Încărcarea listei care poate fi căutată nu a reușit</value>
+    </data>
+    <data name="SelectableGroupLoadingFailed">
+        <value>Încărcarea grupului selectabil nu a reușit</value>
+    </data>
+    <data name="SelectableListCreationFailed">
+        <value>Crearea listei selectabile nu a reușit</value>
+    </data>
+    <data name="SettingsUpdatedSuccessfully">
+        <value>Setările au fost actualizate cu succes</value>
+    </data>
+    <data name="SiteParamCouldNotBeDeleted">
+        <value>Site-ul „{0}” nu a putut fi șters</value>
+    </data>
+    <data name="SiteParamCouldNotBeUpdated">
+        <value>Site-ul cu id-ul {0} nu a putut fi actualizat</value>
+    </data>
+    <data name="SiteParamDeletedSuccessfully">
+        <value>Site-ul „{0}” a fost șters cu succes</value>
+    </data>
+    <data name="SiteParamNotFound">
+        <value>Site-ul cu id-ul {0} nu a fost găsit</value>
+    </data>
+    <data name="SiteWithIdCouldNotBeDeleted">
+        <value>Lucrătorul cu id-ul {0} nu a putut fi șters</value>
+    </data>
+    <data name="TagDeletedSuccessfully">
+        <value>Eticheta a fost ștearsă cu succes</value>
+    </data>
+    <data name="TagParamCreatedSuccessfully">
+        <value>Eticheta „{0}” a fost creată cu succes</value>
+    </data>
+    <data name="TemplateTagUpdatedSuccessfully">
+        <value>Etichetele șablonului au fost actualizate cu succes</value>
+    </data>
+    <data name="UnitParamOTPCouldNotCompleted">
+        <value>Solicitarea OTP al unității „{0}” nu a putut fi finalizată</value>
+    </data>
+    <data name="UnitWasSuccessfullyCreated">
+        <value>Unitatea a fost creată cu succes</value>
+    </data>
+    <data name="ErrorWhileCreatingUnit">
+        <value>Eroare la crearea unității</value>
+    </data>
+    <data name="UserNameOrPasswordIncorrect">
+        <value>Numele de utilizator sau Parola sunt incorecte</value>
+    </data>
+    <data name="UserNotFound">
+        <value>Utilizator nu a fost găsit</value>
+    </data>
+    <data name="UserNotFoundUserName">
+        <value>Utilizatorul {0} nu a fost găsit</value>
+    </data>
+    <data name="UserParamWasDeleted">
+        <value>Utilizatorul {0} a fost șters</value>
+    </data>
+    <data name="UserUserNameAlreadyExist">
+        <value>Utilizatorul {0} există deja</value>
+    </data>
+    <data name="UserUserNameWasCreated">
+        <value>Utilizatorul {0} a fost creat</value>
+    </data>
+    <data name="UserUserNameWasUpdated">
+        <value>Utilizatorul {0} a fost actualizat</value>
+    </data>
+    <data name="WorkerParamCantBeDeleted">
+        <value>Lucrătorul „{0 {1}” nu poate fi șters</value>
+    </data>
+    <data name="WorkerParamCantBeUpdated">
+        <value>Lucrătorul cu id-ul {0} nu poate fi actualizat</value>
+    </data>
+    <data name="WorkerParamDeletedSuccessfully">
+        <value>Lucrătorul „{0} {1}” a fost șters cu succes</value>
+    </data>
+    <data name="WorkerParamWasUpdated">
+        <value>Lucrătorul cu id-ul {0} a fost actualizat</value>
+    </data>
+    <data name="WorkerWasSuccessfullyCreated">
+        <value>Lucrătorul a fost creat cu succes</value>
+    </data>
+    <data name="YouNeedToBuyMoreLicenses">
+        <value>Trebuie să cumpărați mai multe licențe pentru ca unități suplimentare să fie adăugate.</value>
+    </data>
+    <data name="YourEmailPasswordHasBeenReset">
+        <value>E-mailul dvs.: {0}. Parola a fost resetată.</value>
+    </data>
+    <data name="SecurityGroupNotFound">
+        <value>Grupul de securitate nu a fost găsit</value>
+    </data>
+    <data name="YouCantViewChangeOrDeleteAdmin">
+        <value>Nu puteți vizualiza, modifica sau șterge administratorul</value>
+    </data>
+    <data name="ErrorWhileObtainingPermissions">
+        <value>Eroare la obținerea permisiunilor</value>
+    </data>
+    <data name="ErrorWhileUpdatingPermissions">
+        <value>Eroare la actualizarea permisiunilor</value>
+    </data>
+    <data name="PermissionsUpdatedSuccessfully">
+        <value>Permisiunile au fost actualizate cu succes</value>
+    </data>
+    <data name="ConnectionStringDoesNotExist">
+        <value>Șirul de conexiune nu există</value>
+    </data>
+    <data name="eFormAlreadyInGroup">
+        <value>eForm deja în grup</value>
+    </data>
+    <data name="eFormHasBeenDeletedFromGroup">
+        <value>Formularul electronic a fost șters din grup</value>
+    </data>
+    <data name="eFormNotFound">
+        <value>Formularul electronic nu a fost găsit</value>
+    </data>
+    <data name="ErrorWhileBindingEformToGroup">
+        <value>Eroare la legarea eform la grup</value>
+    </data>
+    <data name="ErrorWhileCreatingSecurityGroup">
+        <value>Eroare la crearea grupului de securitate</value>
+    </data>
+    <data name="ErrorWhileDeletingEformFromGroup">
+        <value>Eroare la ștergerea eform din grup</value>
+    </data>
+    <data name="ErrorWhileDeletingSecurityGroup">
+        <value>Eroare la ștergerea grupului de securitate</value>
+    </data>
+    <data name="ErrorWhileObtainingAvailableEForms">
+        <value>Eroare la obținerea formularelor electronice disponibile</value>
+    </data>
+    <data name="ErrorWhileObtainingEformInfo">
+        <value>Eroare la obținerea informațiilor eform</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroup">
+        <value>Eroare la obținerea grupului de securitate</value>
+    </data>
+    <data name="ErrorWhileObtainingSecurityGroups">
+        <value>Eroare la obținerea grupurilor de securitate</value>
+    </data>
+    <data name="ErrorWhileObtainingUserMenu">
+        <value>Eroare la obținerea meniului utilizator</value>
+    </data>
+    <data name="ErrorWhileUpdatingSecurityGroup">
+        <value>Eroare la actualizarea grupului de securitate</value>
+    </data>
+    <data name="PermissionForEformHasBeenUpdated">
+        <value>Permisiunea pentru eform a fost actualizată</value>
+    </data>
+    <data name="SecurityGroupCreatedSuccessfully">
+        <value>Grup de securitate creat cu succes</value>
+    </data>
+    <data name="SecurityGroupNameIsEmpty">
+        <value>Numele grupului de securitate este gol</value>
+    </data>
+    <data name="SecurityGroupRemovedSuccessfully">
+        <value>Grupul de securitate a fost eliminat cu succes</value>
+    </data>
+    <data name="SecurityGroupUpdatedSuccessfully">
+        <value>Grupul de securitate a fost actualizat cu succes</value>
+    </data>
+    <data name="ErrorWhileObtainingSavedTags">
+        <value>Eroare la obținerea etichetelor salvate</value>
+    </data>
+    <data name="ErrorWhileRemovingSavedTags">
+        <value>Eroare la eliminarea etichetelor salvate</value>
+    </data>
+    <data name="ErrorWhileSavingTag">
+        <value>Eroare la salvarea etichetei</value>
+    </data>
+    <data name="InvalidTagId">
+        <value>ID etichetă nevalid</value>
+    </data>
+    <data name="InvalidTagName">
+        <value>Nume de etichetă nevalid</value>
+    </data>
+    <data name="SavedTagNotFound">
+        <value>Eticheta salvată nu a fost găsită</value>
+    </data>
+    <data name="TagAlreadySaved">
+        <value>Eticheta a fost deja salvată</value>
+    </data>
+    <data name="Advanced">
+        <value>Avansat</value>
+    </data>
+    <data name="ApplicationSettings">
+        <value>Setările aplicației</value>
+    </data>
+    <data name="ChangePassword">
+        <value>Schimbaţi parola</value>
+    </data>
+    <data name="DeviceUsers">
+        <value>Utilizatorii dispozitivului</value>
+    </data>
+    <data name="Logout">
+        <value>Deconectare</value>
+    </data>
+    <data name="MyEforms">
+        <value>Formularele mele electronice</value>
+    </data>
+    <data name="SearchableList">
+        <value>Lista care poate fi căutată</value>
+    </data>
+    <data name="Security">
+        <value>Securitate</value>
+    </data>
+    <data name="SelectableList">
+        <value>Lista selectabilă</value>
+    </data>
+    <data name="Settings">
+        <value>Setări</value>
+    </data>
+    <data name="Sites">
+        <value>Site-uri</value>
+    </data>
+    <data name="Units">
+        <value>Unități</value>
+    </data>
+    <data name="UserManagement">
+        <value>Managementul utilizatorilor</value>
+    </data>
+    <data name="Workers">
+        <value>Muncitorii</value>
+    </data>
+    <data name="PluginsSettings">
+        <value>Pluginuri</value>
+    </data>
+    <data name="EformReportNotFound">
+        <value>Raportul Eform nu a fost găsit</value>
+    </data>
+    <data name="ElementListNotProvided">
+        <value>ElementList nu este furnizat</value>
+    </data>
+    <data name="ErrorWhileObtainingReportInfo">
+        <value>Eroare la obținerea informațiilor din raport</value>
+    </data>
+    <data name="ErrorWhileUpdatingReport">
+        <value>Eroare la actualizarea raportului</value>
+    </data>
+    <data name="ReportUpdatedSuccessfully">
+        <value>Raport actualizat cu succes</value>
+    </data>
+    <data name="TemplateNotFound">
+        <value>Șablonul nu a fost găsit</value>
+    </data>
+    <data name="ErrorWhileObtainingPlugins">
+        <value>Eroare la încărcarea pluginurilor</value>
+    </data>
+    <data name="ErrorWhileUpdatingPluginSettings">
+        <value>Eroare la actualizarea setărilor pluginului</value>
+    </data>
+    <data name="PluginNotFound">
+        <value>Pluginul nu a fost găsit</value>
+    </data>
+    <data name="CantEditPrimaryAdminUser">
+        <value>Nu puteți vizualiza, modifica sau șterge administratorul principal</value>
+    </data>
+    <data name="CantUpdateRoleForPrimaryAdminUser">
+        <value>Nu este posibil să schimbați rolul pentru administratorul principal</value>
+    </data>
+    <data name="RoleNotFound">
+        <value>Rolul nu a fost găsit</value>
+    </data>
+    <data name="ErrorWhileExecutingPluginInstall">
+        <value>Eroare la executarea instalării pluginului</value>
+    </data>
+    <data name="ErrorWhileObtainingPluginList">
+        <value>Eroare la obținerea listei de pluginuri</value>
+    </data>
+    <data name="ErrorWhileObtainingSites">
+        <value>Eroare la obținerea site-urilor</value>
+    </data>
+    <data name="ErrorWhileUpdatingTags">
+        <value>Eroare la actualizarea etichetelor</value>
+    </data>
+    <data name="TagNotFound">
+        <value>Eticheta nu a fost găsită</value>
+    </data>
+    <data name="TagUpdatedSuccessfully">
+        <value>Eticheta a fost actualizată cu succes</value>
+    </data>
+    <data name="EmailRecipients">
+        <value>Destinatari de e-mail</value>
+    </data>
+    <data name="EmailRecipientCreatedSuccessfully">
+        <value>Destinatarul e-mailului a fost creat cu succes</value>
+    </data>
+    <data name="EmailRecipientNotFound">
+        <value>Destinatarul e-mailului nu a fost găsit</value>
+    </data>
+    <data name="EmailRecipientRemovedSuccessfully">
+        <value>Destinatarul e-mailului a fost eliminat cu succes</value>
+    </data>
+    <data name="EmailRecipientUpdatedSuccessfully">
+        <value>Destinatarul e-mailului a fost actualizat cu succes</value>
+    </data>
+    <data name="EmailTagCreatedSuccessfully">
+        <value>Etichetă de e-mail creată cu succes</value>
+    </data>
+    <data name="EmailTagNotFound">
+        <value>Eticheta de e-mail nu a fost găsită</value>
+    </data>
+    <data name="EmailTagRemovedSuccessfully">
+        <value>Eticheta de e-mail a fost eliminată cu succes</value>
+    </data>
+    <data name="EmailTagUpdatedSuccessfully">
+        <value>Eticheta de e-mail a fost actualizată cu succes</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailRecipient">
+        <value>Eroare la crearea destinatarului de e-mail</value>
+    </data>
+    <data name="ErrorWhileCreatingEmailTag">
+        <value>Eroare la crearea etichetei de e-mail</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailRecipients">
+        <value>Eroare la obținerea destinatarilor de e-mail</value>
+    </data>
+    <data name="ErrorWhileObtainingEmailTag">
+        <value>Eroare la obținerea etichetei de e-mail</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailRecipient">
+        <value>Eroare la eliminarea destinatarului e-mailului</value>
+    </data>
+    <data name="ErrorWhileRemovingEmailTag">
+        <value>Eroare la eliminarea etichetei de e-mail</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailRecipient">
+        <value>Eroare la actualizarea destinatarului e-mailului</value>
+    </data>
+    <data name="ErrorWhileUpdatingEmailTag">
+        <value>Eroare la actualizarea etichetei de e-mail</value>
+    </data>
+    <data name="ErrorWhileCreatingPost">
+        <value>Eroare la crearea postării</value>
+    </data>
+    <data name="ErrorWhileObtainingPosts">
+        <value>Eroare la obținerea postărilor</value>
+    </data>
+    <data name="ErrorWhileObtainingPostViewInfo">
+        <value>Eroare la obținerea informațiilor despre vizualizarea postării</value>
+    </data>
+    <data name="PostCreatedSuccessfully">
+        <value>Postare creată cu succes</value>
+    </data>
+    <data name="PostNotFound">
+        <value>Postarea nu a fost găsită</value>
+    </data>
+    <data name="CaseNotFound">
+        <value>Cazul nu a fost găsit</value>
+    </data>
+    <data name="SendGridKeyShouldBeAddedToSettings">
+        <value>Cheia SendGrid ar trebui adăugată la setări</value>
+    </data>
+    <data name="DataNotFound">
+        <value>Data negasita!</value>
+    </data>
+    <data name="eFormReport">
+        <value>Raportul eForm</value>
+    </data>
+    <data name="ErrorWhileExportingExcelFile">
+        <value>Eroare la exportul fișierului Excel!</value>
+    </data>
+    <data name="ExcelTemplateNotFoundInStorage">
+        <value>Șablonul Excel nu a fost găsit în stocare!</value>
+    </data>
+    <data name="ErrorWhileCreatingFolder">
+        <value>Eroare la crearea folderului</value>
+    </data>
+    <data name="ErrorWhileObtainingFoldersInfo">
+        <value>Eroare la obținerea informațiilor despre foldere</value>
+    </data>
+    <data name="ErrorWhileRemovingFolder">
+        <value>Eroare la eliminarea folderului</value>
+    </data>
+    <data name="ErrorWhileUpdatingFolder">
+        <value>Eroare la actualizarea folderului</value>
+    </data>
+    <data name="FolderNotFound">
+        <value>Dosarul nu a fost găsit</value>
+    </data>
+    <data name="NavigationMenuUpdate">
+        <value>Meniul de navigare a fost actualizat cu succes.</value>
+    </data>
+    <data name="ImportFinishedSuccessfully">
+        <value>Importul s-a încheiat cu succes</value>
+    </data>
+    <data name="EFormWithNameAlreadyExists">
+        <value>Formularul electronic cu numele {0} există deja</value>
+    </data>
+    <data name="EFormWithNameAlreadyExistsInTheImportedDocument">
+        <value>Formularul electronic cu numele {0} există deja în documentul importat</value>
+    </data>
+    <data name="CasesNotFound">
+        <value>Cazuri nu au fost găsite</value>
+    </data>
+    <data name="ErrorWhileGeneratingReportFile">
+        <value>Eroare la generarea fișierului de raport</value>
+    </data>
+    <data name="CaseId">
+        <value>ID caz</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Creat la</value>
+    </data>
+    <data name="DoneBy">
+        <value>Făcut de</value>
+    </data>
+    <data name="ReportPeriod">
+        <value>Perioada de raportare</value>
+    </data>
+    <data name="ErrorWhileUpdateTag">
+        <value>Eroare la actualizarea etichetei</value>
+    </data>
+    <data name="ImageUpdatedSuccessfully">
+        <value>Imaginea a fost actualizată cu succes</value>
+    </data>
+    <data name="Folders">
+        <value>Foldere</value>
+    </data>
+    <data name="EformSuccessfullyUpdated">
+        <value>eForm actualizat</value>
+    </data>
+    <data name="EformSuccessfullyCreated">
+        <value>eForm creat</value>
+    </data>
+    <data name="PasswordSuccessfullyUpdated">
+        <value>Parola a fost actualizată cu succes</value>
+    </data>
+    <data name="ForgotPasswordEmailSubject">
+        <value>Resetare parola</value>
+    </data>
+    <data name="ForgotPasswordEmailHtml">
+        <value>
+            Bună {0} {1},&lt;br&gt;&lt;br&gt; Ați solicitat să vă resetați parola pentru Microting.&lt;br&gt; Faceți
+            clic pe linkul de mai jos pentru a seta o nouă parolă.&lt;br&gt;&lt;br&gt; &lt;a href="{2}"&gt;Setați o nouă
+            parolă&lt;/a&gt;&lt;br&gt;&lt;br&gt; Dacă nu ați solicitat acest lucru, vă rugăm să ignorați acest e-mail.&lt;br&gt;&lt;br&gt;
+            Parola dvs. va rămâne neschimbată până când veți seta una nouă prin linkul de mai sus.&lt;br&gt;&lt;br&gt;
+            Salutări,&lt;br&gt;&lt;br&gt; Microting&lt;br&gt;&lt;br&gt; Suport: 66 11 10 66
+        </value>
+    </data>
+</root>
