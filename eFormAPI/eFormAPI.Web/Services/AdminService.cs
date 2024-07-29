@@ -136,19 +136,15 @@ public class AdminService : IAdminService
                 {
                     userInfoViewModel.IsDeviceUser = true;
 
-                    if (sdkDbContext.Workers.Any(x =>
-                            x.FirstName == userInfoViewModel.FirstName
-                            && x.LastName == userInfoViewModel.LastName
+                    if (sdkDbContext.Sites.Any(x =>
+                            x.Name == userInfoViewModel.FirstName + " " + userInfoViewModel.LastName
                             && x.WorkflowState != Constants.WorkflowStates.Removed))
                     {
                     }
                     else
                     {
-
                         await core.SiteCreate($"{userInfoViewModel.FirstName} {userInfoViewModel.LastName}", userInfoViewModel.FirstName, userInfoViewModel.LastName,
                             null, "da");
-
-                        // var id = await sdkDbContext.Sites.Where(x => x.MicrotingUid == siteDto.SiteId).Select(x => x.Id).FirstAsync();
                     }
 
                     var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x =>
@@ -279,9 +275,8 @@ public class AdminService : IAdminService
                     unit.IsLocked = true;
                     await unit.Update(sdkDbContext);
                 }
-                var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.FirstName == userRegisterModel.FirstName
-                    && x.LastName == userRegisterModel.LastName
-                    && x.WorkflowState != Constants.WorkflowStates.Removed);
+                var siteWorker = await sdkDbContext.SiteWorkers.SingleOrDefaultAsync(x => x.SiteId == site.Id);
+                var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.Id == siteWorker.WorkerId);
                 if (worker != null)
                 {
                     worker.IsLocked = true;
