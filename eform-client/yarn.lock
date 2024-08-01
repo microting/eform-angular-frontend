@@ -166,6 +166,14 @@
     "@angular-eslint/bundled-angular-compiler" "18.1.0"
     "@angular-eslint/utils" "18.1.0"
 
+"@angular-eslint/eslint-plugin@18.2.0":
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-18.2.0.tgz#44fe09561d2d2323e377648e79d6e74b5ebe523b"
+  integrity sha512-vJ7pstQPqCqkvMrEsjjocvHdPBl/frs0+fqkckog2Sq0QisBEjUPkbImvId6dw7JzxSDSvttdAklakF97CE4VA==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "18.2.0"
+    "@angular-eslint/utils" "18.2.0"
+
 "@angular-eslint/schematics@18.1.0":
   version "18.1.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-18.1.0.tgz#4f1a7fe6abdaf5f67801eaf01d4a23901ff29442"
