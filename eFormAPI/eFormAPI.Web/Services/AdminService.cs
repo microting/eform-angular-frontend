@@ -160,9 +160,11 @@ public class AdminService : IAdminService
                             unit.IsLocked = true;
                             await unit.Update(sdkDbContext);
                         }
-                        var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.FirstName == userInfoViewModel.FirstName
-                            && x.LastName == userInfoViewModel.LastName
-                            && x.WorkflowState != Constants.WorkflowStates.Removed);
+                        var siteWorker = await sdkDbContext.SiteWorkers.SingleOrDefaultAsync(x => x.SiteId == site.Id);
+                        var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.Id == siteWorker.WorkerId);
+                        // var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.FirstName == userInfoViewModel.FirstName
+                        //     && x.LastName == userInfoViewModel.LastName
+                        //     && x.WorkflowState != Constants.WorkflowStates.Removed);
                         if (worker != null)
                         {
                             worker.IsLocked = true;
