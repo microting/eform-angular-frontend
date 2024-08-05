@@ -500,9 +500,8 @@ public class AdminService : IAdminService
                     unit.IsLocked = false;
                     await unit.Update(sdkDbContext);
                 }
-                var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.FirstName == user.FirstName
-                    && x.LastName == user.LastName
-                    && x.WorkflowState != Constants.WorkflowStates.Removed);
+                var siteWorker = await sdkDbContext.SiteWorkers.SingleOrDefaultAsync(x => x.SiteId == site.Id);
+                var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.Id == siteWorker.WorkerId);
                 if (worker != null)
                 {
                     worker.IsLocked = false;
