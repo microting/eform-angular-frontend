@@ -136,8 +136,9 @@ public class AdminService : IAdminService
                 {
                     userInfoViewModel.IsDeviceUser = true;
 
+                    var fullName = userInfoViewModel.FirstName + " " + userInfoViewModel.LastName;
                     if (sdkDbContext.Sites.Any(x =>
-                            x.Name == userInfoViewModel.FirstName + " " + userInfoViewModel.LastName
+                            x.Name.Replace(" ", "") == fullName.Replace(" ", "")
                             && x.WorkflowState != Constants.WorkflowStates.Removed))
                     {
                     }
@@ -147,8 +148,8 @@ public class AdminService : IAdminService
                             null, "da");
                     }
 
-                    var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x =>
-                        x.Name == userInfoViewModel.FirstName + " " + userInfoViewModel.LastName
+                    var site = await sdkDbContext.Sites.FirstOrDefaultAsync(x =>
+                        x.Name.Replace(" ", "") == fullName.Replace(" ", "")
                         && x.WorkflowState != Constants.WorkflowStates.Removed);
                     if (site != null)
                     {
@@ -234,8 +235,8 @@ public class AdminService : IAdminService
             {
                 Email = userRegisterModel.Email,
                 UserName = userRegisterModel.Email,
-                FirstName = userRegisterModel.FirstName,
-                LastName = userRegisterModel.LastName,
+                FirstName = userRegisterModel.FirstName.Trim(),
+                LastName = userRegisterModel.LastName.Trim(),
                 Locale = "da",
                 EmailConfirmed = true,
                 TwoFactorEnabled = false,
@@ -264,7 +265,7 @@ public class AdminService : IAdminService
                 await _dbContext.SaveChangesAsync();
             }
 
-            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userRegisterModel.FirstName + " " + userRegisterModel.LastName
+            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userRegisterModel.FirstName.Trim() + " " + userRegisterModel.LastName.Trim()
                                                                           && x.WorkflowState != Constants.WorkflowStates.Removed);
 
             if (site != null)

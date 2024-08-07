@@ -119,6 +119,8 @@ public class DeviceUsersService : IDeviceUsersService
     public async Task<OperationDataResult<int>> Create(DeviceUserModel deviceUserModel)
     {
         var core = await _coreHelper.GetCore();
+        deviceUserModel.UserFirstName = deviceUserModel.UserFirstName.Trim();
+        deviceUserModel.UserLastName = deviceUserModel.UserLastName.Trim();
         var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
         await using var db = core.DbContextHelper.GetDbContext();
 
@@ -215,6 +217,8 @@ public class DeviceUsersService : IDeviceUsersService
 
     public async Task<OperationResult> Update(DeviceUserModel deviceUserModel)
     {
+        deviceUserModel.UserFirstName = deviceUserModel.UserFirstName.Trim();
+        deviceUserModel.UserLastName = deviceUserModel.UserLastName.Trim();
         try
         {
             var core = await _coreHelper.GetCore();
