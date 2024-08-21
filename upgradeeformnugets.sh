@@ -7,8 +7,8 @@ if (( "$GIT_STATUS" > 0 )); then
 	cd eFormAPI/eFormAPI.Web
   CURRENT_NUMBER_OF_COMMITS=`git log --oneline | wc -l`
 
-	#PACKAGES=('Microting.eForm' 'Microting.eFormApi.BasePn' 'Microting.EformAngularFrontendBase' 'Microsoft.AspNetCore.Identity.UI' 'Microsoft.AspNetCore.Authentication.JwtBearer' 'Microsoft.AspNetCore.Mvc.NewtonsoftJson' 'Microsoft.EntityFrameworkCore.InMemory')
-	PACKAGES=('Microting.eForm' 'Microting.eFormApi.BasePn' 'Microting.EformAngularFrontendBase')
+	PACKAGES=('Microting.eForm' 'Microting.eFormApi.BasePn' 'Microting.EformAngularFrontendBase' 'Microsoft.AspNetCore.Identity.UI' 'Microsoft.AspNetCore.Authentication.JwtBearer' 'Microsoft.AspNetCore.Mvc.NewtonsoftJson' 'Microsoft.EntityFrameworkCore.InMemory')
+	#PACKAGES=('Microting.eForm' 'Microting.eFormApi.BasePn' 'Microting.EformAngularFrontendBase')
 	PROJECT_NAME='eFormAPI.Web.csproj'
 	REPOSITORY='eform-angular-frontend'
 
