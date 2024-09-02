@@ -10014,12 +10014,12 @@ ng2-file-upload@^7.0.1:
   dependencies:
     tslib "^2.3.0"
 
-ng2-pdf-viewer@^10.2.2:
-  version "10.2.2"
-  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-10.2.2.tgz#8d3ecf5f1009ab90835167ef07039805058bb885"
-  integrity sha512-GaKAvF0nXAiR9U4LFWuT54MM9nzp0ie8GGscp34W+lFsSOXdlwS0iFx5UPuVlODRm3YEUKx6xcK5oaJeBq0SAw==
+ng2-pdf-viewer@^10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-10.3.0.tgz#d0b5497747130d08535f35b585408997e54d1ee2"
+  integrity sha512-zU51lVcsmCy1Nytw94r2ABHfdBKlJWc+Zllk7Fct3pT3b7Q8UbMiZ8IbA4d5iXoe2/iznsS2YXGzMn0/vPHcXA==
   dependencies:
-    pdfjs-dist "^3.11.174"
+    pdfjs-dist "^4.5.136"
     tslib "^2.3.0"
 
 ngx-auto-unsubscribe@3.0.1:
@@ -10765,17 +10765,10 @@ path-type@^5.0.0:
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-5.0.0.tgz#14b01ed7aea7ddf9c7c3f46181d4d04f9c785bb8"
   integrity sha512-5HviZNaZcfqP95rwpv+1HDgUamezbqdSYTyzjTvwtJSnIH+3vnbmWsItli8OFEndS984VT55M3jduxZbX351gg==
 
-path2d-polyfill@^2.0.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/path2d-polyfill/-/path2d-polyfill-2.1.1.tgz#6098b7bf2fc24c306c6377bcd558b17ba437ea27"
-  integrity sha512-4Rka5lN+rY/p0CdD8+E+BFv51lFaFvJOrlOhyQ+zjzyQrzyh3ozmxd1vVGGDdIbUFSBtIZLSnspxTgPT0iJhvA==
-  dependencies:
-    path2d "0.1.1"
-
-path2d@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/path2d/-/path2d-0.1.1.tgz#d3c3886cd2252fb2a7830c27ea7bb9a862d937ea"
-  integrity sha512-/+S03c8AGsDYKKBtRDqieTJv2GlkMb0bWjnqOgtF6MkjdUQ9a8ARAtxWf9NgKLGm2+WQr6+/tqJdU8HNGsIDoA==
+path2d@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/path2d/-/path2d-0.2.1.tgz#faf98e5e2222541805a6ac232adc026332330765"
+  integrity sha512-Fl2z/BHvkTNvkuBzYTpTuirHZg6wW9z8+4SND/3mDTEcYbbNKWAy21dz9D3ePNNwrrK8pqZO5vLPZ1hLF6T7XA==
 
 path@^0.12.7:
   version "0.12.7"
@@ -10805,13 +10798,13 @@ pdf-lib@^1.17.1:
     pako "^1.0.11"
     tslib "^1.11.1"
 
-pdfjs-dist@^3.11.174:
-  version "3.11.174"
-  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-3.11.174.tgz#5ff47b80f2d58c8dd0d74f615e7c6a7e7e704c4b"
-  integrity sha512-TdTZPf1trZ8/UFu5Cx/GXB7GZM30LT+wWUNfsi6Bq8ePLnb+woNKtDymI2mxZYBpMbonNFqKmiz684DIfnd8dA==
+pdfjs-dist@^4.5.136:
+  version "4.6.82"
+  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-4.6.82.tgz#4f171289f1810f324cd17c58bc59bd5bd0e0db7e"
+  integrity sha512-BUOryeRFwvbLe0lOU6NhkJNuVQUp06WxlJVVCsxdmJ4y5cU3O3s3/0DunVdK1PMm7v2MUw52qKYaidhDH1Z9+w==
   optionalDependencies:
     canvas "^2.11.2"
-    path2d-polyfill "^2.0.1"
+    path2d "^0.2.1"
 
 pend@~1.2.0:
   version "1.2.0"
