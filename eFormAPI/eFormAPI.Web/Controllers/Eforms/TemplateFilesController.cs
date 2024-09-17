@@ -390,8 +390,8 @@ public class TemplateFilesController : Controller
                 int newWidth = 300;
                 int newHeight = (int) Math.Round((currentRation * newWidth));
 
-                image.Resize(newWidth, newHeight);
-                image.Crop(newWidth, newHeight);
+                image.Resize((uint)newWidth, (uint)newHeight);
+                image.Crop((uint)newWidth, (uint)newHeight);
                 await image.WriteAsync(filePathResized);
                 image.Dispose();
                 await core.PutFileToStorageSystem(Path.Combine(Path.GetTempPath(), filePathResized), smallFilename);
@@ -405,8 +405,8 @@ public class TemplateFilesController : Controller
                 int newWidth = 700;
                 int newHeight = (int) Math.Round((currentRation * newWidth));
 
-                image.Resize(newWidth, newHeight);
-                image.Crop(newWidth, newHeight);
+                image.Resize((uint)newWidth, (uint)newHeight);
+                image.Crop((uint)newWidth, (uint)newHeight);
                 await image.WriteAsync(filePathResized);
                 image.Dispose();
                 await core.PutFileToStorageSystem(Path.Combine(Path.GetTempPath(), filePathResized), bigFilename);
@@ -725,8 +725,8 @@ public class TemplateFilesController : Controller
             int newWidth = 300;
             int newHeight = (int) Math.Round((currentRation * newWidth));
 
-            image.Resize(newWidth, newHeight);
-            image.Crop(newWidth, newHeight);
+            image.Resize((uint)newWidth, (uint)newHeight);
+            image.Crop((uint)newWidth, (uint)newHeight);
             await image.WriteAsync(filePathResized);
             image.Dispose();
             await RotateFileAndPutToStorage(Path.Combine(Path.GetTempPath(), smallFilename), core, smallFilename);
@@ -740,8 +740,8 @@ public class TemplateFilesController : Controller
             int newWidth = 700;
             int newHeight = (int) Math.Round((currentRation * newWidth));
 
-            image.Resize(newWidth, newHeight);
-            image.Crop(newWidth, newHeight);
+            image.Resize((uint)newWidth, (uint)newHeight);
+            image.Crop((uint)newWidth, (uint)newHeight);
             await image.WriteAsync(filePathResized);
             image.Dispose();
             await RotateFileAndPutToStorage(Path.Combine(Path.GetTempPath(), bigFilename), core, bigFilename);

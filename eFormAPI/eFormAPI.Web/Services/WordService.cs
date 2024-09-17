@@ -271,8 +271,8 @@ public class WordService : IWordService
             int newWidth = imageSize;
             int newHeight = (int)Math.Round((currentRation * newWidth));
 
-            image.Resize(newWidth, newHeight);
-            image.Crop(newWidth, newHeight);
+            image.Resize((uint)newWidth, (uint)newHeight);
+            image.Crop((uint)newWidth, (uint)newHeight);
 
             var base64String = image.ToBase64();
             itemsHtml.Append($@"<p><img src=""data:image/png;base64,{base64String}"" width=""{imageWidth}px"" alt="""" /></p>");
