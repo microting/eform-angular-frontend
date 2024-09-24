@@ -127,7 +127,7 @@ public class EformExcelExportService(
                 }
 
                 // Apply autofilter and table formatting
-                ApplyTableFormatting(sheet, worksheetPart, sheetData);
+                // ApplyTableFormatting(sheet, worksheetPart, sheetData);
 
                 workbookPart.Workbook.Save();
             }
@@ -200,33 +200,50 @@ public class EformExcelExportService(
         return columnLetter;
     }
 
-    private Stylesheet CreateStylesheet()
+        private Stylesheet CreateStylesheet()
     {
         return new Stylesheet(
+            new NumberingFormats( // Custom number format for date
+                new NumberingFormat
+                {
+                    NumberFormatId = 164, // Custom NumberFormatId for date format
+                    FormatCode = "dd/MM/yyyy"
+                }
+            ),
             new Fonts(
-                new Font(
+                new Font( // Default font
+                    new FontSize { Val = 11 },
+                    new Color { Rgb = new HexBinaryValue { Value = "FF000000" } }, // Black color
+                    new FontName { Val = "Calibri" }
+                ),
+                new Font( // Bold font
                     new Bold(),
-                    new FontSize { Val = 11 }, // Bold Font for Headers
-                    new FontName { Val = "Calibri" })),
+                    new FontSize { Val = 11 },
+                    new Color { Rgb = new HexBinaryValue { Value = "FF000000" } }, // Black color
+                    new FontName { Val = "Calibri" }
+                )
+            ),
             new Fills(
-                new Fill(new PatternFill { PatternType = PatternValues.None }),
-                new Fill(new PatternFill { PatternType = PatternValues.Gray125 })),
+                new Fill(new PatternFill { PatternType = PatternValues.None }), // Default fill
+                new Fill(new PatternFill { PatternType = PatternValues.Gray125 }) // Gray fill
+            ),
             new Borders(
-                new Border(
+                new Border( // Default border
                     new LeftBorder(),
                     new RightBorder(),
                     new TopBorder(),
                     new BottomBorder(),
-                    new DiagonalBorder())),
+                    new DiagonalBorder()
+                )
+            ),
+            new CellStyleFormats(
+                new CellFormat() // Default cell style format
+            ),
             new CellFormats(
-                new CellFormat(),
-                new CellFormat
-                {
-                    FontId = 0,
-                    FillId = 0,
-                    BorderId = 0,
-                    ApplyFont = true
-                }
+                new CellFormat(), // Default cell format
+                new CellFormat { FontId = 1, ApplyFont = true }, // Bold font cell format
+                new CellFormat { NumberFormatId = 164, ApplyNumberFormat = true }, // Date format
+                new CellFormat { NumberFormatId = 22, ApplyNumberFormat = true } // Date-time format (dd.MM.yyyy HH:mm:ss)
             )
         );
     }

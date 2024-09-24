@@ -208,9 +208,10 @@ public class EntitySearchService : IEntitySearchService
             return new OperationResult(true,
                 _localizationService.GetStringWithFormat("ParamUpdatedSuccessfully", editModel.Name));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return new OperationResult(false, _localizationService.GetString("SearchableListCreationFailed"));
+            return new OperationResult(false, _localizationService.GetString("SearchableListUpdateFailed") + ex.Message);
+            //return new OperationResult(false, _localizationService.GetString("SearchableListCreationFailed"));
         }
     }
 
@@ -220,7 +221,7 @@ public class EntitySearchService : IEntitySearchService
         {
             var core = await _coreHelper.GetCore();
 
-            EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid);
+            EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid, Constants.EntityItemSortParameters.Id, string.Empty);
 
             var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
 
@@ -231,10 +232,10 @@ public class EntitySearchService : IEntitySearchService
 
             return new OperationDataResult<EntityGroup>(true, entityGroup);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             return new OperationDataResult<EntityGroup>(false,
-                _localizationService.GetString("ErrorWhenObtainingSearchableList"));
+                _localizationService.GetString("ErrorWhenObtainingSearchableList") + ex.Message);
         }
     }
 
