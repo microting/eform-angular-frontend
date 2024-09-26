@@ -211,7 +211,6 @@ public class EntitySearchService : IEntitySearchService
         catch (Exception ex)
         {
             return new OperationResult(false, _localizationService.GetString("SearchableListUpdateFailed") + ex.Message);
-            //return new OperationResult(false, _localizationService.GetString("SearchableListCreationFailed"));
         }
     }
 
@@ -234,6 +233,8 @@ public class EntitySearchService : IEntitySearchService
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex.StackTrace);
             return new OperationDataResult<EntityGroup>(false,
                 _localizationService.GetString("ErrorWhenObtainingSearchableList") + ex.Message);
         }

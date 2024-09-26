@@ -79,6 +79,9 @@
               ? '/ ' + getMenuTranslation(menuItem.translations)
               : ' '
             }}
+            <ng-container *ngIf="menuItem.securityGroupsIds ">
+              <span class="microting-uid" *ngIf="menuItem.securityGroupsIds.length > 0">{{' (' + getSecurityGroupNames(menuItem.securityGroupsIds).join(', ')+')' }}</span>
+            </ng-container>
             <div class="spacer"></div>
             <button mat-icon-button (click)="onItemEdit(menuItem, firstLevelIndex)" id="editBtn" color="accent">
               <mat-icon>edit</mat-icon>

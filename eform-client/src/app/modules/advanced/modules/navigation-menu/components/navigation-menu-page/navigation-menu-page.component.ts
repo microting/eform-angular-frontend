@@ -227,4 +227,12 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   menuItemModelChange($event: any[]) {
     this.navigationMenuModel.actualMenu = [...$event];
   }
+
+  getSecurityGroupNames(ids: number[]): string[] {
+    return ids.map(id => {
+      const group = this.securityGroups.find(g => g.id === id);
+      return group ? group.name : '';
+    }).filter(name => name !== '');
+  }
+
 }
