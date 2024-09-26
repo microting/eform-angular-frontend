@@ -4077,15 +4077,15 @@
   dependencies:
     "@types/node" "^20.1.0"
 
-"@wdio/reporter@9.0.8":
-  version "9.0.8"
-  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-9.0.8.tgz#24fafd9918a202bfb2d490a21f840856138327d7"
-  integrity sha512-2T2XmCL31bLVkHN0UvHagg4KkkUHwzbXnHm1wjlWtd90BdVZ3lJyMhDh3TkKsyyDxPaZZJEhyDp9g/COwuF/bw==
+"@wdio/reporter@9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-9.1.0.tgz#a8fb576bb232318226c25334c2b512db032aefec"
+  integrity sha512-9QMP6X2kw82mmOLPKOpXF/VwEqSl0MyXr+kqUivt4VT9Qn3m6CNaHe4Fpt3D2QDvSYbr4MNmSno42XyyODib7Q==
   dependencies:
     "@types/node" "^20.1.0"
-    "@wdio/logger" "9.0.8"
-    "@wdio/types" "9.0.8"
-    diff "^5.0.0"
+    "@wdio/logger" "9.1.0"
+    "@wdio/types" "9.1.0"
+    diff "^7.0.0"
     object-inspect "^1.12.0"
 
 "@wdio/runner@8.40.1":
@@ -4105,13 +4105,13 @@
     webdriver "8.40.0"
     webdriverio "8.40.0"
 
-"@wdio/spec-reporter@^9.0.8":
-  version "9.0.8"
-  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-9.0.8.tgz#60342db75b0be3b418087ff9f831004ed0243a41"
-  integrity sha512-tQFSMGeTn0ZZoGInnVjcXBmx+nTc9INHJfh+SS8uHUr94BrfzOVtD7EPFHNlaXBNKlqfNToj4YIGVC4Jg+uruA==
+"@wdio/spec-reporter@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-9.1.0.tgz#c747a851d95fa9d0056f0fc7243ff892d49dd79f"
+  integrity sha512-8IwJJOOi8MckxJ0z118aNBWxSy+xOoqVXErIQIRAmfN5sGKlyVgXWpy+GHZjafdsUCRoqpTGRQcxjlztfqpsIQ==
   dependencies:
-    "@wdio/reporter" "9.0.8"
-    "@wdio/types" "9.0.8"
+    "@wdio/reporter" "9.1.0"
+    "@wdio/types" "9.1.0"
     chalk "^5.1.2"
     easy-table "^1.2.0"
     pretty-ms "^9.0.0"
@@ -6319,10 +6319,15 @@ diff@^4.0.1:
   resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
 
-diff@^5.0.0, diff@^5.1.0, diff@^5.2.0:
+diff@^5.1.0, diff@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-5.2.0.tgz#26ded047cd1179b78b9537d5ef725503ce1ae531"
   integrity sha512-uIFDxqpRZGZ6ThOk84hEfqWoHx2devRFvpTZcTHur85vImfaxUbTW9Ryh4CpCuDnToOP1CEtXKIgytHBPVff5A==
+
+diff@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/diff/-/diff-7.0.0.tgz#3fb34d387cd76d803f6eebea67b921dab0182a9a"
+  integrity sha512-PJWHUb1RFevKCwaFA9RlG5tCd+FO5iRh9A8HEtkmBH2Li03iJriB6m6JIN4rGz3K3JLawI7/veA1xzRKP6ISBw==
 
 dingbat-to-unicode@^1.0.1:
   version "1.0.1"
