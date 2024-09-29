@@ -176,7 +176,8 @@ public class TemplatesService : ITemplatesService
                 JasperExportEnabled = x.CheckList.JasperExportEnabled,
                 ExcelExportEnabled = x.CheckList.ExcelExportEnabled,
                 IsAchievable = x.CheckList.IsAchievable,
-                IsDoneAtEditable = x.CheckList.IsDoneAtEditable
+                IsDoneAtEditable = x.CheckList.IsDoneAtEditable,
+                QuickSyncEnabled = x.CheckList.QuickSyncEnabled != null && x.CheckList.QuickSyncEnabled == 1
             }).ToListAsync();
 
             //var templatesDto = await core.TemplateItemReadAll(false,

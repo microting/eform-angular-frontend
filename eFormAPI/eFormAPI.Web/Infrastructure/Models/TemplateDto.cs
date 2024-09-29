@@ -69,6 +69,8 @@ public class TemplateDto
 
     public bool IsDoneAtEditable { get; set; }
 
+    public bool QuickSyncEnabled { get; set; }
+
     public static implicit operator TemplateDto(Template_Dto templateDto)
     {
         return new TemplateDto()

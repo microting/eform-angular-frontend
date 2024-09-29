@@ -112,6 +112,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
       sortable: true,
     },
     {header: this.translateService.stream('Tags'), field: 'tags'},
+    {header: this.translateService.stream('QuickSyncEnabled'), field: 'quickSyncEnabled'},
     {header: this.translateService.stream('Pairing'), field: 'pairingUpdate'},
     {
       pinned: 'right',
