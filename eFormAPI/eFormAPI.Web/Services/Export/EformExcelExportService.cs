@@ -1,17 +1,22 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Validation;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models;
 using Microsoft.Extensions.Logging;
 using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Sentry;
 
 namespace eFormAPI.Web.Services.Export;
 
@@ -59,43 +64,26 @@ public class EformExcelExportService(
 
             Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "results"));
             var timeStamp = $"{DateTime.UtcNow:yyyyMMdd_HHmmss}";
-            var resultDocument = Path.Combine(Path.GetTempPath(), "results",
+            var filePath = Path.Combine(Path.GetTempPath(), "results",
                 $"{timeStamp}_{excelModel.TemplateId}.xlsx");
 
             // Create the Excel file using DocumentFormat.OpenXML
-            using (var spreadsheetDocument =
-                   SpreadsheetDocument.Create(resultDocument, SpreadsheetDocumentType.Workbook))
+            using (var document =
+                   SpreadsheetDocument.Create(filePath, SpreadsheetDocumentType.Workbook))
             {
-                WorkbookPart workbookPart = spreadsheetDocument.AddWorkbookPart();
-                workbookPart.Workbook = new Workbook();
+                WorkbookPart workbookPart1 = document.AddWorkbookPart();
+                OpenXMLHelper.GenerateWorkbookPart1Content(workbookPart1,
+                    [new($"Data_{excelModel.TemplateId}", "rId1")]);
 
-                // Add a Stylesheet with bold header formatting
-                var stylesPart = workbookPart.AddNewPart<WorkbookStylesPart>();
-                stylesPart.Stylesheet = CreateStylesheet();
-                stylesPart.Stylesheet.Save();
+                WorkbookStylesPart workbookStylesPart1 = workbookPart1.AddNewPart<WorkbookStylesPart>("rId3");
+                OpenXMLHelper.GenerateWorkbookStylesPart1Content(workbookStylesPart1);
 
-                var sheets = workbookPart.Workbook.AppendChild(new Sheets());
+                ThemePart themePart1 = workbookPart1.AddNewPart<ThemePart>("rId2");
+                OpenXMLHelper.GenerateThemePart1Content(themePart1);
 
-                // Create a new worksheet
-                WorksheetPart worksheetPart = workbookPart.AddNewPart<WorksheetPart>();
-                worksheetPart.Worksheet = new Worksheet(new SheetData());
+                WorksheetPart worksheetPart1 = workbookPart1.AddNewPart<WorksheetPart>("rId1");
 
-                // Add the worksheet to the workbook
-                var sheet = new Sheet
-                {
-                    Id = workbookPart.GetIdOfPart(worksheetPart),
-                    SheetId = 1,
-                    Name = $"Data_{excelModel.TemplateId}"
-                };
-                sheets.Append(sheet);
-
-                // Get the sheet data
-                SheetData sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
-
-                // Create the header row and make it bold
-                var headerRow = new Row { RowIndex = 1 };
-                sheetData.Append(headerRow);
-
+                List<string> headerStrings = new List<string>();
                 for (var y = 0; y < dataSet.Count; y++)
                 {
                     var dataX = dataSet[y];
@@ -103,37 +91,96 @@ public class EformExcelExportService(
                     for (var x = 0; x < dataX.Count; x++)
                     {
                         var dataY = dataX[x];
-
-                        var row = sheetData.Elements<Row>().FirstOrDefault(r => r.RowIndex == (uint)(x + 1)) ??
-                                  new Row { RowIndex = (uint)(x + 1) };
-
-                        if (!sheetData.Elements<Row>().Any(r => r.RowIndex == (uint)(x + 1)))
-                        {
-                            sheetData.Append(row);
-                        }
-
                         if (x == 0)
                         {
-                            var cell = ConstructCell(dataY, CellValues.String);
-                            cell.StyleIndex = 1; // Make the header bold
-                            row.Append(cell);
-                        }
-                        else
-                        {
-                            var cell = ConstructCell(dataY, CellValues.String);
-                            row.Append(cell);
+                            headerStrings.Add(dataY);
                         }
                     }
                 }
 
-                // Apply autofilter and table formatting
-                // ApplyTableFormatting(sheet, worksheetPart, sheetData);
+                Worksheet worksheet1 = new Worksheet()
+                    { MCAttributes = new MarkupCompatibilityAttributes() { Ignorable = "x14ac xr xr2 xr3" } };
+                worksheet1.AddNamespaceDeclaration("r",
+                    "http://schemas.openxmlformats.org/officeDocument/2006/relationships");
+                worksheet1.AddNamespaceDeclaration("mc", "http://schemas.openxmlformats.org/markup-compatibility/2006");
+                worksheet1.AddNamespaceDeclaration("x14ac",
+                    "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac");
+                worksheet1.AddNamespaceDeclaration("xr",
+                    "http://schemas.microsoft.com/office/spreadsheetml/2014/revision");
+                worksheet1.AddNamespaceDeclaration("xr2",
+                    "http://schemas.microsoft.com/office/spreadsheetml/2015/revision2");
+                worksheet1.AddNamespaceDeclaration("xr3",
+                    "http://schemas.microsoft.com/office/spreadsheetml/2016/revision3");
+                worksheet1.SetAttribute(new OpenXmlAttribute("xr", "uid",
+                    "http://schemas.microsoft.com/office/spreadsheetml/2014/revision",
+                    "{00000000-0001-0000-0000-000000000000}"));
 
-                workbookPart.Workbook.Save();
+                SheetFormatProperties sheetFormatProperties1 = new SheetFormatProperties()
+                    { DefaultRowHeight = 15D, DyDescent = 0.25D };
+
+                SheetData sheetData1 = new SheetData();
+
+                Row row1 = new Row()
+                {
+                    RowIndex = (UInt32Value)1U, Spans = new ListValue<StringValue>() { InnerText = "1:19" },
+                    DyDescent = 0.25D
+                };
+
+                foreach (var header in headerStrings)
+                {
+                    var cell = new Cell()
+                    {
+                        CellValue = new CellValue(header),
+                        DataType = CellValues.String,
+                        StyleIndex = (UInt32Value)1U
+                    };
+                    row1.Append(cell);
+                }
+
+                sheetData1.Append(row1);
+
+                int rowIndex = 2;
+                for (var y = 0; y < dataSet.Count; y++)
+                {
+                    var dataX = dataSet[y];
+
+                    for (var x = 0; x < dataX.Count; x++)
+                    {
+                        var dataY = dataX[x];
+                        var row = sheetData1.Elements<Row>().FirstOrDefault(r => r.RowIndex == (uint)(x + 1)) ??
+                                  new Row { RowIndex = (uint)(x + 1) };
+
+                        if (!sheetData1.Elements<Row>().Any(r => r.RowIndex == (uint)(x + 1)))
+                        {
+                            sheetData1.Append(row);
+                            rowIndex++;
+                        }
+
+                        var cell = CreateCell(dataY);
+                        row.Append(cell);
+                    }
+                }
+
+                var columnLetter = GetColumnLetter(headerStrings.Count);
+                AutoFilter autoFilter1 = new AutoFilter() { Reference = $"A1:{columnLetter}{rowIndex}" };
+                autoFilter1.SetAttribute(new OpenXmlAttribute("xr", "uid",
+                    "http://schemas.microsoft.com/office/spreadsheetml/2014/revision",
+                    "{00000000-0001-0000-0000-000000000000}"));
+                PageMargins pageMargins1 = new PageMargins()
+                    { Left = 0.7D, Right = 0.7D, Top = 0.75D, Bottom = 0.75D, Header = 0.3D, Footer = 0.3D };
+
+                worksheet1.Append(sheetFormatProperties1);
+                worksheet1.Append(sheetData1);
+                worksheet1.Append(autoFilter1);
+                worksheet1.Append(pageMargins1);
+
+                worksheetPart1.Worksheet = worksheet1;
             }
 
+            ValidateExcel(filePath);
+
             // Return the generated Excel file as a Stream
-            Stream result = File.Open(resultDocument, FileMode.Open);
+            Stream result = File.Open(filePath, FileMode.Open);
             return new OperationDataResult<Stream>(true, result);
         }
         catch (Exception e)
@@ -145,46 +192,63 @@ public class EformExcelExportService(
         }
     }
 
-    private void ApplyTableFormatting(Sheet sheet, WorksheetPart worksheetPart, SheetData sheetData)
+    private void ValidateExcel(string fileName)
     {
-        // Define the range for the table
-        var columns = sheetData.Elements<Row>().First().Elements<Cell>().Count();
-        var rows = sheetData.Elements<Row>().Count();
-        string range = $"A1:{GetColumnLetter(columns)}{rows}";
-
-        // Apply auto filter
-        AutoFilter autoFilter = new AutoFilter() { Reference = range };
-        worksheetPart.Worksheet.InsertAfter(autoFilter, sheetData);
-
-        // Define table
-        TableDefinitionPart tablePart = worksheetPart.AddNewPart<TableDefinitionPart>();
-        Table table = new Table()
+        try
         {
-            Id = (uint)new Random().Next(1, 10000),
-            Name = "Table1",
-            DisplayName = "Table1",
-            Reference = range,
-            AutoFilter = new AutoFilter() { Reference = range }
-        };
+            var validator = new OpenXmlValidator();
+            int count = 0;
+            StringBuilder sb = new StringBuilder();
+            var doc = SpreadsheetDocument.Open(fileName, true);
+            foreach (ValidationErrorInfo error in validator.Validate(doc))
+            {
 
-        TableColumns tableColumns = new TableColumns() { Count = (uint)columns };
-        for (uint i = 1; i <= columns; i++)
-        {
-            tableColumns.Append(new TableColumn() { Id = i, Name = $"Column{i}" });
+                count++;
+                sb.Append(("Error Count : " + count) + "\r\n");
+                sb.Append(("Description : " + error.Description) + "\r\n");
+                sb.Append(("Path: " + error.Path.XPath) + "\r\n");
+                sb.Append(("Part: " + error.Part.Uri) + "\r\n");
+                sb.Append("\r\n-------------------------------------------------\r\n");
+            }
+
+            doc.Dispose();
+            if (count <= 0) return;
+            sb.Append(("Total Errors in file: " + count));
+            throw new Exception(sb.ToString());
         }
-
-        table.Append(tableColumns);
-        table.Append(new TableStyleInfo() { Name = "TableStyleMedium2", ShowFirstColumn = false, ShowLastColumn = false, ShowRowStripes = true, ShowColumnStripes = false });
-        tablePart.Table = table;
-        table.Save();
+        catch (Exception ex)
+        {
+            SentrySdk.CaptureException(ex);
+            logger.LogError(ex.Message);
+        }
     }
 
-    private Cell ConstructCell(string value, CellValues dataType)
+    private Cell CreateCell(string value)
     {
-        return new Cell
+        return new Cell()
         {
             CellValue = new CellValue(value),
-            DataType = new EnumValue<CellValues>(dataType)
+            DataType = CellValues.String // Explicitly setting the data type to string
+        };
+    }
+
+    private Cell CreateNumericCell(double value)
+    {
+        return new Cell()
+        {
+            CellValue = new CellValue(value.ToString(CultureInfo.InvariantCulture)),
+            DataType = CellValues.Number
+        };
+    }
+
+    private Cell CreateDateCell(DateTime dateValue)
+    {
+        return new Cell()
+        {
+            CellValue = new CellValue(dateValue.ToOADate()
+                .ToString(CultureInfo.InvariantCulture)), // Excel stores dates as OLE Automation date values
+            DataType = CellValues.Number, // Excel treats dates as numbers
+            StyleIndex = 2 // Assuming StyleIndex 2 corresponds to the date format in the stylesheet
         };
     }
 
@@ -197,54 +261,7 @@ public class EformExcelExportService(
             columnLetter = Convert.ToChar(65 + modulo) + columnLetter;
             columnIndex = (columnIndex - modulo) / 26;
         }
-        return columnLetter;
-    }
 
-        private Stylesheet CreateStylesheet()
-    {
-        return new Stylesheet(
-            new NumberingFormats( // Custom number format for date
-                new NumberingFormat
-                {
-                    NumberFormatId = 164, // Custom NumberFormatId for date format
-                    FormatCode = "dd/MM/yyyy"
-                }
-            ),
-            new Fonts(
-                new Font( // Default font
-                    new FontSize { Val = 11 },
-                    new Color { Rgb = new HexBinaryValue { Value = "FF000000" } }, // Black color
-                    new FontName { Val = "Calibri" }
-                ),
-                new Font( // Bold font
-                    new Bold(),
-                    new FontSize { Val = 11 },
-                    new Color { Rgb = new HexBinaryValue { Value = "FF000000" } }, // Black color
-                    new FontName { Val = "Calibri" }
-                )
-            ),
-            new Fills(
-                new Fill(new PatternFill { PatternType = PatternValues.None }), // Default fill
-                new Fill(new PatternFill { PatternType = PatternValues.Gray125 }) // Gray fill
-            ),
-            new Borders(
-                new Border( // Default border
-                    new LeftBorder(),
-                    new RightBorder(),
-                    new TopBorder(),
-                    new BottomBorder(),
-                    new DiagonalBorder()
-                )
-            ),
-            new CellStyleFormats(
-                new CellFormat() // Default cell style format
-            ),
-            new CellFormats(
-                new CellFormat(), // Default cell format
-                new CellFormat { FontId = 1, ApplyFont = true }, // Bold font cell format
-                new CellFormat { NumberFormatId = 164, ApplyNumberFormat = true }, // Date format
-                new CellFormat { NumberFormatId = 22, ApplyNumberFormat = true } // Date-time format (dd.MM.yyyy HH:mm:ss)
-            )
-        );
+        return columnLetter;
     }
 }
