@@ -2492,10 +2492,10 @@
   resolved "https://registry.yarnpkg.com/@msgpackr-extract/msgpackr-extract-win32-x64/-/msgpackr-extract-win32-x64-3.0.3.tgz#0aa5502d547b57abfc4ac492de68e2006e417242"
   integrity sha512-x0fWaQtYp4E6sktbsdAqnehxDgEc/VwM7uLsRCYWaiGu0ykYdZPiS8zCWdnjHwyiumousxfBm4SO31eXqwEZhQ==
 
-"@ng-matero/extensions@18.2.1":
-  version "18.2.1"
-  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-18.2.1.tgz#3c988d65b8733e2ffea441730253c84cb75abae2"
-  integrity sha512-UdxH5cmkN0S4OxubXIbTvBzwo9JQCm869MkA2oQrZx4MQ85P+pZy1VCdlmPoqIoHkY+rki/R1YVUbayvOIlzWA==
+"@ng-matero/extensions@18.2.2":
+  version "18.2.2"
+  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-18.2.2.tgz#ee390e60cd95494da3ab1e282d40ae229eddd7ca"
+  integrity sha512-d8q1sFtUvqSXiv9XVBd2a5ET06qaxIKeWjuL8V0SfFdMJLPCwevLmRzWnQGWSocYavD+xIR1oyioMAXkZfpKfw==
   dependencies:
     "@ng-select/ng-select" "^13.7.0"
     ngx-color "^9.0.0"
