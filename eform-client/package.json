@@ -71,7 +71,7 @@
     "@ngrx/store": "18.0.1",
     "@ngrx/store-devtools": "18.0.1",
     "@ngx-translate/core": "15.0.0",
-    "@sentry/angular": "^8.32.0",
+    "@sentry/angular": "^8.33.0",
     "@sentry/cli": "^2.36.3",
     "@swimlane/ngx-charts": "20.5.0",
     "@types/ramda": "^0.30.2",
