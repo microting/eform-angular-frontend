@@ -285,10 +285,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/language-service@18.2.6":
-  version "18.2.6"
-  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-18.2.6.tgz#c1cd36e40579b5bacaf0d666477c138577d2a6dd"
-  integrity sha512-GBvBvS2llh+/l2YhO7UO5o3GftlvQQoXnw3v0hcNoHKwcnvqXV4CCi+T2WOaZyK0iB8Is4QRbMrpJUC66HokZg==
+"@angular/language-service@18.2.7":
+  version "18.2.7"
+  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-18.2.7.tgz#5aaf8158c8a07f261bef19911e92ee6e92223bb5"
+  integrity sha512-gFsme3y5uC/dQGBBX05VnmT2KAEAZ6gsNk8m1b226LYvh8Oc+JQ4sXv7THGq1x5VnrTzRcCIELbkNHCiFdvL1Q==
 
 "@angular/localize@18.2.3":
   version "18.2.3"
@@ -4033,13 +4033,6 @@
   dependencies:
     "@types/node" "^20.1.0"
 
-"@wdio/types@9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-9.1.0.tgz#3cad0f686f2c0b89dfe2e1dec372cccf7c6d3129"
-  integrity sha512-bi3DTse8Nlat7FTCnciPnJWYggpRSszLQ70ReCcegAUlaancV+Y8ma4IWZROsBQ6f1hB+JIS9gwc/HGcp+6XSQ==
-  dependencies:
-    "@types/node" "^20.1.0"
-
 "@wdio/types@9.1.2":
   version "9.1.2"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-9.1.2.tgz#0439835ab4e38965810026e5c14c706e966b6b8a"
@@ -4065,25 +4058,6 @@
     safaridriver "^0.1.0"
     split2 "^4.2.0"
     wait-port "^1.0.4"
-
-"@wdio/utils@9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-9.1.0.tgz#4eb4006a6d3b630b333b800b6aec608050c012e8"
-  integrity sha512-iH+P/Dakttc7MRsVaikLLe13SDkm9Z+GAAOi6yu6I3x+ao6563KECjsLqJxLCKtbfOjqAqID19QBAtPQTRBVRA==
-  dependencies:
-    "@puppeteer/browsers" "^2.2.0"
-    "@wdio/logger" "9.1.0"
-    "@wdio/types" "9.1.0"
-    decamelize "^6.0.0"
-    deepmerge-ts "^7.0.3"
-    edgedriver "^5.6.1"
-    geckodriver "^4.3.3"
-    get-port "^7.0.0"
-    import-meta-resolve "^4.0.0"
-    locate-app "^2.2.24"
-    safaridriver "^0.1.2"
-    split2 "^4.2.0"
-    wait-port "^1.1.0"
 
 "@wdio/utils@9.1.2":
   version "9.1.2"
