@@ -9337,12 +9337,12 @@ ng2-file-upload@^7.0.1:
   dependencies:
     tslib "^2.3.0"
 
-ng2-pdf-viewer@^10.3.1:
-  version "10.3.1"
-  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-10.3.1.tgz#308ff39e3223a9b4dabc8513a3605e02e4dcae6f"
-  integrity sha512-Tdeu74Go1qzBMmpVbiKA96bgtHCeh+Qnq7ErVLHsV/9TPoCO6cRBsGW/7ojdH1S92MnnM6/iQGLY3EnMYh1wOg==
+ng2-pdf-viewer@^10.3.2:
+  version "10.3.2"
+  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-10.3.2.tgz#3f9e857a3faed797a11324f3b0888bdf0bc5ab5b"
+  integrity sha512-ViKW5N0mxV+9g1/l/JR90h3CrCxu1G6lBIVNFdJnNZcf2+6UoV0TiXkqqAZl/rTlkWdnXe76sVEfIRTCvhxtUQ==
   dependencies:
-    pdfjs-dist "^4.5.136"
+    pdfjs-dist "4.5.136"
     tslib "^2.3.0"
 
 ngx-auto-unsubscribe@3.0.1:
@@ -10121,10 +10121,10 @@ pdf-lib@^1.17.1:
     pako "^1.0.11"
     tslib "^1.11.1"
 
-pdfjs-dist@^4.5.136:
-  version "4.6.82"
-  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-4.6.82.tgz#4f171289f1810f324cd17c58bc59bd5bd0e0db7e"
-  integrity sha512-BUOryeRFwvbLe0lOU6NhkJNuVQUp06WxlJVVCsxdmJ4y5cU3O3s3/0DunVdK1PMm7v2MUw52qKYaidhDH1Z9+w==
+pdfjs-dist@4.5.136:
+  version "4.5.136"
+  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-4.5.136.tgz#4c6f67252d4e23212f43b36537a142171ebfb1ca"
+  integrity sha512-V1BALcAN/FmxBEShLxoP73PlQZAZtzlaNfRbRhJrKvXzjLC5VaIlBAQUJuWP8iaYUmIdmdLHmt3E2TBglxOm3w==
   optionalDependencies:
     canvas "^2.11.2"
     path2d "^0.2.1"
