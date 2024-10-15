@@ -21,6 +21,8 @@ import {
 import { Subscription } from 'rxjs';
 import { EmailRecipientsTagsService} from 'src/app/common/services';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import {dialogConfigHelper} from 'src/app/common/helpers';
 
 @AutoUnsubscribe()
 @Component({
@@ -35,88 +37,73 @@ export class EmailRecipientsTagsComponent implements OnChanges, OnDestroy {
   deleteTag$: Subscription;
   createTag$: Subscription;
   updateTag$: Subscription;
-  constructor(private tagsService: EmailRecipientsTagsService,public dialog: MatDialog) {}
+  showCreateTagSub$: Subscription;
+  showEditTagSub$: Subscription;
+  showDeleteTagSub$: Subscription;
+  deletedTagSub$: Subscription;
+  updatedTagSub$: Subscription;
+
+  constructor(
+    private tagsService: EmailRecipientsTagsService,
+    public dialog: MatDialog,
+    private overlay: Overlay
+  ) {
+  }
 
   show() {
     this.dialogRef = this.dialog.open(SharedTagsComponent, {
-      disableClose: true,
-      data: this.availableTags,
-      minWidth: 300,
+      ...dialogConfigHelper(this.overlay, this.availableTags)
     });
-    this.dialogRef.afterClosed().subscribe(x => {
-      if (x && x.action) {
-        switch (x.action) {
-          case 'create': {
-            const dialogRefCreateTag = this.dialog.open(SharedTagCreateComponent, {
-              disableClose: true,
-              minWidth: 300,
-            });
-            dialogRefCreateTag.afterClosed().subscribe(tag => {
-              if (tag) {
-                this.onTagCreate(tag);
-              }
-              this.show();
-            });
-            break;
-          }
-          case 'edit': {
-            const dialogRefUpdateTag = this.dialog.open(SharedTagEditComponent, {
-              disableClose: true,
-              minWidth: 300,
-              data: x.tag});
-            dialogRefUpdateTag.afterClosed().subscribe(tag => {
-              if (tag) {
-                this.onTagUpdate(tag);
-              }
-              this.show();
-            });
-            break;
-          }
-          case 'delete': {
-            const dialogRefUpdateTag = this.dialog.open(SharedTagDeleteComponent, {
-              disableClose: true,
-              minWidth: 300,
-              data: x.tag});
-            dialogRefUpdateTag.afterClosed().subscribe(tag => {
-              if (tag) {
-                this.onTagDelete(tag);
-              }
-              this.show();
-            });
-            break;
-          }
-        }
-      }
-    });
+    this.showCreateTagSub$ = this.dialogRef.componentInstance.showCreateTag.subscribe(() => {
+      const dialogRefCreateTag = this.dialog.open(SharedTagCreateComponent, {
+        ...dialogConfigHelper(this.overlay)
+      });
+      this.updatedTagSub$ = dialogRefCreateTag.componentInstance.createdTag.subscribe(tag => this.onTagCreate(tag, dialogRefCreateTag));
+    })
+    this.showEditTagSub$ = this.dialogRef.componentInstance.showEditTag.subscribe((x) => {
+      const dialogRefUpdateTag = this.dialog.open(SharedTagEditComponent, {
+        ...dialogConfigHelper(this.overlay, x)
+      });
+      this.updatedTagSub$ = dialogRefUpdateTag.componentInstance.updatedTag.subscribe(tag => this.onTagUpdate(tag, dialogRefUpdateTag));
+    })
+    this.showDeleteTagSub$ = this.dialogRef.componentInstance.showDeleteTag.subscribe((x) => {
+      const dialogRefUpdateTag = this.dialog.open(SharedTagDeleteComponent, {
+        ...dialogConfigHelper(this.overlay, x)
+      });
+      this.deletedTagSub$ = dialogRefUpdateTag.componentInstance.deletedTag.subscribe(tag => this.onTagDelete(tag, dialogRefUpdateTag));
+    })
   }
 
   ngOnDestroy(): void {}
 
-  onTagUpdate(model: SharedTagModel) {
+  onTagUpdate(model: SharedTagModel, dialogRefUpdateTag: MatDialogRef<SharedTagEditComponent>) {
     this.updateTag$ = this.tagsService
       .updateEmailRecipientTag(model)
       .subscribe((data) => {
         if (data && data.success) {
+          dialogRefUpdateTag.close();
           this.tagsChanged.emit();
         }
       });
   }
 
-  onTagCreate(model: SharedTagCreateModel) {
+  onTagCreate(model: SharedTagCreateModel, dialogRefUpdateTag: MatDialogRef<SharedTagCreateComponent>) {
     this.createTag$ = this.tagsService
       .createEmailRecipientTag(model)
       .subscribe((data) => {
         if (data && data.success) {
+          dialogRefUpdateTag.close();
           this.tagsChanged.emit();
         }
       });
   }
 
-  onTagDelete(model: SharedTagModel) {
+  onTagDelete(model: SharedTagModel, dialogRefUpdateTag: MatDialogRef<SharedTagDeleteComponent>) {
     this.deleteTag$ = this.tagsService
       .deleteEmailRecipientTag(model.id)
       .subscribe((data) => {
         if (data && data.success) {
+          dialogRefUpdateTag.close();
           this.tagsChanged.emit();
         }
       });
