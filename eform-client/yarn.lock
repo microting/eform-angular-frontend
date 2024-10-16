@@ -131,6 +131,17 @@
     ora "5.4.1"
     rxjs "7.8.1"
 
+"@angular-devkit/schematics@18.2.8":
+  version "18.2.8"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-18.2.8.tgz#ad10b81c23b353dd46cd770b0a463b7f3d126d5f"
+  integrity sha512-i/h2Oji5FhJMC7wDSnIl5XUe/qym+C1ZwScaATJwDyRLCUIynZkj5rLgdG/uK6l+H0PgvxigkF+akWpokkwW6w==
+  dependencies:
+    "@angular-devkit/core" "18.2.8"
+    jsonc-parser "3.3.1"
+    magic-string "0.30.11"
+    ora "5.4.1"
+    rxjs "7.8.1"
+
 "@angular-eslint/builder@18.3.1":
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-18.3.1.tgz#d883c3dabd1b377fd7c48380b6a7f24fdd0e6881"
