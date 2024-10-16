@@ -9316,10 +9316,10 @@ netmask@^2.0.2:
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
-ng-gallery@^11.0.0:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/ng-gallery/-/ng-gallery-11.0.0.tgz#0cf40947d689aede3a6ce8fe508ad683961010ab"
-  integrity sha512-xG0WD4Hd8FrKAinrH+dseH3dpbthhgc+n6EKUCv1WuwdUJC7YiEMuPOl1aV2t8DxSblVUokR2w5Y6pAFRo9Ixw==
+ng-gallery@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/ng-gallery/-/ng-gallery-12.0.0.tgz#10375819688e248d0fa45e6546d27fecca559d47"
+  integrity sha512-E5cy0XackXprtxnv3V47KMTT//pDx/hzd4f8Can7wUptkNNHoRyqHt5R+nI8czI/lxI8pQqdgxBASYeG7kri4A==
   dependencies:
     tslib "^2.3.1"
 
