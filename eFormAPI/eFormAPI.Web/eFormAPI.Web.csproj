@@ -55,7 +55,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="8.0.64" />
+    <PackageReference Include="Microting.eForm" Version="8.0.65" />
     <PackageReference Include="Microting.EformAngularFrontendBase" Version="8.0.66" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="8.0.65" />
     <PackageReference Include="PureOtp" Version="1.0.0.1" />
