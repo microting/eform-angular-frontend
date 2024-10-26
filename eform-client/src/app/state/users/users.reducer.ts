@@ -12,7 +12,7 @@ export const usersInitialState: UsersState = {
     sort: 'Id',
     isSortDsc: false,
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 100,
     offset: 0,
     total: 0,
   },

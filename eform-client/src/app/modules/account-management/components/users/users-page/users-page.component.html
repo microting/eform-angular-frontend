@@ -26,7 +26,7 @@
     id="userInfoTable"
     [data]="userInfoModelList.entities"
     [columns]="tableHeaders"
-    [cellTemplate]="{id: idTpl, email: emailTpl, fullName: fullNameTpl, role: roleTpl, actions: actionsTpl}"
+    [cellTemplate]="{id: idTpl, email: emailTpl, fullName: fullNameTpl, role: roleTpl, archiveManufacturer: archiveManufacturerTpl, timeRegistrationManufacturer: timeRegistrationManufacturerTpl, actions: actionsTpl}"
     [showPaginator]="true"
     [paginationTemplate]="paginatorTpl"
     [pageOnFront]="false"
@@ -91,5 +91,23 @@
       [pagination]="selectUsersPagination$ | async"
       (paginationChanged)="onPaginationChanged($event)"
     ></eform-pagination>
+  </ng-template>
+
+
+  <ng-template #archiveManufacturerTpl let-row>
+    <ng-container *ngIf="row.archiveOsVersion !== null">
+      <div class="manufacturer" id="manufacturer-{{row.id}}">
+        {{row.archiveModel}} ({{row.archiveOsVersion}})
+      </div>
+    </ng-container>
+  </ng-template>
+
+
+  <ng-template #timeRegistrationManufacturerTpl let-row>
+    <ng-container *ngIf="row.timeRegistrationOsVersion !== null">
+      <div class="manufacturer" id="manufacturer-{{row.id}}">
+        {{row.timeRegistrationModel}} ({{row.timeRegistrationOsVersion}})
+      </div>
+    </ng-container>
   </ng-template>
 </div>
