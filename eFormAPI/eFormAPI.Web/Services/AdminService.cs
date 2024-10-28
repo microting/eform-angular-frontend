@@ -104,7 +104,15 @@ public class AdminService : IAdminService
                 Language = x.Locale,
                 TimeZone = x.TimeZone,
                 Formats = x.Formats,
-                IsDeviceUser = false
+                IsDeviceUser = false,
+                ArchiveModel = x.ArchiveModel,
+                ArchiveManufacturer = x.ArchiveManufacturer,
+                ArchiveOsVersion = x.ArchiveOsVersion,
+                ArchiveSoftwareVersion = x.ArchiveSoftwareVersion,
+                TimeRegistrationModel = x.TimeRegistrationModel,
+                TimeRegistrationManufacturer = x.TimeRegistrationManufacturer,
+                TimeRegistrationOsVersion = x.TimeRegistrationOsVersion,
+                TimeRegistrationSoftwareVersion = x.TimeRegistrationSoftwareVersion
             });
 
             // sort
