@@ -4041,16 +4041,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@^9.1.3":
-  version "9.1.3"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-9.1.3.tgz#354d2a66e021c11b75465cfbd30ddf9210842459"
-  integrity sha512-MhYTwqZdpqu28vUFnU0swbv9Y/cKRGFdaJtBImpT0HlnbBHG3NouEcQnInSiGst5JMdDBRrkxHYZyTz6y3Uxpw==
+"@wdio/mocha-framework@^9.2.2":
+  version "9.2.2"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-9.2.2.tgz#1b3726f1158de7110f02e37e8f4b5f2f2db10e04"
+  integrity sha512-6VmaIYUBv47pJpK9UqH2ZJVyWYsc8Pn0X1PTL9LmmD4ZnzBFLTsGYOhOzEx80bnoA6IBv9dcqZ1SCraKZuzang==
   dependencies:
     "@types/mocha" "^10.0.6"
     "@types/node" "^20.11.28"
     "@wdio/logger" "9.1.3"
-    "@wdio/types" "9.1.3"
-    "@wdio/utils" "9.1.3"
+    "@wdio/types" "9.2.2"
+    "@wdio/utils" "9.2.2"
     mocha "^10.3.0"
 
 "@wdio/protocols@8.38.0":
@@ -4130,6 +4130,13 @@
   dependencies:
     "@types/node" "^20.1.0"
 
+"@wdio/types@9.2.2":
+  version "9.2.2"
+  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-9.2.2.tgz#c3bb4f01149c4ae0612c3864460c4aa48f7c35ec"
+  integrity sha512-nHZ9Ne9iRQFJ1TOYKUn4Fza69IshTTzk6RYmSZ51ImGs9uMZu0+S0Jm9REdly+VLN3FzxG6g2QSe0/F3uNVPdw==
+  dependencies:
+    "@types/node" "^20.1.0"
+
 "@wdio/utils@8.40.0":
   version "8.40.0"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-8.40.0.tgz#ce8947af9dbd03e5833a8cd3cd4d28e518ffd90f"
@@ -4157,6 +4164,25 @@
     "@puppeteer/browsers" "^2.2.0"
     "@wdio/logger" "9.1.3"
     "@wdio/types" "9.1.3"
+    decamelize "^6.0.0"
+    deepmerge-ts "^7.0.3"
+    edgedriver "^5.6.1"
+    geckodriver "^4.3.3"
+    get-port "^7.0.0"
+    import-meta-resolve "^4.0.0"
+    locate-app "^2.2.24"
+    safaridriver "^0.1.2"
+    split2 "^4.2.0"
+    wait-port "^1.1.0"
+
+"@wdio/utils@9.2.2":
+  version "9.2.2"
+  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-9.2.2.tgz#5663c95ec5f05ae633feab628a8a3f799f209a64"
+  integrity sha512-Npx7jL8eXGnBTMN+X+PLcXRfTezgVhcgwCJaarOQ0kSsyP6HNJuV8EqQZFpixzIZ1oRlizZ+cshaiwn01mgVHg==
+  dependencies:
+    "@puppeteer/browsers" "^2.2.0"
+    "@wdio/logger" "9.1.3"
+    "@wdio/types" "9.2.2"
     decamelize "^6.0.0"
     deepmerge-ts "^7.0.3"
     edgedriver "^5.6.1"
