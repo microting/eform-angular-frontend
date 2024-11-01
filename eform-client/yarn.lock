@@ -9567,10 +9567,10 @@ ng2-file-upload@^7.0.1:
   dependencies:
     tslib "^2.3.0"
 
-ng2-pdf-viewer@^10.3.3:
-  version "10.3.3"
-  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-10.3.3.tgz#8bce3a8ad12b0e20d89283dc407bd60a45733396"
-  integrity sha512-eam4AWvycg30XoepPydEgkZ86JrLHFw12+k4VUKH/6Fxw6gkhNM8ZiaSgRAI9b6VyT4F7wZmaARobDSzy6MjKA==
+ng2-pdf-viewer@^10.3.4:
+  version "10.3.4"
+  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-10.3.4.tgz#f844626d51f4385f5b427a835f981558b289b08b"
+  integrity sha512-YcMT52612LRHky82POLnyPx32Gk8PcCU+bmSatRje7zi655F+HT2HYAbOY+gG2PDH96R22oQCF8fAgKzlJl64w==
   dependencies:
     pdfjs-dist "4.6.82"
     tslib "^2.3.0"
