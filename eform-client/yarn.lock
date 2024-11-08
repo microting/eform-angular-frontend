@@ -4119,10 +4119,10 @@
     webdriver "8.40.0"
     webdriverio "8.40.0"
 
-"@wdio/spec-reporter@^9.2.2":
-  version "9.2.2"
-  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-9.2.2.tgz#9d3a4fe26a964252bd76f1d5500f83cb245d6d17"
-  integrity sha512-J/4tt09SJb1mPsy5CQNi5hZyT2ZJ9qhpPS+yBAR/74P/E1bsfHHBMEb2n0CNPp9IhIdyGZzMxueaJAWEiGGWQQ==
+"@wdio/spec-reporter@^9.2.8":
+  version "9.2.8"
+  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-9.2.8.tgz#74b9c22f499bfc6f8c9aa143e5fd6a8206e49291"
+  integrity sha512-68BH6TconFWDFQebqgRsKnQtbbmBoj56fSSlUq5+HSn8yoItTdaG6bYQ+rDpXD9RD9K46C2h622PtSV4ozIR1A==
   dependencies:
     "@wdio/reporter" "9.2.2"
     "@wdio/types" "9.2.2"
