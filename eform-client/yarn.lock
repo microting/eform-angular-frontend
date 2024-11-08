@@ -4055,16 +4055,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@^9.2.5":
-  version "9.2.5"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-9.2.5.tgz#577f66fd7e94eff113db8715595770052fb3c42b"
-  integrity sha512-KmX9TpTrT/9sq/R1seTdV/rRhjCiql7Eqryga4f+a5Sb9PmtHHr8vR2sfyLRXui1Go821TeTw6bqRld7xhAZlA==
+"@wdio/mocha-framework@^9.2.8":
+  version "9.2.8"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-9.2.8.tgz#323ba0b0dda3ccd3d6c5066f9d86dbf9a0f3fc8c"
+  integrity sha512-lCek1D+Cdnb8sF/E/PkdKX1PLrq677YVKHV6hFlZeRHWKcJyopCTvhwnJerZNFgmcTuZ6zeiGLcNNlPdQzF4oQ==
   dependencies:
     "@types/mocha" "^10.0.6"
     "@types/node" "^20.11.28"
     "@wdio/logger" "9.1.3"
     "@wdio/types" "9.2.2"
-    "@wdio/utils" "9.2.5"
+    "@wdio/utils" "9.2.8"
     mocha "^10.3.0"
 
 "@wdio/protocols@8.38.0":
@@ -4162,25 +4162,6 @@
     safaridriver "^0.1.0"
     split2 "^4.2.0"
     wait-port "^1.0.4"
-
-"@wdio/utils@9.2.5":
-  version "9.2.5"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-9.2.5.tgz#55e3dc192ec21dc67f3967c939866aa5a7f7b419"
-  integrity sha512-QgBxscPVuqC/fP62ggssBfWLnonVs2/r1xaj5MgH+tLNez/OVS98pWx0/FYsFHVeTVO5vPnJIhoTo2CXz8tQzA==
-  dependencies:
-    "@puppeteer/browsers" "^2.2.0"
-    "@wdio/logger" "9.1.3"
-    "@wdio/types" "9.2.2"
-    decamelize "^6.0.0"
-    deepmerge-ts "^7.0.3"
-    edgedriver "^5.6.1"
-    geckodriver "^4.3.3"
-    get-port "^7.0.0"
-    import-meta-resolve "^4.0.0"
-    locate-app "^2.2.24"
-    safaridriver "^0.1.2"
-    split2 "^4.2.0"
-    wait-port "^1.1.0"
 
 "@wdio/utils@9.2.8":
   version "9.2.8"
