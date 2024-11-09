@@ -11,30 +11,23 @@ namespace eFormAPI.Web.Controllers;
 using Abstractions.Security;
 
 [Authorize(Roles = EformRole.Admin)]
-public class PluginsPermissionsController : Controller
+public class PluginsPermissionsController(IClaimsService claimsService) : Controller
 {
-    private readonly IClaimsService _claimsService;
-
-    public PluginsPermissionsController(IClaimsService claimsService)
-    {
-        _claimsService = claimsService;
-    }
-
     [HttpGet("api/plugins-permissions/{id}")]
     public async Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id)
     {
-        return await _claimsService.GetPluginPermissions(id);
+        return await claimsService.GetPluginPermissions(id);
     }
 
     [HttpGet("api/plugins-permissions/group-permissions/{id}")]
     public async Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id)
     {
-        return await _claimsService.GetPluginGroupPermissions(id);
+        return await claimsService.GetPluginGroupPermissions(id);
     }
 
     [HttpPut("api/plugins-permissions/group-permissions/{id}")]
     public async Task<OperationResult> SetPluginGroupPermissions(int id, [FromBody]ICollection<PluginGroupPermissionsListModel> permissions)
     {
-        return await _claimsService.SetPluginGroupPermissions(id, permissions);
+        return await claimsService.SetPluginGroupPermissions(id, permissions);
     }
 }

@@ -35,20 +35,13 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.EformAngularFrontendBase.Infrastructure.Const;
 
 [Authorize]
-public class WorkersController : Controller
+public class WorkersController(IWorkersService workersService) : Controller
 {
-    private readonly IWorkersService _workersService;
-
-    public WorkersController(IWorkersService workersService)
-    {
-        _workersService = workersService;
-    }
-
     [HttpGet]
     [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
     public async Task<OperationDataResult<List<WorkerDto>>> Index()
     {
-        return await _workersService.Index();
+        return await workersService.Index();
     }
 
     [HttpPost]
@@ -56,27 +49,27 @@ public class WorkersController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
     public async Task<OperationResult> Сreate([FromBody] WorkerCreateModel model)
     {
-        return await _workersService.Create(model);
+        return await workersService.Create(model);
     }
         
     [HttpGet]
     [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
     public async Task<OperationDataResult<WorkerDto>> Read(int id)
     {
-        return await _workersService.Read(id);
+        return await workersService.Read(id);
     }
 
     [HttpPost]
     [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
     public async Task<OperationResult> Update([FromBody] WorkerModel workerModel)
     {
-        return await _workersService.Update(workerModel);
+        return await workersService.Update(workerModel);
     }
 
     [HttpGet]
     [Authorize(Policy = AuthConsts.EformPolicies.Workers.Delete)]
     public async Task<OperationResult> Delete(int id)
     {
-        return await _workersService.Delete(id);
+        return await workersService.Delete(id);
     }
 }

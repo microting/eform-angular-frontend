@@ -30,15 +30,10 @@ using Microsoft.Extensions.Localization;
 
 namespace eFormAPI.Web.Services;
 
-public class LocalizationService : ILocalizationService
+public class LocalizationService(IStringLocalizerFactory factory) : ILocalizationService
 {
-    private readonly IStringLocalizer _localizer;
-
-    public LocalizationService(IStringLocalizerFactory factory)
-    {
-        _localizer = factory.Create("SharedResource",
-            Assembly.GetEntryAssembly().FullName);
-    }
+    private readonly IStringLocalizer _localizer = factory.Create("SharedResource",
+        Assembly.GetEntryAssembly().FullName);
 
     public string GetString(string key)
     {

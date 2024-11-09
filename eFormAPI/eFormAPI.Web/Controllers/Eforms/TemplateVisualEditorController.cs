@@ -30,19 +30,12 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 [Route("api/template-visual-editor")]
 [Authorize]
-public class TemplateVisualEditorController : Controller
+public class TemplateVisualEditorController(ITemplateVisualEditorService templateVisualEditorService) : Controller
 {
-    private readonly ITemplateVisualEditorService _templateVisualEditorService;
-
-    public TemplateVisualEditorController(ITemplateVisualEditorService templateVisualEditorService)
-    {
-        _templateVisualEditorService = templateVisualEditorService;
-    }
-
     [HttpGet]
     public async Task<OperationDataResult<EformVisualEditorModel>> Read(int id)
     {
-        return await _templateVisualEditorService.ReadVisualTemplate(id);
+        return await templateVisualEditorService.ReadVisualTemplate(id);
     }
 
     [HttpPost]
@@ -58,7 +51,7 @@ public class TemplateVisualEditorController : Controller
             // or 'Checklists[1]Fields[0][PdfFiles][0][File]' or 'Checklists[1]Fields[1]Fields[0][PdfFiles][0][File]' or a **deeper nesting**
             ReflectionSetProperty.SetProperty(model, formFile.Name.Replace("][", ".").Replace("[", ".").Replace("]", ""), formFile);
         }
-        return await _templateVisualEditorService.CreateVisualTemplate(model);
+        return await templateVisualEditorService.CreateVisualTemplate(model);
     }
         
 
@@ -75,6 +68,6 @@ public class TemplateVisualEditorController : Controller
             // or 'Checklists[1]Fields[0][PdfFiles][0][File]' or 'Checklists[1]Fields[1]Fields[0][PdfFiles][0][File]' or a **deeper nesting**
             ReflectionSetProperty.SetProperty(model, formFile.Name.Replace("][", ".").Replace("[", ".").Replace("]", ""), formFile);
         }
-        return await _templateVisualEditorService.UpdateVisualTemplate(model);
+        return await templateVisualEditorService.UpdateVisualTemplate(model);
     }
 }

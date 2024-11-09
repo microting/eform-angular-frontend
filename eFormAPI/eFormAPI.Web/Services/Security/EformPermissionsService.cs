@@ -33,26 +33,18 @@ using eFormAPI.Web.Abstractions.Security;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 
 
-public class EformPermissionsService : IEformPermissionsService
+public class EformPermissionsService(
+    BaseDbContext dbContext,
+    IUserService userService) : IEformPermissionsService
 {
-    private readonly BaseDbContext _dbContext;
-    private readonly IUserService _userService;
-
-    public EformPermissionsService(BaseDbContext dbContext,
-        IUserService userService)
-    {
-        _dbContext = dbContext;
-        _userService = userService;
-    }
-
     public async Task<bool> CheckEform(int eformId, string claimName)
     {
-        if (!_userService.IsInRole(EformRole.Admin))
+        if (!userService.IsInRole(EformRole.Admin))
         {
-            var result = await _dbContext
+            var result = await dbContext
                 .EformInGroups
                 .Where(x => x.TemplateId == eformId)
-                .Where(x => x.SecurityGroup.SecurityGroupUsers.Any(u => u.EformUserId == _userService.UserId))
+                .Where(x => x.SecurityGroup.SecurityGroupUsers.Any(u => u.EformUserId == userService.UserId))
                 .Select(x => new
                 {
                     iss = x.EformPermissions.Any(y => y.Permission.ClaimName == claimName)

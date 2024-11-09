@@ -30,13 +30,10 @@ using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Permissions;
 
-public class SimpleLinkLoader : AbstractLoader
+public class SimpleLinkLoader(BaseDbContext dbContext) : AbstractLoader(dbContext)
 {
-    private readonly BaseDbContext _dbContext;
-    public SimpleLinkLoader(BaseDbContext dbContext) : base(dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly BaseDbContext _dbContext = dbContext;
+
     public override bool IsExecute(PluginMenuItemModel menuItem)
         => menuItem.Type == MenuItemTypeEnum.Link;
 

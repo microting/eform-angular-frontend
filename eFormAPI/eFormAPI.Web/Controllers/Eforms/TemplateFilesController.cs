@@ -24,6 +24,8 @@ SOFTWARE.
 
 using System.Linq;
 using eFormCore;
+using Microsoft.Extensions.Logging;
+using Sentry;
 
 namespace eFormAPI.Web.Controllers.Eforms;
 
@@ -53,48 +55,36 @@ using Microting.EformAngularFrontendBase.Infrastructure.Const;
 using Settings = Microting.eForm.Dto.Settings;
 
 [Authorize]
-public class TemplateFilesController : Controller
+public class TemplateFilesController(
+    IEFormCoreService coreHelper,
+    ILocalizationService localizationService,
+    IUserService userService,
+    IEformPermissionsService permissionsService,
+    IEformExcelExportService eformExcelExportService,
+    ILogger<TemplateFilesController> logger)
+    : Controller
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly IEformPermissionsService _permissionsService;
-    private readonly ILocalizationService _localizationService;
-    private readonly IEformExcelExportService _eformExcelExportService;
-    private readonly IUserService _userService;
-
-    public TemplateFilesController(IEFormCoreService coreHelper,
-        ILocalizationService localizationService,
-        IUserService userService,
-        IEformPermissionsService permissionsService,
-        IEformExcelExportService eformExcelExportService)
-    {
-        _coreHelper = coreHelper;
-        _userService = userService;
-        _localizationService = localizationService;
-        _permissionsService = permissionsService;
-        _eformExcelExportService = eformExcelExportService;
-    }
-
     [HttpGet]
     [Route("api/template-files/csv/{id}")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
     public async Task<IActionResult> Csv(int id, string start, string end, bool utcTime, bool gpsCoordinates, bool includeCheckListText)
     {
-        if (!await _permissionsService.CheckEform(id,
+        if (!await permissionsService.CheckEform(id,
                 AuthConsts.EformClaims.EformsClaims.GetCsv))
         {
             return Forbid();
         }
 
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
         var filePath = Path.GetTempPath();// PathHelper.GetOutputPath(fileName);
         Directory.CreateDirectory(Path.Combine(filePath, "output"));
         filePath = Path.Combine(filePath, fileName);
         CultureInfo cultureInfo = new CultureInfo("de-DE");
-        var language = await _userService.GetCurrentUserLanguage();
+        var language = await userService.GetCurrentUserLanguage();
 
 
-        var timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
+        var timeZoneInfo = await userService.GetCurrentUserTimeZoneInfo();
 
         string fullPath;
         if (!string.IsNullOrEmpty(start) && !string.IsNullOrEmpty(end))
@@ -147,15 +137,15 @@ public class TemplateFilesController : Controller
         var buffer = new byte[bufferSize];
         Response.OnStarting(async () =>
         {
-            if (!await _permissionsService.CheckEform(excelModel.TemplateId,
+            if (!await permissionsService.CheckEform(excelModel.TemplateId,
                     AuthConsts.EformClaims.EformsClaims.ExportEformExcel))
             {
                 Forbid();
             }
-            var result = await _eformExcelExportService.EformExport(excelModel);
+            var result = await eformExcelExportService.EformExport(excelModel);
             if (result.Model == null)
             {
-                var message = _localizationService.GetString("NoDataInSelectedPeriod");
+                var message = localizationService.GetString("NoDataInSelectedPeriod");
                 Response.ContentLength = message.Length;
                 Response.ContentType = "text/plain";
                 Response.StatusCode = 400;
@@ -183,7 +173,7 @@ public class TemplateFilesController : Controller
 
     private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache", string token = "")
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         if (!string.IsNullOrEmpty(token) && token != core.GetSdkSetting(Settings.token).Result)
         {
             return Unauthorized();
@@ -224,7 +214,9 @@ public class TemplateFilesController : Controller
             }
         } catch (Exception e)
         {
-            Console.WriteLine(e);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return NotFound($"Trying to find file at location: {filePath}");
         }
 
@@ -243,7 +235,7 @@ public class TemplateFilesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
     public async Task<OperationResult> RotateImage(string fileName)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         Directory.CreateDirectory(Path.Combine("tmp"));
         var filePath = Path.Combine("tmp",fileName);
 
@@ -263,7 +255,7 @@ public class TemplateFilesController : Controller
         try
         {
             var newFile = HttpContext.Request.Form.Files.Last();
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var uploadData = await sdkDbContext.UploadedDatas
                 .Where(x => x.Id == uploadedObjId)
@@ -277,7 +269,7 @@ public class TemplateFilesController : Controller
 
             if (uploadData == null || fieldValue == null)
             {
-                return new OperationResult(false, _localizationService.GetString("ImageNotFound"));
+                return new OperationResult(false, localizationService.GetString("ImageNotFound"));
             }
 
             // delete old image
@@ -311,12 +303,14 @@ public class TemplateFilesController : Controller
             fieldValue.UploadedDataId = newUploadData.Id;
             await fieldValue.Update(sdkDbContext);
 
-            return new OperationResult(true, _localizationService.GetString("ImageUpdatedSuccessfully"));
+            return new OperationResult(true, localizationService.GetString("ImageUpdatedSuccessfully"));
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdateImage"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileUpdateImage"));
         }
     }
 
@@ -328,7 +322,7 @@ public class TemplateFilesController : Controller
         try
         {
             var newFile = HttpContext.Request.Form.Files.Last();
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var caseDb = await sdkDbContext.Cases
                 .Where(x => x.Id == caseId)
@@ -339,7 +333,7 @@ public class TemplateFilesController : Controller
                 .FirstOrDefaultAsync();
             if (caseDb == null || field == null)
             {
-                return new OperationResult(false, _localizationService.GetString("CaseNotFound"));
+                return new OperationResult(false, localizationService.GetString("CaseNotFound"));
             }
             var folder = Path.Combine(Path.GetTempPath(), "cases-temp-files");
             Directory.CreateDirectory(folder);
@@ -413,12 +407,14 @@ public class TemplateFilesController : Controller
             }
             System.IO.File.Delete(filePathResized);
 
-            return new OperationResult(true, _localizationService.GetString("ImageUpdatedSuccessfully"));
+            return new OperationResult(true, localizationService.GetString("ImageUpdatedSuccessfully"));
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdateImage"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileUpdateImage"));
         }
     }
 
@@ -429,20 +425,22 @@ public class TemplateFilesController : Controller
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             if (!await core.Advanced_DeleteUploadedData(fieldId, uploadedObjId))
             {
-                return new OperationResult(false, _localizationService.GetString("ImageNotDeleted"));
+                return new OperationResult(false, localizationService.GetString("ImageNotDeleted"));
             }
         }
 
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return new OperationResult(false, _localizationService.GetString("ImageNotDeleted"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ImageNotDeleted"));
         }
 
-        return new OperationResult(true, _localizationService.GetString("ImageDeletedSuccessfully"));
+        return new OperationResult(true, localizationService.GetString("ImageDeletedSuccessfully"));
     }
 
     [HttpGet]
@@ -450,7 +448,7 @@ public class TemplateFilesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
     public async Task<IActionResult> GetPdfFile(string fileName)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         //if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
         //{
         try
@@ -465,9 +463,11 @@ public class TemplateFilesController : Controller
 
             //return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"pdf"));
         }
-        catch (Exception exception)
+        catch (Exception e)
         {
-            Console.WriteLine(exception.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return NotFound();
         }
 
@@ -487,7 +487,7 @@ public class TemplateFilesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
     public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId, string fileType)
     {
-        if (!await _permissionsService.CheckEform(templateId,
+        if (!await permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.CasesClaims.CaseGetPdf))
         {
             return Forbid();
@@ -495,8 +495,8 @@ public class TemplateFilesController : Controller
 
         try
         {
-            var core = await _coreHelper.GetCore();
-            var language = await _userService.GetCurrentUserLanguage();
+            var core = await coreHelper.GetCore();
+            var language = await userService.GetCurrentUserLanguage();
 
             // Fix for broken SDK not handling empty customXmlContent well
             string customXmlContent = new XElement("FillerElement",
@@ -514,8 +514,11 @@ public class TemplateFilesController : Controller
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             return File(fileStream, "application/pdf", Path.GetFileName(filePath));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return BadRequest();
         }
     }
@@ -525,7 +528,7 @@ public class TemplateFilesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.DownloadXml)]
     public async Task<IActionResult> DownloadEFormXml(int templateId)
     {
-        if (!await _permissionsService.CheckEform(templateId,
+        if (!await permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.EformsClaims.DownloadXml))
         {
             return Forbid();
@@ -533,10 +536,10 @@ public class TemplateFilesController : Controller
 
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var caseId = await core.CaseReadFirstId(templateId, "not_revmoed");
             CaseDto caseDto = await core.CaseLookupCaseId((int)caseId);
-            var language = await _userService.GetCurrentUserLanguage();
+            var language = await userService.GetCurrentUserLanguage();
             ReplyElement replyElement = await core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId, language).ConfigureAwait(false);
             if (caseId != null)
             {
@@ -557,8 +560,11 @@ public class TemplateFilesController : Controller
                 return BadRequest();
             }
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return BadRequest();
         }
     }
@@ -568,7 +574,7 @@ public class TemplateFilesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UploadZip)]
     public async Task<IActionResult> UploadEformZip(EformZipUploadModel uploadModel)
     {
-        if (!await _permissionsService.CheckEform(uploadModel.TemplateId,
+        if (!await permissionsService.CheckEform(uploadModel.TemplateId,
                 AuthConsts.EformClaims.EformsClaims.UploadZip))
         {
             return Forbid();
@@ -576,12 +582,12 @@ public class TemplateFilesController : Controller
 
         if (!uploadModel.File.FileName.Contains(".zip"))
         {
-            return BadRequest(_localizationService.GetString("InvalidRequest"));
+            return BadRequest(localizationService.GetString("InvalidRequest"));
         }
 
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var templateId = uploadModel.TemplateId;
             if (templateId <= 0)
             {
@@ -686,10 +692,13 @@ public class TemplateFilesController : Controller
                     }
                 }
             }
-            return BadRequest(_localizationService.GetString("InvalidRequest"));
+            return BadRequest(localizationService.GetString("InvalidRequest"));
         }
         catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return BadRequest($"Invalid Request! Exception: {e.Message}");
         }
     }
@@ -701,7 +710,7 @@ public class TemplateFilesController : Controller
         Console.WriteLine(@"Environment.ProcessorCount:          {0}",
             Environment.ProcessorCount);
         var fileId = int.Parse(fileName.Split('_').First());
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var dbContext = core.DbContextHelper.GetDbContext();
         Microting.eForm.Infrastructure.Data.Entities.UploadedData uploadedDataObj = await dbContext.UploadedDatas.SingleAsync(x => x.Id == fileId);
         var result =  await core.GetFileFromS3Storage(fileName);
@@ -762,7 +771,7 @@ public class TemplateFilesController : Controller
         if (!System.IO.File.Exists(filePath))
         {
 
-            return new OperationResult(false, _localizationService.GetString("FileNotFound"));
+            return new OperationResult(false, localizationService.GetString("FileNotFound"));
         }
 
         try
@@ -773,15 +782,18 @@ public class TemplateFilesController : Controller
         }
         catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             if (e.Message == "A generic error occurred in GDI+.")
             {
                 return new OperationResult(false);
             }
 
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
+            return new OperationResult(false, localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
         }
 
-        return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
+        return new OperationResult(true, localizationService.GetString("ImageRotatedSuccessfully"));
     }
 
     private async Task<OperationResult> RotateFileAndPutToStorage(string filePath, Core core, string fileName)
@@ -797,18 +809,21 @@ public class TemplateFilesController : Controller
         }
         catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             if (e.Message == "A generic error occurred in GDI+.")
             {
                 return new OperationResult(false);
             }
 
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
+            return new OperationResult(false, localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
         }
         finally
         {
             System.IO.File.Delete(filePath);
         }
-        return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
+        return new OperationResult(true, localizationService.GetString("ImageRotatedSuccessfully"));
     }
 
 }

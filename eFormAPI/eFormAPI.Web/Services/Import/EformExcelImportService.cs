@@ -32,6 +32,7 @@ using eFormAPI.Web.Infrastructure.Models.Import;
 using eFormAPI.Web.Services.Export;
 using Microsoft.Extensions.Logging;
 using Microting.EformAngularFrontendBase.Infrastructure.Const.Import;
+using Sentry;
 
 namespace eFormAPI.Web.Services.Import;
 
@@ -102,7 +103,9 @@ public class EformExcelImportService(ILogger<EformExcelExportService> logger) : 
         }
         catch (Exception e)
         {
-            logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             throw;
         }
     }

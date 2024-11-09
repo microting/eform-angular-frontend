@@ -36,21 +36,14 @@ using Microting.EformAngularFrontendBase.Infrastructure.Const;
 
 [Authorize]
 [Route("api/admin")]
-public class AdminController : Controller
+public class AdminController(IAdminService adminService) : Controller
 {
-    private readonly IAdminService _adminService;
-
-    public AdminController(IAdminService adminService)
-    {
-        _adminService = adminService;
-    }
-
     [HttpPost]
     [Route("get-users")]
     [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
     public async Task<OperationDataResult<Paged<UserInfoViewModel>>> Index([FromBody] UserInfoRequest paginationModel)
     {
-        return await _adminService.Index(paginationModel);
+        return await adminService.Index(paginationModel);
     }
 
     [HttpPost]
@@ -58,7 +51,7 @@ public class AdminController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Create)]
     public async Task<OperationResult> Create([FromBody] UserRegisterModel userRegisterModel)
     {
-        return await _adminService.Create(userRegisterModel);
+        return await adminService.Create(userRegisterModel);
     }
 
     [HttpGet]
@@ -66,7 +59,7 @@ public class AdminController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
     public Task<OperationDataResult<UserRegisterModel>> Read(int userId)
     {
-        return _adminService.Read(userId);
+        return adminService.Read(userId);
     }
         
     [HttpPost]
@@ -74,7 +67,7 @@ public class AdminController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Update)]
     public async Task<OperationResult> Update([FromBody] UserRegisterModel userRegisterModel)
     {
-        return await _adminService.Update(userRegisterModel);
+        return await adminService.Update(userRegisterModel);
     }
         
     [HttpGet]
@@ -82,7 +75,7 @@ public class AdminController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Delete)]
     public Task<OperationResult> Delete(int userId)
     {
-        return _adminService.Delete(userId);
+        return adminService.Delete(userId);
     }
 
     [HttpGet]
@@ -90,7 +83,7 @@ public class AdminController : Controller
     [Authorize(Roles = EformRole.Admin)]
     public Task<OperationResult> EnableTwoFactorAuthForce()
     {
-        return _adminService.EnableTwoFactorAuthForce();
+        return adminService.EnableTwoFactorAuthForce();
     }
 
     [HttpGet]
@@ -98,6 +91,6 @@ public class AdminController : Controller
     [Authorize(Roles = EformRole.Admin)]
     public Task<OperationResult> DisableTwoFactorAuthForce()
     {
-        return _adminService.DisableTwoFactorAuthForce();
+        return adminService.DisableTwoFactorAuthForce();
     }
 }

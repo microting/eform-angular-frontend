@@ -37,24 +37,17 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 [Authorize]
 [Route("api/tags")]
-public class TagsController : Controller
+public class TagsController(
+    ITagsService tagsService,
+    IEformPermissionsService permissionsService)
+    : Controller
 {
-    private readonly ITagsService _tagsService;
-    private readonly IEformPermissionsService _permissionsService;
-
-    public TagsController(ITagsService tagsService,
-        IEformPermissionsService permissionsService)
-    {
-        _tagsService = tagsService;
-        _permissionsService = permissionsService;
-    }
-
     [HttpGet]
     [Route("index")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ReadTags)]
     public async Task<OperationDataResult<List<CommonDictionaryModel>>> Index()
     {
-        return await _tagsService.Index();
+        return await tagsService.Index();
     }
         
     [HttpPost]
@@ -62,7 +55,7 @@ public class TagsController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
     public async Task<OperationResult> Create([FromBody] CommonTagModel tag)
     {
-        return await _tagsService.Create(tag.Name);
+        return await tagsService.Create(tag.Name);
     }
 
 
@@ -71,20 +64,20 @@ public class TagsController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
     public async Task<IActionResult> Update([FromBody] UpdateTemplateTagsModel requestModel)
     {
-        if (!await _permissionsService.CheckEform(requestModel.TemplateId,
+        if (!await permissionsService.CheckEform(requestModel.TemplateId,
                 AuthConsts.EformClaims.EformsClaims.UpdateTags))
         {
             return Forbid();
         }
 
-        return Ok(await _tagsService.Update(requestModel));
+        return Ok(await tagsService.Update(requestModel));
     }
 
     [HttpDelete]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
     public async Task<OperationResult> DeleteTag(int tagId)
     {
-        return await _tagsService.Delete(tagId);
+        return await tagsService.Delete(tagId);
     }
 
         
@@ -93,26 +86,26 @@ public class TagsController : Controller
     [Route("saved")]
     public async Task<OperationDataResult<SavedTagsModel>> GetSavedTags()
     {
-        return await _tagsService.GetSavedTags();
+        return await tagsService.GetSavedTags();
     }
 
     [HttpPut]
     [Route("saved")]
     public async Task<OperationResult> AddTagToSaved([FromBody] SavedTagModel model)
     {
-        return await _tagsService.AddTagToSaved(model);
+        return await tagsService.AddTagToSaved(model);
     }
 
     [HttpDelete]
     [Route("saved")]
     public async Task<OperationResult> RemoveTagFromSaved(int tagId)
     {
-        return await _tagsService.RemoveTagFromSaved(tagId);
+        return await tagsService.RemoveTagFromSaved(tagId);
     }
 
     [HttpPut]
     public async Task<OperationResult> UpdateTag([FromBody] CommonTagModel commonTagModel)
     {
-        return await _tagsService.UpdateTag(commonTagModel);
+        return await tagsService.UpdateTag(commonTagModel);
     }
 }

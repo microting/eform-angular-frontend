@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Sentry;
+
 namespace eFormAPI.Web.Services.Mailing.EmailTags;
 
 using System;
@@ -37,30 +39,18 @@ using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-public class EmailTagsService : IEmailTagsService
+public class EmailTagsService(
+    ILogger<EmailTagsService> logger,
+    BaseDbContext dbContext,
+    ILocalizationService localizationService,
+    IUserService userService)
+    : IEmailTagsService
 {
-    private readonly ILogger<EmailTagsService> _logger;
-    private readonly IUserService _userService;
-    private readonly ILocalizationService _localizationService;
-    private readonly BaseDbContext _dbContext;
-
-    public EmailTagsService(
-        ILogger<EmailTagsService> logger,
-        BaseDbContext dbContext,
-        ILocalizationService localizationService,
-        IUserService userService)
-    {
-        _logger = logger;
-        _dbContext = dbContext;
-        _localizationService = localizationService;
-        _userService = userService;
-    }
-
     public async Task<OperationDataResult<CommonDictionaryModel[]>> GetEmailTags()
     {
         try
         {
-            var emailTags = await _dbContext.EmailTags
+            var emailTags = await dbContext.EmailTags
                 .AsNoTracking()
                 .Select(x => new CommonDictionaryModel
                 {
@@ -74,69 +64,72 @@ public class EmailTagsService : IEmailTagsService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<CommonDictionaryModel[]>(
                 false,
-                _localizationService.GetString("ErrorWhileObtainingEmailTag"));
+                localizationService.GetString("ErrorWhileObtainingEmailTag"));
         }
     }
     public async Task<OperationResult> UpdateEmailTag(EmailRecipientTagModel requestModel)
     {
         try
         {
-            var emailTag = await _dbContext.EmailTags
+            var emailTag = await dbContext.EmailTags
                 .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
 
             if (emailTag == null)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("EmailTagNotFound"));
+                    localizationService.GetString("EmailTagNotFound"));
             }
 
             emailTag.Name = requestModel.Name;
             emailTag.UpdatedAt = DateTime.UtcNow;
-            emailTag.UpdatedByUserId = _userService.UserId;
+            emailTag.UpdatedByUserId = userService.UserId;
 
-            _dbContext.EmailTags.Update(emailTag);
-            await _dbContext.SaveChangesAsync();
+            dbContext.EmailTags.Update(emailTag);
+            await dbContext.SaveChangesAsync();
 
             return new OperationResult(true,
-                _localizationService.GetString("EmailTagUpdatedSuccessfully"));
+                localizationService.GetString("EmailTagUpdatedSuccessfully"));
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileUpdatingEmailTag"));
+                localizationService.GetString("ErrorWhileUpdatingEmailTag"));
         }
     }
     public async Task<OperationResult> DeleteEmailTag(int id)
     {
         try
         {
-            var emailTag = await _dbContext.EmailTags
+            var emailTag = await dbContext.EmailTags
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (emailTag == null)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("EmailTagNotFound"));
+                    localizationService.GetString("EmailTagNotFound"));
             }
 
-            _dbContext.EmailTags.Remove(emailTag);
-            await _dbContext.SaveChangesAsync();
+            dbContext.EmailTags.Remove(emailTag);
+            await dbContext.SaveChangesAsync();
 
             return new OperationResult(true,
-                _localizationService.GetString("EmailTagRemovedSuccessfully"));
+                localizationService.GetString("EmailTagRemovedSuccessfully"));
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileRemovingEmailTag"));
+                localizationService.GetString("ErrorWhileRemovingEmailTag"));
         }
     }
     public async Task<OperationResult> CreateEmailTag(EmailRecipientTagModel requestModel)
@@ -147,24 +140,25 @@ public class EmailTagsService : IEmailTagsService
             {
                 Name = requestModel.Name,
                 CreatedAt = DateTime.UtcNow,
-                CreatedByUserId = _userService.UserId,
-                UpdatedByUserId = _userService.UserId,
+                CreatedByUserId = userService.UserId,
+                UpdatedByUserId = userService.UserId,
                 UpdatedAt = DateTime.UtcNow,
                 Version = 1
             };
 
-            await _dbContext.EmailTags.AddAsync(emailTag);
-            await _dbContext.SaveChangesAsync();
+            await dbContext.EmailTags.AddAsync(emailTag);
+            await dbContext.SaveChangesAsync();
 
             return new OperationResult(true,
-                _localizationService.GetString("EmailTagCreatedSuccessfully"));
+                localizationService.GetString("EmailTagCreatedSuccessfully"));
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileCreatingEmailTag"));
+                localizationService.GetString("ErrorWhileCreatingEmailTag"));
         }
     }
 }

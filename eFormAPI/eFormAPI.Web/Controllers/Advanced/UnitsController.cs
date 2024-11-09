@@ -35,20 +35,13 @@ using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 [Authorize]
-public class UnitsController : Controller
+public class UnitsController(IUnitsService unitsService) : Controller
 {
-    private readonly IUnitsService _unitsService;
-
-    public UnitsController(IUnitsService unitsService)
-    {
-        _unitsService = unitsService;
-    }
-
     [HttpGet]
     [Authorize(Policy = AuthConsts.EformPolicies.Units.Read)]
     public Task<OperationDataResult<List<UnitModel>>> Index()
     {
-        return _unitsService.Index();
+        return unitsService.Index();
     }
 
     [HttpPost]
@@ -56,7 +49,7 @@ public class UnitsController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
     public Task<OperationResult> Create([FromBody] UnitModel model)
     {
-        return _unitsService.Create(model);
+        return unitsService.Create(model);
     }
 
     [HttpPut]
@@ -64,13 +57,13 @@ public class UnitsController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
     public Task<OperationResult> Update([FromBody] UnitModel model)
     {
-        return _unitsService.Update(model);
+        return unitsService.Update(model);
     }
 
     [HttpGet]
     [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
     public Task<OperationDataResult<UnitDto>> RequestOtp(int id)
     {
-        return _unitsService.RequestOtp(id);
+        return unitsService.RequestOtp(id);
     }
 }

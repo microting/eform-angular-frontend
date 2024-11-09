@@ -36,43 +36,36 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 [Route("api/cases")]
 [Authorize]
-public class CasesController : Controller
+public class CasesController(
+    ICasesService casesService,
+    IEformPermissionsService permissionsService)
+    : Controller
 {
-    private readonly ICasesService _casesService;
-    private readonly IEformPermissionsService _permissionsService;
-
-    public CasesController(ICasesService casesService,
-        IEformPermissionsService permissionsService)
-    {
-        _casesService = casesService;
-        _permissionsService = permissionsService;
-    }
-
     [HttpPost]
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
     public async Task<IActionResult> Index([FromBody] CaseRequestModel requestModel)
     {
         if (requestModel.TemplateId != null
-            && ! await _permissionsService.CheckEform((int) requestModel.TemplateId,
+            && ! await permissionsService.CheckEform((int) requestModel.TemplateId,
                 AuthConsts.EformClaims.CasesClaims.CasesRead))
         {
             return Forbid();
         }
 
-        return Ok(await _casesService.Index(requestModel));
+        return Ok(await casesService.Index(requestModel));
     }
 
     [HttpGet]
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
     public async Task<IActionResult> Read(int id, int templateId)
     {
-        if (! await _permissionsService.CheckEform(templateId, 
+        if (! await permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.CasesClaims.CaseRead))
         {
             return Forbid();
         }
 
-        return Ok(await _casesService.Read(id));
+        return Ok(await casesService.Read(id));
     }
 
     [HttpPut]
@@ -80,26 +73,26 @@ public class CasesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
     public async Task<IActionResult> Update([FromBody] ReplyRequest model, int templateId)
     {
-        if (!await _permissionsService.CheckEform(templateId,
+        if (!await permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.CasesClaims.CaseUpdate))
         {
             return Forbid();
         }
 
-        return Ok(await _casesService.Update(model));
+        return Ok(await casesService.Update(model));
     }
         
     [HttpDelete]
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseDelete)]
     public async Task<IActionResult> Delete(int id, int templateId)
     {
-        if (! await _permissionsService.CheckEform(templateId,
+        if (! await permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.CasesClaims.CaseDelete))
         {
             return Forbid();
         }
 
-        return Ok(await _casesService.Delete(id));
+        return Ok(await casesService.Delete(id));
     }
 
     [HttpPut]
@@ -107,7 +100,7 @@ public class CasesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
     public async Task<OperationResult> Archive([FromBody]int caseId)
     {
-        return await _casesService.Archive(caseId);
+        return await casesService.Archive(caseId);
     }
 
     [HttpPut]
@@ -115,6 +108,6 @@ public class CasesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
     public async Task<OperationResult> Unarchive([FromBody] int caseId)
     {
-        return await _casesService.Unarchive(caseId);
+        return await casesService.Unarchive(caseId);
     }
 }

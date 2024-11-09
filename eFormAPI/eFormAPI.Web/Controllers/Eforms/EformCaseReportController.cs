@@ -36,14 +36,8 @@ using Microsoft.AspNetCore.Http;
 using Infrastructure.Models;
 
 [Authorize]
-public class EformCaseReportController : Controller
+public class EformCaseReportController(IEformCaseReportService eformCaseReportService) : Controller
 {
-    private readonly IEformCaseReportService _eformCaseReportService;
-    public EformCaseReportController(IEformCaseReportService eformCaseReportService)
-    {
-        _eformCaseReportService = eformCaseReportService;
-    }
-
     /// <summary>
     /// Get report case by eForm model
     /// </summary>
@@ -53,7 +47,7 @@ public class EformCaseReportController : Controller
     [Route("api/templates/docx-report")]
     public async Task<OperationDataResult<EFormCasesReportModel>> GetReport([Required][FromBody] EFormCaseReportRequest eFormCaseReportRequesteFormId)
     {
-        return await _eformCaseReportService.GetReportEformCases(eFormCaseReportRequesteFormId);
+        return await eformCaseReportService.GetReportEformCases(eFormCaseReportRequesteFormId);
     }
 
     /// <summary>
@@ -66,7 +60,7 @@ public class EformCaseReportController : Controller
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public async Task GetReportWord([Required] EFormCaseReportRequest eFormCaseReportRequestEFormId)
     {
-        var result = await _eformCaseReportService.GenerateReportFile(eFormCaseReportRequestEFormId);
+        var result = await eformCaseReportService.GenerateReportFile(eFormCaseReportRequestEFormId);
         const int bufferSize = 4086;
         var buffer = new byte[bufferSize];
         Response.OnStarting(async () =>
@@ -82,18 +76,16 @@ public class EformCaseReportController : Controller
             }
             else
             {
-                using (var wordStream = result.Model)
+                await using var wordStream = result.Model;
+                int bytesRead;
+                Response.ContentLength = wordStream.Length;
+                Response.ContentType =
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                while ((bytesRead = wordStream.Read(buffer, 0, buffer.Length)) > 0 &&
+                       !HttpContext.RequestAborted.IsCancellationRequested)
                 {
-                    int bytesRead;
-                    Response.ContentLength = wordStream.Length;
-                    Response.ContentType =
-                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                    while ((bytesRead = wordStream.Read(buffer, 0, buffer.Length)) > 0 &&
-                           !HttpContext.RequestAborted.IsCancellationRequested)
-                    {
-                        await Response.Body.WriteAsync(buffer, 0, bytesRead);
-                        await Response.Body.FlushAsync();
-                    }
+                    await Response.Body.WriteAsync(buffer, 0, bytesRead);
+                    await Response.Body.FlushAsync();
                 }
             }
         });
@@ -109,7 +101,7 @@ public class EformCaseReportController : Controller
     public async Task<OperationResult> UpdateHeadersReport(
         [FromBody] EformDocxReportHeadersModel eformDocxReportHeadersModel)
     {
-        return await _eformCaseReportService.UpdateReportHeaders(eformDocxReportHeadersModel);
+        return await eformCaseReportService.UpdateReportHeaders(eformDocxReportHeadersModel);
     }
 
     /// <summary>
@@ -121,6 +113,6 @@ public class EformCaseReportController : Controller
     [Route("/api/templates/docx-report/headers/{templateId}")]
     public async Task<OperationDataResult<EformDocxReportHeadersModel>> GetHeaderByEformId(int templateId)
     {
-        return await _eformCaseReportService.GetReportHeadersByTemplateId(templateId);
+        return await eformCaseReportService.GetReportHeadersByTemplateId(templateId);
     }
 }

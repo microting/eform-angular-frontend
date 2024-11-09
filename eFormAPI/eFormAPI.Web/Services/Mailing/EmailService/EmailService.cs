@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microsoft.Extensions.Logging;
+using Sentry;
+
 namespace eFormAPI.Web.Services.Mailing.EmailService;
 
 using System;
@@ -32,15 +35,9 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-public class EmailService : IEmailService
+public class EmailService(IDbOptions<EmailSettings> emailSettings, ILogger<EmailService> logger)
+    : IEmailService
 {
-    private readonly IDbOptions<EmailSettings> _emailSettings;
-
-    public EmailService(IDbOptions<EmailSettings> emailSettings)
-    {
-        _emailSettings = emailSettings;
-    }
-
     public async Task SendAsync(
         string fromEmail,
         string fromName,
@@ -51,7 +48,7 @@ public class EmailService : IEmailService
     {
         try
         {
-            var client = new SendGridClient(_emailSettings.Value.SendGridKey);
+            var client = new SendGridClient(emailSettings.Value.SendGridKey);
             var fromAddress = new EmailAddress(fromEmail.Replace(" ", ""), fromName);
             var toAddress = new EmailAddress(to.Replace(" ", ""));
             var msg = MailHelper.CreateSingleEmail(fromAddress, toAddress, subject, text, html);
@@ -78,7 +75,7 @@ public class EmailService : IEmailService
     {
         try
         {
-            var client = new SendGridClient(_emailSettings.Value.SendGridKey);
+            var client = new SendGridClient(emailSettings.Value.SendGridKey);
             var fromEmailAddress = new EmailAddress(fromEmail.Replace(" ", ""), fromName);
             var toEmail = new EmailAddress(to.Replace(" ", ""));
             var msg = MailHelper.CreateSingleEmail(fromEmailAddress, toEmail, subject, text, html);
@@ -91,9 +88,12 @@ public class EmailService : IEmailService
                 throw new Exception($"Status: {response.StatusCode}");
             }
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            throw new Exception("Failed to send email message", ex);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            throw new Exception("Failed to send email message", e);
         }
         finally
         {

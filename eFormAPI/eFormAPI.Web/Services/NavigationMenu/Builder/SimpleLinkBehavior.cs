@@ -43,11 +43,11 @@ public class SimpleLinkBehavior : AbstractBehavior
     {
         menuItem.Name = MenuItemModel.Name;
         menuItem.MenuTemplateId = MenuItemModel.RelatedTemplateItemId.Value; // value must be
-        menuItem.E2EId = _dbContext.MenuTemplates.Single(x => x.Id == MenuItemModel.RelatedTemplateItemId).E2EId;
-        menuItem.ParentId = _parentId;
+        menuItem.E2EId = DbContext.MenuTemplates.Single(x => x.Id == MenuItemModel.RelatedTemplateItemId).E2EId;
+        menuItem.ParentId = ParentId;
 
-        _dbContext.MenuItems.Add(menuItem);
-        _dbContext.SaveChanges();
+        DbContext.MenuItems.Add(menuItem);
+        DbContext.SaveChanges();
 
         //Set translation for menu item
         SetTranslations(menuItem.Id);
@@ -60,8 +60,8 @@ public class SimpleLinkBehavior : AbstractBehavior
                 MenuItemId = menuItem.Id
             };
 
-            _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
-            _dbContext.SaveChanges();
+            DbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
+            DbContext.SaveChanges();
         }
     }
 }

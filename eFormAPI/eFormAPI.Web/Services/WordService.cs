@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Text;
+using Sentry;
 
 namespace eFormAPI.Web.Services;
 
@@ -38,45 +39,37 @@ using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Infrastructure.Models.ReportEformCase;
 using Microting.eForm.Dto;
-using System.Diagnostics;
 
-public class WordService : IWordService
+public class WordService(
+    ILogger<WordService> logger,
+    ILocalizationService localizationService,
+    IEFormCoreService coreHelper)
+    : IWordService
 {
-    private readonly ILogger<WordService> _logger;
-    private readonly ILocalizationService _localizationService;
-    private readonly IEFormCoreService _coreHelper;
     private bool _s3Enabled;
-    private bool _swiftEnabled;
     //private readonly BaseDbContext _dbContext;
 
-    public WordService(
-        ILogger<WordService> logger,
-        ILocalizationService localizationService,
-        IEFormCoreService coreHelper/*,
-            BaseDbContext dbContext*/)
-    {
-        _logger = logger;
-        _localizationService = localizationService;
-        _coreHelper = coreHelper;
-        //_dbContext = dbContext;
-    }
+    /*,
+            BaseDbContext dbContext*/
+    //_dbContext = dbContext;
 
     public async Task<OperationDataResult<Stream>> GenerateWordDashboard(EFormCasesReportModel reportModel)
     {
         try
         {
             // get core
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             //var headerImageName = _dbContext.ConfigurationValues
             //    .Single(x => x.Id == "HeaderSettings:MainText").Value;
 
             _s3Enabled = core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true";
-            _swiftEnabled = core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true";
             // Read html and template
             var resourceString = "eFormAPI.Web.Resources.Templates.WordExport.page.html";
             var assembly = Assembly.GetExecutingAssembly();
             var resourceStream = assembly.GetManifestResourceStream(resourceString);
-            using var reader = new StreamReader(resourceStream ?? throw new InvalidOperationException($"{nameof(resourceStream)} is null"));
+            using var reader = new StreamReader(resourceStream ??
+                                                throw new InvalidOperationException(
+                                                    $"{nameof(resourceStream)} is null"));
             var html = await reader.ReadToEndAsync();
 
             resourceString = "eFormAPI.Web.Resources.Templates.WordExport.file.docx";
@@ -85,6 +78,7 @@ public class WordService : IWordService
             {
                 throw new InvalidOperationException($"{nameof(docxFileResourceStream)} is null");
             }
+
             var docxFileStream = new MemoryStream();
             await docxFileResourceStream.CopyToAsync(docxFileStream);
             var basePicturePath = await core.GetSdkSetting(Settings.fileLocationPicture);
@@ -100,13 +94,16 @@ public class WordService : IWordService
             {
                 itemsHtml.Append(@"<p style='font-size:24px;text-align:center;color:#fff;'>Enter</p>");
             }
+
             //itemsHtml += $@"<p style='font-size:24px;text-align:center;'>{header}</p>";
             //itemsHtml += $@"<p style='font-size:20px;text-align:center;'>{subHeader}</p>";
-            if(reportModel.FromDate != null && reportModel.ToDate != null)
+            if (reportModel.FromDate != null && reportModel.ToDate != null)
             {
-                itemsHtml.Append($@"<p style='font-size:15px;text-align:center;'>{_localizationService.GetString("ReportPeriod")}: "
-                                 + $@"{reportModel.FromDate} - {reportModel.ToDate}</p>");
+                itemsHtml.Append(
+                    $@"<p style='font-size:15px;text-align:center;'>{localizationService.GetString("ReportPeriod")}: "
+                    + $@"{reportModel.FromDate} - {reportModel.ToDate}</p>");
             }
+
             //if (!string.IsNullOrEmpty(headerImageName) && headerImageName != "../../../assets/images/logo.png")
             //{
             //    itemsHtml = await InsertImage(headerImageName, itemsHtml, 150, 150, core, basePicturePath);
@@ -114,37 +111,43 @@ public class WordService : IWordService
             itemsHtml.Append(@"</p>");
             itemsHtml.Append(@"<div style='page-break-before:always;'>");
 
-            if(reportModel.TextHeaders != null)
+            if (reportModel.TextHeaders != null)
             {
                 if (!string.IsNullOrEmpty(reportModel.TextHeaders.Header1))
                 {
-                    itemsHtml.Append($@"<p style='font-size:16pt;color:#2e74b5;'>{reportModel.TextHeaders.Header1}</p>");
+                    itemsHtml.Append(
+                        $@"<p style='font-size:16pt;color:#2e74b5;'>{reportModel.TextHeaders.Header1}</p>");
                 }
 
 
                 if (!string.IsNullOrEmpty(reportModel.TextHeaders.Header2))
                 {
-                    itemsHtml.Append($@"<p style='font-size:13pt;color:#2e74b5;'>{reportModel.TextHeaders.Header2}</p>");
+                    itemsHtml.Append(
+                        $@"<p style='font-size:13pt;color:#2e74b5;'>{reportModel.TextHeaders.Header2}</p>");
                 }
 
 
                 if (!string.IsNullOrEmpty(reportModel.TextHeaders.Header3))
                 {
-                    itemsHtml.Append($@"<p style='font-size:12pt;color:#1f4d78;'>{reportModel.TextHeaders.Header3}</p>");
+                    itemsHtml.Append(
+                        $@"<p style='font-size:12pt;color:#1f4d78;'>{reportModel.TextHeaders.Header3}</p>");
                 }
 
 
                 if (!string.IsNullOrEmpty(reportModel.TextHeaders.Header4))
                 {
-                    itemsHtml.Append($@"<p style='font-size:11pt;font-style:normal;'>{reportModel.TextHeaders.Header4}</p>");
+                    itemsHtml.Append(
+                        $@"<p style='font-size:11pt;font-style:normal;'>{reportModel.TextHeaders.Header4}</p>");
                 }
 
 
                 if (!string.IsNullOrEmpty(reportModel.TextHeaders.Header5))
                 {
-                    itemsHtml.Append($@"<p style='font-size:10pt;font-style:normal;'>{reportModel.TextHeaders.Header5}</p>");
+                    itemsHtml.Append(
+                        $@"<p style='font-size:10pt;font-style:normal;'>{reportModel.TextHeaders.Header5}</p>");
                 }
             }
+
             foreach (var description in reportModel.DescriptionBlocks)
             {
                 itemsHtml.Append($@"<p>{description}</p>");
@@ -159,9 +162,9 @@ public class WordService : IWordService
 
             // Table header
             itemsHtml.Append(@"<tr style=""background-color:#f5f5f5;font-weight:bold"">");
-            itemsHtml.Append($@"<td>{_localizationService.GetString("CaseId")}</td>");
-            itemsHtml.Append($@"<td>{_localizationService.GetString("CreatedAt")}</td>");
-            itemsHtml.Append($@"<td>{_localizationService.GetString("DoneBy")}</td>");
+            itemsHtml.Append($@"<td>{localizationService.GetString("CaseId")}</td>");
+            itemsHtml.Append($@"<td>{localizationService.GetString("CreatedAt")}</td>");
+            itemsHtml.Append($@"<td>{localizationService.GetString("DoneBy")}</td>");
             //itemsHtml += $@"<td>{_localizationService.GetString("ItemName")}</td>";
 
             foreach (var itemHeader in reportModel.ItemHeaders)
@@ -190,7 +193,8 @@ public class WordService : IWordService
                         if (dataModelCaseField == "unchecked")
                         {
                             itemsHtml.Append($@"<td></td>");
-                        } else
+                        }
+                        else
                         {
                             itemsHtml.Append($@"<td>{dataModelCaseField}</td>");
                         }
@@ -214,7 +218,7 @@ public class WordService : IWordService
             // pictures
             foreach (var (key, value) in reportModel.ImageNames)
             {
-                itemsHtml.Append($@"<p>{_localizationService.GetString("Picture")}: {key[1]}</p>");
+                itemsHtml.Append($@"<p>{localizationService.GetString("Picture")}: {key[1]}</p>");
 
                 itemsHtml = await InsertImage(value[0], itemsHtml, 700, 650, core, basePicturePath);
 
@@ -236,15 +240,17 @@ public class WordService : IWordService
         }
         catch (Exception e)
         {
-            Trace.TraceError(e.Message);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<Stream>(
                 false,
-                _localizationService.GetString("ErrorWhileCreatingWordFile"));
+                localizationService.GetString("ErrorWhileCreatingWordFile"));
         }
     }
 
-    private async Task<StringBuilder> InsertImage(string imageName, StringBuilder itemsHtml, int imageSize, int imageWidth, Core core, string basePicturePath)
+    private async Task<StringBuilder> InsertImage(string imageName, StringBuilder itemsHtml, int imageSize,
+        int imageWidth, Core core, string basePicturePath)
     {
         var filePath = Path.Combine(basePicturePath, imageName);
         Stream stream;
@@ -275,7 +281,8 @@ public class WordService : IWordService
             image.Crop((uint)newWidth, (uint)newHeight);
 
             var base64String = image.ToBase64();
-            itemsHtml.Append($@"<p><img src=""data:image/png;base64,{base64String}"" width=""{imageWidth}px"" alt="""" /></p>");
+            itemsHtml.Append(
+                $@"<p><img src=""data:image/png;base64,{base64String}"" width=""{imageWidth}px"" alt="""" /></p>");
         }
 
         await stream.DisposeAsync();

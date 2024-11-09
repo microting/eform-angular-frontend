@@ -38,24 +38,17 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 [Authorize]
 [Route("api/device-users")]
-public class DeviceUsersController : Controller
+public class DeviceUsersController(
+    IDeviceUsersService deviceUsersService,
+    ILocalizationService localizationService)
+    : Controller
 {
-    private readonly IDeviceUsersService _deviceUsersService;
-    private readonly ILocalizationService _localizationService;
-
-    public DeviceUsersController(IDeviceUsersService deviceUsersService,
-        ILocalizationService localizationService)
-    {
-        _deviceUsersService = deviceUsersService;
-        _localizationService = localizationService;
-    }
-
     [HttpPost]
     [Route("index")]
     [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Read)]
     public async Task<OperationDataResult<List<DeviceUser>>> Index([FromBody] DeviceUserSearchRequestModel requestModel)
     {
-        return await _deviceUsersService.Index(requestModel);
+        return await deviceUsersService.Index(requestModel);
     }
 
     [HttpPut]
@@ -65,9 +58,9 @@ public class DeviceUsersController : Controller
     {
         if (!ModelState.IsValid)
             return new OperationDataResult<int>(false,
-                _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+                localizationService.GetString("DeviceUserCouldNotBeCreated"));
 
-        return await _deviceUsersService.Create(deviceUserModel);
+        return await deviceUsersService.Create(deviceUserModel);
     }
 
     [HttpGet]
@@ -75,7 +68,7 @@ public class DeviceUsersController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
     public async Task<OperationDataResult<DeviceUser>> Read(int id)
     {
-        return await _deviceUsersService.Read(id);
+        return await deviceUsersService.Read(id);
     }
 
     [HttpPost]
@@ -83,7 +76,7 @@ public class DeviceUsersController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
     public async Task<OperationResult> Update([FromBody] DeviceUserModel deviceUserModel)
     {
-        return await _deviceUsersService.Update(deviceUserModel);
+        return await deviceUsersService.Update(deviceUserModel);
     }
 
     [HttpDelete]
@@ -91,7 +84,7 @@ public class DeviceUsersController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Delete)]
     public async Task<OperationResult> Delete(int id)
     {
-        return await _deviceUsersService.Delete(id);
+        return await deviceUsersService.Delete(id);
     }
 
     [HttpGet]
@@ -99,6 +92,6 @@ public class DeviceUsersController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
     public async Task<OperationDataResult<List<CommonDictionaryModel>>> ReadCommonDictionary()
     {
-        return await _deviceUsersService.ReadCommonDictionary();
+        return await deviceUsersService.ReadCommonDictionary();
     }
 }

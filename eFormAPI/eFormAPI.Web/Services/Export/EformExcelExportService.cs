@@ -185,7 +185,9 @@ public class EformExcelExportService(
         }
         catch (Exception e)
         {
-            logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<Stream>(
                 false,
                 localizationService.GetString("ErrorWhileExportingExcelFile"));
@@ -216,10 +218,11 @@ public class EformExcelExportService(
             sb.Append(("Total Errors in file: " + count));
             throw new Exception(sb.ToString());
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            SentrySdk.CaptureException(ex);
-            logger.LogError(ex.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
         }
     }
 

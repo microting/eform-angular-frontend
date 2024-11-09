@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using Microting.eForm.Infrastructure.Constants;
@@ -40,32 +42,19 @@ using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-public class TagsService : ITagsService
+public class TagsService(
+    ILogger<TagsService> logger,
+    IEFormCoreService coreHelper,
+    ILocalizationService localizationService,
+    IUserService userService,
+    BaseDbContext dbContext)
+    : ITagsService
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly IUserService _userService;
-    private readonly BaseDbContext _dbContext;
-    private readonly ILogger<TagsService> _logger;
-    private readonly ILocalizationService _localizationService;
-
-    public TagsService(ILogger<TagsService> logger,
-        IEFormCoreService coreHelper,
-        ILocalizationService localizationService,
-        IUserService userService,
-        BaseDbContext dbContext)
-    {
-        _logger = logger;
-        _coreHelper = coreHelper;
-        _localizationService = localizationService;
-        _userService = userService;
-        _dbContext = dbContext;
-    }
-
     public async Task<OperationDataResult<List<CommonDictionaryModel>>> Index()
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var tags = await core.GetAllTags(false);
             var model = new List<CommonDictionaryModel>(tags.Count);
             tags.ForEach(tag =>
@@ -80,9 +69,11 @@ public class TagsService : ITagsService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<CommonDictionaryModel>>(false,
-                _localizationService.GetString("ErrorWhileObtainTags"));
+                localizationService.GetString("ErrorWhileObtainTags"));
         }
     }
 
@@ -90,16 +81,18 @@ public class TagsService : ITagsService
     {
         try
         {
-            var result = await _coreHelper.GetCore().Result.TagCreate(tagName);
+            var result = await coreHelper.GetCore().Result.TagCreate(tagName);
             return result > 0
-                ? new OperationResult(true, _localizationService.GetStringWithFormat("TagParamCreatedSuccessfully", tagName))
-                : new OperationResult(false, _localizationService.GetStringWithFormat("ErrorWhileCreatingParamTag", tagName));
+                ? new OperationResult(true, localizationService.GetStringWithFormat("TagParamCreatedSuccessfully", tagName))
+                : new OperationResult(false, localizationService.GetStringWithFormat("ErrorWhileCreatingParamTag", tagName));
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetStringWithFormat("ErrorWhileCreatingParamTag", tagName));
+                localizationService.GetStringWithFormat("ErrorWhileCreatingParamTag", tagName));
         }
     }
 
@@ -107,15 +100,17 @@ public class TagsService : ITagsService
     {
         try
         {
-            var result = await _coreHelper.GetCore().Result.TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
+            var result = await coreHelper.GetCore().Result.TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
             return result
-                ? new OperationResult(true, _localizationService.GetString("TemplateTagUpdatedSuccessfully"))
-                : new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingTemplateTags"));
+                ? new OperationResult(true, localizationService.GetString("TemplateTagUpdatedSuccessfully"))
+                : new OperationResult(false, localizationService.GetString("ErrorWhileUpdatingTemplateTags"));
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingTemplateTags"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileUpdatingTemplateTags"));
         }
     }
 
@@ -123,7 +118,7 @@ public class TagsService : ITagsService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var tagFromDb = await sdkDbContext.Tags
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -134,7 +129,7 @@ public class TagsService : ITagsService
             {
                 return new OperationResult(
                     false,
-                    _localizationService.GetString("TagNotFound"));
+                    localizationService.GetString("TagNotFound"));
             }
 
             var taggingFromDb = await sdkDbContext.Taggings
@@ -159,19 +154,21 @@ public class TagsService : ITagsService
 
             await tagFromDb.Delete(sdkDbContext);
 
-            var savedTags = await _dbContext.SavedTags.Where(x => x.TagId == tagId).FirstOrDefaultAsync();
+            var savedTags = await dbContext.SavedTags.Where(x => x.TagId == tagId).FirstOrDefaultAsync();
             if (savedTags != null)
             {
-                _dbContext.SavedTags.Remove(savedTags);
-                await _dbContext.SaveChangesAsync();
+                dbContext.SavedTags.Remove(savedTags);
+                await dbContext.SaveChangesAsync();
             }
 
-            return new OperationResult(true, _localizationService.GetString("TagDeletedSuccessfully"));
+            return new OperationResult(true, localizationService.GetString("TagDeletedSuccessfully"));
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileDeletingTag"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileDeletingTag"));
         }
     }
 
@@ -179,8 +176,8 @@ public class TagsService : ITagsService
     {
         try
         {
-            var savedTags = await _dbContext.SavedTags
-                .Where(x => x.EformUserId == _userService.UserId)
+            var savedTags = await dbContext.SavedTags
+                .Where(x => x.EformUserId == userService.UserId)
                 .Select(x => new SavedTagModel()
                 {
                     TagId = x.TagId,
@@ -194,9 +191,11 @@ public class TagsService : ITagsService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<SavedTagsModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingSavedTags"));
+                localizationService.GetString("ErrorWhileObtainingSavedTags"));
         }
     }
 
@@ -205,23 +204,25 @@ public class TagsService : ITagsService
     {
         try
         {
-            var savedTag = await _dbContext.SavedTags.FirstOrDefaultAsync(x =>
-                x.TagId == tagId && x.EformUserId == _userService.UserId);
+            var savedTag = await dbContext.SavedTags.FirstOrDefaultAsync(x =>
+                x.TagId == tagId && x.EformUserId == userService.UserId);
             if (savedTag == null)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("SavedTagNotFound"));
+                    localizationService.GetString("SavedTagNotFound"));
             }
 
-            _dbContext.Remove(savedTag);
-            await _dbContext.SaveChangesAsync();
+            dbContext.Remove(savedTag);
+            await dbContext.SaveChangesAsync();
             return new OperationResult(true);
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileRemovingSavedTags"));
+                localizationService.GetString("ErrorWhileRemovingSavedTags"));
         }
     }
 
@@ -232,37 +233,39 @@ public class TagsService : ITagsService
             if (requestModel.TagId <= 0)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("InvalidTagId"));
+                    localizationService.GetString("InvalidTagId"));
             }
 
             if (string.IsNullOrEmpty(requestModel.TagName))
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("InvalidTagName"));
+                    localizationService.GetString("InvalidTagName"));
             }
 
-            if (_dbContext.SavedTags.Any(x =>
-                    x.EformUserId == _userService.UserId && x.TagId == requestModel.TagId))
+            if (dbContext.SavedTags.Any(x =>
+                    x.EformUserId == userService.UserId && x.TagId == requestModel.TagId))
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("TagAlreadySaved"));
+                    localizationService.GetString("TagAlreadySaved"));
             }
 
             var savedTag = new SavedTag()
             {
-                EformUserId = _userService.UserId,
+                EformUserId = userService.UserId,
                 TagId = requestModel.TagId,
                 TagName = requestModel.TagName
             };
-            _dbContext.SavedTags.Add(savedTag);
-            await _dbContext.SaveChangesAsync();
+            dbContext.SavedTags.Add(savedTag);
+            await dbContext.SaveChangesAsync();
             return new OperationResult(true);
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileSavingTag"));
+                localizationService.GetString("ErrorWhileSavingTag"));
         }
     }
 
@@ -271,7 +274,7 @@ public class TagsService : ITagsService
 
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var tagFromDb = await sdkDbContext.Tags
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -282,13 +285,13 @@ public class TagsService : ITagsService
             {
                 return new OperationResult(
                     false,
-                    _localizationService.GetString("TagNotFound"));
+                    localizationService.GetString("TagNotFound"));
             }
 
             tagFromDb.Name = commonTagModel.Name;
             await tagFromDb.Update(sdkDbContext);
 
-            var savedTagFromDb = await _dbContext.SavedTags
+            var savedTagFromDb = await dbContext.SavedTags
                 //.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .Where(x => x.TagId == commonTagModel.Id)
                 .FirstOrDefaultAsync();
@@ -296,16 +299,18 @@ public class TagsService : ITagsService
             if (savedTagFromDb != null)
             {
                 savedTagFromDb.TagName = commonTagModel.Name;
-                savedTagFromDb.UpdatedByUserId = _userService.UserId;
-                await _dbContext.SaveChangesAsync();
+                savedTagFromDb.UpdatedByUserId = userService.UserId;
+                await dbContext.SaveChangesAsync();
             }
 
-            return new OperationResult(true, _localizationService.GetString("TagUpdatedSuccessfully"));
+            return new OperationResult(true, localizationService.GetString("TagUpdatedSuccessfully"));
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdateTag"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileUpdateTag"));
         }
     }
 }

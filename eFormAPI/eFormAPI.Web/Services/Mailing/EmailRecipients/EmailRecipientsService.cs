@@ -21,6 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using Sentry;
+
 namespace eFormAPI.Web.Services.Mailing.EmailRecipients;
 
 using System;
@@ -39,32 +42,20 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-public class EmailRecipientsService : IEmailRecipientsService
+public class EmailRecipientsService(
+    ILogger<EmailRecipientsService> logger,
+    IUserService userService,
+    ILocalizationService localizationService,
+    BaseDbContext dbContext)
+    : IEmailRecipientsService
 {
-    private readonly ILogger<EmailRecipientsService> _logger;
-    private readonly IUserService _userService;
-    private readonly ILocalizationService _localizationService;
-    private readonly BaseDbContext _dbContext;
-
-    public EmailRecipientsService(
-        ILogger<EmailRecipientsService> logger,
-        IUserService userService,
-        ILocalizationService localizationService,
-        BaseDbContext dbContext)
-    {
-        _logger = logger;
-        _userService = userService;
-        _localizationService = localizationService;
-        _dbContext = dbContext;
-    }
-
     public async Task<OperationDataResult<Paged<EmailRecipientModel>>> GetEmailRecipients(
         EmailRecipientsRequestModel requestModel)
     {
         try
         {
             var emailRecipientsModel = new Paged<EmailRecipientModel>();
-            var emailRecipientsQuery = _dbContext.EmailRecipients
+            var emailRecipientsQuery = dbContext.EmailRecipients
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .AsQueryable();
 
@@ -96,10 +87,11 @@ public class EmailRecipientsService : IEmailRecipientsService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<Paged<EmailRecipientModel>>(false,
-                _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
+                localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
         }
     }
 
@@ -110,7 +102,7 @@ public class EmailRecipientsService : IEmailRecipientsService
 //                {
         try
         {
-            var emailRecipient = await _dbContext.EmailRecipients
+            var emailRecipient = await dbContext.EmailRecipients
                 .Include(x => x.TagRecipients)
                 .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
 
@@ -118,13 +110,13 @@ public class EmailRecipientsService : IEmailRecipientsService
             {
                 //transaction.Rollback();
                 return new OperationResult(false,
-                    _localizationService.GetString("EmailRecipientNotFound"));
+                    localizationService.GetString("EmailRecipientNotFound"));
             }
 
             emailRecipient.Name = requestModel.Name;
             emailRecipient.Email = requestModel.Email.Replace(" ", "");
             emailRecipient.UpdatedAt = DateTime.UtcNow;
-            emailRecipient.UpdatedByUserId = _userService.UserId;
+            emailRecipient.UpdatedByUserId = userService.UserId;
 
             // Tags
             var tagIds = emailRecipient.TagRecipients
@@ -143,7 +135,7 @@ public class EmailRecipientsService : IEmailRecipientsService
 
             foreach (var tagRecipient in tagsForDelete)
             {
-                _dbContext.EmailTagRecipients.Remove(tagRecipient);
+                dbContext.EmailTagRecipients.Remove(tagRecipient);
             }
 
             foreach (var tagId in tagsForCreate)
@@ -151,8 +143,8 @@ public class EmailRecipientsService : IEmailRecipientsService
 
                 var emailTagRecipient = new EmailTagRecipient
                 {
-                    CreatedByUserId = _userService.UserId,
-                    UpdatedByUserId = _userService.UserId,
+                    CreatedByUserId = userService.UserId,
+                    UpdatedByUserId = userService.UserId,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     EmailRecipientId = emailRecipient.Id,
@@ -160,23 +152,23 @@ public class EmailRecipientsService : IEmailRecipientsService
                     Version = 1
                 };
 
-                await _dbContext.EmailTagRecipients.AddAsync(emailTagRecipient);
+                await dbContext.EmailTagRecipients.AddAsync(emailTagRecipient);
             }
 
-            _dbContext.EmailRecipients.Update(emailRecipient);
-            await _dbContext.SaveChangesAsync();
+            dbContext.EmailRecipients.Update(emailRecipient);
+            await dbContext.SaveChangesAsync();
 
             //transaction.Commit();
             return new OperationResult(true,
-                _localizationService.GetString("EmailRecipientUpdatedSuccessfully"));
+                localizationService.GetString("EmailRecipientUpdatedSuccessfully"));
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
-            //transaction.Rollback();
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileUpdatingEmailRecipient"));
+                localizationService.GetString("ErrorWhileUpdatingEmailRecipient"));
         }
         //}
     }
@@ -185,27 +177,28 @@ public class EmailRecipientsService : IEmailRecipientsService
     {
         try
         {
-            var emailRecipient = await _dbContext.EmailRecipients
+            var emailRecipient = await dbContext.EmailRecipients
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (emailRecipient == null)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("EmailRecipientNotFound"));
+                    localizationService.GetString("EmailRecipientNotFound"));
             }
 
-            _dbContext.EmailRecipients.Remove(emailRecipient);
-            await _dbContext.SaveChangesAsync();
+            dbContext.EmailRecipients.Remove(emailRecipient);
+            await dbContext.SaveChangesAsync();
 
             return new OperationResult(true,
-                _localizationService.GetString("EmailRecipientRemovedSuccessfully"));
+                localizationService.GetString("EmailRecipientRemovedSuccessfully"));
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileRemovingEmailRecipient"));
+                localizationService.GetString("ErrorWhileRemovingEmailRecipient"));
         }
     }
 
@@ -230,13 +223,13 @@ public class EmailRecipientsService : IEmailRecipientsService
                     {
                         Name = tagName,
                         CreatedAt = DateTime.UtcNow,
-                        CreatedByUserId = _userService.UserId,
+                        CreatedByUserId = userService.UserId,
                         UpdatedAt = DateTime.UtcNow,
-                        UpdatedByUserId = _userService.UserId,
+                        UpdatedByUserId = userService.UserId,
                         Version = 1
                     };
-                    await _dbContext.EmailTags.AddAsync(emailTag);
-                    await _dbContext.SaveChangesAsync();
+                    await dbContext.EmailTags.AddAsync(emailTag);
+                    await dbContext.SaveChangesAsync();
                     tagIds.Add(emailTag.Id);
                 }
             }
@@ -252,9 +245,9 @@ public class EmailRecipientsService : IEmailRecipientsService
                     Name = recipientCreateModel.Name,
                     Email = recipientCreateModel.Email.Replace(" ", ""),
                     CreatedAt = DateTime.UtcNow,
-                    CreatedByUserId = _userService.UserId,
+                    CreatedByUserId = userService.UserId,
                     UpdatedAt = DateTime.UtcNow,
-                    UpdatedByUserId = _userService.UserId,
+                    UpdatedByUserId = userService.UserId,
                     Version = 1,
                     TagRecipients = new List<EmailTagRecipient>()
                 };
@@ -266,30 +259,30 @@ public class EmailRecipientsService : IEmailRecipientsService
                         new EmailTagRecipient
                         {
                             CreatedAt = DateTime.UtcNow,
-                            CreatedByUserId = _userService.UserId,
+                            CreatedByUserId = userService.UserId,
                             UpdatedAt = DateTime.UtcNow,
-                            UpdatedByUserId = _userService.UserId,
+                            UpdatedByUserId = userService.UserId,
                             Version = 1,
                             EmailTagId = tagId
                         });
                 }
 
-                await _dbContext.EmailRecipients.AddAsync(emailRecipient);
+                await dbContext.EmailRecipients.AddAsync(emailRecipient);
             }
 
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
 
             //transaction.Commit();
             return new OperationResult(true,
-                _localizationService.GetString("EmailRecipientCreatedSuccessfully"));
+                localizationService.GetString("EmailRecipientCreatedSuccessfully"));
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
-            //transaction.Commit();
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileCreatingEmailRecipient"));
+                localizationService.GetString("ErrorWhileCreatingEmailRecipient"));
         }
         //}
     }
@@ -298,7 +291,7 @@ public class EmailRecipientsService : IEmailRecipientsService
     {
         try
         {
-            var emailTags = await _dbContext.EmailTags
+            var emailTags = await dbContext.EmailTags
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .AsNoTracking()
                 .Select(x => new EmailRecipientTagCommonModel
@@ -308,7 +301,7 @@ public class EmailRecipientsService : IEmailRecipientsService
                     IsTag = true
                 }).ToListAsync();
 
-            var emailRecipients = await _dbContext.EmailRecipients
+            var emailRecipients = await dbContext.EmailRecipients
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .AsNoTracking()
                 .Select(x => new EmailRecipientTagCommonModel
@@ -328,10 +321,11 @@ public class EmailRecipientsService : IEmailRecipientsService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<EmailRecipientTagCommonModel[]>(false,
-                _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
+                localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
         }
     }
 
@@ -339,7 +333,7 @@ public class EmailRecipientsService : IEmailRecipientsService
     {
         try
         {
-            var emailRecipients = await _dbContext.EmailRecipients
+            var emailRecipients = await dbContext.EmailRecipients
                 .AsNoTracking()
                 .Select(x => new CommonDictionaryModel
                 {
@@ -353,10 +347,11 @@ public class EmailRecipientsService : IEmailRecipientsService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<CommonDictionaryModel[]>(false,
-                _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
+                localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
         }
     }
 

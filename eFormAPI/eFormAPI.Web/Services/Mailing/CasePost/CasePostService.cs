@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Sentry;
+
 namespace eFormAPI.Web.Services.Mailing.CasePost;
 
 using System;
@@ -50,43 +52,25 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application.CasePosts;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
-public class CasePostService : ICasePostService, ICasePostBaseService
+public class CasePostService(
+    ILogger<CasePostService> logger,
+    IUserService userService,
+    ILocalizationService localizationService,
+    IEFormCoreService coreService,
+    BaseDbContext context,
+    IEmailService emailService,
+    IDbOptions<EmailSettings> emailSettings)
+    : ICasePostService, ICasePostBaseService
 {
-    private readonly ILogger<CasePostService> _logger;
-    private readonly IUserService _userService;
-    private readonly ILocalizationService _localizationService;
-    private readonly IEFormCoreService _coreService;
-    private readonly IEmailService _emailService;
-    private readonly BaseDbContext _dbContext;
-    private readonly IDbOptions<EmailSettings> _emailSettings;
-
-    public CasePostService(
-        ILogger<CasePostService> logger,
-        IUserService userService,
-        ILocalizationService localizationService,
-        IEFormCoreService coreService,
-        BaseDbContext dbContext,
-        IEmailService emailService,
-        IDbOptions<EmailSettings> emailSettings)
-    {
-        _logger = logger;
-        _userService = userService;
-        _coreService = coreService;
-        _localizationService = localizationService;
-        _dbContext = dbContext;
-        _emailService = emailService;
-        _emailSettings = emailSettings;
-    }
-
     public async Task<OperationDataResult<CasePostsListModel>> GetAllPosts(
         CasePostsRequest requestModel)
     {
         try
         {
-            var core = await _coreService.GetCore();
-            var language = await _userService.GetCurrentUserLanguage();
+            var core = await coreService.GetCore();
+            var language = await userService.GetCurrentUserLanguage();
             var casePostsListModel = new CasePostsListModel();
-            var casePostsQuery = _dbContext.CasePosts.AsQueryable();
+            var casePostsQuery = context.CasePosts.AsQueryable();
 
             casePostsQuery = QueryHelper.AddSortToQuery(casePostsQuery, requestModel.Sort, requestModel.IsSortDsc);
 
@@ -122,7 +106,7 @@ public class CasePostService : ICasePostService, ICasePostBaseService
                     Subject = x.Subject,
                     Text = x.Text,
                     Date = x.PostDate,
-                    From = _dbContext.Users
+                    From = context.Users
                         .Where(y => y.Id == x.CreatedByUserId)
                         .Select(y => $"{y.FirstName} {y.LastName}")
                         .FirstOrDefault(),
@@ -145,7 +129,7 @@ public class CasePostService : ICasePostService, ICasePostBaseService
             {
                 return new OperationDataResult<CasePostsListModel>(
                     false,
-                    _localizationService.GetString("CaseNotFound"));
+                    localizationService.GetString("CaseNotFound"));
             }
 
             if (caseEntity.Site?.MicrotingUid != null)
@@ -261,10 +245,11 @@ public class CasePostService : ICasePostService, ICasePostBaseService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<CasePostsListModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingPosts"));
+                localizationService.GetString("ErrorWhileObtainingPosts"));
         }
     }
 
@@ -272,7 +257,7 @@ public class CasePostService : ICasePostService, ICasePostBaseService
     {
         try
         {
-            var casePost = await _dbContext.CasePosts
+            var casePost = await context.CasePosts
                 .Where(x => x.Id == id)
                 .Select(x => new CasePostViewModel
                 {
@@ -293,17 +278,18 @@ public class CasePostService : ICasePostService, ICasePostBaseService
             {
                 return new OperationDataResult<CasePostViewModel>(
                     false,
-                    _localizationService.GetString("PostNotFound"));
+                    localizationService.GetString("PostNotFound"));
             }
 
             return new OperationDataResult<CasePostViewModel>(true, casePost);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<CasePostViewModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingPostViewInfo"));
+                localizationService.GetString("ErrorWhileObtainingPostViewInfo"));
         }
     }
 
@@ -314,11 +300,11 @@ public class CasePostService : ICasePostService, ICasePostBaseService
         //                {
         try
         {
-            if (string.IsNullOrEmpty(_emailSettings.Value.SendGridKey))
+            if (string.IsNullOrEmpty(emailSettings.Value.SendGridKey))
             {
                 //transaction.Rollback();
                 return new OperationResult(false,
-                    _localizationService.GetString("SendGridKeyShouldBeAddedToSettings"));
+                    localizationService.GetString("SendGridKeyShouldBeAddedToSettings"));
             }
 
             var casePost = new CasePost
@@ -326,8 +312,8 @@ public class CasePostService : ICasePostService, ICasePostBaseService
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 Version = 1,
-                CreatedByUserId = _userService.UserId,
-                UpdatedByUserId = _userService.UserId,
+                CreatedByUserId = userService.UserId,
+                UpdatedByUserId = userService.UserId,
                 AttachPdf = requestModel.AttachReport,
                 LinkToCase = requestModel.AttachLinkToCase,
                 Text = requestModel.Text,
@@ -337,8 +323,8 @@ public class CasePostService : ICasePostService, ICasePostBaseService
                 WorkflowState = Constants.WorkflowStates.Created
             };
 
-            await _dbContext.CasePosts.AddAsync(casePost);
-            await _dbContext.SaveChangesAsync();
+            await context.CasePosts.AddAsync(casePost);
+            await context.SaveChangesAsync();
 
             foreach (var tagsId in requestModel.ToTagsIds)
             {
@@ -347,14 +333,14 @@ public class CasePostService : ICasePostService, ICasePostBaseService
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Version = 1,
-                    CreatedByUserId = _userService.UserId,
-                    UpdatedByUserId = _userService.UserId,
+                    CreatedByUserId = userService.UserId,
+                    UpdatedByUserId = userService.UserId,
                     CasePostId = casePost.Id,
                     EmailTagId = tagsId,
                     WorkflowState = Constants.WorkflowStates.Created
                 };
 
-                await _dbContext.CasePostEmailTags.AddAsync(casePostEmailTag);
+                await context.CasePostEmailTags.AddAsync(casePostEmailTag);
             }
 
             foreach (var recipientId in requestModel.ToRecipientsIds)
@@ -364,22 +350,22 @@ public class CasePostService : ICasePostService, ICasePostBaseService
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Version = 1,
-                    CreatedByUserId = _userService.UserId,
-                    UpdatedByUserId = _userService.UserId,
+                    CreatedByUserId = userService.UserId,
+                    UpdatedByUserId = userService.UserId,
                     CasePostId = casePost.Id,
                     EmailRecipientId = recipientId,
                     WorkflowState = Constants.WorkflowStates.Created
                 };
 
-                await _dbContext.CasePostEmailRecipients.AddAsync(casePostEmailRecipient);
+                await context.CasePostEmailRecipients.AddAsync(casePostEmailRecipient);
             }
 
-            await _dbContext.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             // Send email
-            var currentUser = await _userService.GetCurrentUserAsync();
+            var currentUser = await userService.GetCurrentUserAsync();
 
-            var casePostRecipientResult = await _dbContext.CasePosts
+            var casePostRecipientResult = await context.CasePosts
                 .AsNoTracking()
                 .Where(x => x.Id == casePost.Id)
                 .Select(x => new
@@ -393,7 +379,7 @@ public class CasePostService : ICasePostService, ICasePostBaseService
                 })
                 .FirstOrDefaultAsync();
 
-            var emailTagsRecipients = await _dbContext.EmailTagRecipients
+            var emailTagsRecipients = await context.EmailTagRecipients
                 .Where(x => casePostRecipientResult.EmailTags.Contains(x.EmailTagId))
                 .Select(x => x.EmailRecipient)
                 .ToListAsync();
@@ -402,14 +388,14 @@ public class CasePostService : ICasePostService, ICasePostBaseService
             recipients.AddRange(casePostRecipientResult.Recipients);
             recipients.AddRange(emailTagsRecipients);
 
-            var core = await _coreService.GetCore();
+            var core = await coreService.GetCore();
             var caseDto = await core.CaseLookupCaseId(casePost.CaseId);
             if (caseDto?.MicrotingUId == null || caseDto.CheckUId == null)
             {
                 //transaction.Rollback();
                 throw new InvalidOperationException("caseDto not found");
             }
-            var language = await _userService.GetCurrentUserLanguage();
+            var language = await userService.GetCurrentUserLanguage();
             var replyElement = await core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId, language).ConfigureAwait(false);
             var assembly = Assembly.GetExecutingAssembly();
             var assemblyName = assembly.GetName().Name;
@@ -466,7 +452,7 @@ public class CasePostService : ICasePostService, ICasePostBaseService
                             throw new Exception("Error while creating report file");
                         }
 
-                        await _emailService.SendFileAsync(
+                        await emailService.SendFileAsync(
                             EformEmailConst.FromEmail,
                             $"{currentUser.FirstName} {currentUser.LastName}",
                             string.IsNullOrEmpty(casePost.Subject) ? "-" : casePost.Subject,
@@ -477,7 +463,7 @@ public class CasePostService : ICasePostService, ICasePostBaseService
                     catch (Exception e)
                     {
                         Console.WriteLine(e);
-                        await _emailService.SendAsync(
+                        await emailService.SendAsync(
                             EformEmailConst.FromEmail,
                             $"{currentUser.FirstName} {currentUser.LastName}",
                             string.IsNullOrEmpty(casePost.Subject) ? "-" : casePost.Subject,
@@ -487,7 +473,7 @@ public class CasePostService : ICasePostService, ICasePostBaseService
                 }
                 else
                 {
-                    await _emailService.SendAsync(
+                    await emailService.SendAsync(
                         EformEmailConst.FromEmail,
                         $"{currentUser.FirstName} {currentUser.LastName}",
                         string.IsNullOrEmpty(casePost.Subject) ? "-" : casePost.Subject,
@@ -499,15 +485,15 @@ public class CasePostService : ICasePostService, ICasePostBaseService
             //transaction.Commit();
             return new OperationResult(
                 true,
-                _localizationService.GetString("PostCreatedSuccessfully"));
+                localizationService.GetString("PostCreatedSuccessfully"));
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
-            //transaction.Rollback();
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileCreatingPost"));
+                localizationService.GetString("ErrorWhileCreatingPost"));
         }
         //}
     }
@@ -517,7 +503,7 @@ public class CasePostService : ICasePostService, ICasePostBaseService
         try
         {
             var casePostsListModel = new CasePostsCommonModel();
-            var casePostsQuery = _dbContext.CasePosts
+            var casePostsQuery = context.CasePosts
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .AsQueryable();
 
@@ -529,7 +515,7 @@ public class CasePostService : ICasePostService, ICasePostBaseService
 
             if (requestModel.TemplateId != null)
             {
-                var core = await _coreService.GetCore();
+                var core = await coreService.GetCore();
                 await using var microtingDbContext = core.DbContextHelper.GetDbContext();
                 var casesIds = await microtingDbContext.Cases
                     .Where(x => x.CheckListId == requestModel.TemplateId)
@@ -568,11 +554,12 @@ public class CasePostService : ICasePostService, ICasePostBaseService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<CasePostsCommonModel>(
                 false,
-                _localizationService.GetString("ErrorWhileObtainingPosts"));
+                localizationService.GetString("ErrorWhileObtainingPosts"));
         }
     }
 }

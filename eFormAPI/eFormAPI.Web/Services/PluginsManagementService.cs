@@ -1,4 +1,6 @@
 
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using Microsoft.EntityFrameworkCore;
@@ -24,37 +26,22 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 using Newtonsoft.Json;
 
-public class PluginsManagementService : IPluginsManagementService
+public class PluginsManagementService(
+    BaseDbContext dbContext,
+    ILocalizationService localizationService,
+    ILogger<PluginsManagementService> logger,
+    IHttpClientFactory httpClientFactory,
+    IServiceProvider serviceProvider,
+    IDbOptions<PluginStoreSettings> options)
+    : IPluginsManagementService
 {
-    private readonly BaseDbContext _dbContext;
-    private readonly ILocalizationService _localizationService;
-    private readonly ILogger<PluginsManagementService> _logger;
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly IDbOptions<PluginStoreSettings> _options;
-    private readonly IServiceProvider _serviceProvider;
-
-    public PluginsManagementService(BaseDbContext dbContext,
-        ILocalizationService localizationService,
-        ILogger<PluginsManagementService> logger,
-        IHttpClientFactory httpClientFactory,
-        IServiceProvider serviceProvider,
-        IDbOptions<PluginStoreSettings> options)
-    {
-        _dbContext = dbContext;
-        _localizationService = localizationService;
-        _logger = logger;
-        _httpClientFactory = httpClientFactory;
-        _options = options;
-        _serviceProvider = serviceProvider;
-    }
-
     public async Task<OperationDataResult<InstalledPluginsModel>> GetInstalledPlugins(
         InstalledPluginsRequestModel requestModel)
     {
         try
         {
             var result = new InstalledPluginsModel();
-            var eformPlugins = await _dbContext.EformPlugins.ToListAsync();
+            var eformPlugins = await dbContext.EformPlugins.ToListAsync();
             var loadedPlugins = PluginHelper.GetAllPlugins();
 
             foreach (var eformPlugin in eformPlugins)
@@ -81,9 +68,11 @@ public class PluginsManagementService : IPluginsManagementService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<InstalledPluginsModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingPlugins"));
+                localizationService.GetString("ErrorWhileObtainingPlugins"));
         }
     }
 
@@ -91,20 +80,20 @@ public class PluginsManagementService : IPluginsManagementService
     {
         try
         {
-            var eformPlugin = await _dbContext.EformPlugins
+            var eformPlugin = await dbContext.EformPlugins
                 .FirstOrDefaultAsync(x => x.Id == updateModel.Id
                                           && x.PluginId == updateModel.PluginId);
 
             if (eformPlugin == null)
             {
                 return new OperationDataResult<InstalledPluginsModel>(false,
-                    _localizationService.GetString("PluginNotFound"));
+                    localizationService.GetString("PluginNotFound"));
             }
 
             eformPlugin.Status = (int)updateModel.Status;
-            _dbContext.EformPlugins.Update(eformPlugin);
+            dbContext.EformPlugins.Update(eformPlugin);
 
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
 
             if (updateModel.Status == PluginStatus.Enabled)
             {
@@ -121,26 +110,28 @@ public class PluginsManagementService : IPluginsManagementService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<InstalledPluginsModel>(false,
-                _localizationService.GetString("ErrorWhileUpdatingPluginSettings"));
+                localizationService.GetString("ErrorWhileUpdatingPluginSettings"));
         }
     }
 
     public async Task<OperationResult> RemoveNavigationMenuOfPlugin(string pluginId)
     {
         // check exists eformPlugin
-        var eformPlugin = await _dbContext.EformPlugins
+        var eformPlugin = await dbContext.EformPlugins
             .FirstOrDefaultAsync(x => x.PluginId == pluginId);
 
         if (eformPlugin == null)
         {
             return new OperationDataResult<InstalledPluginsModel>(false,
-                _localizationService.GetString("PluginNotFound"));
+                localizationService.GetString("PluginNotFound"));
         }
 
         // get all menu templates that related with plugin id
-        var menuTemplates = await _dbContext.MenuTemplates
+        var menuTemplates = await dbContext.MenuTemplates
             .Where(x => x.EformPluginId == eformPlugin.Id)
             .ToListAsync();
 
@@ -150,11 +141,13 @@ public class PluginsManagementService : IPluginsManagementService
 
         foreach (var menuTemplate in menuTemplates)
         {
-            permissionIds.AddRange(_dbContext.MenuTemplatePermissions.Where(x => x.MenuTemplateId == menuTemplate.Id).Select(x => x.PermissionId).Distinct());
-            permissionTypeIds.AddRange(_dbContext.MenuTemplatePermissions.Include(x => x.Permission).Where(x => x.MenuTemplateId == menuTemplate.Id).Select(x => x.Permission.PermissionTypeId).Distinct());
+            permissionIds.AddRange(dbContext.MenuTemplatePermissions.Where(x => x.MenuTemplateId == menuTemplate.Id)
+                .Select(x => x.PermissionId).Distinct());
+            permissionTypeIds.AddRange(dbContext.MenuTemplatePermissions.Include(x => x.Permission)
+                .Where(x => x.MenuTemplateId == menuTemplate.Id).Select(x => x.Permission.PermissionTypeId).Distinct());
 
             // check menu items that has menu templates ids in order to set null foreign key
-            var menuItems = await _dbContext.MenuItems
+            var menuItems = await dbContext.MenuItems
                 .Where(x => x.MenuTemplateId == menuTemplate.Id)
                 .ToListAsync();
 
@@ -163,31 +156,31 @@ public class PluginsManagementService : IPluginsManagementService
                 menuItem.MenuTemplateId = null;
             }
 
-            _dbContext.MenuItems.UpdateRange(menuItems);
+            dbContext.MenuItems.UpdateRange(menuItems);
         }
 
-        _dbContext.RemoveRange(menuTemplates);
-        _dbContext.SaveChanges();
+        dbContext.RemoveRange(menuTemplates);
+        dbContext.SaveChanges();
 
         // delete all permissions connected with removed menu templates
         foreach (var permissionId in permissionIds)
         {
-            var permission = _dbContext.Permissions.Single(x => x.Id == permissionId);
+            var permission = dbContext.Permissions.Single(x => x.Id == permissionId);
 
-            _dbContext.Permissions.Remove(permission);
-            _dbContext.SaveChanges();
+            dbContext.Permissions.Remove(permission);
+            dbContext.SaveChanges();
         }
 
         // delete all permission types connected with removed permissions
         foreach (var permissionTypeId in permissionTypeIds)
         {
-            var permissions = _dbContext.Permissions.Where(x => x.PermissionTypeId == permissionTypeId);
+            var permissions = dbContext.Permissions.Where(x => x.PermissionTypeId == permissionTypeId);
 
             if (!permissions.Any())
             {
-                var permissionType = _dbContext.PermissionTypes.Single(x => x.Id == permissionTypeId);
-                _dbContext.PermissionTypes.Remove(permissionType);
-                _dbContext.SaveChanges();
+                var permissionType = dbContext.PermissionTypes.Single(x => x.Id == permissionTypeId);
+                dbContext.PermissionTypes.Remove(permissionType);
+                dbContext.SaveChanges();
             }
         }
 
@@ -196,13 +189,13 @@ public class PluginsManagementService : IPluginsManagementService
 
     public async Task<OperationResult> LoadNavigationMenuDuringStartProgram(string pluginId)
     {
-        var eformPlugin = await _dbContext.EformPlugins
+        var eformPlugin = await dbContext.EformPlugins
             .FirstOrDefaultAsync(x => x.PluginId == pluginId);
 
         if (eformPlugin == null)
         {
             return new OperationDataResult<InstalledPluginsModel>(false,
-                _localizationService.GetString("PluginNotFound"));
+                localizationService.GetString("PluginNotFound"));
         }
 
         var plugin = Program.EnabledPlugins.FirstOrDefault(x => x.PluginId == pluginId);
@@ -210,10 +203,10 @@ public class PluginsManagementService : IPluginsManagementService
         if (plugin == null)
         {
             return new OperationDataResult<InstalledPluginsModel>(false,
-                _localizationService.GetString("PluginNotFound"));
+                localizationService.GetString("PluginNotFound"));
         }
 
-        var pluginMenu = plugin.GetNavigationMenu(_serviceProvider).OrderBy(x => x.Position).ToList();
+        var pluginMenu = plugin.GetNavigationMenu(serviceProvider).OrderBy(x => x.Position).ToList();
 
         // get all menu templates from plugin
         var menuTemplatesFromPlugin = new List<PluginMenuTemplateModel>();
@@ -237,7 +230,7 @@ public class PluginsManagementService : IPluginsManagementService
             }
         }
 
-        var menuTemplatesFromDatabase = _dbContext.MenuTemplates
+        var menuTemplatesFromDatabase = dbContext.MenuTemplates
             .Where(x => x.EformPluginId == eformPlugin.Id)
             .ToList();
 
@@ -262,8 +255,8 @@ public class PluginsManagementService : IPluginsManagementService
                             EformPluginId = eformPlugin.Id
                         };
 
-                        _dbContext.MenuTemplates.Add(menuTemplateToDatabase);
-                        _dbContext.SaveChanges();
+                        dbContext.MenuTemplates.Add(menuTemplateToDatabase);
+                        dbContext.SaveChanges();
 
                         foreach (var translation in menuTemplateFromPlugin.Translations)
                         {
@@ -275,8 +268,8 @@ public class PluginsManagementService : IPluginsManagementService
                                 MenuTemplateId = menuTemplateToDatabase.Id
                             };
 
-                            _dbContext.MenuTemplateTranslations.Add(menuTemplateTranslation);
-                            _dbContext.SaveChanges();
+                            dbContext.MenuTemplateTranslations.Add(menuTemplateTranslation);
+                            dbContext.SaveChanges();
                         }
 
                         if (menuTemplateFromPlugin.Permissions.Any())
@@ -285,7 +278,9 @@ public class PluginsManagementService : IPluginsManagementService
                             {
                                 PermissionType newPermissionType = null;
 
-                                var permissionType = _dbContext.PermissionTypes.FirstOrDefault(x => x.Name == itemPermission.PermissionTypeName);
+                                var permissionType =
+                                    dbContext.PermissionTypes.FirstOrDefault(x =>
+                                        x.Name == itemPermission.PermissionTypeName);
 
                                 if (permissionType == null)
                                 {
@@ -294,8 +289,8 @@ public class PluginsManagementService : IPluginsManagementService
                                         Name = itemPermission.PermissionTypeName
                                     };
 
-                                    _dbContext.PermissionTypes.Add(newPermissionType);
-                                    _dbContext.SaveChanges();
+                                    dbContext.PermissionTypes.Add(newPermissionType);
+                                    dbContext.SaveChanges();
                                 }
 
                                 var permission = new Permission
@@ -307,8 +302,8 @@ public class PluginsManagementService : IPluginsManagementService
                                         : newPermissionType.Id
                                 };
 
-                                _dbContext.Permissions.Add(permission);
-                                _dbContext.SaveChanges();
+                                dbContext.Permissions.Add(permission);
+                                dbContext.SaveChanges();
 
                                 var menuTemplatePermission = new MenuTemplatePermission
                                 {
@@ -316,8 +311,8 @@ public class PluginsManagementService : IPluginsManagementService
                                     PermissionId = permission.Id
                                 };
 
-                                _dbContext.MenuTemplatePermissions.Add(menuTemplatePermission);
-                                _dbContext.SaveChanges();
+                                dbContext.MenuTemplatePermissions.Add(menuTemplatePermission);
+                                dbContext.SaveChanges();
                             }
                         }
                     }
@@ -327,7 +322,7 @@ public class PluginsManagementService : IPluginsManagementService
         else
         {
             // Load to database all navigation menu from plugin by id
-            var pluginMenuItemsLoader = new PluginMenuItemsLoader(_dbContext, pluginId);
+            var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, pluginId);
 
             pluginMenuItemsLoader.Load(pluginMenu);
         }
@@ -337,13 +332,13 @@ public class PluginsManagementService : IPluginsManagementService
 
     public async Task<OperationResult> LoadNavigationMenuOfPlugin(string pluginId)
     {
-        var eformPlugin = await _dbContext.EformPlugins
+        var eformPlugin = await dbContext.EformPlugins
             .FirstOrDefaultAsync(x => x.PluginId == pluginId);
 
         if (eformPlugin == null)
         {
             return new OperationDataResult<InstalledPluginsModel>(false,
-                _localizationService.GetString("PluginNotFound"));
+                localizationService.GetString("PluginNotFound"));
         }
 
         var plugin = Program.DisabledPlugins.FirstOrDefault(x => x.PluginId == pluginId);
@@ -351,25 +346,26 @@ public class PluginsManagementService : IPluginsManagementService
         if (plugin == null)
         {
             return new OperationDataResult<InstalledPluginsModel>(false,
-                _localizationService.GetString("PluginNotFound"));
+                localizationService.GetString("PluginNotFound"));
         }
 
-        var pluginMenu = plugin.GetNavigationMenu(_serviceProvider).OrderBy(x => x.Position).ToList();
+        var pluginMenu = plugin.GetNavigationMenu(serviceProvider).OrderBy(x => x.Position).ToList();
 
         // Load to database all navigation menu from plugin by id
-        var pluginMenuItemsLoader = new PluginMenuItemsLoader(_dbContext, pluginId);
+        var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, pluginId);
 
         pluginMenuItemsLoader.Load(pluginMenu);
 
         return new OperationResult(true);
     }
 
-    public async Task<OperationDataResult<PluginsStoreModel>> GetMarketplacePlugins(MarketplacePluginsRequestModel model)
+    public async Task<OperationDataResult<PluginsStoreModel>> GetMarketplacePlugins(
+        MarketplacePluginsRequestModel model)
     {
         try
         {
-            var url = _options.Value.PluginListLink;
-            var httpClient = _httpClientFactory.CreateClient();
+            var url = options.Value.PluginListLink;
+            var httpClient = httpClientFactory.CreateClient();
             var stream = httpClient.GetStreamAsync(url).Result;
             string json;
             using (var reader = new StreamReader(stream))
@@ -392,9 +388,11 @@ public class PluginsManagementService : IPluginsManagementService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<PluginsStoreModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingPluginList"));
+                localizationService.GetString("ErrorWhileObtainingPluginList"));
         }
     }
 
@@ -414,11 +412,11 @@ public class PluginsManagementService : IPluginsManagementService
             if (plugin == null)
             {
                 return new OperationDataResult<PluginsStoreModel>(false,
-                    _localizationService.GetString("PluginNotFound"));
+                    localizationService.GetString("PluginNotFound"));
             }
 
             var link = plugin.InstallScript;
-            var httpClient = _httpClientFactory.CreateClient();
+            var httpClient = httpClientFactory.CreateClient();
             var stream = httpClient.GetStreamAsync(link).Result;
             string scriptContent;
             using (var reader = new StreamReader(stream))
@@ -431,7 +429,8 @@ public class PluginsManagementService : IPluginsManagementService
                 throw new Exception("Error while obtaining install script file");
             }
 
-            const string pluginInstallDirectory = "/var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/PluginInstallDaemonQueue";
+            const string pluginInstallDirectory =
+                "/var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/PluginInstallDaemonQueue";
             var filePath = Path.Combine(pluginInstallDirectory, "install.sh");
             using (var file = new StreamWriter(filePath))
             {
@@ -447,9 +446,11 @@ public class PluginsManagementService : IPluginsManagementService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<PluginsStoreModel>(false,
-                _localizationService.GetString("ErrorWhileExecutingPluginInstall"));
+                localizationService.GetString("ErrorWhileExecutingPluginInstall"));
         }
     }
 
@@ -471,6 +472,7 @@ public class PluginsManagementService : IPluginsManagementService
 
             proc.WaitForExit();
         }
+
         return result;
     }
 }

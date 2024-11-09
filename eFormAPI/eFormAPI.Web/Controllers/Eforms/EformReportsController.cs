@@ -33,30 +33,23 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Authorize]
-public class EformReportsController : Controller
+public class EformReportsController(
+    IEformReportsService eformReportsService,
+    IEformPermissionsService permissionsService)
+    : Controller
 {
-    private readonly IEformReportsService _eformReportsService;
-    private readonly IEformPermissionsService _permissionsService;
-
-    public EformReportsController(IEformReportsService eformReportsService,
-        IEformPermissionsService permissionsService)
-    {
-        _eformReportsService = eformReportsService;
-        _permissionsService = permissionsService;
-    }
-
     [HttpGet]
     [Route("api/templates/{templateId}/report")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ReadJasperReport)]
     public async Task<IActionResult> GetEformReport(int templateId)
     {
-        if (!await _permissionsService.CheckEform(templateId,
+        if (!await permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.EformsClaims.ReadJasperReport))
         {
             return Forbid();
         }
 
-        return Ok(await _eformReportsService.GetEformReport(templateId));
+        return Ok(await eformReportsService.GetEformReport(templateId));
     }
 
     [HttpPut]
@@ -64,12 +57,12 @@ public class EformReportsController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateJasperReport)]
     public async Task<IActionResult> UpdateEformReport([FromBody] EformReportFullModel eformReportModel)
     {
-        if (!await _permissionsService.CheckEform(eformReportModel.EformReport.TemplateId,
+        if (!await permissionsService.CheckEform(eformReportModel.EformReport.TemplateId,
                 AuthConsts.EformClaims.EformsClaims.UpdateJasperReport))
         {
             return Forbid();
         }
 
-        return Ok(await _eformReportsService.UpdateEformReport(eformReportModel));
+        return Ok(await eformReportsService.UpdateEformReport(eformReportModel));
     }
 }

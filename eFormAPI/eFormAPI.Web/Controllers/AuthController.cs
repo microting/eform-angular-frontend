@@ -36,40 +36,32 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 namespace eFormAPI.Web.Controllers;
 
 [Authorize]
-public class AuthController : Controller
+public class AuthController(
+    IAuthService authService,
+    ILocalizationService localizationService)
+    : Controller
 {
-    private readonly IAuthService _authService;
-    private readonly ILocalizationService _localizationService;
-
-    public AuthController(
-        IAuthService authService,
-        ILocalizationService localizationService)
-    {
-        _authService = authService;
-        _localizationService = localizationService;
-    }
-
     [HttpPost]
     [AllowAnonymous]
     [Route("api/auth/token")]
     public async Task<OperationResult> AuthenticateUser(LoginModel model)
     {
         Log.LogEvent("api/auth/token called");
-        return await _authService.AuthenticateUser(model);
+        return await authService.AuthenticateUser(model);
     }
 
     [HttpGet]
     [Route("api/auth/token/refresh")]
     public async Task<OperationResult> RefreshToken()
     {
-        return await _authService.RefreshToken();
+        return await authService.RefreshToken();
     }
 
     [HttpGet]
     [Route("api/auth/logout")]
     public OperationResult Logout()
     {
-        return _authService.LogOut();
+        return authService.LogOut();
     }
 
     [HttpGet]
@@ -78,7 +70,7 @@ public class AuthController : Controller
     {
         try
         {
-            return Ok(_authService.GetCurrentUserClaims());
+            return Ok(authService.GetCurrentUserClaims());
 
         }
         catch (Exception e)
@@ -93,28 +85,28 @@ public class AuthController : Controller
     [Route("api/auth/two-factor-info")]
     public OperationDataResult<bool> TwoFactorAuthForceInfo()
     {
-        return _authService.TwoFactorAuthForceInfo();
+        return authService.TwoFactorAuthForceInfo();
     }
 
     [HttpGet]
     [Route("api/auth/google-auth-info")]
     public async Task<OperationDataResult<GoogleAuthInfoModel>> GetGoogleAuthenticatorInfo()
     {
-        return await _authService.GetGoogleAuthenticatorInfo();
+        return await authService.GetGoogleAuthenticatorInfo();
     }
 
     [HttpPost]
     [Route("api/auth/google-auth-info")]
     public async Task<OperationResult> UpdateGoogleAuthenticatorInfo([FromBody] GoogleAuthInfoModel requestModel)
     {
-        return await _authService.UpdateGoogleAuthenticatorInfo(requestModel);
+        return await authService.UpdateGoogleAuthenticatorInfo(requestModel);
     }
 
     [HttpDelete]
     [Route("api/auth/google-auth-info")]
     public async Task<OperationResult> DeleteGoogleAuthenticatorInfo()
     {
-        return await _authService.DeleteGoogleAuthenticatorInfo();
+        return await authService.DeleteGoogleAuthenticatorInfo();
     }
 
     /// <summary>
@@ -131,9 +123,9 @@ public class AuthController : Controller
         if (!ModelState.IsValid)
         {
             return new OperationDataResult<GoogleAuthenticatorModel>(false,
-                _localizationService.GetString("InvalidUserNameOrPassword"));
+                localizationService.GetString("InvalidUserNameOrPassword"));
         }
 
-        return await _authService.GetGoogleAuthenticator(loginModel);
+        return await authService.GetGoogleAuthenticator(loginModel);
     }
 }

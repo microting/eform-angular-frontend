@@ -37,21 +37,14 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 namespace eFormAPI.Web.Controllers;
 
 [Authorize]
-public class AccountController : Controller
+public class AccountController(IAccountService accountService) : Controller
 {
-    private readonly IAccountService _accountService;
-
-    public AccountController(IAccountService accountService)
-    {
-        _accountService = accountService;
-    }
-
     // GET api/account/user-info
     [HttpGet]
     [Route("api/account/user-info")]
     public Task<UserInfoViewModel> GetUserInfo()
     {
-        return _accountService.GetUserInfo();
+        return accountService.GetUserInfo();
     }
 
     // GET api/account/user-settings
@@ -59,7 +52,7 @@ public class AccountController : Controller
     [Route("api/account/user-settings")]
     public Task<OperationDataResult<UserSettingsModel>> GetUserSettings()
     {
-        return _accountService.GetUserSettings();
+        return accountService.GetUserSettings();
     }
 
     // POST api/account/user-settings
@@ -67,7 +60,7 @@ public class AccountController : Controller
     [Route("api/account/user-settings")]
     public Task<OperationResult> UpdateUserSettings([FromBody] UserSettingsModel model)
     {
-        return _accountService.UpdateUserSettings(model);
+        return accountService.UpdateUserSettings(model);
     }
 
 
@@ -81,7 +74,7 @@ public class AccountController : Controller
             return new OperationResult(false, string.Join(" ", allErrors));
         }
 
-        return await _accountService.ChangePassword(model);
+        return await accountService.ChangePassword(model);
     }
 
     [HttpPost]
@@ -94,7 +87,7 @@ public class AccountController : Controller
             return new OperationResult(false, string.Join(" ", allErrors));
         }
 
-        return await _accountService.AdminChangePassword(model);
+        return await accountService.AdminChangePassword(model);
     }
 
     // POST: /account/forgot-password
@@ -105,7 +98,7 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            return await _accountService.ForgotPassword(model);
+            return await accountService.ForgotPassword(model);
         }
 
         return new OperationResult(false);
@@ -117,7 +110,7 @@ public class AccountController : Controller
     [Route("api/account/reset-admin-password")]
     public async Task<OperationResult> ResetAdminPassword(string code)
     {
-        return await _accountService.ResetAdminPassword(code);
+        return await accountService.ResetAdminPassword(code);
     }
 
     // POST: /account/reset-password
@@ -132,7 +125,7 @@ public class AccountController : Controller
             return new OperationResult(false, string.Join(" ", allErrors));
         }
 
-        return await _accountService.ResetPassword(model);
+        return await accountService.ResetPassword(model);
     }
 
     [HttpGet]
@@ -140,6 +133,6 @@ public class AccountController : Controller
     [AllowAnonymous]
     public OperationDataResult<TimeZonesModel> AllTimeZones()
     {
-        return _accountService.AllTimeZones();
+        return accountService.AllTimeZones();
     }
 }

@@ -27,13 +27,9 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 
-public abstract class AbstractLoader
+public abstract class AbstractLoader(BaseDbContext dbContext)
 {
-    private readonly BaseDbContext _dbContext;
-    public AbstractLoader(BaseDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly BaseDbContext _dbContext = dbContext;
 
     public abstract bool IsExecute(PluginMenuItemModel menuItem);
 

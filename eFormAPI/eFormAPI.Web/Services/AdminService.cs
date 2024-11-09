@@ -24,6 +24,7 @@ SOFTWARE.
 
 using Microting.eForm.Infrastructure.Constants;
 using Microting.eForm.Infrastructure.Data.Entities;
+using Sentry;
 
 namespace eFormAPI.Web.Services;
 
@@ -46,39 +47,23 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-public class AdminService : IAdminService
+public class AdminService(
+    ILogger<AdminService> logger,
+    UserManager<EformUser> userManager,
+    IDbOptions<ApplicationSettings> appSettings,
+    IUserService userService,
+    ILocalizationService localizationService,
+    BaseDbContext dbContext,
+    IEFormCoreService coreHelper)
+    : IAdminService
 {
-    private readonly IUserService _userService;
-    private readonly IDbOptions<ApplicationSettings> _appSettings;
-    private readonly ILogger<AdminService> _logger;
-    private readonly ILocalizationService _localizationService;
-    private readonly BaseDbContext _dbContext;
-    private readonly UserManager<EformUser> _userManager;
-    private readonly IEFormCoreService _coreHelper;
-
-    public AdminService(ILogger<AdminService> logger,
-        UserManager<EformUser> userManager,
-        IDbOptions<ApplicationSettings> appSettings,
-        IUserService userService,
-        ILocalizationService localizationService,
-        BaseDbContext dbContext, IEFormCoreService coreHelper)
-    {
-        _logger = logger;
-        _userManager = userManager;
-        _appSettings = appSettings;
-        _userService = userService;
-        _localizationService = localizationService;
-        _dbContext = dbContext;
-        _coreHelper = coreHelper;
-    }
-
     public async Task<OperationDataResult<Paged<UserInfoViewModel>>> Index(UserInfoRequest requestModel)
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
-            var userQuery = _userManager.Users
+            var userQuery = userManager.Users
                 .AsNoTracking()
                 .AsQueryable();
 
@@ -189,11 +174,13 @@ public class AdminService : IAdminService
                 Entities = userResult
             });
         }
-        catch (Exception exception)
+        catch (Exception e)
         {
-            _logger.LogError(exception.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<Paged<UserInfoViewModel>>(false,
-                _localizationService.GetString("ErrorWhileObtainUsers"));
+                localizationService.GetString("ErrorWhileObtainUsers"));
         }
     }
 
@@ -201,42 +188,42 @@ public class AdminService : IAdminService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             if (userRegisterModel.Role != EformRole.Admin && userRegisterModel.Role != EformRole.User)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("RoleNotFound"));
+                    localizationService.GetString("RoleNotFound"));
             }
 
             if (string.IsNullOrEmpty(userRegisterModel.Password) || userRegisterModel.Password.Length < 6)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("PasswordIsNotValid"));
+                    localizationService.GetString("PasswordIsNotValid"));
             }
 
-            var userResult = await _userManager.FindByNameAsync(userRegisterModel.Email);
+            var userResult = await userManager.FindByNameAsync(userRegisterModel.Email);
 
             if (userResult != null)
             {
                 return new OperationResult(false,
-                    _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.Email));
+                    localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.Email));
             }
 
-            var dbUser = await _dbContext.Users
+            var dbUser = await dbContext.Users
                 .SingleOrDefaultAsync(x => x.FirstName == userRegisterModel.FirstName
                                            && x.LastName == userRegisterModel.LastName);
 
             if (dbUser != null)
             {
                 return new OperationResult(false,
-                    _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.FirstName + " " + userRegisterModel.LastName));
+                    localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.FirstName + " " + userRegisterModel.LastName));
             }
 
-            if (userRegisterModel.Role != EformRole.Admin && !_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId))
+            if (userRegisterModel.Role != EformRole.Admin && !dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId))
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("SecurityGroupNotFound"));
+                    localizationService.GetString("SecurityGroupNotFound"));
             }
 
             var user = new EformUser
@@ -253,14 +240,14 @@ public class AdminService : IAdminService
                 Formats = "de-DE"
             };
 
-            var result = await _userManager.CreateAsync(user, userRegisterModel.Password);
+            var result = await userManager.CreateAsync(user, userRegisterModel.Password);
             if (!result.Succeeded)
             {
                 return new OperationResult(false, string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
             }
 
             // change role
-            await _userManager.AddToRoleAsync(user, userRegisterModel.Role);
+            await userManager.AddToRoleAsync(user, userRegisterModel.Role);
             // add to group
             if (userRegisterModel.GroupId > 0 && user.Id > 0 && userRegisterModel.Role != EformRole.Admin)
             {
@@ -269,8 +256,8 @@ public class AdminService : IAdminService
                     SecurityGroupId = (int)userRegisterModel.GroupId,
                     EformUserId = user.Id
                 };
-                _dbContext.SecurityGroupUsers.Add(securityGroupUser);
-                await _dbContext.SaveChangesAsync();
+                dbContext.SecurityGroupUsers.Add(securityGroupUser);
+                await dbContext.SaveChangesAsync();
             }
 
             var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userRegisterModel.FirstName.Trim() + " " + userRegisterModel.LastName.Trim()
@@ -296,12 +283,14 @@ public class AdminService : IAdminService
             }
 
             return new OperationResult(true,
-                _localizationService.GetStringWithFormat("UserUserNameWasCreated", user.UserName));
+                localizationService.GetStringWithFormat("UserUserNameWasCreated", user.UserName));
         }
-        catch (Exception exception)
+        catch (Exception e)
         {
-            _logger.LogError(exception.Message);
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUser"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileCreatingUser"));
         }
     }
 
@@ -309,13 +298,13 @@ public class AdminService : IAdminService
     {
         try
         {
-            var user = await _userService.GetByIdAsync(userId);
+            var user = await userService.GetByIdAsync(userId);
             if (user == null)
             {
                 return new OperationDataResult<UserRegisterModel>(false,
-                    _localizationService.GetString("UserNotFound"));
+                    localizationService.GetString("UserNotFound"));
             }
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
                                                                           && x.WorkflowState != Constants.WorkflowStates.Removed);
@@ -330,21 +319,23 @@ public class AdminService : IAdminService
                 IsDeviceUser = site != null
             };
             // get role
-            var roles = await _userManager.GetRolesAsync(user);
+            var roles = await userManager.GetRolesAsync(user);
             result.Role = roles.FirstOrDefault();
             // get user group
-            result.GroupId = await _dbContext.SecurityGroupUsers
+            result.GroupId = await dbContext.SecurityGroupUsers
                 .Where(x => x.EformUserId == user.Id)
                 .Select(x => x.SecurityGroup.Id)
                 .FirstOrDefaultAsync();
 
             return new OperationDataResult<UserRegisterModel>(true, result);
         }
-        catch (Exception exception)
+        catch (Exception e)
         {
-            _logger.LogError(exception.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<UserRegisterModel>(false,
-                _localizationService.GetString("ErrorWhileObtainUsers"));
+                localizationService.GetString("ErrorWhileObtainUsers"));
         }
     }
 
@@ -352,43 +343,43 @@ public class AdminService : IAdminService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
-            if (userRegisterModel.Id == 1 && _userService.UserId != 1)
+            if (userRegisterModel.Id == 1 && userService.UserId != 1)
             {
-                return new OperationResult(false, _localizationService.GetString("CantEditPrimaryAdminUser"));
+                return new OperationResult(false, localizationService.GetString("CantEditPrimaryAdminUser"));
             }
 
             if (userRegisterModel.Role != EformRole.Admin && userRegisterModel.Role != EformRole.User)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("RoleNotFound"));
+                    localizationService.GetString("RoleNotFound"));
             }
 
-            var user = await _userService.GetByIdAsync(userRegisterModel.Id);
+            var user = await userService.GetByIdAsync(userRegisterModel.Id);
             if (user == null)
             {
                 return new OperationResult(false,
-                    _localizationService.GetStringWithFormat("UserNotFoundUserName", userRegisterModel.UserName));
+                    localizationService.GetStringWithFormat("UserNotFoundUserName", userRegisterModel.UserName));
             }
 
             // get role
-            var roles = await _userManager.GetRolesAsync(user);
+            var roles = await userManager.GetRolesAsync(user);
             if (user.Id == 1 && roles.Any(x => x != userRegisterModel.Role))
             {
-                return new OperationResult(false, _localizationService.GetString("CantUpdateRoleForPrimaryAdminUser"));
+                return new OperationResult(false, localizationService.GetString("CantUpdateRoleForPrimaryAdminUser"));
             }
 
-            var isAdmin = await _userManager.IsInRoleAsync(user, EformRole.Admin);
-            if (!_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId) && !isAdmin && userRegisterModel.Role != EformRole.Admin)
+            var isAdmin = await userManager.IsInRoleAsync(user, EformRole.Admin);
+            if (!dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId) && !isAdmin && userRegisterModel.Role != EformRole.Admin)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("SecurityGroupNotFound"));
+                    localizationService.GetString("SecurityGroupNotFound"));
             }
 
-            if (isAdmin && _userService.Role != EformRole.Admin)
+            if (isAdmin && userService.Role != EformRole.Admin)
             {
-                return new OperationResult(false, _localizationService.GetString("YouCantViewChangeOrDeleteAdmin"));
+                return new OperationResult(false, localizationService.GetString("YouCantViewChangeOrDeleteAdmin"));
             }
 
             var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
@@ -407,7 +398,7 @@ public class AdminService : IAdminService
             user.FirstName = userRegisterModel.FirstName;
             user.LastName = userRegisterModel.LastName;
 
-            var result = await _userManager.UpdateAsync(user);
+            var result = await userManager.UpdateAsync(user);
             if (!result.Succeeded)
             {
                 return new OperationResult(false, string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
@@ -416,28 +407,28 @@ public class AdminService : IAdminService
             // password
             if (!string.IsNullOrEmpty(userRegisterModel.Password) && userRegisterModel.Password != " ")
             {
-                await _userManager.RemovePasswordAsync(user);
-                await _userManager.AddPasswordAsync(user, userRegisterModel.Password);
+                await userManager.RemovePasswordAsync(user);
+                await userManager.AddPasswordAsync(user, userRegisterModel.Password);
             }
 
             // change role
-            if (!await _userManager.IsInRoleAsync(user, userRegisterModel.Role))
+            if (!await userManager.IsInRoleAsync(user, userRegisterModel.Role))
             {
-                var currentUserRole = await _userManager.GetRolesAsync(user);
-                await _userManager.RemoveFromRolesAsync(user, currentUserRole);
+                var currentUserRole = await userManager.GetRolesAsync(user);
+                await userManager.RemoveFromRolesAsync(user, currentUserRole);
 
-                await _userManager.AddToRoleAsync(user, userRegisterModel.Role);
+                await userManager.AddToRoleAsync(user, userRegisterModel.Role);
             }
 
             // Change group
             if (userRegisterModel.GroupId > 0 && user.Id > 0)
             {
-                var securityGroupUsers = _dbContext.SecurityGroupUsers
+                var securityGroupUsers = dbContext.SecurityGroupUsers
                     .Where(x => x.EformUserId == user.Id
                                 && x.SecurityGroupId != userRegisterModel.GroupId);
 
-                _dbContext.SecurityGroupUsers.RemoveRange(securityGroupUsers);
-                if (!_dbContext.SecurityGroupUsers.Any(x =>
+                dbContext.SecurityGroupUsers.RemoveRange(securityGroupUsers);
+                if (!dbContext.SecurityGroupUsers.Any(x =>
                         x.EformUserId == user.Id && x.SecurityGroupId == userRegisterModel.GroupId))
                 {
                     var securityGroupUser = new SecurityGroupUser()
@@ -445,32 +436,34 @@ public class AdminService : IAdminService
                         SecurityGroupId = (int)userRegisterModel.GroupId,
                         EformUserId = user.Id
                     };
-                    _dbContext.SecurityGroupUsers.Add(securityGroupUser);
+                    dbContext.SecurityGroupUsers.Add(securityGroupUser);
                 }
 
-                await _dbContext.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
             }
 
             if (userRegisterModel.Role == EformRole.Admin)
             {
-                var securityGroupUsers = await _dbContext.SecurityGroupUsers.Where(x => x.EformUserId == user.Id)
+                var securityGroupUsers = await dbContext.SecurityGroupUsers.Where(x => x.EformUserId == user.Id)
                     .ToListAsync();
 
                 if (securityGroupUsers.Any())
                 {
-                    _dbContext.SecurityGroupUsers.RemoveRange(securityGroupUsers);
+                    dbContext.SecurityGroupUsers.RemoveRange(securityGroupUsers);
 
-                    await _dbContext.SaveChangesAsync();
+                    await dbContext.SaveChangesAsync();
                 }
             }
 
             return new OperationResult(true,
-                _localizationService.GetStringWithFormat("UserUserNameWasUpdated", user.UserName));
+                localizationService.GetStringWithFormat("UserUserNameWasUpdated", user.UserName));
         }
-        catch (Exception exception)
+        catch (Exception e)
         {
-            _logger.LogError(exception.Message);
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingUser"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileUpdatingUser"));
         }
     }
 
@@ -478,23 +471,23 @@ public class AdminService : IAdminService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             if (userId == 1)
             {
-                return new OperationResult(false, _localizationService.GetString("CantDeletePrimaryAdminUser"));
+                return new OperationResult(false, localizationService.GetString("CantDeletePrimaryAdminUser"));
             }
 
-            var user = await _userService.GetByIdAsync(userId);
-            if (await _userManager.IsInRoleAsync(user, EformRole.Admin)
-                && _userService.Role != EformRole.Admin)
+            var user = await userService.GetByIdAsync(userId);
+            if (await userManager.IsInRoleAsync(user, EformRole.Admin)
+                && userService.Role != EformRole.Admin)
             {
-                return new OperationResult(false, _localizationService.GetString("YouCantViewChangeOrDeleteAdmin"));
+                return new OperationResult(false, localizationService.GetString("YouCantViewChangeOrDeleteAdmin"));
             }
 
             if (user == null)
             {
-                return new OperationResult(false, _localizationService.GetStringWithFormat("UserUserNameNotFound", userId));
+                return new OperationResult(false, localizationService.GetStringWithFormat("UserUserNameNotFound", userId));
             }
 
             var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
@@ -518,18 +511,20 @@ public class AdminService : IAdminService
                 }
             }
 
-            var result = await _userManager.DeleteAsync(user);
+            var result = await userManager.DeleteAsync(user);
             if (!result.Succeeded)
             {
                 return new OperationResult(false, string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
             }
 
-            return new OperationResult(true, _localizationService.GetStringWithFormat("UserParamWasDeleted", userId));
+            return new OperationResult(true, localizationService.GetStringWithFormat("UserParamWasDeleted", userId));
         }
-        catch (Exception exception)
+        catch (Exception e)
         {
-            _logger.LogError(exception.Message);
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileDeletingUser"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileDeletingUser"));
         }
     }
 
@@ -537,10 +532,13 @@ public class AdminService : IAdminService
     {
         try
         {
-            await _appSettings.UpdateDb((options) => { options.IsTwoFactorForced = true; }, _dbContext);
+            await appSettings.UpdateDb((options) => { options.IsTwoFactorForced = true; }, dbContext);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false);
         }
 
@@ -551,10 +549,13 @@ public class AdminService : IAdminService
     {
         try
         {
-            await _appSettings.UpdateDb((options) => { options.IsTwoFactorForced = false; }, _dbContext);
+            await appSettings.UpdateDb((options) => { options.IsTwoFactorForced = false; }, dbContext);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false);
         }
 
@@ -565,10 +566,13 @@ public class AdminService : IAdminService
     {
         try
         {
-            await _appSettings.UpdateDb((options) => { options.IsUserbackWidgetEnabled = isEnableWidget; }, _dbContext);
+            await appSettings.UpdateDb((options) => { options.IsUserbackWidgetEnabled = isEnableWidget; }, dbContext);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false);
         }
 
@@ -581,12 +585,15 @@ public class AdminService : IAdminService
     {
         try
         {
-            var userbackWidgetModel = new UserbackWidgetModel { IsUserbackWidgetEnabled = _appSettings.Value.IsUserbackWidgetEnabled, UserbackToken = _appSettings.Value.UserbackToken };
+            var userbackWidgetModel = new UserbackWidgetModel { IsUserbackWidgetEnabled = appSettings.Value.IsUserbackWidgetEnabled, UserbackToken = appSettings.Value.UserbackToken };
 
             return new OperationDataResult<UserbackWidgetModel>(true, userbackWidgetModel);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<UserbackWidgetModel>(false);
         }
     }

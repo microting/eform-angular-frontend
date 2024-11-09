@@ -44,8 +44,8 @@ public class DropdownBehavior : AbstractBehavior
         menuItem.MenuTemplateId = null; // because menuitem is dropdown
         menuItem.ParentId = null; // null is always
 
-        _dbContext.MenuItems.Add(menuItem);
-        _dbContext.SaveChanges();
+        DbContext.MenuItems.Add(menuItem);
+        DbContext.SaveChanges();
 
         //Set translation for menu item
         SetTranslations(menuItem.Id);
@@ -58,13 +58,13 @@ public class DropdownBehavior : AbstractBehavior
                 MenuItemId = menuItem.Id
             };
 
-            _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
-            _dbContext.SaveChanges();
+            DbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
+            DbContext.SaveChanges();
         }
 
         for (int i = 0; i < MenuItemModel.Children.Count; i++)
         {
-            var menuItemBuilder = new MenuItemBuilder(_dbContext, MenuItemModel.Children[i], i, menuItem.Id);
+            var menuItemBuilder = new MenuItemBuilder(DbContext, MenuItemModel.Children[i], i, menuItem.Id);
 
             menuItemBuilder.Build();
         }

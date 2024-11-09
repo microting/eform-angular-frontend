@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Sentry;
+
 namespace eFormAPI.Web.Services.Security;
 
 using Microting.eForm.Infrastructure.Constants;
@@ -40,29 +42,18 @@ using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-public class SecurityGroupService : ISecurityGroupService
+public class SecurityGroupService(
+    BaseDbContext dbContext,
+    ILogger<SecurityGroupService> logger,
+    ILocalizationService localizationService,
+    IClaimsService claimsService)
+    : ISecurityGroupService
 {
-    private readonly ILogger<SecurityGroupService> _logger;
-    private readonly IClaimsService _claimsService;
-    private readonly ILocalizationService _localizationService;
-    private readonly BaseDbContext _dbContext;
-
-    public SecurityGroupService(BaseDbContext dbContext,
-        ILogger<SecurityGroupService> logger, 
-        ILocalizationService localizationService,
-        IClaimsService claimsService)
-    {
-        _dbContext = dbContext;
-        _logger = logger;
-        _localizationService = localizationService;
-        _claimsService = claimsService;
-    }
-
     public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetSecurityGroupsDictionary()
     {
         try
         {
-            var result = await _dbContext.SecurityGroups.Select(x => new CommonDictionaryModel
+            var result = await dbContext.SecurityGroups.Select(x => new CommonDictionaryModel
                 {
                     Id = x.Id,
                     Name = x.Name
@@ -73,9 +64,11 @@ public class SecurityGroupService : ISecurityGroupService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<CommonDictionaryModel>>(false,
-                _localizationService.GetString("ErrorWhileObtainingSecurityGroups"));
+                localizationService.GetString("ErrorWhileObtainingSecurityGroups"));
         }
     }
 
@@ -85,7 +78,7 @@ public class SecurityGroupService : ISecurityGroupService
         try
         {
             var securityGroupsModel = new Paged<SecurityGroupModel>();
-            var securityGroupsQuery = _dbContext.SecurityGroups
+            var securityGroupsQuery = dbContext.SecurityGroups
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .AsQueryable();
 
@@ -127,9 +120,11 @@ public class SecurityGroupService : ISecurityGroupService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
-            return new OperationDataResult<Paged<SecurityGroupModel>>(false, 
-                _localizationService.GetString("ErrorWhileObtainingSecurityGroups"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationDataResult<Paged<SecurityGroupModel>>(false,
+                localizationService.GetString("ErrorWhileObtainingSecurityGroups"));
         }
     }
 
@@ -137,7 +132,7 @@ public class SecurityGroupService : ISecurityGroupService
     {
         try
         {
-            var query = _dbContext.SecurityGroups
+            var query = dbContext.SecurityGroups
                 .Where(x => x.Id == id)
                 .AsQueryable();
 
@@ -145,17 +140,19 @@ public class SecurityGroupService : ISecurityGroupService
             var securityGroupModel = await AddSelectToQuery(query).FirstOrDefaultAsync();
             if (securityGroupModel == null)
             {
-                return new OperationDataResult<SecurityGroupModel>(false, 
-                    _localizationService.GetString("SecurityGroupNotFound"));
+                return new OperationDataResult<SecurityGroupModel>(false,
+                    localizationService.GetString("SecurityGroupNotFound"));
             }
 
             return new OperationDataResult<SecurityGroupModel>(true, securityGroupModel);
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
-            return new OperationDataResult<SecurityGroupModel>(false, 
-                _localizationService.GetString("ErrorWhileObtainingSecurityGroup"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationDataResult<SecurityGroupModel>(false,
+                localizationService.GetString("ErrorWhileObtainingSecurityGroup"));
         }
     }
 
@@ -166,7 +163,7 @@ public class SecurityGroupService : ISecurityGroupService
             if (string.IsNullOrEmpty(requestModel.Name))
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("SecurityGroupNameIsEmpty"));
+                    localizationService.GetString("SecurityGroupNameIsEmpty"));
             }
 
             //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
@@ -183,23 +180,25 @@ public class SecurityGroupService : ISecurityGroupService
                 });
             }
 
-            await _dbContext.SecurityGroups.AddAsync(securityGroup);
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SecurityGroups.AddAsync(securityGroup);
+            await dbContext.SaveChangesAsync();
 
             // Update claims in store
-            await _claimsService.UpdateAuthenticatedUsers(new List<int> { securityGroup.Id });
+            await claimsService.UpdateAuthenticatedUsers(new List<int> { securityGroup.Id });
 
             //transaction.Commit();
 //                }
 
-            return new OperationResult(true, 
-                _localizationService.GetString("SecurityGroupCreatedSuccessfully"));
+            return new OperationResult(true,
+                localizationService.GetString("SecurityGroupCreatedSuccessfully"));
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
-            return new OperationResult(false, 
-                _localizationService.GetString("ErrorWhileCreatingSecurityGroup"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false,
+                localizationService.GetString("ErrorWhileCreatingSecurityGroup"));
         }
     }
 
@@ -209,7 +208,7 @@ public class SecurityGroupService : ISecurityGroupService
         {
             //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
 //                {
-            var securityGroup = await _dbContext.SecurityGroups
+            var securityGroup = await dbContext.SecurityGroups
                 .Include(x => x.SecurityGroupUsers)
                 .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
 
@@ -217,15 +216,15 @@ public class SecurityGroupService : ISecurityGroupService
             {
                 //transaction.Rollback();
                 return new OperationResult(false,
-                    _localizationService.GetString("SecurityGroupNotFound"));
+                    localizationService.GetString("SecurityGroupNotFound"));
             }
 
             securityGroup.Name = requestModel.Name;
             // delete old
-            var usersForDelete = _dbContext.SecurityGroupUsers
+            var usersForDelete = dbContext.SecurityGroupUsers
                 .Where(x => x.SecurityGroupId == requestModel.Id
                             && !requestModel.UserIds.Contains(x.EformUserId));
-            _dbContext.SecurityGroupUsers.RemoveRange(usersForDelete);
+            dbContext.SecurityGroupUsers.RemoveRange(usersForDelete);
             // add new
             foreach (var userId in requestModel.UserIds)
             {
@@ -239,23 +238,25 @@ public class SecurityGroupService : ISecurityGroupService
                 }
             }
 
-            _dbContext.SecurityGroups.Update(securityGroup);
-            await _dbContext.SaveChangesAsync();
+            dbContext.SecurityGroups.Update(securityGroup);
+            await dbContext.SaveChangesAsync();
 
             // Update claims in store
-            await _claimsService.UpdateAuthenticatedUsers(new List<int> { requestModel.Id });
+            await claimsService.UpdateAuthenticatedUsers(new List<int> { requestModel.Id });
 
             //transaction.Commit();
 //                }
 
-            return new OperationResult(true, 
-                _localizationService.GetString("SecurityGroupUpdatedSuccessfully"));
+            return new OperationResult(true,
+                localizationService.GetString("SecurityGroupUpdatedSuccessfully"));
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
-            return new OperationResult(false, 
-                _localizationService.GetString("ErrorWhileUpdatingSecurityGroup"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false,
+                localizationService.GetString("ErrorWhileUpdatingSecurityGroup"));
         }
     }
 
@@ -263,28 +264,30 @@ public class SecurityGroupService : ISecurityGroupService
     {
         try
         {
-            var securityGroup = await _dbContext.SecurityGroups
+            var securityGroup = await dbContext.SecurityGroups
                 .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
 
             if (securityGroup == null)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("SecurityGroupNotFound"));
+                    localizationService.GetString("SecurityGroupNotFound"));
             }
 
             securityGroup.RedirectLink = requestModel.RedirectLink;
 
-            _dbContext.SecurityGroups.Update(securityGroup);
-            await _dbContext.SaveChangesAsync();
+            dbContext.SecurityGroups.Update(securityGroup);
+            await dbContext.SaveChangesAsync();
 
             return new OperationResult(true,
-                _localizationService.GetString("SecurityGroupUpdatedSuccessfully"));
+                localizationService.GetString("SecurityGroupUpdatedSuccessfully"));
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileUpdatingSecurityGroup"));
+                localizationService.GetString("ErrorWhileUpdatingSecurityGroup"));
         }
     }
 
@@ -294,29 +297,30 @@ public class SecurityGroupService : ISecurityGroupService
 //                {
         try
         {
-            var securityGroup = await _dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == id);
+            var securityGroup = await dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == id);
             if (securityGroup == null)
             {
                 //transaction.Rollback();
                 return new OperationResult(false,
-                    _localizationService.GetString("SecurityGroupNotFound"));
+                    localizationService.GetString("SecurityGroupNotFound"));
             }
-            _dbContext.SecurityGroups.Remove(securityGroup);
-            await _dbContext.SaveChangesAsync();
+            dbContext.SecurityGroups.Remove(securityGroup);
+            await dbContext.SaveChangesAsync();
 
             // Update claims in store
-            await _claimsService.UpdateAuthenticatedUsers(new List<int> {id});
+            await claimsService.UpdateAuthenticatedUsers(new List<int> {id});
 
             //transaction.Commit();
             return new OperationResult(true,
-                _localizationService.GetString("SecurityGroupRemovedSuccessfully"));
+                localizationService.GetString("SecurityGroupRemovedSuccessfully"));
         }
         catch (Exception e)
         {
-            //transaction.Rollback();
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<SecurityGroupModel>(false,
-                _localizationService.GetString("ErrorWhileDeletingSecurityGroup"));
+                localizationService.GetString("ErrorWhileDeletingSecurityGroup"));
         }
         //}
     }

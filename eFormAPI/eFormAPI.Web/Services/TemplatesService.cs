@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using Abstractions;
@@ -52,44 +54,27 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 using Field = Microting.eForm.Infrastructure.Models.Field;
 using Microting.eForm.Infrastructure.Data.Entities;
 
-public class TemplatesService : ITemplatesService
+public class TemplatesService(
+    IEFormCoreService coreHelper,
+    ILocalizationService localizationService,
+    IUserService userService,
+    BaseDbContext context,
+    IOptions<ConnectionStringsSdk> connectionStringsSdk,
+    IEformExcelImportService eformExcelImportService,
+    ILogger<TemplatesService> logger)
+    : ITemplatesService
 {
-    private readonly IOptions<ConnectionStringsSdk> _connectionStringsSdk;
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-    private readonly IUserService _userService;
-    private readonly BaseDbContext _dbContext;
-    private readonly IEformExcelImportService _eformExcelImportService;
-    private readonly ILogger<TemplatesService> _logger;
-
-    public TemplatesService(
-        IEFormCoreService coreHelper,
-        ILocalizationService localizationService,
-        IUserService userService, BaseDbContext dbContext,
-        IOptions<ConnectionStringsSdk> connectionStringsSdk,
-        IEformExcelImportService eformExcelImportService,
-        ILogger<TemplatesService> logger)
-    {
-        _coreHelper = coreHelper;
-        _localizationService = localizationService;
-        _userService = userService;
-        _dbContext = dbContext;
-        _connectionStringsSdk = connectionStringsSdk;
-        _eformExcelImportService = eformExcelImportService;
-        _logger = logger;
-    }
-
     public async Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel)
     {
-        var timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
+        var timeZoneInfo = await userService.GetCurrentUserTimeZoneInfo();
         Log.LogEvent("TemplateService.Index: called");
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var sdkDbContext = core.DbContextHelper.GetDbContext();
             Log.LogEvent("TemplateService.Index: try section");
 
-            var language = await _userService.GetCurrentUserLanguage();
+            var language = await userService.GetCurrentUserLanguage();
             if (language == null)
             {
                 language = await sdkDbContext.Languages.SingleOrDefaultAsync(x => x.Name == "Danish");
@@ -164,7 +149,7 @@ public class TemplatesService : ITemplatesService
                 Tags = x.CheckList.Taggings
                     .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
                     .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Select(y => new KeyValuePair<int,string>(y.Tag.Id, y.Tag.Name))
+                    .Select(y => new KeyValuePair<int, string>(y.Tag.Id, y.Tag.Name))
                     .ToList(),
                 FolderId = x.CheckList.CheckListSites
                     .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
@@ -190,31 +175,32 @@ public class TemplatesService : ITemplatesService
 
             var model = new TemplateListModel
             {
-                NumOfElements = await query.Where(y => y.CheckList.WorkflowState != Constants.WorkflowStates.Removed).Select(x => x.CheckListId).CountAsync(),
+                NumOfElements = await query.Where(y => y.CheckList.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Select(x => x.CheckListId).CountAsync(),
                 //PageNum = templateRequestModel.PageIndex,
                 Templates = new List<TemplateDto>()
             };
 
-            var pluginIds = await _dbContext.EformPlugins
+            var pluginIds = await context.EformPlugins
                 .Select(x => x.PluginId)
                 .ToListAsync();
-            if (!_userService.IsAdmin())
+            if (!userService.IsAdmin())
             {
-                var isEformsInGroups = await _dbContext.SecurityGroupUsers
-                    .Where(x => x.EformUserId == _userService.UserId)
+                var isEformsInGroups = await context.SecurityGroupUsers
+                    .Where(x => x.EformUserId == userService.UserId)
                     .Where(x => x.SecurityGroup.EformsInGroup.Any())
                     .AnyAsync();
                 if (isEformsInGroups)
                 {
-                    var eformIds = _dbContext.EformInGroups
+                    var eformIds = context.EformInGroups
                         .Where(x =>
-                            x.SecurityGroup.SecurityGroupUsers.Any(y => y.EformUserId == _userService.UserId))
+                            x.SecurityGroup.SecurityGroupUsers.Any(y => y.EformUserId == userService.UserId))
                         .Select(x => x.TemplateId)
                         .ToList();
 
                     foreach (var templateDto in templatesDto.Where(templateDto => eformIds.Contains(templateDto.Id)))
                     {
-                        await templateDto.CheckForLock(_dbContext);
+                        await templateDto.CheckForLock(context);
                         model.Templates.Add(templateDto);
                     }
                 }
@@ -222,7 +208,7 @@ public class TemplatesService : ITemplatesService
                 {
                     foreach (var templateDto in templatesDto)
                     {
-                        await templateDto.CheckForLock(_dbContext, pluginIds);
+                        await templateDto.CheckForLock(context, pluginIds);
                         model.Templates.Add(templateDto);
                     }
                 }
@@ -231,7 +217,7 @@ public class TemplatesService : ITemplatesService
             {
                 foreach (var templateDto in templatesDto)
                 {
-                    await templateDto.CheckForLock(_dbContext, pluginIds);
+                    await templateDto.CheckForLock(context, pluginIds);
                     model.Templates.Add(templateDto);
                 }
             }
@@ -257,38 +243,38 @@ public class TemplatesService : ITemplatesService
 
             return new OperationDataResult<TemplateListModel>(true, model);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Log.LogEvent("TemplateService.Index: catch section");
-            Log.LogException($"TemplatesService.Index: Got exception {ex.Message}");
-            Log.LogException($"TemplatesService.Index: Got stacktrace {ex.StackTrace}");
-            if (ex.Message.Contains("PrimeDb"))
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            if (e.Message.Contains("PrimeDb"))
             {
-                var sdkConnectionString = _connectionStringsSdk.Value.SdkConnection;
+                var sdkConnectionString = connectionStringsSdk.Value.SdkConnection;
                 var adminTool = new AdminTools(sdkConnectionString);
                 await adminTool.DbSettingsReloadRemote();
                 return new OperationDataResult<TemplateListModel>(false,
-                    _localizationService.GetString("CheckConnectionString"));
+                    localizationService.GetString("CheckConnectionString"));
             }
 
-            if (ex.InnerException != null && ex.InnerException.Message.Contains("Cannot open database"))
+            if (e.InnerException != null && e.InnerException.Message.Contains("Cannot open database"))
             {
                 try
                 {
-                    var _ = await _coreHelper.GetCore();
+                    var _ = await coreHelper.GetCore();
                 }
                 catch (Exception ex2)
                 {
                     return new OperationDataResult<TemplateListModel>(false,
-                        _localizationService.GetString("CoreIsNotStarted") + " " + ex2.Message);
+                        localizationService.GetString("CoreIsNotStarted") + " " + ex2.Message);
                 }
 
                 return new OperationDataResult<TemplateListModel>(false,
-                    _localizationService.GetString("CheckSettingsBeforeProceed"));
+                    localizationService.GetString("CheckSettingsBeforeProceed"));
             }
 
             return new OperationDataResult<TemplateListModel>(false,
-                _localizationService.GetString("CheckSettingsBeforeProceed"));
+                localizationService.GetString("CheckSettingsBeforeProceed"));
         }
     }
 
@@ -296,41 +282,44 @@ public class TemplatesService : ITemplatesService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
-            var language = await _userService.GetCurrentUserLanguage();
+            var language = await userService.GetCurrentUserLanguage();
             var templateDto = await core.TemplateItemRead(id, language);
             return new OperationDataResult<Template_Dto>(true, templateDto);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            if (ex.Message.Contains("PrimeDb"))
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            if (e.Message.Contains("PrimeDb"))
             {
-                var sdkConnectionString = _connectionStringsSdk.Value.SdkConnection;
+                var sdkConnectionString = connectionStringsSdk.Value.SdkConnection;
                 var adminTool = new AdminTools(sdkConnectionString);
                 await adminTool.DbSettingsReloadRemote();
                 return new OperationDataResult<Template_Dto>(false,
-                    _localizationService.GetString("CheckConnectionString"));
+                    localizationService.GetString("CheckConnectionString"));
             }
 
-            if (ex.InnerException.Message.Contains("Cannot open database"))
+            if (e.InnerException.Message.Contains("Cannot open database"))
             {
                 try
                 {
-                    var core = await _coreHelper.GetCore();
+                    var core = await coreHelper.GetCore();
                 }
                 catch (Exception)
                 {
                     return new OperationDataResult<Template_Dto>(false,
-                        _localizationService.GetString("CoreIsNotStarted"));
+                        localizationService.GetString("CoreIsNotStarted"));
                 }
 
                 return new OperationDataResult<Template_Dto>(false,
-                    _localizationService.GetString("CheckSettingsBeforeProceed"));
+                    localizationService.GetString("CheckSettingsBeforeProceed"));
             }
 
             return new OperationDataResult<Template_Dto>(false,
-                _localizationService.GetString("CheckSettingsBeforeProceed"));
+                localizationService.GetString("CheckSettingsBeforeProceed"));
         }
     }
 
@@ -338,7 +327,7 @@ public class TemplatesService : ITemplatesService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             // Create tags
             if (eFormXmlModel.NewTag != null)
@@ -358,10 +347,10 @@ public class TemplatesService : ITemplatesService
             if (errors.Any())
             {
                 var message = errors.Aggregate("", (current, str) => current + ("<br>" + str));
-                throw new Exception(_localizationService.GetString("eFormCouldNotBeCreated") + message);
+                throw new Exception(localizationService.GetString("eFormCouldNotBeCreated") + message);
             }
 
-            if (newTemplate == null) throw new Exception(_localizationService.GetString("eFormCouldNotBeCreated"));
+            if (newTemplate == null) throw new Exception(localizationService.GetString("eFormCouldNotBeCreated"));
             // Set tags to eform
             var clId = await core.TemplateCreate(newTemplate);
             var cl = await sdkDbContext.CheckLists.SingleOrDefaultAsync(x => x.Id == clId);
@@ -373,10 +362,13 @@ public class TemplatesService : ITemplatesService
             }
 
             return new OperationResult(true,
-                _localizationService.GetStringWithFormat("eFormParamCreatedSuccessfully", newTemplate.Label));
+                localizationService.GetStringWithFormat("eFormParamCreatedSuccessfully", newTemplate.Label));
         }
         catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false, e.Message);
         }
     }
@@ -386,11 +378,11 @@ public class TemplatesService : ITemplatesService
         try
         {
             var result = new ExcelParseResult();
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var dbContext = core.DbContextHelper.GetDbContext();
-            var language = await _userService.GetCurrentUserLanguage();
+            var language = await userService.GetCurrentUserLanguage();
 
-            var timeZone = await _userService.GetCurrentUserTimeZoneInfo();
+            var timeZone = await userService.GetCurrentUserTimeZoneInfo();
             var templatesDto = await core.TemplateItemReadAll(
                 false,
                 "",
@@ -401,7 +393,7 @@ public class TemplatesService : ITemplatesService
                 timeZone, language);
 
             // Read file
-            var fileResult = _eformExcelImportService.EformImport(excelStream);
+            var fileResult = eformExcelImportService.EformImport(excelStream);
 
             // Validation
             var excelErrors = new List<ExcelParseErrorModel>();
@@ -419,7 +411,7 @@ public class TemplatesService : ITemplatesService
                     var error = new ExcelParseErrorModel
                     {
                         Row = excelModel.ExcelRow,
-                        Message = _localizationService.GetStringWithFormat(
+                        Message = localizationService.GetStringWithFormat(
                             "EFormWithNameAlreadyExists",
                             excelModel.Name)
                     };
@@ -443,7 +435,7 @@ public class TemplatesService : ITemplatesService
                 var error = new ExcelParseErrorModel
                 {
                     Row = 0,
-                    Message = _localizationService.GetStringWithFormat(
+                    Message = localizationService.GetStringWithFormat(
                         "EFormWithNameAlreadyExistsInTheImportedDocument",
                         duplicateObject.Key)
                 };
@@ -491,7 +483,7 @@ public class TemplatesService : ITemplatesService
                     newTemplate = await core.TemplateUploadData(newTemplate);
 
                     if (newTemplate == null)
-                        throw new Exception(_localizationService.GetString("eFormCouldNotBeCreated"));
+                        throw new Exception(localizationService.GetString("eFormCouldNotBeCreated"));
 
                     // Set tags to eform
                     var eFormId = await core.TemplateCreate(newTemplate);
@@ -511,13 +503,15 @@ public class TemplatesService : ITemplatesService
                 }
             }
 
-            result.Message = _localizationService.GetString("ImportFinishedSuccessfully");
+            result.Message = localizationService.GetString("ImportFinishedSuccessfully");
 
             return new OperationDataResult<ExcelParseResult>(true, result);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<ExcelParseResult>(false, e.Message);
         }
     }
@@ -526,7 +520,7 @@ public class TemplatesService : ITemplatesService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
             await using var dbContext = core.DbContextHelper.GetDbContext();
             var checkListSites =
@@ -539,30 +533,33 @@ public class TemplatesService : ITemplatesService
             var checkList = await dbContext.CheckLists.SingleAsync(x => x.Id == id);
             await checkList.Delete(dbContext);
 
-            var eformReport = _dbContext.EformReports
+            var eformReport = context.EformReports
                 .FirstOrDefault(x => x.TemplateId == id);
 
             if (eformReport != null)
             {
-                _dbContext.EformReports.Remove(eformReport);
-                await _dbContext.SaveChangesAsync();
+                context.EformReports.Remove(eformReport);
+                await context.SaveChangesAsync();
             }
 
             return new OperationResult(true,
-                _localizationService.GetStringWithFormat("eFormParamDeletedSuccessfully", id));
+                localizationService.GetStringWithFormat("eFormParamDeletedSuccessfully", id));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetStringWithFormat("eFormParamCouldNotBeDeleted", id));
+                localizationService.GetStringWithFormat("eFormParamCouldNotBeDeleted", id));
         }
     }
 
     public async Task<OperationDataResult<DeployToModel>> DeployTo(int id)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
 
-        var language = await _userService.GetCurrentUserLanguage();
+        var language = await userService.GetCurrentUserLanguage();
         var templateDto = await core.TemplateItemRead(id, language);
         var siteNamesDto = await core.Advanced_SiteItemReadAll();
 
@@ -579,10 +576,10 @@ public class TemplatesService : ITemplatesService
         var sitesToBeRetractedFrom = new List<int>();
         var sitesToBeDeployedTo = new List<int>();
 
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
 
         await using var dbContext = core.DbContextHelper.GetDbContext();
-        var language = await _userService.GetCurrentUserLanguage();
+        var language = await userService.GetCurrentUserLanguage();
         var templateDto = await core.TemplateItemRead(deployModel.Id, language);
 
         var deployedSiteIds = templateDto.DeployedSites.Select(site => site.SiteUId).ToList();
@@ -644,14 +641,14 @@ public class TemplatesService : ITemplatesService
         }
 
         return new OperationResult(true,
-            _localizationService.GetStringWithFormat("ParamPairedSuccessfully", templateDto.Label));
+            localizationService.GetStringWithFormat("ParamPairedSuccessfully", templateDto.Label));
     }
 
     public async Task<OperationDataResult<int>> Duplicate(TemplateDuplicateRequestModel requestModel)
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var sdkDbContext = core.DbContextHelper.GetDbContext();
 
             var duplicateEform = await FindTemplates(requestModel.TemplateId, sdkDbContext);
@@ -659,29 +656,33 @@ public class TemplatesService : ITemplatesService
 
             return new OperationDataResult<int>(true, duplicateEform.Id);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<int>(false,
-                _localizationService.GetStringWithFormat("ErrorWhileDuplicateEform"));
+                localizationService.GetStringWithFormat("ErrorWhileDuplicateEform"));
         }
     }
 
     public async Task<OperationDataResult<List<Field>>> GetFields(int id)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
 
-        var language = await _userService.GetCurrentUserLanguage();
+        var language = await userService.GetCurrentUserLanguage();
         var fields = core.Advanced_TemplateFieldReadAll(id, language).Result
             .Select(f => core.Advanced_FieldRead(f.Id, language).Result).ToList();
 
         return new OperationDataResult<List<Field>>(true, fields);
     }
 
-    public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetDictionaryTemplates(string nameFilter, int idFilter)
+    public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetDictionaryTemplates(string nameFilter,
+        int idFilter)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         await using var sdkDbContext = core.DbContextHelper.GetDbContext();
-        var language = await _userService.GetCurrentUserLanguage();
+        var language = await userService.GetCurrentUserLanguage();
         var query = sdkDbContext.CheckListTranslations
             .Include(x => x.CheckList)
             .Where(x => x.LanguageId == language.Id)
@@ -810,7 +811,8 @@ public class TemplatesService : ITemplatesService
         return eform;
     }
 
-    private static async Task<List<Microting.eForm.Infrastructure.Data.Entities.Field>> FindFields(int eformId, MicrotingDbContext sdkDbContext, int parentFieldId = -1)
+    private static async Task<List<Microting.eForm.Infrastructure.Data.Entities.Field>> FindFields(int eformId,
+        MicrotingDbContext sdkDbContext, int parentFieldId = -1)
     {
         var findFields = new List<Microting.eForm.Infrastructure.Data.Entities.Field>();
         var fieldQuery = sdkDbContext.Fields
@@ -830,6 +832,7 @@ public class TemplatesService : ITemplatesService
         {
             fieldQuery = fieldQuery.Where(x => x.ParentFieldId == null);
         }
+
         var fields = await fieldQuery
             .ToListAsync();
 

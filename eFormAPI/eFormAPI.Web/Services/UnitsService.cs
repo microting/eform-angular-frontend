@@ -29,27 +29,24 @@ using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure.Models.Units;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microting.eForm.Dto;
 using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Sentry;
 
 namespace eFormAPI.Web.Services;
 
-public class UnitsService : IUnitsService
+public class UnitsService(
+    ILocalizationService localizationService,
+    IEFormCoreService coreHelper,
+    ILogger<UnitsService> logger)
+    : IUnitsService
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-
-    public UnitsService(ILocalizationService localizationService, IEFormCoreService coreHelper)
-    {
-        _localizationService = localizationService;
-        _coreHelper = coreHelper;
-    }
-
     public async Task<OperationDataResult<List<UnitModel>>> Index()
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         await using var dbContext = core.DbContextHelper.GetDbContext();
         var units = await dbContext.Units.AsNoTracking()
             .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -88,18 +85,21 @@ public class UnitsService : IUnitsService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
             if (await core.Advanced_UnitCreate(model.SiteId).ConfigureAwait(false))
             {
-                return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));
+                return new OperationResult(true, localizationService.GetString("UnitWasSuccessfullyCreated"));
             }
 
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
+            return new OperationResult(false, localizationService.GetString("ErrorWhileCreatingUnit"));
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileCreatingUnit"));
         }
     }
 
@@ -107,19 +107,22 @@ public class UnitsService : IUnitsService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
             if (await core.Advanced_UnitMove(model.Id, model.SiteId).ConfigureAwait(false))
             {
-                return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));
+                return new OperationResult(true, localizationService.GetString("UnitWasSuccessfullyCreated"));
             }
 
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
+            return new OperationResult(false, localizationService.GetString("ErrorWhileCreatingUnit"));
 
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileCreatingUnit"));
         }
     }
 
@@ -127,15 +130,18 @@ public class UnitsService : IUnitsService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var unitDto = await core.Advanced_UnitRequestOtp(id);
-            return new OperationDataResult<UnitDto>(true, _localizationService.GetString("NewOTPCreatedSuccessfully"),
+            return new OperationDataResult<UnitDto>(true, localizationService.GetString("NewOTPCreatedSuccessfully"),
                 unitDto);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<UnitDto>(false,
-                _localizationService.GetStringWithFormat("UnitParamOTPCouldNotCompleted", id));
+                localizationService.GetStringWithFormat("UnitParamOTPCouldNotCompleted", id));
         }
     }
 }

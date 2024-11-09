@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using Abstractions;
@@ -40,31 +42,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-public class FoldersService : IFoldersService
+public class FoldersService(
+    IEFormCoreService coreHelper,
+    ILocalizationService localizationService,
+    IUserService userService,
+    ILogger<FoldersService> logger)
+    : IFoldersService
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-    private readonly ILogger<FoldersService> _logger;
-    private readonly IUserService _userService;
-
-    public FoldersService(IEFormCoreService coreHelper,
-        ILocalizationService localizationService,
-        IUserService userService,
-        ILogger<FoldersService> logger)
-    {
-        _coreHelper = coreHelper;
-        _localizationService = localizationService;
-        _userService = userService;
-        _logger = logger;
-    }
-
     public async Task<OperationDataResult<List<FolderDtoModel>>> List()
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var dbContext = core.DbContextHelper.GetDbContext();
-            var language = await _userService.GetCurrentUserLanguage();
+            var language = await userService.GetCurrentUserLanguage();
             var folderQuery = dbContext.Folders
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .Where(x => x.FolderTranslations.Any(y =>
@@ -77,10 +68,12 @@ public class FoldersService : IFoldersService
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<FolderDtoModel>>(
                 false,
-                _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
+                localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
         }
     }
 
@@ -88,9 +81,9 @@ public class FoldersService : IFoldersService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var dbContext = core.DbContextHelper.GetDbContext();
-            var language = await _userService.GetCurrentUserLanguage();
+            var language = await userService.GetCurrentUserLanguage();
             var folders = await dbContext.Folders
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .Include(x => x.FolderTranslations)
@@ -107,10 +100,12 @@ public class FoldersService : IFoldersService
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<FolderDtoModel>>(
                 false,
-                _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
+                localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
         }
     }
 
@@ -118,7 +113,7 @@ public class FoldersService : IFoldersService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
             var folderTranslations = createModel.Translations
                 .Select(x => new Microting.eForm.Infrastructure.Models.CommonTranslationsModel
@@ -128,15 +123,18 @@ public class FoldersService : IFoldersService
                     LanguageId = x.LanguageId
                 }).ToList();
 
-            await core.FolderCreate(folderTranslations, createModel.ParentId); // creating the folder in Danish as default
+            await core.FolderCreate(folderTranslations,
+                createModel.ParentId); // creating the folder in Danish as default
             return new OperationResult(true);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(
                 false,
-                _localizationService.GetString("ErrorWhileCreatingFolder"));
+                localizationService.GetString("ErrorWhileCreatingFolder"));
         }
     }
 
@@ -144,7 +142,7 @@ public class FoldersService : IFoldersService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var sdkDbContext = core.DbContextHelper.GetDbContext();
 
             var query = sdkDbContext.Folders
@@ -158,23 +156,25 @@ public class FoldersService : IFoldersService
             {
                 return new OperationDataResult<FolderModel>(
                     false,
-                    _localizationService.GetString("FolderNotFound"));
+                    localizationService.GetString("FolderNotFound"));
             }
 
             return new OperationDataResult<FolderModel>(true, folder);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<FolderModel>(
                 false,
-                _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
+                localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
         }
     }
 
     public async Task<OperationResult> Update(FolderUpdateModel folderUpdateModel)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         try
         {
             await using var sdkDbContext = core.DbContextHelper.GetDbContext();
@@ -195,17 +195,18 @@ public class FoldersService : IFoldersService
         }
         catch (Exception e)
         {
-            _coreHelper.LogException(e.Message);
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(
                 false,
-                _localizationService.GetString("ErrorWhileUpdatingFolder"));
+                localizationService.GetString("ErrorWhileUpdatingFolder"));
         }
     }
 
     public async Task<OperationResult> Delete(int id)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var sdkDbContext = core.DbContextHelper.GetDbContext();
         try
         {
@@ -214,21 +215,23 @@ public class FoldersService : IFoldersService
         }
         catch (Exception e)
         {
-            _coreHelper.LogException(e.Message);
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(
                 false,
-                _localizationService.GetString("ErrorWhileRemovingFolder"));
+                localizationService.GetString("ErrorWhileRemovingFolder"));
         }
     }
 
-    public async Task<OperationDataResult<List<CommonDictionaryModel>>> CommonDictionaryModel(bool fullname, List<int> filterFolderIds, bool getOnlyChildFolders)
+    public async Task<OperationDataResult<List<CommonDictionaryModel>>> CommonDictionaryModel(bool fullname,
+        List<int> filterFolderIds, bool getOnlyChildFolders)
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var sdkDbContext = core.DbContextHelper.GetDbContext();
-            var userLanguage = await _userService.GetCurrentUserLanguage();
+            var userLanguage = await userService.GetCurrentUserLanguage();
             var folders = await sdkDbContext.Folders
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .Include(x => x.FolderTranslations)
@@ -244,10 +247,12 @@ public class FoldersService : IFoldersService
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<CommonDictionaryModel>>(
                 false,
-                _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
+                localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
         }
     }
 
@@ -313,7 +318,8 @@ public class FoldersService : IFoldersService
         return propertyFolderModel;
     }
 
-    private static List<CommonDictionaryModel> MapFolder(FolderDtoModel folder, bool useFullName = true, bool getOnlyChildFolders = true, string rootFolderName = "")
+    private static List<CommonDictionaryModel> MapFolder(FolderDtoModel folder, bool useFullName = true,
+        bool getOnlyChildFolders = true, string rootFolderName = "")
     {
         var result = new List<CommonDictionaryModel>();
         var fullName = useFullName
