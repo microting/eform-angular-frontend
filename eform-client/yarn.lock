@@ -3253,26 +3253,25 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/merge-streams/-/merge-streams-4.0.0.tgz#abb11d99aeb6d27f1b563c38147a72d50058e339"
   integrity sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==
 
-"@swimlane/ngx-charts@20.5.0":
-  version "20.5.0"
-  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-20.5.0.tgz#802a3893347e34eb4b4e447225dca9b38c40160d"
-  integrity sha512-PNBIHdu/R3ceD7jnw1uCBVOj4k3T6IxfdW6xsDsglGkZyoWMEEq4tLoEurjLEKzmDtRv9c35kVNOXy0lkOuXeA==
+"@swimlane/ngx-charts@21.0.0":
+  version "21.0.0"
+  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-21.0.0.tgz#9747650585982f6a54e8c8ee4cee4bc1de291e49"
+  integrity sha512-4YQNWevbVPekiuLz6w3wLdJY9rD2Pk21xskTUtfpUirUFXdkKZdUByJkSUlup+F8UPvkeZIEC5bhBtOr0yTktA==
   dependencies:
-    d3-array "^3.1.1"
+    d3-array "^3.2.0"
     d3-brush "^3.0.0"
     d3-color "^3.1.0"
     d3-ease "^3.0.1"
     d3-format "^3.1.0"
-    d3-hierarchy "^3.1.0"
+    d3-hierarchy "^3.1.2"
     d3-interpolate "^3.0.1"
     d3-sankey "^0.12.3"
     d3-scale "^4.0.2"
     d3-selection "^3.0.0"
     d3-shape "^3.2.0"
-    d3-time-format "^3.0.0"
+    d3-time-format "^4.1.0"
     d3-transition "^3.0.1"
-    rfdc "^1.3.0"
-    tslib "^2.0.0"
+    tslib "^2.3.1"
 
 "@szmarczak/http-timer@^5.0.1":
   version "5.0.1"
@@ -5909,14 +5908,14 @@ cypress@13.16.0:
     untildify "^4.0.0"
     yauzl "^2.10.0"
 
-"d3-array@1 - 2", d3-array@2:
+"d3-array@1 - 2":
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.12.1.tgz#e20b41aafcdffdf5d50928004ececf815a465e81"
   integrity sha512-B0ErZK/66mHtEsR1TkPEEkwdy+WDesimkM5gpZr5Dsg54BiTA5RXtYW5qTLIAcekaS9xfZrzBLF/OAkB3Qn1YQ==
   dependencies:
     internmap "^1.0.0"
 
-"d3-array@2 - 3", "d3-array@2.10.0 - 3", "d3-array@2.5.0 - 3", d3-array@3, d3-array@^3.1.1, d3-array@^3.2.0:
+"d3-array@2 - 3", "d3-array@2.10.0 - 3", "d3-array@2.5.0 - 3", d3-array@3, d3-array@^3.2.0:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-3.2.4.tgz#15fec33b237f97ac5d7c986dc77da273a8ed0bb5"
   integrity sha512-tdQAmyA18i4J7wprpYq8ClcxZy3SC31QMeByyCFyRt7BVHdREQZ5lpzoe5mFEYZUWe+oq8HBvk9JjpibyEV4Jg==
@@ -6020,7 +6019,7 @@ d3-geo@3:
   dependencies:
     d3-array "2.5.0 - 3"
 
-d3-hierarchy@3, d3-hierarchy@^3.1.0:
+d3-hierarchy@3, d3-hierarchy@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/d3-hierarchy/-/d3-hierarchy-3.1.2.tgz#b01cd42c1eed3d46db77a5966cf726f8c09160c6"
   integrity sha512-FX/9frcub54beBdugHjDCdikxThEqjnR93Qt7PvQTOHxyiNCAlvMrHhclk3cD5VeAaq9fxmfRp+CnWw9rEMBuA==
@@ -6103,26 +6102,12 @@ d3-shape@^1.2.0:
   dependencies:
     d3-path "1"
 
-"d3-time-format@2 - 4", d3-time-format@4:
+"d3-time-format@2 - 4", d3-time-format@4, d3-time-format@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/d3-time-format/-/d3-time-format-4.1.0.tgz#7ab5257a5041d11ecb4fe70a5c7d16a195bb408a"
   integrity sha512-dJxPBlzC7NugB2PDLwo9Q8JiTR3M3e4/XANkreKSUxF8vvXKqm1Yfq4Q5dl8budlunRVlUUaDUgFt7eA8D6NLg==
   dependencies:
     d3-time "1 - 3"
-
-d3-time-format@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/d3-time-format/-/d3-time-format-3.0.0.tgz#df8056c83659e01f20ac5da5fdeae7c08d5f1bb6"
-  integrity sha512-UXJh6EKsHBTjopVqZBhFysQcoXSv/5yLONZvkQ5Kk3qbwiUYkdX17Xa1PT6U1ZWXGGfB1ey5L8dKMlFq2DO0Ag==
-  dependencies:
-    d3-time "1 - 2"
-
-"d3-time@1 - 2":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/d3-time/-/d3-time-2.1.1.tgz#e9d8a8a88691f4548e68ca085e5ff956724a6682"
-  integrity sha512-/eIQe/eR4kCQwq7yxi7z4c6qEXf2IYGcjoWB5OOQy4Tq9Uv39/947qlDcN2TLkiTzQWzvnsuYPB9TrWaNfipKQ==
-  dependencies:
-    d3-array "2"
 
 "d3-time@1 - 3", "d3-time@2.1.1 - 3", d3-time@3:
   version "3.1.0"
