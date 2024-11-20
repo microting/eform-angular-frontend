@@ -36,21 +36,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 [Authorize]
-public class SitesController : Controller
+public class SitesController(ISitesService sitesService) : Controller
 {
-    private readonly ISitesService _sitesService;
-
-    public SitesController(ISitesService sitesService)
-    {
-        _sitesService = sitesService;
-    }
-
     [HttpGet]
     [Route("api/sites/index")]
     [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
     public async Task<OperationDataResult<List<SiteModel>>> Index()
     {
-        return await _sitesService.Index();
+        return await sitesService.Index();
     }
 
     [HttpGet]
@@ -58,7 +51,7 @@ public class SitesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
     public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetSitesDictionary()
     {
-        return await _sitesService.GetSitesDictionary();
+        return await sitesService.GetSitesDictionary();
     }
 
     [HttpGet]
@@ -66,7 +59,7 @@ public class SitesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingRead)]
     public async Task<OperationDataResult<List<SiteModel>>> ReadPairing()
     {
-        return await _sitesService.Index();
+        return await sitesService.Index();
     }
 
     [HttpGet]
@@ -74,7 +67,7 @@ public class SitesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
     public async Task<OperationDataResult<SiteModel>> Read(int id)
     {
-        return await _sitesService.Read(id);
+        return await sitesService.Read(id);
     }
 
     [HttpPut]
@@ -82,7 +75,7 @@ public class SitesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
     public async Task<OperationResult> Update([FromBody] SiteUpdateModel updateModel)
     {
-        return await _sitesService.Update(updateModel);
+        return await sitesService.Update(updateModel);
     }
 
     [HttpDelete]
@@ -90,6 +83,6 @@ public class SitesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Sites.Delete)]
     public async Task<OperationResult> Delete(int id)
     {
-        return await _sitesService.Delete(id);
+        return await sitesService.Delete(id);
     }
 }

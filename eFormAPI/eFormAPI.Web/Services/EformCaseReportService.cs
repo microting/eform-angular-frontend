@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using Microting.eForm.Infrastructure.Data.Entities;
+using Sentry;
 
 namespace eFormAPI.Web.Services;
 
@@ -42,46 +43,34 @@ using System.IO;
 using Microsoft.Extensions.Logging;
 using Infrastructure.Models;
 
-public class EformCaseReportService : IEformCaseReportService
+public class EformCaseReportService(
+    IEFormCoreService coreHelper,
+    IUserService userService,
+    ILocalizationService localizationService,
+    ILogger<EformCaseReportService> logger,
+    IWordService wordService)
+    : IEformCaseReportService
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
     //private readonly BaseDbContext _dbContext;
-    private readonly IUserService _userService;
-    private readonly ILogger<EformCaseReportService> _logger;
     //private readonly ICasePostBaseService _casePostBaseService;
-    private readonly IWordService _wordService;
 
-    public EformCaseReportService(
-        IEFormCoreService coreHelper,
-        IUserService userService,
-        //ICasePostBaseService casePostBaseService,
-        ILocalizationService localizationService,
-        //BaseDbContext dbContext,
-        ILogger<EformCaseReportService> logger,
-        IWordService wordService)
-    {
-        _coreHelper = coreHelper;
-        _localizationService = localizationService;
-        //_dbContext = dbContext;
-        _logger = logger;
-        _userService = userService;
-        //_casePostBaseService = casePostBaseService;
-        _wordService = wordService;
-    }
+    //ICasePostBaseService casePostBaseService,
+    //BaseDbContext dbContext,
+    //_dbContext = dbContext;
+    //_casePostBaseService = casePostBaseService;
 
     public async Task<OperationDataResult<EFormCasesReportModel>> GetReportEformCases(
         EFormCaseReportRequest eFormCaseReportRequest)
     {
-        var core = await _coreHelper.GetCore();
-        var language = await _userService.GetCurrentUserLanguage();
+        var core = await coreHelper.GetCore();
+        var language = await userService.GetCurrentUserLanguage();
         var sdkDbContext = core.DbContextHelper.GetDbContext();
-        var timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
+        var timeZoneInfo = await userService.GetCurrentUserTimeZoneInfo();
         var template = await core.TemplateItemRead(eFormCaseReportRequest.TemplateId, language);
         if (template == null)
         {
             return new OperationDataResult<EFormCasesReportModel>(false,
-                _localizationService.GetString("TemplateNotFound"));
+                localizationService.GetString("TemplateNotFound"));
         }
 
         var casesQueryable = sdkDbContext.Cases
@@ -105,7 +94,7 @@ public class EformCaseReportService : IEformCaseReportService
         if (!casesQueryable.Any()) // if count <= 0
         {
             return new OperationDataResult<EFormCasesReportModel>(false,
-                _localizationService.GetString("CasesNotFound"));
+                localizationService.GetString("CasesNotFound"));
         }
 
         var cases = casesQueryable.ToList();
@@ -322,7 +311,7 @@ public class EformCaseReportService : IEformCaseReportService
                 return new OperationDataResult<Stream>(false, reportDataResult.Message);
             }
 
-            var wordDataResult = await _wordService
+            var wordDataResult = await wordService
                 .GenerateWordDashboard(reportDataResult.Model);
 
             if (!wordDataResult.Success)
@@ -334,24 +323,25 @@ public class EformCaseReportService : IEformCaseReportService
         }
         catch (Exception e)
         {
-            Trace.TraceError(e.Message);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<Stream>(
                 false,
-                _localizationService.GetString("ErrorWhileGeneratingReportFile"));
+                localizationService.GetString("ErrorWhileGeneratingReportFile"));
         }
     }
 
     public async Task<OperationResult> UpdateReportHeaders(EformDocxReportHeadersModel eformDocxReportHeadersModel)
     {
 
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var sdkDbContext = core.DbContextHelper.GetDbContext();
         var template = await sdkDbContext.CheckLists.Where(x => x.Id == eformDocxReportHeadersModel.TemplateId)
             .FirstOrDefaultAsync();
         if (template == null)
         {
-            return new OperationResult(false, _localizationService.GetString("TemplateNotFound"));
+            return new OperationResult(false, localizationService.GetString("TemplateNotFound"));
         }
 
         if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H1))
@@ -386,12 +376,12 @@ public class EformCaseReportService : IEformCaseReportService
 
     public async Task<OperationDataResult<EformDocxReportHeadersModel>> GetReportHeadersByTemplateId(int templateId)
     {
-        var core = await _coreHelper.GetCore();
-        var language = await _userService.GetCurrentUserLanguage();
+        var core = await coreHelper.GetCore();
+        var language = await userService.GetCurrentUserLanguage();
         var template = await core.TemplateItemRead(templateId, language);
         if (template == null)
         {
-            return new OperationDataResult<EformDocxReportHeadersModel>(false, _localizationService.GetString("TemplateNotFound"));
+            return new OperationDataResult<EformDocxReportHeadersModel>(false, localizationService.GetString("TemplateNotFound"));
         }
 
         return new OperationDataResult<EformDocxReportHeadersModel>(true,

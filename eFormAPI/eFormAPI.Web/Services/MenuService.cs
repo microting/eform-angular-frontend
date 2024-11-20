@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using Hosting.Enums;
@@ -45,62 +47,48 @@ using Microting.EformAngularFrontendBase.Infrastructure.Const;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 
-public class MenuService : IMenuService
+public class MenuService(
+    ILogger<MenuService> logger,
+    BaseDbContext dbContext,
+    IClaimsService claimsService,
+    IUserService userService,
+    IServiceProvider serviceProvider,
+    ILocalizationService localizationService)
+    : IMenuService
 {
-    private readonly ILogger<MenuService> _logger;
-    private readonly IClaimsService _claimsService;
-    private readonly IUserService _userService;
-    private readonly IServiceProvider _serviceProvider;
-    private readonly ILocalizationService _localizationService;
-    private readonly BaseDbContext _dbContext;
-
-    public MenuService(ILogger<MenuService> logger,
-        BaseDbContext dbContext,
-        IClaimsService claimsService,
-        IUserService userService,
-        IServiceProvider serviceProvider,
-        ILocalizationService localizationService)
-    {
-        _logger = logger;
-        _dbContext = dbContext;
-        _claimsService = claimsService;
-        _userService = userService;
-        _localizationService = localizationService;
-        _serviceProvider = serviceProvider;
-    }
-
-    public async Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels)
+    public async Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu(
+        List<NavigationMenuItemModel> menuItemModels)
     {
         // Step 1. Firstly remove all menu items from database
-        var actualMenu = await _dbContext.MenuItems.ToListAsync();
+        var actualMenu = await dbContext.MenuItems.ToListAsync();
 
-        _dbContext.MenuItems.RemoveRange(actualMenu);
-        await _dbContext.SaveChangesAsync();
+        dbContext.MenuItems.RemoveRange(actualMenu);
+        await dbContext.SaveChangesAsync();
 
         // Step 2. Traversal collection and add to database depend on menu item type
         for (var i = 0; i < menuItemModels.Count; i++)
         {
-            var menuItemBuilder = new MenuItemBuilder(_dbContext, menuItemModels[i], i);
+            var menuItemBuilder = new MenuItemBuilder(dbContext, menuItemModels[i], i);
 
             menuItemBuilder.Build();
         }
 
         return new OperationDataResult<NavigationMenuModel>(true,
-            _localizationService.GetString("NavigationMenuUpdate"));
+            localizationService.GetString("NavigationMenuUpdate"));
     }
 
     public async Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu()
     {
         try
         {
-            var menuItems = await _dbContext.MenuItems
+            var menuItems = await dbContext.MenuItems
                 .Include(x => x.MenuTemplate)
                 .ThenInclude(x => x.EformPlugin)
                 .ToListAsync();
 
-            var userClaims = await _claimsService.GetUserClaimsNames(_userService.UserId);
+            var userClaims = await claimsService.GetUserClaimsNames(userService.UserId);
 
-            if (!_userService.IsInRole(EformRole.Admin))
+            if (!userService.IsInRole(EformRole.Admin))
             {
                 menuItems = FilterMenuForUser(menuItems, userClaims);
             }
@@ -113,7 +101,7 @@ public class MenuService : IMenuService
                 {
                     Id = 1,
                     Name = "Main application",
-                    Items = _dbContext.MenuTemplates
+                    Items = dbContext.MenuTemplates
                         .Where(x => x.EformPluginId == null && !string.IsNullOrEmpty(x.DefaultLink))
                         .Select(p => new NavigationMenuTemplateItemModel
                         {
@@ -121,7 +109,7 @@ public class MenuService : IMenuService
                             Name = p.Name,
                             E2EId = p.E2EId,
                             Link = p.DefaultLink,
-                            Translations = _dbContext.MenuTemplateTranslations
+                            Translations = dbContext.MenuTemplateTranslations
                                 .Where(x => x.MenuTemplateId == p.Id)
                                 .Select(e => new NavigationMenuTranslationModel
                                 {
@@ -138,7 +126,7 @@ public class MenuService : IMenuService
                 }
             };
 
-            var enablePlugins = await _dbContext.EformPlugins
+            var enablePlugins = await dbContext.EformPlugins
                 .Where(x => x.Status == (int)PluginStatus.Enabled)
                 .ToListAsync();
 
@@ -147,8 +135,8 @@ public class MenuService : IMenuService
                 menuTemplates.AddRange(enablePlugins.Select(x => new NavigationMenuTemplateModel()
                 {
                     Id = x.Id,
-                    Name = Program.EnabledPlugins.Single(p => p.PluginId == x.PluginId).Name,// changed plugin
-                    Items = _dbContext.MenuTemplates
+                    Name = Program.EnabledPlugins.Single(p => p.PluginId == x.PluginId).Name, // changed plugin
+                    Items = dbContext.MenuTemplates
                         .Where(p => p.EformPluginId == x.Id && !string.IsNullOrEmpty(p.DefaultLink))
                         .Select(p => new NavigationMenuTemplateItemModel
                         {
@@ -156,7 +144,7 @@ public class MenuService : IMenuService
                             Name = p.Name,
                             E2EId = p.E2EId,
                             Link = p.DefaultLink,
-                            Translations = _dbContext.MenuTemplateTranslations
+                            Translations = dbContext.MenuTemplateTranslations
                                 .Where(y => y.MenuTemplateId == p.Id)
                                 .Select(e => new NavigationMenuTranslationModel
                                 {
@@ -172,7 +160,7 @@ public class MenuService : IMenuService
                 }));
             }
 
-            var securityGroupsIds = await _dbContext.MenuItemSecurityGroups
+            var securityGroupsIds = await dbContext.MenuItemSecurityGroups
                 .ToListAsync();
 
             var actualMenu = menuItems
@@ -189,7 +177,7 @@ public class MenuService : IMenuService
                     ParentId = x.ParentId,
                     Position = x.Position,
                     IsInternalLink = x.IsInternalLink,
-                    Translations = _dbContext.MenuItemTranslations
+                    Translations = dbContext.MenuItemTranslations
                         .Where(p => p.MenuItemId == x.Id)
                         .Select(p => new NavigationMenuTranslationModel
                         {
@@ -214,7 +202,7 @@ public class MenuService : IMenuService
                             RelatedTemplateItemId = p.MenuTemplateId,
                             ParentId = p.ParentId,
                             Position = p.Position,
-                            Translations = _dbContext.MenuItemTranslations
+                            Translations = dbContext.MenuItemTranslations
                                 .Where(k => k.MenuItemId == p.Id)
                                 .Select(k => new NavigationMenuTranslationModel
                                 {
@@ -224,7 +212,7 @@ public class MenuService : IMenuService
                                     Language = k.Language
                                 })
                                 .ToList(),
-                            SecurityGroupsIds = _dbContext.MenuItemSecurityGroups
+                            SecurityGroupsIds = dbContext.MenuItemSecurityGroups
                                 .Where(k => k.MenuItemId == p.Id)
                                 .Select(k => k.SecurityGroupId)
                                 .ToList(),
@@ -244,10 +232,11 @@ public class MenuService : IMenuService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<NavigationMenuModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingUserMenu"));
+                localizationService.GetString("ErrorWhileObtainingUserMenu"));
         }
     }
 
@@ -257,20 +246,20 @@ public class MenuService : IMenuService
         {
 
             // Get all user claims and filter menu for user
-            var userClaims = await _claimsService.GetUserClaimsNames(_userService.UserId);
-            var menuItemsForFilter = await _dbContext.MenuItems
+            var userClaims = await claimsService.GetUserClaimsNames(userService.UserId);
+            var menuItemsForFilter = await dbContext.MenuItems
                 .Include(x => x.MenuTemplate)
                 .ThenInclude(x => x.EformPlugin)
                 .ToListAsync();
 
-            var locale = await _userService.GetCurrentUserLocale();
+            var locale = await userService.GetCurrentUserLocale();
 
             var currentLocale = string.IsNullOrEmpty(locale)
                 ? LocaleNames.English
                 : locale;
 
 
-            if (!_userService.IsInRole(EformRole.Admin))
+            if (!userService.IsInRole(EformRole.Admin))
             {
                 menuItemsForFilter = FilterMenuForUser(menuItemsForFilter, userClaims);
             }
@@ -280,13 +269,16 @@ public class MenuService : IMenuService
                 .OrderBy(x => x.Position)
                 .Select(x => new MenuItemModel
                 {
-                    Name = _dbContext.MenuItemTranslations.Any(d => d.MenuItemId == x.Id && d.LocaleName == currentLocale)
-                        ? _dbContext.MenuItemTranslations.First(d => d.MenuItemId == x.Id && d.LocaleName == currentLocale).Name
-                        : _dbContext.MenuItemTranslations.First(d => d.MenuItemId == x.Id && d.LocaleName == "en-US").Name,
+                    Name = dbContext.MenuItemTranslations.Any(d =>
+                        d.MenuItemId == x.Id && d.LocaleName == currentLocale)
+                        ? dbContext.MenuItemTranslations
+                            .First(d => d.MenuItemId == x.Id && d.LocaleName == currentLocale).Name
+                        : dbContext.MenuItemTranslations.First(d => d.MenuItemId == x.Id && d.LocaleName == "en-US")
+                            .Name,
                     LocaleName = currentLocale,
                     E2EId = x.E2EId,
                     Link = x.Link,
-                    Guards =_dbContext.MenuTemplatePermissions
+                    Guards = dbContext.MenuTemplatePermissions
                         .Include(y => y.Permission)
                         .Where(d => d.MenuTemplateId == x.MenuTemplateId)
                         .Select(y => y.Permission.ClaimName)
@@ -300,20 +292,23 @@ public class MenuService : IMenuService
                     //     : new List<string>(),
                     Position = x.Position,
                     IsInternalLink = x.IsInternalLink,
-                    MenuItems = _dbContext.MenuItems
+                    MenuItems = dbContext.MenuItems
                         .Include(p => p.MenuTemplate)
                         .Where(p => p.ParentId == x.Id)
                         .OrderBy(p => p.Position)
                         .Select(p => new MenuItemModel
                         {
-                            Name = _dbContext.MenuItemTranslations.Any(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale)
-                                ? _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).Name
-                                : _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == "en-US").Name,
+                            Name = dbContext.MenuItemTranslations.Any(d =>
+                                d.MenuItemId == p.Id && d.LocaleName == currentLocale)
+                                ? dbContext.MenuItemTranslations
+                                    .First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).Name
+                                : dbContext.MenuItemTranslations
+                                    .First(d => d.MenuItemId == p.Id && d.LocaleName == "en-US").Name,
                             //LocaleName = _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).LocaleName,
                             LocaleName = currentLocale,
                             E2EId = p.E2EId,
                             Link = p.Link,
-                            Guards = _dbContext.MenuTemplatePermissions
+                            Guards = dbContext.MenuTemplatePermissions
                                 .Include(y => y.Permission)
                                 .Where(d => d.MenuTemplateId == p.MenuTemplateId)
                                 .Select(y => y.Permission.ClaimName)
@@ -347,7 +342,7 @@ public class MenuService : IMenuService
                     {
                         Name = d.Translations.Any(y => y.LocaleName == currentLocale)
                             ? d.Translations.First(y => y.LocaleName == currentLocale).Name
-                            :  d.Translations.First(y => y.LocaleName == "en-US").Name,
+                            : d.Translations.First(y => y.LocaleName == "en-US").Name,
                         LocaleName = currentLocale,
                         E2EId = d.E2EId,
                         Link = d.Link,
@@ -364,7 +359,7 @@ public class MenuService : IMenuService
 
             // Add user first and last name
             var rightMenuItem = orderedRightMenu.First(x => x.Name == "user");
-            rightMenuItem.Name = await _userService.GetCurrentUserFullName();
+            rightMenuItem.Name = await userService.GetCurrentUserFullName();
 
             // Create result
             var result = new MenuModel
@@ -374,7 +369,7 @@ public class MenuService : IMenuService
             };
 
             // Add menu from plugins
-            foreach (var pluginMenu in Program.EnabledPlugins.Select(plugin => plugin.HeaderMenu(_serviceProvider)))
+            foreach (var pluginMenu in Program.EnabledPlugins.Select(plugin => plugin.HeaderMenu(serviceProvider)))
             {
                 //result.LeftMenu.AddRange(pluginMenu.LeftMenu);
                 result.RightMenu.AddRange(pluginMenu.RightMenu);
@@ -384,31 +379,32 @@ public class MenuService : IMenuService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<MenuModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingUserMenu"));
+                localizationService.GetString("ErrorWhileObtainingUserMenu"));
         }
     }
 
     public async Task<OperationResult> ResetCurrentUserMenu()
     {
         // Step 1. Firstly remove all menu items from database
-        var actualMenu = await _dbContext.MenuItems.ToListAsync();
+        var actualMenu = await dbContext.MenuItems.ToListAsync();
 
-        _dbContext.MenuItems.RemoveRange(actualMenu);
-        await _dbContext.SaveChangesAsync();
+        dbContext.MenuItems.RemoveRange(actualMenu);
+        await dbContext.SaveChangesAsync();
 
         var defaultMenu = DefaultMenuStorage.GetDefaultMenu();
 
-        _dbContext.MenuItems.AddRange(defaultMenu);
-        await _dbContext.SaveChangesAsync();
+        dbContext.MenuItems.AddRange(defaultMenu);
+        await dbContext.SaveChangesAsync();
 
         foreach (var plugin in Program.EnabledPlugins)
         {
-            var pluginMenu = plugin.GetNavigationMenu(_serviceProvider).OrderBy(x => x.Position).ToList();
+            var pluginMenu = plugin.GetNavigationMenu(serviceProvider).OrderBy(x => x.Position).ToList();
 
-            var currentPosition = _dbContext.MenuItems.Where(x => x.ParentId == null).Max(x => x.Position) + 1;
+            var currentPosition = dbContext.MenuItems.Where(x => x.ParentId == null).Max(x => x.Position) + 1;
             foreach (var pluginMenuItem in pluginMenu)
             {
                 AddToDatabase(pluginMenuItem, null, currentPosition);
@@ -430,23 +426,24 @@ public class MenuService : IMenuService
                 Link = pluginMenuItem.Link,
                 Type = pluginMenuItem.Type,
                 Position = currentPosition,
-                MenuTemplateId = _dbContext.MenuTemplates.First(x => x.E2EId == pluginMenuItem.E2EId).Id,
+                MenuTemplateId = dbContext.MenuTemplates.First(x => x.E2EId == pluginMenuItem.E2EId).Id,
                 ParentId = parentId
             };
 
-            _dbContext.MenuItems.Add(newMenuItem);
-            _dbContext.SaveChanges();
+            dbContext.MenuItems.Add(newMenuItem);
+            dbContext.SaveChanges();
 
-            foreach (var translation in pluginMenuItem.Translations.Select(menuItemTranslation => new MenuItemTranslation
-                     {
-                         Language = menuItemTranslation.Language,
-                         LocaleName = menuItemTranslation.LocaleName,
-                         Name = menuItemTranslation.Name,
-                         MenuItemId = newMenuItem.Id
-                     }))
+            foreach (var translation in pluginMenuItem.Translations.Select(menuItemTranslation =>
+                         new MenuItemTranslation
+                         {
+                             Language = menuItemTranslation.Language,
+                             LocaleName = menuItemTranslation.LocaleName,
+                             Name = menuItemTranslation.Name,
+                             MenuItemId = newMenuItem.Id
+                         }))
             {
-                _dbContext.MenuItemTranslations.Add(translation);
-                _dbContext.SaveChanges();
+                dbContext.MenuItemTranslations.Add(translation);
+                dbContext.SaveChanges();
             }
         }
         else
@@ -462,19 +459,20 @@ public class MenuService : IMenuService
                 ParentId = parentId
             };
 
-            _dbContext.MenuItems.Add(newMenuItem);
-            _dbContext.SaveChanges();
+            dbContext.MenuItems.Add(newMenuItem);
+            dbContext.SaveChanges();
 
-            foreach (var translation in pluginMenuItem.Translations.Select(menuItemTranslation => new MenuItemTranslation
-                     {
-                         Language = menuItemTranslation.Language,
-                         LocaleName = menuItemTranslation.LocaleName,
-                         Name = menuItemTranslation.Name,
-                         MenuItemId = newMenuItem.Id
-                     }))
+            foreach (var translation in pluginMenuItem.Translations.Select(menuItemTranslation =>
+                         new MenuItemTranslation
+                         {
+                             Language = menuItemTranslation.Language,
+                             LocaleName = menuItemTranslation.LocaleName,
+                             Name = menuItemTranslation.Name,
+                             MenuItemId = newMenuItem.Id
+                         }))
             {
-                _dbContext.MenuItemTranslations.Add(translation);
-                _dbContext.SaveChanges();
+                dbContext.MenuItemTranslations.Add(translation);
+                dbContext.SaveChanges();
             }
 
             if (pluginMenuItem.ChildItems.Any())
@@ -494,7 +492,7 @@ public class MenuService : IMenuService
     {
         var newList = new List<MenuItem>();
 
-        var currentUser = _userService.GetCurrentUserAsync().GetAwaiter().GetResult();
+        var currentUser = userService.GetCurrentUserAsync().GetAwaiter().GetResult();
 
         foreach (var menuItem in items)
         {
@@ -571,9 +569,10 @@ public class MenuService : IMenuService
                     {
                         newList.Add(menuItem);
                     }
+
                     break;
                 case "Plugins":
-                    if (_userService.IsAdmin())
+                    if (userService.IsAdmin())
                     {
                         newList.Add(menuItem);
                     }
@@ -584,19 +583,21 @@ public class MenuService : IMenuService
                     {
                         newList.Add(menuItem);
                     }
+
                     break;
                 case "Email recipients":
                     if (claims.Contains(AuthConsts.EformClaims.EmailRecipientsClaims.Read))
                     {
                         newList.Add(menuItem);
                     }
+
                     break;
                 case "Security":
                     break;
                 case "Application settings":
                     break;
                 default:
-                    var menuItemSecurityGroups = _dbContext.MenuItemSecurityGroups
+                    var menuItemSecurityGroups = dbContext.MenuItemSecurityGroups
                         .Where(x => x.MenuItemId == menuItem.Id)
                         .Select(x => x.SecurityGroupId)
                         .ToList();
@@ -605,7 +606,8 @@ public class MenuService : IMenuService
                     {
                         foreach (var securityGroupId in menuItemSecurityGroups)
                         {
-                            if (_dbContext.SecurityGroupUsers.Any(x => x.SecurityGroupId == securityGroupId && x.EformUserId == currentUser.Id))
+                            if (dbContext.SecurityGroupUsers.Any(x =>
+                                    x.SecurityGroupId == securityGroupId && x.EformUserId == currentUser.Id))
                             {
                                 newList.Add(menuItem);
                                 break;
@@ -616,6 +618,7 @@ public class MenuService : IMenuService
                     {
                         newList.Add(menuItem);
                     }
+
                     //newList.Add(menuItem);
                     break;
             }

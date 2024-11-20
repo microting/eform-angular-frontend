@@ -24,6 +24,7 @@ SOFTWARE.
 
 using eFormAPI.Web.Infrastructure.Models;
 using Microting.eForm.Infrastructure;
+using Sentry;
 
 namespace eFormAPI.Web.Services;
 
@@ -51,48 +52,24 @@ using Infrastructure.Models.Settings.Initial;
 using Microting.eForm.Dto;
 using Microting.eForm.Infrastructure.Data.Entities;
 
-public class SettingsService : ISettingsService
+public class SettingsService(
+    ILogger<SettingsService> logger,
+    IWritableOptions<ConnectionStrings> connectionStrings,
+    IDbOptions<ApplicationSettings> applicationSettings,
+    IDbOptions<LoginPageSettings> loginPageSettings,
+    IDbOptions<HeaderSettings> headerSettings,
+    IDbOptions<EmailSettings> emailSettings,
+    IEFormCoreService coreHelper,
+    ILocalizationService localizationService,
+    IDbOptions<ConnectionStringsSdk> connectionStringsSdk,
+    BaseDbContext dbContext,
+    IDbOptions<EformTokenOptions> tokenOptions)
+    : ISettingsService
 {
-    private readonly ILogger<SettingsService> _logger;
-    private readonly ILocalizationService _localizationService;
-    private readonly IWritableOptions<ConnectionStrings> _connectionStrings;
-    private readonly IDbOptions<ApplicationSettings> _applicationSettings;
-    private readonly IDbOptions<LoginPageSettings> _loginPageSettings;
-    private readonly IDbOptions<HeaderSettings> _headerSettings;
-    private readonly IDbOptions<EmailSettings> _emailSettings;
-    private readonly IDbOptions<ConnectionStringsSdk> _connectionStringsSdk;
-    private readonly IDbOptions<EformTokenOptions> _tokenOptions;
-    private readonly IEFormCoreService _coreHelper;
-    private readonly BaseDbContext _dbContext;
-
-    public SettingsService(ILogger<SettingsService> logger,
-        IWritableOptions<ConnectionStrings> connectionStrings,
-        IDbOptions<ApplicationSettings> applicationSettings,
-        IDbOptions<LoginPageSettings> loginPageSettings,
-        IDbOptions<HeaderSettings> headerSettings,
-        IDbOptions<EmailSettings> emailSettings,
-        IEFormCoreService coreHelper,
-        ILocalizationService localizationService,
-        IDbOptions<ConnectionStringsSdk> connectionStringsSdk,
-        BaseDbContext dbContext, IDbOptions<EformTokenOptions> tokenOptions)
-    {
-        _logger = logger;
-        _connectionStrings = connectionStrings;
-        _applicationSettings = applicationSettings;
-        _loginPageSettings = loginPageSettings;
-        _headerSettings = headerSettings;
-        _emailSettings = emailSettings;
-        _coreHelper = coreHelper;
-        _localizationService = localizationService;
-        _connectionStringsSdk = connectionStringsSdk;
-        _dbContext = dbContext;
-        _tokenOptions = tokenOptions;
-    }
-
     public OperationResult ConnectionStringExist()
     {
         Log.LogEvent("SettingsService.ConnectionStringExist: called");
-        var connectionString = _connectionStringsSdk.Value.SdkConnection;
+        var connectionString = connectionStringsSdk.Value.SdkConnection;
         if (!string.IsNullOrEmpty(connectionString))
         {
             Log.LogEvent("SettingsService.ConnectionStringExist: we have the file");
@@ -101,14 +78,14 @@ public class SettingsService : ISettingsService
 
         Log.LogEvent("SettingsService.ConnectionStringExist: we don't have the file");
         return new OperationResult(false,
-            _localizationService.GetString("ConnectionStringDoesNotExist"));
+            localizationService.GetString("ConnectionStringDoesNotExist"));
     }
 
     public OperationDataResult<string> GetDefaultLocale()
     {
         try
         {
-            var locale = _applicationSettings.Value.DefaultLocale;
+            var locale = applicationSettings.Value.DefaultLocale;
             if (string.IsNullOrEmpty(locale))
             {
                 return new OperationDataResult<string>(true, "en-US");
@@ -118,7 +95,9 @@ public class SettingsService : ISettingsService
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             // We do this if any of the above fail for some reason, then we set it to default en-US
             return new OperationDataResult<string>(true, "en-US");
         }
@@ -150,10 +129,10 @@ public class SettingsService : ISettingsService
             "Convert Zero Datetime = true;SslMode=none;";
 
 
-        if (!string.IsNullOrEmpty(_connectionStringsSdk.Value.SdkConnection))
+        if (!string.IsNullOrEmpty(connectionStringsSdk.Value.SdkConnection))
         {
             return new OperationResult(false,
-                _localizationService.GetString("ConnectionStringAlreadyExist"));
+                localizationService.GetString("ConnectionStringAlreadyExist"));
         }
 
         try
@@ -169,8 +148,9 @@ public class SettingsService : ISettingsService
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception.Message);
-            _logger.LogError(exception.StackTrace);
+            SentrySdk.CaptureException(exception);
+            logger.LogError(exception.Message);
+            logger.LogTrace(exception.StackTrace);
             if (exception.InnerException != null)
             {
                 return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
@@ -205,14 +185,15 @@ public class SettingsService : ISettingsService
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception.Message);
-            _logger.LogError(exception.StackTrace);
+            SentrySdk.CaptureException(exception);
+            logger.LogError(exception.Message);
+            logger.LogError(exception.StackTrace);
             //return new OperationResult(false,
             //    _localizationService.GetString("MainConnectionStringIsInvalid"));
             if (exception.Message == "Could not create the user")
             {
                 return new OperationResult(false,
-                    _localizationService.GetString(exception.Message));
+                    localizationService.GetString(exception.Message));
             }
 
             if (exception.InnerException != null)
@@ -232,29 +213,23 @@ public class SettingsService : ISettingsService
 
             // Update Database settings
             await using var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
-            await _tokenOptions.UpdateDb((options) => { options.SigningKey = signingKey; }, dbContext);
+            await tokenOptions.UpdateDb((options) => { options.SigningKey = signingKey; }, dbContext);
 
-            await _applicationSettings.UpdateDb(
-                options =>
-                {
-                    options.DefaultLocale = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale;
-                }, dbContext);
+            await applicationSettings.UpdateDb(
+                options => { options.DefaultLocale = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale; },
+                dbContext);
 
-            await _connectionStringsSdk.UpdateDb((options) =>
-            {
-                options.SdkConnection = sdkConnectionString;
-            }, dbContext);
+            await connectionStringsSdk.UpdateDb((options) => { options.SdkConnection = sdkConnectionString; },
+                dbContext);
             // Update connection string
-            _connectionStrings.UpdateFile((options) =>
-            {
-                options.DefaultConnection = angularConnectionString;
-            });
+            connectionStrings.UpdateFile((options) => { options.DefaultConnection = angularConnectionString; });
         }
 
         catch (Exception exception)
         {
-            _logger.LogError(exception.Message);
-            _logger.LogError(exception.StackTrace);
+            SentrySdk.CaptureException(exception);
+            logger.LogError(exception.Message);
+            logger.LogError(exception.StackTrace);
             return exception.InnerException != null
                 ? new OperationResult(false, exception.Message + " - " + exception.InnerException.Message)
                 : new OperationResult(false, exception.Message);
@@ -266,17 +241,17 @@ public class SettingsService : ISettingsService
 
     public async Task<OperationResult> IntegrityCheck()
     {
-        Core core = await _coreHelper.GetCore();
+        Core core = await coreHelper.GetCore();
         MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
 
-        _logger.LogInformation("Checking uploaded data");
+        logger.LogInformation("Checking uploaded data");
         var uploadedDatas =
             await dbContext.UploadedDatas.Where(x => x.FileLocation.Contains("https://")).ToListAsync();
 
-        _logger.LogInformation($"Found {uploadedDatas.Count} uploaded data items, which needs download");
+        logger.LogInformation($"Found {uploadedDatas.Count} uploaded data items, which needs download");
         foreach (UploadedData uploadedData in uploadedDatas)
         {
-            _logger.LogInformation($"Trying to download from {uploadedData.FileLocation}");
+            logger.LogInformation($"Trying to download from {uploadedData.FileLocation}");
             await core.DownloadUploadedData(uploadedData.Id);
         }
 
@@ -285,7 +260,7 @@ public class SettingsService : ISettingsService
 
     public async Task<OperationDataResult<LanguagesModel>> GetLanguages()
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var sdkDbContext = core.DbContextHelper.GetDbContext();
         var languages = await sdkDbContext.Languages
             .AsNoTracking()
@@ -310,12 +285,12 @@ public class SettingsService : ISettingsService
 
     public async Task<OperationResult> UpdateLanguages(LanguagesModel languages)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var sdkDbContext = core.DbContextHelper.GetDbContext();
         // loop through all languages and update them accordingly
         foreach (var language in languages.Languages)
         {
-            _logger.LogInformation($"Updating language {language.Name} with id {language.Id}");
+            logger.LogInformation($"Updating language {language.Name} with id {language.Id}");
             var dbLanguage = await sdkDbContext.Languages
                 .FirstAsync(x => x.Id == language.Id);
             dbLanguage.IsActive = language.IsActive;
@@ -331,23 +306,25 @@ public class SettingsService : ISettingsService
         {
             var model = new LoginPageSettingsModel
             {
-                ImageLink = _loginPageSettings.Value.ImageLink,
-                ImageLinkVisible = _loginPageSettings.Value.ImageLinkVisible,
-                MainText = _loginPageSettings.Value.MainText,
-                MainTextVisible = _loginPageSettings.Value.MainTextVisible,
-                SecondaryText = _loginPageSettings.Value.SecondaryText,
-                SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
-                IsSMTPExists = string.IsNullOrEmpty(_emailSettings.Value.SmtpHost) &&
-                               string.IsNullOrEmpty(_emailSettings.Value.SmtpPort.ToString()),
-                IsSendGridExists = !string.IsNullOrEmpty(_emailSettings.Value.SendGridKey)
+                ImageLink = loginPageSettings.Value.ImageLink,
+                ImageLinkVisible = loginPageSettings.Value.ImageLinkVisible,
+                MainText = loginPageSettings.Value.MainText,
+                MainTextVisible = loginPageSettings.Value.MainTextVisible,
+                SecondaryText = loginPageSettings.Value.SecondaryText,
+                SecondaryTextVisible = loginPageSettings.Value.SecondaryTextVisible,
+                IsSMTPExists = string.IsNullOrEmpty(emailSettings.Value.SmtpHost) &&
+                               string.IsNullOrEmpty(emailSettings.Value.SmtpPort.ToString()),
+                IsSendGridExists = !string.IsNullOrEmpty(emailSettings.Value.SendGridKey)
             };
             return new OperationDataResult<LoginPageSettingsModel>(true, model);
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<LoginPageSettingsModel>(false,
-                _localizationService.GetString("CantObtainSettingsFromWebConfig"));
+                localizationService.GetString("CantObtainSettingsFromWebConfig"));
         }
     }
 
@@ -357,19 +334,21 @@ public class SettingsService : ISettingsService
         {
             var model = new HeaderSettingsModel
             {
-                ImageLink = _headerSettings.Value.ImageLink,
-                ImageLinkVisible = _headerSettings.Value.ImageLinkVisible,
-                MainText = _headerSettings.Value.MainText,
-                MainTextVisible = _headerSettings.Value.MainTextVisible,
-                SecondaryText = _headerSettings.Value.SecondaryText,
-                SecondaryTextVisible = _headerSettings.Value.SecondaryTextVisible
+                ImageLink = headerSettings.Value.ImageLink,
+                ImageLinkVisible = headerSettings.Value.ImageLinkVisible,
+                MainText = headerSettings.Value.MainText,
+                MainTextVisible = headerSettings.Value.MainTextVisible,
+                SecondaryText = headerSettings.Value.SecondaryText,
+                SecondaryTextVisible = headerSettings.Value.SecondaryTextVisible
             };
 
             return new OperationDataResult<HeaderSettingsModel>(true, model);
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<HeaderSettingsModel>(false, "Can't obtain settings from web.config");
         }
     }
@@ -392,46 +371,47 @@ public class SettingsService : ISettingsService
 
     public OperationDataResult<string> GetLatestVersion()
     {
-        return new OperationDataResult<string>(true, PluginHelper.GetLatestRepositoryVersion("microting", "eform-angular-frontend"));
+        return new OperationDataResult<string>(true,
+            PluginHelper.GetLatestRepositoryVersion("microting", "eform-angular-frontend"));
     }
 
     public async Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings()
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
             var model = new AdminSettingsModel
             {
                 SMTPSettingsModel = new SMTPSettingsModel
                 {
-                    Host = _emailSettings.Value.SmtpHost,
-                    Port = _emailSettings.Value.SmtpPort.ToString(),
-                    Login = _emailSettings.Value.Login,
-                    Password = _emailSettings.Value.Password
+                    Host = emailSettings.Value.SmtpHost,
+                    Port = emailSettings.Value.SmtpPort.ToString(),
+                    Login = emailSettings.Value.Login,
+                    Password = emailSettings.Value.Password
                 },
                 SendGridSettingsModel = new SendGridSettingsModel
                 {
-                    ApiKey = _emailSettings.Value.SendGridKey
+                    ApiKey = emailSettings.Value.SendGridKey
                 },
                 HeaderSettingsModel = new HeaderSettingsModel
                 {
-                    ImageLink = _headerSettings.Value.ImageLink,
-                    ImageLinkVisible = _headerSettings.Value.ImageLinkVisible,
-                    MainText = _headerSettings.Value.MainText,
-                    MainTextVisible = _headerSettings.Value.MainTextVisible,
-                    SecondaryText = _headerSettings.Value.SecondaryText,
-                    SecondaryTextVisible = _headerSettings.Value.SecondaryTextVisible
+                    ImageLink = headerSettings.Value.ImageLink,
+                    ImageLinkVisible = headerSettings.Value.ImageLinkVisible,
+                    MainText = headerSettings.Value.MainText,
+                    MainTextVisible = headerSettings.Value.MainTextVisible,
+                    SecondaryText = headerSettings.Value.SecondaryText,
+                    SecondaryTextVisible = headerSettings.Value.SecondaryTextVisible
                 },
                 LoginPageSettingsModel = new LoginPageSettingsModel
                 {
-                    ImageLink = _loginPageSettings.Value.ImageLink,
-                    ImageLinkVisible = _loginPageSettings.Value.ImageLinkVisible,
-                    MainText = _loginPageSettings.Value.MainText,
-                    MainTextVisible = _loginPageSettings.Value.MainTextVisible,
-                    SecondaryText = _loginPageSettings.Value.SecondaryText,
-                    SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
-                    IsSendGridExists = !string.IsNullOrEmpty(_emailSettings.Value.SendGridKey)
+                    ImageLink = loginPageSettings.Value.ImageLink,
+                    ImageLinkVisible = loginPageSettings.Value.ImageLinkVisible,
+                    MainText = loginPageSettings.Value.MainText,
+                    MainTextVisible = loginPageSettings.Value.MainTextVisible,
+                    SecondaryText = loginPageSettings.Value.SecondaryText,
+                    SecondaryTextVisible = loginPageSettings.Value.SecondaryTextVisible,
+                    IsSendGridExists = !string.IsNullOrEmpty(emailSettings.Value.SendGridKey)
                 },
                 SdkSettingsModel = new SDKSettingsModel
                 {
@@ -447,9 +427,11 @@ public class SettingsService : ISettingsService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<AdminSettingsModel>(false,
-                _localizationService.GetString("CantObtainSettingsFromWebConfig"));
+                localizationService.GetString("CantObtainSettingsFromWebConfig"));
         }
     }
 
@@ -457,22 +439,22 @@ public class SettingsService : ISettingsService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             if (adminSettingsModel.SendGridSettingsModel.ApiKey != null)
             {
-                await _emailSettings.UpdateDb(option =>
+                await emailSettings.UpdateDb(option =>
                 {
                     // option.SmtpHost = adminSettingsModel.SMTPSettingsModel.Host;
                     // option.SmtpPort = int.Parse(adminSettingsModel.SMTPSettingsModel.Port);
                     // option.Login = adminSettingsModel.SMTPSettingsModel.Login;
                     // option.Password = adminSettingsModel.SMTPSettingsModel.Password;
                     option.SendGridKey = adminSettingsModel.SendGridSettingsModel.ApiKey;
-                }, _dbContext);
+                }, dbContext);
             }
 
             if (adminSettingsModel.HeaderSettingsModel != null)
             {
-                await _headerSettings.UpdateDb(option =>
+                await headerSettings.UpdateDb(option =>
                 {
                     option.ImageLink = adminSettingsModel.HeaderSettingsModel.ImageLink;
                     option.ImageLinkVisible = adminSettingsModel.HeaderSettingsModel.ImageLinkVisible;
@@ -480,12 +462,12 @@ public class SettingsService : ISettingsService
                     option.MainTextVisible = adminSettingsModel.HeaderSettingsModel.MainTextVisible;
                     option.SecondaryText = adminSettingsModel.HeaderSettingsModel.SecondaryText;
                     option.SecondaryTextVisible = adminSettingsModel.HeaderSettingsModel.SecondaryTextVisible;
-                }, _dbContext);
+                }, dbContext);
             }
 
             if (adminSettingsModel.LoginPageSettingsModel != null)
             {
-                await _loginPageSettings.UpdateDb(option =>
+                await loginPageSettings.UpdateDb(option =>
                 {
                     option.ImageLink = adminSettingsModel.LoginPageSettingsModel.ImageLink;
                     option.ImageLinkVisible = adminSettingsModel.LoginPageSettingsModel.ImageLinkVisible;
@@ -493,7 +475,7 @@ public class SettingsService : ISettingsService
                     option.MainTextVisible = adminSettingsModel.LoginPageSettingsModel.MainTextVisible;
                     option.SecondaryText = adminSettingsModel.LoginPageSettingsModel.SecondaryText;
                     option.SecondaryTextVisible = adminSettingsModel.LoginPageSettingsModel.SecondaryTextVisible;
-                }, _dbContext);
+                }, dbContext);
             }
 
             if (!string.IsNullOrEmpty(adminSettingsModel.SiteLink))
@@ -548,12 +530,14 @@ public class SettingsService : ISettingsService
             //     await core.SetSdkSetting(Settings.s3Endpoint, adminSettingsModel.S3SettingsModel.S3Endpoint);
             // }
 
-            return new OperationResult(true, _localizationService.GetString("SettingsUpdatedSuccessfully"));
+            return new OperationResult(true, localizationService.GetString("SettingsUpdatedSuccessfully"));
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
-            return new OperationResult(false, _localizationService.GetString("CantUpdateSettingsInWebConfig"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("CantUpdateSettingsInWebConfig"));
         }
     }
 
@@ -563,7 +547,7 @@ public class SettingsService : ISettingsService
     {
         try
         {
-            await _loginPageSettings.UpdateDb((option) =>
+            await loginPageSettings.UpdateDb((option) =>
             {
                 option.ImageLink = "";
                 option.ImageLinkVisible = true;
@@ -571,12 +555,14 @@ public class SettingsService : ISettingsService
                 option.MainTextVisible = true;
                 option.SecondaryText = "No more paper-forms and back-office data entry";
                 option.SecondaryTextVisible = true;
-            }, _dbContext);
+            }, dbContext);
             return new OperationResult(true, "Login page settings have been reset successfully");
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false, "Can't update settings in web.config");
         }
     }
@@ -585,7 +571,7 @@ public class SettingsService : ISettingsService
     {
         try
         {
-            await _headerSettings.UpdateDb((option) =>
+            await headerSettings.UpdateDb((option) =>
             {
                 option.ImageLink = "";
                 option.ImageLinkVisible = true;
@@ -593,12 +579,14 @@ public class SettingsService : ISettingsService
                 option.MainTextVisible = true;
                 option.SecondaryText = "No more paper-forms and back-office data entry";
                 option.SecondaryTextVisible = true;
-            }, _dbContext);
+            }, dbContext);
             return new OperationResult(true, "Header settings have been reset successfully");
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false, "Can't update settings in web.config");
         }
     }

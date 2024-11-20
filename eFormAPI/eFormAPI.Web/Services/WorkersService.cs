@@ -23,6 +23,9 @@ SOFTWARE.
 */
 
 
+using Microsoft.Extensions.Logging;
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using Microting.EformAngularFrontendBase.Infrastructure.Const;
@@ -38,22 +41,16 @@ using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-public class WorkersService : IWorkersService
+public class WorkersService(
+    IEFormCoreService coreHelper,
+    ILocalizationService localizationService,
+    ILogger<WorkersService> logger)
+    : IWorkersService
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-
-    public WorkersService(IEFormCoreService coreHelper,
-        ILocalizationService localizationService)
-    {
-        _coreHelper = coreHelper;
-        _localizationService = localizationService;
-    }
-
     [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
     public async Task<OperationDataResult<List<WorkerDto>>> Index()
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var workersDto = await core.Advanced_WorkerReadAll("not_removed", null, null);
 
         return new OperationDataResult<List<WorkerDto>>(true, workersDto);
@@ -61,7 +58,7 @@ public class WorkersService : IWorkersService
 
     public async Task<OperationDataResult<WorkerDto>> Read(int id)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var workerDto = await core.Advanced_WorkerRead(id);
 
         return new OperationDataResult<WorkerDto>(true, workerDto);
@@ -71,18 +68,24 @@ public class WorkersService : IWorkersService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var workerDto = await core.Advanced_WorkerRead(workerModel.Id);
             var isUpdated = await core.Advanced_WorkerUpdate(workerModel.Id, workerModel.UserFirstName,
                 workerModel.UserLastName, workerDto.Email, "");
 
             return isUpdated
-                ? new OperationResult(true, _localizationService.GetStringWithFormat("WorkerParamWasUpdated", workerModel.Id))
-                : new OperationResult(false, _localizationService.GetStringWithFormat("WorkerParamCantBeUpdated", workerModel.Id));
+                ? new OperationResult(true,
+                    localizationService.GetStringWithFormat("WorkerParamWasUpdated", workerModel.Id))
+                : new OperationResult(false,
+                    localizationService.GetStringWithFormat("WorkerParamCantBeUpdated", workerModel.Id));
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetStringWithFormat("WorkerParamCantBeUpdated", workerModel.Id));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false,
+                localizationService.GetStringWithFormat("WorkerParamCantBeUpdated", workerModel.Id));
         }
     }
 
@@ -90,7 +93,7 @@ public class WorkersService : IWorkersService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var workerDto = await core.Advanced_WorkerCreate(model.FirstName, model.LastName,
                 model.SiteId + "." + model.CustomerNo + "@invalid.invalid", "");
             var createdWorker =
@@ -100,11 +103,14 @@ public class WorkersService : IWorkersService
                     SiteName = ""
                 }, workerDto);
 
-            return new OperationResult(true, _localizationService.GetString("WorkerWasSuccessfullyCreated"));
+            return new OperationResult(true, localizationService.GetString("WorkerWasSuccessfullyCreated"));
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingWorker"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileCreatingWorker"));
         }
     }
 
@@ -113,29 +119,33 @@ public class WorkersService : IWorkersService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var workerDto = await core.Advanced_WorkerRead(id);
 
             if (workerDto.Equals(null))
             {
                 return new OperationResult(false,
-                    _localizationService.GetStringWithFormat("SiteWithIdCouldNotBeDeleted", id));
+                    localizationService.GetStringWithFormat("SiteWithIdCouldNotBeDeleted", id));
             }
 
             return await core.Advanced_WorkerDelete(id)
                 ? new OperationResult(true,
-                    _localizationService.GetStringWithFormat(
+                    localizationService.GetStringWithFormat(
                         "WorkerParamDeletedSuccessfully",
                         workerDto.FirstName,
                         workerDto.LastName))
                 : new OperationResult(false,
-                    _localizationService.GetStringWithFormat("WorkerParamCantBeDeleted", workerDto.FirstName, workerDto.LastName));
+                    localizationService.GetStringWithFormat("WorkerParamCantBeDeleted", workerDto.FirstName,
+                        workerDto.LastName));
         }
 
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetStringWithFormat("SiteWithIdCouldNotBeDeleted", id));
+                localizationService.GetStringWithFormat("SiteWithIdCouldNotBeDeleted", id));
         }
     }
 }

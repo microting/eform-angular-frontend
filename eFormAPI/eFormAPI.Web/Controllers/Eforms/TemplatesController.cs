@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microsoft.Extensions.Logging;
+using Sentry;
+
 namespace eFormAPI.Web.Controllers.Eforms;
 
 using System;
@@ -38,25 +41,22 @@ using Microting.EformAngularFrontendBase.Infrastructure.Const;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 [Authorize]
-public class TemplatesController : Controller
+public class TemplatesController(ITemplatesService templatesService, ILogger<TemplatesController> logger)
+    : Controller
 {
-    private readonly ITemplatesService _templatesService;
-
-    public TemplatesController(ITemplatesService templatesService)
-    {
-        _templatesService = templatesService;
-    }
-
     [HttpPost]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
     public async Task<IActionResult> Index([FromBody] TemplateRequestModel templateRequestModel)
     {
         try
         {
-            return Ok(await _templatesService.Index(templateRequestModel));
+            return Ok(await templatesService.Index(templateRequestModel));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return Unauthorized();
         }
     }
@@ -65,7 +65,7 @@ public class TemplatesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
     public async Task<OperationResult> Create([FromBody] EFormXmlModel eFormXmlModel)
     {
-        return await _templatesService.Create(eFormXmlModel);
+        return await templatesService.Create(eFormXmlModel);
     }
 
     [HttpPost]
@@ -73,7 +73,7 @@ public class TemplatesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
     public async Task<OperationResult> Import(EformExcelUploadModel uploadModel)
     {
-        return await _templatesService.Import(uploadModel.File.OpenReadStream());
+        return await templatesService.Import(uploadModel.File.OpenReadStream());
     }
 
     [HttpPost]
@@ -81,7 +81,7 @@ public class TemplatesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
     public async Task<OperationDataResult<int>> Duplicate([FromBody]TemplateDuplicateRequestModel requestModel)
     {
-        return await _templatesService.Duplicate(requestModel);
+        return await templatesService.Duplicate(requestModel);
     }
 
     [HttpGet]
@@ -91,10 +91,13 @@ public class TemplatesController : Controller
     {
         try
         {
-            return Ok(await _templatesService.Get(id));
+            return Ok(await templatesService.Get(id));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return Unauthorized();
         }
     }
@@ -103,7 +106,7 @@ public class TemplatesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Delete)]
     public async Task<OperationResult> Delete(int id)
     {
-        return await _templatesService.Delete(id);
+        return await templatesService.Delete(id);
     }
 
     [HttpGet]
@@ -113,10 +116,13 @@ public class TemplatesController : Controller
     {
         try
         {
-            return Ok(await _templatesService.GetFields(id));
+            return Ok(await templatesService.GetFields(id));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return Unauthorized();
         }
     }
@@ -125,13 +131,13 @@ public class TemplatesController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingUpdate)]
     public async Task<OperationResult> Deploy([FromBody] DeployModel deployModel)
     {
-        return await _templatesService.Deploy(deployModel);
+        return await templatesService.Deploy(deployModel);
     }
 
     [HttpGet]
     [Route("api/templates/common-dictionary-templates")]
     public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetCommonDictionaryTemplates(string nameFilter, int idFilter)
     {
-        return await _templatesService.GetDictionaryTemplates(nameFilter, idFilter);
+        return await templatesService.GetDictionaryTemplates(nameFilter, idFilter);
     }
 }

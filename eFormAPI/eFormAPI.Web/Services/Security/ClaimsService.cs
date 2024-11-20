@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Sentry;
+
 namespace eFormAPI.Web.Services.Security;
 
 using Cache.AuthCache;
@@ -43,27 +45,17 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 
-public class ClaimsService : IClaimsService
+public class ClaimsService(
+    BaseDbContext dbContext,
+    IAuthCacheService authCacheService,
+    ILogger<ClaimsService> logger)
+    : IClaimsService
 {
-    private readonly BaseDbContext _dbContext;
-    private readonly IAuthCacheService _authCacheService;
-    private readonly ILogger<ClaimsService> _logger;
-
-    public ClaimsService(
-        BaseDbContext dbContext,
-        IAuthCacheService authCacheService,
-        ILogger<ClaimsService> logger)
-    {
-        _dbContext = dbContext;
-        _authCacheService = authCacheService;
-        _logger = logger;
-    }
-
     public async Task UpdateAuthenticatedUsers(List<int> securityGroups)
     {
         try
         {
-            var groupUsers = await _dbContext.SecurityGroupUsers
+            var groupUsers = await dbContext.SecurityGroupUsers
                 .AsNoTracking()
                 .Where(x => securityGroups.Contains(x.SecurityGroupId))
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -79,7 +71,7 @@ public class ClaimsService : IClaimsService
             foreach (var user in groupUsers)
             {
                 // try to get auth item
-                var auth = _authCacheService.TryGetValue(user.UserId);
+                var auth = authCacheService.TryGetValue(user.UserId);
 
                 if (auth != null)
                 {
@@ -89,13 +81,15 @@ public class ClaimsService : IClaimsService
 
                     auth.Claims = claims;
                     auth.TimeStamp = timeStamp;
-                    _authCacheService.Set(auth, user.UserId);
+                    authCacheService.Set(auth, user.UserId);
                 }
             }
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             throw;
         }
     }
@@ -120,7 +114,9 @@ public class ClaimsService : IClaimsService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             throw;
         }
     }
@@ -130,13 +126,13 @@ public class ClaimsService : IClaimsService
         try
         {
             var claims = new List<Claim>();
-            var groups = _dbContext.SecurityGroupUsers
+            var groups = dbContext.SecurityGroupUsers
                 .Where(x => x.EformUserId == userId)
                 .Select(x => x.SecurityGroupId)
                 .ToList();
             if (groups.Any())
             {
-                var claimNames = _dbContext.GroupPermissions
+                var claimNames = dbContext.GroupPermissions
                     .Where(x => groups.Contains(x.SecurityGroupId))
                     .Select(x => x.Permission.ClaimName)
                     .ToList();
@@ -152,7 +148,9 @@ public class ClaimsService : IClaimsService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             throw;
         }
     }
@@ -172,7 +170,9 @@ public class ClaimsService : IClaimsService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             throw;
         }
     }
@@ -266,7 +266,7 @@ public class ClaimsService : IClaimsService
     {
         var claims = new List<Claim>();
 
-        foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int)PluginStatus.Enabled).ToList())
+        foreach (var eformPlugin in dbContext.EformPlugins.Where(p => p.Status == (int)PluginStatus.Enabled).ToList())
         {
             var permissionManager = await GetPluginPermissionsManager(eformPlugin.Id);
 
@@ -283,7 +283,7 @@ public class ClaimsService : IClaimsService
     {
         var claims = new List<Claim>();
 
-        foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int)PluginStatus.Enabled).ToList())
+        foreach (var eformPlugin in dbContext.EformPlugins.Where(p => p.Status == (int)PluginStatus.Enabled).ToList())
         {
             var permissionManager = await GetPluginPermissionsManager(eformPlugin.Id);
 
@@ -327,7 +327,7 @@ public class ClaimsService : IClaimsService
     public async Task<PluginPermissionsManager> GetPluginPermissionsManager(int pluginId)
     {
         var loadedPlugins = PluginHelper.GetAllPlugins();
-        var eformPlugin = await _dbContext.EformPlugins.FirstOrDefaultAsync(p => p.Id == pluginId);
+        var eformPlugin = await dbContext.EformPlugins.FirstOrDefaultAsync(p => p.Id == pluginId);
         var loadedPlugin = loadedPlugins.FirstOrDefault(x => x.PluginId == eformPlugin.PluginId);
 
         return loadedPlugin?.GetPermissionsManager(eformPlugin.ConnectionString);

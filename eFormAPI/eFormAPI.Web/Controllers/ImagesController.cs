@@ -36,18 +36,11 @@ namespace eFormAPI.Web.Controllers;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 
 [Authorize]
-public class ImagesController : Controller
+public class ImagesController(
+    IEFormCoreService coreHelper,
+    ILocalizationService localizationService)
+    : Controller
 {
-    private readonly ILocalizationService _localizationService;
-    private readonly IEFormCoreService _coreHelper;
-
-    public ImagesController(IEFormCoreService coreHelper,
-        ILocalizationService localizationService)
-    {
-        _coreHelper = coreHelper;
-        _localizationService = localizationService;
-    }
-
     [HttpGet]
     [Route("api/images/eform-images")]
     public async Task<IActionResult> GetImage(string fileName)
@@ -61,7 +54,7 @@ public class ImagesController : Controller
         }
         string fileType = $"image/{ext}";
 
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
 
         if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
         {
@@ -95,7 +88,7 @@ public class ImagesController : Controller
         }
 
         string fileType = $"image/{ext}";
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
 
         if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
         {
@@ -125,7 +118,7 @@ public class ImagesController : Controller
         var saveFolder = PathHelper.GetEformLoginPageSettingsImagesPath();
         if (string.IsNullOrEmpty(saveFolder))
         {
-            return BadRequest(_localizationService.GetString("FolderError"));
+            return BadRequest(localizationService.GetString("FolderError"));
         }
         Directory.CreateDirectory(saveFolder);
 
@@ -135,7 +128,7 @@ public class ImagesController : Controller
             await using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
-                var core = await _coreHelper.GetCore();
+                var core = await coreHelper.GetCore();
                 if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                 {
                     await core.PutFileToStorageSystem(filePath, file.FileName);
@@ -148,7 +141,7 @@ public class ImagesController : Controller
         {
             return Ok();
         }
-        return BadRequest(_localizationService.GetString("InvalidRequest"));
+        return BadRequest(localizationService.GetString("InvalidRequest"));
     }
 
     [HttpPost]
@@ -160,7 +153,7 @@ public class ImagesController : Controller
         var saveFolder = PathHelper.GetEformSettingsImagesPath();
         if (string.IsNullOrEmpty(saveFolder))
         {
-            return BadRequest(_localizationService.GetString("FolderError"));
+            return BadRequest(localizationService.GetString("FolderError"));
         }
         Directory.CreateDirectory(saveFolder);
 
@@ -170,7 +163,7 @@ public class ImagesController : Controller
             await using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
-                var core = await _coreHelper.GetCore();
+                var core = await coreHelper.GetCore();
                 if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                 {
                     await core.PutFileToStorageSystem(filePath, file.FileName);
@@ -183,6 +176,6 @@ public class ImagesController : Controller
         {
             return Ok();
         }
-        return BadRequest(_localizationService.GetString("InvalidRequest"));
+        return BadRequest(localizationService.GetString("InvalidRequest"));
     }
 }

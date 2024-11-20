@@ -27,18 +27,14 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 
-public abstract class AbstractBehavior
+public abstract class AbstractBehavior(
+    BaseDbContext dbContext,
+    NavigationMenuItemModel menuItemModel,
+    int? parentId = null)
 {
-    protected readonly BaseDbContext _dbContext;
-    protected readonly int? _parentId;
-    public NavigationMenuItemModel MenuItemModel { get; set; }
-
-    public AbstractBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null)
-    {
-        MenuItemModel = menuItemModel;
-        _dbContext = dbContext;
-        _parentId = parentId;
-    }
+    protected readonly BaseDbContext DbContext = dbContext;
+    protected readonly int? ParentId = parentId;
+    public NavigationMenuItemModel MenuItemModel { get; set; } = menuItemModel;
 
     public abstract bool IsExecute();
 
@@ -56,8 +52,8 @@ public abstract class AbstractBehavior
                 Language = translationModel.Language
             };
 
-            _dbContext.MenuItemTranslations.Add(menuItemTranslation);
-            _dbContext.SaveChanges();
+            DbContext.MenuItemTranslations.Add(menuItemTranslation);
+            DbContext.SaveChanges();
         }
     }
 

@@ -23,6 +23,9 @@ SOFTWARE.
 */
 
 
+using Microsoft.Extensions.Logging;
+using Sentry;
+
 namespace eFormAPI.Web.Controllers.Eforms;
 
 using System;
@@ -36,15 +39,9 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.EformAngularFrontendBase.Infrastructure.Const;
 
 [Authorize]
-public class AudioController : Controller
+public class AudioController(IEFormCoreService coreHelper, ILogger<AudioController> logger)
+    : Controller
 {
-    private readonly IEFormCoreService _coreHelper;
-
-    public AudioController(IEFormCoreService coreHelper)
-    {
-        _coreHelper = coreHelper;
-    }
-
     [HttpGet]
     [Route("api/audio/eform-audio")]
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
@@ -52,7 +49,7 @@ public class AudioController : Controller
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
             if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
             {
@@ -79,9 +76,12 @@ public class AudioController : Controller
             Response.Headers.Remove("Cache-Control");
             return File(stream, "audio/wav");
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            return NotFound($"Trying to find file at location: {fileName}, exception is: {ex.Message}");
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return NotFound($"Trying to find file at location: {fileName}, exception is: {e.Message}");
         }
     }
 }

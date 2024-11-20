@@ -39,46 +39,35 @@ using System.Threading.Tasks;
 using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 
-public class UserService : IUserService
+public class UserService(
+    BaseDbContext dbContext,
+    UserManager<EformUser> userManager,
+    IHttpContextAccessor httpAccessor,
+    IEFormCoreService coreHelper)
+    : IUserService
 {
-    private readonly UserManager<EformUser> _userManager;
-    private readonly IHttpContextAccessor _httpAccessor;
-    private readonly BaseDbContext _dbContext;
-    private readonly IEFormCoreService _coreHelper;
-
-    public UserService(BaseDbContext dbContext,
-        UserManager<EformUser> userManager,
-        IHttpContextAccessor httpAccessor,
-        IEFormCoreService coreHelper)
-    {
-        _userManager = userManager;
-        _httpAccessor = httpAccessor;
-        _dbContext = dbContext;
-        _coreHelper = coreHelper;
-    }
-
     public async Task<EformUser> GetByIdAsync(int id)
     {
-        return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+        return await dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<EformUser> GetByUsernameAsync(string username)
     {
-        return await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == username);
+        return await dbContext.Users.FirstOrDefaultAsync(x => x.UserName == username);
     }
 
     public int UserId
     {
         get
         {
-            var value = _httpAccessor?.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var value = httpAccessor?.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
             return value == null ? 0 : int.Parse(value);
         }
     }
 
-    public string Role => _httpAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Role);
+    public string Role => httpAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Role);
 
-    public bool IsInRole(string role) => _httpAccessor.HttpContext.User.IsInRole(role);
+    public bool IsInRole(string role) => httpAccessor.HttpContext.User.IsInRole(role);
 
     public bool IsAdmin()
     {
@@ -87,7 +76,7 @@ public class UserService : IUserService
 
     public async Task<EformUser> GetCurrentUserAsync()
     {
-        return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == UserId);
+        return await dbContext.Users.FirstOrDefaultAsync(x => x.Id == UserId);
     }
 
     public async Task<TimeZoneInfo> GetCurrentUserTimeZoneInfo()
@@ -103,7 +92,7 @@ public class UserService : IUserService
     public async Task<TimeZoneInfo> GetTimeZoneInfo(int userId)
     {
 
-        var timeZone = await _dbContext.Users
+        var timeZone = await dbContext.Users
             .AsNoTracking()
             .Where(x => x.Id == userId)
             .Select(x => x.TimeZone)
@@ -139,7 +128,7 @@ public class UserService : IUserService
 
     public async Task<string> GetUserLocale(int userId)
     {
-        var locale = await _dbContext.Users
+        var locale = await dbContext.Users
             .AsNoTracking()
             .Where(x => x.Id == userId)
             .Select(x => x.Locale)
@@ -165,7 +154,7 @@ public class UserService : IUserService
 
     public async Task<string> GetUserFormats(int userId)
     {
-        var formats = await _dbContext.Users
+        var formats = await dbContext.Users
             .AsNoTracking()
             .Where(x => x.Id == userId)
             .Select(x => x.Formats)
@@ -181,20 +170,20 @@ public class UserService : IUserService
 
     public Task AddPasswordAsync(EformUser user, string password)
     {
-        return _userManager.AddPasswordAsync(user, password);
+        return userManager.AddPasswordAsync(user, password);
     }
 
     public async Task AddToRoleAsync(EformUser user, string role)
     {
-        if (!await _userManager.IsInRoleAsync(user, role))
+        if (!await userManager.IsInRoleAsync(user, role))
         {
-            await _userManager.AddToRoleAsync(user, role);
+            await userManager.AddToRoleAsync(user, role);
         }
     }
 
     public async Task<string> GetFullNameUserByUserIdAsync(int userId)
     {
-        return await _dbContext.Users
+        return await dbContext.Users
             .AsNoTracking()
             .Where(x => x.Id == userId)
             .Select(x => $"{x.FirstName} {x.LastName}")
@@ -213,7 +202,7 @@ public class UserService : IUserService
 
     public async Task<Language> GetLanguageByUserIdAsync(int userId)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var locale = await GetUserLocale(userId);
         var sdkDbContext = core.DbContextHelper.GetDbContext();
         var language = await sdkDbContext.Languages
@@ -236,7 +225,7 @@ public class UserService : IUserService
 
     public async Task<List<Language>> GetActiveLanguages()
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var sdkDbContext = core.DbContextHelper.GetDbContext();
         var languages = await sdkDbContext.Languages
             .AsNoTracking()

@@ -37,21 +37,14 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 [Authorize]
 [Route("api/selectable-groups")]
-public class EntitySelectController : Controller
+public class EntitySelectController(IEntitySelectService entitySelectService) : Controller
 {
-    private readonly IEntitySelectService _entitySelectService;
-
-    public EntitySelectController(IEntitySelectService entitySelectService)
-    {
-        _entitySelectService = entitySelectService;
-    }
-
     [HttpPost]
     [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
     public Task<OperationDataResult<Paged<EntityGroup>>> Index(
         [FromBody] AdvEntitySelectableGroupListRequestModel requestModel)
     {
-        return _entitySelectService.Index(requestModel);
+        return entitySelectService.Index(requestModel);
     }
 
     [HttpPost]
@@ -59,7 +52,7 @@ public class EntitySelectController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Create)]
     public Task<OperationResult> Create([FromBody] AdvEntitySelectableGroupEditModel editModel)
     {
-        return _entitySelectService.Create(editModel);
+        return entitySelectService.Create(editModel);
     }
         
     [HttpGet]
@@ -67,7 +60,7 @@ public class EntitySelectController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
     public Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
     {
-        return _entitySelectService.Read(entityGroupUid);
+        return entitySelectService.Read(entityGroupUid);
     }
 
     [HttpPost]
@@ -75,7 +68,7 @@ public class EntitySelectController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Update)]
     public Task<OperationResult> Update([FromBody] AdvEntitySelectableGroupEditModel editModel)
     {
-        return _entitySelectService.Update(editModel);
+        return entitySelectService.Update(editModel);
     }
         
     [HttpGet]
@@ -83,7 +76,7 @@ public class EntitySelectController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Delete)]
     public Task<OperationResult> Delete(string entityGroupUid)
     {
-        return _entitySelectService.Delete(entityGroupUid);
+        return entitySelectService.Delete(entityGroupUid);
     }
 
     [HttpGet]
@@ -91,7 +84,7 @@ public class EntitySelectController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
     public Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid)
     {
-        return _entitySelectService.GetEntityGroupDictionary(entityGroupUid);
+        return entitySelectService.GetEntityGroupDictionary(entityGroupUid);
     }
 
 
@@ -99,6 +92,6 @@ public class EntitySelectController : Controller
     [Route("dict")]
     public Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary([FromQuery] string searchString)
     {
-        return _entitySelectService.GetEntityGroupsInDictionary(searchString);
+        return entitySelectService.GetEntityGroupsInDictionary(searchString);
     }
 }

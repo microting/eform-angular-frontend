@@ -22,6 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microsoft.Extensions.Logging;
+using Sentry;
+using ILogger = Amazon.Runtime.Internal.Util.ILogger;
+
 namespace eFormAPI.Web.Services;
 
 using System;
@@ -36,29 +40,20 @@ using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eForm.Infrastructure.Constants;
 
-public class TemplateColumnsService : ITemplateColumnsService
+public class TemplateColumnsService(
+    ILocalizationService localizationService,
+    IUserService userService,
+    IEFormCoreService coreHelper,
+    ILogger<TemplateColumnsService> logger)
+    : ITemplateColumnsService
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-    private readonly IUserService _userService;
-
-    public TemplateColumnsService(ILocalizationService localizationService,
-        IUserService userService,
-        IEFormCoreService coreHelper)
-    {
-        _localizationService = localizationService;
-        _userService = userService;
-        _coreHelper = coreHelper;
-    }
-
-
     public async Task<OperationDataResult<List<TemplateColumnModel>>> GetAvailableColumns(int templateId)
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
-            var language = await _userService.GetCurrentUserLanguage();
+            var language = await userService.GetCurrentUserLanguage();
             var fields = await core.Advanced_TemplateFieldReadAll(templateId, language);
             var templateColumns = new List<TemplateColumnModel>();
             foreach (var field in fields)
@@ -78,10 +73,13 @@ public class TemplateColumnsService : ITemplateColumnsService
 
             return new OperationDataResult<List<TemplateColumnModel>>(true, templateColumns);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<TemplateColumnModel>>(false,
-                _localizationService.GetString("ErrorWhileObtainColumns"));
+                localizationService.GetString("ErrorWhileObtainColumns"));
         }
     }
 
@@ -90,10 +88,10 @@ public class TemplateColumnsService : ITemplateColumnsService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
             await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
-            var language = await _userService.GetCurrentUserLanguage();
+            var language = await userService.GetCurrentUserLanguage();
             var template = await core.TemplateItemRead(templateId, language);
             var model = new DisplayTemplateColumnsModel()
             {
@@ -112,10 +110,13 @@ public class TemplateColumnsService : ITemplateColumnsService
 
             return new OperationDataResult<DisplayTemplateColumnsModel>(true, model);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<DisplayTemplateColumnsModel>(false,
-                _localizationService.GetString("ErrorWhileObtainColumns"));
+                localizationService.GetString("ErrorWhileObtainColumns"));
         }
     }
 
@@ -123,8 +124,8 @@ public class TemplateColumnsService : ITemplateColumnsService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
-            var language = await _userService.GetCurrentUserLanguage();
+            var core = await coreHelper.GetCore();
+            var language = await userService.GetCurrentUserLanguage();
             var columnsList = new List<int?>
             {
                 model.FieldId1,
@@ -153,12 +154,15 @@ public class TemplateColumnsService : ITemplateColumnsService
             }
 
             return columnsUpdateResult
-                ? new OperationResult(true, _localizationService.GetString("ColumnsWereUpdated"))
-                : new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingColumns"));
+                ? new OperationResult(true, localizationService.GetString("ColumnsWereUpdated"))
+                : new OperationResult(false, localizationService.GetString("ErrorWhileUpdatingColumns"));
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingColumns"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileUpdatingColumns"));
         }
     }
 }

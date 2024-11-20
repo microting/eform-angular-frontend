@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microsoft.Extensions.Logging;
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using System;
@@ -41,28 +44,19 @@ using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using EntityGroup = Infrastructure.Models.EntityGroup;
 
-public class EntitySearchService : IEntitySearchService
+public class EntitySearchService(
+    BaseDbContext dbContext,
+    IEFormCoreService coreHelper,
+    ILocalizationService localizationService,
+    ILogger<EntitySearchService> logger)
+    : IEntitySearchService
 {
-    private readonly BaseDbContext _dbContext;
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-
-    public EntitySearchService(BaseDbContext dbContext,
-        IEFormCoreService coreHelper,
-        ILocalizationService localizationService)
-    {
-        _dbContext = dbContext;
-        _coreHelper = coreHelper;
-        _localizationService = localizationService;
-    }
-
-
     public async Task<OperationDataResult<Paged<EntityGroup>>> Index(
         AdvEntitySearchableGroupListRequestModel requestModel)
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
 
             var entityGroupList = new Paged<EntityGroup>();
@@ -114,7 +108,7 @@ public class EntitySearchService : IEntitySearchService
 
             if (entityGroupList.Entities != null)
             {
-                List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                List<string> plugins = await dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
                 foreach (EntityGroup entityGroup in entityGroupList.Entities)
                 {
                     foreach (string plugin in plugins)
@@ -129,10 +123,13 @@ public class EntitySearchService : IEntitySearchService
 
             return new OperationDataResult<Paged<EntityGroup>>(true, entityGroupList);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<Paged<EntityGroup>>(false,
-                _localizationService.GetString("SearchableListLoadingFailed") + ex.Message);
+                localizationService.GetString("SearchableListLoadingFailed") + e.Message);
         }
     }
 
@@ -140,7 +137,7 @@ public class EntitySearchService : IEntitySearchService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var groupCreate = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name, editModel.Description, false, true);
             if (editModel.EntityItemModels.Any())
             {
@@ -160,11 +157,14 @@ public class EntitySearchService : IEntitySearchService
             }
 
             return new OperationResult(true,
-                _localizationService.GetStringWithFormat("ParamCreatedSuccessfully", groupCreate.MicrotingUid));
+                localizationService.GetStringWithFormat("ParamCreatedSuccessfully", groupCreate.MicrotingUid));
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetString("SearchableListCreationFailed"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("SearchableListCreationFailed"));
         }
     }
 
@@ -172,7 +172,7 @@ public class EntitySearchService : IEntitySearchService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var entityGroup = await core.EntityGroupRead(editModel.GroupUid);
 
             entityGroup.Description = editModel.Description;
@@ -206,11 +206,14 @@ public class EntitySearchService : IEntitySearchService
             }
 
             return new OperationResult(true,
-                _localizationService.GetStringWithFormat("ParamUpdatedSuccessfully", editModel.Name));
+                localizationService.GetStringWithFormat("ParamUpdatedSuccessfully", editModel.Name));
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetString("SearchableListUpdateFailed") + ex.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("SearchableListUpdateFailed") + e.Message);
         }
     }
 
@@ -218,11 +221,11 @@ public class EntitySearchService : IEntitySearchService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
             EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid, Constants.EntityItemSortParameters.Id, string.Empty);
 
-            var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+            var plugins = await dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
 
             foreach (var _ in plugins.Where(plugin => entityGroup.Name.Contains(plugin)))
             {
@@ -231,12 +234,13 @@ public class EntitySearchService : IEntitySearchService
 
             return new OperationDataResult<EntityGroup>(true, entityGroup);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Console.WriteLine(ex.Message);
-            Console.WriteLine(ex.StackTrace);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<EntityGroup>(false,
-                _localizationService.GetString("ErrorWhenObtainingSearchableList") + ex.Message);
+                localizationService.GetString("ErrorWhenObtainingSearchableList") + e.Message);
         }
     }
 
@@ -245,7 +249,7 @@ public class EntitySearchService : IEntitySearchService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
             var entityGroup = await core.EntityGroupRead(entityGroupUid, "Name", searchString);
 
@@ -262,10 +266,13 @@ public class EntitySearchService : IEntitySearchService
 
             return new OperationDataResult<List<CommonDictionaryTextModel>>(true, mappedEntityGroupDict);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<CommonDictionaryTextModel>>(false,
-                _localizationService.GetString("ErrorWhenObtainingSearchableList"));
+                localizationService.GetString("ErrorWhenObtainingSearchableList"));
         }
     }
 
@@ -273,16 +280,19 @@ public class EntitySearchService : IEntitySearchService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
 
             return await core.EntityGroupDelete(entityGroupUid)
-                ? new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid))
-                : new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
+                ? new OperationResult(true, localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid))
+                : new OperationResult(false, localizationService.GetString("ErrorWhenDeletingSearchableList"));
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhenDeletingSearchableList"));
         }
     }
 
@@ -294,11 +304,14 @@ public class EntitySearchService : IEntitySearchService
         {
             //var core = await _coreHelper.GetCore();
 
-            return new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid));
+            return new OperationResult(true, localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid));
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhenDeletingSearchableList"));
         }
     }
 
@@ -306,7 +319,7 @@ public class EntitySearchService : IEntitySearchService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
 
             var query = sdkDbContext.EntityGroups
@@ -330,10 +343,13 @@ public class EntitySearchService : IEntitySearchService
 
             return new OperationDataResult<List<CommonDictionaryModel>>(true, entityGroups);
         }
-        catch (Exception exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<CommonDictionaryModel>>(false,
-                _localizationService.GetString("ErrorWhenObtainingSearchableList") + $" {exception.Message}");
+                localizationService.GetString("ErrorWhenObtainingSearchableList") + $" {e.Message}");
         }
     }
 }

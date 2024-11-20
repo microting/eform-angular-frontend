@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Sentry;
+
 namespace eFormAPI.Web.Services.Security;
 
 using System;
@@ -42,29 +44,16 @@ using Microting.EformAngularFrontendBase.Infrastructure.Const;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Permissions;
 
-public class EformGroupService : IEformGroupService
+public class EformGroupService(
+    ILogger<EformGroupService> logger,
+    BaseDbContext dbContext,
+    ILocalizationService localizationService,
+    IEFormCoreService coreHelper,
+    IUserService userService,
+    IHttpContextAccessor httpContextAccessor)
+    : IEformGroupService
 {
-    private readonly ILogger<EformGroupService> _logger;
-    private readonly BaseDbContext _dbContext;
-    private readonly IUserService _userService;
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public EformGroupService(ILogger<EformGroupService> logger,
-        BaseDbContext dbContext,
-        ILocalizationService localizationService,
-        IEFormCoreService coreHelper,
-        IUserService userService,
-        IHttpContextAccessor httpContextAccessor)
-    {
-        _logger = logger;
-        _dbContext = dbContext;
-        _localizationService = localizationService;
-        _coreHelper = coreHelper;
-        _userService = userService;
-        _httpContextAccessor = httpContextAccessor;
-    }
+    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
     public async Task<OperationDataResult<TemplateListModel>> GetAvailableEforms(
         TemplateRequestModel templateRequestModel,
@@ -72,14 +61,14 @@ public class EformGroupService : IEformGroupService
     {
         try
         {
-            TimeZoneInfo timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
+            TimeZoneInfo timeZoneInfo = await userService.GetCurrentUserTimeZoneInfo();
 
             var result = new TemplateListModel
             {
                 Templates = new List<TemplateDto>()
             };
-            var core = await _coreHelper.GetCore();
-            var language = await _userService.GetCurrentUserLanguage();
+            var core = await coreHelper.GetCore();
+            var language = await userService.GetCurrentUserLanguage();
             var templatesDto = await core.TemplateItemReadAll(false,
                 "",
                 templateRequestModel.NameFilter,
@@ -87,7 +76,7 @@ public class EformGroupService : IEformGroupService
                 templateRequestModel.Sort,
                 templateRequestModel.TagIds, timeZoneInfo, language).ConfigureAwait(false);
 
-            var eformsInGroup = await _dbContext.EformInGroups
+            var eformsInGroup = await dbContext.EformInGroups
                 .Where(x => x.SecurityGroupId == groupId)
                 .Select(x => x.TemplateId)
                 .ToListAsync();
@@ -110,10 +99,11 @@ public class EformGroupService : IEformGroupService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<TemplateListModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingAvailableEForms"));
+                localizationService.GetString("ErrorWhileObtainingAvailableEForms"));
         }
     }
 
@@ -121,15 +111,15 @@ public class EformGroupService : IEformGroupService
     {
         try
         {
-            if (!await _dbContext.SecurityGroups.AnyAsync(x => x.Id == requestModel.GroupId))
+            if (!await dbContext.SecurityGroups.AnyAsync(x => x.Id == requestModel.GroupId))
             {
-                return new OperationResult(false, _localizationService.GetString("SecurityGroupNotFound"));
+                return new OperationResult(false, localizationService.GetString("SecurityGroupNotFound"));
             }
 
-            if (await _dbContext.EformInGroups.AnyAsync(x => x.TemplateId == requestModel.EformId
+            if (await dbContext.EformInGroups.AnyAsync(x => x.TemplateId == requestModel.EformId
                                                              && x.SecurityGroupId == requestModel.GroupId))
             {
-                return new OperationResult(false, _localizationService.GetString("eFormAlreadyInGroup"));
+                return new OperationResult(false, localizationService.GetString("eFormAlreadyInGroup"));
             }
 
             var newEformInGroup = new EformInGroup()
@@ -137,16 +127,17 @@ public class EformGroupService : IEformGroupService
                 SecurityGroupId = requestModel.GroupId,
                 TemplateId = requestModel.EformId
             };
-            await _dbContext.EformInGroups.AddAsync(newEformInGroup);
-            await _dbContext.SaveChangesAsync();
+            await dbContext.EformInGroups.AddAsync(newEformInGroup);
+            await dbContext.SaveChangesAsync();
             return new OperationResult(true);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(true,
-                _localizationService.GetString("ErrorWhileBindingEformToGroup"));
+                localizationService.GetString("ErrorWhileBindingEformToGroup"));
         }
     }
 
@@ -154,7 +145,7 @@ public class EformGroupService : IEformGroupService
     {
         try
         {
-            TimeZoneInfo timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
+            TimeZoneInfo timeZoneInfo = await userService.GetCurrentUserTimeZoneInfo();
             var result = new EformsPermissionsModel();
             var eformClaims = new[]
             {
@@ -176,7 +167,7 @@ public class EformGroupService : IEformGroupService
                 AuthConsts.EformClaims.EformsClaims.ExportEformExcel
             };
 
-            List<EformPermissionsModel> eformsInGroup = await _dbContext.EformInGroups
+            List<EformPermissionsModel> eformsInGroup = await dbContext.EformInGroups
                 .Where(x => x.SecurityGroupId == groupId)
                 .Select(e => new EformPermissionsModel()
                 {
@@ -205,7 +196,7 @@ public class EformGroupService : IEformGroupService
                 .ToListAsync();
             foreach (EformPermissionsModel eformPermissionsModel in eformsInGroup)
             {
-                eformPermissionsModel.Permissions = await _dbContext.Permissions
+                eformPermissionsModel.Permissions = await dbContext.Permissions
                     .Where(x => eformClaims.Contains(x.ClaimName))
                     .Select(x => new EformPermissionModel()
                     {
@@ -217,14 +208,14 @@ public class EformGroupService : IEformGroupService
                     }).ToListAsync();
                 foreach (EformPermissionModel permission in eformPermissionsModel.Permissions)
                 {
-                    permission.IsEnabled = _dbContext.EformPermissions.Any(g =>
+                    permission.IsEnabled = dbContext.EformPermissions.Any(g =>
                         g.EformInGroup.SecurityGroupId == groupId
                         && g.PermissionId == permission.Id
                         && g.EformInGroupId == eformPermissionsModel.EformInGroupId);
                 }
             }
-            var core = await _coreHelper.GetCore();
-            var language = await _userService.GetCurrentUserLanguage();
+            var core = await coreHelper.GetCore();
+            var language = await userService.GetCurrentUserLanguage();
             var templatesDto = await core.TemplateItemReadAll(false, timeZoneInfo, language);
             foreach (var eformInGroups in eformsInGroup)
             {
@@ -255,7 +246,7 @@ public class EformGroupService : IEformGroupService
             }
             else
             {
-                result.GroupName = _dbContext.SecurityGroups
+                result.GroupName = dbContext.SecurityGroups
                     .Where(x => x.Id == groupId)
                     .Select(x => x.Name)
                     .FirstOrDefault();
@@ -263,7 +254,7 @@ public class EformGroupService : IEformGroupService
 
             result.GroupId = groupId;
             result.EformsList = eformsInGroup;
-            result.Total = _dbContext.EformInGroups
+            result.Total = dbContext.EformInGroups
                 .Where(x => x.SecurityGroupId == groupId)
                 .Select(x => x.Id)
                 .Count();
@@ -272,10 +263,11 @@ public class EformGroupService : IEformGroupService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<EformsPermissionsModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingEformInfo"));
+                localizationService.GetString("ErrorWhileObtainingEformInfo"));
         }
     }
 
@@ -284,9 +276,9 @@ public class EformGroupService : IEformGroupService
     {
         try
         {
-            List<EformPermissionsSimpleModel> result = await _dbContext.EformInGroups
+            List<EformPermissionsSimpleModel> result = await dbContext.EformInGroups
                 .Where(x => x.SecurityGroup.SecurityGroupUsers.Any(y =>
-                    y.EformUserId == _userService.UserId))
+                    y.EformUserId == userService.UserId))
                 .Select(x => new EformPermissionsSimpleModel()
                 {
                     TemplateId = x.TemplateId,
@@ -297,10 +289,11 @@ public class EformGroupService : IEformGroupService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<EformPermissionsSimpleModel>>(false,
-                _localizationService.GetString("ErrorWhileObtainingEformInfo"));
+                localizationService.GetString("ErrorWhileObtainingEformInfo"));
         }
     }
 
@@ -329,15 +322,15 @@ public class EformGroupService : IEformGroupService
             }
 
             // for delete
-            var forDelete = _dbContext.EformPermissions
+            var forDelete = dbContext.EformPermissions
                 .Where(x => !enabledEformPermission.Contains(x.Id)
                             && x.EformInGroupId == requestModel.EformInGroupId)
                 .ToList();
 
-            _dbContext.EformPermissions.RemoveRange(forDelete);
-            await _dbContext.SaveChangesAsync();
+            dbContext.EformPermissions.RemoveRange(forDelete);
+            await dbContext.SaveChangesAsync();
 
-            var list = _dbContext.EformPermissions
+            var list = dbContext.EformPermissions
                 .Where(x => x.EformInGroupId == requestModel.EformInGroupId)
                 .Where(x => enabledEformPermission.Contains(x.Id))
                 .Select(x => x.PermissionId)
@@ -360,7 +353,7 @@ public class EformGroupService : IEformGroupService
                         x.Id == permissionId && x.IsEnabled);
                     if (permissionModel != null)
                     {
-                        await _dbContext.EformPermissions.AddAsync(new EformPermission()
+                        await dbContext.EformPermissions.AddAsync(new EformPermission()
                         {
                             EformInGroupId = requestModel.EformInGroupId,
                             PermissionId = permissionModel.Id
@@ -369,18 +362,19 @@ public class EformGroupService : IEformGroupService
                 }
             }
 
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             //transaction.Commit();
 //                }
 
-            return new OperationResult(true, _localizationService.GetString("PermissionForEformHasBeenUpdated"));
+            return new OperationResult(true, localizationService.GetString("PermissionForEformHasBeenUpdated"));
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<EformsPermissionsModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingEformInfo"));
+                localizationService.GetString("ErrorWhileObtainingEformInfo"));
         }
     }
 
@@ -388,26 +382,27 @@ public class EformGroupService : IEformGroupService
     {
         try
         {
-            var eformInGroup = await _dbContext.EformInGroups
+            var eformInGroup = await dbContext.EformInGroups
                 .FirstOrDefaultAsync(x => x.TemplateId == templateId
                                           && x.SecurityGroupId == groupId);
             if (eformInGroup == null)
             {
                 return new OperationDataResult<EformsPermissionsModel>(false,
-                    _localizationService.GetString("eFormNotFound"));
+                    localizationService.GetString("eFormNotFound"));
             }
 
-            _dbContext.EformInGroups.Remove(eformInGroup);
-            await _dbContext.SaveChangesAsync();
+            dbContext.EformInGroups.Remove(eformInGroup);
+            await dbContext.SaveChangesAsync();
             return new OperationResult(true,
-                _localizationService.GetString("eFormHasBeenDeletedFromGroup"));
+                localizationService.GetString("eFormHasBeenDeletedFromGroup"));
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<EformsPermissionsModel>(false,
-                _localizationService.GetString("ErrorWhileDeletingEformFromGroup"));
+                localizationService.GetString("ErrorWhileDeletingEformFromGroup"));
         }
     }
 }

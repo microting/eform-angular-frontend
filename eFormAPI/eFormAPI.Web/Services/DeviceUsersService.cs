@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microsoft.Extensions.Logging;
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
@@ -39,23 +42,17 @@ using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-public class DeviceUsersService : IDeviceUsersService
+public class DeviceUsersService(
+    ILocalizationService localizationService,
+    IEFormCoreService coreHelper,
+    ILogger<DeviceUsersService> logger)
+    : IDeviceUsersService
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-
-    public DeviceUsersService(ILocalizationService localizationService,
-        IEFormCoreService coreHelper)
-    {
-        _localizationService = localizationService;
-        _coreHelper = coreHelper;
-    }
-
     public async Task<OperationDataResult<List<DeviceUser>>> Index(DeviceUserSearchRequestModel requestModel)
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             // var deviceUsers = new List<DeviceUser>();
 
@@ -109,16 +106,19 @@ public class DeviceUsersService : IDeviceUsersService
 
             return new OperationDataResult<List<DeviceUser>>(true, deviceUsers);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<DeviceUser>>(false,
-                _localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers") + " " + ex.Message);
+                localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers") + " " + e.Message);
         }
     }
 
     public async Task<OperationDataResult<int>> Create(DeviceUserModel deviceUserModel)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         deviceUserModel.UserFirstName = deviceUserModel.UserFirstName.Trim();
         deviceUserModel.UserLastName = deviceUserModel.UserLastName.Trim();
         var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
@@ -132,7 +132,7 @@ public class DeviceUsersService : IDeviceUsersService
             if (site != null)
             {
                 return new OperationDataResult<int>(false,
-                    _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", siteName));
+                    localizationService.GetStringWithFormat("UserUserNameAlreadyExist", siteName));
             }
 
             var siteDto = await core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
@@ -145,36 +145,42 @@ public class DeviceUsersService : IDeviceUsersService
 
             return siteDto != null
                 ? new OperationDataResult<int>(true,
-                    _localizationService.GetStringWithFormat("DeviceUserParamCreatedSuccessfully", siteDto.SiteName),
+                    localizationService.GetStringWithFormat("DeviceUserParamCreatedSuccessfully", siteDto.SiteName),
                     id)
-                : new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+                : new OperationDataResult<int>(false, localizationService.GetString("DeviceUserCouldNotBeCreated"));
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             try
             {
-                if (ex.InnerException.Message == "The remote server returned an error: (402) Payment Required.")
+                if (e.InnerException.Message == "The remote server returned an error: (402) Payment Required.")
                 {
                     return new OperationDataResult<int>(false,
-                        _localizationService.GetString("YouNeedToBuyMoreLicenses"));
+                        localizationService.GetString("YouNeedToBuyMoreLicenses"));
                 }
                 else
                 {
                     return new OperationDataResult<int>(false,
-                        _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+                        localizationService.GetString("DeviceUserCouldNotBeCreated"));
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                SentrySdk.CaptureException(ex);
+                logger.LogError(ex.Message);
+                logger.LogTrace(ex.StackTrace);
                 return new OperationDataResult<int>(false,
-                    _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+                    localizationService.GetString("DeviceUserCouldNotBeCreated"));
             }
         }
     }
 
     public async Task<OperationDataResult<DeviceUser>> Read(int id)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         await using var db = core.DbContextHelper.GetDbContext();
 
         //var siteDto = await core.SiteRead(id);
@@ -212,7 +218,7 @@ public class DeviceUsersService : IDeviceUsersService
         return deviceUser != null
             ? new OperationDataResult<DeviceUser>(true, deviceUser)
             : new OperationDataResult<DeviceUser>(false,
-                _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeEdited", id));
+                localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeEdited", id));
     }
 
     public async Task<OperationResult> Update(DeviceUserModel deviceUserModel)
@@ -221,7 +227,7 @@ public class DeviceUsersService : IDeviceUsersService
         deviceUserModel.UserLastName = deviceUserModel.UserLastName.Trim();
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var db = core.DbContextHelper.GetDbContext();
             var language = db.Languages.Single(x => x.LanguageCode == deviceUserModel.LanguageCode);
             var siteDto = await core.SiteRead(deviceUserModel.Id);
@@ -241,20 +247,23 @@ public class DeviceUsersService : IDeviceUsersService
                     //     await site.Update(db);
                     // }
                     return isUpdated
-                        ? new OperationResult(true, _localizationService.GetString("DeviceUserUpdatedSuccessfully"))
+                        ? new OperationResult(true, localizationService.GetString("DeviceUserUpdatedSuccessfully"))
                         : new OperationResult(false,
-                            _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated",
+                            localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated",
                                 deviceUserModel.Id));
                 }
 
-                return new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeObtained"));
+                return new OperationResult(false, localizationService.GetString("DeviceUserCouldNotBeObtained"));
             }
 
-            return new OperationResult(false, _localizationService.GetString("DeviceUserNotFound"));
+            return new OperationResult(false, localizationService.GetString("DeviceUserNotFound"));
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeUpdated"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("DeviceUserCouldNotBeUpdated"));
         }
     }
 
@@ -262,20 +271,23 @@ public class DeviceUsersService : IDeviceUsersService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var siteNameDto = await core.Advanced_SiteItemRead(id);
 
             return await core.SiteDelete(siteNameDto.SiteUId)
                 ? new OperationResult(true,
-                    _localizationService.GetStringWithFormat("DeviceUserParamDeletedSuccessfully",
+                    localizationService.GetStringWithFormat("DeviceUserParamDeletedSuccessfully",
                         siteNameDto.SiteName))
                 : new OperationResult(false,
-                    _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", siteNameDto.SiteName));
+                    localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", siteNameDto.SiteName));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", id));
+                localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", id));
         }
     }
 
@@ -283,7 +295,7 @@ public class DeviceUsersService : IDeviceUsersService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
 
             var sitesQuery = sdkDbContext.Sites
@@ -299,10 +311,13 @@ public class DeviceUsersService : IDeviceUsersService
 
             return new OperationDataResult<List<CommonDictionaryModel>>(true, deviceUsers);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<CommonDictionaryModel>>(false,
-                _localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers") + " " + ex.Message);
+                localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers") + " " + e.Message);
         }
     }
 }

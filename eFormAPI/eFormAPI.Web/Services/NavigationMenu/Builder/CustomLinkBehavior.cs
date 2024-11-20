@@ -28,13 +28,9 @@ using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 
-public class CustomLinkBehavior : AbstractBehavior
+public class CustomLinkBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null)
+    : AbstractBehavior(dbContext, menuItemModel, parentId)
 {
-    public CustomLinkBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null) 
-        : base(dbContext, menuItemModel, parentId)
-    { 
-    }
-
     public override bool IsExecute()
         => MenuItemModel.Type == MenuItemTypeEnum.CustomLink;
 
@@ -42,10 +38,10 @@ public class CustomLinkBehavior : AbstractBehavior
     {
         menuItem.Name = MenuItemModel.Name;
         menuItem.MenuTemplateId = null;
-        menuItem.ParentId = _parentId;
+        menuItem.ParentId = ParentId;
 
-        _dbContext.MenuItems.Add(menuItem);
-        _dbContext.SaveChanges();
+        DbContext.MenuItems.Add(menuItem);
+        DbContext.SaveChanges();
 
         //Set translation for menu item
         SetTranslations(menuItem.Id);
@@ -58,8 +54,8 @@ public class CustomLinkBehavior : AbstractBehavior
                 MenuItemId = menuItem.Id
             };
 
-            _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
-            _dbContext.SaveChanges();
+            DbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
+            DbContext.SaveChanges();
         }
     }
 }

@@ -35,31 +35,21 @@ using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using Sentry;
 
 namespace eFormAPI.Web.Services.Eform;
 
-public class TemplateVisualEditorService : ITemplateVisualEditorService
+public class TemplateVisualEditorService(
+    IEFormCoreService coreHelper,
+    ILogger<TemplateVisualEditorService> logger,
+    ILocalizationService localizationService)
+    : ITemplateVisualEditorService
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILogger<TemplateVisualEditorService> _logger;
-    private readonly ILocalizationService _localizationService;
-
-    public TemplateVisualEditorService(
-        IEFormCoreService coreHelper,
-        ILogger<TemplateVisualEditorService> logger,
-        ILocalizationService localizationService
-    )
-    {
-        _coreHelper = coreHelper;
-        _logger = logger;
-        _localizationService = localizationService;
-    }
-
     public async Task<OperationDataResult<EformVisualEditorModel>> ReadVisualTemplate(int id)
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var children = await sdkDbContext.CheckLists
                 // ReSharper disable once AccessToModifiedClosure
@@ -121,9 +111,11 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<EformVisualEditorModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingEform"));
+                localizationService.GetString("ErrorWhileObtainingEform"));
         }
     }
 
@@ -131,7 +123,7 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
 
             // create main checkList
@@ -218,13 +210,15 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
             }
 
             return new OperationResult(true,
-                _localizationService.GetString("EformSuccessfullyCreated"));
+                localizationService.GetString("EformSuccessfullyCreated"));
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<EformVisualEditorModel>(false,
-                _localizationService.GetString("ErrorWhileCreateEform"));
+                localizationService.GetString("ErrorWhileCreateEform"));
         }
     }
 
@@ -232,7 +226,7 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
 
             CheckList parentEform = null;
@@ -245,7 +239,7 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
 
             if (dbEform == null)
                 return new OperationDataResult<EformVisualEditorModel>(false,
-                    _localizationService.GetString("EformNotFound"));
+                    localizationService.GetString("EformNotFound"));
 
             if (dbEform.ParentId != null)
             {
@@ -448,13 +442,15 @@ public class TemplateVisualEditorService : ITemplateVisualEditorService
             // }
 
             return new OperationResult(true,
-                _localizationService.GetString("EformSuccessfullyUpdated"));
+                localizationService.GetString("EformSuccessfullyUpdated"));
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<EformVisualEditorModel>(false,
-                _localizationService.GetString("ErrorWhileUpdateEform"));
+                localizationService.GetString("ErrorWhileUpdateEform"));
         }
     }
 

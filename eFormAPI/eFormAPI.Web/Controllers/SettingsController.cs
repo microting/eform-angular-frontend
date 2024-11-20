@@ -38,23 +38,15 @@ namespace eFormAPI.Web.Controllers;
 
 [Authorize]
 [Route("api/settings")]
-public class SettingsController : Controller
+public class SettingsController(ISettingsService settingsService, IAdminService adminService)
+    : Controller
 {
-    private readonly ISettingsService _settingsService;
-    private readonly IAdminService _adminService;
-
-    public SettingsController(ISettingsService settingsService, IAdminService adminService)
-    {
-        _settingsService = settingsService;
-        _adminService = adminService;
-    }
-
     [AllowAnonymous]
     [HttpGet]
     [Route("connection-string-exist")]
     public OperationResult ConnectionStringExist()
     {
-        return _settingsService.ConnectionStringExist();
+        return settingsService.ConnectionStringExist();
     }
 
     [AllowAnonymous]
@@ -62,7 +54,7 @@ public class SettingsController : Controller
     [Route("default-locale")]
     public OperationDataResult<string> GetDefaultLocale()
     {
-        return _settingsService.GetDefaultLocale();
+        return settingsService.GetDefaultLocale();
     }
 
     [AllowAnonymous]
@@ -70,7 +62,7 @@ public class SettingsController : Controller
     [Route("connection-string")]
     public async Task<OperationResult> UpdateConnectionString([FromBody] InitialSettingsModel initialSettingsModel)
     {
-        return await _settingsService.UpdateConnectionString(initialSettingsModel);
+        return await settingsService.UpdateConnectionString(initialSettingsModel);
     }
 
     [HttpGet]
@@ -78,7 +70,7 @@ public class SettingsController : Controller
     [Route("login-page")]
     public OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings()
     {
-        return _settingsService.GetLoginPageSettings();
+        return settingsService.GetLoginPageSettings();
     }
 
 
@@ -86,7 +78,7 @@ public class SettingsController : Controller
     [Route("page-header")]
     public OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings()
     {
-        return _settingsService.GetPageHeaderSettings();
+        return settingsService.GetPageHeaderSettings();
     }
 
 
@@ -95,7 +87,7 @@ public class SettingsController : Controller
     [Route("admin")]
     public async Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings()
     {
-        return await _settingsService.GetAdminSettings();
+        return await settingsService.GetAdminSettings();
     }
 
 
@@ -104,8 +96,8 @@ public class SettingsController : Controller
     [Route("admin")]
     public async Task<OperationResult> UpdateAdminSettings([FromBody] AdminSettingsModel adminSettingsModel)
     {
-        await _settingsService.IntegrityCheck();
-        return await _settingsService.UpdateAdminSettings(adminSettingsModel);
+        await settingsService.IntegrityCheck();
+        return await settingsService.UpdateAdminSettings(adminSettingsModel);
     }
 
     #region ResetSettingsSection
@@ -115,7 +107,7 @@ public class SettingsController : Controller
     [Route("reset-login-page")]
     public async Task<OperationResult> ResetLoginPageSettings()
     {
-        return await _settingsService.ResetLoginPageSettings();
+        return await settingsService.ResetLoginPageSettings();
     }
 
     [HttpGet]
@@ -123,7 +115,7 @@ public class SettingsController : Controller
     [Route("reset-page-header")]
     public async Task<OperationResult> ResetPageHeaderSettings()
     {
-        return await _settingsService.ResetPageHeaderSettings();
+        return await settingsService.ResetPageHeaderSettings();
     }
 
     #endregion
@@ -133,7 +125,7 @@ public class SettingsController : Controller
     [Route("version")]
     public OperationDataResult<string> GetApplicationVersion()
     {
-        return _settingsService.GetAssemblyVersion();
+        return settingsService.GetAssemblyVersion();
     }
 
     [HttpGet]
@@ -141,7 +133,7 @@ public class SettingsController : Controller
     [Route("hostos")]
     public OperationDataResult<string> GetApplicationHostOs()
     {
-        return _settingsService.GetApplicationHostOs();
+        return settingsService.GetApplicationHostOs();
     }
 
     [HttpGet]
@@ -149,14 +141,14 @@ public class SettingsController : Controller
     [Route("latest-version")]
     public OperationDataResult<string> GetLatestVersion()
     {
-        return _settingsService.GetLatestVersion();
+        return settingsService.GetLatestVersion();
     }
 
     [HttpGet]
     [Route(("integrity-test"))]
     public async Task<OperationResult> IntegrityCheck()
     {
-        return await _settingsService.IntegrityCheck();
+        return await settingsService.IntegrityCheck();
     }
 
     [HttpPut]
@@ -164,7 +156,7 @@ public class SettingsController : Controller
     [Authorize(Roles = EformRole.Admin)]
     public Task<OperationResult> UpdateUserbackWidget([FromBody] bool isEnableWidget)
     {
-        return _adminService.UpdateUserbackWidget(isEnableWidget);
+        return adminService.UpdateUserbackWidget(isEnableWidget);
     }
 
     [HttpGet]
@@ -172,20 +164,20 @@ public class SettingsController : Controller
     //[Authorize(Roles = EformRole.Admin)]
     public Task<OperationDataResult<UserbackWidgetModel>> IsUserbackWidget()
     {
-        return _adminService.GetUserbackWidget();
+        return adminService.GetUserbackWidget();
     }
 
     [HttpGet]
     [Route("languages")]
     public Task<OperationDataResult<LanguagesModel>> GetLanguages()
     {
-        return _settingsService.GetLanguages();
+        return settingsService.GetLanguages();
     }
 
     [HttpPut]
     [Route("languages")]
     public Task<OperationResult> UpdateLanguages([FromBody] LanguagesModel languages)
     {
-        return _settingsService.UpdateLanguages(languages);
+        return settingsService.UpdateLanguages(languages);
     }
 }

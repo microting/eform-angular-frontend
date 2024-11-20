@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Sentry;
+
 namespace eFormAPI.Web.Services.Security;
 
 using System;
@@ -37,36 +39,25 @@ using Microsoft.EntityFrameworkCore;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Permissions;
 
-public class PermissionsService : IPermissionsService
+public class PermissionsService(
+    BaseDbContext dbContext,
+    ILocalizationService localizationService,
+    ILogger<PermissionsService> logger,
+    IClaimsService claimsService)
+    : IPermissionsService
 {
-    private readonly ILocalizationService _localizationService;
-    private readonly ILogger<PermissionsService> _logger;
-    private readonly IClaimsService _claimsService;
-    private readonly BaseDbContext _dbContext;
-
-    public PermissionsService(BaseDbContext dbContext,
-        ILocalizationService localizationService,
-        ILogger<PermissionsService> logger,
-        IClaimsService claimsService)
-    {
-        _dbContext = dbContext;
-        _localizationService = localizationService;
-        _logger = logger;
-        _claimsService = claimsService;
-    }
-
     public async Task<OperationDataResult<PermissionsModel>> GetGroupPermissions(int groupId)
     {
         try
         {
-            SecurityGroup group = await _dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == groupId);
+            SecurityGroup group = await dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == groupId);
             if (group == null)
             {
                 return new OperationDataResult<PermissionsModel>(false,
-                    _localizationService.GetString("SecurityGroupNotFound"));
+                    localizationService.GetString("SecurityGroupNotFound"));
             }
 
-            var permissionModels = await _dbContext.Permissions
+            var permissionModels = await dbContext.Permissions
                 .Select(x => new PermissionModel()
                 {
                     Id = x.Id,
@@ -74,7 +65,7 @@ public class PermissionsService : IPermissionsService
                     PermissionName = x.PermissionName,
                     PermissionType = x.PermissionType.Name,
                     PermissionTypeId = x.PermissionTypeId,
-                    IsEnabled = _dbContext.GroupPermissions.Any(g => g.SecurityGroupId == groupId
+                    IsEnabled = dbContext.GroupPermissions.Any(g => g.SecurityGroupId == groupId
                                                                      && g.PermissionId == x.Id)
                 })
                 .ToListAsync();
@@ -98,9 +89,11 @@ public class PermissionsService : IPermissionsService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<PermissionsModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingPermissions"));
+                localizationService.GetString("ErrorWhileObtainingPermissions"));
         }
     }
 
@@ -108,10 +101,10 @@ public class PermissionsService : IPermissionsService
     {
         try
         {
-            if (!await _dbContext.SecurityGroups.AnyAsync(x => x.Id == requestModel.GroupId))
+            if (!await dbContext.SecurityGroups.AnyAsync(x => x.Id == requestModel.GroupId))
             {
                 return new OperationDataResult<PermissionsModel>(false,
-                    _localizationService.GetString("SecurityGroupNotFound"));
+                    localizationService.GetString("SecurityGroupNotFound"));
             }
 
             //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
@@ -122,14 +115,14 @@ public class PermissionsService : IPermissionsService
                 .ToList();
 
             // for delete
-            var forDelete = _dbContext.GroupPermissions
+            var forDelete = dbContext.GroupPermissions
                 .Where(x => x.SecurityGroupId == requestModel.GroupId)
                 .Where(x => !enabledList.Contains(x.Permission.Id));
 
-            _dbContext.GroupPermissions.RemoveRange(forDelete);
-            await _dbContext.SaveChangesAsync();
+            dbContext.GroupPermissions.RemoveRange(forDelete);
+            await dbContext.SaveChangesAsync();
 
-            var list = _dbContext.GroupPermissions
+            var list = dbContext.GroupPermissions
                 .Where(x => x.SecurityGroupId == requestModel.GroupId)
                 .Where(x => enabledList.Contains(x.Permission.Id))
                 .Select(x => x.Permission.Id)
@@ -139,7 +132,7 @@ public class PermissionsService : IPermissionsService
             {
                 if (!list.Contains(permissionId))
                 {
-                    await _dbContext.GroupPermissions.AddAsync(new GroupPermission()
+                    await dbContext.GroupPermissions.AddAsync(new GroupPermission()
                     {
                         PermissionId = permissionId,
                         SecurityGroupId = requestModel.GroupId
@@ -147,22 +140,24 @@ public class PermissionsService : IPermissionsService
                 }
             }
 
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
 
             // Update claims in memory store
-            await _claimsService.UpdateAuthenticatedUsers(new List<int> { requestModel.GroupId });
+            await claimsService.UpdateAuthenticatedUsers(new List<int> { requestModel.GroupId });
 
             //transaction.Commit();
 //                }
 
             return new OperationResult(true,
-                _localizationService.GetString("PermissionsUpdatedSuccessfully"));
+                localizationService.GetString("PermissionsUpdatedSuccessfully"));
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileUpdatingPermissions"));
+                localizationService.GetString("ErrorWhileUpdatingPermissions"));
         }
     }
 }

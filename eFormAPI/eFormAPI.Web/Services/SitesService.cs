@@ -24,6 +24,7 @@ SOFTWARE.
 
 using eFormAPI.Web.Infrastructure.Models.Units;
 using Microting.eForm.Infrastructure.Data.Entities;
+using Sentry;
 
 namespace eFormAPI.Web.Services;
 
@@ -41,26 +42,17 @@ using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-public class SitesService : ISitesService
+public class SitesService(
+    IEFormCoreService coreHelper,
+    ILocalizationService localizationService,
+    ILogger<SitesService> logger)
+    : ISitesService
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-    private readonly ILogger<SitesService> _logger;
-
-    public SitesService(IEFormCoreService coreHelper,
-        ILocalizationService localizationService,
-        ILogger<SitesService> logger)
-    {
-        _coreHelper = coreHelper;
-        _localizationService = localizationService;
-        _logger = logger;
-    }
-
     public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetSitesDictionary()
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var dbContext = core.DbContextHelper.GetDbContext();
             var sites = await dbContext.Sites
                 .AsNoTracking()
@@ -77,9 +69,11 @@ public class SitesService : ISitesService
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<CommonDictionaryModel>>(false,
-                _localizationService.GetString("ErrorWhileObtainingSites"));
+                localizationService.GetString("ErrorWhileObtainingSites"));
         }
     }
 
@@ -87,7 +81,7 @@ public class SitesService : ISitesService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var dbContext = core.DbContextHelper.GetDbContext();
             var sites = await dbContext.Sites
                 .AsNoTracking()
@@ -118,9 +112,11 @@ public class SitesService : ISitesService
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<SiteModel>>(false,
-                _localizationService.GetString("ErrorWhileObtainingSites"));
+                localizationService.GetString("ErrorWhileObtainingSites"));
         }
     }
 
@@ -128,7 +124,7 @@ public class SitesService : ISitesService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var sdkDbContext = core.DbContextHelper.GetDbContext();
             var site = await sdkDbContext.Sites
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -150,16 +146,18 @@ public class SitesService : ISitesService
             {
                 return new OperationDataResult<SiteModel>(
                     false,
-                    _localizationService.GetStringWithFormat("SiteParamNotFound", id));
+                    localizationService.GetStringWithFormat("SiteParamNotFound", id));
             }
 
             return new OperationDataResult<SiteModel>(true, site);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<SiteModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingSites"));
+                localizationService.GetString("ErrorWhileObtainingSites"));
         }
     }
 
@@ -167,7 +165,7 @@ public class SitesService : ISitesService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var dbContext = core.DbContextHelper.GetDbContext();
             var site = await dbContext.Sites
                 .Include(x => x.SiteTags)
@@ -179,7 +177,7 @@ public class SitesService : ISitesService
             {
                 return new OperationResult(
                     false,
-                    _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
+                    localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
             }
 
             var language = await dbContext.Languages.SingleAsync(x => x.Id ==
@@ -232,9 +230,11 @@ public class SitesService : ISitesService
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetStringWithFormat("SiteParamCouldNotBeUpdated", updateModel.Id));
+                localizationService.GetStringWithFormat("SiteParamCouldNotBeUpdated", updateModel.Id));
         }
     }
 
@@ -242,7 +242,7 @@ public class SitesService : ISitesService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var dbContext = core.DbContextHelper.GetDbContext();
             var site = await dbContext.Sites
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -252,20 +252,22 @@ public class SitesService : ISitesService
             if (site?.MicrotingUid == null)
             {
                 return new OperationResult(false,
-                    _localizationService.GetStringWithFormat("SiteParamNotFound", id));
+                    localizationService.GetStringWithFormat("SiteParamNotFound", id));
             }
 
             return await core.Advanced_SiteItemDelete((int)site.MicrotingUid)
                 ? new OperationResult(true,
-                    _localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", site.Name))
+                    localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", site.Name))
                 : new OperationResult(false,
-                    _localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", site.Name));
+                    localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", site.Name));
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", id));
+                localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", id));
         }
     }
 }

@@ -23,6 +23,8 @@ SOFTWARE.
 */
 
 
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using System;
@@ -42,28 +44,14 @@ using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Reports;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-public class EformReportsService : IEformReportsService
+public class EformReportsService(
+    IEFormCoreService coreHelper,
+    IUserService userService,
+    ILocalizationService localizationService,
+    BaseDbContext context,
+    ILogger<EformReportsService> logger)
+    : IEformReportsService
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-    private readonly BaseDbContext _dbContext;
-    private readonly IUserService _userService;
-    private readonly ILogger<EformReportsService> _logger;
-
-    public EformReportsService(
-        IEFormCoreService coreHelper,
-        IUserService userService,
-        ILocalizationService localizationService,
-        BaseDbContext dbContext,
-        ILogger<EformReportsService> logger)
-    {
-        _coreHelper = coreHelper;
-        _localizationService = localizationService;
-        _dbContext = dbContext;
-        _logger = logger;
-        _userService = userService;
-    }
-
     private static List<EformReportElementModel> GetReportElementsList(BaseDbContext dbContext,
         EformReportElement parent,
         List<object> elementList)
@@ -297,18 +285,18 @@ public class EformReportsService : IEformReportsService
         try
         {
             var result = new EformReportFullModel();
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             await using var dbContext = core.DbContextHelper.GetDbContext();
 
-            var language = await _userService.GetCurrentUserLanguage();
+            var language = await userService.GetCurrentUserLanguage();
             var template = await core.ReadeForm(templateId, language);
             if (template == null)
             {
                 return new OperationDataResult<EformReportFullModel>(false,
-                    _localizationService.GetString("TemplateNotFound"));
+                    localizationService.GetString("TemplateNotFound"));
             }
 
-            var eformReport = await _dbContext.EformReports
+            var eformReport = await context.EformReports
                 .FirstOrDefaultAsync(x => x.TemplateId == templateId);
 
             if (eformReport == null)
@@ -319,11 +307,11 @@ public class EformReportsService : IEformReportsService
                     IsDateVisible = true,
                     IsWorkerNameVisible = true
                 };
-                _dbContext.EformReports.Add(eformReport);
-                await _dbContext.SaveChangesAsync();
+                context.EformReports.Add(eformReport);
+                await context.SaveChangesAsync();
             }
 
-            var reportElements = await _dbContext.EformReportElements
+            var reportElements = await context.EformReportElements
                 .Include(x => x.DataItems)
                 .ThenInclude(x => x.NestedDataItems)
                 .Include(x => x.NestedElements)
@@ -346,10 +334,10 @@ public class EformReportsService : IEformReportsService
                         EformReportId = eformReport.Id,
                         ElementId = templateElement.Id
                     };
-                    _dbContext.EformReportElements.Add(reportElement);
-                    await _dbContext.SaveChangesAsync();
+                    context.EformReportElements.Add(reportElement);
+                    await context.SaveChangesAsync();
 
-                    reportElement = await _dbContext.EformReportElements
+                    reportElement = await context.EformReportElements
                         .Include(x => x.DataItems)
                         .ThenInclude(x => x.NestedDataItems)
                         .Include(x => x.NestedElements)
@@ -369,7 +357,7 @@ public class EformReportsService : IEformReportsService
                 if (templateElement.GetType() == typeof(DataElement))
                 {
                     var item = (DataElement) templateElement;
-                    var dataItemList = GetReportDataItemList(_dbContext, reportElement, null,
+                    var dataItemList = GetReportDataItemList(context, reportElement, null,
                         item.DataItemList.Select(x => (object) x).ToList());
                     element.DataItemList = dataItemList;
                 }
@@ -377,7 +365,7 @@ public class EformReportsService : IEformReportsService
                 if (templateElement.GetType() == typeof(GroupElement))
                 {
                     var item = (GroupElement) templateElement;
-                    var elementList = GetReportElementsList(_dbContext, reportElement,
+                    var elementList = GetReportElementsList(context, reportElement,
                         item.ElementList.Select(x => (object) x).ToList());
                     element.ElementList = elementList;
                 }
@@ -411,9 +399,11 @@ public class EformReportsService : IEformReportsService
         }
         catch (Exception e)
         {
-            _logger.LogCritical(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<EformReportFullModel>(false,
-                _localizationService.GetString("ErrorWhileObtainingReportInfo"));
+                localizationService.GetString("ErrorWhileObtainingReportInfo"));
         }
     }
 
@@ -425,13 +415,13 @@ public class EformReportsService : IEformReportsService
             //                {
             //try
             //{
-            var eformReport = _dbContext.EformReports
+            var eformReport = context.EformReports
                 .FirstOrDefault(x => x.Id == requestModel.EformReport.Id);
 
             if (eformReport == null)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("EformReportNotFound"));
+                    localizationService.GetString("EformReportNotFound"));
             }
 
             eformReport.Description = requestModel.EformReport.Description;
@@ -444,21 +434,21 @@ public class EformReportsService : IEformReportsService
             eformReport.IsDateVisible = requestModel.EformReport.IsDateVisible;
             eformReport.IsWorkerNameVisible = requestModel.EformReport.IsWorkerNameVisible;
 
-            _dbContext.EformReports.Update(eformReport);
-            await _dbContext.SaveChangesAsync();
+            context.EformReports.Update(eformReport);
+            await context.SaveChangesAsync();
 
             var elementList = requestModel.EformMainElement?.ElementList;
             if (elementList == null)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("ElementListNotProvided"));
+                    localizationService.GetString("ElementListNotProvided"));
             }
 
             var dataItems = ParseElements(elementList);
             if (dataItems.Any())
             {
                 var dataItemsIds = dataItems.Select(x => x.Id).ToArray();
-                var eformDataItems = await _dbContext.EformReportDataItems
+                var eformDataItems = await context.EformReportDataItems
                     .Where(x => dataItemsIds.Contains(x.Id)).ToListAsync();
 
                 foreach (var eformDataItem in eformDataItems)
@@ -468,11 +458,11 @@ public class EformReportsService : IEformReportsService
                     {
                         eformDataItem.Position = dataItem.Position;
                         eformDataItem.Visibility = dataItem.Visibility;
-                        _dbContext.EformReportDataItems.Update(eformDataItem);
+                        context.EformReportDataItems.Update(eformDataItem);
                     }
                 }
 
-                await _dbContext.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
 
             //transaction.Commit();
@@ -485,13 +475,15 @@ public class EformReportsService : IEformReportsService
             //}
 
             return new OperationResult(true,
-                _localizationService.GetString("ReportUpdatedSuccessfully"));
+                localizationService.GetString("ReportUpdatedSuccessfully"));
         }
         catch (Exception e)
         {
-            _logger.LogCritical(e, e.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false,
-                _localizationService.GetString("ErrorWhileUpdatingReport"));
+                localizationService.GetString("ErrorWhileUpdatingReport"));
         }
     }
 

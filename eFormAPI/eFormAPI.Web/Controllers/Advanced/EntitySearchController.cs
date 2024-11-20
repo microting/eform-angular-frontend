@@ -37,21 +37,14 @@ using Microting.EformAngularFrontendBase.Infrastructure.Const;
 
 [Authorize]
 [Route("api/searchable-groups")]
-public class EntitySearchController : Controller
+public class EntitySearchController(IEntitySearchService entitySearchService) : Controller
 {
-    private readonly IEntitySearchService _entitySearchService;
-
-    public EntitySearchController(IEntitySearchService entitySearchService)
-    {
-        _entitySearchService = entitySearchService;
-    }
-
     [HttpPost]
     [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Read)]
     public Task<OperationDataResult<Paged<EntityGroup>>> Index(
         [FromBody] AdvEntitySearchableGroupListRequestModel requestModel)
     {
-        return _entitySearchService.Index(requestModel);
+        return entitySearchService.Index(requestModel);
     }
         
     [HttpPost]
@@ -59,7 +52,7 @@ public class EntitySearchController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Create)]
     public Task<OperationResult> Create([FromBody] AdvEntitySearchableGroupEditModel editModel)
     {
-        return _entitySearchService.Create(editModel);
+        return entitySearchService.Create(editModel);
     }
 
 
@@ -68,7 +61,7 @@ public class EntitySearchController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Read)]
     public Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
     {
-        return _entitySearchService.Read(entityGroupUid);
+        return entitySearchService.Read(entityGroupUid);
     }
         
     [HttpPost]
@@ -76,7 +69,7 @@ public class EntitySearchController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Update)]
     public Task<OperationResult> Update([FromBody] AdvEntitySearchableGroupEditModel editModel)
     {
-        return _entitySearchService.Update(editModel);
+        return entitySearchService.Update(editModel);
     }
 
     [HttpGet]
@@ -84,7 +77,7 @@ public class EntitySearchController : Controller
     [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Delete)]
     public Task<OperationResult> Delete(string entityGroupUid)
     {
-        return _entitySearchService.Delete(entityGroupUid);
+        return entitySearchService.Delete(entityGroupUid);
     }
 
     [HttpGet]
@@ -93,20 +86,20 @@ public class EntitySearchController : Controller
     public Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid,
         string searchString)
     {
-        return _entitySearchService.GetEntityGroupDictionary(entityGroupUid, searchString);
+        return entitySearchService.GetEntityGroupDictionary(entityGroupUid, searchString);
     }
 
     [HttpPost]
     [Route("send")]
     public Task<OperationResult> SendSearchableGroup(string entityGroupUid)
     {
-        return _entitySearchService.SendSearchableGroup(entityGroupUid);
+        return entitySearchService.SendSearchableGroup(entityGroupUid);
     }
 
     [HttpGet]
     [Route("dict")]
     public Task<OperationDataResult<List<CommonDictionaryModel>>> GetEntityGroupsInDictionary([FromQuery] string searchString)
     {
-        return _entitySearchService.GetEntityGroupsInDictionary(searchString);
+        return entitySearchService.GetEntityGroupsInDictionary(searchString);
     }
 }

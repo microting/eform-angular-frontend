@@ -21,6 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using Cache.AuthCache;
@@ -49,55 +52,32 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
-public class AuthService : IAuthService
+public class AuthService(
+    IOptions<EformTokenOptions> tokenOptions,
+    ILogger<AuthService> logger,
+    IDbOptions<ApplicationSettings> appSettings,
+    RoleManager<EformRole> roleManager,
+    SignInManager<EformUser> signInManager,
+    UserManager<EformUser> userManager,
+    IUserService userService,
+    ILocalizationService localizationService,
+    IClaimsService claimsService,
+    IAuthCacheService authCacheService)
+    : IAuthService
 {
-    private readonly IOptions<EformTokenOptions> _tokenOptions;
-    private readonly IUserService _userService;
-    private readonly IDbOptions<ApplicationSettings> _appSettings;
-    private readonly IClaimsService _claimsService;
-    private readonly ILocalizationService _localizationService;
-    private readonly IAuthCacheService _authCacheService;
-    private readonly ILogger<AuthService> _logger;
-    private readonly UserManager<EformUser> _userManager;
-    private readonly RoleManager<EformRole> _roleManager;
-    private readonly SignInManager<EformUser> _signInManager;
-
-    public AuthService(IOptions<EformTokenOptions> tokenOptions,
-        ILogger<AuthService> logger,
-        IDbOptions<ApplicationSettings> appSettings,
-        RoleManager<EformRole> roleManager,
-        SignInManager<EformUser> signInManager,
-        UserManager<EformUser> userManager,
-        IUserService userService,
-        ILocalizationService localizationService,
-        IClaimsService claimsService,
-        IAuthCacheService authCacheService)
-    {
-        _tokenOptions = tokenOptions;
-        _logger = logger;
-        _appSettings = appSettings;
-        _roleManager = roleManager;
-        _signInManager = signInManager;
-        _userManager = userManager;
-        _userService = userService;
-        _localizationService = localizationService;
-        _claimsService = claimsService;
-        _authCacheService = authCacheService;
-    }
-
     public async Task<OperationDataResult<EformAuthorizeResult>> AuthenticateUser(LoginModel model)
     {
         Log.LogEvent("AuthService.AuthenticateUser: called");
         if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
             return new OperationDataResult<EformAuthorizeResult>(false, "Empty username or password");
 
-        var user = await _userService.GetByUsernameAsync(model.Username);
+        var user = await userService.GetByUsernameAsync(model.Username);
         if (user == null)
             return new OperationDataResult<EformAuthorizeResult>(false,
                 $"User with username {model.Username} not found");
 
         var signInResult =
-            await _signInManager.CheckPasswordSignInAsync(user, model.Password, true);
+            await signInManager.CheckPasswordSignInAsync(user, model.Password, true);
 
         if (!signInResult.Succeeded && !signInResult.RequiresTwoFactor)
         {
@@ -120,7 +100,7 @@ public class AuthService : IAuthService
         // TwoFactor check
         var psk = user.GoogleAuthenticatorSecretKey;
         var code = model.Code;
-        var isTwoFactorAuthForced = _appSettings.Value.IsTwoFactorForced;
+        var isTwoFactorAuthForced = appSettings.Value.IsTwoFactorForced;
         if (user.TwoFactorEnabled || isTwoFactorAuthForced)
         {
             // check input params
@@ -146,7 +126,7 @@ public class AuthService : IAuthService
             if (!user.IsGoogleAuthenticatorEnabled)
             {
                 user.IsGoogleAuthenticatorEnabled = true;
-                var updateResult = _userManager.UpdateAsync(user).Result;
+                var updateResult = userManager.UpdateAsync(user).Result;
                 if (!updateResult.Succeeded)
                 {
                     return new OperationDataResult<EformAuthorizeResult>(false, "PSK or code is empty");
@@ -155,7 +135,7 @@ public class AuthService : IAuthService
         }
 
         var token = await GenerateToken(user);
-        var roleList = _userManager.GetRolesAsync(user).Result;
+        var roleList = userManager.GetRolesAsync(user).Result;
         if (!roleList.Any())
         {
             return new OperationDataResult<EformAuthorizeResult>(false,
@@ -164,12 +144,12 @@ public class AuthService : IAuthService
         if (user.TimeZone == null)
         {
             user.TimeZone = "Europe/Copenhagen";
-            await _userManager.UpdateAsync(user);
+            await userManager.UpdateAsync(user);
         }
         if (user.Formats == null)
         {
             user.Formats = "de-DE";
-            await _userManager.UpdateAsync(user);
+            await userManager.UpdateAsync(user);
         }
 
         return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
@@ -186,17 +166,17 @@ public class AuthService : IAuthService
 
     public async Task<OperationDataResult<EformAuthorizeResult>> RefreshToken()
     {
-        var user = await _userService.GetByIdAsync(_userService.UserId);
+        var user = await userService.GetByIdAsync(userService.UserId);
         if (user == null)
             return new OperationDataResult<EformAuthorizeResult>(false,
-                $"User with id {_userService.UserId} not found");
+                $"User with id {userService.UserId} not found");
 
         var token = await GenerateToken(user);
-        var roleList = await _userManager.GetRolesAsync(user);
+        var roleList = await userManager.GetRolesAsync(user);
         if (!roleList.Any())
         {
             return new OperationDataResult<EformAuthorizeResult>(false,
-                $"Role for user {_userService.UserId} not found");
+                $"Role for user {userService.UserId} not found");
         }
 
         return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
@@ -229,16 +209,16 @@ public class AuthService : IAuthService
             }
 
             // Add user and roles claims
-            var userClaims = _userManager.GetClaimsAsync(user).Result;
-            var userRoles = _userManager.GetRolesAsync(user).Result;
+            var userClaims = userManager.GetClaimsAsync(user).Result;
+            var userRoles = userManager.GetRolesAsync(user).Result;
             claims.AddRange(userClaims);
             foreach (var userRole in userRoles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, userRole));
-                var role = _roleManager.FindByNameAsync(userRole).Result;
+                var role = roleManager.FindByNameAsync(userRole).Result;
                 if (role != null)
                 {
-                    var roleClaims = _roleManager.GetClaimsAsync(role).Result;
+                    var roleClaims = roleManager.GetClaimsAsync(role).Result;
                     foreach (var roleClaim in roleClaims)
                     {
                         claims.Add(roleClaim);
@@ -246,7 +226,7 @@ public class AuthService : IAuthService
                 }
             }
 
-            var userInMemoryClaims = await _claimsService.GetUserPermissions(
+            var userInMemoryClaims = await claimsService.GetUserPermissions(
                 user.Id,
                 userRoles.Contains(EformRole.Admin));
 
@@ -257,13 +237,13 @@ public class AuthService : IAuthService
                 Claims = userInMemoryClaims
             };
 
-            _authCacheService.Set(authItem, user.Id);
+            authCacheService.Set(authItem, user.Id);
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.Value.SigningKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.Value.SigningKey));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expireIn = DateTime.Now.AddHours(24);
-            var token = new JwtSecurityToken(_tokenOptions.Value.Issuer,
-                _tokenOptions.Value.Issuer,
+            var token = new JwtSecurityToken(tokenOptions.Value.Issuer,
+                tokenOptions.Value.Issuer,
                 claims.ToArray(),
                 expires: expireIn,
                 signingCredentials: credentials);
@@ -278,13 +258,13 @@ public class AuthService : IAuthService
     public OperationDataResult<Dictionary<string, string>> GetCurrentUserClaims()
     {
         var result = new Dictionary<string, string>();
-        var userId = _userService.UserId;
+        var userId = userService.UserId;
         if (userId < 1)
         {
             throw new Exception("Current user not found!");
         }
 
-        var auth = _authCacheService.TryGetValue(_userService.UserId);
+        var auth = authCacheService.TryGetValue(userService.UserId);
 
         if (auth == null)
         {
@@ -306,13 +286,14 @@ public class AuthService : IAuthService
     {
         try
         {
-            _authCacheService.Remove(_userService.UserId);
+            authCacheService.Remove(userService.UserId);
             return new OperationResult(true);
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
-            Console.WriteLine(e);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false, e.Message);
         }
     }
@@ -321,10 +302,13 @@ public class AuthService : IAuthService
     {
         try
         {
-            return new OperationDataResult<bool>(true, _appSettings.Value.IsTwoFactorForced);
+            return new OperationDataResult<bool>(true, appSettings.Value.IsTwoFactorForced);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<bool>(false);
         }
     }
@@ -333,20 +317,23 @@ public class AuthService : IAuthService
     {
         try
         {
-            var user = await _userService.GetCurrentUserAsync();
+            var user = await userService.GetCurrentUserAsync();
             if (user != null)
             {
                 var model = new GoogleAuthInfoModel()
                 {
                     PSK = user.GoogleAuthenticatorSecretKey,
                     IsTwoFactorEnabled = user.TwoFactorEnabled,
-                    IsTwoFactorForced = _appSettings.Value.IsTwoFactorForced
+                    IsTwoFactorForced = appSettings.Value.IsTwoFactorForced
                 };
                 return new OperationDataResult<GoogleAuthInfoModel>(true, model);
             }
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<GoogleAuthInfoModel>(false);
         }
 
@@ -357,19 +344,22 @@ public class AuthService : IAuthService
     {
         try
         {
-            var user = await _userService.GetCurrentUserAsync();
+            var user = await userService.GetCurrentUserAsync();
             if (user != null)
             {
                 user.TwoFactorEnabled = requestModel.IsTwoFactorEnabled;
-                var updateResult = _userManager.UpdateAsync(user).Result;
+                var updateResult = userManager.UpdateAsync(user).Result;
                 if (updateResult.Succeeded)
                 {
                     return new OperationResult(true);
                 }
             }
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false);
         }
 
@@ -380,20 +370,23 @@ public class AuthService : IAuthService
     {
         try
         {
-            var user = await _userService.GetCurrentUserAsync();
+            var user = await userService.GetCurrentUserAsync();
             if (user != null)
             {
                 user.GoogleAuthenticatorSecretKey = null;
                 user.IsGoogleAuthenticatorEnabled = false;
-                var updateResult = _userManager.UpdateAsync(user).Result;
+                var updateResult = userManager.UpdateAsync(user).Result;
                 if (updateResult.Succeeded)
                 {
                     return new OperationResult(true);
                 }
             }
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationResult(false);
         }
 
@@ -403,15 +396,15 @@ public class AuthService : IAuthService
     public async Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel)
     {
         // try to sign in with user credentials
-        var user = await _userManager.FindByNameAsync(loginModel.Username);
+        var user = await userManager.FindByNameAsync(loginModel.Username);
         if (user == null)
         {
             return new OperationDataResult<GoogleAuthenticatorModel>(false,
-                _localizationService.GetString("UserNameOrPasswordIncorrect"));
+                localizationService.GetString("UserNameOrPasswordIncorrect"));
         }
 
         var signInResult =
-            await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, true);
+            await signInManager.CheckPasswordSignInAsync(user, loginModel.Password, true);
 
         if (!signInResult.Succeeded)
         {
@@ -423,11 +416,11 @@ public class AuthService : IAuthService
 
             // Credentials are invalid, or account doesn't exist
             return new OperationDataResult<GoogleAuthenticatorModel>(false,
-                _localizationService.GetString("UserNameOrPasswordIncorrect"));
+                localizationService.GetString("UserNameOrPasswordIncorrect"));
         }
 
         // check if two factor is enabled
-        var isTwoFactorAuthForced = _appSettings.Value.IsTwoFactorForced;
+        var isTwoFactorAuthForced = appSettings.Value.IsTwoFactorForced;
         if (!user.TwoFactorEnabled && !isTwoFactorAuthForced)
         {
             return new OperationDataResult<GoogleAuthenticatorModel>(true);
@@ -448,11 +441,11 @@ public class AuthService : IAuthService
         };
         // write PSK to the user entity
         user.GoogleAuthenticatorSecretKey = model.PSK;
-        var updateResult = _userManager.UpdateAsync(user).Result;
+        var updateResult = userManager.UpdateAsync(user).Result;
         if (!updateResult.Succeeded)
         {
             return new OperationDataResult<GoogleAuthenticatorModel>(false,
-                _localizationService.GetString("ErrorWhileUpdatingPSK"));
+                localizationService.GetString("ErrorWhileUpdatingPSK"));
         }
 
         // return

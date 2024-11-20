@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microsoft.Extensions.Logging;
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using System;
@@ -42,26 +45,18 @@ using Microting.eFormApi.BasePn.Infrastructure.Delegates.CaseUpdate;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application.Case.CaseEdit;
 
-public class CasesService : ICasesService
+public class CasesService(
+    IEFormCoreService coreHelper,
+    IUserService userService,
+    ILocalizationService localizationService,
+    ILogger<CasesService> logger)
+    : ICasesService
 {
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-    private readonly IUserService _userService;
-
-    public CasesService(IEFormCoreService coreHelper,
-        IUserService userService,
-        ILocalizationService localizationService)
-    {
-        _coreHelper = coreHelper;
-        _userService = userService;
-        _localizationService = localizationService;
-    }
-
     public async Task<OperationDataResult<CaseListModel>> Index(CaseRequestModel requestModel)
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
 
             // get base query
@@ -157,11 +152,12 @@ public class CasesService : ICasesService
 
             return new OperationDataResult<CaseListModel>(true, model);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Log.LogException(ex.Message);
-            Log.LogException(ex.StackTrace);
-            return new OperationDataResult<CaseListModel>(false, _localizationService.GetString("CaseLoadingFailed") + $" Exception: {ex.Message}");
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);;
+            return new OperationDataResult<CaseListModel>(false, localizationService.GetString("CaseLoadingFailed") + $" Exception: {e.Message}");
         }
     }
 
@@ -169,14 +165,14 @@ public class CasesService : ICasesService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var caseDto = await sdkDbContext.Cases.SingleOrDefaultAsync(x => x.Id == id);
             if (caseDto == null)
             {
-                return new OperationDataResult<ReplyElement>(false, _localizationService.GetString("CaseNotFound"));
+                return new OperationDataResult<ReplyElement>(false, localizationService.GetString("CaseNotFound"));
             }
-            var language = await _userService.GetCurrentUserLanguage();
+            var language = await userService.GetCurrentUserLanguage();
             var theCase = await core.CaseRead(caseDto.Id, language);
             theCase.Id = id;
 
@@ -184,11 +180,12 @@ public class CasesService : ICasesService
                 ? new OperationDataResult<ReplyElement>(true, theCase)
                 : new OperationDataResult<ReplyElement>(false);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Log.LogException(ex.Message);
-            Log.LogException(ex.StackTrace);
-            return new OperationDataResult<ReplyElement>(false, ex.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationDataResult<ReplyElement>(false, e.Message);
         }
     }
 
@@ -196,17 +193,18 @@ public class CasesService : ICasesService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
             return await core.CaseDeleteResult(id)
-                ? new OperationResult(true, _localizationService.GetStringWithFormat("CaseParamDeletedSuccessfully", id))
-                : new OperationResult(false, _localizationService.GetString("CaseCouldNotBeRemoved"));
+                ? new OperationResult(true, localizationService.GetStringWithFormat("CaseParamDeletedSuccessfully", id))
+                : new OperationResult(false, localizationService.GetString("CaseCouldNotBeRemoved"));
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Log.LogException(ex.Message);
-            Log.LogException(ex.StackTrace);
-            return new OperationResult(false, $"{_localizationService.GetString("CaseCouldNotBeRemoved")} Exception: {ex.Message}");
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, $"{localizationService.GetString("CaseCouldNotBeRemoved")} Exception: {e.Message}");
         }
     }
 
@@ -214,8 +212,8 @@ public class CasesService : ICasesService
     {
         var checkListValueList = new List<string>();
         var fieldValueList = new List<string>();
-        var core = await _coreHelper.GetCore();
-        var language = await _userService.GetCurrentUserLanguage();
+        var core = await coreHelper.GetCore();
+        var language = await userService.GetCurrentUserLanguage();
         try
         {
             model.ElementList.ForEach(element =>
@@ -224,11 +222,12 @@ public class CasesService : ICasesService
                 fieldValueList.AddRange(CaseUpdateHelper.GetFieldList(element));
             });
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Log.LogException(ex.Message);
-            Log.LogException(ex.StackTrace);
-            return new OperationResult(false, $"{_localizationService.GetString("CaseCouldNotBeUpdated")} Exception: {ex.Message}");
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, $"{localizationService.GetString("CaseCouldNotBeUpdated")} Exception: {e.Message}");
         }
 
         try
@@ -257,7 +256,7 @@ public class CasesService : ICasesService
                 }
                 else
                 {
-                    return new OperationResult(false, _localizationService.GetString("CaseNotFound"));
+                    return new OperationResult(false, localizationService.GetString("CaseNotFound"));
                 }
             }
 
@@ -271,19 +270,20 @@ public class CasesService : ICasesService
                 }
             }
 
-            return new OperationResult(true, _localizationService.GetString("CaseHasBeenUpdated"));
+            return new OperationResult(true, localizationService.GetString("CaseHasBeenUpdated"));
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Log.LogException(ex.Message);
-            Log.LogException(ex.StackTrace);
-            return new OperationResult(false, _localizationService.GetString("CaseCouldNotBeUpdated") + $" Exception: {ex.Message}");
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("CaseCouldNotBeUpdated") + $" Exception: {e.Message}");
         }
     }
 
     public async Task<OperationResult> Archive(int caseId)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var sdkDbContext = core.DbContextHelper.GetDbContext();
         try
         {
@@ -294,7 +294,7 @@ public class CasesService : ICasesService
                 .FirstOrDefaultAsync();
             if (caseDb == null)
             {
-                return new OperationResult(false, _localizationService.GetString("CaseNotFound"));
+                return new OperationResult(false, localizationService.GetString("CaseNotFound"));
             }
 
             caseDb.IsArchived = true;
@@ -309,19 +309,20 @@ public class CasesService : ICasesService
                     func.DynamicInvoke(caseId);
                 }
             }
-            return new OperationResult(true, _localizationService.GetString("CaseHasBeenArchived"));
+            return new OperationResult(true, localizationService.GetString("CaseHasBeenArchived"));
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Log.LogException(ex.Message);
-            Log.LogException(ex.StackTrace);
-            return new OperationResult(false, $"{_localizationService.GetString("CaseCouldNotBeArchived")} Exception: {ex.Message}");
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, $"{localizationService.GetString("CaseCouldNotBeArchived")} Exception: {e.Message}");
         }
     }
 
     public async Task<OperationResult> Unarchive(int caseId)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         var sdkDbContext = core.DbContextHelper.GetDbContext();
         try
         {
@@ -332,19 +333,20 @@ public class CasesService : ICasesService
                 .FirstOrDefaultAsync();
             if (caseDb == null)
             {
-                return new OperationResult(false, _localizationService.GetString("CaseNotFound"));
+                return new OperationResult(false, localizationService.GetString("CaseNotFound"));
             }
 
             caseDb.IsArchived = false;
             await caseDb.Update(sdkDbContext);
 
-            return new OperationResult(true, _localizationService.GetString("CaseHasBeenUnarchived"));
+            return new OperationResult(true, localizationService.GetString("CaseHasBeenUnarchived"));
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Log.LogException(ex.Message);
-            Log.LogException(ex.StackTrace);
-            return new OperationResult(false, $"{_localizationService.GetString("CaseCouldNotBeUnarchived")} Exception: {ex.Message}");
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, $"{localizationService.GetString("CaseCouldNotBeUnarchived")} Exception: {e.Message}");
         }
     }
 }

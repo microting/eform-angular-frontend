@@ -9,22 +9,16 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 namespace eFormAPI.Web.Controllers;
 
 //[Authorize]
-public class TranslationController : Controller
+public class TranslationController(ITranslationService translationService, IOptions<GoogleTranslateOptions> options)
+    : Controller
 {
-    private readonly ITranslationService _translationService;
-    private readonly string _apiKey;
-
-    public TranslationController(ITranslationService translationService, IOptions<GoogleTranslateOptions> options)
-    {
-        _translationService = translationService;
-        _apiKey = options.Value.ApiKey;
-    }
+    private readonly string _apiKey = options.Value.ApiKey;
 
     [HttpGet]
     [Route("api/get-translation")]
     public async Task<OperationDataResult<string>> TranslateText(string sourceText, string sourceLanguageCode, string targetLanguageCode)
     {
-        return await _translationService.TranslateText(sourceText, sourceLanguageCode, targetLanguageCode, _apiKey);
+        return await translationService.TranslateText(sourceText, sourceLanguageCode, targetLanguageCode, _apiKey);
     }
 
     [HttpGet]

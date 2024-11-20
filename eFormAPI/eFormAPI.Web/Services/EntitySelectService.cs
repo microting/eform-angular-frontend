@@ -23,6 +23,9 @@ SOFTWARE.
 */
 
 
+using Microsoft.Extensions.Logging;
+using Sentry;
+
 namespace eFormAPI.Web.Services;
 
 using Abstractions;
@@ -42,27 +45,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using EntityGroup = Infrastructure.Models.EntityGroup;
 
-public class EntitySelectService : IEntitySelectService
+public class EntitySelectService(
+    BaseDbContext dbContext,
+    ILocalizationService localizationService,
+    IEFormCoreService coreHelper,
+    ILogger<EntitySelectService> logger)
+    : IEntitySelectService
 {
-    private readonly BaseDbContext _dbContext;
-    private readonly IEFormCoreService _coreHelper;
-    private readonly ILocalizationService _localizationService;
-
-    public EntitySelectService(BaseDbContext dbContext,
-        ILocalizationService localizationService,
-        IEFormCoreService coreHelper)
-    {
-        _dbContext = dbContext;
-        _localizationService = localizationService;
-        _coreHelper = coreHelper;
-    }
-
     public async Task<OperationDataResult<Paged<EntityGroup>>> Index(
         AdvEntitySelectableGroupListRequestModel requestModel)
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
 
             var entityGroupList = new Paged<EntityGroup>();
@@ -112,7 +107,7 @@ public class EntitySelectService : IEntitySelectService
 
             entityGroupList.Entities = entityGroups;
 
-            var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+            var plugins = await dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
             foreach (var entityGroup in entityGroupList.Entities)
             {
                 foreach (var _ in plugins.Where(plugin => entityGroup.Name.Contains(plugin)))
@@ -123,10 +118,13 @@ public class EntitySelectService : IEntitySelectService
 
             return new OperationDataResult<Paged<EntityGroup>>(true, entityGroupList);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<Paged<EntityGroup>>(false,
-                _localizationService.GetString("SelectableGroupLoadingFailed"));
+                localizationService.GetString("SelectableGroupLoadingFailed"));
         }
     }
 
@@ -134,7 +132,7 @@ public class EntitySelectService : IEntitySelectService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var groupCreate = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect, editModel.Name, editModel.Description, false, true);
             if (editModel.EntityItemModels != null && editModel.EntityItemModels.Any())
             {
@@ -153,12 +151,14 @@ public class EntitySelectService : IEntitySelectService
             }
 
             return new OperationResult(true,
-                _localizationService.GetStringWithFormat("ParamCreatedSuccessfully", groupCreate.MicrotingUid));
+                localizationService.GetStringWithFormat("ParamCreatedSuccessfully", groupCreate.MicrotingUid));
         }
-        catch (Exception exception)
+        catch (Exception e)
         {
-            Console.WriteLine(exception.Message);
-            return new OperationResult(false, _localizationService.GetString("SelectableListCreationFailed"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("SelectableListCreationFailed"));
         }
     }
 
@@ -166,7 +166,7 @@ public class EntitySelectService : IEntitySelectService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var entityGroup = await core.EntityGroupRead(editModel.GroupUid);
 
             entityGroup.Description = editModel.Description;
@@ -204,23 +204,26 @@ public class EntitySelectService : IEntitySelectService
             }
 
             return new OperationResult(true,
-                _localizationService.GetStringWithFormat("ParamUpdatedSuccessfully", editModel.Name));
+                localizationService.GetStringWithFormat("ParamUpdatedSuccessfully", editModel.Name));
         }
-        catch (Exception exception)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetString("SelectableListCreationFailed") + exception.Message);
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("SelectableListCreationFailed") + e.Message);
         }
     }
 
     public async Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
     {
-        var core = await _coreHelper.GetCore();
+        var core = await coreHelper.GetCore();
         try
         {
 
             EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid);
 
-            var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+            var plugins = await dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
 
             foreach (var _ in plugins.Where(plugin => entityGroup.Name.Contains(plugin)))
             {
@@ -235,7 +238,7 @@ public class EntitySelectService : IEntitySelectService
             var eg = await sdkDbContext.EntityGroups.SingleAsync(x => x.Id == int.Parse(entityGroupUid));
             EntityGroup entityGroup = await core.EntityGroupRead(eg.MicrotingUid);
 
-            var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+            var plugins = await dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
 
             foreach (var _ in plugins.Where(plugin => entityGroup.Name.Contains(plugin)))
             {
@@ -245,10 +248,13 @@ public class EntitySelectService : IEntitySelectService
             return new OperationDataResult<EntityGroup>(true, entityGroup);
         }
 
-        catch (Exception exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<EntityGroup>(false,
-                _localizationService.GetString("ErrorWhileObtainSelectableList") + $" {exception.Message}");
+                localizationService.GetString("ErrorWhileObtainSelectableList") + $" {e.Message}");
         }
     }
 
@@ -256,7 +262,7 @@ public class EntitySelectService : IEntitySelectService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
             var entityGroup = await core.EntityGroupRead(entityGroupUid);
 
@@ -270,10 +276,13 @@ public class EntitySelectService : IEntitySelectService
 
             return new OperationDataResult<List<CommonDictionaryTextModel>>(true, mappedEntityGroupDict);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<CommonDictionaryTextModel>>(false,
-                _localizationService.GetString("ErrorWhileObtainSelectableList"));
+                localizationService.GetString("ErrorWhileObtainSelectableList"));
         }
     }
 
@@ -281,16 +290,19 @@ public class EntitySelectService : IEntitySelectService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
 
 
             return await core.EntityGroupDelete(entityGroupUid)
-                ? new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid))
-                : new OperationResult(false, _localizationService.GetString("ErrorWhileDeletingSelectableList"));
+                ? new OperationResult(true, localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid))
+                : new OperationResult(false, localizationService.GetString("ErrorWhileDeletingSelectableList"));
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return new OperationResult(false, _localizationService.GetString("ErrorWhileDeletingSelectableList"));
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false, localizationService.GetString("ErrorWhileDeletingSelectableList"));
         }
     }
 
@@ -298,7 +310,7 @@ public class EntitySelectService : IEntitySelectService
     {
         try
         {
-            var core = await _coreHelper.GetCore();
+            var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
 
             var query = sdkDbContext.EntityGroups
@@ -322,10 +334,13 @@ public class EntitySelectService : IEntitySelectService
 
             return new OperationDataResult<List<CommonDictionaryModel>>(true, entityGroups);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<CommonDictionaryModel>>(false,
-                _localizationService.GetString("ErrorWhenObtainingSearchableList"));
+                localizationService.GetString("ErrorWhenObtainingSearchableList"));
         }
     }
 }
