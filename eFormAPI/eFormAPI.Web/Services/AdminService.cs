@@ -63,10 +63,38 @@ public class AdminService(
         {
             var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
-            var userQuery = userManager.Users
+            var userQuery = dbContext.Users
+                .GroupJoin(
+                    dbContext.SecurityGroupUsers,
+                    user => user.Id,
+                    securityGroupUser => securityGroupUser.EformUserId,
+                    (user, securityGroupUsers) => new { user, securityGroupUsers })
+                .SelectMany(
+                    x => x.securityGroupUsers.DefaultIfEmpty(),
+                    (x, securityGroupUser) => new
+                    {
+                        x.user.Id,
+                        x.user.FirstName,
+                        x.user.LastName,
+                        x.user.UserRoles,
+                        x.user.UserName,
+                        x.user.Email,
+                        x.user.Locale,
+                        x.user.TimeZone,
+                        x.user.Formats,
+                        x.user.DarkTheme,
+                        x.user.ArchiveModel,
+                        x.user.ArchiveManufacturer,
+                        x.user.ArchiveOsVersion,
+                        x.user.ArchiveSoftwareVersion,
+                        x.user.TimeRegistrationModel,
+                        x.user.TimeRegistrationManufacturer,
+                        x.user.TimeRegistrationOsVersion,
+                        x.user.TimeRegistrationSoftwareVersion,
+                        GroupName = securityGroupUser != null ? securityGroupUser.SecurityGroup.Name : null
+                    })
                 .AsNoTracking()
                 .AsQueryable();
-
 
             // get count
             var totalUsers = await userQuery.Select(x => x.Id).CountAsync();
@@ -80,8 +108,10 @@ public class AdminService(
             var userQueryWithSelect = userQuery.Select(x => new UserInfoViewModel
             {
                 Role = x.UserRoles.Select(y => y.Role.Name).FirstOrDefault(),
+                GroupName = x.GroupName,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
+                FullName = x.FirstName + " " + x.LastName,
                 Id = x.Id,
                 UserName = x.UserName,
                 Email = x.Email,

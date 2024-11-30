@@ -56,29 +56,29 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   tableHeaders: MtxGridColumn[] = [
     {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true},
     {header: this.translateService.stream('Email'), sortProp: {id: 'Email'}, field: 'email', sortable: true},
-    {
-      header: this.translateService.stream('Full Name'),
-      field: 'fullName',
-      sortable: false,
-      formatter: rowData => `${rowData.firstName} ${rowData.lastName}`
-    },
+    {header: this.translateService.stream('Full Name'), sortProp: {id: 'FullName'}, field: 'fullName', sortable: true},
     {header: this.translateService.stream('Role'), sortProp: {id: 'Role'}, field: 'role', sortable: true},
+    {header: this.translateService.stream('GroupName'), sortProp: {id: 'GroupName'}, field: 'groupName', sortable: true},
     {header: this.translateService.stream('Language'), sortProp: {id: 'Language'}, field: 'language', sortable: true},
     {
       header: this.translateService.stream('Archive Model & OS version'),
-      field: 'archiveManufacturer',
+      sortProp: {id: 'ArchiveManufacturer'},
+      field: 'archiveManufacturer', sortable: true
     },
     {
       header: this.translateService.stream('Archive Software version'),
-      field: 'archiveSoftwareVersion',
+      sortProp: {id: 'ArchiveSoftwareVersion'},
+      field: 'archiveSoftwareVersion', sortable: true
     },
     {
       header: this.translateService.stream('Time Model & OS version'),
-      field: 'timeRegistrationManufacturer',
+      sortProp: {id: 'TimeRegistrationManufacturer'},
+      field: 'timeRegistrationManufacturer', sortable: true
     },
     {
       header: this.translateService.stream('Time Software version'),
-      field: 'timeRegistrationSoftwareVersion',
+      sortProp: {id: 'TimeRegistrationSoftwareVersion'},
+      field: 'timeRegistrationSoftwareVersion', sortable: true
     },
     {header: this.translateService.stream('Actions'), field: 'actions', sortable: false},
   ];

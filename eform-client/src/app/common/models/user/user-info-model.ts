@@ -5,6 +5,7 @@ export class UserInfoModel {
   email: string;
   firstName: string;
   lastName: string;
+  fullName: string;
   role: string;
   darkTheme: boolean;
   isDeviceUser: boolean;
@@ -19,6 +20,7 @@ export class UserInfoModel {
   timeRegistrationModel?: string;
   timeRegistrationManufacturer?: string;
   timeRegistrationOsVersion?: string;
+  groupName: string;
 
   constructor(data?: any) {
     if (data) {
@@ -28,6 +30,7 @@ export class UserInfoModel {
       this.email = data.email;
       this.firstName = data.firstName;
       this.lastName = data.lastName;
+      this.fullName = data.fullName;
       this.role = data.role;
       this.darkTheme = data.darkTheme;
       this.isDeviceUser = data.isDeviceUser;
@@ -42,6 +45,7 @@ export class UserInfoModel {
       this.timeRegistrationModel = data.timeRegistrationModel;
       this.timeRegistrationManufacturer = data.timeRegistrationManufacturer;
       this.timeRegistrationOsVersion = data.timeRegistrationOsVersion;
+      this.groupName = data.groupName;
     }
   }
 }
