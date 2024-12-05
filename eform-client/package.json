@@ -94,7 +94,7 @@
     "ngx-auto-unsubscribe": "3.0.1",
     "ngx-cookie-service": "18.0.0",
     "ngx-editor": "^18.0.0",
-    "ngx-mask": "^18.0.4",
+    "ngx-mask": "^19.0.2",
     "ngx-papaparse": "8.0.0",
     "ngx-slimscroll": "12.2.0",
     "ngx-toastr": "19.0.0",
