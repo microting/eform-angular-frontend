@@ -384,9 +384,62 @@ public class Program
         Environment.SetEnvironmentVariable("API_KEY", defaultConfig["api-key"]);
         Console.WriteLine("API_KEY: " + defaultConfig["api-key"]);
 
-
         var port = defaultConfig.GetValue("port", 5000);
         var connectionString = defaultConfig.GetValue("ConnectionString", "");
+        var clientEmail = defaultConfig.GetValue("client_email", "");
+        var privateKeyId = defaultConfig.GetValue("private_key_id", "");
+        var privateKey = defaultConfig.GetValue("private_key", "");
+        var clientId = defaultConfig.GetValue("client_id", "");
+        var projectId = defaultConfig.GetValue("project_id", "");
+
+        // check if connection.json exists
+        var connectionJsonPath = Path.Combine(Directory.GetCurrentDirectory(), "connection.json");
+        if (File.Exists(connectionJsonPath))
+        {
+            // if it does exist read the "service_account" section into the environment variables without deserializing it into an object
+            var connectionJson = File.ReadAllText(connectionJsonPath);
+            var serviceAccount = JsonConvert.DeserializeObject<ServiceAccount>(connectionJson);
+            if (serviceAccount != null)
+            {
+                if (string.IsNullOrEmpty(clientEmail))
+                {
+                    clientEmail = serviceAccount.ClientEmail;
+                }
+
+                if (string.IsNullOrEmpty(privateKeyId))
+                {
+                    privateKeyId = serviceAccount.PrivateKeyId;
+                }
+
+                if (string.IsNullOrEmpty(privateKey))
+                {
+                    privateKey = serviceAccount.PrivateKey;
+                }
+
+                if (string.IsNullOrEmpty(clientId))
+                {
+                    clientId = serviceAccount.ClientId;
+                }
+
+                if (string.IsNullOrEmpty(projectId))
+                {
+                    projectId = serviceAccount.ProjectId;
+                }
+            }
+
+        }
+
+        Environment.SetEnvironmentVariable("CLIENT_EMAIL", clientEmail);
+        Console.WriteLine("CLIENT_EMAIL: " + clientEmail);
+        Environment.SetEnvironmentVariable("PRIVATE_KEY_ID", privateKeyId);
+        Console.WriteLine("PRIVATE_KEY_ID: " + privateKeyId);
+        Environment.SetEnvironmentVariable("PRIVATE_KEY", privateKey);
+        Console.WriteLine("PRIVATE_KEY: " + privateKey);
+        Environment.SetEnvironmentVariable("CLIENT_ID", clientId);
+        Console.WriteLine("CLIENT_ID: " + clientId);
+        Environment.SetEnvironmentVariable("PROJECT_ID", projectId);
+        Console.WriteLine("PROJECT_ID: " + projectId);
+
         return WebHost.CreateDefaultBuilder(args)
             .ConfigureKestrel(serverOptions =>
             {
