@@ -398,7 +398,8 @@ public class Program
         {
             // if it does exist read the "service_account" section into the environment variables without deserializing it into an object
             var connectionJson = File.ReadAllText(connectionJsonPath);
-            var serviceAccount = JsonConvert.DeserializeObject<ServiceAccount>(connectionJson);
+            var serviceAccountWrapper = JsonConvert.DeserializeObject<ServiceAccountWrapper>(connectionJson);
+            var serviceAccount = serviceAccountWrapper.ServiceAccount;
             if (serviceAccount != null)
             {
                 if (string.IsNullOrEmpty(clientEmail))
