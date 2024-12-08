@@ -103,7 +103,7 @@ public static class PluginHelper
                                 dbContext.SaveChanges();
                             }
 
-                            if (eformPlugin.Status == (int) PluginStatus.Enabled)
+                            if (eformPlugin.Status == (int) PluginStatus.Enabled && plugins.All(x => x.PluginId != plugin.PluginId))
                             {
                                 plugins.Add(plugin);
                             }
