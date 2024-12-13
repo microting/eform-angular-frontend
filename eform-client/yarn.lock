@@ -4069,14 +4069,14 @@
   dependencies:
     "@types/node" "^20.1.0"
 
-"@wdio/reporter@9.2.14":
-  version "9.2.14"
-  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-9.2.14.tgz#376b85af9b4e4bc79218c2e9956501fdb3b94a9d"
-  integrity sha512-njOqa9+w5zc9AY4fsUmW46EhZ2nzMFRXZPCmwnGZuYk81L3slVfAFhKk1wSTRhSbghjYAZndt9Yo3c4wFLh6Lg==
+"@wdio/reporter@9.4.2":
+  version "9.4.2"
+  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-9.4.2.tgz#3bd4c692638725715ba3653ff8006e6e433ede70"
+  integrity sha512-BYB1eGZX6LhwJXdIR7XEdfTiY3dFrt1YVLjQNGgbbp9HYE6cnXeejo4/l0Vwk+D1y0oXkEjKr2mOr3XL2PFNIA==
   dependencies:
     "@types/node" "^20.1.0"
     "@wdio/logger" "9.1.3"
-    "@wdio/types" "9.2.2"
+    "@wdio/types" "9.4.2"
     diff "^7.0.0"
     object-inspect "^1.12.0"
 
@@ -4097,13 +4097,13 @@
     webdriver "8.40.0"
     webdriverio "8.40.0"
 
-"@wdio/spec-reporter@^9.2.14":
-  version "9.2.14"
-  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-9.2.14.tgz#f3f19db8f4de917f826c2207068e2209323e2b7d"
-  integrity sha512-/0QI/Lfld2gKscVAOTxgy1KyshxreDEu2F0FsiNQUUMQXuV8bN85lGgH6K3F+xZ0p17J/tg8UnWQCv2IaXTycw==
+"@wdio/spec-reporter@^9.4.2":
+  version "9.4.2"
+  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-9.4.2.tgz#9d3cfee3e3c0eb6c507d337a3d668f30e3f24aec"
+  integrity sha512-AKd7xajCFHEyuxVk2nZey9OSy29JOllb4qleQuTQpM8NIf6RxqLPqV3bNfzzpPjryO55qrykTUU//+7s4OcK2Q==
   dependencies:
-    "@wdio/reporter" "9.2.14"
-    "@wdio/types" "9.2.2"
+    "@wdio/reporter" "9.4.2"
+    "@wdio/types" "9.4.2"
     chalk "^5.1.2"
     easy-table "^1.2.0"
     pretty-ms "^9.0.0"
@@ -4119,6 +4119,13 @@
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-9.2.2.tgz#c3bb4f01149c4ae0612c3864460c4aa48f7c35ec"
   integrity sha512-nHZ9Ne9iRQFJ1TOYKUn4Fza69IshTTzk6RYmSZ51ImGs9uMZu0+S0Jm9REdly+VLN3FzxG6g2QSe0/F3uNVPdw==
+  dependencies:
+    "@types/node" "^20.1.0"
+
+"@wdio/types@9.4.2":
+  version "9.4.2"
+  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-9.4.2.tgz#5522f6e77e4179f3f4fe154e02741231db707abb"
+  integrity sha512-eaEqngtnYQ2D6YLbfM2HGJVbJBjO1fAotPdu1G1cr28RAjcsANpl5IbDHZMlsKmiU9JtJx5CadhxCnrCLZVVDw==
   dependencies:
     "@types/node" "^20.1.0"
 
