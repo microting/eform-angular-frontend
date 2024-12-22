@@ -355,7 +355,16 @@ public class TemplatesService(
             var clId = await core.TemplateCreate(newTemplate);
             var cl = await sdkDbContext.CheckLists.SingleOrDefaultAsync(x => x.Id == clId);
             cl.IsEditable = true;
+            cl.QuickSyncEnabled = 1;
             await cl.Update(sdkDbContext);
+            var subCl = await sdkDbContext.CheckLists
+                .Where(x => x.ParentId == clId)
+                .ToListAsync();
+            foreach (var checkList in subCl)
+            {
+                checkList.QuickSyncEnabled = 1;
+                await checkList.Update(sdkDbContext);
+            }
             if (eFormXmlModel.TagIds != null)
             {
                 await core.TemplateSetTags(newTemplate.Id, eFormXmlModel.TagIds);
