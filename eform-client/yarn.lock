@@ -200,16 +200,6 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.0.2.tgz#9308199fda2581953a4a9b8b270dd289b5034c68"
   integrity sha512-HPmp92r70SNO/0NdIaIhxrgVSpomqryuUk7jszvNRtu+OzYCJGcbLhQD38T3dbBWT/AV0QXzyzExn6/2ai9fEw==
 
-"@angular-eslint/eslint-plugin-template@18.4.1":
-  version "18.4.1"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-18.4.1.tgz#b7fa47bb8d6340a8ff2b280a2b993a83cd032a02"
-  integrity sha512-sofnKpi6wOZ6avVfYYqB7sCgGgWF2HgCZfW+IAp1MtVD2FBa1zTSbbfIZ1I8Akpd22UXa4LKJd0TLwm5XHHkiQ==
-  dependencies:
-    "@angular-eslint/bundled-angular-compiler" "18.4.1"
-    "@angular-eslint/utils" "18.4.1"
-    aria-query "5.3.2"
-    axobject-query "4.1.0"
-
 "@angular-eslint/eslint-plugin-template@19.0.2":
   version "19.0.2"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-19.0.2.tgz#3ef9bccadf4021b231471e701dfb1cdaac5a53c7"
@@ -248,13 +238,6 @@
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "18.4.1"
     eslint-scope "^8.0.2"
-
-"@angular-eslint/utils@18.4.1":
-  version "18.4.1"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-18.4.1.tgz#7e88446d74cf8d554a40eedcccbeb6717f06715e"
-  integrity sha512-F5UGE1J/CRmTbl8vjexQRwRglNqnJwdXCUejaG+qlGssSHoWcRB+ubbR/na3PdnzeJdBE6DkLYElXnOQZ6YKfg==
-  dependencies:
-    "@angular-eslint/bundled-angular-compiler" "18.4.1"
 
 "@angular-eslint/utils@19.0.2":
   version "19.0.2"
