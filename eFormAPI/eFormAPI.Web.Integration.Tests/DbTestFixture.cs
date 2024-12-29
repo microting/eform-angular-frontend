@@ -44,7 +44,8 @@ namespace eFormAPI.Web.Integration.Tests
             dbContextOptionsBuilder.UseMySql(connectionStr,
                     new MariaDbServerVersion(
                         ServerVersion.AutoDetect(connectionStr)),
-                    b => b.EnableRetryOnFailure());
+                    b => b.EnableRetryOnFailure()
+                        .TranslateParameterizedCollectionsToConstants());
             DbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
 
             DbContext.Database.Migrate();

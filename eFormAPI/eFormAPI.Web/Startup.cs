@@ -116,6 +116,7 @@ public class Startup
                         ServerVersion.AutoDetect(Configuration["ConnectinString"])), mySqlOptionsAction: builder =>
                     {
                         builder.EnableRetryOnFailure();
+                        builder.TranslateParameterizedCollectionsToConstants();
                     }));
 
             services.AddHealthChecks()
@@ -168,6 +169,7 @@ public class Startup
                                 ServerVersion.AutoDetect(Configuration.MyConnectionString())), mySqlOptionsAction: builder =>
                             {
                                 builder.EnableRetryOnFailure();
+                                builder.TranslateParameterizedCollectionsToConstants();
                             }));
 
                     services.AddHealthChecks()

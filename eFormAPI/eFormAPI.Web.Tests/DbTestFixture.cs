@@ -46,6 +46,7 @@ namespace eFormAPI.Web.Tests
                 ServerVersion.AutoDetect(connectionStr)), mySqlOptionsAction: builder =>
             {
                 builder.EnableRetryOnFailure();
+                builder.TranslateParameterizedCollectionsToConstants();
             });
             DbContext = new BaseDbContext(optionsBuilder.Options);
 
