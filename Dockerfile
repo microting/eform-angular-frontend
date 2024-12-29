@@ -10,7 +10,7 @@ RUN yarn install
 RUN yarn build
 RUN if [ -n "$SENTRY_AUTH_TOKEN" ]; then yarn sentrysourcemap; else echo "SENTRY_AUTH_TOKEN is not set"; fi
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:9.0-noble AS build-env
 WORKDIR /app
 ARG GITVERSION
 
@@ -20,7 +20,7 @@ RUN dotnet publish -o out /p:Version=$GITVERSION --runtime linux-x64 --configura
 RUN pwd
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-jammy
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-noble
 WORKDIR /app
 COPY --from=build-env /app/out .
 COPY --from=node-env /app/dist wwwroot

@@ -92,7 +92,7 @@ public class Program
             options.IsGlobalModeEnabled = false;
 
             // This option will enable Sentry's tracing features. You still need to start transactions and spans.
-            options.EnableTracing = true;
+            //options.EnableTracing = true;
         });
 
         var host = BuildWebHost(args);
