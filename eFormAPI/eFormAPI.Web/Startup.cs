@@ -25,7 +25,9 @@ SOFTWARE.
 using eFormAPI.Web.Infrastructure.Models;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microting.eForm.Infrastructure.Factories;
+using RabbitMQ.Client;
 
 namespace eFormAPI.Web;
 
@@ -72,6 +74,8 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
 using Services.Eform;
+using RabbitMQ.Client;
+
 
 public class Startup
 {
@@ -125,7 +129,23 @@ public class Startup
                 var rabbituser = dbcontext.Settings.First(x => x.Name == "rabbitMqUser").Value;
                 var rabbitpass = dbcontext.Settings.First(x => x.Name == "rabbitMqPassword").Value;
 
-                services.AddHealthChecks().AddRabbitMQ($"amqp://{rabbituser}:{rabbitpass}@{rabbithost}", name: "rabbitmq");
+                services.AddHealthChecks()
+                    .AddRabbitMQ(
+                        factory: serviceProvider =>
+                        {
+                            var connectionFactory = new RabbitMQ.Client.ConnectionFactory
+                            {
+                                HostName = rabbithost,
+                                UserName = rabbituser,
+                                Password = rabbitpass
+                            };
+                            return connectionFactory.CreateConnectionAsync();
+                        },
+                        name: "rabbitmq",
+                        failureStatus: HealthStatus.Unhealthy,
+                        tags: ["message-broker"],
+                        timeout: TimeSpan.FromSeconds(5)
+                    );
                 _sdkPresent = true;
             }
             catch (Exception ex) {
@@ -161,7 +181,23 @@ public class Startup
                         var rabbituser = dbcontext.Settings.First(x => x.Name == "rabbitMqUser").Value;
                         var rabbitpass = dbcontext.Settings.First(x => x.Name == "rabbitMqPassword").Value;
 
-                        services.AddHealthChecks().AddRabbitMQ($"amqp://{rabbituser}:{rabbitpass}@{rabbithost}", name: "rabbitmq");
+                        services.AddHealthChecks()
+                            .AddRabbitMQ(
+                                factory: serviceProvider =>
+                                {
+                                    var connectionFactory = new RabbitMQ.Client.ConnectionFactory
+                                    {
+                                        HostName = rabbithost,
+                                        UserName = rabbituser,
+                                        Password = rabbitpass
+                                    };
+                                    return connectionFactory.CreateConnectionAsync();
+                                },
+                                name: "rabbitmq",
+                                failureStatus: HealthStatus.Unhealthy,
+                                tags: ["message-broker"],
+                                timeout: TimeSpan.FromSeconds(5)
+                            );
                         _sdkPresent = true;
                     }
                     catch (Exception ex) {
