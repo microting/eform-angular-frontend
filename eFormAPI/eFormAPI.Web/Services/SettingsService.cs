@@ -169,7 +169,8 @@ public class SettingsService(
             dbContextOptionsBuilder.UseMySql(angularConnectionString,
                 new MariaDbServerVersion(ServerVersion.AutoDetect(angularConnectionString)),
                 b =>
-                    b.EnableRetryOnFailure());
+                    b.EnableRetryOnFailure()
+                        .TranslateParameterizedCollectionsToConstants());
 
 
             await using var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
