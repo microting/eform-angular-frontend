@@ -150,7 +150,7 @@
     ora "5.4.1"
     rxjs "7.8.1"
 
-"@angular-eslint/builder@18.2.11":
+"@angular-eslint/builder@18.4.3":
   version "18.4.3"
   resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-18.4.3.tgz#800b8a68b464ddfc0d737b0ad38c7804b463d8e1"
   integrity sha512-NzmrXlr7GFE+cjwipY/CxBscZXNqnuK0us1mO6Z2T6MeH6m+rRcdlY/rZyKoRniyNNvuzl6vpEsfMIMmnfebrA==
@@ -163,7 +163,7 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-18.4.3.tgz#0810f76045b854782e6370953cf5324112a65f80"
   integrity sha512-zdrA8mR98X+U4YgHzUKmivRU+PxzwOL/j8G7eTOvBuq8GPzsP+hvak+tyxlgeGm9HsvpFj9ERHLtJ0xDUPs8fg==
 
-"@angular-eslint/eslint-plugin-template@18.2.11", "@angular-eslint/eslint-plugin-template@18.4.3":
+"@angular-eslint/eslint-plugin-template@18.4.3":
   version "18.4.3"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-18.4.3.tgz#3e9820735f087afad193361e3081fad54dbf4e51"
   integrity sha512-ijGlX2N01ayMXTpeQivOA31AszO8OEbu9ZQUCxnu9AyMMhxyi2q50bujRChAvN9YXQfdQtbxuajxV6+aiWb5BQ==
@@ -173,7 +173,7 @@
     aria-query "5.3.2"
     axobject-query "4.1.0"
 
-"@angular-eslint/eslint-plugin@18.2.11", "@angular-eslint/eslint-plugin@18.4.3":
+"@angular-eslint/eslint-plugin@18.4.3":
   version "18.4.3"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-18.4.3.tgz#7618bc6056086a98ed4d888f31185fc62e6be2d1"
   integrity sha512-AyJbupiwTBR81P6T59v+aULEnPpZBCBxL2S5QFWfAhNCwWhcof4GihvdK2Z87yhvzDGeAzUFSWl/beJfeFa+PA==
@@ -181,7 +181,7 @@
     "@angular-eslint/bundled-angular-compiler" "18.4.3"
     "@angular-eslint/utils" "18.4.3"
 
-"@angular-eslint/schematics@18.2.11":
+"@angular-eslint/schematics@18.4.3":
   version "18.4.3"
   resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-18.4.3.tgz#1d6e9026e0054d556c37750ccff0ecce701561c1"
   integrity sha512-D5maKn5e6n58+8n7jLFLD4g+RGPOPeDSsvPc1sqial5tEKLxAJQJS9WZ28oef3bhkob6C60D+1H0mMmEEVvyVA==
@@ -194,7 +194,7 @@
     semver "7.6.3"
     strip-json-comments "3.1.1"
 
-"@angular-eslint/template-parser@18.2.11":
+"@angular-eslint/template-parser@18.4.3":
   version "18.4.3"
   resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-18.4.3.tgz#2c6c396563a278a6f2dfdb3fbe9d4310ad0c6dc6"
   integrity sha512-JZMPtEB8yNip3kg4WDEWQyObSo2Hwf+opq2ElYuwe85GQkGhfJSJ2CQYo4FSwd+c5MUQAqESNRg9QqGYauDsiw==
@@ -8936,7 +8936,7 @@ loglevel@^1.6.0:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.9.2.tgz#c2e028d6c757720107df4e64508530db6621ba08"
   integrity sha512-HgMmCqIJSAKqo68l0rS2AanEWfkxaZ5wNiEFb5ggm08lDs9Xl2KxBlX3PTcaD2chBM1gXAYf491/M2Rv8Jwayg==
 
-lop@^0.4.1:
+lop@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/lop/-/lop-0.4.2.tgz#c9c2f958a39b9da1c2f36ca9ad66891a9fe84640"
   integrity sha512-RefILVDQ4DKoRZsJ4Pj22TxE3omDO47yFpkIBoDKzkqPRISs5U1cnAdg/5583YPkWPaLIYHOKRMQSvjFsO26cw==
@@ -9047,9 +9047,9 @@ makeerror@1.0.12:
     tmpl "1.0.5"
 
 mammoth@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/mammoth/-/mammoth-1.8.0.tgz#d8f1b0d3a0355fda129270346e9dc853f223028f"
-  integrity sha512-pJNfxSk9IEGVpau+tsZFz22ofjUsl2mnA5eT8PjPs2n0BP+rhVte4Nez6FdgEuxv3IGI3afiV46ImKqTGDVlbA==
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/mammoth/-/mammoth-1.9.0.tgz#71e34ca280735275788bfe95e653a058dcab4df2"
+  integrity sha512-F+0NxzankQV9XSUAuVKvkdQK0GbtGGuqVnND9aVf9VSeUA82LQa29GjLqYU6Eez8LHqSJG3eGiDW3224OKdpZg==
   dependencies:
     "@xmldom/xmldom" "^0.8.6"
     argparse "~1.0.3"
@@ -9057,7 +9057,7 @@ mammoth@^1.8.0:
     bluebird "~3.4.0"
     dingbat-to-unicode "^1.0.1"
     jszip "^3.7.1"
-    lop "^0.4.1"
+    lop "^0.4.2"
     path-is-absolute "^1.0.0"
     underscore "^1.13.1"
     xmlbuilder "^10.0.0"
@@ -9489,7 +9489,7 @@ ng2-file-upload@^7.0.1:
   dependencies:
     tslib "^2.3.0"
 
-ng2-pdf-viewer@^10.4.0:
+ng2-pdf-viewer@^10.3.4:
   version "10.4.0"
   resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-10.4.0.tgz#b4197ed7a8e5d86de7621b349a8130b69e29ec68"
   integrity sha512-TPh1oLZoeARggreTG60Sl3ikSn+Z3+At9pLZ0o/vxPjc7mW2ok2XPyl2Oqz7VyP80ipVorldm1hsLPBmNe2zzA==
@@ -10372,7 +10372,7 @@ pathval@^2.0.0:
   resolved "https://registry.yarnpkg.com/pathval/-/pathval-2.0.0.tgz#7e2550b422601d4f6b8e26f1301bc8f15a741a25"
   integrity sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA==
 
-pdf-lib@^1.17.1:
+pdf-lib@^1.16.0:
   version "1.17.1"
   resolved "https://registry.yarnpkg.com/pdf-lib/-/pdf-lib-1.17.1.tgz#9e7dd21261a0c1fb17992580885b39e7d08f451f"
   integrity sha512-V/mpyJAoTsN4cnP31vc0wfNA1+p20evqqnap0KLoRUN0Yk/p3wN52DOEsL4oBFcLdb76hlpKPtzJIgo67j/XLw==
