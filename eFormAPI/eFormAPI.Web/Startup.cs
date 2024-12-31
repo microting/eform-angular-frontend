@@ -130,23 +130,24 @@ public class Startup
                 var rabbituser = dbcontext.Settings.First(x => x.Name == "rabbitMqUser").Value;
                 var rabbitpass = dbcontext.Settings.First(x => x.Name == "rabbitMqPassword").Value;
 
-                services.AddHealthChecks()
-                    .AddRabbitMQ(
-                        factory: serviceProvider =>
-                        {
-                            var connectionFactory = new RabbitMQ.Client.ConnectionFactory
-                            {
-                                HostName = rabbithost,
-                                UserName = rabbituser,
-                                Password = rabbitpass
-                            };
-                            return connectionFactory.CreateConnectionAsync();
-                        },
-                        name: "rabbitmq",
-                        failureStatus: HealthStatus.Unhealthy,
-                        tags: ["message-broker"],
-                        timeout: TimeSpan.FromSeconds(5)
-                    );
+                services.AddHealthChecks().AddRabbitMQ($"amqp://{rabbituser}:{rabbitpass}@{rabbithost}", name: "rabbitmq");
+                // services.AddHealthChecks()
+                //     .AddRabbitMQ(
+                //         factory: serviceProvider =>
+                //         {
+                //             var connectionFactory = new RabbitMQ.Client.ConnectionFactory
+                //             {
+                //                 HostName = rabbithost,
+                //                 UserName = rabbituser,
+                //                 Password = rabbitpass
+                //             };
+                //             return connectionFactory.CreateConnectionAsync();
+                //         },
+                //         name: "rabbitmq",
+                //         failureStatus: HealthStatus.Unhealthy,
+                //         tags: ["message-broker"],
+                //         timeout: TimeSpan.FromSeconds(5)
+                //     );
                 _sdkPresent = true;
             }
             catch (Exception ex) {
@@ -183,23 +184,24 @@ public class Startup
                         var rabbituser = dbcontext.Settings.First(x => x.Name == "rabbitMqUser").Value;
                         var rabbitpass = dbcontext.Settings.First(x => x.Name == "rabbitMqPassword").Value;
 
-                        services.AddHealthChecks()
-                            .AddRabbitMQ(
-                                factory: serviceProvider =>
-                                {
-                                    var connectionFactory = new RabbitMQ.Client.ConnectionFactory
-                                    {
-                                        HostName = rabbithost,
-                                        UserName = rabbituser,
-                                        Password = rabbitpass
-                                    };
-                                    return connectionFactory.CreateConnectionAsync();
-                                },
-                                name: "rabbitmq",
-                                failureStatus: HealthStatus.Unhealthy,
-                                tags: ["message-broker"],
-                                timeout: TimeSpan.FromSeconds(5)
-                            );
+                        services.AddHealthChecks().AddRabbitMQ($"amqp://{rabbituser}:{rabbitpass}@{rabbithost}", name: "rabbitmq");
+                        // services.AddHealthChecks()
+                        //     .AddRabbitMQ(
+                        //         factory: serviceProvider =>
+                        //         {
+                        //             var connectionFactory = new RabbitMQ.Client.ConnectionFactory
+                        //             {
+                        //                 HostName = rabbithost,
+                        //                 UserName = rabbituser,
+                        //                 Password = rabbitpass
+                        //             };
+                        //             return connectionFactory.CreateConnectionAsync();
+                        //         },
+                        //         name: "rabbitmq",
+                        //         failureStatus: HealthStatus.Unhealthy,
+                        //         tags: ["message-broker"],
+                        //         timeout: TimeSpan.FromSeconds(5)
+                        //     );
                         _sdkPresent = true;
                     }
                     catch (Exception ex) {
