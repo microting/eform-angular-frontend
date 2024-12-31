@@ -418,7 +418,7 @@ public class AdminService(
             {
                 var language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
 
-                await core.SiteUpdate((int)site.MicrotingUid,
+                await core.SiteUpdate((int)site.MicrotingUid!,
                     $"{userRegisterModel.FirstName} {userRegisterModel.LastName}", userRegisterModel.FirstName,
                     userRegisterModel.LastName, userRegisterModel.Email, language.LanguageCode);
             }
@@ -513,11 +513,6 @@ public class AdminService(
                 && userService.Role != EformRole.Admin)
             {
                 return new OperationResult(false, localizationService.GetString("YouCantViewChangeOrDeleteAdmin"));
-            }
-
-            if (user == null)
-            {
-                return new OperationResult(false, localizationService.GetStringWithFormat("UserUserNameNotFound", userId));
             }
 
             var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
