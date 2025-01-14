@@ -53,8 +53,8 @@ namespace eFormAPI.Web.Tests
             EformUser foundeformUser = DbContext.Users.Find(eformUser.Id);
 
             // Assert
-            Assert.NotNull(foundeformUser);
-            Assert.AreEqual(eformUser.FirstName, foundeformUser.FirstName);
+            Assert.That(foundeformUser, Is.Not.Null);
+            Assert.That(eformUser.FirstName, Is.EqualTo(foundeformUser.FirstName));
 
         }
     }

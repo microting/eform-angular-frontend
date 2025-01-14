@@ -31,7 +31,7 @@ namespace eFormAPI.Web.Tests
         [Test]
         public void UnitCanPeep()
         {
-            Assert.True(true);
+            Assert.That(true);
         }
     }
 }

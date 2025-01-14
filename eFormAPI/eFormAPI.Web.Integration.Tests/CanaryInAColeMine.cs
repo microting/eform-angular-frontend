@@ -31,7 +31,7 @@ namespace eFormAPI.Web.Integration.Tests
         [Test]
         public void IntegrationCanPeep()
         {
-            Assert.True(true);
+            Assert.That(true);
         }
     }
 }
