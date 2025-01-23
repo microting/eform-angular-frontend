@@ -16,7 +16,7 @@ jobs:
         run: docker build . -t microtingas/frontend-container:latest --build-arg GITVERSION=1.0.0 --build-arg SENTRY_AUTH_TOKEN=${{secrets.SENTRY_AUTH_TOKEN}}
         shell: bash
       - run: docker save microtingas/frontend-container:latest -o container.tar
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: container
           path: container.tar
@@ -116,7 +116,7 @@ jobs:
         cat docker_run_log
     - name: Archive screenshot artifacts
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: error Screenshots ${{matrix.test}}
         path: |
@@ -124,7 +124,7 @@ jobs:
         retention-days: 2        
     - name: Archive video artifacts
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: error Screenshots ${{matrix.test}}
         path: |
