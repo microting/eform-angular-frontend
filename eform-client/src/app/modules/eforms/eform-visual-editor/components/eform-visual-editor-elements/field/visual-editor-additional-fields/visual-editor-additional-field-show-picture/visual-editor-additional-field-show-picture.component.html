@@ -1,0 +1,30 @@
+<ng-container *ngFor="let selectedLanguage of selectedLanguages; let i = index">
+  <mat-card *ngIf="isLanguageSelected(selectedLanguage) && getLanguage(selectedLanguage) !== undefined">
+    <mat-card-header>{{
+      getLanguage(selectedLanguage).name | translate
+      }}</mat-card-header>
+    <mat-card-content>
+      <input
+        type="file"
+        hidden
+        [accept]="'application/pdf'"
+        (change)="onFileSelected($event, selectedLanguage)"
+        id="pdfInput{{ i }}"
+        #fileUpload
+      />
+      <div>
+        {{
+        getFileNameByLanguage(selectedLanguage) ||
+        'No file uploaded yet.' | translate
+        }}
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="fileUpload.click()"
+        >
+          {{ 'Upload' | translate }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
