@@ -5,3 +5,4 @@ export * from './visual-editor-additional-field-options/visual-editor-additional
 export * from './visual-editor-additional-field-entity-search/visual-editor-additional-field-entity-search.component';
 export * from './visual-editor-additional-field-entity-select/visual-editor-additional-field-entity-select.component';
 export * from './visual-editor-additional-field-date/visual-editor-additional-field-date.component';
+export * from './visual-editor-additional-field-show-picture/visual-editor-additional-field-show-picture.component';

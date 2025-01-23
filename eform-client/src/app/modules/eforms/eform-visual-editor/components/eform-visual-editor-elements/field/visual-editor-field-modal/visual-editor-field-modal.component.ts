@@ -82,6 +82,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
       this.recursionModel.field.fieldType === EformFieldTypesEnum.FieldGroup ||
       this.recursionModel.field.fieldType === EformFieldTypesEnum.Audio ||
       this.recursionModel.field.fieldType === EformFieldTypesEnum.ShowPdf ||
+      this.recursionModel.field.fieldType === EformFieldTypesEnum.ShowPicture ||
       this.recursionModel.field.fieldType === EformFieldTypesEnum.SaveButton
     );
   }

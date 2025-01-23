@@ -147,6 +147,13 @@ export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = 
     previewImage:
       '../../../../../../../assets/images/visual-editor-preview/multi-select.png',
   },
+  {
+    id: EformFieldTypesEnum.ShowPicture,
+    name: 'Show picture',
+    description: 'Show a single picture field',
+    previewImage:
+      '',
+  },
 ];
 
 export const eformVisualEditorElementColors: CommonDictionaryModel[] = [

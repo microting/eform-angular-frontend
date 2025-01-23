@@ -79,6 +79,12 @@ public class VisualEditorFieldModel
     public List<CommonDictionaryModel> PdfFiles { get; set; }
         = new();
 
+    /// <summary>
+    /// for Picture field
+    /// </summary>
+    public List<CommonDictionaryModel> PictureFiles { get; set; }
+        = new();
+
     public int ChecklistId { get; set; }
 
     public int? TempId { get; set; }

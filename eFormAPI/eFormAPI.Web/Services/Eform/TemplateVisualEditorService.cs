@@ -1186,7 +1186,48 @@ public class TemplateVisualEditorService(
                                         {
                                             Checksum = hashAndLanguageIdList.Last().Key,
                                             FileName = pdfFile.File.FileName,
-                                            FileLocation = filePath
+                                            FileLocation = filePath,
+                                            Extension = ".pdf"
+                                        };
+                                        await uploadData.Create(sdkDbContext);
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+                        case Constants.FieldTypes.ShowPicture:
+                        {
+                            if (field.PictureFiles.Any())
+                            {
+                                var folder = Path.Combine(Path.GetTempPath(), "templates",
+                                    Path.Combine("fields-png-files", eformId.ToString()));
+                                Directory.CreateDirectory(folder);
+                                foreach (var pngFile in field.PictureFiles)
+                                {
+                                    if (pngFile.File != null)
+                                    {
+                                        var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{eformId}.png");
+                                        // ReSharper disable once UseAwaitUsing
+                                        using (var
+                                               stream = new FileStream(filePath,
+                                                   FileMode
+                                                       .Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
+                                        {
+                                            await pngFile.File.CopyToAsync(stream);
+                                        }
+
+                                        await core.PutFileToStorageSystem(filePath, pngFile.File.FileName);
+                                        hashAndLanguageIdList.Add(
+                                            new KeyValuePair<string, int>(await core.PngUpload(filePath),
+                                                pngFile.LanguageId));
+
+                                        var uploadData = new UploadedData
+                                        {
+                                            Checksum = hashAndLanguageIdList.Last().Key,
+                                            FileName = pngFile.File.FileName,
+                                            FileLocation = filePath,
+                                            Extension = ".png"
                                         };
                                         await uploadData.Create(sdkDbContext);
                                     }

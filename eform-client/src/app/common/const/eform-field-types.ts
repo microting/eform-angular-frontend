@@ -18,4 +18,5 @@ export enum EformFieldTypesEnum {
   FieldGroup,
   SaveButton,
   NumberStepper,
+  ShowPicture,
 }

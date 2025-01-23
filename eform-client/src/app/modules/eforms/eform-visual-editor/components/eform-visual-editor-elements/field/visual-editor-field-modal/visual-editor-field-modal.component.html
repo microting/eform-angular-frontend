@@ -154,6 +154,13 @@
     [field]="recursionModel.field"
   >
   </app-visual-editor-additional-field-entity-select>
+  <app-visual-editor-additional-field-show-picture
+    *ngSwitchCase="eformFieldTypesEnum.ShowPicture"
+    [field]="recursionModel.field"
+    [selectedLanguages]="selectedLanguages"
+    [appLanguages]="appLanguages"
+  >
+  </app-visual-editor-additional-field-show-picture>
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
