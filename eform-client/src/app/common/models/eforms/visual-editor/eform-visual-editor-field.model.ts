@@ -2,7 +2,7 @@ import {
   CommonTranslationsModel,
   EformVisualEditorOptionsModel,
   EformVisualEditorTranslationWithDefaultValue,
-  EformVisualEditorUploadPdfFileForFieldModel,
+  EformVisualEditorUploadPdfFileForFieldModel, EformVisualEditorUploadPngFileForFieldModel,
 } from 'src/app/common/models';
 import { getRandomInt } from 'src/app/common/helpers';
 
@@ -24,4 +24,5 @@ export class EformVisualEditorFieldModel {
   pdfFiles: EformVisualEditorUploadPdfFileForFieldModel[] = [];
   options: EformVisualEditorOptionsModel[] = [];
   entityGroupId?: number;
+  pngFiles: EformVisualEditorUploadPngFileForFieldModel[] = [];
 }

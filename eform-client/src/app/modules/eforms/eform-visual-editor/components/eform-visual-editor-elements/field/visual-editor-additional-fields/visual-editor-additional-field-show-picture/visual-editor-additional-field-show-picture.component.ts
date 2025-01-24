@@ -35,11 +35,11 @@ export class VisualEditorAdditionalFieldShowPictureComponent
     if (changes.field) {
       const sortByFn = R.sortBy(R.prop('id'));
       this.appLanguages.languages.forEach((x) => {
-        const index = this.field.pdfFiles.findIndex(
+        const index = this.field.pngFiles.findIndex(
           (y) => y.languageId === x.id || y.id === x.id
         );
         if (index === -1) {
-          this.field.pdfFiles.push({
+          this.field.pngFiles.push({
             id: x.id,
             name: '',
             languageId: x.id,
@@ -47,9 +47,9 @@ export class VisualEditorAdditionalFieldShowPictureComponent
           });
         }
         if (index !== -1) {
-          this.field.pdfFiles[index].languageId = x.id;
+          this.field.pngFiles[index].languageId = x.id;
         }
-        this.field.pdfFiles = sortByFn(this.field.pdfFiles);
+        this.field.pngFiles = sortByFn(this.field.pngFiles);
       });
     }
   }
@@ -67,20 +67,20 @@ export class VisualEditorAdditionalFieldShowPictureComponent
   onFileSelected(event: Event, selectedLanguage: number) {
     // @ts-ignore
     const files: File[] = event.target.files;
-    const filesIndexByLanguage = this.field.pdfFiles.findIndex(
+    const filesIndexByLanguage = this.field.pngFiles.findIndex(
       (x) => x.languageId === selectedLanguage || x.id === selectedLanguage
     );
     if (filesIndexByLanguage !== -1) {
-      this.field.pdfFiles[filesIndexByLanguage].file = R.last(files);
-      this.field.pdfFiles[filesIndexByLanguage].name = R.last(files).name;
+      this.field.pngFiles[filesIndexByLanguage].file = R.last(files);
+      this.field.pngFiles[filesIndexByLanguage].name = R.last(files).name;
     }
   }
 
   getFileNameByLanguage(languageId: number): string {
-    if (this.field.pdfFiles[languageId - 1].id) {
-      return this.field.pdfFiles[languageId - 1].name;
+    if (this.field.pngFiles[languageId - 1].id) {
+      return this.field.pngFiles[languageId - 1].name;
     } else {
-      const file = this.field.pdfFiles[languageId - 1].file;
+      const file = this.field.pngFiles[languageId - 1].file;
       if (file) {
         return file.name;
       }
