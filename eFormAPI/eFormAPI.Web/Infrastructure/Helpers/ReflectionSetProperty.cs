@@ -18,6 +18,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
+
 namespace eFormAPI.Web.Infrastructure.Helpers;
 
 using System.Collections;
@@ -34,29 +36,38 @@ public static class ReflectionSetProperty
     /// <param name="setTo">the value to set for path</param>
     public static void SetProperty(object target, string property, object setTo)
     {
-        var parts = property.Split('.');
-        // if target object is List and target object no end target - 
-        // we need cast to IList and get value by index
-        if (target.GetType().Namespace == "System.Collections.Generic" && parts.Length != 1)
+        try
         {
-            var targetList = (IList)target;
-            var value = targetList[int.Parse(parts.First())];
-            SetProperty(value, string.Join(".", parts.Skip(1)), setTo);
-        }
-        else
-        {
-            var prop = target.GetType().GetProperty(parts[0]);
-            if (parts.Length == 1)
+            var parts = property.Split('.');
+            // if target object is List and target object no end target -
+            // we need cast to IList and get value by index
+            if (target.GetType().Namespace == "System.Collections.Generic" && parts.Length != 1)
             {
-                // last property
-                prop.SetValue(target, setTo, null);
+                var targetList = (IList)target;
+                var value = targetList[int.Parse(parts.First())];
+                SetProperty(value, string.Join(".", parts.Skip(1)), setTo);
             }
             else
             {
-                // Not at the end, go recursive
-                var value = prop.GetValue(target);
-                SetProperty(value, string.Join(".", parts.Skip(1)), setTo);
+                var prop = target.GetType().GetProperty(parts[0]);
+                if (parts.Length == 1)
+                {
+                    // last property
+                    prop.SetValue(target, setTo, null);
+                }
+                else
+                {
+                    // Not at the end, go recursive
+                    var value = prop.GetValue(target);
+                    SetProperty(value, string.Join(".", parts.Skip(1)), setTo);
+                }
             }
         }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
     }
 }

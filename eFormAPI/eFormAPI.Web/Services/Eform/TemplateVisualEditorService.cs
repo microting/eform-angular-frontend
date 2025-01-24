@@ -694,6 +694,48 @@ public class TemplateVisualEditorService(
 
                     break;
                 }
+                case Constants.FieldTypes.ShowPicture:
+                {
+                    if (fieldForUpdate.PngFiles.Any())
+                    {
+                        var folder = Path.Combine(Path.GetTempPath(), "templates",
+                            Path.Combine("fields-png-files", fieldFromDb.CheckListId.ToString()));
+                        Directory.CreateDirectory(folder);
+                        foreach (var pngFile in fieldForUpdate.PngFiles)
+                        {
+                            if (pngFile.File != null)
+                            {
+                                var filePath = Path.Combine(folder,
+                                    $"{DateTime.Now.Ticks}_{fieldFromDb.CheckListId}.png");
+                                // ReSharper disable once UseAwaitUsing
+                                using (var
+                                       stream = new FileStream(filePath,
+                                           FileMode
+                                               .Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
+                                {
+                                    await pngFile.File.CopyToAsync(stream);
+                                }
+
+                                await core.PutFileToStorageSystem(filePath, pngFile.File.FileName);
+                                hashAndLanguageIdList.Add(
+                                    new KeyValuePair<string, int>(await core.PngUpload(filePath),
+                                        pngFile.LanguageId));
+
+
+                                var uploadData = new UploadedData
+                                {
+                                    Checksum = hashAndLanguageIdList.Last().Key,
+                                    FileName = pngFile.File.FileName,
+                                    FileLocation = filePath,
+                                    Extension = "png"
+                                };
+                                await uploadData.Create(sdkDbContext);
+                            }
+                        }
+                    }
+
+                    break;
+                }
                 case Constants.FieldTypes.EntitySearch or Constants.FieldTypes.EntitySelect:
                 {
                     fieldFromDb.EntityGroupId = fieldForUpdate.EntityGroupId;
@@ -739,6 +781,17 @@ public class TemplateVisualEditorService(
                         translationsModel.DefaultValue = hash; // for pdf
                     }
                 }
+                if (fieldFromDb.FieldType.Type == Constants.FieldTypes.ShowPicture)
+                {
+                    var hash = hashAndLanguageIdList
+                        .Where(x => x.Value == translationsModel.LanguageId)
+                        .Select(x => x.Key)
+                        .FirstOrDefault();
+                    if (!string.IsNullOrEmpty(hash))
+                    {
+                        translationsModel.DefaultValue = hash; // for pdf
+                    }
+                }
 
                 await translationsModel.Create(sdkDbContext);
             }
@@ -750,44 +803,55 @@ public class TemplateVisualEditorService(
                     fieldForUpdate.Translations.First(x => x.LanguageId == dbFieldTranslation.LanguageId);
                 var fieldType = await sdkDbContext.FieldTypes
                     .FirstOrDefaultAsync(x => x.Id == fieldFromDb.FieldTypeId);
-                if (translation.Name != dbFieldTranslation.Text ||
-                    translation.Description != dbFieldTranslation.Description ||
-                    translation.DefaultValue != dbFieldTranslation.DefaultValue)
+                // if (translation.Name != dbFieldTranslation.Text ||
+                //     translation.Description != dbFieldTranslation.Description ||
+                //     translation.DefaultValue != dbFieldTranslation.DefaultValue)
+                // {
+                dbFieldTranslation.Description = translation.Description?.Replace("</div><div>", "<br>")
+                    .Replace("</div>", "").Replace("<div>", "");
+                dbFieldTranslation.Text = translation.Name;
+                dbFieldTranslation.DefaultValue = translation.DefaultValue;
+
+                if (fieldType.Type == Constants.FieldTypes.ShowPdf)
                 {
-                    dbFieldTranslation.Description = translation.Description?.Replace("</div><div>", "<br>")
-                        .Replace("</div>", "").Replace("<div>", "");
-                    dbFieldTranslation.Text = translation.Name;
-                    dbFieldTranslation.DefaultValue = translation.DefaultValue;
-
-                    if (fieldType.Type == Constants.FieldTypes.ShowPdf)
+                    var hash = hashAndLanguageIdList
+                        .Where(x => x.Value == dbFieldTranslation.LanguageId)
+                        .Select(x => x.Key)
+                        .FirstOrDefault();
+                    if (!string.IsNullOrEmpty(hash))
                     {
-                        var hash = hashAndLanguageIdList
-                            .Where(x => x.Value == dbFieldTranslation.LanguageId)
-                            .Select(x => x.Key)
-                            .FirstOrDefault();
-                        if (!string.IsNullOrEmpty(hash))
-                        {
-                            dbFieldTranslation.DefaultValue = hash; // for pdf
-                        }
+                        dbFieldTranslation.DefaultValue = hash; // for pdf
                     }
-
-                    if (fieldType.Type == Constants.FieldTypes.Number ||
-                        fieldType.Type == Constants.FieldTypes.Number)
-                    {
-                        dbFieldTranslation.DefaultValue = string.IsNullOrEmpty(dbFieldTranslation.DefaultValue)
-                            ? ""
-                            : dbFieldTranslation.DefaultValue;
-                    }
-
-                    if (fieldType.Type == Constants.FieldTypes.SaveButton)
-                    {
-                        dbFieldTranslation.DefaultValue = string.IsNullOrEmpty(dbFieldTranslation.DefaultValue)
-                            ? "Save"
-                            : dbFieldTranslation.DefaultValue;
-                    }
-
-                    await dbFieldTranslation.Update(sdkDbContext);
                 }
+                if (fieldType.Type == Constants.FieldTypes.ShowPicture)
+                {
+                    var hash = hashAndLanguageIdList
+                        .Where(x => x.Value == dbFieldTranslation.LanguageId)
+                        .Select(x => x.Key)
+                        .FirstOrDefault();
+                    if (!string.IsNullOrEmpty(hash))
+                    {
+                        dbFieldTranslation.DefaultValue = hash; // for pdf
+                    }
+                }
+
+                if (fieldType.Type == Constants.FieldTypes.Number ||
+                    fieldType.Type == Constants.FieldTypes.Number)
+                {
+                    dbFieldTranslation.DefaultValue = string.IsNullOrEmpty(dbFieldTranslation.DefaultValue)
+                        ? ""
+                        : dbFieldTranslation.DefaultValue;
+                }
+
+                if (fieldType.Type == Constants.FieldTypes.SaveButton)
+                {
+                    dbFieldTranslation.DefaultValue = string.IsNullOrEmpty(dbFieldTranslation.DefaultValue)
+                        ? "Save"
+                        : dbFieldTranslation.DefaultValue;
+                }
+
+                await dbFieldTranslation.Update(sdkDbContext);
+                // }
             }
         }
     }
@@ -1055,7 +1119,30 @@ public class TemplateVisualEditorService(
                         //var fileStream = File.OpenRead(uploadData.FileLocation);
                         if (uploadData != null)
                         {
-                            editorField.PdfFiles.Add(new CommonDictionaryModel()
+                            editorField.PngFiles.Add(new CommonDictionaryModel()
+                                {Name = uploadData.FileName, Id = hash.LanguageId});
+                        }
+                    }
+
+                    findFields.Add(editorField);
+                    break;
+                }
+                case Constants.FieldTypes.ShowPicture:
+                {
+                    var hashList = field.Translations
+                        .Where(x => x.DefaultValue != null)
+                        .Select(x => new { x.DefaultValue, x.LanguageId })
+                        .ToList();
+                    foreach (var hash in hashList)
+                    {
+                        var uploadData = await sdkDbContext.UploadedDatas
+                            .Where(x => x.Checksum == hash.DefaultValue)
+                            .FirstOrDefaultAsync();
+
+                        //var fileStream = File.OpenRead(uploadData.FileLocation);
+                        if (uploadData != null)
+                        {
+                            editorField.PngFiles.Add(new CommonDictionaryModel()
                                 {Name = uploadData.FileName, Id = hash.LanguageId});
                         }
                     }
@@ -1198,12 +1285,12 @@ public class TemplateVisualEditorService(
                         }
                         case Constants.FieldTypes.ShowPicture:
                         {
-                            if (field.PictureFiles.Any())
+                            if (field.PngFiles.Any())
                             {
                                 var folder = Path.Combine(Path.GetTempPath(), "templates",
                                     Path.Combine("fields-png-files", eformId.ToString()));
                                 Directory.CreateDirectory(folder);
-                                foreach (var pngFile in field.PictureFiles)
+                                foreach (var pngFile in field.PngFiles)
                                 {
                                     if (pngFile.File != null)
                                     {

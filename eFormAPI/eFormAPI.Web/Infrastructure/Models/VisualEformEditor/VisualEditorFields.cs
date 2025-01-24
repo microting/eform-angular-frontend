@@ -76,7 +76,7 @@ public class VisualEditorFields
     /// <summary>
     /// for PDF field
     /// </summary>
-    public List<UploadPdfFileForFieldModel> PictureFiles { get; set; }
+    public List<UploadPdfFileForFieldModel> PngFiles { get; set; }
         = new();
 
     public int ChecklistId { get; set; }

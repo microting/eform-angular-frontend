@@ -82,7 +82,7 @@ public class VisualEditorFieldModel
     /// <summary>
     /// for Picture field
     /// </summary>
-    public List<CommonDictionaryModel> PictureFiles { get; set; }
+    public List<CommonDictionaryModel> PngFiles { get; set; }
         = new();
 
     public int ChecklistId { get; set; }
