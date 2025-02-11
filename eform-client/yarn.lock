@@ -2131,10 +2131,10 @@
     "@napi-rs/nice-win32-ia32-msvc" "1.0.1"
     "@napi-rs/nice-win32-x64-msvc" "1.0.1"
 
-"@ng-matero/extensions@18.3.1":
-  version "18.3.1"
-  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-18.3.1.tgz#794e196a72b8017dd2cc697fd8e502b27a4342d5"
-  integrity sha512-I0JpaLzaUdlrbZv6R0UKQ06g0+EhN0bSuN/NxEFFOtefz6dNTcTpf2YXK2x5X02/LYbjxn7RaLciCCHlbIiqfw==
+"@ng-matero/extensions@18.4.1":
+  version "18.4.1"
+  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-18.4.1.tgz#315c8e95f6765da29096d4123a7506e9d9a66cd3"
+  integrity sha512-KeaY6z67S03INJ9NQ24Q4PnEPCUXLwXBx9pybjx9qRetCUeXguDhMtJWT84EEbsBv9o3uie0yAYpx1kBoi16BA==
   dependencies:
     "@ng-select/ng-select" "^13.7.0"
     ngx-color "^9.0.0"
