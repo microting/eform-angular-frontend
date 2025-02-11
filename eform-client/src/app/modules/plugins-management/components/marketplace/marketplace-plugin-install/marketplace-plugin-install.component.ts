@@ -4,9 +4,10 @@ import {PluginsManagementService} from 'src/app/common/services';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-plugins-marketplace-install',
-  templateUrl: './marketplace-plugin-install.component.html',
-  styleUrls: ['./marketplace-plugin-install.component.scss']
+    selector: 'app-plugins-marketplace-install',
+    templateUrl: './marketplace-plugin-install.component.html',
+    styleUrls: ['./marketplace-plugin-install.component.scss'],
+    standalone: false
 })
 export class MarketplacePluginInstallComponent implements OnInit {
   constructor(

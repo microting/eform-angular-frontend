@@ -9,9 +9,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CommonDictionaryModel, TemplateDto, TemplateTagsUpdateModel} from 'src/app/common/models';
 
 @Component({
-  selector: 'app-eform-edit-tags-modal',
-  templateUrl: './eform-edit-tags-modal.component.html',
-  styleUrls: ['./eform-edit-tags-modal.component.scss'],
+    selector: 'app-eform-edit-tags-modal',
+    templateUrl: './eform-edit-tags-modal.component.html',
+    styleUrls: ['./eform-edit-tags-modal.component.scss'],
+    standalone: false
 })
 export class EformEditTagsModalComponent implements OnInit {
   @Input() availableTags: Array<CommonDictionaryModel> = [];

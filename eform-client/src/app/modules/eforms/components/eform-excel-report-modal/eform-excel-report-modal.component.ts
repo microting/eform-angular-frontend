@@ -9,9 +9,10 @@ import {Subscription} from 'rxjs';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-eform-excel-report-modal',
-  templateUrl: './eform-excel-report-modal.component.html',
-  styleUrls: ['./eform-excel-report-modal.component.scss']
+    selector: 'app-eform-excel-report-modal',
+    templateUrl: './eform-excel-report-modal.component.html',
+    styleUrls: ['./eform-excel-report-modal.component.scss'],
+    standalone: false
 })
 export class EformExcelReportModalComponent implements OnInit, OnDestroy {
   @ViewChild('frame', {static: true}) frame;

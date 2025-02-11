@@ -7,9 +7,10 @@ import {take} from 'rxjs';
 import {filter} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-auth',
-  styleUrls: ['./auth.component.scss'],
-  templateUrl: './auth.component.html',
+    selector: 'app-auth',
+    styleUrls: ['./auth.component.scss'],
+    templateUrl: './auth.component.html',
+    standalone: false
 })
 export class AuthComponent implements OnInit {
   loginPageSettings: LoginPageSettingsModel = new LoginPageSettingsModel();

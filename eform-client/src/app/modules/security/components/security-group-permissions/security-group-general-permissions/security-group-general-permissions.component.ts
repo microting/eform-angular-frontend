@@ -8,9 +8,10 @@ import {
 import { SecurityGroupGeneralPermissionsService } from 'src/app/common/services/security';
 
 @Component({
-  selector: 'app-security-group-general-permissions',
-  templateUrl: './security-group-general-permissions.component.html',
-  styleUrls: ['./security-group-general-permissions.component.scss'],
+    selector: 'app-security-group-general-permissions',
+    templateUrl: './security-group-general-permissions.component.html',
+    styleUrls: ['./security-group-general-permissions.component.scss'],
+    standalone: false
 })
 export class SecurityGroupGeneralPermissionsComponent implements OnInit {
   selectedGroupId: number;

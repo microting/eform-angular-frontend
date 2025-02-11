@@ -3,9 +3,10 @@ import {EformVisualEditorFieldModel, LanguagesModel} from 'src/app/common/models
 import {TranslationRequestModel, TranslationService} from 'src/app/common/services';
 
 @Component({
-  selector: 'app-visual-editor-additional-field-save-button',
-  templateUrl: './visual-editor-additional-field-save-button.component.html',
-  styleUrls: ['./visual-editor-additional-field-save-button.component.scss'],
+    selector: 'app-visual-editor-additional-field-save-button',
+    templateUrl: './visual-editor-additional-field-save-button.component.html',
+    styleUrls: ['./visual-editor-additional-field-save-button.component.scss'],
+    standalone: false
 })
 export class VisualEditorAdditionalFieldSaveButtonComponent
   implements OnInit, OnDestroy {

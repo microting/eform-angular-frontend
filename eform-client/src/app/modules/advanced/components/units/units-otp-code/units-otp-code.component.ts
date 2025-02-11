@@ -4,9 +4,10 @@ import {UnitsService} from 'src/app/common/services/advanced';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-units-otp-code',
-  templateUrl: './units-otp-code.component.html',
-  styleUrls: ['./units-otp-code.component.scss']
+    selector: 'app-units-otp-code',
+    templateUrl: './units-otp-code.component.html',
+    styleUrls: ['./units-otp-code.component.scss'],
+    standalone: false
 })
 export class UnitsOtpCodeComponent implements OnInit {
   constructor(private unitsService: UnitsService,

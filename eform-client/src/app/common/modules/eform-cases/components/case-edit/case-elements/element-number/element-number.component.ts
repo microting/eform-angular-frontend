@@ -2,10 +2,11 @@ import {Component, Input} from '@angular/core';
 import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-number',
-  templateUrl: './element-number.component.html',
-  styleUrls: ['./element-number.component.scss']
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-number',
+    templateUrl: './element-number.component.html',
+    styleUrls: ['./element-number.component.scss'],
+    standalone: false
 })
 export class ElementNumberComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();

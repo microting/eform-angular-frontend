@@ -11,9 +11,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-case-archive-modal',
-  templateUrl: './case-archive-modal.component.html',
-  styleUrls: ['./case-archive-modal.component.scss'],
+    selector: 'app-case-archive-modal',
+    templateUrl: './case-archive-modal.component.html',
+    styleUrls: ['./case-archive-modal.component.scss'],
+    standalone: false
 })
 export class CaseArchiveModalComponent implements OnInit, OnDestroy {
   constructor(

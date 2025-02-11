@@ -13,9 +13,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TranslationRequestModel, TranslationService} from 'src/app/common/services';
 
 @Component({
-  selector: 'app-visual-editor-checklist-modal',
-  templateUrl: './visual-editor-checklist-modal.component.html',
-  styleUrls: ['./visual-editor-checklist-modal.component.scss'],
+    selector: 'app-visual-editor-checklist-modal',
+    templateUrl: './visual-editor-checklist-modal.component.html',
+    styleUrls: ['./visual-editor-checklist-modal.component.scss'],
+    standalone: false
 })
 export class VisualEditorChecklistModalComponent implements OnInit {
   selectedLanguages: number[];

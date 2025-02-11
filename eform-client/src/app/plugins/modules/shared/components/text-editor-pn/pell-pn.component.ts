@@ -11,18 +11,19 @@ import { ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import * as pell from './pell-pn';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'pell-pn-editor',
-  templateUrl: './pell-pn.component.html',
-  encapsulation: ViewEncapsulation.None,
-  styles: [
-    `
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'pell-pn-editor',
+    templateUrl: './pell-pn.component.html',
+    encapsulation: ViewEncapsulation.None,
+    styles: [
+        `
            div p {
              margin: 0;
              padding: 0;
            }
          `,
-  ],
+    ],
+    standalone: false
 })
 export class PellPnComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() actions: Array<Object> = [];

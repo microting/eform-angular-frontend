@@ -20,11 +20,12 @@ import {Subscription} from 'rxjs';
 
 @AutoUnsubscribe()
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'formatting-text-editor',
-  templateUrl: './formatting-text-editor.component.html',
-  styleUrls: ['./formatting-text-editor.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'formatting-text-editor',
+    templateUrl: './formatting-text-editor.component.html',
+    styleUrls: ['./formatting-text-editor.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class FormattingTextEditorComponent implements OnInit, OnDestroy, OnChanges {
   @Input() toolbar?: Toolbar = [['bold', 'italic', 'underline', 'strike']];

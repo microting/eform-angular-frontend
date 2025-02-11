@@ -4,9 +4,10 @@ import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/sec
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-security-group-eforms-edit',
-  templateUrl: './security-group-eforms-edit.component.html',
-  styleUrls: ['./security-group-eforms-edit.component.scss']
+    selector: 'app-security-group-eforms-edit',
+    templateUrl: './security-group-eforms-edit.component.html',
+    styleUrls: ['./security-group-eforms-edit.component.scss'],
+    standalone: false
 })
 export class SecurityGroupEformsEditComponent implements OnInit {
   constructor(

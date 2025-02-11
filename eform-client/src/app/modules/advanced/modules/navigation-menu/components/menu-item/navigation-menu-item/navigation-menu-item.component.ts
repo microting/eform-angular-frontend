@@ -8,9 +8,10 @@ import {selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
 @Component({
-  selector: 'app-navigation-menu-item',
-  templateUrl: './navigation-menu-item.component.html',
-  styleUrls: ['./navigation-menu-item.component.scss'],
+    selector: 'app-navigation-menu-item',
+    templateUrl: './navigation-menu-item.component.html',
+    styleUrls: ['./navigation-menu-item.component.scss'],
+    standalone: false
 })
 export class NavigationMenuItemComponent implements OnInit {
   @Input() item: NavigationMenuItemModel = new NavigationMenuItemModel();

@@ -8,9 +8,10 @@ import { PluginsManagementService } from 'src/app/common/services';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-installed-plugin-modal',
-  templateUrl: './installed-plugin-modal.component.html',
-  styleUrls: ['./installed-plugin-modal.component.scss'],
+    selector: 'app-installed-plugin-modal',
+    templateUrl: './installed-plugin-modal.component.html',
+    styleUrls: ['./installed-plugin-modal.component.scss'],
+    standalone: false
 })
 export class InstalledPluginModalComponent implements OnInit {
   constructor(

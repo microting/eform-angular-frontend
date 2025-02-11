@@ -3,9 +3,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DeleteModalSettingModel} from 'src/app/common/models';
 
 @Component({
-  selector: 'app-delete-modal',
-  templateUrl: './delete-modal.component.html',
-  styleUrls: ['./delete-modal.component.scss']
+    selector: 'app-delete-modal',
+    templateUrl: './delete-modal.component.html',
+    styleUrls: ['./delete-modal.component.scss'],
+    standalone: false
 })
 export class DeleteModalComponent implements OnInit {
   delete: EventEmitter<any> = new EventEmitter<any>();

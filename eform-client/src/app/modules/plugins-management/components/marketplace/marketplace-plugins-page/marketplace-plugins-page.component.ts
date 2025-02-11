@@ -15,9 +15,10 @@ import { TranslateService } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-plugins-marketplace-page',
-  templateUrl: './marketplace-plugins-page.component.html',
-  styleUrls: ['./marketplace-plugins-page.component.scss']
+    selector: 'app-plugins-marketplace-page',
+    templateUrl: './marketplace-plugins-page.component.html',
+    styleUrls: ['./marketplace-plugins-page.component.scss'],
+    standalone: false
 })
 export class MarketplacePluginsPageComponent implements OnInit, OnDestroy{
   marketplacePluginsRequestModel: MarketplacePluginsRequestModel = new MarketplacePluginsRequestModel();

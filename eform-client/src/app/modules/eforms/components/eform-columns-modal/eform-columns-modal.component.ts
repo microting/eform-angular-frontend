@@ -5,9 +5,10 @@ import {EFormService} from 'src/app/common/services/eform';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-eform-column-modal',
-  templateUrl: './eform-columns-modal.component.html',
-  styleUrls: ['./eform-columns-modal.component.scss']
+    selector: 'app-eform-column-modal',
+    templateUrl: './eform-columns-modal.component.html',
+    styleUrls: ['./eform-columns-modal.component.scss'],
+    standalone: false
 })
 export class EformColumnsModalComponent implements OnInit {
   columnEditModel: UpdateColumnsModel = new UpdateColumnsModel;

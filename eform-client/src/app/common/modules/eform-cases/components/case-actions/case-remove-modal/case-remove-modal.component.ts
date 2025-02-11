@@ -4,9 +4,10 @@ import {CasesService} from 'src/app/common/services/cases';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-case-remove-modal',
-  templateUrl: './case-remove-modal.component.html',
-  styleUrls: ['./case-remove-modal.component.scss']
+    selector: 'app-case-remove-modal',
+    templateUrl: './case-remove-modal.component.html',
+    styleUrls: ['./case-remove-modal.component.scss'],
+    standalone: false
 })
 export class CaseRemoveModalComponent implements OnInit {
   selectedTemplateId: number;

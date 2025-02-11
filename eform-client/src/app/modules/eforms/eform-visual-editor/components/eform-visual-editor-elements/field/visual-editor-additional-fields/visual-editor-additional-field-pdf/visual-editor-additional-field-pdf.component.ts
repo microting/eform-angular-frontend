@@ -10,9 +10,10 @@ import {EformVisualEditorFieldModel, LanguagesModel} from 'src/app/common/models
 import * as R from 'ramda';
 
 @Component({
-  selector: 'app-visual-editor-additional-field-pdf',
-  templateUrl: './visual-editor-additional-field-pdf.component.html',
-  styleUrls: ['./visual-editor-additional-field-pdf.component.scss'],
+    selector: 'app-visual-editor-additional-field-pdf',
+    templateUrl: './visual-editor-additional-field-pdf.component.html',
+    styleUrls: ['./visual-editor-additional-field-pdf.component.scss'],
+    standalone: false
 })
 export class VisualEditorAdditionalFieldPdfComponent
   implements OnChanges, OnDestroy {

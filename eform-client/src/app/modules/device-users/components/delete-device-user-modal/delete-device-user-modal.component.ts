@@ -4,9 +4,10 @@ import {DeviceUserService} from 'src/app/common/services/device-users';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-delete-device-user-modal',
-  templateUrl: './delete-device-user-modal.component.html',
-  styleUrls: ['./delete-device-user-modal.component.scss']
+    selector: 'app-delete-device-user-modal',
+    templateUrl: './delete-device-user-modal.component.html',
+    styleUrls: ['./delete-device-user-modal.component.scss'],
+    standalone: false
 })
 export class DeleteDeviceUserModalComponent implements OnInit {
   constructor(

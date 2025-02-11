@@ -8,9 +8,10 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-database-setup',
-  templateUrl: './connection-setup.component.html',
-  styleUrls: ['./connection-setup.component.scss']
+    selector: 'app-database-setup',
+    templateUrl: './connection-setup.component.html',
+    styleUrls: ['./connection-setup.component.scss'],
+    standalone: false
 })
 export class ConnectionSetupComponent implements OnInit, OnDestroy {
   settingsModel: SettingsModel = new SettingsModel();

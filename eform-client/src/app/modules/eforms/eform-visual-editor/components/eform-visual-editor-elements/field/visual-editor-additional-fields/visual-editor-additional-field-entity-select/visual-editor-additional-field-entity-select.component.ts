@@ -14,9 +14,10 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 import { EntitySelectService } from 'src/app/common/services';
 
 @Component({
-  selector: 'app-visual-editor-additional-field-entity-select',
-  templateUrl: './visual-editor-additional-field-entity-select.component.html',
-  styleUrls: ['./visual-editor-additional-field-entity-select.component.scss'],
+    selector: 'app-visual-editor-additional-field-entity-select',
+    templateUrl: './visual-editor-additional-field-entity-select.component.html',
+    styleUrls: ['./visual-editor-additional-field-entity-select.component.scss'],
+    standalone: false
 })
 export class VisualEditorAdditionalFieldEntitySelectComponent
   implements OnInit, OnDestroy {

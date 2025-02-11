@@ -14,9 +14,10 @@ import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-visual-editor-additional-field-options',
-  templateUrl: './visual-editor-additional-field-options.component.html',
-  styleUrls: ['./visual-editor-additional-field-options.component.scss'],
+    selector: 'app-visual-editor-additional-field-options',
+    templateUrl: './visual-editor-additional-field-options.component.html',
+    styleUrls: ['./visual-editor-additional-field-options.component.scss'],
+    standalone: false
 })
 export class VisualEditorAdditionalFieldOptionsComponent
   implements OnInit, OnDestroy {
@@ -157,8 +158,8 @@ export class VisualEditorAdditionalFieldOptionsComponent
 }
 
 @Component({
-  selector: 'app-visual-editor-additional-field-option-edit-component',
-  template: `
+    selector: 'app-visual-editor-additional-field-option-edit-component',
+    template: `
     <div mat-dialog-content>
       <mat-form-field>
         <mat-label>{{ 'Option translate' | translate }}</mat-label>
@@ -188,6 +189,7 @@ export class VisualEditorAdditionalFieldOptionsComponent
         {{ 'Cancel' | translate }}
       </button>
     </div>`,
+    standalone: false
 })
 export class VisualEditorAdditionalFieldOptionEditComponent {
   constructor(
@@ -202,8 +204,8 @@ export class VisualEditorAdditionalFieldOptionEditComponent {
 }
 
 @Component({
-  selector: 'app-visual-editor-additional-field-option-delete-component',
-  template: `
+    selector: 'app-visual-editor-additional-field-option-delete-component',
+    template: `
     <div mat-dialog-title>
       {{ 'Are you sure you want to delete it' | translate }}?
     </div>
@@ -227,6 +229,7 @@ export class VisualEditorAdditionalFieldOptionEditComponent {
         {{ 'Cancel' | translate }}
       </button>
     </div>`,
+    standalone: false
 })
 export class VisualEditorAdditionalFieldOptionDeleteComponent {
   constructor(

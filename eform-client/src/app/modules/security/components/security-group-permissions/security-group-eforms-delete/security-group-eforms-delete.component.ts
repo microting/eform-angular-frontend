@@ -4,9 +4,10 @@ import {SecurityGroupEformsPermissionsService} from 'src/app/common/services';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-security-group-eforms-delete',
-  templateUrl: './security-group-eforms-delete.component.html',
-  styleUrls: ['./security-group-eforms-delete.component.scss']
+    selector: 'app-security-group-eforms-delete',
+    templateUrl: './security-group-eforms-delete.component.html',
+    styleUrls: ['./security-group-eforms-delete.component.scss'],
+    standalone: false
 })
 export class SecurityGroupEformsDeleteComponent implements OnInit {
   eformSecurityModel: EformPermissionsModel = new EformPermissionsModel();

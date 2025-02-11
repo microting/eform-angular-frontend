@@ -10,9 +10,10 @@ import { EFormService } from 'src/app/common/services/eform';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-eform-duplicate-confirm-modal',
-  templateUrl: './eform-duplicate-confirm-modal.component.html',
-  styleUrls: ['./eform-duplicate-confirm-modal.component.scss'],
+    selector: 'app-eform-duplicate-confirm-modal',
+    templateUrl: './eform-duplicate-confirm-modal.component.html',
+    styleUrls: ['./eform-duplicate-confirm-modal.component.scss'],
+    standalone: false
 })
 export class EformDuplicateConfirmModalComponent implements OnInit {
   constructor(private eFormService: EFormService,

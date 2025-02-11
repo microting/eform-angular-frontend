@@ -22,8 +22,9 @@ import {applicationLanguages} from "src/app/common/const";
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    standalone: false
 })
 export class LoginComponent implements OnInit, OnDestroy {
   formLogin: FormGroup;

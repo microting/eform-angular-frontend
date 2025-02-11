@@ -14,8 +14,9 @@ import {AuthStateService} from 'src/app/common/store';
 import {applicationLanguages} from "src/app/common/const";
 
 @Component({
-  selector: 'app-restore-password',
-  templateUrl: './restore-password.component.html',
+    selector: 'app-restore-password',
+    templateUrl: './restore-password.component.html',
+    standalone: false
 })
 export class RestorePasswordComponent implements OnInit {
   formRestore: FormGroup;

@@ -5,10 +5,11 @@ import { AppMenuStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'eform-subheader',
-  templateUrl: './eform-subheader.component.html',
-  styleUrls: ['./eform-subheader.component.scss'],
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'eform-subheader',
+    templateUrl: './eform-subheader.component.html',
+    styleUrls: ['./eform-subheader.component.scss'],
+    standalone: false
 })
 export class EformSubheaderComponent implements OnInit, OnDestroy {
   @Input() title = '';

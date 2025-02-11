@@ -13,9 +13,10 @@ import {zip} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-admin-settings',
-  templateUrl: './admin-settings.component.html',
-  styleUrls: ['./admin-settings.component.scss'],
+    selector: 'app-admin-settings',
+    templateUrl: './admin-settings.component.html',
+    styleUrls: ['./admin-settings.component.scss'],
+    standalone: false
 })
 export class AdminSettingsComponent implements OnInit, AfterViewInit {
   loginPageImageUploader: FileUploader = new FileUploader({

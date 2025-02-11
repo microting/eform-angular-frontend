@@ -7,9 +7,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-email-recipient-delete',
-  templateUrl: './email-recipient-delete.component.html',
-  styleUrls: ['./email-recipient-delete.component.scss']
+    selector: 'app-email-recipient-delete',
+    templateUrl: './email-recipient-delete.component.html',
+    styleUrls: ['./email-recipient-delete.component.scss'],
+    standalone: false
 })
 export class EmailRecipientDeleteComponent implements OnInit, OnDestroy {
   deleteEmailRecipient$: Subscription;

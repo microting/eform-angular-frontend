@@ -13,8 +13,9 @@ import {
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
-  selector: 'app-google-authenticator',
-  templateUrl: './google-authenticator.component.html',
+    selector: 'app-google-authenticator',
+    templateUrl: './google-authenticator.component.html',
+    standalone: false
 })
 export class GoogleAuthenticatorComponent implements OnInit {
   googleAuthenticatorModel: GoogleAuthenticatorModel;

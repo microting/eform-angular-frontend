@@ -9,10 +9,11 @@ import {Subscription} from 'rxjs';
 
 @AutoUnsubscribe()
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-signature',
-  templateUrl: './element-signature.component.html',
-  styleUrls: ['./element-signature.component.scss']
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-signature',
+    templateUrl: './element-signature.component.html',
+    styleUrls: ['./element-signature.component.scss'],
+    standalone: false
 })
 export class ElementSignatureComponent implements OnChanges, OnDestroy {
   @Input() fieldValues: Array<FieldValueDto> = [];

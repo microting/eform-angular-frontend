@@ -28,9 +28,10 @@ import {
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-selectable-list',
-  templateUrl: './entity-select.component.html',
-  styleUrls: ['./entity-select.component.scss'],
+    selector: 'app-selectable-list',
+    templateUrl: './entity-select.component.html',
+    styleUrls: ['./entity-select.component.scss'],
+    standalone: false
 })
 export class EntitySelectComponent implements OnInit, OnDestroy {
   advEntitySelectableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();

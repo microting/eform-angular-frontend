@@ -2,9 +2,10 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {EformVisualEditorFieldModel, LanguagesModel} from 'src/app/common/models';
 
 @Component({
-  selector: 'app-visual-editor-additional-field-number',
-  templateUrl: './visual-editor-additional-field-number.component.html',
-  styleUrls: ['./visual-editor-additional-field-number.component.scss'],
+    selector: 'app-visual-editor-additional-field-number',
+    templateUrl: './visual-editor-additional-field-number.component.html',
+    styleUrls: ['./visual-editor-additional-field-number.component.scss'],
+    standalone: false
 })
 export class VisualEditorAdditionalFieldNumberComponent
   implements OnInit, OnDestroy {

@@ -25,9 +25,10 @@ import {selectCurrentUserLanguageId} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
 @Component({
-  selector: 'app-visual-editor-field',
-  templateUrl: './visual-editor-field.component.html',
-  styleUrls: ['./visual-editor-field.component.scss'],
+    selector: 'app-visual-editor-field',
+    templateUrl: './visual-editor-field.component.html',
+    styleUrls: ['./visual-editor-field.component.scss'],
+    standalone: false
 })
 export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   @Input() field: EformVisualEditorFieldModel;

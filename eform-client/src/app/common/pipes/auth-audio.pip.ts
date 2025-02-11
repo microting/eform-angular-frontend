@@ -5,7 +5,8 @@ import {selectBearerToken} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
 @Pipe({
-  name: 'authAudio',
+    name: 'authAudio',
+    standalone: false
 })
 export class AuthAudioPipe implements PipeTransform {
   private selectBearerToken$ = this.authStore.select(selectBearerToken);

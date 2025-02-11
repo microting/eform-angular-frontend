@@ -5,9 +5,10 @@ import {EFormService} from 'src/app/common/services/eform';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-eform-create-modal',
-  templateUrl: './eform-create-modal.component.html',
-  styleUrls: ['./eform-create-modal.component.scss']
+    selector: 'app-eform-create-modal',
+    templateUrl: './eform-create-modal.component.html',
+    styleUrls: ['./eform-create-modal.component.scss'],
+    standalone: false
 })
 export class EformCreateModalComponent implements OnInit {
   eFormCreateModel: EFormCreateModel = new EFormCreateModel();

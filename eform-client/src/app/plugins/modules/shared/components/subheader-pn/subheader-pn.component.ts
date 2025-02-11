@@ -12,10 +12,11 @@ import { AppMenuStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'subheader-pn',
-  templateUrl: './subheader-pn.component.html',
-  styleUrls: ['./subheader-pn.component.scss'],
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'subheader-pn',
+    templateUrl: './subheader-pn.component.html',
+    styleUrls: ['./subheader-pn.component.scss'],
+    standalone: false
 })
 export class SubheaderPnComponent implements OnInit, OnDestroy {
   @ViewChild('heading', { static: true }) heading: ElementRef;

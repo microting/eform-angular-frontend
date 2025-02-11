@@ -28,9 +28,10 @@ import { TranslateService } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-installed-plugins-page',
-  templateUrl: './installed-plugins-page.component.html',
-  styleUrls: ['./installed-plugins-page.component.scss'],
+    selector: 'app-installed-plugins-page',
+    templateUrl: './installed-plugins-page.component.html',
+    styleUrls: ['./installed-plugins-page.component.scss'],
+    standalone: false
 })
 export class InstalledPluginsPageComponent implements OnInit, OnDestroy{
   installedPluginsRequestModel: InstalledPluginsRequestModel = new InstalledPluginsRequestModel();

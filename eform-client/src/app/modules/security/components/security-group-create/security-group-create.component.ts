@@ -11,9 +11,10 @@ import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-security-group-create',
-  templateUrl: './security-group-create.component.html',
-  styleUrls: ['./security-group-create.component.scss'],
+    selector: 'app-security-group-create',
+    templateUrl: './security-group-create.component.html',
+    styleUrls: ['./security-group-create.component.scss'],
+    standalone: false
 })
 export class SecurityGroupCreateComponent implements OnInit {
   securityGroupUsers: Array<UserInfoModel> = [];

@@ -5,9 +5,10 @@ import {HeaderSettingsModel} from 'src/app/common/models/settings';
 import {AppSettingsService} from 'src/app/common/services/settings';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    standalone: false
 })
 export class HeaderComponent implements OnInit {
   headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;

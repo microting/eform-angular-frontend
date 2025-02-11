@@ -41,8 +41,9 @@ import {
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-users-page',
-  templateUrl: './users-page.component.html',
+    selector: 'app-users-page',
+    templateUrl: './users-page.component.html',
+    standalone: false
 })
 export class UsersPageComponent implements OnInit, OnDestroy {
 

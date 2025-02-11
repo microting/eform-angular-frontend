@@ -2,10 +2,11 @@ import { Component, Input} from '@angular/core';
 import { FieldValueDto } from 'src/app/common/models';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-comment',
-  templateUrl: './element-comment.component.html',
-  styleUrls: ['./element-comment.component.scss'],
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-comment',
+    templateUrl: './element-comment.component.html',
+    styleUrls: ['./element-comment.component.scss'],
+    standalone: false
 })
 export class ElementCommentComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();

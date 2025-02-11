@@ -22,9 +22,10 @@ import {Store} from '@ngrx/store';
 import {take} from 'rxjs';
 
 @Component({
-  selector: 'app-visual-editor-checklist',
-  templateUrl: './visual-editor-checklist.component.html',
-  styleUrls: ['./visual-editor-checklist.component.scss'],
+    selector: 'app-visual-editor-checklist',
+    templateUrl: './visual-editor-checklist.component.html',
+    styleUrls: ['./visual-editor-checklist.component.scss'],
+    standalone: false
 })
 export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   @Input() checklist: EformVisualEditorModel;

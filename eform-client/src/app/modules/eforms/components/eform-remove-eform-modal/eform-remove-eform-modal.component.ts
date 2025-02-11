@@ -4,9 +4,10 @@ import {EFormService} from 'src/app/common/services/eform';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-eform-remove-eform-modal',
-  templateUrl: './eform-remove-eform-modal.component.html',
-  styleUrls: ['./eform-remove-eform-modal.component.scss']
+    selector: 'app-eform-remove-eform-modal',
+    templateUrl: './eform-remove-eform-modal.component.html',
+    styleUrls: ['./eform-remove-eform-modal.component.scss'],
+    standalone: false
 })
 export class EformRemoveEformModalComponent implements OnInit {
   constructor(

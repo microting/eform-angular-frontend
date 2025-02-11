@@ -4,9 +4,10 @@ import {FolderDto} from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-folder-delete',
-  templateUrl: './folder-delete.component.html',
-  styleUrls: ['./folder-delete.component.scss']
+    selector: 'app-folder-delete',
+    templateUrl: './folder-delete.component.html',
+    styleUrls: ['./folder-delete.component.scss'],
+    standalone: false
 })
 export class FolderDeleteComponent implements OnInit {
   constructor(private folderService: FoldersService,

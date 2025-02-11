@@ -24,9 +24,10 @@ import {selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
 @Component({
-  selector: 'app-visual-editor-field-modal',
-  templateUrl: './visual-editor-field-modal.component.html',
-  styleUrls: ['./visual-editor-field-modal.component.scss'],
+    selector: 'app-visual-editor-field-modal',
+    templateUrl: './visual-editor-field-modal.component.html',
+    styleUrls: ['./visual-editor-field-modal.component.scss'],
+    standalone: false
 })
 export class VisualEditorFieldModalComponent implements OnInit {
   @ViewChild('popTemplate', { static: true }) popTemplate;

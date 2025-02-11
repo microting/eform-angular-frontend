@@ -3,9 +3,10 @@ import { DateFormatterModel} from '../../../../models/common';
 import {formatDate} from '@angular/common';
 
 @Component({
-  selector: 'date-formatter',
-  templateUrl: './date-formatter.component.html',
-  styleUrls: ['./date-formatter.component.scss']
+    selector: 'date-formatter',
+    templateUrl: './date-formatter.component.html',
+    styleUrls: ['./date-formatter.component.scss'],
+    standalone: false
 })
 export class DateFormatterComponent implements OnInit {
   dateFormatter: DateFormatterModel = new DateFormatterModel();

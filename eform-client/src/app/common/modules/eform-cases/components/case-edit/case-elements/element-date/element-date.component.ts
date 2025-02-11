@@ -4,10 +4,11 @@ import { FieldValueDto } from 'src/app/common/models';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-date',
-  templateUrl: './element-date.component.html',
-  styleUrls: ['./element-date.component.scss'],
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-date',
+    templateUrl: './element-date.component.html',
+    styleUrls: ['./element-date.component.scss'],
+    standalone: false
 })
 export class ElementDateComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();

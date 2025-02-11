@@ -4,9 +4,10 @@ import {UnitsService, DeviceUserService} from 'src/app/common/services';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-unit-move',
-  templateUrl: './unit-move.component.html',
-  styleUrls: ['./unit-move.component.scss']
+    selector: 'app-unit-move',
+    templateUrl: './unit-move.component.html',
+    styleUrls: ['./unit-move.component.scss'],
+    standalone: false
 })
 export class UnitMoveComponent implements OnInit {
   unitModel: UnitModel = new UnitModel;

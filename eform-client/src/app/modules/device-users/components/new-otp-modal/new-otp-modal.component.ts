@@ -4,9 +4,10 @@ import {UnitsService} from 'src/app/common/services/advanced';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-new-otp-modal',
-  templateUrl: './new-otp-modal.component.html',
-  styleUrls: ['./new-otp-modal.component.scss']
+    selector: 'app-new-otp-modal',
+    templateUrl: './new-otp-modal.component.html',
+    styleUrls: ['./new-otp-modal.component.scss'],
+    standalone: false
 })
 export class NewOtpModalComponent implements OnInit {
   constructor(

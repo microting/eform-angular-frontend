@@ -2,10 +2,11 @@ import {Component, Input} from '@angular/core';
 import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-singleselect',
-  templateUrl: './element-singleselect.component.html',
-  styleUrls: ['./element-singleselect.component.scss']
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-singleselect',
+    templateUrl: './element-singleselect.component.html',
+    styleUrls: ['./element-singleselect.component.scss'],
+    standalone: false
 })
 export class ElementSingleselectComponent {
   @Input()

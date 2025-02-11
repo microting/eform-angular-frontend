@@ -17,9 +17,10 @@ interface FlatNode {
 }
 
 @Component({
-  selector: 'app-eform-tree-view-picker',
-  templateUrl: './eform-tree-view-picker.component.html',
-  styleUrls: ['./eform-tree-view-picker.component.scss'],
+    selector: 'app-eform-tree-view-picker',
+    templateUrl: './eform-tree-view-picker.component.html',
+    styleUrls: ['./eform-tree-view-picker.component.scss'],
+    standalone: false
 })
 export class EformTreeViewPickerComponent implements OnChanges, OnDestroy {
   @Input() nodes: FolderDto[] = [];

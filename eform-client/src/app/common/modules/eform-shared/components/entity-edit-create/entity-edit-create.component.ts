@@ -24,9 +24,10 @@ import {Overlay} from '@angular/cdk/overlay';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-entity-edit-create',
-  templateUrl: './entity-edit-create.component.html',
-  styleUrls: ['./entity-edit-create.component.scss'],
+    selector: 'app-entity-edit-create',
+    templateUrl: './entity-edit-create.component.html',
+    styleUrls: ['./entity-edit-create.component.scss'],
+    standalone: false
 })
 export class EntityEditCreateComponent implements OnInit, OnDestroy{
   entityGroupEditModel: EntityGroupEditModel = new EntityGroupEditModel();

@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
-  selector: 'page-size-pn',
-  templateUrl: './page-size-pn.component.html'
+    selector: 'page-size-pn',
+    templateUrl: './page-size-pn.component.html',
+    standalone: false
 })
 export class PageSizePnComponent {
   @Input() pageSize: number;

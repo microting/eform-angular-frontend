@@ -13,8 +13,9 @@ import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsSitesCreate} from 'src/app/state/auth/auth.selector';
 
 @Component({
-  selector: 'app-units',
-  templateUrl: './units.component.html',
+    selector: 'app-units',
+    templateUrl: './units.component.html',
+    standalone: false
 })
 export class UnitsComponent implements OnInit {
   @ViewChild('modalUnitsMove', {static: true}) modalUnitsMove;

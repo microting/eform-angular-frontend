@@ -26,9 +26,10 @@ import {Overlay} from '@angular/cdk/overlay';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-eforms-tags',
-  templateUrl: './eforms-tags.component.html',
-  styleUrls: ['./eforms-tags.component.scss'],
+    selector: 'app-eforms-tags',
+    templateUrl: './eforms-tags.component.html',
+    styleUrls: ['./eforms-tags.component.scss'],
+    standalone: false
 })
 export class EformsTagsComponent implements OnDestroy, OnChanges {
   @Input() availableTags: CommonDictionaryModel[] = [];

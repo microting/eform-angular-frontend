@@ -8,9 +8,10 @@ import {Subscription} from 'rxjs';
 import {LanguagesModel} from 'src/app/common/models';
 
 @Component({
-  selector: 'app-edit-create-user-modal',
-  templateUrl: './edit-create-user-modal.component.html',
-  styleUrls: ['./edit-create-user-modal.component.scss']
+    selector: 'app-edit-create-user-modal',
+    templateUrl: './edit-create-user-modal.component.html',
+    styleUrls: ['./edit-create-user-modal.component.scss'],
+    standalone: false
 })
 export class EditCreateUserModalComponent implements OnInit {
   edit: boolean = false;

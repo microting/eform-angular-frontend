@@ -4,9 +4,10 @@ import {EntitySearchService} from 'src/app/common/services/advanced';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-entity-search-remove',
-  templateUrl: './entity-search-remove.component.html',
-  styleUrls: ['./entity-search-remove.component.scss']
+    selector: 'app-entity-search-remove',
+    templateUrl: './entity-search-remove.component.html',
+    styleUrls: ['./entity-search-remove.component.scss'],
+    standalone: false
 })
 export class EntitySearchRemoveComponent implements OnInit {
   constructor(

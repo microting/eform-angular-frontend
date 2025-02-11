@@ -29,9 +29,10 @@ import {loadAppMenu, selectCurrentUserLocale} from 'src/app/state';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-navigation-menu-page',
-  templateUrl: './navigation-menu-page.component.html',
-  styleUrls: ['./navigation-menu-page.component.scss'],
+    selector: 'app-navigation-menu-page',
+    templateUrl: './navigation-menu-page.component.html',
+    styleUrls: ['./navigation-menu-page.component.scss'],
+    standalone: false
 })
 export class NavigationMenuPageComponent implements OnInit, OnDestroy {
 

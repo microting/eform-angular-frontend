@@ -6,8 +6,9 @@ import {AppSettingsService} from 'src/app/common/services/settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 
 @Component({
-  selector: 'app-reset-admin-password',
-  templateUrl: './reset-admin-password.component.html'
+    selector: 'app-reset-admin-password',
+    templateUrl: './reset-admin-password.component.html',
+    standalone: false
 })
 export class ResetAdminPasswordComponent implements OnInit {
   formReset: FormGroup;

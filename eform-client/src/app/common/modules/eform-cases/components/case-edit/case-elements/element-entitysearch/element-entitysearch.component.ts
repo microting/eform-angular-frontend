@@ -11,10 +11,11 @@ import { CommonDictionaryTextModel } from 'src/app/common/models/common';
 import { EntitySearchService } from 'src/app/common/services/advanced';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-entitysearch',
-  templateUrl: './element-entitysearch.component.html',
-  styleUrls: ['./element-entitysearch.component.scss'],
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-entitysearch',
+    templateUrl: './element-entitysearch.component.html',
+    styleUrls: ['./element-entitysearch.component.scss'],
+    standalone: false
 })
 export class ElementEntitysearchComponent implements AfterViewInit {
   items: Array<CommonDictionaryTextModel> = [];

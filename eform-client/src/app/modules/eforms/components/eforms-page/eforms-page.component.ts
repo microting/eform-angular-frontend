@@ -51,9 +51,10 @@ import {
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-eform-page',
-  templateUrl: './eforms-page.component.html',
-  styleUrls: ['./eforms-page.component.scss'],
+    selector: 'app-eform-page',
+    templateUrl: './eforms-page.component.html',
+    styleUrls: ['./eforms-page.component.scss'],
+    standalone: false
 })
 export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalTags', {static: true}) modalTags: EformsTagsComponent;

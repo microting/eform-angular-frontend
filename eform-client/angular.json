@@ -15,13 +15,16 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "aot": true,
-            "outputPath": "dist",
+            "outputPath": {
+              "base": "dist"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               {
@@ -47,13 +50,12 @@
             ],
             "scripts": [
               "node_modules/hammerjs/hammer.min.js"
-            ]
+            ],
+            "browser": "src/main.ts"
           },
           "configurations": {
             "development": {
-              "vendorChunk": true,
               "extractLicenses": false,
-              "buildOptimizer": false,
               "sourceMap": true,
               "optimization": false,
               "namedChunks": true
@@ -76,9 +78,7 @@
               "sourceMap": true,
               "namedChunks": false,
               "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "extractLicenses": true
             }
           },
           "defaultConfiguration": "production"
@@ -87,18 +87,18 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "defaultConfiguration": "",
           "options": {
-            "browserTarget": "eform-angular:build:development"
+            "buildTarget": "eform-angular:build:development"
           },
           "configurations": {
             "production": {
-              "browserTarget": "eform-angular:build:production"
+              "buildTarget": "eform-angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "eform-angular:build"
+            "buildTarget": "eform-angular:build"
           }
         },
         "test": {

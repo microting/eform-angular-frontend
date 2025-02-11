@@ -4,9 +4,10 @@ import {EntitySelectService} from 'src/app/common/services';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-entity-select-remove',
-  templateUrl: './entity-select-remove.component.html',
-  styleUrls: ['./entity-select-remove.component.scss']
+    selector: 'app-entity-select-remove',
+    templateUrl: './entity-select-remove.component.html',
+    styleUrls: ['./entity-select-remove.component.scss'],
+    standalone: false
 })
 export class EntitySelectRemoveComponent implements OnInit {
   constructor(

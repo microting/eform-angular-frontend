@@ -6,9 +6,10 @@ import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-navigation-menu-reset',
-  templateUrl: './navigation-menu-reset.component.html',
-  styleUrls: ['./navigation-menu-reset.component.scss'],
+    selector: 'app-navigation-menu-reset',
+    templateUrl: './navigation-menu-reset.component.html',
+    styleUrls: ['./navigation-menu-reset.component.scss'],
+    standalone: false
 })
 export class NavigationMenuResetComponent implements OnInit {
   get menuItemType() {

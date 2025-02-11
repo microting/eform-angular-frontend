@@ -7,9 +7,10 @@ import {EformVisualEditorRecursionChecklistModel,} from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-visual-editor-checklist-delete-modal',
-  templateUrl: './visual-editor-checklist-delete-modal.component.html',
-  styleUrls: ['./visual-editor-checklist-delete-modal.component.scss'],
+    selector: 'app-visual-editor-checklist-delete-modal',
+    templateUrl: './visual-editor-checklist-delete-modal.component.html',
+    styleUrls: ['./visual-editor-checklist-delete-modal.component.scss'],
+    standalone: false
 })
 export class VisualEditorChecklistDeleteModalComponent implements OnInit {
 

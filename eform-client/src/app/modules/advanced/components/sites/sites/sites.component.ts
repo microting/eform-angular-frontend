@@ -19,8 +19,9 @@ import {selectCurrentUserClaimsSitesDelete, selectCurrentUserClaimsSitesUpdate} 
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-sites',
-  templateUrl: './sites.component.html',
+    selector: 'app-sites',
+    templateUrl: './sites.component.html',
+    standalone: false
 })
 export class SitesComponent implements OnInit, OnDestroy {
   private selectCurrentUserClaimsSitesUpdate$ = this.authStore.select(selectCurrentUserClaimsSitesUpdate);

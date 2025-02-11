@@ -14,9 +14,10 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 import { EntitySearchService } from 'src/app/common/services';
 
 @Component({
-  selector: 'app-visual-editor-additional-field-entity-search',
-  templateUrl: './visual-editor-additional-field-entity-search.component.html',
-  styleUrls: ['./visual-editor-additional-field-entity-search.component.scss'],
+    selector: 'app-visual-editor-additional-field-entity-search',
+    templateUrl: './visual-editor-additional-field-entity-search.component.html',
+    styleUrls: ['./visual-editor-additional-field-entity-search.component.scss'],
+    standalone: false
 })
 export class VisualEditorAdditionalFieldEntitySearchComponent
   implements OnInit, OnDestroy {

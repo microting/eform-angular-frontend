@@ -18,9 +18,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {loadAppMenu, selectCurrentUserIsAdmin, updateCurrentUserLocaleAndDarkTheme} from 'src/app/state';
 
 @Component({
-  selector: 'app-profile-settings',
-  templateUrl: './profile-settings.component.html',
-  styleUrls: ['./profile-settings.component.scss'],
+    selector: 'app-profile-settings',
+    templateUrl: './profile-settings.component.html',
+    styleUrls: ['./profile-settings.component.scss'],
+    standalone: false
 })
 export class ProfileSettingsComponent implements OnInit {
 

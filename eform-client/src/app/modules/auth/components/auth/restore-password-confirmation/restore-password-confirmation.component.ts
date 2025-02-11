@@ -16,8 +16,9 @@ import {applicationLanguages} from "src/app/common/const";
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-restore-password-confirmation',
-  templateUrl: './restore-password-confirmation.component.html',
+    selector: 'app-restore-password-confirmation',
+    templateUrl: './restore-password-confirmation.component.html',
+    standalone: false
 })
 export class RestorePasswordConfirmationComponent implements OnInit, OnDestroy {
   submitRestoreModel: PasswordRestoreModel = new PasswordRestoreModel();

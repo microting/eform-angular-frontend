@@ -3,9 +3,10 @@ import {Subject} from 'rxjs';
 import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-case-edit-confirmation',
-  templateUrl: './case-edit-confirmation.component.html',
-  styleUrls: ['./case-edit-confirmation.component.scss']
+    selector: 'app-case-edit-confirmation',
+    templateUrl: './case-edit-confirmation.component.html',
+    styleUrls: ['./case-edit-confirmation.component.scss'],
+    standalone: false
 })
 export class CaseEditConfirmationComponent implements OnInit {
   navigateAwaySelection$: Subject<boolean> = new Subject<boolean>();

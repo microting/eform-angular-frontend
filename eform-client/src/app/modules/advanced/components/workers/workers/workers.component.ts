@@ -14,8 +14,9 @@ import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsWorkersCreate} from 'src/app/state/auth/auth.selector';
 
 @Component({
-  selector: 'app-workers',
-  templateUrl: './workers.component.html',
+    selector: 'app-workers',
+    templateUrl: './workers.component.html',
+    standalone: false
 })
 export class WorkersComponent implements OnInit {
   workersDto: Array<WorkerDto> = [];

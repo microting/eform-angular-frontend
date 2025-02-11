@@ -14,9 +14,10 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-navigation-menu-item-edit',
-  templateUrl: './navigation-menu-item-edit.component.html',
-  styleUrls: ['./navigation-menu-item-edit.component.scss'],
+    selector: 'app-navigation-menu-item-edit',
+    templateUrl: './navigation-menu-item-edit.component.html',
+    styleUrls: ['./navigation-menu-item-edit.component.scss'],
+    standalone: false
 })
 export class NavigationMenuItemEditComponent implements OnInit {
   availableSecurityGroups: CommonDictionaryModel[] = [];

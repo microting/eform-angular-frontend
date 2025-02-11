@@ -39,9 +39,10 @@ import {Store} from '@ngrx/store';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-eform-visual-editor-container',
-  templateUrl: './eform-visual-editor-container.component.html',
-  styleUrls: ['./eform-visual-editor-container.component.scss'],
+    selector: 'app-eform-visual-editor-container',
+    templateUrl: './eform-visual-editor-container.component.html',
+    styleUrls: ['./eform-visual-editor-container.component.scss'],
+    standalone: false
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   @ViewChild('tagsModal') tagsModal: EformsTagsComponent;

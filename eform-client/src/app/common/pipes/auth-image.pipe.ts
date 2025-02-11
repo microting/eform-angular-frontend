@@ -5,7 +5,8 @@ import {selectBearerToken} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
 @Pipe({
-  name: 'authImage',
+    name: 'authImage',
+    standalone: false
 })
 export class AuthImagePipe implements PipeTransform {
   private selectBearerToken$ = this.authStore.select(selectBearerToken);

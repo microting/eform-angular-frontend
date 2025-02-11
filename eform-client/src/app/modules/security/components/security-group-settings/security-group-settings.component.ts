@@ -11,9 +11,10 @@ import {
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-security-group-settings',
-  templateUrl: './security-group-settings.component.html',
-  styleUrls: ['./security-group-settings.component.scss'],
+    selector: 'app-security-group-settings',
+    templateUrl: './security-group-settings.component.html',
+    styleUrls: ['./security-group-settings.component.scss'],
+    standalone: false
 })
 export class SecurityGroupSettingsComponent implements OnInit {
   settingsUpdate: EventEmitter<SecurityGroupSettingsUpdateModel> = new EventEmitter<SecurityGroupSettingsUpdateModel>();

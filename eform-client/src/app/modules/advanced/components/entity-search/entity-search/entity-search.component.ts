@@ -26,9 +26,10 @@ import {
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-searchable-list',
-  templateUrl: './entity-search.component.html',
-  styleUrls: ['./entity-search.component.scss'],
+    selector: 'app-searchable-list',
+    templateUrl: './entity-search.component.html',
+    styleUrls: ['./entity-search.component.scss'],
+    standalone: false
 })
 export class EntitySearchComponent implements OnInit, OnDestroy {
   advEntitySearchableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();

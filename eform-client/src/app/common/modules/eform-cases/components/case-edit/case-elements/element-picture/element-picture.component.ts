@@ -23,10 +23,11 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 
 @AutoUnsubscribe()
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-picture',
-  templateUrl: './element-picture.component.html',
-  styleUrls: ['./element-picture.component.scss']
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-picture',
+    templateUrl: './element-picture.component.html',
+    styleUrls: ['./element-picture.component.scss'],
+    standalone: false
 })
 export class ElementPictureComponent implements OnChanges, OnDestroy {
   @Input() fieldValues: Array<FieldValueDto> = [];
@@ -188,8 +189,8 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
 }
 
 @Component({
-  selector: 'app-element-picture-add-picture-modal-component',
-  template: `
+    selector: 'app-element-picture-add-picture-modal-component',
+    template: `
     <div mat-dialog-title>
       {{ 'Select new image' | translate }}
     </div>
@@ -233,6 +234,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
         {{ 'Cancel' | translate }}
       </button>
     </div>`,
+    standalone: false
 })
 export class AddPictureDialogComponent {
   addedPicture: EventEmitter<File> = new EventEmitter<File>();
@@ -258,8 +260,8 @@ export class AddPictureDialogComponent {
 }
 
 @Component({
-  selector: 'app-element-picture-delete-picture-modal-component',
-  template: `
+    selector: 'app-element-picture-delete-picture-modal-component',
+    template: `
     <div mat-dialog-title>
       {{ 'Are you sure you want to delete it' | translate }}?
     </div>
@@ -279,6 +281,7 @@ export class AddPictureDialogComponent {
         {{ 'Cancel' | translate }}
       </button>
     </div>`,
+    standalone: false
 })
 export class DeletePictureDialogComponent {
   deletePicture: EventEmitter<File> = new EventEmitter<File>();

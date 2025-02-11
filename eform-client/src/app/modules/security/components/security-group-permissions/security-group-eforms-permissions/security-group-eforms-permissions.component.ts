@@ -23,9 +23,10 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-security-group-eforms-permissions',
-  templateUrl: './security-group-eforms-permissions.component.html',
-  styleUrls: ['./security-group-eforms-permissions.component.scss']
+    selector: 'app-security-group-eforms-permissions',
+    templateUrl: './security-group-eforms-permissions.component.html',
+    styleUrls: ['./security-group-eforms-permissions.component.scss'],
+    standalone: false
 })
 export class SecurityGroupEformsPermissionsComponent implements OnInit, OnDestroy {
   tableHeaders: MtxGridColumn[] = [

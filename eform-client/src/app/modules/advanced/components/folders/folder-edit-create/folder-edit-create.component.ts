@@ -22,9 +22,10 @@ import {Store} from '@ngrx/store';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-folder-edit-create',
-  templateUrl: './folder-edit-create.component.html',
-  styleUrls: ['./folder-edit-create.component.scss'],
+    selector: 'app-folder-edit-create',
+    templateUrl: './folder-edit-create.component.html',
+    styleUrls: ['./folder-edit-create.component.scss'],
+    standalone: false
 })
 export class FolderEditCreateComponent implements OnInit, OnDestroy {
   selectedLanguageId: number;

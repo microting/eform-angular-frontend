@@ -29,9 +29,10 @@ import {Store} from '@ngrx/store';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-case-edit',
-  templateUrl: './case-edit.component.html',
-  styleUrls: ['./case-edit.component.scss'],
+    selector: 'app-case-edit',
+    templateUrl: './case-edit.component.html',
+    styleUrls: ['./case-edit.component.scss'],
+    standalone: false
 })
 export class CaseEditComponent implements OnInit, OnDestroy {
   @ViewChildren(CaseEditElementComponent)

@@ -2,7 +2,7 @@ name: Master/Stable
 
 on:
   push:
-    branches: [ master, stable, angular15, angular16, angular17 ]
+    branches: [ master, stable, angular19 ]
     paths-ignore:
     - '*.md'
 

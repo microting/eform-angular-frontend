@@ -10,9 +10,10 @@ import {selectBearerToken, selectConnectionStringExists} from 'src/app/state/aut
 import {Store} from '@ngrx/store';
 
 @Component({
-  selector: 'app-eforms-bulk-import-modal',
-  templateUrl: './eforms-bulk-import-modal.component.html',
-  styleUrls: ['./eforms-bulk-import-modal.component.scss'],
+    selector: 'app-eforms-bulk-import-modal',
+    templateUrl: './eforms-bulk-import-modal.component.html',
+    styleUrls: ['./eforms-bulk-import-modal.component.scss'],
+    standalone: false
 })
 export class EformsBulkImportModalComponent implements OnInit {
   @ViewChild('xlsxEforms', {static: false})

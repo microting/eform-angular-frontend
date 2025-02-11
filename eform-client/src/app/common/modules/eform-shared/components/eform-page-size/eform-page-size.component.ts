@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'eform-page-size',
-  templateUrl: './eform-page-size.component.html',
+    selector: 'eform-page-size',
+    templateUrl: './eform-page-size.component.html',
+    standalone: false
 })
 export class EformPageSizeComponent {
   @Input() pageSize: number;

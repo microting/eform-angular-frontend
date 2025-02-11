@@ -9,9 +9,10 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-email-recipients-new',
-  templateUrl: './email-recipients-new.component.html',
-  styleUrls: ['./email-recipients-new.component.scss']
+    selector: 'app-email-recipients-new',
+    templateUrl: './email-recipients-new.component.html',
+    styleUrls: ['./email-recipients-new.component.scss'],
+    standalone: false
 })
 export class EmailRecipientsNewComponent implements OnInit, OnDestroy {
   emailRecipientsCreateModel: EmailRecipientsCreateModel = new EmailRecipientsCreateModel();

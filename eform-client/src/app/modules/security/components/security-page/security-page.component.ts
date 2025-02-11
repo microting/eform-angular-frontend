@@ -25,9 +25,10 @@ import {
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-security-page',
-  templateUrl: './security-page.component.html',
-  styleUrls: ['./security-page.component.scss'],
+    selector: 'app-security-page',
+    templateUrl: './security-page.component.html',
+    styleUrls: ['./security-page.component.scss'],
+    standalone: false
 })
 export class SecurityPageComponent implements OnInit, OnDestroy {
   tableHeaders: MtxGridColumn[] = [

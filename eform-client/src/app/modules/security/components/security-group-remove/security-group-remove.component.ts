@@ -8,9 +8,10 @@ import { SecurityGroupModel } from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-security-group-remove',
-  templateUrl: './security-group-remove.component.html',
-  styleUrls: ['./security-group-remove.component.scss'],
+    selector: 'app-security-group-remove',
+    templateUrl: './security-group-remove.component.html',
+    styleUrls: ['./security-group-remove.component.scss'],
+    standalone: false
 })
 export class SecurityGroupRemoveComponent implements OnInit {
   onSecurityGroupRemoved: EventEmitter<number> = new EventEmitter<number>();

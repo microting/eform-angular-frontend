@@ -9,10 +9,11 @@ import {
 import { SortModel, TableHeaderElementModel } from 'src/app/common/models';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: '[table-headers]',
-  templateUrl: './eform-table-headers.component.html',
-  styleUrls: ['./eform-table-headers.component.scss'],
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: '[table-headers]',
+    templateUrl: './eform-table-headers.component.html',
+    styleUrls: ['./eform-table-headers.component.scss'],
+    standalone: false
 })
 export class EformTableHeadersComponent implements OnInit {
   // todo need to remove from this line to end

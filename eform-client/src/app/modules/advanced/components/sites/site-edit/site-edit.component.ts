@@ -11,8 +11,9 @@ import {CommonDictionaryModel, DeviceUserModel, SiteNameModel} from 'src/app/com
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-site-edit',
-  templateUrl: './site-edit.component.html',
+    selector: 'app-site-edit',
+    templateUrl: './site-edit.component.html',
+    standalone: false
 })
 export class SiteEditComponent implements OnInit {
   availableTags: CommonDictionaryModel[] = [];

@@ -6,10 +6,11 @@ import {Subscription} from 'rxjs';
 
 @AutoUnsubscribe()
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-pdf',
-  templateUrl: './element-pdf.component.html',
-  styleUrls: ['./element-pdf.component.scss']
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-pdf',
+    templateUrl: './element-pdf.component.html',
+    styleUrls: ['./element-pdf.component.scss'],
+    standalone: false
 })
 export class ElementPdfComponent implements OnDestroy {
   dataItemObj: DataItemDto = new DataItemDto();

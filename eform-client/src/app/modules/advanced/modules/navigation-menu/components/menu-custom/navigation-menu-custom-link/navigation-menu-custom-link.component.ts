@@ -11,9 +11,10 @@ import {CommonDictionaryModel, NavigationMenuItemModel,} from 'src/app/common/mo
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-navigation-menu-custom-link',
-  templateUrl: './navigation-menu-custom-link.component.html',
-  styleUrls: ['./navigation-menu-custom-link.component.scss'],
+    selector: 'app-navigation-menu-custom-link',
+    templateUrl: './navigation-menu-custom-link.component.html',
+    styleUrls: ['./navigation-menu-custom-link.component.scss'],
+    standalone: false
 })
 export class NavigationMenuCustomLinkComponent implements OnInit {
   customLinkModel: NavigationMenuItemModel = new NavigationMenuItemModel();

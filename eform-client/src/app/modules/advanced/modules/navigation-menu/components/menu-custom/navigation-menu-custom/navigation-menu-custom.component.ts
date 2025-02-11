@@ -15,9 +15,10 @@ import {Overlay} from '@angular/cdk/overlay';
 import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-navigation-menu-custom',
-  templateUrl: './navigation-menu-custom.component.html',
-  styleUrls: ['./navigation-menu-custom.component.scss'],
+    selector: 'app-navigation-menu-custom',
+    templateUrl: './navigation-menu-custom.component.html',
+    styleUrls: ['./navigation-menu-custom.component.scss'],
+    standalone: false
 })
 export class NavigationMenuCustomComponent implements OnInit {
   @Input() availableSecurityGroups: CommonDictionaryModel[] = [];

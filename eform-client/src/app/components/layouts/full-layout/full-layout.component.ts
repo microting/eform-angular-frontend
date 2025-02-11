@@ -23,9 +23,10 @@ import {
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-full-layout-root',
-  templateUrl: `./full-layout.component.html`,
-  styleUrls: ['./full-layout.component.scss']
+    selector: 'app-full-layout-root',
+    templateUrl: `./full-layout.component.html`,
+    styleUrls: ['./full-layout.component.scss'],
+    standalone: false
 })
 export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('drawer') drawer: MatDrawer;

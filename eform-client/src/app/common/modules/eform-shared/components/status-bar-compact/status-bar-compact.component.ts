@@ -3,9 +3,10 @@ import { CaseStatusEnum } from 'src/app/common/const';
 import { StatusBarModel} from '../../../../models/common';
 
 @Component({
-  selector: 'status-bar-compact',
-  templateUrl: './status-bar-compact.component.html',
-  styleUrls: ['./status-bar-compact.component.scss']
+    selector: 'status-bar-compact',
+    templateUrl: './status-bar-compact.component.html',
+    styleUrls: ['./status-bar-compact.component.scss'],
+    standalone: false
 })
 export class StatusBarCompactComponent implements OnInit {
   statusBar: StatusBarModel = new StatusBarModel();

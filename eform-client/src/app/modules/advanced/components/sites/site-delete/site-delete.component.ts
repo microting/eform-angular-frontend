@@ -4,9 +4,10 @@ import {SitesService} from 'src/app/common/services/advanced';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-site-delete',
-  templateUrl: './site-delete.component.html',
-  styleUrls: ['./site-delete.component.scss']
+    selector: 'app-site-delete',
+    templateUrl: './site-delete.component.html',
+    styleUrls: ['./site-delete.component.scss'],
+    standalone: false
 })
 export class SiteDeleteComponent implements OnInit {
   constructor(

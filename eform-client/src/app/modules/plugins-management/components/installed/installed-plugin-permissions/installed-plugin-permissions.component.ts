@@ -12,9 +12,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {PluginPermissionsService} from 'src/app/common/services';
 
 @Component({
-  selector: 'app-installed-plugin-permissions',
-  templateUrl: './installed-plugin-permissions.component.html',
-  styleUrls: ['./installed-plugin-permissions.component.scss'],
+    selector: 'app-installed-plugin-permissions',
+    templateUrl: './installed-plugin-permissions.component.html',
+    styleUrls: ['./installed-plugin-permissions.component.scss'],
+    standalone: false
 })
 export class InstalledPluginPermissionsComponent implements OnInit {
   securityGroups: SecurityGroupModel[] = [];

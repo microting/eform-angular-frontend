@@ -12,9 +12,10 @@ import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-security-group-update',
-  templateUrl: './security-group-update.component.html',
-  styleUrls: ['./security-group-update.component.scss'],
+    selector: 'app-security-group-update',
+    templateUrl: './security-group-update.component.html',
+    styleUrls: ['./security-group-update.component.scss'],
+    standalone: false
 })
 export class SecurityGroupUpdateComponent implements OnInit {
   securityGroupModel: SecurityGroupModel = new SecurityGroupModel();

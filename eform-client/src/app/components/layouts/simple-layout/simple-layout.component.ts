@@ -9,8 +9,9 @@ import {connectionStringExistCount} from 'src/app/state';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-simple-layout',
-  templateUrl: './simple-layout.component.html',
+    selector: 'app-simple-layout',
+    templateUrl: './simple-layout.component.html',
+    standalone: false
 })
 export class SimpleLayoutComponent implements OnInit, OnDestroy {
 

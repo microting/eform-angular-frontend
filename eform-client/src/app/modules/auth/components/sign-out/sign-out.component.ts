@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'sign-out',
-  template: '',
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'sign-out',
+    template: '',
+    standalone: false
 })
 export class SignOutComponent implements OnInit, AfterViewChecked {
   constructor(

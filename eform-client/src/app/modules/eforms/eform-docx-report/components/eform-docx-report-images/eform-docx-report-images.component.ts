@@ -8,9 +8,10 @@ import {catchError} from 'rxjs/operators';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-eform-docx-report-images',
-  templateUrl: './eform-docx-report-images.component.html',
-  styleUrls: ['./eform-docx-report-images.component.scss']
+    selector: 'app-eform-docx-report-images',
+    templateUrl: './eform-docx-report-images.component.html',
+    styleUrls: ['./eform-docx-report-images.component.scss'],
+    standalone: false
 })
 export class EformDocxReportImagesComponent implements OnDestroy, OnChanges {
   @Input() imageNames: {key: {key: number, value: string}, value: {key: string, value: string}}[] = [];

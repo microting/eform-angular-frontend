@@ -20,9 +20,10 @@ import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-eform-docx-report-container',
-  templateUrl: './eform-docx-report-container.component.html',
-  styleUrls: ['./eform-docx-report-container.component.scss'],
+    selector: 'app-eform-docx-report-container',
+    templateUrl: './eform-docx-report-container.component.html',
+    styleUrls: ['./eform-docx-report-container.component.scss'],
+    standalone: false
 })
 export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
   reportModel: EformDocxReportModel = new EformDocxReportModel();

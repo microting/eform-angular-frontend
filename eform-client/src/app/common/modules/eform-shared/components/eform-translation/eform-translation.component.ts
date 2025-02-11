@@ -5,16 +5,17 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-eform-translation',
-  templateUrl: './eform-translation.component.html',
-  styleUrls: ['./eform-translation.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => EformTranslationComponent),
-      multi: true
-    }
-  ],
+    selector: 'app-eform-translation',
+    templateUrl: './eform-translation.component.html',
+    styleUrls: ['./eform-translation.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => EformTranslationComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 export class EformTranslationComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() model: CommonTranslationsModel = {id: undefined, description: '', name: '', languageId: 1};

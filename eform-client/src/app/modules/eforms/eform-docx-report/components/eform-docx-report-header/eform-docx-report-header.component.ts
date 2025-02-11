@@ -7,9 +7,10 @@ import {WordIcon} from 'src/app/common/const';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-eform-docx-report-header',
-  templateUrl: './eform-docx-report-header.component.html',
-  styleUrls: ['./eform-docx-report-header.component.scss'],
+    selector: 'app-eform-docx-report-header',
+    templateUrl: './eform-docx-report-header.component.html',
+    styleUrls: ['./eform-docx-report-header.component.scss'],
+    standalone: false
 })
 export class EformDocxReportHeaderComponent implements OnInit {
   @Output()

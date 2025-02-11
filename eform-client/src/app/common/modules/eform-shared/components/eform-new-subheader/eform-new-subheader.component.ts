@@ -8,10 +8,11 @@ import {Subscription} from 'rxjs';
 
 @AutoUnsubscribe()
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'eform-new-subheader',
-  templateUrl: './eform-new-subheader.component.html',
-  styleUrls: ['./eform-new-subheader.component.scss'],
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'eform-new-subheader',
+    templateUrl: './eform-new-subheader.component.html',
+    styleUrls: ['./eform-new-subheader.component.scss'],
+    standalone: false
 })
 export class EformNewSubheaderComponent implements OnInit, OnDestroy {
   @Input() subtitle = '';

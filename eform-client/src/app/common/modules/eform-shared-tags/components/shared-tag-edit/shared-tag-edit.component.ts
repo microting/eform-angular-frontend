@@ -10,9 +10,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-shared-tag-edit',
-  templateUrl: './shared-tag-edit.component.html',
-  styleUrls: ['./shared-tag-edit.component.scss'],
+    selector: 'app-shared-tag-edit',
+    templateUrl: './shared-tag-edit.component.html',
+    styleUrls: ['./shared-tag-edit.component.scss'],
+    standalone: false
 })
 export class SharedTagEditComponent implements OnDestroy {
   public updatedTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();

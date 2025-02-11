@@ -9,9 +9,10 @@ import {EformDocxReportHeadersModel} from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-eform-docx-report-header-editor',
-  templateUrl: './eform-docx-report-header-editor.component.html',
-  styleUrls: ['./eform-docx-report-header-editor.component.scss'],
+    selector: 'app-eform-docx-report-header-editor',
+    templateUrl: './eform-docx-report-header-editor.component.html',
+    styleUrls: ['./eform-docx-report-header-editor.component.scss'],
+    standalone: false
 })
 export class EformDocxReportHeaderEditorComponent implements OnInit {
   @Output()

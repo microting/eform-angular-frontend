@@ -12,9 +12,10 @@ import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-navigation-menu-item-delete',
-  templateUrl: './navigation-menu-item-delete.component.html',
-  styleUrls: ['./navigation-menu-item-delete.component.scss'],
+    selector: 'app-navigation-menu-item-delete',
+    templateUrl: './navigation-menu-item-delete.component.html',
+    styleUrls: ['./navigation-menu-item-delete.component.scss'],
+    standalone: false
 })
 export class NavigationMenuItemDeleteComponent implements OnInit {
   itemDeleteConfirm: EventEmitter<

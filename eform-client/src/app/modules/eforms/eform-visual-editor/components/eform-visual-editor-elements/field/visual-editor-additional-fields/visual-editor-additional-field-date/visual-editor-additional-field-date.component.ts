@@ -4,9 +4,10 @@ import {MatDatepickerInputEvent} from "@angular/material/datepicker";
 import {format, set} from "date-fns";
 
 @Component({
-  selector: 'app-visual-editor-additional-field-date',
-  templateUrl: './visual-editor-additional-field-date.component.html',
-  styleUrls: ['./visual-editor-additional-field-date.component.scss'],
+    selector: 'app-visual-editor-additional-field-date',
+    templateUrl: './visual-editor-additional-field-date.component.html',
+    styleUrls: ['./visual-editor-additional-field-date.component.scss'],
+    standalone: false
 })
 export class VisualEditorAdditionalFieldDateComponent
   implements OnInit, OnDestroy {

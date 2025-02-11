@@ -2,10 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-multiselect',
-  templateUrl: './element-multiselect.component.html',
-  styleUrls: ['./element-multiselect.component.scss']
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-multiselect',
+    templateUrl: './element-multiselect.component.html',
+    styleUrls: ['./element-multiselect.component.scss'],
+    standalone: false
 })
 export class ElementMultiselectComponent implements OnInit {
   fieldValueObj: FieldValueDto = new FieldValueDto();

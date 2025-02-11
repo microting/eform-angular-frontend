@@ -3,10 +3,11 @@ import {differenceInSeconds} from 'date-fns';
 import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-timer',
-  templateUrl: './element-timer.component.html',
-  styleUrls: ['./element-timer.component.scss']
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-timer',
+    templateUrl: './element-timer.component.html',
+    styleUrls: ['./element-timer.component.scss'],
+    standalone: false
 })
 export class ElementTimerComponent implements OnInit {
   fieldValueObj: FieldValueDto = new FieldValueDto();

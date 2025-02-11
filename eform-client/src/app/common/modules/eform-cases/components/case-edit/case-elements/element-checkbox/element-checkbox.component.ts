@@ -2,10 +2,11 @@ import { Component, Input} from '@angular/core';
 import { FieldValueDto } from 'src/app/common/models';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-checkbox',
-  templateUrl: './element-checkbox.component.html',
-  styleUrls: ['./element-checkbox.component.scss'],
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-checkbox',
+    templateUrl: './element-checkbox.component.html',
+    styleUrls: ['./element-checkbox.component.scss'],
+    standalone: false
 })
 export class ElementCheckboxComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();

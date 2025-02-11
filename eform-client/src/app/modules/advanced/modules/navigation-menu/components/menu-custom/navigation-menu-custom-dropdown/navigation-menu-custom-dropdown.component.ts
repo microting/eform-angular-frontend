@@ -10,9 +10,10 @@ import {CommonDictionaryModel, NavigationMenuItemModel} from 'src/app/common/mod
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-navigation-menu-custom-dropdown',
-  templateUrl: './navigation-menu-custom-dropdown.component.html',
-  styleUrls: ['./navigation-menu-custom-dropdown.component.scss'],
+    selector: 'app-navigation-menu-custom-dropdown',
+    templateUrl: './navigation-menu-custom-dropdown.component.html',
+    styleUrls: ['./navigation-menu-custom-dropdown.component.scss'],
+    standalone: false
 })
 export class NavigationMenuCustomDropdownComponent implements OnInit {
   customDropdownModel: NavigationMenuItemModel = new NavigationMenuItemModel();

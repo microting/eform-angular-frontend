@@ -12,9 +12,10 @@ import {Store} from "@ngrx/store";
 import {selectCurrentUserClaimsEformsPairingRead} from 'src/app/state/auth/auth.selector';
 
 @Component({
-  selector: 'app-eform-edit-paring-modal',
-  templateUrl: './eform-edit-paring-modal.component.html',
-  styleUrls: ['./eform-edit-paring-modal.component.scss'],
+    selector: 'app-eform-edit-paring-modal',
+    templateUrl: './eform-edit-paring-modal.component.html',
+    styleUrls: ['./eform-edit-paring-modal.component.scss'],
+    standalone: false
 })
 export class EformEditParingModalComponent implements OnInit {
   deployModel: DeployModel = new DeployModel();

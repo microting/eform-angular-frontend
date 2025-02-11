@@ -12,9 +12,10 @@ import {getRandomInt} from 'src/app/common/helpers';
 import {DragulaService} from 'ng2-dragula';
 
 @Component({
-  selector: 'app-entity-list-elements',
-  templateUrl: './entity-list-elements.component.html',
-  styleUrls: ['./entity-list-elements.component.scss'],
+    selector: 'app-entity-list-elements',
+    templateUrl: './entity-list-elements.component.html',
+    styleUrls: ['./entity-list-elements.component.scss'],
+    standalone: false
 })
 export class EntityListElementsComponent implements OnInit, OnDestroy {
   @Input() entityItemModels: EntityItemModel[] = [];

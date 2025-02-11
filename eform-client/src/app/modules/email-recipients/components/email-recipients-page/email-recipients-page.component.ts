@@ -33,9 +33,10 @@ import {
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-email-recipients-page',
-  templateUrl: './email-recipients-page.component.html',
-  styleUrls: ['./email-recipients-page.component.scss'],
+    selector: 'app-email-recipients-page',
+    templateUrl: './email-recipients-page.component.html',
+    styleUrls: ['./email-recipients-page.component.scss'],
+    standalone: false
 })
 export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   @ViewChild('recipientsTagsModal')

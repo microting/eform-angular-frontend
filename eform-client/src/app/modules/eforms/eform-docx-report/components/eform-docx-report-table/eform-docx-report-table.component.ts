@@ -12,10 +12,11 @@ import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-eform-docx-report-table',
-  templateUrl: './eform-docx-report-table.component.html',
-  styleUrls: ['./eform-docx-report-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-eform-docx-report-table',
+    templateUrl: './eform-docx-report-table.component.html',
+    styleUrls: ['./eform-docx-report-table.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EformDocxReportTableComponent implements OnInit, OnChanges {
   @ViewChild('caseFieldTpl', { static: true }) caseFieldTpl!: TemplateRef<any>;

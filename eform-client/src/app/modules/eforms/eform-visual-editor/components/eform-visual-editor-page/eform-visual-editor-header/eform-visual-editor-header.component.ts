@@ -7,9 +7,10 @@ import {AuthStateService} from 'src/app/common/store';
 import {TranslationRequestModel, TranslationService} from 'src/app/common/services/translation.service';
 
 @Component({
-  selector: 'app-eform-visual-editor-header',
-  templateUrl: './eform-visual-editor-header.component.html',
-  styleUrls: ['./eform-visual-editor-header.component.scss'],
+    selector: 'app-eform-visual-editor-header',
+    templateUrl: './eform-visual-editor-header.component.html',
+    styleUrls: ['./eform-visual-editor-header.component.scss'],
+    standalone: false
 })
 export class EformVisualEditorHeaderComponent implements OnInit {
   @Input()

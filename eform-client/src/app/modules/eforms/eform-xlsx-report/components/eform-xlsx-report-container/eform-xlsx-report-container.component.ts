@@ -12,9 +12,10 @@ import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-eform-xlsx-report-container',
-  templateUrl: './eform-xlsx-report-container.component.html',
-  styleUrls: ['./eform-xlsx-report-container.component.scss'],
+    selector: 'app-eform-xlsx-report-container',
+    templateUrl: './eform-xlsx-report-container.component.html',
+    styleUrls: ['./eform-xlsx-report-container.component.scss'],
+    standalone: false
 })
 export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
   dateFrom: any;

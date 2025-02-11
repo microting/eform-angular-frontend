@@ -39,8 +39,9 @@ import {
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-cases-table',
-  templateUrl: './cases-table.component.html',
+    selector: 'app-cases-table',
+    templateUrl: './cases-table.component.html',
+    standalone: false
 })
 export class CasesTableComponent implements OnInit, OnDestroy {
   public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);

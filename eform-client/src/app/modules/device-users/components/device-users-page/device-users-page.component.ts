@@ -21,8 +21,9 @@ import {selectDeviceUsersFilters, selectDeviceUsersNameFilter} from "src/app/sta
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-device-users-page',
-  templateUrl: './device-users-page.component.html',
+    selector: 'app-device-users-page',
+    templateUrl: './device-users-page.component.html',
+    standalone: false
 })
 export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   sitesDto: Array<SiteDto>;

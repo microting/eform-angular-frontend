@@ -2,9 +2,10 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LoaderService} from 'src/app/common/services';
 
 @Component({
-  selector: 'app-eform-spinner',
-  templateUrl: './spinner.component.html',
-  styleUrls: ['./spinner.component.scss']
+    selector: 'app-eform-spinner',
+    templateUrl: './spinner.component.html',
+    styleUrls: ['./spinner.component.scss'],
+    standalone: false
 })
 export class SpinnerComponent implements OnInit {
   loading: boolean;

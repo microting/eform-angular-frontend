@@ -4,9 +4,10 @@ import {WorkersService} from 'src/app/common/services';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-worker-delete',
-  templateUrl: './worker-delete.component.html',
-  styleUrls: ['./worker-delete.component.scss']
+    selector: 'app-worker-delete',
+    templateUrl: './worker-delete.component.html',
+    styleUrls: ['./worker-delete.component.scss'],
+    standalone: false
 })
 export class WorkerDeleteComponent implements OnInit {
 

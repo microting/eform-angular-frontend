@@ -4,10 +4,11 @@ import { CommonDictionaryTextModel } from 'src/app/common/models/common';
 import { EntitySelectService } from 'src/app/common/services/advanced';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'element-entityselect',
-  templateUrl: './element-entityselect.component.html',
-  styleUrls: ['./element-entityselect.component.scss'],
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'element-entityselect',
+    templateUrl: './element-entityselect.component.html',
+    styleUrls: ['./element-entityselect.component.scss'],
+    standalone: false
 })
 export class ElementEntityselectComponent implements OnInit, AfterViewInit {
   items: Array<CommonDictionaryTextModel> = [];

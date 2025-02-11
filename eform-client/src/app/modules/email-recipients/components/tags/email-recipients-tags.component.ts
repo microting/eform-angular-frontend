@@ -26,9 +26,10 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-email-recipients-tags',
-  templateUrl: './email-recipients-tags.component.html',
-  styleUrls: ['./email-recipients-tags.component.scss'],
+    selector: 'app-email-recipients-tags',
+    templateUrl: './email-recipients-tags.component.html',
+    styleUrls: ['./email-recipients-tags.component.scss'],
+    standalone: false
 })
 export class EmailRecipientsTagsComponent implements OnChanges, OnDestroy {
   @Input() availableTags: CommonDictionaryModel[] = [];

@@ -13,8 +13,9 @@ import {AuthStateService} from 'src/app/common/store';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy {
   public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);

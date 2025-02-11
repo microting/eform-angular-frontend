@@ -11,9 +11,10 @@ import {
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-shared-tags',
-  templateUrl: './shared-tags.component.html',
-  styleUrls: ['./shared-tags.component.scss']
+    selector: 'app-shared-tags',
+    templateUrl: './shared-tags.component.html',
+    styleUrls: ['./shared-tags.component.scss'],
+    standalone: false
 })
 export class SharedTagsComponent implements OnInit {
   public availableTags: CommonDictionaryModel[] = [];

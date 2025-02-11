@@ -12,9 +12,10 @@ import {Store} from '@ngrx/store';
 import {selectOthersSettings} from 'src/app/state/application-settings/application-settings.selector';
 
 @Component({
-  selector: 'app-userback-widget',
-  templateUrl: './userback-widget.component.html',
-  styleUrls: ['./userback-widget.component.scss'],
+    selector: 'app-userback-widget',
+    templateUrl: './userback-widget.component.html',
+    styleUrls: ['./userback-widget.component.scss'],
+    standalone: false
 })
 export class UserbackWidgetComponent implements OnInit, OnDestroy {
   private isShowing: boolean = false;

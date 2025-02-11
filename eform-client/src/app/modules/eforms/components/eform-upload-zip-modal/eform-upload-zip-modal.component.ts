@@ -9,9 +9,10 @@ import {selectBearerToken} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
 @Component({
-  selector: 'app-eform-uplo ad-zip-modal',
-  templateUrl: './eform-upload-zip-modal.component.html',
-  styleUrls: ['./eform-upload-zip-modal.component.scss'],
+    selector: 'app-eform-uplo ad-zip-modal',
+    templateUrl: './eform-upload-zip-modal.component.html',
+    styleUrls: ['./eform-upload-zip-modal.component.scss'],
+    standalone: false
 })
 export class EformUploadZipModalComponent implements OnInit {
   zipFileUploader: FileUploader;

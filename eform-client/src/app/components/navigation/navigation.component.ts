@@ -27,9 +27,10 @@ interface MenuNode {
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-navigation',
-  templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss'],
+    selector: 'app-navigation',
+    templateUrl: './navigation.component.html',
+    styleUrls: ['./navigation.component.scss'],
+    standalone: false
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   @Output() clickOnLink: EventEmitter<void> = new EventEmitter<void>();

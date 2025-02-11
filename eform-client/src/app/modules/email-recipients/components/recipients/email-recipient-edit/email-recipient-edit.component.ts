@@ -7,9 +7,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-email-recipient-edit',
-  templateUrl: './email-recipient-edit.component.html',
-  styleUrls: ['./email-recipient-edit.component.scss']
+    selector: 'app-email-recipient-edit',
+    templateUrl: './email-recipient-edit.component.html',
+    styleUrls: ['./email-recipient-edit.component.scss'],
+    standalone: false
 })
 export class EmailRecipientEditComponent implements OnInit, OnDestroy {
   availableTags: CommonDictionaryModel[] = [];

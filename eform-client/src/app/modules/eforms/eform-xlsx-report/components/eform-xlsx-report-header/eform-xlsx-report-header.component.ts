@@ -4,9 +4,10 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {format} from 'date-fns';
 
 @Component({
-  selector: 'app-eform-xlsx-report-header',
-  templateUrl: './eform-xlsx-report-header.component.html',
-  styleUrls: ['./eform-xlsx-report-header.component.scss'],
+    selector: 'app-eform-xlsx-report-header',
+    templateUrl: './eform-xlsx-report-header.component.html',
+    styleUrls: ['./eform-xlsx-report-header.component.scss'],
+    standalone: false
 })
 export class EformXlsxReportHeaderComponent implements OnInit {
   @Output()

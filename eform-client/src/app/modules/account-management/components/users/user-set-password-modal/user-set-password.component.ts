@@ -6,8 +6,9 @@ import {AuthService} from 'src/app/common/services';
 import {ChangePasswordAdminModel} from 'src/app/common/models/user/change-password-admin.model';
 
 @Component({
-  selector: 'app-user-set-password',
-  templateUrl: './user-set-password.component.html',
+    selector: 'app-user-set-password',
+    templateUrl: './user-set-password.component.html',
+    standalone: false
 })
 export class UserSetPasswordComponent implements OnInit {
   setPasswordForm: FormGroup;

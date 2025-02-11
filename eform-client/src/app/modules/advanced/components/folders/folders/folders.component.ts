@@ -12,8 +12,9 @@ import {Store} from "@ngrx/store";
 import {selectCurrentUserClaimsWorkersCreate} from 'src/app/state/auth/auth.selector';
 
 @Component({
-  selector: 'app-folders',
-  templateUrl: './folders.component.html',
+    selector: 'app-folders',
+    templateUrl: './folders.component.html',
+    standalone: false
 })
 export class FoldersComponent implements OnInit {
   foldersFlatList: Array<FolderDto> = [];

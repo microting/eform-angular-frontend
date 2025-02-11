@@ -12,9 +12,10 @@ import { AdminService } from 'src/app/common/services/users';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-user-modal',
-  templateUrl: './user-modal.component.html',
-  styleUrls: ['./user-modal.component.scss'],
+    selector: 'app-user-modal',
+    templateUrl: './user-modal.component.html',
+    styleUrls: ['./user-modal.component.scss'],
+    standalone: false
 })
 export class UserModalComponent implements OnInit {
   userModel: UserRegisterModel = new UserRegisterModel();

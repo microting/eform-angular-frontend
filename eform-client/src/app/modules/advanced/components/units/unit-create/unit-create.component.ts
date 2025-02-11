@@ -6,9 +6,10 @@ import {DeviceUserRequestModel} from 'src/app/common/models';
 import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-unit-create',
-  templateUrl: './unit-create.component.html',
-  styleUrls: ['./unit-create.component.scss']
+    selector: 'app-unit-create',
+    templateUrl: './unit-create.component.html',
+    styleUrls: ['./unit-create.component.scss'],
+    standalone: false
 })
 export class UnitCreateComponent implements OnInit {
   unitModel: UnitModel = new UnitModel;

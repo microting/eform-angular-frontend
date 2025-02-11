@@ -4,9 +4,10 @@ import {WorkersService, DeviceUserService} from 'src/app/common/services';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-worker-edit-create',
-  templateUrl: './worker-edit-create.component.html',
-  styleUrls: ['./worker-edit-create.component.scss']
+    selector: 'app-worker-edit-create',
+    templateUrl: './worker-edit-create.component.html',
+    styleUrls: ['./worker-edit-create.component.scss'],
+    standalone: false
 })
 export class WorkerEditCreateComponent implements OnInit {
   simpleSites: Array<CommonDictionaryModel> = [];
