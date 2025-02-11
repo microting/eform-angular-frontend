@@ -65,7 +65,7 @@
     "@angular/platform-browser": "19.1.5",
     "@angular/platform-browser-dynamic": "19.1.5",
     "@angular/router": "19.1.5",
-    "@ng-matero/extensions": "18.3.1",
+    "@ng-matero/extensions": "18.4.1",
     "@ngrx/effects": "18.0.1",
     "@ngrx/entity": "18.0.1",
     "@ngrx/store": "18.0.1",
