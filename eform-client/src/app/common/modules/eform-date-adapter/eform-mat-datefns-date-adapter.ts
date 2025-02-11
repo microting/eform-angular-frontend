@@ -18,7 +18,7 @@ import {
   toDate,
   parseJSON,
 } from 'date-fns';
-import { zonedTimeToUtc } from 'date-fns-tz';
+import { fromZonedTime } from 'date-fns-tz';
 import {da} from 'date-fns/locale';
 import {EFORM_MAT_DATEFNS_LOCALES} from './eform-mat-datefns-locales';
 import {BehaviorSubject} from 'rxjs';
@@ -256,7 +256,7 @@ export class EformDateFnsDateAdapter extends DateAdapter<Date> {
           const d = parse(value.trim(), parseFormat, new Date(), {
             locale: this._dateFnsLocale,
           });
-          return zonedTimeToUtc(d, UTC_TIMEZONE);
+          return fromZonedTime(d, UTC_TIMEZONE);
         }
         return parse(value.trim(), parseFormat, new Date(), {
           locale: this._dateFnsLocale,
@@ -300,7 +300,7 @@ export class EformDateFnsDateAdapter extends DateAdapter<Date> {
 
   private _createDateInternal(year: number, month: number, date: number): Date {
     if (this.options?.useUtc) {
-      return zonedTimeToUtc(new Date(year, month, date), UTC_TIMEZONE);
+      return fromZonedTime(new Date(year, month, date), UTC_TIMEZONE);
     }
     return new Date(year, month, date);
   }
