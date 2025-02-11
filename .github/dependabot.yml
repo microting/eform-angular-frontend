@@ -10,9 +10,3 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 50
-  - package-ecosystem: npm
-    directory: "/eform-client"
-    schedule:
-      interval: daily
-    open-pull-requests-limit: 50
-    target-branch: "angular19"
