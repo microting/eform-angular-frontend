@@ -89,7 +89,7 @@
     "moment": "2.30.1",
     "ng-gallery": "^12.0.0",
     "ng2-dragula": "^5.1.0",
-    "ng2-file-upload": "^7.0.1",
+    "ng2-file-upload": "^8.0.0",
     "ng2-pdf-viewer": "^10.3.4",
     "ngx-auto-unsubscribe": "3.0.1",
     "ngx-cookie-service": "18.0.0",
