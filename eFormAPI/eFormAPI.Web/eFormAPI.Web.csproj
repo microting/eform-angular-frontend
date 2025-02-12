@@ -53,7 +53,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microting.eForm" Version="9.0.15" />
     <PackageReference Include="Microting.EformAngularFrontendBase" Version="9.0.10" />
