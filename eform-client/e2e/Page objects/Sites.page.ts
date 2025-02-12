@@ -116,14 +116,14 @@ class SitesPage extends PageWithNavbarPage {
     await (await sitesPage.sitesManageTagsBtn()).waitForClickable({ timeout: 40000 });
   }
 
-  async getSite(num): Promise<SitesRowObject> {
+  async getSite(num: number): Promise<SitesRowObject> {
     await browser.pause(500);
     const obj = new SitesRowObject();
     return await obj.getRow(num);
   }
 
   async getFirstRowObject(): Promise<SitesRowObject> {
-    await browser.pause(500);
+    await browser.pause(1500);
     const rowNum = await this.rowNum();
     if (rowNum > 1) {
       return this.getSite(2);
@@ -186,7 +186,7 @@ export class SitesRowObject {
       if (site.tags) {
         for (let i = 0; i < site.tags.length; i++) {
           await (await (await sitesPage.tagSelector()).$('input')).addValue(site.tags[i]);
-          await browser.pause(500);
+          await browser.pause(1000);
           await browser.keys(['Return']);
         }
       }

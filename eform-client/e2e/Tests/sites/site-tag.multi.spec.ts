@@ -6,7 +6,8 @@ import sitesPage from '../../Page objects/Sites.page';
 import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
-const tagName = generateRandmString();
+const aTagName = generateRandmString();
+const bTagName = generateRandmString();
 
 describe('Site tags', function () {
   before(async () => {
@@ -18,23 +19,31 @@ describe('Site tags', function () {
     await myEformsPage.Navbar.goToSites();
   });
   it('should create new tag', async () => {
-    await sitesPage.createTag([tagName]);
+    await sitesPage.createTag([aTagName]);
+  });
+  it('should create new b tag', async () => {
+    await sitesPage.createTag([bTagName]);
   });
   it('should assign tag', async () => {
     await browser.pause(500);
     let site = await sitesPage.getFirstRowObject();
-    await site.edit({ tags: [tagName] });
+    await site.edit({ tags: [aTagName] });
     site = await sitesPage.getFirstRowObject();
-    expect(site.tags.includes(tagName)).eq(true);
+    expect(site.tags.includes(aTagName)).eq(true);
   });
   it('should cancel assign tag', async () => {
     let site = await sitesPage.getFirstRowObject();
-    await site.edit({ tags: [tagName] });
+    await site.edit({ tags: [bTagName] }, true);
+    await browser.pause(1500);
     site = await sitesPage.getFirstRowObject();
-    expect(site.tags.includes(tagName)).eq(false);
+    expect(site.tags.includes(bTagName)).eq(false);
+    expect(site.tags.includes(aTagName)).eq(true);
   });
   it('should delete tag', async () => {
-    await sitesPage.removeTags([tagName]);
+    await sitesPage.removeTags([aTagName]);
+  });
+  it('should delete tag', async () => {
+    await sitesPage.removeTags([bTagName]);
   });
   it('should delete user', async () => {
     await myEformsPage.Navbar.goToDeviceUsersPage();
