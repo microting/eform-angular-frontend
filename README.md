@@ -3,15 +3,38 @@
 [![Master/Stable](https://github.com/microting/eform-angular-frontend/actions/workflows/dotnet-core-master.yml/badge.svg?branch=stable)](https://github.com/microting/eform-angular-frontend/actions/workflows/dotnet-core-master.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/383f012a79c7bea1101e/maintainability)](https://codeclimate.com/github/microting/eform-angular-frontend/maintainability)
 
-eForm Backend is created using Angular \(19\) and C\# .Net Core 9
+eForm Backend is created using Angular 19 and C\# .Net Core 9
 
 ## Translating eForm Angular Frontend
 
 | Language | C\# part | Angular part |
 | :--- | :---: | :---: |
-| English | 100% | 100% |
+| Bulgarian | 100% | 100% |
+| Croatian | 100% | 100% |
+| Czech | 100% | 100% |
 | Danish | 100% | 100% |
-| German | 90% | 100% |
+| Dutch | 100% | 100% |
+| English | 100% | 100% |
+| Estonian | 100% | 100% |
+| Finish | 100% | 100% |
+| French | 100% | 100% |
+| German | 100% | 100% |
+| Greek | 100% | 100% |
+| Hungarian | 100% | 100% |
+| Icelandic | 100% | 100% |
+| Italian | 100% | 100% |
+| Latvian | 100% | 100% |
+| Lithuanian | 100% | 100% |
+| Norwegian | 100% | 100% |
+| Polish | 100% | 100% |
+| Portuguese | 100% | 100% |
+| Romanian | 100% | 100% |
+| Slovak | 100% | 100% |
+| Slovenian | 100% | 100% |
+| Spanish | 100% | 100% |
+| Swedish | 100% | 100% |
+| Turkish | 100% | 100% |
+| Ukrainian | 100% | 100% |
 
 If you want to contribute with a translation to another language, please start by cloning the repository and create a copy of [SharedResource.resx](https://github.com/microting/eform-angular-frontend/blob/master/eFormAPI/eFormAPI.Web/Resources/SharedResource.resx) and name it SharedResource.XX.resx where XX is the language code. For the Angular part, please create a copy of [en-US.json](https://github.com/microting/eform-angular-frontend/blob/master/eform-client/src/assets/i18n/en-US.json) and follow pattern on [ISO 639-1 standard language codes](https://www.andiamo.co.uk/resources/iso-language-codes/)
 
