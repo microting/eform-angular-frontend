@@ -1,6 +1,12 @@
 {
   "name": "eform-angular",
-  "version": "2.0.0",
+  "version": "9.0.0",
+  "license": "MIT",
+  "author": "René Schultz Madsen <rm@microting.com> (https://www.microting.com/)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microting/eform-angular-frontend"
+  },
   "scripts": {
     "ng": "node --max-http-header-size=100000 --max_old_space_size=8192 ng",
     "start": "ng serve --proxy-config proxy.config.json",
@@ -135,7 +141,7 @@
     "@wdio/spec-reporter": "^9.4.4",
     "angular-mocks": "^1.8.3",
     "chai": "^5.1.2",
-    "chromedriver": "^131.0.4",
+    "chromedriver": "^132.0.2",
     "cypress": "14.0.2",
     "eslint": "^8.57.1",
     "fs-extra": "^11.1.0",

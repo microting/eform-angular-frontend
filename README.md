@@ -1,23 +1,9 @@
 # eForm Angular Frontend
 
-[![Master/Stable](https://github.com/microting/eform-angular-frontend/actions/workflows/dotnet-core-master.yml/badge.svg)](https://github.com/microting/eform-angular-frontend/actions/workflows/dotnet-core-master.yml)
-[![Docker build](https://github.com/microting/eform-angular-frontend/actions/workflows/dotnet-docker.yml/badge.svg)](https://github.com/microting/eform-angular-frontend/actions/workflows/dotnet-docker.yml)
-[![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/stable/status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend/stable?path=eform-client)
-[![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/stable/dev-status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend/stable?path=eform-client&type=dev)
+[![Master/Stable](https://github.com/microting/eform-angular-frontend/actions/workflows/dotnet-core-master.yml/badge.svg?branch=stable)](https://github.com/microting/eform-angular-frontend/actions/workflows/dotnet-core-master.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/383f012a79c7bea1101e/maintainability)](https://codeclimate.com/github/microting/eform-angular-frontend/maintainability)
 
-eForm Backend is created using Angular \(9.1.1\) and C\# .Net Core 2.2
-
-## Supported Platforms
-
-| OS | .Net Standard 2.2 | MySQL/MariaDB |
-| :--- | :---: | :---: |
-| OSX 10.14.2 | X | X |
-| Ubuntu 19.10 | X | X |
-| Ubuntu 19.04 | X | X |
-| Ubuntu 18.10 | X | X |
-| Ubuntu 18.04 | X | X |
-| Ubuntu 16.04 | X | X |
+eForm Backend is created using Angular \(19\) and C\# .Net Core 9
 
 ## Translating eForm Angular Frontend
 
@@ -34,46 +20,6 @@ If you want to contribute with a translation to another language, please start b
 You need to create an account for Microting API and get your access credentials.
 
 * Call Microting at +45 66 11 10 66 to get started.
-
-## Development recommendations
-
-To work with the C\# part we recommend to use either:
-
-* [**JetBrains Rider**](https://www.jetbrains.com/rider/)
-* [**Visual Studio 2017 Community edition**](https://www.visualstudio.com/vs/community/).
-
-To work with Angular code, recommended to use either:
-
-* [**WebStorm**](https://www.jetbrains.com/webstorm/)
-* [**VS Code**](https://code.visualstudio.com).
-
-If you're going to use VS Code you're need to install several plugins.
-
-1. [Angular Essentials](https://marketplace.visualstudio.com/items?itemName=johnpapa.angular-essentials)  - for Angular intellisense.
-2. [Angular Snippets](https://marketplace.visualstudio.com/items?itemName=Mikael.Angular-BeastCode)  - for Angular snippets.
-3. [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=johnpapa.angular-essentials)
-4. [Chrome Augury extention](https://augury.angular.io/) - to observe variables and changes in a real time.
-
-After installing, run **cmd** navigate to front-end **eform-client** folder and type **npm i**, after that **npm start**. This will start **Webpack** development server that will reload on any change in the front-end code.
-
-There is two ways how to debug Angular application. First way is to put breakpoints in the **Sources**. To do that Open **Chrome Dev Tools** and then navigate to **Sources** tab. Go down and open **webpack://** tab from left panel. After that open tab with _disk\_name:/app\_folder/eform-client_ \(for example _C:/Users/MyUser/eForm/eform-client/_\). Here you will see an entire application as you see it in **VS Code** and put a **debugger** where you're need it. The second way is simple, you can just put a **debugger** word dirrectly in code. After that app will reload and with open **Chrome Dev Tools** on the function call **debugger** will be triggered. For example **debugger** will be triggered on click _Logout_ button:
-
-```text
-logout(): Observable<any> {
-debugger;
-     return this.post(AuthMethods.Logout, {});
-   }
-```
-
-To use **Augury** go to **Chrome Dev Tools** and navigate to this tab. The component tree displays a hierarchical relationship of the components. When a component is selected, Augury presents additional information about the selected component.
-
-1\) View Source — a link to the source code of the component. 2\) Change Detection — displays whether or not Change Detection is in use for the component. 3\) Object Properties — lists the properties of the component. 4\) Dependencies - lists the dependencies of the component.
-
-To view the source code of the selected component, click the **View Source** link. This will bring the **Sources** tab into focus and display the source code. The major feature of Augury is the Router Tree, which displays the routing information for the application. The **Router Tree** tab is located next to the **Component Tree** tab along the top left side.
-
-## Installation
-
-[Download our latests release](https://github.com/microting/eform-angular-frontend/releases)
 
 ## Contributing
 
@@ -108,7 +54,7 @@ This project has adopted the [Microting Open Source Code of Conduct](https://www
 
 The MIT License \(MIT\)
 
-Copyright \(c\) 2007-2020 Microting A/S
+Copyright \(c\) 2007-2025 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files \(the "Software"\), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
