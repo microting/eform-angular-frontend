@@ -3705,7 +3705,7 @@
   dependencies:
     tinyrainbow "^1.2.0"
 
-"@vitest/snapshot@^2.0.3", "@vitest/snapshot@^2.0.5", "@vitest/snapshot@^2.1.1":
+"@vitest/snapshot@^2.0.5", "@vitest/snapshot@^2.1.1":
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/@vitest/snapshot/-/snapshot-2.1.9.tgz#24260b93f798afb102e2dcbd7e61c6dfa118df91"
   integrity sha512-oBO82rEjsxLNJincVhLhaxxZdEtV0EFHMK5Kmx5sJ6H9L183dHECjiefOAdnqpIgT5eZwT04PoggUnW88vOBNQ==
@@ -3769,13 +3769,14 @@
     glob "^10.2.2"
     import-meta-resolve "^4.0.0"
 
-"@wdio/globals@8.41.0", "@wdio/globals@^8.29.3":
-  version "8.41.0"
-  resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-8.41.0.tgz#3c68a814ff993201834517ddfbbd728d89bdfc54"
-  integrity sha512-xfUpEppdKzMHy4qoSoQN1cXoBPPh7oMeX+U/jtdvOtla+dd/YZ8pu47zLhQ/GM3gDVrBGnO4w3u4L6Zf/P3KEw==
-  optionalDependencies:
-    expect-webdriverio "^4.11.2"
-    webdriverio "8.41.0"
+"@wdio/dot-reporter@9.6.3":
+  version "9.6.3"
+  resolved "https://registry.yarnpkg.com/@wdio/dot-reporter/-/dot-reporter-9.6.3.tgz#b492f7c2c4bd564686ba465d60411229ad1d1724"
+  integrity sha512-/54vTrG08Q66QFFvw96SrdKpqhFknucdKZZj5rN8h5/e5zT+nl7BXUvCkXy6eEP9CCR+DOYLvA2sXZjoArG6xw==
+  dependencies:
+    "@wdio/reporter" "9.6.3"
+    "@wdio/types" "9.6.3"
+    chalk "^5.0.1"
 
 "@wdio/globals@9.8.0":
   version "9.8.0"
@@ -3785,21 +3786,21 @@
     expect-webdriverio "^5.0.1"
     webdriverio "9.8.0"
 
-"@wdio/local-runner@^8.40.1":
-  version "8.41.0"
-  resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-8.41.0.tgz#ae3c2c1e0f7e40b3a239a96d64124643a35a564c"
-  integrity sha512-A5msAjAC8gqiWvtFl+VNm9BBlVb5q3a2o7i+L+Cw7idV3aFY5etigB2wLYMtyBWgB8cXvbZaxXizHhGvZ+iB8Q==
+"@wdio/local-runner@^9.8.0":
+  version "9.8.0"
+  resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-9.8.0.tgz#66bb2bc568a53c531f7feccf79ac80bb97a1788e"
+  integrity sha512-nK5LFUJqAW0bNMcc2uuboRHL2aUR2GxDS2fAkSqCN1aKAl/kzwDW88TgyWz3RgOSE9Iyi+6OFUIXN/4XSJ4CRQ==
   dependencies:
-    "@types/node" "^22.2.0"
-    "@wdio/logger" "8.38.0"
-    "@wdio/repl" "8.40.3"
-    "@wdio/runner" "8.41.0"
-    "@wdio/types" "8.41.0"
+    "@types/node" "^20.1.0"
+    "@wdio/logger" "9.4.4"
+    "@wdio/repl" "9.4.4"
+    "@wdio/runner" "9.8.0"
+    "@wdio/types" "9.6.3"
     async-exit-hook "^2.0.1"
     split2 "^4.1.0"
     stream-buffers "^3.0.2"
 
-"@wdio/logger@8.38.0", "@wdio/logger@^8.1.0", "@wdio/logger@^8.11.0", "@wdio/logger@^8.28.0", "@wdio/logger@^8.38.0":
+"@wdio/logger@8.38.0", "@wdio/logger@^8.1.0", "@wdio/logger@^8.11.0", "@wdio/logger@^8.38.0":
   version "8.38.0"
   resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-8.38.0.tgz#a96406267e800bef9c58ac95de00f42ab0d3ac5c"
   integrity sha512-kcHL86RmNbcQP+Gq/vQUGlArfU6IIcbbnNp32rRIraitomZow+iEoc519rdQmSVusDozMS5DZthkgDdxK+vz6Q==
@@ -3876,22 +3877,22 @@
     diff "^7.0.0"
     object-inspect "^1.12.0"
 
-"@wdio/runner@8.41.0":
-  version "8.41.0"
-  resolved "https://registry.yarnpkg.com/@wdio/runner/-/runner-8.41.0.tgz#fe4063bf55f7812b02fd23dfb01a7c5582e9345a"
-  integrity sha512-eQ9vZaHIXBLw7XqiKsasiUGjC8PgJawnHFMPKS0i/4ds+5arHo6ciX0s2uhJ3j/EHw3PYvFPCREp/sXetRuNlQ==
+"@wdio/runner@9.8.0":
+  version "9.8.0"
+  resolved "https://registry.yarnpkg.com/@wdio/runner/-/runner-9.8.0.tgz#581f1deda66c56e14738a202458a4f355a39cf43"
+  integrity sha512-Qak3SzdC48HZ7NHK/Ilh/x6s95mAx8Fy/iovntjpphyGQ9k3Ra/cIqzzpiMkV/3+X4Gdo1lQ5AGa5KakkQJHeg==
   dependencies:
-    "@types/node" "^22.2.0"
-    "@wdio/config" "8.41.0"
-    "@wdio/globals" "8.41.0"
-    "@wdio/logger" "8.38.0"
-    "@wdio/types" "8.41.0"
-    "@wdio/utils" "8.41.0"
-    deepmerge-ts "^5.1.0"
-    expect-webdriverio "^4.12.0"
-    gaze "^1.1.3"
-    webdriver "8.41.0"
-    webdriverio "8.41.0"
+    "@types/node" "^20.11.28"
+    "@wdio/config" "9.7.3"
+    "@wdio/dot-reporter" "9.6.3"
+    "@wdio/globals" "9.8.0"
+    "@wdio/logger" "9.4.4"
+    "@wdio/types" "9.6.3"
+    "@wdio/utils" "9.7.3"
+    deepmerge-ts "^7.0.3"
+    expect-webdriverio "^5.0.1"
+    webdriver "9.7.3"
+    webdriverio "9.8.0"
 
 "@wdio/spec-reporter@^9.4.4":
   version "9.8.0"
@@ -4932,7 +4933,7 @@ chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.0, chalk@^4.1.2:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@^5.1.2, chalk@^5.2.0, chalk@^5.4.1:
+chalk@^5.0.1, chalk@^5.1.2, chalk@^5.2.0, chalk@^5.4.1:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.4.1.tgz#1b48bf0963ec158dce2aacf69c093ae2dd2092d8"
   integrity sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w==
@@ -6637,20 +6638,6 @@ expand-template@^2.0.3:
   resolved "https://registry.yarnpkg.com/expand-template/-/expand-template-2.0.3.tgz#6e14b3fcee0f3a6340ecb57d2e8918692052a47c"
   integrity sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==
 
-expect-webdriverio@^4.11.2, expect-webdriverio@^4.12.0:
-  version "4.15.4"
-  resolved "https://registry.yarnpkg.com/expect-webdriverio/-/expect-webdriverio-4.15.4.tgz#0d0c572e6aa6477c5094b0c689106bc8890d1416"
-  integrity sha512-Op1xZoevlv1pohCq7g2Og5Gr3xP2NhY7MQueOApmopVxgweoJ/BqJxyvMNP0A//QsMg8v0WsN/1j81Sx2er9Wg==
-  dependencies:
-    "@vitest/snapshot" "^2.0.3"
-    expect "^29.7.0"
-    jest-matcher-utils "^29.7.0"
-    lodash.isequal "^4.5.0"
-  optionalDependencies:
-    "@wdio/globals" "^8.29.3"
-    "@wdio/logger" "^8.28.0"
-    webdriverio "^8.29.3"
-
 expect-webdriverio@^5.0.1:
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/expect-webdriverio/-/expect-webdriverio-5.0.5.tgz#1e00ec28530d9df988ca8f47a2483ccbec86e991"
@@ -7080,13 +7067,6 @@ function-bind@^1.1.2:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.2.tgz#2c02d864d97f3ea6c8830c464cbd11ab6eab7a1c"
   integrity sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==
 
-gaze@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/gaze/-/gaze-1.1.3.tgz#c441733e13b927ac8c0ff0b4c3b033f28812924a"
-  integrity sha512-BRdNm8hbWzFzWHERTrejLqwHDfS4GibPoq5wjTPIoJHoBtKGPg3xAFfxmM+9ztbXelxcf2hwQcaz1PtmFeue8g==
-  dependencies:
-    globule "^1.0.0"
-
 geckodriver@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/geckodriver/-/geckodriver-5.0.0.tgz#88437f3812075988bb05b5e19dc4aaa42d200577"
@@ -7280,18 +7260,6 @@ glob@^8.1.0:
     minimatch "^5.0.1"
     once "^1.3.0"
 
-glob@~7.1.1:
-  version "7.1.7"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.7.tgz#3b193e9233f01d42d0b3f78294bbeeb418f94a90"
-  integrity sha512-OvD9ENzPLbegENnYP5UUfJIirTg4+XwMWGaQfQTY0JenxNvvIKP3U3/tAQSPIu/lHxXYSZmpXlUHeqAIdKzBLQ==
-  dependencies:
-    fs.realpath "^1.0.0"
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "^3.0.4"
-    once "^1.3.0"
-    path-is-absolute "^1.0.0"
-
 global-dirs@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/global-dirs/-/global-dirs-3.0.1.tgz#0c488971f066baceda21447aecb1a8b911d22485"
@@ -7334,15 +7302,6 @@ globby@^14.0.0:
     path-type "^6.0.0"
     slash "^5.1.0"
     unicorn-magic "^0.3.0"
-
-globule@^1.0.0:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/globule/-/globule-1.3.4.tgz#7c11c43056055a75a6e68294453c17f2796170fb"
-  integrity sha512-OPTIfhMBh7JbBYDpa5b+Q5ptmMWKwcNcFSR/0c6t8V4f3ZAVBEsKNY37QdVqmLRYSMhOUGYrY0QhSoEpzGr/Eg==
-  dependencies:
-    glob "~7.1.1"
-    lodash "^4.17.21"
-    minimatch "~3.0.2"
 
 gopd@^1.2.0:
   version "1.2.0"
@@ -8858,7 +8817,7 @@ minimatch@*, minimatch@^10.0.0:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^3.0.4, minimatch@^3.0.5, minimatch@^3.1.1, minimatch@^3.1.2:
+minimatch@^3.0.5, minimatch@^3.1.1, minimatch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
@@ -8878,13 +8837,6 @@ minimatch@^9.0.0, minimatch@^9.0.3, minimatch@^9.0.4, minimatch@^9.0.5:
   integrity sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==
   dependencies:
     brace-expansion "^2.0.1"
-
-minimatch@~3.0.2:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.8.tgz#5e6a59bd11e2ab0de1cfb843eb2d82e546c321c1"
-  integrity sha512-6FsRAQsxQ61mw+qP1ZzbL9Bc78x2p5OqNgNpnoAFLTrX8n5Kxph0CsnhmKKNXTWjXqU5L0pGPR7hYk+XWZr60Q==
-  dependencies:
-    brace-expansion "^1.1.7"
 
 minimist@^1.2.0, minimist@^1.2.3, minimist@^1.2.6, minimist@^1.2.8:
   version "1.2.8"
@@ -11376,7 +11328,16 @@ streamx@^2.15.0, streamx@^2.21.0:
   optionalDependencies:
     bare-events "^2.2.0"
 
-"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -11417,7 +11378,7 @@ string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -11430,6 +11391,13 @@ strip-ansi@^3.0.0:
   integrity sha512-VhumSSbBqDTP8p2ZLKj40UjBCV4+v8bUSEpUb4KjRgWk9pbqGF4REFj6KEagidb2f/M6AzC0EmFyDNGaw9OCzg==
   dependencies:
     ansi-regex "^2.0.0"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
 
 strip-ansi@^7.0.1, strip-ansi@^7.1.0:
   version "7.1.0"
@@ -12230,37 +12198,6 @@ webdriver@9.7.3:
     undici "^6.20.1"
     ws "^8.8.0"
 
-webdriverio@8.41.0, webdriverio@^8.29.3, webdriverio@^8.39.1:
-  version "8.41.0"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-8.41.0.tgz#94837f81123bf8f941bd8375c7c7f6a8a2b20fa2"
-  integrity sha512-WlQfw0mUEhTS8DPr+TBSYMhEnqXkFr2dcUwPb5XkffTB+i0wftf+BLXJPSVD9M1PTLyYcFdCIu68pqR54dq5BA==
-  dependencies:
-    "@types/node" "^22.2.0"
-    "@wdio/config" "8.41.0"
-    "@wdio/logger" "8.38.0"
-    "@wdio/protocols" "8.40.3"
-    "@wdio/repl" "8.40.3"
-    "@wdio/types" "8.41.0"
-    "@wdio/utils" "8.41.0"
-    archiver "^7.0.0"
-    aria-query "^5.0.0"
-    css-shorthand-properties "^1.1.1"
-    css-value "^0.0.1"
-    devtools-protocol "^0.0.1359167"
-    grapheme-splitter "^1.0.2"
-    import-meta-resolve "^4.0.0"
-    is-plain-obj "^4.1.0"
-    jszip "^3.10.1"
-    lodash.clonedeep "^4.5.0"
-    lodash.zip "^4.2.0"
-    minimatch "^9.0.0"
-    puppeteer-core "^21.11.0"
-    query-selector-shadow-dom "^1.0.0"
-    resq "^1.9.1"
-    rgb2hex "0.2.5"
-    serialize-error "^11.0.1"
-    webdriver "8.41.0"
-
 webdriverio@9.8.0:
   version "9.8.0"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-9.8.0.tgz#c9f1e46f99f52260876fa109c308bee19959c414"
@@ -12293,6 +12230,37 @@ webdriverio@9.8.0:
     serialize-error "^11.0.3"
     urlpattern-polyfill "^10.0.0"
     webdriver "9.7.3"
+
+webdriverio@^8.39.1:
+  version "8.41.0"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-8.41.0.tgz#94837f81123bf8f941bd8375c7c7f6a8a2b20fa2"
+  integrity sha512-WlQfw0mUEhTS8DPr+TBSYMhEnqXkFr2dcUwPb5XkffTB+i0wftf+BLXJPSVD9M1PTLyYcFdCIu68pqR54dq5BA==
+  dependencies:
+    "@types/node" "^22.2.0"
+    "@wdio/config" "8.41.0"
+    "@wdio/logger" "8.38.0"
+    "@wdio/protocols" "8.40.3"
+    "@wdio/repl" "8.40.3"
+    "@wdio/types" "8.41.0"
+    "@wdio/utils" "8.41.0"
+    archiver "^7.0.0"
+    aria-query "^5.0.0"
+    css-shorthand-properties "^1.1.1"
+    css-value "^0.0.1"
+    devtools-protocol "^0.0.1359167"
+    grapheme-splitter "^1.0.2"
+    import-meta-resolve "^4.0.0"
+    is-plain-obj "^4.1.0"
+    jszip "^3.10.1"
+    lodash.clonedeep "^4.5.0"
+    lodash.zip "^4.2.0"
+    minimatch "^9.0.0"
+    puppeteer-core "^21.11.0"
+    query-selector-shadow-dom "^1.0.0"
+    resq "^1.9.1"
+    rgb2hex "0.2.5"
+    serialize-error "^11.0.1"
+    webdriver "8.41.0"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
@@ -12490,7 +12458,7 @@ workerpool@^6.5.1:
   resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.5.1.tgz#060f73b39d0caf97c6db64da004cd01b4c099544"
   integrity sha512-Fs4dNYcsdpYSAfVxhnl1L5zTksjvOJxtC5hzMNl+1t9B8hTJTdKDyZ5ju7ztgPy+ft9tBFXoOlDNiOT9WUXZlA==
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -12503,6 +12471,15 @@ wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
+
+wrap-ansi@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
+  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"
