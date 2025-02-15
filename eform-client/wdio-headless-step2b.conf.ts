@@ -110,7 +110,7 @@ export const config: Options.Testrunner = {
   bail: 0,
   //
   // Saves a screenshot to a given path if a command fails.
-  //screenshotPath: './errorShots/',
+  screenshotPath: './errorShots/',
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
