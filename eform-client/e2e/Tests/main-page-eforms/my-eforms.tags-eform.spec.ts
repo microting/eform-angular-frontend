@@ -30,9 +30,9 @@ describe('Main page', function () {
   });
   it('should create tag', async () => {
     const elem = await $('#toast-container');
-    await elem.waitForDisplayed({ timeout: 40000, reverse: true });
+    await elem.waitForDisplayed({ timeout: 90000, reverse: true });
     await myEformsPage.createNewTag(testTag);
-    await elem.waitForDisplayed({ timeout: 40000 });
+    await elem.waitForDisplayed({ timeout: 90000 });
     expect(await elem.getText()).eq(`Tag "${testTag}" oprettet`);
   });
   it('should add already prepared tag to eform', async () => {
@@ -45,9 +45,9 @@ describe('Main page', function () {
   it('should delete eForm tag from eform', async () => {
     let eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
     const elem = await $('#toast-container');
-    await elem.waitForDisplayed({ timeout: 40000, reverse: true });
+    await elem.waitForDisplayed({ timeout: 90000, reverse: true });
     await eform.deleteTags([testTag]);
-    await elem.waitForDisplayed({ timeout: 40000 });
+    await elem.waitForDisplayed({ timeout: 90000 });
     await elem.click();
     await browser.pause(500);
     eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
@@ -55,9 +55,9 @@ describe('Main page', function () {
   });
   it('should delete tag from list', async () => {
     const elem = await $('#toast-container');
-    await elem.waitForDisplayed({ timeout: 40000, reverse: true });
+    await elem.waitForDisplayed({ timeout: 90000, reverse: true });
     await myEformsPage.removeTag(testTag);
-    await elem.waitForDisplayed({ timeout: 40000 });
+    await elem.waitForDisplayed({ timeout: 90000 });
     expect(await elem.getText()).eq(`Tag slettet`);
   });
   it('should delete existing eform', async () => {

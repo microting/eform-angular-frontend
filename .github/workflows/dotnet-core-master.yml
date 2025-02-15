@@ -46,7 +46,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 20
+        node-version: 22
     - name: yarn install
       run: cd eform-client && yarn install
     - name: Create errorShots directory
@@ -120,7 +120,7 @@ jobs:
       with:
         name: error Screenshots ${{matrix.test}}
         path: |
-          eform-client/chrome*.png
+          /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots/*.png
         retention-days: 2        
     - name: Archive video artifacts
       if: ${{ failure() }}
