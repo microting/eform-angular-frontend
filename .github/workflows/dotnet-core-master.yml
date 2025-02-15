@@ -120,7 +120,7 @@ jobs:
       with:
         name: error Screenshots ${{matrix.test}}
         path: |
-          eform-client/chrome*.png
+          /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots/*.png
         retention-days: 2        
     - name: Archive video artifacts
       if: ${{ failure() }}
