@@ -2,7 +2,7 @@
 import type { Options } from '@wdio/types'
 import path from "path";
 
-export const config: Options.Testrunner = {
+export const config: WebdriverIO.Config = {
   runner: 'local',
   path: '/',
   //
