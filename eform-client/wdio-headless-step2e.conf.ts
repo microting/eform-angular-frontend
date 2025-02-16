@@ -1,6 +1,7 @@
 //const path = require("path");
 import type { Options } from '@wdio/types';
 import { $ } from '@wdio/globals';
+import path from "path";
 
 export const config: WebdriverIO.Config = {
   runner: 'local',
@@ -266,6 +267,7 @@ export const config: WebdriverIO.Config = {
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
+      second: '2-digit',
       hour12: false
     }).replace(/[ ]/g, '--').replace(':', '-');
 
