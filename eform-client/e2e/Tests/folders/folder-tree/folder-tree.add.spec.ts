@@ -303,10 +303,11 @@ describe('Create folder', function () {
       const folderObj = new FoldersRowObject();
       const folder = await folderObj.getRow(1);
       await folder.delete();
-      await $('#spinner-animation').waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
+      await loginPage.waitForSpinnerHide();
+      // await $('#spinner-animation').waitForDisplayed({
+      //   timeout: 90000,
+      //   reverse: true,
+      // });
       await browser.pause(500);
     }
     // const rowCountBeforeCreation = await foldersPage.rowNum();
