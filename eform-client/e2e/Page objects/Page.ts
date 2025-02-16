@@ -27,12 +27,12 @@ export default class Page {
   //   console.log('Saved screenshot to:', filePath);
   // }
 
-  async open(path) {
+  async open(path: string) {
     await browser.url(path);
   }
 
   public async spinnerAnimation() {
-    return await $('#spinner-animation');
+    return $('#spinner-animation');
   }
 
   public async waitForSpinnerHide(timeout: number = 90000) {
