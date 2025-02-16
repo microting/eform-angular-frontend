@@ -36,7 +36,14 @@ export default class Page {
   }
 
   public async waitForSpinnerHide(timeout: number = 90000) {
-    await (await this.spinnerAnimation()).waitForDisplayed({timeout: timeout, reverse: true});
+    // do a while loop to wait for the spinner to hide for the given timeout
+    let i = 1000;
+    while (await (await this.spinnerAnimation()).isDisplayed() && i < timeout) {
+      await browser.pause(1000);
+      i += 1000;
+    }
+
+    //await (await this.spinnerAnimation()).waitForDisplayed({timeout: timeout, reverse: true});
   }
 
   public async waitForSpinnerShow(timeout: number = 90000) {
