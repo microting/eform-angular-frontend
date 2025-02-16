@@ -132,7 +132,7 @@
     ora "5.4.1"
     rxjs "7.8.1"
 
-"@angular-devkit/schematics@>= 19.0.0 < 20.0.0":
+"@angular-devkit/schematics@19.1.7", "@angular-devkit/schematics@>= 19.0.0 < 20.0.0":
   version "19.1.7"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-19.1.7.tgz#85fa8a6861373f0815baa9954a98f86b51f3b123"
   integrity sha512-AP6FvhMybCYs3gs+vzEAzSU1K//AFT3SVTRFv+C3WMO5dLeAHeGzM8I2dxD5EHQQtqIE/8apP6CxGrnpA5YlFg==
