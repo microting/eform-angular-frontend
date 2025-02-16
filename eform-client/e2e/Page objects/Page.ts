@@ -38,14 +38,16 @@ export default class Page {
   public async waitForSpinnerHide(timeout: number = 90000) {
     // do a while loop to wait for the spinner to hide for the given timeout
     let i = 1000;
-    while (await (await this.spinnerAnimation()).isDisplayed()) {
-      await browser.pause(1000);
-      i += 1000;
-      if (i >= timeout) {
-        throw new Error('Spinner did not hide within the given timeout');
+    while (i <= timeout) {
+      if (await (await this.spinnerAnimation()).isDisplayed()) {
+        await browser.pause(1000);
+        i += 1000;
+      } else {
+        break;
       }
     }
 
+    // TODO: This is not working as expected, probably because of this bug https://github.com/webdriverio/webdriverio/issues/13253
     //await (await this.spinnerAnimation()).waitForDisplayed({timeout: timeout, reverse: true});
   }
 
