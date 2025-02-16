@@ -140,7 +140,7 @@
     "@wdio/mocha-framework": "^9.4.4",
     "@wdio/spec-reporter": "^9.4.4",
     "angular-mocks": "^1.8.3",
-    "chai": "^5.1.2",
+    "chai": "^5.2.0",
     "chromedriver": "^132.0.2",
     "cypress": "14.0.2",
     "eslint": "^8.57.1",
