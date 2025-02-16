@@ -472,7 +472,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await (await this.entitySearchEditItemNameBox()).clearValue();
     await browser.pause(500);
     await (await this.entitySearchEditItemNameBox()).setValue(newItemName);
-    (await await this.entitySearchEditItemSaveBtn()).click();
+    await (await this.entitySearchEditItemSaveBtn()).click();
   }
 
   public async deleteItem() {
@@ -482,20 +482,12 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public async cleanup() {
     const deleteObject = await this.getFirstRowObject();
     if (deleteObject != null) {
-      await $('#spinner-animation').waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
+      await this.waitForSpinnerHide();
       await deleteObject.deleteBtn.click();
-      await $('#spinner-animation').waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
+
+      await this.waitForSpinnerHide();
       await (await this.entitySearchDeleteDeleteBtn()).click();
-      await $('#spinner-animation').waitForDisplayed({
-        timeout: 90000,
-        reverse: true,
-      });
+      await this.waitForSpinnerHide();
       // browser.refresh();
     }
   }
