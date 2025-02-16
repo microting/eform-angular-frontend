@@ -1,5 +1,6 @@
 
 import { $ } from '@wdio/globals';
+import loginPage from "./Login.page";
 
 class NavigationMenuPage {
   public async menuItemsChilds(): Promise<WebdriverIO.ElementArray> {
@@ -155,7 +156,7 @@ class NavigationMenuPage {
     await navigationMenuSaveBtn.scrollIntoView();
     await navigationMenuSaveBtn.waitForClickable({ timeout: 40000 });
     await navigationMenuSaveBtn.click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await loginPage.waitForSpinnerHide();
   }
 
   public async openOnEditCreatedMenuItem(indexInCreatedMenuItems) {
@@ -194,7 +195,7 @@ class NavigationMenuPage {
     await deleteWorkerDeleteBtn.waitForDisplayed({ timeout: 40000 });
     await deleteWorkerDeleteBtn.waitForClickable({ timeout: 40000 });
     await deleteWorkerDeleteBtn.click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await loginPage.waitForSpinnerHide();
     await browser.pause(500);
   }
 

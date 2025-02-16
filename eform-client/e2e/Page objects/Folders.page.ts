@@ -2,6 +2,7 @@ import { PageWithNavbarPage } from './PageWithNavbar.page';
 import {applicationLanguagesTranslated} from '../../src/app/common/const';
 import {selectValueInNgSelector} from "../Helpers/helper-functions";
 import { $ } from '@wdio/globals';
+import loginPage from "./Login.page";
 
 class FoldersPage extends PageWithNavbarPage {
   constructor() {
@@ -368,10 +369,7 @@ class FoldersPage extends PageWithNavbarPage {
     } else {
       await (await this.cancelCreateBtn()).click();
     }
-    await $('#spinner-animation').waitForDisplayed({
-      timeout: 90000,
-      reverse: true,
-    });
+    await this.waitForSpinnerHide();
     await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
     });
@@ -573,10 +571,7 @@ export class FoldersRowObject {
     } else {
       await (await foldersPage.cancelDeleteBtn()).click();
     }
-    await $('#spinner-animation').waitForDisplayed({
-      timeout: 90000,
-      reverse: true,
-    });
+    await loginPage.waitForSpinnerHide();
     await (await foldersPage.newFolderBtn()).waitForDisplayed({
       timeout: 40000,
     });
