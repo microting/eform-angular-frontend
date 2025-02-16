@@ -29,8 +29,7 @@ describe('Main page', function () {
   });
   it('should pair several device users', async () => {
     await (await myEformsPage.idSortBtn()).click();
-    const spinnerAnimation = await $('#spinner-animation');
-    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
+    await loginPage.waitForSpinnerHide(40000);
     await browser.pause(1000);
     let eform = await myEformsPage.getFirstMyEformsRowObj();
     await eform.pair(folders[0], users);
@@ -38,7 +37,7 @@ describe('Main page', function () {
     eform = await myEformsPage.getFirstMyEformsRowObj();
     await eform.editPairEformBtn.click();
     //await (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
-    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
+    await loginPage.waitForSpinnerHide(40000);
     await browser.pause(1000);
     await (await myEformsPage.cancelParingBtn()).waitForDisplayed({ timeout: 40000 });
     expect(
@@ -64,9 +63,8 @@ describe('Main page', function () {
   it('should unpair one', async () => {
     await (await myEformsPage.getFirstMyEformsRowObj()).unPair([users[1]]);
     await browser.pause(1000);
-    const spinnerAnimation = await $('#spinner-animation');
     (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
-    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
+    await loginPage.waitForSpinnerHide(40000);
     //await (await $('td.cdk-column-siteUId > mtx-grid-cell > span')).waitForDisplayed({ timeout: 40000 });
     //await browser.pause(1000);
     //const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
