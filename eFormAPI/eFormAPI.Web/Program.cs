@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Runtime.InteropServices;
+using System.Text;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 using Sentry;
 
@@ -231,6 +232,26 @@ public class Program
             {
                 //var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                 //logger.LogError(e, "Error while adding missing admin settings to all menu items");
+            }
+
+            try
+            {
+                var users = dbContext.Users
+                    .Where(x => x.EmailSha256 == null)
+                    .ToList();
+
+                foreach (var user in users)
+                {
+                    // generate sha256 hash of email
+                    user.EmailSha256 = String.Concat((System.Security.Cryptography.SHA256.Create()
+                        .ComputeHash(Encoding.UTF8.GetBytes(user.Email!.ToLower())).Select(item => item.ToString("x2"))));
+                    dbContext.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                logger.LogError(e, "Error while adding missing admin settings to all menu items");
             }
         }
     }
