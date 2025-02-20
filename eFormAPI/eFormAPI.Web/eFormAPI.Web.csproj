@@ -56,7 +56,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microting.eForm" Version="9.0.15" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="9.0.12" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="9.0.13" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="9.0.16" />
     <PackageReference Include="PureOtp" Version="1.0.0.1" />
     <PackageReference Include="Sentry" Version="5.1.1" />
