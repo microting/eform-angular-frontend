@@ -10,14 +10,6 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-"@angular-devkit/architect@0.1901.6":
-  version "0.1901.6"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.1901.6.tgz#aeaf4a5098ef1dd9107eeb8df4da9daa9d229340"
-  integrity sha512-JiMrs3T1A7RyF5bh0PLGKDjTR8sa/kh8w63+dW0azcNok30tKjLjwJRPTpePokWefjmRgfKaf/iZ8yfFBnpGpA==
-  dependencies:
-    "@angular-devkit/core" "19.1.6"
-    rxjs "7.8.1"
-
 "@angular-devkit/architect@0.1901.7", "@angular-devkit/architect@>= 0.1900.0 < 0.2000.0":
   version "0.1901.7"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.1901.7.tgz#b37c6776ecf16e51be4026b849d42c5315980bdb"
@@ -96,18 +88,6 @@
   dependencies:
     "@angular-devkit/architect" "0.1901.7"
     rxjs "7.8.1"
-
-"@angular-devkit/core@19.1.6":
-  version "19.1.6"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.1.6.tgz#316bcfd8137aae451544669b1de864ac97b1a8d5"
-  integrity sha512-4s1RpYFGb/yP6OZ1dnYmU7maFYdhZS9pnUHKKiL9rSDhUHkX+VZlf9WFFrHv2RMWg+evrrwPtiFOTMBLShUi8g==
-  dependencies:
-    ajv "8.17.1"
-    ajv-formats "3.0.1"
-    jsonc-parser "3.3.1"
-    picomatch "4.0.2"
-    rxjs "7.8.1"
-    source-map "0.7.4"
 
 "@angular-devkit/core@19.1.7", "@angular-devkit/core@>= 19.0.0 < 20.0.0":
   version "19.1.7"
@@ -306,10 +286,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/language-service@19.1.6":
-  version "19.1.6"
-  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-19.1.6.tgz#d0279da2882af3c35ed99908b265a48c326dac66"
-  integrity sha512-YIvCQRt+EFUKmms8M9K0ULDxAkCQSJqmnx4lGDJDHNK13U/C6r0d3/WMrrSDuSjax4zGSJf5xiRPpQlzPPsphA==
+"@angular/language-service@19.1.7":
+  version "19.1.7"
+  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-19.1.7.tgz#6dbbe8a5b989925342692da3ee9704674c4540c4"
+  integrity sha512-V2QSihzZhkFaTxiw79PM+YP6LilQbx4IBFANTILNCmsGJxwnFQwMdmAptX6vWXiF/1o7YZ5IX4x8arRZ83YzFQ==
 
 "@angular/localize@19.1.5":
   version "19.1.5"
