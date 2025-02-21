@@ -6,6 +6,8 @@ import { ApiBaseService } from 'src/app/common/services';
 
 export let UserSettingsMethods = {
   UserSettings: 'api/account/user-settings',
+  ProfilePictureUpload: 'api/account/profile-picture-upload',
+  ProfilePictureDelete: 'api/account/profile-picture-delete',
 };
 
 @Injectable()

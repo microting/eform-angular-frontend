@@ -27,6 +27,8 @@ using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Infrastructure.Models.Settings;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.Users;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
@@ -43,4 +45,5 @@ public interface IAccountService
     Task<OperationResult> UpdateUserSettings(UserSettingsModel model);
     OperationDataResult<TimeZonesModel> AllTimeZones();
     Task<OperationResult> AdminChangePassword(ChangePasswordAdminModel model);
+    Task<OperationResult> ProfilePictureDelete();
 }

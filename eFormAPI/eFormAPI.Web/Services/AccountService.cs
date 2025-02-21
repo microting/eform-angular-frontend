@@ -24,9 +24,13 @@ SOFTWARE.
 
 
 using System.Globalization;
+using System.IO;
 using System.Web;
 using eFormAPI.Web.Infrastructure.Models.Auth;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Localization;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 namespace eFormAPI.Web.Services;
 
@@ -79,7 +83,10 @@ public class AccountService(
             Id = user.Id,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Role = role
+            Role = role,
+            ProfilePicture = user.ProfilePicture,
+            ProfilePictureSnapshot = user.ProfilePictureSnapshot,
+            EmailSha256 = user.EmailSha256
         };
     }
 
@@ -116,7 +123,10 @@ public class AccountService(
             DarkTheme = darkTheme,
             Formats = formats,
             TimeZone = timeZone,
-            LoginRedirectUrl = securityGroupRedirectLink
+            LoginRedirectUrl = securityGroupRedirectLink,
+            ProfilePicture = user.ProfilePicture,
+            ProfilePictureSnapshot = user.ProfilePictureSnapshot,
+            EmailSha256 = user.EmailSha256
         });
     }
 
@@ -189,6 +199,11 @@ public class AccountService(
         }
 
         return new OperationResult(true, localizationService.GetString("PasswordSuccessfullyUpdated"));
+    }
+
+    public Task<OperationResult> ProfilePictureDelete()
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<OperationResult> ForgotPassword(ForgotPasswordModel model)

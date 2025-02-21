@@ -15,7 +15,15 @@ import {AppSettingsStateService} from 'src/app/modules/application-settings/comp
 import {LanguagesModel} from 'src/app/common/models';
 import {Store} from '@ngrx/store';
 import {TranslateService} from '@ngx-translate/core';
-import {loadAppMenu, selectCurrentUserIsAdmin, updateCurrentUserLocaleAndDarkTheme} from 'src/app/state';
+import {
+  loadAppMenu,
+  selectBearerToken,
+  selectCurrentUserIsAdmin,
+  updateCurrentUserLocaleAndDarkTheme
+} from 'src/app/state';
+import {FileItem, FileUploader, FileUploaderOptions} from 'ng2-file-upload';
+import {v4 as uuid} from 'uuid';
+import * as R from 'ramda';
 
 @Component({
     selector: 'app-profile-settings',
@@ -24,6 +32,9 @@ import {loadAppMenu, selectCurrentUserIsAdmin, updateCurrentUserLocaleAndDarkThe
     standalone: false
 })
 export class ProfileSettingsComponent implements OnInit {
+  profilePictureUploader: FileUploader = new FileUploader({
+    url: '/api/account/profile-picture-upload',
+  });
 
   userSettingsModel: UserSettingsModel = new UserSettingsModel();
   googleAuthInfoModel: GoogleAuthInfoModel = new GoogleAuthInfoModel();
@@ -32,6 +43,7 @@ export class ProfileSettingsComponent implements OnInit {
   appLanguages: LanguagesModel = new LanguagesModel();
   activeLanguages: Array<any> = [];
   public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
+  private selectBearerToken$ = this.authStore.select(selectBearerToken);
 
   constructor(
     public authStateService: AuthStateService,
@@ -47,6 +59,19 @@ export class ProfileSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.getEnabledLanguages();
+    this.initializeUploaders();
+    let token = '';
+    this.selectBearerToken$.subscribe((bearerToken) => (token = bearerToken));
+    const uploadOptionsLogin: FileUploaderOptions = {
+      headers: [
+        {
+          name: 'Authorization',
+          value: 'Bearer ' + token,
+        }
+      ],
+      url: '/api/account/profile-picture-upload',
+    };
+    this.profilePictureUploader.setOptions(uploadOptionsLogin);
   }
 
   getGoogleAuthenticatorInfo() {
@@ -95,6 +120,10 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   updateUserProfileSettings() {
+
+    if (this.profilePictureUploader.queue.length > 0) {
+      this.profilePictureUploader.queue[0].upload();
+    }
     this.userSettingsService
       .updateUserSettings(this.userSettingsModel)
       .subscribe((data) => {
@@ -130,5 +159,20 @@ export class ProfileSettingsComponent implements OnInit {
 
   get countries() {
     return countries;
+  }
+
+  initializeUploaders() {
+    this.profilePictureUploader.onAfterAddingFile = (_) => {
+      if (this.profilePictureUploader.queue.length > 1) {
+        // save only last file
+        this.profilePictureUploader.removeFromQueue(this.profilePictureUploader.queue[0]);
+      }
+    };
+    this.profilePictureUploader.onAfterAddingAll = (files: FileItem[]) => {
+      files.forEach((fileItem) => {
+        fileItem.file.name = `${uuid()}.${R.last(fileItem.file.name.split('.'))}`; // uuid + file extension
+        //this.adminSettingsModel.loginPageSettingsModel.imageLink = fileItem.file.name;
+      });
+    };
   }
 }

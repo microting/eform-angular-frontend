@@ -12,7 +12,7 @@ import {
 import { normalizeUserClaimNames } from 'src/app/common/helpers';
 import { ApiBaseService } from 'src/app/common/services';
 import {HttpParams} from '@angular/common/http';
-import {ChangePasswordAdminModel} from "src/app/common/models/user/change-password-admin.model";
+import {ChangePasswordAdminModel} from '../../models/user/change-password-admin.model';
 
 export let AuthMethods = {
   Login: 'api/auth/token',

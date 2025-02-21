@@ -31,4 +31,7 @@ public class UserSettingsModel
     public string Formats { get; set; }
     public string TimeZone { get; set; }
     public string LoginRedirectUrl { get; set; }
+    public string ProfilePicture { get; set; }
+    public string ProfilePictureSnapshot { get; set; }
+    public string EmailSha256 { get; set; }
 }
