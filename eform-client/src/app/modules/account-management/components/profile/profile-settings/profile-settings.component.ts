@@ -133,7 +133,8 @@ export class ProfileSettingsComponent implements OnInit {
             darkTheme: this.userSettingsModel.darkTheme,
             locale: this.userSettingsModel.locale,
             languageId: this.userSettingsModel.languageId
-          }))
+          }));
+          this.getUserSettings();
         });
         this.store.dispatch(loadAppMenu());
       });
@@ -174,5 +175,22 @@ export class ProfileSettingsComponent implements OnInit {
         //this.adminSettingsModel.loginPageSettingsModel.imageLink = fileItem.file.name;
       });
     };
+  }
+
+  resetProfilePicture() {
+    this.userSettingsService
+      .deleteProfilePicture()
+      .subscribe((data) => {
+        this.userSettings.getUserSettings().subscribe((data) => {
+          this.userSettingsModel = data.model;
+          this.store.dispatch(updateCurrentUserLocaleAndDarkTheme({
+            darkTheme: this.userSettingsModel.darkTheme,
+            locale: this.userSettingsModel.locale,
+            languageId: this.userSettingsModel.languageId
+          }));
+          this.getUserSettings();
+        });
+        this.store.dispatch(loadAppMenu());
+      });
   }
 }

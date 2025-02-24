@@ -55,24 +55,24 @@
     <mat-card-content>
       <div class="d-flex flex-wrap justify-content-between">
         <div>
-          <p class="mb-0 align-self-center">
-            {{ 'Image' | translate }}
-          </p>
           <img
             alt=""
             *ngIf="userSettingsModel.profilePicture"
             class="p-3"
-            height="100"
-            width="100"
+            height="32"
+            width="32"
             [src]="'api/images/login-page-images?fileName=' + userSettingsModel.profilePicture | authImage | async"
           />
+          <img
+            alt=""
+            *ngIf="!userSettingsModel.profilePicture && userSettingsModel.emailSha256"
+            class="p-3"
+            height="32"
+            width="32"
+            [src]="'https://www.gravatar.com/avatar/{{userSettingsModel.profilePicture}}?s=32&d=identicon'"
+          />
         </div>
-        <div class="d-flex">
-          <div class="align-self-center">
-            <p>{{ 'Recommended parameters' | translate }}:</p>
-            <p>{{ 'Resolution' | translate }} - 100x100</p>
-            <p>{{ 'Proportions' | translate }} - 1:1</p>
-          </div>
+        <div class="d-flex pt-2">
           <div class="align-self-center align-self-end mb-3">
             <button
               mat-raised-button
@@ -100,7 +100,19 @@
               id="loginPageFileInput"
             />
           </div>
+          <div class="align-self-center align-self-end mb-3 pl-2">
+            <button
+              mat-raised-button
+              color="accent"
+              id="resetProfilePicture"
+              (click)="resetProfilePicture()"
+              matTooltip="{{ 'Reset' | translate }}"
+            >
+              {{ 'Reset' | translate }}
+            </button>
+          </div>
         </div>
+
       </div>
     </mat-card-content>
   </mat-card>

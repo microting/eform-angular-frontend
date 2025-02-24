@@ -201,9 +201,18 @@ public class AccountService(
         return new OperationResult(true, localizationService.GetString("PasswordSuccessfullyUpdated"));
     }
 
-    public Task<OperationResult> ProfilePictureDelete()
+    public async Task<OperationResult> ProfilePictureDelete()
     {
-        throw new NotImplementedException();
+        var user = await userService.GetCurrentUserAsync();
+        if (user == null)
+        {
+            return new OperationResult(false, localizationService.GetString("UserNotFound"));
+        }
+        user.ProfilePicture = null;
+        user.ProfilePictureSnapshot = null;
+        await userManager.UpdateAsync(user);
+
+        return new OperationResult(true);
     }
 
     public async Task<OperationResult> ForgotPassword(ForgotPasswordModel model)
