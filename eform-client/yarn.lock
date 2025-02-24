@@ -3745,15 +3745,15 @@
     magic-string "^0.30.12"
     pathe "^1.1.2"
 
-"@wdio/cli@^9.9.1":
-  version "9.9.1"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-9.9.1.tgz#19bfee9642673785aa222f0f589acc0458f5e94f"
-  integrity sha512-h/Bh5udwsKaeCQPFCTnaVy4DYXZGYlGxuCaFcM7tnAz+ujXWqYPa90XERjCNmBQYYgeT53935rpC0HwIbZMEmA==
+"@wdio/cli@^9.10.0":
+  version "9.10.0"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-9.10.0.tgz#0a9e0e149e74d2cbdca230d6f2a805a312aa7e2e"
+  integrity sha512-UlkebQ7BIf8uHDgr61+KsqjGrPTxqt4upfu0W04LgkfTMQibFyCMuLRsOGMOuQiILnMXV9q114zBRzTnBHCgtw==
   dependencies:
     "@types/node" "^20.1.1"
     "@vitest/snapshot" "^2.1.1"
     "@wdio/config" "9.9.0"
-    "@wdio/globals" "9.9.1"
+    "@wdio/globals" "9.10.0"
     "@wdio/logger" "9.4.4"
     "@wdio/protocols" "9.7.0"
     "@wdio/types" "9.9.0"
@@ -3772,7 +3772,7 @@
     read-pkg-up "^10.0.0"
     recursive-readdir "^2.2.3"
     tsx "^4.7.2"
-    webdriverio "9.9.1"
+    webdriverio "9.10.0"
     yargs "^17.7.2"
 
 "@wdio/config@8.41.0":
@@ -3808,13 +3808,13 @@
     expect-webdriverio "^4.11.2"
     webdriverio "8.42.0"
 
-"@wdio/globals@9.9.1":
-  version "9.9.1"
-  resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-9.9.1.tgz#ceeec5b24c1fb37ce377334a5bf2db9103c850e8"
-  integrity sha512-0sOgQcbX3QSsTpSmN+3mofNGam4d7hQze5D5WmRGmXHtWWmRztusmByWm+LbdJiheReEf6ynfGBpOvd+CuQnpA==
+"@wdio/globals@9.10.0":
+  version "9.10.0"
+  resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-9.10.0.tgz#40fea6e3ea46d79a7e8a3d3049f6f0357f82fa94"
+  integrity sha512-Unwp19PeVfGThcWd34R5uFQIup2w8C4awoOJi0HzUaH9KHQeVKvUk4JxnwD3VnXwfVHm1jdPLeCjwXFL5rQbcg==
   optionalDependencies:
     expect-webdriverio "^5.1.0"
-    webdriverio "9.9.1"
+    webdriverio "9.10.0"
 
 "@wdio/local-runner@^8.40.1":
   version "8.42.0"
@@ -12308,10 +12308,10 @@ webdriverio@8.42.0, webdriverio@^8.29.3, webdriverio@^8.39.1:
     serialize-error "^11.0.1"
     webdriver "8.42.0"
 
-webdriverio@9.9.1:
-  version "9.9.1"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-9.9.1.tgz#007b5b58f3523c8458803292831ece22ee47c2cb"
-  integrity sha512-3TO8JcA2fylti2ExsIKgyicwdDvft5slWdq1wz50BXw41/3yOwyg4z8UkT6fUuSUYDOt8QPlfddALtOdQqvuKA==
+webdriverio@9.10.0:
+  version "9.10.0"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-9.10.0.tgz#4c9219f62dd6a81721987a56f85d1592a3b2cc9b"
+  integrity sha512-60jJBfpy+7UworuoTo2mHLlhTHgFPggveYfIb4T4CfJ//4kejr4xbTXnL+2DxvoVWn2nqakdHJA6ceJRan0m3Q==
   dependencies:
     "@types/node" "^20.11.30"
     "@types/sinonjs__fake-timers" "^8.1.5"
