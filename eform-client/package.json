@@ -98,7 +98,7 @@
     "ng2-file-upload": "^8.0.0",
     "ng2-pdf-viewer": "^10.3.4",
     "ngx-auto-unsubscribe": "3.0.1",
-    "ngx-cookie-service": "19.1.0",
+    "ngx-cookie-service": "19.1.2",
     "ngx-editor": "^18.0.0",
     "ngx-mask": "^19.0.6",
     "ngx-papaparse": "8.0.0",
