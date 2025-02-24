@@ -121,17 +121,6 @@
     rxjs "7.8.1"
     source-map "0.7.4"
 
-"@angular-devkit/schematics@19.1.7":
-  version "19.1.7"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-19.1.7.tgz#85fa8a6861373f0815baa9954a98f86b51f3b123"
-  integrity sha512-AP6FvhMybCYs3gs+vzEAzSU1K//AFT3SVTRFv+C3WMO5dLeAHeGzM8I2dxD5EHQQtqIE/8apP6CxGrnpA5YlFg==
-  dependencies:
-    "@angular-devkit/core" "19.1.7"
-    jsonc-parser "3.3.1"
-    magic-string "0.30.17"
-    ora "5.4.1"
-    rxjs "7.8.1"
-
 "@angular-devkit/schematics@19.1.8", "@angular-devkit/schematics@>= 19.0.0 < 20.0.0":
   version "19.1.8"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-19.1.8.tgz#e9927bd656e53965018ee30505c86649275ff1e3"
