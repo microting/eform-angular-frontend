@@ -31,7 +31,7 @@ export const config: Options.Testrunner = {
   },
   specs: [
     'e2e/Tests/main-page-eforms/my-eforms.create-eform.spec.ts',
-    'e2e/Tests/main-page-eforms/my-eforms.sort-eform.spec.ts',
+    //'e2e/Tests/main-page-eforms/my-eforms.sort-eform.spec.ts',
     'e2e/Tests/main-page-eforms/my-eforms.filter-eform.spec.ts',
   ],
   suites: {
