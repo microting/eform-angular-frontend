@@ -62,6 +62,7 @@ import {
   securityReducer,
   usersReducer,
 } from './state';
+import {NgxMaskDirective, NgxMaskPipe} from "ngx-mask";
 
 @NgModule({
   declarations: [
@@ -77,6 +78,8 @@ import {
     ConnectionSetupComponent,
   ],
   imports: [
+
+    NgxMaskDirective, NgxMaskPipe,
     // Libs
     BrowserModule,
     HttpClientModule,
