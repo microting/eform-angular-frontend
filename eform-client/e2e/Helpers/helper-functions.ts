@@ -25,7 +25,7 @@ export async function testSorting(
   const elements = await getElementsForSorting(); // Assuming this returns a list of elements
   let elementsBefore = [];
   for (let i = 0; i < elements.length; i++) {
-    elementsBefore.push(await elements[i].getText());
+    elementsBefore.push(elements[i].getText());
   }
 
   // check that sorting is correct in both directions
@@ -36,7 +36,7 @@ export async function testSorting(
     const elements = await getElementsForSorting(); // Assuming this returns a list of elements
     let elementsAfter = [];
     for (let i = 0; i < elements.length; i++) {
-      elementsAfter.push(await elements[i].getText());
+      elementsAfter.push(elements[i].getText());
     }
     // // get current direction of sorting
     const sortIcon = await tableHeader.$('.ng-trigger-leftPointer').getAttribute('style');

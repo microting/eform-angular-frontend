@@ -64,7 +64,7 @@ import {EFORM_MAT_DATEFNS_LOCALES} from 'src/app/common/modules/eform-date-adapt
 import {APP_INITIALIZER, ErrorHandler} from '@angular/core';
 import * as Sentry from '@sentry/angular';
 import {Router} from '@angular/router';
-import {provideEnvironmentNgxMask} from 'ngx-mask';
+import {provideEnvironmentNgxMask, provideNgxMask} from 'ngx-mask';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {
   CustomMatPaginatorIntl
@@ -156,5 +156,5 @@ export let providers = [
     provide: MatPaginatorIntl,
     useClass: CustomMatPaginatorIntl,
   },
-  provideEnvironmentNgxMask(),
+  provideNgxMask(),
 ];
