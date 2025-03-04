@@ -140,13 +140,15 @@
     aria-query "5.3.2"
     axobject-query "4.1.0"
 
-"@angular-eslint/eslint-plugin@19.1.0":
-  version "19.1.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-19.1.0.tgz#147d66bf1b9762200314d2ec801dda5efeed05e7"
-  integrity sha512-TDO0+Ry+oNkxnaLHogKp1k2aey6IkJef5d7hathE4UFT6owjRizltWaRoX6bGw7Qu1yagVLL8L2Se8SddxSPAQ==
+"@angular-eslint/eslint-plugin-template@19.2.0":
+  version "19.2.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-19.2.0.tgz#9f5278949f642a8cfadf282312a896cd701f2855"
+  integrity sha512-lUSzmk5/Dr0bNc2Omb5CZDu3zQZh70bJyuXnN5MKd00V1b3u90eqvMSveFzWFJ6Eot8Hh8+FxtiozPwGqOE+Og==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "19.1.0"
-    "@angular-eslint/utils" "19.1.0"
+    "@angular-eslint/bundled-angular-compiler" "19.2.0"
+    "@angular-eslint/utils" "19.2.0"
+    aria-query "5.3.2"
+    axobject-query "4.1.0"
 
 "@angular-eslint/eslint-plugin@19.2.0":
   version "19.2.0"
@@ -156,15 +158,15 @@
     "@angular-eslint/bundled-angular-compiler" "19.2.0"
     "@angular-eslint/utils" "19.2.0"
 
-"@angular-eslint/schematics@19.1.0":
-  version "19.1.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-19.1.0.tgz#03fe40f8d3b6eec67023851c1d3884a339fc6e31"
-  integrity sha512-6S1FjmM7rZxc0u0W0KjqWYOkFQ0q89IGyjPkdUt1a8NwRnWg3VoXp4WYfeuZOjda/FEYuBS/E6rckLAMp0h6Aw==
+"@angular-eslint/schematics@19.2.0":
+  version "19.2.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-19.2.0.tgz#2922d991f83bc9ac6f70497cc4c242bbc75b2483"
+  integrity sha512-SQfbKgPEJNkK5TVXRsdnWp6TjvVZOczvf8lELF1n+I/Uwmp7ulUjTRgTo59ZQnXoPSs2qCPgS4gAOVR6CD91zQ==
   dependencies:
     "@angular-devkit/core" ">= 19.0.0 < 20.0.0"
     "@angular-devkit/schematics" ">= 19.0.0 < 20.0.0"
-    "@angular-eslint/eslint-plugin" "19.1.0"
-    "@angular-eslint/eslint-plugin-template" "19.1.0"
+    "@angular-eslint/eslint-plugin" "19.2.0"
+    "@angular-eslint/eslint-plugin-template" "19.2.0"
     ignore "7.0.3"
     semver "7.7.1"
     strip-json-comments "3.1.1"
