@@ -89,18 +89,6 @@
     "@angular-devkit/architect" "0.1902.1"
     rxjs "7.8.1"
 
-"@angular-devkit/core@19.2.0":
-  version "19.2.0"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.0.tgz#5187cc0a7f7ac6e721bc6a3a980edec0f8be8764"
-  integrity sha512-qd2nYoHZOYWRsu4MjXG8KiDtfM9ZDRR2rDGa+rDZ3CYAsngCrPmqOebun10dncUjwAidX49P4S2U2elOmX3VYQ==
-  dependencies:
-    ajv "8.17.1"
-    ajv-formats "3.0.1"
-    jsonc-parser "3.3.1"
-    picomatch "4.0.2"
-    rxjs "7.8.1"
-    source-map "0.7.4"
-
 "@angular-devkit/core@19.2.1", "@angular-devkit/core@>= 19.0.0 < 20.0.0":
   version "19.2.1"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.1.tgz#59e8e5bf7ea643ade3138545ea21bcb16d094ad2"
@@ -152,14 +140,6 @@
     aria-query "5.3.2"
     axobject-query "4.1.0"
 
-"@angular-eslint/eslint-plugin@19.2.0":
-  version "19.2.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-19.2.0.tgz#074ee7b3af8237a9834f2c6779f19d2340c2b763"
-  integrity sha512-QQWWDrTdJ22tBd7RLFG/FdPwNyYEhg7YwWgn29z6XcdnV00ZFtf7FRbv/te1kqVNPvfjtht7bvtHcPQ432aUdQ==
-  dependencies:
-    "@angular-eslint/bundled-angular-compiler" "19.2.0"
-    "@angular-eslint/utils" "19.2.0"
-
 "@angular-eslint/eslint-plugin@19.2.1":
   version "19.2.1"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-19.2.1.tgz#00d094582bd13b81e6b0c3c3b9a38ccda2849917"
@@ -188,13 +168,6 @@
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "19.2.0"
     eslint-scope "^8.0.2"
-
-"@angular-eslint/utils@19.2.0":
-  version "19.2.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-19.2.0.tgz#dab84fd74dc337f193fb5330aaa80bed027d20ee"
-  integrity sha512-1XQXzIqYadKUxcAgW1DPev56SVbR8Uld6TthgolU7rfIX23RYMIIRtQlrQCk7zoXLXm5fzcGqjTR4wHfoD+iWg==
-  dependencies:
-    "@angular-eslint/bundled-angular-compiler" "19.2.0"
 
 "@angular-eslint/utils@19.2.1":
   version "19.2.1"
