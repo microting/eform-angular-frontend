@@ -89,18 +89,6 @@
     "@angular-devkit/architect" "0.1902.1"
     rxjs "7.8.1"
 
-"@angular-devkit/core@19.2.0":
-  version "19.2.0"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.0.tgz#5187cc0a7f7ac6e721bc6a3a980edec0f8be8764"
-  integrity sha512-qd2nYoHZOYWRsu4MjXG8KiDtfM9ZDRR2rDGa+rDZ3CYAsngCrPmqOebun10dncUjwAidX49P4S2U2elOmX3VYQ==
-  dependencies:
-    ajv "8.17.1"
-    ajv-formats "3.0.1"
-    jsonc-parser "3.3.1"
-    picomatch "4.0.2"
-    rxjs "7.8.1"
-    source-map "0.7.4"
-
 "@angular-devkit/core@19.2.1", "@angular-devkit/core@>= 19.0.0 < 20.0.0":
   version "19.2.1"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.1.tgz#59e8e5bf7ea643ade3138545ea21bcb16d094ad2"
@@ -181,12 +169,12 @@
     semver "7.7.1"
     strip-json-comments "3.1.1"
 
-"@angular-eslint/template-parser@19.2.0":
-  version "19.2.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-19.2.0.tgz#50a710c42be6212d173ea4b9c3212b752e65e949"
-  integrity sha512-VqgvFrILhoMe0GHZrx+Bjy8kx7/LJfJTd+x/wzE/X1cCChSU81MBZFMVeFMnoI75OOQUf4fwaaKrtUhUvAkVyw==
+"@angular-eslint/template-parser@19.2.1":
+  version "19.2.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-19.2.1.tgz#b2a0ed08be8c458ed5932ea6833d00191b2bff45"
+  integrity sha512-fU16NUh8nY02zdkHRsAlGI9ruppsE1ko1Z1PIyB3oofYt4rCKsXb8yXWbXWn7qCjNPVqv4+oLx0BwhJQZwEX8w==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "19.2.0"
+    "@angular-eslint/bundled-angular-compiler" "19.2.1"
     eslint-scope "^8.0.2"
 
 "@angular-eslint/utils@19.2.0":
