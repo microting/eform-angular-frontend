@@ -141,7 +141,7 @@
     "@wdio/spec-reporter": "^9.11.0",
     "angular-mocks": "^1.8.3",
     "chai": "^5.2.0",
-    "chromedriver": "^133.0.3",
+    "chromedriver": "^134.0.2",
     "cypress": "14.1.0",
     "eslint": "^8.57.1",
     "fs-extra": "^11.1.0",
