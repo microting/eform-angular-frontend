@@ -120,11 +120,6 @@
     "@angular-devkit/architect" ">= 0.1900.0 < 0.2000.0"
     "@angular-devkit/core" ">= 19.0.0 < 20.0.0"
 
-"@angular-eslint/bundled-angular-compiler@19.2.0":
-  version "19.2.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.2.0.tgz#3c817d8e33c5687350b9cebff3de74b35fd9774b"
-  integrity sha512-hmmAogTpYGbBvnJ0j7DNLi8YQ+YEEuwFdx0heU8XjTpZlRoSRIP7MJJVlaQCt+ZT5f5XwdGtqi9lOXqqcyGHLA==
-
 "@angular-eslint/bundled-angular-compiler@19.2.1":
   version "19.2.1"
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.2.1.tgz#b612d530372ef8707d9894c2a6b101003afb727c"
@@ -3558,15 +3553,15 @@
     magic-string "^0.30.12"
     pathe "^1.1.2"
 
-"@wdio/cli@^9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-9.11.0.tgz#e3c23ad358234c86fdd2af70038218cc1b70dfbf"
-  integrity sha512-KaJMt69P8lxe9yaCcp9XdYL3TY/wt6vZYbnqg1miwVVjtThLTANKeG7fgplYMheMgTe1s5JDi+CDe141gM5y2g==
+"@wdio/cli@^9.12.0":
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-9.12.0.tgz#cd5536d11456b47e0ee16fe78cab0c789c4ee81f"
+  integrity sha512-VAp5fLScIlwkCT/DpqrDuqgS/MFXkY5jwUMUhdvVtoz3qHzeQQFF5kamLRVgKY+GNhzPA0LiL8xwP9GiBfvcIw==
   dependencies:
     "@types/node" "^20.1.1"
     "@vitest/snapshot" "^2.1.1"
     "@wdio/config" "9.11.0"
-    "@wdio/globals" "9.11.0"
+    "@wdio/globals" "9.12.0"
     "@wdio/logger" "9.4.4"
     "@wdio/protocols" "9.7.0"
     "@wdio/types" "9.10.1"
@@ -3585,7 +3580,7 @@
     read-pkg-up "^10.0.0"
     recursive-readdir "^2.2.3"
     tsx "^4.7.2"
-    webdriverio "9.11.0"
+    webdriverio "9.12.0"
     yargs "^17.7.2"
 
 "@wdio/config@8.41.0":
@@ -3621,13 +3616,13 @@
     expect-webdriverio "^4.11.2"
     webdriverio "8.42.0"
 
-"@wdio/globals@9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-9.11.0.tgz#9791851dd33ae97c07c8fa29176656090bad280f"
-  integrity sha512-U0eSp9NcDjMIdEQuM5rUXlZdf4qA/qZAin9cUq3uRdjTz1dZxD/0kXhzctsjpVXj/Fp60UfLF38XwLLgYNoi6w==
+"@wdio/globals@9.12.0":
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-9.12.0.tgz#399b3cc942611409b736d14ae92f2d4c138251fe"
+  integrity sha512-iUTV8tpeHyZN08fhk6x4xm90wbPlms83UAn3HDiiJ1l5jf6wB7xfpbxG4Y6/tEGzUWyAevg69JXbgAZmfpBzqA==
   optionalDependencies:
     expect-webdriverio "^5.1.0"
-    webdriverio "9.11.0"
+    webdriverio "9.12.0"
 
 "@wdio/local-runner@^8.40.1":
   version "8.42.0"
@@ -12084,10 +12079,10 @@ webdriverio@8.42.0, webdriverio@^8.29.3, webdriverio@^8.39.1:
     serialize-error "^11.0.1"
     webdriver "8.42.0"
 
-webdriverio@9.11.0:
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-9.11.0.tgz#42426a3b4b96313a6a128292156f7f08763b9800"
-  integrity sha512-FYdq/3OJj04t4a+hooXt6GQ1L7i8BpZyB9BmKOW5iEKnG8vyyOE9nyOEj5SaAKU9dVJFrR8jBNdIALFDmABpRA==
+webdriverio@9.12.0:
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-9.12.0.tgz#adc9746baf1b15c317438f1fbe94624c4dc78b40"
+  integrity sha512-QQ+HFL1POqQwOeyb3cpu+PfJw73JXGzqKUH/tMTK9+pG3Dd3AfeXJIKJw0RJBPjEgv/D2Di8u/wk41Yf5Dce6g==
   dependencies:
     "@types/node" "^20.11.30"
     "@types/sinonjs__fake-timers" "^8.1.5"
