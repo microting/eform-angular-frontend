@@ -10,7 +10,7 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-"@angular-devkit/architect@0.1902.1", "@angular-devkit/architect@>= 0.1900.0 < 0.2000.0":
+"@angular-devkit/architect@0.1902.1":
   version "0.1902.1"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.1902.1.tgz#d0bcb697179a74b78cdb79474864b1060280c38b"
   integrity sha512-iCm6F4HYO5aIgjzhjOUPKnyFHcn6yVE8gCpjWFQL8JVqrVzFG27vMZ0wK8b8rMDIDt6/hr2FOSSwChVg/cv9GQ==
@@ -18,16 +18,24 @@
     "@angular-devkit/core" "19.2.1"
     rxjs "7.8.1"
 
-"@angular-devkit/build-angular@19.2.1":
-  version "19.2.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-19.2.1.tgz#6136e76de96658112599095ac9c92fbb72ea5475"
-  integrity sha512-YJdHON1005lBzXFFfTJBrcFvbgWMEhvkziQw1IuQpbl+aa2XbkPnBFbT/d5FWjQpIWVpPYRMMMCSVSqeICYUcg==
+"@angular-devkit/architect@0.1902.2", "@angular-devkit/architect@>= 0.1900.0 < 0.2000.0":
+  version "0.1902.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.1902.2.tgz#32c9fd8df7d260b57e0d9f4f9975f003cf590de0"
+  integrity sha512-GDhWXFl0Qm2A9246YRkbB60jlsi0XdtC22OykKJ6K/esZOb0DU6TvuxxaL94jOOg85a5TworkH2/H8wstrbiIw==
+  dependencies:
+    "@angular-devkit/core" "19.2.2"
+    rxjs "7.8.1"
+
+"@angular-devkit/build-angular@19.2.2":
+  version "19.2.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-19.2.2.tgz#588086ed58fcdd5f4205a2e78823bf1ba314d3ae"
+  integrity sha512-fIvMlQz1rItZT9Zz4osy4tMXaAKFeoqCLqLns6V8GYEnrjwZnCSJtPnnaByzcEDaU+YA7xfdgycREyqFk5zB8Q==
   dependencies:
     "@ampproject/remapping" "2.3.0"
-    "@angular-devkit/architect" "0.1902.1"
-    "@angular-devkit/build-webpack" "0.1902.1"
-    "@angular-devkit/core" "19.2.1"
-    "@angular/build" "19.2.1"
+    "@angular-devkit/architect" "0.1902.2"
+    "@angular-devkit/build-webpack" "0.1902.2"
+    "@angular-devkit/core" "19.2.2"
+    "@angular/build" "19.2.2"
     "@babel/core" "7.26.9"
     "@babel/generator" "7.26.9"
     "@babel/helper-annotate-as-pure" "7.25.9"
@@ -38,7 +46,7 @@
     "@babel/preset-env" "7.26.9"
     "@babel/runtime" "7.26.9"
     "@discoveryjs/json-ext" "0.6.3"
-    "@ngtools/webpack" "19.2.1"
+    "@ngtools/webpack" "19.2.2"
     "@vitejs/plugin-basic-ssl" "1.2.0"
     ansi-colors "4.1.3"
     autoprefixer "10.4.20"
@@ -46,7 +54,7 @@
     browserslist "^4.21.5"
     copy-webpack-plugin "12.0.2"
     css-loader "7.1.2"
-    esbuild-wasm "0.25.0"
+    esbuild-wasm "0.25.1"
     fast-glob "3.3.3"
     http-proxy-middleware "3.0.3"
     istanbul-lib-instrument "6.0.3"
@@ -79,20 +87,32 @@
     webpack-merge "6.0.1"
     webpack-subresource-integrity "5.1.0"
   optionalDependencies:
-    esbuild "0.25.0"
+    esbuild "0.25.1"
 
-"@angular-devkit/build-webpack@0.1902.1":
-  version "0.1902.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-webpack/-/build-webpack-0.1902.1.tgz#17b6d0a29e548b0722cb5d88020657642f6a4fc8"
-  integrity sha512-KXvYkxvdun90GxAzaHIXkIKaYeJY9kQ89xaFXOaaJi6a9a+EkovnkHSPwPQ6uNqJo/zbwU5jKkT/rI/g+5D5Bg==
+"@angular-devkit/build-webpack@0.1902.2":
+  version "0.1902.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-webpack/-/build-webpack-0.1902.2.tgz#9dc97e12048308a32dfa2926e42d881224e70f4f"
+  integrity sha512-Msr09kAgT2mr2lcytQOW1rlI+Hg14HhOLu1Dnq2gpZ7KGZ6/Mbd9MwnstwRK04cp7Q+DQay11rapV5seUz8eBg==
   dependencies:
-    "@angular-devkit/architect" "0.1902.1"
+    "@angular-devkit/architect" "0.1902.2"
     rxjs "7.8.1"
 
-"@angular-devkit/core@19.2.1", "@angular-devkit/core@>= 19.0.0 < 20.0.0":
+"@angular-devkit/core@19.2.1":
   version "19.2.1"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.1.tgz#59e8e5bf7ea643ade3138545ea21bcb16d094ad2"
   integrity sha512-DYsoU8emxmBkfIKI693BNUqocwHTVHLjgybyD5nU1qMOH+D/jqEzL5bQbjhUeqeARyrzDg7tyPM5Xno+GsS7KQ==
+  dependencies:
+    ajv "8.17.1"
+    ajv-formats "3.0.1"
+    jsonc-parser "3.3.1"
+    picomatch "4.0.2"
+    rxjs "7.8.1"
+    source-map "0.7.4"
+
+"@angular-devkit/core@19.2.2", "@angular-devkit/core@>= 19.0.0 < 20.0.0":
+  version "19.2.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.2.tgz#9aeb345ad4f17f355dc406a42b64d3bc36677f24"
+  integrity sha512-5vtx5c2jLgl18TFze0fYhpkw8lWTtRoaiH5WPJ98AR2tENw657Hb5Viudc9MicySpWnPrPxgNCzRGjODyHLcjQ==
   dependencies:
     ajv "8.17.1"
     ajv-formats "3.0.1"
@@ -119,11 +139,6 @@
   dependencies:
     "@angular-devkit/architect" ">= 0.1900.0 < 0.2000.0"
     "@angular-devkit/core" ">= 19.0.0 < 20.0.0"
-
-"@angular-eslint/bundled-angular-compiler@19.2.0":
-  version "19.2.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.2.0.tgz#3c817d8e33c5687350b9cebff3de74b35fd9774b"
-  integrity sha512-hmmAogTpYGbBvnJ0j7DNLi8YQ+YEEuwFdx0heU8XjTpZlRoSRIP7MJJVlaQCt+ZT5f5XwdGtqi9lOXqqcyGHLA==
 
 "@angular-eslint/bundled-angular-compiler@19.2.1":
   version "19.2.1"
@@ -183,13 +198,13 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/build@19.2.1":
-  version "19.2.1"
-  resolved "https://registry.yarnpkg.com/@angular/build/-/build-19.2.1.tgz#25cdef3783addaceaa4dbbb174753fcab3f0da33"
-  integrity sha512-+gRcH2F+qGSN/JRT5J650FzXW2kPrhjoSwOMYW06zhSpyX+oDZenFygUxORNhb5CnXJyZf/L5UEj6ypUojx4KQ==
+"@angular/build@19.2.2":
+  version "19.2.2"
+  resolved "https://registry.yarnpkg.com/@angular/build/-/build-19.2.2.tgz#58538777d32a3d5a04a46d68d5b01d05cd998c6b"
+  integrity sha512-VSt0kDAHc5E2rQXf9Xht6W8Xb+UZKW3bOkn1pfiwYO+C2JN/M+KDTWSTIF7yJCWjxfCCi6uzK7RLzTpaS+nIIQ==
   dependencies:
     "@ampproject/remapping" "2.3.0"
-    "@angular-devkit/architect" "0.1902.1"
+    "@angular-devkit/architect" "0.1902.2"
     "@babel/core" "7.26.9"
     "@babel/helper-annotate-as-pure" "7.25.9"
     "@babel/helper-split-export-declaration" "7.24.7"
@@ -198,7 +213,7 @@
     "@vitejs/plugin-basic-ssl" "1.2.0"
     beasties "0.2.0"
     browserslist "^4.23.0"
-    esbuild "0.25.0"
+    esbuild "0.25.1"
     fast-glob "3.3.3"
     https-proxy-agent "7.0.6"
     istanbul-lib-instrument "6.0.3"
@@ -2129,10 +2144,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@ngtools/webpack@19.2.1":
-  version "19.2.1"
-  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-19.2.1.tgz#330515cc27595b64030bd6768ad09c05e215b639"
-  integrity sha512-K8b3+eCG+Iz0EXTE/UDuXabr6yOL9NP6sW1CLk9AUdUUnL4AhoQy/vjfaOtxZx1T8qEErAWizJ51dHD25ysXHw==
+"@ngtools/webpack@19.2.2":
+  version "19.2.2"
+  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-19.2.2.tgz#5b7c57f88b13251dd0ad721d0e5b337d1333b55f"
+  integrity sha512-MEMIXaGgWD8DYgD12yRTgelz5c/cR8PCSDt4RzNHc9Yv4LgmS6z5yndu35U7RvbM7RP/qDgPZjucVyhl9f9EDg==
 
 "@ngx-translate/core@16.0.4":
   version "16.0.4"
@@ -6196,43 +6211,12 @@ es-set-tostringtag@^2.1.0:
     has-tostringtag "^1.0.2"
     hasown "^2.0.2"
 
-esbuild-wasm@0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/esbuild-wasm/-/esbuild-wasm-0.25.0.tgz#56bbcc29d9eb5052ff1598248dc37dd958876e82"
-  integrity sha512-60iuWr6jdTVylmGXjpnqk3pCktUi5Rmjiv6EMza3h4X20BLtfL2BjUGs1+UCt2G9UK7jVGrJdUr5i1k0sL3wBg==
+esbuild-wasm@0.25.1:
+  version "0.25.1"
+  resolved "https://registry.yarnpkg.com/esbuild-wasm/-/esbuild-wasm-0.25.1.tgz#fbe9ca6d7afbfe351389cad02c0fcd584cf40bcc"
+  integrity sha512-dZxPeDHcDIQ6ilml/NzYxnPbNkoVsHSFH3JGLSobttc5qYYgExMo8lh2XcB+w+AfiqykVDGK5PWanGB0gWaAWw==
 
-esbuild@0.25.0, esbuild@~0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.25.0.tgz#0de1787a77206c5a79eeb634a623d39b5006ce92"
-  integrity sha512-BXq5mqc8ltbaN34cDqWuYKyNhX8D/Z0J1xdtdQ8UcIIIyJyz+ZMKUt58tF3SrZ85jcfN/PZYhjR5uDQAYNVbuw==
-  optionalDependencies:
-    "@esbuild/aix-ppc64" "0.25.0"
-    "@esbuild/android-arm" "0.25.0"
-    "@esbuild/android-arm64" "0.25.0"
-    "@esbuild/android-x64" "0.25.0"
-    "@esbuild/darwin-arm64" "0.25.0"
-    "@esbuild/darwin-x64" "0.25.0"
-    "@esbuild/freebsd-arm64" "0.25.0"
-    "@esbuild/freebsd-x64" "0.25.0"
-    "@esbuild/linux-arm" "0.25.0"
-    "@esbuild/linux-arm64" "0.25.0"
-    "@esbuild/linux-ia32" "0.25.0"
-    "@esbuild/linux-loong64" "0.25.0"
-    "@esbuild/linux-mips64el" "0.25.0"
-    "@esbuild/linux-ppc64" "0.25.0"
-    "@esbuild/linux-riscv64" "0.25.0"
-    "@esbuild/linux-s390x" "0.25.0"
-    "@esbuild/linux-x64" "0.25.0"
-    "@esbuild/netbsd-arm64" "0.25.0"
-    "@esbuild/netbsd-x64" "0.25.0"
-    "@esbuild/openbsd-arm64" "0.25.0"
-    "@esbuild/openbsd-x64" "0.25.0"
-    "@esbuild/sunos-x64" "0.25.0"
-    "@esbuild/win32-arm64" "0.25.0"
-    "@esbuild/win32-ia32" "0.25.0"
-    "@esbuild/win32-x64" "0.25.0"
-
-esbuild@^0.25.0:
+esbuild@0.25.1, esbuild@^0.25.0:
   version "0.25.1"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.25.1.tgz#a16b8d070b6ad4871935277bda6ccfe852e3fa2f"
   integrity sha512-BGO5LtrGC7vxnqucAe/rmvKdJllfGaYWdyABvyMoXQlfYMb2bbRuReWR5tEGE//4LcNJj9XrkovTqNYRFZHAMQ==
@@ -6262,6 +6246,37 @@ esbuild@^0.25.0:
     "@esbuild/win32-arm64" "0.25.1"
     "@esbuild/win32-ia32" "0.25.1"
     "@esbuild/win32-x64" "0.25.1"
+
+esbuild@~0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.25.0.tgz#0de1787a77206c5a79eeb634a623d39b5006ce92"
+  integrity sha512-BXq5mqc8ltbaN34cDqWuYKyNhX8D/Z0J1xdtdQ8UcIIIyJyz+ZMKUt58tF3SrZ85jcfN/PZYhjR5uDQAYNVbuw==
+  optionalDependencies:
+    "@esbuild/aix-ppc64" "0.25.0"
+    "@esbuild/android-arm" "0.25.0"
+    "@esbuild/android-arm64" "0.25.0"
+    "@esbuild/android-x64" "0.25.0"
+    "@esbuild/darwin-arm64" "0.25.0"
+    "@esbuild/darwin-x64" "0.25.0"
+    "@esbuild/freebsd-arm64" "0.25.0"
+    "@esbuild/freebsd-x64" "0.25.0"
+    "@esbuild/linux-arm" "0.25.0"
+    "@esbuild/linux-arm64" "0.25.0"
+    "@esbuild/linux-ia32" "0.25.0"
+    "@esbuild/linux-loong64" "0.25.0"
+    "@esbuild/linux-mips64el" "0.25.0"
+    "@esbuild/linux-ppc64" "0.25.0"
+    "@esbuild/linux-riscv64" "0.25.0"
+    "@esbuild/linux-s390x" "0.25.0"
+    "@esbuild/linux-x64" "0.25.0"
+    "@esbuild/netbsd-arm64" "0.25.0"
+    "@esbuild/netbsd-x64" "0.25.0"
+    "@esbuild/openbsd-arm64" "0.25.0"
+    "@esbuild/openbsd-x64" "0.25.0"
+    "@esbuild/sunos-x64" "0.25.0"
+    "@esbuild/win32-arm64" "0.25.0"
+    "@esbuild/win32-ia32" "0.25.0"
+    "@esbuild/win32-x64" "0.25.0"
 
 escalade@^3.1.1, escalade@^3.2.0:
   version "3.2.0"
