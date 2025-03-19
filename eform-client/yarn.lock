@@ -120,11 +120,6 @@
     "@angular-devkit/architect" ">= 0.1900.0 < 0.2000.0"
     "@angular-devkit/core" ">= 19.0.0 < 20.0.0"
 
-"@angular-eslint/bundled-angular-compiler@19.2.0":
-  version "19.2.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.2.0.tgz#3c817d8e33c5687350b9cebff3de74b35fd9774b"
-  integrity sha512-hmmAogTpYGbBvnJ0j7DNLi8YQ+YEEuwFdx0heU8XjTpZlRoSRIP7MJJVlaQCt+ZT5f5XwdGtqi9lOXqqcyGHLA==
-
 "@angular-eslint/bundled-angular-compiler@19.2.1":
   version "19.2.1"
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.2.1.tgz#b612d530372ef8707d9894c2a6b101003afb727c"
@@ -2581,55 +2576,55 @@
   resolved "https://registry.yarnpkg.com/@sec-ant/readable-stream/-/readable-stream-0.4.1.tgz#60de891bb126abfdc5410fdc6166aca065f10a0c"
   integrity sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==
 
-"@sentry-internal/browser-utils@9.5.0":
-  version "9.5.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/browser-utils/-/browser-utils-9.5.0.tgz#47feeb57ecf245d08bad30b5f808f61a789a971b"
-  integrity sha512-AE9jgeI5+KyGvLR0vf1I6sesi0NZXZe6pDlZNXyg+pWZB2vkE9dksE8ZsoU+YiD9zjUqazgPcVyb3O0VvmaCGw==
+"@sentry-internal/browser-utils@9.6.1":
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/browser-utils/-/browser-utils-9.6.1.tgz#9ad2300a86a0f5d8897d280e150981972d51c87d"
+  integrity sha512-3bQDHc/extRnjzPaq8SjNxwPLHeWa5jT8O99kYq2MHg+xZr5wb5PkbaBIPZNHZp4CChNkzzSEQI9p1aBIfy0rQ==
   dependencies:
-    "@sentry/core" "9.5.0"
+    "@sentry/core" "9.6.1"
 
-"@sentry-internal/feedback@9.5.0":
-  version "9.5.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/feedback/-/feedback-9.5.0.tgz#5d7450bf25292326e6864e6600a9472a717dc067"
-  integrity sha512-p+yOTufEYHP1RLwkD+aZwpCNS4/2l6t4uHgphjYrEC2U/U2mtZQh+EvlBAt0wY/eiKC4/acPNrF5yFD/4A7a0A==
+"@sentry-internal/feedback@9.6.1":
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/feedback/-/feedback-9.6.1.tgz#43377fc7c7aeb1dc131311886bbb1c2425f354e6"
+  integrity sha512-mjvEYzBFnV3RmpGsqGeKCIvyYBoHoapevEYgNS2Q+kcFXfSYvA1EozzlhlTVaflWzI2kfLN0Uh/OBcjwCRvCkQ==
   dependencies:
-    "@sentry/core" "9.5.0"
+    "@sentry/core" "9.6.1"
 
-"@sentry-internal/replay-canvas@9.5.0":
-  version "9.5.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/replay-canvas/-/replay-canvas-9.5.0.tgz#f63fc4e027189d7e2d1a9de7e535591e8399a143"
-  integrity sha512-W7MS7/9Z8uP2i0pbndxqz2VcGlFPc7Bv6gCoxRdGIWUWSBS9rsRbryO0sM0PwwuHt2mQtWMqwjYykcR441RBRA==
+"@sentry-internal/replay-canvas@9.6.1":
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/replay-canvas/-/replay-canvas-9.6.1.tgz#8485b5f47951596be2ca3b4ec2f9a2257f17d1c8"
+  integrity sha512-3enNu2YwG4SycodMyenR6Q6MfFwbvatD6ms1gupxB0HGui2xxfgb2ySYZI2iuvMPO2VL544kFkIfwNyqax2YyA==
   dependencies:
-    "@sentry-internal/replay" "9.5.0"
-    "@sentry/core" "9.5.0"
+    "@sentry-internal/replay" "9.6.1"
+    "@sentry/core" "9.6.1"
 
-"@sentry-internal/replay@9.5.0":
-  version "9.5.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/replay/-/replay-9.5.0.tgz#1527d77c25b1d8a7ea606d6fbf4faa9bd8cb70bb"
-  integrity sha512-fBBNimElAnu865HT3MJ6xH2P26KvkZvAYt+yRrWr+x5zS5KvjBYUPsSI+F0FTE14XmLW9q7DlNUl5iAZhXSy3g==
+"@sentry-internal/replay@9.6.1":
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/replay/-/replay-9.6.1.tgz#9f877cc2a4acd9c97595b7c440c6f33faf1d62ee"
+  integrity sha512-iV5E48fI+IQzyI2hJ+KKOullWMbv/SWDFtyQoRN6drimScDP9Tn1rJ5uNsAiVF3m8Vsj+w3UQwPBzcd+WDeQmw==
   dependencies:
-    "@sentry-internal/browser-utils" "9.5.0"
-    "@sentry/core" "9.5.0"
+    "@sentry-internal/browser-utils" "9.6.1"
+    "@sentry/core" "9.6.1"
 
-"@sentry/angular@^9.5.0":
-  version "9.5.0"
-  resolved "https://registry.yarnpkg.com/@sentry/angular/-/angular-9.5.0.tgz#11928f3c806e3b598511cf6a20363a2c8bbbe4c1"
-  integrity sha512-8sqTY/PGNYxsl4gsm7mC8DkUckeWjQV5sPWXGk6P2IGS5aaarXBhekSaFyff2wp0jJi3WGAxLlrSG1pjizyOxA==
+"@sentry/angular@^9.6.1":
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry/angular/-/angular-9.6.1.tgz#52affa8cab55e1deee9d5ada09ecd2c4e269dd5b"
+  integrity sha512-t7+fnrnSsXQAE28c8mgB0AvuTczBVwnhDrmLMNnLCylmWSqDKIoJ+9HLd0LZB/jPmjvHRScgpnimWnqFw4mZvQ==
   dependencies:
-    "@sentry/browser" "9.5.0"
-    "@sentry/core" "9.5.0"
+    "@sentry/browser" "9.6.1"
+    "@sentry/core" "9.6.1"
     tslib "^2.4.1"
 
-"@sentry/browser@9.5.0":
-  version "9.5.0"
-  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-9.5.0.tgz#0ea3e00013bb1b133a1a37f4c79b1648f238befc"
-  integrity sha512-HYSPW8GjknuYykJgOialKFyWg7ldmrbD1AKTIhksqdsNXLER07YeVWFAbe+xSYa1ZwwC8/s6vQJP9ZOoH1BaVg==
+"@sentry/browser@9.6.1":
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-9.6.1.tgz#8f3dcbe2847319e46e93a50dba240609f72e4b39"
+  integrity sha512-m6rCoR+dafZkHTJdQhPrIq4vdTrfRhmP3FVEPlBCVClnNeo6TShVJwtEu3kfBsmnYfGWaac2tn1oczMD2wjmZQ==
   dependencies:
-    "@sentry-internal/browser-utils" "9.5.0"
-    "@sentry-internal/feedback" "9.5.0"
-    "@sentry-internal/replay" "9.5.0"
-    "@sentry-internal/replay-canvas" "9.5.0"
-    "@sentry/core" "9.5.0"
+    "@sentry-internal/browser-utils" "9.6.1"
+    "@sentry-internal/feedback" "9.6.1"
+    "@sentry-internal/replay" "9.6.1"
+    "@sentry-internal/replay-canvas" "9.6.1"
+    "@sentry/core" "9.6.1"
 
 "@sentry/cli-darwin@2.42.2":
   version "2.42.2"
@@ -2685,10 +2680,10 @@
     "@sentry/cli-win32-i686" "2.42.2"
     "@sentry/cli-win32-x64" "2.42.2"
 
-"@sentry/core@9.5.0":
-  version "9.5.0"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-9.5.0.tgz#09fc38e3bf0b107c721d21351b8702ca2f012922"
-  integrity sha512-NMqyFdyg26ECAfnibAPKT8vvAt4zXp4R7dYtQnwJKhEJEVkgAshcNYeJ2D95ZLMVOqlqhTtTPnw1vqf+v9ePZg==
+"@sentry/core@9.6.1":
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-9.6.1.tgz#daad84c89359dda44f332bc1e5823945b87342c7"
+  integrity sha512-BHaRxyFF3sNlKP6lNcB5cxFogvfMOtWw0Est6mK/Mbewnim0qEbmqKyuMj67ebfgo+pmUJJc2wgugdxkxvqGRQ==
 
 "@sigstore/bundle@^3.1.0":
   version "3.1.0"
