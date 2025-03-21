@@ -120,11 +120,6 @@
     "@angular-devkit/architect" ">= 0.1900.0 < 0.2000.0"
     "@angular-devkit/core" ">= 19.0.0 < 20.0.0"
 
-"@angular-eslint/bundled-angular-compiler@19.2.0":
-  version "19.2.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.2.0.tgz#3c817d8e33c5687350b9cebff3de74b35fd9774b"
-  integrity sha512-hmmAogTpYGbBvnJ0j7DNLi8YQ+YEEuwFdx0heU8XjTpZlRoSRIP7MJJVlaQCt+ZT5f5XwdGtqi9lOXqqcyGHLA==
-
 "@angular-eslint/bundled-angular-compiler@19.2.1":
   version "19.2.1"
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.2.1.tgz#b612d530372ef8707d9894c2a6b101003afb727c"
@@ -3673,16 +3668,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@^9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-9.11.0.tgz#7bd9505b829c7499c5d1f5909f8a4bf8b7735c9e"
-  integrity sha512-b7Zg1v67dznpI7eyGDGdDEzdQb9GS37ccs91UOd7uHkkP6ktGRhGsSaOZKZCbvvWQK+jWsU2Tvs6kuaWGQQnQg==
+"@wdio/mocha-framework@^9.12.1":
+  version "9.12.1"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-9.12.1.tgz#0d4ee10ef529e900c2c689d3d795c4e1f89ca560"
+  integrity sha512-gWRpSizXyhFFE5MaHtyf/O51nVL08bEoAqrAtZ8ZDRMhmjnVY6KA64Shxw+ULoK1ta1dpxpIyrsiloyLaBTPuA==
   dependencies:
     "@types/mocha" "^10.0.6"
     "@types/node" "^20.11.28"
     "@wdio/logger" "9.4.4"
     "@wdio/types" "9.10.1"
-    "@wdio/utils" "9.11.0"
+    "@wdio/utils" "9.12.1"
     mocha "^10.3.0"
 
 "@wdio/protocols@8.40.3":
@@ -3785,6 +3780,25 @@
   version "9.11.0"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-9.11.0.tgz#006234c865579e86b121998c78e47e86013de57d"
   integrity sha512-chVbHqrjDlIKCLoAPLdrFK8Qozu/S+fbubqlyazohAKnouCUCa2goYs7faYR0lkmLqm92PllJS+KBRAha9V/tg==
+  dependencies:
+    "@puppeteer/browsers" "^2.2.0"
+    "@wdio/logger" "9.4.4"
+    "@wdio/types" "9.10.1"
+    decamelize "^6.0.0"
+    deepmerge-ts "^7.0.3"
+    edgedriver "^6.1.1"
+    geckodriver "^5.0.0"
+    get-port "^7.0.0"
+    import-meta-resolve "^4.0.0"
+    locate-app "^2.2.24"
+    safaridriver "^1.0.0"
+    split2 "^4.2.0"
+    wait-port "^1.1.0"
+
+"@wdio/utils@9.12.1":
+  version "9.12.1"
+  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-9.12.1.tgz#8dcf06240e9d73546dbacb697fcbfc051bd4068a"
+  integrity sha512-WrkBdglOwKMpwvCZbOatlLUCghxNWyVfKRDyl92RBX3DuRqqq+uZK8fSHHAJMvXfax5TxcTRzHZUKrQO3ASSXw==
   dependencies:
     "@puppeteer/browsers" "^2.2.0"
     "@wdio/logger" "9.4.4"
