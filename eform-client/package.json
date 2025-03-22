@@ -151,7 +151,7 @@
     "run-sequence": "^2.2.1",
     "ts-node": "10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "5.5.4",
+    "typescript": "5.8.2",
     "wdio-chromedriver-service": "^8.1.1",
     "wdio-docker-service": "^3.2.1",
     "webdriverio": "^8.39.1",
