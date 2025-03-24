@@ -123,7 +123,30 @@ public class Startup
                 .AddMySql(Configuration["ConnectinString"]!);
             try {
                 var dbContextFactory = new MicrotingDbContextFactory();
-                dbContextFactory.CreateDbContext([Configuration["ConnectinString"].Replace("Angular", "SDK")]);
+                var dbcontext =
+                    dbContextFactory.CreateDbContext(new[]
+                        { Configuration["ConnectinString"].Replace("Angular", "SDK") });
+
+                var rabbithost = dbcontext.Settings.First(x => x.Name == "rabbitMqHost").Value;
+                var rabbituser = dbcontext.Settings.First(x => x.Name == "rabbitMqUser").Value;
+                var rabbitpass = dbcontext.Settings.First(x => x.Name == "rabbitMqPassword").Value;
+
+                services
+                    .AddSingleton(sp =>
+                    {
+                        var factory = new ConnectionFactory
+                        {
+                            HostName = rabbithost,
+                            UserName = rabbituser,
+                            Password = rabbitpass,
+                            AutomaticRecoveryEnabled = true, // helps in case of brief network issues
+                            RequestedConnectionTimeout = TimeSpan.FromSeconds(10)
+                        };
+                        return factory.CreateConnectionAsync().GetAwaiter().GetResult();
+                    })
+                    .AddHealthChecks()
+                    .AddRabbitMQ();
+
                 _sdkPresent = true;
             }
             catch (Exception ex) {
@@ -153,7 +176,30 @@ public class Startup
                         .AddMySql(Configuration.MyConnectionString());
                     try {
                         var dbContextFactory = new MicrotingDbContextFactory();
-                        dbContextFactory.CreateDbContext([Configuration.MyConnectionString().Replace("Angular", "SDK")]);
+                        var dbcontext =
+                            dbContextFactory.CreateDbContext(new[]
+                                { Configuration.MyConnectionString().Replace("Angular", "SDK") });
+                        var rabbithost = dbcontext.Settings.First(x => x.Name == "rabbitMqHost").Value;
+                        var rabbituser = dbcontext.Settings.First(x => x.Name == "rabbitMqUser").Value;
+                        var rabbitpass = dbcontext.Settings.First(x => x.Name == "rabbitMqPassword").Value;
+
+                        services
+                            .AddSingleton(sp =>
+                            {
+                                var factory = new ConnectionFactory
+                                {
+                                    HostName = rabbithost,
+                                    UserName = rabbituser,
+                                    Password = rabbitpass,
+                                    AutomaticRecoveryEnabled = true, // helps in case of brief network issues
+                                    RequestedConnectionTimeout = TimeSpan.FromSeconds(10)
+                                };
+                                return factory.CreateConnectionAsync().GetAwaiter().GetResult();
+                            })
+                            .AddHealthChecks()
+                            .AddRabbitMQ();
+
+
                         _sdkPresent = true;
                     }
                     catch (Exception ex) {
