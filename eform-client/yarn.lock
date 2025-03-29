@@ -121,17 +121,6 @@
     rxjs "7.8.1"
     source-map "0.7.4"
 
-"@angular-devkit/schematics@19.2.4":
-  version "19.2.4"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-19.2.4.tgz#e43229808b50f94349a1a5fef039529f219c2738"
-  integrity sha512-WaFe95ncm1A+QTlUHxQcFyGKIn67xgqGX7WCj8R0QlKOS0hLKx97SG4p19uwHlww0lmAcwk/QJP6G6sPL/CJ9w==
-  dependencies:
-    "@angular-devkit/core" "19.2.4"
-    jsonc-parser "3.3.1"
-    magic-string "0.30.17"
-    ora "5.4.1"
-    rxjs "7.8.1"
-
 "@angular-devkit/schematics@19.2.5", "@angular-devkit/schematics@>= 19.0.0 < 20.0.0":
   version "19.2.5"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-19.2.5.tgz#1bff9e8709e59833e9b76083c5b37b31e527d9b1"
@@ -322,10 +311,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/language-service@19.2.3":
-  version "19.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-19.2.3.tgz#ed5b78be072051b5586b4fb5523daa324e2a1abc"
-  integrity sha512-qq54VhRTk8jxnqXN6Q4wK1W7ewSkD0kdhii0Sif25gbkNvfDfqd1PjtnojelG81sN8XhBeMBcDhtbmEQX4nqHg==
+"@angular/language-service@19.2.4":
+  version "19.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-19.2.4.tgz#4eabce16cabefa041f07abeec23eec098e1780b4"
+  integrity sha512-bSLgjQYKyoUHUoD/SEQAmaQAFF2kVVFEBa8oXAFMjLov49CNybLuwgJI4Y11mjOnq6IONjnKLdKFvdrJhQn73g==
 
 "@angular/localize@19.2.0":
   version "19.2.0"
@@ -3841,13 +3830,6 @@
   dependencies:
     "@types/node" "^22.2.0"
 
-"@wdio/types@9.10.1":
-  version "9.10.1"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-9.10.1.tgz#89d3eb936ac2dc5675b01652ee9475e1ff31f325"
-  integrity sha512-/t1VXPU5Ad1FQjRUP0WlK7IR0dCTX5hSkul8SpCuUpWbeyI4Iol/Wx2b1YU6nS+Ydh78rJCyHxtV0eE5TM1rbw==
-  dependencies:
-    "@types/node" "^20.1.0"
-
 "@wdio/types@9.12.2":
   version "9.12.2"
   resolved "https://registry.yarnpkg.com/@wdio/types/-/types-9.12.2.tgz#8fe5b5e30dee55d2c3ce191a03dfbcdbc180726e"
@@ -3873,25 +3855,6 @@
     safaridriver "^0.1.0"
     split2 "^4.2.0"
     wait-port "^1.0.4"
-
-"@wdio/utils@9.12.1":
-  version "9.12.1"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-9.12.1.tgz#8dcf06240e9d73546dbacb697fcbfc051bd4068a"
-  integrity sha512-WrkBdglOwKMpwvCZbOatlLUCghxNWyVfKRDyl92RBX3DuRqqq+uZK8fSHHAJMvXfax5TxcTRzHZUKrQO3ASSXw==
-  dependencies:
-    "@puppeteer/browsers" "^2.2.0"
-    "@wdio/logger" "9.4.4"
-    "@wdio/types" "9.10.1"
-    decamelize "^6.0.0"
-    deepmerge-ts "^7.0.3"
-    edgedriver "^6.1.1"
-    geckodriver "^5.0.0"
-    get-port "^7.0.0"
-    import-meta-resolve "^4.0.0"
-    locate-app "^2.2.24"
-    safaridriver "^1.0.0"
-    split2 "^4.2.0"
-    wait-port "^1.1.0"
 
 "@wdio/utils@9.12.2":
   version "9.12.2"
