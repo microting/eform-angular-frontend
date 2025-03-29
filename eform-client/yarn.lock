@@ -1187,10 +1187,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@ctrl/tinycolor@^3.6.0":
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.6.1.tgz#b6c75a56a1947cc916ea058772d666a2c8932f31"
-  integrity sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==
+"@ctrl/tinycolor@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-4.1.0.tgz#91a8f8120ffc9da2feb2a38f7862b300d5e9691a"
+  integrity sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==
 
 "@cypress/request@^3.0.8":
   version "3.0.8"
@@ -2128,13 +2128,13 @@
     "@napi-rs/nice-win32-ia32-msvc" "1.0.1"
     "@napi-rs/nice-win32-x64-msvc" "1.0.1"
 
-"@ng-matero/extensions@19.2.1":
-  version "19.2.1"
-  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-19.2.1.tgz#d0e0bfec4a4c300777dc160d988fb3d5848b591e"
-  integrity sha512-c1r6s3U71LYPe+GMBv8NgrQK3q/x8libPH/hzvZN60dnQvgdbtSfh8itdB+Od3hXTIU0lm2g+Ir4sJvEDPnBFg==
+"@ng-matero/extensions@19.3.0":
+  version "19.3.0"
+  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-19.3.0.tgz#734bb2fc901fa159b4fff18b12a0cc4064753ac8"
+  integrity sha512-5fJFS5Y3SBk0dm17uhCfi/pX+t8SugnwyS99PxwPGWq9SciJkwAcPhkjY6AalK3cWjVY49gfx1+FuWCEIFCrdQ==
   dependencies:
     "@ng-select/ng-select" "^14.2.0"
-    ngx-color "^9.0.0"
+    ngx-color "^10.0.0"
     photoviewer "^3.10.0"
     tslib "^2.4.0"
 
@@ -9076,12 +9076,12 @@ ngx-auto-unsubscribe@3.0.1:
   resolved "https://registry.yarnpkg.com/ngx-auto-unsubscribe/-/ngx-auto-unsubscribe-3.0.1.tgz#b4970bb2c1289411a5e6a1e5ab175593cc9e76eb"
   integrity sha512-Yp3o2HxjGYNv2yZ0QwR5Wkh6Al3b07J3v7hhcdZhqm7DTJuXMmisaNi5zhnXq2+7rtCg0jaTBsA/SWhtS7zZbw==
 
-ngx-color@^9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-color/-/ngx-color-9.0.0.tgz#7e58da081a3563c53607fc10090a61cfa27eaffc"
-  integrity sha512-zyAFux+FRI4cACZ7g8DQQsBbNMhqmFkhtUPaxhkiVHhPzWU1iqXP8MqWH6By3guNOCch5oYrYNBWlHToklbdDg==
+ngx-color@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-color/-/ngx-color-10.0.0.tgz#dfe4b273d2fae8aea2c49fd1a4fd67abf68f5579"
+  integrity sha512-WYNB/JWE8DzedJz7CuI9ewKFbRngeeTESXQKvHhdgymhil5enhlVFdufNTE6LMctAW5gZAmt/meNVtjNhZknlw==
   dependencies:
-    "@ctrl/tinycolor" "^3.6.0"
+    "@ctrl/tinycolor" "^4.1.0"
     material-colors "^1.2.6"
     tslib "^2.3.0"
 
