@@ -209,7 +209,7 @@ export function selectValueInNgSelector(selector: string | GetElementFunction, v
 }
 
 export function selectValueInNgSelectorNoSelector(value: string) {
-  cy.get('.ng-option-marked').each((item, index, list) => {
+  cy.get('.ng-option').each((item, index, list) => {
     if (item.text().includes(value)) {
       item.click();
     }
