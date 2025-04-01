@@ -60,7 +60,7 @@
     <PackageReference Include="Microting.eFormApi.BasePn" Version="9.0.25" />
     <PackageReference Include="PureOtp" Version="1.0.0.1" />
     <PackageReference Include="Sentry" Version="5.4.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="2.0.0" />
     <PackageReference Include="sendgrid" Version="9.29.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.3" />
