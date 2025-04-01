@@ -62,7 +62,8 @@ import {
   securityReducer,
   usersReducer,
 } from './state';
-import {NgxMaskDirective, NgxMaskPipe} from "ngx-mask";
+import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,7 @@ import {NgxMaskDirective, NgxMaskPipe} from "ngx-mask";
     ConnectionSetupComponent,
   ],
   imports: [
-
+    NgxMaterialTimepickerModule,
     NgxMaskDirective, NgxMaskPipe,
     // Libs
     BrowserModule,
