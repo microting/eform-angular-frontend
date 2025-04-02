@@ -93,3 +93,8 @@ a {
 .pt-6 {
   padding-top: 1.5em;
 }
+
+ngx-material-timepicker-container {
+  z-index: 2000;
+  position: relative;
+}

@@ -1,43 +1,43 @@
-@import '../utilities/colors';
-
-.btn {
-  padding: 0.5rem 1.2rem;
-  &:not(.btn-block) {
-    display: inline-flex;
-  }
-
-  &.btn-neutral {
-    color: $eform-gray;
-    background-color: var(--black-050);
-    & > i {
-      color: $eform-gray-dark;
-    }
-    &:active {
-      color: $eform-gray-dark;
-    }
-  }
-
-  &.btn-icon {
-    //padding: 0.5rem 0.5rem;
-    padding: 0.46em 0.5rem;
-  }
-
-  &.btn-small-height {
-    padding-top: 0.46em;
-    padding-bottom: 0.46em;
-  }
-
-  &.text-uppercase {
-    text-transform: uppercase;
-  }
-}
-
-@each $key in mat-mdc-button-base, mat-mdc-slide-toggle {
-  .#{$key} + .mat-mdc-button-base {
-    @if($key==mat-mdc-slide-toggle){
-      margin-left: 1rem;
-    } @else {
-      margin-left: 0.5rem;
-    }
-  }
-}
+//@import '../utilities/colors';
+//
+//.btn {
+//  padding: 0.5rem 1.2rem;
+//  &:not(.btn-block) {
+//    display: inline-flex;
+//  }
+//
+//  &.btn-neutral {
+//    color: $eform-gray;
+//    background-color: var(--black-050);
+//    & > i {
+//      color: $eform-gray-dark;
+//    }
+//    &:active {
+//      color: $eform-gray-dark;
+//    }
+//  }
+//
+//  &.btn-icon {
+//    //padding: 0.5rem 0.5rem;
+//    padding: 0.46em 0.5rem;
+//  }
+//
+//  &.btn-small-height {
+//    padding-top: 0.46em;
+//    padding-bottom: 0.46em;
+//  }
+//
+//  &.text-uppercase {
+//    text-transform: uppercase;
+//  }
+//}
+//
+//@each $key in mat-mdc-button-base, mat-mdc-slide-toggle {
+//  .#{$key} + .mat-mdc-button-base {
+//    @if($key==mat-mdc-slide-toggle){
+//      margin-left: 1rem;
+//    } @else {
+//      margin-left: 0.5rem;
+//    }
+//  }
+//}

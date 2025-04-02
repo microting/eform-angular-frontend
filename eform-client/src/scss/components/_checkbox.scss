@@ -1,16 +1,16 @@
-@import "../utilities/colors";
-$dark-theme-color: #e7e8eb;
-$light-theme-color: #242729;
-.md-checkbox {
-  margin-bottom: 0;
-}
-
-.md-checkbox input:checked + .md-checkbox--fake::before {
-  border-color: $light-theme-color;
-}
-
-body.theme-dark {
-  .md-checkbox input:checked + .md-checkbox--fake::before {
-    border-color: $dark-theme-color;
-  }
-}
+//@import "../utilities/colors";
+//$dark-theme-color: #e7e8eb;
+//$light-theme-color: #242729;
+//.md-checkbox {
+//  margin-bottom: 0;
+//}
+//
+//.md-checkbox input:checked + .md-checkbox--fake::before {
+//  border-color: $light-theme-color;
+//}
+//
+//body.theme-dark {
+//  .md-checkbox input:checked + .md-checkbox--fake::before {
+//    border-color: $dark-theme-color;
+//  }
+//}

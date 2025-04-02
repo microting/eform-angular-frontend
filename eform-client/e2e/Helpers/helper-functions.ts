@@ -75,18 +75,18 @@ export async function selectDateOnDatePicker(
   await browser.pause(1000);
   await yearForSelect.click();
   // select month. after select month we can select day
-  if (month > 1) {
-    const monthForSelect = await $$(`mat-year-view .mat-calendar-body-cell`)[month - 1];
-    await monthForSelect.waitForClickable({timeout: 20000});
-    await browser.pause(1000);
-    await monthForSelect.click();
-  }
-  else {
+  // if (month > 1) {
+  //   const monthForSelect = await $$(`mat-year-view .mat-calendar-body-cell`)[month - 1];
+  //   await monthForSelect.waitForClickable({timeout: 20000});
+  //   await browser.pause(1000);
+  //   await monthForSelect.click();
+  // }
+  // else {
     const monthForSelect = await $$(`mat-year-view .mat-calendar-body-cell`)[month];
     await monthForSelect.waitForClickable({timeout: 20000});
     await browser.pause(1000);
     await monthForSelect.click();
-  }
+  //}
   // select day
   const dayForSelect = await $$(`mat-month-view .mat-calendar-body-cell`)[day - 1];
   await dayForSelect.waitForClickable({timeout: 20000});
