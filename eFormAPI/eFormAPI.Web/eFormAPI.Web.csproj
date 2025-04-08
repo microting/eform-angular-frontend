@@ -57,7 +57,7 @@
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microting.eForm" Version="9.0.28" />
     <PackageReference Include="Microting.EformAngularFrontendBase" Version="9.0.23" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="9.0.26" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="9.0.27" />
     <PackageReference Include="PureOtp" Version="1.0.0.1" />
     <PackageReference Include="Sentry" Version="5.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.0" />
