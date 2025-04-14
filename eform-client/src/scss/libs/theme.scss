@@ -179,3 +179,9 @@ body {
 .mat-sort-header-content {
   text-align: start !important;
 }
+
+.theme-dark {
+  .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
+    color: white; // Replace with your desired color value
+  }
+}
