@@ -210,42 +210,54 @@ public class Program
 
             try
             {
-                // add missing admin settings to all menu items
-                var menuItems = dbContext.MenuItems.ToList();
-                foreach (var menuItem in menuItems)
+                var connectionStrings =
+                    scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
+                if (connectionStrings.Value.DefaultConnection != "...")
                 {
-                    if (!dbContext.MenuItemSecurityGroups.Any(x => x.MenuItemId == menuItem.Id && x.SecurityGroupId == 1))
+                    // add missing admin settings to all menu items
+                    var menuItems = dbContext.MenuItems.ToList();
+                    foreach (var menuItem in menuItems)
                     {
-                        var securityGroup = new MenuItemSecurityGroup
+                        if (!dbContext.MenuItemSecurityGroups.Any(x =>
+                                x.MenuItemId == menuItem.Id && x.SecurityGroupId == 1))
                         {
-                            MenuItemId = menuItem.Id,
-                            SecurityGroupId = 1
-                        };
+                            var securityGroup = new MenuItemSecurityGroup
+                            {
+                                MenuItemId = menuItem.Id,
+                                SecurityGroupId = 1
+                            };
 
-                        dbContext.MenuItemSecurityGroups.Add(securityGroup);
-                        dbContext.SaveChanges();
-                        Console.WriteLine($"Adding missing admin settings to menu item {menuItem.Name}");
+                            dbContext.MenuItemSecurityGroups.Add(securityGroup);
+                            dbContext.SaveChanges();
+                            Console.WriteLine($"Adding missing admin settings to menu item {menuItem.Name}");
+                        }
+
                     }
-
                 }
-            } catch (Exception /*e*/)
+            } catch (Exception e)
             {
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                 //var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                //logger.LogError(e, "Error while adding missing admin settings to all menu items");
+                logger.LogError(e, "Error while adding missing admin settings to all menu items");
             }
 
             try
             {
-                var users = dbContext.Users
-                    .Where(x => x.EmailSha256 == null)
-                    .ToList();
-
-                foreach (var user in users)
+                var connectionStrings =
+                    scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
+                if (connectionStrings.Value.DefaultConnection != "...")
                 {
-                    // generate sha256 hash of email
-                    user.EmailSha256 = String.Concat((System.Security.Cryptography.SHA256.Create()
-                        .ComputeHash(Encoding.UTF8.GetBytes(user.Email!.ToLower())).Select(item => item.ToString("x2"))));
-                    dbContext.SaveChanges();
+                    var users = dbContext.Users
+                        .Where(x => x.EmailSha256 == null)
+                        .ToList();
+
+                    foreach (var user in users)
+                    {
+                        // generate sha256 hash of email
+                        user.EmailSha256 = String.Concat((System.Security.Cryptography.SHA256.Create()
+                            .ComputeHash(Encoding.UTF8.GetBytes(user.Email!.ToLower())).Select(item => item.ToString("x2"))));
+                        dbContext.SaveChanges();
+                    }
                 }
             }
             catch (Exception e)
