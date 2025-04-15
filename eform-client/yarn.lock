@@ -2128,10 +2128,10 @@
     "@napi-rs/nice-win32-ia32-msvc" "1.0.1"
     "@napi-rs/nice-win32-x64-msvc" "1.0.1"
 
-"@ng-matero/extensions@19.3.0":
-  version "19.3.0"
-  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-19.3.0.tgz#734bb2fc901fa159b4fff18b12a0cc4064753ac8"
-  integrity sha512-5fJFS5Y3SBk0dm17uhCfi/pX+t8SugnwyS99PxwPGWq9SciJkwAcPhkjY6AalK3cWjVY49gfx1+FuWCEIFCrdQ==
+"@ng-matero/extensions@19.3.2":
+  version "19.3.2"
+  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-19.3.2.tgz#6d4a5c1a009bb0ddba041c7f59034b3c68d1cd4a"
+  integrity sha512-IVIs2++USoPvf1Za7A1TnMvynUmna3frk5G1LItIquY6xV+eFp0n9bc5MDIngvo0YAtbsyNHRlWD1VbEubUl8g==
   dependencies:
     "@ng-select/ng-select" "^14.2.0"
     ngx-color "^10.0.0"
@@ -3830,25 +3830,6 @@
     safaridriver "^0.1.0"
     split2 "^4.2.0"
     wait-port "^1.0.4"
-
-"@wdio/utils@9.12.3":
-  version "9.12.3"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-9.12.3.tgz#b9d0eeb3226d3a5591d081caed20fb27573e2471"
-  integrity sha512-G7qpiLux89jqhzz33TvIIWaMIKIUUmmBaBH8ylCu3W/7h8i1/jPrYryOvWw75yVWl1ch4NYEo4uJey1NsJnkAQ==
-  dependencies:
-    "@puppeteer/browsers" "^2.2.0"
-    "@wdio/logger" "9.4.4"
-    "@wdio/types" "9.12.3"
-    decamelize "^6.0.0"
-    deepmerge-ts "^7.0.3"
-    edgedriver "^6.1.1"
-    geckodriver "^5.0.0"
-    get-port "^7.0.0"
-    import-meta-resolve "^4.0.0"
-    locate-app "^2.2.24"
-    safaridriver "^1.0.0"
-    split2 "^4.2.0"
-    wait-port "^1.1.0"
 
 "@wdio/utils@9.12.5":
   version "9.12.5"
