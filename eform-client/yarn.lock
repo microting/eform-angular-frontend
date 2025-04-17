@@ -3831,25 +3831,6 @@
     split2 "^4.2.0"
     wait-port "^1.0.4"
 
-"@wdio/utils@9.12.3":
-  version "9.12.3"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-9.12.3.tgz#b9d0eeb3226d3a5591d081caed20fb27573e2471"
-  integrity sha512-G7qpiLux89jqhzz33TvIIWaMIKIUUmmBaBH8ylCu3W/7h8i1/jPrYryOvWw75yVWl1ch4NYEo4uJey1NsJnkAQ==
-  dependencies:
-    "@puppeteer/browsers" "^2.2.0"
-    "@wdio/logger" "9.4.4"
-    "@wdio/types" "9.12.3"
-    decamelize "^6.0.0"
-    deepmerge-ts "^7.0.3"
-    edgedriver "^6.1.1"
-    geckodriver "^5.0.0"
-    get-port "^7.0.0"
-    import-meta-resolve "^4.0.0"
-    locate-app "^2.2.24"
-    safaridriver "^1.0.0"
-    split2 "^4.2.0"
-    wait-port "^1.1.0"
-
 "@wdio/utils@9.12.5":
   version "9.12.5"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-9.12.5.tgz#66dc85154f7b1c19076d40439141924b1c6975c1"
@@ -4931,10 +4912,10 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.4.tgz#05bffd7ff928465093314708c93bdfa9bd1f0f5b"
   integrity sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==
 
-chromedriver@^135.0.1:
-  version "135.0.1"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-135.0.1.tgz#26e2e1b597ffeb73d0c76aa45403515a9a853cec"
-  integrity sha512-MLAS4t9dkttp1R1O2o/1nvtNIxg1dBTx7OE3ZCSrrFz+EFowd0wRAO7H5j918hw0i8+30yODq99p8CumvqRS9Q==
+chromedriver@^135.0.2:
+  version "135.0.2"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-135.0.2.tgz#73ed7dc6d11306b12f92097a4aae51ed6bc030b4"
+  integrity sha512-/X3VecpIhFFRW/TazgsA/S9RVIcBaMJ6zkZ8Gf8PGn4prB1A/S0JFdgxALjXnbqyjxCi45JUl+5q4rVY65pvQA==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
     axios "^1.7.4"
