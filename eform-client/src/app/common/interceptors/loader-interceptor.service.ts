@@ -6,7 +6,7 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import {finalize, Observable, throwError} from 'rxjs';
+import {EMPTY, finalize, Observable, throwError} from 'rxjs';
 import {LoaderService} from 'src/app/common/services';
 import {catchError, tap} from 'rxjs/operators';
 
@@ -54,13 +54,16 @@ export class LoaderInterceptor implements HttpInterceptor {
         ),
         // This catchError operator removes the request from the requests array and throws an error if there is an error
         catchError((err) => {
+          // console.log('Intercept request intercepted. catchError... for user: ', req);
           // console.error(err);
-          // this.removeRequest(req);
-          return throwError(err);
+          this.removeRequest(req);
+          // return throwError(err);
+          return EMPTY;
         }),
         // This finalize operator removes the request from the requests array when the Observable completes
         finalize(() => {
-          // this.removeRequest(req);
+          // console.log('Intercept request intercepted. Finalizing... for user: ', req);
+          this.removeRequest(req);
         })
       );
   }

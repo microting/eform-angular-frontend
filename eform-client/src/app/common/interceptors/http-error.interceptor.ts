@@ -12,7 +12,7 @@ import {
   throwError,
   catchError,
   switchMap,
-  timer, retryWhen
+  timer, retryWhen, EMPTY
 } from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
@@ -67,15 +67,17 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             return throwError(() => errorMessage);
           }
           case 401: { // Handle 401 — Unauthorized
-            console.error('401 - Unauthorized');
-            console.error(error);
+            // console.error('401 - Unauthorized');
+            // console.error(error);
+            this.loaderService.setLoading(false);
             this.authStateService.logout();
-            return throwError(() => errorMessage);
+            // return throwError(() => errorMessage);
+            return EMPTY;
           }
           case 403: { // Handle 403 — Forbidden
             //this.toastrService.warning('403 - Forbidden');
-            console.error('403 - Forbidden');
-            console.error(error);
+            // console.error('403 - Forbidden');
+            // console.error(error);
             // Try refresh token
             if(!request.url.includes(AuthMethods.RefreshToken)) {
               // this.authStore.dispatch(refreshToken());
@@ -91,19 +93,23 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 }),
                 catchError((refreshError) => {
                   // if refresh token is failed - logout
-                  console.error('Token refresh failed', refreshError);
+                  // console.error('Token refresh failed', refreshError);
+                  this.loaderService.setLoading(false);
                   this.authStateService.logout();
-                  return throwError(() => errorMessage);
+                  // stop the request
+                  return EMPTY;
                 })
               );
             } else {
+              this.loaderService.setLoading(false);
               this.authStateService.logout();
             }
-            return throwError(() => errorMessage);
+            return EMPTY;
+            // return throwError(() => errorMessage);
           }
           default: {
-            const maxRetries = 5; // Number of retries (x)
-            const retryDelay = 15000; // Delay in milliseconds (y)
+            const maxRetries = 3; // Number of retries (x)
+            const retryDelay = 500; // Delay in milliseconds (y)
 
             // @ts-ignore
             if (error._body === undefined) {
@@ -113,9 +119,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                     switchMap((err, index) => {
                       if (index < maxRetries) {
                         this.loaderService.setLoading(true);
+                        console.log('Retrying request...');
                         return timer(retryDelay); // Wait for retryDelay before retrying
                       }
-                      return throwError(() => err); // Throw error after max retries
+                      return EMPTY;
+                      // return throwError(() => err); // Throw error after max retries
                     })
                   )
                 )
@@ -130,7 +138,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 timeOut: 10000,
               });
             }
-            return throwError(() => errorMessage); // Ensure the error is propagated
+            return EMPTY;
+            // return throwError(() => errorMessage); // Ensure the error is propagated
           }
         }
       })
