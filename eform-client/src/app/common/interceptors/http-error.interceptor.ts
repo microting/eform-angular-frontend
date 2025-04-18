@@ -48,9 +48,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       // Handle 400 - Bad Request
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
+        Sentry.captureException(error); // Log to Sentry
         switch (error.status) {
           case 400: {
-            Sentry.captureException(error, ); // Log to Sentry
             let errors;
             // @ts-ignore
             errors = error._body || error.error;
@@ -65,14 +65,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             return throwError(() => errorMessage);
           }
           case 401: { // Handle 401 — Unauthorized
-            Sentry.captureException(error); // Log to Sentry
             console.error('401 - Unauthorized');
             console.error(error);
             this.authStateService.logout();
             return throwError(() => errorMessage);
           }
           case 403: { // Handle 403 — Forbidden
-            Sentry.captureException(error); // Log to Sentry
             //this.toastrService.warning('403 - Forbidden');
             console.error('403 - Forbidden');
             console.error(error);
@@ -102,7 +100,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             return throwError(() => errorMessage);
           }
           default: {
-            Sentry.captureException(error); // Log to Sentry
             // @ts-ignore
             const body = error._body || '';
             errorMessage = `${error.status} - ${error.statusText || ''} ${body}`;
