@@ -15,7 +15,6 @@ import {
   timer, retryWhen, EMPTY
 } from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
-import {Router} from '@angular/router';
 import {AuthStateService} from 'src/app/common/store';
 import {Injectable} from '@angular/core';
 import {AuthMethods, LoaderService} from 'src/app/common/services';
@@ -29,7 +28,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(
     private loaderService: LoaderService,
     private toastrService: ToastrService,
-    private router: Router,
     private authStateService: AuthStateService,
   ) {
   }
@@ -108,8 +106,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             // return throwError(() => errorMessage);
           }
           default: {
-            const maxRetries = 3; // Number of retries (x)
-            const retryDelay = 500; // Delay in milliseconds (y)
+            const maxRetries = 5; // Number of retries (x)
+            const retryDelay = 15000; // Delay in milliseconds (y)
 
             // @ts-ignore
             if (error._body === undefined) {
