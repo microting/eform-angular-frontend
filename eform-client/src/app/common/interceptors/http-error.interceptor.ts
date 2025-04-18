@@ -11,13 +11,14 @@ import {
   retry,
   throwError,
   catchError,
-  switchMap
+  switchMap,
+  timer, retryWhen
 } from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {AuthStateService} from 'src/app/common/store';
 import {Injectable} from '@angular/core';
-import {AuthMethods} from 'src/app/common/services';
+import {AuthMethods, LoaderService} from 'src/app/common/services';
 import {AuthResponseModel, OperationDataResult} from 'src/app/common/models';
 import * as Sentry from '@sentry/angular';
 
@@ -26,6 +27,7 @@ import * as Sentry from '@sentry/angular';
 export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(
+    private loaderService: LoaderService,
     private toastrService: ToastrService,
     private router: Router,
     private authStateService: AuthStateService,
@@ -100,6 +102,26 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             return throwError(() => errorMessage);
           }
           default: {
+            const maxRetries = 5; // Number of retries (x)
+            const retryDelay = 15000; // Delay in milliseconds (y)
+
+            // @ts-ignore
+            if (error._body === undefined) {
+              return next.handle(request).pipe(
+                retryWhen((errors) =>
+                  errors.pipe(
+                    switchMap((err, index) => {
+                      if (index < maxRetries) {
+                        this.loaderService.setLoading(true);
+                        return timer(retryDelay); // Wait for retryDelay before retrying
+                      }
+                      return throwError(() => err); // Throw error after max retries
+                    })
+                  )
+                )
+              );
+            }
+
             // @ts-ignore
             const body = error._body || '';
             errorMessage = `${error.status} - ${error.statusText || ''} ${body}`;
@@ -108,6 +130,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 timeOut: 10000,
               });
             }
+            return throwError(() => errorMessage); // Ensure the error is propagated
           }
         }
       })

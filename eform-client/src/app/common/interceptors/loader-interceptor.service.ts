@@ -54,12 +54,13 @@ export class LoaderInterceptor implements HttpInterceptor {
         ),
         // This catchError operator removes the request from the requests array and throws an error if there is an error
         catchError((err) => {
-          this.removeRequest(req);
+          // console.error(err);
+          // this.removeRequest(req);
           return throwError(err);
         }),
         // This finalize operator removes the request from the requests array when the Observable completes
         finalize(() => {
-          this.removeRequest(req);
+          // this.removeRequest(req);
         })
       );
   }
