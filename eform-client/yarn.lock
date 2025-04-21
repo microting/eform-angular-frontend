@@ -10,14 +10,6 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-"@angular-devkit/architect@0.1902.7":
-  version "0.1902.7"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.1902.7.tgz#3d20acff9f6c67ff4f03c0805d865df388b66abf"
-  integrity sha512-XPKbesrGJ3qOHLcwb3y8X14NlBIwxnh9OvsfyqgBujByJq0LIg4CaU/GrX0Lo4RmX3UQBli668TjFgmIkMTL7Q==
-  dependencies:
-    "@angular-devkit/core" "19.2.7"
-    rxjs "7.8.1"
-
 "@angular-devkit/architect@0.1902.8", "@angular-devkit/architect@>= 0.1900.0 < 0.2000.0":
   version "0.1902.8"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.1902.8.tgz#7c363c9e31f420f0ff88d7ebe2fc2fb601c3872f"
@@ -26,16 +18,16 @@
     "@angular-devkit/core" "19.2.8"
     rxjs "7.8.1"
 
-"@angular-devkit/build-angular@19.2.7":
-  version "19.2.7"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-19.2.7.tgz#8a105ea297660b0a133c7d84355a4dc541b6efcb"
-  integrity sha512-2VZOLXGNChC9qme7Xo4z227GTb+hQw1dtyJvkeT1XmdxY0iBlCaZx2Stn0mFWOzNx3iL+QOX3XXYO4veCJrSWQ==
+"@angular-devkit/build-angular@19.2.8":
+  version "19.2.8"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-19.2.8.tgz#bfcc012d072ae6ebc54abb5ff4240a8b9ef0bbce"
+  integrity sha512-jlOig9cXfjvH34mq74wAznXpRTb88XP1g5ZE8rKch4qGwh+mFF7aES86MxCvMZGXgz6KckC5dIEL7VHuB7NVCA==
   dependencies:
     "@ampproject/remapping" "2.3.0"
-    "@angular-devkit/architect" "0.1902.7"
-    "@angular-devkit/build-webpack" "0.1902.7"
-    "@angular-devkit/core" "19.2.7"
-    "@angular/build" "19.2.7"
+    "@angular-devkit/architect" "0.1902.8"
+    "@angular-devkit/build-webpack" "0.1902.8"
+    "@angular-devkit/core" "19.2.8"
+    "@angular/build" "19.2.8"
     "@babel/core" "7.26.10"
     "@babel/generator" "7.26.10"
     "@babel/helper-annotate-as-pure" "7.25.9"
@@ -46,7 +38,7 @@
     "@babel/preset-env" "7.26.9"
     "@babel/runtime" "7.26.10"
     "@discoveryjs/json-ext" "0.6.3"
-    "@ngtools/webpack" "19.2.7"
+    "@ngtools/webpack" "19.2.8"
     "@vitejs/plugin-basic-ssl" "1.2.0"
     ansi-colors "4.1.3"
     autoprefixer "10.4.20"
@@ -89,25 +81,13 @@
   optionalDependencies:
     esbuild "0.25.1"
 
-"@angular-devkit/build-webpack@0.1902.7":
-  version "0.1902.7"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-webpack/-/build-webpack-0.1902.7.tgz#5982bf1bcb5b2656cca12391543f3805ab6d8a27"
-  integrity sha512-5oo2RFjTrNy/D7fLgTdRhL/rrIfydgHCdwtmQCoeL9RVXp6LcHtmMu2H26WzqVngd0wMYZ8OEbdJDyw5uFL+xA==
+"@angular-devkit/build-webpack@0.1902.8":
+  version "0.1902.8"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-webpack/-/build-webpack-0.1902.8.tgz#7abf7fb71b09f2390037ec17095682a064b9c647"
+  integrity sha512-0X7Lou22VV5ZoG9AW9q1+0kqWbaq51vHZg0YnjfqxEZ1gqKXqE4flZHAvUhm92aeRp8O1UH8YqujwqiCGzvCNg==
   dependencies:
-    "@angular-devkit/architect" "0.1902.7"
+    "@angular-devkit/architect" "0.1902.8"
     rxjs "7.8.1"
-
-"@angular-devkit/core@19.2.7":
-  version "19.2.7"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.7.tgz#f8a53906801b486a596038dd3e40d1276ffe4ce5"
-  integrity sha512-WeX/7HuNooJ4UhvVdremj6it0cX3nreG0/5r3QfrQd5Tz3sCHnh/lO5TW31gHtSqVgPjBGmzSzsyZ1Mi0lI7FA==
-  dependencies:
-    ajv "8.17.1"
-    ajv-formats "3.0.1"
-    jsonc-parser "3.3.1"
-    picomatch "4.0.2"
-    rxjs "7.8.1"
-    source-map "0.7.4"
 
 "@angular-devkit/core@19.2.8", "@angular-devkit/core@>= 19.0.0 < 20.0.0":
   version "19.2.8"
@@ -120,17 +100,6 @@
     picomatch "4.0.2"
     rxjs "7.8.1"
     source-map "0.7.4"
-
-"@angular-devkit/schematics@19.2.7":
-  version "19.2.7"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-19.2.7.tgz#999f8dbd8bec88321cb05f72f056d722034f1c3f"
-  integrity sha512-kE9W1MqfasumAYVD8egMHefyxmA93KfBYrWqcepZaFPQTPwg1AGTlID7YLHToLQquw4Iqen6Xv8Bzfv05IZ+tw==
-  dependencies:
-    "@angular-devkit/core" "19.2.7"
-    jsonc-parser "3.3.1"
-    magic-string "0.30.17"
-    ora "5.4.1"
-    rxjs "7.8.1"
 
 "@angular-devkit/schematics@19.2.8", "@angular-devkit/schematics@>= 19.0.0 < 20.0.0":
   version "19.2.8"
@@ -209,13 +178,13 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/build@19.2.7":
-  version "19.2.7"
-  resolved "https://registry.yarnpkg.com/@angular/build/-/build-19.2.7.tgz#828878f82ee793e0f1b0ea1d3d0b36ccc357383a"
-  integrity sha512-a91gbY7jxXZinUXC5O7I4urUV2Omv4hI2zOY4ufq2tvTt8iRjU/0SbHdIU2xFvon8CI/9HyB1WBl0JuDjlJMfg==
+"@angular/build@19.2.8":
+  version "19.2.8"
+  resolved "https://registry.yarnpkg.com/@angular/build/-/build-19.2.8.tgz#ae72b59aadd3e7d18b2772c6ffc5549751d99ffc"
+  integrity sha512-lfg9OZqRZhmaXbmZTjSE24auOskd7XSbWjZsYodGcW4dYfZdCGkI1g2bP/p6EGQqm+8Vw+IHecyzHLtdJNcbpA==
   dependencies:
     "@ampproject/remapping" "2.3.0"
-    "@angular-devkit/architect" "0.1902.7"
+    "@angular-devkit/architect" "0.1902.8"
     "@babel/core" "7.26.10"
     "@babel/helper-annotate-as-pure" "7.25.9"
     "@babel/helper-split-export-declaration" "7.24.7"
@@ -238,7 +207,7 @@
     sass "1.85.0"
     semver "7.7.1"
     source-map-support "0.5.21"
-    vite "6.2.5"
+    vite "6.2.6"
     watchpack "2.4.2"
   optionalDependencies:
     lmdb "3.2.6"
@@ -317,10 +286,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/language-service@19.2.6":
-  version "19.2.6"
-  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-19.2.6.tgz#3a73762633c2843e72e2962bc1d776ee97c3dcf1"
-  integrity sha512-8ilcY4g2E0jt/IYEmmzD7RYFSMvLKiuh1aSLkpOYyKUSM9w2pK2CGZ1tldLAUfK9wuWHGCR24LDMTxRpZzt+OQ==
+"@angular/language-service@19.2.7":
+  version "19.2.7"
+  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-19.2.7.tgz#6d8ef4eec7b7d7f1da4cf87d52b5aa6b2e236294"
+  integrity sha512-+/Pa6NWkunZyHVPi8rAQX+5MmFSE7aBgB9Qs0ZiCymgdJt8aFC/ry0O62k+9s2uxBd//GS1CZSIttwOxOZnZ7w==
 
 "@angular/localize@19.2.0":
   version "19.2.0"
@@ -2159,10 +2128,10 @@
     "@napi-rs/nice-win32-ia32-msvc" "1.0.1"
     "@napi-rs/nice-win32-x64-msvc" "1.0.1"
 
-"@ng-matero/extensions@19.3.0":
-  version "19.3.0"
-  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-19.3.0.tgz#734bb2fc901fa159b4fff18b12a0cc4064753ac8"
-  integrity sha512-5fJFS5Y3SBk0dm17uhCfi/pX+t8SugnwyS99PxwPGWq9SciJkwAcPhkjY6AalK3cWjVY49gfx1+FuWCEIFCrdQ==
+"@ng-matero/extensions@19.3.3":
+  version "19.3.3"
+  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-19.3.3.tgz#97b176c618a4bbe48930897344f3aaa1dad2daad"
+  integrity sha512-qxJw7+ZDFWOEguS96/8bGhvluekaPW+aKvQW9sjlOmLQXswQnQ+DFH58z2kmtDonY2vIUH6nT9ZR+QmiNRrS+Q==
   dependencies:
     "@ng-select/ng-select" "^14.2.0"
     ngx-color "^10.0.0"
@@ -2204,10 +2173,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@ngtools/webpack@19.2.7":
-  version "19.2.7"
-  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-19.2.7.tgz#5a06b75cab3f7ff7f47ffbb8cbac44d1e66b5a84"
-  integrity sha512-dUdalMLy6oNrrDQNOQMrfOZaFdvqNW/z8Z3EhtWySc2CiD/yjIqYwWi51o/SuDqBIglNa5BSrxHFfpAXl12r6w==
+"@ngtools/webpack@19.2.8":
+  version "19.2.8"
+  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-19.2.8.tgz#13470efeae8142e669d5c744a3d1f96499b548e8"
+  integrity sha512-PBuEadA1bM3BYqo49FdXIgehgEGMSnPmbfmeMC5xRtOXNw8Ear2ogjqPoOj45L98grcS2XyJPlctC7C8kQpA+g==
 
 "@ngx-translate/core@16.0.4":
   version "16.0.4"
@@ -3516,13 +3485,13 @@
     "@typescript-eslint/types" "7.18.0"
     "@typescript-eslint/visitor-keys" "7.18.0"
 
-"@typescript-eslint/scope-manager@8.29.1":
-  version "8.29.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-8.29.1.tgz#cfdfd4144f20c38b9d3e430efd6480e297ef52f6"
-  integrity sha512-2nggXGX5F3YrsGN08pw4XpMLO1Rgtnn4AzTegC2MDesv6q3QaTU5yU7IbS1tf1IwCR0Hv/1EFygLn9ms6LIpDA==
+"@typescript-eslint/scope-manager@8.30.1":
+  version "8.30.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-8.30.1.tgz#f99c7efd53b5ff9fb57e55be71eb855603fd80b7"
+  integrity sha512-+C0B6ChFXZkuaNDl73FJxRYT0G7ufVPOSQkqkpM/U198wUwUFOtgo1k/QzFh1KjpBitaK7R1tgjVz6o9HmsRPg==
   dependencies:
-    "@typescript-eslint/types" "8.29.1"
-    "@typescript-eslint/visitor-keys" "8.29.1"
+    "@typescript-eslint/types" "8.30.1"
+    "@typescript-eslint/visitor-keys" "8.30.1"
 
 "@typescript-eslint/type-utils@7.18.0":
   version "7.18.0"
@@ -3539,10 +3508,10 @@
   resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-7.18.0.tgz#b90a57ccdea71797ffffa0321e744f379ec838c9"
   integrity sha512-iZqi+Ds1y4EDYUtlOOC+aUmxnE9xS/yCigkjA7XpTKV6nCBd3Hp/PRGGmdwnfkV2ThMyYldP1wRpm/id99spTQ==
 
-"@typescript-eslint/types@8.29.1":
-  version "8.29.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-8.29.1.tgz#984ed1283fedbfb41d3993a9abdcb7b299971500"
-  integrity sha512-VT7T1PuJF1hpYC3AGm2rCgJBjHL3nc+A/bhOp9sGMKfi5v0WufsX/sHCFBfNTx2F+zA6qBc/PD0/kLRLjdt8mQ==
+"@typescript-eslint/types@8.30.1":
+  version "8.30.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-8.30.1.tgz#20ff6d66ab3d8fe0533aeb7092a487393d53f925"
+  integrity sha512-81KawPfkuulyWo5QdyG/LOKbspyyiW+p4vpn4bYO7DM/hZImlVnFwrpCTnmNMOt8CvLRr5ojI9nU1Ekpw4RcEw==
 
 "@typescript-eslint/typescript-estree@7.18.0":
   version "7.18.0"
@@ -3558,13 +3527,13 @@
     semver "^7.6.0"
     ts-api-utils "^1.3.0"
 
-"@typescript-eslint/typescript-estree@8.29.1":
-  version "8.29.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-8.29.1.tgz#4ac085665ed5390d11c0e3426427978570e3b747"
-  integrity sha512-l1enRoSaUkQxOQnbi0KPUtqeZkSiFlqrx9/3ns2rEDhGKfTa+88RmXqedC1zmVTOWrLc2e6DEJrTA51C9iLH5g==
+"@typescript-eslint/typescript-estree@8.30.1":
+  version "8.30.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-8.30.1.tgz#f5c133e4a76a54d25607434f2c276409d7bec4ba"
+  integrity sha512-kQQnxymiUy9tTb1F2uep9W6aBiYODgq5EMSk6Nxh4Z+BDUoYUSa029ISs5zTzKBFnexQEh71KqwjKnRz58lusQ==
   dependencies:
-    "@typescript-eslint/types" "8.29.1"
-    "@typescript-eslint/visitor-keys" "8.29.1"
+    "@typescript-eslint/types" "8.30.1"
+    "@typescript-eslint/visitor-keys" "8.30.1"
     debug "^4.3.4"
     fast-glob "^3.3.2"
     is-glob "^4.0.3"
@@ -3582,15 +3551,15 @@
     "@typescript-eslint/types" "7.18.0"
     "@typescript-eslint/typescript-estree" "7.18.0"
 
-"@typescript-eslint/utils@^8.29.1":
-  version "8.29.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-8.29.1.tgz#3d206c8c8def3527a8eb0588e94e3e60f7e167c9"
-  integrity sha512-QAkFEbytSaB8wnmB+DflhUPz6CLbFWE2SnSCrRMEa+KnXIzDYbpsn++1HGvnfAsUY44doDXmvRkO5shlM/3UfA==
+"@typescript-eslint/utils@^8.30.1":
+  version "8.30.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-8.30.1.tgz#23d4824394765948fe73dc7113892f85fdc80efd"
+  integrity sha512-T/8q4R9En2tcEsWPQgB5BQ0XJVOtfARcUvOa8yJP3fh9M/mXraLxZrkCfGb6ChrO/V3W+Xbd04RacUEqk1CFEQ==
   dependencies:
     "@eslint-community/eslint-utils" "^4.4.0"
-    "@typescript-eslint/scope-manager" "8.29.1"
-    "@typescript-eslint/types" "8.29.1"
-    "@typescript-eslint/typescript-estree" "8.29.1"
+    "@typescript-eslint/scope-manager" "8.30.1"
+    "@typescript-eslint/types" "8.30.1"
+    "@typescript-eslint/typescript-estree" "8.30.1"
 
 "@typescript-eslint/visitor-keys@7.18.0":
   version "7.18.0"
@@ -3600,12 +3569,12 @@
     "@typescript-eslint/types" "7.18.0"
     eslint-visitor-keys "^3.4.3"
 
-"@typescript-eslint/visitor-keys@8.29.1":
-  version "8.29.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-8.29.1.tgz#9b74e5098c71138d42bbf2178fbe4dfad45d6b9a"
-  integrity sha512-RGLh5CRaUEf02viP5c1Vh1cMGffQscyHe7HPAzGpfmfflFg1wUz2rYxd+OZqwpeypYvZ8UxSxuIpF++fmOzEcg==
+"@typescript-eslint/visitor-keys@8.30.1":
+  version "8.30.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-8.30.1.tgz#510955ef1fb56e08da4b7953a3377258e5942e36"
+  integrity sha512-aEhgas7aJ6vZnNFC7K4/vMGDGyOiqWcYZPpIWrTKuTAlsvDNKy2GFDqh9smL+iq069ZvR0YzEeq0B8NJlLzjFA==
   dependencies:
-    "@typescript-eslint/types" "8.29.1"
+    "@typescript-eslint/types" "8.30.1"
     eslint-visitor-keys "^4.2.0"
 
 "@ungap/structured-clone@^1.2.0":
@@ -3639,19 +3608,19 @@
     magic-string "^0.30.12"
     pathe "^1.1.2"
 
-"@wdio/cli@^9.12.5":
-  version "9.12.5"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-9.12.5.tgz#2895339a2d2a487897b394a144962d5092377451"
-  integrity sha512-ZsUzPvkBtw5IWvOmLwtvrgtVbAXw3HIBuox7yn0NiSJkdl0V5QHSGKGLgkt27azktwPThRymrgx9723egEONIw==
+"@wdio/cli@^9.12.6":
+  version "9.12.6"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-9.12.6.tgz#e5db7a8ff87e566f43ba482bddcfe4b4c5649668"
+  integrity sha512-ZPmbN9o64dBZoVpAEdZm7A0QwuuGh/xLQVdx5twAQ6XIhK30sQB8uQ/yycD2rTmG5UKsVbwv6ceCqDOl8Ggr1w==
   dependencies:
     "@types/node" "^20.1.1"
     "@vitest/snapshot" "^2.1.1"
-    "@wdio/config" "9.12.5"
-    "@wdio/globals" "9.12.5"
+    "@wdio/config" "9.12.6"
+    "@wdio/globals" "9.12.6"
     "@wdio/logger" "9.4.4"
     "@wdio/protocols" "9.12.5"
-    "@wdio/types" "9.12.3"
-    "@wdio/utils" "9.12.5"
+    "@wdio/types" "9.12.6"
+    "@wdio/utils" "9.12.6"
     async-exit-hook "^2.0.1"
     chalk "^5.2.0"
     chokidar "^4.0.0"
@@ -3666,7 +3635,7 @@
     read-pkg-up "^10.0.0"
     recursive-readdir "^2.2.3"
     tsx "^4.7.2"
-    webdriverio "9.12.5"
+    webdriverio "9.12.6"
     yargs "^17.7.2"
 
 "@wdio/config@8.41.0":
@@ -3682,14 +3651,14 @@
     glob "^10.2.2"
     import-meta-resolve "^4.0.0"
 
-"@wdio/config@9.12.5":
-  version "9.12.5"
-  resolved "https://registry.yarnpkg.com/@wdio/config/-/config-9.12.5.tgz#6859b41a14ec822f864c769d0ae7bf046f82caf2"
-  integrity sha512-T4pOgY7FLj0+SBc58n81JZidCJKfqaSb9Ql9lOd38tmorEwTKjcPAzQQY1Ftzqv49kjBHvXdlupy685VVKNepA==
+"@wdio/config@9.12.6":
+  version "9.12.6"
+  resolved "https://registry.yarnpkg.com/@wdio/config/-/config-9.12.6.tgz#2b1d1b7950450940563d54ef988eec2dcc2a3bb3"
+  integrity sha512-zlOJixJUHxeoyfIN/KdM797HwJj/oNgBaEdftgJARqbXt5AVZu18vJ3zljb+wzbY2M0pl7Y4+5OFH06WlDgQ+A==
   dependencies:
     "@wdio/logger" "9.4.4"
-    "@wdio/types" "9.12.3"
-    "@wdio/utils" "9.12.5"
+    "@wdio/types" "9.12.6"
+    "@wdio/utils" "9.12.6"
     deepmerge-ts "^7.0.3"
     glob "^10.2.2"
     import-meta-resolve "^4.0.0"
@@ -3702,13 +3671,13 @@
     expect-webdriverio "^4.11.2"
     webdriverio "8.42.0"
 
-"@wdio/globals@9.12.5":
-  version "9.12.5"
-  resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-9.12.5.tgz#7778563578db88fa7cf61efb5f02c1baaa4cf6d3"
-  integrity sha512-BixX9uOJNmtdlitqHLFzexo3RgM+IRljhR8iujdpgV5bMrt4K+sup0SchZTl80jZB95WBKgv87N+RoOZxiZEKg==
+"@wdio/globals@9.12.6":
+  version "9.12.6"
+  resolved "https://registry.yarnpkg.com/@wdio/globals/-/globals-9.12.6.tgz#544e7f5f6c735e06ef71b39c33fae4d11539865d"
+  integrity sha512-/JrmgoZ/VR6fj3z5v9C1rx2tc0kPSuDNyju+cluWyNHJ8oPJCNr6ZkcFWrWAU5WYz3CBT+bZI7EyqNMpHNOJBg==
   optionalDependencies:
     expect-webdriverio "^5.1.0"
-    webdriverio "9.12.5"
+    webdriverio "9.12.6"
 
 "@wdio/local-runner@^8.40.1":
   version "8.42.0"
@@ -3754,16 +3723,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@^9.12.5":
-  version "9.12.5"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-9.12.5.tgz#157a69cdb625008b988d0bd5b3f8adc21506e1bb"
-  integrity sha512-QNyvTjz2mgLn80NwtE3P1XhMa6ve65FZhb/N9XMYl5ATKSLh/HTl458eVdpVaSh/9FHaZpfkruEJdCB8milYeQ==
+"@wdio/mocha-framework@^9.12.6":
+  version "9.12.6"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-9.12.6.tgz#e2f2503e3fd58122aa60be081b1631ec3c64a9d6"
+  integrity sha512-vBAtVY+PLCGTZqTqsfxNtPVthk6tKI4JSffgGNlWDK/uCcjUOZdvsRRs7VRLr8COyeP1QQFzJ8cHDpCu8nd7Fw==
   dependencies:
     "@types/mocha" "^10.0.6"
     "@types/node" "^20.11.28"
     "@wdio/logger" "9.4.4"
-    "@wdio/types" "9.12.3"
-    "@wdio/utils" "9.12.5"
+    "@wdio/types" "9.12.6"
+    "@wdio/utils" "9.12.6"
     mocha "^10.3.0"
 
 "@wdio/protocols@8.40.3":
@@ -3790,14 +3759,14 @@
   dependencies:
     "@types/node" "^20.1.0"
 
-"@wdio/reporter@9.12.3":
-  version "9.12.3"
-  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-9.12.3.tgz#8e99d7f51fe44aafff4eaefb6f9698fef7c8dffa"
-  integrity sha512-T0dO6xQ3AYTwvgmHpVP/w/8pgDtv3SFo8JKO0EDBFM6uNOyKlh+9ChvU2KednY1Qt7Pw11sUrSFsFzY7TXW1iQ==
+"@wdio/reporter@9.12.6":
+  version "9.12.6"
+  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-9.12.6.tgz#116641dc4e416eddbdc999ba1d509ffdcdfacbcc"
+  integrity sha512-8cR74tEp5nzC8nP59n4hkDUpoaHUNDbJvP3jD9EfX+ZO4OgPMyJMVTGubo1o88Wuty/Gd2jvOZLHoGD8KlHcKw==
   dependencies:
     "@types/node" "^20.1.0"
     "@wdio/logger" "9.4.4"
-    "@wdio/types" "9.12.3"
+    "@wdio/types" "9.12.6"
     diff "^7.0.0"
     object-inspect "^1.12.0"
 
@@ -3818,13 +3787,13 @@
     webdriver "8.42.0"
     webdriverio "8.42.0"
 
-"@wdio/spec-reporter@^9.12.3":
-  version "9.12.3"
-  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-9.12.3.tgz#3d9dd8af4ca8c706178c66e882ffabdec3fd94c0"
-  integrity sha512-d/ZLu6gwzuuzYMObfC8Kaf2Lv8GkxfrrPr+ZUVbwWiJI0MxRJJc2STb2fchbSc1eTRkzKpuTHVPYF932yaCrsA==
+"@wdio/spec-reporter@^9.12.6":
+  version "9.12.6"
+  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-9.12.6.tgz#ce14e871c6b8424d22bbcd606c90055591f1116b"
+  integrity sha512-zLBbp5tuCdwyxCdh7IXdFk7fideP/e/U8GjuWpRMMuGHCrfIdVxShM5CEq1XEv7Lnw4RWkO6Yo00LU4F0Lafmg==
   dependencies:
-    "@wdio/reporter" "9.12.3"
-    "@wdio/types" "9.12.3"
+    "@wdio/reporter" "9.12.6"
+    "@wdio/types" "9.12.6"
     chalk "^5.1.2"
     easy-table "^1.2.0"
     pretty-ms "^9.0.0"
@@ -3836,10 +3805,10 @@
   dependencies:
     "@types/node" "^22.2.0"
 
-"@wdio/types@9.12.3":
-  version "9.12.3"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-9.12.3.tgz#b8c7491bd65f9b451ccf58d33061bc14df111340"
-  integrity sha512-MlnQ3WG1CQAjmUmeKtv3timGR91hSsCwQW9T1kqpu0VaJ/qbw3sWgtArMqRvgWB2H6IGueqQwDQ9qHlP013w9Q==
+"@wdio/types@9.12.6":
+  version "9.12.6"
+  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-9.12.6.tgz#62b243fa49c5de76f265882c506f63cb4c6a9622"
+  integrity sha512-WzZhaN834du9wjqT/Go9qPyB7VkzV2bjr6pr06DrIzxIpJq/snWOv96C6OjJu8nmYNRjV769mAxyggBUf+sUoQ==
   dependencies:
     "@types/node" "^20.1.0"
 
@@ -3862,14 +3831,14 @@
     split2 "^4.2.0"
     wait-port "^1.0.4"
 
-"@wdio/utils@9.12.5":
-  version "9.12.5"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-9.12.5.tgz#66dc85154f7b1c19076d40439141924b1c6975c1"
-  integrity sha512-yddJj7VyA3kGuAuDU63ZdRBK4D1jwSU+52KwlZtOeqDdT/i6KAwRVYNYMwwmsGuM4GpY3q5h944YylBQNkKkjQ==
+"@wdio/utils@9.12.6":
+  version "9.12.6"
+  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-9.12.6.tgz#eb789fccb9b1a0c44b72dd6ad7f63785d407ed6e"
+  integrity sha512-JfI4CxBRQCOgToJeQNaZLv+wYNIGyJG1gqrpxUOvkrJvBgdOAmIu3dzlcKP/WviXlcxvwLQF2FK8bQVTjHv0fQ==
   dependencies:
     "@puppeteer/browsers" "^2.2.0"
     "@wdio/logger" "9.4.4"
-    "@wdio/types" "9.12.3"
+    "@wdio/types" "9.12.6"
     decamelize "^6.0.0"
     deepmerge-ts "^7.0.3"
     edgedriver "^6.1.1"
@@ -4943,10 +4912,10 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.4.tgz#05bffd7ff928465093314708c93bdfa9bd1f0f5b"
   integrity sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==
 
-chromedriver@^135.0.1:
-  version "135.0.1"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-135.0.1.tgz#26e2e1b597ffeb73d0c76aa45403515a9a853cec"
-  integrity sha512-MLAS4t9dkttp1R1O2o/1nvtNIxg1dBTx7OE3ZCSrrFz+EFowd0wRAO7H5j918hw0i8+30yODq99p8CumvqRS9Q==
+chromedriver@^135.0.2:
+  version "135.0.2"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-135.0.2.tgz#73ed7dc6d11306b12f92097a4aae51ed6bc030b4"
+  integrity sha512-/X3VecpIhFFRW/TazgsA/S9RVIcBaMJ6zkZ8Gf8PGn4prB1A/S0JFdgxALjXnbqyjxCi45JUl+5q4rVY65pvQA==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
     axios "^1.7.4"
@@ -12045,10 +12014,10 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vite@6.2.5:
-  version "6.2.5"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-6.2.5.tgz#d093b5fe8eb96e594761584a966ab13f24457820"
-  integrity sha512-j023J/hCAa4pRIUH6J9HemwYfjB5llR2Ps0CWeikOtdR8+pAURAk0DoJC5/mm9kd+UgdnIy7d6HE4EAvlYhPhA==
+vite@6.2.6:
+  version "6.2.6"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-6.2.6.tgz#7f0ccf2fdc0c1eda079ce258508728e2473d3f61"
+  integrity sha512-9xpjNl3kR4rVDZgPNdTL0/c6ao4km69a/2ihNQbcANz8RuCOK3hQBmLSJf3bRKVQjVMda+YvizNE8AwvogcPbw==
   dependencies:
     esbuild "^0.25.0"
     postcss "^8.5.3"
@@ -12150,18 +12119,18 @@ webdriver@8.42.0:
     ky "^0.33.0"
     ws "^8.8.0"
 
-webdriver@9.12.5:
-  version "9.12.5"
-  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-9.12.5.tgz#ea34f0f33cd2a0d37c2d721b14258b7715f8bb3c"
-  integrity sha512-CQCb1kDh52VtzPOIWc6XOdRz9q07LMAm9XwL+ABLSd0gueJq+GZoUTqHVX1YwVF0EQlFnw0JYJok0hxGH7m7cw==
+webdriver@9.12.6:
+  version "9.12.6"
+  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-9.12.6.tgz#dc5d5bd7030dcacf66119409771e846a7fa03ae0"
+  integrity sha512-Alz+JiaVW15b/Qy6zSmJeYXxvmtMIVpEAg7QDfCWqG9miZSKJYWwgWE3xoSrwYn5kTylUszqb17Pb5wyrj7YFw==
   dependencies:
     "@types/node" "^20.1.0"
     "@types/ws" "^8.5.3"
-    "@wdio/config" "9.12.5"
+    "@wdio/config" "9.12.6"
     "@wdio/logger" "9.4.4"
     "@wdio/protocols" "9.12.5"
-    "@wdio/types" "9.12.3"
-    "@wdio/utils" "9.12.5"
+    "@wdio/types" "9.12.6"
+    "@wdio/utils" "9.12.6"
     deepmerge-ts "^7.0.3"
     undici "^6.20.1"
     ws "^8.8.0"
@@ -12197,19 +12166,19 @@ webdriverio@8.42.0, webdriverio@^8.29.3, webdriverio@^8.39.1:
     serialize-error "^11.0.1"
     webdriver "8.42.0"
 
-webdriverio@9.12.5:
-  version "9.12.5"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-9.12.5.tgz#c1cbd3feece888f67123c5f212c1f76d3adc2b0d"
-  integrity sha512-ho7gEOdPkpMlZJ5fbCX6+zAllnVdYl8X9RZ4x3tDabf3ByEzReqexaTVou8ayWmNngGjarWlXX3ov1BIdhQTLQ==
+webdriverio@9.12.6:
+  version "9.12.6"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-9.12.6.tgz#a24c6e8f42d254d423ab0a0fadf52f28c64a88cf"
+  integrity sha512-cAuDFz2NgDxxvhC2/xEW7Pc5lC2TGMcohOuRmbQmSx4hNc82Hp2QpM+fVAS0ZDr9lzg9h3u0bL/blyV2Ah5NCg==
   dependencies:
     "@types/node" "^20.11.30"
     "@types/sinonjs__fake-timers" "^8.1.5"
-    "@wdio/config" "9.12.5"
+    "@wdio/config" "9.12.6"
     "@wdio/logger" "9.4.4"
     "@wdio/protocols" "9.12.5"
     "@wdio/repl" "9.4.4"
-    "@wdio/types" "9.12.3"
-    "@wdio/utils" "9.12.5"
+    "@wdio/types" "9.12.6"
+    "@wdio/utils" "9.12.6"
     archiver "^7.0.1"
     aria-query "^5.3.0"
     cheerio "^1.0.0-rc.12"
@@ -12226,7 +12195,7 @@ webdriverio@9.12.5:
     rgb2hex "0.2.5"
     serialize-error "^11.0.3"
     urlpattern-polyfill "^10.0.0"
-    webdriver "9.12.5"
+    webdriver "9.12.6"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
