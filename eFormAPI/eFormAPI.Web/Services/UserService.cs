@@ -217,6 +217,7 @@ public class UserService(
     {
         return await dbContext.Users
             .AsNoTracking()
+            .OrderBy(x => x.Id)
             .Select(x => x.Id)
             .FirstOrDefaultAsync();
     }
