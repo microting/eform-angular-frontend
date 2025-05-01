@@ -133,18 +133,18 @@
     rxjs "7.8.1"
     source-map "0.7.4"
 
-"@angular-devkit/schematics@19.2.8":
-  version "19.2.8"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-19.2.8.tgz#489783d3cc44c6e49bfd39602238ce04550fae45"
-  integrity sha512-QsmFuYdAyeCyg9WF/AJBhFXDUfCwmDFTEbsv5t5KPSP6slhk0GoLNZApniiFytU2siRlSxVNpve2uATyYuAYkQ==
+"@angular-devkit/schematics@19.2.10", "@angular-devkit/schematics@>= 19.0.0 < 20.0.0":
+  version "19.2.10"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-19.2.10.tgz#0cd3f1470df574ad82d76116ac7722658e47295d"
+  integrity sha512-S+7Mvi9GMiJu3BY0Dpa7TrrAiFIwGwCIKLpO0IgGLUDh9fVLIlcIC/PZgU+L46gEpRwPZfrfMbDFKIlGGz/eQQ==
   dependencies:
-    "@angular-devkit/core" "19.2.8"
+    "@angular-devkit/core" "19.2.10"
     jsonc-parser "3.3.1"
     magic-string "0.30.17"
     ora "5.4.1"
     rxjs "7.8.1"
 
-"@angular-devkit/schematics@19.2.9", "@angular-devkit/schematics@>= 19.0.0 < 20.0.0":
+"@angular-devkit/schematics@19.2.9":
   version "19.2.9"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-19.2.9.tgz#d7f5a99d7d0655d9f1ac1071ac96b3daf54cd59a"
   integrity sha512-B8FQ4hFsP4Ffh895F9GVvyhgDoZztWnAyYKiM1pyvLSQikzaUZqi9NZnD12HgMALmwm2z36zTzoSNsYFBTHgaw==
