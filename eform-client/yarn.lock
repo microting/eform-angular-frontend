@@ -121,17 +121,6 @@
     rxjs "7.8.1"
     source-map "0.7.4"
 
-"@angular-devkit/schematics@19.2.10":
-  version "19.2.10"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-19.2.10.tgz#0cd3f1470df574ad82d76116ac7722658e47295d"
-  integrity sha512-S+7Mvi9GMiJu3BY0Dpa7TrrAiFIwGwCIKLpO0IgGLUDh9fVLIlcIC/PZgU+L46gEpRwPZfrfMbDFKIlGGz/eQQ==
-  dependencies:
-    "@angular-devkit/core" "19.2.10"
-    jsonc-parser "3.3.1"
-    magic-string "0.30.17"
-    ora "5.4.1"
-    rxjs "7.8.1"
-
 "@angular-devkit/schematics@19.2.11", "@angular-devkit/schematics@>= 19.0.0 < 20.0.0":
   version "19.2.11"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-19.2.11.tgz#d3649fc925a08ce73de5df47a8cf3c0acfb4225c"
@@ -2981,10 +2970,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/chai@^5.2.1":
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-5.2.1.tgz#85687a58b27eac736ec0e87e5cb98f21e57a0bb1"
-  integrity sha512-iu1JLYmGmITRzUgNiLMZD3WCoFzpYtueuyAgHTXqgwSRAMIlFTnZqG6/xenkpUGRJEzSfklUTI4GNSzks/dc0w==
+"@types/chai@^5.2.2":
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-5.2.2.tgz#6f14cea18180ffc4416bc0fd12be05fdd73bdd6b"
+  integrity sha512-8kB30R7Hwqf40JPiKhVzodJs2Qc1ZJ5zuT3uzw5Hq/dhNCl3G3l83jfpdI1e20BP348+fV7VIL/+FxaXkqBmWg==
   dependencies:
     "@types/deep-eql" "*"
 
