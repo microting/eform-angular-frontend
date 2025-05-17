@@ -3702,10 +3702,10 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.3.0.tgz#d06bbb384ebcf6c505fde1c3d0ed4ddffe0aaff8"
   integrity sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==
 
-"@userback/widget@^0.3.10":
-  version "0.3.10"
-  resolved "https://registry.yarnpkg.com/@userback/widget/-/widget-0.3.10.tgz#beec6780b92ca7f34d16783d82c1dc74c19cee10"
-  integrity sha512-mBDsmbbk0GBuRHO/OFJvOOU5WMCQ9nWuY3ooCT2XqasQiaklVqS+KwCMLdp1S6+SyQeL4FcNnjkcJ+v+Dhdogg==
+"@userback/widget@^0.3.11":
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/@userback/widget/-/widget-0.3.11.tgz#a80ab2f85a977f291969dbc4597acd7b2dc4b7e2"
+  integrity sha512-gVOob+0EFzgpG3pqj9yBmvONo6xjwRhkWyFjDLD8U6YQmbnMpXvHIsvLLReaXfMeVWSWApCVt79jIXmpgoM2CQ==
 
 "@vitejs/plugin-basic-ssl@1.2.0":
   version "1.2.0"
