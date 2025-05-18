@@ -149,7 +149,7 @@ describe('Create folder', function () {
     ).getHTML(false);
 
     expect(html, 'save description incorrect').eq(
-      `<div><b>${description}</b></div>`
+      `<div>\n  <b>${description}</b>\n</div>`
     );
     await foldersRowObject.closeEditModal(true);
   });
@@ -197,7 +197,7 @@ describe('Create folder', function () {
     ).getHTML(false);
 
     expect(html, 'save description incorrect').eq(
-      `<div><u>${description}</u></div>`
+      `<div>\n  <u>${description}</u>\n</div>`
     );
     await foldersRowObject.closeEditModal(true);
   });
@@ -245,7 +245,7 @@ describe('Create folder', function () {
     ).getHTML(false);
 
     expect(html, 'save description incorrect').eq(
-      `<div><i>${description}</i></div>`
+      `<div>\n  <i>${description}</i>\n</div>`
     );
     await foldersRowObject.closeEditModal(true);
   });
@@ -293,7 +293,7 @@ describe('Create folder', function () {
     ).getHTML(false);
 
     expect(html, 'save description incorrect').eq(
-      `<div><s>${description}</s></div>`
+      `<div>\n  <s>${description}</s>\n</div>`
     );
     await foldersRowObject.closeEditModal(true);
   });
