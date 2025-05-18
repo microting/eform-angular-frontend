@@ -6,6 +6,7 @@ import { ApiBaseService } from 'src/app/common/services';
 
 export let UserSettingsMethods = {
   UserSettings: 'api/account/user-settings',
+  ProfilePictureDelete: 'api/account/profile-picture-delete',
 };
 
 @Injectable()
@@ -21,5 +22,9 @@ export class UserSettingsService {
       UserSettingsMethods.UserSettings,
       model
     );
+  }
+
+  deleteProfilePicture(): Observable<OperationResult> {
+    return this.apiBaseService.delete(UserSettingsMethods.ProfilePictureDelete);
   }
 }

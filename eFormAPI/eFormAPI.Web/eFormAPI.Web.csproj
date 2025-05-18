@@ -47,24 +47,24 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="9.0.0" />
-    <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="8.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="9.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
-    <PackageReference Include="HtmlToOpenXml.dll" Version="3.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.2" />
+    <PackageReference Include="HtmlToOpenXml.dll" Version="3.2.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="9.0.15" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="9.0.10" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="9.0.14" />
+    <PackageReference Include="Microting.eForm" Version="9.0.34" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="9.0.30" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="9.0.34" />
     <PackageReference Include="PureOtp" Version="1.0.0.1" />
-    <PackageReference Include="Sentry" Version="5.1.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="Sentry" Version="5.6.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="2.0.0" />
     <PackageReference Include="sendgrid" Version="9.29.3" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.2" />
-    <PackageReference Include="System.Threading.AccessControl" Version="9.0.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.4" />
+    <PackageReference Include="System.Threading.AccessControl" Version="9.0.4" />
   </ItemGroup>
 
   <ItemGroup>

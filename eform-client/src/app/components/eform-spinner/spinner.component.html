@@ -1,5 +1,7 @@
-<div class="overlay-spinner" *ngIf="loading">
-  <mat-spinner id="spinner-animation">
-  </mat-spinner>
+<div [style]="display">
+  <div class="overlay-spinner">
+    <mat-spinner id="spinner-animation">
+    </mat-spinner>
+  </div>
 </div>
 <ng-content></ng-content>

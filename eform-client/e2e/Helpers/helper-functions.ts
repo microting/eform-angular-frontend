@@ -25,7 +25,7 @@ export async function testSorting(
   const elements = await getElementsForSorting(); // Assuming this returns a list of elements
   let elementsBefore = [];
   for (let i = 0; i < elements.length; i++) {
-    elementsBefore.push(await elements[i].getText());
+    elementsBefore.push(elements[i].getText());
   }
 
   // check that sorting is correct in both directions
@@ -36,7 +36,7 @@ export async function testSorting(
     const elements = await getElementsForSorting(); // Assuming this returns a list of elements
     let elementsAfter = [];
     for (let i = 0; i < elements.length; i++) {
-      elementsAfter.push(await elements[i].getText());
+      elementsAfter.push(elements[i].getText());
     }
     // // get current direction of sorting
     const sortIcon = await tableHeader.$('.ng-trigger-leftPointer').getAttribute('style');
@@ -75,18 +75,18 @@ export async function selectDateOnDatePicker(
   await browser.pause(1000);
   await yearForSelect.click();
   // select month. after select month we can select day
-  if (month > 1) {
-    const monthForSelect = await $$(`mat-year-view .mat-calendar-body-cell`)[month - 1];
-    await monthForSelect.waitForClickable({timeout: 20000});
-    await browser.pause(1000);
-    await monthForSelect.click();
-  }
-  else {
+  // if (month > 1) {
+  //   const monthForSelect = await $$(`mat-year-view .mat-calendar-body-cell`)[month - 1];
+  //   await monthForSelect.waitForClickable({timeout: 20000});
+  //   await browser.pause(1000);
+  //   await monthForSelect.click();
+  // }
+  // else {
     const monthForSelect = await $$(`mat-year-view .mat-calendar-body-cell`)[month];
     await monthForSelect.waitForClickable({timeout: 20000});
     await browser.pause(1000);
     await monthForSelect.click();
-  }
+  //}
   // select day
   const dayForSelect = await $$(`mat-month-view .mat-calendar-body-cell`)[day - 1];
   await dayForSelect.waitForClickable({timeout: 20000});

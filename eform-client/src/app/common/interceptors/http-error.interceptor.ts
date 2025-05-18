@@ -11,21 +11,23 @@ import {
   retry,
   throwError,
   catchError,
-  switchMap
+  switchMap,
+  timer, retryWhen, EMPTY
 } from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
-import {Router} from '@angular/router';
 import {AuthStateService} from 'src/app/common/store';
 import {Injectable} from '@angular/core';
-import {AuthMethods} from 'src/app/common/services';
+import {AuthMethods, LoaderService} from 'src/app/common/services';
 import {AuthResponseModel, OperationDataResult} from 'src/app/common/models';
+import * as Sentry from '@sentry/angular';
+
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(
+    private loaderService: LoaderService,
     private toastrService: ToastrService,
-    private router: Router,
     private authStateService: AuthStateService,
   ) {
   }
@@ -46,6 +48,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       // Handle 400 - Bad Request
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
+        Sentry.captureException(error); // Log to Sentry
         switch (error.status) {
           case 400: {
             let errors;
@@ -62,15 +65,17 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             return throwError(() => errorMessage);
           }
           case 401: { // Handle 401 — Unauthorized
-            console.error('401 - Unauthorized');
-            console.error(error);
+            // console.error('401 - Unauthorized');
+            // console.error(error);
+            this.loaderService.setLoading(false);
             this.authStateService.logout();
-            return throwError(() => errorMessage);
+            // return throwError(() => errorMessage);
+            return EMPTY;
           }
           case 403: { // Handle 403 — Forbidden
             //this.toastrService.warning('403 - Forbidden');
-            console.error('403 - Forbidden');
-            console.error(error);
+            // console.error('403 - Forbidden');
+            // console.error(error);
             // Try refresh token
             if(!request.url.includes(AuthMethods.RefreshToken)) {
               // this.authStore.dispatch(refreshToken());
@@ -86,17 +91,43 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 }),
                 catchError((refreshError) => {
                   // if refresh token is failed - logout
-                  console.error('Token refresh failed', refreshError);
+                  // console.error('Token refresh failed', refreshError);
+                  this.loaderService.setLoading(false);
                   this.authStateService.logout();
-                  return throwError(() => errorMessage);
+                  // stop the request
+                  return EMPTY;
                 })
               );
             } else {
+              this.loaderService.setLoading(false);
               this.authStateService.logout();
             }
-            return throwError(() => errorMessage);
+            return EMPTY;
+            // return throwError(() => errorMessage);
           }
           default: {
+            const maxRetries = 5; // Number of retries (x)
+            const retryDelay = 15000; // Delay in milliseconds (y)
+
+            // @ts-ignore
+            if (error._body === undefined) {
+              return next.handle(request).pipe(
+                retryWhen((errors) =>
+                  errors.pipe(
+                    switchMap((err, index) => {
+                      if (index < maxRetries) {
+                        this.loaderService.setLoading(true);
+                        console.log('Retrying request...');
+                        return timer(retryDelay); // Wait for retryDelay before retrying
+                      }
+                      return EMPTY;
+                      // return throwError(() => err); // Throw error after max retries
+                    })
+                  )
+                )
+              );
+            }
+
             // @ts-ignore
             const body = error._body || '';
             errorMessage = `${error.status} - ${error.statusText || ''} ${body}`;
@@ -105,6 +136,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 timeOut: 10000,
               });
             }
+            return EMPTY;
+            // return throwError(() => errorMessage); // Ensure the error is propagated
           }
         }
       })

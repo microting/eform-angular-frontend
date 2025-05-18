@@ -21,6 +21,9 @@ export class UserInfoModel {
   timeRegistrationManufacturer?: string;
   timeRegistrationOsVersion?: string;
   groupName: string;
+  profilePicture: string;
+  profilePictureSnapshot: string;
+  emailSha256: string;
 
   constructor(data?: any) {
     if (data) {
@@ -46,6 +49,9 @@ export class UserInfoModel {
       this.timeRegistrationManufacturer = data.timeRegistrationManufacturer;
       this.timeRegistrationOsVersion = data.timeRegistrationOsVersion;
       this.groupName = data.groupName;
+      this.profilePicture = data.profilePicture;
+      this.profilePictureSnapshot = data.profilePictureSnapshot;
+      this.emailSha256 = data.emailSha256;
     }
   }
 }

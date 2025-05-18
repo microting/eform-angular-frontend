@@ -213,6 +213,15 @@ public class UserService(
         return language;
     }
 
+    public async Task<int> GetFirstUserIdInDb()
+    {
+        return await dbContext.Users
+            .AsNoTracking()
+            .OrderBy(x => x.Id)
+            .Select(x => x.Id)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<Language> GetCurrentUserLanguage()
     {
         if (UserId < 1)

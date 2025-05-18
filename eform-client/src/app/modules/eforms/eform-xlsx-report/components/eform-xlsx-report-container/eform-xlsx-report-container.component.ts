@@ -49,8 +49,10 @@ export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
       this.dateTo = params['dateTo'];
       this.selectedTemplateId = +params['eformId'];
 
-      this.range.push(parseISO(this.dateFrom));
-      this.range.push(parseISO(this.dateTo));
+      if (this.dateFrom && this.dateTo) {
+        this.range.push(parseISO(this.dateFrom));
+        this.range.push(parseISO(this.dateTo));
+      }
       const model: EformDocxReportGenerateModel = {
         dateFrom: this.dateFrom ? this.dateFrom.toString() : null,
         dateTo: this.dateTo ? this.dateTo.toString() : null,

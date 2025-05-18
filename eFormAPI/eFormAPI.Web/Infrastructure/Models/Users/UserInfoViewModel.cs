@@ -41,20 +41,15 @@ public class UserInfoViewModel
     public string TimeZone { get; set; }
     public bool DarkTheme { get; set; }
     public bool IsDeviceUser { get; set; }
-
     public string ArchiveSoftwareVersion { get; set; }
-
     public string ArchiveModel { get; set; }
-
     public string ArchiveManufacturer { get; set; }
-
     public string ArchiveOsVersion { get; set; }
-
     public string TimeRegistrationSoftwareVersion { get; set; }
-
     public string TimeRegistrationModel { get; set; }
-
     public string TimeRegistrationManufacturer { get; set; }
-
     public string TimeRegistrationOsVersion { get; set; }
+    public string ProfilePicture { get; set; }
+    public string ProfilePictureSnapshot { get; set; }
+    public string EmailSha256 { get; set; }
 }

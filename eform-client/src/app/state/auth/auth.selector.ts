@@ -41,7 +41,9 @@ export const selectCurrentUserName
 export const selectCurrentUserFullName
   = createSelector(selectAuthUser, (state) => `${state.firstName} ${state.lastName}`);
 export const selectCurrentUserIsAdmin
-  = createSelector(selectAuthToken, (state) => state.role === 'Admin');
+  = createSelector(selectAuthToken, (state) => state.role.toLowerCase() === 'admin');
+export const selectCurrentUserIsFirstUser
+  = createSelector(selectAuthUser, (state) => state.isFirstUser);
 export const selectCurrentUserClaims
   = createSelector(selectAuthUser, (state) => state.claims);
 export const selectCurrentUserClaimsUsersUpdate

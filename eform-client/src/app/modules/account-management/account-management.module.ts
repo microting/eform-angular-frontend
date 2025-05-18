@@ -22,6 +22,7 @@ import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+import {FileUploadModule} from "ng2-file-upload";
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import {MatIconModule} from '@angular/material/icon';
         MatDialogModule,
         MatInputModule,
         MatIconModule,
+        FileUploadModule,
     ],
   declarations: [
     ChangePasswordComponent,

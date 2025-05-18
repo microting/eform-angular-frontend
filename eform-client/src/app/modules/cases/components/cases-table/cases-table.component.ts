@@ -112,7 +112,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     this.tableHeaders = [...this.tableHeaders, {
       header: this.translateService.stream('SiteId'),
       field: 'workerName',
-      sortProp: {id: 'SiteId'},
+      sortProp: {id: 'SiteName'},
       sortable: true,
     }];
   }
@@ -223,7 +223,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     this.tableHeaders = [...this.tableHeaders, {
       header: this.translateService.stream('SiteId'),
       field: 'workerName',
-      sortProp: {id: 'SiteId'},
+      sortProp: {id: 'SiteName'},
       sortable: true,
     }];
     this.currentTemplate.field1 && this.currentTemplate.field1.label

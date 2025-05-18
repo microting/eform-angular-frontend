@@ -152,6 +152,8 @@ public class AuthService(
             await userManager.UpdateAsync(user);
         }
 
+        var firstUserIdInDb = await userService.GetFirstUserIdInDb();
+
         return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
         {
             Id = user.Id,
@@ -160,7 +162,8 @@ public class AuthService(
             Role = roleList.FirstOrDefault(),
             ExpiresIn = token.expireIn,
             FirstName = user.FirstName,
-            LastName = user.LastName
+            LastName = user.LastName,
+            IsFirstUser = user.Id == firstUserIdInDb
         });
     }
 

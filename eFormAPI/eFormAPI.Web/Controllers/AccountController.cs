@@ -22,22 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Infrastructure.Models.Settings;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.Users;
+using ImageMagick;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microting.eForm.Dto;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
 namespace eFormAPI.Web.Controllers;
 
 [Authorize]
-public class AccountController(IAccountService accountService) : Controller
+public class AccountController(
+    IAccountService accountService,
+    IEFormCoreService coreHelper,
+    IUserService userService,
+    UserManager<EformUser> userManager,
+    ILocalizationService localizationService) : Controller
 {
     // GET api/account/user-info
     [HttpGet]
@@ -61,6 +76,81 @@ public class AccountController(IAccountService accountService) : Controller
     public Task<OperationResult> UpdateUserSettings([FromBody] UserSettingsModel model)
     {
         return accountService.UpdateUserSettings(model);
+    }
+
+    [HttpPost]
+    [Route("api/account/profile-picture-upload")]
+    public async Task<IActionResult> ProfilePictureUpload(IFormFile file)
+    {
+        try
+        {
+            if (file.Length > 0)
+            {
+                await using (var baseMemoryStream = new MemoryStream())
+                {
+
+                    var core = await coreHelper.GetCore();
+                    if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" ||
+                        core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+                    {
+
+                        await file.CopyToAsync(baseMemoryStream);
+                        baseMemoryStream.Position = 0; // Reset the stream position to the beginning
+
+                        var fileExtension = Path.GetExtension(file.FileName);
+
+                        string checkSumConvertedFile;
+                        using (var md5 = MD5.Create())
+                        {
+                            var grr = md5.ComputeHash(baseMemoryStream.ToArray());
+                            checkSumConvertedFile = BitConverter.ToString(grr).Replace("-", "").ToLower();
+                        }
+
+                        baseMemoryStream.Seek(0, SeekOrigin.Begin);
+                        MemoryStream memoryStream = new MemoryStream();
+                        await baseMemoryStream.CopyToAsync(memoryStream);
+                        await core.PutFileToS3Storage(memoryStream, checkSumConvertedFile + fileExtension);
+
+                        // find the current user and update the profile picture
+                        var user = await userService.GetCurrentUserAsync();
+                        user.ProfilePicture = checkSumConvertedFile + fileExtension;
+
+                        baseMemoryStream.Seek(0, SeekOrigin.Begin);
+
+                        using (var image = new MagickImage(baseMemoryStream))
+                        {
+                            image.Resize(32, 32);
+                            MemoryStream newMemoryStream = new MemoryStream();
+                            await image.WriteAsync(newMemoryStream);
+
+                            await core.PutFileToS3Storage(newMemoryStream,
+                                checkSumConvertedFile + "_32" + fileExtension);
+                            await newMemoryStream.DisposeAsync().ConfigureAwait(false);
+                            newMemoryStream.Close();
+                            user.ProfilePictureSnapshot = checkSumConvertedFile + "_32" + fileExtension;
+                        }
+
+                        await userManager.UpdateAsync(user);
+                    }
+                }
+
+
+                return Ok();
+            }
+
+            return BadRequest(localizationService.GetString("InvalidRequest"));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete]
+    [Route("api/account/profile-picture-delete")]
+    public async Task<OperationResult> ProfilePictureDelete()
+    {
+        return await accountService.ProfilePictureDelete();
     }
 
 

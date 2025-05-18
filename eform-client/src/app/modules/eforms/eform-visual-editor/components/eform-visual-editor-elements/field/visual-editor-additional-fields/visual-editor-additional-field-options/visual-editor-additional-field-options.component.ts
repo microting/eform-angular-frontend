@@ -65,6 +65,7 @@ export class VisualEditorAdditionalFieldOptionsComponent
   parseOptions() {
     if (this.options !== '') {
       const parsedOptions = R.split('\n', this.options);
+      let currentCount = this.field.options.length;
       for (const parsedOption of parsedOptions) {
         const parsedTranslates = R.split('|', parsedOption);
         let translatesOptions: CommonTranslationsModel[] = [];
@@ -83,12 +84,13 @@ export class VisualEditorAdditionalFieldOptionsComponent
           ...this.field.options,
           {
             translates: translatesOptions,
-            key: this.field.options.length,
+            key: currentCount,
             id: null,
             selected: false,
-            displayOrder: this.field.options.length,
+            displayOrder: currentCount,
           },
         ];
+        currentCount++;
       }
       this.options = '';
     }

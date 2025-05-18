@@ -1,4 +1,4 @@
-FROM node:20-bookworm-slim as node-env
+FROM node:22-bookworm-slim as node-env
 
 WORKDIR /app
 ARG SENTRY_AUTH_TOKEN

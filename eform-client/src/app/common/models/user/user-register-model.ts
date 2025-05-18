@@ -8,4 +8,7 @@ export class UserRegisterModel {
   role: string;
   userName: string;
   isDeviceUser: boolean;
+  profilePicture: string;
+  profilePictureSnapshot: string;
+  emailSha256: string;
 }

@@ -414,8 +414,7 @@ class MyEformsRowObject {
     for (let i = 0; i < users.length; i++) {
       const checkbox = await $(`#checkbox${users[i].siteId}`);
       await checkbox.scrollIntoView();
-      await (await checkbox.$('..')).waitForClickable({timeout: 40000});
-      await (await checkbox.$('..')).click();
+      await checkbox.click();
       await browser.pause(1000);
     }
     await (await myEformsPage.saveParingBtn()).click();

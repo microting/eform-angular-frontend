@@ -5,8 +5,7 @@
       color="accent"
       matTooltip="Save settings"
       id="ProfileSettingsSaveBtn"
-      (click)="updateUserProfileSettings()"
-    >
+      (click)="updateUserProfileSettings()">
       {{ 'Save' | translate }}
     </button>
   </div>
@@ -22,8 +21,7 @@
         id="2fauthForsed"
         (change)="isTwoFactorEnabledCheckBoxChanged($event)"
         [(ngModel)]="googleAuthInfoModel.isTwoFactorEnabled"
-        color="primary"
-      >
+        color="primary">
         {{ 'Status' | translate }}
       </mat-checkbox>
     </div>
@@ -33,8 +31,7 @@
     <ng-container *ngIf="googleAuthInfoModel.psk">
       <div class="p-0">
         <div
-          [innerHTML]="'Google Authenticator description' | translate"
-        ></div>
+          [innerHTML]="'Google Authenticator description' | translate"></div>
         <p>
           <strong>{{ googleAuthInfoModel.psk }}</strong>
         </p>
@@ -44,15 +41,80 @@
           mat-raised-button
           color="warn"
           id="deleteGoogleAuthenticatorInfo"
-          matTooltip="{{
-                  'Remove google authenticator secret key' | translate
-                }}"
-          (click)="deleteGoogleAuthenticatorInfo()"
-        >
+          matTooltip="{{ 'Remove google authenticator secret key' | translate }}"
+          (click)="deleteGoogleAuthenticatorInfo()">
           {{ 'Remove PSK' | translate }}
         </button>
       </div>
     </ng-container>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ 'Profile picture' | translate}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="d-flex flex-wrap justify-content-between">
+        <div>
+          <img
+            alt=""
+            *ngIf="userSettingsModel.profilePicture"
+            class="p-3"
+            height="32"
+            width="32"
+            [src]="'api/images/login-page-images?fileName=' + userSettingsModel.profilePicture | authImage | async"
+          />
+          <img
+            alt=""
+            *ngIf="!userSettingsModel.profilePicture && userSettingsModel.emailSha256"
+            class="p-3"
+            height="32"
+            width="32"
+            [src]="'https://www.gravatar.com/avatar/{{userSettingsModel.profilePicture}}?s=32&d=identicon'"
+          />
+        </div>
+        <div class="d-flex pt-2">
+          <div class="align-self-center align-self-end mb-3">
+            <button
+              mat-raised-button
+              color="primary"
+              *ngIf="profilePictureUploader?.queue?.length === 0"
+              id="loginPageImageUploadBtn"
+              (click)="loginPagefileInput.click()"
+            >
+              {{ 'Upload' | translate }}
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              *ngIf="profilePictureUploader?.queue?.length > 0"
+              (click)="loginPagefileInput.click()"
+            >
+              {{ 'Pending' | translate }}
+            </button>
+            <input
+              class="input-invisible"
+              type="file"
+              ng2FileSelect
+              #loginPagefileInput
+              [uploader]="profilePictureUploader"
+              id="loginPageFileInput"
+            />
+          </div>
+          <div class="align-self-center align-self-end mb-3 pl-2">
+            <button
+              mat-raised-button
+              color="accent"
+              id="resetProfilePicture"
+              (click)="resetProfilePicture()"
+              matTooltip="{{ 'Reset' | translate }}"
+            >
+              {{ 'Reset' | translate }}
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </mat-card-content>
   </mat-card>
 
   <mat-card class="p-3">
@@ -67,8 +129,7 @@
         [bindValue]="'languageCode'"
         [clearable]="false"
         [(ngModel)]="userSettingsModel.locale"
-        [items]="activeLanguages"
-      >
+        [items]="activeLanguages">
       </mtx-select>
     </mat-form-field>
     <mat-form-field *ngIf="selectCurrentUserIsAdmin$ | async">
@@ -79,8 +140,8 @@
         [bindValue]="'id'"
         [clearable]="false"
         [(ngModel)]="userSettingsModel.formats"
-        [items]="countries"
-      ></mtx-select>
+        [items]="countries">
+      </mtx-select>
     </mat-form-field>
     <mat-form-field *ngIf="selectCurrentUserIsAdmin$ | async">
       <mat-label>{{ 'Timezone' | translate }}</mat-label>
@@ -90,89 +151,15 @@
         [bindValue]="'id'"
         [clearable]="false"
         [(ngModel)]="userSettingsModel.timeZone"
-        [items]="timeZones.timeZoneModels"
-      ></mtx-select>
+        [items]="timeZones.timeZoneModels">
+      </mtx-select>
     </mat-form-field>
     <div class="mb-1">
       <mat-checkbox
         id="darkTheme"
-        [(ngModel)]="userSettingsModel.darkTheme"
-      >
+        [(ngModel)]="userSettingsModel.darkTheme">
         {{ 'Dark theme' | translate }}
       </mat-checkbox>
     </div>
   </mat-card>
 </div>
-
-
-<!--<div class="container-fluid mt-4">
-  <div class="row mb-4">
-    <div class="col-md-6 mb-3" *ngIf="authStateService.isAdmin">
-      <mdb-card>
-        <mdb-card-header>
-          {{ 'Google Authenticator' | translate }}
-        </mdb-card-header>
-        <mdb-card-body>
-          <div class="mb-1">
-            <mat-checkbox
-              id="2fauthForsed"
-              (change)="isTwoFactorEnabledCheckBoxChanged($event)"
-              [(ngModel)]="googleAuthInfoModel.isTwoFactorEnabled"
-              color="primary"
-            >
-              {{ 'Status' | translate }}
-            </mat-checkbox>
-          </div>
-          <p class="text-danger">
-            ({{ 'change will logout you from the application' | translate }})
-          </p>
-
-          <ng-container *ngIf="googleAuthInfoModel.psk">
-            <div class="p-0">
-              <div
-                [innerHTML]="'Google Authenticator description' | translate"
-              ></div>
-              <p>
-                <strong>{{ googleAuthInfoModel.psk }}</strong>
-              </p>
-            </div>
-            <div class="p-0">
-              <button
-                mat-raised-button
-                color="warn"
-                id="deleteGoogleAuthenticatorInfo"
-                mdbTooltip="{{
-                  'Remove google authenticator secret key' | translate
-                }}"
-                (click)="deleteGoogleAuthenticatorInfo()"
-              >
-                {{ 'Remove PSK' | translate }}
-              </button>
-            </div>
-          </ng-container>
-        </mdb-card-body>
-      </mdb-card>
-    </div>
-    <div class="col-md-6">
-      <mdb-card class="card">
-        <mdb-card-header>
-          {{ 'General' | translate }}
-        </mdb-card-header>
-        <mdb-card-body>
-          <div class="container-fluid">
-            <div class="row">
-
-            </div>
-            <div class="row">
-
-            </div>
-            <div class="row">
-
-            </div>
-
-          </div>
-        </mdb-card-body>
-      </mdb-card>
-    </div>
-  </div>
-</div>-->
