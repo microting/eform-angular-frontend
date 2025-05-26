@@ -156,6 +156,11 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.4.0.tgz#68669d4ae32574f6940a5a174a063ec9552db42e"
   integrity sha512-Djq+je34czagDxvkBbbe1dLlhUGYK2MbHjEgPTQ00tVkacLQGAW4UmT1A0JGZzfzl/lDVvli64/lYQsJTSSM6A==
 
+"@angular-eslint/bundled-angular-compiler@19.5.0":
+  version "19.5.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.5.0.tgz#d90845728a24552f83a5cefa45e56b31470cc640"
+  integrity sha512-k75d3oQaF4F4a3Rk3JLBGtcmCNlaI5TlMSleKTMhKRrsD0nqDc+b5iFc/+JUzB9I5E6SovgMueU13ZdZfXZGZg==
+
 "@angular-eslint/eslint-plugin-template@19.4.0":
   version "19.4.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-19.4.0.tgz#10adc4472fb1fc8a2a5fb00ed7ec649523741e46"
@@ -163,6 +168,16 @@
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "19.4.0"
     "@angular-eslint/utils" "19.4.0"
+    aria-query "5.3.2"
+    axobject-query "4.1.0"
+
+"@angular-eslint/eslint-plugin-template@19.5.0":
+  version "19.5.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-19.5.0.tgz#4eb06e2b29c2f7667238f5a263246e4aa01b5bf9"
+  integrity sha512-xDlxptxYelH6MuP48PE10cKDU+EHNYxDvsRmcUmP84MHP69VMAlmAAIS1j9y0UtfHrB1JxlKdsTU7cWH2YeWqA==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "19.5.0"
+    "@angular-eslint/utils" "19.5.0"
     aria-query "5.3.2"
     axobject-query "4.1.0"
 
@@ -174,17 +189,25 @@
     "@angular-eslint/bundled-angular-compiler" "19.4.0"
     "@angular-eslint/utils" "19.4.0"
 
-"@angular-eslint/schematics@19.4.0":
-  version "19.4.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-19.4.0.tgz#4a1fdaf7085df10107cee1b9730d183e3fce0e32"
-  integrity sha512-gW6RkLC5/CHiD1CXjve6LO0iit0EbHyhV6Jnb7FeRhTaFHhktbuI0zQ8wnSI/D0Pm8ZvV1PoNyhB2k2AWZT9sQ==
+"@angular-eslint/eslint-plugin@19.5.0":
+  version "19.5.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-19.5.0.tgz#b1ebc1a8a91fe2dd4aba644d8a16a658e6756697"
+  integrity sha512-9hxPnX5rWCCH2Qga30Plym2eDXXetS0luPuOl0kHqdXQ/MB6j6tuSWcLKmqKlCRFe7/G9qEJoiblUvex6gwb9g==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "19.5.0"
+    "@angular-eslint/utils" "19.5.0"
+
+"@angular-eslint/schematics@19.5.0":
+  version "19.5.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-19.5.0.tgz#cb78a802621fec8601581921383944a9be04b1b6"
+  integrity sha512-1IgJPJDwlYdMWaY4L5amO83G8aHy5PXFkoL2ijlHIBxJFA2ltn4aMai1LdsntQTViJ3zsbK6L3xLHM26cDzeRw==
   dependencies:
     "@angular-devkit/core" ">= 19.0.0 < 20.0.0"
     "@angular-devkit/schematics" ">= 19.0.0 < 20.0.0"
-    "@angular-eslint/eslint-plugin" "19.4.0"
-    "@angular-eslint/eslint-plugin-template" "19.4.0"
+    "@angular-eslint/eslint-plugin" "19.5.0"
+    "@angular-eslint/eslint-plugin-template" "19.5.0"
     ignore "7.0.4"
-    semver "7.7.1"
+    semver "7.7.2"
     strip-json-comments "3.1.1"
 
 "@angular-eslint/template-parser@19.4.0":
@@ -201,6 +224,13 @@
   integrity sha512-2hZ7rf/0YBkn1Rk0i7AlYGlfxQ7+DqEXUsgp1M56mf0cy7/GCFiWZE0lcXFY4kzb4yQK3G2g+kIF092MwelT7Q==
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "19.4.0"
+
+"@angular-eslint/utils@19.5.0":
+  version "19.5.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-19.5.0.tgz#03a16e441b97b7b8b4bc5b9df66ce1f5a06ab2b8"
+  integrity sha512-s9ec5WAGppuqkYCU6yXg2jsz95Cbqo8eY5xNftI+4AiMP9YEwNwe212U1Z7OxHDvS1TbQGb6Vp0dJcgAmqs5bw==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "19.5.0"
 
 "@angular/animations@19.2.0":
   version "19.2.0"
@@ -11029,6 +11059,11 @@ semver@7.7.1:
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.1.tgz#abd5098d82b18c6c81f6074ff2647fd3e7220c9f"
   integrity sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==
 
+semver@7.7.2, semver@^7.0.0, semver@^7.1.1, semver@^7.3.5, semver@^7.3.7, semver@^7.5.3, semver@^7.5.4, semver@^7.6.0, semver@^7.7.0, semver@^7.7.1, semver@^7.7.2:
+  version "7.7.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.2.tgz#67d99fdcd35cec21e6f8b87a7fd515a33f982b58"
+  integrity sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==
+
 semver@^5.6.0:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.2.tgz#48d55db737c3287cd4835e17fa13feace1c41ef8"
@@ -11038,11 +11073,6 @@ semver@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
-
-semver@^7.0.0, semver@^7.1.1, semver@^7.3.5, semver@^7.3.7, semver@^7.5.3, semver@^7.5.4, semver@^7.6.0, semver@^7.7.0, semver@^7.7.1, semver@^7.7.2:
-  version "7.7.2"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.2.tgz#67d99fdcd35cec21e6f8b87a7fd515a33f982b58"
-  integrity sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==
 
 send@0.19.0:
   version "0.19.0"
