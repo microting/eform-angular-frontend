@@ -156,6 +156,11 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.4.0.tgz#68669d4ae32574f6940a5a174a063ec9552db42e"
   integrity sha512-Djq+je34czagDxvkBbbe1dLlhUGYK2MbHjEgPTQ00tVkacLQGAW4UmT1A0JGZzfzl/lDVvli64/lYQsJTSSM6A==
 
+"@angular-eslint/bundled-angular-compiler@19.5.0":
+  version "19.5.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.5.0.tgz#d90845728a24552f83a5cefa45e56b31470cc640"
+  integrity sha512-k75d3oQaF4F4a3Rk3JLBGtcmCNlaI5TlMSleKTMhKRrsD0nqDc+b5iFc/+JUzB9I5E6SovgMueU13ZdZfXZGZg==
+
 "@angular-eslint/eslint-plugin-template@19.4.0":
   version "19.4.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-19.4.0.tgz#10adc4472fb1fc8a2a5fb00ed7ec649523741e46"
@@ -173,6 +178,14 @@
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "19.4.0"
     "@angular-eslint/utils" "19.4.0"
+
+"@angular-eslint/eslint-plugin@19.5.0":
+  version "19.5.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-19.5.0.tgz#b1ebc1a8a91fe2dd4aba644d8a16a658e6756697"
+  integrity sha512-9hxPnX5rWCCH2Qga30Plym2eDXXetS0luPuOl0kHqdXQ/MB6j6tuSWcLKmqKlCRFe7/G9qEJoiblUvex6gwb9g==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "19.5.0"
+    "@angular-eslint/utils" "19.5.0"
 
 "@angular-eslint/schematics@19.4.0":
   version "19.4.0"
@@ -201,6 +214,13 @@
   integrity sha512-2hZ7rf/0YBkn1Rk0i7AlYGlfxQ7+DqEXUsgp1M56mf0cy7/GCFiWZE0lcXFY4kzb4yQK3G2g+kIF092MwelT7Q==
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "19.4.0"
+
+"@angular-eslint/utils@19.5.0":
+  version "19.5.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-19.5.0.tgz#03a16e441b97b7b8b4bc5b9df66ce1f5a06ab2b8"
+  integrity sha512-s9ec5WAGppuqkYCU6yXg2jsz95Cbqo8eY5xNftI+4AiMP9YEwNwe212U1Z7OxHDvS1TbQGb6Vp0dJcgAmqs5bw==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "19.5.0"
 
 "@angular/animations@19.2.0":
   version "19.2.0"
