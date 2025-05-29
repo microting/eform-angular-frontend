@@ -148,7 +148,7 @@
     "eslint": "^8.57.1",
     "fs-extra": "^11.1.0",
     "guid-typescript": "^1.0.9",
-    "mammoth": "^1.8.0",
+    "mammoth": "^1.9.1",
     "path": "^0.12.7",
     "run-sequence": "^2.2.1",
     "ts-node": "10.9.2",
