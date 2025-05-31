@@ -202,12 +202,12 @@
     semver "7.7.1"
     strip-json-comments "3.1.1"
 
-"@angular-eslint/template-parser@19.4.0":
-  version "19.4.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-19.4.0.tgz#93cccac8dc7e97e4c15ba245b04f4c95b5ebf76c"
-  integrity sha512-f4t7Z6zo8owOTUqAtZ3G/cMA5hfT3RE2OKR0dLn7YI6LxUJkrlcHq75n60UHiapl5sais6heo70hvjQgJ3fDxQ==
+"@angular-eslint/template-parser@19.6.0":
+  version "19.6.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-19.6.0.tgz#0b834b593f9921adf04857f10c5598464ac8ece2"
+  integrity sha512-NGxXUZkI5lXjoKnmL51C8DoJx8AjwF9sonieC2EVxgXycK2MYAamFWYGHMiVemzFsg1nIv+JvhHITgjSjyC3HQ==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "19.4.0"
+    "@angular-eslint/bundled-angular-compiler" "19.6.0"
     eslint-scope "^8.0.2"
 
 "@angular-eslint/utils@19.4.0":
