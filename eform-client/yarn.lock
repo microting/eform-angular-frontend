@@ -189,6 +189,14 @@
     "@angular-eslint/bundled-angular-compiler" "19.4.0"
     "@angular-eslint/utils" "19.4.0"
 
+"@angular-eslint/eslint-plugin@19.6.0":
+  version "19.6.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-19.6.0.tgz#d189dc191cd04f8d88f6baac4c4cd21f007c66f9"
+  integrity sha512-IOMfFi/rPNrPwxZwIGTqWw0C5pC2Facwg3llmJoQFq8w2sUE0nNBL5uSQv5dT8s6ucum4g+RFNYHNe20SEOvRw==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "19.6.0"
+    "@angular-eslint/utils" "19.6.0"
+
 "@angular-eslint/schematics@19.4.0":
   version "19.4.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-19.4.0.tgz#4a1fdaf7085df10107cee1b9730d183e3fce0e32"
