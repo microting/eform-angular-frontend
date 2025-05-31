@@ -156,6 +156,11 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.4.0.tgz#68669d4ae32574f6940a5a174a063ec9552db42e"
   integrity sha512-Djq+je34czagDxvkBbbe1dLlhUGYK2MbHjEgPTQ00tVkacLQGAW4UmT1A0JGZzfzl/lDVvli64/lYQsJTSSM6A==
 
+"@angular-eslint/bundled-angular-compiler@19.6.0":
+  version "19.6.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.6.0.tgz#78bb3cb3285998d5bd243d2fbb0cfd736344aca2"
+  integrity sha512-ro+seaTAg5GvtJ72uWEEnP9J5mT0vtgdqH6YMrmMt4pZbSZxvkLfLjZGkXo/HjVDVcCjPnmZeMwKN+uoEc27Jg==
+
 "@angular-eslint/eslint-plugin-template@19.4.0":
   version "19.4.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-19.4.0.tgz#10adc4472fb1fc8a2a5fb00ed7ec649523741e46"
@@ -163,6 +168,16 @@
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "19.4.0"
     "@angular-eslint/utils" "19.4.0"
+    aria-query "5.3.2"
+    axobject-query "4.1.0"
+
+"@angular-eslint/eslint-plugin-template@19.6.0":
+  version "19.6.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-19.6.0.tgz#42350635b224763ac79a324a49dbb118b7a298a0"
+  integrity sha512-SDGbNSCUuPmqVesy5SvRE2MV7AKvvA/bVJwL9Fz5KYCHYxJz1rrJ8FknjWAfmg0qO2TMs1ZI9hov8JL+Bc4BBw==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "19.6.0"
+    "@angular-eslint/utils" "19.6.0"
     aria-query "5.3.2"
     axobject-query "4.1.0"
 
@@ -201,6 +216,13 @@
   integrity sha512-2hZ7rf/0YBkn1Rk0i7AlYGlfxQ7+DqEXUsgp1M56mf0cy7/GCFiWZE0lcXFY4kzb4yQK3G2g+kIF092MwelT7Q==
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "19.4.0"
+
+"@angular-eslint/utils@19.6.0":
+  version "19.6.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-19.6.0.tgz#b5078ace75c32acb188d458528a0b043646d5beb"
+  integrity sha512-ygtsmRKHNqrzG2mpUj1XwLNRoG+ikYkizsOuq5xPRM8o6dCw03H5eel4s7hnXT4c09WbpnoaVNi9O3xFLIETJQ==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "19.6.0"
 
 "@angular/animations@19.2.0":
   version "19.2.0"
