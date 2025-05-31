@@ -1,12 +1,18 @@
 version: 2
 updates:
 - package-ecosystem: nuget
-  directory: "/eFormAPI"
+  directory: "/eFormAPI/eFormAPI.Web.Integration.Tests"
   schedule:
     interval: daily
-  open-pull-requests-limit: 50
+- package-ecosystem: nuget
+  directory: "/eFormAPI/eFormAPI.Web.Tests"
+  schedule:
+    interval: daily
+- package-ecosystem: nuget
+  directory: "/eFormAPI/eFormAPI.Web"
+  schedule:
+    interval: daily
 - package-ecosystem: npm
   directory: "/eform-client"
   schedule:
     interval: daily
-  open-pull-requests-limit: 50
