@@ -2279,10 +2279,10 @@
     "@napi-rs/nice-win32-ia32-msvc" "1.0.1"
     "@napi-rs/nice-win32-x64-msvc" "1.0.1"
 
-"@ng-matero/extensions@19.3.3":
-  version "19.3.3"
-  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-19.3.3.tgz#97b176c618a4bbe48930897344f3aaa1dad2daad"
-  integrity sha512-qxJw7+ZDFWOEguS96/8bGhvluekaPW+aKvQW9sjlOmLQXswQnQ+DFH58z2kmtDonY2vIUH6nT9ZR+QmiNRrS+Q==
+"@ng-matero/extensions@19.4.0":
+  version "19.4.0"
+  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-19.4.0.tgz#281f64d68d0ccf85f1d9caabed17c2a93b119582"
+  integrity sha512-CQXinJOueeCjvn5k+r25utkqH4o4e5m6RCKV7tKHXEOyyjlesDOZV/z5p4pDb7lqVItgnh7lQkSagiDxVa8yGg==
   dependencies:
     "@ng-select/ng-select" "^14.2.0"
     ngx-color "^10.0.0"
@@ -3459,10 +3459,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^22.15.21", "@types/node@^22.2.0", "@types/node@^22.5.5":
-  version "22.15.21"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.21.tgz#196ef14fe20d87f7caf1e7b39832767f9a995b77"
-  integrity sha512-EV/37Td6c+MgKAbkcLG6vqZ2zEYHD7bvSrzqqs2RIhbA6w3x+Dqz8MZM3sP6kGTeLrdoOgKZe+Xja7tUB2DNkQ==
+"@types/node@*", "@types/node@^22.15.29", "@types/node@^22.2.0", "@types/node@^22.5.5":
+  version "22.15.29"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.29.tgz#c75999124a8224a3f79dd8b6ccfb37d74098f678"
+  integrity sha512-LNdjOkUDlU1RZb8e1kOIUpN1qQUlzGkEtbVNo53vbrwDg5om6oduhm4SiUaPW5ASTXhAiP0jInWG8Qx9fVlOeQ==
   dependencies:
     undici-types "~6.21.0"
 
