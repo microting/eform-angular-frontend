@@ -98,7 +98,11 @@ public class CasesService(
                 .Where(x => x.CheckListId == requestModel.TemplateId);
 
             // add sort and filtering
-            var nameFields = new List<string> { "FieldValue1", "FieldValue2", "FieldValue3", "FieldValue4", "FieldValue5", "FieldValue6", "FieldValue7", "FieldValue8", "FieldValue9", "FieldValue10", "Id", "DoneAt", "SiteName"};
+            var nameFields = new List<string>
+            {
+                "FieldValue1", "FieldValue2", "FieldValue3", "FieldValue4", "FieldValue5", "FieldValue6", "FieldValue7",
+                "FieldValue8", "FieldValue9", "FieldValue10", "Id", "DoneAt", "SiteName"
+            };
             query = QueryHelper.AddFilterAndSortToQuery(query, requestModel, nameFields);
 
             //get total
@@ -156,8 +160,10 @@ public class CasesService(
         {
             SentrySdk.CaptureException(e);
             logger.LogError(e.Message);
-            logger.LogTrace(e.StackTrace);;
-            return new OperationDataResult<CaseListModel>(false, localizationService.GetString("CaseLoadingFailed") + $" Exception: {e.Message}");
+            logger.LogTrace(e.StackTrace);
+            ;
+            return new OperationDataResult<CaseListModel>(false,
+                localizationService.GetString("CaseLoadingFailed") + $" Exception: {e.Message}");
         }
     }
 
@@ -172,6 +178,7 @@ public class CasesService(
             {
                 return new OperationDataResult<ReplyElement>(false, localizationService.GetString("CaseNotFound"));
             }
+
             var language = await userService.GetCurrentUserLanguage();
             var theCase = await core.CaseRead(caseDto.Id, language);
             theCase.Id = id;
@@ -204,7 +211,8 @@ public class CasesService(
             SentrySdk.CaptureException(e);
             logger.LogError(e.Message);
             logger.LogTrace(e.StackTrace);
-            return new OperationResult(false, $"{localizationService.GetString("CaseCouldNotBeRemoved")} Exception: {e.Message}");
+            return new OperationResult(false,
+                $"{localizationService.GetString("CaseCouldNotBeRemoved")} Exception: {e.Message}");
         }
     }
 
@@ -227,7 +235,8 @@ public class CasesService(
             SentrySdk.CaptureException(e);
             logger.LogError(e.Message);
             logger.LogTrace(e.StackTrace);
-            return new OperationResult(false, $"{localizationService.GetString("CaseCouldNotBeUpdated")} Exception: {e.Message}");
+            return new OperationResult(false,
+                $"{localizationService.GetString("CaseCouldNotBeUpdated")} Exception: {e.Message}");
         }
 
         try
@@ -235,7 +244,7 @@ public class CasesService(
             await core.CaseUpdate(model.Id, fieldValueList, checkListValueList);
             await core.CaseUpdateFieldValues(model.Id, language);
 
-            if(model.IsDoneAtEditable)
+            if (model.IsDoneAtEditable)
             {
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
 
@@ -244,11 +253,12 @@ public class CasesService(
                                 && x.WorkflowState != Constants.WorkflowStates.Removed)
                     .FirstOrDefaultAsync();
 
-                if(foundCase != null)
+                if (foundCase != null)
                 {
                     if (foundCase.DoneAt != null)
                     {
-                        var newDoneAt = new DateTime(model.DoneAt.Year, model.DoneAt.Month, model.DoneAt.Day, foundCase.DoneAt.Value.Hour, foundCase.DoneAt.Value.Minute, foundCase.DoneAt.Value.Second);
+                        var newDoneAt = new DateTime(model.DoneAt.Year, model.DoneAt.Month, model.DoneAt.Day,
+                            foundCase.DoneAt.Value.Hour, foundCase.DoneAt.Value.Minute, foundCase.DoneAt.Value.Second);
                         foundCase.DoneAtUserModifiable = newDoneAt;
                     }
 
@@ -277,7 +287,8 @@ public class CasesService(
             SentrySdk.CaptureException(e);
             logger.LogError(e.Message);
             logger.LogTrace(e.StackTrace);
-            return new OperationResult(false, localizationService.GetString("CaseCouldNotBeUpdated") + $" Exception: {e.Message}");
+            return new OperationResult(false,
+                localizationService.GetString("CaseCouldNotBeUpdated") + $" Exception: {e.Message}");
         }
     }
 
@@ -309,6 +320,7 @@ public class CasesService(
                     func.DynamicInvoke(caseId);
                 }
             }
+
             return new OperationResult(true, localizationService.GetString("CaseHasBeenArchived"));
         }
         catch (Exception e)
@@ -316,7 +328,8 @@ public class CasesService(
             SentrySdk.CaptureException(e);
             logger.LogError(e.Message);
             logger.LogTrace(e.StackTrace);
-            return new OperationResult(false, $"{localizationService.GetString("CaseCouldNotBeArchived")} Exception: {e.Message}");
+            return new OperationResult(false,
+                $"{localizationService.GetString("CaseCouldNotBeArchived")} Exception: {e.Message}");
         }
     }
 
@@ -346,7 +359,56 @@ public class CasesService(
             SentrySdk.CaptureException(e);
             logger.LogError(e.Message);
             logger.LogTrace(e.StackTrace);
-            return new OperationResult(false, $"{localizationService.GetString("CaseCouldNotBeUnarchived")} Exception: {e.Message}");
+            return new OperationResult(false,
+                $"{localizationService.GetString("CaseCouldNotBeUnarchived")} Exception: {e.Message}");
+        }
+    }
+
+    public async Task<OperationDataResult<LatestCaseActivity>> GetLatestActivity()
+    {
+        var core = await coreHelper.GetCore();
+        var sdkDbContext = core.DbContextHelper.GetDbContext();
+        try
+        {
+            var latestActivity = await sdkDbContext.Cases
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .OrderByDescending(x => x.UpdatedAt)
+                .Select(x => new { x.Id, x.UpdatedAt, x.CheckListId })
+                .FirstOrDefaultAsync();
+            var eFormText = await sdkDbContext.CheckListTranslations
+                .Where(x => x.CheckListId == latestActivity.CheckListId)
+                .Select(x => x.Text)
+                .FirstOrDefaultAsync();
+
+            if (latestActivity == null)
+            {
+                return new OperationDataResult<LatestCaseActivity>(false,
+                    localizationService.GetString("CouldNotGetLatestActivity"));
+            }
+
+            if (eFormText == null)
+            {
+                return new OperationDataResult<LatestCaseActivity>(false,
+                    localizationService.GetString("CouldNotGetLatestActivity"));
+            }
+
+            return new OperationDataResult<LatestCaseActivity>(true,
+                new LatestCaseActivity()
+                {
+                    Id = latestActivity.Id,
+                    UpdatedAt = latestActivity.UpdatedAt,
+                    CheckListId = latestActivity.CheckListId,
+                    CheckListText = eFormText
+                }
+            );
+        }
+        catch (Exception e)
+        {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationDataResult<LatestCaseActivity>(false,
+                $"{localizationService.GetString("CouldNotGetLatestActivity")} Exception: {e.Message}");
         }
     }
 }

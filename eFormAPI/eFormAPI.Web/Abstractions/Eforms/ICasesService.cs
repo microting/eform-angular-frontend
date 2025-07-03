@@ -45,4 +45,5 @@ public interface ICasesService
     Task<OperationResult> Archive(int caseId);
 
     Task<OperationResult> Unarchive(int caseId);
+    Task<OperationDataResult<LatestCaseActivity>> GetLatestActivity();
 }

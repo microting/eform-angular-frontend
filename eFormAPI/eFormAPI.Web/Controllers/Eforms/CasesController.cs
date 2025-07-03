@@ -81,7 +81,7 @@ public class CasesController(
 
         return Ok(await casesService.Update(model));
     }
-        
+
     [HttpDelete]
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseDelete)]
     public async Task<IActionResult> Delete(int id, int templateId)
@@ -109,5 +109,13 @@ public class CasesController(
     public async Task<OperationResult> Unarchive([FromBody] int caseId)
     {
         return await casesService.Unarchive(caseId);
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    [Route("latest-activity")]
+    public async Task<OperationResult> GetLatestActivity()
+    {
+        return await casesService.GetLatestActivity();
     }
 }
