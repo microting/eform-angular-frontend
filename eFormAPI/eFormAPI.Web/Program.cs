@@ -25,7 +25,6 @@ SOFTWARE.
 using System.Runtime.InteropServices;
 using System.Text;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
-using Sentry;
 
 namespace eFormAPI.Web;
 
@@ -66,8 +65,8 @@ public class Program
 {
     private static CancellationTokenSource _cancelTokenSource = new CancellationTokenSource();
     private static bool _shouldBeRestarted;
-    public static List<IEformPlugin> EnabledPlugins = new List<IEformPlugin>();
-    public static List<IEformPlugin> DisabledPlugins = new List<IEformPlugin>();
+    public static List<IEformPlugin> EnabledPlugins = [];
+    public static List<IEformPlugin> DisabledPlugins = [];
     private static string _defaultConnectionString;
 
     public static void Main(string[] args)
@@ -318,7 +317,7 @@ public class Program
                     {
                         var contextFactory = new BaseDbContextFactory();
                         await using var dbContext =
-                            contextFactory.CreateDbContext(new[] { _defaultConnectionString });
+                            contextFactory.CreateDbContext([_defaultConnectionString]);
                         var eformPlugin = await dbContext.EformPlugins
                             .Where(x => x.Status == (int)PluginStatus.Disabled)
                             .FirstOrDefaultAsync(x => x.PluginId == pluginObject.PluginId);
@@ -386,7 +385,7 @@ public class Program
 
                         var contextFactory = new BaseDbContextFactory();
                         await using var dbContext =
-                            contextFactory.CreateDbContext(new[] {_defaultConnectionString});
+                            contextFactory.CreateDbContext([_defaultConnectionString]);
                         var connectionStringsSdk =
                             scope.ServiceProvider.GetRequiredService<IDbOptions<ConnectionStringsSdk>>();
                         await connectionStringsSdk.UpdateDb(
@@ -532,7 +531,7 @@ public class Program
                         });
                     }
 
-                    using var dbContext = contextFactory.CreateDbContext(new[] {_defaultConnectionString});
+                    using var dbContext = contextFactory.CreateDbContext([_defaultConnectionString]);
                     foreach (var plugin in EnabledPlugins)
                     {
                         var pluginEntity = dbContext.EformPlugins

@@ -25,9 +25,7 @@ SOFTWARE.
 using eFormAPI.Web.Infrastructure.Models;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microting.eForm.Infrastructure.Factories;
-using RabbitMQ.Client;
 
 namespace eFormAPI.Web;
 
@@ -77,16 +75,12 @@ using Services.Eform;
 using RabbitMQ.Client;
 
 
-public class Startup
+public class Startup(IConfiguration configuration)
 {
     private bool _sdkPresent;
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
 
     // ReSharper disable once MemberCanBePrivate.Global
-    public IConfiguration Configuration { get; }
+    public IConfiguration Configuration { get; } = configuration;
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
@@ -124,8 +118,7 @@ public class Startup
             try {
                 var dbContextFactory = new MicrotingDbContextFactory();
                 var dbcontext =
-                    dbContextFactory.CreateDbContext(new[]
-                        { Configuration["ConnectinString"].Replace("Angular", "SDK") });
+                    dbContextFactory.CreateDbContext([Configuration["ConnectinString"].Replace("Angular", "SDK")]);
 
                 var rabbithost = dbcontext.Settings.First(x => x.Name == "rabbitMqHost").Value;
                 var rabbituser = dbcontext.Settings.First(x => x.Name == "rabbitMqUser").Value;
@@ -177,8 +170,8 @@ public class Startup
                     try {
                         var dbContextFactory = new MicrotingDbContextFactory();
                         var dbcontext =
-                            dbContextFactory.CreateDbContext(new[]
-                                { Configuration.MyConnectionString().Replace("Angular", "SDK") });
+                            dbContextFactory.CreateDbContext([Configuration.MyConnectionString().Replace("Angular", "SDK")
+                            ]);
                         var rabbithost = dbcontext.Settings.First(x => x.Name == "rabbitMqHost").Value;
                         var rabbituser = dbcontext.Settings.First(x => x.Name == "rabbitMqUser").Value;
                         var rabbitpass = dbcontext.Settings.First(x => x.Name == "rabbitMqPassword").Value;
@@ -246,14 +239,14 @@ public class Startup
         services.ConfigureDbOptions<EmailSettings>(Configuration.GetSection("EmailSettings"));
         services.ConfigureDbOptions<LoginPageSettings>(Configuration.GetSection("LoginPageSettings"));
         services.ConfigureDbOptions<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
-        var bla = Configuration.GetSection("ConnectionStringsSdk");
+        var configurationSection = Configuration.GetSection("ConnectionStringsSdk");
         if (Configuration.MyConnectionString().Contains("127.0.0.1"))
         {
-            bla.GetSection("SdkConnection").Value = bla.GetSection("SdkConnection")!.Value.Replace(
+            configurationSection.GetSection("SdkConnection").Value = configurationSection.GetSection("SdkConnection")!.Value.Replace(
                 "mariadb-cluster-mariadb-galera",
                 "127.0.0.1");
         }
-        services.ConfigureDbOptions<ConnectionStringsSdk>(bla);
+        services.ConfigureDbOptions<ConnectionStringsSdk>(configurationSection);
         services.ConfigureDbOptions<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
         services.ConfigureDbOptions<PluginStoreSettings>(Configuration.GetSection("PluginStoreSettings"));
         // Database plugins options
@@ -455,27 +448,23 @@ public class Startup
         if (Configuration.MyConnectionString() != "...")
         {
             var contextFactory = new BaseDbContextFactory();
-            using (var dbContext = contextFactory.CreateDbContext(new[] { Configuration.MyConnectionString() }))
+            using var dbContext = contextFactory.CreateDbContext([Configuration.MyConnectionString()]);
+            foreach (var eformPlugin in dbContext.EformPlugins
+                         .AsNoTracking()
+                         .Where(x => x.ConnectionString != "..."))
             {
-                foreach (var eformPlugin in dbContext.EformPlugins
-                             .AsNoTracking()
-                             .Where(x => x.ConnectionString != "..."))
+                var plugin = Program.EnabledPlugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
+                if (plugin == null) continue;
+                if (Configuration.MyConnectionString().Contains("127.0.0.1"))
                 {
-                    var plugin = Program.EnabledPlugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
-                    if (plugin != null)
-                    {
-                        if (Configuration.MyConnectionString().Contains("127.0.0.1"))
-                        {
-                            eformPlugin.ConnectionString = eformPlugin.ConnectionString.Replace(
-                                "mariadb-cluster-mariadb-galera",
-                                "127.0.0.1");
-                        }
-                        var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
-                        if(permissionsManager != null)
-                        {
-                            permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
-                        }
-                    }
+                    eformPlugin.ConnectionString = eformPlugin.ConnectionString.Replace(
+                        "mariadb-cluster-mariadb-galera",
+                        "127.0.0.1");
+                }
+                var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
+                if(permissionsManager != null)
+                {
+                    permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
                 }
             }
         }
