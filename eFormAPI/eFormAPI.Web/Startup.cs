@@ -404,7 +404,7 @@ public class Startup(IConfiguration configuration)
         services.AddSingleton<ILocalizationService, LocalizationService>();
         services.AddSingleton<IEFormCoreService, EFormCoreService>();
         services.AddScoped<ITagsService, TagsService>();
-        services.AddScoped<ITemplateColumnsService, TemplateColumnsService>();
+        services.AddScoped<ITemplateColumnsService, EFormColumnsService>();
         services.AddScoped<IUnitsService, UnitsService>();
         services.AddScoped<IWorkersService, WorkersService>();
         services.AddScoped<ISitesService, SitesService>();
@@ -420,7 +420,7 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IAdminService, AdminService>();
         services.AddScoped<ISettingsService, SettingsService>();
-        services.AddScoped<ITemplatesService, TemplatesService>();
+        services.AddScoped<ITemplatesService, EFormService>();
         services.AddScoped<ISecurityGroupService, SecurityGroupService>();
         services.AddTransient<IClaimsService, ClaimsService>();
         services.AddScoped<IPermissionsService, PermissionsService>();
@@ -437,7 +437,7 @@ public class Startup(IConfiguration configuration)
         services.AddTransient<IEformExcelImportService, EformExcelImportService>();
         services.AddScoped<IEformCaseReportService, EformCaseReportService>();
         services.AddScoped<IWordService, WordService>();
-        services.AddScoped<ITemplateVisualEditorService, TemplateVisualEditorService>();
+        services.AddScoped<ITemplateVisualEditorService, EFormVisualEditorService>();
         services.AddScoped<ITranslationService, TranslationService>();
     }
 

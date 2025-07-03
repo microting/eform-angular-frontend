@@ -40,11 +40,11 @@ using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eForm.Infrastructure.Constants;
 
-public class TemplateColumnsService(
+public class EFormColumnsService(
     ILocalizationService localizationService,
     IUserService userService,
     IEFormCoreService coreHelper,
-    ILogger<TemplateColumnsService> logger)
+    ILogger<EFormColumnsService> logger)
     : ITemplateColumnsService
 {
     public async Task<OperationDataResult<List<TemplateColumnModel>>> GetAvailableColumns(int templateId)

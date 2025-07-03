@@ -29,8 +29,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 [Route("api/template-visual-editor")]
+[Route("api/eform-visual-editor")]
 [Authorize]
-public class TemplateVisualEditorController(ITemplateVisualEditorService templateVisualEditorService) : Controller
+public class EFormVisualEditorController(ITemplateVisualEditorService templateVisualEditorService) : Controller
 {
     [HttpGet]
     public async Task<OperationDataResult<EformVisualEditorModel>> Read(int id)
@@ -53,7 +54,7 @@ public class TemplateVisualEditorController(ITemplateVisualEditorService templat
         }
         return await templateVisualEditorService.CreateVisualTemplate(model);
     }
-        
+
 
     [HttpPut]
     public async Task<OperationResult> Update([FromForm] EformVisualEditorUpdateModel model)

@@ -39,9 +39,9 @@ using Sentry;
 
 namespace eFormAPI.Web.Services.Eform;
 
-public class TemplateVisualEditorService(
+public class EFormVisualEditorService(
     IEFormCoreService coreHelper,
-    ILogger<TemplateVisualEditorService> logger,
+    ILogger<EFormVisualEditorService> logger,
     ILocalizationService localizationService)
     : ITemplateVisualEditorService
 {
@@ -428,7 +428,7 @@ public class TemplateVisualEditorService(
                         fieldsForCreateResult.RemoveAll(x => x.TempId == field.TempId);
                     }
                 }
-                
+
                 await CreateFields(checklistId, sdkDbContext,
                     fieldsForCreateResult,
                     core); // c

@@ -54,18 +54,20 @@ using Microting.eForm.Infrastructure.Constants;
 using Microting.EformAngularFrontendBase.Infrastructure.Const;
 using Settings = Microting.eForm.Dto.Settings;
 
+[Route("api/template-files")]
+[Route("api/eform-files")]
 [Authorize]
-public class TemplateFilesController(
+public class EFormFilesController(
     IEFormCoreService coreHelper,
     ILocalizationService localizationService,
     IUserService userService,
     IEformPermissionsService permissionsService,
     IEformExcelExportService eformExcelExportService,
-    ILogger<TemplateFilesController> logger)
+    ILogger<EFormFilesController> logger)
     : Controller
 {
     [HttpGet]
-    [Route("api/template-files/csv/{id}")]
+    [Route("csv/{id}")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
     public async Task<IActionResult> Csv(int id, string start, string end, bool utcTime, bool gpsCoordinates, bool includeCheckListText)
     {
@@ -90,13 +92,13 @@ public class TemplateFilesController(
         if (!string.IsNullOrEmpty(start) && !string.IsNullOrEmpty(end))
         {
             fullPath = await core.CasesToCsv(id, DateTime.Parse(start), DateTime.Parse(end), filePath,
-                $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",",
+                $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/eform-files/get-image/", ",",
                 "", utcTime, cultureInfo, timeZoneInfo, language, gpsCoordinates, includeCheckListText);
         }
         else
         {
             fullPath = await core.CasesToCsv(id, null, null, filePath,
-                $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",",
+                $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/eform-files/get-image/", ",",
                 "", utcTime, cultureInfo, timeZoneInfo, language, gpsCoordinates, includeCheckListText);
         }
 
@@ -105,7 +107,7 @@ public class TemplateFilesController(
     }
 
     [HttpGet]
-    [Route("api/template-files/get-image/{fileName}.{ext}")]
+    [Route("get-image/{fileName}.{ext}")]
     public async Task<IActionResult> GetImage(string fileName, string ext, string noCache = "noCache")
     {
         return await GetFile(fileName, ext,"image", noCache);
@@ -113,21 +115,21 @@ public class TemplateFilesController(
 
     [HttpGet]
     [AllowAnonymous]
-    [Route("api/template-files/get-report-image/{fileName}.{ext}&token={token}")]
+    [Route("get-report-image/{fileName}.{ext}&token={token}")]
     public async Task<IActionResult> GetReportImage(string fileName, string ext, string noCache = "noCache", string token = "")
     {
         return await GetFile(fileName, ext,"image", noCache, token);
     }
 
     [HttpGet]
-    [Route("api/template-files/get-pdf/{fileName}.{ext}")]
+    [Route("get-pdf/{fileName}.{ext}")]
     public async Task<IActionResult> GetPdf(string fileName, string ext, string noCache = "noCache")
     {
         return await GetFile(fileName, ext, "pdf", noCache);
     }
 
     [HttpGet]
-    [Route("api/template-files/download-eform-excel")]
+    [Route("download-eform-excel")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
     public Task DownloadExcelEform(EformDownloadExcelModel excelModel)
     {
@@ -169,67 +171,8 @@ public class TemplateFilesController(
         return Task.CompletedTask;
     }
 
-    private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache", string token = "")
-    {
-        var core = await coreHelper.GetCore();
-        if (!string.IsNullOrEmpty(token) && token != core.GetSdkSetting(Settings.token).Result)
-        {
-            return Unauthorized();
-        }
-        var fullFileName = $"{fileName}.{ext}";
-        var filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),fullFileName);
-        if (fileType == "pdf")
-        {
-            filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPdf),fullFileName);
-        }
-
-        switch (ext)
-        {
-            case "png":
-                fileType = "image/png";
-                break;
-            case "jpg":
-            case "jpeg":
-                fileType = "image/jpeg";
-                break;
-            case "wav":
-                fileType = "audio/wav";
-                break;
-            case "pdf":
-                fileType = "application/pdf";
-                break;
-        }
-
-        try
-        {
-            if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-            {
-                var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
-
-                Response.ContentLength = ss.ContentLength;
-
-                return File(ss.ResponseStream, ss.Headers.ContentType);
-            }
-        } catch (Exception e)
-        {
-            SentrySdk.CaptureException(e);
-            logger.LogError(e.Message);
-            logger.LogTrace(e.StackTrace);
-            return NotFound($"Trying to find file at location: {filePath}");
-        }
-
-
-        if (!System.IO.File.Exists(filePath))
-        {
-            return NotFound($"Trying to find file at location: {filePath}");
-        }
-
-        var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-        return File(fileStream, fileType);
-    }
-
     [HttpGet]
-    [Route("api/template-files/rotate-image")]
+    [Route("rotate-image")]
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
     public async Task<OperationResult> RotateImage(string fileName)
     {
@@ -246,7 +189,7 @@ public class TemplateFilesController(
     }
 
     [HttpPut]
-    [Route("api/template-files/image")]
+    [Route("image")]
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
     public async Task<OperationResult> UpdateImage([FromForm]int uploadedObjId)
     {
@@ -313,7 +256,7 @@ public class TemplateFilesController(
     }
 
     [HttpPost]
-    [Route("api/template-files/image")]
+    [Route("image")]
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
     public async Task<OperationResult> AddNewImage([FromForm] int fieldId, [FromForm] int caseId)
     {
@@ -417,7 +360,7 @@ public class TemplateFilesController(
     }
 
     [HttpGet]
-    [Route("api/template-files/delete-image")]
+    [Route("delete-image")]
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
     public async Task<OperationResult> DeleteImage(string fileName, int fieldId, int uploadedObjId)
     {
@@ -442,7 +385,7 @@ public class TemplateFilesController(
     }
 
     [HttpGet]
-    [Route("api/template-files/get-pdf-file")]
+    [Route("get-pdf-file")]
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
     public async Task<IActionResult> GetPdfFile(string fileName)
     {
@@ -481,7 +424,7 @@ public class TemplateFilesController(
     }
 
     [HttpGet]
-    [Route("api/template-files/download-case-pdf/{templateId}")]
+    [Route("download-case-pdf/{templateId}")]
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
     public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId, string fileType)
     {
@@ -502,8 +445,8 @@ public class TemplateFilesController(
 
             var filePath = await core.CaseToPdf(caseId, templateId.ToString(),
                 DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-report-image/", fileType, customXmlContent, language);
-            //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
+                $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/eform-files/get-report-image/", fileType, customXmlContent, language);
+            //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/eform-files/get-image?&filename=");
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound();
@@ -522,7 +465,7 @@ public class TemplateFilesController(
     }
 
     [HttpGet]
-    [Route("api/template-files/download-eform-xml/{templateId}")]
+    [Route("download-eform-xml/{templateId}")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.DownloadXml)]
     public async Task<IActionResult> DownloadEFormXml(int templateId)
     {
@@ -543,7 +486,7 @@ public class TemplateFilesController(
             {
                 var filePath = await core.CaseToJasperXml(caseDto, replyElement, (int)caseId,
                     DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/",
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/eform-files/get-image/",
                     "", language);
                 if (!System.IO.File.Exists(filePath))
                 {
@@ -568,7 +511,7 @@ public class TemplateFilesController(
     }
 
     [HttpPost]
-    [Route("api/template-files/upload-eform-zip")]
+    [Route("upload-eform-zip")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UploadZip)]
     public async Task<IActionResult> UploadEformZip(EformZipUploadModel uploadModel)
     {
@@ -822,6 +765,65 @@ public class TemplateFilesController(
             System.IO.File.Delete(filePath);
         }
         return new OperationResult(true, localizationService.GetString("ImageRotatedSuccessfully"));
+    }
+
+    private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache", string token = "")
+    {
+        var core = await coreHelper.GetCore();
+        if (!string.IsNullOrEmpty(token) && token != core.GetSdkSetting(Settings.token).Result)
+        {
+            return Unauthorized();
+        }
+        var fullFileName = $"{fileName}.{ext}";
+        var filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),fullFileName);
+        if (fileType == "pdf")
+        {
+            filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPdf),fullFileName);
+        }
+
+        switch (ext)
+        {
+            case "png":
+                fileType = "image/png";
+                break;
+            case "jpg":
+            case "jpeg":
+                fileType = "image/jpeg";
+                break;
+            case "wav":
+                fileType = "audio/wav";
+                break;
+            case "pdf":
+                fileType = "application/pdf";
+                break;
+        }
+
+        try
+        {
+            if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+            {
+                var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
+
+                Response.ContentLength = ss.ContentLength;
+
+                return File(ss.ResponseStream, ss.Headers.ContentType);
+            }
+        } catch (Exception e)
+        {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return NotFound($"Trying to find file at location: {filePath}");
+        }
+
+
+        if (!System.IO.File.Exists(filePath))
+        {
+            return NotFound($"Trying to find file at location: {filePath}");
+        }
+
+        var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+        return File(fileStream, fileType);
     }
 
 }

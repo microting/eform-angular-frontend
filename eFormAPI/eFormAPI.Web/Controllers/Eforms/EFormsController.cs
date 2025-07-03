@@ -40,11 +40,14 @@ using Infrastructure.Models.Import;
 using Microting.EformAngularFrontendBase.Infrastructure.Const;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
+[Route("api/templates")]
+[Route("api/eforms")]
 [Authorize]
-public class TemplatesController(ITemplatesService templatesService, ILogger<TemplatesController> logger)
+public class EFormsController(ITemplatesService templatesService, ILogger<EFormsController> logger)
     : Controller
 {
     [HttpPost]
+    [Route("index")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
     public async Task<IActionResult> Index([FromBody] TemplateRequestModel templateRequestModel)
     {
@@ -62,6 +65,7 @@ public class TemplatesController(ITemplatesService templatesService, ILogger<Tem
     }
 
     [HttpPost]
+    [Route("create")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
     public async Task<OperationResult> Create([FromBody] EFormXmlModel eFormXmlModel)
     {
@@ -69,7 +73,7 @@ public class TemplatesController(ITemplatesService templatesService, ILogger<Tem
     }
 
     [HttpPost]
-    [Route("api/templates/import")]
+    [Route("import")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
     public async Task<OperationResult> Import(EformExcelUploadModel uploadModel)
     {
@@ -77,7 +81,7 @@ public class TemplatesController(ITemplatesService templatesService, ILogger<Tem
     }
 
     [HttpPost]
-    [Route("api/templates/duplicate")]
+    [Route("duplicate")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
     public async Task<OperationDataResult<int>> Duplicate([FromBody]TemplateDuplicateRequestModel requestModel)
     {
@@ -85,7 +89,7 @@ public class TemplatesController(ITemplatesService templatesService, ILogger<Tem
     }
 
     [HttpGet]
-    [Route("api/templates/get/{id}")]
+    [Route("get/{id}")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
     public async Task<IActionResult> Read(int id)
     {
@@ -102,7 +106,8 @@ public class TemplatesController(ITemplatesService templatesService, ILogger<Tem
         }
     }
 
-    [HttpGet]
+    [HttpDelete]
+    [Route("delete/{id}")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Delete)]
     public async Task<OperationResult> Delete(int id)
     {
@@ -110,7 +115,7 @@ public class TemplatesController(ITemplatesService templatesService, ILogger<Tem
     }
 
     [HttpGet]
-    [Route("api/templates/get-fields/{id}")]
+    [Route("get-fields/{id}")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
     public async Task<IActionResult> GetDataItems(int id)
     {
@@ -126,8 +131,9 @@ public class TemplatesController(ITemplatesService templatesService, ILogger<Tem
             return Unauthorized();
         }
     }
-        
+
     [HttpPost]
+    [Route("deploy")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingUpdate)]
     public async Task<OperationResult> Deploy([FromBody] DeployModel deployModel)
     {
@@ -135,7 +141,7 @@ public class TemplatesController(ITemplatesService templatesService, ILogger<Tem
     }
 
     [HttpGet]
-    [Route("api/templates/common-dictionary-templates")]
+    [Route("common-dictionary-templates")]
     public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetCommonDictionaryTemplates(string nameFilter, int idFilter)
     {
         return await templatesService.GetDictionaryTemplates(nameFilter, idFilter);

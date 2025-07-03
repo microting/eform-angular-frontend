@@ -54,14 +54,14 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 using Field = Microting.eForm.Infrastructure.Models.Field;
 using Microting.eForm.Infrastructure.Data.Entities;
 
-public class TemplatesService(
+public class EFormService(
     IEFormCoreService coreHelper,
     ILocalizationService localizationService,
     IUserService userService,
     BaseDbContext context,
     IOptions<ConnectionStringsSdk> connectionStringsSdk,
     IEformExcelImportService eformExcelImportService,
-    ILogger<TemplatesService> logger)
+    ILogger<EFormService> logger)
     : ITemplatesService
 {
     public async Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel)

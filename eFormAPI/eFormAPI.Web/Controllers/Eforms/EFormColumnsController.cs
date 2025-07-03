@@ -34,28 +34,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.EformAngularFrontendBase.Infrastructure.Const;
 
+[Route("api/template-columns")]
+[Route("api/eform-columns")]
 [Authorize]
-public class TemplateColumnsController(
+public class EFormColumnsController(
     ITemplateColumnsService templateColumnsService,
     IEformPermissionsService permissionsService)
     : Controller
 {
     [HttpGet]
-    [Route("api/template-columns/{templateId}")]
+    [Route("{templateId}")]
     public async Task<OperationDataResult<List<TemplateColumnModel>>> GetAvailableColumns(int templateId)
     {
         return await templateColumnsService.GetAvailableColumns(templateId);
     }
 
     [HttpGet]
-    [Route("api/template-columns/current/{templateId}")]
+    [Route("current/{templateId}")]
     public async Task<OperationDataResult<DisplayTemplateColumnsModel>> GetCurrentColumns(int templateId)
     {
         return await templateColumnsService.GetCurrentColumns(templateId);
     }
 
     [HttpPost]
-    [Route("api/template-columns")]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateColumns)]
     public async Task<IActionResult> UpdateColumns([FromBody] UpdateTemplateColumnsModel model)
     {

@@ -56,7 +56,7 @@ export class EFormService {
   }
 
   deleteSingle(id: number): Observable<OperationResult> {
-    return this.apiBaseService.get(TemplatesMethods.DeleteSingle + '/' + id);
+    return this.apiBaseService.delete(TemplatesMethods.DeleteSingle + '/' + id);
   }
 
   createSingle(eFormXmlModel: EFormCreateModel): Observable<OperationResult> {
