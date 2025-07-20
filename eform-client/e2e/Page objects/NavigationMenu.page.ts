@@ -172,7 +172,7 @@ class NavigationMenuPage {
   ) {
     const ele = await $(`#editItemTranslation${firstLevelIndex}_${secondLevelIndex}_${translationIndex}`);
     await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
