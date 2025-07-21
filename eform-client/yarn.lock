@@ -360,10 +360,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/language-service@19.2.12":
-  version "19.2.12"
-  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-19.2.12.tgz#49de1d57f6c328448f4c84b307fa6c4c08c248cf"
-  integrity sha512-eYsN/WZ1nSxkZgSONguee3AajB0fIn2C4Xv7iHEZImI0LixeIC5wIqnbk/yinrl7TEbDi7+16Tkx3yXgW82NjA==
+"@angular/language-service@20.1.2":
+  version "20.1.2"
+  resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-20.1.2.tgz#44c0358f01bbd5b9ff5ea4dcec628571cf689a89"
+  integrity sha512-qeRrSJCfSZ5K01x+5bQntHPZOrXJOy17bLTtJdQ7iu5PBYh2hFwMipWOGp6SPeYgZ8yl88vmZI+YkLOEsNNniw==
 
 "@angular/localize@19.2.0":
   version "19.2.0"
