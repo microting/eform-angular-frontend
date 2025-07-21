@@ -221,18 +221,6 @@
     "@angular-devkit/architect" "0.1902.13"
     rxjs "7.8.1"
 
-"@angular-devkit/core@19.2.12":
-  version "19.2.12"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.12.tgz#da278ad9742d566e5b49b32e2ba3a3d99304280d"
-  integrity sha512-v5pdfZHZ8MTZozfpkhKoPFBpXQW+2GFbTfdyis8FBtevJWCbIsCR3xhodgI4jwzkSEAraN4oVtWvSytdNyBC6A==
-  dependencies:
-    ajv "8.17.1"
-    ajv-formats "3.0.1"
-    jsonc-parser "3.3.1"
-    picomatch "4.0.2"
-    rxjs "7.8.1"
-    source-map "0.7.4"
-
 "@angular-devkit/core@19.2.13":
   version "19.2.13"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.13.tgz#6baea0d6156d02ea9078f2b557a69fa1733af55b"
@@ -304,6 +292,11 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.6.0.tgz#78bb3cb3285998d5bd243d2fbb0cfd736344aca2"
   integrity sha512-ro+seaTAg5GvtJ72uWEEnP9J5mT0vtgdqH6YMrmMt4pZbSZxvkLfLjZGkXo/HjVDVcCjPnmZeMwKN+uoEc27Jg==
 
+"@angular-eslint/bundled-angular-compiler@20.1.1":
+  version "20.1.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-20.1.1.tgz#aca45911806a21daf4b1c60aecadfd908f458fcb"
+  integrity sha512-hEWh/upyTj2bhyRmbNnGtlOXhBSEHwLg8/9YYhwmiNApQwKcvcg7lkstZMEVrKievNHZT6Wh4dWZvjRjMqLNSg==
+
 "@angular-eslint/eslint-plugin-template@19.6.0":
   version "19.6.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-19.6.0.tgz#42350635b224763ac79a324a49dbb118b7a298a0"
@@ -335,12 +328,12 @@
     semver "7.7.2"
     strip-json-comments "3.1.1"
 
-"@angular-eslint/template-parser@19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-19.6.0.tgz#0b834b593f9921adf04857f10c5598464ac8ece2"
-  integrity sha512-NGxXUZkI5lXjoKnmL51C8DoJx8AjwF9sonieC2EVxgXycK2MYAamFWYGHMiVemzFsg1nIv+JvhHITgjSjyC3HQ==
+"@angular-eslint/template-parser@20.1.1":
+  version "20.1.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-20.1.1.tgz#9c3db7050e3e4bf48f87ffc775a30785fe7d8684"
+  integrity sha512-giIMYORf8P8MbBxh6EUfiR/7Y+omxJtK2C7a8lYTtLSOIGO0D8c8hXx9hTlPcdupVX+xZXDuZ85c9JDen+JSSA==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "19.6.0"
+    "@angular-eslint/bundled-angular-compiler" "20.1.1"
     eslint-scope "^8.0.2"
 
 "@angular-eslint/utils@19.6.0":
