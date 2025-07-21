@@ -221,18 +221,6 @@
     "@angular-devkit/architect" "0.1902.13"
     rxjs "7.8.1"
 
-"@angular-devkit/core@19.2.12":
-  version "19.2.12"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.12.tgz#da278ad9742d566e5b49b32e2ba3a3d99304280d"
-  integrity sha512-v5pdfZHZ8MTZozfpkhKoPFBpXQW+2GFbTfdyis8FBtevJWCbIsCR3xhodgI4jwzkSEAraN4oVtWvSytdNyBC6A==
-  dependencies:
-    ajv "8.17.1"
-    ajv-formats "3.0.1"
-    jsonc-parser "3.3.1"
-    picomatch "4.0.2"
-    rxjs "7.8.1"
-    source-map "0.7.4"
-
 "@angular-devkit/core@19.2.13":
   version "19.2.13"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.13.tgz#6baea0d6156d02ea9078f2b557a69fa1733af55b"
@@ -304,6 +292,11 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.6.0.tgz#78bb3cb3285998d5bd243d2fbb0cfd736344aca2"
   integrity sha512-ro+seaTAg5GvtJ72uWEEnP9J5mT0vtgdqH6YMrmMt4pZbSZxvkLfLjZGkXo/HjVDVcCjPnmZeMwKN+uoEc27Jg==
 
+"@angular-eslint/bundled-angular-compiler@20.1.1":
+  version "20.1.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-20.1.1.tgz#aca45911806a21daf4b1c60aecadfd908f458fcb"
+  integrity sha512-hEWh/upyTj2bhyRmbNnGtlOXhBSEHwLg8/9YYhwmiNApQwKcvcg7lkstZMEVrKievNHZT6Wh4dWZvjRjMqLNSg==
+
 "@angular-eslint/eslint-plugin-template@19.6.0":
   version "19.6.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-19.6.0.tgz#42350635b224763ac79a324a49dbb118b7a298a0"
@@ -321,6 +314,15 @@
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "19.6.0"
     "@angular-eslint/utils" "19.6.0"
+
+"@angular-eslint/eslint-plugin@20.1.1":
+  version "20.1.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-20.1.1.tgz#332e0d3efc0420abecf507fafc33effccc37217a"
+  integrity sha512-h+D6T35UGIuG0keYPH7dc6OTdfTVJ8GoIhCIpoAmVGhdIdfXIISvDvvX/QPiZtTcefik3vEZEGRiI/Nzc5xImw==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "20.1.1"
+    "@angular-eslint/utils" "20.1.1"
+    ts-api-utils "^2.1.0"
 
 "@angular-eslint/schematics@19.6.0":
   version "19.6.0"
@@ -349,6 +351,13 @@
   integrity sha512-ygtsmRKHNqrzG2mpUj1XwLNRoG+ikYkizsOuq5xPRM8o6dCw03H5eel4s7hnXT4c09WbpnoaVNi9O3xFLIETJQ==
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "19.6.0"
+
+"@angular-eslint/utils@20.1.1":
+  version "20.1.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-20.1.1.tgz#7f64edcc2aa0d1294c8e72d268960a30f253552d"
+  integrity sha512-hqbzGqa/0Ua90r4TMn4oZVnLuwIF6dqEfH7SlstB224h/7+nKoi67aHkmUq7VItWXpDDe+f1opeR01GKS9fNog==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "20.1.1"
 
 "@angular/animations@19.2.0":
   version "19.2.0"
