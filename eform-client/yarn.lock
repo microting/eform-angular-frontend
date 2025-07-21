@@ -221,18 +221,6 @@
     "@angular-devkit/architect" "0.1902.13"
     rxjs "7.8.1"
 
-"@angular-devkit/core@19.2.12":
-  version "19.2.12"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.12.tgz#da278ad9742d566e5b49b32e2ba3a3d99304280d"
-  integrity sha512-v5pdfZHZ8MTZozfpkhKoPFBpXQW+2GFbTfdyis8FBtevJWCbIsCR3xhodgI4jwzkSEAraN4oVtWvSytdNyBC6A==
-  dependencies:
-    ajv "8.17.1"
-    ajv-formats "3.0.1"
-    jsonc-parser "3.3.1"
-    picomatch "4.0.2"
-    rxjs "7.8.1"
-    source-map "0.7.4"
-
 "@angular-devkit/core@19.2.13":
   version "19.2.13"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-19.2.13.tgz#6baea0d6156d02ea9078f2b557a69fa1733af55b"
@@ -9626,10 +9614,10 @@ ngx-color@^10.0.0:
     material-colors "^1.2.6"
     tslib "^2.3.0"
 
-ngx-cookie-service@19.1.2:
-  version "19.1.2"
-  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-19.1.2.tgz#d96c073705bfd9740609b6635bb2a23973a1760d"
-  integrity sha512-4BFbc5BA7/ryuQVZUfDMHcjdgkHeW8obqfCCknoOEaplefjzlVvMQUx9Hywfjbc8POzZeZD2csS43Hs7rscJcA==
+ngx-cookie-service@20.0.0:
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-20.0.0.tgz#3d638857abea7367f547464c50efdd73325987dd"
+  integrity sha512-2xT/y7zwX2krot3E47nNj4hNeBufGEDGaO6biRrtCCzx1aI19XZ17mUK0+wFsnH0VDPvF0F7Ja0kMADrkRLv6A==
   dependencies:
     tslib "^2.8.0"
 
