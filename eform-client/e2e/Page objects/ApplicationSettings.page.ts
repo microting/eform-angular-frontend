@@ -1,5 +1,6 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import { $ } from '@wdio/globals';
+import loginPage from "./Login.page";
 
 export class ApplicationSettingsPage extends PageWithNavbarPage {
   public LoginPage: LoginPageSettings;
@@ -70,7 +71,8 @@ class LoginPageSettings {
 
   public async reset() {
     await (await this.resetBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await loginPage.waitForSpinnerHide();
+    //await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   }
 }
 

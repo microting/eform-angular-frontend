@@ -2,7 +2,7 @@
 import type { Options } from '@wdio/types';
 import { $ } from '@wdio/globals';
 
-export const config: Options.Testrunner = {
+export const config: WebdriverIO.Config = {
   runner: 'local',
   path: '/',
   //
@@ -265,6 +265,7 @@ export const config: Options.Testrunner = {
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
+      second: '2-digit',
       hour12: false
     }).replace(/[ ]/g, '--').replace(':', '-');
 
