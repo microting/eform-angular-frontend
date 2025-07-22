@@ -1,7 +1,7 @@
 import { Guid } from 'guid-typescript';
-import { $ } from '@wdio/globals';
+import { $, expect } from '@wdio/globals';
 
-import { expect } from 'chai';
+// import { expect } from 'chai';
 
 export function generateRandmString(length: number = 36): string {
   return Guid.raw().toString().slice(0, length);
@@ -48,7 +48,8 @@ export async function testSorting(
     } else {
       sorted = elementsBefore.sort();
     }
-    expect(sorted, `Sort by ${sortBy} incorrect`).deep.equal(elementsAfter);
+    // expect(sorted, `Sort by ${sortBy} incorrect`).deep.equal(elementsAfter);
+    expect(sorted).toEqual(elementsAfter);
   }
 }
 
