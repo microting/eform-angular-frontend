@@ -1,7 +1,7 @@
 import { Guid } from 'guid-typescript';
 import { $ } from '@wdio/globals';
 
-const expect = require('chai').expect;
+import { expect } from 'chai';
 
 export function generateRandmString(length: number = 36): string {
   return Guid.raw().toString().slice(0, length);
