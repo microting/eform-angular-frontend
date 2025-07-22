@@ -3787,10 +3787,10 @@
     magic-string "^0.30.17"
     pathe "^2.0.3"
 
-"@wdio/cli@^9.14.0":
-  version "9.18.1"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-9.18.1.tgz#80e47a99b41688e51c3170d2c47aab81f047d740"
-  integrity sha512-f/Akoj7bTjAG3fdZRXgQsRPO0SZFzl8U1z/U5b1MNBt/zCFhh/vUg8SbOGDWXMp1UdR3p3zQQdlrk9SxWT3NDg==
+"@wdio/cli@^9.18.2":
+  version "9.18.2"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-9.18.2.tgz#8430cb2a8abac88fa3ba12eeb1edae2ce28ab61e"
+  integrity sha512-6JnSAOu0SKtQ3r8pHoUyTT298ZISSDvPz4KPhIfPAsq1zVCWIPL3rEtL4W6n6AVkTPZHw7MpYc/t/HfWpgtSjg==
   dependencies:
     "@vitest/snapshot" "^2.1.1"
     "@wdio/config" "9.18.0"
@@ -3802,7 +3802,7 @@
     async-exit-hook "^2.0.1"
     chalk "^5.4.1"
     chokidar "^4.0.0"
-    create-wdio "9.18.0"
+    create-wdio "9.18.2"
     dotenv "^17.2.0"
     import-meta-resolve "^4.0.0"
     lodash.flattendeep "^4.4.0"
@@ -5553,10 +5553,10 @@ create-require@^1.1.0:
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
-create-wdio@9.18.0:
-  version "9.18.0"
-  resolved "https://registry.yarnpkg.com/create-wdio/-/create-wdio-9.18.0.tgz#f857c58e69efe3689700b2854dd1c96a1bf7dad3"
-  integrity sha512-udb7Q+0NOAXzb6a+jpHUifNKYZEkFCSxRwl2wW7d76vM/A7aYMcR8+bp9e0I6whV8cTNw5RwvXhBk9OBo+noBw==
+create-wdio@9.18.2:
+  version "9.18.2"
+  resolved "https://registry.yarnpkg.com/create-wdio/-/create-wdio-9.18.2.tgz#b2f973f9bf5da6a5a1cd1bcead8978f414e8966e"
+  integrity sha512-atf81YJfyTNAJXsNu3qhpqF4OO43tHGTpr88duAc1Hk4a0uXJAPUYLnYxshOuMnfmeAxlWD+NqGU7orRiXEuJg==
   dependencies:
     chalk "^5.3.0"
     commander "^14.0.0"
