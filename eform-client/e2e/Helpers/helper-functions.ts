@@ -1,5 +1,5 @@
 import { Guid } from 'guid-typescript';
-import { $, expect } from '@wdio/globals';
+// import { $, expect } from '@wdio/globals';
 
 // import { expect } from 'chai';
 
