@@ -3787,10 +3787,10 @@
     magic-string "^0.30.17"
     pathe "^2.0.3"
 
-"@wdio/cli@^9.14.0":
-  version "9.18.1"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-9.18.1.tgz#80e47a99b41688e51c3170d2c47aab81f047d740"
-  integrity sha512-f/Akoj7bTjAG3fdZRXgQsRPO0SZFzl8U1z/U5b1MNBt/zCFhh/vUg8SbOGDWXMp1UdR3p3zQQdlrk9SxWT3NDg==
+"@wdio/cli@^9.18.4":
+  version "9.18.4"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-9.18.4.tgz#daf8102e17f2d69290f275e13afc9e82adc16ae8"
+  integrity sha512-nSCMxko+g91KvUhIvUBp3ULnCDTBD8D5ma7LbPBDr7j72mQyXlQoNamKRCNsNVaFEXA/FtCmPXc1m/ynQDgeaA==
   dependencies:
     "@vitest/snapshot" "^2.1.1"
     "@wdio/config" "9.18.0"
@@ -3802,7 +3802,7 @@
     async-exit-hook "^2.0.1"
     chalk "^5.4.1"
     chokidar "^4.0.0"
-    create-wdio "9.18.0"
+    create-wdio "9.18.2"
     dotenv "^17.2.0"
     import-meta-resolve "^4.0.0"
     lodash.flattendeep "^4.4.0"
@@ -3810,7 +3810,7 @@
     lodash.union "^4.6.0"
     read-pkg-up "^10.0.0"
     tsx "^4.7.2"
-    webdriverio "9.18.1"
+    webdriverio "9.18.4"
     yargs "^17.7.2"
 
 "@wdio/config@8.45.0":
@@ -5553,10 +5553,10 @@ create-require@^1.1.0:
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
-create-wdio@9.18.0:
-  version "9.18.0"
-  resolved "https://registry.yarnpkg.com/create-wdio/-/create-wdio-9.18.0.tgz#f857c58e69efe3689700b2854dd1c96a1bf7dad3"
-  integrity sha512-udb7Q+0NOAXzb6a+jpHUifNKYZEkFCSxRwl2wW7d76vM/A7aYMcR8+bp9e0I6whV8cTNw5RwvXhBk9OBo+noBw==
+create-wdio@9.18.2:
+  version "9.18.2"
+  resolved "https://registry.yarnpkg.com/create-wdio/-/create-wdio-9.18.2.tgz#b2f973f9bf5da6a5a1cd1bcead8978f414e8966e"
+  integrity sha512-atf81YJfyTNAJXsNu3qhpqF4OO43tHGTpr88duAc1Hk4a0uXJAPUYLnYxshOuMnfmeAxlWD+NqGU7orRiXEuJg==
   dependencies:
     chalk "^5.3.0"
     commander "^14.0.0"
@@ -12549,6 +12549,37 @@ webdriverio@9.18.1:
   version "9.18.1"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-9.18.1.tgz#836050fec2566a3b659afc58745898066ea90c5b"
   integrity sha512-b9aVtmi5+BUkae+SfJlajjKcVWqhMP+HdxpW2B3MlAtvYG2MRpwXkR34yvRIh5IYVMnR5tyUi5knDlJUGOPHPQ==
+  dependencies:
+    "@types/node" "^20.11.30"
+    "@types/sinonjs__fake-timers" "^8.1.5"
+    "@wdio/config" "9.18.0"
+    "@wdio/logger" "9.18.0"
+    "@wdio/protocols" "9.16.2"
+    "@wdio/repl" "9.16.2"
+    "@wdio/types" "9.16.2"
+    "@wdio/utils" "9.18.0"
+    archiver "^7.0.1"
+    aria-query "^5.3.0"
+    cheerio "^1.0.0-rc.12"
+    css-shorthand-properties "^1.1.1"
+    css-value "^0.0.1"
+    grapheme-splitter "^1.0.4"
+    htmlfy "^0.8.1"
+    is-plain-obj "^4.1.0"
+    jszip "^3.10.1"
+    lodash.clonedeep "^4.5.0"
+    lodash.zip "^4.2.0"
+    query-selector-shadow-dom "^1.0.1"
+    resq "^1.11.0"
+    rgb2hex "0.2.5"
+    serialize-error "^12.0.0"
+    urlpattern-polyfill "^10.0.0"
+    webdriver "9.18.0"
+
+webdriverio@9.18.4:
+  version "9.18.4"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-9.18.4.tgz#02e16ce15a9b9ee7842789c876ecb1b6a53f043e"
+  integrity sha512-Q/gghz/Zt7EhTnbDQfLb61WgSwCksXZE60lEzmDXe4fULCH/6Js5IWUsne3W+BRy6nXeVvFscHD/d7S77dbamw==
   dependencies:
     "@types/node" "^20.11.30"
     "@types/sinonjs__fake-timers" "^8.1.5"
