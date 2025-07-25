@@ -159,11 +159,5 @@
     "webdriverio": "9.18.4",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
   },
-  "browserslist": [
-    "last 20 versions",
-    "not ie > 0",
-    "not ie_mob > 0",
-    "not dead"
-  ],
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }
