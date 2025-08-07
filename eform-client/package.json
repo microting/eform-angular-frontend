@@ -76,7 +76,7 @@
     "@ngrx/entity": "19.2.1",
     "@ngrx/store": "19.2.1",
     "@ngrx/store-devtools": "19.2.1",
-    "@ngx-translate/core": "16.0.4",
+    "@ngx-translate/core": "17.0.0",
     "@sentry/angular": "^10.0.0",
     "@sentry/cli": "^2.46.0",
     "@swimlane/ngx-charts": "22.0.0",
