@@ -2251,10 +2251,10 @@
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-20.1.2.tgz#dda3212cb21f34531c429e0e1f476a8d931e50fd"
   integrity sha512-1kN6o/JGevLY9d89qyRtr5bKkRMBUwH2/6wIquZgkcK2jPYs0Cmm0N7kV0eDL7yBFLI4RtyV6IHligPmdCHpeA==
 
-"@ngx-translate/core@16.0.4":
-  version "16.0.4"
-  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-16.0.4.tgz#8e17d6ed6b306803ed2eb19ab72a0fdb697f1d76"
-  integrity sha512-s8llTL2SJvROhqttxvEs7Cg+6qSf4kvZPFYO+cTOY1d8DWTjlutRkWAleZcPPoeX927Dm7ALfL07G7oYDJ7z6w==
+"@ngx-translate/core@17.0.0":
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-17.0.0.tgz#d6c0738c5004b53273bc97e6ca5488f6a6816f25"
+  integrity sha512-Rft2D5ns2pq4orLZjEtx1uhNuEBerUdpFUG1IcqtGuipj6SavgB8SkxtNQALNDA+EVlvsNCCjC2ewZVtUeN6rg==
   dependencies:
     tslib "^2.3.0"
 
