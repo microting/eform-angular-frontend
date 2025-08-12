@@ -1,55 +1,24 @@
-import {
-  Component,
-  EventEmitter,
-  Input, OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import {
-  EntityItemModel,
-} from 'src/app/common/models';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {CdkDragDrop, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
 import {getRandomInt} from 'src/app/common/helpers';
-import {DragulaService} from 'ng2-dragula';
+import {EntityItemModel} from 'src/app/common/models';
 
 @Component({
-    selector: 'app-entity-list-elements',
-    templateUrl: './entity-list-elements.component.html',
-    styleUrls: ['./entity-list-elements.component.scss'],
-    standalone: false
+  selector: 'app-entity-list-elements',
+  templateUrl: './entity-list-elements.component.html',
+  styleUrls: ['./entity-list-elements.component.scss'],
+  standalone: false
 })
-export class EntityListElementsComponent implements OnInit, OnDestroy {
-  @Input() entityItemModels: EntityItemModel[] = [];
+export class EntityListElementsComponent {
+  @Input() entityItemModels: any[] = [];
   @Output() entityItemModelsChanged: EventEmitter<Array<EntityItemModel>> =
     new EventEmitter<Array<EntityItemModel>>();
   @Output() openEditNameModal: EventEmitter<EntityItemModel> =
     new EventEmitter<EntityItemModel>();
-  constructor(private dragulaService: DragulaService,) {
-    this.dragulaService.createGroup('ITEMS', {
-      moves: (el, container, handle) => {
-        return handle.classList.contains('dragula-handle') && container.classList.contains('dragula-container');
-      },
-      isContainer: (el) => {
-        return el.classList.contains('dragula-container');
-      },
-      accepts: (target) => {
-        return target.classList.contains('dragula-item') || target.parentElement.classList.contains('dragula-container');
-      },
-      direction: 'vertical'
-    });
-  }
 
-  ngOnInit() {
-  }
-
-  deleteEntityItem(tempId: number) {
-    this.entityItemModels = this.entityItemModels.filter(
-      (x) => x.tempId !== tempId
-    );
-    this.actualizeEntityItemsPositions();
-    this.entityItemModelsChanged.emit(this.entityItemModels);
-  }
-
-  actualizeEntityItemsPositions() {
+  drop(event: CdkDragDrop<any[]>) {
+    moveItemInArray(this.entityItemModels, event.previousIndex, event.currentIndex);
+    this.dragulaPositionChanged(); // Call your existing handler if needed
     for (let i = 0; i < this.entityItemModels.length; i++) {
       this.entityItemModels[i].entityItemUId = i.toString();
       this.entityItemModels[i].displayIndex = i;
@@ -61,12 +30,18 @@ export class EntityListElementsComponent implements OnInit, OnDestroy {
   }
 
   dragulaPositionChanged() {
-    this.actualizeEntityItemsPositions();
     this.entityItemModelsChanged.emit(this.entityItemModels);
   }
 
-  onOpenModalEditName(entityItem: EntityItemModel) {
+  onOpenModalEditName(entityItem: any) {
     this.openEditNameModal.emit(entityItem);
+  }
+
+  deleteEntityItem(tempId: any) {
+    this.entityItemModels = this.entityItemModels.filter(
+      item => item.tempId !== tempId
+    );
+    this.entityItemModelsChanged.emit(this.entityItemModels);
   }
 
   getRandId(): number{
@@ -75,9 +50,5 @@ export class EntityListElementsComponent implements OnInit, OnDestroy {
       return this.getRandId();
     }
     return randId;
-  }
-
-  ngOnDestroy(): void {
-    this.dragulaService.destroy('ITEMS');
   }
 }

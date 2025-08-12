@@ -42,6 +42,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormattingTextEditorModule} from '../eform-imported/formatting-text-editor/formatting-text-editor.module';
 import {CustomMatPaginatorIntl} from './components/eform-pagination/mat_paginator_intl';
+import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
 
 @NgModule({
   imports: [
@@ -62,7 +63,9 @@ import {CustomMatPaginatorIntl} from './components/eform-pagination/mat_paginato
     MatInputModule,
     MatDialogModule,
     MatTooltipModule,
-    FormattingTextEditorModule
+    FormattingTextEditorModule,
+    CdkDropList,
+    CdkDrag
   ],
   declarations: [
     EformPaginationComponent,
