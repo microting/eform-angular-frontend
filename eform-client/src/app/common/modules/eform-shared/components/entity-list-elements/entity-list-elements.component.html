@@ -10,7 +10,7 @@
     cdkDrag
   >
     <mat-icon class="cdk-drag-handle cursor-pointer">drag_handle</mat-icon>
-    <div id="createEntityItemName{{entityItem.id}}">{{ entityItem.name }}</div>
+    <div class="createEntityItemName">{{ entityItem.name }}</div>
     <div style="display: flex; align-items: center;">
       <mat-icon
         style="width: 40px;"
@@ -21,14 +21,14 @@
         style="margin-left: 0.5rem;"
         mat-icon-button
         color="accent"
-        id="entityItemEditBtn"
+        class="entityItemEditBtn"
         (click)="onOpenModalEditName(entityItem)">
         <mat-icon >edit</mat-icon>
       </button>
       <button
         mat-icon-button
         color="warn"
-        id="entityItemDeleteBtn"
+        class="entityItemDeleteBtn"
         (click)="deleteEntityItem(entityItem.tempId)">
         <mat-icon>delete</mat-icon>
       </button>

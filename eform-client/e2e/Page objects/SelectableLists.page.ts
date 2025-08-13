@@ -8,7 +8,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async selectableListCount(): Promise<number> {
-    //await browser.pause(500);
+    //await browser.pause(250);
     return (await $$('tbody > tr')).length;
   }
 
@@ -32,7 +32,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async itemsCreatePageCount(): Promise<number> {
-    return (await $$('#createEntityItemName')).length;
+    return (await $$('.createEntityItemName')).length;
   }
 
   public async entitySelectCreateBtn(): Promise<WebdriverIO.Element> {
@@ -169,7 +169,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async getFirstEntityItemOnEdit(): Promise<EntitySelectItemEditRowObject> {
-    await browser.pause(500);
+    await browser.pause(250);
     const obj = new EntitySelectItemEditRowObject();
     return await obj.getRow(1);
   }
@@ -246,13 +246,13 @@ export class SelectableListsPage extends PageWithNavbarPage {
     clickCancel = false
   ) {
     await (await this.entitySelectCreateBtn()).click();
-    await browser.pause(500);
+    await browser.pause(250);
     await (await this.entitySelectCreateName()).waitForDisplayed({ timeout: 40000 });
     await (await this.entitySelectCreateName()).setValue(data.name);
-    await browser.pause(500);
+    await browser.pause(250);
     if (data.description) {
       await (await this.entitySelectCreateDescription()).setValue(data.description);
-      await browser.pause(500);
+      await browser.pause(250);
     }
     if (data.items != null) {
       if (multipleImport) {
@@ -264,27 +264,27 @@ export class SelectableListsPage extends PageWithNavbarPage {
             item = item + '\n';
           }
           await (await this.entitySelectImportTextArea()).addValue(item);
-          await browser.pause(500);
+          await browser.pause(250);
         }
         await (await this.entitySelectImportSaveBtn()).click();
-        await browser.pause(1000);
+        await browser.pause(250);
       } else {
         for (let i = 0; i < data.items.length; i++) {
           await (await this.entitySelectCreateSingleItemBtn()).click();
-          await browser.pause(500);
+          await browser.pause(250);
           await (await this.getLastItemCreateObject()).edit(data.items[i]);
         }
       }
     }
     if (!clickCancel) {
       await (await this.entitySelectCreateSaveBtn()).click();
-      await browser.pause(500);
+      await browser.pause(250);
     } else {
       await (await this.entitySelectCreateCancelBtn()).click();
-      await browser.pause(500);
+      await browser.pause(250);
     }
     await (await this.entitySelectCreateBtn()).waitForDisplayed();
-    //await browser.pause(1000);
+    //await browser.pause(250);
   }
 
   public async cleanupList() {
@@ -333,34 +333,34 @@ export class SelectableListRowObject {
 
   async delete(clickCancel = false) {
     await this.deleteBtn.click();
-    await browser.pause(500);
+    await browser.pause(250);
     if (!clickCancel) {
       await (await selectableLists.entitySelectDeleteDeleteBtn()).click();
-      await browser.pause(500);
+      await browser.pause(250);
     } else {
       await (await selectableLists.entitySelectDeleteCancelBtn()).click();
-      await browser.pause(500);
+      await browser.pause(250);
     }
     await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
   }
 
   async openEdit() {
     await this.editBtn.click();
-    await browser.pause(2000);
+    await browser.pause(250);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
-    //await browser.pause(1000);
+    //await browser.pause(250);
   }
 
   async closeEdit(clickCancel = false) {
     if (!clickCancel) {
       await (await selectableLists.entitySelectEditSaveBtn()).click();
-      await browser.pause(1000);
+      await browser.pause(250);
     } else {
       await (await selectableLists.entitySelectEditCancelBtn()).click();
-      //await browser.pause(500);
+      //await browser.pause(250);
     }
     await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
-    await browser.pause(1000);
+    await browser.pause(250);
   }
 
   async edit(
@@ -380,7 +380,7 @@ export class SelectableListRowObject {
     if (clearItems && (await selectableLists.itemsEditPageCount()) > 0) {
       for (let i = (await selectableLists.itemsEditPageCount()); i > 0; i--) {
         await (await selectableLists.getFirstItemEditObject()).delete();
-        await browser.pause(500);
+        await browser.pause(250);
       }
     }
     if (data.items != null) {
@@ -390,7 +390,7 @@ export class SelectableListRowObject {
         await (await selectableLists.entitySelectImportTextArea()).waitForDisplayed({
           timeout: 40000,
         });
-        await browser.pause(500);
+        await browser.pause(250);
         for (let i = 0; i < data.items.length; i++) {
           let item = data.items[i];
           if (!item.includes('\n') && i !== data.items.length - 1) {
@@ -399,7 +399,7 @@ export class SelectableListRowObject {
           await (await selectableLists.entitySelectImportTextArea()).addValue(item);
         }
         await (await selectableLists.entitySelectImportSaveBtn()).click();
-        await browser.pause(500);
+        await browser.pause(250);
       } else {
         for (let i = 0; i < (data.items).length; i++) {
           if (editItems) {
@@ -409,9 +409,9 @@ export class SelectableListRowObject {
               await item.edit(data.items[i]);
             } else {
               await (await selectableLists.entitySelectEditSingleItemBtn()).click();
-              await browser.pause(500);
+              await browser.pause(250);
               await (await selectableLists.getLastItemEditObject()).edit(data.items[i]);
-              await browser.pause(500);
+              await browser.pause(250);
             }
           }
           // console.log('edit 4e');
@@ -423,7 +423,7 @@ export class SelectableListRowObject {
       }
     }
     await this.closeEdit(clickCancel);
-    //await browser.pause(500);
+    //await browser.pause(250);
   }
 }
 
@@ -439,13 +439,13 @@ export class EntitySelectItemEditRowObject {
     const row = await $$('app-entity-list-elements .d-flex')[rowNum - 1];
     if (row) {
       try {
-        this.name = await row.$('#createEntityItemName').getText();
+        this.name = await row.$('.createEntityItemName').getText();
       } catch (e) {}
       try {
-        this.editBtn = await row.$('#entityItemEditBtn');
+        this.editBtn = await row.$('.entityItemEditBtn');
       } catch (e) {}
       try {
-        this.deleteBtn = await row.$('#entityItemDeleteBtn');
+        this.deleteBtn = await row.$('.entityItemDeleteBtn');
       } catch (e) {}
     } else {
       return null;
@@ -456,22 +456,22 @@ export class EntitySelectItemEditRowObject {
   async edit(newName: string, clickCancel = false) {
     // await this.editBtn.scrollIntoView();
     await this.editBtn.click();
-    await browser.pause(500);
+    await browser.pause(250);
     await (await selectableLists.entitySelectEditItemNameBox()).setValue(newName);
-    await browser.pause(500);
+    await browser.pause(250);
     if (!clickCancel) {
       await (await selectableLists.entitySelectEditItemSaveBtn()).click();
     } else {
       await (await selectableLists.entitySelectEditItemCancelBtn()).click();
     }
-    await browser.pause(500);
+    await browser.pause(250);
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
   }
 
   async delete() {
     await this.deleteBtn.scrollIntoView();
     await this.deleteBtn.click();
-    await browser.pause(500);
+    await browser.pause(250);
   }
 }
 
@@ -483,15 +483,15 @@ export class EntitySelectItemCreateRowObject {
   deleteBtn;
 
   async getRow(rowNum: number) {
-    if ((await $$('#createEntityItemName'))[rowNum - 1]) {
+    if ((await $$('.createEntityItemName'))[rowNum - 1]) {
       try {
-        this.name = await (await (await $$('#createEntityItemName'))[rowNum - 1]).getText();
+        this.name = await (await (await $$('.createEntityItemName'))[rowNum - 1]).getText();
       } catch (e) {}
       try {
-        this.editBtn = (await $$('#entityItemEditBtn'))[rowNum - 1];
+        this.editBtn = (await $$('.entityItemEditBtn'))[rowNum - 1];
       } catch (e) {}
       try {
-        this.deleteBtn = (await $$('#entityItemDeleteBtn'))[
+        this.deleteBtn = (await $$('.entityItemDeleteBtn'))[
         rowNum - 1
           ];
       } catch (e) {}
@@ -502,15 +502,15 @@ export class EntitySelectItemCreateRowObject {
   async edit(newName: string, clickCancel = false) {
     await this.editBtn.scrollIntoView();
     await this.editBtn.click();
-    await browser.pause(500);
+    await browser.pause(250);
     await (await selectableLists.entitySelectEditItemNameBox()).setValue(newName);
-    await browser.pause(500);
+    await browser.pause(250);
     if (!clickCancel) {
       await (await selectableLists.entitySelectEditItemSaveBtn()).click();
     } else {
       await (await selectableLists.entitySelectEditItemCancelBtn()).click();
     }
-    await browser.pause(500);
+    await browser.pause(250);
     await (await selectableLists.entitySelectCreateCancelBtn()).waitForDisplayed();
   }
 
