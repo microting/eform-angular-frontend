@@ -79,7 +79,7 @@
     "@ngx-translate/core": "17.0.0",
     "@sentry/angular": "^10.0.0",
     "@sentry/cli": "^2.46.0",
-    "@swimlane/ngx-charts": "22.0.0",
+    "@swimlane/ngx-charts": "23.0.0",
     "@types/ramda": "^0.31.0",
     "@userback/widget": "^0.3.11",
     "build": "^0.1.4",
