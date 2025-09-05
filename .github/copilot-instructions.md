@@ -12,7 +12,7 @@ This is **eForm Angular Frontend**, a multi-component application consisting of:
 
 ### Required Software Versions
 - **.NET 9.x** - **CRITICAL**: Project targets net9.0 framework
-- **Node.js 20.19.4+** - Required for Angular build
+- **Node.js 22.19.x+** - Required for Angular build
 - **npm 10.8.2+** - Package manager
 - **yarn 1.22.22+** - Alternative package manager (also supported)
 
@@ -20,7 +20,7 @@ This is **eForm Angular Frontend**, a multi-component application consisting of:
 ```bash
 # Verify versions before starting development
 dotnet --version  # Must be 9.x
-node --version    # Should be 20.19.4+
+node --version    # Should be 22.19.x+
 npm --version     # Should be 10.8.2+
 ```
 
@@ -206,7 +206,7 @@ docker build -t eform-frontend -f Dockerfile-big .  # --timeout 900
 2. **Node/npm Version Issues**:
    ```bash
    # Check versions
-   node --version  # Should be 20.19.4+
+   node --version  # Should be 22.19.x+
    npm --version   # Should be 10.8.2+
    ```
 
