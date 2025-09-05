@@ -13,15 +13,14 @@ This is **eForm Angular Frontend**, a multi-component application consisting of:
 ### Required Software Versions
 - **.NET 9.x** - **CRITICAL**: Project targets net9.0 framework
 - **Node.js 22.19.x+** - Required for Angular build
-- **npm 10.8.2+** - Package manager
-- **yarn 1.22.22+** - Alternative package manager (also supported)
+- **yarn 1.22.19+** - Package manager (primary)
 
 ### Development Tools Verification
 ```bash
 # Verify versions before starting development
 dotnet --version  # Must be 9.x
 node --version    # Should be 22.19.x+
-npm --version     # Should be 10.8.2+
+yarn --version    # Should be 1.22.19+
 ```
 
 ### External Services (Required for Full Functionality)
@@ -46,13 +45,13 @@ dotnet build    # --timeout 200
 cd eform-client
 
 # Install dependencies (37s) - NEVER CANCEL EARLY
-npm install     # --timeout 300
+yarn install     # --timeout 300
 
 # Development build (20s)
-npm run build   # --timeout 200
+yarn build       # --timeout 200
 
 # Development server (35s to start)
-npm start       # --timeout 300
+yarn start       # --timeout 300
 # Access at http://localhost:4200
 ```
 
@@ -66,7 +65,7 @@ cd eform-angular-frontend
 
 # Install all dependencies
 cd eFormAPI && dotnet restore
-cd ../eform-client && npm install
+cd ../eform-client && yarn install
 ```
 
 ### 2. Running Development Environment
@@ -77,7 +76,7 @@ dotnet run  # Starts API server
 
 # Terminal 2: Start Angular dev server
 cd eform-client
-npm start   # Starts on localhost:4200
+yarn start   # Starts on localhost:4200
 ```
 
 ### 3. Building for Production
@@ -88,7 +87,7 @@ dotnet build --configuration Release
 
 # Build Angular
 cd eform-client  
-npm run build --prod
+yarn build --prod
 ```
 
 ## Testing
@@ -101,7 +100,7 @@ dotnet test  # --timeout 300
 
 # Angular unit tests
 cd eform-client
-npm run test
+yarn test
 ```
 
 ### Integration Tests
@@ -114,11 +113,11 @@ dotnet test --filter "Category=Integration"  # --timeout 600
 ### End-to-End Tests
 ```bash
 cd eform-client
-npm run e2e  # --timeout 900
+yarn e2e  # --timeout 900
 
 # Multiple E2E test configurations available:
-npm run testheadless2a  # Step 2a tests
-npm run testheadless2b  # Step 2b tests
+yarn testheadless2a  # Step 2a tests
+yarn testheadless2b  # Step 2b tests
 # ... up to testheadless2j
 ```
 
@@ -142,7 +141,7 @@ If you encounter network blocks for external dependencies:
 3. **xlsx Package Issues**:
    ```bash
    # Install with --force if needed
-   npm install xlsx --force
+   yarn add xlsx --force
    ```
 
 4. **Google Fonts Blocks**:
@@ -203,18 +202,18 @@ docker build -t eform-frontend -f Dockerfile-big .  # --timeout 900
    # If wrong version, install .NET 9.x SDK
    ```
 
-2. **Node/npm Version Issues**:
+2. **Node/yarn Version Issues**:
    ```bash
    # Check versions
    node --version  # Should be 22.19.x+
-   npm --version   # Should be 10.8.2+
+   yarn --version  # Should be 1.22.19+
    ```
 
 3. **Package Restore Failures**:
    ```bash
    # Clear caches and reinstall
    cd eFormAPI && dotnet clean && dotnet restore
-   cd eform-client && rm -rf node_modules && npm install
+   cd eform-client && rm -rf node_modules && yarn install
    ```
 
 4. **Test Database Connection**:
@@ -228,7 +227,7 @@ docker build -t eform-frontend -f Dockerfile-big .  # --timeout 900
    - Ensure ports are available
 
 ### Performance Optimization
-- Use `npm ci` instead of `npm install` in CI/CD
+- Use `yarn install --frozen-lockfile` instead of `yarn install` in CI/CD
 - Enable .NET build caching with `--no-restore` after initial restore
 - Use Docker layer caching for faster container builds
 
@@ -244,7 +243,7 @@ Located in `.github/workflows/`:
 Use these timeout values in your workflows:
 - .NET restore: 300 seconds
 - .NET build: 200 seconds  
-- npm install: 300 seconds
+- yarn install: 300 seconds
 - Angular build: 200 seconds
 - E2E tests: 900 seconds
 - Integration tests: 600 seconds
