@@ -14,6 +14,8 @@ export class UserSetPasswordComponent implements OnInit {
   setPasswordForm: FormGroup;
   changePasswordModel: ChangePasswordAdminModel = new ChangePasswordAdminModel();
   userPasswordSet: EventEmitter<UserInfoModel> = new EventEmitter<UserInfoModel>();
+  newPasswordVisible = false;
+  confirmPasswordVisible = false;
   constructor(private authService: AuthService,
               private fb: FormBuilder,
               public dialogRef: MatDialogRef<UserSetPasswordComponent>,
@@ -44,5 +46,13 @@ export class UserSetPasswordComponent implements OnInit {
       return this.setPasswordForm.valid;
     }
     return false;
+  }
+
+  toggleNewPasswordVisibility() {
+    this.newPasswordVisible = !this.newPasswordVisible;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.confirmPasswordVisible = !this.confirmPasswordVisible;
   }
 }

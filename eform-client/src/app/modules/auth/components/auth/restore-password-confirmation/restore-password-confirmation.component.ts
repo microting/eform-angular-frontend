@@ -23,6 +23,8 @@ import {applicationLanguages} from "src/app/common/const";
 export class RestorePasswordConfirmationComponent implements OnInit, OnDestroy {
   submitRestoreModel: PasswordRestoreModel = new PasswordRestoreModel();
   form: FormGroup;
+  newPasswordVisible = false;
+  newPasswordConfirmVisible = false;
 
   constructor(
     private translateService: TranslateService,
@@ -75,5 +77,13 @@ export class RestorePasswordConfirmationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+  }
+
+  toggleNewPasswordVisibility() {
+    this.newPasswordVisible = !this.newPasswordVisible;
+  }
+
+  toggleNewPasswordConfirmVisibility() {
+    this.newPasswordConfirmVisible = !this.newPasswordConfirmVisible;
   }
 }
