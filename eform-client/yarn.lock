@@ -9207,10 +9207,10 @@ ng-gallery@^12.0.0:
   dependencies:
     tslib "^2.3.1"
 
-ng2-dragula@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/ng2-dragula/-/ng2-dragula-5.1.0.tgz#a7999eadfec0fae4649960c9c72205398060bb50"
-  integrity sha512-5P185NWZXIAA/lmZ8Bb6alMxfxYcMRu4Mw+JGJVj4ACplsUUq77Odfhpwk1a5R1pyI+3CC4sOwYrJg+nTi0e6Q==
+ng2-dragula@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ng2-dragula/-/ng2-dragula-6.0.0.tgz#9ddfa8c805989d9d4c23707b08edeb0b23ea3ba9"
+  integrity sha512-DRWw0rTZrpIReecgE4771flOrpa3rgSkY3TDyZBNPBEkPIAFOePfPm9W96IhlWEXgQEL7fjWaz2HyZI89YGDUg==
   dependencies:
     tslib "^2.3.0"
 
