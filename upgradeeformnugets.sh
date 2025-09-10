@@ -45,9 +45,9 @@ if (( "$GIT_STATUS" > 0 )); then
 	done
 
 	cd ..
-	cd eFormAPI.Integration.Test
+	cd eFormAPI.Web.Tests
 	PACKAGES=('Microsoft.NET.Test.Sdk' 'NUnit' 'NUnit3TestAdapter' 'NUnit.Analyzers')
-	PROJECT_NAME='eFormAPI.Integration.Test.csproj'
+	PROJECT_NAME='eFormAPI.Web.Tests.csproj'
 	REPOSITORY='eform-angular-frontend'
 
 	for PACKAGE_NAME in ${PACKAGES[@]}; do
