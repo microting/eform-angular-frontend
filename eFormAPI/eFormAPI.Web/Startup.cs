@@ -395,6 +395,7 @@ public class Startup(IConfiguration configuration)
         app.UseEFormPlugins(Program.EnabledPlugins);
         // Route all unknown requests to app root
         app.UseAngularMiddleware(env);
+        FixUserToWorkerLinks();
     }
 
 
@@ -470,5 +471,35 @@ public class Startup(IConfiguration configuration)
         }
 
         return permissions;
+    }
+
+    // TODO remove, when we are sure that all users have been fixed.
+    // This method is only needed for a short period of time to fix the users that already exist.
+    // It matches users to workers based on First and Last name, and updates the email on the worker.
+    // It is not a perfect solution, but it is the best we can do without having a direct link between the two.
+    // It is assumed that users have unique First and Last names.
+    // If there are multiple workers with the same name, only the first one found will be updated.
+    // If a worker already has an email, it will be overwritten.
+    // After a while this method should be removed again.
+    private void FixUserToWorkerLinks()
+    {
+        if (Configuration.MyConnectionString() == "...") return;
+        var contextFactory = new BaseDbContextFactory();
+        using var dbContext = contextFactory.CreateDbContext([Configuration.MyConnectionString()]);
+
+        var sdkDbContextFactory = new MicrotingDbContextFactory();
+        using var sdkDbContext =
+            sdkDbContextFactory.CreateDbContext([Configuration.MyConnectionString().Replace("Angular", "SDK")]);
+
+        var users = dbContext.Users.AsNoTracking().ToList();
+        foreach (var user in users)
+        {
+            var fullName = (user.FirstName + user.LastName).Trim().ToLower().Replace(" ", "");
+            var worker = sdkDbContext.Workers.FirstOrDefault(x =>
+                (x.FirstName + x.LastName).Trim().ToLower().Replace(" ", "") == fullName && x.WorkflowState != "removed");
+            if (worker == null) continue;
+            worker.Email = user.Email;
+            worker.Update(sdkDbContext).GetAwaiter().GetResult();
+        }
     }
 }
