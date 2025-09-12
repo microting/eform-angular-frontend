@@ -134,24 +134,24 @@
     "@angular-devkit/core" "20.1.6"
     rxjs "7.8.2"
 
-"@angular-devkit/architect@0.2002.2", "@angular-devkit/architect@>= 0.2000.0 < 0.2100.0":
-  version "0.2002.2"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.2002.2.tgz#2d44109edf3e325a093536ac2a30f29a7906a0ea"
-  integrity sha512-amppp/UqKyj+B8hYFU16j4t6SVN+SS0AEnHivDjKy41NNJgXv+5Sm2Q2jaMHviCT3rclyT0wqwNAi0RDjyLx5Q==
+"@angular-devkit/architect@0.2003.1", "@angular-devkit/architect@>= 0.2000.0 < 0.2100.0":
+  version "0.2003.1"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.2003.1.tgz#b605faa580cb828906e99f267b7ebc63f4027d55"
+  integrity sha512-PE/yMVv8RZ7nQzGROi0juZo+yMZE2QwyBXc9yFrHIRozuTzTFaMW/9ifCZDVrpicjyHEk3s+7hUVNCcKO/xIIQ==
   dependencies:
-    "@angular-devkit/core" "20.2.2"
+    "@angular-devkit/core" "20.3.1"
     rxjs "7.8.2"
 
-"@angular-devkit/build-angular@20.2.2":
-  version "20.2.2"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-20.2.2.tgz#1cd34e3e2ef904e1ae382370e06aab9f5e050543"
-  integrity sha512-atmy2RNViTqzNYGLR94NxSEISGtynseKFF+FPEnYTBc3W08UcJmaC5AAdJeuDJqqW495tFM7dSxUMGlSfWsN2w==
+"@angular-devkit/build-angular@20.3.1":
+  version "20.3.1"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-20.3.1.tgz#a97908b0a2e9da2dad5cc1c1f67b1d10c11f8b97"
+  integrity sha512-e08aKi3+0GsfdPQylAvBapR1FUcV/QQWnEgyF6tYFnK/0iMvYaLAfGQhvamJZpqgnMSkq7zWHs6B1M9Is3/yGg==
   dependencies:
     "@ampproject/remapping" "2.3.0"
-    "@angular-devkit/architect" "0.2002.2"
-    "@angular-devkit/build-webpack" "0.2002.2"
-    "@angular-devkit/core" "20.2.2"
-    "@angular/build" "20.2.2"
+    "@angular-devkit/architect" "0.2003.1"
+    "@angular-devkit/build-webpack" "0.2003.1"
+    "@angular-devkit/core" "20.3.1"
+    "@angular/build" "20.3.1"
     "@babel/core" "7.28.3"
     "@babel/generator" "7.28.3"
     "@babel/helper-annotate-as-pure" "7.27.3"
@@ -162,7 +162,7 @@
     "@babel/preset-env" "7.28.3"
     "@babel/runtime" "7.28.3"
     "@discoveryjs/json-ext" "0.6.3"
-    "@ngtools/webpack" "20.2.2"
+    "@ngtools/webpack" "20.3.1"
     ansi-colors "4.1.3"
     autoprefixer "10.4.21"
     babel-loader "10.0.0"
@@ -204,12 +204,12 @@
   optionalDependencies:
     esbuild "0.25.9"
 
-"@angular-devkit/build-webpack@0.2002.2":
-  version "0.2002.2"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-webpack/-/build-webpack-0.2002.2.tgz#d1d37f1e0f7fdf1393a27a0950dcd2dd131e078c"
-  integrity sha512-DbHq8AHmlRsr1jFmrJSlksPl/ViSVPqQdicz0dkdo0rSGkQqGO1Z0vFLf0/trlDP7GgHz46yucDtaFjPq1dZ9Q==
+"@angular-devkit/build-webpack@0.2003.1":
+  version "0.2003.1"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-webpack/-/build-webpack-0.2003.1.tgz#565d9f34490209b64867bfa276d9610b5eea4ef9"
+  integrity sha512-6/RL6ZymNVWdPaVHJ2AOGGaxToyANZ5B65XgNMLHOd7Wp9YH8PVtKbPf+R5b+e8KWiDZThFkEbYRWSS97g7+rg==
   dependencies:
-    "@angular-devkit/architect" "0.2002.2"
+    "@angular-devkit/architect" "0.2003.1"
     rxjs "7.8.2"
 
 "@angular-devkit/core@20.1.4":
@@ -248,10 +248,10 @@
     rxjs "7.8.2"
     source-map "0.7.6"
 
-"@angular-devkit/core@20.2.2", "@angular-devkit/core@>= 20.0.0 < 21.0.0":
-  version "20.2.2"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-20.2.2.tgz#f7eb3be70a33dfb7853b9093c4bf8e44764fd4b3"
-  integrity sha512-SC+f5isSWJBpEgR+R7jP++2Z14WExNWLAdKpIickLWjuL8FlGkj+kaF3dWXhh0KcXo+r6kKb4pWUptSaqer5gA==
+"@angular-devkit/core@20.3.1", "@angular-devkit/core@>= 20.0.0 < 21.0.0":
+  version "20.3.1"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-20.3.1.tgz#78be61705df50fb442ae51fde3a0b7545c9e9522"
+  integrity sha512-TmS69GqBlbTfydn7C4tUKr0mshYSStuCkgruXbvedHFX8+7XBp8wPE+VUzdKnSmKZi6buI4oskDbJ1AdGtNm/g==
   dependencies:
     ajv "8.17.1"
     ajv-formats "3.0.1"
@@ -349,13 +349,13 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/build@20.2.2":
-  version "20.2.2"
-  resolved "https://registry.yarnpkg.com/@angular/build/-/build-20.2.2.tgz#18a593b7ad69bee96596dabc5b39a9f4a29a2fcb"
-  integrity sha512-rvlKMt3OmeenHOwejRpI4OLcyERQn6Hl4ODRWlYfNX70Ki1zu6eAD0pWULzcD+HSQd0a26Xzt3gcpEy2vOEAzg==
+"@angular/build@20.3.1":
+  version "20.3.1"
+  resolved "https://registry.yarnpkg.com/@angular/build/-/build-20.3.1.tgz#99562315c8a8819271332b8b4f7f7c5c7176cd6d"
+  integrity sha512-z5n8WnisyPrRvS1WctdDB3Svas0Wql1Eplnwh4O7waZHeJTOcd8zZeFxPbPGp12ybGf3HEEjTeWOigm1kRgW9g==
   dependencies:
     "@ampproject/remapping" "2.3.0"
-    "@angular-devkit/architect" "0.2002.2"
+    "@angular-devkit/architect" "0.2003.1"
     "@babel/core" "7.28.3"
     "@babel/helper-annotate-as-pure" "7.27.3"
     "@babel/helper-split-export-declaration" "7.24.7"
@@ -378,7 +378,7 @@
     semver "7.7.2"
     source-map-support "0.5.21"
     tinyglobby "0.2.14"
-    vite "7.1.2"
+    vite "7.1.5"
     watchpack "2.4.4"
   optionalDependencies:
     lmdb "3.4.2"
@@ -2367,10 +2367,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@ngtools/webpack@20.2.2":
-  version "20.2.2"
-  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-20.2.2.tgz#867fb19c93083be8d4fdd3ce105e1311816b99c3"
-  integrity sha512-q2kNlKmC+slbdwiOhnY7M610ie41P5j0WFz+1k73L57tE5xUitgdjCF/f4YPGlj7vNfFyuoX98k9IyQtsbzh8w==
+"@ngtools/webpack@20.3.1":
+  version "20.3.1"
+  resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-20.3.1.tgz#42731cf66a66224096cf425350bbbeb5222a003c"
+  integrity sha512-yTI149/K6cCp9Tsb0UuiiFciGXA1NUNP81Q2hepmfWcOuRyeJ/YZvjzDIC0+d7yVsMpkudy6iN8MCbxV6hMQIQ==
 
 "@ngx-translate/core@17.0.0":
   version "17.0.0"
@@ -7084,10 +7084,15 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
-fdir@^6.4.4, fdir@^6.4.6:
+fdir@^6.4.4:
   version "6.4.6"
   resolved "https://registry.yarnpkg.com/fdir/-/fdir-6.4.6.tgz#2b268c0232697063111bbf3f64810a2a741ba281"
   integrity sha512-hiFoqpyZcfNm1yc4u8oWCf9A2c4D3QjCrks3zmoVKVxpQRzmPNar1hUJcBG2RQHvEVGDN+Jm81ZheVLAQMK6+w==
+
+fdir@^6.5.0:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/fdir/-/fdir-6.5.0.tgz#ed2ab967a331ade62f18d077dae192684d50d350"
+  integrity sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==
 
 fecha@^4.2.0:
   version "4.2.3"
@@ -11798,13 +11803,21 @@ tinycolor2@^1.0.0:
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.6.0.tgz#f98007460169b0263b97072c5ae92484ce02d09e"
   integrity sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==
 
-tinyglobby@0.2.14, tinyglobby@^0.2.12, tinyglobby@^0.2.14:
+tinyglobby@0.2.14, tinyglobby@^0.2.12:
   version "0.2.14"
   resolved "https://registry.yarnpkg.com/tinyglobby/-/tinyglobby-0.2.14.tgz#5280b0cf3f972b050e74ae88406c0a6a58f4079d"
   integrity sha512-tX5e7OM1HnYr2+a2C/4V0htOcSQcoSTH9KgJnVvNm5zm/cyEWKJ7j7YutsH9CxMdtOkkLFy2AHrMci9IM8IPZQ==
   dependencies:
     fdir "^6.4.4"
     picomatch "^4.0.2"
+
+tinyglobby@^0.2.15:
+  version "0.2.15"
+  resolved "https://registry.yarnpkg.com/tinyglobby/-/tinyglobby-0.2.15.tgz#e228dd1e638cea993d2fdb4fcd2d4602a79951c2"
+  integrity sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==
+  dependencies:
+    fdir "^6.5.0"
+    picomatch "^4.0.3"
 
 tinygradient@^1.0.0:
   version "1.1.5"
@@ -12228,17 +12241,17 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vite@7.1.2:
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-7.1.2.tgz#62ffd8a915977ff387fbe7a731af1a650ec5006e"
-  integrity sha512-J0SQBPlQiEXAF7tajiH+rUooJPo0l8KQgyg4/aMunNtrOa7bwuZJsJbDWzeljqQpgftxuq5yNJxQ91O9ts29UQ==
+vite@7.1.5:
+  version "7.1.5"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-7.1.5.tgz#4dbcb48c6313116689be540466fc80faa377be38"
+  integrity sha512-4cKBO9wR75r0BeIWWWId9XK9Lj6La5X846Zw9dFfzMRw38IlTk2iCcUt6hsyiDRcPidc55ZParFYDXi0nXOeLQ==
   dependencies:
     esbuild "^0.25.0"
-    fdir "^6.4.6"
+    fdir "^6.5.0"
     picomatch "^4.0.3"
     postcss "^8.5.6"
     rollup "^4.43.0"
-    tinyglobby "^0.2.14"
+    tinyglobby "^0.2.15"
   optionalDependencies:
     fsevents "~2.3.3"
 
