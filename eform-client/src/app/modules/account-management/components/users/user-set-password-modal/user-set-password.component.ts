@@ -16,13 +16,14 @@ export class UserSetPasswordComponent implements OnInit {
   userPasswordSet: EventEmitter<UserInfoModel> = new EventEmitter<UserInfoModel>();
   newPasswordVisible = false;
   confirmPasswordVisible = false;
+  passwordStrength = 0; // Track password strength score
   constructor(private authService: AuthService,
               private fb: FormBuilder,
               public dialogRef: MatDialogRef<UserSetPasswordComponent>,
     @Inject(MAT_DIALOG_DATA) public selectedUser: UserInfoModel = new UserInfoModel()) {
     this.setPasswordForm = this.fb.group({
-      newPassword: ['', [Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.minLength(6)]]
+      newPassword: ['', [Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.minLength(8)]]
     });
   }
 
@@ -54,5 +55,19 @@ export class UserSetPasswordComponent implements OnInit {
 
   toggleConfirmPasswordVisibility() {
     this.confirmPasswordVisible = !this.confirmPasswordVisible;
+  }
+
+  onPasswordStrengthChanged(strength: number): void {
+    this.passwordStrength = strength;
+    // Optionally add additional validation based on strength
+    const passwordControl = this.setPasswordForm.get('newPassword');
+    if (passwordControl && strength < 40) {
+      passwordControl.setErrors({ ...passwordControl.errors, weakPassword: true });
+    } else if (passwordControl && passwordControl.hasError('weakPassword')) {
+      delete passwordControl.errors.weakPassword;
+      if (Object.keys(passwordControl.errors).length === 0) {
+        passwordControl.setErrors(null);
+      }
+    }
   }
 }

@@ -71,6 +71,7 @@
     "@angular/platform-browser": "20.1.2",
     "@angular/platform-browser-dynamic": "20.1.2",
     "@angular/router": "20.1.2",
+    "@angular-material-extensions/password-strength": "^16.0.0",
     "@ng-matero/extensions": "20.2.1",
     "@ngrx/effects": "19.2.1",
     "@ngrx/entity": "19.2.1",

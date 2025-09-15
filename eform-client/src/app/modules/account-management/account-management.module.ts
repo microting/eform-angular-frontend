@@ -23,6 +23,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {FileUploadModule} from "ng2-file-upload";
+import {MatPasswordStrengthModule} from '@angular-material-extensions/password-strength';
 
 @NgModule({
     imports: [
@@ -44,6 +45,7 @@ import {FileUploadModule} from "ng2-file-upload";
         MatInputModule,
         MatIconModule,
         FileUploadModule,
+        MatPasswordStrengthModule,
     ],
   declarations: [
     ChangePasswordComponent,
