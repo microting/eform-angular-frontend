@@ -16,6 +16,7 @@ export class UserSetPasswordComponent implements OnInit {
   userPasswordSet: EventEmitter<UserInfoModel> = new EventEmitter<UserInfoModel>();
   newPasswordVisible = false;
   confirmPasswordVisible = false;
+  passwordStrength = 0; // Track password strength score
   constructor(private authService: AuthService,
               private fb: FormBuilder,
               public dialogRef: MatDialogRef<UserSetPasswordComponent>,
@@ -55,4 +56,19 @@ export class UserSetPasswordComponent implements OnInit {
   toggleConfirmPasswordVisibility() {
     this.confirmPasswordVisible = !this.confirmPasswordVisible;
   }
+
+  // TODO: Uncomment once @angular-material-extensions/password-strength is installed
+  // onPasswordStrengthChanged(strength: number): void {
+  //   this.passwordStrength = strength;
+  //   // Optionally add additional validation based on strength
+  //   const passwordControl = this.setPasswordForm.get('newPassword');
+  //   if (passwordControl && strength < 40) {
+  //     passwordControl.setErrors({ ...passwordControl.errors, weakPassword: true });
+  //   } else if (passwordControl && passwordControl.hasError('weakPassword')) {
+  //     delete passwordControl.errors.weakPassword;
+  //     if (Object.keys(passwordControl.errors).length === 0) {
+  //       passwordControl.setErrors(null);
+  //     }
+  //   }
+  // }
 }

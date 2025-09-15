@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class ChangePasswordComponent implements OnInit {
   changePasswordModel: ChangePasswordModel = new ChangePasswordModel();
   changePasswordForm: FormGroup;
+  passwordStrength = 0; // Track password strength score
   constructor(private authService: AuthService, private fb: FormBuilder) {
     this.changePasswordForm = this.fb.group({
       oldPassword: ['', [Validators.required, Validators.min(8)]],
@@ -36,6 +37,21 @@ export class ChangePasswordComponent implements OnInit {
       (data) => {},
     );
   }
+
+  // TODO: Uncomment once @angular-material-extensions/password-strength is installed
+  // onPasswordStrengthChanged(strength: number): void {
+  //   this.passwordStrength = strength;
+  //   // Optionally add additional validation based on strength
+  //   const passwordControl = this.changePasswordForm.get('newPassword');
+  //   if (passwordControl && strength < 40) {
+  //     passwordControl.setErrors({ ...passwordControl.errors, weakPassword: true });
+  //   } else if (passwordControl && passwordControl.hasError('weakPassword')) {
+  //     delete passwordControl.errors.weakPassword;
+  //     if (Object.keys(passwordControl.errors).length === 0) {
+  //       passwordControl.setErrors(null);
+  //     }
+  //   }
+  // }
 
 /*  checkPasswords(group: FormGroup) {
     let pass = group.get('newPassword').value;

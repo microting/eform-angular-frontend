@@ -20,6 +20,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
+// import {MatPasswordStrengthModule} from '@angular-material-extensions/password-strength';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     MatButtonModule,
     MatTooltipModule,
     MtxSelectModule
+    // MatPasswordStrengthModule,
   ],
   declarations: [
     LoginComponent,
