@@ -38,6 +38,7 @@ import {
   selectCurrentUserClaimsUsersUpdate,
   selectCurrentUserIsAdmin
 } from 'src/app/state';
+import {format} from "date-fns";
 
 @AutoUnsubscribe()
 @Component({
@@ -270,11 +271,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  // openSetPasswordModal(id) {
-  //   // this.adminService.resetPassword(id).subscribe((data) => {
-  //   //   if (data.success) {
-  //   //     this.getUserInfoList();
-  //   //   }
-  //   // });
-  // }
+  getFormattedDate(date: Date) {
+    return format(date, 'P', {locale: this.authStateService.dateFnsLocale});
+  }
 }
