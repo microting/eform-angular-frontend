@@ -42,7 +42,7 @@ export class RestorePasswordConfirmationComponent implements OnInit, OnDestroy {
     console.debug('RestorePasswordConfirmationComponent - ngOnInit');
     this.route.queryParams.subscribe((params) => {
       this.form = this.fb.group({
-        newPassword: ['', [Validators.required, Validators.minLength(6)]],
+        newPassword: ['', [Validators.required, Validators.minLength(8)]],
         newPasswordConfirm: ['', [Validators.required]],
         userId: [params['userId']],
         code: [params['code']],
@@ -88,18 +88,17 @@ export class RestorePasswordConfirmationComponent implements OnInit, OnDestroy {
     this.newPasswordConfirmVisible = !this.newPasswordConfirmVisible;
   }
 
-  // TODO: Uncomment once @angular-material-extensions/password-strength is installed
-  // onPasswordStrengthChanged(strength: number): void {
-  //   this.passwordStrength = strength;
-  //   // Optionally add additional validation based on strength
-  //   const passwordControl = this.form.get('newPassword');
-  //   if (passwordControl && strength < 40) {
-  //     passwordControl.setErrors({ ...passwordControl.errors, weakPassword: true });
-  //   } else if (passwordControl && passwordControl.hasError('weakPassword')) {
-  //     delete passwordControl.errors.weakPassword;
-  //     if (Object.keys(passwordControl.errors).length === 0) {
-  //       passwordControl.setErrors(null);
-  //     }
-  //   }
-  // }
+  onPasswordStrengthChanged(strength: number): void {
+    this.passwordStrength = strength;
+    // Optionally add additional validation based on strength
+    const passwordControl = this.form.get('newPassword');
+    if (passwordControl && strength < 40) {
+      passwordControl.setErrors({ ...passwordControl.errors, weakPassword: true });
+    } else if (passwordControl && passwordControl.hasError('weakPassword')) {
+      delete passwordControl.errors.weakPassword;
+      if (Object.keys(passwordControl.errors).length === 0) {
+        passwordControl.setErrors(null);
+      }
+    }
+  }
 }
