@@ -81,7 +81,7 @@
     "@sentry/angular": "^10.8.0",
     "@sentry/cli": "^2.53.0",
     "@swimlane/ngx-charts": "23.0.0",
-    "@types/ramda": "^0.31.0",
+    "@types/ramda": "^0.31.1",
     "@userback/widget": "^0.3.11",
     "build": "^0.1.4",
     "core-js": "3.45.0",
