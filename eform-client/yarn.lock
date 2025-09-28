@@ -310,14 +310,15 @@
     aria-query "5.3.2"
     axobject-query "4.1.0"
 
-"@angular-eslint/eslint-plugin@20.1.1":
-  version "20.1.1"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-20.1.1.tgz#332e0d3efc0420abecf507fafc33effccc37217a"
-  integrity sha512-h+D6T35UGIuG0keYPH7dc6OTdfTVJ8GoIhCIpoAmVGhdIdfXIISvDvvX/QPiZtTcefik3vEZEGRiI/Nzc5xImw==
+"@angular-eslint/eslint-plugin-template@20.3.0":
+  version "20.3.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-20.3.0.tgz#a5b9a90b04dc992481bf2e41cff8ef4e30f87ccc"
+  integrity sha512-WMJDJfybOLCiN4QrOyrLl+Zt5F+A/xoDYMWTdn+LgACheLs2tguVQiwf+oCgHnHGcsTsulPYlRHldKBGZMgs4w==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "20.1.1"
-    "@angular-eslint/utils" "20.1.1"
-    ts-api-utils "^2.1.0"
+    "@angular-eslint/bundled-angular-compiler" "20.3.0"
+    "@angular-eslint/utils" "20.3.0"
+    aria-query "5.3.2"
+    axobject-query "4.1.0"
 
 "@angular-eslint/eslint-plugin@20.3.0":
   version "20.3.0"
@@ -328,15 +329,15 @@
     "@angular-eslint/utils" "20.3.0"
     ts-api-utils "^2.1.0"
 
-"@angular-eslint/schematics@20.1.1":
-  version "20.1.1"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-20.1.1.tgz#2643b4e6ce7f30d4dc8f06b652b91be5f6308d71"
-  integrity sha512-4sXU0Gr/RhdW3xSBFRzjhTO9mk6ugXUhUIPc1FRta1pmNnbmkvx22ewnKZE8IeRl8PMyk6xJuxZHq19CW1oWOA==
+"@angular-eslint/schematics@20.3.0":
+  version "20.3.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-20.3.0.tgz#9a18322fcfc26fb56c73efc81970dbeb8e6cae98"
+  integrity sha512-4n92tHKIJm1PP+FjhnmO7AMpvKdRIoF+YgF38oUU7aMJqfZ3RXIhazMMxw2u3VU1MisKH766KSll++c4LgarVA==
   dependencies:
     "@angular-devkit/core" ">= 20.0.0 < 21.0.0"
     "@angular-devkit/schematics" ">= 20.0.0 < 21.0.0"
-    "@angular-eslint/eslint-plugin" "20.1.1"
-    "@angular-eslint/eslint-plugin-template" "20.1.1"
+    "@angular-eslint/eslint-plugin" "20.3.0"
+    "@angular-eslint/eslint-plugin-template" "20.3.0"
     ignore "7.0.5"
     semver "7.7.2"
     strip-json-comments "3.1.1"
