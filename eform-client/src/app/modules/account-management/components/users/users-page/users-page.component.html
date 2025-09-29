@@ -37,6 +37,14 @@
     [sortDirection]="selectUsersIsSortDsc$ | async"
     (sortChange)="onSortTable($event)">
   </mtx-grid>
+
+  <ng-template #idTpl let-row>
+    <ng-container *ngIf="selectCurrentUserIsAdmin$ | async;">
+      <span title="{{ 'Is device user' | translate }}">{{row.id}}<small class="microting-uid"> ({{row.isDeviceUser}})</small></span>
+    </ng-container>
+  </ng-template>
+
+
   <ng-template #idTpl let-row let-i="index">
     <div class="userAdministrationId" id="userAdministrationId-{{i}}">{{row.id}}</div>
   </ng-template>

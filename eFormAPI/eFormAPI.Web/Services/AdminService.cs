@@ -155,46 +155,13 @@ public class AdminService(
 
             foreach (UserInfoViewModel userInfoViewModel in userResult)
             {
-                if (!userInfoViewModel.Email.Contains("microting.com") && !userInfoViewModel.Email.Contains("admin.com"))
+                var workers = await sdkDbContext.Workers
+                    .Where(x => x.Email == userInfoViewModel.Email
+                                && x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .FirstOrDefaultAsync();
+                if (workers != null)
                 {
                     userInfoViewModel.IsDeviceUser = true;
-
-                    var fullName = userInfoViewModel.FirstName + " " + userInfoViewModel.LastName;
-                    if (sdkDbContext.Sites.Any(x =>
-                            x.Name.Replace(" ", "") == fullName.Replace(" ", "")
-                            && x.WorkflowState != Constants.WorkflowStates.Removed))
-                    {
-                    }
-                    else
-                    {
-                        await core.SiteCreate($"{userInfoViewModel.FirstName} {userInfoViewModel.LastName}", userInfoViewModel.FirstName, userInfoViewModel.LastName,
-                            null, "da");
-                    }
-
-                    var site = await sdkDbContext.Sites.FirstOrDefaultAsync(x =>
-                        x.Name.Replace(" ", "") == fullName.Replace(" ", "")
-                        && x.WorkflowState != Constants.WorkflowStates.Removed);
-                    if (site != null)
-                    {
-                        site.IsLocked = true;
-                        await site.Update(sdkDbContext);
-                        var units = await sdkDbContext.Units.Where(x => x.SiteId == site.Id).ToListAsync();
-                        foreach (Unit unit in units)
-                        {
-                            unit.IsLocked = true;
-                            await unit.Update(sdkDbContext);
-                        }
-                        var siteWorker = await sdkDbContext.SiteWorkers.SingleOrDefaultAsync(x => x.SiteId == site.Id);
-                        var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.Id == siteWorker.WorkerId);
-                        // var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.FirstName == userInfoViewModel.FirstName
-                        //     && x.LastName == userInfoViewModel.LastName
-                        //     && x.WorkflowState != Constants.WorkflowStates.Removed);
-                        if (worker != null)
-                        {
-                            worker.IsLocked = true;
-                            await worker.Update(sdkDbContext);
-                        }
-                    }
                 }
             }
 
@@ -290,9 +257,20 @@ public class AdminService(
                 await dbContext.SaveChangesAsync();
             }
 
-            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == userRegisterModel.FirstName.Trim() + " " + userRegisterModel.LastName.Trim()
-                                                                          && x.WorkflowState != Constants.WorkflowStates.Removed);
+            var worker = await sdkDbContext.Workers.FirstOrDefaultAsync(x => x.Email == user.Email && x.WorkflowState != Constants.WorkflowStates.Removed);
+            if (worker != null)
+            {
+                worker.IsLocked = true;
+                await worker.Update(sdkDbContext);
+            }
 
+            var siteWorker = await sdkDbContext.SiteWorkers
+                .Include(x => x.Site)
+                .Where(x => x.WorkerId == worker.Id && x.WorkflowState != Constants.WorkflowStates.Removed)
+                .FirstOrDefaultAsync();
+
+            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Id == siteWorker.SiteId && x.WorkflowState != Constants.WorkflowStates.Removed);
+            // lock site and units
             if (site != null)
             {
                 site.IsLocked = true;
@@ -302,13 +280,6 @@ public class AdminService(
                 {
                     unit.IsLocked = true;
                     await unit.Update(sdkDbContext);
-                }
-                var siteWorker = await sdkDbContext.SiteWorkers.SingleOrDefaultAsync(x => x.SiteId == site.Id);
-                var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.Id == siteWorker.WorkerId);
-                if (worker != null)
-                {
-                    worker.IsLocked = true;
-                    await worker.Update(sdkDbContext);
                 }
             }
 
@@ -336,8 +307,8 @@ public class AdminService(
             }
             var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
-            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
-                                                                          && x.WorkflowState != Constants.WorkflowStates.Removed);
+            var worker = await sdkDbContext.Workers.AnyAsync(x => x.Email == user.Email
+                                                                            && x.WorkflowState != Constants.WorkflowStates.Removed);
 
             var result = new UserRegisterModel()
             {
@@ -346,7 +317,7 @@ public class AdminService(
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 UserName = user.UserName,
-                IsDeviceUser = site != null
+                IsDeviceUser = worker
             };
             // get role
             var roles = await userManager.GetRolesAsync(user);
@@ -412,7 +383,12 @@ public class AdminService(
                 return new OperationResult(false, localizationService.GetString("YouCantViewChangeOrDeleteAdmin"));
             }
 
-            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
+            var worker = await sdkDbContext.Workers.FirstOrDefaultAsync(x => x.Email == user.Email && x.WorkflowState != Constants.WorkflowStates.Removed);
+            var siteWorker = await sdkDbContext.SiteWorkers
+                .Where(x => x.WorkerId == worker.Id && x.WorkflowState != Constants.WorkflowStates.Removed)
+                .FirstOrDefaultAsync();
+
+            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Id == siteWorker.SiteId
                                                                           && x.WorkflowState != Constants.WorkflowStates.Removed);
             if (site != null)
             {
@@ -422,11 +398,19 @@ public class AdminService(
                     $"{userRegisterModel.FirstName} {userRegisterModel.LastName}", userRegisterModel.FirstName,
                     userRegisterModel.LastName, userRegisterModel.Email, language.LanguageCode);
             }
-            user.Email = userRegisterModel.Email;
             user.EmailConfirmed = true;
+            user.Email = userRegisterModel.Email;
             user.UserName = userRegisterModel.Email;
-            user.FirstName = userRegisterModel.FirstName;
-            user.LastName = userRegisterModel.LastName;
+            if (worker == null)
+            {
+                user.FirstName = userRegisterModel.FirstName;
+                user.LastName = userRegisterModel.LastName;
+            }
+            else
+            {
+                worker.Email = userRegisterModel.Email;
+                await worker.Update(sdkDbContext);
+            }
 
             var result = await userManager.UpdateAsync(user);
             if (!result.Succeeded)
@@ -515,34 +499,16 @@ public class AdminService(
                 return new OperationResult(false, localizationService.GetString("YouCantViewChangeOrDeleteAdmin"));
             }
 
-            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Name == user.FirstName + " " + user.LastName
-                                                                          && x.WorkflowState != Constants.WorkflowStates.Removed);
-            if (site != null)
+            var worker = await sdkDbContext.Workers.FirstOrDefaultAsync(x => x.Email == user.Email && x.WorkflowState != Constants.WorkflowStates.Removed);
+            if (worker != null)
             {
-                site.IsLocked = false;
-                await site.Update(sdkDbContext);
-                var units = await sdkDbContext.Units.Where(x => x.SiteId == site.Id).ToListAsync();
-                foreach (Unit unit in units)
-                {
-                    unit.IsLocked = false;
-                    await unit.Update(sdkDbContext);
-                }
-                var siteWorker = await sdkDbContext.SiteWorkers.SingleOrDefaultAsync(x => x.SiteId == site.Id);
-                var worker = await sdkDbContext.Workers.SingleOrDefaultAsync(x => x.Id == siteWorker.WorkerId);
-                if (worker != null)
-                {
-                    worker.IsLocked = false;
-                    await worker.Update(sdkDbContext);
-                }
+                return new OperationResult(false, localizationService.GetStringWithFormat("ErrorWhileDeletingUser", userId));
             }
 
             var result = await userManager.DeleteAsync(user);
-            if (!result.Succeeded)
-            {
-                return new OperationResult(false, string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
-            }
-
-            return new OperationResult(true, localizationService.GetStringWithFormat("UserParamWasDeleted", userId));
+            return !result.Succeeded
+                ? new OperationResult(false, string.Join(" ", result.Errors.Select(x => x.Description).ToArray()))
+                : new OperationResult(true, localizationService.GetStringWithFormat("UserParamWasDeleted", userId));
         }
         catch (Exception e)
         {
