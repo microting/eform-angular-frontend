@@ -26,6 +26,10 @@
               "src/polyfills.ts"
             ],
             "tsConfig": "src/tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "dragula",
+              "file-saver"
+            ],
             "assets": [
               {
                 "glob": "**/*",
