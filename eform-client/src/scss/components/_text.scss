@@ -1,6 +1,6 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
-@import '../utilities/colors';
+@use '../utilities/colors' as *;
 
 a {
   &.link-primary {

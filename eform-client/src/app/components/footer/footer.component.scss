@@ -1,4 +1,4 @@
-@import "../../../scss/utilities/colors";
+@use "../../../scss/utilities/colors" as *;
 
 footer {
   color: $eform-gray;
