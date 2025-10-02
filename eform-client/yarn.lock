@@ -3093,10 +3093,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/merge-streams/-/merge-streams-4.0.0.tgz#abb11d99aeb6d27f1b563c38147a72d50058e339"
   integrity sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==
 
-"@swimlane/ngx-charts@23.0.0":
-  version "23.0.0"
-  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-23.0.0.tgz#397a403c050f76a8989a3e4b7ea0a252259cd483"
-  integrity sha512-bLv1FWEvuM8pqCZr+WFQ980xH1F3bnbVRRlyW52kGUzj4BHdfGIOJo/JolFkIjMQdzLlAV5MqN649JlO3G70Dg==
+"@swimlane/ngx-charts@23.0.1":
+  version "23.0.1"
+  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-23.0.1.tgz#ba12d4ccb2c43db7889037aa7f43a34166e62191"
+  integrity sha512-mvdJTjBjUNoDj/R3AopYyVkVNrv0Zsrlh71CIQLVhBOs6PSV1mT3o7ukBFu8ct4w38wTfiGr8G+twHiYM1TEKA==
   dependencies:
     d3-array "^3.2.0"
     d3-brush "^3.0.0"

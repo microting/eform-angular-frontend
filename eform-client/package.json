@@ -80,7 +80,7 @@
     "@ngx-translate/core": "17.0.0",
     "@sentry/angular": "^10.8.0",
     "@sentry/cli": "^2.56.0",
-    "@swimlane/ngx-charts": "23.0.0",
+    "@swimlane/ngx-charts": "23.0.1",
     "@types/ramda": "^0.31.1",
     "@userback/widget": "^0.3.11",
     "build": "^0.1.4",
