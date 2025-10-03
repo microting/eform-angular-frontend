@@ -31,8 +31,8 @@ namespace eFormAPI.Web.Infrastructure.Models.SelectableList;
 
 public class AdvEntitySelectableGroupEditModel
 {
-    public string Name { get; set; }
-    public string GroupUid { get; set; }
-    public string Description { get; set; }
+    public required string Name { get; set; }
+    public required string GroupUid { get; set; }
+    public required string Description { get; set; }
     public List<EntityItem>? EntityItemModels { get; set; }
 }

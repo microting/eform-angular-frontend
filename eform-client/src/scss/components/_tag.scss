@@ -1,6 +1,7 @@
 @use 'sass:map';
+@use 'sass:color';
 @use '@angular/material' as mat;
-@import "../utilities";
+@use "../utilities" as *;
 
 .tag {
   min-width: $icon-size;
@@ -29,9 +30,9 @@
   $icon-color: mat.m2-get-color-from-palette($foreground, icon);
   $disabled-button: mat.m2-get-color-from-palette($background, disabled-button);
 
-  $background-color: scale-color(map.get($background, 'card'), $lightness: +15%);
+  $background-color: color.scale(map.get($background, 'card'), $lightness: +15%);
   @if $is-dark-theme {
-    $background-color: scale-color(map.get($background, 'card'), $lightness: -15%);
+    $background-color: color.scale(map.get($background, 'card'), $lightness: -15%);
   }
 
   .tag {
