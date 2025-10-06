@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  OnDestroy,
-} from '@angular/core';
+import { Component, EventEmitter, OnDestroy, inject } from '@angular/core';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import {SharedTagModel} from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -16,12 +11,14 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class SharedTagEditComponent implements OnDestroy {
+  dialogRef = inject<MatDialogRef<SharedTagEditComponent>>(MatDialogRef);
+
   public updatedTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
   public tagModel: SharedTagModel = new SharedTagModel()
 
-  constructor(
-    public dialogRef: MatDialogRef<SharedTagEditComponent>,
-    @Inject(MAT_DIALOG_DATA) tagModel: SharedTagModel = new SharedTagModel()) {
+  constructor() {
+    const tagModel = inject<SharedTagModel>(MAT_DIALOG_DATA) ?? new SharedTagModel();
+
     this.tagModel = {...tagModel};
   }
 

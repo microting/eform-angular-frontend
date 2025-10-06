@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {EmailRecipientsService} from 'src/app/common/services';
 import {
   CommonPaginationState,
@@ -22,15 +22,15 @@ import {
 
 @Injectable({providedIn: 'root'})
 export class EmailRecipientsStateService {
+  private store = inject(Store);
+  private service = inject(EmailRecipientsService);
+
   private emailRecipientsFilters$ = this.store.select(selectEmailRecipientsFilters);
   private emailRecipientsPagination$ = this.store.select(selectEmailRecipientsPagination);
   currentPagination: CommonPaginationState;
   currentFilters: EmailRecipientsFilters;
 
-  constructor(
-    private store: Store,
-    private service: EmailRecipientsService,
-  ) {
+  constructor() {
     this.emailRecipientsPagination$.subscribe(x => this.currentPagination = x);
     this.emailRecipientsFilters$.subscribe(x => this.currentFilters = x);
   }

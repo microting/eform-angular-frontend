@@ -1,8 +1,4 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   PluginGroupPermissionsListModel,
   PluginGroupPermissionsUpdateModel,
@@ -18,14 +14,19 @@ import {PluginPermissionsService} from 'src/app/common/services';
     standalone: false
 })
 export class InstalledPluginPermissionsComponent implements OnInit {
+  private pluginPermissionsService = inject(PluginPermissionsService);
+  dialogRef = inject<MatDialogRef<InstalledPluginPermissionsComponent>>(MatDialogRef);
+
   securityGroups: SecurityGroupModel[] = [];
   pluginGroupPermissions: PluginGroupPermissionsListModel[] = [];
   pluginId: number;
 
-  constructor(
-    private pluginPermissionsService: PluginPermissionsService,
-    public dialogRef: MatDialogRef<InstalledPluginPermissionsComponent>,
-    @Inject(MAT_DIALOG_DATA) model: {pluginPermissions: PluginGroupPermissionsUpdateModel, securityGroups: SecurityGroupModel[]}) {
+  constructor() {
+    const model = inject<{
+    pluginPermissions: PluginGroupPermissionsUpdateModel;
+    securityGroups: SecurityGroupModel[];
+}>(MAT_DIALOG_DATA);
+
     this.pluginId = model.pluginPermissions.pluginId;
     this.pluginGroupPermissions = model.pluginPermissions.groupPermissions;
     this.securityGroups = model.securityGroups;

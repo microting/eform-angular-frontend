@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OperationDataResult, OperationResult } from 'src/app/common/models';
 import { UserSettingsModel } from 'src/app/common/models/settings';
@@ -11,7 +11,8 @@ export let UserSettingsMethods = {
 
 @Injectable()
 export class UserSettingsService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getUserSettings(): Observable<OperationDataResult<UserSettingsModel>> {
     return this.apiBaseService.get(UserSettingsMethods.UserSettings);

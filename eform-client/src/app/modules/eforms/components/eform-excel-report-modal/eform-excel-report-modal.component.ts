@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import {EFormService} from 'src/app/common/services/eform';
 import {EformDownloadExcelModel, TemplateDto} from 'src/app/common/models';
 import {saveAs} from 'file-saver';
@@ -15,13 +15,13 @@ import {Subscription} from 'rxjs';
     standalone: false
 })
 export class EformExcelReportModalComponent implements OnInit, OnDestroy {
+  private eFormService = inject(EFormService);
+  private formBuilder = inject(FormBuilder);
+
   @ViewChild('frame', {static: true}) frame;
   selectedTemplate: TemplateDto = new TemplateDto();
   downloadExcelSub$: Subscription;
   downloadForm: FormGroup;
-
-  constructor(private eFormService: EFormService, private formBuilder: FormBuilder) {
-  }
 
   ngOnInit() {
     this.downloadForm = this.formBuilder.group({

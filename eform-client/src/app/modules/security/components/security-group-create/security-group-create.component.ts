@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   UserInfoModel,
@@ -17,6 +17,11 @@ import {TranslateService} from '@ngx-translate/core';
     standalone: false
 })
 export class SecurityGroupCreateComponent implements OnInit {
+  private adminService = inject(AdminService);
+  private securityGroupsService = inject(SecurityGroupsService);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+
   securityGroupUsers: Array<UserInfoModel> = [];
   securityGroupCreateModel: SecurityGroupCreateModel = new SecurityGroupCreateModel();
   users: Paged<UserInfoModel> = new Paged<UserInfoModel>();
@@ -40,14 +45,6 @@ export class SecurityGroupCreateComponent implements OnInit {
       ]
     },
   ];
-
-
-  constructor(
-    private adminService: AdminService,
-    private securityGroupsService: SecurityGroupsService,
-    private router: Router,
-    private translateService: TranslateService,
-  ) {}
 
   ngOnInit() {
     this.getUsers();

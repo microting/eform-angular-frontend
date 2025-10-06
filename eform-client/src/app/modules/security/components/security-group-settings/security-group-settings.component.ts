@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {
   SecurityGroupModel,
   SecurityGroupSettingsUpdateModel,
@@ -17,13 +12,14 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class SecurityGroupSettingsComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<SecurityGroupSettingsComponent>>(MatDialogRef);
+
   settingsUpdate: EventEmitter<SecurityGroupSettingsUpdateModel> = new EventEmitter<SecurityGroupSettingsUpdateModel>();
   settingsUpdateModel: SecurityGroupSettingsUpdateModel = new SecurityGroupSettingsUpdateModel();
 
-  constructor(
-    public dialogRef: MatDialogRef<SecurityGroupSettingsComponent>,
-    @Inject(MAT_DIALOG_DATA) securityGroup: SecurityGroupModel = new SecurityGroupModel()
-  ) {
+  constructor() {
+    const securityGroup = inject<SecurityGroupModel>(MAT_DIALOG_DATA) ?? new SecurityGroupModel();
+
     this.settingsUpdateModel = {
       id: securityGroup.id,
       redirectLink: securityGroup.redirectLink,

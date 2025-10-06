@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs';
@@ -13,13 +13,12 @@ export let LocaleMethods = {
 
 @Injectable()
 export class LocaleService {
+  private apiBaseService = inject(ApiBaseService);
+  private translateService = inject(TranslateService);
+  private cookieService = inject(CookieService);
+
   //private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
-  constructor(
-    private apiBaseService: ApiBaseService,
-    // private authStateService: AuthStateService,
-    private translateService: TranslateService,
-    private cookieService: CookieService
-  ) {
+  constructor() {
     console.debug('LocaleService - constructor');
   }
 

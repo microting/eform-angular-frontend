@@ -1,8 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {SharedTagMultipleCreateModel} from 'src/app/common/models';
 import {MatDialogRef} from '@angular/material/dialog';
 
@@ -13,10 +9,10 @@ import {MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class SharedTagMultipleCreateComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<SharedTagMultipleCreateComponent>>(MatDialogRef);
+
   public createdTags: EventEmitter<SharedTagMultipleCreateModel> = new EventEmitter<SharedTagMultipleCreateModel>();
   textareaValue: string = '';
-
-  constructor( public dialogRef: MatDialogRef<SharedTagMultipleCreateComponent>,) {}
 
   ngOnInit() {}
 

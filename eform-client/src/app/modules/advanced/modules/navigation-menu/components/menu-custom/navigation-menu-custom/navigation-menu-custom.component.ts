@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { NavigationMenuItemModel } from 'src/app/common/models/navigation-menu';
 import { NavigationMenuCustomDropdownComponent, NavigationMenuCustomLinkComponent}
   from '..';
@@ -21,6 +15,9 @@ import {Subscription} from 'rxjs';
     standalone: false
 })
 export class NavigationMenuCustomComponent implements OnInit {
+  dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+
   @Input() availableSecurityGroups: CommonDictionaryModel[] = [];
   @Output() addCustomLinkToMenu: EventEmitter<
     NavigationMenuItemModel
@@ -30,10 +27,6 @@ export class NavigationMenuCustomComponent implements OnInit {
   > = new EventEmitter<NavigationMenuItemModel>();
   collapsed = false;
   navigationMenuCustomDropdownComponentAfterClosedSub$: Subscription;
-
-  constructor(
-    public dialog: MatDialog,
-    private overlay: Overlay) {}
 
   ngOnInit(): void {}
 

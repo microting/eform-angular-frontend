@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, inject } from '@angular/core';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { FieldValueDto } from 'src/app/common/models';
 import { CommonDictionaryTextModel } from 'src/app/common/models/common';
@@ -18,6 +12,9 @@ import { EntitySearchService } from 'src/app/common/services/advanced';
     standalone: false
 })
 export class ElementEntitysearchComponent implements AfterViewInit {
+  private entitySearchService = inject(EntitySearchService);
+  private cd = inject(ChangeDetectorRef);
+
   items: Array<CommonDictionaryTextModel> = [];
   fieldValueObj: FieldValueDto = new FieldValueDto();
   typeahead = new EventEmitter<string>();
@@ -32,10 +29,7 @@ export class ElementEntitysearchComponent implements AfterViewInit {
     this.fieldValueObj = val;
   }
 
-  constructor(
-    private entitySearchService: EntitySearchService,
-    private cd: ChangeDetectorRef
-  ) {
+  constructor() {
     this.typeahead
       .pipe(
         debounceTime(200),

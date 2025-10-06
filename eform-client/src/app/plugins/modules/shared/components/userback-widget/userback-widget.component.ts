@@ -1,7 +1,4 @@
-import {
-  Component, OnDestroy,
-  OnInit
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {AuthStateService} from 'src/app/common/store';
 import {Subscription} from 'rxjs';
 import UserbackWidgetLoader, {UserbackWidget} from '@userback/widget';
@@ -18,6 +15,10 @@ import {selectOthersSettings} from 'src/app/state/application-settings/applicati
     standalone: false
 })
 export class UserbackWidgetComponent implements OnInit, OnDestroy {
+  private authStore = inject(Store);
+  private authStateService = inject(AuthStateService);
+  private appSettingsStateService = inject(AppSettingsStateService);
+
   private isShowing: boolean = false;
   private loadWidget: boolean = false;
   private userbackToken: string;
@@ -29,13 +30,6 @@ export class UserbackWidgetComponent implements OnInit, OnDestroy {
 
   isAuthSub$: Subscription;
   getUserbackWidgetIsEnabledSub$: Subscription;
-
-  constructor(
-    private authStore: Store,
-    private authStateService: AuthStateService,
-    private appSettingsStateService: AppSettingsStateService,
-  ) {
-  }
 
   ngOnInit(): void {
     // TODO: Fix this

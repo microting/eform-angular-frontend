@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import {EformDocxReportHeadersModel} from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
@@ -15,12 +9,11 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class EformDocxReportHeaderEditorComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<EformDocxReportHeaderEditorComponent>>(MatDialogRef);
+  reportHeadersModel = inject<EformDocxReportHeadersModel>(MAT_DIALOG_DATA) ?? new EformDocxReportHeadersModel();
+
   @Output()
   updateReportHeaders: EventEmitter<EformDocxReportHeadersModel> = new EventEmitter<EformDocxReportHeadersModel>();
-
-  constructor(
-    public dialogRef: MatDialogRef<EformDocxReportHeaderEditorComponent>,
-    @Inject(MAT_DIALOG_DATA) public reportHeadersModel: EformDocxReportHeadersModel = new EformDocxReportHeadersModel()) {}
 
   ngOnInit(): void {}
 

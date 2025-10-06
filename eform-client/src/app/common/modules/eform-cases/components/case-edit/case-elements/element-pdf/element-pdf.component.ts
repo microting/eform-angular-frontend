@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy} from '@angular/core';
+import { Component, Input, OnDestroy, inject } from '@angular/core';
 import {DataItemDto} from 'src/app/common/models';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {TemplateFilesService} from 'src/app/common/services';
@@ -13,6 +13,8 @@ import {Subscription} from 'rxjs';
     standalone: false
 })
 export class ElementPdfComponent implements OnDestroy {
+  private templateFilesService = inject(TemplateFilesService);
+
   dataItemObj: DataItemDto = new DataItemDto();
   pdfSub$: Subscription;
 
@@ -23,9 +25,6 @@ export class ElementPdfComponent implements OnDestroy {
 
   set dataItem(val) {
     this.dataItemObj = val;
-  }
-
-  constructor(private templateFilesService: TemplateFilesService) {
   }
 
   ngOnDestroy(): void {

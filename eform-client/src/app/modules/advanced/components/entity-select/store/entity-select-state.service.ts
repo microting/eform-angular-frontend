@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {EntitySelectService} from 'src/app/common/services';
 import {
   AdvEntitySelectableGroupListRequestModel,
@@ -22,15 +22,15 @@ import {
 
 @Injectable({providedIn: 'root'})
 export class EntitySelectStateService {
+  private store = inject(Store);
+  private service = inject(EntitySelectService);
+
   private selectEntitySelectFilters$ = this.store.select(selectEntitySelectFilters);
   private selectEntitySelectPagination$ = this.store.select(selectEntitySelectPagination);
   currentPagination: CommonPaginationState;
   currentFilters: EntitySelectFilters;
 
-  constructor(
-    private store: Store,
-    private service: EntitySelectService,
-  ) {
+  constructor() {
     this.selectEntitySelectPagination$.subscribe(x => this.currentPagination = x);
     this.selectEntitySelectFilters$.subscribe(x => this.currentFilters = x);
   }

@@ -12,11 +12,11 @@ import {Store} from '@ngrx/store';
 
 @Injectable()
 export class PermissionGuard {
+  private store = inject(Store);
+
   private selectCurrentUserClaims$ = this.store.select(selectCurrentUserClaims);
 
-  constructor(
-    private store: Store
-  ) {
+  constructor() {
     console.debug('PermissionGuard - constructor');
   }
 

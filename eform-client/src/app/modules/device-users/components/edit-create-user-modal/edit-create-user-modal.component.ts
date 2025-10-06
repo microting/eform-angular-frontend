@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DeviceUserModel } from 'src/app/common/models/device-users';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -14,15 +14,15 @@ import {LanguagesModel} from 'src/app/common/models';
     standalone: false
 })
 export class EditCreateUserModalComponent implements OnInit {
+  private deviceUserService = inject(DeviceUserService);
+  dialogRef = inject<MatDialogRef<EditCreateUserModalComponent>>(MatDialogRef);
+  simpleSiteModel = inject<DeviceUserModel>(MAT_DIALOG_DATA) ?? new DeviceUserModel();
+  private appSettingsStateService = inject(AppSettingsStateService);
+
   edit: boolean = false;
   getLanguagesSub$: Subscription;
   appLanguages: LanguagesModel = new LanguagesModel();
   activeLanguages: Array<any> = [];
-  constructor(
-    private deviceUserService: DeviceUserService,
-    public dialogRef: MatDialogRef<EditCreateUserModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public simpleSiteModel: DeviceUserModel = new DeviceUserModel(),
-    private appSettingsStateService: AppSettingsStateService) { }
 
   ngOnInit() {
     this.getEnabledLanguages();

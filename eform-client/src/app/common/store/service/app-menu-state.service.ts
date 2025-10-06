@@ -1,14 +1,12 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {MenuItemModel} from 'src/app/common/models';
 import {leftAppMenus, rightAppMenus} from 'src/app/state';
 import {Store} from '@ngrx/store';
 
 @Injectable()
 export class AppMenuStateService {
-  constructor(
-    private store: Store,
-  ) {
-  }
+  private store = inject(Store);
+
   public rightAppMenus$ = this.store.select(rightAppMenus);
   public leftAppMenus$ = this.store.select(leftAppMenus);
 

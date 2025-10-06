@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DeviceUserService } from 'src/app/common/services';
 import { OperationDataResult, SiteDto } from 'src/app/common/models';
 import { Observable } from 'rxjs';
@@ -8,12 +8,12 @@ import {updateDeviceUserFilters, selectDeviceUsersFilters, DeviceUsersFilters} f
 
 @Injectable({ providedIn: 'root' })
 export class DeviceUsersStateService {
+  private service = inject(DeviceUserService);
+  private store = inject(Store);
+
   private selectDeviceUsersFilters$ = this.store.select(selectDeviceUsersFilters);
   currentFilters: DeviceUsersFilters;
-  constructor(
-    private service: DeviceUserService,
-    private store: Store,
-  ) {
+  constructor() {
     this.selectDeviceUsersFilters$.pipe(
       filter(x => !!x),
       tap(x => this.currentFilters = x)

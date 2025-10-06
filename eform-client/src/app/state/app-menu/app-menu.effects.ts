@@ -2,16 +2,14 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {AppMenuService} from 'src/app/common/services';
 import {loadAppMenu, loadAppMenuFailure, loadAppMenuSuccess} from './';
 import {mergeMap, of, catchError, map} from 'rxjs';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {OperationDataResult, UserMenuModel} from 'src/app/common/models';
 
 @Injectable()
 export class AppMenuEffects {
-  constructor(
-    private actions$: Actions,
-    private appMenuService: AppMenuService,
-  ) {
-  }
+  private actions$ = inject(Actions);
+  private appMenuService = inject(AppMenuService);
+
 
 loadAppMenu$ = createEffect(() => this.actions$.pipe(
   ofType(loadAppMenu),

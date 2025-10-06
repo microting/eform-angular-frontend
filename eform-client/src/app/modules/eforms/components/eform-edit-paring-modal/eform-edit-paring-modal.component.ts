@@ -1,8 +1,4 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {FolderDto, SiteNameDto, TemplateDto, DeployCheckbox, DeployModel} from 'src/app/common/models';
 import {FoldersService, SitesService, EFormService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
@@ -18,6 +14,15 @@ import {selectCurrentUserClaimsEformsPairingRead} from 'src/app/state/auth/auth.
     standalone: false
 })
 export class EformEditParingModalComponent implements OnInit {
+  private authStore = inject(Store);
+  private foldersService = inject(FoldersService);
+  private eFormService = inject(EFormService);
+  private sitesService = inject(SitesService);
+  private authStateService = inject(AuthStateService);
+  dialogRef = inject<MatDialogRef<EformEditParingModalComponent>>(MatDialogRef);
+  selectedTemplateDto = inject<TemplateDto>(MAT_DIALOG_DATA) ?? new TemplateDto();
+  translateService = inject(TranslateService);
+
   deployModel: DeployModel = new DeployModel();
   deployViewModel: DeployModel = new DeployModel();
   sitesDto: Array<SiteNameDto> = [];
@@ -32,18 +37,6 @@ export class EformEditParingModalComponent implements OnInit {
   // ];
   rowSelected: any[];
   private selectCurrentUserClaimsEformsPairingRead$ = this.authStore.select(selectCurrentUserClaimsEformsPairingRead);
-
-  constructor(
-    private authStore: Store,
-    private foldersService: FoldersService,
-    private eFormService: EFormService,
-    private sitesService: SitesService,
-    private authStateService: AuthStateService,
-    public dialogRef: MatDialogRef<EformEditParingModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedTemplateDto: TemplateDto = new TemplateDto(),
-    public translateService: TranslateService,
-  ) {
-  }
 
   ngOnInit() {
     this.loadAllSites();

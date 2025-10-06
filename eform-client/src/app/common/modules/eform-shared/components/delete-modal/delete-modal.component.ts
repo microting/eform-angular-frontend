@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject, EventEmitter} from '@angular/core';
+import { Component, OnInit, EventEmitter, inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DeleteModalSettingModel} from 'src/app/common/models';
 
@@ -9,12 +9,10 @@ import {DeleteModalSettingModel} from 'src/app/common/models';
     standalone: false
 })
 export class DeleteModalComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<DeleteModalComponent>>(MatDialogRef);
+  deleteModalSettingModel = inject<DeleteModalSettingModel>(MAT_DIALOG_DATA);
+
   delete: EventEmitter<any> = new EventEmitter<any>();
-  constructor(
-    public dialogRef: MatDialogRef<DeleteModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public deleteModalSettingModel: DeleteModalSettingModel,
-  ) {
-  }
 
   ngOnInit() {
   }

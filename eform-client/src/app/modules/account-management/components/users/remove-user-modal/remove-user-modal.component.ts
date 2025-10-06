@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {UserInfoModel} from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
@@ -14,12 +9,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class RemoveUserModalComponent implements OnInit {
-  userDeleted: EventEmitter<UserInfoModel> = new EventEmitter<UserInfoModel>();
+  dialogRef = inject<MatDialogRef<RemoveUserModalComponent>>(MatDialogRef);
+  selectedUser = inject<UserInfoModel>(MAT_DIALOG_DATA) ?? new UserInfoModel();
 
-  constructor(
-    public dialogRef: MatDialogRef<RemoveUserModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedUser: UserInfoModel = new UserInfoModel()) {
-  }
+  userDeleted: EventEmitter<UserInfoModel> = new EventEmitter<UserInfoModel>();
 
   ngOnInit() {
   }

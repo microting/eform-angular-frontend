@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {CasesService, EFormService} from 'src/app/common/services';
 import {Observable} from 'rxjs';
 import {
@@ -22,14 +22,14 @@ import {
 
 @Injectable({providedIn: 'root'})
 export class CasesStateService {
+  private store = inject(Store);
+  private service = inject(CasesService);
+  private eFormService = inject(EFormService);
+
   private selectCasesPagination$ = this.store.select(selectCasesPagination);
   private selectCasesFilters$ = this.store.select(selectCasesFilters);
 
-  constructor(
-    private store: Store,
-    private service: CasesService,
-    private eFormService: EFormService
-  ) {
+  constructor() {
     this.selectCasesPagination$.pipe(
       filter(x => !!x),
       tap(x => this.currentPagination = x)

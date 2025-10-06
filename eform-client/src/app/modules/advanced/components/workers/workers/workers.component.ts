@@ -1,4 +1,4 @@
-import {Component, OnInit,} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Router} from '@angular/router';
 import {WorkerDto} from 'src/app/common/models';
 import {WorkersService} from 'src/app/common/services';
@@ -19,6 +19,12 @@ import {selectCurrentUserClaimsWorkersCreate} from 'src/app/state/auth/auth.sele
     standalone: false
 })
 export class WorkersComponent implements OnInit {
+  private authStore = inject(Store);
+  private workersService = inject(WorkersService);
+  dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private translateService = inject(TranslateService);
+
   workersDto: Array<WorkerDto> = [];
 
   tableHeaders: MtxGridColumn[] = [
@@ -33,15 +39,6 @@ export class WorkersComponent implements OnInit {
   public selectCurrentUserClaimsWorkersCreate$ = this.authStore.select(selectCurrentUserClaimsWorkersCreate);
   public selectCurrentUserClaimsWorkersUpdate$ = this.authStore.select(selectCurrentUserClaimsWorkersCreate);
   public selectCurrentUserClaimsWorkersDelete$ = this.authStore.select(selectCurrentUserClaimsWorkersCreate);
-
-  constructor(
-    private authStore: Store,
-    private workersService: WorkersService,
-    public dialog: MatDialog,
-    private overlay: Overlay,
-    private translateService: TranslateService,
-  ) {
-  }
 
   ngOnInit() {
     this.loadAllWorkers();

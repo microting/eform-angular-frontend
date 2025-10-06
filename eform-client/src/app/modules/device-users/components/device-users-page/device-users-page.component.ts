@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {DeviceUserService} from 'src/app/common/services';
 import {DeviceUsersStateService} from '../store';
 import {AuthStateService} from 'src/app/common/store';
@@ -26,6 +26,13 @@ import {selectDeviceUsersFilters, selectDeviceUsersNameFilter} from "src/app/sta
     standalone: false
 })
 export class DeviceUsersPageComponent implements OnInit, OnDestroy {
+  private authStore = inject(Store);
+  private deviceUsersService = inject(DeviceUserService);
+  deviceUsersStateService = inject(DeviceUsersStateService);
+  dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private translateService = inject(TranslateService);
+
   sitesDto: Array<SiteDto>;
 
   tableHeaders: MtxGridColumn[] = [
@@ -51,16 +58,6 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   public selectCurrentUserClaimsDeviceUsersUpdate$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
   public selectCurrentUserClaimsDeviceUsersDelete$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
   private selectDeviceUsersNameFilter$ = this.authStore.select(selectDeviceUsersNameFilter);
-
-  constructor(
-    private authStore: Store,
-    private deviceUsersService: DeviceUserService,
-    public deviceUsersStateService: DeviceUsersStateService,
-    public dialog: MatDialog,
-    private overlay: Overlay,
-    private translateService: TranslateService,
-  ) {
-  }
 
   ngOnInit() {
     this.getDeviceUsersFiltered();

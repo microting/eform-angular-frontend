@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import { SecurityGroupModel } from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
@@ -14,12 +9,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class SecurityGroupRemoveComponent implements OnInit {
-  onSecurityGroupRemoved: EventEmitter<number> = new EventEmitter<number>();
+  dialogRef = inject<MatDialogRef<SecurityGroupRemoveComponent>>(MatDialogRef);
+  selectedSecurityGroup = inject<SecurityGroupModel>(MAT_DIALOG_DATA) ?? new SecurityGroupModel();
 
-  constructor(
-    public dialogRef: MatDialogRef<SecurityGroupRemoveComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedSecurityGroup: SecurityGroupModel = new SecurityGroupModel()
-  ) {}
+  onSecurityGroupRemoved: EventEmitter<number> = new EventEmitter<number>();
 
   ngOnInit() {}
 

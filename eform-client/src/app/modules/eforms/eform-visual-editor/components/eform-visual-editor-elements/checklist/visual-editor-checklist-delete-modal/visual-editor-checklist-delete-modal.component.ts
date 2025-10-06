@@ -1,8 +1,4 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {EformVisualEditorRecursionChecklistModel,} from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
@@ -13,12 +9,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class VisualEditorChecklistDeleteModalComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<VisualEditorChecklistDeleteModalComponent>>(MatDialogRef);
+  private recursionChecklistModel = inject<EformVisualEditorRecursionChecklistModel>(MAT_DIALOG_DATA) ?? new EformVisualEditorRecursionChecklistModel();
 
-  constructor(
-    public dialogRef: MatDialogRef<VisualEditorChecklistDeleteModalComponent>,
-    @Inject(MAT_DIALOG_DATA) private recursionChecklistModel: EformVisualEditorRecursionChecklistModel =
-      new EformVisualEditorRecursionChecklistModel()
-  ) {}
 
   ngOnInit() {}
 

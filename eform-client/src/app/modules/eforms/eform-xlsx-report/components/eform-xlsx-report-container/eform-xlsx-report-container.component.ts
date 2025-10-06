@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { parseISO } from 'date-fns';
@@ -18,6 +18,13 @@ import {TranslateService} from '@ngx-translate/core';
     standalone: false
 })
 export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
+  private translateService = inject(TranslateService);
+  private activateRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private appMenuStateService = inject(AppMenuStateService);
+  private toastrService = inject(ToastrService);
+  private eFormService = inject(EFormService);
+
   dateFrom: any;
   dateTo: any;
   range: Date[] = [];
@@ -29,14 +36,7 @@ export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
   getSingleEformSub$: Subscription;
   appMenuObservableSub$: Subscription;
 
-  constructor(
-    private translateService: TranslateService,
-    private activateRoute: ActivatedRoute,
-    private router: Router,
-    private appMenuStateService: AppMenuStateService,
-    private toastrService: ToastrService,
-    private eFormService: EFormService
-  ) {
+  constructor() {
     this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
       // Required to reload component
       if (this.selectedTemplateId) {

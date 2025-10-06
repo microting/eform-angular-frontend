@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter, Inject,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { SitesService } from 'src/app/common/services';
 import {CommonDictionaryModel, DeviceUserModel, SiteNameModel} from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -16,13 +9,18 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class SiteEditComponent implements OnInit {
+  private sitesService = inject(SitesService);
+  dialogRef = inject<MatDialogRef<SiteEditComponent>>(MatDialogRef);
+
   availableTags: CommonDictionaryModel[] = [];
   site: SiteNameModel = new SiteNameModel();
 
-  constructor(
-    private sitesService: SitesService,
-    public dialogRef: MatDialogRef<SiteEditComponent>,
-    @Inject(MAT_DIALOG_DATA) data: { siteId: number, availableTags: CommonDictionaryModel[] }) {
+  constructor() {
+    const data = inject<{
+    siteId: number;
+    availableTags: CommonDictionaryModel[];
+}>(MAT_DIALOG_DATA);
+
     this.availableTags = data.availableTags;
     this.sitesService.getSingleSite(data.siteId).subscribe((data) => {
       if (data && data.success) {

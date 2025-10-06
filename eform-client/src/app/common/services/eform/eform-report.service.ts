@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   EformFullReportModel,
@@ -14,7 +14,8 @@ const TemplateReportMethods = {
 
 @Injectable()
 export class EformReportService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getSingle(
     templateId: number

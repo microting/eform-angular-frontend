@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { GoogleAuthInfoModel } from 'src/app/common/models/auth';
 import { UserSettingsModel } from 'src/app/common/models/settings';
 import {
@@ -32,6 +32,16 @@ import * as R from 'ramda';
     standalone: false
 })
 export class ProfileSettingsComponent implements OnInit {
+  authStateService = inject(AuthStateService);
+  private authStore = inject(Store);
+  private googleAuthService = inject(GoogleAuthService);
+  private localeService = inject(LocaleService);
+  private translateService = inject(TranslateService);
+  private userSettingsService = inject(UserSettingsService);
+  private store = inject(Store);
+  private userSettings = inject(UserSettingsService);
+  private appSettingsStateService = inject(AppSettingsStateService);
+
   profilePictureUploader: FileUploader = new FileUploader({
     url: '/api/account/profile-picture-upload',
   });
@@ -44,18 +54,6 @@ export class ProfileSettingsComponent implements OnInit {
   activeLanguages: Array<any> = [];
   public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
   private selectBearerToken$ = this.authStore.select(selectBearerToken);
-
-  constructor(
-    public authStateService: AuthStateService,
-    private authStore: Store,
-    private googleAuthService: GoogleAuthService,
-    private localeService: LocaleService,
-    private translateService: TranslateService,
-    private userSettingsService: UserSettingsService,
-    private store: Store,
-    private userSettings: UserSettingsService,
-    private appSettingsStateService: AppSettingsStateService
-  ) {}
 
   ngOnInit() {
     this.getEnabledLanguages();

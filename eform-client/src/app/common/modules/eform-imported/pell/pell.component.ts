@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { ElementRef, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import * as pell from './pell';
 
@@ -13,17 +13,14 @@ import * as pell from './pell';
   }`]
 })
 export class PellComponent implements OnInit, AfterViewInit, OnChanges {
+  private rd = inject(Renderer2);
+
   @Input() actions: Array<Object> = [];
   @Input() value: String = '';
   @Output() valueChange = new EventEmitter();
   pell = pell;
   html;
   editor;
-
-  constructor(
-    private rd: Renderer2
-
-  ) { }
 
   ngOnInit() {
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import {
@@ -17,7 +17,8 @@ export let EformDocxReportServiceMethods = {
 
 @Injectable()
 export class EformDocxReportService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getTemplateDocxReportHeaders(
     templateId: number

@@ -8,11 +8,11 @@ import {AuthStateService} from 'src/app/common/store';
 
 @Injectable()
 export class AdminGuard {
-  constructor(
-    private router: Router,
-    private store: Store,
-    private authStateService: AuthStateService,
-  ) {
+  private router = inject(Router);
+  private store = inject(Store);
+  private authStateService = inject(AuthStateService);
+
+  constructor() {
     console.debug('AdminGuard - constructor');
   }
 

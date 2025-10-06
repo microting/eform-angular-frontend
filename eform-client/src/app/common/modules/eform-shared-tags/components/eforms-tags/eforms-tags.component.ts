@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter, Input, OnChanges,
-  OnDestroy,
-  Output,
-  SimpleChanges,
-
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, inject } from '@angular/core';
 import {
   SharedTagCreateComponent,
   SharedTagDeleteComponent,
@@ -32,6 +25,10 @@ import {Overlay} from '@angular/cdk/overlay';
     standalone: false
 })
 export class EformsTagsComponent implements OnDestroy, OnChanges {
+  private eFormTagService = inject(EformTagService);
+  dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() tagsChanged: EventEmitter<void> = new EventEmitter<void>();
   dialogRef: MatDialogRef<SharedTagsComponent>;
@@ -43,13 +40,6 @@ export class EformsTagsComponent implements OnDestroy, OnChanges {
   showDeleteTagSub$: Subscription;
   deletedTagSub$: Subscription;
   updatedTagSub$: Subscription;
-
-  constructor(
-    private eFormTagService: EformTagService,
-    public dialog: MatDialog,
-    private overlay: Overlay
-  ) {
-  }
 
   show() {
     this.dialogRef = this.dialog.open(SharedTagsComponent, {

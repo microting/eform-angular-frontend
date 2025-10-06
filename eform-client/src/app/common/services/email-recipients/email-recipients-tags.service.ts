@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   CommonDictionaryModel,
@@ -16,7 +16,8 @@ const EmailRecipientsTagsMethods = {
 
 @Injectable()
 export class EmailRecipientsTagsService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getEmailRecipientsTags(): Observable<
     OperationDataResult<CommonDictionaryModel[]>

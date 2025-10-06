@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {AdminService, AppSettingsService, AuthService} from 'src/app/common/services';
 import {exhaustMap, of, catchError, map} from 'rxjs';
@@ -8,14 +8,12 @@ import {AuthStateService} from 'src/app/common/store';
 
 @Injectable()
 export class AuthEffects {
-  constructor(
-    private actions$: Actions,
-    private settingsService: AppSettingsService,
-    private adminService: AdminService,
-    private authService: AuthService,
-    private authStateService: AuthStateService,
-  ) {
-  }
+  private actions$ = inject(Actions);
+  private settingsService = inject(AppSettingsService);
+  private adminService = inject(AdminService);
+  private authService = inject(AuthService);
+  private authStateService = inject(AuthStateService);
+
 
   authenticate$ = createEffect(() => this.actions$.pipe(
       ofType(authenticate),
