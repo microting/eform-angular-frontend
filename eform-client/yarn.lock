@@ -9528,10 +9528,10 @@ ng2-dragula@^6.0.0:
   dependencies:
     tslib "^2.3.0"
 
-ng2-file-upload@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/ng2-file-upload/-/ng2-file-upload-8.0.0.tgz#23415db82208dd6461a227ba2a3e1e9680882a0e"
-  integrity sha512-uforjhx9zHxVJvstOwILWnn7qIpFD+V7x9xtsBIczVxI4KYwGtek2GyEohgZTemv979nZtcQBZrFGqH981OroA==
+ng2-file-upload@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/ng2-file-upload/-/ng2-file-upload-9.0.0.tgz#e8284e438ffbdf7d08c7b525bea71e6ee383d2f9"
+  integrity sha512-7tH6qESpLNor12hSsEHtlmW3WQRuhwGp6CfLzPPhTDr5iWpPtyKoAn4NVOV1fQGw5PVYxRIbIRqZkAEHXCNKJA==
   dependencies:
     tslib "^2.3.0"
 
