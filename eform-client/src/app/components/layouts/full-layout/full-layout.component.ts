@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild, inject } from '@angular/core';
 import {AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Observable, of, Subscription, take, tap} from 'rxjs';
@@ -29,6 +29,15 @@ import {
     standalone: false
 })
 export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
+  authStateService = inject(AuthStateService);
+  private renderer = inject(Renderer2);
+  private authStore = inject(Store);
+  private store = inject(Store);
+  router = inject(Router);
+  private eventBrokerService = inject(EventBrokerService);
+  private settingsService = inject(AppSettingsService);
+  private loaderService = inject(LoaderService);
+
   @ViewChild('drawer') drawer: MatDrawer;
   isDarkThemeAsync$: Subscription;
   private brokerListener: any;
@@ -45,16 +54,9 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   public selectSideMenuOpened$ = this.authStore.select(selectSideMenuOpened);
   private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
 
-  constructor(
-    public authStateService: AuthStateService,
-    private renderer: Renderer2,
-    private authStore: Store,
-    private store: Store,
-    public router: Router,
-    private eventBrokerService: EventBrokerService,
-    private settingsService: AppSettingsService,
-    private loaderService: LoaderService,
-  ) {
+  constructor() {
+    const eventBrokerService = this.eventBrokerService;
+
     this.brokerListener = eventBrokerService.listen<void>('get-header-settings',
       () => {
         this.getSettings();

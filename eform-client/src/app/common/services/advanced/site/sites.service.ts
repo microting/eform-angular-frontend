@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   CommonDictionaryModel,
@@ -18,7 +18,8 @@ const SitesMethods = {
 
 @Injectable()
 export class SitesService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getAllSites(): Observable<OperationDataResult<Array<SiteNameDto>>> {
     return this.apiBaseService.get<Array<SiteNameDto>>(SitesMethods.GetAll);

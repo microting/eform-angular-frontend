@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { AppMenuStateService } from 'src/app/common/store';
@@ -12,19 +12,15 @@ import { AppMenuStateService } from 'src/app/common/store';
     standalone: false
 })
 export class EformSubheaderComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
+  appMenuStateService = inject(AppMenuStateService);
+
   @Input() title = '';
   @Input() subtitle = '';
   @Input() heandingSizeRem = 2.5;
   @Input() forceStaticTitle = false;
   @Input() breadcrumbs: { name: string; href?: string }[] = null;
   href = this.router.url;
-
-  // internalTitle = '';
-
-  constructor(
-    private router: Router,
-    public appMenuStateService: AppMenuStateService
-  ) {}
 
   ngOnDestroy() {}
 

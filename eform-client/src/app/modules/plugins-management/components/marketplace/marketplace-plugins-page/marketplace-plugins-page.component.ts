@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {PluginsManagementService} from 'src/app/common/services';
 import {
   MarketplacePluginModel, MarketplacePluginsModel,
@@ -21,6 +21,11 @@ import { TranslateService } from '@ngx-translate/core';
     standalone: false
 })
 export class MarketplacePluginsPageComponent implements OnInit, OnDestroy{
+  private pluginManagementService = inject(PluginsManagementService);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private translateService = inject(TranslateService);
+
   marketplacePluginsRequestModel: MarketplacePluginsRequestModel = new MarketplacePluginsRequestModel();
   marketplacePluginsList: MarketplacePluginsModel = new MarketplacePluginsModel();
   tableHeaders: MtxGridColumn[] = [
@@ -30,13 +35,6 @@ export class MarketplacePluginsPageComponent implements OnInit, OnDestroy{
   ];
   marketplacePluginInstallComponentAfterClosedSub$: Subscription;
   getMarketplacePluginsSub$: Subscription;
-
-  constructor(
-    private pluginManagementService: PluginsManagementService,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-    private translateService: TranslateService,) {
-  }
 
   ngOnInit() {
     this.getMarketplacePlugins();

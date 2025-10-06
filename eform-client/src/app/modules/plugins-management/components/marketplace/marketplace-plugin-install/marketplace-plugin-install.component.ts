@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit,} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {MarketplacePluginModel} from 'src/app/common/models';
 import {PluginsManagementService} from 'src/app/common/services';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -10,10 +10,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class MarketplacePluginInstallComponent implements OnInit {
-  constructor(
-    private pluginManagementService: PluginsManagementService,
-    public dialogRef: MatDialogRef<MarketplacePluginInstallComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedPluginModel: MarketplacePluginModel = new MarketplacePluginModel(),) { }
+  private pluginManagementService = inject(PluginsManagementService);
+  dialogRef = inject<MatDialogRef<MarketplacePluginInstallComponent>>(MatDialogRef);
+  selectedPluginModel = inject<MarketplacePluginModel>(MAT_DIALOG_DATA) ?? new MarketplacePluginModel();
+
 
   ngOnInit() {
   }

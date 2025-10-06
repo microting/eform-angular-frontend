@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
@@ -18,6 +13,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class NavigationMenuItemDeleteComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<NavigationMenuItemDeleteComponent>>(MatDialogRef);
+
   itemDeleteConfirm: EventEmitter<
     NavigationMenuItemIndexedModel
   > = new EventEmitter<NavigationMenuItemIndexedModel>();
@@ -29,9 +26,13 @@ export class NavigationMenuItemDeleteComponent implements OnInit {
     return NavigationMenuItemTypeEnum;
   }
 
-  constructor(
-    public dialogRef: MatDialogRef<NavigationMenuItemDeleteComponent>,
-    @Inject(MAT_DIALOG_DATA) model: {model: NavigationMenuItemModel, firstLevelIndex: number, secondLevelIndex?: number}) {
+  constructor() {
+    const model = inject<{
+    model: NavigationMenuItemModel;
+    firstLevelIndex: number;
+    secondLevelIndex?: number;
+}>(MAT_DIALOG_DATA);
+
     this.item = model.model;
     this.firstLevelIndex = model.firstLevelIndex;
     this.secondLevelIndex = model.secondLevelIndex;

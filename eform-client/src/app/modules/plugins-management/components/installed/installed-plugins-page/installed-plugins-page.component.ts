@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {InstalledPluginStatusEnum} from 'src/app/common/const';
 import {
   SecurityGroupsService,
@@ -34,6 +34,14 @@ import { TranslateService } from '@ngx-translate/core';
     standalone: false
 })
 export class InstalledPluginsPageComponent implements OnInit, OnDestroy{
+  private pluginManagementService = inject(PluginsManagementService);
+  private pluginPermissionsService = inject(PluginPermissionsService);
+  private securityGroupsService = inject(SecurityGroupsService);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private authStateService = inject(AuthStateService);
+  private translateService = inject(TranslateService);
+
   installedPluginsRequestModel: InstalledPluginsRequestModel = new InstalledPluginsRequestModel();
   installedPluginsModel: InstalledPluginsModel = new InstalledPluginsModel();
   securityGroups: SecurityGroupModel[] = [];
@@ -53,17 +61,6 @@ export class InstalledPluginsPageComponent implements OnInit, OnDestroy{
   getInstalledPluginsSub$: Subscription;
   getPluginPermissionsSub$: Subscription;
   getPluginGroupPermissionsSub$: Subscription;
-
-  constructor(
-    private pluginManagementService: PluginsManagementService,
-    private pluginPermissionsService: PluginPermissionsService,
-    private securityGroupsService: SecurityGroupsService,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-    private authStateService: AuthStateService,
-    private translateService: TranslateService,
-  ) {
-  }
 
   get statusEnum() {
     return InstalledPluginStatusEnum;

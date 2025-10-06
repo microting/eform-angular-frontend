@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {EFormCreateModel} from 'src/app/common/models/eforms';
 import {EFormService} from 'src/app/common/services/eform';
@@ -11,12 +11,11 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class EformCreateModalComponent implements OnInit {
-  eFormCreateModel: EFormCreateModel = new EFormCreateModel();
+  private eFormService = inject(EFormService);
+  dialogRef = inject<MatDialogRef<EformCreateModalComponent>>(MatDialogRef);
+  availableTags = inject<Array<CommonDictionaryModel>>(MAT_DIALOG_DATA) ?? [];
 
-  constructor(private eFormService: EFormService,
-  public dialogRef: MatDialogRef<EformCreateModalComponent>,
-  @Inject(MAT_DIALOG_DATA) public availableTags: Array<CommonDictionaryModel> = []) {
-  }
+  eFormCreateModel: EFormCreateModel = new EFormCreateModel();
 
   ngOnInit() {
   }

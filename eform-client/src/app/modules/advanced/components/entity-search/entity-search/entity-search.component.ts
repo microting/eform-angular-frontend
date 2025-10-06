@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   EntityGroupModel,
   Paged,
@@ -32,6 +32,12 @@ import {
     standalone: false
 })
 export class EntitySearchComponent implements OnInit, OnDestroy {
+  private store = inject(Store);
+  entitySearchStateService = inject(EntitySearchStateService);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private translateService = inject(TranslateService);
+
   advEntitySearchableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();
   entitySearchRemoveComponentAfterClosedSub$: Subscription;
 
@@ -55,15 +61,6 @@ export class EntitySearchComponent implements OnInit, OnDestroy {
   public selectEntitySearchSort$ = this.store.select(selectEntitySearchSort);
   public selectEntitySearchIsSortDsc$ = this.store.select(selectEntitySearchIsSortDsc);
   public selectEntitySearchPagination$ = this.store.select(selectEntitySearchPagination);
-
-  constructor(
-    private store: Store,
-    public entitySearchStateService: EntitySearchStateService,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-    private translateService: TranslateService,
-  ) {
-  }
 
   ngOnInit() {
     this.getEntitySearchableGroupList();

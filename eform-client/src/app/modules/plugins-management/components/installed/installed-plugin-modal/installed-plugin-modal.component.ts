@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   InstalledPluginModel,
   InstalledPluginUpdateModel,
@@ -14,11 +14,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class InstalledPluginModalComponent implements OnInit {
-  constructor(
-    private pluginManagementService: PluginsManagementService,
-    public dialogRef: MatDialogRef<InstalledPluginModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public installedPluginModel: InstalledPluginModel = new InstalledPluginModel()
-  ) {}
+  private pluginManagementService = inject(PluginsManagementService);
+  dialogRef = inject<MatDialogRef<InstalledPluginModalComponent>>(MatDialogRef);
+  installedPluginModel = inject<InstalledPluginModel>(MAT_DIALOG_DATA) ?? new InstalledPluginModel();
+
 
   hide(result = false) {
     this.dialogRef.close(result);

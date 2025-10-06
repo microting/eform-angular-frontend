@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -18,17 +18,17 @@ import { AuthStateService } from 'src/app/common/store';
     standalone: false
 })
 export class GoogleAuthenticatorComponent implements OnInit {
+  private authStateService = inject(AuthStateService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private fb = inject(FormBuilder);
+
   googleAuthenticatorModel: GoogleAuthenticatorModel;
   loginRequestModel: LoginRequestModel;
   formGoogleAuth: FormGroup;
   code: AbstractControl;
 
-  constructor(
-    private authStateService: AuthStateService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private fb: FormBuilder
-  ) {
+  constructor() {
     this.route.params.subscribe((params) => {
       const parsedModel = JSON.parse(atob(params['cypher']));
       this.loginRequestModel = parsedModel.loginData;

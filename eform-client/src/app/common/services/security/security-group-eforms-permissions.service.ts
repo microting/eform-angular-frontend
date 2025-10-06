@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EformPermissionsNamesSwap } from 'src/app/common/const';
 import {
@@ -20,9 +20,9 @@ const SecurityGroupEformsPermissionsMethods = {
 
 @Injectable()
 export class SecurityGroupEformsPermissionsService {
-  mappedPermissions: Array<EformPermissionsSimpleModel> = [];
+  private apiBaseService = inject(ApiBaseService);
 
-  constructor(private apiBaseService: ApiBaseService) {}
+  mappedPermissions: Array<EformPermissionsSimpleModel> = [];
 
   getAvailableEformsForGroup(
     model: TemplateRequestModel,

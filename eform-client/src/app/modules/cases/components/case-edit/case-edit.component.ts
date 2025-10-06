@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  QueryList,
-  ViewChildren,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {
@@ -35,6 +29,14 @@ import {Store} from '@ngrx/store';
     standalone: false
 })
 export class CaseEditComponent implements OnInit, OnDestroy {
+  private authStore = inject(Store);
+  private casesService = inject(CasesService);
+  private eFormService = inject(EFormService);
+  private router = inject(Router);
+  private securityGroupEformsService = inject(SecurityGroupEformsPermissionsService);
+  private toastrService = inject(ToastrService);
+  private dialog = inject(MatDialog);
+
   @ViewChildren(CaseEditElementComponent)
   editElements: QueryList<CaseEditElementComponent>;
   id: number;
@@ -56,16 +58,9 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   onConfirmationPressedSub$: Subscription;
   public selectCaseUpdate$ = this.authStore.select(selectCurrentUserClaimsCaseUpdate);
 
-  constructor(
-    private authStore: Store,
-    activateRoute: ActivatedRoute,
-    private casesService: CasesService,
-    private eFormService: EFormService,
-    private router: Router,
-    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-    private toastrService: ToastrService,
-    private dialog: MatDialog,
-  ) {
+  constructor() {
+    const activateRoute = inject(ActivatedRoute);
+
     this.activatedRouteSub$ = activateRoute.params.subscribe((params) => {
       this.id = +params['id'];
       this.templateId = +params['templateId'];

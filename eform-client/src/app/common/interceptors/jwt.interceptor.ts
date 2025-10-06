@@ -4,7 +4,7 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {Observable, of, take} from 'rxjs';
 import { AuthStateService } from 'src/app/common/store';
 import {Store} from '@ngrx/store';
@@ -32,8 +32,8 @@ import {selectAuthIsAuth, selectBearerToken} from 'src/app/state/auth/auth.selec
 // }
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private store: Store) {
-  }
+  private store = inject(Store);
+
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.store.select(selectAuthIsAuth).pipe(

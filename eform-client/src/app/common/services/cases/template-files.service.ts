@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {OperationDataResult, OperationResult} from 'src/app/common/models';
 import { ApiBaseService } from 'src/app/common/services';
@@ -14,7 +14,8 @@ export let ImageMethods = {
 
 @Injectable()
 export class TemplateFilesService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   rotateImage(fileName: string): Observable<OperationResult> {
     return this.apiBaseService.get(

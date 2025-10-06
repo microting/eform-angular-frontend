@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit,} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {SiteNameDto} from 'src/app/common/models/dto';
 import {SitesService} from 'src/app/common/services/advanced';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -10,11 +10,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class SiteDeleteComponent implements OnInit {
-  constructor(
-    private sitesService: SitesService,
-    public dialogRef: MatDialogRef<SiteDeleteComponent>,
-    @Inject(MAT_DIALOG_DATA) public siteNameDto: SiteNameDto = new SiteNameDto()
-  ) { }
+  private sitesService = inject(SitesService);
+  dialogRef = inject<MatDialogRef<SiteDeleteComponent>>(MatDialogRef);
+  siteNameDto = inject<SiteNameDto>(MAT_DIALOG_DATA) ?? new SiteNameDto();
+
 
   ngOnInit() {
   }

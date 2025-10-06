@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {AppSettingsService, AuthService, LocaleService, UserSettingsService} from 'src/app/common/services';
 import {AuthResponseModel, LoginRequestModel, OperationDataResult, UserClaimsModel, UserInfoModel,} from 'src/app/common/models';
 import {BehaviorSubject, catchError, of, switchMap, take, zip} from 'rxjs';
@@ -30,6 +30,16 @@ import {Platform} from '@angular/cdk/platform';
 
 @Injectable({providedIn: 'root'})
 export class AuthStateService {
+  private platform = inject(Platform);
+  private service = inject(AuthService);
+  private translateService = inject(TranslateService);
+  private localeService = inject(LocaleService);
+  private router = inject(Router);
+  private authStore = inject(Store);
+  private userSettings = inject(UserSettingsService);
+  settingsService = inject(AppSettingsService);
+  private dateLocale = inject<BehaviorSubject<string | Locale | null>>(MAT_DATE_LOCALE);
+
   private isRefreshing = false;
   private currentLanguageId = 1;
   private claims: UserClaimsModel;
@@ -37,17 +47,7 @@ export class AuthStateService {
   private defaultLocale = applicationLanguages[1];
   platformInfo: string;
 
-  constructor(
-    private platform: Platform,
-    private service: AuthService,
-    private translateService: TranslateService,
-    private localeService: LocaleService,
-    private router: Router,
-    private authStore: Store,
-    private userSettings: UserSettingsService,
-    public settingsService: AppSettingsService,
-    @Inject(MAT_DATE_LOCALE) private dateLocale: BehaviorSubject<string | Locale | null>
-  ) {
+  constructor() {
     this.platformInfo = this.getPlatformInfo();
     this.selectCurrentUserLanguageId$.subscribe((languageId) => this.currentLanguageId = languageId);
     this.selectCurrentUserClaims$.subscribe((claims) => this.claims = claims);

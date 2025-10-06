@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges, inject } from '@angular/core';
 import {Gallery, GalleryItem, ImageItem} from 'ng-gallery';
 import {Subscription} from 'rxjs';
 import {Lightbox} from 'ng-gallery/lightbox';
@@ -14,13 +14,15 @@ import {catchError} from 'rxjs/operators';
     standalone: false
 })
 export class EformDocxReportImagesComponent implements OnDestroy, OnChanges {
+  gallery = inject(Gallery);
+  lightbox = inject(Lightbox);
+  private imageService = inject(TemplateFilesService);
+
   @Input() imageNames: {key: {key: number, value: string}, value: {key: string, value: string}}[] = [];
   images: {key: number, value: any}[] = [];
   galleryImages: GalleryItem[] = [];
   imageSub$: Subscription;
   buttonsLocked = false;
-
-  constructor(public gallery: Gallery, public lightbox: Lightbox, private imageService: TemplateFilesService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.imageNames) {

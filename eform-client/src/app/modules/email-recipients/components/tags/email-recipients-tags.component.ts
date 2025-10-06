@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  Output, SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, inject } from '@angular/core';
 import {
   CommonDictionaryModel,
   SharedTagCreateModel,
@@ -32,6 +25,10 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
     standalone: false
 })
 export class EmailRecipientsTagsComponent implements OnChanges, OnDestroy {
+  private tagsService = inject(EmailRecipientsTagsService);
+  dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() tagsChanged: EventEmitter<void> = new EventEmitter<void>();
   dialogRef: MatDialogRef<SharedTagsComponent>;
@@ -43,13 +40,6 @@ export class EmailRecipientsTagsComponent implements OnChanges, OnDestroy {
   showDeleteTagSub$: Subscription;
   deletedTagSub$: Subscription;
   updatedTagSub$: Subscription;
-
-  constructor(
-    private tagsService: EmailRecipientsTagsService,
-    public dialog: MatDialog,
-    private overlay: Overlay
-  ) {
-  }
 
   show() {
     this.dialogRef = this.dialog.open(SharedTagsComponent, {

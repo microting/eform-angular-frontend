@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   CommonDictionaryModel,
   EformVisualEditorFieldModel,
@@ -25,7 +18,10 @@ export class VisualEditorAdditionalFieldEntitySelectComponent
   entitySelectableGroups: CommonDictionaryModel[] = [];
   typeahead = new EventEmitter<string>();
 
-  constructor(entitySelectService: EntitySelectService, cd: ChangeDetectorRef) {
+  constructor() {
+    const entitySelectService = inject(EntitySelectService);
+    const cd = inject(ChangeDetectorRef);
+
     this.typeahead
       .pipe(
         debounceTime(200),

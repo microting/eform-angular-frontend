@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter, Inject,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { Paged } from 'src/app/common/models/common';
 import { SecurityGroupModel } from 'src/app/common/models/security';
 import { UserRegisterModel } from 'src/app/common/models/user';
@@ -18,15 +12,19 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class UserModalComponent implements OnInit {
+  private adminService = inject(AdminService);
+  dialogRef = inject<MatDialogRef<UserModalComponent>>(MatDialogRef);
+
   userModel: UserRegisterModel = new UserRegisterModel();
   public availableGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
   edit: boolean = false;
 
-  constructor(
-    private adminService: AdminService,
-    public dialogRef: MatDialogRef<UserModalComponent>,
-    @Inject(MAT_DIALOG_DATA) data: {availableGroups: Paged<SecurityGroupModel>, selectedId?: number}
-   ) {
+  constructor() {
+    const data = inject<{
+    availableGroups: Paged<SecurityGroupModel>;
+    selectedId?: number;
+}>(MAT_DIALOG_DATA);
+
     this.availableGroups = data.availableGroups;
     if(data.selectedId) {
       this.edit = true;

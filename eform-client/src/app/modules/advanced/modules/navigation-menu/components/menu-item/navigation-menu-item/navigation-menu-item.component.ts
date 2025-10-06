@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import {
   NavigationMenuItemModel,
   NavigationMenuTranslationModel,
@@ -14,6 +14,8 @@ import {Store} from '@ngrx/store';
     standalone: false
 })
 export class NavigationMenuItemComponent implements OnInit {
+  private authStore = inject(Store);
+
   @Input() item: NavigationMenuItemModel = new NavigationMenuItemModel();
   @Input() firstLevelIndex: number;
   @Input() secondLevelIndex: number | null;
@@ -22,9 +24,6 @@ export class NavigationMenuItemComponent implements OnInit {
   @Output()
   itemEdit: EventEmitter<NavigationMenuItemModel> = new EventEmitter<NavigationMenuItemModel>();
   private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
-  constructor(
-    private authStore: Store
-  ) {}
 
   ngOnInit(): void {}
 

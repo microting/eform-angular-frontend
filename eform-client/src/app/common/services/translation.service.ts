@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {ApiBaseService} from 'src/app/common/services/apiBase.service';
 import {Observable} from 'rxjs';
 import {OperationDataResult, OperationResult} from 'src/app/common/models';
@@ -29,7 +29,8 @@ export class TranslationModel {
 })
 
 export class TranslationService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getTranslation(
     model: TranslationRequestModel

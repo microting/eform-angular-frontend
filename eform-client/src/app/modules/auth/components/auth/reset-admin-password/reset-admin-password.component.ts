@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
@@ -11,17 +11,16 @@ import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/se
     standalone: false
 })
 export class ResetAdminPasswordComponent implements OnInit {
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private settingsService = inject(AppSettingsService);
+  private fb = inject(FormBuilder);
+  private toastrService = inject(ToastrService);
+  private localeService = inject(LocaleService);
+  private userSettings = inject(UserSettingsService);
+
   formReset: FormGroup;
   secretKey: AbstractControl;
-
-  constructor(private router: Router,
-              private authService: AuthService,
-              private settingsService: AppSettingsService,
-              private fb: FormBuilder,
-              private toastrService: ToastrService,
-              private localeService: LocaleService,
-              private userSettings: UserSettingsService) {
-  }
 
   ngOnInit() {
     this.formReset = this.fb.group({

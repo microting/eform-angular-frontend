@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -19,18 +19,16 @@ import {applicationLanguages} from "src/app/common/const";
     standalone: false
 })
 export class RestorePasswordComponent implements OnInit {
+  private translateService = inject(TranslateService);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private settingsService = inject(AppSettingsService);
+  private fb = inject(FormBuilder);
+  private toastrService = inject(ToastrService);
+  private authStateService = inject(AuthStateService);
+
   formRestore: FormGroup;
   email: AbstractControl;
-
-  constructor(
-    private translateService: TranslateService,
-    private router: Router,
-    private authService: AuthService,
-    private settingsService: AppSettingsService,
-    private fb: FormBuilder,
-    private toastrService: ToastrService,
-    private authStateService: AuthStateService
-  ) {}
 
   ngOnInit() {
     console.debug('RestorePasswordComponent - ngOnInit');

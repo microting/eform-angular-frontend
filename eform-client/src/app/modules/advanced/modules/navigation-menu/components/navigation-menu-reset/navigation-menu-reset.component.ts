@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import {MatDialogRef} from '@angular/material/dialog';
 
@@ -12,13 +9,11 @@ import {MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class NavigationMenuResetComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<NavigationMenuResetComponent>>(MatDialogRef);
+
   get menuItemType() {
     return NavigationMenuItemTypeEnum;
   }
-
-  constructor(
-    public dialogRef: MatDialogRef<NavigationMenuResetComponent>,
-    ) {}
 
   ngOnInit(): void {}
 

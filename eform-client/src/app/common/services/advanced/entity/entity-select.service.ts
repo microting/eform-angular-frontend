@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   EntityGroupModel,
@@ -23,7 +23,8 @@ const AdvSelectableEntityMethods = {
 
 @Injectable()
 export class EntitySelectService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getEntitySelectableGroupList(
     model: AdvEntitySelectableGroupListRequestModel

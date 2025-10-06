@@ -1,9 +1,4 @@
-import {
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { ToastrService } from 'ngx-toastr';
@@ -28,6 +23,14 @@ import {Store} from '@ngrx/store';
     standalone: false
 })
 export class FolderEditCreateComponent implements OnInit, OnDestroy {
+  private foldersService = inject(FoldersService);
+  private authStore = inject(Store);
+  private toastrService = inject(ToastrService);
+  private translateService = inject(TranslateService);
+  private _localeService = inject(LocaleService);
+  dialogRef = inject<MatDialogRef<FolderEditCreateComponent>>(MatDialogRef);
+  private appSettingsStateService = inject(AppSettingsStateService);
+
   selectedLanguageId: number;
   selectedParentFolder: FolderModel;
   folderUpdateCreateModel = new FolderUpdateModel()
@@ -59,16 +62,13 @@ export class FolderEditCreateComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  constructor(
-    private foldersService: FoldersService,
-    private authStore: Store,
-    private toastrService: ToastrService,
-    private translateService: TranslateService,
-    private _localeService: LocaleService,
-    public dialogRef: MatDialogRef<FolderEditCreateComponent>,
-    private appSettingsStateService: AppSettingsStateService,
-    @Inject(MAT_DIALOG_DATA) data: {folder?: FolderDto, create: boolean}
-  ) {
+  constructor() {
+    const _localeService = this._localeService;
+    const data = inject<{
+    folder?: FolderDto;
+    create: boolean;
+}>(MAT_DIALOG_DATA);
+
     this.localeService = _localeService;
     this.getEnabledLanguages(data);
 

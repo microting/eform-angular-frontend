@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {authFeatureSelector, AuthState, loadAuthState} from 'src/app/state';
 import {select, Store} from '@ngrx/store';
 import {filter} from 'rxjs/operators';
@@ -10,10 +10,9 @@ export const AUTH_LOCALSTORAGE_KEY = 'auth';
 })
 // this service saves the current state of the store and restores it from local storage
 export class AuthSyncStorageService {
-  private isInit = false;
+  private store$ = inject<Store<AuthState>>(Store);
 
-  constructor(private store$: Store<AuthState>) {
-  }
+  private isInit = false;
 
   init() {
     if (this.isInit) {

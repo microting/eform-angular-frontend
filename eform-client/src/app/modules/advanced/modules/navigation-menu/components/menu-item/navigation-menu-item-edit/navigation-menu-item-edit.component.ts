@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
@@ -20,6 +15,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class NavigationMenuItemEditComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<NavigationMenuItemEditComponent>>(MatDialogRef);
+
   availableSecurityGroups: CommonDictionaryModel[] = [];
   itemEditConfirm: EventEmitter<
     NavigationMenuItemIndexedModel
@@ -33,10 +30,15 @@ export class NavigationMenuItemEditComponent implements OnInit {
     return NavigationMenuItemTypeEnum;
   }
 
-  constructor(
-    public dialogRef: MatDialogRef<NavigationMenuItemEditComponent>,
-    @Inject(MAT_DIALOG_DATA) model:
-      {model: NavigationMenuItemModel, firstLevelIndex: number, secondLevelIndex?: number, securityGroups: []}) {
+  constructor() {
+    const model = inject<{
+    model: NavigationMenuItemModel;
+    firstLevelIndex: number;
+    secondLevelIndex?: number;
+    securityGroups: [
+    ];
+}>(MAT_DIALOG_DATA);
+
     this.availableSecurityGroups = model.securityGroups;
     this.item = model.model;
     this.translationsArray.clear();

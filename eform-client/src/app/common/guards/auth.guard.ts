@@ -12,10 +12,10 @@ import {
 
 @Injectable()
 export class AuthGuard {
-  constructor(
-    private store: Store,
-    private router: Router,
-  ) {
+  private store = inject(Store);
+  private router = inject(Router);
+
+  constructor() {
     this.isAuth$.subscribe(x => this.isAuth = x);
     this.loginRedirectUrl$.subscribe(x => this.loginRedirectUrl = x);
   }

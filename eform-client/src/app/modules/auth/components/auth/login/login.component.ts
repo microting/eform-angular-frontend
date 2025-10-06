@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   AbstractControl, FormBuilder,
   FormControl,
@@ -27,6 +27,14 @@ import {applicationLanguages} from "src/app/common/const";
     standalone: false
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
+  private googleAuthService = inject(GoogleAuthService);
+  private authStateService = inject(AuthStateService);
+  private titleService = inject(TitleService);
+  private translateService = inject(TranslateService);
+  private store = inject(Store);
+  private fb = inject(FormBuilder);
+
   formLogin: FormGroup;
   googleAuthenticatorModel: GoogleAuthenticatorModel = new GoogleAuthenticatorModel();
 
@@ -35,17 +43,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   error: string;
   isAuthAsyncSub$: Subscription;
   private selectIsAuth$ = this.store.select(selectAuthIsAuth);
-
-  constructor(
-    private router: Router,
-    private googleAuthService: GoogleAuthService,
-    private authStateService: AuthStateService,
-    private titleService: TitleService,
-    private translateService: TranslateService,
-    private store: Store,
-    private fb: FormBuilder,
-  ) {
-  }
 
   login() {
     this.authStateService.login(

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {SiteDto} from 'src/app/common/models/dto';
 import {UnitsService} from 'src/app/common/services/advanced';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -10,10 +10,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class NewOtpModalComponent implements OnInit {
-  constructor(
-    private unitsService: UnitsService,
-    public dialogRef: MatDialogRef<NewOtpModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedSimpleSite: SiteDto = new SiteDto()) { }
+  private unitsService = inject(UnitsService);
+  dialogRef = inject<MatDialogRef<NewOtpModalComponent>>(MatDialogRef);
+  selectedSimpleSite = inject<SiteDto>(MAT_DIALOG_DATA) ?? new SiteDto();
+
 
   ngOnInit() {
   }

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {Observable, } from 'rxjs';
 import {EFormService} from 'src/app/common/services';
 import {
@@ -20,15 +20,15 @@ import {
 
 @Injectable({providedIn: 'root'})
 export class EformsStateService {
+  private store = inject<Store<AppState>>(Store);
+  private service = inject(EFormService);
+
   private selectEformsPagination$ = this.store.select(selectEformsPagination);
   private selectEformsFilters$ = this.store.select(selectEformsFilters);
   private currentFilters: FiltrationStateModel = new FiltrationStateModel();
   private currentPagination: CommonPaginationState = new CommonPaginationState();
 
-  constructor(
-    private store: Store<AppState>,
-    private service: EFormService,
-  ) {
+  constructor() {
     this.selectEformsPagination$.subscribe(x => this.currentPagination = x);
     this.selectEformsFilters$.subscribe(x => this.currentFilters = x);
   }

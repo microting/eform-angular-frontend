@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit,} from '@angular/core';
+import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {TemplateListModel, EformBindGroupModel} from 'src/app/common/models';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
@@ -12,6 +12,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class SecurityGroupEformsAddComponent implements OnInit {
+  private securityGroupEformsService = inject(SecurityGroupEformsPermissionsService);
+  private translateService = inject(TranslateService);
+  dialogRef = inject<MatDialogRef<SecurityGroupEformsAddComponent>>(MatDialogRef);
+
   tableHeaders: MtxGridColumn[] = [
     {header: this.translateService.stream('Id'), field: 'id', class: 'cursor-pointer',},
     {
@@ -33,12 +37,12 @@ export class SecurityGroupEformsAddComponent implements OnInit {
   onSearchInputChanged: EventEmitter<string> = new EventEmitter<string>();
   eformBindGroupModel: EformBindGroupModel = new EformBindGroupModel();
 
-  constructor(
-    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-    private translateService: TranslateService,
-    public dialogRef: MatDialogRef<SecurityGroupEformsAddComponent>,
-    @Inject(MAT_DIALOG_DATA) model: { templateListModel: TemplateListModel, selectedGroupId: number },
-  ) {
+  constructor() {
+    const model = inject<{
+    templateListModel: TemplateListModel;
+    selectedGroupId: number;
+}>(MAT_DIALOG_DATA);
+
     this.templateListModel = model.templateListModel;
     this.eformBindGroupModel.groupId = model.selectedGroupId;
   }

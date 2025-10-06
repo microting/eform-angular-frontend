@@ -1,5 +1,5 @@
 import {ActivatedRoute, Router} from '@angular/router';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {PdfIcon, WordIcon} from 'src/app/common/const';
 import {composeCasesTableHeaders, dialogConfigHelper} from 'src/app/common/helpers';
 import {
@@ -44,27 +44,28 @@ import {
     standalone: false
 })
 export class CasesTableComponent implements OnInit, OnDestroy {
+  private activateRoute = inject(ActivatedRoute);
+  private authStore = inject(Store);
+  private eFormService = inject(EFormService);
+  authStateService = inject(AuthStateService);
+  private securityGroupEformsService = inject(SecurityGroupEformsPermissionsService);
+  caseStateService = inject(CasesStateService);
+  private router = inject(Router);
+  private appMenuStateService = inject(AppMenuStateService);
+  private translateService = inject(TranslateService);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+
   public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
   public selectCasesSort$ = this.authStore.select(selectCasesSort);
   public selectCasesIsSortDsc$ = this.authStore.select(selectCasesIsSortDsc);
   public selectCasesPagination$ = this.authStore.select(selectCasesPagination);
   public selectCasesNameFilter$ = this.authStore.select(selectCasesNameFilter);
 
-  constructor(
-    private activateRoute: ActivatedRoute,
-    private authStore: Store,
-    private eFormService: EFormService,
-    public authStateService: AuthStateService,
-    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-    public caseStateService: CasesStateService,
-    private router: Router,
-    private appMenuStateService: AppMenuStateService,
-    iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer,
-    private translateService: TranslateService,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-  ) {
+  constructor() {
+    const iconRegistry = inject(MatIconRegistry);
+    const sanitizer = inject(DomSanitizer);
+
     iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(WordIcon));
     iconRegistry.addSvgIconLiteral('file-pdf', sanitizer.bypassSecurityTrustHtml(PdfIcon));
   }

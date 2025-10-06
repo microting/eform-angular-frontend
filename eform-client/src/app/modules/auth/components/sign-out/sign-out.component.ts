@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthStateService } from 'src/app/common/store';
 
@@ -9,10 +9,9 @@ import { AuthStateService } from 'src/app/common/store';
     standalone: false
 })
 export class SignOutComponent implements OnInit, AfterViewChecked {
-  constructor(
-    private authStateService: AuthStateService,
-    private router: Router
-  ) {}
+  private authStateService = inject(AuthStateService);
+  private router = inject(Router);
+
 
   ngOnInit() {}
 

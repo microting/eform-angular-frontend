@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   CommonDictionaryModel,
@@ -20,7 +20,8 @@ export let TemplateTagMethods = {
 
 @Injectable()
 export class EformTagService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getAvailableTags(): Observable<
     OperationDataResult<Array<CommonDictionaryModel>>

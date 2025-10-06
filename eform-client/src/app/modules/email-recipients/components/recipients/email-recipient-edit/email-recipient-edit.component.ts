@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {EmailRecipientsService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
@@ -13,16 +13,20 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class EmailRecipientEditComponent implements OnInit, OnDestroy {
+  private emailRecipientsService = inject(EmailRecipientsService);
+  dialogRef = inject<MatDialogRef<EmailRecipientEditComponent>>(MatDialogRef);
+
   availableTags: CommonDictionaryModel[] = [];
   emailRecipientUpdateModel: EmailRecipientUpdateModel = new EmailRecipientUpdateModel;
   updateEmailRecipient$: Subscription;
 
 
-  constructor(
-    private emailRecipientsService: EmailRecipientsService,
-    public dialogRef: MatDialogRef<EmailRecipientEditComponent>,
-    @Inject(MAT_DIALOG_DATA) data: { emailRecipientUpdateModel: EmailRecipientModel, availableTags: CommonDictionaryModel[] }
-  ) {
+  constructor() {
+    const data = inject<{
+    emailRecipientUpdateModel: EmailRecipientModel;
+    availableTags: CommonDictionaryModel[];
+}>(MAT_DIALOG_DATA);
+
     this.emailRecipientUpdateModel = {...data.emailRecipientUpdateModel, tagsIds: data.emailRecipientUpdateModel.tags.map(x => x.id)};
     this.availableTags = data.availableTags;
   }

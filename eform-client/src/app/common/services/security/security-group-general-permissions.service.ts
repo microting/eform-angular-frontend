@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   OperationDataResult,
@@ -14,7 +14,8 @@ const SecurityGroupGeneralPermissionsMethods = {
 
 @Injectable()
 export class SecurityGroupGeneralPermissionsService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getGeneralPermissions(
     groupId: number

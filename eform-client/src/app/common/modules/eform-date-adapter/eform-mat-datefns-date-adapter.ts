@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken, Optional} from '@angular/core';
+import { Injectable, InjectionToken, inject } from '@angular/core';
 import {DateAdapter, MAT_DATE_LOCALE} from '@angular/material/core';
 import {
   addDays,
@@ -57,15 +57,14 @@ const UTC_TIMEZONE = 'UTC';
   providedIn: 'root'
 })
 export class EformDateFnsDateAdapter extends DateAdapter<Date> {
+  private locales = inject(EFORM_MAT_DATEFNS_LOCALES, { optional: true });
+  private options = inject<EformDateFnsDateAdapterOptions>(EFORM_MAT_DATEFNS_DATE_ADAPTER_OPTIONS, { optional: true });
+
   private _dateFnsLocale!: Locale;
 
-  constructor(
-    @Optional() @Inject(MAT_DATE_LOCALE) dateLocale: BehaviorSubject<string | Locale | null>,
-    @Optional() @Inject(EFORM_MAT_DATEFNS_LOCALES) private locales: Locale[] | null,
-    @Optional()
-    @Inject(EFORM_MAT_DATEFNS_DATE_ADAPTER_OPTIONS)
-    private options?: EformDateFnsDateAdapterOptions,
-  ) {
+  constructor() {
+    const dateLocale = inject<BehaviorSubject<string | Locale | null>>(MAT_DATE_LOCALE, { optional: true });
+
     super();
 
     if (!this.locales || this.locales.length === 0) {

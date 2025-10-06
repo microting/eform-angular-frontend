@@ -4,15 +4,14 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 @Injectable()
 export class BaseService {
-  constructor(
-    private http: HttpClient,
-    public router: Router,
-    private toastrService: ToastrService
-  ) {}
+  private http = inject(HttpClient);
+  router = inject(Router);
+  private toastrService = inject(ToastrService);
+
 
   public get<T>(method: string, params?: any): Observable<any> {
     return this.http
