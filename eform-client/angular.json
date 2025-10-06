@@ -113,10 +113,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "sourceMap": false,
-            "styles": [
-              "src/styles.scss",
-              "src/theme.scss"
-            ],
+            "styles": [],
             "scripts": [],
             "assets": [
               "src/favicon.ico",
