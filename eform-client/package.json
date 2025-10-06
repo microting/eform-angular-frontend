@@ -13,6 +13,7 @@
     "start-port": "ng serve --port 4300 --proxy-config proxy.config.json",
     "build": "ng build",
     "sentrysourcemap": "yarn sentry:sourcemaps",
+    "test:ci": "ng test --watch=false --browsers=ChromeHeadlessCI",
     "test": "./node_modules/.bin/wdio wdio.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
     "test2": "wdio wdio-step2.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
     "testheadless": "./node_modules/.bin/wdio wdio-headless.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
