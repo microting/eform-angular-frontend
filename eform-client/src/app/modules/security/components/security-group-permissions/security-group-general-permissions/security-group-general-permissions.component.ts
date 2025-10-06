@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   SecurityGroupGeneralPermissionsModel,
@@ -14,15 +14,13 @@ import { SecurityGroupGeneralPermissionsService } from 'src/app/common/services/
     standalone: false
 })
 export class SecurityGroupGeneralPermissionsComponent implements OnInit {
+  private securityGroupGeneralPermissionsService = inject(SecurityGroupGeneralPermissionsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   selectedGroupId: number;
   securityGroupGeneralPermissionsModel: SecurityGroupGeneralPermissionsModel = new SecurityGroupGeneralPermissionsModel();
   securityGroupGeneralPermissionsUpdateModel: SecurityGroupGeneralPermissionsUpdateModel = new SecurityGroupGeneralPermissionsUpdateModel();
-
-  constructor(
-    private securityGroupGeneralPermissionsService: SecurityGroupGeneralPermissionsService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {

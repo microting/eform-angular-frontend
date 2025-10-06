@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit,} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {EntityGroupModel} from 'src/app/common/models/advanced';
 import {EntitySearchService} from 'src/app/common/services/advanced';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -10,11 +10,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class EntitySearchRemoveComponent implements OnInit {
-  constructor(
-    private entitySearchService: EntitySearchService,
-    public dialogRef: MatDialogRef<EntitySearchRemoveComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedGroupModel: EntityGroupModel = new EntityGroupModel()
-  ) { }
+  private entitySearchService = inject(EntitySearchService);
+  dialogRef = inject<MatDialogRef<EntitySearchRemoveComponent>>(MatDialogRef);
+  selectedGroupModel = inject<EntityGroupModel>(MAT_DIALOG_DATA) ?? new EntityGroupModel();
+
 
   ngOnInit() {
   }

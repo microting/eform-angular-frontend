@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core';
 import {
   EformFieldTypesEnum,
 } from 'src/app/common/const';
@@ -31,6 +24,9 @@ import {Store} from '@ngrx/store';
     standalone: false
 })
 export class VisualEditorFieldComponent implements OnInit, OnDestroy {
+  private authStore = inject(Store);
+  private translateService = inject(TranslateService);
+
   @Input() field: EformVisualEditorFieldModel;
   @Input() fieldIndex: number;
   @Input() checklistRecursionIndexes = [];
@@ -86,11 +82,6 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
       return types.find(x => x.id === fieldType).name;
     }
   }
-
-  constructor(
-    private authStore: Store,
-    private translateService: TranslateService
-  ) {}
 
   ngOnInit() {
   }

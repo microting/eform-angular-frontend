@@ -1,8 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-} from '@angular/core';
+import { Component, EventEmitter, inject } from '@angular/core';
 import { SharedTagModel } from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
@@ -13,10 +9,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class SharedTagDeleteComponent {
+  dialogRef = inject<MatDialogRef<SharedTagDeleteComponent>>(MatDialogRef);
+  tagModel = inject<SharedTagModel>(MAT_DIALOG_DATA) ?? new SharedTagModel();
+
   public deletedTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
-  constructor(
-    public dialogRef: MatDialogRef<SharedTagDeleteComponent>,
-    @Inject(MAT_DIALOG_DATA) public tagModel: SharedTagModel = new SharedTagModel()) {}
 
   deleteTag() {
     this.deletedTag.emit(this.tagModel);

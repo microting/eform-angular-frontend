@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FoldersService } from 'src/app/common/services';
 import {FolderDto, LanguagesModel} from 'src/app/common/models';
@@ -17,6 +17,11 @@ import {selectCurrentUserClaimsWorkersCreate} from 'src/app/state/auth/auth.sele
     standalone: false
 })
 export class FoldersComponent implements OnInit {
+  private authStore = inject(Store);
+  private foldersService = inject(FoldersService);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+
   foldersFlatList: Array<FolderDto> = [];
   foldersDto: Array<FolderDto> = [];
   folderDeleteComponentAfterClosedSub$: Subscription;
@@ -32,13 +37,6 @@ export class FoldersComponent implements OnInit {
     this.loadAllFolders();
     // this.loadAllFoldersList();
   }
-
-  constructor(
-    private authStore: Store,
-    private foldersService: FoldersService,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-  ) {}
 
   openCreateModal(selectedFolder?: FolderDto) {
     this.folderCreateComponentAfterClosedSub$ = this.dialog.open(FolderEditCreateComponent,

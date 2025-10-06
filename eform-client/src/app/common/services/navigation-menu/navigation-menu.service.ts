@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OperationDataResult, OperationResult } from 'src/app/common/models';
 import {
@@ -14,7 +14,8 @@ const NavigationMenuMethods = {
 
 @Injectable()
 export class NavigationMenuService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getNavigationMenu(): Observable<OperationDataResult<NavigationMenuModel>> {
     return this.apiBaseService.get<NavigationMenuModel>(

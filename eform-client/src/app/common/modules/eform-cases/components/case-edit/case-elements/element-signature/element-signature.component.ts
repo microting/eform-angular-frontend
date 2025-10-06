@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges, inject } from '@angular/core';
 import {Gallery, GalleryItem, ImageItem} from 'ng-gallery';
 import {Lightbox} from 'ng-gallery/lightbox';
 import {FieldValueDto} from 'src/app/common/models';
@@ -16,17 +16,14 @@ import {Subscription} from 'rxjs';
     standalone: false
 })
 export class ElementSignatureComponent implements OnChanges, OnDestroy {
+  gallery = inject(Gallery);
+  lightbox = inject(Lightbox);
+  private imageService = inject(TemplateFilesService);
+
   @Input() fieldValues: Array<FieldValueDto> = [];
   images = [];
   galleryImages: GalleryItem[] = [];
   imageSub$: Subscription;
-
-  constructor(
-    public gallery: Gallery,
-    public lightbox: Lightbox,
-    private imageService: TemplateFilesService
-  ) {
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.fieldValues) {

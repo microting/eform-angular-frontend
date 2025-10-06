@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {UnitDto} from 'src/app/common/models';
 import {UnitsService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
@@ -18,6 +18,12 @@ import {selectCurrentUserClaimsSitesCreate} from 'src/app/state/auth/auth.select
     standalone: false
 })
 export class UnitsComponent implements OnInit {
+  private authStore = inject(Store);
+  private unitsService = inject(UnitsService);
+  dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private translateService = inject(TranslateService);
+
   @ViewChild('modalUnitsMove', {static: true}) modalUnitsMove;
   unitModels: Array<UnitDto> = [];
 
@@ -36,15 +42,6 @@ export class UnitsComponent implements OnInit {
 
   unitCreateComponentAfterClosedSub$: Subscription;
   unitsOtpCodeComponentAfterClosedSub$: Subscription;
-
-  constructor(
-    private authStore: Store,
-    private unitsService: UnitsService,
-    public dialog: MatDialog,
-    private overlay: Overlay,
-    private translateService: TranslateService,
-  ) {
-  }
 
   ngOnInit() {
     this.loadAllUnits();

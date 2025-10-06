@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {EmailRecipientsStateService} from '../store';
@@ -39,6 +39,14 @@ import {
     standalone: false
 })
 export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
+  private store = inject(Store);
+  private emailRecipientsService = inject(EmailRecipientsService);
+  private tagsService = inject(EmailRecipientsTagsService);
+  emailRecipientsStateService = inject(EmailRecipientsStateService);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private translateService = inject(TranslateService);
+
   @ViewChild('recipientsTagsModal')
   recipientTagsModal: EmailRecipientsTagsComponent;
   emailRecipientsListModel: Paged<EmailRecipientModel> = new Paged<EmailRecipientModel>();
@@ -69,17 +77,6 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   public selectEmailRecipientsIsSortDsc$ = this.store.select(selectEmailRecipientsIsSortDsc);
   public selectEmailRecipientsPagination$ = this.store.select(selectEmailRecipientsPagination);
   public selectEmailRecipientsTagIds$ = this.store.select(selectEmailRecipientsTagIds);
-
-  constructor(
-    private store: Store,
-    private emailRecipientsService: EmailRecipientsService,
-    private tagsService: EmailRecipientsTagsService,
-    public emailRecipientsStateService: EmailRecipientsStateService,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-    private translateService: TranslateService,
-  ) {
-  }
 
   ngOnInit(): void {
     this.getEmailRecipients();

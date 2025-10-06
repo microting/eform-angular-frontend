@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter, Inject,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { TemplateDto } from 'src/app/common/models/dto';
 import { EFormService } from 'src/app/common/services/eform';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -16,9 +10,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class EformDuplicateConfirmModalComponent implements OnInit {
-  constructor(private eFormService: EFormService,
-  public dialogRef: MatDialogRef<EformDuplicateConfirmModalComponent>,
-  @Inject(MAT_DIALOG_DATA) public selectedTemplateDto: TemplateDto = new TemplateDto(),) {}
+  private eFormService = inject(EFormService);
+  dialogRef = inject<MatDialogRef<EformDuplicateConfirmModalComponent>>(MatDialogRef);
+  selectedTemplateDto = inject<TemplateDto>(MAT_DIALOG_DATA) ?? new TemplateDto();
+
 
   ngOnInit() {}
 

@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit,} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {CommonDictionaryModel, EmailRecipientCreateModel, EmailRecipientsCreateModel} from 'src/app/common/models';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
@@ -15,18 +15,15 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
     standalone: false
 })
 export class EmailRecipientsNewComponent implements OnInit, OnDestroy {
+  private emailRecipientsService = inject(EmailRecipientsService);
+  private toastrService = inject(ToastrService);
+  private translateService = inject(TranslateService);
+  dialogRef = inject<MatDialogRef<EmailRecipientsNewComponent>>(MatDialogRef);
+  availableTags = inject(MAT_DIALOG_DATA) ?? [];
+
   emailRecipientsCreateModel: EmailRecipientsCreateModel = new EmailRecipientsCreateModel();
   createEmailRecipients$: Subscription;
   rawTextareaData = '';
-
-  constructor(
-    private emailRecipientsService: EmailRecipientsService,
-    private toastrService: ToastrService,
-    private translateService: TranslateService,
-    public dialogRef: MatDialogRef<EmailRecipientsNewComponent>,
-    @Inject(MAT_DIALOG_DATA) public availableTags: CommonDictionaryModel[] = [],
-  ) {
-  }
 
   ngOnInit() {
   }

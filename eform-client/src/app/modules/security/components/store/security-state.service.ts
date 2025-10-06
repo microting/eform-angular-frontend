@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SecurityGroupsService} from 'src/app/common/services';
 import {Observable, tap} from 'rxjs';
 import {
@@ -22,15 +22,15 @@ import {
 
 @Injectable({providedIn: 'root'})
 export class SecurityStateService {
+  private store = inject(Store);
+  private service = inject(SecurityGroupsService);
+
   private selectSecurityFilters$ = this.store.select(selectSecurityFilters);
   private selectSecurityPagination$ = this.store.select(selectSecurityPagination);
   currentPagination: CommonPaginationState;
   currentFilters: SecurityFilters;
 
-  constructor(
-    private store: Store,
-    private service: SecurityGroupsService,
-  ) {
+  constructor() {
     this.selectSecurityPagination$.subscribe(x => this.currentPagination = x);
     this.selectSecurityFilters$.subscribe(x => this.currentFilters = x);
   }

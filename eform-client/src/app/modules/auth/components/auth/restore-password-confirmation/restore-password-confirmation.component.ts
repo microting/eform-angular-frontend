@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   AbstractControl, FormBuilder,
   FormControl,
@@ -21,22 +21,20 @@ import {applicationLanguages} from "src/app/common/const";
     standalone: false
 })
 export class RestorePasswordConfirmationComponent implements OnInit, OnDestroy {
+  private translateService = inject(TranslateService);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private settingsService = inject(AppSettingsService);
+  private toastrService = inject(ToastrService);
+  private route = inject(ActivatedRoute);
+  private fb = inject(FormBuilder);
+  private authStateService = inject(AuthStateService);
+
   submitRestoreModel: PasswordRestoreModel = new PasswordRestoreModel();
   form: FormGroup;
   newPasswordVisible = false;
   newPasswordConfirmVisible = false;
-  passwordStrength = 0; // Track password strength score
-
-  constructor(
-    private translateService: TranslateService,
-    private router: Router,
-    private authService: AuthService,
-    private settingsService: AppSettingsService,
-    private toastrService: ToastrService,
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
-  private authStateService: AuthStateService
-  ) {}
+  passwordStrength = 0;
 
   ngOnInit() {
     console.debug('RestorePasswordConfirmationComponent - ngOnInit');

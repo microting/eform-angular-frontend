@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input, OnChanges,
-  OnInit,
-  SimpleChanges, TemplateRef, ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild, inject } from '@angular/core';
 import { EformDocxReportItemModel } from 'src/app/common/models';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import * as R from 'ramda';
@@ -19,6 +13,9 @@ import {TranslateService} from '@ngx-translate/core';
     standalone: false
 })
 export class EformDocxReportTableComponent implements OnInit, OnChanges {
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+
   @ViewChild('caseFieldTpl', { static: true }) caseFieldTpl!: TemplateRef<any>;
   @Input() items: EformDocxReportItemModel[] = [];
   @Input() dateFrom: any;
@@ -31,8 +28,6 @@ export class EformDocxReportTableComponent implements OnInit, OnChanges {
     {header: this.translateService.stream('Done by'), field: 'doneBy',},
     {header: this.translateService.stream('Actions'), field: 'actions',},
   ];
-
-  constructor(private router: Router, private translateService: TranslateService) {}
 
   ngOnInit(): void {}
 

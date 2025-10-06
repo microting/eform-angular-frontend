@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {Router} from '@angular/router';
 import {SettingsModel} from 'src/app/common/models';
 import {AppSettingsService} from 'src/app/common/services';
@@ -14,6 +14,10 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
     standalone: false
 })
 export class ConnectionSetupComponent implements OnInit, OnDestroy {
+  private settingsService = inject(AppSettingsService);
+  private router = inject(Router);
+  authStateService = inject(AuthStateService);
+
   settingsModel: SettingsModel = new SettingsModel();
 
   languages = [
@@ -31,11 +35,7 @@ export class ConnectionSetupComponent implements OnInit, OnDestroy {
   updateConnectionStringSub$: Subscription;
   getApplicationHostOsSub$: Subscription;
 
-  constructor(
-    private settingsService: AppSettingsService,
-    private router: Router,
-    public authStateService: AuthStateService,
-  ) {
+  constructor() {
     console.debug('ConnectionSetupComponent - constructor');
   }
 

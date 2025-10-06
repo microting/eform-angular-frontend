@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import {v4 as uuid} from 'uuid';
 import {FileItem, FileUploader, FileUploaderOptions} from 'ng2-file-upload';
 import {EventBrokerService} from 'src/app/common/helpers';
@@ -19,6 +19,13 @@ import {tap} from 'rxjs/operators';
     standalone: false
 })
 export class AdminSettingsComponent implements OnInit, AfterViewInit {
+  private settingsService = inject(AppSettingsService);
+  private authStore = inject(Store);
+  private authStateService = inject(AuthStateService);
+  private eventBrokerService = inject(EventBrokerService);
+  private appSettingsStateService = inject(AppSettingsStateService);
+  private service = inject(AppSettingsService);
+
   loginPageImageUploader: FileUploader = new FileUploader({
     url: '/api/images/login-page-images',
   });
@@ -35,16 +42,6 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   private selectBearerToken$ = this.authStore.select(selectBearerToken);
   private selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
   public selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
-
-  constructor(
-    private settingsService: AppSettingsService,
-    private authStore: Store,
-    private authStateService: AuthStateService,
-    private eventBrokerService: EventBrokerService,
-    private appSettingsStateService: AppSettingsStateService,
-    private service: AppSettingsService,
-  ) {
-  }
 
   ngAfterViewInit() {
   }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { AppMenuStateService } from 'src/app/common/store';
@@ -15,6 +15,11 @@ import {Subscription} from 'rxjs';
     standalone: false
 })
 export class EformNewSubheaderComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
+  appMenuStateService = inject(AppMenuStateService);
+  private titleService = inject(TitleService);
+  private translateService = inject(TranslateService);
+
   @Input() subtitle = '';
   @Input() title = '';
   @Input() forceStaticTitle = false;
@@ -22,13 +27,6 @@ export class EformNewSubheaderComponent implements OnInit, OnDestroy {
   href = this.router.url;
   appMenuSub$: Subscription;
   getTranslatedTitleSub$: Subscription;
-
-  constructor(
-    private router: Router,
-    public appMenuStateService: AppMenuStateService,
-    private titleService: TitleService,
-    private translateService: TranslateService,
-  ) {}
 
   ngOnDestroy() {}
 

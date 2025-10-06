@@ -1,8 +1,4 @@
-import {
-  Component,
-  Inject, Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   EformVisualEditorModel,
   EformVisualEditorRecursionChecklistModel, LanguagesModel,
@@ -19,6 +15,9 @@ import {TranslationRequestModel, TranslationService} from 'src/app/common/servic
     standalone: false
 })
 export class VisualEditorChecklistModalComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<VisualEditorChecklistModalComponent>>(MatDialogRef);
+  private translationService = inject(TranslationService);
+
   selectedLanguages: number[];
   recursionModel: EformVisualEditorRecursionChecklistModel = new EformVisualEditorRecursionChecklistModel();
   isChecklistSelected = false;
@@ -34,11 +33,14 @@ export class VisualEditorChecklistModalComponent implements OnInit {
     return this.appLanguages.languages.filter((x) => x.isActive);
   }
 
-  constructor(
-    public dialogRef: MatDialogRef<VisualEditorChecklistModalComponent>,
-    private translationService: TranslationService,
-    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[], model?: EformVisualEditorRecursionChecklistModel, appLanguages: LanguagesModel, translationPossible: boolean }
-  ) {
+  constructor() {
+    const model = inject<{
+    selectedLanguages: number[];
+    model?: EformVisualEditorRecursionChecklistModel;
+    appLanguages: LanguagesModel;
+    translationPossible: boolean;
+}>(MAT_DIALOG_DATA);
+
     this.translationPossible = model.translationPossible;
     this.selectedLanguages = model.selectedLanguages;
     this.appLanguages = model.appLanguages;

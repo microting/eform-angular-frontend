@@ -1,4 +1,4 @@
-import {Component, OnInit,} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {SiteDto, UnitModel} from 'src/app/common/models';
 import {UnitsService} from 'src/app/common/services';
 import {DeviceUserService} from 'src/app/common/services/device-users';
@@ -12,15 +12,12 @@ import {MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class UnitCreateComponent implements OnInit {
+  private simpleSitesService = inject(DeviceUserService);
+  private unitsService = inject(UnitsService);
+  dialogRef = inject<MatDialogRef<UnitCreateComponent>>(MatDialogRef);
+
   unitModel: UnitModel = new UnitModel;
   simpleSites: Array<SiteDto> = [];
-
-  constructor(
-    private simpleSitesService: DeviceUserService,
-    private unitsService: UnitsService,
-    public dialogRef: MatDialogRef<UnitCreateComponent>,
-    ) {
-  }
 
   ngOnInit() {
     this.loadAllSimpleSites();

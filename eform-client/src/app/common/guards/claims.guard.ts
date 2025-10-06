@@ -12,13 +12,13 @@ import {UserClaimsModel} from 'src/app/common/models';
 
 @Injectable()
 export class ClaimsGuard {
+  private store = inject(Store);
+
 
   private claims: UserClaimsModel;
   private selectCurrentUserClaims$ = this.store.select(selectCurrentUserClaims);
 
-  constructor(
-    private store: Store
-  ) {
+  constructor() {
     this.selectCurrentUserClaims$.subscribe(x => this.claims = x);
   }
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -30,9 +30,8 @@ export let AuthMethods = {
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private apiBaseService: ApiBaseService,
-  ) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   login(loginInfo: LoginRequestModel): Observable<AuthResponseModel> {
     let body = new HttpParams();

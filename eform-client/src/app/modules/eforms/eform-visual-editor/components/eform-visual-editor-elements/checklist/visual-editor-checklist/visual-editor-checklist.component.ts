@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core';
 import {
   EformVisualEditorFieldsDnDRecursionModel,
   EformVisualEditorFieldModel,
@@ -28,6 +21,9 @@ import {take} from 'rxjs';
     standalone: false
 })
 export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
+  private authStore = inject(Store);
+  private authStateService = inject(AuthStateService);
+
   @Input() checklist: EformVisualEditorModel;
   @Input() checklistIndex = 0;
   @Input() checklistRecursionIndex = 0;
@@ -80,24 +76,6 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
       return this.checklist.translations[index].name;
     }
     return '';
-  }
-
-  constructor(
-    private authStore: Store,
-    // private dragulaService: DragulaService,
-    private authStateService: AuthStateService
-  ) {
-/*    this.dragulaService.createGroup(this.dragulaElementContainerName, {
-      moves: (el, container, handle) => {
-        return handle.classList.contains('dragula-handle');
-      },
-      accepts: (el, target) => {
-        return (
-          el.id.includes('checkList_') ||
-          target.id.includes(`fields_${this.checklistIndex}`)
-        );
-      },
-    });*/
   }
 
   get fieldTypes() {

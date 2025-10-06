@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 // import {LocaleService} from 'app/services';
 
@@ -7,12 +7,8 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './example-pn-page.component.html'
 })
 export class ExamplePnPageComponent implements OnInit {
+  private translateService = inject(TranslateService);
 
-  constructor(private translateService: TranslateService,
-              // private localeService: LocaleService
-  ) {
-
-  }
 
   ngOnInit() {
     // this.setTranslation();

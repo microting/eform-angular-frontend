@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, inject } from '@angular/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Observable, Subscription} from 'rxjs';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
@@ -33,6 +27,9 @@ interface MenuNode {
     standalone: false
 })
 export class NavigationComponent implements OnInit, OnDestroy {
+  router = inject(Router);
+  private authStore = inject(Store);
+
   @Output() clickOnLink: EventEmitter<void> = new EventEmitter<void>();
 
   treeControl = new NestedTreeControl<MenuNode>(node => node.menuItems);
@@ -45,12 +42,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
   public allAppMenus$ = this.authStore.select(leftAppMenus);
   private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
   private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
-
-  constructor(
-    public router: Router,
-    private authStore: Store,
-  ) {
-  }
 
   ngOnDestroy() {
   }

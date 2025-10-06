@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild,} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
 import {ToastrService} from 'ngx-toastr';
 import {TranslateService} from '@ngx-translate/core';
@@ -16,6 +16,13 @@ import {Store} from '@ngrx/store';
     standalone: false
 })
 export class EformsBulkImportModalComponent implements OnInit {
+  private toastrService = inject(ToastrService);
+  private authStore = inject(Store);
+  private translateService = inject(TranslateService);
+  loaderService = inject(LoaderService);
+  private authStateService = inject(AuthStateService);
+  dialogRef = inject<MatDialogRef<EformsBulkImportModalComponent>>(MatDialogRef);
+
   @ViewChild('xlsxEforms', {static: false})
   xlsxEformsInput: ElementRef;
   xlsxEformsFileUploader: FileUploader;
@@ -27,16 +34,6 @@ export class EformsBulkImportModalComponent implements OnInit {
     {header: this.translateService.stream('Row'), field: 'row'},
     {header: this.translateService.stream('Error'), field: 'error',},
   ];
-
-  constructor(
-    private toastrService: ToastrService,
-    private authStore: Store,
-    private translateService: TranslateService,
-    public loaderService: LoaderService,
-    private authStateService: AuthStateService,
-    public dialogRef: MatDialogRef<EformsBulkImportModalComponent>,
-  ) {
-  }
 
   ngOnInit() {
     let token = '';

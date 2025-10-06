@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   FolderModel,
@@ -19,7 +19,8 @@ const FoldersMethods = {
 
 @Injectable()
 export class FoldersService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getAllFolders(): Observable<OperationDataResult<FolderDto[]>> {
     return this.apiBaseService.get(FoldersMethods.Folders);

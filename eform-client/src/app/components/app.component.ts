@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {AuthService, TitleService, UserSettingsService} from 'src/app/common/services';
 import {Router} from '@angular/router';
@@ -18,20 +18,17 @@ import {TranslateService} from '@ngx-translate/core';
     standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy {
-  public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  private router = inject(Router);
+  private authStore = inject(Store);
+  private userSettings = inject(UserSettingsService);
+  authStateService = inject(AuthStateService);
+  private service = inject(AuthService);
+  private translateService = inject(TranslateService);
+  private ngTitle = inject(Title);
+  private titleService = inject(TitleService);
+  private authSyncStorageService = inject(AuthSyncStorageService);
 
-  constructor(
-    private router: Router,
-    private authStore: Store,
-    private userSettings: UserSettingsService,
-    public authStateService: AuthStateService,
-    private service: AuthService,
-    private translateService: TranslateService,
-    private ngTitle: Title,
-    private titleService: TitleService,
-    private authSyncStorageService: AuthSyncStorageService,
-  ) {
-  }
+  public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
 
   ngOnInit(): void {
     this.authSyncStorageService.init();

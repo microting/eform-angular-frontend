@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   OperationDataResult,
@@ -17,7 +17,8 @@ const UnitsMethods = {
 
 @Injectable()
 export class UnitsService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getAllUnits(): Observable<OperationDataResult<Array<UnitDto>>> {
     return this.apiBaseService.get<Array<UnitDto>>(UnitsMethods.GetAll);

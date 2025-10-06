@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   HttpEvent,
   HttpHandler,
@@ -12,8 +12,8 @@ import { AuthStateService } from 'src/app/common/store';
 
 @Injectable()
 export class UserClaimsInterceptor implements HttpInterceptor {
-  constructor(private authStateService: AuthStateService) {
-  }
+  private authStateService = inject(AuthStateService);
+
 
   intercept(
     request: HttpRequest<any>,

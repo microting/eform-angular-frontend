@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {AppSettingsService} from 'src/app/common/services';
 
 @Component({
@@ -8,11 +8,10 @@ import {AppSettingsService} from 'src/app/common/services';
     standalone: false
 })
 export class FooterComponent implements OnInit {
+  private settingsService = inject(AppSettingsService);
+
   version: string;
   date = new Date();
-
-  constructor(private settingsService: AppSettingsService) {
-  }
 
   ngOnInit() {
     this.getAssemblyVersion();

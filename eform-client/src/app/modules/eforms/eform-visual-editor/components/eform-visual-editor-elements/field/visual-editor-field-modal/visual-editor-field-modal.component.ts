@@ -1,9 +1,4 @@
-import {
-  Component,
-  Inject, Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import {
   EformFieldTypesEnum,
 } from 'src/app/common/const';
@@ -30,6 +25,12 @@ import {Store} from '@ngrx/store';
     standalone: false
 })
 export class VisualEditorFieldModalComponent implements OnInit {
+  private authStateService = inject(AuthStateService);
+  private authStore = inject(Store);
+  private translateService = inject(TranslateService);
+  private translationService = inject(TranslationService);
+  dialogRef = inject<MatDialogRef<VisualEditorFieldModalComponent>>(MatDialogRef);
+
   @ViewChild('popTemplate', { static: true }) popTemplate;
   selectedLanguages: number[];
   recursionModel: EformVisualEditorRecursionFieldModel = new EformVisualEditorRecursionFieldModel();
@@ -96,16 +97,14 @@ export class VisualEditorFieldModalComponent implements OnInit {
   //   return !this.recursionModel.field.translations.find((x) => x.name !== '');
   // }
 
-  constructor(
-    private authStateService: AuthStateService,
-    private authStore: Store,
-    private translateService: TranslateService,
-    private translationService: TranslationService,
-    public dialogRef: MatDialogRef<VisualEditorFieldModalComponent>,
-    @Inject(MAT_DIALOG_DATA) model: {selectedLanguages: number[],
-      model?: EformVisualEditorRecursionFieldModel,
-      appLanguages: LanguagesModel, translationPossible: boolean }
-  ) {
+  constructor() {
+    const model = inject<{
+    selectedLanguages: number[];
+    model?: EformVisualEditorRecursionFieldModel;
+    appLanguages: LanguagesModel;
+    translationPossible: boolean;
+}>(MAT_DIALOG_DATA);
+
     this.translationPossible = model.translationPossible;
     this.selectedLanguages = model.selectedLanguages;
     this.appLanguages = model.appLanguages;

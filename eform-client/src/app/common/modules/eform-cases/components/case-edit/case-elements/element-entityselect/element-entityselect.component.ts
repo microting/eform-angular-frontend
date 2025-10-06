@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, inject } from '@angular/core';
 import { FieldValueDto } from 'src/app/common/models';
 import { CommonDictionaryTextModel } from 'src/app/common/models/common';
 import { EntitySelectService } from 'src/app/common/services/advanced';
@@ -11,6 +11,8 @@ import { EntitySelectService } from 'src/app/common/services/advanced';
     standalone: false
 })
 export class ElementEntityselectComponent implements OnInit, AfterViewInit {
+  private entitySelectService = inject(EntitySelectService);
+
   items: Array<CommonDictionaryTextModel> = [];
   fieldValueObj: FieldValueDto = new FieldValueDto();
   @Input() entityGroupUid: string;
@@ -23,8 +25,6 @@ export class ElementEntityselectComponent implements OnInit, AfterViewInit {
   set fieldValue(val) {
     this.fieldValueObj = val;
   }
-
-  constructor(private entitySelectService: EntitySelectService) {}
 
   ngOnInit() {
     this.entitySelectService

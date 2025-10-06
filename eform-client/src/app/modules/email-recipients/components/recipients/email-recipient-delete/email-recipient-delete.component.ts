@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit,} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {EmailRecipientModel} from 'src/app/common/models';
 import {Subscription} from 'rxjs';
 import {EmailRecipientsService} from 'src/app/common/services';
@@ -13,13 +13,11 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class EmailRecipientDeleteComponent implements OnInit, OnDestroy {
-  deleteEmailRecipient$: Subscription;
+  private emailRecipientsService = inject(EmailRecipientsService);
+  dialogRef = inject<MatDialogRef<EmailRecipientDeleteComponent>>(MatDialogRef);
+  selectedEmailRecipient = inject<EmailRecipientModel>(MAT_DIALOG_DATA) ?? new EmailRecipientModel();
 
-  constructor(
-    private emailRecipientsService: EmailRecipientsService,
-    public dialogRef: MatDialogRef<EmailRecipientDeleteComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedEmailRecipient: EmailRecipientModel = new EmailRecipientModel()) {
-  }
+  deleteEmailRecipient$: Subscription;
 
   hide(result = false) {
     this.dialogRef.close(result);

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import {
   SiteNameDto,
   CommonDictionaryModel,
@@ -24,19 +24,16 @@ import {selectCurrentUserClaimsSitesDelete, selectCurrentUserClaimsSitesUpdate} 
     standalone: false
 })
 export class SitesComponent implements OnInit, OnDestroy {
+  private authStore = inject(Store);
+  private sitesService = inject(SitesService);
+  private authStateService = inject(AuthStateService);
+  private eFormTagService = inject(EformTagService);
+  dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private translateService = inject(TranslateService);
+
   private selectCurrentUserClaimsSitesUpdate$ = this.authStore.select(selectCurrentUserClaimsSitesUpdate);
   private selectCurrentUserClaimsSitesDelete$ = this.authStore.select(selectCurrentUserClaimsSitesDelete);
-
-  constructor(
-    private authStore: Store,
-    private sitesService: SitesService,
-    private authStateService: AuthStateService,
-    private eFormTagService: EformTagService,
-    public dialog: MatDialog,
-    private overlay: Overlay,
-    private translateService: TranslateService,
-  ) {
-  }
 
   @ViewChild('modalTags', {static: true}) modalSiteTags: EformsTagsComponent;
   sitesDto: Array<SiteNameDto> = [];

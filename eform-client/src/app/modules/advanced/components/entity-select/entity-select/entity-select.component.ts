@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   Paged,
   EntityGroupModel,
@@ -34,6 +34,12 @@ import {
     standalone: false
 })
 export class EntitySelectComponent implements OnInit, OnDestroy {
+  private store = inject(Store);
+  entitySelectStateService = inject(EntitySelectStateService);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private translateService = inject(TranslateService);
+
   advEntitySelectableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();
   entitySelectRemoveComponentAfterClosedSub$: Subscription;
 
@@ -58,15 +64,6 @@ export class EntitySelectComponent implements OnInit, OnDestroy {
   public selectEntitySelectIsSortDsc$ = this.store.select(selectEntitySelectIsSortDsc);
   public selectEntitySelectNameFilter$ = this.store.select(selectEntitySelectNameFilter);
   public selectEntitySelectPagination$ = this.store.select(selectEntitySelectPagination);
-
-  constructor(
-    private store: Store,
-    public entitySelectStateService: EntitySelectStateService,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-    private translateService: TranslateService,
-  ) {
-  }
 
   ngOnInit() {
     this.getEntitySelectableGroupList();

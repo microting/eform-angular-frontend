@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import {
   CommonDictionaryModel,
   EformVisualEditorModel, LanguagesModel,
@@ -13,6 +13,9 @@ import {TranslationRequestModel, TranslationService} from 'src/app/common/servic
     standalone: false
 })
 export class EformVisualEditorHeaderComponent implements OnInit {
+  private authStateService = inject(AuthStateService);
+  private translationService = inject(TranslationService);
+
   @Input()
   visualEditorModel: EformVisualEditorModel = new EformVisualEditorModel();
   @Input() selectedLanguages: number[];
@@ -29,9 +32,6 @@ export class EformVisualEditorHeaderComponent implements OnInit {
     }
     return this.appLanguages.languages.filter((x) => x.isActive);
   }
-
-  constructor(private authStateService: AuthStateService,
-              private translationService: TranslationService) {}
 
   ngOnInit() {
   }

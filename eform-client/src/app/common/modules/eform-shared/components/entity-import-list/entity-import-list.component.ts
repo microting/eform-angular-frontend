@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
@@ -8,9 +8,10 @@ import {MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class EntityImportListComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<EntityImportListComponent>>(MatDialogRef);
+
   importString = '';
   public importStringSubmit: EventEmitter<string> = new EventEmitter<string>();
-  constructor(public dialogRef: MatDialogRef<EntityImportListComponent>,) { }
 
   ngOnInit() {
   }

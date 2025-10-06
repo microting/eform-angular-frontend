@@ -1,13 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  Input,
-  OnChanges,
-  OnDestroy,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, inject } from '@angular/core';
 import {Gallery, GalleryItem, ImageItem} from 'ng-gallery';
 import {Lightbox} from 'ng-gallery/lightbox';
 import {FieldValueDto} from 'src/app/common/models';
@@ -30,6 +21,13 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
     standalone: false
 })
 export class ElementPictureComponent implements OnChanges, OnDestroy {
+  private activateRoute = inject(ActivatedRoute);
+  private imageService = inject(TemplateFilesService);
+  gallery = inject(Gallery);
+  lightbox = inject(Lightbox);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+
   @Input() fieldValues: Array<FieldValueDto> = [];
   @Input() fieldId: number;
   @Output() pictureUpdated: EventEmitter<void> = new EventEmitter<void>();
@@ -47,16 +45,6 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
   activatedRouteSub$: Subscription;
   addPictureDialogComponentAddedPictureSub$: any;
   deletePictureDialogComponentDeletePictureSub$: any;
-
-  constructor(
-    private activateRoute: ActivatedRoute,
-    private imageService: TemplateFilesService,
-    public gallery: Gallery,
-    public lightbox: Lightbox,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-  ) {
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.fieldValues) {
@@ -237,12 +225,10 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
     standalone: false
 })
 export class AddPictureDialogComponent {
+  dialogRef = inject<MatDialogRef<AddPictureDialogComponent>>(MatDialogRef);
+
   addedPicture: EventEmitter<File> = new EventEmitter<File>();
   image: File;
-  constructor(
-    public dialogRef: MatDialogRef<AddPictureDialogComponent>,
-  ) {
-  }
 
   onAddPicture() {
     this.addedPicture.emit(this.image)
@@ -284,12 +270,10 @@ export class AddPictureDialogComponent {
     standalone: false
 })
 export class DeletePictureDialogComponent {
+  dialogRef = inject<MatDialogRef<DeletePictureDialogComponent>>(MatDialogRef);
+  image = inject<File>(MAT_DIALOG_DATA);
+
   deletePicture: EventEmitter<File> = new EventEmitter<File>();
-  constructor(
-    public dialogRef: MatDialogRef<DeletePictureDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public image: File,
-  ) {
-  }
 
   hide() {
     this.dialogRef.close();

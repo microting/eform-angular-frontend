@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   CommonTranslationsModel,
   EformVisualEditorFieldModel, LanguagesModel,
@@ -21,6 +21,10 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class VisualEditorAdditionalFieldOptionsComponent
   implements OnInit, OnDestroy {
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private translateService = inject(TranslateService);
+
   @Input() field: EformVisualEditorFieldModel;
   @Input() selectedLanguages: number[];
   @Input() appLanguages: LanguagesModel = new LanguagesModel();
@@ -41,13 +45,6 @@ export class VisualEditorAdditionalFieldOptionsComponent
   ];
   visualEditorAdditionalFieldOptionEditComponentAfterClosedSub$: Subscription;
   visualEditorAdditionalFieldOptionDeleteComponentAfterClosedSub$: Subscription;
-
-  constructor(
-    private dialog: MatDialog,
-    private overlay: Overlay,
-    private translateService: TranslateService,
-  ) {
-  }
 
   ngOnInit() {
   }
@@ -194,11 +191,9 @@ export class VisualEditorAdditionalFieldOptionsComponent
     standalone: false
 })
 export class VisualEditorAdditionalFieldOptionEditComponent {
-  constructor(
-    public dialogRef: MatDialogRef<VisualEditorAdditionalFieldOptionEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public fieldOptionForEdit = {selectedLanguage: 0, name: '', indexOption: 0,}
-  ) {
-  }
+  dialogRef = inject<MatDialogRef<VisualEditorAdditionalFieldOptionEditComponent>>(MatDialogRef);
+  fieldOptionForEdit = inject(MAT_DIALOG_DATA) ?? { selectedLanguage: 0, name: '', indexOption: 0, };
+
 
   hide(result = false) {
     this.dialogRef.close({result: result, model: result ? this.fieldOptionForEdit : null});
@@ -234,11 +229,9 @@ export class VisualEditorAdditionalFieldOptionEditComponent {
     standalone: false
 })
 export class VisualEditorAdditionalFieldOptionDeleteComponent {
-  constructor(
-    public dialogRef: MatDialogRef<VisualEditorAdditionalFieldOptionDeleteComponent>,
-    @Inject(MAT_DIALOG_DATA) public indexOptionForDelete: number,
-  ) {
-  }
+  dialogRef = inject<MatDialogRef<VisualEditorAdditionalFieldOptionDeleteComponent>>(MatDialogRef);
+  indexOptionForDelete = inject(MAT_DIALOG_DATA);
+
 
   hide(result = false) {
     this.dialogRef.close({result: result, model: result ? this.indexOptionForDelete : null});

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   CasePostCreateModel,
@@ -17,7 +17,8 @@ const CasePostsMethods = {
 
 @Injectable()
 export class CasePostsService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getAllPosts(
     model: CasePostsRequestModel

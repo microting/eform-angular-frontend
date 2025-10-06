@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {TemplateColumnModel, UpdateColumnsModel} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {EFormService} from 'src/app/common/services/eform';
@@ -11,14 +11,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class EformColumnsModalComponent implements OnInit {
+  private eFormService = inject(EFormService);
+  dialogRef = inject<MatDialogRef<EformColumnsModalComponent>>(MatDialogRef);
+  selectedTemplateDto = inject<TemplateDto>(MAT_DIALOG_DATA);
+
   columnEditModel: UpdateColumnsModel = new UpdateColumnsModel;
   columnModels: Array<TemplateColumnModel> = [];
-
-  constructor(
-    private eFormService: EFormService,
-    public dialogRef: MatDialogRef<EformColumnsModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedTemplateDto: TemplateDto,) {
-  }
 
   ngOnInit() {
     this.getColumnsForTemplate();

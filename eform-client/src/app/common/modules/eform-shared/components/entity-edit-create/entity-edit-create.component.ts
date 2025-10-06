@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
 import {
   EntityGroupEditModel,
   EntityItemModel,
@@ -30,6 +23,13 @@ import {Overlay} from '@angular/cdk/overlay';
     standalone: false
 })
 export class EntityEditCreateComponent implements OnInit, OnDestroy{
+  private activateRoute = inject(ActivatedRoute);
+  private entitySearchService = inject(EntitySearchService);
+  private entitySelectService = inject(EntitySelectService);
+  private location = inject(Location);
+  dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+
   entityGroupEditModel: EntityGroupEditModel = new EntityGroupEditModel();
   @ViewChild('frame', { static: true }) frame;
   @ViewChild('modalNameEdit', { static: true }) modalNameEdit: EntityItemEditNameComponent;
@@ -51,16 +51,6 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
 
   get title(): string {
     return `${this.edit ? 'Edit' : 'Create'} ${this.header} list`
-  }
-
-  constructor(
-    private activateRoute: ActivatedRoute,
-    private entitySearchService: EntitySearchService,
-    private entitySelectService: EntitySelectService,
-    private location: Location,
-    public dialog: MatDialog,
-    private overlay: Overlay,
-  ) {
   }
 
   ngOnInit() {

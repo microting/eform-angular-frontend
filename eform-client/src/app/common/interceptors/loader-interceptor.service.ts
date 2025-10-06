@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   HttpResponse,
   HttpRequest,
@@ -14,13 +14,10 @@ import {catchError, tap} from 'rxjs/operators';
 // This is a class for an HTTP interceptor that intercepts HTTP requests and responses
 // It implements the HttpInterceptor interface from the @angular/common/http package
 export class LoaderInterceptor implements HttpInterceptor {
+  private loaderService = inject(LoaderService);
+
   // This is an array of HTTP requests that are currently being processed
   private requests: HttpRequest<any>[] = [];
-
-  // This is the constructor for the class
-  // It takes a LoaderService as a parameter
-  constructor(private loaderService: LoaderService) {
-  }
 
   // This method removes a request from the requests array
   // It takes an HttpRequest as a parameter

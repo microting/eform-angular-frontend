@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {
   EformPermissionsModel,
@@ -29,6 +29,12 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
     standalone: false
 })
 export class SecurityGroupEformsPermissionsComponent implements OnInit, OnDestroy {
+  private securityGroupEformsService = inject(SecurityGroupEformsPermissionsService);
+  private route = inject(ActivatedRoute);
+  private translateService = inject(TranslateService);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+
   tableHeaders: MtxGridColumn[] = [
     {header: this.translateService.stream('Id'), field: 'templateId', sortable: false},
     {
@@ -76,15 +82,6 @@ export class SecurityGroupEformsPermissionsComponent implements OnInit, OnDestro
   onEformBoundSub$: Subscription;
   onSearchInputChangedSub$: Subscription;
   securityGroupEformsAddComponentAfterClosedSub$: Subscription;
-
-  constructor(
-    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-    private route: ActivatedRoute,
-    private translateService: TranslateService,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-  ) {
-  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {

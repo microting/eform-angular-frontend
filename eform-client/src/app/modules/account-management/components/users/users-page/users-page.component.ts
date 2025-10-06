@@ -1,8 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   UserInfoModel,
   Paged,
@@ -47,6 +43,16 @@ import {format} from "date-fns";
     standalone: false
 })
 export class UsersPageComponent implements OnInit, OnDestroy {
+  private adminService = inject(AdminService);
+  private store = inject(Store);
+  authStateService = inject(AuthStateService);
+  private googleAuthService = inject(GoogleAuthService);
+  private securityGroupsService = inject(SecurityGroupsService);
+  usersStateService = inject(UsersStateService);
+  private translateService = inject(TranslateService);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+
 
   userInfoModelList: Paged<UserInfoModel> = new Paged<UserInfoModel>();
   securityGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
@@ -95,19 +101,6 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   public selectUsersPagination$ = this.store.select(selectUsersPagination);
   public selectUsersSort$ = this.store.select(selectUsersSort);
   public selectUsersIsSortDsc$ = this.store.select(selectUsersIsSortDsc);
-
-  constructor(
-    private adminService: AdminService,
-    private store: Store,
-    public authStateService: AuthStateService,
-    private googleAuthService: GoogleAuthService,
-    private securityGroupsService: SecurityGroupsService,
-    public usersStateService: UsersStateService,
-    private translateService: TranslateService,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-  ) {
-  }
 
 
   ngOnInit() {
