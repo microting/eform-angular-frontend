@@ -5,6 +5,7 @@ import { WorkersService } from 'src/app/common/services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { WorkerDto, OperationResult } from 'src/app/common/models';
+import { MockTranslatePipe } from 'src/test-helpers';
 
 describe('WorkerDeleteComponent', () => {
   let component: WorkerDeleteComponent;
@@ -23,7 +24,7 @@ describe('WorkerDeleteComponent', () => {
     mockDialogData = { workerUId: 123, firstName: 'John', lastName: 'Doe' } as WorkerDto;
 
     TestBed.configureTestingModule({
-      declarations: [WorkerDeleteComponent],
+      declarations: [WorkerDeleteComponent, MockTranslatePipe],
       providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: MatDialogRef, useValue: mockDialogRef },

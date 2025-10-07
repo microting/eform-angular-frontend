@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-
+import { MockTranslatePipe } from 'src/test-helpers';
 import { EformDocxReportHeaderEditorComponent } from './eform-docx-report-header-editor.component';
 
 describe('EformDocxReportHeaderEditorComponent', () => {
@@ -9,7 +9,7 @@ describe('EformDocxReportHeaderEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EformDocxReportHeaderEditorComponent ],
+      declarations: [ EformDocxReportHeaderEditorComponent, MockTranslatePipe ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
