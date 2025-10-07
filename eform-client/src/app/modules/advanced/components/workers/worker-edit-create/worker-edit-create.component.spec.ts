@@ -5,6 +5,7 @@ import { WorkersService, DeviceUserService } from 'src/app/common/services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { WorkerDto, CommonDictionaryModel, OperationDataResult, OperationResult } from 'src/app/common/models';
+import { MockTranslatePipe } from 'src/test-helpers';
 
 describe('WorkerEditCreateComponent', () => {
   let component: WorkerEditCreateComponent;
@@ -21,7 +22,7 @@ describe('WorkerEditCreateComponent', () => {
     mockDialogData = new WorkerDto();
 
     TestBed.configureTestingModule({
-      declarations: [WorkerEditCreateComponent],
+      declarations: [WorkerEditCreateComponent, MockTranslatePipe],
       providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
