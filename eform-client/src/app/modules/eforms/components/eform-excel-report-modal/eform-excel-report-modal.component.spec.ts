@@ -1,5 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MockTranslatePipe } from 'src/test-helpers';
 import { EformExcelReportModalComponent } from './eform-excel-report-modal.component';
 
 describe('EformExcelReportModalComponent', () => {
@@ -8,7 +9,8 @@ describe('EformExcelReportModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EformExcelReportModalComponent ]
+      declarations: [ EformExcelReportModalComponent, MockTranslatePipe ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

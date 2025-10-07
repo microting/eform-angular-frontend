@@ -1,36 +1,43 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FolderDeleteComponent } from './folder-delete.component';
 import { FoldersService } from 'src/app/common/services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { FolderDto, OperationResult } from 'src/app/common/models';
+import { MockTranslatePipe } from 'src/test-helpers';
 
 describe('FolderDeleteComponent', () => {
   let component: FolderDeleteComponent;
   let fixture: ComponentFixture<FolderDeleteComponent>;
-  let mockFoldersService: jasmine.SpyObj<FoldersService>;
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<FolderDeleteComponent>>;
+  let mockFoldersService: any;
+  let mockDialogRef: any;
   let mockDialogData: FolderDto;
 
   beforeEach(waitForAsync(() => {
-    mockFoldersService = jasmine.createSpyObj('FoldersService', ['deleteSingleFolder']);
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+    mockFoldersService = {
+          deleteSingleFolder: jest.fn(),
+        };
+    mockDialogRef = {
+          close: jest.fn(),
+        };
     mockDialogData = { id: 1, name: 'Test Folder' } as FolderDto;
 
     TestBed.configureTestingModule({
-      declarations: [FolderDeleteComponent],
+      declarations: [FolderDeleteComponent, MockTranslatePipe],
       providers: [
         { provide: FoldersService, useValue: mockFoldersService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FolderDeleteComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {
@@ -75,7 +82,7 @@ describe('FolderDeleteComponent', () => {
         success: true,
         message: ''
       };
-      mockFoldersService.deleteSingleFolder.and.returnValue(of(mockResult));
+      mockFoldersService.deleteSingleFolder.mockReturnValue(of(mockResult));
 
       component.deleteFolder();
 
@@ -88,7 +95,7 @@ describe('FolderDeleteComponent', () => {
         success: false,
         message: 'Error deleting folder'
       };
-      mockFoldersService.deleteSingleFolder.and.returnValue(of(mockResult));
+      mockFoldersService.deleteSingleFolder.mockReturnValue(of(mockResult));
 
       component.deleteFolder();
 
@@ -97,7 +104,7 @@ describe('FolderDeleteComponent', () => {
     });
 
     it('should handle null response', () => {
-      mockFoldersService.deleteSingleFolder.and.returnValue(of(null));
+      mockFoldersService.deleteSingleFolder.mockReturnValue(of(null));
 
       component.deleteFolder();
 

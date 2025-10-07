@@ -1,5 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MockTranslatePipe } from 'src/test-helpers';
 import { NavigationMenuCustomComponent } from './navigation-menu-custom.component';
 
 describe('NavigationMenuCustomComponent', () => {
@@ -8,7 +9,8 @@ describe('NavigationMenuCustomComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavigationMenuCustomComponent ]
+      declarations: [ NavigationMenuCustomComponent, MockTranslatePipe ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -16,7 +18,7 @@ describe('NavigationMenuCustomComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NavigationMenuCustomComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {

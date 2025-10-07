@@ -1,36 +1,46 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UnitCreateComponent } from './unit-create.component';
 import { UnitsService } from 'src/app/common/services';
 import { DeviceUserService } from 'src/app/common/services/device-users';
 import { MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { UnitModel, SiteDto, DeviceUserRequestModel, OperationResult, OperationDataResult } from 'src/app/common/models';
+import { MockTranslatePipe } from 'src/test-helpers';
 
 describe('UnitCreateComponent', () => {
   let component: UnitCreateComponent;
   let fixture: ComponentFixture<UnitCreateComponent>;
-  let mockUnitsService: jasmine.SpyObj<UnitsService>;
-  let mockDeviceUserService: jasmine.SpyObj<DeviceUserService>;
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<UnitCreateComponent>>;
+  let mockUnitsService: any;
+  let mockDeviceUserService: any;
+  let mockDialogRef: any;
 
   beforeEach(waitForAsync(() => {
-    mockUnitsService = jasmine.createSpyObj('UnitsService', ['createUnit']);
-    mockDeviceUserService = jasmine.createSpyObj('DeviceUserService', ['getDeviceUsersFiltered']);
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+    mockUnitsService = {
+          createUnit: jest.fn(),
+        };
+    mockDeviceUserService = {
+          getDeviceUsersFiltered: jest.fn(),
+        };
+    mockDialogRef = {
+          close: jest.fn(),
+        };
 
     TestBed.configureTestingModule({
-      declarations: [UnitCreateComponent],
+      declarations: [UnitCreateComponent, MockTranslatePipe],
       providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
         { provide: MatDialogRef, useValue: mockDialogRef }
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UnitCreateComponent);
     component = fixture.componentInstance;
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {
@@ -47,7 +57,7 @@ describe('UnitCreateComponent', () => {
         success: true, message: '',
         model: mockSites
       };
-      mockDeviceUserService.getDeviceUsersFiltered.and.returnValue(of(mockResult));
+      mockDeviceUserService.getDeviceUsersFiltered.mockReturnValue(of(mockResult));
 
       component.ngOnInit();
 
@@ -65,11 +75,11 @@ describe('UnitCreateComponent', () => {
         success: true, message: '',
         model: mockSites
       };
-      mockDeviceUserService.getDeviceUsersFiltered.and.returnValue(of(mockResult));
+      mockDeviceUserService.getDeviceUsersFiltered.mockReturnValue(of(mockResult));
 
       component.loadAllSimpleSites();
 
-      expect(mockDeviceUserService.getDeviceUsersFiltered).toHaveBeenCalledWith(jasmine.any(DeviceUserRequestModel));
+      expect(mockDeviceUserService.getDeviceUsersFiltered).toHaveBeenCalledWith(expect.any(DeviceUserRequestModel));
       expect(component.simpleSites.length).toBe(2);
       expect(component.simpleSites[0].fullName).toBe('Site 1');
       expect(component.simpleSites[1].fullName).toBe('Site 2');
@@ -80,7 +90,7 @@ describe('UnitCreateComponent', () => {
         success: true, message: '',
         model: []
       };
-      mockDeviceUserService.getDeviceUsersFiltered.and.returnValue(of(mockResult));
+      mockDeviceUserService.getDeviceUsersFiltered.mockReturnValue(of(mockResult));
 
       component.loadAllSimpleSites();
 
@@ -114,7 +124,7 @@ describe('UnitCreateComponent', () => {
         success: true,
         message: ''
       };
-      mockUnitsService.createUnit.and.returnValue(of(mockResult));
+      mockUnitsService.createUnit.mockReturnValue(of(mockResult));
       component.unitModel = new UnitModel();
       component.unitModel.siteId = 1;
 
@@ -129,7 +139,7 @@ describe('UnitCreateComponent', () => {
         success: false,
         message: ''
       };
-      mockUnitsService.createUnit.and.returnValue(of(mockResult));
+      mockUnitsService.createUnit.mockReturnValue(of(mockResult));
       component.unitModel = new UnitModel();
 
       component.createUnit();
@@ -139,7 +149,7 @@ describe('UnitCreateComponent', () => {
     });
 
     it('should handle null response', () => {
-      mockUnitsService.createUnit.and.returnValue(of(null));
+      mockUnitsService.createUnit.mockReturnValue(of(null));
       component.unitModel = new UnitModel();
 
       component.createUnit();

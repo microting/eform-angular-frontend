@@ -1,29 +1,36 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { WorkerDeleteComponent } from './worker-delete.component';
 import { WorkersService } from 'src/app/common/services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { WorkerDto, OperationResult } from 'src/app/common/models';
+import { MockTranslatePipe } from 'src/test-helpers';
 
 describe('WorkerDeleteComponent', () => {
   let component: WorkerDeleteComponent;
   let fixture: ComponentFixture<WorkerDeleteComponent>;
-  let mockWorkersService: jasmine.SpyObj<WorkersService>;
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<WorkerDeleteComponent>>;
+  let mockWorkersService: any;
+  let mockDialogRef: any;
   let mockDialogData: WorkerDto;
 
   beforeEach(waitForAsync(() => {
-    mockWorkersService = jasmine.createSpyObj('WorkersService', ['deleteSingleWorker']);
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+    mockWorkersService = {
+          deleteSingleWorker: jest.fn(),
+        };
+    mockDialogRef = {
+          close: jest.fn(),
+        };
     mockDialogData = { workerUId: 123, firstName: 'John', lastName: 'Doe' } as WorkerDto;
 
     TestBed.configureTestingModule({
-      declarations: [WorkerDeleteComponent],
+      declarations: [WorkerDeleteComponent, MockTranslatePipe],
       providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
@@ -75,7 +82,7 @@ describe('WorkerDeleteComponent', () => {
         success: true,
         message: ''
       };
-      mockWorkersService.deleteSingleWorker.and.returnValue(of(mockResult));
+      mockWorkersService.deleteSingleWorker.mockReturnValue(of(mockResult));
 
       component.deleteWorker();
 
@@ -88,7 +95,7 @@ describe('WorkerDeleteComponent', () => {
         success: false,
         message: 'Error deleting worker'
       };
-      mockWorkersService.deleteSingleWorker.and.returnValue(of(mockResult));
+      mockWorkersService.deleteSingleWorker.mockReturnValue(of(mockResult));
 
       component.deleteWorker();
 
@@ -97,7 +104,7 @@ describe('WorkerDeleteComponent', () => {
     });
 
     it('should handle null response', () => {
-      mockWorkersService.deleteSingleWorker.and.returnValue(of(null));
+      mockWorkersService.deleteSingleWorker.mockReturnValue(of(null));
 
       component.deleteWorker();
 

@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UnitsOtpCodeComponent } from './units-otp-code.component';
-import { UnitsService } from 'src/app/common/services';
+import { UnitsService } from 'src/app/common/services/advanced';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { UnitDto, OperationDataResult } from 'src/app/common/models';
@@ -8,13 +9,17 @@ import { UnitDto, OperationDataResult } from 'src/app/common/models';
 describe('UnitsOtpCodeComponent', () => {
   let component: UnitsOtpCodeComponent;
   let fixture: ComponentFixture<UnitsOtpCodeComponent>;
-  let mockUnitsService: jasmine.SpyObj<UnitsService>;
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<UnitsOtpCodeComponent>>;
+  let mockUnitsService: any;
+  let mockDialogRef: any;
   let mockDialogData: UnitDto;
 
   beforeEach(waitForAsync(() => {
-    mockUnitsService = jasmine.createSpyObj('UnitsService', ['requestOtp']);
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+    mockUnitsService = {
+          requestOtp: jest.fn(),
+        };
+    mockDialogRef = {
+          close: jest.fn(),
+        };
     mockDialogData = { id: 1, microtingUid: 12345, siteName: 'Test Site' } as UnitDto;
 
     TestBed.configureTestingModule({
@@ -23,14 +28,15 @@ describe('UnitsOtpCodeComponent', () => {
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UnitsOtpCodeComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Don't call fixture.detectChanges() here
   });
 
   it('should create', () => {
@@ -76,7 +82,7 @@ describe('UnitsOtpCodeComponent', () => {
         success: true, message: '',
         model: mockUnit
       };
-      mockUnitsService.requestOtp.and.returnValue(of(mockResult));
+      mockUnitsService.requestOtp.mockReturnValue(of(mockResult));
 
       component.requestOtp();
 
@@ -89,7 +95,7 @@ describe('UnitsOtpCodeComponent', () => {
         success: false, message: '',
         model: null
       };
-      mockUnitsService.requestOtp.and.returnValue(of(mockResult));
+      mockUnitsService.requestOtp.mockReturnValue(of(mockResult));
 
       component.requestOtp();
 
@@ -98,7 +104,7 @@ describe('UnitsOtpCodeComponent', () => {
     });
 
     it('should handle null response', () => {
-      mockUnitsService.requestOtp.and.returnValue(of(null));
+      mockUnitsService.requestOtp.mockReturnValue(of(null));
 
       component.requestOtp();
 

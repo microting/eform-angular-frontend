@@ -149,7 +149,7 @@ jobs:
         node-version: 22
     - name: Install dependencies
       run: cd eform-client && yarn install --frozen-lockfile
-    - name: Run Karma unit tests
+    - name: Run Jest unit tests
       run: cd eform-client && npm run test:unit
   test-dotnet:
     runs-on: ubuntu-latest

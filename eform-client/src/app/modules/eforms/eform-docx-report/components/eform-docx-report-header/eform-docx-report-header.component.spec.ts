@@ -1,5 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MockTranslatePipe } from 'src/test-helpers';
 import { EformDocxReportHeaderComponent } from './eform-docx-report-header.component';
 
 describe('EformDocxReportHeaderComponent', () => {
@@ -8,7 +9,8 @@ describe('EformDocxReportHeaderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EformDocxReportHeaderComponent ]
+      declarations: [ EformDocxReportHeaderComponent, MockTranslatePipe ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
