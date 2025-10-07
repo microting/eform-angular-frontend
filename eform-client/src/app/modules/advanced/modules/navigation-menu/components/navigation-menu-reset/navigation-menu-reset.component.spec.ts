@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NavigationMenuResetComponent } from './navigation-menu-reset.component';
+import { MockTranslatePipe } from 'src/test-helpers';
 
 describe('NavigationMenuResetComponent', () => {
   let component: NavigationMenuResetComponent;
@@ -14,7 +15,7 @@ describe('NavigationMenuResetComponent', () => {
         };
 
     TestBed.configureTestingModule({
-      declarations: [ NavigationMenuResetComponent ],
+      declarations: [ NavigationMenuResetComponent, MockTranslatePipe ],
       providers: [
         { provide: MatDialogRef, useValue: mockDialogRef }
       ],

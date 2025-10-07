@@ -9,8 +9,16 @@ describe('EmailRecipientTagDeleteComponent', () => {
   let fixture: ComponentFixture<SharedTagDeleteComponent>;
 
   beforeEach(waitForAsync(() => {
+    const mockDialogRef = {
+      close: jest.fn()
+    };
+    
     TestBed.configureTestingModule({
       declarations: [ SharedTagDeleteComponent ],
+      providers: [
+        { provide: MatDialogRef, useValue: mockDialogRef },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
