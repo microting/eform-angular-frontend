@@ -25,6 +25,15 @@ describe('EmailRecipientEditComponent', () => {
     const mockDialogRef = {
           close: jest.fn(),
         };
+    const mockDialogData = {
+      emailRecipientUpdateModel: {
+        id: 1,
+        name: 'Test',
+        email: 'test@example.com',
+        tags: []
+      },
+      availableTags: []
+    };
     
     TestBed.configureTestingModule({
       declarations: [ EmailRecipientEditComponent, MockTranslatePipe ],
@@ -33,7 +42,7 @@ describe('EmailRecipientEditComponent', () => {
         { provide: ToastrService, useValue: mockToastrService },
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: MatDialogRef, useValue: mockDialogRef },
-        { provide: MAT_DIALOG_DATA, useValue: {} }
+        { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

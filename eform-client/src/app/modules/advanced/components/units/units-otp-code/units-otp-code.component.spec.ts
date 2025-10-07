@@ -31,13 +31,10 @@ describe('UnitsOtpCodeComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
-  }));
-
-  beforeEach(() => {
+    
     fixture = TestBed.createComponent(UnitsOtpCodeComponent);
     component = fixture.componentInstance;
-    // Don't call fixture.detectChanges() here - do it in individual tests
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
