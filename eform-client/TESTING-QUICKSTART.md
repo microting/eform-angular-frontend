@@ -9,6 +9,9 @@ This guide will help you quickly get started with unit testing in the eForm Angu
 cd eform-client
 ng test
 
+# Run unit tests (Karma) - CI/CD friendly
+npm run test:unit
+
 # Run tests in headless mode (for CI/CD)
 ng test --watch=false --browsers=ChromeHeadless
 

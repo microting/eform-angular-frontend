@@ -22,6 +22,9 @@ This document describes the unit testing approach and patterns used for testing 
 # Run all tests
 ng test
 
+# Run unit tests (CI/CD friendly)
+npm run test:unit
+
 # Run tests in headless mode (for CI/CD)
 ng test --watch=false --browsers=ChromeHeadless
 

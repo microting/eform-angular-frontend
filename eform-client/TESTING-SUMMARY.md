@@ -213,11 +213,20 @@ For each component, ensure:
 
 ### Running Tests
 
+The foundation is complete. To finish the implementation:
+1. Use `generate-spec.sh` to create spec file templates for remaining ~90 components
+2. Follow patterns documented in TESTING.md
+3. Reference existing spec files as examples
+4. Test incrementally as you go with `npm run test:unit`
+
 ```bash
 # Development mode with watch
 ng test
 
-# CI/CD mode (headless)
+# Unit tests in CI/CD mode (headless)
+npm run test:unit
+
+# Or directly with ng
 ng test --watch=false --browsers=ChromeHeadless
 
 # With coverage report
