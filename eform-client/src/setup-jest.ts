@@ -13,79 +13,119 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting(),
 );
 
+// Ensure Jest matchers are available
+// @ts-ignore
+if (typeof global.expect === 'undefined') {
+  throw new Error('Jest expect is not defined');
+}
+
 // Jasmine compatibility layer for Jest
 // This provides jasmine global object for existing tests that use Jasmine syntax
 (global as any).jasmine = {
   createSpyObj: (baseName: string, methodNames: string[]) => {
     const obj: any = {};
     methodNames.forEach((methodName) => {
-      obj[methodName] = jest.fn();
-      // Add Jasmine-style 'and' API
-      obj[methodName].and = {
-        returnValue: (value: any) => {
-          obj[methodName].mockReturnValue(value);
-          return obj[methodName];
-        },
-        throwError: (error: any) => {
-          obj[methodName].mockImplementation(() => {
-            throw error;
-          });
-          return obj[methodName];
-        }
-      };
-      // Add Jasmine-style 'calls' API for compatibility
-      obj[methodName].calls = {
-        reset: () => {
-          obj[methodName].mockClear();
-        },
-        count: () => {
-          return obj[methodName].mock.calls.length;
-        },
-        any: () => {
-          return obj[methodName].mock.calls.length > 0;
-        },
-        all: () => {
-          return obj[methodName].mock.calls;
-        },
-        mostRecent: () => {
-          const calls = obj[methodName].mock.calls;
-          return calls.length > 0 ? { args: calls[calls.length - 1] } : undefined;
-        }
-      };
+      // Create a proper Jest mock function
+      const mockFn = jest.fn();
+      obj[methodName] = mockFn;
+      
+      // Add Jasmine-style 'and' API that works with Jest
+      Object.defineProperty(obj[methodName], 'and', {
+        get: () => ({
+          returnValue: (value: any) => {
+            mockFn.mockReturnValue(value);
+            return mockFn;
+          },
+          throwError: (error: any) => {
+            mockFn.mockImplementation(() => {
+              throw error;
+            });
+            return mockFn;
+          },
+          callFake: (fn: any) => {
+            mockFn.mockImplementation(fn);
+            return mockFn;
+          }
+        }),
+        configurable: true
+      });
+      
+      // Add Jasmine-style 'calls' API that doesn't interfere with Jest
+      Object.defineProperty(obj[methodName], 'calls', {
+        get: () => ({
+          reset: () => {
+            mockFn.mockClear();
+          },
+          count: () => {
+            return mockFn.mock.calls.length;
+          },
+          any: () => {
+            return mockFn.mock.calls.length > 0;
+          },
+          all: () => {
+            return mockFn.mock.calls;
+          },
+          mostRecent: () => {
+            const calls = mockFn.mock.calls;
+            return calls.length > 0 ? { args: calls[calls.length - 1] } : undefined;
+          },
+          argsFor: (index: number) => {
+            return mockFn.mock.calls[index];
+          }
+        }),
+        configurable: true
+      });
     });
     return obj;
   },
   createSpy: (name: string, originalFn?: (...args: any[]) => any) => {
     const spy = jest.fn(originalFn as any);
-    (spy as any).and = {
-      returnValue: (value: any) => {
-        spy.mockReturnValue(value);
-        return spy;
-      },
-      callThrough: () => {
-        spy.mockImplementation((originalFn || (() => {})) as any);
-        return spy;
-      }
-    };
+    
+    // Add Jasmine-style 'and' API
+    Object.defineProperty(spy, 'and', {
+      get: () => ({
+        returnValue: (value: any) => {
+          spy.mockReturnValue(value);
+          return spy;
+        },
+        callThrough: () => {
+          spy.mockImplementation((originalFn || (() => {})) as any);
+          return spy;
+        },
+        callFake: (fn: any) => {
+          spy.mockImplementation(fn);
+          return spy;
+        }
+      }),
+      configurable: true
+    });
+    
     // Add Jasmine-style 'calls' API
-    (spy as any).calls = {
-      reset: () => {
-        spy.mockClear();
-      },
-      count: () => {
-        return spy.mock.calls.length;
-      },
-      any: () => {
-        return spy.mock.calls.length > 0;
-      },
-      all: () => {
-        return spy.mock.calls;
-      },
-      mostRecent: () => {
-        const calls = spy.mock.calls;
-        return calls.length > 0 ? { args: calls[calls.length - 1] } : undefined;
-      }
-    };
+    Object.defineProperty(spy, 'calls', {
+      get: () => ({
+        reset: () => {
+          spy.mockClear();
+        },
+        count: () => {
+          return spy.mock.calls.length;
+        },
+        any: () => {
+          return spy.mock.calls.length > 0;
+        },
+        all: () => {
+          return spy.mock.calls;
+        },
+        mostRecent: () => {
+          const calls = spy.mock.calls;
+          return calls.length > 0 ? { args: calls[calls.length - 1] } : undefined;
+        },
+        argsFor: (index: number) => {
+          return spy.mock.calls[index];
+        }
+      }),
+      configurable: true
+    });
+    
     return spy;
   }
 };
