@@ -10,15 +10,23 @@ import { MockTranslatePipe } from 'src/test-helpers';
 describe('WorkerEditCreateComponent', () => {
   let component: WorkerEditCreateComponent;
   let fixture: ComponentFixture<WorkerEditCreateComponent>;
-  let mockWorkersService: jasmine.SpyObj<WorkersService>;
-  let mockDeviceUserService: jasmine.SpyObj<DeviceUserService>;
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<WorkerEditCreateComponent>>;
+  let mockWorkersService: any;
+  let mockDeviceUserService: any;
+  let mockDialogRef: any;
   let mockDialogData: WorkerDto;
 
   beforeEach(waitForAsync(() => {
-    mockWorkersService = jasmine.createSpyObj('WorkersService', ['createWorker', 'updateSingleWorker']);
-    mockDeviceUserService = jasmine.createSpyObj('DeviceUserService', ['getCommonDictionarySites', 'getSingleSimpleSite']);
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+    mockWorkersService = {
+          createWorker: jest.fn(),
+          updateSingleWorker: jest.fn(),
+        };
+    mockDeviceUserService = {
+          getCommonDictionarySites: jest.fn(),
+          getSingleSimpleSite: jest.fn(),
+        };
+    mockDialogRef = {
+          close: jest.fn(),
+        };
     mockDialogData = new WorkerDto();
 
     TestBed.configureTestingModule({
@@ -81,7 +89,7 @@ describe('WorkerEditCreateComponent', () => {
         success: true, message: '',
         model: mockSites
       };
-      mockDeviceUserService.getCommonDictionarySites.and.returnValue(of(mockResult));
+      mockDeviceUserService.getCommonDictionarySites.mockReturnValue(of(mockResult));
 
       component.ngOnInit();
 
@@ -99,7 +107,7 @@ describe('WorkerEditCreateComponent', () => {
         success: true, message: '',
         model: mockSites
       };
-      mockDeviceUserService.getCommonDictionarySites.and.returnValue(of(mockResult));
+      mockDeviceUserService.getCommonDictionarySites.mockReturnValue(of(mockResult));
 
       component.loadAllSimpleSites();
 
@@ -112,7 +120,7 @@ describe('WorkerEditCreateComponent', () => {
         success: false, message: '',
         model: null
       };
-      mockDeviceUserService.getCommonDictionarySites.and.returnValue(of(mockResult));
+      mockDeviceUserService.getCommonDictionarySites.mockReturnValue(of(mockResult));
 
       component.loadAllSimpleSites();
 
@@ -150,11 +158,11 @@ describe('WorkerEditCreateComponent', () => {
         success: true, message: '',
         model: { customerNo: 456 }
       };
-      mockDeviceUserService.getSingleSimpleSite.and.returnValue(of(mockSiteResult));
+      mockDeviceUserService.getSingleSimpleSite.mockReturnValue(of(mockSiteResult));
 
       const mockCreateResult: OperationResult = {
         success: true, message: "" };
-      mockWorkersService.createWorker.and.returnValue(of(mockCreateResult));
+      mockWorkersService.createWorker.mockReturnValue(of(mockCreateResult));
 
       component.createWorker();
 
@@ -170,11 +178,11 @@ describe('WorkerEditCreateComponent', () => {
         success: true, message: '',
         model: { customerNo: 456 }
       };
-      mockDeviceUserService.getSingleSimpleSite.and.returnValue(of(mockSiteResult));
+      mockDeviceUserService.getSingleSimpleSite.mockReturnValue(of(mockSiteResult));
 
       const mockCreateResult: OperationResult = {
         success: false, message: "" };
-      mockWorkersService.createWorker.and.returnValue(of(mockCreateResult));
+      mockWorkersService.createWorker.mockReturnValue(of(mockCreateResult));
 
       component.createWorker();
 
@@ -190,7 +198,7 @@ describe('WorkerEditCreateComponent', () => {
 
       const mockResult: OperationResult = {
         success: true, message: "" };
-      mockWorkersService.updateSingleWorker.and.returnValue(of(mockResult));
+      mockWorkersService.updateSingleWorker.mockReturnValue(of(mockResult));
 
       component.updateSingle();
 
@@ -203,7 +211,7 @@ describe('WorkerEditCreateComponent', () => {
 
       const mockResult: OperationResult = {
         success: false, message: "" };
-      mockWorkersService.updateSingleWorker.and.returnValue(of(mockResult));
+      mockWorkersService.updateSingleWorker.mockReturnValue(of(mockResult));
 
       component.updateSingle();
 

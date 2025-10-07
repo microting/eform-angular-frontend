@@ -12,20 +12,29 @@ import { WorkerDto, OperationDataResult } from 'src/app/common/models';
 describe('WorkersComponent', () => {
   let component: WorkersComponent;
   let fixture: ComponentFixture<WorkersComponent>;
-  let mockWorkersService: jasmine.SpyObj<WorkersService>;
-  let mockDialog: jasmine.SpyObj<MatDialog>;
-  let mockStore: jasmine.SpyObj<Store>;
-  let mockTranslateService: jasmine.SpyObj<TranslateService>;
+  let mockWorkersService: any;
+  let mockDialog: any;
+  let mockStore: any;
+  let mockTranslateService: any;
 
   beforeEach(waitForAsync(() => {
-    mockWorkersService = jasmine.createSpyObj('WorkersService', ['getAllWorkers']);
-    mockDialog = jasmine.createSpyObj('MatDialog', ['open']);
-    mockStore = jasmine.createSpyObj('Store', ['select', 'dispatch']);
-    mockTranslateService = jasmine.createSpyObj('TranslateService', ['stream']);
-    mockTranslateService.stream.and.returnValue(of('Test'));
+    mockWorkersService = {
+          getAllWorkers: jest.fn(),
+        };
+    mockDialog = {
+          open: jest.fn(),
+        };
+    mockStore = {
+          select: jest.fn(),
+          dispatch: jest.fn(),
+        };
+    mockTranslateService = {
+          stream: jest.fn(),
+        };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
 
     // Setup store select to return observables
-    mockStore.select.and.returnValue(of(true));
+    mockStore.select.mockReturnValue(of(true));
 
     TestBed.configureTestingModule({
       declarations: [WorkersComponent],
@@ -55,7 +64,7 @@ describe('WorkersComponent', () => {
         success: true, message: '',
         model: []
       };
-      mockWorkersService.getAllWorkers.and.returnValue(of(mockResult));
+      mockWorkersService.getAllWorkers.mockReturnValue(of(mockResult));
 
       component.ngOnInit();
 
@@ -63,12 +72,12 @@ describe('WorkersComponent', () => {
     });
 
     it('should add actions column when user has delete permissions', () => {
-      mockStore.select.and.returnValue(of(true));
+      mockStore.select.mockReturnValue(of(true));
       const mockResult: OperationDataResult<Array<WorkerDto>> = {
         success: true, message: '',
         model: []
       };
-      mockWorkersService.getAllWorkers.and.returnValue(of(mockResult));
+      mockWorkersService.getAllWorkers.mockReturnValue(of(mockResult));
 
       const initialHeadersCount = component.tableHeaders.length;
       component.ngOnInit();
@@ -88,7 +97,7 @@ describe('WorkersComponent', () => {
         success: true, message: '',
         model: mockWorkers
       };
-      mockWorkersService.getAllWorkers.and.returnValue(of(mockResult));
+      mockWorkersService.getAllWorkers.mockReturnValue(of(mockResult));
 
       component.loadAllWorkers();
 
@@ -101,7 +110,7 @@ describe('WorkersComponent', () => {
         success: false, message: '',
         model: null
       };
-      mockWorkersService.getAllWorkers.and.returnValue(of(mockResult));
+      mockWorkersService.getAllWorkers.mockReturnValue(of(mockResult));
 
       component.loadAllWorkers();
 
@@ -115,13 +124,13 @@ describe('WorkersComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(true)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
       
       const mockResult: OperationDataResult<Array<WorkerDto>> = {
         success: true, message: '',
         model: []
       };
-      mockWorkersService.getAllWorkers.and.returnValue(of(mockResult));
+      mockWorkersService.getAllWorkers.mockReturnValue(of(mockResult));
 
       component.openCreateModal();
 
@@ -133,9 +142,9 @@ describe('WorkersComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(false)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
 
-      mockWorkersService.getAllWorkers.calls.reset();
+      mockWorkersService.getAllWorkers.mockClear();
       component.openCreateModal();
 
       expect(mockDialog.open).toHaveBeenCalled();
@@ -149,13 +158,13 @@ describe('WorkersComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(true)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
       
       const mockResult: OperationDataResult<Array<WorkerDto>> = {
         success: true, message: '',
         model: []
       };
-      mockWorkersService.getAllWorkers.and.returnValue(of(mockResult));
+      mockWorkersService.getAllWorkers.mockReturnValue(of(mockResult));
 
       component.openEditModal(selectedWorker);
 
@@ -170,13 +179,13 @@ describe('WorkersComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(true)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
       
       const mockResult: OperationDataResult<Array<WorkerDto>> = {
         success: true, message: '',
         model: []
       };
-      mockWorkersService.getAllWorkers.and.returnValue(of(mockResult));
+      mockWorkersService.getAllWorkers.mockReturnValue(of(mockResult));
 
       component.openDeleteModal(selectedWorker);
 

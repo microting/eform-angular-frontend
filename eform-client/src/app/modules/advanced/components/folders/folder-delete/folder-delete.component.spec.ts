@@ -9,13 +9,17 @@ import { FolderDto, OperationResult } from 'src/app/common/models';
 describe('FolderDeleteComponent', () => {
   let component: FolderDeleteComponent;
   let fixture: ComponentFixture<FolderDeleteComponent>;
-  let mockFoldersService: jasmine.SpyObj<FoldersService>;
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<FolderDeleteComponent>>;
+  let mockFoldersService: any;
+  let mockDialogRef: any;
   let mockDialogData: FolderDto;
 
   beforeEach(waitForAsync(() => {
-    mockFoldersService = jasmine.createSpyObj('FoldersService', ['deleteSingleFolder']);
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+    mockFoldersService = {
+          deleteSingleFolder: jest.fn(),
+        };
+    mockDialogRef = {
+          close: jest.fn(),
+        };
     mockDialogData = { id: 1, name: 'Test Folder' } as FolderDto;
 
     TestBed.configureTestingModule({
@@ -77,7 +81,7 @@ describe('FolderDeleteComponent', () => {
         success: true,
         message: ''
       };
-      mockFoldersService.deleteSingleFolder.and.returnValue(of(mockResult));
+      mockFoldersService.deleteSingleFolder.mockReturnValue(of(mockResult));
 
       component.deleteFolder();
 
@@ -90,7 +94,7 @@ describe('FolderDeleteComponent', () => {
         success: false,
         message: 'Error deleting folder'
       };
-      mockFoldersService.deleteSingleFolder.and.returnValue(of(mockResult));
+      mockFoldersService.deleteSingleFolder.mockReturnValue(of(mockResult));
 
       component.deleteFolder();
 
@@ -99,7 +103,7 @@ describe('FolderDeleteComponent', () => {
     });
 
     it('should handle null response', () => {
-      mockFoldersService.deleteSingleFolder.and.returnValue(of(null));
+      mockFoldersService.deleteSingleFolder.mockReturnValue(of(null));
 
       component.deleteFolder();
 

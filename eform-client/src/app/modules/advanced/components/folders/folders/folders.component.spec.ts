@@ -11,15 +11,23 @@ import { FolderDto, OperationDataResult } from 'src/app/common/models';
 describe('FoldersComponent', () => {
   let component: FoldersComponent;
   let fixture: ComponentFixture<FoldersComponent>;
-  let mockFoldersService: jasmine.SpyObj<FoldersService>;
-  let mockDialog: jasmine.SpyObj<MatDialog>;
-  let mockStore: jasmine.SpyObj<Store>;
+  let mockFoldersService: any;
+  let mockDialog: any;
+  let mockStore: any;
 
   beforeEach(waitForAsync(() => {
-    mockFoldersService = jasmine.createSpyObj('FoldersService', ['getAllFolders', 'getAllFoldersList']);
-    mockDialog = jasmine.createSpyObj('MatDialog', ['open']);
-    mockStore = jasmine.createSpyObj('Store', ['select', 'dispatch']);
-    mockStore.select.and.returnValue(of(true));
+    mockFoldersService = {
+          getAllFolders: jest.fn(),
+          getAllFoldersList: jest.fn(),
+        };
+    mockDialog = {
+          open: jest.fn(),
+        };
+    mockStore = {
+          select: jest.fn(),
+          dispatch: jest.fn(),
+        };
+    mockStore.select.mockReturnValue(of(true));
 
     TestBed.configureTestingModule({
       declarations: [FoldersComponent],
@@ -49,7 +57,7 @@ describe('FoldersComponent', () => {
         message: '',
         model: []
       };
-      mockFoldersService.getAllFolders.and.returnValue(of(mockResult));
+      mockFoldersService.getAllFolders.mockReturnValue(of(mockResult));
 
       component.ngOnInit();
 
@@ -64,7 +72,7 @@ describe('FoldersComponent', () => {
         message: '',
         model: []
       };
-      mockFoldersService.getAllFolders.and.returnValue(of(mockResult));
+      mockFoldersService.getAllFolders.mockReturnValue(of(mockResult));
 
       component.getInitialData();
 
@@ -83,7 +91,7 @@ describe('FoldersComponent', () => {
         message: '',
         model: mockFolders
       };
-      mockFoldersService.getAllFolders.and.returnValue(of(mockResult));
+      mockFoldersService.getAllFolders.mockReturnValue(of(mockResult));
 
       component.loadAllFolders();
 
@@ -97,7 +105,7 @@ describe('FoldersComponent', () => {
         message: '',
         model: null
       };
-      mockFoldersService.getAllFolders.and.returnValue(of(mockResult));
+      mockFoldersService.getAllFolders.mockReturnValue(of(mockResult));
 
       component.loadAllFolders();
 
@@ -117,7 +125,7 @@ describe('FoldersComponent', () => {
         message: '',
         model: mockFolders
       };
-      mockFoldersService.getAllFoldersList.and.returnValue(of(mockResult));
+      mockFoldersService.getAllFoldersList.mockReturnValue(of(mockResult));
 
       component.loadAllFoldersList();
 
@@ -131,14 +139,14 @@ describe('FoldersComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(true)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
       
       const mockResult: OperationDataResult<Array<FolderDto>> = {
         success: true,
         message: '',
         model: []
       };
-      mockFoldersService.getAllFolders.and.returnValue(of(mockResult));
+      mockFoldersService.getAllFolders.mockReturnValue(of(mockResult));
 
       component.openCreateModal();
 
@@ -151,14 +159,14 @@ describe('FoldersComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(true)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
       
       const mockResult: OperationDataResult<Array<FolderDto>> = {
         success: true,
         message: '',
         model: []
       };
-      mockFoldersService.getAllFolders.and.returnValue(of(mockResult));
+      mockFoldersService.getAllFolders.mockReturnValue(of(mockResult));
 
       component.openCreateModal(parentFolder);
 
@@ -170,9 +178,9 @@ describe('FoldersComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(false)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
 
-      mockFoldersService.getAllFolders.calls.reset();
+      mockFoldersService.getAllFolders.mockClear();
       component.openCreateModal();
 
       expect(mockDialog.open).toHaveBeenCalled();
@@ -186,14 +194,14 @@ describe('FoldersComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(true)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
       
       const mockResult: OperationDataResult<Array<FolderDto>> = {
         success: true,
         message: '',
         model: []
       };
-      mockFoldersService.getAllFolders.and.returnValue(of(mockResult));
+      mockFoldersService.getAllFolders.mockReturnValue(of(mockResult));
 
       component.openEditModal(selectedFolder);
 
@@ -208,14 +216,14 @@ describe('FoldersComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(true)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
       
       const mockResult: OperationDataResult<Array<FolderDto>> = {
         success: true,
         message: '',
         model: []
       };
-      mockFoldersService.getAllFolders.and.returnValue(of(mockResult));
+      mockFoldersService.getAllFolders.mockReturnValue(of(mockResult));
 
       component.openDeleteModal(selectedFolder);
 

@@ -9,13 +9,17 @@ import { WorkerDto, OperationResult } from 'src/app/common/models';
 describe('WorkerDeleteComponent', () => {
   let component: WorkerDeleteComponent;
   let fixture: ComponentFixture<WorkerDeleteComponent>;
-  let mockWorkersService: jasmine.SpyObj<WorkersService>;
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<WorkerDeleteComponent>>;
+  let mockWorkersService: any;
+  let mockDialogRef: any;
   let mockDialogData: WorkerDto;
 
   beforeEach(waitForAsync(() => {
-    mockWorkersService = jasmine.createSpyObj('WorkersService', ['deleteSingleWorker']);
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+    mockWorkersService = {
+          deleteSingleWorker: jest.fn(),
+        };
+    mockDialogRef = {
+          close: jest.fn(),
+        };
     mockDialogData = { workerUId: 123, firstName: 'John', lastName: 'Doe' } as WorkerDto;
 
     TestBed.configureTestingModule({
@@ -77,7 +81,7 @@ describe('WorkerDeleteComponent', () => {
         success: true,
         message: ''
       };
-      mockWorkersService.deleteSingleWorker.and.returnValue(of(mockResult));
+      mockWorkersService.deleteSingleWorker.mockReturnValue(of(mockResult));
 
       component.deleteWorker();
 
@@ -90,7 +94,7 @@ describe('WorkerDeleteComponent', () => {
         success: false,
         message: 'Error deleting worker'
       };
-      mockWorkersService.deleteSingleWorker.and.returnValue(of(mockResult));
+      mockWorkersService.deleteSingleWorker.mockReturnValue(of(mockResult));
 
       component.deleteWorker();
 
@@ -99,7 +103,7 @@ describe('WorkerDeleteComponent', () => {
     });
 
     it('should handle null response', () => {
-      mockWorkersService.deleteSingleWorker.and.returnValue(of(null));
+      mockWorkersService.deleteSingleWorker.mockReturnValue(of(null));
 
       component.deleteWorker();
 

@@ -12,17 +12,26 @@ import { UnitDto, OperationDataResult } from 'src/app/common/models';
 describe('UnitsComponent', () => {
   let component: UnitsComponent;
   let fixture: ComponentFixture<UnitsComponent>;
-  let mockUnitsService: jasmine.SpyObj<UnitsService>;
-  let mockDialog: jasmine.SpyObj<MatDialog>;
-  let mockStore: jasmine.SpyObj<Store>;
-  let mockTranslateService: jasmine.SpyObj<TranslateService>;
+  let mockUnitsService: any;
+  let mockDialog: any;
+  let mockStore: any;
+  let mockTranslateService: any;
 
   beforeEach(waitForAsync(() => {
-    mockUnitsService = jasmine.createSpyObj('UnitsService', ['getAllUnits']);
-    mockDialog = jasmine.createSpyObj('MatDialog', ['open']);
-    mockStore = jasmine.createSpyObj('Store', ['select', 'dispatch']);
-    mockTranslateService = jasmine.createSpyObj('TranslateService', ['stream']);
-    mockTranslateService.stream.and.returnValue(of('Test'));
+    mockUnitsService = {
+          getAllUnits: jest.fn(),
+        };
+    mockDialog = {
+          open: jest.fn(),
+        };
+    mockStore = {
+          select: jest.fn(),
+          dispatch: jest.fn(),
+        };
+    mockTranslateService = {
+          stream: jest.fn(),
+        };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
 
     TestBed.configureTestingModule({
       declarations: [UnitsComponent],
@@ -52,7 +61,7 @@ describe('UnitsComponent', () => {
         success: true, message: '',
         model: []
       };
-      mockUnitsService.getAllUnits.and.returnValue(of(mockResult));
+      mockUnitsService.getAllUnits.mockReturnValue(of(mockResult));
 
       component.ngOnInit();
 
@@ -70,7 +79,7 @@ describe('UnitsComponent', () => {
         success: true, message: '',
         model: mockUnits
       };
-      mockUnitsService.getAllUnits.and.returnValue(of(mockResult));
+      mockUnitsService.getAllUnits.mockReturnValue(of(mockResult));
 
       component.loadAllUnits();
 
@@ -83,7 +92,7 @@ describe('UnitsComponent', () => {
         success: false, message: '',
         model: null
       };
-      mockUnitsService.getAllUnits.and.returnValue(of(mockResult));
+      mockUnitsService.getAllUnits.mockReturnValue(of(mockResult));
 
       component.loadAllUnits();
 
@@ -97,13 +106,13 @@ describe('UnitsComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(true)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
       
       const mockResult: OperationDataResult<Array<UnitDto>> = {
         success: true, message: '',
         model: []
       };
-      mockUnitsService.getAllUnits.and.returnValue(of(mockResult));
+      mockUnitsService.getAllUnits.mockReturnValue(of(mockResult));
 
       component.openCreateModal();
 
@@ -115,9 +124,9 @@ describe('UnitsComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(false)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
 
-      mockUnitsService.getAllUnits.calls.reset();
+      mockUnitsService.getAllUnits.mockClear();
       component.openCreateModal();
 
       expect(mockDialog.open).toHaveBeenCalled();
@@ -131,13 +140,13 @@ describe('UnitsComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(true)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
       
       const mockResult: OperationDataResult<Array<UnitDto>> = {
         success: true, message: '',
         model: []
       };
-      mockUnitsService.getAllUnits.and.returnValue(of(mockResult));
+      mockUnitsService.getAllUnits.mockReturnValue(of(mockResult));
 
       component.openMoveModal(selectedUnit);
 
@@ -152,13 +161,13 @@ describe('UnitsComponent', () => {
       const mockDialogRef = {
         afterClosed: () => of(true)
       };
-      mockDialog.open.and.returnValue(mockDialogRef as any);
+      mockDialog.open.mockReturnValue(mockDialogRef as any);
       
       const mockResult: OperationDataResult<Array<UnitDto>> = {
         success: true, message: '',
         model: []
       };
-      mockUnitsService.getAllUnits.and.returnValue(of(mockResult));
+      mockUnitsService.getAllUnits.mockReturnValue(of(mockResult));
 
       component.openModalUnitsOtpCode(selectedUnit);
 

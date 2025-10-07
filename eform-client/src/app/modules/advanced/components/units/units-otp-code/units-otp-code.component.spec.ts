@@ -9,13 +9,17 @@ import { UnitDto, OperationDataResult } from 'src/app/common/models';
 describe('UnitsOtpCodeComponent', () => {
   let component: UnitsOtpCodeComponent;
   let fixture: ComponentFixture<UnitsOtpCodeComponent>;
-  let mockUnitsService: jasmine.SpyObj<UnitsService>;
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<UnitsOtpCodeComponent>>;
+  let mockUnitsService: any;
+  let mockDialogRef: any;
   let mockDialogData: UnitDto;
 
   beforeEach(waitForAsync(() => {
-    mockUnitsService = jasmine.createSpyObj('UnitsService', ['requestOtp']);
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+    mockUnitsService = {
+          requestOtp: jest.fn(),
+        };
+    mockDialogRef = {
+          close: jest.fn(),
+        };
     mockDialogData = { id: 1, microtingUid: 12345, siteName: 'Test Site' } as UnitDto;
 
     TestBed.configureTestingModule({
@@ -78,7 +82,7 @@ describe('UnitsOtpCodeComponent', () => {
         success: true, message: '',
         model: mockUnit
       };
-      mockUnitsService.requestOtp.and.returnValue(of(mockResult));
+      mockUnitsService.requestOtp.mockReturnValue(of(mockResult));
 
       component.requestOtp();
 
@@ -91,7 +95,7 @@ describe('UnitsOtpCodeComponent', () => {
         success: false, message: '',
         model: null
       };
-      mockUnitsService.requestOtp.and.returnValue(of(mockResult));
+      mockUnitsService.requestOtp.mockReturnValue(of(mockResult));
 
       component.requestOtp();
 
@@ -100,7 +104,7 @@ describe('UnitsOtpCodeComponent', () => {
     });
 
     it('should handle null response', () => {
-      mockUnitsService.requestOtp.and.returnValue(of(null));
+      mockUnitsService.requestOtp.mockReturnValue(of(null));
 
       component.requestOtp();
 

@@ -10,14 +10,20 @@ import { UnitModel, SiteDto, DeviceUserRequestModel, OperationResult, OperationD
 describe('UnitCreateComponent', () => {
   let component: UnitCreateComponent;
   let fixture: ComponentFixture<UnitCreateComponent>;
-  let mockUnitsService: jasmine.SpyObj<UnitsService>;
-  let mockDeviceUserService: jasmine.SpyObj<DeviceUserService>;
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<UnitCreateComponent>>;
+  let mockUnitsService: any;
+  let mockDeviceUserService: any;
+  let mockDialogRef: any;
 
   beforeEach(waitForAsync(() => {
-    mockUnitsService = jasmine.createSpyObj('UnitsService', ['createUnit']);
-    mockDeviceUserService = jasmine.createSpyObj('DeviceUserService', ['getDeviceUsersFiltered']);
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+    mockUnitsService = {
+          createUnit: jest.fn(),
+        };
+    mockDeviceUserService = {
+          getDeviceUsersFiltered: jest.fn(),
+        };
+    mockDialogRef = {
+          close: jest.fn(),
+        };
 
     TestBed.configureTestingModule({
       declarations: [UnitCreateComponent],
@@ -49,7 +55,7 @@ describe('UnitCreateComponent', () => {
         success: true, message: '',
         model: mockSites
       };
-      mockDeviceUserService.getDeviceUsersFiltered.and.returnValue(of(mockResult));
+      mockDeviceUserService.getDeviceUsersFiltered.mockReturnValue(of(mockResult));
 
       component.ngOnInit();
 
@@ -67,7 +73,7 @@ describe('UnitCreateComponent', () => {
         success: true, message: '',
         model: mockSites
       };
-      mockDeviceUserService.getDeviceUsersFiltered.and.returnValue(of(mockResult));
+      mockDeviceUserService.getDeviceUsersFiltered.mockReturnValue(of(mockResult));
 
       component.loadAllSimpleSites();
 
@@ -82,7 +88,7 @@ describe('UnitCreateComponent', () => {
         success: true, message: '',
         model: []
       };
-      mockDeviceUserService.getDeviceUsersFiltered.and.returnValue(of(mockResult));
+      mockDeviceUserService.getDeviceUsersFiltered.mockReturnValue(of(mockResult));
 
       component.loadAllSimpleSites();
 
@@ -116,7 +122,7 @@ describe('UnitCreateComponent', () => {
         success: true,
         message: ''
       };
-      mockUnitsService.createUnit.and.returnValue(of(mockResult));
+      mockUnitsService.createUnit.mockReturnValue(of(mockResult));
       component.unitModel = new UnitModel();
       component.unitModel.siteId = 1;
 
@@ -131,7 +137,7 @@ describe('UnitCreateComponent', () => {
         success: false,
         message: ''
       };
-      mockUnitsService.createUnit.and.returnValue(of(mockResult));
+      mockUnitsService.createUnit.mockReturnValue(of(mockResult));
       component.unitModel = new UnitModel();
 
       component.createUnit();
@@ -141,7 +147,7 @@ describe('UnitCreateComponent', () => {
     });
 
     it('should handle null response', () => {
-      mockUnitsService.createUnit.and.returnValue(of(null));
+      mockUnitsService.createUnit.mockReturnValue(of(null));
       component.unitModel = new UnitModel();
 
       component.createUnit();

@@ -13,10 +13,19 @@ describe('EmailRecipientCreateComponent', () => {
   let fixture: ComponentFixture<EmailRecipientsNewComponent>;
 
   beforeEach(waitForAsync(() => {
-    const mockEmailRecipientsService = jasmine.createSpyObj('EmailRecipientsService', ['create']);
-    const mockToastrService = jasmine.createSpyObj('ToastrService', ['success', 'error']);
-    const mockTranslateService = jasmine.createSpyObj('TranslateService', ['instant']);
-    const mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+    const mockEmailRecipientsService = {
+          create: jest.fn(),
+        };
+    const mockToastrService = {
+          success: jest.fn(),
+          error: jest.fn(),
+        };
+    const mockTranslateService = {
+          instant: jest.fn(),
+        };
+    const mockDialogRef = {
+          close: jest.fn(),
+        };
     
     TestBed.configureTestingModule({
       declarations: [ EmailRecipientsNewComponent, MockTranslatePipe ],
