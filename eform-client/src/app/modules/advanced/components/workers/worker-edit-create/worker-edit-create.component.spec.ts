@@ -44,6 +44,7 @@ describe('WorkerEditCreateComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkerEditCreateComponent);
     component = fixture.componentInstance;
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {
@@ -66,7 +67,7 @@ describe('WorkerEditCreateComponent', () => {
     
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      declarations: [WorkerEditCreateComponent],
+      declarations: [WorkerEditCreateComponent, MockTranslatePipe],
       providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },

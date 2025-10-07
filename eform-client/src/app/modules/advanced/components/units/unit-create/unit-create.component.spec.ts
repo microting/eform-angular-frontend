@@ -6,6 +6,7 @@ import { DeviceUserService } from 'src/app/common/services/device-users';
 import { MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { UnitModel, SiteDto, DeviceUserRequestModel, OperationResult, OperationDataResult } from 'src/app/common/models';
+import { MockTranslatePipe } from 'src/test-helpers';
 
 describe('UnitCreateComponent', () => {
   let component: UnitCreateComponent;
@@ -26,7 +27,7 @@ describe('UnitCreateComponent', () => {
         };
 
     TestBed.configureTestingModule({
-      declarations: [UnitCreateComponent],
+      declarations: [UnitCreateComponent, MockTranslatePipe],
       providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
@@ -39,6 +40,7 @@ describe('UnitCreateComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UnitCreateComponent);
     component = fixture.componentInstance;
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {
@@ -77,7 +79,7 @@ describe('UnitCreateComponent', () => {
 
       component.loadAllSimpleSites();
 
-      expect(mockDeviceUserService.getDeviceUsersFiltered).toHaveBeenCalledWith(jasmine.any(DeviceUserRequestModel));
+      expect(mockDeviceUserService.getDeviceUsersFiltered).toHaveBeenCalledWith(expect.any(DeviceUserRequestModel));
       expect(component.simpleSites.length).toBe(2);
       expect(component.simpleSites[0].fullName).toBe('Site 1');
       expect(component.simpleSites[1].fullName).toBe('Site 2');

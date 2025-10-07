@@ -5,6 +5,7 @@ import { FoldersService } from 'src/app/common/services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { FolderDto, OperationResult } from 'src/app/common/models';
+import { MockTranslatePipe } from 'src/test-helpers';
 
 describe('FolderDeleteComponent', () => {
   let component: FolderDeleteComponent;
@@ -23,7 +24,7 @@ describe('FolderDeleteComponent', () => {
     mockDialogData = { id: 1, name: 'Test Folder' } as FolderDto;
 
     TestBed.configureTestingModule({
-      declarations: [FolderDeleteComponent],
+      declarations: [FolderDeleteComponent, MockTranslatePipe],
       providers: [
         { provide: FoldersService, useValue: mockFoldersService },
         { provide: MatDialogRef, useValue: mockDialogRef },
@@ -36,7 +37,7 @@ describe('FolderDeleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FolderDeleteComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {
