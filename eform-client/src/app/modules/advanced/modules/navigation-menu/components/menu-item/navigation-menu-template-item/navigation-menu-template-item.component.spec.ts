@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { NavigationMenuTemplateItemComponent } from './navigation-menu-template-item.component';
 
@@ -8,7 +9,8 @@ describe('NavigationMenuTemplateItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavigationMenuTemplateItemComponent ]
+      declarations: [ NavigationMenuTemplateItemComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

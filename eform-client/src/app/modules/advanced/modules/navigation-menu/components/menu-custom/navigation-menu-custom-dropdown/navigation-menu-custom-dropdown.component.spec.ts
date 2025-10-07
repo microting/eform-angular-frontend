@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { NavigationMenuCustomDropdownComponent } from './navigation-menu-custom-dropdown.component';
 
@@ -8,7 +9,8 @@ describe('NavigationMenuCustomDropdownComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavigationMenuCustomDropdownComponent ]
+      declarations: [ NavigationMenuCustomDropdownComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

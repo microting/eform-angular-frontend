@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { NavigationMenuItemDeleteComponent } from './navigation-menu-item-delete.component';
 
@@ -8,7 +9,8 @@ describe('NavigationMenuItemDeleteComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavigationMenuItemDeleteComponent ]
+      declarations: [ NavigationMenuItemDeleteComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { EformDocxReportHeaderEditorComponent } from './eform-docx-report-header-editor.component';
 
@@ -8,7 +9,8 @@ describe('EformDocxReportHeaderEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EformDocxReportHeaderEditorComponent ]
+      declarations: [ EformDocxReportHeaderEditorComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   });

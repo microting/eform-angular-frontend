@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FoldersComponent } from './folders.component';
 import { FoldersService } from 'src/app/common/services';
 import { MatDialog } from '@angular/material/dialog';
@@ -26,8 +27,9 @@ describe('FoldersComponent', () => {
         { provide: FoldersService, useValue: mockFoldersService },
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
-        { provide: Overlay, useValue: {} }
-      ]
+        { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 

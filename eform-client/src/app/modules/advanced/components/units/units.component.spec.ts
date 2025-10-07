@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UnitsComponent } from './units.component';
 import { UnitsService } from 'src/app/common/services';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,8 +31,9 @@ describe('UnitsComponent', () => {
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
         { provide: TranslateService, useValue: mockTranslateService },
-        { provide: Overlay, useValue: {} }
-      ]
+        { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
