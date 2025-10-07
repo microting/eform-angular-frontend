@@ -47,12 +47,13 @@ if (typeof global.expect === 'undefined') {
             return mockFn;
           }
         }),
-        configurable: true
+        configurable: true,
+        enumerable: false  // Don't enumerate this property
       });
       
-      // Add Jasmine-style 'calls' API that doesn't interfere with Jest
+      // Add Jasmine-style 'calls' API but make it non-enumerable to avoid conflicts
       Object.defineProperty(obj[methodName], 'calls', {
-        get: () => ({
+        value: {
           reset: () => {
             mockFn.mockClear();
           },
@@ -72,8 +73,10 @@ if (typeof global.expect === 'undefined') {
           argsFor: (index: number) => {
             return mockFn.mock.calls[index];
           }
-        }),
-        configurable: true
+        },
+        writable: true,
+        configurable: true,
+        enumerable: false  // Don't enumerate this property
       });
     });
     return obj;
@@ -97,12 +100,13 @@ if (typeof global.expect === 'undefined') {
           return spy;
         }
       }),
-      configurable: true
+      configurable: true,
+      enumerable: false
     });
     
     // Add Jasmine-style 'calls' API
     Object.defineProperty(spy, 'calls', {
-      get: () => ({
+      value: {
         reset: () => {
           spy.mockClear();
         },
@@ -122,8 +126,10 @@ if (typeof global.expect === 'undefined') {
         argsFor: (index: number) => {
           return spy.mock.calls[index];
         }
-      }),
-      configurable: true
+      },
+      writable: true,
+      configurable: true,
+      enumerable: false
     });
     
     return spy;
