@@ -3,7 +3,7 @@
 
 module.exports = function (config) {
   config.set({
-    logLevel: config.LOG_DEBUG,  // More verbose logging
+    logLevel: config.LOG_INFO,  // Less verbose logging for better performance
     client: {
       captureConsole: true,
       clearContext: false,
@@ -11,7 +11,7 @@ module.exports = function (config) {
         random: false  // Run tests in order for consistency
       }
     },
-    browserNoActivityTimeout: 120000,  // Increase to 2 minutes
+    browserNoActivityTimeout: 300000,  // Increase to 5 minutes
     browserDisconnectTimeout: 10000,
     browserDisconnectTolerance: 3,
     captureTimeout: 210000,
