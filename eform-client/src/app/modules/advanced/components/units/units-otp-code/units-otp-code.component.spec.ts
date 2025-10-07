@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UnitsOtpCodeComponent } from './units-otp-code.component';
-import { UnitsService } from 'src/app/common/services';
+import { UnitsService } from 'src/app/common/services/advanced';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { UnitDto, OperationDataResult } from 'src/app/common/models';
@@ -31,10 +31,13 @@ describe('UnitsOtpCodeComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
-    
+  }));
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(UnitsOtpCodeComponent);
     component = fixture.componentInstance;
-  }));
+    // Don't call fixture.detectChanges() here
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
