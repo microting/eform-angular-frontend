@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { NavigationMenuItemDeleteComponent } from './navigation-menu-item-delete.component';
