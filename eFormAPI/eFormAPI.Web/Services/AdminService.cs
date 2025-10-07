@@ -262,24 +262,24 @@ public class AdminService(
             {
                 worker.IsLocked = true;
                 await worker.Update(sdkDbContext);
-            }
 
-            var siteWorker = await sdkDbContext.SiteWorkers
-                .Include(x => x.Site)
-                .Where(x => x.WorkerId == worker.Id && x.WorkflowState != Constants.WorkflowStates.Removed)
-                .FirstOrDefaultAsync();
+                var siteWorker = await sdkDbContext.SiteWorkers
+                    .Include(x => x.Site)
+                    .Where(x => x.WorkerId == worker.Id && x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .FirstOrDefaultAsync();
 
-            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Id == siteWorker.SiteId && x.WorkflowState != Constants.WorkflowStates.Removed);
-            // lock site and units
-            if (site != null)
-            {
-                site.IsLocked = true;
-                await site.Update(sdkDbContext);
-                var units = await sdkDbContext.Units.Where(x => x.SiteId == site.Id).ToListAsync();
-                foreach (Unit unit in units)
+                var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Id == siteWorker.SiteId && x.WorkflowState != Constants.WorkflowStates.Removed);
+                // lock site and units
+                if (site != null)
                 {
-                    unit.IsLocked = true;
-                    await unit.Update(sdkDbContext);
+                    site.IsLocked = true;
+                    await site.Update(sdkDbContext);
+                    var units = await sdkDbContext.Units.Where(x => x.SiteId == site.Id).ToListAsync();
+                    foreach (Unit unit in units)
+                    {
+                        unit.IsLocked = true;
+                        await unit.Update(sdkDbContext);
+                    }
                 }
             }
 
@@ -384,29 +384,30 @@ public class AdminService(
             }
 
             var worker = await sdkDbContext.Workers.FirstOrDefaultAsync(x => x.Email == user.Email && x.WorkflowState != Constants.WorkflowStates.Removed);
-            var siteWorker = await sdkDbContext.SiteWorkers
-                .Where(x => x.WorkerId == worker.Id && x.WorkflowState != Constants.WorkflowStates.Removed)
-                .FirstOrDefaultAsync();
-
-            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Id == siteWorker.SiteId
-                                                                          && x.WorkflowState != Constants.WorkflowStates.Removed);
-            if (site != null)
+            if (worker != null)
             {
-                var language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+                var siteWorker = await sdkDbContext.SiteWorkers
+                    .Where(x => x.WorkerId == worker.Id && x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .FirstOrDefaultAsync();
 
-                await core.SiteUpdate((int)site.MicrotingUid!,
-                    $"{userRegisterModel.FirstName} {userRegisterModel.LastName}", userRegisterModel.FirstName,
-                    userRegisterModel.LastName, userRegisterModel.Email, language.LanguageCode);
+                var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.Id == siteWorker.SiteId
+                                                                              && x.WorkflowState !=
+                                                                              Constants.WorkflowStates.Removed);
+                if (site != null)
+                {
+                    var language = await sdkDbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+
+                    await core.SiteUpdate((int)site.MicrotingUid!,
+                        $"{userRegisterModel.FirstName} {userRegisterModel.LastName}", userRegisterModel.FirstName,
+                        userRegisterModel.LastName, userRegisterModel.Email, language.LanguageCode);
+                }
             }
             user.EmailConfirmed = true;
             user.Email = userRegisterModel.Email;
             user.UserName = userRegisterModel.Email;
-            if (worker == null)
-            {
-                user.FirstName = userRegisterModel.FirstName;
-                user.LastName = userRegisterModel.LastName;
-            }
-            else
+            user.FirstName = userRegisterModel.FirstName;
+            user.LastName = userRegisterModel.LastName;
+            if (worker != null)
             {
                 worker.Email = userRegisterModel.Email;
                 await worker.Update(sdkDbContext);

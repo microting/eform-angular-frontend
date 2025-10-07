@@ -15,6 +15,8 @@ export class ChangePasswordComponent implements OnInit {
 
   changePasswordModel: ChangePasswordModel = new ChangePasswordModel();
   changePasswordForm: FormGroup;
+  newPasswordVisible = false;
+  newPasswordConfirmVisible = false;
   passwordStrength = 0; // Track password strength score
   constructor() {
     this.changePasswordForm = this.fb.group({
@@ -55,10 +57,13 @@ export class ChangePasswordComponent implements OnInit {
     }
   }
 
-/*  checkPasswords(group: FormGroup) {
-    let pass = group.get('newPassword').value;
-    let confirmPass = group.get('confirmPassword').value;
 
-    return pass === confirmPass ? null : { notSame: true }
-  }*/
+
+  toggleNewPasswordVisibility() {
+    this.newPasswordVisible = !this.newPasswordVisible;
+  }
+
+  toggleNewPasswordConfirmVisibility() {
+    this.newPasswordConfirmVisible = !this.newPasswordConfirmVisible;
+  }
 }
