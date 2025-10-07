@@ -1,4 +1,4 @@
-# Karma Unit Testing Guide for eForm Angular Frontend
+# Jest Unit Testing Guide for eForm Angular Frontend
 
 ## Overview
 
@@ -7,29 +7,31 @@ This document describes the unit testing approach and patterns used for testing 
 ## Test Infrastructure
 
 ### Tools & Frameworks
-- **Jasmine**: Behavior-driven testing framework
-- **Karma**: Test runner for executing tests in browsers
+- **Jest**: Modern JavaScript testing framework
+- **jest-preset-angular**: Angular-specific Jest preset
 - **Angular Testing Utilities**: `TestBed`, `ComponentFixture`, etc.
 
 ### Configuration Files
-- `src/karma.conf.js`: Karma configuration with increased timeouts for CI/CD
-- `src/test.ts`: Test entry point with zone.js and Jasmine setup
+- `jest.config.js`: Jest configuration with Angular-specific settings
+- `src/setup-jest.ts`: Jest setup file with Angular test environment initialization
 - `src/tsconfig.spec.json`: TypeScript configuration for tests
 
 ### Running Tests
 
 ```bash
 # Run all tests
-ng test
-
-# Run unit tests (CI/CD friendly)
 npm run test:unit
 
-# Run tests in headless mode (for CI/CD)
-ng test --watch=false --browsers=ChromeHeadless
+# Run tests in watch mode (for development)
+npm run test:watch
+# or
+npm run test:local_unit
 
-# Run with code coverage
-ng test --code-coverage
+# Run tests with coverage
+npm run test:unit
+
+# Run tests for CI/CD
+npm run test:ci
 ```
 
 ## Testing Patterns and Best Practices
@@ -316,12 +318,17 @@ ng test --include='**/component-name.component.spec.ts'
 
 ## Continuous Integration
 
-Tests are designed to run in CI/CD pipelines:
+Tests are automatically run in GitHub Actions workflows using Jest:
 
 ```bash
-# Headless mode for CI/CD
-ng test --watch=false --browsers=ChromeHeadless --code-coverage
+# Run tests in CI/CD mode
+npm run test:ci
 ```
+
+Jest is configured with:
+- Code coverage reporting
+- CI-specific optimizations (--ci flag)
+- Maximum of 2 workers for parallel execution
 
 ## Contributing
 
@@ -335,5 +342,5 @@ When adding new components:
 ## Additional Resources
 
 - [Angular Testing Guide](https://angular.dev/guide/testing)
-- [Jasmine Documentation](https://jasmine.github.io/)
-- [Karma Configuration](https://karma-runner.github.io/latest/config/configuration-file.html)
+- [Jest Documentation](https://jestjs.io/)
+- [jest-preset-angular Documentation](https://thymikee.github.io/jest-preset-angular/)

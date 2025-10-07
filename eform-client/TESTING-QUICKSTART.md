@@ -1,4 +1,4 @@
-# Karma Unit Testing - Quick Start Guide
+# Jest Unit Testing - Quick Start Guide
 
 This guide will help you quickly get started with unit testing in the eForm Angular Frontend project.
 
@@ -7,16 +7,18 @@ This guide will help you quickly get started with unit testing in the eForm Angu
 ```bash
 # Run all tests
 cd eform-client
-ng test
-
-# Run unit tests (Karma) - CI/CD friendly
 npm run test:unit
 
-# Run tests in headless mode (for CI/CD)
-ng test --watch=false --browsers=ChromeHeadless
+# Run tests in watch mode (for development)
+npm run test:watch
+# or
+npm run test:local_unit
 
-# Run tests with code coverage
-ng test --code-coverage --watch=false --browsers=ChromeHeadless
+# Run tests with coverage (default for test:unit)
+npm run test:unit
+
+# Run tests for CI/CD
+npm run test:ci
 
 # Generate a new spec file template
 ./generate-spec.sh src/app/modules/path/to/component.component.ts
@@ -146,7 +148,7 @@ For each component, ensure:
 
 Tests can be run in CI/CD pipelines with:
 ```bash
-ng test --watch=false --browsers=ChromeHeadless --code-coverage
+npm run test:ci
 ```
 
-Karma is configured with appropriate timeouts for CI/CD environments.
+Jest is configured with appropriate settings for CI/CD environments.
