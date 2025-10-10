@@ -2797,10 +2797,10 @@
     "@emnapi/runtime" "^1.5.0"
     "@tybys/wasm-util" "^0.10.1"
 
-"@ng-matero/extensions@20.2.1":
-  version "20.2.1"
-  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-20.2.1.tgz#4a3e06e30694d3f451f16c364a8879b80343e964"
-  integrity sha512-8NO1E1jDhZdU+aWD1mTZjbidKRxQndKyb9fbfWI0MNW0aC4r1mpk53P2TF701GNz9QpKZKnuxVSdubYTwmQ5mA==
+"@ng-matero/extensions@20.3.1":
+  version "20.3.1"
+  resolved "https://registry.yarnpkg.com/@ng-matero/extensions/-/extensions-20.3.1.tgz#7291cce9ecd8d44e2a70b9766544210ba8797f81"
+  integrity sha512-eR0A88Yj+CSjCgrV/m+rHPtGwThPWTWjUxdZL9T8dz+j9FmrLBjJGbm4QVw47tu69ZHl0epBFjpHEXmxqaZTdA==
   dependencies:
     "@ng-select/ng-select" "^20.0.0"
     ngx-color "^10.0.0"
