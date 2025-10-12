@@ -375,10 +375,6 @@ public class CasesService(
                 .OrderByDescending(x => x.UpdatedAt)
                 .Select(x => new { x.Id, x.UpdatedAt, x.CheckListId })
                 .FirstOrDefaultAsync();
-            var eFormText = await sdkDbContext.CheckListTranslations
-                .Where(x => x.CheckListId == latestActivity.CheckListId)
-                .Select(x => x.Text)
-                .FirstOrDefaultAsync();
 
             if (latestActivity == null)
             {
@@ -386,6 +382,10 @@ public class CasesService(
                     localizationService.GetString("CouldNotGetLatestActivity"));
             }
 
+            var eFormText = await sdkDbContext.CheckListTranslations
+                .Where(x => x.CheckListId == latestActivity.CheckListId)
+                .Select(x => x.Text)
+                .FirstOrDefaultAsync();
             if (eFormText == null)
             {
                 return new OperationDataResult<LatestCaseActivity>(false,
