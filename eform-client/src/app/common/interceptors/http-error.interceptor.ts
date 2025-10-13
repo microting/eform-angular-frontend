@@ -16,7 +16,7 @@ import {
 } from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {AuthStateService} from 'src/app/common/store';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {AuthMethods, LoaderService} from 'src/app/common/services';
 import {AuthResponseModel, OperationDataResult} from 'src/app/common/models';
 import * as Sentry from '@sentry/angular';
@@ -24,13 +24,10 @@ import * as Sentry from '@sentry/angular';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
+  private loaderService = inject(LoaderService);
+  private toastrService = inject(ToastrService);
+  private authStateService = inject(AuthStateService);
 
-  constructor(
-    private loaderService: LoaderService,
-    private toastrService: ToastrService,
-    private authStateService: AuthStateService,
-  ) {
-  }
 
   intercept(
     request: HttpRequest<any>,

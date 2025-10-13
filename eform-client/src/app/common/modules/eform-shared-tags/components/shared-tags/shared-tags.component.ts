@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {
   CommonDictionaryModel,
   SharedTagModel,
@@ -17,6 +12,8 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
     standalone: false
 })
 export class SharedTagsComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<SharedTagsComponent>>(MatDialogRef);
+
   public availableTags: CommonDictionaryModel[] = [];
   public showMultipleCreateBtn: boolean = false;
   public showCreateTag: EventEmitter<void> = new EventEmitter<void>();
@@ -24,9 +21,9 @@ export class SharedTagsComponent implements OnInit {
   public showDeleteTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
   public showMultipleCreateTag: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(
-    public dialogRef: MatDialogRef<SharedTagsComponent>,
-    @Inject(MAT_DIALOG_DATA) availableTags: CommonDictionaryModel[] = [],) {
+  constructor() {
+    const availableTags = inject(MAT_DIALOG_DATA) ?? [];
+
     this.availableTags = availableTags;
   }
 

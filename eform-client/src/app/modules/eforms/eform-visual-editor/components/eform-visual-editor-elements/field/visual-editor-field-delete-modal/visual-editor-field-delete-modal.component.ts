@@ -1,8 +1,4 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { EformVisualEditorRecursionFieldModel } from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
@@ -13,9 +9,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class VisualEditorFieldDeleteModalComponent implements OnInit {
-  constructor(
-    public dialogRef: MatDialogRef<VisualEditorFieldDeleteModalComponent>,
-    @Inject(MAT_DIALOG_DATA) private recursionFieldModel: EformVisualEditorRecursionFieldModel) {}
+  dialogRef = inject<MatDialogRef<VisualEditorFieldDeleteModalComponent>>(MatDialogRef);
+  private recursionFieldModel = inject<EformVisualEditorRecursionFieldModel>(MAT_DIALOG_DATA);
+
 
   ngOnInit() {}
 

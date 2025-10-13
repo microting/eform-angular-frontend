@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   UserInfoModel,
@@ -18,6 +18,12 @@ import {TranslateService} from '@ngx-translate/core';
     standalone: false
 })
 export class SecurityGroupUpdateComponent implements OnInit {
+  private adminService = inject(AdminService);
+  private securityGroupsService = inject(SecurityGroupsService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private translateService = inject(TranslateService);
+
   securityGroupModel: SecurityGroupModel = new SecurityGroupModel();
   securityGroupUpdateModel: SecurityGroupUpdateModel = new SecurityGroupUpdateModel();
   selectedGroupId: number;
@@ -43,13 +49,7 @@ export class SecurityGroupUpdateComponent implements OnInit {
     },
   ];
 
-  constructor(
-    private adminService: AdminService,
-    private securityGroupsService: SecurityGroupsService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private translateService: TranslateService,
-  ) {
+  constructor() {
     this.route.params.subscribe((params) => {
       this.selectedGroupId = params['id'];
       this.getSecurityGroup(this.selectedGroupId);

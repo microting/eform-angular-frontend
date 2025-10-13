@@ -1,5 +1,5 @@
-@import "../../../../scss/utilities/colors";
-@import "../../../../scss/utilities/variables";
+@use "../../../../scss/utilities/colors" as *;
+@use "../../../../scss/utilities/variables" as *;
 .mat-drawer {
   max-width: 15vw;
 }

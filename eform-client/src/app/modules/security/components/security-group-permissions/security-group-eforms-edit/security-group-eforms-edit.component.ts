@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {EformPermissionsModel} from 'src/app/common/models/security/group-permissions/eform';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -10,11 +10,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class SecurityGroupEformsEditComponent implements OnInit {
-  constructor(
-    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-    public dialogRef: MatDialogRef<SecurityGroupEformsEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public eformSecurityModel: EformPermissionsModel = new EformPermissionsModel()
-  ) {}
+  private securityGroupEformsService = inject(SecurityGroupEformsPermissionsService);
+  dialogRef = inject<MatDialogRef<SecurityGroupEformsEditComponent>>(MatDialogRef);
+  eformSecurityModel = inject<EformPermissionsModel>(MAT_DIALOG_DATA) ?? new EformPermissionsModel();
+
 
   ngOnInit() {
   }

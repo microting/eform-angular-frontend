@@ -1,9 +1,5 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
-import {  } from 'src/app/common/models/navigation-menu';
+import { Component, OnInit, inject } from '@angular/core';
+
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import { applicationLanguages } from 'src/app/common/const/application-languages.const';
 import {CommonDictionaryModel, NavigationMenuItemModel} from 'src/app/common/models';
@@ -16,16 +12,16 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class NavigationMenuCustomDropdownComponent implements OnInit {
-  customDropdownModel: NavigationMenuItemModel = new NavigationMenuItemModel();
-
-  constructor(
-    public dialogRef: MatDialogRef<NavigationMenuCustomDropdownComponent>,
-    @Inject(MAT_DIALOG_DATA) public availableSecurityGroups: CommonDictionaryModel[] = [
-      {
+  dialogRef = inject<MatDialogRef<NavigationMenuCustomDropdownComponent>>(MatDialogRef);
+  availableSecurityGroups = inject(MAT_DIALOG_DATA) ?? [
+    {
         id: 1,
         name: 'Test',
         description: ''
-      },]) {}
+    },
+];
+
+  customDropdownModel: NavigationMenuItemModel = new NavigationMenuItemModel();
 
   ngOnInit(): void {
     this.customDropdownModel = this.generateLanguages(this.customDropdownModel);

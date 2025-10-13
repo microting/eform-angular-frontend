@@ -1,4 +1,4 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthStateService} from 'src/app/common/store';
 import {selectBearerToken} from 'src/app/state/auth/auth.selector';
@@ -9,12 +9,11 @@ import {Store} from '@ngrx/store';
     standalone: false
 })
 export class AuthAudioPipe implements PipeTransform {
+  private http = inject(HttpClient);
+  private authStore = inject(Store);
+  private authStateService = inject(AuthStateService);
+
   private selectBearerToken$ = this.authStore.select(selectBearerToken);
-  constructor(
-    private http: HttpClient,
-    private authStore: Store,
-    private authStateService: AuthStateService
-  ) {}
 
   async transform(src: string): Promise<any> {
     let token = '';

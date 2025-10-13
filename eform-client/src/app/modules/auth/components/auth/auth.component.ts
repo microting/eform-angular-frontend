@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {EventType, NavigationEnd, Router} from '@angular/router';
 import {LoginPageSettingsModel} from 'src/app/common/models';
 import {AppSettingsService} from 'src/app/common/services';
@@ -13,17 +13,16 @@ import {filter} from 'rxjs/operators';
     standalone: false
 })
 export class AuthComponent implements OnInit {
+  private router = inject(Router);
+  private googleAuthService = inject(GoogleAuthService);
+  settingsService = inject(AppSettingsService);
+
   loginPageSettings: LoginPageSettingsModel = new LoginPageSettingsModel();
   loginImage: any;
   twoFactorForced = false;
   onForgotPasswordPage = false;
 
-  constructor(
-    private router: Router,
-    private googleAuthService: GoogleAuthService,
-    public settingsService: AppSettingsService,
-    // private authService: AuthStateService,
-  ) {
+  constructor() {
     console.debug('AuthComponent - constructor');
   }
 

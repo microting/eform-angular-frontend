@@ -72,7 +72,7 @@ public class AudioController(IEFormCoreService coreHelper, ILogger<AudioControll
             //    new MediaTypeHeaderValue("application/octet-stream");
             //result.Content.Headers.ContentLength = stream.Length;
             //result.Content.Headers.ContentRange = new ContentRangeHeaderValue(0, stream.Length);
-            Response.Headers.Add("Accept-Ranges", "bytes");
+            Response.Headers["Accept-Ranges"] = "bytes";
             Response.Headers.Remove("Cache-Control");
             return File(stream, "audio/wav");
         }

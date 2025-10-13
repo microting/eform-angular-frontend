@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   CaseListModel,
@@ -18,7 +18,8 @@ const CasesMethods = {
 
 @Injectable()
 export class CasesService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getById(
     id: number,

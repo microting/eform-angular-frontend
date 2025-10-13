@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   SecurityGroupModel,
   SecurityGroupSettingsUpdateModel,
@@ -31,6 +31,15 @@ import {
     standalone: false
 })
 export class SecurityPageComponent implements OnInit, OnDestroy {
+  private store = inject(Store);
+  private securityGroupsService = inject(SecurityGroupsService);
+  securityStateService = inject(SecurityStateService);
+  private translateService = inject(TranslateService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+
   tableHeaders: MtxGridColumn[] = [
     {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true},
     {header: this.translateService.stream('GroupName'), sortProp: {id: 'GroupName'}, field: 'groupName', sortable: true},
@@ -93,18 +102,6 @@ export class SecurityPageComponent implements OnInit, OnDestroy {
   public selectSecuritySort$ = this.store.select(selectSecuritySort);
   public selectSecurityIsSortDsc$ = this.store.select(selectSecurityIsSortDsc);
   public selectSecurityPagination$ = this.store.select(selectSecurityPagination);
-
-  constructor(
-    private store: Store,
-    private securityGroupsService: SecurityGroupsService,
-    public securityStateService: SecurityStateService,
-    private translateService: TranslateService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-  ) {
-  }
 
   ngOnInit() {
     this.getSecurityGroups();

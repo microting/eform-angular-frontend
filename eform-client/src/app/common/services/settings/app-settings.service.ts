@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   AdminSettingsModel,
@@ -31,8 +31,9 @@ const SettingsMethods = {
 
 @Injectable()
 export class AppSettingsService {
+  private apiBaseService = inject(ApiBaseService);
+
   loginPageSettingsModel: LoginPageSettingsModel = new LoginPageSettingsModel();
-  constructor(private apiBaseService: ApiBaseService) {}
 
   updateConnectionString(model: SettingsModel): Observable<OperationResult> {
     return this.apiBaseService.post<SettingsModel>(

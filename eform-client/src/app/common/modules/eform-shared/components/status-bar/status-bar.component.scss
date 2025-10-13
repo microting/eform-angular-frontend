@@ -1,3 +1,5 @@
+@use "sass:list";
+
 $statuses: (
   0: (#bdbdbd, white),
   33: (#757575, white),
@@ -18,8 +20,8 @@ $statuses: (
 }
 
 @each $status, $background-color-and-color in $statuses {
-  $background-color: nth($background-color-and-color, 1);
-  $color-text: nth($background-color-and-color, 2);
+  $background-color: list.nth($background-color-and-color, 1);
+  $color-text: list.nth($background-color-and-color, 2);
   .status-#{$status} {
     background-color: $background-color;
     display: flex;

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   DeployModel,
@@ -41,7 +41,8 @@ const TemplateColumnMethods = {
 
 @Injectable()
 export class EFormService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getAll(
     model: TemplateRequestModel

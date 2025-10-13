@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   EformVisualEditorModel,
@@ -16,7 +16,8 @@ const TemplateVisualEditorMethods = {
   providedIn: 'root',
 })
 export class EformVisualEditorService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getVisualEditorTemplate(
     id: number

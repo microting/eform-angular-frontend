@@ -26,6 +26,10 @@
               "src/polyfills.ts"
             ],
             "tsConfig": "src/tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "dragula",
+              "file-saver"
+            ],
             "assets": [
               {
                 "glob": "**/*",
@@ -102,22 +106,9 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
-            "sourceMap": false,
-            "styles": [
-              "src/styles.scss",
-              "src/theme.scss"
-            ],
-            "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
+            "configPath": "jest.config.js"
           }
         }
       }

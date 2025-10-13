@@ -77,7 +77,7 @@ public class ClaimsTransformer : IClaimsTransformation
 
         if (auth == null)
         {
-            _httpContextAccessor.HttpContext.Response.Headers.Add(AuthConsts.UpdateHeaderName, AuthConsts.UpdateHeaderValue);
+            _httpContextAccessor.HttpContext.Response.Headers[AuthConsts.UpdateHeaderName] = AuthConsts.UpdateHeaderValue;
         }
         else
         {
@@ -86,7 +86,7 @@ public class ClaimsTransformer : IClaimsTransformation
 
             if (timeValue != auth.TimeStamp)
             {
-                _httpContextAccessor.HttpContext.Response.Headers.Add(AuthConsts.UpdateHeaderName, AuthConsts.UpdateHeaderValue);
+                _httpContextAccessor.HttpContext.Response.Headers[AuthConsts.UpdateHeaderName] = AuthConsts.UpdateHeaderValue;
             }
 
             // Add claims

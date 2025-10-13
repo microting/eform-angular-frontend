@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {AppSettingsService} from 'src/app/common/services';
 import {AdminSettingsModel, LanguagesModel} from 'src/app/common/models';
 import {take, zip, tap} from 'rxjs';
@@ -11,11 +11,9 @@ import {
 
 @Injectable({providedIn: 'root'})
 export class AppSettingsStateService {
-  constructor(
-    private service: AppSettingsService,
-    private authStore: Store
-  ) {
-  }
+  private service = inject(AppSettingsService);
+  private authStore = inject(Store);
+
 
   getAdminSettings() {
     return this.service.getAdminSettings().pipe(take(1));

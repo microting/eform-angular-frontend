@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import {EformDocxReportGenerateModel} from 'src/app/common/models';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {format} from 'date-fns';
@@ -21,10 +21,10 @@ export class EformDocxReportHeaderComponent implements OnInit {
   @Input() templateId: number;
   generateForm: FormGroup;
 
-  constructor(
-    iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer,
-  ) {
+  constructor() {
+    const iconRegistry = inject(MatIconRegistry);
+    const sanitizer = inject(DomSanitizer);
+
     iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(WordIcon));
   }
 

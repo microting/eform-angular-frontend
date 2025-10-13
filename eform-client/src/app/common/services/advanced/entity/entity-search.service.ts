@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   EntityGroupEditModel,
@@ -24,7 +24,8 @@ const AdvSearchableEntityMethods = {
 
 @Injectable()
 export class EntitySearchService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getEntitySearchableGroupList(
     model: AdvEntitySearchableGroupListRequestModel

@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-  OnDestroy,
-} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, OnDestroy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { AppMenuStateService } from 'src/app/common/store';
@@ -19,17 +12,15 @@ import { AppMenuStateService } from 'src/app/common/store';
     standalone: false
 })
 export class SubheaderPnComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
+  private appMenuService = inject(AppMenuStateService);
+
   @ViewChild('heading', { static: true }) heading: ElementRef;
 
   @Input() title = '';
   @Input() subtitle = '';
   @Input() heandingSizeRem = 2.5;
   @Input() forceStaticTitle = false;
-
-  constructor(
-    private router: Router,
-    private appMenuService: AppMenuStateService
-  ) {}
 
   ngOnDestroy() {}
 

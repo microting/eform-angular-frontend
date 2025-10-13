@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {UnitModel, SiteDto, UnitDto, DeviceUserRequestModel } from 'src/app/common/models';
 import {UnitsService, DeviceUserService} from 'src/app/common/services';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -10,15 +10,17 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class UnitMoveComponent implements OnInit {
+  private simpleSitesService = inject(DeviceUserService);
+  private unitsService = inject(UnitsService);
+  dialogRef = inject<MatDialogRef<UnitMoveComponent>>(MatDialogRef);
+  selectedUnitModel = inject<UnitDto>(MAT_DIALOG_DATA) ?? new UnitDto();
+
   unitModel: UnitModel = new UnitModel;
   simpleSites: Array<SiteDto> = [];
 
-  constructor(
-    private simpleSitesService: DeviceUserService,
-    private unitsService: UnitsService,
-    public dialogRef: MatDialogRef<UnitMoveComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedUnitModel: UnitDto = new UnitDto()
-  ) {
+  constructor() {
+    const selectedUnitModel = this.selectedUnitModel;
+
     this.unitModel.id = selectedUnitModel.id;
     this.unitModel.siteId = selectedUnitModel.siteMicrotingUid;
     if (this.simpleSites.length === 0) {

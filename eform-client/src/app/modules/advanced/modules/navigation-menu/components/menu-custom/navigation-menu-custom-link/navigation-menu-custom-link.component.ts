@@ -1,8 +1,4 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   NavigationMenuItemTypeEnum,
   applicationLanguagesTranslated,
@@ -17,11 +13,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class NavigationMenuCustomLinkComponent implements OnInit {
-  customLinkModel: NavigationMenuItemModel = new NavigationMenuItemModel();
+  dialogRef = inject<MatDialogRef<NavigationMenuCustomLinkComponent>>(MatDialogRef);
+  availableSecurityGroups = inject(MAT_DIALOG_DATA) ?? [];
 
-  constructor(
-    public dialogRef: MatDialogRef<NavigationMenuCustomLinkComponent>,
-    @Inject(MAT_DIALOG_DATA) public availableSecurityGroups: CommonDictionaryModel[] = []) {}
+  customLinkModel: NavigationMenuItemModel = new NavigationMenuItemModel();
 
   ngOnInit(): void {
     this.customLinkModel = this.generateLanguages(new NavigationMenuItemModel());}

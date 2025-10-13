@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import {EformVisualEditorFieldModel, LanguagesModel} from 'src/app/common/models';
 import {TranslationRequestModel, TranslationService} from 'src/app/common/services';
 
@@ -10,6 +10,8 @@ import {TranslationRequestModel, TranslationService} from 'src/app/common/servic
 })
 export class VisualEditorAdditionalFieldSaveButtonComponent
   implements OnInit, OnDestroy {
+  private translationService = inject(TranslationService);
+
   @Input() field: EformVisualEditorFieldModel;
   @Input() selectedLanguages: number[];
   @Input() appLanguages: LanguagesModel = new LanguagesModel();
@@ -23,9 +25,6 @@ export class VisualEditorAdditionalFieldSaveButtonComponent
     }
     return this.appLanguages.languages.filter((x) => x.isActive);
   }
-
-  constructor(
-    private translationService: TranslationService) {}
 
   ngOnInit() {}
 

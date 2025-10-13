@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {SiteDto} from 'src/app/common/models/dto';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -10,11 +10,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class DeleteDeviceUserModalComponent implements OnInit {
-  constructor(
-    private deviceUserService: DeviceUserService,
-    public dialogRef: MatDialogRef<DeleteDeviceUserModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedDeviceUser: SiteDto = new SiteDto()) {
-  }
+  private deviceUserService = inject(DeviceUserService);
+  dialogRef = inject<MatDialogRef<DeleteDeviceUserModalComponent>>(MatDialogRef);
+  selectedDeviceUser = inject<SiteDto>(MAT_DIALOG_DATA) ?? new SiteDto();
+
 
   ngOnInit() {
   }

@@ -3,12 +3,14 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "types": [
-      "jasmine",
-      "node"
-    ]
+      "jest",
+      "node",
+      "jasmine"
+    ],
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true
   },
   "files": [
-    "test.ts",
     "polyfills.ts"
   ],
   "include": [

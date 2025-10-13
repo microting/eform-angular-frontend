@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
-@import "lib/gallery";
-@import "lib/lightbox";
+@use "lib/gallery";
+@use "lib/lightbox";
 
 @mixin color($theme) {
   $color-config: mat.m2-get-color-config($theme);
@@ -28,4 +28,3 @@ gallery-image .g-image-item {
   background-size: contain !important;
   background-repeat: no-repeat !important;
 }
-

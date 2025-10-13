@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import {
   NavigationMenuItemIndexedModel,
@@ -35,6 +35,16 @@ import {loadAppMenu, selectCurrentUserLocale} from 'src/app/state';
     standalone: false
 })
 export class NavigationMenuPageComponent implements OnInit, OnDestroy {
+  private authStore = inject(Store);
+  private dragulaService = inject(DragulaService);
+  private navigationMenuService = inject(NavigationMenuService);
+  private securityGroupsService = inject(SecurityGroupsService);
+  private authStateService = inject(AuthStateService);
+  private appMenuStateService = inject(AppMenuStateService);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private store = inject(Store);
+
 
   @ViewChild('resetMenuModal')
   resetMenuModal: NavigationMenuResetComponent;
@@ -54,17 +64,9 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     return NavigationMenuItemTypeEnum;
   }
 
-  constructor(
-    private authStore: Store,
-    private dragulaService: DragulaService,
-    private navigationMenuService: NavigationMenuService,
-    private securityGroupsService: SecurityGroupsService,
-    private authStateService: AuthStateService,
-    private appMenuStateService: AppMenuStateService,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-    private store: Store,
-  ) {
+  constructor() {
+    const dragulaService = this.dragulaService;
+
     dragulaService.createGroup('MENU_ITEMS', {
       moves: (el, container, handle) => {
         return handle.classList.contains('dragula-handle');

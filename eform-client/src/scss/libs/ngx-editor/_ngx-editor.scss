@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use 'sass:color';
 @use '@angular/material' as mat;
 
 @mixin color($theme) {
@@ -12,7 +13,7 @@
   $background: map.get($theme, 'background');
 
   .NgxEditor__MenuBar {
-    background-color: scale-color(map.get($background, 'card'), $lightness: +30%);
+    background-color: color.scale(map.get($background, 'card'), $lightness: +30%);
   }
 
   .NgxEditor {

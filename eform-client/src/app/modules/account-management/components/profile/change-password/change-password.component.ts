@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ChangePasswordModel } from 'src/app/common/models/user';
 import { AuthService } from 'src/app/common/services';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -10,10 +10,15 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';
     standalone: false
 })
 export class ChangePasswordComponent implements OnInit {
+  private authService = inject(AuthService);
+  private fb = inject(FormBuilder);
+
   changePasswordModel: ChangePasswordModel = new ChangePasswordModel();
   changePasswordForm: FormGroup;
+  newPasswordVisible = false;
+  newPasswordConfirmVisible = false;
   passwordStrength = 0; // Track password strength score
-  constructor(private authService: AuthService, private fb: FormBuilder) {
+  constructor() {
     this.changePasswordForm = this.fb.group({
       oldPassword: ['', [Validators.required, Validators.minLength(8)]],
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
@@ -52,10 +57,13 @@ export class ChangePasswordComponent implements OnInit {
     }
   }
 
-/*  checkPasswords(group: FormGroup) {
-    let pass = group.get('newPassword').value;
-    let confirmPass = group.get('confirmPassword').value;
 
-    return pass === confirmPass ? null : { notSame: true }
-  }*/
+
+  toggleNewPasswordVisibility() {
+    this.newPasswordVisible = !this.newPasswordVisible;
+  }
+
+  toggleNewPasswordConfirmVisibility() {
+    this.newPasswordConfirmVisible = !this.newPasswordConfirmVisible;
+  }
 }

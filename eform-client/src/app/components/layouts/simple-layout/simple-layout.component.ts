@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2, inject } from '@angular/core';
 import {AuthStateService} from 'src/app/common/store';
 import {take} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
@@ -14,14 +14,14 @@ import {connectionStringExistCount} from 'src/app/state';
     standalone: false
 })
 export class SimpleLayoutComponent implements OnInit, OnDestroy {
+  authStateService = inject(AuthStateService);
+  private authStore = inject(Store);
+  private renderer = inject(Renderer2);
+  settingsService = inject(AppSettingsService);
+  router = inject(Router);
 
-  constructor(
-    public authStateService: AuthStateService,
-    private authStore: Store,
-    private renderer: Renderer2,
-    public settingsService: AppSettingsService,
-    public router: Router,
-  ) {
+
+  constructor() {
     console.debug('SimpleLayoutComponent - constructor');
   }
 

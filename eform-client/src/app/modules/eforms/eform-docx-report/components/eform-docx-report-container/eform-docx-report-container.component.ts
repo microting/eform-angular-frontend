@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {
   CommonDictionaryModel,
@@ -26,6 +26,13 @@ import {TranslateService} from '@ngx-translate/core';
     standalone: false
 })
 export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
+  private translateService = inject(TranslateService);
+  private emailRecipientsService = inject(EmailRecipientsService);
+  private activateRoute = inject(ActivatedRoute);
+  private reportService = inject(EformDocxReportService);
+  private toastrService = inject(ToastrService);
+  private router = inject(Router);
+
   reportModel: EformDocxReportModel = new EformDocxReportModel();
   dateFrom: any;
   dateTo: any;
@@ -36,14 +43,7 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
   downloadReportSub$: Subscription;
   activatedRouteSub$: Subscription;
 
-  constructor(
-    private translateService: TranslateService,
-    private emailRecipientsService: EmailRecipientsService,
-    private activateRoute: ActivatedRoute,
-    private reportService: EformDocxReportService,
-    private toastrService: ToastrService,
-    private router: Router,
-  ) {
+  constructor() {
     this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
       // Required to reload component
       if (this.selectedTemplateId) {

@@ -1,4 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { SharedTagDeleteComponent } from './shared-tag-delete.component';
 
@@ -7,8 +9,17 @@ describe('EmailRecipientTagDeleteComponent', () => {
   let fixture: ComponentFixture<SharedTagDeleteComponent>;
 
   beforeEach(waitForAsync(() => {
+    const mockDialogRef = {
+      close: jest.fn()
+    };
+    
     TestBed.configureTestingModule({
-      declarations: [ SharedTagDeleteComponent ]
+      declarations: [ SharedTagDeleteComponent ],
+      providers: [
+        { provide: MatDialogRef, useValue: mockDialogRef },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

@@ -1,4 +1,6 @@
 .card-img-adaptive {
+  object-fit: cover;
+  cursor: pointer;
 
   @media (min-width: 1281px) {
     //height: 10vw;
@@ -23,7 +25,4 @@
   @media (min-width: 320px) and (max-width: 480px) {
     //height: 40vw;
   }
-
-  object-fit: cover;
-  cursor: pointer;
 }

@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables" as *;
 
 @each $position in $positions {
   .position-#{$position} { position: $position !important; }

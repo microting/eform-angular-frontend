@@ -1,14 +1,50 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { EmailRecipientEditComponent } from './email-recipient-edit.component';
+import { EmailRecipientsService } from 'src/app/common/services';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
+import { MockTranslatePipe } from 'src/test-helpers';
 
 describe('EmailRecipientEditComponent', () => {
   let component: EmailRecipientEditComponent;
   let fixture: ComponentFixture<EmailRecipientEditComponent>;
 
   beforeEach(waitForAsync(() => {
+    const mockEmailRecipientsService = {
+          update: jest.fn(),
+        };
+    const mockToastrService = {
+          success: jest.fn(),
+          error: jest.fn(),
+        };
+    const mockTranslateService = {
+          instant: jest.fn(),
+        };
+    const mockDialogRef = {
+          close: jest.fn(),
+        };
+    const mockDialogData = {
+      emailRecipientUpdateModel: {
+        id: 1,
+        name: 'Test',
+        email: 'test@example.com',
+        tags: []
+      },
+      availableTags: []
+    };
+    
     TestBed.configureTestingModule({
-      declarations: [ EmailRecipientEditComponent ]
+      declarations: [ EmailRecipientEditComponent, MockTranslatePipe ],
+      providers: [
+        { provide: EmailRecipientsService, useValue: mockEmailRecipientsService },
+        { provide: ToastrService, useValue: mockToastrService },
+        { provide: TranslateService, useValue: mockTranslateService },
+        { provide: MatDialogRef, useValue: mockDialogRef },
+        { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

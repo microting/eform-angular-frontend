@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import * as R from 'ramda';
@@ -45,6 +45,19 @@ import {Store} from '@ngrx/store';
     standalone: false
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
+  private dragulaService = inject(DragulaService);
+  private tagsService = inject(EformTagService);
+  private visualEditorService = inject(EformVisualEditorService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  authStateService = inject(AuthStateService);
+  private authStore = inject(Store);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private reportService = inject(EformDocxReportService);
+  private appSettingsStateService = inject(AppSettingsStateService);
+  private translationService = inject(TranslationService);
+
   @ViewChild('tagsModal') tagsModal: EformsTagsComponent;
 
   visualEditorTemplateModel: EformVisualEditorModel = new EformVisualEditorModel();
@@ -73,20 +86,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
   private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
-  constructor(
-    private dragulaService: DragulaService,
-    private tagsService: EformTagService,
-    private visualEditorService: EformVisualEditorService,
-    private router: Router,
-    private route: ActivatedRoute,
-    public authStateService: AuthStateService,
-    private authStore: Store,
-    private dialog: MatDialog,
-    private overlay: Overlay,
-    private reportService: EformDocxReportService,
-    private appSettingsStateService: AppSettingsStateService,
-    private translationService: TranslationService
-  ) {
+  constructor() {
     this.dragulaService.createGroup('CHECK_LISTS', {
       moves: (el, container, handle) => {
         return (

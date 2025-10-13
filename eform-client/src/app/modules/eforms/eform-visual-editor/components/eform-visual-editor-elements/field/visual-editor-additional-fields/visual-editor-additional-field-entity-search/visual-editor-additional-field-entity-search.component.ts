@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   CommonDictionaryModel,
   EformVisualEditorFieldModel,
@@ -25,7 +18,10 @@ export class VisualEditorAdditionalFieldEntitySearchComponent
   entitySearchableGroups: CommonDictionaryModel[] = [];
   typeahead = new EventEmitter<string>();
 
-  constructor(entitySearchService: EntitySearchService, cd: ChangeDetectorRef) {
+  constructor() {
+    const entitySearchService = inject(EntitySearchService);
+    const cd = inject(ChangeDetectorRef);
+
     this.typeahead
       .pipe(
         debounceTime(200),

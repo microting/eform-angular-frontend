@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   OperationDataResult,
@@ -23,7 +23,8 @@ const AdminMethods = {
 
 @Injectable()
 export class AdminService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getAllUsers(
     model: UserInfoRequestModel

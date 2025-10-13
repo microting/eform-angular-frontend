@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   CommonDictionaryModel,
@@ -24,7 +24,8 @@ const SecurityGroupMethods = {
 
 @Injectable()
 export class SecurityGroupsService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
+
 
   getAllSecurityGroups(
     model: SecurityGroupsRequestModel

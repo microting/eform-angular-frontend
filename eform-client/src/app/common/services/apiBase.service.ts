@@ -2,23 +2,23 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ToastrService} from 'ngx-toastr';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import * as R from 'ramda';
 import {selectAuthIsAuth, selectBearerToken} from 'src/app/state';
 import {Store} from '@ngrx/store';
 
 @Injectable()
 export class ApiBaseService {
+  private http = inject(HttpClient);
+  private authStore = inject(Store);
+  private toastrService = inject(ToastrService);
+
   private selectBearerToken$ = this.authStore.select(selectBearerToken);
   private selectAuthIsAuth$ = this.authStore.select(selectAuthIsAuth);
   private currentBearerToken: string = '';
   private isAuth: boolean = false;
 
-  constructor(
-    private http: HttpClient,
-    private authStore: Store,
-    private toastrService: ToastrService,
-  ) {
+  constructor() {
     this.selectBearerToken$.subscribe(x => this.currentBearerToken = x);
     this.selectAuthIsAuth$.subscribe(x => this.isAuth = x);
   }

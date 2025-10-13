@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import {Subject, Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {CodeIcon, CsvIcon, ExcelIcon, FileUploadIcon, UserClaimsEnum, WordIcon} from 'src/app/common/const';
@@ -57,6 +57,15 @@ import {
     standalone: false
 })
 export class EformsPageComponent implements OnInit, OnDestroy {
+  private store = inject(Store);
+  private eFormService = inject(EFormService);
+  private eFormTagService = inject(EformTagService);
+  private securityGroupEformsService = inject(SecurityGroupEformsPermissionsService);
+  eformsStateService = inject(EformsStateService);
+  dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+  private translateService = inject(TranslateService);
+
   @ViewChild('modalTags', {static: true}) modalTags: EformsTagsComponent;
 
   searchSubject = new Subject();
@@ -119,18 +128,10 @@ export class EformsPageComponent implements OnInit, OnDestroy {
       pinned: 'right',
       header: this.translateService.stream('Actions'), field: 'actions'},
   ];
-  constructor(
-    private store: Store,
-    private eFormService: EFormService,
-    private eFormTagService: EformTagService,
-    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-    public eformsStateService: EformsStateService,
-    iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer,
-    public dialog: MatDialog,
-    private overlay: Overlay,
-    private translateService: TranslateService,
-  ) {
+  constructor() {
+    const iconRegistry = inject(MatIconRegistry);
+    const sanitizer = inject(DomSanitizer);
+
     iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(WordIcon));
     iconRegistry.addSvgIconLiteral('file-code', sanitizer.bypassSecurityTrustHtml(CodeIcon));
     iconRegistry.addSvgIconLiteral('file-csv', sanitizer.bypassSecurityTrustHtml(CsvIcon));

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit,} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {EformPermissionsModel} from 'src/app/common/models';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -10,13 +10,17 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
     standalone: false
 })
 export class SecurityGroupEformsDeleteComponent implements OnInit {
+  private securityGroupEformsService = inject(SecurityGroupEformsPermissionsService);
+  dialogRef = inject<MatDialogRef<SecurityGroupEformsDeleteComponent>>(MatDialogRef);
+
   eformSecurityModel: EformPermissionsModel = new EformPermissionsModel();
   groupId: number;
-  constructor(
-    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-    public dialogRef: MatDialogRef<SecurityGroupEformsDeleteComponent>,
-    @Inject(MAT_DIALOG_DATA) model: {model: EformPermissionsModel, selectedGroupId: number}
-  ) {
+  constructor() {
+    const model = inject<{
+    model: EformPermissionsModel;
+    selectedGroupId: number;
+}>(MAT_DIALOG_DATA);
+
     this.eformSecurityModel = model.model;
     this.groupId = model.selectedGroupId;
   }

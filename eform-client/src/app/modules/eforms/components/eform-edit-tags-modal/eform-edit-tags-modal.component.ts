@@ -1,9 +1,4 @@
-import {
-  Component,
-  Inject,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { EformTagService } from 'src/app/common/services/eform';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CommonDictionaryModel, TemplateDto, TemplateTagsUpdateModel} from 'src/app/common/models';
@@ -15,16 +10,19 @@ import {CommonDictionaryModel, TemplateDto, TemplateTagsUpdateModel} from 'src/a
     standalone: false
 })
 export class EformEditTagsModalComponent implements OnInit {
+  private eFormTagService = inject(EformTagService);
+  dialogRef = inject<MatDialogRef<EformEditTagsModalComponent>>(MatDialogRef);
+
   @Input() availableTags: Array<CommonDictionaryModel> = [];
   selectedTemplateDto: TemplateDto = new TemplateDto();
   selectedTemplateTagsIds: Array<number> = [];
 
-  constructor(private eFormTagService: EformTagService,
-  public dialogRef: MatDialogRef<EformEditTagsModalComponent>,
-  @Inject(MAT_DIALOG_DATA) value: {
-    availableTags: CommonDictionaryModel[],
-    selectedTemplate: TemplateDto,
-  }) {
+  constructor() {
+    const value = inject<{
+    availableTags: CommonDictionaryModel[];
+    selectedTemplate: TemplateDto;
+}>(MAT_DIALOG_DATA);
+
     this.availableTags = value.availableTags ?? [];
     this.selectedTemplateDto = value.selectedTemplate;
     this.selectedTemplateTagsIds = this.selectedTemplateDto.tags.map(

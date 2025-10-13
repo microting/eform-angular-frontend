@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {FileUploader} from 'ng2-file-upload';
 import {ToastrService} from 'ngx-toastr';
@@ -15,18 +15,15 @@ import {Store} from '@ngrx/store';
     standalone: false
 })
 export class EformUploadZipModalComponent implements OnInit {
+  private toastrService = inject(ToastrService);
+  private authStore = inject(Store);
+  private translateService = inject(TranslateService);
+  private authStateService = inject(AuthStateService);
+  dialogRef = inject<MatDialogRef<EformUploadZipModalComponent>>(MatDialogRef);
+  selectedTemplate = inject<TemplateDto>(MAT_DIALOG_DATA);
+
   zipFileUploader: FileUploader;
   private selectBearerToken$ = this.authStore.select(selectBearerToken);
-
-  constructor(
-    private toastrService: ToastrService,
-    private authStore: Store,
-    private translateService: TranslateService,
-    private authStateService: AuthStateService,
-    public dialogRef: MatDialogRef<EformUploadZipModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedTemplate: TemplateDto,
-  ) {
-  }
 
   ngOnInit() {
     let token = '';

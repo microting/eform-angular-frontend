@@ -51,6 +51,16 @@ jobs:
       run: cd eform-client && yarn install
     - name: Create errorShots directory
       run: mkdir eform-client/errorShots
+    - name: Wait for MariaDB
+      run: |
+        for i in {1..30}; do
+          if docker exec mariadb-test mysql -uroot -psecretpassword -e "SELECT 1" &>/dev/null; then
+            echo "MariaDB is ready!"
+            break
+          fi
+          echo "Waiting for MariaDB... ($i/30)"
+          sleep 2
+        done
     - name: Start the newly build Docker container
       id: docker-run
       run: docker run --name my-container -p 4200:5000 --network data microtingas/frontend-container:latest "/ConnectionString=host=mariadbtest;Database=420_Angular;user=root;password=secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;" > docker_run_log 2>&1 &
@@ -130,6 +140,19 @@ jobs:
         path: |
           eform-client/cypress/videos/*.mp4
         retention-days: 2
+  test-angular-unit:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22
+    - name: Install dependencies
+      run: cd eform-client && yarn install --frozen-lockfile
+    - name: Run Jest unit tests
+      run: cd eform-client && npm run test:unit
   test-dotnet:
     runs-on: ubuntu-latest
     steps:

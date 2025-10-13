@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit} from '@angular/core';
+import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {UserInfoModel} from 'src/app/common/models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -11,16 +11,18 @@ import {ChangePasswordAdminModel} from 'src/app/common/models/user/change-passwo
     standalone: false
 })
 export class UserSetPasswordComponent implements OnInit {
+  private authService = inject(AuthService);
+  private fb = inject(FormBuilder);
+  dialogRef = inject<MatDialogRef<UserSetPasswordComponent>>(MatDialogRef);
+  selectedUser = inject<UserInfoModel>(MAT_DIALOG_DATA) ?? new UserInfoModel();
+
   setPasswordForm: FormGroup;
   changePasswordModel: ChangePasswordAdminModel = new ChangePasswordAdminModel();
   userPasswordSet: EventEmitter<UserInfoModel> = new EventEmitter<UserInfoModel>();
   newPasswordVisible = false;
   confirmPasswordVisible = false;
   passwordStrength = 0; // Track password strength score
-  constructor(private authService: AuthService,
-              private fb: FormBuilder,
-              public dialogRef: MatDialogRef<UserSetPasswordComponent>,
-    @Inject(MAT_DIALOG_DATA) public selectedUser: UserInfoModel = new UserInfoModel()) {
+  constructor() {
     this.setPasswordForm = this.fb.group({
       newPassword: ['', [Validators.minLength(8)]],
       confirmPassword: ['', [Validators.minLength(8)]]
