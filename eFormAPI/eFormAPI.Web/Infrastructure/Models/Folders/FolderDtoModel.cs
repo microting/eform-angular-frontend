@@ -35,6 +35,9 @@ public class FolderDtoModel
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public int? MicrotingUId { get; set; }
+    public bool IsLocked { get; set; }
+    public bool IsEditable { get; set; }
+    public bool ManagedByPlugin { get; set; }
     public List<FolderDtoModel> Children { get; set; }
         = new List<FolderDtoModel>();
 }

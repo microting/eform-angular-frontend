@@ -288,7 +288,10 @@ public class FoldersService(
                 .First(y => y.LanguageId == languageId)
                 .Name,
             ParentId = x.ParentId,
-            UpdatedAt = x.UpdatedAt
+            UpdatedAt = x.UpdatedAt,
+            IsLocked = x.IsLocked,
+            IsEditable = x.IsEditable,
+            ManagedByPlugin = x.ManagedByPlugin
         });
     }
 
@@ -307,6 +310,9 @@ public class FoldersService(
                 .FirstOrDefault(),
             MicrotingUId = folder.MicrotingUid,
             ParentId = folder.ParentId,
+            IsLocked = folder.IsLocked,
+            IsEditable = folder.IsEditable,
+            ManagedByPlugin = folder.ManagedByPlugin,
             Children = new List<FolderDtoModel>(),
         };
 
