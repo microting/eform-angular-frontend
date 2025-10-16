@@ -14,7 +14,7 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class SharedTagsComponent implements OnInit {
   dialogRef = inject<MatDialogRef<SharedTagsComponent>>(MatDialogRef);
 
-  public availableTags: CommonDictionaryModel[] = [];
+  public availableTags: SharedTagModel[] = [];
   public showMultipleCreateBtn: boolean = false;
   public showCreateTag: EventEmitter<void> = new EventEmitter<void>();
   public showEditTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
