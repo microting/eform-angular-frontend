@@ -249,9 +249,7 @@ public class CasesService(
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
 
                 var foundCase = await sdkDbContext.Cases
-                    .Where(x => x.Id == model.Id
-                                && x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync(x => x.Id == model.Id);
 
                 if (foundCase != null)
                 {
@@ -260,7 +258,13 @@ public class CasesService(
                         var newDoneAt = new DateTime(model.DoneAt.Year, model.DoneAt.Month, model.DoneAt.Day,
                             foundCase.DoneAt.Value.Hour, foundCase.DoneAt.Value.Minute, foundCase.DoneAt.Value.Second);
                         foundCase.DoneAtUserModifiable = newDoneAt;
+                    } else
+                    {
+                        var newDoneAt = new DateTime(model.DoneAt.Year, model.DoneAt.Month, model.DoneAt.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                        foundCase.DoneAtUserModifiable = newDoneAt;
                     }
+                    foundCase.WorkflowState = Constants.WorkflowStates.Created;
+                    foundCase.UpdatedAt = DateTime.UtcNow;
 
                     await foundCase.Update(sdkDbContext);
                 }
@@ -375,10 +379,6 @@ public class CasesService(
                 .OrderByDescending(x => x.UpdatedAt)
                 .Select(x => new { x.Id, x.UpdatedAt, x.CheckListId })
                 .FirstOrDefaultAsync();
-            var eFormText = await sdkDbContext.CheckListTranslations
-                .Where(x => x.CheckListId == latestActivity.CheckListId)
-                .Select(x => x.Text)
-                .FirstOrDefaultAsync();
 
             if (latestActivity == null)
             {
@@ -386,6 +386,10 @@ public class CasesService(
                     localizationService.GetString("CouldNotGetLatestActivity"));
             }
 
+            var eFormText = await sdkDbContext.CheckListTranslations
+                .Where(x => x.CheckListId == latestActivity.CheckListId)
+                .Select(x => x.Text)
+                .FirstOrDefaultAsync();
             if (eFormText == null)
             {
                 return new OperationDataResult<LatestCaseActivity>(false,

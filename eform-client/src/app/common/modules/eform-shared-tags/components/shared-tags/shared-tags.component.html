@@ -29,7 +29,7 @@
       </div>
       <div class="spacer"></div>
       <div>
-        <button
+        <button *ngIf="!tag.isLocked"
           color="accent"
           mat-icon-button
           (click)="showEditTagModal(tag)"
@@ -38,7 +38,7 @@
         >
           <mat-icon>edit</mat-icon>
         </button>
-        <button
+        <button *ngIf="!tag.isLocked"
           mat-icon-button
           color="warn"
           (click)="showDeleteTagModal(tag)"

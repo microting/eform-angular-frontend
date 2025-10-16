@@ -45,13 +45,13 @@
               <span>{{ 'Add new child folder' | translate }}</span>
             </button>
           </ng-container>
-          <ng-container *ngIf="showEditAction">
+          <ng-container *ngIf="showEditAction && node.isEditable">
             <button mat-menu-item (click)="edit(node.id)" id="editFolderTreeBtn">
               <mat-icon>edit</mat-icon>
               <span>{{ 'Edit folder' | translate }}</span>
             </button>
           </ng-container>
-          <ng-container *ngIf="showDeleteAction">
+          <ng-container *ngIf="showDeleteAction && !node.isLocked">
             <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn">
               <mat-icon>delete</mat-icon>
               <span>{{ 'Delete folder' | translate }}</span>
@@ -92,13 +92,13 @@
               <span>{{ 'Add new child folder' | translate }}</span>
             </button>
           </ng-container>
-          <ng-container *ngIf="showEditAction">
+          <ng-container *ngIf="showEditAction && node.isEditable">
             <button mat-menu-item (click)="edit(node.id)" id="editFolderTreeBtn">
               <mat-icon>edit</mat-icon>
               <span>{{ 'Edit folder' | translate }}</span>
             </button>
           </ng-container>
-          <ng-container *ngIf="showDeleteAction">
+          <ng-container *ngIf="showDeleteAction && !node.isLocked">
             <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn">
               <mat-icon>delete</mat-icon>
               <span>{{ 'Delete folder' | translate }}</span>

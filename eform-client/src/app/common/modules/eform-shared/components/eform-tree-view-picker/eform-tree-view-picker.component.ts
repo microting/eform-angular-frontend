@@ -50,6 +50,9 @@ export class EformTreeViewPickerComponent implements OnChanges, OnDestroy {
       microtingUId: node.microtingUId,
       description: node.description,
       createdAt: node.createdAt,
+      isLocked: node.isLocked,
+      isEditable: node.isEditable,
+      managedByPlugin: node.managedByPlugin,
     };
   };
 

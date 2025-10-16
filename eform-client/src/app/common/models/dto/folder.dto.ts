@@ -8,4 +8,7 @@ export class FolderDto {
   parentId?: number;
   microtingUId?: number;
   children?: FolderDto[];
+  isLocked: boolean;
+  isEditable: boolean;
+  managedByPlugin: boolean;
 }
