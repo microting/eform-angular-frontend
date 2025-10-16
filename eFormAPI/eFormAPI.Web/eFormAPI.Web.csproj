@@ -55,16 +55,16 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="9.0.61" />
-    <PackageReference Include="Microting.EformAngularFrontendBase" Version="9.0.50" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="9.0.55" />
+    <PackageReference Include="Microting.eForm" Version="9.0.64" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="9.0.51" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="9.0.56" />
     <PackageReference Include="PureOtp" Version="1.0.0.1" />
     <PackageReference Include="Sentry" Version="5.16.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="2.0.0" />
     <PackageReference Include="sendgrid" Version="9.29.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.10" />
-    <PackageReference Include="System.Threading.AccessControl" Version="9.0.9" />
+    <PackageReference Include="System.Threading.AccessControl" Version="9.0.10" />
   </ItemGroup>
 
   <ItemGroup>
