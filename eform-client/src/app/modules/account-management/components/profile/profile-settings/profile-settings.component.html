@@ -11,7 +11,7 @@
   </div>
 </eform-new-subheader>
 
-<div class="d-flex flex-row justify-content-between align-items-start">
+<div [formGroup]="profileForm" class="d-flex flex-row justify-content-between align-items-start">
   <mat-card class="p-3" *ngIf="selectCurrentUserIsAdmin$ | async">
     <mat-card-header>
       <mat-card-title>{{ 'Google Authenticator' | translate }}</mat-card-title>
@@ -19,8 +19,8 @@
     <div class="mb-1">
       <mat-checkbox
         id="2fauthForsed"
-        (change)="isTwoFactorEnabledCheckBoxChanged($event)"
-        [(ngModel)]="googleAuthInfoModel.isTwoFactorEnabled"
+        formControlName="isTwoFactorEnabled"
+        (change)="toggleTwoFactor()"
         color="primary">
         {{ 'Status' | translate }}
       </mat-checkbox>
@@ -128,7 +128,7 @@
         [bindLabel]="'name'"
         [bindValue]="'languageCode'"
         [clearable]="false"
-        [(ngModel)]="userSettingsModel.locale"
+        formControlName="locale"
         [items]="activeLanguages">
       </mtx-select>
     </mat-form-field>
@@ -139,7 +139,7 @@
         [bindLabel]="'text'"
         [bindValue]="'id'"
         [clearable]="false"
-        [(ngModel)]="userSettingsModel.formats"
+        formControlName="formats"
         [items]="countries">
       </mtx-select>
     </mat-form-field>
@@ -150,14 +150,14 @@
         [bindLabel]="'name'"
         [bindValue]="'id'"
         [clearable]="false"
-        [(ngModel)]="userSettingsModel.timeZone"
+        formControlName="timeZone"
         [items]="timeZones.timeZoneModels">
       </mtx-select>
     </mat-form-field>
     <div class="mb-1">
       <mat-checkbox
         id="darkTheme"
-        [(ngModel)]="userSettingsModel.darkTheme">
+        formControlName="darkTheme">
         {{ 'Dark theme' | translate }}
       </mat-checkbox>
     </div>

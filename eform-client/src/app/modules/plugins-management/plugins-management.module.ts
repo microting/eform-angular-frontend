@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {EformSharedModule} from '../../common/modules/eform-shared/eform-shared.module';
 import {PluginsManagementRouting} from './plugins-management.routing';
@@ -21,21 +21,22 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    EformSharedModule,
-    FormsModule,
-    TranslateModule,
-    PluginsManagementRouting,
-    MatCheckboxModule,
-    MatButtonModule,
-    MtxGridModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    MatIconModule,
-    MatDialogModule,
-    MatCardModule,
-  ],
+    imports: [
+        CommonModule,
+        EformSharedModule,
+        FormsModule,
+        TranslateModule,
+        PluginsManagementRouting,
+        MatCheckboxModule,
+        MatButtonModule,
+        MtxGridModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        MatIconModule,
+        MatDialogModule,
+        MatCardModule,
+        ReactiveFormsModule,
+    ],
   declarations: [
     InstalledPluginsPageComponent,
     InstalledPluginModalComponent,

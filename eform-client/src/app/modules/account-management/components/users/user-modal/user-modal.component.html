@@ -1,16 +1,16 @@
 <h3 mat-dialog-title>{{ (edit ? 'Edit User' : 'New User') | translate }}</h3>
 <div mat-dialog-content>
-  <form #form="ngForm" class="need-wrapper">
+  <form #form="ngForm" [formGroup]="userForm" class="need-wrapper">
     <div class="d-flex flex-row">
       <mat-form-field>
         <mat-label>{{ 'First name' | translate }}</mat-label>
         <input
-        matInput
-        type="text"
-        [disabled]="userModel.isDeviceUser"
-        [(ngModel)]="userModel.firstName"
-        [id]="edit ? 'editFirstName' : 'createFirstName'"
-        [name]="edit ? 'editFirstName' : 'createFirstName'"
+          matInput
+          type="text"
+          [disabled]="isDeviceUser"
+          formControlName="firstName"
+          [id]="edit ? 'editFirstName' : 'createFirstName'"
+          [name]="edit ? 'editFirstName' : 'createFirstName'"
         >
       </mat-form-field>
       <mat-form-field>
@@ -18,8 +18,8 @@
         <input
           matInput
           type="text"
-          [disabled]="userModel.isDeviceUser"
-          [(ngModel)]="userModel.lastName"
+          [disabled]="isDeviceUser"
+          formControlName="lastName"
           [name]="edit ? 'editLastName' : 'createLastName'"
           [id]="edit ? 'editLastName' : 'createLastName'"
         >
@@ -31,9 +31,8 @@
         <input
           matInput
           required
-          #createEmail="ngModel"
-          type="text"
-          [(ngModel)]="userModel.email"
+          type="email"
+          formControlName="email"
           [id]="edit ? 'emailEdit' : 'createEmail'"
           [name]="edit ? 'emailEdit' : 'createEmail'"
         >
@@ -44,7 +43,7 @@
           matInput
           required
           type="password"
-          [(ngModel)]="userModel.password"
+          formControlName="password"
           [id]="edit ? 'editPassword' : 'createPassword'"
           [name]="edit ? 'editPassword' : 'createPassword'"
         >
@@ -58,8 +57,7 @@
           bindLabel="name"
           bindValue="id"
           [clearable]="false"
-          [(ngModel)]="userModel.role"
-          [name]="edit ? 'editRole' : 'createRole'"
+          formControlName="role"
           [id]="edit ? 'editRole' : 'createRole'"
           id="createRole"
           appendTo="body"
@@ -69,14 +67,13 @@
                   ]"
         ></mtx-select>
       </mat-form-field>
-      <mat-form-field *ngIf="userModel.role !== 'admin'">
+      <mat-form-field *ngIf="userForm.get('role')?.value !== 'admin'">
         <mat-label>{{ 'Group' | translate }}</mat-label>
         <mtx-select
           required
           bindLabel="groupName"
           bindValue="id"
-          [(ngModel)]="userModel.groupId"
-          [name]="edit ? 'editGroup' : 'createGroup'"
+          formControlName="groupId"
           [id]="edit ? 'editGroup' : 'createGroup'"
           appendTo="body"
           [items]="availableGroups.entities"
@@ -87,11 +84,11 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    [disabled]="!form.form.valid"
     mat-raised-button
     color="accent"
     type="submit"
-    (click)="edit ? updateUser() : createUser()"
+    [disabled]="userForm.invalid"
+    (click)="submit()"
     [id]="edit ? 'editUserSaveBtn' : 'createAdministrationUserBtn'"
   >
     {{ (edit ? 'Save' : 'Create') | translate }}
