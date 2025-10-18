@@ -96,6 +96,36 @@ a {
   color: #fff !important;
 }
 
+.priority-urgent {
+  background-color: #a71d2a !important; /* red */
+  color: #fff !important;
+}
+.priority-high {
+  background-color: #dc3545 !important; /* orange */
+  color: #fff !important;
+}
+.priority-medium {
+  background-color: #f5a5a8 !important; /* yellow */
+  color: #fff !important;
+}
+.priority-low {
+  background-color: #f8d7da !important; /* green */
+  color: #000 !important;
+}
+
+.priority-urgent span {
+  color: #fff !important;
+}
+.priority-high span {
+  color: #fff !important;
+}
+.priority-medium span {
+  color: #fff !important;
+}
+.priority-low span {
+  color: #000 !important;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
