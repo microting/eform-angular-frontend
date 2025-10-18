@@ -79,6 +79,23 @@ a {
   color: green !important;
 }
 
+.status-active {
+  background-color: #4caf50 !important; /* green */
+  color: #fff !important;
+}
+.status-inactive {
+  background-color: #f44336 !important; /* red */
+  color: #fff !important;
+}
+
+.status-active span {
+  color: #fff !important;
+}
+
+.status-inactive span {
+  color: #fff !important;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
