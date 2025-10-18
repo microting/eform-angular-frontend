@@ -18,7 +18,7 @@ import {
   selectCurrentUserLocale,
   selectIsDarkMode,
   selectSideMenuOpened,
-  rightAppMenus, selectCurrentUserClaims,
+  rightAppMenus, selectCurrentUserClaims, selectCurrentUserName, selectCurrentUserFullName, selectCurrentUserAvatarUrl,
 } from 'src/app/state';
 
 @AutoUnsubscribe()
@@ -51,6 +51,9 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
   private selectIsDarkMode$ = this.authStore.select(selectIsDarkMode);
   private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
+  public selectCurrentUserName$ = this.authStore.select(selectCurrentUserName);
+  public selectCurrentUserFullName$ = this.authStore.select(selectCurrentUserFullName);
+  public selectCurrentUserAvatarUrl$ = this.authStore.select(selectCurrentUserAvatarUrl);
   public selectSideMenuOpened$ = this.authStore.select(selectSideMenuOpened);
   private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
 
@@ -169,5 +172,14 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       return false;
     }));
+  }
+
+  getavatarurl() {
+    // get one result from observable and return as string
+    let avatarUrl = '';
+    this.selectCurrentUserAvatarUrl$.pipe(take(1)).subscribe(url => {
+      avatarUrl = url;
+    });
+    return avatarUrl;
   }
 }

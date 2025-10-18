@@ -1,7 +1,7 @@
-<div class="h-100 d-flex flex-column" *ngIf="selectIsAuth$ | async">
+<div *ngIf="selectIsAuth$ | async">
   <!--  <app-header></app-header>-->
-  <mat-toolbar style="padding-top: 5px; padding-bottom: 5px" class="d-flex align-items-center">
-    <div *ngIf="headerSettingsModel.imageLinkVisible" class="d-flex">
+  <mat-toolbar>
+    <div *ngIf="headerSettingsModel.imageLinkVisible">
       <div class="logo-container">
         <img height="30px" id="site-header-image" [src]="logoImage | authImage | async"
              *ngIf="headerSettingsModel.imageLinkVisible" alt="">
@@ -11,11 +11,14 @@
       <mat-icon>menu</mat-icon>
     </button>
     <span class="spacer"></span>
-    <div class="tag">
-      <mat-icon>account_circle</mat-icon>
-      <button mat-icon-button [matMenuTriggerFor]="menu" id="sign-out-dropdown">
-        <mat-icon style="padding-top: 2px !important; padding-left: 5px !important;">settings</mat-icon>
-      </button>
+    <div class="progress-circle" [matMenuTriggerFor]="menu">
+      <div class="avatar" [style.background-image]="'url(' + getavatarurl() + ')'"></div>
+    </div>
+    <button mat-button [matMenuTriggerFor]="menu" id="sign-out-dropdown">
+      <strong>
+        {{selectCurrentUserFullName$ | async}}
+      </strong>
+    </button>
       <mat-menu #menu="matMenu">
         <ng-container *ngFor="let menu of allAppMenus$ | async">
           <ng-container *ngIf="checkGuards(menu.guards) | async">
@@ -28,7 +31,6 @@
           </ng-container>
         </ng-container>
       </mat-menu>
-    </div>
   </mat-toolbar>
   <mat-drawer-container autosize style="height: 100%;">
     <mat-drawer

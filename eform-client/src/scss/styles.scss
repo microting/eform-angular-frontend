@@ -126,6 +126,101 @@ a {
   color: #000 !important;
 }
 
+.grey-background {
+  background-color: #f3f4f6 !important;
+  border-right: 5px solid white !important;
+  padding-right: 5px !important;
+  border-bottom: 1px solid white !important;
+}
+
+.white-background {
+  border-right: 5px solid white !important;
+  margin-right: 5px !important;
+  border-bottom: 1px solid white !important;
+}
+
+.green-background {
+  background-color: #0bbe60 !important;
+  border-bottom: 1px solid white !important;
+  border-right: 5px solid white !important;
+  margin-right: 5px !important;
+}
+
+.red-background {
+  background-color: #da4259 !important;
+  border-bottom: 1px solid white !important;
+  border-right: 5px solid white !important;
+  margin-right: 5px !important;
+}
+
+.neutral-icon {
+  position: relative !important;
+  top: 5px !important;
+}
+
+.black-text {
+  color: black !important;
+}
+
+.green-text {
+  color: green !important;
+}
+
+.white-text {
+  color: white !important;
+}
+
+.red-text {
+  color: #da4259 !important;
+}
+
+.blue-text {
+  color: #007bff !important;
+}
+
+.progress-circle {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: conic-gradient(
+      #0bbe60 0%,
+      #0bbe60 calc(var(--percentage) * 1%),
+      lightgrey calc(var(--percentage) * 1%),
+      lightgrey 100%
+  );
+}
+
+.progress-circle::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.progress-circle .avatar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background-size: cover;
+  background-position: center;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  padding-bottom: 4px;
+  padding-top: 4px;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;

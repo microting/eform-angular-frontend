@@ -23,7 +23,8 @@ export interface AuthCurrentUser {
   darkTheme?: boolean;
   loginRedirectUrl?: string;
   claims?: UserClaimsModel;
-  isFirstUser: boolean
+  isFirstUser: boolean,
+  avatarUrl?: string;
 }
 
 export interface AuthToken {
@@ -62,6 +63,7 @@ export const authInitialState: AuthState = {
     darkTheme: false,
     loginRedirectUrl: '',
     isFirstUser: false,
+    avatarUrl: '',
     claims: {
       unitsRead: false,
       unitsUpdate: false,
