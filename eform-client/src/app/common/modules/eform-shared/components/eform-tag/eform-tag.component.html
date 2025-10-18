@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-start flex-wrap">
   <mat-chip *ngFor="let tag of tags" [id]="id" (click)="onClickTag(tag.id)">
-    <span>{{ tag.name }}</span>
+    {{ tag.name }}
 
   </mat-chip>
 <!--  <div class="tag" *ngFor="let tag of tags" [id]="id" (click)="onClickTag(tag.id)">-->
