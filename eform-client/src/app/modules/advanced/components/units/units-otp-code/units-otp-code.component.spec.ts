@@ -5,6 +5,7 @@ import { UnitsService } from 'src/app/common/services/advanced';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { UnitDto, OperationDataResult } from 'src/app/common/models';
+import { MockTranslatePipe } from 'src/test-helpers';
 
 describe('UnitsOtpCodeComponent', () => {
   let component: UnitsOtpCodeComponent;
@@ -23,7 +24,7 @@ describe('UnitsOtpCodeComponent', () => {
     mockDialogData = { id: 1, microtingUid: 12345, siteName: 'Test Site' } as UnitDto;
 
     TestBed.configureTestingModule({
-      declarations: [UnitsOtpCodeComponent],
+      declarations: [UnitsOtpCodeComponent, MockTranslatePipe],
       providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: MatDialogRef, useValue: mockDialogRef },
