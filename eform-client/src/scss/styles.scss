@@ -3,7 +3,7 @@
 @use "utilities" as *;
 @use "libs/index" as libs;
 
-$eform-font-family: Roboto, "Helvetica Neue", sans-serif;
+$eform-font-family: Nunito Sans, Roboto, "Helvetica Neue", sans-serif;
 // h-100 for base elements
 html, body {
   height: 100vh;
