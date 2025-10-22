@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MockTranslatePipe } from 'src/test-helpers';
 
 import { SharedTagDeleteComponent } from './shared-tag-delete.component';
 
@@ -14,7 +15,7 @@ describe('EmailRecipientTagDeleteComponent', () => {
     };
     
     TestBed.configureTestingModule({
-      declarations: [ SharedTagDeleteComponent ],
+      declarations: [ SharedTagDeleteComponent, MockTranslatePipe ],
       providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: {} }

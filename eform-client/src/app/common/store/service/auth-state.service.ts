@@ -78,7 +78,8 @@ export class AuthStateService {
                 lastName: response.lastName,
                 userName: response.userName,
                 id: response.id,
-                isFirstUser: response.isFirstUser
+                isFirstUser: response.isFirstUser,
+                avatarUrl: response.avatarUrl,
               },
               count: 2
             })
@@ -156,6 +157,7 @@ export class AuthStateService {
           firstName: auth.model.firstName,
           lastName: auth.model.lastName,
           isFirstUser: auth.model.isFirstUser,
+          avatarUrl: auth.model.avatarUrl,
         },
         count: 2,
       })))),

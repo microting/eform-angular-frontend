@@ -43,30 +43,32 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormattingTextEditorModule} from '../eform-imported/formatting-text-editor/formatting-text-editor.module';
 import {CustomMatPaginatorIntl} from './components/eform-pagination/mat_paginator_intl';
 import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
+import {MatChip} from "@angular/material/chips";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    NgSelectModule,
-    FormsModule,
-    RouterModule,
-    DragulaModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatTreeModule,
-    MatMenuModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    MatTooltipModule,
-    FormattingTextEditorModule,
-    CdkDropList,
-    CdkDrag
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        NgSelectModule,
+        FormsModule,
+        RouterModule,
+        DragulaModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        MatTreeModule,
+        MatMenuModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        MatTooltipModule,
+        FormattingTextEditorModule,
+        CdkDropList,
+        CdkDrag,
+        MatChip
+    ],
   declarations: [
     EformPaginationComponent,
     EformPageSizeComponent,// Added only in an transitive import until all plugins have been migrated to the new eform-pagination

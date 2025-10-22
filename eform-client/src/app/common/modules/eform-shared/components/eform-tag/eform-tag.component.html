@@ -1,6 +1,10 @@
 <div class="d-flex justify-content-start flex-wrap">
-  <div class="tag" *ngFor="let tag of tags" [id]="id" (click)="onClickTag(tag.id)">
-    <mat-icon>discount</mat-icon>
-    <span>{{ tag.name }}</span>
-  </div>
+  <mat-chip *ngFor="let tag of tags" [id]="id" (click)="onClickTag(tag.id)">
+    {{ tag.name }}
+
+  </mat-chip>
+<!--  <div class="tag" *ngFor="let tag of tags" [id]="id" (click)="onClickTag(tag.id)">-->
+<!--&lt;!&ndash;    <mat-icon>discount</mat-icon>&ndash;&gt;-->
+<!--    <span>{{ tag.name }}</span>-->
+<!--  </div>-->
 </div>

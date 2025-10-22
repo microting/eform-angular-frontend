@@ -304,7 +304,7 @@ class MyEformsRowObject {
     } catch (e) {
     }
     const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[currentPosition];
-    this.tags = await this.element.$$('.mat-column-tags .tag span');
+    this.tags = await this.element.$$('.mat-column-tags mat-chip span span span.mat-mdc-chip-action-label');
     // this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
     this.editTagsBtn = (await $$('#eform-edit-btn-' + (currentPosition)))[0];
     this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[

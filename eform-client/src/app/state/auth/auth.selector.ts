@@ -44,6 +44,8 @@ export const selectCurrentUserIsAdmin
   = createSelector(selectAuthToken, (state) => state.role.toLowerCase() === 'admin');
 export const selectCurrentUserIsFirstUser
   = createSelector(selectAuthUser, (state) => state.isFirstUser);
+export const selectCurrentUserAvatarUrl
+  = createSelector(selectAuthUser, (state) => state.avatarUrl);
 export const selectCurrentUserClaims
   = createSelector(selectAuthUser, (state) => state.claims);
 export const selectCurrentUserClaimsUsersUpdate

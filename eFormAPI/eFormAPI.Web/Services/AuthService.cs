@@ -163,7 +163,10 @@ public class AuthService(
             ExpiresIn = token.expireIn,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            IsFirstUser = user.Id == firstUserIdInDb
+            IsFirstUser = user.Id == firstUserIdInDb,
+            AvatarUrl = user.ProfilePictureSnapshot != null
+                ? $"api/images/login-page-images?fileName={user.ProfilePictureSnapshot}"
+                : $"https://www.gravatar.com/avatar/{user.EmailSha256}?s=32&d=identicon"
         });
     }
 
@@ -190,7 +193,10 @@ public class AuthService(
             Role = roleList.FirstOrDefault(),
             ExpiresIn = token.expireIn,
             FirstName = user.FirstName,
-            LastName = user.LastName
+            LastName = user.LastName,
+            AvatarUrl = user.ProfilePictureSnapshot != null
+                ? $"api/images/login-page-images?fileName={user.ProfilePictureSnapshot}"
+                : $"https://www.gravatar.com/avatar/{user.EmailSha256}?s=32&d=identicon"
         });
     }
 

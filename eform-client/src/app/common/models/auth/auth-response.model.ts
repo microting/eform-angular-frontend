@@ -8,6 +8,7 @@ export class AuthResponseModel {
   userName: string;
   id: number;
   isFirstUser: boolean;
+  avatarUrl?: string;
 
   constructor(user: any) {
     this.accessToken = user.accessToken;
@@ -19,5 +20,6 @@ export class AuthResponseModel {
     this.userName = user.userName;
     this.id = user.id;
     this.isFirstUser = user.isFirstUser;
+    this.avatarUrl = user.avatalUrl;
   }
 }

@@ -20,7 +20,9 @@ module.exports = {
   coverageReporters: ['html', 'text', 'text-summary', 'lcov'],
   moduleNameMapper: {
     '^src/(.*)$': '<rootDir>/src/$1',
-    '^@app/(.*)$': '<rootDir>/src/app/$1'
+    '^@app/(.*)$': '<rootDir>/src/app/$1',
+    '^ng-gallery$': '<rootDir>/src/__mocks__/ng-gallery.ts',
+    '^ng-gallery/lightbox$': '<rootDir>/src/__mocks__/ng-gallery/lightbox.ts'
   },
   transform: {
     '^.+\\.(ts|js|html)$': [
@@ -32,7 +34,7 @@ module.exports = {
     ]
   },
   transformIgnorePatterns: [
-    'node_modules/(?!.*\\.mjs$|ngx-auto-unsubscribe|@angular|@ngrx|rxjs)'
+    'node_modules/(?!.*\\.mjs$|ngx-auto-unsubscribe|@angular|@ngrx|rxjs|ng-gallery)'
   ],
   moduleFileExtensions: ['ts', 'html', 'js', 'json', 'mjs'],
   testMatch: ['**/src/**/*.spec.ts'],
