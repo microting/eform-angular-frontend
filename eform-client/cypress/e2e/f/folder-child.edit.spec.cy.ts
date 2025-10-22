@@ -11,7 +11,9 @@ describe('Folders - Edit child folder', function () {
   before(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    cy.intercept('POST', '**/api/folders/list').as('loadFolders');
     foldersPage.goToFoldersPage();
+    cy.wait('@loadFolders', { timeout: 30000 });
     
     // Create a parent folder
     const description = generateRandmString();

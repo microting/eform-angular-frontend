@@ -10,7 +10,9 @@ describe('Folders - Edit folder', function () {
   before(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    cy.intercept('POST', '**/api/folders/list').as('loadFolders');
     foldersPage.goToFoldersPage();
+    cy.wait('@loadFolders', { timeout: 30000 });
     
     // Create a folder to edit
     const description = generateRandmString();
