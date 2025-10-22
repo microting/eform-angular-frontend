@@ -7,8 +7,8 @@ This document tracks the migration of WebDriverIO (wdio) e2e tests to Cypress te
 ## Current Status
 
 - **Total wdio tests**: 38
-- **Cypress tests implemented**: 47
-- **Tests remaining to migrate**: 3
+- **Cypress tests implemented**: 50
+- **Tests remaining to migrate**: 0
 
 ## Tests Already Migrated to Cypress ✓
 
@@ -36,6 +36,7 @@ The following wdio tests have been successfully migrated to Cypress:
 - ✓ navigation-menu.drag-item.spec.ts (cypress/e2e/c/)
 
 ### eForm Visual Editor
+- ✓ eform-visual-editor.create-eform.spec.ts (cypress/e2e/j/)
 - ✓ eform-visual-editor.edit-eform.spec.ts (cypress/e2e/j/)
 - ✓ eform-visual-editor.edit-xml.spec.ts (cypress/e2e/j/)
 - ✓ eform-visual-editor.multi-language.spec.ts (cypress/e2e/j/)
@@ -72,7 +73,11 @@ The following wdio tests have been successfully migrated to Cypress:
 - ✓ selectable-lists.edit.spec.cy.ts (cypress/e2e/i/)
 - ✓ selectable-lists.sort.spec.cy.ts (cypress/e2e/i/)
 
-## Tests to Migrate (4 tests)
+### Workers
+- ✓ workers.add.spec.cy.ts (cypress/e2e/h/)
+- ✓ workers.edit.spec.cy.ts (cypress/e2e/h/)
+
+## Tests to Migrate (2 tests)
 
 The following tests need to be migrated from wdio to Cypress. They are organized by functional area for easier sub-issue creation.
 
@@ -120,14 +125,15 @@ Tests migrated:
 
 ---
 
-### 3. eForm Visual Editor - Create (1 test)
+### 3. eForm Visual Editor - Create (1 test) ✓
 
 **Category**: eForm Visual Editor  
 **Priority**: High  
-**Location**: e2e/Tests/eform-visual-editor/
+**Location**: e2e/Tests/eform-visual-editor/  
+**Migrated to**: cypress/e2e/j/
 
-Tests to migrate:
-- [ ] eform-visual-editor.create-eform.spec.ts
+Tests migrated:
+- ✓ eform-visual-editor.create-eform.spec.cy.ts
 
 **Description**: Tests for creating eForms using the visual editor. The edit functionality is already migrated.
 
@@ -303,15 +309,16 @@ Tests migrated:
 
 ---
 
-### 12. Workers (2 tests)
+### 12. Workers (2 tests) ✓
 
 **Category**: Worker Management  
 **Priority**: Medium  
-**Location**: e2e/Tests/workers/
+**Location**: e2e/Tests/workers/  
+**Migrated to**: cypress/e2e/h/
 
-Tests to migrate:
-- [ ] workers.add.spec.ts
-- [ ] workers.edit.spec.ts
+Tests migrated:
+- ✓ workers.add.spec.cy.ts
+- ✓ workers.edit.spec.cy.ts
 
 **Description**: Tests for managing worker records (staff members) in the system.
 
@@ -407,7 +414,7 @@ Use this section to track overall migration progress:
 
 - [x] Application Settings (2 tests) ✓
 - [x] Device Users (3 tests) ✓
-- [ ] eForm Visual Editor - Create (1 test)
+- [x] eForm Visual Editor - Create (1 test) ✓
 - [x] Folders - Folder Tree (3 tests) ✓
 - [x] Folders - Folder Child (3 tests) ✓
 - [x] Navigation Menu (4 tests) ✓
@@ -416,9 +423,9 @@ Use this section to track overall migration progress:
 - [x] Searchable Lists (3 tests) ✓
 - [x] Selectable Lists (4 tests) ✓
 - [x] User Administration (1 test) ✓
-- [ ] Workers (2 tests)
+- [x] Workers (2 tests) ✓
 
-**Total Progress**: 25/28 tests migrated (89.3%)
+**Total Progress**: 28/28 tests migrated (100.0%)
 
 ## Notes
 
