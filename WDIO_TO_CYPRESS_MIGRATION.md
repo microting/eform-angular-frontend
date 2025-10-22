@@ -7,8 +7,8 @@ This document tracks the migration of WebDriverIO (wdio) e2e tests to Cypress te
 ## Current Status
 
 - **Total wdio tests**: 38
-- **Cypress tests implemented**: 46
-- **Tests remaining to migrate**: 4
+- **Cypress tests implemented**: 47
+- **Tests remaining to migrate**: 3
 
 ## Tests Already Migrated to Cypress ✓
 
@@ -36,6 +36,7 @@ The following wdio tests have been successfully migrated to Cypress:
 - ✓ navigation-menu.drag-item.spec.ts (cypress/e2e/c/)
 
 ### eForm Visual Editor
+- ✓ eform-visual-editor.create-eform.spec.ts (cypress/e2e/j/)
 - ✓ eform-visual-editor.edit-eform.spec.ts (cypress/e2e/j/)
 - ✓ eform-visual-editor.edit-xml.spec.ts (cypress/e2e/j/)
 - ✓ eform-visual-editor.multi-language.spec.ts (cypress/e2e/j/)
@@ -117,14 +118,15 @@ Tests migrated:
 
 ---
 
-### 3. eForm Visual Editor - Create (1 test)
+### 3. eForm Visual Editor - Create (1 test) ✓
 
 **Category**: eForm Visual Editor  
 **Priority**: High  
-**Location**: e2e/Tests/eform-visual-editor/
+**Location**: e2e/Tests/eform-visual-editor/  
+**Migrated to**: cypress/e2e/j/
 
-Tests to migrate:
-- [ ] eform-visual-editor.create-eform.spec.ts
+Tests migrated:
+- ✓ eform-visual-editor.create-eform.spec.cy.ts
 
 **Description**: Tests for creating eForms using the visual editor. The edit functionality is already migrated.
 
@@ -403,7 +405,7 @@ Use this section to track overall migration progress:
 
 - [x] Application Settings (2 tests) ✓
 - [x] Device Users (3 tests) ✓
-- [ ] eForm Visual Editor - Create (1 test)
+- [x] eForm Visual Editor - Create (1 test) ✓
 - [x] Folders - Folder Tree (3 tests) ✓
 - [x] Folders - Folder Child (3 tests) ✓
 - [x] Navigation Menu (4 tests) ✓
@@ -414,7 +416,7 @@ Use this section to track overall migration progress:
 - [x] User Administration (1 test) ✓
 - [ ] Workers (2 tests)
 
-**Total Progress**: 24/28 tests migrated (85.7%)
+**Total Progress**: 25/28 tests migrated (89.3%)
 
 ## Notes
 

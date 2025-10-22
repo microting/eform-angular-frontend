@@ -8,7 +8,7 @@ Migrate eForm Visual Editor creation test to Cypress. This complements the alrea
 
 ## Tests to Migrate
 
-- [ ] `eform-visual-editor.create-eform.spec.ts` - Creating eForms from scratch
+- [x] `eform-visual-editor.create-eform.spec.ts` - Creating eForms from scratch ✅ **MIGRATED**
 
 ## Current Location
 - **wdio tests**: `eform-client/e2e/Tests/eform-visual-editor/`
@@ -56,15 +56,15 @@ Migrate eForm Visual Editor creation test to Cypress. This complements the alrea
 10. Verify in eForm list
 
 ## Acceptance Criteria
-- [ ] Test file migrated to Cypress
-- [ ] Tests follow existing Cypress patterns in j/ folder
-- [ ] Reuse existing visual editor page objects
-- [ ] Complete create workflow tested
-- [ ] Multiple field types tested
-- [ ] Validation rules tested
+- [x] Test file migrated to Cypress
+- [x] Tests follow existing Cypress patterns in j/ folder
+- [x] Reuse existing visual editor page objects
+- [x] Complete create workflow tested
+- [x] Multiple field types tested
+- [x] Validation rules tested
 - [ ] Tests pass locally
 - [ ] Tests pass in CI/CD pipeline
-- [ ] Created eForms properly cleaned up
+- [x] Created eForms properly cleaned up
 
 ## Technical Notes
 - Reference existing edit tests in `cypress/e2e/j/` for patterns
