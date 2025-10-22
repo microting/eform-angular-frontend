@@ -264,6 +264,16 @@ a {
   );
 }
 
+.progress-circle .red-warning-avatar-icon {
+  //background-color: white;
+  color: #DB0D0D !important;
+  position: relative;
+  top: 30px;
+  left: 30px;
+  font-weight: 200 !important;
+  font-size: 20px !important;
+}
+
 .progress-circle::before {
   content: '';
   position: absolute;
