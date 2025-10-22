@@ -18,10 +18,14 @@ class ProfileSettingsPage extends PageWithNavbarPage {
   }
 
   chooseLanguage(language: string) {
+    // Click on the language selector
     this.languageSelector().should('be.visible').click();
     cy.wait(500);
-    // The language selector is a custom mtx-select, we need to click on the option
-    cy.contains('.mtx-option', language).should('be.visible').click();
+    // Type the language name into the input field
+    cy.get('#ProfileLanguageSelector input').type(language);
+    cy.wait(200);
+    // Press Enter to select the option
+    cy.get('body').type('{enter}');
     cy.wait(500);
   }
 }
