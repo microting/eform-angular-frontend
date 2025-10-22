@@ -1,0 +1,170 @@
+import loginPage from '../Login.page';
+import navigationMenuPage from '../NavigationMenu.page';
+
+describe('Navigation menu - Create item', function () {
+  beforeEach(() => {
+    cy.visit('http://localhost:4200');
+    loginPage.login();
+    navigationMenuPage.goToMenuEditor();
+  });
+
+  it('element must be moved from templates to list', () => {
+    cy.wait(1000);
+    
+    // Get initial count
+    navigationMenuPage.getMenuItems().its('length').then(initialCount => {
+      navigationMenuPage.collapseTemplates(0);
+      navigationMenuPage.createMenuItemFromTemplate(0);
+      cy.wait(500);
+
+      // Verify count increased
+      navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
+      
+      navigationMenuPage.clickSaveMenuBtn();
+      cy.wait(500);
+      
+      navigationMenuPage.openEditMenuItem(0);
+      cy.wait(500);
+      
+      // Verify link field
+      cy.get('#editLinkInput').should('have.value', '/');
+      
+      // Verify translations
+      cy.get('#editItemTranslation0_0_0').should('have.value', 'My eForms');
+      cy.get('#editItemTranslation0_0_1').should('have.value', 'Mine eForms');
+      cy.get('#editItemTranslation0_0_2').should('have.value', 'Meine eForms');
+      
+      navigationMenuPage.editItemSave();
+      cy.wait(500);
+      
+      navigationMenuPage.collapseTemplates(0);
+      cy.wait(500);
+    });
+  });
+
+  it('element must be created from custom link', () => {
+    cy.wait(1500);
+    
+    const customLink = {
+      securityGroups: [],
+      link: 'test0',
+      translations: ['test1', 'test2', 'test3']
+    };
+
+    navigationMenuPage.getMenuItems().its('length').then(initialCount => {
+      navigationMenuPage.collapseTemplates(1);
+      navigationMenuPage.createCustomLink(customLink);
+      cy.wait(1000);
+
+      // Verify count increased
+      navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
+      
+      navigationMenuPage.clickSaveMenuBtn();
+      cy.wait(500);
+
+      // Open last item for editing
+      navigationMenuPage.getMenuItems().its('length').then(count => {
+        navigationMenuPage.openEditMenuItem(count - 1);
+        cy.wait(500);
+
+        // Verify link
+        cy.get('#editLinkInput').should('have.value', customLink.link);
+
+        // Verify translations
+        customLink.translations.forEach((translation, i) => {
+          navigationMenuPage.getMenuItems().its('length').then(itemCount => {
+            cy.get(`#editItemTranslation${itemCount - 1}_0_${i}`).should('have.value', translation);
+          });
+        });
+
+        cy.wait(500);
+        navigationMenuPage.editItemSave();
+        cy.wait(500);
+      });
+    });
+  });
+
+  it('element must be created from custom dropdown', () => {
+    cy.wait(1500);
+    
+    const dropdown = {
+      securityGroups: [],
+      translations: ['test1', 'test2', 'test3']
+    };
+
+    navigationMenuPage.getMenuItems().its('length').then(initialCount => {
+      navigationMenuPage.collapseTemplates(1);
+      navigationMenuPage.createCustomDropdown(dropdown);
+      cy.wait(1500);
+
+      // Verify count increased
+      navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
+      
+      navigationMenuPage.clickSaveMenuBtn();
+      cy.wait(500);
+
+      // Open last item for editing
+      navigationMenuPage.getMenuItems().its('length').then(count => {
+        navigationMenuPage.openEditMenuItem(count - 1);
+        cy.wait(500);
+
+        // Verify translations
+        dropdown.translations.forEach((translation, i) => {
+          navigationMenuPage.getMenuItems().its('length').then(itemCount => {
+            cy.get(`#editItemTranslation${itemCount - 1}_0_${i}`).should('have.value', translation);
+          });
+        });
+
+        navigationMenuPage.editItemSave();
+        cy.wait(500);
+      });
+    });
+  });
+
+  it('element must be created from custom dropdown with security group', () => {
+    cy.wait(1500);
+    
+    const dropdown = {
+      securityGroups: ['eForm admins'],
+      translations: ['test1', 'test2', 'test3']
+    };
+
+    navigationMenuPage.getMenuItems().its('length').then(initialCount => {
+      navigationMenuPage.collapseTemplates(1);
+      navigationMenuPage.createCustomDropdown(dropdown);
+      cy.wait(500);
+
+      // Verify count increased
+      navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
+      
+      navigationMenuPage.clickSaveMenuBtn();
+      cy.wait(500);
+
+      // Open last item for editing
+      navigationMenuPage.getMenuItems().its('length').then(count => {
+        navigationMenuPage.openEditMenuItem(count - 1);
+        cy.wait(500);
+
+        // Verify security groups
+        dropdown.securityGroups.forEach((group, i) => {
+          navigationMenuPage.getSecurityGroupsValue().eq(i).should('have.text', group);
+        });
+
+        // Verify translations
+        dropdown.translations.forEach((translation, i) => {
+          navigationMenuPage.getMenuItems().its('length').then(itemCount => {
+            cy.get(`#editItemTranslation${itemCount - 1}_0_${i}`).should('have.value', translation);
+          });
+        });
+
+        navigationMenuPage.editItemSave();
+        cy.wait(500);
+      });
+    });
+  });
+
+  afterEach(() => {
+    navigationMenuPage.resetMenu();
+    cy.wait(2000);
+  });
+});
