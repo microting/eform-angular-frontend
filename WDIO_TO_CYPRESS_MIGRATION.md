@@ -7,8 +7,8 @@ This document tracks the migration of WebDriverIO (wdio) e2e tests to Cypress te
 ## Current Status
 
 - **Total wdio tests**: 38
-- **Cypress tests implemented**: 46
-- **Tests remaining to migrate**: 4
+- **Cypress tests implemented**: 47
+- **Tests remaining to migrate**: 3
 
 ## Tests Already Migrated to Cypress ✓
 
@@ -42,6 +42,9 @@ The following wdio tests have been successfully migrated to Cypress:
 
 ### Password Settings
 - ✓ password-settings.change-password.spec.ts (cypress/e2e/e/)
+
+### Profile Settings
+- ✓ profile-settings.language.spec.cy.ts (cypress/e2e/e/)
 
 ### User Administration
 - ✓ user-administration.name-change.spec.ts (cypress/e2e/e/)
@@ -224,14 +227,15 @@ Tests migrated:
 
 ---
 
-### 8. Profile Settings (1 test)
+### 8. Profile Settings (1 test) ✓
 
 **Category**: User Profile Settings  
 **Priority**: Medium  
-**Location**: e2e/Tests/profile-settings/
+**Location**: e2e/Tests/profile-settings/  
+**Migrated to**: cypress/e2e/e/
 
-Tests to migrate:
-- [ ] profile-settings.language.spec.ts
+Tests migrated:
+- ✓ profile-settings.language.spec.cy.ts
 
 **Description**: Tests for changing user interface language preferences.
 
@@ -408,13 +412,13 @@ Use this section to track overall migration progress:
 - [x] Folders - Folder Child (3 tests) ✓
 - [x] Navigation Menu (4 tests) ✓
 - [x] Password Settings (1 test) ✓
-- [ ] Profile Settings (1 test)
+- [x] Profile Settings (1 test) ✓
 - [x] Searchable Lists (3 tests) ✓
 - [x] Selectable Lists (4 tests) ✓
 - [x] User Administration (1 test) ✓
 - [ ] Workers (2 tests)
 
-**Total Progress**: 24/28 tests migrated (85.7%)
+**Total Progress**: 25/28 tests migrated (89.3%)
 
 ## Notes
 
