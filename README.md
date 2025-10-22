@@ -44,6 +44,20 @@ You need to create an account for Microting API and get your access credentials.
 
 * Call Microting at +45 66 11 10 66 to get started.
 
+## Testing
+
+### E2E Test Migration
+We are actively migrating our end-to-end tests from WebDriverIO to Cypress for improved reliability and developer experience.
+
+**📋 Migration Documentation:**
+- [WDIO to Cypress Migration Plan](WDIO_TO_CYPRESS_MIGRATION.md) - Complete migration guide with all test details
+- [Migration Summary](MIGRATION_SUMMARY.md) - Quick overview and status
+- [Sub-Issue Templates](migration-issues/README.md) - Detailed specifications for each migration task
+
+**Status:** 28 tests remaining to migrate (0% complete)
+
+For more information on testing, see [Testing Documentation](eform-client/TESTING.md).
+
 ## Contributing
 
 1. Do a fork
