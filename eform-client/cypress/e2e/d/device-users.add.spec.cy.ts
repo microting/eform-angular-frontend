@@ -12,8 +12,10 @@ describe('Device users page - Add new device user', function () {
   before(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers');
     deviceUsersPage.Navbar.goToDeviceUsersPage();
-    cy.get('#newDeviceUserBtn').should('be.visible');
+    cy.wait('@loadDeviceUsers', { timeout: 30000 });
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
   });
 
   it('should add new device user with first name and last name', () => {
@@ -49,8 +51,10 @@ describe('Device users page - Should not add new device user', function () {
   before(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers');
     deviceUsersPage.Navbar.goToDeviceUsersPage();
-    cy.get('#newDeviceUserBtn').should('be.visible');
+    cy.wait('@loadDeviceUsers', { timeout: 30000 });
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
   });
 
   it('should NOT add device user with only first name', () => {

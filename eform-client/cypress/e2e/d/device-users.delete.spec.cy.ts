@@ -7,12 +7,14 @@ describe('Device users page - Delete device user', function () {
   before(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers');
     deviceUsersPage.Navbar.goToDeviceUsersPage();
+    cy.wait('@loadDeviceUsers', { timeout: 30000 });
 
     // Create a test user to delete
     const firstName = Guid.create().toString();
     const lastName = Guid.create().toString();
-    cy.get('#newDeviceUserBtn').should('be.visible').click();
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible').click();
     cy.get('#firstName').should('be.visible').type(firstName);
     cy.get('#lastName').should('be.visible').type(lastName);
     cy.get('#saveCreateBtn').should('be.visible').click();
