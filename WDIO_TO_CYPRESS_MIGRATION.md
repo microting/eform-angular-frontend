@@ -7,8 +7,8 @@ This document tracks the migration of WebDriverIO (wdio) e2e tests to Cypress te
 ## Current Status
 
 - **Total wdio tests**: 38
-- **Cypress tests implemented**: 26
-- **Tests remaining to migrate**: 24
+- **Cypress tests implemented**: 27
+- **Tests remaining to migrate**: 23
 
 ## Tests Already Migrated to Cypress ✓
 
@@ -39,7 +39,10 @@ The following wdio tests have been successfully migrated to Cypress:
 ### Password Settings
 - ✓ password-settings.change-password.spec.ts (cypress/e2e/e/)
 
-## Tests to Migrate (27 tests)
+### User Administration
+- ✓ user-administration.name-change.spec.ts (cypress/e2e/e/)
+
+## Tests to Migrate (23 tests)
 
 The following tests need to be migrated from wdio to Cypress. They are organized by functional area for easier sub-issue creation.
 
@@ -206,16 +209,24 @@ Tests to migrate:
 
 ---
 
-### 11. User Administration (1 test)
+### 11. User Administration (1 test) ✓
 
 **Category**: User Management  
 **Priority**: High  
-**Location**: e2e/Tests/user-administration/
+**Location**: e2e/Tests/user-administration/  
+**Migrated to**: cypress/e2e/e/
 
-Tests to migrate:
-- [ ] user-administration.name-change.spec.ts
+Tests migrated:
+- ✓ user-administration.name-change.spec.cy.ts
 
 **Description**: Tests for managing user accounts and changing user names.
+
+**Key Functionality**:
+- Editing user first and last names
+- Creating new users with role and group
+- Changing user roles
+- Deleting users
+- Password field handling
 
 ---
 
@@ -331,10 +342,10 @@ Use this section to track overall migration progress:
 - [ ] Profile Settings (1 test)
 - [ ] Searchable Lists (3 tests)
 - [ ] Selectable Lists (4 tests)
-- [ ] User Administration (1 test)
+- [x] User Administration (1 test) ✓
 - [ ] Workers (2 tests)
 
-**Total Progress**: 4/28 tests migrated (14.3%)
+**Total Progress**: 5/28 tests migrated (17.9%)
 
 ## Notes
 
