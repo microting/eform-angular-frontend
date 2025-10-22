@@ -14,10 +14,10 @@ This directory contains detailed specifications for each sub-issue in the wdio t
 | 06 | [Application Settings](06-application-settings.md) | 🟡 MEDIUM | 2 | ✅ Complete |
 | 07 | [Searchable Lists](07-searchable-lists.md) | 🟡 MEDIUM | 3 | ✅ Complete |
 | 08 | [Selectable Lists](08-selectable-lists.md) | 🟡 MEDIUM | 4 | ✅ Complete |
-| 09 | [Workers](09-workers.md) | 🟡 MEDIUM | 2 | ⏳ Pending |
+| 09 | [Workers](09-workers.md) | 🟡 MEDIUM | 2 | ✅ Complete |
 | 10 | [Profile Settings](10-profile-settings.md) | 🟡 MEDIUM | 1 | ⏳ Pending |
 | 11 | [eForm Visual Editor - Create](11-eform-visual-editor-create.md) | 🔴 HIGH | 1 | ⏳ Pending |
-| | **TOTAL** | | **28** | **86% Complete** |
+| | **TOTAL** | | **28** | **93% Complete** |
 
 ## How to Use These Sub-Issues
 
