@@ -7,8 +7,8 @@ This document tracks the migration of WebDriverIO (wdio) e2e tests to Cypress te
 ## Current Status
 
 - **Total wdio tests**: 38
-- **Cypress tests implemented**: 25
-- **Tests remaining to migrate**: 25
+- **Cypress tests implemented**: 26
+- **Tests remaining to migrate**: 24
 
 ## Tests Already Migrated to Cypress ✓
 
@@ -36,7 +36,10 @@ The following wdio tests have been successfully migrated to Cypress:
 - ✓ eform-visual-editor.edit-xml.spec.ts (cypress/e2e/j/)
 - ✓ eform-visual-editor.multi-language.spec.ts (cypress/e2e/j/)
 
-## Tests to Migrate (28 tests)
+### Password Settings
+- ✓ password-settings.change-password.spec.ts (cypress/e2e/e/)
+
+## Tests to Migrate (27 tests)
 
 The following tests need to be migrated from wdio to Cypress. They are organized by functional area for easier sub-issue creation.
 
@@ -139,16 +142,23 @@ Tests to migrate:
 
 ---
 
-### 7. Password Settings (1 test)
+### 7. Password Settings (1 test) ✓
 
 **Category**: User Security Settings  
 **Priority**: High  
-**Location**: e2e/Tests/password-settings/
+**Location**: e2e/Tests/password-settings/  
+**Migrated to**: cypress/e2e/e/
 
-Tests to migrate:
-- [ ] password-settings.change-password.spec.ts
+Tests migrated:
+- ✓ password-settings.change-password.spec.cy.ts
 
 **Description**: Tests for user password change functionality and validation.
+
+**Key Functionality**:
+- Changing password with valid inputs
+- Reverting password back to original
+- Login with new password verification
+- Password field validation
 
 ---
 
@@ -317,14 +327,14 @@ Use this section to track overall migration progress:
 - [ ] Folders - Folder Tree (3 tests)
 - [ ] Folders - Folder Child (3 tests)
 - [ ] Navigation Menu (4 tests)
-- [ ] Password Settings (1 test)
+- [x] Password Settings (1 test) ✓
 - [ ] Profile Settings (1 test)
 - [ ] Searchable Lists (3 tests)
 - [ ] Selectable Lists (4 tests)
 - [ ] User Administration (1 test)
 - [ ] Workers (2 tests)
 
-**Total Progress**: 3/28 tests migrated (10.7%)
+**Total Progress**: 4/28 tests migrated (14.3%)
 
 ## Notes
 
