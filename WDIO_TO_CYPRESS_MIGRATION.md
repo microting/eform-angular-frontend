@@ -7,8 +7,8 @@ This document tracks the migration of WebDriverIO (wdio) e2e tests to Cypress te
 ## Current Status
 
 - **Total wdio tests**: 38
-- **Cypress tests implemented**: 42
-- **Tests remaining to migrate**: 8
+- **Cypress tests implemented**: 46
+- **Tests remaining to migrate**: 4
 
 ## Tests Already Migrated to Cypress ✓
 
@@ -63,7 +63,13 @@ The following wdio tests have been successfully migrated to Cypress:
 - ✓ searchable-lists.delete.spec.cy.ts (cypress/e2e/h/)
 - ✓ searchable-lists.edit.spec.cy.ts (cypress/e2e/h/)
 
-## Tests to Migrate (8 tests)
+### Selectable Lists
+- ✓ selectable-lists.add.spec.cy.ts (cypress/e2e/i/)
+- ✓ selectable-lists.delete.spec.cy.ts (cypress/e2e/i/)
+- ✓ selectable-lists.edit.spec.cy.ts (cypress/e2e/i/)
+- ✓ selectable-lists.sort.spec.cy.ts (cypress/e2e/i/)
+
+## Tests to Migrate (4 tests)
 
 The following tests need to be migrated from wdio to Cypress. They are organized by functional area for easier sub-issue creation.
 
@@ -247,19 +253,28 @@ Tests migrated:
 
 ---
 
-### 10. Selectable Lists (4 tests)
+### 10. Selectable Lists (4 tests) ✓
 
 **Category**: Selectable Lists Management  
 **Priority**: Medium  
-**Location**: e2e/Tests/selectable-lists/
+**Location**: e2e/Tests/selectable-lists/  
+**Migrated to**: cypress/e2e/i/
 
-Tests to migrate:
-- [ ] selectable-lists.add.spec.ts
-- [ ] selectable-lists.delete.spec.ts
-- [ ] selectable-lists.edit.spec.ts
-- [ ] selectable-lists.sort.spec.ts
+Tests migrated:
+- ✓ selectable-lists.add.spec.cy.ts
+- ✓ selectable-lists.delete.spec.cy.ts
+- ✓ selectable-lists.edit.spec.cy.ts
+- ✓ selectable-lists.sort.spec.cy.ts
 
 **Description**: Tests for managing selectable lists (radio button/checkbox options) including sorting functionality.
+
+**Key Functionality**:
+- Creating selectable lists with name and description
+- Adding list items/options (single or multiple via import)
+- Editing list name and items
+- Deleting lists and items
+- Sorting lists by ID, Name, and Description
+- Cancel operations verification
 
 ---
 
@@ -386,20 +401,20 @@ Migrate [Category Name] wdio tests to Cypress
 
 Use this section to track overall migration progress:
 
-- [ ] Application Settings (2 tests)
+- [x] Application Settings (2 tests) ✓
 - [x] Device Users (3 tests) ✓
 - [ ] eForm Visual Editor - Create (1 test)
-- [ ] Folders - Folder Tree (3 tests)
-- [ ] Folders - Folder Child (3 tests)
+- [x] Folders - Folder Tree (3 tests) ✓
+- [x] Folders - Folder Child (3 tests) ✓
 - [x] Navigation Menu (4 tests) ✓
 - [x] Password Settings (1 test) ✓
 - [ ] Profile Settings (1 test)
-- [ ] Searchable Lists (3 tests)
-- [ ] Selectable Lists (4 tests)
+- [x] Searchable Lists (3 tests) ✓
+- [x] Selectable Lists (4 tests) ✓
 - [x] User Administration (1 test) ✓
 - [ ] Workers (2 tests)
 
-**Total Progress**: 12/28 tests migrated (42.9%)
+**Total Progress**: 24/28 tests migrated (85.7%)
 
 ## Notes
 
