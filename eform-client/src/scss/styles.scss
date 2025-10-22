@@ -49,6 +49,19 @@ body, .theme-light {
   --black-800: #242729;
   --blue-600: #0077cc;
   --theme-body-font-color: var(--black-800);
+  --tp-td-bg: #ffffff;
+  --tp-th-bg: #f7f9fa;
+  --tp-border: #EBEFF2;
+  --tp-text: #111827;
+  --tp-white-text: black;
+}
+
+body, .theme-dark {
+  --tp-td-bg: #424242;
+  --tp-th-bg: #424242;
+  --tp-border: #2B2B2B;
+  --tp-text: #E6E6E6;
+  --tp-white-text: white;
 }
 
 a {
@@ -128,10 +141,8 @@ a {
 }
 //.background-yellow{background-color: var(--yellow) !important;}
 .grey-background {
-  background-color: white !important;
-  //background-color: #EBEFF2 !important;
+  background-color: var(--tp-td-bg) !important;
   border-right: 1px solid #EBEFF2 !important;
-  //padding-right: 5px !important;
   border-bottom: 1px solid #EBEFF2 !important;
   padding: 5px !important;
 }
@@ -143,38 +154,31 @@ a {
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  //width: 100% !important;
   min-height: 100px;
   min-width: 250px !important;
-  //padding: 5px;
-  //margin: 5px;
 }
 
 .white-background {
-  background-color: white !important;
+  background-color: var(--tp-td-bg) !important;
   border-right: 1px solid #EBEFF2 !important;
-  margin-right: 5px !important;
   border-bottom: 1px solid #EBEFF2 !important;
+  padding: 5px !important;
 }
 
 .white-background .plan-container {
+  background-color: var(--tp-td-bg) !important;
   width: 100% !important;
   height: 100% !important;
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  //width: 100% !important;
   min-height: 100px;
   min-width: 250px !important;
-  //padding: 5px;
-  //margin: 5px;
 }
 
 .green-background {
-  background-color: white !important;
-  //background-color: #EBEFF2 !important;
+  background-color: var(--tp-td-bg) !important;
   border-right: 1px solid #EBEFF2 !important;
-  //padding-right: 5px !important;
   border-bottom: 1px solid #EBEFF2 !important;
   padding: 5px !important;
 }
@@ -186,18 +190,14 @@ a {
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  //width: 100% !important;
   min-height: 100px;
   min-width: 250px !important;
-  //padding: 5px;
-  //margin: 5px;
 }
 
 .red-background {
-  background-color: white !important;
+  background-color: var(--tp-td-bg) !important;
   border-bottom: 1px solid #EBEFF2 !important;
   border-right: 1px solid #EBEFF2 !important;
-  //margin-right: 5px !important;
 }
 
 .red-background .plan-container {
@@ -207,11 +207,8 @@ a {
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  //width: 100% !important;
   min-height: 100px;
   min-width: 250px !important;
-  //padding: 5px;
-  //margin: 5px;
 }
 
 .device-icon {
@@ -236,7 +233,7 @@ a {
 }
 
 .white-text {
-  color: black !important;
+  color: var(--tp-white-text) !important;
 }
 
 .red-text {
