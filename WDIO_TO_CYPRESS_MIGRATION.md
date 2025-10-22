@@ -7,8 +7,8 @@ This document tracks the migration of WebDriverIO (wdio) e2e tests to Cypress te
 ## Current Status
 
 - **Total wdio tests**: 38
-- **Cypress tests implemented**: 39
-- **Tests remaining to migrate**: 11
+- **Cypress tests implemented**: 42
+- **Tests remaining to migrate**: 8
 
 ## Tests Already Migrated to Cypress ✓
 
@@ -58,7 +58,12 @@ The following wdio tests have been successfully migrated to Cypress:
 - ✓ application-settings.login-page.spec.cy.ts (cypress/e2e/g/)
 - ✓ application-settings.site-header.spec.cy.ts (cypress/e2e/g/)
 
-## Tests to Migrate (15 tests)
+### Searchable Lists
+- ✓ searchable-lists.add.spec.cy.ts (cypress/e2e/h/)
+- ✓ searchable-lists.delete.spec.cy.ts (cypress/e2e/h/)
+- ✓ searchable-lists.edit.spec.cy.ts (cypress/e2e/h/)
+
+## Tests to Migrate (8 tests)
 
 The following tests need to be migrated from wdio to Cypress. They are organized by functional area for easier sub-issue creation.
 
@@ -226,16 +231,17 @@ Tests to migrate:
 
 ---
 
-### 9. Searchable Lists (3 tests)
+### 9. Searchable Lists (3 tests) ✓
 
 **Category**: Searchable Lists Management  
 **Priority**: Medium  
-**Location**: e2e/Tests/searchable-lists/
+**Location**: e2e/Tests/searchable-lists/  
+**Migrated to**: cypress/e2e/h/
 
-Tests to migrate:
-- [ ] searchable-lists.add.spec.ts
-- [ ] searchable-lists.delete.spec.ts
-- [ ] searchable-lists.edit.spec.ts
+Tests migrated:
+- ✓ searchable-lists.add.spec.cy.ts
+- ✓ searchable-lists.delete.spec.cy.ts
+- ✓ searchable-lists.edit.spec.cy.ts
 
 **Description**: Tests for managing searchable dropdown lists used in eForms.
 

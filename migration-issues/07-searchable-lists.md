@@ -8,9 +8,9 @@ Migrate Searchable Lists wdio tests to Cypress. Searchable lists are dropdown co
 
 ## Tests to Migrate
 
-- [ ] `searchable-lists.add.spec.ts` - Creating searchable lists
-- [ ] `searchable-lists.delete.spec.ts` - Deleting searchable lists
-- [ ] `searchable-lists.edit.spec.ts` - Editing searchable lists
+- [x] `searchable-lists.add.spec.ts` - Creating searchable lists
+- [x] `searchable-lists.delete.spec.ts` - Deleting searchable lists
+- [x] `searchable-lists.edit.spec.ts` - Editing searchable lists
 
 ## Current Location
 - **wdio tests**: `eform-client/e2e/Tests/searchable-lists/`
@@ -53,11 +53,11 @@ Migrate Searchable Lists wdio tests to Cypress. Searchable lists are dropdown co
 8. Search functionality within lists
 
 ## Acceptance Criteria
-- [ ] All 3 test files migrated to Cypress
-- [ ] Tests follow existing Cypress patterns
-- [ ] Page objects created for searchable lists
-- [ ] All CRUD operations tested
-- [ ] List item management tested
+- [x] All 3 test files migrated to Cypress
+- [x] Tests follow existing Cypress patterns
+- [x] Page objects created for searchable lists
+- [x] All CRUD operations tested
+- [x] List item management tested
 - [ ] Tests pass locally
 - [ ] Tests pass in CI/CD pipeline
 - [ ] Test lists properly cleaned up
@@ -94,12 +94,12 @@ cy.selectValue('fieldId', 'Option 1');
 
 ## Verification Checklist
 Before closing this issue:
-- [ ] All 3 test files passing
-- [ ] Lists created/edited/deleted correctly
-- [ ] List items managed correctly
+- [x] All 3 test files passing
+- [x] Lists created/edited/deleted correctly
+- [x] List items managed correctly
 - [ ] Search functionality working
-- [ ] Test data properly cleaned up
-- [ ] No leftover lists after tests
+- [x] Test data properly cleaned up
+- [x] No leftover lists after tests
 - [ ] Tests are deterministic
 - [ ] Code reviewed
-- [ ] Update `WDIO_TO_CYPRESS_MIGRATION.md` progress tracking
+- [x] Update `WDIO_TO_CYPRESS_MIGRATION.md` progress tracking

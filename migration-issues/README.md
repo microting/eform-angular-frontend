@@ -12,7 +12,7 @@ This directory contains detailed specifications for each sub-issue in the wdio t
 | 04 | [Navigation Menu](04-navigation-menu.md) | 🟡 MEDIUM | 4 | ✅ Complete |
 | 05 | [Folders](05-folders.md) | 🟡 MEDIUM | 6 | ✅ Complete |
 | 06 | [Application Settings](06-application-settings.md) | 🟡 MEDIUM | 2 | ✅ Complete |
-| 07 | [Searchable Lists](07-searchable-lists.md) | 🟡 MEDIUM | 3 | ⏳ Pending |
+| 07 | [Searchable Lists](07-searchable-lists.md) | 🟡 MEDIUM | 3 | ✅ Complete |
 | 08 | [Selectable Lists](08-selectable-lists.md) | 🟡 MEDIUM | 4 | ⏳ Pending |
 | 09 | [Workers](09-workers.md) | 🟡 MEDIUM | 2 | ⏳ Pending |
 | 10 | [Profile Settings](10-profile-settings.md) | 🟡 MEDIUM | 1 | ⏳ Pending |
