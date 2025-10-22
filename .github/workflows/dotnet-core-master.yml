@@ -82,8 +82,6 @@ jobs:
         config-file: cypress.config.ts
         working-directory: eform-client
         command-prefix: "--"
-    - name: testheadless2${{matrix.test}}
-      run: cd eform-client && npm run testheadless2${{matrix.test}}
     - name: ${{matrix.test}} test
       uses: cypress-io/github-action@v5
       with:
@@ -96,6 +94,8 @@ jobs:
         config-file: cypress.config.ts
         working-directory: eform-client
         command-prefix: "--"
+    - name: testheadless2${{matrix.test}}
+      run: cd eform-client && npm run testheadless2${{matrix.test}}
     - name: Stop the newly build Docker container
       if: ${{ always() }}
       continue-on-error: true
