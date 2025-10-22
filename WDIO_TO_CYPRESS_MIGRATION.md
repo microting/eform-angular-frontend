@@ -7,8 +7,8 @@ This document tracks the migration of WebDriverIO (wdio) e2e tests to Cypress te
 ## Current Status
 
 - **Total wdio tests**: 38
-- **Cypress tests implemented**: 22
-- **Tests remaining to migrate**: 28
+- **Cypress tests implemented**: 25
+- **Tests remaining to migrate**: 25
 
 ## Tests Already Migrated to Cypress ✓
 
@@ -54,16 +54,17 @@ Tests to migrate:
 
 ---
 
-### 2. Device Users (3 tests)
+### 2. Device Users (3 tests) ✓
 
 **Category**: Device User Management  
 **Priority**: High  
-**Location**: e2e/Tests/device-users/
+**Location**: e2e/Tests/device-users/  
+**Migrated to**: cypress/e2e/d/
 
-Tests to migrate:
-- [ ] device-users.add.spec.ts
-- [ ] device-users.delete.spec.ts
-- [ ] device-users.edit.spec.ts
+Tests migrated:
+- ✓ device-users.add.spec.cy.ts
+- ✓ device-users.delete.spec.cy.ts
+- ✓ device-users.edit.spec.cy.ts
 
 **Description**: Tests for CRUD operations on device users (mobile device operators who use the eForm mobile app).
 
@@ -311,7 +312,7 @@ Migrate [Category Name] wdio tests to Cypress
 Use this section to track overall migration progress:
 
 - [ ] Application Settings (2 tests)
-- [ ] Device Users (3 tests)
+- [x] Device Users (3 tests) ✓
 - [ ] eForm Visual Editor - Create (1 test)
 - [ ] Folders - Folder Tree (3 tests)
 - [ ] Folders - Folder Child (3 tests)
@@ -323,7 +324,7 @@ Use this section to track overall migration progress:
 - [ ] User Administration (1 test)
 - [ ] Workers (2 tests)
 
-**Total Progress**: 0/28 tests migrated (0%)
+**Total Progress**: 3/28 tests migrated (10.7%)
 
 ## Notes
 
