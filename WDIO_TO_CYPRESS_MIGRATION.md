@@ -7,8 +7,8 @@ This document tracks the migration of WebDriverIO (wdio) e2e tests to Cypress te
 ## Current Status
 
 - **Total wdio tests**: 38
-- **Cypress tests implemented**: 37
-- **Tests remaining to migrate**: 13
+- **Cypress tests implemented**: 39
+- **Tests remaining to migrate**: 11
 
 ## Tests Already Migrated to Cypress ✓
 
@@ -54,21 +54,33 @@ The following wdio tests have been successfully migrated to Cypress:
 - ✓ folder-child.edit.spec.cy.ts (cypress/e2e/f/)
 - ✓ folder-child.delete.spec.cy.ts (cypress/e2e/f/)
 
-## Tests to Migrate (17 tests)
+### Application Settings
+- ✓ application-settings.login-page.spec.cy.ts (cypress/e2e/g/)
+- ✓ application-settings.site-header.spec.cy.ts (cypress/e2e/g/)
+
+## Tests to Migrate (15 tests)
 
 The following tests need to be migrated from wdio to Cypress. They are organized by functional area for easier sub-issue creation.
 
-### 1. Application Settings (2 tests)
+### 1. Application Settings (2 tests) ✓
 
 **Category**: Application Configuration and Settings  
 **Priority**: Medium  
-**Location**: e2e/Tests/application-settings/
+**Location**: e2e/Tests/application-settings/  
+**Migrated to**: cypress/e2e/g/
 
-Tests to migrate:
-- [ ] application-settings.login-page.spec.ts
-- [ ] application-settings.site-header.spec.ts
+Tests migrated:
+- ✓ application-settings.login-page.spec.cy.ts
+- ✓ application-settings.site-header.spec.cy.ts
 
 **Description**: Tests for application-level settings including login page configuration and site header customization.
+
+**Key Functionality**:
+- Customizing login page main and secondary text
+- Toggling visibility of login page elements (main text, secondary text, image)
+- Resetting login page settings to defaults
+- Customizing site header image visibility
+- Verifying changes persist on login and header pages
 
 ---
 
