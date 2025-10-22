@@ -7,8 +7,8 @@ This document tracks the migration of WebDriverIO (wdio) e2e tests to Cypress te
 ## Current Status
 
 - **Total wdio tests**: 38
-- **Cypress tests implemented**: 31
-- **Tests remaining to migrate**: 19
+- **Cypress tests implemented**: 37
+- **Tests remaining to migrate**: 13
 
 ## Tests Already Migrated to Cypress ✓
 
@@ -46,7 +46,15 @@ The following wdio tests have been successfully migrated to Cypress:
 ### User Administration
 - ✓ user-administration.name-change.spec.ts (cypress/e2e/e/)
 
-## Tests to Migrate (23 tests)
+### Folders
+- ✓ folder-tree.add.spec.cy.ts (cypress/e2e/f/)
+- ✓ folder-tree.edit.spec.cy.ts (cypress/e2e/f/)
+- ✓ folder-tree.delete.spec.cy.ts (cypress/e2e/f/)
+- ✓ folder-child.add.spec.cy.ts (cypress/e2e/f/)
+- ✓ folder-child.edit.spec.cy.ts (cypress/e2e/f/)
+- ✓ folder-child.delete.spec.cy.ts (cypress/e2e/f/)
+
+## Tests to Migrate (17 tests)
 
 The following tests need to be migrated from wdio to Cypress. They are organized by functional area for easier sub-issue creation.
 
@@ -101,33 +109,49 @@ Tests to migrate:
 
 ---
 
-### 4. Folders - Folder Tree (3 tests)
+### 4. Folders - Folder Tree (3 tests) ✓
 
 **Category**: Folder Management - Tree Structure  
 **Priority**: Medium  
-**Location**: e2e/Tests/folders/folder-tree/
+**Location**: e2e/Tests/folders/folder-tree/  
+**Migrated to**: cypress/e2e/f/
 
-Tests to migrate:
-- [ ] folder-tree.add.spec.ts
-- [ ] folder-tree.delete.spec.ts
-- [ ] folder-tree.edit.spec.ts
+Tests migrated:
+- ✓ folder-tree.add.spec.cy.ts
+- ✓ folder-tree.edit.spec.cy.ts
+- ✓ folder-tree.delete.spec.cy.ts
 
 **Description**: Tests for hierarchical folder tree management including creating, editing, and deleting folder nodes.
 
+**Key Functionality**:
+- Creating folders with name and description
+- Creating folders with formatted descriptions (bold, italic, underline, strike-through)
+- Editing folder name and description
+- Deleting folders with confirmation
+- Cancel operations verification
+
 ---
 
-### 5. Folders - Folder Child (3 tests)
+### 5. Folders - Folder Child (3 tests) ✓
 
 **Category**: Folder Management - Child Folders  
 **Priority**: Medium  
-**Location**: e2e/Tests/folders/folder-child/
+**Location**: e2e/Tests/folders/folder-child/  
+**Migrated to**: cypress/e2e/f/
 
-Tests to migrate:
-- [ ] folder-child.add.spec.ts
-- [ ] folder-child.delete.spec.ts
-- [ ] folder-child.edit.spec.ts
+Tests migrated:
+- ✓ folder-child.add.spec.cy.ts
+- ✓ folder-child.edit.spec.cy.ts
+- ✓ folder-child.delete.spec.cy.ts
 
 **Description**: Tests for child folder management within the folder hierarchy.
+
+**Key Functionality**:
+- Creating child folders under parent folders
+- Editing child folder name and description
+- Deleting child folders
+- Maintaining parent-child relationships
+- Expanding/collapsing folder tree nodes
 
 ---
 
