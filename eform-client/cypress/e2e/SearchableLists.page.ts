@@ -1,11 +1,13 @@
-import { Navbar } from './Navbar.page';
+import { PageWithNavbarPage } from './PageWithNavbar.page';
 
-export class SearchableListsPage {
-  private navbar = new Navbar();
+export class SearchableListsPage extends PageWithNavbarPage {
+  constructor() {
+    super();
+  }
 
   // Navigation
   public goToEntitySearchPage() {
-    this.navbar.goToEntitySearch();
+    this.Navbar.goToEntitySearch();
   }
 
   // Element selectors
