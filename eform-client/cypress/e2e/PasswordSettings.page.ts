@@ -1,9 +1,7 @@
-import { Navbar } from './Navbar.page';
+import { PageWithNavbarPage } from './PageWithNavbar.page';
 import loginConstants from '../../e2e/Constants/LoginConstants';
 
-export class PasswordSettingsPage {
-  public Navbar = new Navbar();
-
+class PasswordSettingsPage extends PageWithNavbarPage {
   oldPasswordField() {
     return cy.get('#oldPassword');
   }

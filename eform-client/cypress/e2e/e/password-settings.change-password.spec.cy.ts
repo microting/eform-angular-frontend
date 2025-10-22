@@ -1,6 +1,5 @@
 import loginPage from '../Login.page';
 import passwordSettingsPage from '../PasswordSettings.page';
-import loginConstants from '../../../e2e/Constants/LoginConstants';
 
 describe('Password settings - Change password', function () {
   before(() => {
