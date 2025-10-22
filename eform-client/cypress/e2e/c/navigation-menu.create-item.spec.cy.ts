@@ -5,7 +5,10 @@ describe('Navigation menu - Create item', function () {
   beforeEach(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    cy.intercept('GET', '**/api/navigation-menu').as('loadMenu');
     navigationMenuPage.goToMenuEditor();
+    cy.wait('@loadMenu', { timeout: 30000 });
+    cy.wait(1000);
   });
 
   it('element must be moved from templates to list', () => {

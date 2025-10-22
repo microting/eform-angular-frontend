@@ -5,7 +5,10 @@ describe('Navigation menu - Delete item', function () {
   beforeEach(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    cy.intercept('GET', '**/api/navigation-menu').as('loadMenu');
     navigationMenuPage.goToMenuEditor();
+    cy.wait('@loadMenu', { timeout: 30000 });
+    cy.wait(2000);
   });
 
   it('element must be created from custom dropdown which elements and create templates elements', () => {

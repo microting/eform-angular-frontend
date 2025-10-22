@@ -11,8 +11,10 @@ describe('User Administration - Name Change', function () {
   before(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    cy.intercept('GET', '**/api/admin/get-users').as('loadUsers');
     userAdministrationPage.Navbar.goToUserAdministration();
-    cy.get('#createNewUserBtn').should('be.visible');
+    cy.wait('@loadUsers', { timeout: 30000 });
+    cy.get('#createNewUserBtn', { timeout: 10000 }).should('be.visible');
   });
 
   it('should set name to Foo Bar', () => {

@@ -15,14 +15,18 @@ describe('Workers page - Add new worker', function () {
     loginPage.login();
     
     // First, create a device user that will be associated with the worker
+    cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers');
     deviceUsersPage.Navbar.goToDeviceUsersPage();
-    cy.get('#newDeviceUserBtn').should('be.visible');
+    cy.wait('@loadDeviceUsers', { timeout: 30000 });
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
     deviceUsersPage.createNewDeviceUser(deviceUserFirstName, deviceUserLastName);
     cy.wait(1000);
     
     // Navigate to Workers page
+    cy.intercept('POST', '**/api/workers/index').as('loadWorkers');
     workersPage.Navbar.goToWorkers();
-    cy.get('#workerCreateBtn').should('be.visible');
+    cy.wait('@loadWorkers', { timeout: 30000 });
+    cy.get('#workerCreateBtn', { timeout: 10000 }).should('be.visible');
   });
 
   it('should add new worker with first and last name', () => {
