@@ -6,9 +6,9 @@ This directory contains detailed specifications for each sub-issue in the wdio t
 
 | # | Title | Priority | Tests | Status |
 |---|-------|----------|-------|--------|
-| 01 | [Device Users](01-device-users.md) | 🔴 HIGH | 3 | ⏳ Pending |
-| 02 | [Password Settings](02-password-settings.md) | 🔴 HIGH | 1 | ⏳ Pending |
-| 03 | [User Administration](03-user-administration.md) | 🔴 HIGH | 1 | ⏳ Pending |
+| 01 | [Device Users](01-device-users.md) | 🔴 HIGH | 3 | ✅ Complete |
+| 02 | [Password Settings](02-password-settings.md) | 🔴 HIGH | 1 | ✅ Complete |
+| 03 | [User Administration](03-user-administration.md) | 🔴 HIGH | 1 | ✅ Complete |
 | 04 | [Navigation Menu](04-navigation-menu.md) | 🟡 MEDIUM | 4 | ⏳ Pending |
 | 05 | [Folders](05-folders.md) | 🟡 MEDIUM | 6 | ⏳ Pending |
 | 06 | [Application Settings](06-application-settings.md) | 🟡 MEDIUM | 2 | ⏳ Pending |
@@ -17,7 +17,7 @@ This directory contains detailed specifications for each sub-issue in the wdio t
 | 09 | [Workers](09-workers.md) | 🟡 MEDIUM | 2 | ⏳ Pending |
 | 10 | [Profile Settings](10-profile-settings.md) | 🟡 MEDIUM | 1 | ⏳ Pending |
 | 11 | [eForm Visual Editor - Create](11-eform-visual-editor-create.md) | 🔴 HIGH | 1 | ⏳ Pending |
-| | **TOTAL** | | **28** | **0% Complete** |
+| | **TOTAL** | | **28** | **18% Complete** |
 
 ## How to Use These Sub-Issues
 
