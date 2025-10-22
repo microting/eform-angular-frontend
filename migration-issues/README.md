@@ -10,14 +10,14 @@ This directory contains detailed specifications for each sub-issue in the wdio t
 | 02 | [Password Settings](02-password-settings.md) | 🔴 HIGH | 1 | ✅ Complete |
 | 03 | [User Administration](03-user-administration.md) | 🔴 HIGH | 1 | ✅ Complete |
 | 04 | [Navigation Menu](04-navigation-menu.md) | 🟡 MEDIUM | 4 | ✅ Complete |
-| 05 | [Folders](05-folders.md) | 🟡 MEDIUM | 6 | ⏳ Pending |
+| 05 | [Folders](05-folders.md) | 🟡 MEDIUM | 6 | ✅ Complete |
 | 06 | [Application Settings](06-application-settings.md) | 🟡 MEDIUM | 2 | ⏳ Pending |
 | 07 | [Searchable Lists](07-searchable-lists.md) | 🟡 MEDIUM | 3 | ⏳ Pending |
 | 08 | [Selectable Lists](08-selectable-lists.md) | 🟡 MEDIUM | 4 | ⏳ Pending |
 | 09 | [Workers](09-workers.md) | 🟡 MEDIUM | 2 | ⏳ Pending |
 | 10 | [Profile Settings](10-profile-settings.md) | 🟡 MEDIUM | 1 | ⏳ Pending |
 | 11 | [eForm Visual Editor - Create](11-eform-visual-editor-create.md) | 🔴 HIGH | 1 | ⏳ Pending |
-| | **TOTAL** | | **28** | **43% Complete** |
+| | **TOTAL** | | **28** | **64% Complete** |
 
 ## How to Use These Sub-Issues
 
