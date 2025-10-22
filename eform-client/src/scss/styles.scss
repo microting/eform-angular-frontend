@@ -271,18 +271,42 @@ a {
   top: 30px;
   left: 30px;
   font-weight: 200 !important;
-  font-size: 20px !important;
+  font-size: 17px !important;
 }
 
+/* css */
+/* File: 'src/scss/styles.scss' */
+/* Keep current positioning in '.progress-circle .red-warning-avatar-icon' as-is */
+
+/* Only adjust the icon box and background */
+mat-icon.red-warning-avatar-icon {
+  /* Default mat-icon box is 24x24; with font-size: 20px this yields ~2px margin */
+  width: 19px;   /* keep default */
+  height: 19px;  /* keep default */
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fff;   /* white circular background */
+  border-radius: 50%;       /* make it a circle */
+  padding: 0 !important;    /* no extra white ring */
+
+  color: #DB0D0D !important; /* keep the glyph red */
+  line-height: 1;            /* avoid extra vertical space */
+  box-sizing: border-box;
+}
+
+/* If the mat-icon inherits a color (e.g. red) you can keep the glyph colored while the circle is white */
+mat-icon.red-warning-avatar-icon {
+  color: #d32f2f; /* example icon color */
+}
 .progress-circle::before {
   content: '';
   position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 42px;
-  height: 42px;
+  inset: 4px;
   border-radius: 50%;
-  background-color: white;
+  background-color: #fff;
 }
 
 .progress-circle .avatar {
