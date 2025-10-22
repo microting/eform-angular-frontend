@@ -7,8 +7,8 @@ This document tracks the migration of WebDriverIO (wdio) e2e tests to Cypress te
 ## Current Status
 
 - **Total wdio tests**: 38
-- **Cypress tests implemented**: 27
-- **Tests remaining to migrate**: 23
+- **Cypress tests implemented**: 31
+- **Tests remaining to migrate**: 19
 
 ## Tests Already Migrated to Cypress ✓
 
@@ -30,6 +30,10 @@ The following wdio tests have been successfully migrated to Cypress:
 
 ### Navigation Menu
 - ✓ subheader.spec.ts (cypress/e2e/c/)
+- ✓ navigation-menu.create-item.spec.ts (cypress/e2e/c/)
+- ✓ navigation-menu.edit-item.spec.ts (cypress/e2e/c/)
+- ✓ navigation-menu.delete-item.spec.ts (cypress/e2e/c/)
+- ✓ navigation-menu.drag-item.spec.ts (cypress/e2e/c/)
 
 ### eForm Visual Editor
 - ✓ eform-visual-editor.edit-eform.spec.ts (cypress/e2e/j/)
@@ -127,19 +131,27 @@ Tests to migrate:
 
 ---
 
-### 6. Navigation Menu (4 tests)
+### 6. Navigation Menu (4 tests) ✓
 
 **Category**: Navigation Menu Management  
 **Priority**: Medium  
-**Location**: e2e/Tests/navigation-menu/
+**Location**: e2e/Tests/navigation-menu/  
+**Migrated to**: cypress/e2e/c/
 
-Tests to migrate:
-- [ ] navigation-menu.create-item.spec.ts
-- [ ] navigation-menu.delete-item.spec.ts
-- [ ] navigation-menu.drag-item.spec.ts
-- [ ] navigation-menu.edit-item.spec.ts
+Tests migrated:
+- ✓ navigation-menu.create-item.spec.cy.ts
+- ✓ navigation-menu.delete-item.spec.cy.ts
+- ✓ navigation-menu.drag-item.spec.cy.ts
+- ✓ navigation-menu.edit-item.spec.cy.ts
 
 **Description**: Tests for customizing and managing navigation menu items including drag-and-drop reordering.
+
+**Key Functionality**:
+- Creating menu items from templates
+- Creating custom links and dropdowns
+- Editing menu item properties (translations, links, security groups)
+- Deleting menu items and dropdown items
+- Drag-and-drop reordering of menu items
 
 **Note**: subheader.spec.ts is already migrated in cypress/e2e/c/
 
@@ -337,7 +349,7 @@ Use this section to track overall migration progress:
 - [ ] eForm Visual Editor - Create (1 test)
 - [ ] Folders - Folder Tree (3 tests)
 - [ ] Folders - Folder Child (3 tests)
-- [ ] Navigation Menu (4 tests)
+- [x] Navigation Menu (4 tests) ✓
 - [x] Password Settings (1 test) ✓
 - [ ] Profile Settings (1 test)
 - [ ] Searchable Lists (3 tests)
@@ -345,7 +357,7 @@ Use this section to track overall migration progress:
 - [x] User Administration (1 test) ✓
 - [ ] Workers (2 tests)
 
-**Total Progress**: 5/28 tests migrated (17.9%)
+**Total Progress**: 12/28 tests migrated (42.9%)
 
 ## Notes
 
