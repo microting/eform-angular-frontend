@@ -35,8 +35,10 @@ describe('Folders - Add child folder', function () {
     cy.get(`#createFolderDescriptionTranslation_${nameIndex} .NgxEditor__Content`).type(description);
     cy.wait(500);
 
+    cy.intercept({method: 'POST', url: '**/api/folders'}).as('createFolder');
+    cy.intercept({method: 'PUT', url: '**/api/folders'}).as('updateFolder');
     cy.get('#folderSaveBtn').click();
-    cy.get('#spinner-animation').should('not.exist', { timeout: 90000 });
+    cy.wait(['@createFolder', '@updateFolder'], { timeout: 30000 }).then(() => cy.log('Folder operation completed'));
     foldersPage.newFolderBtn().should('be.visible');
     cy.wait(500);
   });
@@ -71,8 +73,10 @@ describe('Folders - Add child folder', function () {
       cy.wait(500);
 
       // Save
+      cy.intercept({method: 'POST', url: '**/api/folders'}).as('createFolder');
+      cy.intercept({method: 'PUT', url: '**/api/folders'}).as('updateFolder');
       cy.get('#folderSaveBtn').click();
-      cy.get('#spinner-animation').should('not.exist', { timeout: 90000 });
+      cy.wait(['@createFolder', '@updateFolder'], { timeout: 30000 }).then(() => cy.log('Folder operation completed'));
       foldersPage.newFolderBtn().should('be.visible');
       cy.wait(500);
 
@@ -102,8 +106,9 @@ describe('Folders - Add child folder', function () {
     // Delete parent folder (which will delete children too)
     cy.get('.folder-tree-name').contains(parentFolderName).parents('mat-tree-node').first().find('button.mat-menu-trigger').click();
     cy.get('#deleteFolderTreeBtn').click();
+    cy.intercept('DELETE', '**/api/folders/**').as('deleteFolder');
     cy.get('#saveDeleteBtn').should('be.visible').click();
-    cy.get('#spinner-animation').should('not.exist', { timeout: 90000 });
+    cy.wait('@deleteFolder', { timeout: 30000 });
     foldersPage.newFolderBtn().should('be.visible');
     cy.wait(500);
 
