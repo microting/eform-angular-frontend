@@ -451,7 +451,7 @@ class FoldersRowObject {
     }
     if (!clickCancel) {
       cy.get(foldersPage.saveCreateBtn()).click();
-      cy.get('#spinner-animation').should('not.exist', {timeout: 90000});
+      // Note: Tests should intercept POST /api/folders after clicking save
     } else {
       cy.get(foldersPage.cancelCreateBtn()).click();
     }
