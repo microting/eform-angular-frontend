@@ -25,6 +25,9 @@ describe('Device users page - Delete device user', function () {
   });
 
   it('should not delete device user if cancel was clicked', () => {
+    // Ensure table is visible before counting rows
+    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
+    
     deviceUsersPage.rowNum().then((rowNumBeforeDelete) => {
       cy.get('#deviceUserId').should('be.visible');
 
@@ -33,7 +36,12 @@ describe('Device users page - Delete device user', function () {
       cy.get('#cancelDeleteBtn').should('be.visible').click();
 
       // Navigate back to device users page
+      cy.intercept('POST', '**/api/device-users/index').as('reloadList');
       deviceUsersPage.Navbar.goToDeviceUsersPage();
+      cy.wait('@reloadList', { timeout: 30000 });
+      
+      // Ensure table is visible before counting rows
+      cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
 
       // Verify count hasn't changed
       deviceUsersPage.rowNum().then((rowNumAfterCancelDelete) => {
@@ -46,6 +54,9 @@ describe('Device users page - Delete device user', function () {
     cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers1');
     deviceUsersPage.Navbar.goToDeviceUsersPage();
     cy.wait('@loadDeviceUsers1', { timeout: 30000 });
+    
+    // Ensure table is visible before counting rows
+    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
 
     deviceUsersPage.rowNum().then((rowNumBeforeDelete) => {
       cy.get('#deviceUserId').should('be.visible');
@@ -62,6 +73,9 @@ describe('Device users page - Delete device user', function () {
       cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers2');
       deviceUsersPage.Navbar.goToDeviceUsersPage();
       cy.wait('@loadDeviceUsers2', { timeout: 30000 });
+      
+      // Ensure table is visible before counting rows
+      cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
 
       // Verify count decreased
       deviceUsersPage.rowNum().then((rowNumAfterDelete) => {

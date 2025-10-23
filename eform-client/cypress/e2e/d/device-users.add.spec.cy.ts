@@ -21,6 +21,9 @@ describe('Device users page - Add new device user', function () {
   it('should add new device user with first name and last name', () => {
     const surname = generateRandmString();
 
+    // Ensure table is visible before counting rows
+    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
+    
     deviceUsersPage.rowNum().then((rowCountBeforeCreation) => {
       countDeviceUsersBeforeCreating = rowCountBeforeCreation;
 
@@ -100,6 +103,9 @@ describe('Device users page - Should not add new device user', function () {
   });
 
   it('should NOT create user if cancel was clicked', () => {
+    // Ensure table is visible before counting rows
+    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
+    
     deviceUsersPage.rowNum().then((rowCountBeforeCreation) => {
       cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible').click();
       cy.get('#firstName').should('be.visible');
@@ -118,6 +124,9 @@ describe('Device users page - Should not add new device user', function () {
   });
 
   it('should clean up created test data', () => {
+    // Ensure table is visible before finding user
+    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
+    
     // Find and delete the test user
     cy.get('#deviceUserFirstName').each(($el, index) => {
       if ($el.text() === nameDeviceUser) {
@@ -132,6 +141,9 @@ describe('Device users page - Should not add new device user', function () {
       }
     });
 
+    // Ensure table is visible before counting rows
+    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
+    
     // Verify count is back to original
     deviceUsersPage.rowNum().then((currentCount) => {
       expect(currentCount).to.equal(countDeviceUsersBeforeCreating);

@@ -114,6 +114,9 @@ describe('Device users page - Edit device user', function () {
     const newName = Guid.create().toString();
     const newSurname = Guid.create().toString();
 
+    // Ensure table is visible before counting rows
+    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
+    
     // Get count and data before edit
     deviceUsersPage.rowNum().then((rowNumBeforeEdit) => {
       cy.get('#deviceUserFirstName').last().invoke('text').then((oldFirstName) => {
@@ -127,7 +130,7 @@ describe('Device users page - Edit device user', function () {
           cy.get('#firstName').clear().type(newName);
           cy.get('#lastName').clear().type(newSurname);
           cy.get('#cancelEditBtn').should('be.visible').click();
-          cy.get('#newDeviceUserBtn').should('be.visible');
+          cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
 
           // Verify no changes occurred
           deviceUsersPage.rowNum().then((rowNumAfterEdit) => {
