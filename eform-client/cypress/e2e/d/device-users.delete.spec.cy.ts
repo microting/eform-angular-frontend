@@ -17,8 +17,10 @@ describe('Device users page - Delete device user', function () {
     cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible').click();
     cy.get('#firstName').should('be.visible').type(firstName);
     cy.get('#lastName').should('be.visible').type(lastName);
+    
+    cy.intercept('POST', '**/api/device-users/create').as('createUser');
     cy.get('#saveCreateBtn').should('be.visible').click();
-    cy.get('#spinner-animation').should('not.exist');
+    cy.wait('@createUser', { timeout: 30000 });
     cy.get('#newDeviceUserBtn').should('be.visible');
   });
 
@@ -47,9 +49,10 @@ describe('Device users page - Delete device user', function () {
       cy.get('#deviceUserId').should('be.visible');
 
       // Click delete button on last row
+      cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
       cy.get('#deleteDeviceUserBtn').last().should('be.visible').click();
       cy.get('#saveDeleteBtn').should('be.visible').click();
-      cy.get('#spinner-animation').should('not.exist');
+      cy.wait('@deleteUser', { timeout: 30000 });
 
       // Navigate back to device users page
       deviceUsersPage.Navbar.goToDeviceUsersPage();

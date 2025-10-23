@@ -17,8 +17,10 @@ describe('Device users page - Edit device user', function () {
     cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible').click();
     cy.get('#firstName').should('be.visible').type(firstName);
     cy.get('#lastName').should('be.visible').type(lastName);
+    
+    cy.intercept('POST', '**/api/device-users/create').as('createUser');
     cy.get('#saveCreateBtn').should('be.visible').click();
-    cy.get('#spinner-animation').should('not.exist');
+    cy.wait('@createUser', { timeout: 30000 });
     cy.get('#newDeviceUserBtn').should('be.visible');
   });
 
@@ -37,8 +39,10 @@ describe('Device users page - Edit device user', function () {
 
         // Edit first name
         cy.get('#firstName').clear().type(newName);
+        
+        cy.intercept('POST', '**/api/device-users/update').as('updateUser');
         cy.get('#saveEditBtn').should('be.visible').click();
-        cy.get('#spinner-animation').should('not.exist');
+        cy.wait('@updateUser', { timeout: 30000 });
         cy.get('#newDeviceUserBtn').should('be.visible');
 
         // Verify changes
@@ -62,8 +66,10 @@ describe('Device users page - Edit device user', function () {
 
       // Edit last name
       cy.get('#lastName').clear().type(newSurname);
+      
+      cy.intercept('POST', '**/api/device-users/update').as('updateUser');
       cy.get('#saveEditBtn').should('be.visible').click();
-      cy.get('#spinner-animation').should('not.exist');
+      cy.wait('@updateUser', { timeout: 30000 });
       cy.get('#newDeviceUserBtn').should('be.visible');
 
       // Verify changes
@@ -85,8 +91,10 @@ describe('Device users page - Edit device user', function () {
     // Edit both fields
     cy.get('#firstName').clear().type(newName);
     cy.get('#lastName').clear().type(newSurname);
+    
+    cy.intercept('POST', '**/api/device-users/update').as('updateUser');
     cy.get('#saveEditBtn').should('be.visible').click();
-    cy.get('#spinner-animation').should('not.exist');
+    cy.wait('@updateUser', { timeout: 30000 });
     cy.get('#newDeviceUserBtn').should('be.visible');
 
     // Verify changes

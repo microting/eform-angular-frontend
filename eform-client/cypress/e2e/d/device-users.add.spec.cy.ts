@@ -28,8 +28,10 @@ describe('Device users page - Add new device user', function () {
       cy.get('#newDeviceUserBtn').should('be.visible').click();
       cy.get('#firstName').should('be.visible').type(nameDeviceUser);
       cy.get('#lastName').should('be.visible').type(surname);
+      
+      cy.intercept('POST', '**/api/device-users/create').as('createUser');
       cy.get('#saveCreateBtn').should('be.visible').should('be.enabled').click();
-      cy.get('#spinner-animation').should('not.exist');
+      cy.wait('@createUser', { timeout: 30000 });
       cy.get('#newDeviceUserBtn').should('be.visible');
 
       // Verify the user was created
@@ -116,9 +118,10 @@ describe('Device users page - Should not add new device user', function () {
     // Find and delete the test user
     cy.get('#deviceUserFirstName').each(($el, index) => {
       if ($el.text() === nameDeviceUser) {
+        cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
         cy.get('#deleteDeviceUserBtn').eq(index).click();
         cy.get('#saveDeleteBtn').should('be.visible').click();
-        cy.get('#spinner-animation').should('not.exist');
+        cy.wait('@deleteUser', { timeout: 30000 });
         cy.get('#newDeviceUserBtn').should('be.visible');
         return false; // break the loop
       }
