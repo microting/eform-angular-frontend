@@ -39,8 +39,10 @@ describe('Workers page - Edit worker', function () {
     cy.get('#firstName').should('be.visible').type(initialFirstName);
     cy.get('#lastName').should('be.visible').type(initialLastName);
     cy.wait(500);
+    
+    cy.intercept('POST', '**/api/workers/create').as('createWorker');
     cy.get('#workerSaveBtn').should('be.visible').click();
-    cy.get('#spinner-animation').should('not.exist');
+    cy.wait('@createWorker', { timeout: 30000 });
     cy.get('#workerCreateBtn').should('be.visible');
   });
 
@@ -60,8 +62,10 @@ describe('Workers page - Edit worker', function () {
       cy.get('#firstNameEdit').clear().type(newFirstName);
       cy.get('#lastNameEdit').clear().type(newLastName);
       cy.wait(500);
+      
+      cy.intercept('POST', '**/api/workers/update').as('updateWorker');
       cy.get('#workerEditSaveBtn').should('be.visible').click();
-      cy.get('#spinner-animation').should('not.exist');
+      cy.wait('@updateWorker', { timeout: 30000 });
       cy.get('#workerCreateBtn').should('be.visible');
 
       // Verify changes
@@ -84,8 +88,10 @@ describe('Workers page - Edit worker', function () {
     cy.get('#firstNameEdit').clear().type(newFirstName);
     cy.get('#lastNameEdit').clear().type(newLastName);
     cy.wait(500);
+    
+    cy.intercept('POST', '**/api/workers/update').as('updateWorker');
     cy.get('#workerEditSaveBtn').should('be.visible').click();
-    cy.get('#spinner-animation').should('not.exist');
+    cy.wait('@updateWorker', { timeout: 30000 });
     cy.get('#workerCreateBtn').should('be.visible');
 
     // Verify changes
@@ -127,9 +133,10 @@ describe('Workers page - Edit worker', function () {
 
   after(() => {
     // Clean up: Delete the test worker
+    cy.intercept('POST', '**/api/workers/delete').as('deleteWorker');
     cy.get('#workerDeleteBtn').last().should('be.visible').click();
     cy.get('#saveDeleteBtn').should('be.visible').click();
-    cy.get('#spinner-animation').should('not.exist');
+    cy.wait('@deleteWorker', { timeout: 30000 });
     cy.wait(500);
 
     // Clean up: Delete the device user
@@ -138,9 +145,10 @@ describe('Workers page - Edit worker', function () {
     
     cy.get('#deviceUserFirstName').each(($el, index) => {
       if ($el.text() === deviceUserFirstName) {
+        cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
         cy.get('#deleteDeviceUserBtn').eq(index).click();
         cy.get('#saveDeleteBtn').should('be.visible').click();
-        cy.get('#spinner-animation').should('not.exist');
+        cy.wait('@deleteUser', { timeout: 30000 });
         cy.get('#newDeviceUserBtn').should('be.visible');
         return false; // break the loop
       }
