@@ -15,8 +15,11 @@ describe('Navigation menu - Create item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(0);
       navigationMenuPage.createMenuItemFromTemplate(0);
+      
+      // Wait for DOM update after drag-and-drop (matching WDIO test behavior)
+      cy.wait(500);
 
-      // Verify count increased - wait for DOM update
+      // Verify count increased
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
       
       // Intercept save operation
@@ -53,8 +56,11 @@ describe('Navigation menu - Create item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomLink(customLink);
+      
+      // Wait for DOM update after creating custom link (matching WDIO test behavior)
+      cy.wait(1000);
 
-      // Verify count increased - wait for DOM update
+      // Verify count increased
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
       
       // Intercept save operation
@@ -93,8 +99,11 @@ describe('Navigation menu - Create item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
+      
+      // Wait for DOM update after creating dropdown (matching WDIO test behavior)
+      cy.wait(1500);
 
-      // Verify count increased - wait for DOM update
+      // Verify count increased
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
       
       // Intercept save operation
@@ -130,8 +139,11 @@ describe('Navigation menu - Create item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
+      
+      // Wait for DOM update after creating dropdown (matching WDIO test behavior)
+      cy.wait(1500);
 
-      // Verify count increased - wait for DOM update
+      // Verify count increased
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
       
       // Intercept save operation
