@@ -43,19 +43,25 @@ describe('Device users page - Delete device user', function () {
   });
 
   it('should delete device user successfully', () => {
+    cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers1');
     deviceUsersPage.Navbar.goToDeviceUsersPage();
+    cy.wait('@loadDeviceUsers1', { timeout: 30000 });
 
     deviceUsersPage.rowNum().then((rowNumBeforeDelete) => {
       cy.get('#deviceUserId').should('be.visible');
 
       // Click delete button on last row
       cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
+      cy.intercept('POST', '**/api/device-users/index').as('reloadAfterDelete');
       cy.get('#deleteDeviceUserBtn').last().should('be.visible').click();
       cy.get('#saveDeleteBtn').should('be.visible').click();
       cy.wait('@deleteUser', { timeout: 30000 });
+      cy.wait('@reloadAfterDelete', { timeout: 30000 });
 
       // Navigate back to device users page
+      cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers2');
       deviceUsersPage.Navbar.goToDeviceUsersPage();
+      cy.wait('@loadDeviceUsers2', { timeout: 30000 });
 
       // Verify count decreased
       deviceUsersPage.rowNum().then((rowNumAfterDelete) => {

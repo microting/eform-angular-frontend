@@ -30,8 +30,10 @@ describe('Device users page - Add new device user', function () {
       cy.get('#lastName').should('be.visible').type(surname);
       
       cy.intercept('POST', '**/api/device-users/create').as('createUser');
+      cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
       cy.get('#saveCreateBtn').should('be.visible').should('be.enabled').click();
       cy.wait('@createUser', { timeout: 30000 });
+      cy.wait('@reloadDeviceUsers', { timeout: 30000 });
       cy.get('#newDeviceUserBtn').should('be.visible');
 
       // Verify the user was created
@@ -75,34 +77,35 @@ describe('Device users page - Should not add new device user', function () {
   it('should NOT add device user with only last name', () => {
     const lastName = generateRandmString();
 
-    cy.get('#newDeviceUserBtn').should('be.visible').click();
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible').click();
     cy.get('#lastName').should('be.visible').type(lastName);
 
     // Verify save button is disabled
     cy.get('#saveCreateBtn').should('be.disabled');
 
     cy.get('#cancelCreateBtn').should('be.visible').click();
-    cy.wait(500);
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
   });
 
   it('should NOT add device user without first and last names', () => {
-    cy.get('#newDeviceUserBtn').should('be.visible').click();
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible').click();
     cy.get('#firstName').should('be.visible');
 
     // Verify save button is disabled
     cy.get('#saveCreateBtn').should('be.disabled');
 
     cy.get('#cancelCreateBtn').should('be.visible').click();
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
     cy.wait(500);
   });
 
   it('should NOT create user if cancel was clicked', () => {
     deviceUsersPage.rowNum().then((rowCountBeforeCreation) => {
-      cy.get('#newDeviceUserBtn').should('be.visible').click();
+      cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible').click();
       cy.get('#firstName').should('be.visible');
       cy.wait(500);
       cy.get('#cancelCreateBtn').should('be.visible').click();
-      cy.get('#newDeviceUserBtn').should('be.visible');
+      cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
       cy.wait(500);
 
       deviceUsersPage.rowNum().then((rowCountAfterCreation) => {
@@ -119,10 +122,12 @@ describe('Device users page - Should not add new device user', function () {
     cy.get('#deviceUserFirstName').each(($el, index) => {
       if ($el.text() === nameDeviceUser) {
         cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
+        cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
         cy.get('#deleteDeviceUserBtn').eq(index).click();
         cy.get('#saveDeleteBtn').should('be.visible').click();
         cy.wait('@deleteUser', { timeout: 30000 });
-        cy.get('#newDeviceUserBtn').should('be.visible');
+        cy.wait('@reloadDeviceUsers', { timeout: 30000 });
+        cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
         return false; // break the loop
       }
     });
