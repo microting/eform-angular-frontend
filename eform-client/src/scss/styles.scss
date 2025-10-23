@@ -49,6 +49,19 @@ body, .theme-light {
   --black-800: #242729;
   --blue-600: #0077cc;
   --theme-body-font-color: var(--black-800);
+  --tp-td-bg: #ffffff;
+  --tp-th-bg: #f7f9fa;
+  --tp-border: #EBEFF2;
+  --tp-text: #111827;
+  --tp-white-text: black;
+}
+
+body, .theme-dark {
+  --tp-td-bg: #424242;
+  --tp-th-bg: #424242;
+  --tp-border: #2B2B2B;
+  --tp-text: #E6E6E6;
+  --tp-white-text: white;
 }
 
 a {
@@ -128,10 +141,8 @@ a {
 }
 //.background-yellow{background-color: var(--yellow) !important;}
 .grey-background {
-  background-color: white !important;
-  //background-color: #EBEFF2 !important;
+  background-color: var(--tp-td-bg) !important;
   border-right: 1px solid #EBEFF2 !important;
-  //padding-right: 5px !important;
   border-bottom: 1px solid #EBEFF2 !important;
   padding: 5px !important;
 }
@@ -143,38 +154,31 @@ a {
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  //width: 100% !important;
   min-height: 100px;
   min-width: 250px !important;
-  //padding: 5px;
-  //margin: 5px;
 }
 
 .white-background {
-  background-color: white !important;
+  background-color: var(--tp-td-bg) !important;
   border-right: 1px solid #EBEFF2 !important;
-  margin-right: 5px !important;
   border-bottom: 1px solid #EBEFF2 !important;
+  padding: 5px !important;
 }
 
 .white-background .plan-container {
+  background-color: var(--tp-td-bg) !important;
   width: 100% !important;
   height: 100% !important;
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  //width: 100% !important;
   min-height: 100px;
   min-width: 250px !important;
-  //padding: 5px;
-  //margin: 5px;
 }
 
 .green-background {
-  background-color: white !important;
-  //background-color: #EBEFF2 !important;
+  background-color: var(--tp-td-bg) !important;
   border-right: 1px solid #EBEFF2 !important;
-  //padding-right: 5px !important;
   border-bottom: 1px solid #EBEFF2 !important;
   padding: 5px !important;
 }
@@ -186,18 +190,14 @@ a {
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  //width: 100% !important;
   min-height: 100px;
   min-width: 250px !important;
-  //padding: 5px;
-  //margin: 5px;
 }
 
 .red-background {
-  background-color: white !important;
+  background-color: var(--tp-td-bg) !important;
   border-bottom: 1px solid #EBEFF2 !important;
   border-right: 1px solid #EBEFF2 !important;
-  //margin-right: 5px !important;
 }
 
 .red-background .plan-container {
@@ -207,11 +207,8 @@ a {
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  //width: 100% !important;
   min-height: 100px;
   min-width: 250px !important;
-  //padding: 5px;
-  //margin: 5px;
 }
 
 .device-icon {
@@ -236,7 +233,7 @@ a {
 }
 
 .white-text {
-  color: black !important;
+  color: var(--tp-white-text) !important;
 }
 
 .red-text {
@@ -264,15 +261,49 @@ a {
   );
 }
 
+.progress-circle .red-warning-avatar-icon {
+  //background-color: white;
+  color: #DB0D0D !important;
+  position: relative;
+  top: 30px;
+  left: 30px;
+  font-weight: 200 !important;
+  font-size: 17px !important;
+}
+
+/* css */
+/* File: 'src/scss/styles.scss' */
+/* Keep current positioning in '.progress-circle .red-warning-avatar-icon' as-is */
+
+/* Only adjust the icon box and background */
+mat-icon.red-warning-avatar-icon {
+  /* Default mat-icon box is 24x24; with font-size: 20px this yields ~2px margin */
+  width: 19px;   /* keep default */
+  height: 19px;  /* keep default */
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fff;   /* white circular background */
+  border-radius: 50%;       /* make it a circle */
+  padding: 0 !important;    /* no extra white ring */
+
+  color: #DB0D0D !important; /* keep the glyph red */
+  line-height: 1;            /* avoid extra vertical space */
+  box-sizing: border-box;
+}
+
+/* If the mat-icon inherits a color (e.g. red) you can keep the glyph colored while the circle is white */
+mat-icon.red-warning-avatar-icon {
+  color: #d32f2f; /* example icon color */
+}
 .progress-circle::before {
   content: '';
   position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 42px;
-  height: 42px;
+  inset: 4px;
   border-radius: 50%;
-  background-color: white;
+  background-color: #fff;
 }
 
 .progress-circle .avatar {
