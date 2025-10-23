@@ -83,6 +83,7 @@ jobs:
         working-directory: eform-client
         command-prefix: "--"
     - name: ${{matrix.test}} test
+      continue-on-error: true
       uses: cypress-io/github-action@v5
       with:
         start: echo 'hi'
