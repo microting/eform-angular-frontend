@@ -72,7 +72,7 @@ jobs:
     - name: Pretest changes to work with Docker container
       run: sed -i 's/localhost/mariadbtest/g' eform-client/e2e/Constants/DatabaseConfigurationConstants.ts
     - name: DB Configuration
-      uses: cypress-io/github-action@v4
+      uses: cypress-io/github-action@v5
       with:
         start: echo 'hi'
         wait-on: "http://localhost:4200"

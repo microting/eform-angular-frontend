@@ -6,7 +6,7 @@ describe('Password settings - Change password', function () {
     cy.visit('http://localhost:4200');
     loginPage.login();
     passwordSettingsPage.Navbar.goToPasswordSettings();
-    cy.get('#oldPassword').should('be.visible');
+    cy.get('#oldPassword', { timeout: 10000 }).should('be.visible');
   });
 
   it('should change password to new password', () => {

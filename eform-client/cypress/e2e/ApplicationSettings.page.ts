@@ -9,9 +9,10 @@ export class ApplicationSettings {
   }
 
   save() {
+    cy.intercept({method: 'PUT', url: '**/api/settings/**'}).as('saveSettings');
+    cy.intercept({method: 'POST', url: '**/api/settings/**'}).as('saveSettings2');
     this.getSaveBtn().should('be.visible').click();
-    cy.wait(500);
-    cy.get('#spinner-animation').should('not.exist');
+    cy.wait(['@saveSettings', '@saveSettings2'], { timeout: 30000 }).then(() => cy.log('Settings saved'));
   }
 
   // Site header elements
@@ -38,8 +39,9 @@ export class ApplicationSettings {
     getResetBtn: () => cy.get('#loginPageReset'),
     
     reset: () => {
+      cy.intercept('POST', '**/api/settings/reset-login-page').as('resetLoginPage');
       cy.get('#loginPageReset').should('be.visible').should('be.enabled').click();
-      cy.get('#spinner-animation').should('not.exist');
+      cy.wait('@resetLoginPage', { timeout: 30000 });
     }
   };
 
@@ -54,8 +56,9 @@ export class ApplicationSettings {
     getResetBtn: () => cy.get('#siteHeaderReset'),
     
     reset: () => {
+      cy.intercept('POST', '**/api/settings/reset-page-header').as('resetHeader');
       cy.get('#siteHeaderReset').should('be.visible').should('be.enabled').click();
-      cy.get('#spinner-animation').should('not.exist');
+      cy.wait('@resetHeader', { timeout: 30000 });
     }
   };
 }

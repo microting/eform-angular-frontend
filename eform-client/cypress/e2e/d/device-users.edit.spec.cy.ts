@@ -7,17 +7,23 @@ describe('Device users page - Edit device user', function () {
   before(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers');
     deviceUsersPage.Navbar.goToDeviceUsersPage();
+    cy.wait('@loadDeviceUsers', { timeout: 30000 });
 
     // Create a test user
     const firstName = Guid.create().toString();
     const lastName = Guid.create().toString();
-    cy.get('#newDeviceUserBtn').should('be.visible').click();
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible').click();
     cy.get('#firstName').should('be.visible').type(firstName);
     cy.get('#lastName').should('be.visible').type(lastName);
+    
+    cy.intercept('POST', '**/api/device-users/create').as('createUser');
+    cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
     cy.get('#saveCreateBtn').should('be.visible').click();
-    cy.get('#spinner-animation').should('not.exist');
-    cy.get('#newDeviceUserBtn').should('be.visible');
+    cy.wait('@createUser', { timeout: 30000 });
+    cy.wait('@reloadDeviceUsers', { timeout: 30000 });
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
   });
 
   it('should edit device user\'s first name', () => {
@@ -35,9 +41,13 @@ describe('Device users page - Edit device user', function () {
 
         // Edit first name
         cy.get('#firstName').clear().type(newName);
+        
+        cy.intercept('POST', '**/api/device-users/update').as('updateUser');
+        cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
         cy.get('#saveEditBtn').should('be.visible').click();
-        cy.get('#spinner-animation').should('not.exist');
-        cy.get('#newDeviceUserBtn').should('be.visible');
+        cy.wait('@updateUser', { timeout: 30000 });
+        cy.wait('@reloadDeviceUsers', { timeout: 30000 });
+        cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
 
         // Verify changes
         cy.get('#deviceUserFirstName').last().should('have.text', newName);
@@ -60,9 +70,13 @@ describe('Device users page - Edit device user', function () {
 
       // Edit last name
       cy.get('#lastName').clear().type(newSurname);
+      
+      cy.intercept('POST', '**/api/device-users/update').as('updateUser');
+      cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
       cy.get('#saveEditBtn').should('be.visible').click();
-      cy.get('#spinner-animation').should('not.exist');
-      cy.get('#newDeviceUserBtn').should('be.visible');
+      cy.wait('@updateUser', { timeout: 30000 });
+      cy.wait('@reloadDeviceUsers', { timeout: 30000 });
+      cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
 
       // Verify changes
       cy.get('#deviceUserFirstName').last().should('have.text', oldFirstName);
@@ -83,9 +97,13 @@ describe('Device users page - Edit device user', function () {
     // Edit both fields
     cy.get('#firstName').clear().type(newName);
     cy.get('#lastName').clear().type(newSurname);
+    
+    cy.intercept('POST', '**/api/device-users/update').as('updateUser');
+    cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
     cy.get('#saveEditBtn').should('be.visible').click();
-    cy.get('#spinner-animation').should('not.exist');
-    cy.get('#newDeviceUserBtn').should('be.visible');
+    cy.wait('@updateUser', { timeout: 30000 });
+    cy.wait('@reloadDeviceUsers', { timeout: 30000 });
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
 
     // Verify changes
     cy.get('#deviceUserFirstName').last().should('have.text', newName);
@@ -96,6 +114,9 @@ describe('Device users page - Edit device user', function () {
     const newName = Guid.create().toString();
     const newSurname = Guid.create().toString();
 
+    // Ensure table is visible before counting rows
+    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
+    
     // Get count and data before edit
     deviceUsersPage.rowNum().then((rowNumBeforeEdit) => {
       cy.get('#deviceUserFirstName').last().invoke('text').then((oldFirstName) => {
@@ -109,7 +130,7 @@ describe('Device users page - Edit device user', function () {
           cy.get('#firstName').clear().type(newName);
           cy.get('#lastName').clear().type(newSurname);
           cy.get('#cancelEditBtn').should('be.visible').click();
-          cy.get('#newDeviceUserBtn').should('be.visible');
+          cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
 
           // Verify no changes occurred
           deviceUsersPage.rowNum().then((rowNumAfterEdit) => {
