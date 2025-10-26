@@ -25,10 +25,10 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using eFormAPI.Web.Services.NavigationMenu;
 using System.Collections.Generic;
+using MenuModel = eFormAPI.Web.Infrastructure.Models.Menu.MenuModel;
 
 namespace eFormAPI.Web.Controllers;
 

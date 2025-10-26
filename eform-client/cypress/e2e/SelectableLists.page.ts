@@ -336,17 +336,16 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public cleanup() {
     cy.get('button.entitySelectDeleteBtn').first().then($btn => {
       if ($btn.length > 0) {
-        this.waitForSpinnerHide();
         cy.wrap($btn).click();
-        this.waitForSpinnerHide();
         this.entitySelectDeleteDeleteBtn().click();
-        this.waitForSpinnerHide();
+        // Note: Tests should intercept DELETE API calls if they need to wait
       }
     });
   }
 
+  // DEPRECATED: Use API intercepts in tests instead
   public waitForSpinnerHide() {
-    cy.get('#spinner-animation', { timeout: 90000 }).should('not.exist');
+    cy.log('WARNING: waitForSpinnerHide is deprecated - use API intercepts instead');
   }
 }
 

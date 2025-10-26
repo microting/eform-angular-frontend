@@ -10,10 +10,7 @@ describe('Application settings - Site header section', () => {
   it('should hide image', () => {
     applicationSettingsPage.Navbar.goToApplicationSettings();
     
-    // Wait for spinner to disappear
-    cy.get('#spinner-animation').should('not.exist');
-    
-    // Wait for sign-out dropdown to be visible
+    // Wait for sign-out dropdown to be visible (page loaded)
     cy.get('#sign-out-dropdown').should('be.visible', { timeout: 40000 });
     
     // Toggle site header image visibility

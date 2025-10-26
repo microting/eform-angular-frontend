@@ -97,67 +97,66 @@ export class Navbar {
   public goToProfileSettings() {
     this.signOutDropdown().click();
     this.settingsBtn().should('be.visible').should('be.enabled').click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }
 
   public goToApplicationSettings() {
-    this.waitForSpinnerHide();
     cy.get('#application-settings').should('be.visible').then(isDisplayed => {
       if (!isDisplayed) {
         this.advancedBtn();
       }
     });
     this.applicationSettingsBtn().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }
 
   public goToWorkers() {
     this.advancedBtn();
     this.workersBtn().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }
 
   public goToSites() {
     this.advancedBtn();
     this.sitesBtn().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }
 
   public goToUserAdministration() {
     this.signOutDropdown().click();
     this.userAdministrationBtn().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }
 
   public goToPasswordSettings() {
     this.signOutDropdown().click();
     this.changePasswordBtn().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }
 
   public goToDeviceUsersPage() {
     this.deviceUsersBtn().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }
 
   public goToEntitySelect() {
     this.advancedBtn();
     this.entitySelectBtn().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }
 
   public goToEntitySearch() {
     this.advancedBtn();
     this.entitySearchBtn().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }
 
@@ -192,30 +191,27 @@ export class Navbar {
   public goToMenuEditorPage() {
     this.signOutDropdown().click();
     this.menuEditorBtn().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept GET /api/navigation-menu after navigation
   }
 
   public goToMyEForms() {
     this.myEformsBtn().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept appropriate API calls after navigation
   }
 
   public goToSecurity() {
     this.signOutDropdown().click();
     this.securityBtn().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept appropriate API calls after navigation
   }
 
   spinnerAnimation() {
     return cy.get('#spinner-animation');
   }
 
+  // DEPRECATED: Use API intercepts in tests instead
   public waitForSpinnerHide() {
-    if(this.spinnerAnimation().should('exist'))
-    {
-      this.spinnerAnimation().should('not.exist');
-      return;
-    }
-    this.spinnerAnimation().should('not.exist');
+    cy.log('WARNING: waitForSpinnerHide is deprecated - use API intercepts instead');
+    // No longer waits for spinner - tests should use cy.intercept() and cy.wait() for specific API calls
   }
 }

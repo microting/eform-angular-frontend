@@ -5,8 +5,9 @@ describe('Navigation menu - Drag item', function () {
   beforeEach(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    cy.intercept('GET', '**/api/navigation-menu').as('loadMenu');
     navigationMenuPage.goToMenuEditor();
-    cy.wait(5000);
+    cy.wait('@loadMenu', { timeout: 30000 });
   });
 
   it('element must be created from custom dropdown which elements', () => {
@@ -18,18 +19,14 @@ describe('Navigation menu - Drag item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
-      cy.wait(500);
 
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
 
       navigationMenuPage.getMenuItems().its('length').then(currentCount => {
         navigationMenuPage.collapseMenuItemDropdown(currentCount - 1);
         navigationMenuPage.dragTemplateOnElementInCreatedDropdown(1, currentCount - 1);
-        cy.wait(500);
         navigationMenuPage.dragTemplateOnElementInCreatedDropdown(2, currentCount - 1);
-        cy.wait(500);
         navigationMenuPage.dragTemplateOnElementInCreatedDropdown(3, currentCount - 1);
-        cy.wait(500);
 
         navigationMenuPage.getDropdownBodyChilds(currentCount - 1).should('have.length', 3);
       });
@@ -59,11 +56,11 @@ describe('Navigation menu - Drag item', function () {
       // Edit translations in each dropdown element
       array.forEach(data => {
         navigationMenuPage.editTranslationsOnDropdownBodyChilds(data);
-        cy.wait(500);
       });
 
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
-      cy.wait(500);
+      cy.wait('@saveMenu', { timeout: 30000 });
 
       // Verify all translations were saved
       array.forEach(item => {
@@ -71,15 +68,15 @@ describe('Navigation menu - Drag item', function () {
           .eq(item.indexChildDropdown)
           .find('#editBtn')
           .click();
-        cy.wait(500);
 
         item.translations_array.forEach((translation, i) => {
           cy.get(`#editItemTranslation${item.indexDropdownInMenu}_${item.indexChildDropdown}_${i}`)
             .should('have.value', translation);
         });
 
+        cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
         navigationMenuPage.editItemSave();
-        cy.wait(500);
+        cy.wait('@saveMenuEdit', { timeout: 30000 });
       });
     });
   });
@@ -88,10 +85,10 @@ describe('Navigation menu - Drag item', function () {
     navigationMenuPage.getMenuItems().its('length').then(menuCount => {
       // Swap elements within dropdown
       navigationMenuPage.dragAndDropElementOfDropdown(menuCount, 2, 0);
-      cy.wait(500);
       
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
-      cy.wait(500);
+      cy.wait('@saveMenu', { timeout: 30000 });
 
       // Verify order after swap
       const itemsAfterSwap = [
@@ -103,13 +100,12 @@ describe('Navigation menu - Drag item', function () {
       navigationMenuPage.getDropdownBodyChilds(menuCount - 1).each(($el, index) => {
         cy.wrap($el).invoke('text').should('eq', itemsAfterSwap[index]);
       });
-
-      cy.wait(500);
     });
   });
 
   afterEach(() => {
+    cy.intercept('POST', '**/api/navigation-menu/reset').as('resetMenu');
     navigationMenuPage.resetMenu();
-    cy.wait(500);
+    cy.wait('@resetMenu', { timeout: 30000 });
   });
 });

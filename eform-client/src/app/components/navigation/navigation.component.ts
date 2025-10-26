@@ -17,6 +17,7 @@ interface MenuNode {
   position: number;
   isInternalLink: boolean;
   guards: Array<string>;
+  icon?: string;
 }
 
 @AutoUnsubscribe()

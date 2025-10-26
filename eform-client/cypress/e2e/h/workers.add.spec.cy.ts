@@ -15,14 +15,18 @@ describe('Workers page - Add new worker', function () {
     loginPage.login();
     
     // First, create a device user that will be associated with the worker
+    cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers');
     deviceUsersPage.Navbar.goToDeviceUsersPage();
-    cy.get('#newDeviceUserBtn').should('be.visible');
+    cy.wait('@loadDeviceUsers', { timeout: 30000 });
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
     deviceUsersPage.createNewDeviceUser(deviceUserFirstName, deviceUserLastName);
     cy.wait(1000);
     
     // Navigate to Workers page
+    cy.intercept('POST', '**/api/workers/index').as('loadWorkers');
     workersPage.Navbar.goToWorkers();
-    cy.get('#workerCreateBtn').should('be.visible');
+    cy.wait('@loadWorkers', { timeout: 30000 });
+    cy.get('#workerCreateBtn', { timeout: 10000 }).should('be.visible');
   });
 
   it('should add new worker with first and last name', () => {
@@ -46,8 +50,10 @@ describe('Workers page - Add new worker', function () {
       cy.get('#firstName').should('be.visible').type(firstName);
       cy.get('#lastName').should('be.visible').type(lastName);
       cy.wait(500);
+      
+      cy.intercept('POST', '**/api/workers/create').as('createWorker');
       cy.get('#workerSaveBtn').should('be.visible').should('be.enabled').click();
-      cy.get('#spinner-animation').should('not.exist');
+      cy.wait('@createWorker', { timeout: 30000 });
       cy.get('#workerCreateBtn').should('be.visible');
 
       // Verify the worker was created
@@ -83,8 +89,10 @@ describe('Workers page - Add new worker', function () {
       cy.get('#firstName').should('be.visible').type(firstName);
       cy.get('#lastName').should('be.visible').type(lastName);
       cy.wait(500);
+      
+      cy.intercept('POST', '**/api/workers/create').as('createWorker');
       cy.get('#workerSaveBtn').should('be.visible').should('be.enabled').click();
-      cy.get('#spinner-animation').should('not.exist');
+      cy.wait('@createWorker', { timeout: 30000 });
       cy.get('#workerCreateBtn').should('be.visible');
 
       // Verify the worker was created
@@ -108,9 +116,10 @@ describe('Workers page - Add new worker', function () {
       
       for (let i = 0; i < workersToDelete; i++) {
         // Always delete the last worker
+        cy.intercept('POST', '**/api/workers/delete').as('deleteWorker');
         cy.get('#workerDeleteBtn').last().should('be.visible').click();
         cy.get('#saveDeleteBtn').should('be.visible').click();
-        cy.get('#spinner-animation').should('not.exist');
+        cy.wait('@deleteWorker', { timeout: 30000 });
         cy.wait(500);
       }
       
@@ -126,9 +135,10 @@ describe('Workers page - Add new worker', function () {
     
     cy.get('#deviceUserFirstName').each(($el, index) => {
       if ($el.text() === deviceUserFirstName) {
+        cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
         cy.get('#deleteDeviceUserBtn').eq(index).click();
         cy.get('#saveDeleteBtn').should('be.visible').click();
-        cy.get('#spinner-animation').should('not.exist');
+        cy.wait('@deleteUser', { timeout: 30000 });
         cy.get('#newDeviceUserBtn').should('be.visible');
         return false; // break the loop
       }

@@ -37,7 +37,6 @@ using eFormAPI.Web.Abstractions.Security;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +45,8 @@ using Microsoft.EntityFrameworkCore;
 using Microting.EformAngularFrontendBase.Infrastructure.Const;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+using MenuItemModel = eFormAPI.Web.Infrastructure.Models.Menu.MenuItemModel;
+using MenuModel = eFormAPI.Web.Infrastructure.Models.Menu.MenuModel;
 
 public class MenuService(
     ILogger<MenuService> logger,
@@ -177,6 +178,7 @@ public class MenuService(
                     ParentId = x.ParentId,
                     Position = x.Position,
                     IsInternalLink = x.IsInternalLink,
+                    Icon = x.IconName,
                     Translations = dbContext.MenuItemTranslations
                         .Where(p => p.MenuItemId == x.Id)
                         .Select(p => new NavigationMenuTranslationModel
@@ -202,6 +204,7 @@ public class MenuService(
                             RelatedTemplateItemId = p.MenuTemplateId,
                             ParentId = p.ParentId,
                             Position = p.Position,
+                            Icon = p.IconName,
                             Translations = dbContext.MenuItemTranslations
                                 .Where(k => k.MenuItemId == p.Id)
                                 .Select(k => new NavigationMenuTranslationModel
@@ -278,6 +281,7 @@ public class MenuService(
                     LocaleName = currentLocale,
                     E2EId = x.E2EId,
                     Link = x.Link,
+                    Icon = x.IconName,
                     Guards = dbContext.MenuTemplatePermissions
                         .Include(y => y.Permission)
                         .Where(d => d.MenuTemplateId == x.MenuTemplateId)
@@ -308,6 +312,7 @@ public class MenuService(
                             LocaleName = currentLocale,
                             E2EId = p.E2EId,
                             Link = p.Link,
+                            Icon = p.IconName,
                             Guards = dbContext.MenuTemplatePermissions
                                 .Include(y => y.Permission)
                                 .Where(d => d.MenuTemplateId == p.MenuTemplateId)
@@ -372,7 +377,7 @@ public class MenuService(
             foreach (var pluginMenu in Program.EnabledPlugins.Select(plugin => plugin.HeaderMenu(serviceProvider)))
             {
                 //result.LeftMenu.AddRange(pluginMenu.LeftMenu);
-                result.RightMenu.AddRange(pluginMenu.RightMenu);
+                result.RightMenu.AddRange(ConvertToLocalMenuItemModel(pluginMenu.RightMenu));
             }
 
             return new OperationDataResult<MenuModel>(true, result);
@@ -385,6 +390,21 @@ public class MenuService(
             return new OperationDataResult<MenuModel>(false,
                 localizationService.GetString("ErrorWhileObtainingUserMenu"));
         }
+    }
+
+    private List<MenuItemModel> ConvertToLocalMenuItemModel(List<Microting.eFormApi.BasePn.Infrastructure.Models.Application.MenuItemModel> externalModels)
+    {
+        return externalModels.Select(x => new MenuItemModel
+        {
+            Name = x.Name,
+            LocaleName = x.LocaleName,
+            E2EId = x.E2EId,
+            Link = x.Link,
+            Position = x.Position,
+            IsInternalLink = x.IsInternalLink,
+            Guards = x.Guards,
+            MenuItems = ConvertToLocalMenuItemModel(x.MenuItems)
+        }).ToList();
     }
 
     public async Task<OperationResult> ResetCurrentUserMenu()
