@@ -134,10 +134,10 @@ jobs:
           /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots/*.png
         retention-days: 2        
     - name: Archive video artifacts
-      if: ${{ failure() }}
+      if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
-        name: error Screenshots ${{matrix.test}}
+        name: cypress-videos-${{matrix.test}}
         path: |
           eform-client/cypress/videos/*.mp4
         retention-days: 2
