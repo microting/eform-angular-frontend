@@ -24,6 +24,10 @@
         placeholder="e.g., home, settings, dashboard"
       >
     </mat-form-field>
+    <div class="d-flex flex-row align-items-center mb-3" *ngIf="item.icon">
+      <span class="me-2">{{ 'Icon preview' | translate }}:</span>
+      <mat-icon id="editIconPreview">{{ item.icon }}</mat-icon>
+    </div>
     <div class="d-flex flex-row align-items-center need-wrapper"
          *ngIf="item.type === menuItemType.CustomLink || item.type === menuItemType.Link">
       <mat-form-field>
