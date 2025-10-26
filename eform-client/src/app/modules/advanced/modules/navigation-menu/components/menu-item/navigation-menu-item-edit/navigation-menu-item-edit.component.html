@@ -13,6 +13,17 @@
         [multiple]="true"      >
       </mtx-select>
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'Icon' | translate }}</mat-label>
+      <input
+        matInput
+        type="text"
+        id="editIconInput"
+        name="editIconInput"
+        [(ngModel)]="item.icon"
+        placeholder="e.g., home, settings, dashboard"
+      >
+    </mat-form-field>
     <div class="d-flex flex-row align-items-center need-wrapper"
          *ngIf="item.type === menuItemType.CustomLink || item.type === menuItemType.Link">
       <mat-form-field>
