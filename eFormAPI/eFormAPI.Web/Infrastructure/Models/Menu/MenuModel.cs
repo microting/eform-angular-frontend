@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2021 Microting A/S
@@ -21,19 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Threading.Tasks;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using eFormAPI.Web.Services.NavigationMenu;
+
+namespace eFormAPI.Web.Infrastructure.Models.Menu;
+
 using System.Collections.Generic;
-using MenuModel = eFormAPI.Web.Infrastructure.Models.Menu.MenuModel;
 
-namespace eFormAPI.Web.Abstractions;
-
-public interface IMenuService
+public class MenuModel
 {
-    Task<OperationDataResult<MenuModel>> GetCurrentUserMenu();
-    Task<OperationResult> ResetCurrentUserMenu();
-    Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu();
-    Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels);
-       
+    public List<MenuItemModel> LeftMenu { get; set; } = new List<MenuItemModel>();
+    public List<MenuItemModel> RightMenu { get; set; } = new List<MenuItemModel>();
 }

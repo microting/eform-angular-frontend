@@ -11,4 +11,5 @@ export class MenuItemModel {
   isInternalLink: boolean;
   menuItems: Array<MenuItemModel> = [];
   guards: Array<string> = [];
+  icon?: string;
 }
