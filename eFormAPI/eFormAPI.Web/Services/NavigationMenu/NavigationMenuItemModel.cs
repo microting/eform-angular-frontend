@@ -47,4 +47,5 @@ public class NavigationMenuItemModel
         = new List<NavigationMenuTranslationModel>();
 
     public bool IsInternalLink { get; set; }
+    public string Icon { get; set; }
 }

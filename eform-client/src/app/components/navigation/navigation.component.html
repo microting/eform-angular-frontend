@@ -15,6 +15,7 @@
          [id]="node.e2EId"
          (click)="onClickOnNode()"
       >
+        <mat-icon *ngIf="node.icon" class="menu-icon">{{ node.icon }}</mat-icon>
         {{ node.name }}
       </a>
       <a mat-button
@@ -24,6 +25,7 @@
          [href]="node.link"
          (click)="onClickOnNode()"
       >
+        <mat-icon *ngIf="node.icon" class="menu-icon">{{ node.icon }}</mat-icon>
         {{node.name }}
       </a>
     </ng-container>
@@ -37,6 +39,7 @@
             matTreeNodeToggle
             [id]="node.e2EId"
           >
+            <mat-icon *ngIf="node.icon" class="menu-icon" style="vertical-align: middle; margin-right: 8px;">{{ node.icon }}</mat-icon>
             <span style="">{{node.name}}</span>
           </a>
         </mat-expansion-panel-header>

@@ -35,4 +35,5 @@ public class NavigationMenuTemplateItemModel
     public int? RelatedTemplateItemId { get; set; }
     public List<NavigationMenuTranslationModel> Translations { get; set; }
         = new List<NavigationMenuTranslationModel>();
+    public string Icon { get; set; }
 }
