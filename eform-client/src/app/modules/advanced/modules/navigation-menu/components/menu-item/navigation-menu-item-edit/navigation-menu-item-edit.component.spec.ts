@@ -34,4 +34,25 @@ describe('NavigationMenuItemEditComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display icon preview when icon is set', () => {
+    component.item.icon = 'home';
+    fixture.detectChanges();
+    
+    const compiled = fixture.nativeElement;
+    const iconPreview = compiled.querySelector('#editIconPreview');
+    
+    expect(iconPreview).toBeTruthy();
+    expect(iconPreview.textContent.trim()).toBe('home');
+  });
+
+  it('should not display icon preview when icon is not set', () => {
+    component.item.icon = '';
+    fixture.detectChanges();
+    
+    const compiled = fixture.nativeElement;
+    const iconPreview = compiled.querySelector('#editIconPreview');
+    
+    expect(iconPreview).toBeFalsy();
+  });
 });
