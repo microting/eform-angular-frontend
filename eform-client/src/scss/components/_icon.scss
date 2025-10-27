@@ -1,6 +1,6 @@
 @use "../utilities/colors" as *;
 
-i {
+i, .mat-icon {
   &.material-icons {
     &.md-18 { font-size: 18px; }
     &.md-24 { font-size: 24px; }
@@ -16,6 +16,43 @@ i {
     }
     &.material-icon-success {
       color: $eform-green-dark
+    }
+  }
+
+  &.material-symbols-outlined,
+  &.material-symbols-rounded,
+  &.material-symbols-sharp {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+    
+    &.md-18 { font-size: 18px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; }
+    &.md-24 { font-size: 24px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    &.md-36 { font-size: 36px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 40; }
+    &.md-48 { font-size: 48px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48; }
+    
+    &.material-icon-pointer {
+      cursor: pointer;
+    }
+
+    &.material-icon-danger {
+      color: $eform-red-dark
+    }
+    &.material-icon-success {
+      color: $eform-green-dark
+    }
+
+    // Additional Material Symbols variations
+    &.filled {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    &.light {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    &.bold {
+      font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 24;
     }
   }
 }
