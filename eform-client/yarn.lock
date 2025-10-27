@@ -344,6 +344,15 @@
     "@angular-eslint/utils" "20.3.0"
     ts-api-utils "^2.1.0"
 
+"@angular-eslint/eslint-plugin@20.4.0":
+  version "20.4.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-20.4.0.tgz#eec568bbd93ccdc9e00acaac37396b74030c570d"
+  integrity sha512-gSQO18QLHt46UFjDcxkGhuFMKl4sPdFDnCZRZDpZC+4OZQ64f+xazPOveSoK1o4ttjSulfyXslE+I9bESmR5Mw==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "20.4.0"
+    "@angular-eslint/utils" "20.4.0"
+    ts-api-utils "^2.1.0"
+
 "@angular-eslint/schematics@20.3.0":
   version "20.3.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-20.3.0.tgz#9a18322fcfc26fb56c73efc81970dbeb8e6cae98"
@@ -378,6 +387,13 @@
   integrity sha512-7XOQeNXgyhznDwoP1TwPrCMq/uXKJHQgCVPFREkJGKbNf/jzNldB7iV1eqpBzUQIPEQFgfcDG67dexpMAq3N4g==
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "20.3.0"
+
+"@angular-eslint/utils@20.4.0":
+  version "20.4.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-20.4.0.tgz#1570f60ea2999ecbd625fca62d6febf677eb7e75"
+  integrity sha512-SkR4fdPc+40W/53JmF6Nz6EIXIxvoRzhOdUiHoBKr/6fWONQwm7Vq55vk11AdK/oKTDUQCJ84HExQw6mzFljtg==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "20.4.0"
 
 "@angular-material-extensions/password-strength@^16.0.0":
   version "16.0.0"
