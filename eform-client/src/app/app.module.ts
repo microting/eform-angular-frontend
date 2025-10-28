@@ -31,10 +31,11 @@ import {SharedPnModule} from './plugins/modules/shared/shared-pn.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTreeModule} from '@angular/material/tree';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {DomSanitizer} from '@angular/platform-browser';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {FormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -143,7 +144,16 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor() {
+  constructor(
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
     console.debug('AppModule - constructor');
+    // Register Material Symbols font sets
+    this.matIconRegistry.registerFontClassAlias('material-symbols-outlined', 'material-symbols-outlined');
+    this.matIconRegistry.registerFontClassAlias('material-symbols-rounded', 'material-symbols-rounded');
+    this.matIconRegistry.registerFontClassAlias('material-symbols-sharp', 'material-symbols-sharp');
+    // Default font set remains Material Icons
+    this.matIconRegistry.setDefaultFontSetClass('material-icons');
   }
 }
