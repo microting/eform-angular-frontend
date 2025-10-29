@@ -86,7 +86,11 @@ class DeviceUsersPage extends PageWithNavbarPage{
   // @ts-ignore
   public rowNum(): Cypress.Chainable<number> {
     // @ts-ignore
-    return cy.get('tbody > tr').should('have.length.gt', 0).then($rows => $rows.length);
+    return cy.wait(500).then(() => {
+      return cy.get('tbody').then($tbody => {
+        return $tbody.find('tr').length;
+      });
+    });
   }
 
   public getDeviceUser(num: number): DeviceUsersRowObject {
