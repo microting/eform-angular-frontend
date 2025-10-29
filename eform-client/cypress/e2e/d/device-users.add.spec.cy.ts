@@ -74,7 +74,7 @@ describe('Device users page - Should not add new device user', function () {
     cy.get('#saveCreateBtn').should('be.disabled');
 
     cy.get('#cancelCreateBtn').should('be.visible').click();
-    cy.wait(500);
+    cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
   });
 
   it('should NOT add device user with only last name', () => {
@@ -99,7 +99,6 @@ describe('Device users page - Should not add new device user', function () {
 
     cy.get('#cancelCreateBtn').should('be.visible').click();
     cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
-    cy.wait(500);
   });
 
   it('should NOT create user if cancel was clicked', () => {
@@ -109,10 +108,8 @@ describe('Device users page - Should not add new device user', function () {
     deviceUsersPage.rowNum().then((rowCountBeforeCreation) => {
       cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible').click();
       cy.get('#firstName').should('be.visible');
-      cy.wait(500);
       cy.get('#cancelCreateBtn').should('be.visible').click();
       cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
-      cy.wait(500);
 
       deviceUsersPage.rowNum().then((rowCountAfterCreation) => {
         expect(
