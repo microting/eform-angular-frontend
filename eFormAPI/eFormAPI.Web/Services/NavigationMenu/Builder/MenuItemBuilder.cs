@@ -59,7 +59,8 @@ public class MenuItemBuilder
             Type = MenuItemModel.Type,
             Link = MenuItemModel.Link,
             E2EId = MenuItemModel.E2EId,
-            IsInternalLink = MenuItemModel.IsInternalLink
+            IsInternalLink = MenuItemModel.IsInternalLink,
+            IconName = MenuItemModel.Icon
         };
 
         foreach (var behavior in _behaviors.Where(behavior => behavior.IsExecute()))

@@ -18,6 +18,7 @@ export class NavigationMenuTemplateItemModel {
   link: string;
   collapsed: boolean;
   translations: NavigationMenuTranslationModel[];
+  icon?: string;
 }
 
 export class NavigationMenuItemModel {
@@ -34,6 +35,7 @@ export class NavigationMenuItemModel {
   securityGroupsIds: number[];
   translations: NavigationMenuTranslationModel[];
   isInternalLink: boolean = true;
+  icon?: string;
 }
 
 export class NavigationMenuTranslationModel {

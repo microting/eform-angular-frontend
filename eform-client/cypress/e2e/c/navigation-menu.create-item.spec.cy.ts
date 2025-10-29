@@ -5,26 +5,29 @@ describe('Navigation menu - Create item', function () {
   beforeEach(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
+    cy.intercept('GET', '**/api/navigation-menu').as('loadMenu');
     navigationMenuPage.goToMenuEditor();
+    cy.wait('@loadMenu', { timeout: 30000 });
   });
 
   it('element must be moved from templates to list', () => {
-    cy.wait(1000);
-    
     // Get initial count
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(0);
       navigationMenuPage.createMenuItemFromTemplate(0);
+      
+      // Wait for DOM update after drag-and-drop (matching WDIO test behavior)
       cy.wait(500);
 
       // Verify count increased
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
       
+      // Intercept save operation
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
-      cy.wait(500);
+      cy.wait('@saveMenu', { timeout: 30000 });
       
       navigationMenuPage.openEditMenuItem(0);
-      cy.wait(500);
       
       // Verify link field
       cy.get('#editLinkInput').should('have.value', '/');
@@ -34,17 +37,16 @@ describe('Navigation menu - Create item', function () {
       cy.get('#editItemTranslation0_0_1').should('have.value', 'Mine eForms');
       cy.get('#editItemTranslation0_0_2').should('have.value', 'Meine eForms');
       
+      // Intercept edit save operation
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
       navigationMenuPage.editItemSave();
-      cy.wait(500);
+      cy.wait('@saveMenuEdit', { timeout: 30000 });
       
       navigationMenuPage.collapseTemplates(0);
-      cy.wait(500);
     });
   });
 
   it('element must be created from custom link', () => {
-    cy.wait(1500);
-    
     const customLink = {
       securityGroups: [],
       link: 'test0',
@@ -54,18 +56,21 @@ describe('Navigation menu - Create item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomLink(customLink);
+      
+      // Wait for DOM update after creating custom link (matching WDIO test behavior)
       cy.wait(1000);
 
       // Verify count increased
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
       
+      // Intercept save operation
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
-      cy.wait(500);
+      cy.wait('@saveMenu', { timeout: 30000 });
 
       // Open last item for editing
       navigationMenuPage.getMenuItems().its('length').then(count => {
         navigationMenuPage.openEditMenuItem(count - 1);
-        cy.wait(500);
 
         // Verify link
         cy.get('#editLinkInput').should('have.value', customLink.link);
@@ -77,16 +82,15 @@ describe('Navigation menu - Create item', function () {
           });
         });
 
-        cy.wait(500);
+        // Intercept edit save operation
+        cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
         navigationMenuPage.editItemSave();
-        cy.wait(500);
+        cy.wait('@saveMenuEdit', { timeout: 30000 });
       });
     });
   });
 
   it('element must be created from custom dropdown', () => {
-    cy.wait(1500);
-    
     const dropdown = {
       securityGroups: [],
       translations: ['test1', 'test2', 'test3']
@@ -95,18 +99,21 @@ describe('Navigation menu - Create item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
+      
+      // Wait for DOM update after creating dropdown (matching WDIO test behavior)
       cy.wait(1500);
 
       // Verify count increased
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
       
+      // Intercept save operation
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
-      cy.wait(500);
+      cy.wait('@saveMenu', { timeout: 30000 });
 
       // Open last item for editing
       navigationMenuPage.getMenuItems().its('length').then(count => {
         navigationMenuPage.openEditMenuItem(count - 1);
-        cy.wait(500);
 
         // Verify translations
         dropdown.translations.forEach((translation, i) => {
@@ -115,15 +122,15 @@ describe('Navigation menu - Create item', function () {
           });
         });
 
+        // Intercept edit save operation
+        cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
         navigationMenuPage.editItemSave();
-        cy.wait(500);
+        cy.wait('@saveMenuEdit', { timeout: 30000 });
       });
     });
   });
 
   it('element must be created from custom dropdown with security group', () => {
-    cy.wait(1500);
-    
     const dropdown = {
       securityGroups: ['eForm admins'],
       translations: ['test1', 'test2', 'test3']
@@ -132,18 +139,21 @@ describe('Navigation menu - Create item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
-      cy.wait(500);
+      
+      // Wait for DOM update after creating dropdown (matching WDIO test behavior)
+      cy.wait(1500);
 
       // Verify count increased
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
       
+      // Intercept save operation
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
-      cy.wait(500);
+      cy.wait('@saveMenu', { timeout: 30000 });
 
       // Open last item for editing
       navigationMenuPage.getMenuItems().its('length').then(count => {
         navigationMenuPage.openEditMenuItem(count - 1);
-        cy.wait(500);
 
         // Verify security groups
         dropdown.securityGroups.forEach((group, i) => {
@@ -157,14 +167,17 @@ describe('Navigation menu - Create item', function () {
           });
         });
 
+        // Intercept edit save operation
+        cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
         navigationMenuPage.editItemSave();
-        cy.wait(500);
+        cy.wait('@saveMenuEdit', { timeout: 30000 });
       });
     });
   });
 
   afterEach(() => {
+    cy.intercept('POST', '**/api/navigation-menu/reset').as('resetMenu');
     navigationMenuPage.resetMenu();
-    cy.wait(2000);
+    cy.wait('@resetMenu', { timeout: 30000 });
   });
 });

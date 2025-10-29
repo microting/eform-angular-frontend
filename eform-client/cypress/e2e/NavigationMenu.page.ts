@@ -254,7 +254,7 @@ export class NavigationMenuPage {
   // Save and Reset
   public clickSaveMenuBtn() {
     cy.get('#navigationMenuSaveBtn').scrollIntoView().click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept POST /api/navigation-menu and wait for it instead
   }
 
   public resetMenu() {
@@ -264,13 +264,15 @@ export class NavigationMenuPage {
     cy.get('#resetBtn').scrollIntoView().click();
     cy.wait(500);
     cy.get('#deleteWorkerDeleteBtn').should('be.visible').click();
-    this.waitForSpinnerHide();
+    // Note: Tests should intercept POST /api/navigation-menu/reset and wait for it instead
     cy.wait(500);
   }
 
-  // Helper methods
+  // Helper methods - DEPRECATED: Use API intercepts in tests instead
   public waitForSpinnerHide() {
-    cy.get('#spinner-animation', { timeout: 90000 }).should('not.exist');
+    // This method is deprecated and should not be used
+    // Tests should use cy.intercept() and cy.wait() for specific API calls instead
+    cy.log('WARNING: waitForSpinnerHide is deprecated - use API intercepts instead');
   }
 }
 

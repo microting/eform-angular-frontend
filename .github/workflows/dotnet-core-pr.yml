@@ -72,7 +72,7 @@ jobs:
     - name: Pretest changes to work with Docker container
       run: sed -i 's/localhost/mariadbtest/g' eform-client/e2e/Constants/DatabaseConfigurationConstants.ts
     - name: DB Configuration
-      uses: cypress-io/github-action@v4
+      uses: cypress-io/github-action@v5
       with:
         start: echo 'hi'
         wait-on: "http://localhost:4200"
@@ -133,10 +133,10 @@ jobs:
           /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots/*.png
         retention-days: 2
     - name: Archive video artifacts
-      if: ${{ failure() }}
+      if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
-        name: error Screenshots ${{matrix.test}}
+        name: cypress-videos-${{matrix.test}}
         path: |
           eform-client/cypress/videos/*.mp4
         retention-days: 2
