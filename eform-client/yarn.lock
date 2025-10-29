@@ -287,11 +287,6 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-20.4.0.tgz#f3a8df8287f3c1ca44d7b176a7193515cac8aa50"
   integrity sha512-u3I/yABCm+lda/AdnLKJnjdQp1i4BACgEKY9D6eKIgijcRtlvUc6Jq+43e1oPZLj+3DdrlABNcB8HsA/+RzikA==
 
-"@angular-eslint/bundled-angular-compiler@20.4.0":
-  version "20.4.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-20.4.0.tgz#f3a8df8287f3c1ca44d7b176a7193515cac8aa50"
-  integrity sha512-u3I/yABCm+lda/AdnLKJnjdQp1i4BACgEKY9D6eKIgijcRtlvUc6Jq+43e1oPZLj+3DdrlABNcB8HsA/+RzikA==
-
 "@angular-eslint/bundled-angular-compiler@20.5.0":
   version "20.5.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-20.5.0.tgz#b0dd9ffd89f5cb0139741d112bdb228f1ba7a46d"
@@ -3699,10 +3694,10 @@
     color "^5.0.2"
     text-hex "1.0.x"
 
-"@swimlane/ngx-charts@23.0.1":
-  version "23.0.1"
-  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-23.0.1.tgz#ba12d4ccb2c43db7889037aa7f43a34166e62191"
-  integrity sha512-mvdJTjBjUNoDj/R3AopYyVkVNrv0Zsrlh71CIQLVhBOs6PSV1mT3o7ukBFu8ct4w38wTfiGr8G+twHiYM1TEKA==
+"@swimlane/ngx-charts@23.1.0":
+  version "23.1.0"
+  resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-23.1.0.tgz#6f110ab5c07b943efe39e2e4c9fc01e1da126461"
+  integrity sha512-f2lBc8M9164PtylLDLd98XqO6owSw4LQMT9L/vQovT3nIjMO7t5l9JnytyOB8s5KImo3p+7x+1/HYxBZ5iOVWA==
   dependencies:
     d3-array "^3.2.0"
     d3-brush "^3.0.0"
