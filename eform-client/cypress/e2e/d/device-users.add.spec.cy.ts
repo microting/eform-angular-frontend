@@ -52,7 +52,7 @@ describe('Device users page - Add new device user', function () {
 });
 
 describe('Device users page - Should not add new device user', function () {
-  before(() => {
+  beforeEach(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
     cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers');
@@ -121,7 +121,7 @@ describe('Device users page - Should not add new device user', function () {
     // Find and delete the test user
     cy.get('#deviceUserFirstName').each(($el, index) => {
       if ($el.text() === nameDeviceUser) {
-        cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
+        cy.intercept('DELETE', '**/api/device-users/delete/*').as('deleteUser');
         cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
         cy.get('#deleteDeviceUserBtn').eq(index).click();
         cy.get('#saveDeleteBtn').should('be.visible').click();
