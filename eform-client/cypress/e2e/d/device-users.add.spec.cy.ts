@@ -21,10 +21,9 @@ describe('Device users page - Add new device user', function () {
   it('should add new device user with first name and last name', () => {
     const surname = generateRandmString();
 
-    // Ensure table is visible before counting rows
-    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
-    
-    deviceUsersPage.rowNum().then((rowCountBeforeCreation) => {
+    // Count rows (may be 0 if table is empty)
+    cy.get('tbody').then(($tbody) => {
+      const rowCountBeforeCreation = $tbody.find('tr').length;
       countDeviceUsersBeforeCreating = rowCountBeforeCreation;
 
       // Create new device user
@@ -40,7 +39,8 @@ describe('Device users page - Add new device user', function () {
       cy.get('#newDeviceUserBtn').should('be.visible');
 
       // Verify the user was created
-      deviceUsersPage.rowNum().then((rowCountAfterCreation) => {
+      cy.get('tbody').then(($tbody) => {
+        const rowCountAfterCreation = $tbody.find('tr').length;
         expect(
           rowCountAfterCreation,
           'Number of rows hasn\'t changed after creating new user'
@@ -102,16 +102,17 @@ describe('Device users page - Should not add new device user', function () {
   });
 
   it('should NOT create user if cancel was clicked', () => {
-    // Ensure table is visible before counting rows
-    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
-    
-    deviceUsersPage.rowNum().then((rowCountBeforeCreation) => {
+    // Count rows (may be 0 if table is empty at start)
+    cy.get('tbody').then(($tbody) => {
+      const rowCountBeforeCreation = $tbody.find('tr').length;
+
       cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible').click();
       cy.get('#firstName').should('be.visible');
       cy.get('#cancelCreateBtn').should('be.visible').click();
       cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
 
-      deviceUsersPage.rowNum().then((rowCountAfterCreation) => {
+      cy.get('tbody').then(($tbody2) => {
+        const rowCountAfterCreation = $tbody2.find('tr').length;
         expect(
           rowCountAfterCreation,
           'Number of rows has changed after cancel'
@@ -121,29 +122,29 @@ describe('Device users page - Should not add new device user', function () {
   });
 
   it('should clean up created test data', () => {
-    // Ensure table is visible before finding user
-    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
-    
-    // Find and delete the test user
-    cy.get('#deviceUserFirstName').each(($el, index) => {
-      if ($el.text() === nameDeviceUser) {
-        cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
-        cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
-        cy.get('#deleteDeviceUserBtn').eq(index).click();
-        cy.get('#saveDeleteBtn').should('be.visible').click();
-        cy.wait('@deleteUser', { timeout: 30000 });
-        cy.wait('@reloadDeviceUsers', { timeout: 30000 });
-        cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
-        return false; // break the loop
+    // Check if there are any rows to clean up
+    cy.get('tbody').then(($tbody) => {
+      if ($tbody.find('tr').length > 0) {
+        // Find and delete the test user
+        cy.get('#deviceUserFirstName').each(($el, index) => {
+          if ($el.text() === nameDeviceUser) {
+            cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
+            cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
+            cy.get('#deleteDeviceUserBtn').eq(index).click();
+            cy.get('#saveDeleteBtn').should('be.visible').click();
+            cy.wait('@deleteUser', { timeout: 30000 });
+            cy.wait('@reloadDeviceUsers', { timeout: 30000 });
+            cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
+            return false; // break the loop
+          }
+        });
       }
-    });
 
-    // Ensure table is visible before counting rows
-    cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
-    
-    // Verify count is back to original
-    deviceUsersPage.rowNum().then((currentCount) => {
-      expect(currentCount).to.equal(countDeviceUsersBeforeCreating);
+      // Verify count is back to original
+      cy.get('tbody').then(($tbody2) => {
+        const currentCount = $tbody2.find('tr').length;
+        expect(currentCount).to.equal(countDeviceUsersBeforeCreating);
+      });
     });
   });
 });
