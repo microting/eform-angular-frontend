@@ -28,8 +28,8 @@ describe('Device users page - Add new device user', function () {
       cy.get('#newDeviceUserBtn').should('be.visible').click();
       cy.get('#firstName').should('be.visible').type(nameDeviceUser);
       cy.get('#lastName').should('be.visible').type(surname);
-      
-      cy.intercept('POST', '**/api/device-users/create').as('createUser');
+
+      cy.intercept('PUT', '**/api/device-users/create').as('createUser');
       cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
       cy.get('#saveCreateBtn').should('be.visible').should('be.enabled').click();
       cy.wait('@createUser', { timeout: 30000 });
@@ -131,7 +131,7 @@ describe('Device users page - Should not add new device user', function () {
         return false; // break the loop
       }
     });
-    
+
     // Verify count is back to original
     deviceUsersPage.rowNum().then((currentCount) => {
       expect(currentCount).to.equal(countDeviceUsersBeforeCreating);
