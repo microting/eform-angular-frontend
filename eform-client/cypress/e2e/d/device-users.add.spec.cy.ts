@@ -65,7 +65,9 @@ describe('Device users page - Should not add new device user', function () {
     const name = generateRandmString();
 
     cy.get('#newDeviceUserBtn', { timeout: 40000 }).should('be.visible').click();
+    cy.wait(500);
     cy.get('#firstName').should('be.visible').type(name);
+    cy.get('#lastName').should('be.visible').type('');
 
     // Verify save button is disabled
     cy.get('#saveCreateBtn').should('be.disabled');
@@ -78,6 +80,8 @@ describe('Device users page - Should not add new device user', function () {
     const lastName = generateRandmString();
 
     cy.get('#newDeviceUserBtn', { timeout: 40000 }).should('be.visible').click();
+    cy.wait(500);
+    cy.get('#firstName').should('be.visible').type('');
     cy.get('#lastName').should('be.visible').type(lastName);
 
     // Verify save button is disabled
@@ -90,7 +94,8 @@ describe('Device users page - Should not add new device user', function () {
   it('should NOT add device user without first and last names', () => {
     cy.get('#newDeviceUserBtn', { timeout: 40000 }).should('be.visible').click();
     cy.wait(500);
-    cy.get('#firstName').should('be.visible');
+    cy.get('#firstName').should('be.visible').type('');
+    cy.get('#lastName').should('be.visible').type('');
 
     // Verify save button is disabled
     cy.get('#saveCreateBtn').should('be.disabled');
@@ -102,8 +107,8 @@ describe('Device users page - Should not add new device user', function () {
   it('should NOT create user if cancel was clicked', () => {
     deviceUsersPage.rowNum().then((rowCountBeforeCreation) => {
       cy.get('#newDeviceUserBtn', { timeout: 40000 }).should('be.visible').click();
-      cy.get('#firstName').should('be.visible');
       cy.wait(500);
+      cy.get('#firstName').should('be.visible');
       cy.get('#cancelCreateBtn').should('be.visible').click();
       cy.get('#newDeviceUserBtn', { timeout: 40000 }).should('be.visible');
       cy.wait(500);
@@ -124,6 +129,7 @@ describe('Device users page - Should not add new device user', function () {
         cy.intercept('DELETE', '**/api/device-users/delete/*').as('deleteUser');
         cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
         cy.get('#deleteDeviceUserBtn').eq(index).click();
+        cy.wait(500);
         cy.get('#saveDeleteBtn').should('be.visible').click();
         cy.wait('@deleteUser', { timeout: 30000 });
         cy.wait('@reloadDeviceUsers', { timeout: 30000 });
