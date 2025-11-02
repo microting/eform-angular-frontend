@@ -104,7 +104,7 @@
     "ng2-file-upload": "^9.0.0",
     "ng2-pdf-viewer": "^10.3.4",
     "ngx-auto-unsubscribe": "3.0.1",
-    "ngx-cookie-service": "20.1.0",
+    "ngx-cookie-service": "20.1.1",
     "ngx-editor": "^18.0.0",
     "ngx-mask": "^20.0.3",
     "ngx-material-timepicker": "^13.1.1",
