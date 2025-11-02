@@ -294,7 +294,7 @@
     ora "8.2.0"
     rxjs "7.8.2"
 
-"@angular-devkit/schematics@>= 20.0.0 < 21.0.0":
+"@angular-devkit/schematics@20.3.8", "@angular-devkit/schematics@>= 20.0.0 < 21.0.0":
   version "20.3.8"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-20.3.8.tgz#3e0d90749448cea86c1bea6856accc78227108bb"
   integrity sha512-Ymv7nWLTDB1gBh2laRveO912eUpQ/rUIzKRr8VQFMVG/wNipL88vzyrlKhJa7WhQ3CdKxLD7kplFIjdev7XUVg==
