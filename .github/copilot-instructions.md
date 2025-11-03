@@ -8,6 +8,35 @@ This is **eForm Angular Frontend**, a multi-component application consisting of:
 - **Docker Configuration** - Containerization setup
 - **GitHub Actions** - CI/CD workflows
 
+## Task Suitability for Copilot
+
+### ✅ Well-Suited Tasks for Copilot
+Copilot coding agent excels at:
+- **Bug fixes** - Fixing identified issues with clear reproduction steps
+- **UI improvements** - Making visual adjustments and accessibility enhancements
+- **Test additions** - Adding unit tests, integration tests, or E2E tests
+- **Documentation updates** - Updating README, API docs, or inline comments
+- **Code refactoring** - Improving code quality while maintaining functionality
+- **Dependency updates** - Updating package versions and fixing breaking changes
+- **Translation updates** - Adding or updating localization files
+- **Accessibility improvements** - Adding ARIA labels, keyboard navigation, etc.
+
+### ❌ Tasks to Avoid Assigning to Copilot
+Do not assign these complex tasks:
+- **Architectural changes** - Major structural redesigns requiring deep domain knowledge
+- **Business logic** - Critical business rules and decision-making code
+- **Security implementations** - Authentication, authorization, encryption logic
+- **Database migrations** - Complex schema changes affecting multiple systems
+- **Performance optimizations** - System-wide performance improvements requiring profiling
+- **Third-party integrations** - Initial setup of complex external service integrations
+
+### 💡 Tips for Creating Good Issues for Copilot
+- Provide clear, specific descriptions of the problem or feature
+- Include acceptance criteria (e.g., "should have tests", "should update docs")
+- Specify affected files or components when known
+- Include examples or screenshots for UI changes
+- Reference related issues or pull requests for context
+
 ## Prerequisites and Environment
 
 ### Required Software Versions
@@ -256,6 +285,96 @@ This is a **full-stack application** with separate frontend and backend componen
 - Database schema changes affect both API and frontend
 - Authentication/authorization spans both components
 - Build processes are independent but coordinated
+
+## Code Style and Conventions
+
+### Angular Frontend (TypeScript)
+- **Angular Style Guide**: Follow the [Official Angular Style Guide](https://angular.io/guide/styleguide)
+- **Component Structure**: Use standalone components where appropriate
+- **Naming Conventions**:
+  - Components: `PascalCase` (e.g., `UserListComponent`)
+  - Services: `PascalCase` with `Service` suffix (e.g., `UserService`)
+  - Modules: `PascalCase` with `Module` suffix (e.g., `CoreModule`)
+  - Files: `kebab-case` (e.g., `user-list.component.ts`)
+- **TypeScript**: Use strict type checking, avoid `any` when possible
+- **Imports**: Organize imports in order: Angular, third-party, local
+- **RxJS**: Use the pipe operator, avoid nested subscribes
+- **Translations**: Use translation keys from `src/assets/i18n/` files
+
+### .NET Core API (C#)
+- **Naming Conventions**: Follow Microsoft's C# conventions
+  - PascalCase for public members, methods, classes
+  - camelCase for private fields
+  - Prefix interfaces with `I` (e.g., `IUserService`)
+- **Async/Await**: Use async/await for all I/O operations
+- **Dependency Injection**: Register services in `Program.cs`
+- **API Controllers**: Use attribute routing, return ActionResult types
+- **Error Handling**: Use try-catch blocks, return appropriate HTTP status codes
+- **Testing**: Write unit tests for business logic, integration tests for API endpoints
+
+### General Practices
+- **Comments**: Write self-documenting code; add comments only for complex logic
+- **Git Commits**: Use conventional commit format (feat:, fix:, docs:, etc.)
+- **Pull Requests**: Keep PRs small and focused on a single issue
+- **Code Reviews**: Address all review comments before merging
+
+## Pull Request Workflow with Copilot
+
+### Creating Pull Requests
+- Copilot automatically creates PRs for assigned issues
+- PR title follows format: `[Issue Type] Brief description`
+- PR description includes implementation details and testing notes
+
+### Iterating on Pull Requests
+- **Provide feedback** by commenting on specific lines or the PR overall
+- **Tag @copilot** in comments to request changes
+- Be specific in feedback: "Please add error handling for null values"
+- Copilot will update the PR based on your feedback
+
+### Before Merging
+- Ensure all CI/CD checks pass (build, tests, linting)
+- Review code changes manually for logic errors
+- Verify documentation updates are included if needed
+- Confirm tests are added for new functionality
+
+## Validation Guidelines for Copilot
+
+When making changes, always:
+
+1. **Run Linters**:
+   ```bash
+   # Frontend
+   cd eform-client && yarn lint
+   
+   # Backend (if applicable linters exist)
+   cd eFormAPI && dotnet format --verify-no-changes
+   ```
+
+2. **Build the Project**:
+   ```bash
+   # Build both frontend and backend
+   cd eFormAPI && dotnet build
+   cd ../eform-client && yarn build
+   ```
+
+3. **Run Tests**:
+   ```bash
+   # Run relevant tests for changed code
+   cd eFormAPI && dotnet test
+   cd ../eform-client && yarn test:unit
+   ```
+
+4. **Manual Verification**:
+   - For UI changes: Start dev server and verify visually
+   - For API changes: Test endpoints with sample requests
+   - For bug fixes: Verify the original issue is resolved
+   - For new features: Test happy path and edge cases
+
+5. **Documentation**:
+   - Update inline comments if logic is complex
+   - Update README.md if user-facing changes exist
+   - Update API documentation if endpoints change
+   - Update translation files if UI text is added
 
 ## Security Considerations
 
