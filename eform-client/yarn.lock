@@ -283,17 +283,6 @@
     rxjs "7.8.2"
     source-map "0.7.6"
 
-"@angular-devkit/schematics@20.3.7":
-  version "20.3.7"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-20.3.7.tgz#9ffab1f0aa49603dd37f9e5665118d1ac5f5a5d3"
-  integrity sha512-DUxcQBPKO69p56ZgIdVfxWyLiSjdcUoD6BH9/nWHp0QiqRAR6GcXP4SFax76JPl2WsiCp4hHZ233Hf69AP1xew==
-  dependencies:
-    "@angular-devkit/core" "20.3.7"
-    jsonc-parser "3.3.1"
-    magic-string "0.30.17"
-    ora "8.2.0"
-    rxjs "7.8.2"
-
 "@angular-devkit/schematics@20.3.8", "@angular-devkit/schematics@>= 20.0.0 < 21.0.0":
   version "20.3.8"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-20.3.8.tgz#3e0d90749448cea86c1bea6856accc78227108bb"
@@ -305,10 +294,10 @@
     ora "8.2.0"
     rxjs "7.8.2"
 
-"@angular-eslint/builder@20.3.0":
-  version "20.3.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-20.3.0.tgz#6d86093405a8cf5217762f15509b349deb4f2597"
-  integrity sha512-3XpWLdh+/K4+r0ChkKW00SXWyBA7ShMpE+Pt1XUmIu4srJgGRnt8e+kC4Syi+s2t5QS7PjlwRaelB1KfSMXZ5A==
+"@angular-eslint/builder@20.5.1":
+  version "20.5.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-20.5.1.tgz#390c05f6a42fed19de10840443f8fc702a94a5cd"
+  integrity sha512-jUnqrMbMQ/UR8xPncg3NW3I18dlnV68V0HHozZgX3rjHuDOa7Yq4jwjFaaxfaId5KsNDoEGtjZCAz1lgw/+4Gw==
   dependencies:
     "@angular-devkit/architect" ">= 0.2000.0 < 0.2100.0"
     "@angular-devkit/core" ">= 20.0.0 < 21.0.0"
