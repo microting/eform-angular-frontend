@@ -376,6 +376,7 @@ public class CasesService(
         {
             var latestActivity = await sdkDbContext.Cases
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Where(x => x.Status == 100)
                 .OrderByDescending(x => x.UpdatedAt)
                 .Select(x => new { x.Id, x.UpdatedAt, x.CheckListId })
                 .FirstOrDefaultAsync();
