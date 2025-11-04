@@ -110,7 +110,7 @@
     "ngx-material-timepicker": "^13.1.1",
     "ngx-papaparse": "8.0.0",
     "ngx-slimscroll": "12.2.0",
-    "ngx-toastr": "19.0.0",
+    "ngx-toastr": "19.1.0",
     "npm": "latest",
     "pdf-lib": "^1.16.0",
     "ramda": "^0.32.0",

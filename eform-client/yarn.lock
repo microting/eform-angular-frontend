@@ -11005,10 +11005,10 @@ ngx-slimscroll@12.2.0:
   dependencies:
     tslib "^2.2.0"
 
-ngx-toastr@19.0.0:
-  version "19.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-19.0.0.tgz#51ebb9cb8f8b2f43704d45b560f6d8997f556016"
-  integrity sha512-6pTnktwwWD+kx342wuMOWB4+bkyX9221pAgGz3SHOJH0/MI9erLucS8PeeJDFwbUYyh75nQ6AzVtolgHxi52dQ==
+ngx-toastr@19.1.0:
+  version "19.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-19.1.0.tgz#c3a676e2b7c2e186e192e75ef272b4caaa778417"
+  integrity sha512-Qa7Kg7QzGKNtp1v04hu3poPKKx8BGBD/Onkhm6CdH5F0vSMdq+BdR/f8DTpZnGFksW891tAFufpiWb9UZX+3vg==
   dependencies:
     tslib "^2.3.0"
 
