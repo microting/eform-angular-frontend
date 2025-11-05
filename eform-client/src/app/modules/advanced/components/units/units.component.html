@@ -9,7 +9,7 @@
 <!--    {{ 'Create unit' | translate }}-->
 <!--  </button>-->
 <!--</eform-new-subheader>-->
-<br />
+<br/>
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 
 
@@ -61,16 +61,23 @@
     disabled="true"
   ></mat-slide-toggle>
 </ng-template>
-<ng-template #actionsTpl let-row let-index="index">
-  <div>
-    <button
-      mat-icon-button
-      color="warn"
-      id="moveBtn_{{ index }}"
-      matTooltip="{{ 'Move unit' | translate }}"
-      (click)="openMoveModal(row)"
-    >
-      <mat-icon>trolley</mat-icon>
+
+<ng-template #actionsTpl let-row let-i="index">
+  <div class="device-user-actions" id="action-items-{{i}}">
+    <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
+      <mat-icon>more_vert</mat-icon>
     </button>
+
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        id="moveBtn_{{i}}"
+        (click)="openMoveModal(row)"
+      >
+        <mat-icon color="warn">trolley</mat-icon>
+        <span>{{ 'Move unit' | translate }}</span>
+      </button>
+    </mat-menu>
   </div>
 </ng-template>
+

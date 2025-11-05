@@ -45,37 +45,43 @@
   (sortChange)="sortTable($event)">
 </mtx-grid>
 <ng-template #microtingUUIDTpl let-row let-i="index">
-  <div class="entitySearchMUid" id="entitySearchMUid">{{row.microtingUUID}}</div>
+  <div class="entitySearchMUid" id="entitySearchMUid">{{ row.microtingUUID }}</div>
 </ng-template>
 <ng-template #entitySelectNameTpl let-row let-i="index">
-  <div class="entitySearchName" id="entitySearchName">{{row.name}}</div>
+  <div class="entitySearchName" id="entitySearchName">{{ row.name }}</div>
 </ng-template>
 <ng-template #entitySelectDescriptionTpl let-row let-i="index">
-  <div class="entitySelectDescription" id="entitySelectDescription">{{row.description}}</div>
+  <div class="entitySelectDescription" id="entitySelectDescription">{{ row.description }}</div>
 </ng-template>
 
+<ng-template #actionsTpl let-row let-i="index">
+  <div id="action-items-{{i}}"
+       *ngIf="(selectCurrentUserClaimsEntitySearchDelete$ | async) || (selectCurrentUserClaimsEntitySearchUpdate$ | async)">
+    <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
+      <mat-icon>more_vert</mat-icon>
+    </button>
 
-<ng-template #actionsTpl let-row>
-  <div *ngIf="(selectCurrentUserClaimsEntitySearchDelete$ | async) || (selectCurrentUserClaimsEntitySearchUpdate$ | async)">
-    <button
-      mat-icon-button
-      id="entitySearchUpdateBtn"
-      matTooltip="{{ 'Edit' | translate }}"
-      [disabled]="(selectCurrentUserClaimsEntitySearchUpdate$ | async) === false"
-      [routerLink]="['/advanced/entity-search/edit/' + row.microtingUUID]"
-    >
-      <mat-icon>edit</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      color="warn"
-      id="entitySearchDeleteBtn"
-      (click)="openModalSearchRemove(row)"
-      matTooltip="{{ 'Remove' | translate }}"
-      [disabled]="(selectCurrentUserClaimsEntitySearchDelete$ | async) === false || row.isLocked"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        id="entitySearchUpdateBtn-{{i}}"
+        [disabled]="(selectCurrentUserClaimsEntitySearchUpdate$ | async) === false"
+        [routerLink]="['/advanced/entity-search/edit/' + row.microtingUUID]"
+      >
+        <mat-icon>edit</mat-icon>
+        <span>{{ 'Edit' | translate }}</span>
+      </button>
+
+      <button
+        mat-menu-item
+        id="entitySearchDeleteBtn-{{i}}"
+        (click)="openModalSearchRemove(row)"
+        [disabled]="(selectCurrentUserClaimsEntitySearchDelete$ | async) === false || row.isLocked"
+      >
+        <mat-icon  color="warn">delete</mat-icon>
+        <span>{{ 'Remove' | translate }}</span>
+      </button>
+    </mat-menu>
   </div>
 </ng-template>
 

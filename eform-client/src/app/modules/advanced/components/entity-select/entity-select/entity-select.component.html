@@ -44,29 +44,34 @@
   [sortDirection]="selectEntitySelectIsSortDsc$ | async"
   (sortChange)="sortTable($event)">
 </mtx-grid>
-<ng-template #actionsTpl let-row>
-  <div *ngIf="(selectCurrentUserClaimsEntitySelectDelete$ | async) || (selectCurrentUserClaimsEntitySelectUpdate$ | async)">
-    <button
-      class="entitySelectEditBtn"
-      mat-icon-button
-      id="entitySelectEditBtn"
-      matTooltip="{{ 'Edit' | translate }}"
-      [disabled]="(selectCurrentUserClaimsEntitySelectUpdate$ | async) === false"
-      [routerLink]="['/advanced/entity-select/edit/' + row.microtingUUID]"
-    >
-      <mat-icon>edit</mat-icon>
+
+<ng-template #actionsTpl let-row let-i="index">
+  <div id="action-items-{{i}}" *ngIf="(selectCurrentUserClaimsEntitySelectDelete$ | async) || (selectCurrentUserClaimsEntitySelectUpdate$ | async)">
+    <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
+      <mat-icon>more_vert</mat-icon>
     </button>
-    <button
-      class="entitySelectDeleteBtn"
-      mat-icon-button
-      color="warn"
-      id="entitySelectDeleteBtn"
-      (click)="openModalSelectRemove(row)"
-      matTooltip="{{ 'Remove' | translate }}"
-      [disabled]="(selectCurrentUserClaimsEntitySelectDelete$ | async) === false || row.isLocked"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
+
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        id="entitySelectEditBtn-{{i}}"
+        [disabled]="(selectCurrentUserClaimsEntitySelectUpdate$ | async) === false"
+        [routerLink]="['/advanced/entity-select/edit/' + row.microtingUUID]"
+      >
+        <mat-icon>edit</mat-icon>
+        <span>{{ 'Edit' | translate }}</span>
+      </button>
+
+      <button
+        mat-menu-item
+        id="entitySelectDeleteBtn-{{i}}"
+        (click)="openModalSelectRemove(row)"
+        [disabled]="(selectCurrentUserClaimsEntitySelectDelete$ | async) === false || row.isLocked"
+      >
+        <mat-icon color="warn">delete</mat-icon>
+        <span>{{ 'Remove' | translate }}</span>
+      </button>
+    </mat-menu>
   </div>
 </ng-template>
 
