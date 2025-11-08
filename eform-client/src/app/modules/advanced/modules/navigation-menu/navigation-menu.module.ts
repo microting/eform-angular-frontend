@@ -13,7 +13,7 @@ import {
 } from './components';
 import { NavigationMenuRouting } from './navigation-menu.routing';
 import { TranslateModule } from '@ngx-translate/core';
-import { DragulaModule } from 'ng2-dragula';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -44,7 +44,7 @@ import {MatInputModule} from '@angular/material/input';
     CommonModule,
     NavigationMenuRouting,
     TranslateModule,
-    DragulaModule,
+    DragDropModule,
     FormsModule,
     EformSharedModule,
     ReactiveFormsModule,
