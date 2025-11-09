@@ -11,10 +11,19 @@
     >
       <div style="display: flex; flex-grow: 6; align-items: center;">
         <mat-icon
-          [cdkDragHandle]="fieldIsNested"
+          *ngIf="!fieldIsNested"
           class="dragula-handle align-middle"
           style="cursor: pointer"
-          [id]="fieldIsNested ? 'moveNestedFieldBtn' : 'moveFieldBtn'"
+          id="moveFieldBtn"
+        >
+          menu
+        </mat-icon>
+        <mat-icon
+          *ngIf="fieldIsNested"
+          cdkDragHandle
+          class="dragula-handle align-middle"
+          style="cursor: pointer"
+          id="moveNestedFieldBtn"
         >
           menu
         </mat-icon>
