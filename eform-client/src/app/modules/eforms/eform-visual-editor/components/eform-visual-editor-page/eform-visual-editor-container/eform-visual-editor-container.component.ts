@@ -218,6 +218,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   dropChecklist(event: CdkDragDrop<EformVisualEditorModel[]>) {
     if (event.previousIndex !== event.currentIndex) {
       moveItemInArray(this.visualEditorTemplateModel.checkLists, event.previousIndex, event.currentIndex);
+      this.visualEditorTemplateModel.checkLists = [...this.visualEditorTemplateModel.checkLists]; // Create new reference
       this.dragulaPositionChecklistChanged(this.visualEditorTemplateModel.checkLists);
     }
   }
@@ -225,6 +226,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   dropField(event: CdkDragDrop<EformVisualEditorFieldModel[]>) {
     if (event.previousIndex !== event.currentIndex) {
       moveItemInArray(this.visualEditorTemplateModel.fields, event.previousIndex, event.currentIndex);
+      this.visualEditorTemplateModel.fields = [...this.visualEditorTemplateModel.fields]; // Create new reference
       this.dragulaPositionFieldChanged(this.visualEditorTemplateModel.fields);
     }
   }

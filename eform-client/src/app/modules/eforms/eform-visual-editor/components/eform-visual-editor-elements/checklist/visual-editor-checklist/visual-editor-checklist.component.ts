@@ -131,6 +131,7 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   dropNestedField(event: CdkDragDrop<EformVisualEditorFieldModel[]>) {
     if (event.previousIndex !== event.currentIndex) {
       moveItemInArray(this.checklist.fields, event.previousIndex, event.currentIndex);
+      this.checklist.fields = [...this.checklist.fields]; // Create new reference for change detection
       this.onNestedFieldPositionChanged(this.checklist.fields);
     }
   }

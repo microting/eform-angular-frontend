@@ -168,6 +168,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   dropNestedField(event: CdkDragDrop<EformVisualEditorFieldModel[]>) {
     if (event.previousIndex !== event.currentIndex) {
       moveItemInArray(this.field.fields, event.previousIndex, event.currentIndex);
+      this.field.fields = [...this.field.fields]; // Create new reference for change detection
       this.onFieldPositionChangedOnNestedField(this.field.fields);
     }
   }
