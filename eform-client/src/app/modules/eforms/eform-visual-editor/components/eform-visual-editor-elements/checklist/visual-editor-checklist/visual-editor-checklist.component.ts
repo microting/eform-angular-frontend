@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   EformVisualEditorFieldsDnDRecursionModel,
   EformVisualEditorFieldModel,
@@ -125,6 +126,13 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
       checklistIndex: this.checklistIndex,
       fields: model,
     });
+  }
+
+  dropNestedField(event: CdkDragDrop<EformVisualEditorFieldModel[]>) {
+    if (event.previousIndex !== event.currentIndex) {
+      moveItemInArray(this.checklist.fields, event.previousIndex, event.currentIndex);
+      this.onNestedFieldPositionChanged(this.checklist.fields);
+    }
   }
 
   onEditNestedField(fieldIndex: number, field: EformVisualEditorFieldModel) {
