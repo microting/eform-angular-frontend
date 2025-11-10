@@ -27,7 +27,6 @@
             ],
             "tsConfig": "src/tsconfig.app.json",
             "allowedCommonJsDependencies": [
-              "dragula",
               "file-saver"
             ],
             "assets": [

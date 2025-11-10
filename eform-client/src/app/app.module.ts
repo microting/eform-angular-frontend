@@ -5,7 +5,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GalleryModule} from 'ng-gallery';
 import {TranslateModule} from '@ngx-translate/core';
 import {LightboxModule} from 'ng-gallery/lightbox';
-import {DragulaModule} from 'ng2-dragula';
 // TODO fix ngx-mask
 //import {NgxMaskModule} from 'ngx-mask';
 import {ToastrModule} from 'ngx-toastr';
@@ -113,7 +112,6 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
       preventDuplicates: true,
       positionClass: 'toast-bottom-right',
     }),
-    DragulaModule.forRoot(),
     // TODO fix ngx-mask
     // NgxMaskModule.forRoot(),
     GalleryModule,

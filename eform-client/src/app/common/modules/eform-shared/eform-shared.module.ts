@@ -28,7 +28,6 @@ import {
 } from 'src/app/common/pipes';
 import {EformTableHeadersComponent} from './components';
 import {RouterModule} from '@angular/router';
-import {DragulaModule} from 'ng2-dragula';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from '@angular/material/button';
@@ -52,7 +51,6 @@ import {MatChip} from "@angular/material/chips";
         NgSelectModule,
         FormsModule,
         RouterModule,
-        DragulaModule,
         MatSortModule,
         MatPaginatorModule,
         MatButtonModule,

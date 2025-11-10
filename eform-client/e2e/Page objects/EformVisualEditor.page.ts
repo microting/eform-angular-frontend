@@ -726,8 +726,9 @@ export class ChecklistFieldRowObj {
     });
   }
 
-  async changePosition(tarasyncField: ChecklistFieldRowObj) {
-    await this.moveFieldBtn.dragAndDrop(tarasyncField.element);
+  async changePosition(targetField: ChecklistFieldRowObj) {
+    // For CDK drag-drop: drag from the move button to the target field element
+    await this.moveFieldBtn.dragAndDrop(targetField.element);
   }
 }
 
