@@ -1,5 +1,9 @@
 import loginPage from '../Login.page';
 import {generateRandmString, getRandomInt, selectValueInNgSelectorNoSelector} from '../helper-functions';
+import { Navbar } from '../Navbar.page';
+import { myEformsPage } from '../MyEforms.page';
+
+const navbar = new Navbar();
 
 describe('Visual editor - Create eForm', () => {
   beforeEach(() => {
@@ -684,10 +688,7 @@ describe('Visual editor - Create eForm', () => {
 
   afterEach(() => {
     // Clean up - delete created eForm
-    cy.get('#cancelEditBtn').click();
-    cy.wait(500);
-    cy.get('#delete-eform-btn-0').click();
-    cy.get('#eFormDeleteDeleteBtn').click();
-    cy.wait(1000);
+    navbar.goToMyEForms();
+    myEformsPage.clearEFormTable();
   });
 });
