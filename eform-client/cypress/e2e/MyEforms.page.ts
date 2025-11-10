@@ -159,20 +159,26 @@ class MyEformsPage extends PageWithNavbarPage {
 
   public clearEFormTable() {
     cy.wait(500);
-    const rowCount = this.rowNum();
-    let indexForDelete = 1;
-    for (let i = 1; i <= rowCount; i++) {
-      const eformsRowObject = this.getEformRowObj(i, false);
-      if (
-        eformsRowObject &&
-        eformsRowObject.deleteBtn &&
-        (eformsRowObject.deleteBtn.should('be.visible'))
-      ) {
-        eformsRowObject.deleteEForm();
-      } else {
-        indexForDelete += 1;
+    // Check if table has any rows before trying to delete
+    cy.get('body').then($body => {
+      if ($body.find('.eform-id').length > 0) {
+        // Table has rows, delete them
+        cy.get('.eform-id').its('length').then((rowCount) => {
+          for (let i = 1; i <= rowCount; i++) {
+            const eformsRowObject = this.getEformRowObj(1, false); // Always delete first row
+            if (
+              eformsRowObject &&
+              eformsRowObject.deleteBtn
+            ) {
+              eformsRowObject.deleteBtn.should('be.visible').click();
+              cy.wait(500);
+              cy.get('#eFormDeleteDeleteBtn').should('be.visible').click();
+              cy.wait(500);
+            }
+          }
+        });
       }
-    }
+    });
   }
 
   createNewEform(
