@@ -727,8 +727,8 @@ export class ChecklistFieldRowObj {
   }
 
   async changePosition(targetField: ChecklistFieldRowObj) {
-    // For CDK drag-drop: drag from the field element itself to the target field element
-    await this.element.dragAndDrop(targetField.element);
+    // For CDK drag-drop: drag from the move button to the target field element
+    await this.moveFieldBtn.dragAndDrop(targetField.element);
   }
 }
 
