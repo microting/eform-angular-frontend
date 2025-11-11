@@ -70,6 +70,7 @@ import {
   CustomMatPaginatorIntl
 } from './common/modules/eform-shared/components/eform-pagination/mat_paginator_intl';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {environment} from '../environments/environment';
 // Guards
 
 export let providers = [
@@ -126,21 +127,23 @@ export let providers = [
     },
   },
   {provide: MAT_DATE_LOCALE, useValue: new BehaviorSubject(null)},
-  {
-    provide: ErrorHandler,
-    useValue: Sentry.createErrorHandler({
-      showDialog: false,
-    }),
-  }, {
-    provide: Sentry.TraceService,
-    deps: [Router],
-  },
-  {
-    provide: APP_INITIALIZER,
-    useFactory: () => () => {},
-    deps: [Sentry.TraceService],
-    multi: true,
-  },
+  ...(environment.enableSentry ? [
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: false,
+      }),
+    }, {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps: [Sentry.TraceService],
+      multi: true,
+    }
+  ] : []),
   AuthStateService,
   AppMenuStateService,
   // Helpers
