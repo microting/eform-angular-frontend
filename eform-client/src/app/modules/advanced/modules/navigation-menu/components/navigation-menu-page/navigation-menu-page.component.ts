@@ -111,10 +111,10 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       // Copy from template menu
-      const item = { 
-        ...event.previousContainer.data[event.previousIndex], 
-        type: NavigationMenuItemTypeEnum.Link, 
-        isInternalLink: true 
+      const item = {
+        ...event.previousContainer.data[event.previousIndex],
+        type: NavigationMenuItemTypeEnum.Link,
+        isInternalLink: true
       };
       this.navigationMenuModel.actualMenu.splice(event.currentIndex, 0, item);
     }
@@ -126,10 +126,10 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       // Copy from template menu
-      const item = { 
-        ...event.previousContainer.data[event.previousIndex], 
-        type: NavigationMenuItemTypeEnum.Link, 
-        isInternalLink: true 
+      const item = {
+        ...event.previousContainer.data[event.previousIndex],
+        type: NavigationMenuItemTypeEnum.Link,
+        isInternalLink: true
       };
       this.navigationMenuModel.actualMenu[parentIndex].children.splice(event.currentIndex, 0, item);
     }

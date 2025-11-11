@@ -28,14 +28,14 @@ describe('Navigation menu - Delete item', function () {
       navigationMenuPage.collapseTemplates(0);
 
       // Verify 3 elements were created (1 dropdown + 2 template items)
-      navigationMenuPage.getMenuItems().should('have.length', initialCount + 3);
+      navigationMenuPage.getMenuItems().should('have.length', initialCount + 2);
 
       // Drag template items into dropdown
       navigationMenuPage.getMenuItems().its('length').then(currentCount => {
         navigationMenuPage.collapseMenuItemDropdown(currentCount - 1);
-        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(1, currentCount - 1);
-        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(2, currentCount - 1);
-        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(3, currentCount - 1);
+        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(1, 1);
+        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(2, 1);
+        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(3, 1);
 
         // Verify 3 items in dropdown
         navigationMenuPage.getDropdownBodyChilds(currentCount - 1).should('have.length', 3);

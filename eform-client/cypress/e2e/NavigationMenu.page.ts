@@ -164,7 +164,7 @@ export class NavigationMenuPage {
 
   public deleteElementFromDropdown(dropdownIndex: number, itemIndex: number) {
     cy.get('.menu_item').eq(dropdownIndex)
-      .find('#dropdownBody>*').eq(itemIndex)
+      .find('.dropdownBody>*').eq(itemIndex)
       .find('#deleteBtn').scrollIntoView().click();
     cy.wait(500);
     cy.get('#menuItemDeleteBtn').should('be.visible').click();
@@ -179,14 +179,14 @@ export class NavigationMenuPage {
   }
 
   public getDropdownBodyChilds(dropdownIndex: number) {
-    return cy.get('.menu_item').eq(dropdownIndex).find('#dropdownBody>*');
+    return cy.get('.menu_item').eq(dropdownIndex).find('.dropdownBody>*');
   }
 
   public dragTemplateOnElementInCreatedDropdown(templateIndex: number, dropdownIndex: number) {
     this.collapseTemplates(0);
 
     const dragHandle = cy.get(`#dragHandle0_${templateIndex}`);
-    const dropdownBody = cy.get('.menu_item').eq(dropdownIndex).find('#dropdownBody');
+    const dropdownBody = cy.get('.dropdownBody').eq(dropdownIndex);//.find('.dropdownBody');
 
     dragHandle
       .trigger('mousedown', { button: 0, bubbles: true })
@@ -206,7 +206,7 @@ export class NavigationMenuPage {
     translations_array: string[];
   }) {
     cy.get('.menu_item').eq(data.indexDropdownInMenu)
-      .find('#dropdownBody>*').eq(data.indexChildDropdown)
+      .find('.dropdownBody>*').eq(data.indexChildDropdown)
       .find('#editBtn').click();
 
     cy.get('#editItemSaveBtn').should('be.visible');
