@@ -159,20 +159,20 @@ class MyEformsPage extends PageWithNavbarPage {
 
   public clearEFormTable() {
     cy.wait(500);
-    const rowCount = this.rowNum();
-    let indexForDelete = 1;
-    for (let i = 1; i <= rowCount; i++) {
-      const eformsRowObject = this.getEformRowObj(i, false);
-      if (
-        eformsRowObject &&
-        eformsRowObject.deleteBtn &&
-        (eformsRowObject.deleteBtn.should('be.visible'))
-      ) {
-        eformsRowObject.deleteEForm();
-      } else {
-        indexForDelete += 1;
+    // Check if table has any rows before trying to delete
+    cy.get('body').then($body => {
+      if ($body.find('.eform-id').length > 0) {
+        // Table has rows, delete them
+        cy.get('.eform-id').its('length').then((rowCount) => {
+          for (let i = 1; i <= rowCount; i++) {
+              cy.get('#delete-eform-btn-0').click();
+              cy.intercept('DELETE' , '**/api/templates/delete/*').as('deleteEform');
+              cy.get('#eFormDeleteDeleteBtn').should('be.visible').click();
+              cy.wait('@deleteEform', {timeout: 50000});
+          }
+        });
       }
-    }
+    });
   }
 
   createNewEform(
@@ -293,7 +293,7 @@ class MyEformsRowObject {
 
   getRow(rowNum) {
     const currentPosition = rowNum - 1;
-    this.element = cy.get('#mainPageEFormsTableBody tr.mat-row').eq(currentPosition);
+    this.element = cy.get('#mainPageEFormsTableBody tbody tr').eq(currentPosition);
     cy.get(`#eform-id-${currentPosition}`)
       .eq(0)
       .invoke('text')

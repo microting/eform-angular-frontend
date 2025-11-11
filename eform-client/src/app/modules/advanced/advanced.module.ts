@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
-import {DragulaModule} from 'ng2-dragula';
 import {EformSharedModule} from '../../common/modules/eform-shared/eform-shared.module';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {AdvancedRoutingModule} from './advanced.routing';
@@ -48,7 +47,6 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
     EformSharedModule,
     NgSelectModule,
     FormsModule,
-    DragulaModule,
     EformImportedModule,
     ReactiveFormsModule,
     EformSharedTagsModule,

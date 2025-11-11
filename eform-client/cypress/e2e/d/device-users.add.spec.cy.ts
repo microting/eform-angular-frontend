@@ -67,8 +67,7 @@ describe('Device users page - Should not add new device user', function () {
     cy.get('#newDeviceUserBtn', { timeout: 40000 }).should('be.visible').click();
     cy.wait(500);
     cy.get('#firstName').should('be.visible').type(name);
-    cy.get('#lastName').should('be.visible').type('');
-
+    cy.get('#lastName').should('be.visible').clear();
     // Verify save button is disabled
     cy.get('#saveCreateBtn').should('be.disabled');
 
@@ -81,7 +80,7 @@ describe('Device users page - Should not add new device user', function () {
 
     cy.get('#newDeviceUserBtn', { timeout: 40000 }).should('be.visible').click();
     cy.wait(500);
-    cy.get('#firstName').should('be.visible').type('');
+    cy.get('#firstName').should('be.visible').clear();
     cy.get('#lastName').should('be.visible').type(lastName);
 
     // Verify save button is disabled
@@ -94,8 +93,8 @@ describe('Device users page - Should not add new device user', function () {
   it('should NOT add device user without first and last names', () => {
     cy.get('#newDeviceUserBtn', { timeout: 40000 }).should('be.visible').click();
     cy.wait(500);
-    cy.get('#firstName').should('be.visible').type('');
-    cy.get('#lastName').should('be.visible').type('');
+    cy.get('#firstName').should('be.visible').clear();
+    cy.get('#lastName').should('be.visible').clear();
 
     // Verify save button is disabled
     cy.get('#saveCreateBtn').should('be.disabled');

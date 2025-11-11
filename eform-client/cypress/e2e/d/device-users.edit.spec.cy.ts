@@ -4,12 +4,15 @@ import { Guid } from 'guid-typescript';
 import { expect } from 'chai';
 
 describe('Device users page - Edit device user', function () {
-  before(() => {
+  beforeEach(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
     cy.intercept('POST', '**/api/device-users/index').as('loadDeviceUsers');
     deviceUsersPage.Navbar.goToDeviceUsersPage();
     cy.wait('@loadDeviceUsers', { timeout: 30000 });
+  });
+
+  it('should edit device user\'s first name', () => {
 
     // Create a test user
     const firstName = Guid.create().toString();
@@ -17,16 +20,13 @@ describe('Device users page - Edit device user', function () {
     cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible').click();
     cy.get('#firstName').should('be.visible').type(firstName);
     cy.get('#lastName').should('be.visible').type(lastName);
-    
-    cy.intercept('POST', '**/api/device-users/create').as('createUser');
+
+    cy.intercept('PUT', '**/api/device-users/create').as('createUser');
     cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
     cy.get('#saveCreateBtn').should('be.visible').click();
     cy.wait('@createUser', { timeout: 30000 });
     cy.wait('@reloadDeviceUsers', { timeout: 30000 });
     cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
-  });
-
-  it('should edit device user\'s first name', () => {
     const newName = Guid.create().toString();
 
     cy.get('#deviceUserFirstName').should('be.visible');
@@ -37,11 +37,12 @@ describe('Device users page - Edit device user', function () {
 
         // Click edit button on last row
         cy.get('#editDeviceUserBtn').last().should('be.visible').click();
+        cy.wait(500);
         cy.get('#firstName').should('be.visible');
 
         // Edit first name
         cy.get('#firstName').clear().type(newName);
-        
+
         cy.intercept('POST', '**/api/device-users/update').as('updateUser');
         cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
         cy.get('#saveEditBtn').should('be.visible').click();
@@ -66,11 +67,12 @@ describe('Device users page - Edit device user', function () {
 
       // Click edit button on last row
       cy.get('#editDeviceUserBtn').last().should('be.visible').click();
+      cy.wait(500);
       cy.get('#firstName').should('be.visible');
 
       // Edit last name
-      cy.get('#lastName').clear().type(newSurname);
-      
+      cy.get('#lastName').should('be.visible').clear().type(newSurname);
+
       cy.intercept('POST', '**/api/device-users/update').as('updateUser');
       cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
       cy.get('#saveEditBtn').should('be.visible').click();
@@ -92,12 +94,13 @@ describe('Device users page - Edit device user', function () {
 
     // Click edit button on last row
     cy.get('#editDeviceUserBtn').last().should('be.visible').click();
+    cy.wait(500);
     cy.get('#firstName').should('be.visible');
 
     // Edit both fields
     cy.get('#firstName').clear().type(newName);
     cy.get('#lastName').clear().type(newSurname);
-    
+
     cy.intercept('POST', '**/api/device-users/update').as('updateUser');
     cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
     cy.get('#saveEditBtn').should('be.visible').click();
@@ -116,7 +119,7 @@ describe('Device users page - Edit device user', function () {
 
     // Ensure table is visible before counting rows
     cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
-    
+
     // Get count and data before edit
     deviceUsersPage.rowNum().then((rowNumBeforeEdit) => {
       cy.get('#deviceUserFirstName').last().invoke('text').then((oldFirstName) => {
@@ -124,6 +127,7 @@ describe('Device users page - Edit device user', function () {
 
           // Click edit button on last row
           cy.get('#editDeviceUserBtn').last().should('be.visible').click();
+          cy.wait(500);
           cy.get('#firstName').should('be.visible');
 
           // Try to edit both fields

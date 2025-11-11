@@ -13,7 +13,7 @@
         <mat-icon
           class="dragula-handle align-middle"
           style="cursor: pointer"
-          [id]="fieldIsNested ? 'moveNestedFieldBtn' : 'moveFieldBtn'"
+          [id]="fieldIsNested ? 'moveNestedFieldBtn'+fieldIndex : 'moveFieldBtn'+fieldIndex"
         >
           menu
         </mat-icon>
@@ -92,13 +92,14 @@
       *ngIf="field.fieldType == fieldTypes.FieldGroup"
       class="field-group-container section-collapse pl-3 nested-fields"
       [ngClass]="{'p-1 pt-3' : !field.collapsed, 'collapsed' : field.collapsed}"
-      dragula="FIELDS"
-      [dragulaModel]="field.fields"
+      cdkDropList
+      [cdkDropListData]="field.fields"
       id="nestedFields"
-      (dragulaModelChange)="onFieldPositionChangedOnNestedField($event)"
+      (cdkDropListDropped)="dropNestedField($event)"
     >
       <app-visual-editor-field
         *ngFor="let nestedField of field.fields; let i = index"
+        cdkDrag
         [ngClass]="{'collapsed' : field.collapsed}"
         [field]="nestedField"
         [checklistRecursionIndexes]="checklistRecursionIndexes"
