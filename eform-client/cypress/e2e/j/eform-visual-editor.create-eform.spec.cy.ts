@@ -195,7 +195,9 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#fieldSection0').should('exist');
     cy.get('#fieldSection0').should('contain', fieldName);
     // Verify color by checking the field has the red color class or styling
-    cy.get('#fieldSection0 .field-color-red').should('exist');
+    // cy.get('#fieldSection0 .field-color-red').should('exist');
+    // check the style attribyte for background-color to be background-color: rgb(255, 228, 228);
+    cy.get('#fieldSection0 > div > div').should('have.attr', 'style').and('include', 'background-color: rgb(255, 228, 228)');
   });
 
   it('should create visual template with one numberField', () => {
@@ -345,8 +347,8 @@ describe('Visual editor - Create eForm', () => {
     // Verify both nested fields exist with red color
     cy.get('#fields_0 #fieldSection0').should('contain', nestedFieldName);
     cy.get('#fields_0 #fieldSection1').should('contain', nestedFieldName);
-    cy.get('#fields_0 #fieldSection0 .field-color-red').should('exist');
-    cy.get('#fields_0 #fieldSection1 .field-color-red').should('exist');
+    cy.get('#fieldSection0 > div > div').should('have.attr', 'style').and('include', 'background-color: rgb(255, 228, 228)');
+    cy.get('#fieldSection1 > div > div').should('have.attr', 'style').and('include', 'background-color: rgb(255, 228, 228)');
   });
 
   it('should create visual template and delete field', () => {
