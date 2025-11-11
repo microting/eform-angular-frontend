@@ -170,11 +170,8 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#changeFieldSaveBtn').click();
     cy.wait(1000);
 
-    // Change field color to red
-    cy.get('#fieldSection0 #editBtn').click();
-    cy.get('#fieldColorSelector input').clear().type('Red');
-    selectValueInNgSelectorNoSelector('Red');
-    cy.get('#changeFieldSaveBtn').click();
+    // Change field color to red by clicking the red color button (5th button, index 4)
+    cy.get('#fieldSection0 #colors button').eq(4).click();
     cy.wait(1000);
 
     // Save the eForm
@@ -320,11 +317,8 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#changeFieldSaveBtn').click();
     cy.wait(1000);
 
-    // Change nested field color to red
-    cy.get('#fields_0 #fieldSection0 #editBtn').click();
-    cy.get('#fieldColorSelector input').clear().type('Red');
-    selectValueInNgSelectorNoSelector('Red');
-    cy.get('#changeFieldSaveBtn').click();
+    // Change nested field color to red by clicking the red color button (5th button, index 4)
+    cy.get('#fields_0 #fieldSection0 #colors button').eq(4).click();
     cy.wait(1000);
 
     // Make a copy of the nested field
@@ -383,11 +377,8 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#changeFieldSaveBtn').click();
     cy.wait(1000);
 
-    // Change nested field color
-    cy.get('#fields_0 #fieldSection0 #editBtn').click();
-    cy.get('#fieldColorSelector input').clear().type('Red');
-    selectValueInNgSelectorNoSelector('Red');
-    cy.get('#changeFieldSaveBtn').click();
+    // Change nested field color to red by clicking the red color button (5th button, index 4)
+    cy.get('#fields_0 #fieldSection0 #colors button').eq(4).click();
     cy.wait(1000);
 
     // Make a copy of the nested field
