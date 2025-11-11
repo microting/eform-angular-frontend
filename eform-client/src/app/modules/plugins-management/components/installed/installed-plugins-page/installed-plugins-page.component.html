@@ -1,12 +1,12 @@
 <eform-new-subheader>
-<!--  <button-->
-<!--    color="accent"-->
-<!--    mat-raised-button-->
-<!--    id="newSecurityGroupBtn"-->
-<!--    [routerLink]="['marketplace']"-->
-<!--  >-->
-<!--    {{ 'Marketplace' | translate }}-->
-<!--  </button>-->
+  <!--  <button-->
+  <!--    color="accent"-->
+  <!--    mat-raised-button-->
+  <!--    id="newSecurityGroupBtn"-->
+  <!--    [routerLink]="['marketplace']"-->
+  <!--  >-->
+  <!--    {{ 'Marketplace' | translate }}-->
+  <!--  </button>-->
 </eform-new-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
@@ -21,47 +21,56 @@
 </mtx-grid>
 
 <ng-template #idTpl let-row let-i="index">
-  <div class="plugin-id" id="plugin-id{{i}}">{{row.id}}</div>
+  <div class="plugin-id" id="plugin-id{{i}}">{{ row.id }}</div>
 </ng-template>
 
 <ng-template #nameTpl let-row let-i="index">
-  <div class="plugin-name" id="plugin-name{{i}}">{{row.name}}</div>
+  <div class="plugin-name" id="plugin-name{{i}}">{{ row.name }}</div>
 </ng-template>
 
 <ng-template #versionTpl let-row let-i="index">
-  <div class="plugin-version" id="plugin-version{{i}}">{{row.version}}</div>
+  <div class="plugin-version" id="plugin-version{{i}}">{{ row.version }}</div>
 </ng-template>
-
 
 <ng-template #actionsTpl let-row let-i="index">
-  <div class="d-flex align-items-center">
-    <button
-      mat-icon-button
-      color="{{row.status === statusEnum.Enabled ? 'accent' : ''}}"
-      matTooltip="{{(row.status === statusEnum.Enabled ? 'Deactivate' : 'Activate') +' plugin' | translate}}"
-      (click)="openPluginModal(row, row.status === statusEnum.Enabled ? statusEnum.Disabled : statusEnum.Enabled)"
-      id="plugin-status-button{{i}}"
-    >
-      <mat-icon>{{row.status === statusEnum.Enabled ? 'toggle_on' : 'toggle_off'}}</mat-icon>
+  <div id="action-items-{{i}}">
+    <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
+      <mat-icon>more_vert</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      color="accent"
-      *ngIf="row.status == statusEnum.Enabled"
-      matTooltip="{{ 'Edit Plugin Permissions' | translate }}"
-      (click)="showPermissionsModal(row)"
-      id="plugin-permissions-btn"
-    >
-      <mat-icon>lock_open</mat-icon>
-    </button>
-    <a
-      mat-icon-button
-      *ngIf="row.status == statusEnum.Enabled"
-      matTooltip="{{ 'Plugin Settings Page' | translate }}"
-      routerLink="/plugins/{{ row.baseUrl }}/settings"
-      id="plugin-settings-link"
-    >
-      <mat-icon>settings</mat-icon>
-    </a>
+
+    <mat-menu #menu="matMenu">
+
+      <button
+        mat-menu-item
+        (click)="openPluginModal(row, row.status === statusEnum.Enabled ? statusEnum.Disabled : statusEnum.Enabled)"
+        id="plugin-status-button{{i}}"
+      >
+        <mat-icon
+          color="{{row.status === statusEnum.Enabled ? 'accent' : ''}}">{{ row.status === statusEnum.Enabled ? 'toggle_on' : 'toggle_off' }}
+        </mat-icon>
+        <span>{{ (row.status === statusEnum.Enabled ? 'Deactivate' : 'Activate') + ' plugin' | translate }}</span>
+      </button>
+
+      <button
+        mat-menu-item
+        *ngIf="row.status == statusEnum.Enabled"
+        (click)="showPermissionsModal(row)"
+        id="plugin-permissions-btn{{i}}"
+      >
+        <mat-icon color="accent">lock_open</mat-icon>
+        <span>{{ 'Edit Plugin Permissions' | translate }}</span>
+      </button>
+      <a
+        mat-menu-item
+        *ngIf="row.status == statusEnum.Enabled"
+        routerLink="/plugins/{{ row.baseUrl }}/settings"
+        id="plugin-settings-link{{i}}"
+      >
+        <mat-icon>settings</mat-icon>
+        <span>{{ 'Plugin Settings Page' | translate }}</span>
+      </a>
+
+    </mat-menu>
   </div>
 </ng-template>
+
