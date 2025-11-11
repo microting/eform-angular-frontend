@@ -19,24 +19,28 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        EformSharedModule,
-        FormsModule,
-        TranslateModule,
-        PluginsManagementRouting,
-        MatCheckboxModule,
-        MatButtonModule,
-        MtxGridModule,
-        MatSlideToggleModule,
-        MatTooltipModule,
-        MatIconModule,
-        MatDialogModule,
-        MatCardModule,
-        ReactiveFormsModule,
-    ],
+  imports: [
+    CommonModule,
+    EformSharedModule,
+    FormsModule,
+    TranslateModule,
+    PluginsManagementRouting,
+    MatCheckboxModule,
+    MatButtonModule,
+    MtxGridModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatDialogModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
+  ],
   declarations: [
     InstalledPluginsPageComponent,
     InstalledPluginModalComponent,
