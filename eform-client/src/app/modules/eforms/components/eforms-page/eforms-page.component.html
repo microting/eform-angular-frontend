@@ -108,10 +108,10 @@
   (sortChange)="sortTable($event)">
 </mtx-grid>
 <ng-template #labelTpl let-row let-i="index">
-  <div class="eform-label" id="eform-label-{{i}}">{{row.label}}</div>
+  <div class="eform-label" id="eform-label-{{i}}">{{ row.label }}</div>
 </ng-template>
 <ng-template #idTpl let-row let-i="index">
-  <div class="eform-id" id="eform-id-{{i}}">{{row.id}}</div>
+  <div class="eform-id" id="eform-id-{{i}}">{{ row.id }}</div>
 </ng-template>
 <ng-template #createdAtTpl let-row let-i="index">
   <date-formatter
@@ -192,35 +192,42 @@
 </ng-template>
 <ng-template #actionsTpl let-row let-i="index">
   <div class="">
-    <button
-      mat-icon-button
-      *ngIf="row.hasCases &&
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+
+
+      <button
+        mat-menu-item
+        *ngIf="row.hasCases &&
       checkEformPermissions(
       row.id,
       userClaimsEnum.casesRead)"
-      id="eform-cases-btn-{{ i }}"
-      [routerLink]="['/cases', row.id]"
-      matTooltip="{{'Show cases' | translate}}"
-    >
-      <mat-icon>cases</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      color="warn"
-      id="delete-eform-btn-{{ i }}"
-      (click)="openEformDeleteModal(row)"
-      *ngIf="
+        id="eform-cases-btn-{{ i }}"
+        [routerLink]="['/cases', row.id]"
+      >
+        <mat-icon>cases</mat-icon>
+        <span>{{ 'Show cases' | translate }}</span>
+      </button>
+      <button
+        mat-menu-item
+        color="warn"
+        id="delete-eform-btn-{{ i }}"
+        (click)="openEformDeleteModal(row)"
+        *ngIf="
                   checkEformPermissions(
                     row.id,
                     userClaimsEnum.eformsDelete
                   ) && !row.isLocked
                 "
-      matTooltip="{{ 'Delete eForm' | translate }}"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
-    <a
-      *ngIf="
+      >
+        <mat-icon>delete</mat-icon>
+        <span>{{ 'Delete eForm' | translate }}</span>
+      </button>
+      <a
+        *ngIf="
                   checkEformPermissions(
                     row.id,
                     userClaimsEnum.eformsDelete
@@ -228,17 +235,15 @@
                   !row.isLocked &&
                   row.isEditable
                 "
-      mat-icon-button
-      id="edit-eform-btn-{{ i }}"
-      [routerLink]="['visual-editor/' + row.id]"
-      matTooltip="{{ 'Edit eForm' | translate }}"
-    >
-      <mat-icon>edit</mat-icon>
-    </a>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
+        mat-menu-item
+        id="edit-eform-btn-{{ i }}"
+        [routerLink]="['visual-editor/' + row.id]"
+      >
+        <mat-icon>edit</mat-icon>
+        <span>{{ 'Edit eForm' | translate }}</span>
+      </a>
+
+
       <button
         mat-menu-item
         id="edit-columns-btn-{{ i }}"
