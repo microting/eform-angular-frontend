@@ -12,7 +12,7 @@ describe('Entity Search', function () {
   });
   it('should assert true is true', () => {
     expect(true).equal(true); // this will pass
-  // });
+  });
   // it('should go to entity search page', async () => {
   //   await searchableLists.goToEntitySearchPage();
   //   await $('#createEntitySearchBtn').waitForDisplayed({ timeout: 40000 });

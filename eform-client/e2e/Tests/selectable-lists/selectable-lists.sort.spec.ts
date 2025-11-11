@@ -14,7 +14,7 @@ describe('Entity Select Sort', function () {
   });
   it('should assert true is true', () => {
     expect(true).equal(true); // this will pass
-  // });
+  });
   // it('should be able to sort by ID', async () => {
   //   await testSorting(
   //     await selectableLists.idTableHeader(),

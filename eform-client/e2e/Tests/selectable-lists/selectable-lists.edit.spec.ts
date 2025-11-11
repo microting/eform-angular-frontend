@@ -15,7 +15,7 @@ describe('Entity Select', function () {
   });
   it('should assert true is true', () => {
     expect(true).equal(true); // this will pass
-  // });
+  });
   // it('should make a new selectable list, with no items.', async () => {
   //   await selectableLists.createSelectableList(data1);
   //   const selectableListRowObject = await selectableLists.getLastSelectableListObject();
