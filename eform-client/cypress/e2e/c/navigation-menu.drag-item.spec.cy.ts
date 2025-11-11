@@ -16,13 +16,15 @@ describe('Navigation menu - Drag item', function () {
       translations: ['test1', 'test', 'test3']
     };
 
-    navigationMenuPage.getMenuItems().its('length').then(initialCount => {
+    navigationMenuPage.getMenuItems().its('length').as('initialCount');
+    cy.get('@initialCount').then((initialCount) => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
 
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
 
-      navigationMenuPage.getMenuItems().its('length').then(currentCount => {
+      navigationMenuPage.getMenuItems().its('length').as('currentCount');
+      cy.get('@currentCount').then((currentCount) => {
         navigationMenuPage.collapseMenuItemDropdown(currentCount - 1);
         navigationMenuPage.dragTemplateOnElementInCreatedDropdown(1, currentCount - 1);
         navigationMenuPage.dragTemplateOnElementInCreatedDropdown(2, currentCount - 1);
@@ -34,7 +36,8 @@ describe('Navigation menu - Drag item', function () {
   });
 
   it('should edit elements in dropdown', () => {
-    navigationMenuPage.getMenuItems().its('length').then(menuCount => {
+    navigationMenuPage.getMenuItems().its('length').as('menuCount');
+    cy.get('@menuCount').then((menuCount) => {
       const array = [
         {
           indexChildDropdown: 0,
@@ -82,7 +85,8 @@ describe('Navigation menu - Drag item', function () {
   });
 
   it('swap elements in dropdown', () => {
-    navigationMenuPage.getMenuItems().its('length').then(menuCount => {
+    navigationMenuPage.getMenuItems().its('length').as('menuCount');
+    cy.get('@menuCount').then((menuCount) => {
       // Swap elements within dropdown
       navigationMenuPage.dragAndDropElementOfDropdown(menuCount, 2, 0);
       

@@ -16,7 +16,8 @@ describe('Navigation menu - Delete item', function () {
       translations: ['test1', 'test', 'test3']
     };
 
-    navigationMenuPage.getMenuItems().its('length').then(initialCount => {
+    navigationMenuPage.getMenuItems().its('length').as('initialCount');
+    cy.get('@initialCount').then((initialCount) => {
       navigationMenuPage.collapseTemplates(1);
 
       navigationMenuPage.createCustomDropdown(dropdown);
@@ -31,7 +32,8 @@ describe('Navigation menu - Delete item', function () {
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 3);
 
       // Drag template items into dropdown
-      navigationMenuPage.getMenuItems().its('length').then(currentCount => {
+      navigationMenuPage.getMenuItems().its('length').as('currentCount');
+      cy.get('@currentCount').then((currentCount) => {
         navigationMenuPage.collapseMenuItemDropdown(currentCount - 1);
         navigationMenuPage.dragTemplateOnElementInCreatedDropdown(1, currentCount - 1);
         navigationMenuPage.dragTemplateOnElementInCreatedDropdown(2, currentCount - 1);
@@ -49,9 +51,11 @@ describe('Navigation menu - Delete item', function () {
   });
 
   it('should before deleted items from custom dropdown and items menu', () => {
-    navigationMenuPage.getMenuItems().its('length').then(menuItemsCount => {
+    navigationMenuPage.getMenuItems().its('length').as('menuItemsCount');
+    cy.get('@menuItemsCount').then((menuItemsCount) => {
       // Get count of elements in dropdown
-      navigationMenuPage.getDropdownBodyChilds(menuItemsCount - 1).its('length').then(dropdownCount => {
+      navigationMenuPage.getDropdownBodyChilds(menuItemsCount - 1).its('length').as('dropdownCount');
+      cy.get('@dropdownCount').then((dropdownCount) => {
 
         // Delete 3 elements from dropdown
         navigationMenuPage.deleteElementFromDropdown(menuItemsCount - 1, 0);
@@ -69,7 +73,8 @@ describe('Navigation menu - Delete item', function () {
         navigationMenuPage.deleteElementFromMenuItems(0);
         navigationMenuPage.deleteElementFromMenuItems(0); // delete 2 template elements
 
-        navigationMenuPage.getMenuItems().its('length').then(currentCount => {
+        navigationMenuPage.getMenuItems().its('length').as('currentCount');
+        cy.get('@currentCount').then((currentCount) => {
           navigationMenuPage.deleteElementFromMenuItems(currentCount - 1); // delete created dropdown
 
           cy.intercept('POST', '**/api/navigation-menu').as('saveMenu2');

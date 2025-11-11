@@ -163,7 +163,8 @@ class MyEformsPage extends PageWithNavbarPage {
     cy.get('body').then($body => {
       if ($body.find('.eform-id').length > 0) {
         // Table has rows, delete them
-        cy.get('.eform-id').its('length').then((rowCount) => {
+        cy.get('.eform-id').its('length').as('rowCount');
+        cy.get('@rowCount').then((rowCount) => {
           for (let i = 1; i <= rowCount; i++) {
               cy.get('#delete-eform-btn-0').click();
               cy.intercept('DELETE' , '**/api/templates/delete/*').as('deleteEform');

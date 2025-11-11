@@ -12,7 +12,8 @@ describe('Navigation menu - Create item', function () {
 
   it('element must be moved from templates to list', () => {
     // Get initial count
-    navigationMenuPage.getMenuItems().its('length').then(initialCount => {
+    navigationMenuPage.getMenuItems().its('length').as('initialCount');
+    cy.get('@initialCount').then((initialCount) => {
       navigationMenuPage.collapseTemplates(0);
       navigationMenuPage.createMenuItemFromTemplate(0);
       
@@ -53,7 +54,8 @@ describe('Navigation menu - Create item', function () {
       translations: ['test1', 'test2', 'test3']
     };
 
-    navigationMenuPage.getMenuItems().its('length').then(initialCount => {
+    navigationMenuPage.getMenuItems().its('length').as('initialCount');
+    cy.get('@initialCount').then((initialCount) => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomLink(customLink);
       
@@ -69,7 +71,8 @@ describe('Navigation menu - Create item', function () {
       cy.wait('@saveMenu', { timeout: 30000 });
 
       // Open last item for editing
-      navigationMenuPage.getMenuItems().its('length').then(count => {
+      navigationMenuPage.getMenuItems().its('length').as('count');
+      cy.get('@count').then((count) => {
         navigationMenuPage.openEditMenuItem(count - 1);
 
         // Verify link
@@ -77,7 +80,8 @@ describe('Navigation menu - Create item', function () {
 
         // Verify translations
         customLink.translations.forEach((translation, i) => {
-          navigationMenuPage.getMenuItems().its('length').then(itemCount => {
+          navigationMenuPage.getMenuItems().its('length').as('itemCount');
+          cy.get('@itemCount').then((itemCount) => {
             cy.get(`#editItemTranslation${itemCount - 1}_0_${i}`).should('have.value', translation);
           });
         });
@@ -96,7 +100,8 @@ describe('Navigation menu - Create item', function () {
       translations: ['test1', 'test2', 'test3']
     };
 
-    navigationMenuPage.getMenuItems().its('length').then(initialCount => {
+    navigationMenuPage.getMenuItems().its('length').as('initialCount');
+    cy.get('@initialCount').then((initialCount) => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
       
@@ -112,12 +117,14 @@ describe('Navigation menu - Create item', function () {
       cy.wait('@saveMenu', { timeout: 30000 });
 
       // Open last item for editing
-      navigationMenuPage.getMenuItems().its('length').then(count => {
+      navigationMenuPage.getMenuItems().its('length').as('count');
+      cy.get('@count').then((count) => {
         navigationMenuPage.openEditMenuItem(count - 1);
 
         // Verify translations
         dropdown.translations.forEach((translation, i) => {
-          navigationMenuPage.getMenuItems().its('length').then(itemCount => {
+          navigationMenuPage.getMenuItems().its('length').as('itemCount');
+          cy.get('@itemCount').then((itemCount) => {
             cy.get(`#editItemTranslation${itemCount - 1}_0_${i}`).should('have.value', translation);
           });
         });
@@ -136,7 +143,8 @@ describe('Navigation menu - Create item', function () {
       translations: ['test1', 'test2', 'test3']
     };
 
-    navigationMenuPage.getMenuItems().its('length').then(initialCount => {
+    navigationMenuPage.getMenuItems().its('length').as('initialCount');
+    cy.get('@initialCount').then((initialCount) => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
       
@@ -152,7 +160,8 @@ describe('Navigation menu - Create item', function () {
       cy.wait('@saveMenu', { timeout: 30000 });
 
       // Open last item for editing
-      navigationMenuPage.getMenuItems().its('length').then(count => {
+      navigationMenuPage.getMenuItems().its('length').as('count');
+      cy.get('@count').then((count) => {
         navigationMenuPage.openEditMenuItem(count - 1);
 
         // Verify security groups
@@ -162,7 +171,8 @@ describe('Navigation menu - Create item', function () {
 
         // Verify translations
         dropdown.translations.forEach((translation, i) => {
-          navigationMenuPage.getMenuItems().its('length').then(itemCount => {
+          navigationMenuPage.getMenuItems().its('length').as('itemCount');
+          cy.get('@itemCount').then((itemCount) => {
             cy.get(`#editItemTranslation${itemCount - 1}_0_${i}`).should('have.value', translation);
           });
         });
