@@ -8,28 +8,28 @@ export class NavigationMenuPage {
 
   // Template controls
   public collapseTemplates(index: number) {
-    cy.get('#menuTemplate').eq(index).find('.mat-expansion-indicator').click();
+    cy.get('.menuTemplate').eq(index).find('.mat-expansion-indicator').click();
     cy.wait(2000); // Wait for menu to open/close
   }
 
   // Menu Items
   public getMenuItems() {
-    return cy.get('#menuItems');
+    return cy.get('.menu_item');
   }
 
   public getMenuItemsCount() {
-    return cy.get('#menuItems').its('length');
+    return cy.get('.menu_item').its('length');
   }
 
   // Create operations
   public createMenuItemFromTemplate(templateIndex: number) {
     const dragHandle = cy.get(`#dragHandle0_${templateIndex}`);
     const target = cy.get('mat-card > mat-accordion').first();
-    
+
     dragHandle
       .trigger('mousedown', { button: 0, bubbles: true })
       .trigger('mousemove', { pageX: 10, pageY: 0 });
-    
+
     target
       .trigger('mousemove', { position: 'top' })
       .trigger('mouseup', { button: 0, bubbles: true });
@@ -77,7 +77,7 @@ export class NavigationMenuPage {
 
   // Edit operations
   public openEditMenuItem(index: number) {
-    cy.get('#menuItems').eq(index).find('#editBtn').click();
+    cy.get('.menu_item').eq(index).find('#editBtn').click();
     cy.get('#editItemSaveBtn').should('be.visible');
   }
 
@@ -157,13 +157,13 @@ export class NavigationMenuPage {
 
   // Delete operations
   public deleteElementFromMenuItems(index: number) {
-    cy.get('#menuItems').eq(index).find('#deleteBtn').scrollIntoView().click();
+    cy.get('.menu_item').eq(index).find('#deleteBtn').scrollIntoView().click();
     cy.wait(500);
     cy.get('#menuItemDeleteBtn').should('be.visible').click();
   }
 
   public deleteElementFromDropdown(dropdownIndex: number, itemIndex: number) {
-    cy.get('#menuItems').eq(dropdownIndex)
+    cy.get('.menu_item').eq(dropdownIndex)
       .find('#dropdownBody>*').eq(itemIndex)
       .find('#deleteBtn').scrollIntoView().click();
     cy.wait(500);
@@ -175,27 +175,27 @@ export class NavigationMenuPage {
 
   // Dropdown operations
   public collapseMenuItemDropdown(index: number) {
-    cy.get('#menuItems').eq(index).find('.mat-expansion-indicator').click();
+    cy.get('.menu_item').eq(index).find('.mat-expansion-indicator').click();
   }
 
   public getDropdownBodyChilds(dropdownIndex: number) {
-    return cy.get('#menuItems').eq(dropdownIndex).find('#dropdownBody>*');
+    return cy.get('.menu_item').eq(dropdownIndex).find('#dropdownBody>*');
   }
 
   public dragTemplateOnElementInCreatedDropdown(templateIndex: number, dropdownIndex: number) {
     this.collapseTemplates(0);
-    
+
     const dragHandle = cy.get(`#dragHandle0_${templateIndex}`);
-    const dropdownBody = cy.get('#menuItems').eq(dropdownIndex).find('#dropdownBody');
+    const dropdownBody = cy.get('.menu_item').eq(dropdownIndex).find('#dropdownBody');
 
     dragHandle
       .trigger('mousedown', { button: 0, bubbles: true })
       .trigger('mousemove', { pageX: 10, pageY: 0 });
-    
+
     dropdownBody
       .trigger('mousemove', { position: 'center' })
       .trigger('mouseup', { button: 0, bubbles: true });
-    
+
     cy.wait(500);
     this.collapseTemplates(0);
   }
@@ -205,10 +205,10 @@ export class NavigationMenuPage {
     indexDropdownInMenu: number;
     translations_array: string[];
   }) {
-    cy.get('#menuItems').eq(data.indexDropdownInMenu)
+    cy.get('.menu_item').eq(data.indexDropdownInMenu)
       .find('#dropdownBody>*').eq(data.indexChildDropdown)
       .find('#editBtn').click();
-    
+
     cy.get('#editItemSaveBtn').should('be.visible');
 
     data.translations_array.forEach((translation, idx) => {
@@ -231,11 +231,11 @@ export class NavigationMenuPage {
     fromHandle
       .trigger('mousedown', { button: 0, bubbles: true })
       .trigger('mousemove', { pageX: 10, pageY: 0 });
-    
+
     toHandle
       .trigger('mousemove', { position: 'center' })
       .trigger('mouseup', { button: 0, bubbles: true });
-    
+
     cy.wait(2000);
   }
 
@@ -273,14 +273,18 @@ export class NavigationMenuPage {
   }
 
   public resetMenu() {
-    cy.wait(1100);
-    cy.wait(1200);
-    cy.wait(1400);
+    // cy.wait(1100);
+    // cy.wait(1200);
+    // cy.wait(1400);
     cy.get('#resetBtn').scrollIntoView().click();
     cy.wait(500);
+    cy.intercept('POST', '**/api/navigation-menu/reset').as('resetMenu');
+    cy.intercept('GET', '**/api/navigation-menu').as('getMenuAfterReset');
     cy.get('#deleteWorkerDeleteBtn').should('be.visible').click();
+    cy.wait('@resetMenu', { timeout: 30000 });
+    cy.wait('@getMenuAfterReset', { timeout: 30000 });
     // Note: Tests should intercept POST /api/navigation-menu/reset and wait for it instead
-    cy.wait(500);
+    // cy.wait(500);
   }
 
   // Helper methods - DEPRECATED: Use API intercepts in tests instead

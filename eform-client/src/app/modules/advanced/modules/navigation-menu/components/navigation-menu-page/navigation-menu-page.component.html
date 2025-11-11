@@ -23,7 +23,7 @@
   <mat-accordion multi="true" displayMode="flat" class="mr-2">
     <mat-expansion-panel *ngFor="
           let menuTemplate of navigationMenuModel.menuTemplates;
-          let templateIndex = index" id="menuTemplate">
+          let templateIndex = index" class="menuTemplate">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ menuTemplate.name }}
@@ -69,8 +69,7 @@
               let firstLevelIndex = index"
               [hideToggle]="menuItem.type !== menuItemTypes.Dropdown"
               cdkDrag
-              class="dragula-item"
-              id="menuItems"
+              class="menu_item"
       >
         <mat-expansion-panel-header>
           <mat-panel-title>
