@@ -23,7 +23,7 @@ describe('Navigation menu - Edit item', function () {
       
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
       
-      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
+      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
       cy.wait('@saveMenu', { timeout: 30000 });
     });
@@ -41,7 +41,7 @@ describe('Navigation menu - Edit item', function () {
     navigationMenuPage.getMenuItems().its('length').then(count => {
       navigationMenuPage.editCustomLink(customLink, count - 1);
 
-      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
+      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
       cy.wait('@saveMenu', { timeout: 30000 });
 
@@ -60,7 +60,7 @@ describe('Navigation menu - Edit item', function () {
         cy.get(`#editItemTranslation${count - 1}_0_${i}`).should('have.value', translation);
       });
 
-      cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
+      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenuEdit');
       navigationMenuPage.editItemSave();
       cy.wait('@saveMenuEdit', { timeout: 30000 });
     });
@@ -78,7 +78,7 @@ describe('Navigation menu - Edit item', function () {
       
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
       
-      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
+      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
       cy.wait('@saveMenu', { timeout: 30000 });
     });
@@ -93,7 +93,7 @@ describe('Navigation menu - Edit item', function () {
     navigationMenuPage.getMenuItems().its('length').then(count => {
       navigationMenuPage.editCustomDropdown(dropdown, count - 1);
 
-      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
+      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
       cy.wait('@saveMenu', { timeout: 30000 });
 
@@ -109,7 +109,7 @@ describe('Navigation menu - Edit item', function () {
         cy.get(`#editItemTranslation${count - 1}_0_${i}`).should('have.value', translation);
       });
 
-      cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
+      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenuEdit');
       navigationMenuPage.editItemSave();
       cy.wait('@saveMenuEdit', { timeout: 30000 });
     });
@@ -122,7 +122,7 @@ describe('Navigation menu - Edit item', function () {
 
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
       
-      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
+      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
       cy.wait('@saveMenu', { timeout: 30000 });
       
@@ -142,7 +142,7 @@ describe('Navigation menu - Edit item', function () {
     
     cy.get('#editLinkInput').should('have.value', data.link);
     
-    cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
+    cy.intercept('PUT', '**/api/navigation-menu').as('saveMenuEdit');
     navigationMenuPage.editItemSave();
     cy.wait('@saveMenuEdit', { timeout: 30000 });
   });
@@ -164,7 +164,7 @@ describe('Navigation menu - Edit item', function () {
       }
     });
 
-    cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
+    cy.intercept('PUT', '**/api/navigation-menu').as('saveMenuEdit');
     navigationMenuPage.editItemSave();
     cy.wait('@saveMenuEdit', { timeout: 30000 });
   });
