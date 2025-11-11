@@ -16,15 +16,23 @@ describe('Navigation menu - Drag item', function () {
       translations: ['test1', 'test', 'test3']
     };
 
-    navigationMenuPage.getMenuItems().its('length').as('initialCount');
-    cy.get('@initialCount').then((initialCount) => {
+    let initialCount: number;
+    navigationMenuPage.getMenuItems().its('length').then((length) => {
+      initialCount = length;
+    });
+
+    cy.then(() => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
 
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
 
-      navigationMenuPage.getMenuItems().its('length').as('currentCount');
-      cy.get('@currentCount').then((currentCount) => {
+      let currentCount: number;
+      navigationMenuPage.getMenuItems().its('length').then((length) => {
+        currentCount = length;
+      });
+
+      cy.then(() => {
         navigationMenuPage.collapseMenuItemDropdown(currentCount - 1);
         navigationMenuPage.dragTemplateOnElementInCreatedDropdown(1, currentCount - 1);
         navigationMenuPage.dragTemplateOnElementInCreatedDropdown(2, currentCount - 1);
@@ -36,8 +44,12 @@ describe('Navigation menu - Drag item', function () {
   });
 
   it('should edit elements in dropdown', () => {
-    navigationMenuPage.getMenuItems().its('length').as('menuCount');
-    cy.get('@menuCount').then((menuCount) => {
+    let menuCount: number;
+    navigationMenuPage.getMenuItems().its('length').then((length) => {
+      menuCount = length;
+    });
+
+    cy.then(() => {
       const array = [
         {
           indexChildDropdown: 0,
@@ -85,8 +97,12 @@ describe('Navigation menu - Drag item', function () {
   });
 
   it('swap elements in dropdown', () => {
-    navigationMenuPage.getMenuItems().its('length').as('menuCount');
-    cy.get('@menuCount').then((menuCount) => {
+    let menuCount: number;
+    navigationMenuPage.getMenuItems().its('length').then((length) => {
+      menuCount = length;
+    });
+
+    cy.then(() => {
       // Swap elements within dropdown
       navigationMenuPage.dragAndDropElementOfDropdown(menuCount, 2, 0);
       

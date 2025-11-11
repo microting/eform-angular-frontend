@@ -17,8 +17,12 @@ describe('Navigation menu - Edit item', function () {
       translations: ['test1', 'test2', 'test3']
     };
 
-    navigationMenuPage.getMenuItems().its('length').as('initialCount');
-    cy.get('@initialCount').then((initialCount) => {
+    let initialCount: number;
+    navigationMenuPage.getMenuItems().its('length').then((length) => {
+      initialCount = length;
+    });
+
+    cy.then(() => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomLink(customLink);
       
@@ -39,8 +43,12 @@ describe('Navigation menu - Edit item', function () {
 
     navigationMenuPage.collapseTemplates(1);
 
-    navigationMenuPage.getMenuItems().its('length').as('count');
-    cy.get('@count').then((count) => {
+    let count: number;
+    navigationMenuPage.getMenuItems().its('length').then((length) => {
+      count = length;
+    });
+
+    cy.then(() => {
       navigationMenuPage.editCustomLink(customLink, count - 1);
 
       cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
@@ -74,8 +82,12 @@ describe('Navigation menu - Edit item', function () {
       translations: ['test1', 'test2', 'test3']
     };
 
-    navigationMenuPage.getMenuItems().its('length').as('initialCount');
-    cy.get('@initialCount').then((initialCount) => {
+    let initialCount: number;
+    navigationMenuPage.getMenuItems().its('length').then((length) => {
+      initialCount = length;
+    });
+
+    cy.then(() => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
       
@@ -93,8 +105,12 @@ describe('Navigation menu - Edit item', function () {
       translations: ['Test11', 'Test22', 'Test31']
     };
 
-    navigationMenuPage.getMenuItems().its('length').as('count');
-    cy.get('@count').then((count) => {
+    let count: number;
+    navigationMenuPage.getMenuItems().its('length').then((length) => {
+      count = length;
+    });
+
+    cy.then(() => {
       navigationMenuPage.editCustomDropdown(dropdown, count - 1);
 
       cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
@@ -120,8 +136,12 @@ describe('Navigation menu - Edit item', function () {
   });
 
   it('element must be moved from templates to list', () => {
-    navigationMenuPage.getMenuItems().its('length').as('initialCount');
-    cy.get('@initialCount').then((initialCount) => {
+    let initialCount: number;
+    navigationMenuPage.getMenuItems().its('length').then((length) => {
+      initialCount = length;
+    });
+
+    cy.then(() => {
       navigationMenuPage.collapseTemplates(0);
       navigationMenuPage.createMenuItemFromTemplate(0);
 
