@@ -13,7 +13,7 @@
         <mat-icon
           class="dragula-handle align-middle"
           style="cursor: pointer"
-          [id]="fieldIsNested ? 'moveNestedFieldBtn' : 'moveFieldBtn'"
+          [id]="fieldIsNested ? 'moveNestedFieldBtn'+fieldIndex : 'moveFieldBtn'+fieldIndex"
         >
           menu
         </mat-icon>

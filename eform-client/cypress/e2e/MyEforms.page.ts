@@ -165,16 +165,10 @@ class MyEformsPage extends PageWithNavbarPage {
         // Table has rows, delete them
         cy.get('.eform-id').its('length').then((rowCount) => {
           for (let i = 1; i <= rowCount; i++) {
-            const eformsRowObject = this.getEformRowObj(1, false); // Always delete first row
-            if (
-              eformsRowObject &&
-              eformsRowObject.deleteBtn
-            ) {
-              eformsRowObject.deleteBtn.should('be.visible').click();
-              cy.wait(500);
+              cy.get('#delete-eform-btn-0').click();
+              cy.intercept('DELETE' , '**/api/templates/delete/*').as('deleteEform');
               cy.get('#eFormDeleteDeleteBtn').should('be.visible').click();
-              cy.wait(500);
-            }
+              cy.wait('@deleteEform', {timeout: 50000});
           }
         });
       }
@@ -299,7 +293,7 @@ class MyEformsRowObject {
 
   getRow(rowNum) {
     const currentPosition = rowNum - 1;
-    this.element = cy.get('#mainPageEFormsTableBody tr.mat-row').eq(currentPosition);
+    this.element = cy.get('#mainPageEFormsTableBody tbody tr').eq(currentPosition);
     cy.get(`#eform-id-${currentPosition}`)
       .eq(0)
       .invoke('text')

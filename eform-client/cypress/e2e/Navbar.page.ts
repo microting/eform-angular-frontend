@@ -195,7 +195,11 @@ export class Navbar {
   }
 
   public goToMyEForms() {
+    cy.intercept('POST', '**/api/templates/index').as('getTemplates');
+    cy.intercept('GET', '**/api/tags/index').as('getTags');
     this.myEformsBtn().click();
+    cy.wait('@getTemplates', { timeout: 60000 });
+    cy.wait('@getTags', { timeout: 60000 });
     // Note: Tests should intercept appropriate API calls after navigation
   }
 
