@@ -33,7 +33,7 @@
         class="dragula-template"
         cdkDropList
         [cdkDropListData]="menuTemplate.items"
-        [cdkDropListConnectedTo]="['actualMenuList']"
+        [cdkDropListConnectedTo]="['actualMenuList'].concat(connectedDropdownIds)"
         id="mainMenu"
       >
         <app-navigation-menu-template-item
@@ -98,6 +98,7 @@
         <div
           class="dropdownBody"
           cdkDropList
+          [id]="getDropdownId(firstLevelIndex)"
           [cdkDropListData]="menuItem.children"
           [cdkDropListConnectedTo]="['mainMenu']"
           (cdkDropListDropped)="dropMenuItemChild($event, firstLevelIndex)"

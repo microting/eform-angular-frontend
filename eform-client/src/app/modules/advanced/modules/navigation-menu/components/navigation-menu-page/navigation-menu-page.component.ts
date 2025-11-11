@@ -63,6 +63,16 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     return NavigationMenuItemTypeEnum;
   }
 
+  getDropdownId(index: number): string {
+    return `dropdown-${index}`;
+  }
+
+  get connectedDropdownIds(): string[] {
+    return this.navigationMenuModel.actualMenu
+      .map((item, index) => item.type === NavigationMenuItemTypeEnum.Dropdown ? this.getDropdownId(index) : null)
+      .filter(id => id !== null) as string[];
+  }
+
   constructor() {
   }
 
