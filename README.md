@@ -44,6 +44,29 @@ You need to create an account for Microting API and get your access credentials.
 
 * Call Microting at +45 66 11 10 66 to get started.
 
+## Sentry Configuration
+
+Sentry error tracking is enabled by default in production environments but disabled in development mode to prevent unnecessary test data collection.
+
+### Development Mode
+When running locally with `yarn start`, Sentry is automatically disabled via the `environment.ts` configuration file where `enableSentry: false`.
+
+### Production Mode
+In production builds, Sentry is enabled through `environment.prod.ts` where `enableSentry: true`.
+
+### Docker Configuration
+When building Docker images, you can control Sentry behavior using the `DISABLE_SENTRY` build argument:
+
+```bash
+# Disable Sentry for testing/CI environments
+docker build --build-arg DISABLE_SENTRY=true -t my-image .
+
+# Enable Sentry for production (default behavior)
+docker build -t my-image .
+```
+
+The `DISABLE_SENTRY` environment variable can be set to `true` or `1` to disable Sentry in both the Angular frontend and C# backend.
+
 ## Testing
 
 ### E2E Test Migration

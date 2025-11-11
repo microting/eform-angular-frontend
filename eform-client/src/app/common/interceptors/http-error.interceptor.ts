@@ -20,6 +20,7 @@ import { Injectable, inject } from '@angular/core';
 import {AuthMethods, LoaderService} from 'src/app/common/services';
 import {AuthResponseModel, OperationDataResult} from 'src/app/common/models';
 import * as Sentry from '@sentry/angular';
+import {environment} from '../../../environments/environment';
 
 
 @Injectable()
@@ -45,7 +46,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       // Handle 400 - Bad Request
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        Sentry.captureException(error); // Log to Sentry
+        if (environment.enableSentry) {
+          Sentry.captureException(error); // Log to Sentry only if enabled
+        }
         switch (error.status) {
           case 400: {
             let errors;

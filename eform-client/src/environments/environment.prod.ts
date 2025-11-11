@@ -1,4 +1,5 @@
 
 export const environment = {
-  production: true
+  production: true,
+  enableSentry: true // Enable Sentry in production mode
 };
