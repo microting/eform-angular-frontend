@@ -41,7 +41,7 @@ describe('Navigation menu - Delete item', function () {
         navigationMenuPage.getDropdownBodyChilds(currentCount - 1).should('have.length', 3);
 
         // Save menu
-        cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
+        cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
         navigationMenuPage.clickSaveMenuBtn();
         cy.wait('@saveMenu', { timeout: 30000 });
       });
@@ -58,7 +58,7 @@ describe('Navigation menu - Delete item', function () {
         navigationMenuPage.deleteElementFromDropdown(menuItemsCount - 1, 0);
         navigationMenuPage.deleteElementFromDropdown(menuItemsCount - 1, 0);
 
-        cy.intercept('POST', '**/api/navigation-menu').as('saveMenu1');
+        cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu1');
         navigationMenuPage.clickSaveMenuBtn();
         cy.wait('@saveMenu1', { timeout: 30000 });
 
@@ -72,7 +72,7 @@ describe('Navigation menu - Delete item', function () {
         navigationMenuPage.getMenuItems().its('length').then(currentCount => {
           navigationMenuPage.deleteElementFromMenuItems(currentCount - 1); // delete created dropdown
 
-          cy.intercept('POST', '**/api/navigation-menu').as('saveMenu2');
+          cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu2');
           navigationMenuPage.clickSaveMenuBtn();
           cy.wait('@saveMenu2', { timeout: 30000 });
 
