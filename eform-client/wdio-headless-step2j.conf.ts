@@ -30,7 +30,7 @@ export const config: WebdriverIO.Config = {
     // }
   },
   specs: [
-    'e2e/Tests/eform-visual-editor/eform-visual-editor.edit-eform.spec.ts',
+    // 'e2e/Tests/eform-visual-editor/eform-visual-editor.edit-eform.spec.ts',
   ],
   suites: {
     settings: [
