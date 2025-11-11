@@ -1,5 +1,37 @@
 # GitHub Copilot Instructions for eForm Angular Frontend
 
+> **Note**: These instructions follow the [GitHub Copilot coding agent best practices](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-coding-agent). For more information about using Copilot effectively in this repository, refer to the official documentation.
+
+## Quick Start for Copilot
+
+**Critical requirements before starting:**
+- ✅ .NET 9.x SDK installed
+- ✅ Node.js 22.19.x+ and yarn 1.22.19+ installed
+- ✅ Repository structure: `eFormAPI/` (backend) + `eform-client/` (frontend)
+
+**Essential commands for validation:**
+```bash
+# Backend: Restore & Build
+cd eFormAPI && dotnet restore && dotnet build
+
+# Frontend: Install & Build
+cd eform-client && yarn install && yarn build
+
+# Run tests
+cd eFormAPI && dotnet test
+cd eform-client && yarn test:unit
+
+# Lint code
+cd eform-client && yarn lint
+cd eFormAPI && dotnet format --verify-no-changes
+```
+
+**Remember:**
+- Always run build/test commands with adequate timeouts (see Build Process section)
+- Never cancel long-running operations early
+- Make minimal, surgical changes to existing code
+- Test both frontend and backend if changes affect both
+
 ## Repository Overview
 
 This is **eForm Angular Frontend**, a multi-component application consisting of:
@@ -382,6 +414,22 @@ When making changes, always:
 - Frontend implements role-based access control
 - Sensitive configuration via environment variables
 - Database connections use secure connection strings
+
+## When to Ask for Help
+
+Copilot should request human assistance when encountering:
+
+- **Ambiguous Requirements**: Issue description lacks clarity or contains conflicting requirements
+- **Missing Information**: Cannot determine which files to modify or what the expected behavior should be
+- **Build Failures**: Cannot resolve build errors after reasonable attempts
+- **Test Failures**: Existing tests fail and the root cause is unclear or requires business logic knowledge
+- **Security Concerns**: Uncertain about security implications of a change
+- **Breaking Changes**: Proposed changes would significantly alter existing functionality
+- **Architecture Decisions**: Need to make architectural choices that affect multiple components
+- **Access Issues**: Cannot access required external services, databases, or dependencies
+- **Scope Concerns**: The issue appears larger than initially described and might need to be split
+
+Always provide context about what you've attempted and what's blocking progress when asking for help.
 
 ---
 
