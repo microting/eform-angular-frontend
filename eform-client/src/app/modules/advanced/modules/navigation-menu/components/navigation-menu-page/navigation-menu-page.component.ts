@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, copyArrayItem, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, copyArrayItem, transferArrayItem, CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
@@ -10,6 +10,7 @@ import {
 import {
   NavigationMenuService,
   SecurityGroupsService,
+  NavigationMenuDragDropService,
 } from 'src/app/common/services';
 import {Subscription, take} from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
@@ -43,6 +44,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private store = inject(Store);
+  private dragDropService = inject(NavigationMenuDragDropService);
 
 
   @ViewChild('resetMenuModal')
@@ -244,6 +246,20 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       const group = this.securityGroups.find(g => g.id === id);
       return group ? group.name : '';
     }).filter(name => name !== '');
+  }
+
+  /**
+   * Handle drag move events to track hover state
+   */
+  onDragMoved(event: CdkDragMove<any>) {
+    this.dragDropService.dragMoved(event);
+  }
+
+  /**
+   * Handle drag release events to clear hover state
+   */
+  onDragReleased(event: CdkDragRelease) {
+    this.dragDropService.dragReleased(event);
   }
 
 }

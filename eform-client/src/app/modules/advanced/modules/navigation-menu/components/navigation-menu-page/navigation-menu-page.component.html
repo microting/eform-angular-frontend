@@ -19,7 +19,7 @@
   </div>
 </eform-new-subheader>
 
-<div class="d-flex flex-row align-items-start">
+<div class="d-flex flex-row align-items-start" cdkDropListGroup>
   <mat-accordion multi="true" displayMode="flat" class="mr-2">
     <mat-expansion-panel *ngFor="
           let menuTemplate of navigationMenuModel.menuTemplates;
@@ -42,6 +42,8 @@
               let itemIndex = index
             "
           cdkDrag
+          (cdkDragMoved)="onDragMoved($event)"
+          (cdkDragReleased)="onDragReleased($event)"
           [item]="menuTemplateItem"
           [itemIndex]="itemIndex"
           [templateIndex]="templateIndex"
@@ -69,6 +71,8 @@
               let firstLevelIndex = index"
               [hideToggle]="menuItem.type !== menuItemTypes.Dropdown"
               cdkDrag
+              (cdkDragMoved)="onDragMoved($event)"
+              (cdkDragReleased)="onDragReleased($event)"
               class="menu_item"
       >
         <mat-expansion-panel-header>
@@ -111,6 +115,8 @@
           >
             <app-navigation-menu-item
               cdkDrag
+              (cdkDragMoved)="onDragMoved($event)"
+              (cdkDragReleased)="onDragReleased($event)"
               (itemDelete)="onItemDelete($event, firstLevelIndex, secondLevelIndex)"
               (itemEdit)="onItemEdit($event, firstLevelIndex, secondLevelIndex)"
               [item]="menuItemChild"
