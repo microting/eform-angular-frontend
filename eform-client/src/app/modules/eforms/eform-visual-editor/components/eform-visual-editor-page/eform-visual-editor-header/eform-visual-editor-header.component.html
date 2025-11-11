@@ -45,6 +45,7 @@
                 />
               </mat-form-field>
               <formatting-text-editor
+                contenteditable="true"
                 [(value)]="translation.description"
                 [placeholder]="'Description' | translate"
                 id="mainCheckListDescriptionTranslation_{{ translation.languageId }}"
