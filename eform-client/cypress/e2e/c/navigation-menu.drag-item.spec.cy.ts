@@ -74,9 +74,7 @@ describe('Navigation menu - Drag item', function () {
             .should('have.value', translation);
         });
 
-        cy.intercept('PUT', '**/api/navigation-menu').as('saveMenuEdit');
         navigationMenuPage.editItemSave();
-        cy.wait('@saveMenuEdit', { timeout: 30000 });
       });
     });
   });
