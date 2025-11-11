@@ -194,9 +194,6 @@ describe('Visual editor - Create eForm', () => {
 
     cy.get('#fieldSection0').should('exist');
     cy.get('#fieldSection0').should('contain', fieldName);
-    // Verify color by checking the field has the red color class or styling
-    // cy.get('#fieldSection0 .field-color-red').should('exist');
-    // check the style attribyte for background-color to be background-color: rgb(255, 228, 228);
     cy.get('#fieldSection0 > div > div').should('have.attr', 'style').and('include', 'background-color: rgb(255, 228, 228)');
   });
 
@@ -224,7 +221,7 @@ describe('Visual editor - Create eForm', () => {
     // Set number field properties
     cy.get('#minValueEdit').clear().type(minValue.toString());
     cy.get('#maxValueEdit').clear().type(maxValue.toString());
-    cy.get('#defaultValueEdit').clear().type(defaultValue.toString());
+    cy.get('#defaultValueEdit0').clear().type(defaultValue.toString());
     cy.get('#decimalCountEdit').clear().type(decimalCount.toString());
 
     cy.get('#changeFieldSaveBtn').click();
@@ -320,11 +317,11 @@ describe('Visual editor - Create eForm', () => {
     cy.wait(1000);
 
     // Change nested field color to red by clicking the red color button (5th button, index 4)
-    cy.get('#fields_0 #fieldSection0 #colors button').eq(4).click();
+    cy.get('#nestedFields #fieldSection0 #colors button').eq(4).click();
     cy.wait(1000);
 
     // Make a copy of the nested field
-    cy.get('#fields_0 #fieldSection0 #copyBtn').click();
+    cy.get('#nestedFields #fieldSection0 #copyBtn').click();
     cy.wait(1000);
 
     // Save the eForm
@@ -345,10 +342,10 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#fieldSection0').should('contain', fieldGroupName);
 
     // Verify both nested fields exist with red color
-    cy.get('#fields_0 #fieldSection0').should('contain', nestedFieldName);
-    cy.get('#fields_0 #fieldSection1').should('contain', nestedFieldName);
-    cy.get('#fieldSection0 > div > div').should('have.attr', 'style').and('include', 'background-color: rgb(255, 228, 228)');
-    cy.get('#fieldSection1 > div > div').should('have.attr', 'style').and('include', 'background-color: rgb(255, 228, 228)');
+    cy.get('#nestedFields #fieldSection0').should('contain', nestedFieldName);
+    cy.get('#nestedFields #fieldSection1').should('contain', nestedFieldName);
+    cy.get('#nestedFields #fieldSection0 > div > div').should('have.attr', 'style').and('include', 'background-color: rgb(255, 228, 228)');
+    cy.get('#nestedFields #fieldSection1 > div > div').should('have.attr', 'style').and('include', 'background-color: rgb(255, 228, 228)');
   });
 
   it('should create visual template and delete field', () => {
@@ -380,17 +377,20 @@ describe('Visual editor - Create eForm', () => {
     cy.wait(1000);
 
     // Change nested field color to red by clicking the red color button (5th button, index 4)
-    cy.get('#fields_0 #fieldSection0 #colors button').eq(4).click();
+    cy.get('#nestedFields #fieldSection0 #colors button').eq(4).click();
     cy.wait(1000);
 
     // Make a copy of the nested field
-    cy.get('#fields_0 #fieldSection0 #copyBtn').click();
+    cy.get('#nestedFields #fieldSection0 #copyBtn').click();
     cy.wait(1000);
 
     // Delete the field group
-    cy.get('#fieldSection0 #deleteBtn').click();
+    // await mainChecklist.fields[0].delete(); is the wdio way
+    cy.get('#fieldSection0 #collapseToggleBtn').click();
+    cy.wait(500);
+    cy.get('#fieldSection0 #deleteBtn').first().click();
     cy.get('#fieldDeleteDeleteBtn').click();
-    cy.wait(1000);
+    cy.wait(500);
 
     // Save the eForm
     cy.intercept('POST', '**/api/template-visual-editor/').as('saveeForm');
@@ -661,8 +661,8 @@ describe('Visual editor - Create eForm', () => {
     const eformName = generateRandmString();
 
     // Create eForm from XML first (navigate to My eForms)
-    cy.get('#cancelEditBtn').click();
-    cy.wait(500);
+    // cy.get('#cancelEditBtn').click();
+    // cy.wait(500);
 
     // Create eForm using XML
     const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
