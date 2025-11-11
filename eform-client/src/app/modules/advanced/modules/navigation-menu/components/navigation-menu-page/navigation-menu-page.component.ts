@@ -73,6 +73,10 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       .filter(id => id !== null) as string[];
   }
 
+  get allConnectedDropListIds(): string[] {
+    return ['mainMenu', 'actualMenuList', ...this.connectedDropdownIds];
+  }
+
   constructor() {
   }
 
