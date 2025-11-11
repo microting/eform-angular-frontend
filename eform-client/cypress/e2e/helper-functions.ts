@@ -212,6 +212,8 @@ export function selectValueInNgSelectorNoSelector(value: string) {
   cy.get('.ng-option').each((item, index, list) => {
     if (item.text().includes(value)) {
       item.click();
+      cy.wait(500);
+      return false; // break the loop
     }
   });
 }
