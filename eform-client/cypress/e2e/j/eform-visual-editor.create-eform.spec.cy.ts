@@ -661,8 +661,8 @@ describe('Visual editor - Create eForm', () => {
     const eformName = generateRandmString();
 
     // Create eForm from XML first (navigate to My eForms)
-    // cy.get('#cancelEditBtn').click();
-    // cy.wait(500);
+    cy.get('#cancelCreateBtn').click();
+    cy.wait(500);
 
     // Create eForm using XML
     const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
