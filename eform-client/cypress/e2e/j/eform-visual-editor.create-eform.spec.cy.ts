@@ -709,15 +709,17 @@ describe('Visual editor - Create eForm', () => {
       </Main>`;
 
     cy.get('#newEFormBtn').click();
-    cy.get('#createEformBtn').should('be.visible').click();
 
     // Enter XML
-    cy.get('#eFormXMLTextarea').clear().type(xmlContent.replace(/\n\s+/g, ''), { parseSpecialCharSequences: false, delay: 0 });
-    cy.get('#eFormLabelInput').clear().type(eformName);
+    cy.get('#eFormXml').clear().type(xmlContent.replace(/\n\s+/g, ''), { parseSpecialCharSequences: false, delay: 0 });
 
-    cy.intercept('POST', '**/api/templates').as('createTemplate');
-    cy.get('#eFormSaveBtn').click();
-    cy.wait('@createTemplate', { timeout: 60000 });
+      cy.intercept('POST', '**/api/templates/create').as('saveeForm');
+      cy.intercept('POST', '**/api/templates/index').as('getTemplates');
+      cy.intercept('GET', '**/api/tags/index').as('getTags');
+      cy.get('#createEformBtn').click();
+      cy.wait('@saveeForm', { timeout: 60000 });
+      cy.wait('@getTemplates', { timeout: 60000 });
+      cy.wait('@getTags', { timeout: 60000 });
 
     // Open in visual editor
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
