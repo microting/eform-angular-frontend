@@ -26,8 +26,13 @@ export class NavigationMenuPage {
     const dragHandle = cy.get(`#dragHandle0_${templateIndex}`);
     const target = cy.get('mat-card > mat-accordion').first();
     
-    dragHandle.trigger('mousedown', { which: 1 });
-    target.trigger('mousemove', 'top').trigger('mouseup', { force: true });
+    dragHandle
+      .trigger('mousedown', { button: 0, bubbles: true })
+      .trigger('mousemove', { pageX: 10, pageY: 0 });
+    
+    target
+      .trigger('mousemove', { position: 'top' })
+      .trigger('mouseup', { button: 0, bubbles: true });
   }
 
   public createCustomLink(data: { securityGroups?: string[]; link: string; translations: string[] }) {
@@ -183,8 +188,13 @@ export class NavigationMenuPage {
     const dragHandle = cy.get(`#dragHandle0_${templateIndex}`);
     const dropdownBody = cy.get('#menuItems').eq(dropdownIndex).find('#dropdownBody');
 
-    dragHandle.trigger('mousedown', { which: 1 });
-    dropdownBody.trigger('mousemove').trigger('mouseup', { force: true });
+    dragHandle
+      .trigger('mousedown', { button: 0, bubbles: true })
+      .trigger('mousemove', { pageX: 10, pageY: 0 });
+    
+    dropdownBody
+      .trigger('mousemove', { position: 'center' })
+      .trigger('mouseup', { button: 0, bubbles: true });
     
     cy.wait(500);
     this.collapseTemplates(0);
@@ -218,9 +228,14 @@ export class NavigationMenuPage {
     fromHandle.scrollIntoView();
     cy.wait(2000);
 
-    fromHandle.trigger('mousedown', { which: 1, force: true });
-    toHandle.trigger('mousemove', { force: true });
-    toHandle.trigger('mouseup', { force: true });
+    fromHandle
+      .trigger('mousedown', { button: 0, bubbles: true })
+      .trigger('mousemove', { pageX: 10, pageY: 0 });
+    
+    toHandle
+      .trigger('mousemove', { position: 'center' })
+      .trigger('mouseup', { button: 0, bubbles: true });
+    
     cy.wait(2000);
   }
 
