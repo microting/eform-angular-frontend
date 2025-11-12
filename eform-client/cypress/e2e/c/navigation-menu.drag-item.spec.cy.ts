@@ -58,7 +58,7 @@ describe('Navigation menu - Drag item', function () {
         navigationMenuPage.editTranslationsOnDropdownBodyChilds(data);
       });
 
-      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
       cy.wait('@saveMenu', { timeout: 30000 });
 
@@ -74,7 +74,9 @@ describe('Navigation menu - Drag item', function () {
             .should('have.value', translation);
         });
 
+        cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
         navigationMenuPage.editItemSave();
+        cy.wait('@saveMenuEdit', { timeout: 30000 });
       });
     });
   });
@@ -84,7 +86,7 @@ describe('Navigation menu - Drag item', function () {
       // Swap elements within dropdown
       navigationMenuPage.dragAndDropElementOfDropdown(menuCount, 2, 0);
       
-      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
       cy.wait('@saveMenu', { timeout: 30000 });
 
