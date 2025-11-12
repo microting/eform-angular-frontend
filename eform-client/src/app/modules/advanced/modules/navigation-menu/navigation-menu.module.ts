@@ -27,6 +27,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatInputModule} from '@angular/material/input';
+import { NavigationMenuDragDropService } from 'src/app/common/services';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,9 @@ import {MatInputModule} from '@angular/material/input';
     MatFormFieldModule,
     MtxSelectModule,
     MatInputModule,
+  ],
+  providers: [
+    NavigationMenuDragDropService
   ],
 })
 export class NavigationMenuModule {}

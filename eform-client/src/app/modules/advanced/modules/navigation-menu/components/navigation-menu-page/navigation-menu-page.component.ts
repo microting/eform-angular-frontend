@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, copyArrayItem, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, OnDestroy, OnInit, ViewChild, inject, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, copyArrayItem, transferArrayItem, CdkDragMove, CdkDragRelease, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
@@ -10,6 +10,7 @@ import {
 import {
   NavigationMenuService,
   SecurityGroupsService,
+  NavigationMenuDragDropService,
 } from 'src/app/common/services';
 import {Subscription, take} from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
@@ -34,7 +35,7 @@ import {loadAppMenu, selectCurrentUserLocale} from 'src/app/state';
     styleUrls: ['./navigation-menu-page.component.scss'],
     standalone: false
 })
-export class NavigationMenuPageComponent implements OnInit, OnDestroy {
+export class NavigationMenuPageComponent implements OnInit, OnDestroy, AfterViewInit {
   private authStore = inject(Store);
   private navigationMenuService = inject(NavigationMenuService);
   private securityGroupsService = inject(SecurityGroupsService);
@@ -43,10 +44,12 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private store = inject(Store);
+  private dragDropService = inject(NavigationMenuDragDropService);
 
 
   @ViewChild('resetMenuModal')
   resetMenuModal: NavigationMenuResetComponent;
+  @ViewChildren(CdkDropList) dropLists?: QueryList<CdkDropList>;
   securityGroups: CommonDictionaryModel[] = [];
   navigationMenuModel: NavigationMenuModel = new NavigationMenuModel();
 
@@ -73,12 +76,44 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       .filter(id => id !== null) as string[];
   }
 
+  /**
+   * Predicate function to determine if dropping is allowed
+   */
+  allowDropPredicate = (drag: CdkDrag, drop: CdkDropList): boolean => {
+    return this.dragDropService.isDropAllowed(drag, drop);
+  };
+
+  /**
+   * Get all connected drop lists from the service
+   */
+  get connectedLists(): CdkDropList[] {
+    return this.dragDropService.dropLists;
+  }
+
   constructor() {
   }
 
   ngOnInit(): void {
     this.getNavigationMenu();
     this.getSecurityGroups();
+  }
+
+  ngAfterViewInit(): void {
+    // Register all drop lists with the service after view initialization
+    if (this.dropLists) {
+      this.dropLists.forEach(dropList => {
+        this.dragDropService.register(dropList);
+      });
+      
+      // Subscribe to changes in drop lists (for dynamically added dropdowns)
+      this.dropLists.changes.subscribe(() => {
+        // Clear and re-register all drop lists when the list changes
+        this.dragDropService.dropLists = [];
+        this.dropLists?.forEach(dropList => {
+          this.dragDropService.register(dropList);
+        });
+      });
+    }
   }
 
   getSecurityGroups() {
@@ -244,6 +279,20 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       const group = this.securityGroups.find(g => g.id === id);
       return group ? group.name : '';
     }).filter(name => name !== '');
+  }
+
+  /**
+   * Handle drag move events to track hover state
+   */
+  onDragMoved(event: CdkDragMove<any>) {
+    this.dragDropService.dragMoved(event);
+  }
+
+  /**
+   * Handle drag release events to clear hover state
+   */
+  onDragReleased(event: CdkDragRelease) {
+    this.dragDropService.dragReleased(event);
   }
 
 }

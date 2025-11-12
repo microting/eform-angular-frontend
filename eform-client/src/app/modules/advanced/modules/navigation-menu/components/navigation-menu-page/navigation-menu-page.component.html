@@ -19,7 +19,7 @@
   </div>
 </eform-new-subheader>
 
-<div class="d-flex flex-row align-items-start">
+<div class="d-flex flex-row align-items-start" cdkDropListGroup>
   <mat-accordion multi="true" displayMode="flat" class="mr-2">
     <mat-expansion-panel *ngFor="
           let menuTemplate of navigationMenuModel.menuTemplates;
@@ -33,7 +33,8 @@
         class="dragula-template"
         cdkDropList
         [cdkDropListData]="menuTemplate.items"
-        [cdkDropListConnectedTo]="['actualMenuList'].concat(connectedDropdownIds)"
+        [cdkDropListConnectedTo]="connectedLists"
+        [cdkDropListEnterPredicate]="allowDropPredicate"
         id="mainMenu"
       >
         <app-navigation-menu-template-item
@@ -42,6 +43,8 @@
               let itemIndex = index
             "
           cdkDrag
+          (cdkDragMoved)="onDragMoved($event)"
+          (cdkDragReleased)="onDragReleased($event)"
           [item]="menuTemplateItem"
           [itemIndex]="itemIndex"
           [templateIndex]="templateIndex"
@@ -61,7 +64,8 @@
       cdkDropList
       id="actualMenuList"
       [cdkDropListData]="navigationMenuModel.actualMenu"
-      [cdkDropListConnectedTo]="['mainMenu']"
+      [cdkDropListConnectedTo]="connectedLists"
+      [cdkDropListEnterPredicate]="allowDropPredicate"
       (cdkDropListDropped)="dropMenuItem($event)"
       class="dragula-item">
       <mat-expansion-panel *ngFor="
@@ -69,6 +73,8 @@
               let firstLevelIndex = index"
               [hideToggle]="menuItem.type !== menuItemTypes.Dropdown"
               cdkDrag
+              (cdkDragMoved)="onDragMoved($event)"
+              (cdkDragReleased)="onDragReleased($event)"
               class="menu_item"
       >
         <mat-expansion-panel-header>
@@ -100,7 +106,8 @@
           cdkDropList
           [id]="getDropdownId(firstLevelIndex)"
           [cdkDropListData]="menuItem.children"
-          [cdkDropListConnectedTo]="['mainMenu']"
+          [cdkDropListConnectedTo]="connectedLists"
+          [cdkDropListEnterPredicate]="allowDropPredicate"
           (cdkDropListDropped)="dropMenuItemChild($event, firstLevelIndex)"
           *ngIf="menuItem.type === menuItemTypes.Dropdown"
           style="min-height: 50px;"
@@ -111,6 +118,8 @@
           >
             <app-navigation-menu-item
               cdkDrag
+              (cdkDragMoved)="onDragMoved($event)"
+              (cdkDragReleased)="onDragReleased($event)"
               (itemDelete)="onItemDelete($event, firstLevelIndex, secondLevelIndex)"
               (itemEdit)="onItemEdit($event, firstLevelIndex, secondLevelIndex)"
               [item]="menuItemChild"
