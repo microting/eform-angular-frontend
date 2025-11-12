@@ -26,7 +26,7 @@ import {
   VisualEditorFieldModalComponent,
   VisualEditorChecklistDeleteModalComponent, VisualEditorChecklistModalComponent
 } from '../../';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {DragulaService} from 'ng2-dragula';
 import {AuthStateService} from 'src/app/common/store';
 import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/components';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
@@ -56,6 +56,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   private reportService = inject(EformDocxReportService);
   private appSettingsStateService = inject(AppSettingsStateService);
   private translationService = inject(TranslationService);
+  private dragulaService = inject(DragulaService);
 
   @ViewChild('tagsModal') tagsModal: EformsTagsComponent;
 
@@ -86,6 +87,21 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
   constructor() {
+    this.dragulaService.createGroup('CHECK_LISTS', {
+      moves: (el, container, handle) => {
+        return (
+          handle.classList.contains('dragula-handle') && handle.id === 'moveBtn'
+        );
+      },
+    });
+
+    this.dragulaService.createGroup('FIELDS', {
+      moves: (el, container, handle) => {
+        return (
+          handle.classList.contains('dragula-handle')
+        );
+      },
+    });
   }
 
   get isAllNamesEmpty() {
@@ -213,22 +229,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   toggleCollapse() {
     this.isItemsCollapsed = !this.isItemsCollapsed;
-  }
-
-  dropChecklist(event: CdkDragDrop<EformVisualEditorModel[]>) {
-    if (event.previousIndex !== event.currentIndex) {
-      moveItemInArray(this.visualEditorTemplateModel.checkLists, event.previousIndex, event.currentIndex);
-      this.visualEditorTemplateModel.checkLists = [...this.visualEditorTemplateModel.checkLists]; // Create new reference
-      this.dragulaPositionChecklistChanged(this.visualEditorTemplateModel.checkLists);
-    }
-  }
-
-  dropField(event: CdkDragDrop<EformVisualEditorFieldModel[]>) {
-    if (event.previousIndex !== event.currentIndex) {
-      moveItemInArray(this.visualEditorTemplateModel.fields, event.previousIndex, event.currentIndex);
-      this.visualEditorTemplateModel.fields = [...this.visualEditorTemplateModel.fields]; // Create new reference
-      this.dragulaPositionFieldChanged(this.visualEditorTemplateModel.fields);
-    }
   }
 
   dragulaPositionChecklistChanged(model: EformVisualEditorModel[]) {
@@ -774,6 +774,9 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.dragulaService.destroy('CHECK_LISTS');
+    this.dragulaService.destroy('FIELDS');
+    // this.dragulaService.destroy('NESTED_FIELDS');
   }
 
 

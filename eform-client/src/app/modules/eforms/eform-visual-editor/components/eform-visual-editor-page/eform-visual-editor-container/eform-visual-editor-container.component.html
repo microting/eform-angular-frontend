@@ -74,19 +74,16 @@
     [ngClass]="{'collapsed' : isItemsCollapsed}"
   >
     <div
-      cdkDropList
+      dragula="CHECK_LISTS"
       id="editorChecklists"
-      [cdkDropListData]="visualEditorTemplateModel.checkLists"
-      (cdkDropListDropped)="dropChecklist($event)"
-      class="cdk-drop-list"
+      (dragulaModelChange)="dragulaPositionChecklistChanged($event)"
+      [dragulaModel]="visualEditorTemplateModel.checkLists"
     >
       <app-visual-editor-checklist
         *ngFor="
                   let checklist of visualEditorTemplateModel.checkLists;
                   let i = index
                 "
-        cdkDrag
-        [cdkDragDisabled]="!checklist.collapsed"
         [checklist]="checklist"
         [checklistRecursionIndexes]="[i]"
         [checklistIndex]="i"
@@ -97,7 +94,6 @@
         (addNewNestedField)="showFieldModal($event)"
         (deleteNestedField)="showDeleteFieldModal($event)"
         (editNestedField)="showFieldModal($event)"
-        [ngClass]="{ 'no-drag': !checklist.collapsed }"
         (nestedFieldPositionChanged)="
                   onNestedFieldPositionChanged($event)
                 "
@@ -112,18 +108,17 @@
                 !visualEditorTemplateModel.checkLists ||
                 visualEditorTemplateModel.checkLists.length == 0
               "
-      cdkDropList
+      dragula="FIELDS"
       id="editorFields"
-      class="editor-fields cdk-drop-list"
-      [cdkDropListData]="visualEditorTemplateModel.fields"
-      (cdkDropListDropped)="dropField($event)"
+      class="editor-fields"
+      (dragulaModelChange)="dragulaPositionFieldChanged($event)"
+      [dragulaModel]="visualEditorTemplateModel.fields"
     >
       <app-visual-editor-field
         *ngFor="
                   let field of visualEditorTemplateModel.fields;
                   let i = index
                 "
-        cdkDrag
         [field]="field"
         [fieldIndex]="i"
         id="field_{{ i }}"

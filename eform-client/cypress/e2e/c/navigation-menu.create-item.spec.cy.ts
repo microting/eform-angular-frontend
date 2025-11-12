@@ -15,33 +15,33 @@ describe('Navigation menu - Create item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(0);
       navigationMenuPage.createMenuItemFromTemplate(0);
-
+      
       // Wait for DOM update after drag-and-drop (matching WDIO test behavior)
       cy.wait(500);
 
       // Verify count increased
-      navigationMenuPage.getMenuItems().should('have.length', 4);
-
+      navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
+      
       // Intercept save operation
-      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
       cy.wait('@saveMenu', { timeout: 30000 });
-
+      
       navigationMenuPage.openEditMenuItem(0);
-
+      
       // Verify link field
       cy.get('#editLinkInput').should('have.value', '/');
-
+      
       // Verify translations
       cy.get('#editItemTranslation0_0_0').should('have.value', 'My eForms');
       cy.get('#editItemTranslation0_0_1').should('have.value', 'Mine eForms');
       cy.get('#editItemTranslation0_0_2').should('have.value', 'Meine eForms');
-
+      
       // Intercept edit save operation
-      // cy.intercept('PUT', '**/api/navigation-menu').as('saveMenuEdit');
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
       navigationMenuPage.editItemSave();
-      // cy.wait('@saveMenuEdit', { timeout: 30000 });
-
+      cy.wait('@saveMenuEdit', { timeout: 30000 });
+      
       navigationMenuPage.collapseTemplates(0);
     });
   });
@@ -56,15 +56,15 @@ describe('Navigation menu - Create item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomLink(customLink);
-
+      
       // Wait for DOM update after creating custom link (matching WDIO test behavior)
       cy.wait(1000);
 
       // Verify count increased
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
-
+      
       // Intercept save operation
-      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
       cy.wait('@saveMenu', { timeout: 30000 });
 
@@ -83,9 +83,9 @@ describe('Navigation menu - Create item', function () {
         });
 
         // Intercept edit save operation
-        // cy.intercept('PUT', '**/api/navigation-menu').as('saveMenuEdit');
+        cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
         navigationMenuPage.editItemSave();
-        // cy.wait('@saveMenuEdit', { timeout: 30000 });
+        cy.wait('@saveMenuEdit', { timeout: 30000 });
       });
     });
   });
@@ -99,15 +99,15 @@ describe('Navigation menu - Create item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
-
+      
       // Wait for DOM update after creating dropdown (matching WDIO test behavior)
       cy.wait(1500);
 
       // Verify count increased
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
-
+      
       // Intercept save operation
-      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
       cy.wait('@saveMenu', { timeout: 30000 });
 
@@ -123,9 +123,9 @@ describe('Navigation menu - Create item', function () {
         });
 
         // Intercept edit save operation
-        // cy.intercept('PUT', '**/api/navigation-menu').as('saveMenuEdit');
+        cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
         navigationMenuPage.editItemSave();
-        // cy.wait('@saveMenuEdit', { timeout: 30000 });
+        cy.wait('@saveMenuEdit', { timeout: 30000 });
       });
     });
   });
@@ -139,15 +139,15 @@ describe('Navigation menu - Create item', function () {
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(1);
       navigationMenuPage.createCustomDropdown(dropdown);
-
+      
       // Wait for DOM update after creating dropdown (matching WDIO test behavior)
       cy.wait(1500);
 
       // Verify count increased
       navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
-
+      
       // Intercept save operation
-      cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu');
+      cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');
       navigationMenuPage.clickSaveMenuBtn();
       cy.wait('@saveMenu', { timeout: 30000 });
 
@@ -168,9 +168,9 @@ describe('Navigation menu - Create item', function () {
         });
 
         // Intercept edit save operation
-        // cy.intercept('PUT', '**/api/navigation-menu').as('saveMenuEdit');
+        cy.intercept('POST', '**/api/navigation-menu').as('saveMenuEdit');
         navigationMenuPage.editItemSave();
-        // cy.wait('@saveMenuEdit', { timeout: 30000 });
+        cy.wait('@saveMenuEdit', { timeout: 30000 });
       });
     });
   });

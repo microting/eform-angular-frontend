@@ -2,6 +2,7 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
+import {DragulaModule} from 'ng2-dragula';
 import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
 import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
@@ -67,6 +68,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     EformSharedModule,
     TranslateModule,
     FormsModule,
+    DragulaModule,
     EformImportedModule,
     EformSharedTagsModule,
     MatCheckboxModule,

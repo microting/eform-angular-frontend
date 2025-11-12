@@ -23,7 +23,7 @@
   <mat-accordion multi="true" displayMode="flat" class="mr-2">
     <mat-expansion-panel *ngFor="
           let menuTemplate of navigationMenuModel.menuTemplates;
-          let templateIndex = index" class="menuTemplate">
+          let templateIndex = index" id="menuTemplate">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ menuTemplate.name }}
@@ -31,20 +31,15 @@
       </mat-expansion-panel-header>
       <div
         class="dragula-template"
-        cdkDropList
-        [cdkDropListData]="menuTemplate.items"
-        [cdkDropListConnectedTo]="connectedLists"
-        [cdkDropListEnterPredicate]="allowDropPredicate"
+        dragula="MENU_ITEMS"
         id="mainMenu"
+        [(dragulaModel)]="menuTemplate.items"
       >
         <app-navigation-menu-template-item
           *ngFor="
               let menuTemplateItem of menuTemplate.items;
               let itemIndex = index
             "
-          cdkDrag
-          (cdkDragMoved)="onDragMoved($event)"
-          (cdkDragReleased)="onDragReleased($event)"
           [item]="menuTemplateItem"
           [itemIndex]="itemIndex"
           [templateIndex]="templateIndex"
@@ -61,20 +56,16 @@
     <mat-accordion
       multi="true"
       displayMode="flat"
-      cdkDropList
-      id="actualMenuList"
-      [cdkDropListData]="navigationMenuModel.actualMenu"
-      [cdkDropListConnectedTo]="connectedLists"
-      [cdkDropListEnterPredicate]="allowDropPredicate"
-      (cdkDropListDropped)="dropMenuItem($event)">
+      dragula="MENU_ITEMS"
+      class="dragula-item"
+      [dragulaModel]="navigationMenuModel.actualMenu"
+      (dragulaModelChange)="menuItemModelChange($event)">
       <mat-expansion-panel *ngFor="
               let menuItem of navigationMenuModel.actualMenu;
               let firstLevelIndex = index"
               [hideToggle]="menuItem.type !== menuItemTypes.Dropdown"
-              cdkDrag
-              (cdkDragMoved)="onDragMoved($event)"
-              (cdkDragReleased)="onDragReleased($event)"
-              class="menu_item"
+              class="dragula-item"
+              id="menuItems"
       >
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -101,14 +92,11 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div
-          cdkDropList
-          class="cdk-drop-list dropdownBody"
-          [id]="getDropdownId(firstLevelIndex)"
-          [cdkDropListData]="menuItem.children"
-          [cdkDropListConnectedTo]="connectedLists"
-          [cdkDropListEnterPredicate]="allowDropPredicate"
-          (cdkDropListDropped)="dropMenuItemChild($event, firstLevelIndex)"
+          id="dropdownBody"
+          class="dragula-dropdown"
+          dragula="MENU_ITEMS"
           *ngIf="menuItem.type === menuItemTypes.Dropdown"
+          [(dragulaModel)]="menuItem.children"
           style="min-height: 50px;"
         >
           <ng-container
@@ -116,9 +104,6 @@
                       let secondLevelIndex = index"
           >
             <app-navigation-menu-item
-              cdkDrag
-              (cdkDragMoved)="onDragMoved($event)"
-              (cdkDragReleased)="onDragReleased($event)"
               (itemDelete)="onItemDelete($event, firstLevelIndex, secondLevelIndex)"
               (itemEdit)="onItemEdit($event, firstLevelIndex, secondLevelIndex)"
               [item]="menuItemChild"

@@ -13,7 +13,7 @@ import {
 } from './components';
 import { NavigationMenuRouting } from './navigation-menu.routing';
 import { TranslateModule } from '@ngx-translate/core';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DragulaModule } from 'ng2-dragula';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -27,7 +27,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatInputModule} from '@angular/material/input';
-import { NavigationMenuDragDropService } from 'src/app/common/services';
 
 @NgModule({
   declarations: [
@@ -45,7 +44,7 @@ import { NavigationMenuDragDropService } from 'src/app/common/services';
     CommonModule,
     NavigationMenuRouting,
     TranslateModule,
-    DragDropModule,
+    DragulaModule,
     FormsModule,
     EformSharedModule,
     ReactiveFormsModule,
@@ -60,9 +59,6 @@ import { NavigationMenuDragDropService } from 'src/app/common/services';
     MatFormFieldModule,
     MtxSelectModule,
     MatInputModule,
-  ],
-  providers: [
-    NavigationMenuDragDropService
   ],
 })
 export class NavigationMenuModule {}
