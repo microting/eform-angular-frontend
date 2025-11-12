@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild, inject, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, copyArrayItem, transferArrayItem, CdkDragMove, CdkDragRelease, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { DragulaService } from 'ng2-dragula';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
@@ -10,7 +10,6 @@ import {
 import {
   NavigationMenuService,
   SecurityGroupsService,
-  NavigationMenuDragDropService,
 } from 'src/app/common/services';
 import {Subscription, take} from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
@@ -35,8 +34,9 @@ import {loadAppMenu, selectCurrentUserLocale} from 'src/app/state';
     styleUrls: ['./navigation-menu-page.component.scss'],
     standalone: false
 })
-export class NavigationMenuPageComponent implements OnInit, OnDestroy, AfterViewInit {
+export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   private authStore = inject(Store);
+  private dragulaService = inject(DragulaService);
   private navigationMenuService = inject(NavigationMenuService);
   private securityGroupsService = inject(SecurityGroupsService);
   private authStateService = inject(AuthStateService);
@@ -44,12 +44,10 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy, AfterView
   private dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private store = inject(Store);
-  private dragDropService = inject(NavigationMenuDragDropService);
 
 
   @ViewChild('resetMenuModal')
   resetMenuModal: NavigationMenuResetComponent;
-  @ViewChildren(CdkDropList) dropLists?: QueryList<CdkDropList>;
   securityGroups: CommonDictionaryModel[] = [];
   navigationMenuModel: NavigationMenuModel = new NavigationMenuModel();
 
@@ -66,58 +64,38 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy, AfterView
     return NavigationMenuItemTypeEnum;
   }
 
-  getDropdownId(index: number): string {
-    return `dropdown-${index}`;
-  }
-
-  get connectedDropdownIds(): string[] {
-    return this.navigationMenuModel.actualMenu
-      .map((item, index) => item.type === NavigationMenuItemTypeEnum.Dropdown ? this.getDropdownId(index) : null)
-      .filter(id => id !== null) as string[];
-  }
-
-  /**
-   * Predicate function to determine if dropping is allowed
-   */
-  allowDropPredicate = (drag: CdkDrag, drop: CdkDropList): boolean => {
-    return this.dragDropService.isDropAllowed(drag, drop);
-  };
-
-  /**
-   * Get all connected drop lists from the service
-   */
-  get connectedLists(): CdkDropList[] {
-    return this.dragDropService.dropLists;
-  }
-
   constructor() {
+    const dragulaService = this.dragulaService;
+
+    dragulaService.createGroup('MENU_ITEMS', {
+      moves: (el, container, handle) => {
+        return handle.classList.contains('dragula-handle');
+      },
+      copy: (el, source) => {
+        return source.id === 'mainMenu' || source.id === 'pluginMenu';
+      },
+      copyItem: (data: NavigationMenuItemModel) => {
+        return { ...data, type: NavigationMenuItemTypeEnum.Link, isInternalLink: true, };
+      },
+      accepts: (el, target) => {
+        // To avoid dragging from right to left container
+        return (
+          (target.classList.contains('dragula-item') ||
+            (target.classList.contains('dragula-dropdown') &&
+              !el.classList.contains('dragula-dropdown'))) &&
+          target.id !== 'mainMenu' &&
+          target.id !== 'pluginMenu'
+        );
+      },
+    });
+    this.dragulaService.drop('MENU_ITEMS').subscribe(({ name }) => {
+      this.dragulaService.find(name).drake.cancel(true);
+    });
   }
 
   ngOnInit(): void {
     this.getNavigationMenu();
     this.getSecurityGroups();
-  }
-
-  ngAfterViewInit(): void {
-    // Register all drop lists with the service after view initialization
-    if (this.dropLists) {
-      this.dropLists.forEach(dropList => {
-        this.dragDropService.register(dropList);
-      });
-
-      // Subscribe to changes in drop lists (for dynamically added dropdowns)
-      this.dropLists.changes.subscribe(() => {
-        // Use setTimeout to defer the update to avoid ExpressionChangedAfterItHasBeenCheckedError
-        // This ensures the update happens after the current change detection cycle
-        setTimeout(() => {
-          // Clear and re-register all drop lists when the list changes
-          this.dragDropService.dropLists = [];
-          this.dropLists?.forEach(dropList => {
-            this.dragDropService.register(dropList);
-          });
-        });
-      });
-    }
   }
 
   getSecurityGroups() {
@@ -153,49 +131,10 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy, AfterView
       ...this.navigationMenuModel.actualMenu,
       model,
     ];
-    // Trigger change detection and update drop lists after the new item is rendered
-    // This ensures newly added dropdowns are immediately available as drop targets
-    setTimeout(() => {
-      if (this.dropLists) {
-        this.dragDropService.dropLists = [];
-        this.dropLists.forEach(dropList => {
-          this.dragDropService.register(dropList);
-        });
-      }
-    });
-  }
-
-  dropMenuItem(event: CdkDragDrop<NavigationMenuItemModel[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      // Copy from template menu
-      const item = {
-        ...event.previousContainer.data[event.previousIndex],
-        type: NavigationMenuItemTypeEnum.Link,
-        isInternalLink: true
-      };
-      this.navigationMenuModel.actualMenu.splice(event.currentIndex, 0, item);
-    }
-    this.navigationMenuModel.actualMenu = [...this.navigationMenuModel.actualMenu];
-  }
-
-  dropMenuItemChild(event: CdkDragDrop<NavigationMenuItemModel[]>, parentIndex: number) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      // Copy from template menu
-      const item = {
-        ...event.previousContainer.data[event.previousIndex],
-        type: NavigationMenuItemTypeEnum.Link,
-        isInternalLink: true
-      };
-      this.navigationMenuModel.actualMenu[parentIndex].children.splice(event.currentIndex, 0, item);
-    }
-    this.navigationMenuModel.actualMenu = [...this.navigationMenuModel.actualMenu];
   }
 
   ngOnDestroy(): void {
+    this.dragulaService.destroy('MENU_ITEMS');
   }
 
   onItemDelete(
@@ -288,25 +227,15 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy, AfterView
     ).name;
   }
 
+  menuItemModelChange($event: any[]) {
+    this.navigationMenuModel.actualMenu = [...$event];
+  }
+
   getSecurityGroupNames(ids: number[]): string[] {
     return ids.map(id => {
       const group = this.securityGroups.find(g => g.id === id);
       return group ? group.name : '';
     }).filter(name => name !== '');
-  }
-
-  /**
-   * Handle drag move events to track hover state
-   */
-  onDragMoved(event: CdkDragMove<any>) {
-    this.dragDropService.dragMoved(event);
-  }
-
-  /**
-   * Handle drag release events to clear hover state
-   */
-  onDragReleased(event: CdkDragRelease) {
-    this.dragDropService.dragReleased(event);
   }
 
 }
