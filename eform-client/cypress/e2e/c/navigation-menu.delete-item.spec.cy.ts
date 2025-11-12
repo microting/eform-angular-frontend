@@ -21,15 +21,21 @@ describe('Navigation menu - Delete item', function () {
 
       navigationMenuPage.createCustomDropdown(dropdown);
 
-      // Verify 1 element was created (the dropdown)
-      navigationMenuPage.getMenuItems().should('have.length', initialCount + 1);
+      // Create 2 items from templates menu
+      navigationMenuPage.collapseTemplates(0);
+      navigationMenuPage.createMenuItemFromTemplate(2);
+      navigationMenuPage.createMenuItemFromTemplate(3);
+      navigationMenuPage.collapseTemplates(0);
 
-      // Drag 3 template items into dropdown
+      // Verify 3 elements were created (1 dropdown + 2 template items)
+      navigationMenuPage.getMenuItems().should('have.length', initialCount + 3);
+
+      // Drag template items into dropdown
       navigationMenuPage.getMenuItems().its('length').then(currentCount => {
         navigationMenuPage.collapseMenuItemDropdown(currentCount - 1);
-        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(1, 0);
-        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(2, 0);
-        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(3, 0);
+        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(1, 1);
+        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(2, 1);
+        navigationMenuPage.dragTemplateOnElementInCreatedDropdown(3, 1);
 
         // Verify 3 items in dropdown
         navigationMenuPage.getDropdownBodyChilds(currentCount - 1).should('have.length', 3);
@@ -59,15 +65,20 @@ describe('Navigation menu - Delete item', function () {
         // Verify dropdown is empty
         navigationMenuPage.getDropdownBodyChilds(menuItemsCount - 1).should('have.length', dropdownCount - 3);
 
-        // Delete the dropdown itself
-        navigationMenuPage.deleteElementFromMenuItems(menuItemsCount - 1);
+        // Delete menu items
+        navigationMenuPage.deleteElementFromMenuItems(0);
+        navigationMenuPage.deleteElementFromMenuItems(0); // delete 2 template elements
 
-        cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu2');
-        navigationMenuPage.clickSaveMenuBtn();
-        cy.wait('@saveMenu2', { timeout: 30000 });
+        navigationMenuPage.getMenuItems().its('length').then(currentCount => {
+          navigationMenuPage.deleteElementFromMenuItems(currentCount - 1); // delete created dropdown
 
-        // Verify dropdown was deleted
-        navigationMenuPage.getMenuItems().should('have.length', menuItemsCount - 1);
+          cy.intercept('PUT', '**/api/navigation-menu').as('saveMenu2');
+          navigationMenuPage.clickSaveMenuBtn();
+          cy.wait('@saveMenu2', { timeout: 30000 });
+
+          // Verify items were deleted
+          navigationMenuPage.getMenuItems().should('have.length', menuItemsCount - 3);
+        });
       });
     });
   });
