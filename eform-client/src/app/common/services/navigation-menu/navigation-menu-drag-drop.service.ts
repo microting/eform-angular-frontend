@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { CdkDropList, CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
+import { CdkDropList, CdkDragMove, CdkDragRelease, CdkDrag } from '@angular/cdk/drag-drop';
 
 /**
  * Service to handle nested drag and drop operations in navigation menu.
@@ -55,5 +55,15 @@ export class NavigationMenuDragDropService {
    */
   dragReleased(event: CdkDragRelease) {
     this.currentHoverDropListId = undefined;
+  }
+
+  /**
+   * Determine if dropping is allowed based on the current hover state
+   */
+  isDropAllowed(drag: CdkDrag, drop: CdkDropList): boolean {
+    if (this.currentHoverDropListId == null) {
+      return true;
+    }
+    return drop.id === this.currentHoverDropListId;
   }
 }

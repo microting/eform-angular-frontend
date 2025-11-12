@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, copyArrayItem, transferArrayItem, CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
+import { Component, OnDestroy, OnInit, ViewChild, inject, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, copyArrayItem, transferArrayItem, CdkDragMove, CdkDragRelease, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
@@ -35,7 +35,7 @@ import {loadAppMenu, selectCurrentUserLocale} from 'src/app/state';
     styleUrls: ['./navigation-menu-page.component.scss'],
     standalone: false
 })
-export class NavigationMenuPageComponent implements OnInit, OnDestroy {
+export class NavigationMenuPageComponent implements OnInit, OnDestroy, AfterViewInit {
   private authStore = inject(Store);
   private navigationMenuService = inject(NavigationMenuService);
   private securityGroupsService = inject(SecurityGroupsService);
@@ -49,6 +49,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
 
   @ViewChild('resetMenuModal')
   resetMenuModal: NavigationMenuResetComponent;
+  @ViewChildren(CdkDropList) dropLists?: QueryList<CdkDropList>;
   securityGroups: CommonDictionaryModel[] = [];
   navigationMenuModel: NavigationMenuModel = new NavigationMenuModel();
 
@@ -75,12 +76,35 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       .filter(id => id !== null) as string[];
   }
 
+  /**
+   * Predicate function to determine if dropping is allowed
+   */
+  allowDropPredicate = (drag: CdkDrag, drop: CdkDropList): boolean => {
+    return this.dragDropService.isDropAllowed(drag, drop);
+  };
+
+  /**
+   * Get all connected drop lists from the service
+   */
+  get connectedLists(): CdkDropList[] {
+    return this.dragDropService.dropLists;
+  }
+
   constructor() {
   }
 
   ngOnInit(): void {
     this.getNavigationMenu();
     this.getSecurityGroups();
+  }
+
+  ngAfterViewInit(): void {
+    // Register all drop lists with the service after view initialization
+    if (this.dropLists) {
+      this.dropLists.forEach(dropList => {
+        this.dragDropService.register(dropList);
+      });
+    }
   }
 
   getSecurityGroups() {

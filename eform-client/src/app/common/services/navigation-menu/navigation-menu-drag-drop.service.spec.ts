@@ -82,4 +82,31 @@ describe('NavigationMenuDragDropService', () => {
     service.dragMoved(mockEvent as CdkDragMove<any>);
     expect(service.currentHoverDropListId).toBe('parent-drop-list');
   });
+
+  it('should allow drop when currentHoverDropListId is null', () => {
+    service.currentHoverDropListId = undefined;
+    const mockDrag: any = {};
+    const mockDrop: any = { id: 'test-drop-list' };
+
+    const result = service.isDropAllowed(mockDrag, mockDrop);
+    expect(result).toBe(true);
+  });
+
+  it('should allow drop when drop list id matches currentHoverDropListId', () => {
+    service.currentHoverDropListId = 'test-drop-list';
+    const mockDrag: any = {};
+    const mockDrop: any = { id: 'test-drop-list' };
+
+    const result = service.isDropAllowed(mockDrag, mockDrop);
+    expect(result).toBe(true);
+  });
+
+  it('should not allow drop when drop list id does not match currentHoverDropListId', () => {
+    service.currentHoverDropListId = 'other-drop-list';
+    const mockDrag: any = {};
+    const mockDrop: any = { id: 'test-drop-list' };
+
+    const result = service.isDropAllowed(mockDrag, mockDrop);
+    expect(result).toBe(false);
+  });
 });
