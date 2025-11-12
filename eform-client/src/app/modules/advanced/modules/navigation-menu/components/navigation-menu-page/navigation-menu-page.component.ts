@@ -104,6 +104,15 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy, AfterView
       this.dropLists.forEach(dropList => {
         this.dragDropService.register(dropList);
       });
+      
+      // Subscribe to changes in drop lists (for dynamically added dropdowns)
+      this.dropLists.changes.subscribe(() => {
+        // Clear and re-register all drop lists when the list changes
+        this.dragDropService.dropLists = [];
+        this.dropLists?.forEach(dropList => {
+          this.dragDropService.register(dropList);
+        });
+      });
     }
   }
 
