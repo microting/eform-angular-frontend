@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, inject, AfterViewInit, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, copyArrayItem, transferArrayItem, CdkDragMove, CdkDragRelease, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import {
   NavigationMenuItemIndexedModel,
@@ -45,7 +45,6 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy, AfterView
   private overlay = inject(Overlay);
   private store = inject(Store);
   private dragDropService = inject(NavigationMenuDragDropService);
-  private cdr = inject(ChangeDetectorRef);
 
 
   @ViewChild('resetMenuModal')
@@ -108,13 +107,15 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy, AfterView
 
       // Subscribe to changes in drop lists (for dynamically added dropdowns)
       this.dropLists.changes.subscribe(() => {
-        // Clear and re-register all drop lists when the list changes
-        this.dragDropService.dropLists = [];
-        this.dropLists?.forEach(dropList => {
-          this.dragDropService.register(dropList);
+        // Use setTimeout to defer the update to avoid ExpressionChangedAfterItHasBeenCheckedError
+        // This ensures the update happens after the current change detection cycle
+        setTimeout(() => {
+          // Clear and re-register all drop lists when the list changes
+          this.dragDropService.dropLists = [];
+          this.dropLists?.forEach(dropList => {
+            this.dragDropService.register(dropList);
+          });
         });
-        // Trigger change detection to prevent ExpressionChangedAfterItHasBeenCheckedError
-        this.cdr.detectChanges();
       });
     }
   }
