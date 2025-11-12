@@ -153,6 +153,16 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy, AfterView
       ...this.navigationMenuModel.actualMenu,
       model,
     ];
+    // Trigger change detection and update drop lists after the new item is rendered
+    // This ensures newly added dropdowns are immediately available as drop targets
+    setTimeout(() => {
+      if (this.dropLists) {
+        this.dragDropService.dropLists = [];
+        this.dropLists.forEach(dropList => {
+          this.dragDropService.register(dropList);
+        });
+      }
+    });
   }
 
   dropMenuItem(event: CdkDragDrop<NavigationMenuItemModel[]>) {
