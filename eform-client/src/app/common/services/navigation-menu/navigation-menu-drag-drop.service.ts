@@ -5,7 +5,7 @@ import { CdkDropList, CdkDragMove, CdkDragRelease, CdkDrag } from '@angular/cdk/
 /**
  * Service to handle nested drag and drop operations in navigation menu.
  * Based on: https://stackoverflow.com/a/67337935/2144807
- * 
+ *
  * This service dynamically tracks which drop list is currently being hovered
  * during drag operations, enabling nested drag and drop functionality that
  * cdkDropListGroup doesn't support out of the box.
@@ -29,24 +29,25 @@ export class NavigationMenuDragDropService {
    */
   dragMoved(event: CdkDragMove<any>) {
     const elementFromPoint = this.document.elementFromPoint(
-      event.pointerPosition.x, 
+      event.pointerPosition.x,
       event.pointerPosition.y
     );
-    
+
     if (!elementFromPoint) {
       this.currentHoverDropListId = undefined;
       return;
     }
-    
+
     const dropList = elementFromPoint.classList.contains('cdk-drop-list')
       ? elementFromPoint
       : elementFromPoint.closest('.cdk-drop-list');
-    
+
     if (!dropList) {
       this.currentHoverDropListId = undefined;
       return;
     }
-    
+
+    console.log('Hovering over drop list:', dropList.id);
     this.currentHoverDropListId = dropList.id;
   }
 

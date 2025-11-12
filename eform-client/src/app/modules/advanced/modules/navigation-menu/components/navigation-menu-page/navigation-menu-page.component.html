@@ -19,7 +19,7 @@
   </div>
 </eform-new-subheader>
 
-<div class="d-flex flex-row align-items-start" cdkDropListGroup>
+<div class="d-flex flex-row align-items-start">
   <mat-accordion multi="true" displayMode="flat" class="mr-2">
     <mat-expansion-panel *ngFor="
           let menuTemplate of navigationMenuModel.menuTemplates;
@@ -66,8 +66,7 @@
       [cdkDropListData]="navigationMenuModel.actualMenu"
       [cdkDropListConnectedTo]="connectedLists"
       [cdkDropListEnterPredicate]="allowDropPredicate"
-      (cdkDropListDropped)="dropMenuItem($event)"
-      class="dragula-item">
+      (cdkDropListDropped)="dropMenuItem($event)">
       <mat-expansion-panel *ngFor="
               let menuItem of navigationMenuModel.actualMenu;
               let firstLevelIndex = index"
@@ -102,7 +101,6 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div
-          class="dropdownBody"
           cdkDropList
           [id]="getDropdownId(firstLevelIndex)"
           [cdkDropListData]="menuItem.children"
