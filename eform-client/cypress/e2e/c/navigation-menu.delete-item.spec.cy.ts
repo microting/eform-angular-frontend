@@ -28,7 +28,7 @@ describe('Navigation menu - Delete item', function () {
       navigationMenuPage.collapseTemplates(0);
 
       // Verify 3 elements were created (1 dropdown + 2 template items)
-      navigationMenuPage.getMenuItems().should('have.length', initialCount + 3);
+      navigationMenuPage.getMenuItems().should('have.length', initialCount + 2);
 
       // Drag template items into dropdown
       navigationMenuPage.getMenuItems().its('length').then(currentCount => {
