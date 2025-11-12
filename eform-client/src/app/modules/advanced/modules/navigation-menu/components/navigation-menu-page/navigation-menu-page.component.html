@@ -102,6 +102,7 @@
         </mat-expansion-panel-header>
         <div
           cdkDropList
+          class="cdk-drop-list dropdownBody"
           [id]="getDropdownId(firstLevelIndex)"
           [cdkDropListData]="menuItem.children"
           [cdkDropListConnectedTo]="connectedLists"
