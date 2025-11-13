@@ -161,22 +161,30 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public async clearEFormTable() {
-    await browser.pause(500);
+    await browser.pause(2000);
     const rowCount = await this.rowNum();
-    let indexForDelete = 1;
     for (let i = 1; i <= rowCount; i++) {
-      const eformsRowObject = await this.getEformRowObj(i, false);
-      if (
-        eformsRowObject &&
-        eformsRowObject.deleteBtn &&
-        (await eformsRowObject.deleteBtn.isDisplayed())
-      ) {
-        await eformsRowObject.deleteEForm();
-      } else {
-        indexForDelete += 1;
-      }
+      await (await this.getEformRowObj(1)).deleteEForm();
     }
   }
+
+  // public async clearEFormTable() {
+  //   await browser.pause(500);
+  //   const rowCount = await this.rowNum();
+  //   let indexForDelete = 1;
+  //   for (let i = 1; i <= rowCount; i++) {
+  //     const eformsRowObject = await this.getEformRowObj(i, false);
+  //     if (
+  //       eformsRowObject &&
+  //       eformsRowObject.deleteBtn &&
+  //       (await eformsRowObject.deleteBtn.isDisplayed())
+  //     ) {
+  //       await eformsRowObject.deleteEForm();
+  //     } else {
+  //       indexForDelete += 1;
+  //     }
+  //   }
+  // }
 
   async createNewEform(
     eFormLabel,
