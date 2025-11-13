@@ -124,11 +124,21 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return ele;
   }
 
+  // public async entitySearchEditBtn(i = 0): Promise<WebdriverIO.Element> {
+  //   const ele = await $$('#entitySearchUpdateBtn')[i];
+  //   await ele.waitForDisplayed({timeout: 400});
+  //   await ele.waitForClickable({timeout: 400});
+  //   return ele;
+  // }
+
   public async entitySearchEditBtn(i = 0): Promise<WebdriverIO.Element> {
-    const ele = await $$('#entitySearchUpdateBtn')[i];
-    await ele.waitForDisplayed({timeout: 400});
-    await ele.waitForClickable({timeout: 400});
-    return ele;
+    await browser.pause(250);
+    await this.openRowMenu(i);
+    await browser.pause(250);
+    const btn = await $(`#entitySearchUpdateBtn${i}`);
+    await btn.waitForDisplayed({ timeout: 5000 });
+    await btn.waitForClickable({ timeout: 5000 });
+    return btn;
   }
 
   public async entitySearchEditNameBox(): Promise<WebdriverIO.Element> {
@@ -216,11 +226,12 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return ele;
   }
 
-  public async entitySearchDeleteBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#entitySearchDeleteBtn');
-    await ele.waitForDisplayed({timeout: 400});
-    await ele.waitForClickable({timeout: 400});
-    return ele;
+  public async entitySearchDeleteBtn(i = 0): Promise<WebdriverIO.Element> {
+    // await this.openRowMenu(i);
+    const btn = await $(`#entitySearchDeleteBtn${i}`);
+    await btn.waitForDisplayed({ timeout: 5000 });
+    await btn.waitForClickable({ timeout: 5000 });
+    return btn;
   }
 
   public async entitySearchDeleteDeleteBtn(): Promise<WebdriverIO.Element> {
@@ -449,13 +460,28 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   public async deleteList() {
-    const deleteList = await this.getFirstRowObject();
-    if (deleteList != null) {
-      await deleteList.deleteBtn.click();
-      await (await this.entitySearchDeleteDeleteBtn()).click();
-      // browser.refresh();
-    }
+    const row = await this.getFirstRowObject();
+    if (!row?.index) return;
+
+    const index = row.index - 1;
+
+    await $(`#action-items${index}`).scrollIntoView();
+
+    await browser.pause(250);
+    await this.openRowMenu(index);
+    await browser.pause(250);
+
+    const deleteBtn = await this.entitySearchDeleteBtn(index);
+    await deleteBtn.waitForClickable({ timeout: 5000 });
+    await deleteBtn.click();
+
+    const confirm = await this.entitySearchDeleteDeleteBtn();
+    await confirm.waitForClickable({ timeout: 5000 });
+    await confirm.click();
+
+    await this.waitForSpinnerHide();
   }
+
 
   public async editItemName(newItemName) {
     await (await this.entitySearchItemEditBtn()).click();
@@ -479,18 +505,30 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await (await this.entitySearchItemDeleteBtn()).click();
   }
 
-  public async cleanup() {
-    const deleteObject = await this.getFirstRowObject();
-    if (deleteObject != null) {
-      await this.waitForSpinnerHide();
-      await deleteObject.deleteBtn.click();
-
-      await this.waitForSpinnerHide();
-      await (await this.entitySearchDeleteDeleteBtn()).click();
-      await this.waitForSpinnerHide();
-      // browser.refresh();
-    }
+  public async openRowMenu(i = 0) {
+    const menuBtn = await $(`#action-items${i} #actionMenu`);
+    await menuBtn.waitForClickable({ timeout: 1000 });
+    await menuBtn.click();
+    await browser.pause(200);
   }
+
+  public async cleanup() {
+    const row = await this.getFirstRowObject();
+    if (!row?.deleteBtn) return;
+
+    await this.openRowMenu(row.index - 1);
+
+    await row.deleteBtn.waitForClickable({ timeout: 5000 });
+    await row.deleteBtn.click();
+
+    const confirm = await this.entitySearchDeleteDeleteBtn();
+    await confirm.waitForClickable({ timeout: 5000 });
+    await confirm.click();
+
+    await this.waitForSpinnerHide();
+  }
+
+
 }
 
 export class SearchableListRowObject {
@@ -510,10 +548,10 @@ export class SearchableListRowObject {
         this.name = await (await $$('#entitySearchName'))[rowNum - 1].getText();
       } catch (e) {}
       try {
-        this.editBtn = (await $$('#entitySearchUpdateBtn'))[rowNum - 1];
+        this.editBtn = await $(`#entitySearchUpdateBtn${rowNum - 1}`);
       } catch (e) {}
       try {
-        this.deleteBtn = (await $$('#entitySearchDeleteBtn'))[rowNum - 1];
+        this.deleteBtn = await $(`#entitySearchDeleteBtn${rowNum - 1}`);
         // console.log('rowNum is ' + rowNum + ' - ' + this.deleteBtn);
       } catch (e) {}
     }
