@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   EformFieldTypesEnum,
 } from 'src/app/common/const';
@@ -163,14 +162,6 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
       checklistRecursionIndexes: this.checklistRecursionIndexes,
       parentFieldId: this.field.id ? this.field.id : this.field.tempId,
     });
-  }
-
-  dropNestedField(event: CdkDragDrop<EformVisualEditorFieldModel[]>) {
-    if (event.previousIndex !== event.currentIndex) {
-      moveItemInArray(this.field.fields, event.previousIndex, event.currentIndex);
-      this.field.fields = [...this.field.fields]; // Create new reference for change detection
-      this.onFieldPositionChangedOnNestedField(this.field.fields);
-    }
   }
 
   get fieldTranslationAndType() {

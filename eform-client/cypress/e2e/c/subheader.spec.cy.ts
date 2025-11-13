@@ -15,12 +15,8 @@ describe('Subheader test', function () {
     cy.wait('@loadMenu', { timeout: 30000 });
     
     cy.get('#mat-expansion-panel-header-2 > .mat-expansion-indicator').click();
-    cy.get('#dragHandle0_0')
-      .trigger('mousedown', { button: 0, bubbles: true })
-      .trigger('mousemove', { pageX: 10, pageY: 0 });
-    cy.get('mat-card > mat-accordion')
-      .trigger('mousemove', { position: 'top' })
-      .trigger('mouseup', { button: 0, bubbles: true });
+    cy.get('#dragHandle0_0').trigger('mousedown', {which: 1});
+    cy.get('mat-card > mat-accordion').trigger('mousemove', 'top').trigger('mouseup', {force: true});
     cy.get('#mat-expansion-panel-header-2 > .mat-expansion-indicator').click();
     
     cy.intercept('POST', '**/api/navigation-menu').as('saveMenu');

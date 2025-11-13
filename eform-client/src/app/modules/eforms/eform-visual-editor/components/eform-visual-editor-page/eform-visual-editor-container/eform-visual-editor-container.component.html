@@ -94,6 +94,7 @@
         (addNewNestedField)="showFieldModal($event)"
         (deleteNestedField)="showDeleteFieldModal($event)"
         (editNestedField)="showFieldModal($event)"
+        [ngClass]="{ 'no-drag': !checklist.collapsed }"
         (nestedFieldPositionChanged)="
                   onNestedFieldPositionChanged($event)
                 "

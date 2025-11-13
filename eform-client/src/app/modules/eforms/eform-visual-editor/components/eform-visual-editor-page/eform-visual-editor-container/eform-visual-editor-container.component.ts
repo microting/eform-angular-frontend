@@ -45,6 +45,7 @@ import {Store} from '@ngrx/store';
     standalone: false
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
+  private dragulaService = inject(DragulaService);
   private tagsService = inject(EformTagService);
   private visualEditorService = inject(EformVisualEditorService);
   private router = inject(Router);
@@ -56,7 +57,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   private reportService = inject(EformDocxReportService);
   private appSettingsStateService = inject(AppSettingsStateService);
   private translationService = inject(TranslationService);
-  private dragulaService = inject(DragulaService);
 
   @ViewChild('tagsModal') tagsModal: EformsTagsComponent;
 
@@ -93,13 +93,26 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
           handle.classList.contains('dragula-handle') && handle.id === 'moveBtn'
         );
       },
+      accepts: (el, target) => {
+        return target.id === 'editorChecklists' && el.id.includes('checkList_');
+      },
     });
-
     this.dragulaService.createGroup('FIELDS', {
       moves: (el, container, handle) => {
         return (
+          (handle.id === 'moveFieldBtn' || handle.id === 'moveNestedFieldBtn') &&
           handle.classList.contains('dragula-handle')
         );
+      },
+      accepts: (el, target) => {
+        if (el.classList.contains('field-group')) {
+          return (
+            !target.classList.contains('field-group-container')
+            || target.classList.contains('editor-fields')
+          );
+        }
+        return target.classList.contains('editor-fields')
+          || target.classList.contains('nested-fields');
       },
     });
   }
