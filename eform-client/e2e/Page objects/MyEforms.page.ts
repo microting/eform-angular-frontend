@@ -334,12 +334,12 @@ class MyEformsRowObject {
       // await (await this.deleteBtn).scrollIntoView();
       // await (await this.deleteBtn).waitForClickable({timeout: 40000});
       await this.deleteBtn.click();
-      await browser.pause(500);
+      await browser.pause(1000);
       const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');
       // await eFormDeleteDeleteBtn.waitForDisplayed({timeout: 40000});
       // await eFormDeleteDeleteBtn.waitForClickable({timeout: 40000});
       await eFormDeleteDeleteBtn.click();
-      await browser.pause(500);
+      await browser.pause(1000);
     // }
   }
 
