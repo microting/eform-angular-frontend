@@ -33,7 +33,8 @@ describe('Entity Search', function () {
     await searchableLists.createSearchableList_OneItem(name, itemName);
     const searchableList = await searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
-    await searchableList.editBtn.click();
+    // await searchableList.editBtn.click();
+    await (await searchableLists.entitySearchEditBtn(searchableList.index - 1)).click();
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal(itemName);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
   });
@@ -43,7 +44,8 @@ describe('Entity Search', function () {
     await searchableLists.editSearchableListNameAndItem(newName, newItemName);
     const searchableList = await searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(newName);
-    searchableList.editBtn.click();
+    // searchableList.editBtn.click();
+    await (await searchableLists.entitySearchEditBtn(searchableList.index - 1)).click();
     await browser.pause(500);
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal(newItemName);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
@@ -93,7 +95,8 @@ describe('Entity Search', function () {
     const row = await obj.getRow(rowNumber);
     const searchableList = row;
     expect(searchableList.name).equal(newName);
-    await searchableList.editBtn.click();
+    // await searchableList.editBtn.click();
+    await (await searchableLists.entitySearchEditBtn(searchableList.index - 1)).click();
     await browser.pause(500);
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal('f');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();

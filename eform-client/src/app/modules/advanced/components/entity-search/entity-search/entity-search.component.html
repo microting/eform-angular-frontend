@@ -55,7 +55,7 @@
 </ng-template>
 
 <ng-template #actionsTpl let-row let-i="index">
-  <div id="action-items-{{i}}"
+  <div id="action-items{{i}}"
        *ngIf="(selectCurrentUserClaimsEntitySearchDelete$ | async) || (selectCurrentUserClaimsEntitySearchUpdate$ | async)">
     <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
       <mat-icon>more_vert</mat-icon>
@@ -64,7 +64,7 @@
     <mat-menu #menu="matMenu">
       <button
         mat-menu-item
-        id="entitySearchUpdateBtn-{{i}}"
+        id="entitySearchUpdateBtn{{i}}"
         [disabled]="(selectCurrentUserClaimsEntitySearchUpdate$ | async) === false"
         [routerLink]="['/advanced/entity-search/edit/' + row.microtingUUID]"
       >
@@ -74,7 +74,7 @@
 
       <button
         mat-menu-item
-        id="entitySearchDeleteBtn-{{i}}"
+        id="entitySearchDeleteBtn{{i}}"
         (click)="openModalSearchRemove(row)"
         [disabled]="(selectCurrentUserClaimsEntitySearchDelete$ | async) === false || row.isLocked"
       >

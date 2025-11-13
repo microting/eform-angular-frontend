@@ -33,7 +33,8 @@ describe('Entity Search', function () {
     await searchableLists.createSearchableList_OneItem(name, itemName);
     const searchableList = await searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
-    await searchableList.editBtn.click();
+    // await searchableLists.openRowMenu(searchableList.index - 1);
+    await (await searchableLists.entitySearchEditBtn(searchableList.index - 1)).click();
     await browser.pause(500);
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal(itemName);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
@@ -52,7 +53,8 @@ describe('Entity Search', function () {
     await searchableLists.createSearchableList_MultipleItems(name, itemNames);
     const searchableList = await searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
-    await searchableList.editBtn.click();
+    // await searchableLists.openRowMenu(searchableList.index - 1);
+    await (await searchableLists.entitySearchEditBtn(searchableList.index - 1)).click();
     await browser.pause(500);
     expect(await (await searchableLists.firstEntityItemName()).getText()).equal('a');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
