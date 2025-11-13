@@ -313,15 +313,16 @@ class MyEformsRowObject {
     this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[
       currentPosition
       ].$('#eform-add-btn-' + (currentPosition));
-    this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (currentPosition)))[0];
-    this.deleteBtn = await this.element.$('.mat-column-actions [id^="delete-eform-btn"]');
-    this.uploadZipArchiveBtn = (await $$('#upload-zip-btn-' + (currentPosition)))[0];
-    this.goVisualEditorBtn = await this.element.$('.mat-column-actions [id^="edit-eform-btn"]');
+    this.editColumnsBtn = await $('#edit-columns-btn-' + (currentPosition));
+    this.deleteBtn = await $('#delete-eform-btn-' + (currentPosition));
+    this.uploadZipArchiveBtn = await $('#upload-zip-btn-' + (currentPosition));
+    this.goVisualEditorBtn = await $('#edit-eform-btn-' + (currentPosition));
     return this;
   }
 
   async deleteEForm() {
     if (await this.deleteBtn) {
+      await this.clickActionsMenu();
       await (await this.deleteBtn).scrollIntoView();
       await (await this.deleteBtn).waitForClickable({timeout: 40000});
       await (await this.deleteBtn).click();
@@ -332,6 +333,12 @@ class MyEformsRowObject {
       await eFormDeleteDeleteBtn.click();
       await browser.pause(500);
     }
+  }
+
+  private async clickActionsMenu() {
+    await browser.pause(1000);
+    await (await $$('#actionMenu'))[0].click();
+    await browser.pause(1000);
   }
 
   async addTag(tag: string) {
@@ -422,6 +429,7 @@ class MyEformsRowObject {
   }
 
   async goToVisualEditor() {
+    await this.clickActionsMenu();
     await this.goVisualEditorBtn.click();
     await browser.pause(500);
     await (await $('#manageTags')).waitForClickable({timeout: 40000});
