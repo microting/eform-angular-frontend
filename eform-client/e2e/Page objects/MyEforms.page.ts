@@ -329,18 +329,18 @@ class MyEformsRowObject {
   }
 
   async deleteEForm() {
-    if (await this.deleteBtn) {
+    // if (await this.deleteBtn) {
       await this.clickActionsMenu();
-      await (await this.deleteBtn).scrollIntoView();
-      await (await this.deleteBtn).waitForClickable({timeout: 40000});
-      await (await this.deleteBtn).click();
+      // await (await this.deleteBtn).scrollIntoView();
+      // await (await this.deleteBtn).waitForClickable({timeout: 40000});
+      await this.deleteBtn.click();
       await browser.pause(500);
       const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');
-      await eFormDeleteDeleteBtn.waitForDisplayed({timeout: 40000});
-      await eFormDeleteDeleteBtn.waitForClickable({timeout: 40000});
+      // await eFormDeleteDeleteBtn.waitForDisplayed({timeout: 40000});
+      // await eFormDeleteDeleteBtn.waitForClickable({timeout: 40000});
       await eFormDeleteDeleteBtn.click();
       await browser.pause(500);
-    }
+    // }
   }
 
   private async clickActionsMenu() {
