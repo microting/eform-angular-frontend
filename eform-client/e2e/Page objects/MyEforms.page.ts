@@ -283,7 +283,7 @@ export default myEformsPage;
 class MyEformsRowObject {
   constructor() {
   }
-
+  currentPosition: number;
   element: WebdriverIO.Element;
   id: number;
   createdAt: Date;
@@ -298,33 +298,33 @@ class MyEformsRowObject {
   goVisualEditorBtn: WebdriverIO.Element;
 
   async getRow(rowNum: number) {
-    const currentPosition = rowNum - 1;
-    this.element = (await $$('#mainPageEFormsTableBody tr.mat-mdc-row'))[currentPosition];
-    this.id = +(await (await $$('#eform-id-' + (currentPosition)))[0].getText());
+    this.currentPosition = rowNum - 1;
+    this.element = (await $$('#mainPageEFormsTableBody tr.mat-mdc-row'))[this.currentPosition];
+    this.id = +(await (await $$('#eform-id-' + (this.currentPosition)))[0].getText());
     try {
-      const val = (await $$('#eform-created-at-' + (currentPosition)))[0];
+      const val = (await $$('#eform-created-at-' + (this.currentPosition)))[0];
       this.createdAt = new Date(await val.getText());
     } catch (e) {
     }
     try {
-      const val = (await $$('#eform-label-' + (currentPosition)))[0];
+      const val = (await $$('#eform-label-' + (this.currentPosition)))[0];
       this.eFormName = await val.getText();
     } catch (e) {
     }
-    const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[currentPosition];
+    const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[this.currentPosition];
     this.tags = await this.element.$$('.mat-column-tags mat-chip span span span.mat-mdc-chip-action-label');
     // this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
-    this.editTagsBtn = (await $$('#eform-edit-btn-' + (currentPosition)))[0];
+    this.editTagsBtn = (await $$('#eform-edit-btn-' + (this.currentPosition)))[0];
     this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[
-      currentPosition
-      ].$('#eform-pairing-btn-' + (currentPosition));
+      this.currentPosition
+      ].$('#eform-pairing-btn-' + (this.currentPosition));
     this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[
-      currentPosition
-      ].$('#eform-add-btn-' + (currentPosition));
-    this.editColumnsBtn = await $('#edit-columns-btn-' + (currentPosition));
-    this.deleteBtn = await $('#delete-eform-btn-' + (currentPosition));
-    this.uploadZipArchiveBtn = await $('#upload-zip-btn-' + (currentPosition));
-    this.goVisualEditorBtn = await $('#edit-eform-btn-' + (currentPosition));
+      this.currentPosition
+      ].$('#eform-add-btn-' + (this.currentPosition));
+    this.editColumnsBtn = await $('#edit-columns-btn-' + (this.currentPosition));
+    this.deleteBtn = await $('#delete-eform-btn-' + (this.currentPosition));
+    this.uploadZipArchiveBtn = await $('#upload-zip-btn-' + (this.currentPosition));
+    this.goVisualEditorBtn = await $('#edit-eform-btn-' + (this.currentPosition));
     return this;
   }
 
@@ -345,7 +345,7 @@ class MyEformsRowObject {
 
   private async clickActionsMenu() {
     await browser.pause(1000);
-    await (await $$('#actionMenu'))[0].click();
+    await (await $$('#actionMenu'))[this.currentPosition].click();
     await browser.pause(1000);
   }
 
