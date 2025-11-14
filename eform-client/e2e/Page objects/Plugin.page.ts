@@ -70,14 +70,13 @@ class PluginRowObject {
 
   public async getRow(rowNum: number): Promise<PluginRowObject> {
     this.rowNumber= rowNum -1;
-
+    await this.clickActionsMenu();
     this.id = +await ($('#plugin-id'+this.rowNumber)).getText();
     this.name = await (await $('#plugin-name'+this.rowNumber)).getText();
     this.version = await (await $('#plugin-version'+this.rowNumber)).getText();
     this.settingsBtn = await $('#plugin-settings-link'+this.rowNumber);
     this.statusBtn = await $('#plugin-status-button'+this.rowNumber);
     // To get status, we need to open the menu first since the button is inside mat-menu
-    await this.clickActionsMenu();
     const statusIcon = await this.statusBtn.$('mat-icon');
     this.status = await statusIcon.getText();
     // Close the menu by clicking elsewhere or pressing escape
