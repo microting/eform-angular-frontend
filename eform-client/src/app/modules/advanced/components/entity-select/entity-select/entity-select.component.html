@@ -46,7 +46,7 @@
 </mtx-grid>
 
 <ng-template #actionsTpl let-row let-i="index">
-  <div id="action-items-{{i}}" *ngIf="(selectCurrentUserClaimsEntitySelectDelete$ | async) || (selectCurrentUserClaimsEntitySelectUpdate$ | async)">
+  <div id="action-items{{i}}" *ngIf="(selectCurrentUserClaimsEntitySelectDelete$ | async) || (selectCurrentUserClaimsEntitySelectUpdate$ | async)">
     <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -54,7 +54,7 @@
     <mat-menu #menu="matMenu">
       <button
         mat-menu-item
-        id="entitySelectEditBtn-{{i}}"
+        id="entitySelectEditBtn{{i}}"
         [disabled]="(selectCurrentUserClaimsEntitySelectUpdate$ | async) === false"
         [routerLink]="['/advanced/entity-select/edit/' + row.microtingUUID]"
       >
@@ -64,7 +64,7 @@
 
       <button
         mat-menu-item
-        id="entitySelectDeleteBtn-{{i}}"
+        id="entitySelectDeleteBtn{{i}}"
         (click)="openModalSelectRemove(row)"
         [disabled]="(selectCurrentUserClaimsEntitySelectDelete$ | async) === false || row.isLocked"
       >

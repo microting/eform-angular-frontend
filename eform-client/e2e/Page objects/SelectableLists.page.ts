@@ -10,6 +10,16 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public async selectableListCount(): Promise<number> {
     //await browser.pause(250);
     return (await $$('tbody > tr')).length;
+
+  }
+
+  public async openRowMenu(i = 0) {
+    const menuBtn = await $(`#action-items${i} #actionMenu`);
+    await menuBtn.waitForDisplayed({ timeout: 5000 });
+    await menuBtn.waitForClickable({ timeout: 5000 });
+    await menuBtn.scrollIntoView();
+    await menuBtn.click();
+    await browser.pause(200);
   }
 
   public async itemsEditPageCount(): Promise<number> {
@@ -287,6 +297,13 @@ export class SelectableListsPage extends PageWithNavbarPage {
     //await browser.pause(250);
   }
 
+  // public async cleanupList() {
+  //   const last = await this.getLastSelectableListObject();
+  //   if (last.name !== 'Device users') {
+  //     await last.delete();
+  //   }
+  // }
+
   public async cleanupList() {
     for (let i = await this.selectableListCount(); i > 0; i--) {
       const obj = new SelectableListRowObject();
@@ -296,6 +313,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
       }
     }
   }
+
 }
 
 const selectableLists = new SelectableListsPage();
@@ -331,9 +349,29 @@ export class SelectableListRowObject {
     return this;
   }
 
+  // async delete(clickCancel = false) {
+  //   await this.deleteBtn.click();
+  //   await browser.pause(250);
+  //   if (!clickCancel) {
+  //     await (await selectableLists.entitySelectDeleteDeleteBtn()).click();
+  //     await browser.pause(250);
+  //   } else {
+  //     await (await selectableLists.entitySelectDeleteCancelBtn()).click();
+  //     await browser.pause(250);
+  //   }
+  //   await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
+  // }
+
   async delete(clickCancel = false) {
-    await this.deleteBtn.click();
+    const index = this.index - 1;
+    await selectableLists.openRowMenu(index);
+    const deleteBtn = await $(`#entitySelectDeleteBtn${index}`);
+    await deleteBtn.waitForDisplayed({ timeout: 5000 });
+    await deleteBtn.waitForClickable({ timeout: 5000 });
+    await deleteBtn.scrollIntoView();
+    await deleteBtn.click();
     await browser.pause(250);
+
     if (!clickCancel) {
       await (await selectableLists.entitySelectDeleteDeleteBtn()).click();
       await browser.pause(250);
@@ -341,15 +379,23 @@ export class SelectableListRowObject {
       await (await selectableLists.entitySelectDeleteCancelBtn()).click();
       await browser.pause(250);
     }
+
     await (await selectableLists.entitySelectCreateBtn()).waitForDisplayed();
   }
 
   async openEdit() {
-    await this.editBtn.click();
-    await browser.pause(250);
+    const index = this.index - 1;
+
+    await selectableLists.openRowMenu(index);
+    const editBtn = await $(`#entitySelectEditBtn${index}`);
+
+    await editBtn.waitForDisplayed({ timeout: 5000 });
+    await editBtn.waitForClickable({ timeout: 5000 });
+    await editBtn.click();
+
     await (await selectableLists.entitySelectEditCancelBtn()).waitForDisplayed();
-    //await browser.pause(250);
   }
+
 
   async closeEdit(clickCancel = false) {
     if (!clickCancel) {
