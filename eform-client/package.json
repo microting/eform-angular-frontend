@@ -133,7 +133,7 @@
     "@angular-eslint/template-parser": "20.5.0",
     "@angular/cli": "20.3.8",
     "@angular/compiler-cli": "20.1.2",
-    "@angular/language-service": "20.3.9",
+    "@angular/language-service": "20.3.10",
     "@types/chai": "^5.2.2",
     "@types/d3": "^7.4.3",
     "@types/dragula": "^2.1.36",
