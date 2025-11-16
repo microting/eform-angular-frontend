@@ -125,6 +125,7 @@ export default sitesPage;
 export class SitesRowObject {
   constructor() {}
 
+  index: number;
   element: Cypress.Chainable<JQuery<HTMLElement>>;
   siteId: number;
   units: string;
@@ -134,6 +135,7 @@ export class SitesRowObject {
   deleteBtn: Cypress.Chainable<JQuery<HTMLElement>>;
 
   getRow(rowNum): Promise<SitesRowObject> {
+    this.index = rowNum;
     this.element = cy.get('tbody > tr').eq(rowNum - 1);
     if (this.element) {
       this.siteId = +(this.element.find('#siteUUId').invoke('text'));
@@ -146,6 +148,13 @@ export class SitesRowObject {
     }
     return this;
   }
+
+  openRowMenu() {
+    const index = this.index - 1;
+    cy.get(`#action-items-${index} #actionMenu`).should('be.visible').click();
+    cy.wait(200);
+  }
+
   closeEditModal(clickCancel = false) {
     if (clickCancel) {
       sitesPage.siteEditCancelBtn().click();
@@ -156,22 +165,10 @@ export class SitesRowObject {
     sitesPage.sitesManageTagsBtn().should('be.visible', { timeout: 40000 });
   }
 
-  getRow(rowNum): Promise<SitesRowObject> {
-    this.element = Cypress.$$('tbody > tr').eq(rowNum - 1);
-    if (this.element) {
-      this.siteId = +this.element.find('#siteUUId').text();
-      this.units = this.element.find('#units').text();
-      this.siteName = this.element.find('#siteName').text();
-      const list = this.element.find('mat-chip-list mat-chip > span');
-      this.tags = Promise.all(list.map((_, element) => Cypress.$(element).text()));
-      this.editBtn = this.element.find('#editSiteBtn');
-      this.deleteBtn = this.element.find('#deleteSiteBtn');
-    }
-    return this;
-  }
-
   openEditModal(site?: { name?: string; tags?: string[] }) {
-    this.editBtn.click();
+    const index = this.index - 1;
+    this.openRowMenu();
+    cy.get(`#editSiteBtn${index}`).should('be.visible').click();
     cy.wait(500);
     sitesPage.siteEditCancelBtn().should('be.visible', {timeout: 40000});
     if (site) {
@@ -196,7 +193,9 @@ export class SitesRowObject {
   }
 
   openDeleteModal() {
-    this.deleteBtn.click();
+    const index = this.index - 1;
+    this.openRowMenu();
+    cy.get(`#deleteSiteBtn${index}`).should('be.visible').click();
     cy.wait(500);
     sitesPage.siteDeleteCancelBtn().should('be.visible', {timeout: 40000}).click();
   }

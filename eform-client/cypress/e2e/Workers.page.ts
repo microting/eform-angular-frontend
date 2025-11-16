@@ -127,7 +127,9 @@ class WorkersPage extends PageWithNavbarPage {
     firstName = '',
     lastName = ''
   ): void {
-    worker.editBtn().should('be.visible').click();
+    const index = worker.index - 1;
+    worker.openRowMenu();
+    cy.get(`#workerEditBtn${index}`).should('be.visible').click();
     // @ts-ignore
     cy.get('#firstNameEdit').should('be.visible');
     if (firstName !== '') {
@@ -152,6 +154,7 @@ const workersPage = new WorkersPage();
 export default workersPage;
 
 export class WorkersRowObject {
+  index: number;
   siteId: number;
   firstName: string;
   lastName: string;
@@ -161,6 +164,7 @@ export class WorkersRowObject {
   deleteBtn: Cypress.Chainable<JQuery<HTMLElement>>;
 
   getRow(rowNum: number) {
+    this.index = rowNum;
     // @ts-ignore
     if (cy.get('#workerUID').eq(rowNum - 1).should('exist')) {
       // @ts-ignore
@@ -175,5 +179,11 @@ export class WorkersRowObject {
       this.deleteBtn = cy.get('#workerDeleteBtn').eq(rowNum - 1);
     }
     return this;
+  }
+
+  openRowMenu() {
+    const index = this.index - 1;
+    cy.get(`#action-items-${index} #actionMenu`).should('be.visible').click();
+    cy.wait(200);
   }
 }
