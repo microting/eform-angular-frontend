@@ -1,18 +1,37 @@
+/**
+ * Form Component Styles
+ * 
+ * Provides utility classes for Material Design form fields with various spacing options.
+ * These classes enable flexible form layouts and consistent spacing across the application.
+ */
+
+/**
+ * Material Design Form Variants
+ */
+
+// Form field for case elements with minimal spacing
 .md-form {
   &.md-form-case-elem {
     margin-top: 0.3rem;
     margin-bottom: 0;
   }
+
+  // Form field with no spacing
   &.md-form-no-spacing {
     margin: 0 !important;
     padding: 0 !important;
   }
+
+  // Small form field with standard margin
   &.md-form-sm {
     margin: 1rem !important;
     padding: 0 !important;
   }
 }
 
+/**
+ * Material Form Field Base Styles
+ */
 .mat-mdc-form-field {
   width: 100%;
 }

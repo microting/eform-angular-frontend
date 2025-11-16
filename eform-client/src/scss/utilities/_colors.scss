@@ -1,9 +1,29 @@
-$eform-gray-light: #F1F1F1;
+/**
+ * Color Variables
+ * 
+ * Defines the core color palette used throughout the application.
+ * These colors provide semantic meaning and maintain consistency across components.
+ * 
+ * Color Categories:
+ * - Gray shades: For neutral UI elements
+ * - Red shades: For errors, warnings, and critical actions
+ * - Orange: For warnings and alerts
+ * - Green shades: For success states and positive actions
+ */
+
+// Gray color palette
+$eform-gray-light: #f1f1f1;
 $eform-gray: #263238;
 $eform-gray-dark: #000a12;
+
+// Red color palette
 $eform-red-dark: #7f0000;
-$eform-red-light: #f05545;
 $eform-red: #b71c1c;
+$eform-red-light: #f05545;
+
+// Warning/alert colors
 $eform-orange: #d9921e;
-$eform-green: #61BA5B;
-$eform-green-dark: #4B9F45;
+
+// Success/positive colors
+$eform-green: #61ba5b;
+$eform-green-dark: #4b9f45;

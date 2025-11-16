@@ -1,27 +1,50 @@
-// Modal y fix
+/**
+ * Modal Component Styles
+ * 
+ * Customizes modal behavior and appearance with theme support.
+ * Handles scrolling behavior and dark theme styling for modal components.
+ */
+
+/**
+ * Modal Scrolling Behavior
+ * 
+ * Ensures modals are scrollable without showing scrollbars.
+ * Provides a cleaner appearance across different browsers.
+ */
 .modal-open .modal {
   overflow-y: auto;
-  -ms-overflow-style: none;  // IE 10+
-  overflow: -moz-scrollbars-none;  // Firefox
+  -ms-overflow-style: none; // IE 10+
+  overflow: -moz-scrollbars-none; // Firefox
+  
   &::-webkit-scrollbar {
-    display: none;  // Safari and Chrome
+    display: none; // Safari and Chrome
   }
 }
 
+/**
+ * Dark Theme Modal Styles
+ * 
+ * Applies dark theme colors to modal header, body, and footer.
+ * Ensures proper contrast and readability in dark mode.
+ */
 body.theme-dark {
   .modal-content {
     background-color: var(--theme-background-color);
+    
     .modal-header {
       background-color: var(--black-075);
       color: var(--theme-body-font-color);
       border-bottom: 1px solid var(--black-300);
+      
       button.close {
         color: var(--black-900);
       }
     }
+    
     .modal-body {
       color: var(--theme-body-font-color);
     }
+    
     .modal-footer {
       border-top: 1px solid var(--black-300);
     }

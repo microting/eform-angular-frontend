@@ -1,33 +1,77 @@
-/* You can add global styles to this file, and also import other style files 2 */
+/**
+ * Global Styles
+ * 
+ * This file contains application-wide styles including:
+ * - Base HTML/body styles
+ * - CSS custom properties (CSS variables) for theming
+ * - Utility classes for common patterns
+ * - Component overrides and customizations
+ * - Status and priority indicators
+ * 
+ * Structure:
+ * 1. Imports (components, utilities, libraries)
+ * 2. Base element styles
+ * 3. Theme variables
+ * 4. Utility classes
+ * 5. Status/priority classes
+ * 6. Custom component styles
+ */
+
+// Import component styles
 @use "components/index" as components;
+
+// Import utilities (variables, colors, spacing, etc.)
 @use "utilities" as *;
+
+// Import third-party library styles
 @use "libs/index" as libs;
 
+/**
+ * Font Configuration
+ */
 $eform-font-family: Nunito Sans, Roboto, "Helvetica Neue", sans-serif;
-// h-100 for base elements
-html, body {
+
+/**
+ * Base HTML and Body Styles
+ */
+html,
+body {
   height: 100vh;
   font-size: 14px;
   margin: 0;
-  --theme-body-font-color: var(--black-800);
   font-family: $eform-font-family;
+  --theme-body-font-color: var(--black-800);
 
   .mat-mdc-option {
     font-size: unset !important;
   }
 }
 
-b, strong {
+/**
+ * Typography Overrides
+ */
+b,
+strong {
   font-weight: 500;
 }
+
 h2 {
   font-weight: 300;
 }
+
+/**
+ * Layout Utilities
+ */
 .spacer {
   flex: 1 1 auto;
 }
 
-* { // for all elements with scroll
+/**
+ * Custom Scrollbar Styles
+ * 
+ * Applies custom scrollbar styling for webkit browsers.
+ */
+* {
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -35,190 +79,223 @@ h2 {
   }
 
   &::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
     background-color: #999999;
   }
 
   &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
     background-color: white;
   }
 }
 
-body, .theme-light {
+/**
+ * Light Theme CSS Custom Properties
+ */
+body,
+.theme-light {
   --black-800: #242729;
   --blue-600: #0077cc;
   --theme-body-font-color: var(--black-800);
   --tp-td-bg: #ffffff;
   --tp-th-bg: #f7f9fa;
-  --tp-border: #EBEFF2;
+  --tp-border: #ebeff2;
   --tp-text: #111827;
   --tp-white-text: black;
 }
 
-body, .theme-dark {
+/**
+ * Dark Theme CSS Custom Properties
+ */
+body,
+.theme-dark {
   --tp-td-bg: #424242;
   --tp-th-bg: #424242;
-  --tp-border: #2B2B2B;
-  --tp-text: #E6E6E6;
+  --tp-border: #2b2b2b;
+  --tp-text: #e6e6e6;
   --tp-white-text: white;
 }
 
+/**
+ * Link Styles
+ */
 a {
   text-decoration: none;
 }
 
-//.mat-icon {
-//  width: $icon-size !important;
-//  height: $icon-size !important;
-//  font-size: $icon-size;
-//  line-height: $icon-size !important;
-//}
-//.mat-mdc-menu-item .mat-icon {
-//  width: 18px;
-//  height: 18px;
-//  font-size: 18px;
-//  line-height: 18px
-//}
-
+/**
+ * Common Utility Classes
+ */
 .h-100 {
   height: 100% !important;
 }
 
 .text-center {
-  text-align: center!important;
+  text-align: center !important;
 }
 
+/**
+ * Report Case Styles
+ */
 .reportCaseUnarchive {
   color: green !important;
 }
 
+/**
+ * Status Indicator Classes
+ * 
+ * Provides visual feedback for active/inactive states.
+ */
 .status-active {
-  background-color: #4caf50 !important; /* green */
+  background-color: #4caf50 !important;
   color: #fff !important;
+
+  span {
+    color: #fff !important;
+  }
 }
+
 .status-inactive {
-  background-color: #f44336 !important; /* red */
+  background-color: #f44336 !important;
   color: #fff !important;
+
+  span {
+    color: #fff !important;
+  }
 }
 
-.status-active span {
-  color: #fff !important;
-}
-
-.status-inactive span {
-  color: #fff !important;
-}
-
+/**
+ * Priority Indicator Classes
+ * 
+ * Color-coded priority levels for tasks and items.
+ * Range from urgent (red) to low (light red/pink).
+ */
 .priority-green {
-  background-color: #a3d7b1 !important; /* green */
-  color: #000 !important;}
+  background-color: #a3d7b1 !important;
+  color: #000 !important;
+}
 
 .priority-urgent {
-  background-color: #a71d2a !important; /* red */
+  background-color: #a71d2a !important;
   color: #fff !important;
-}
-.priority-high {
-  background-color: #dc3545 !important; /* orange */
-  color: #fff !important;
-}
-.priority-medium {
-  background-color: #f5a5a8 !important; /* yellow */
-  color: #fff !important;
-}
-.priority-low {
-  background-color: #f8d7da !important; /* green */
-  color: #000 !important;
+
+  span {
+    color: #fff !important;
+  }
 }
 
-.priority-urgent span {
+.priority-high {
+  background-color: #dc3545 !important;
   color: #fff !important;
+
+  span {
+    color: #fff !important;
+  }
 }
-.priority-high span {
+
+.priority-medium {
+  background-color: #f5a5a8 !important;
   color: #fff !important;
+
+  span {
+    color: #fff !important;
+  }
 }
-.priority-medium span {
-  color: #fff !important;
-}
-.priority-low span {
+
+.priority-low {
+  background-color: #f8d7da !important;
   color: #000 !important;
+
+  span {
+    color: #000 !important;
+  }
 }
-//.background-yellow{background-color: var(--yellow) !important;}
+/**
+ * Planning Container Background Classes
+ * 
+ * Provides different background colors for planning/calendar containers.
+ * Each background class includes a styled plan-container child element.
+ */
 .grey-background {
   background-color: var(--tp-td-bg) !important;
-  border-right: 1px solid #EBEFF2 !important;
-  border-bottom: 1px solid #EBEFF2 !important;
+  border-right: 1px solid #ebeff2 !important;
+  border-bottom: 1px solid #ebeff2 !important;
   padding: 5px !important;
-}
 
-.grey-background .plan-container {
-  background-color: #EBEFF2 !important;
-  width: 100% !important;
-  height: 100% !important;
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-  min-height: 100px;
-  min-width: 250px !important;
+  .plan-container {
+    background-color: #ebeff2 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    min-height: 100px;
+    min-width: 250px !important;
+  }
 }
 
 .white-background {
   background-color: var(--tp-td-bg) !important;
-  border-right: 1px solid #EBEFF2 !important;
-  border-bottom: 1px solid #EBEFF2 !important;
+  border-right: 1px solid #ebeff2 !important;
+  border-bottom: 1px solid #ebeff2 !important;
   padding: 5px !important;
-}
 
-.white-background .plan-container {
-  background-color: var(--tp-td-bg) !important;
-  width: 100% !important;
-  height: 100% !important;
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-  min-height: 100px;
-  min-width: 250px !important;
+  .plan-container {
+    background-color: var(--tp-td-bg) !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    min-height: 100px;
+    min-width: 250px !important;
+  }
 }
 
 .green-background {
   background-color: var(--tp-td-bg) !important;
-  border-right: 1px solid #EBEFF2 !important;
-  border-bottom: 1px solid #EBEFF2 !important;
+  border-right: 1px solid #ebeff2 !important;
+  border-bottom: 1px solid #ebeff2 !important;
   padding: 5px !important;
-}
 
-.green-background .plan-container {
-  background-color: #E2F7E7 !important;
-  width: 100% !important;
-  height: 100% !important;
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-  min-height: 100px;
-  min-width: 250px !important;
+  .plan-container {
+    background-color: #e2f7e7 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    min-height: 100px;
+    min-width: 250px !important;
+  }
 }
 
 .red-background {
   background-color: var(--tp-td-bg) !important;
-  border-bottom: 1px solid #EBEFF2 !important;
-  border-right: 1px solid #EBEFF2 !important;
+  border-bottom: 1px solid #ebeff2 !important;
+  border-right: 1px solid #ebeff2 !important;
+
+  .plan-container {
+    background-color: #ffe1e1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    min-height: 100px;
+    min-width: 250px !important;
+  }
 }
 
-.red-background .plan-container {
-  background-color: #FFE1E1 !important;
-  width: 100% !important;
-  height: 100% !important;
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-  min-height: 100px;
-  min-width: 250px !important;
-}
-
+/**
+ * Icon Utility Classes
+ * 
+ * Positioning and styling for various icon types used in the application.
+ */
 .device-icon {
   position: relative !important;
   top: 5px !important;
-  color: #B3B9BF !important;
+  color: #b3b9bf !important;
 }
 
 .neutral-icon {
@@ -228,6 +305,11 @@ a {
   font-size: 20px !important;
 }
 
+/**
+ * Text Color Utility Classes
+ * 
+ * Quick color overrides for text elements.
+ */
 .black-text {
   color: black !important;
 }
@@ -241,93 +323,99 @@ a {
 }
 
 .red-text {
-  color: #DB0D0D !important;
+  color: #db0d0d !important;
 }
 
 .blue-text {
-  color: #0D96DB !important;
+  color: #0d96db !important;
 }
 
 .grey-text {
-  color: #B3B9BF !important;
+  color: #b3b9bf !important;
 }
 
+/**
+ * Progress Circle Component
+ * 
+ * Displays a circular progress indicator with optional avatar and warning icon.
+ * Uses CSS conic-gradient for the progress arc.
+ */
 .progress-circle {
   position: relative;
   width: 50px;
   height: 50px;
   border-radius: 50%;
   background: conic-gradient(
-      #319C4C 0%,
-      #319C4C calc(var(--percentage) * 1%),
-      lightgrey calc(var(--percentage) * 1%),
-      lightgrey 100%
+    #319c4c 0%,
+    #319c4c calc(var(--percentage) * 1%),
+    lightgrey calc(var(--percentage) * 1%),
+    lightgrey 100%
   );
+
+  // Warning icon positioning
+  .red-warning-avatar-icon {
+    color: #db0d0d !important;
+    position: relative;
+    top: 30px;
+    left: 30px;
+    font-weight: 200 !important;
+    font-size: 17px !important;
+  }
+
+  // White circular background layer
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+
+  // Avatar overlay
+  .avatar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background-size: cover;
+    background-position: center;
+  }
 }
 
-.progress-circle .red-warning-avatar-icon {
-  //background-color: white;
-  color: #DB0D0D !important;
-  position: relative;
-  top: 30px;
-  left: 30px;
-  font-weight: 200 !important;
-  font-size: 17px !important;
-}
-
-/* css */
-/* File: 'src/scss/styles.scss' */
-/* Keep current positioning in '.progress-circle .red-warning-avatar-icon' as-is */
-
-/* Only adjust the icon box and background */
+/**
+ * Warning Icon Styling
+ * 
+ * Special styling for the red warning icon used in avatar circles.
+ */
 mat-icon.red-warning-avatar-icon {
-  /* Default mat-icon box is 24x24; with font-size: 20px this yields ~2px margin */
-  width: 19px;   /* keep default */
-  height: 19px;  /* keep default */
-
+  width: 19px;
+  height: 19px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  background-color: #fff;   /* white circular background */
-  border-radius: 50%;       /* make it a circle */
-  padding: 0 !important;    /* no extra white ring */
-
-  color: #DB0D0D !important; /* keep the glyph red */
-  line-height: 1;            /* avoid extra vertical space */
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 0 !important;
+  color: #db0d0d !important;
+  line-height: 1;
   box-sizing: border-box;
 }
 
-/* If the mat-icon inherits a color (e.g. red) you can keep the glyph colored while the circle is white */
-mat-icon.red-warning-avatar-icon {
-  color: #d32f2f; /* example icon color */
-}
-.progress-circle::before {
-  content: '';
-  position: absolute;
-  inset: 4px;
-  border-radius: 50%;
-  background-color: #fff;
-}
-
-.progress-circle .avatar {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background-size: cover;
-  background-position: center;
-}
-
+/**
+ * Planning and Layout Components
+ * 
+ * Utility classes for planning-related UI components.
+ */
 .progress-container {
   display: flex;
   align-items: center;
   padding-bottom: 4px;
   padding-top: 4px;
 }
+
 .plan-content {
   flex-grow: 1;
   padding: 5px;
@@ -345,20 +433,32 @@ mat-icon.red-warning-avatar-icon {
   flex: 1 0 0;
 }
 
+/**
+ * Toast Notification Positioning
+ */
 .toast-bottom-right {
   bottom: 0;
   right: 7px;
 }
 
+/**
+ * Spacing Utilities
+ */
 .pt-6 {
   padding-top: 1.5em;
 }
 
+/**
+ * Third-party Component Overrides
+ */
+
+// Timepicker z-index
 ngx-material-timepicker-container {
   z-index: 2000;
   position: relative;
 }
 
+// Overlay backdrop opacity
 .cdk-overlay-backdrop {
   background-color: rgba(0, 0, 0, 1) !important;
 }
