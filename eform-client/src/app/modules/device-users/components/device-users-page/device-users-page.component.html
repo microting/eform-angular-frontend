@@ -74,27 +74,33 @@
   </ng-container>
   <ng-container *ngIf="!row.unitId"> N/A</ng-container>
 </ng-template>
-<ng-template #actionsTpl let-row>
-  <div *ngIf="(selectCurrentUserClaimsDeviceUsersUpdate$ | async) || (selectCurrentUserClaimsDeviceUsersDelete$ | async)">
-    <button
-      mat-icon-button
-      id="editDeviceUserBtn"
-      (click)="openEditModal(row)"
-      *ngIf="(selectCurrentUserClaimsDeviceUsersUpdate$ | async) && !row.isLocked"
-      matTooltip="{{ 'Edit Device User' | translate }}"
-    >
-      <mat-icon>edit</mat-icon>
+<ng-template #actionsTpl let-row let-i="index">
+  <div class="device-user-actions" id="action-items-{{i}}" *ngIf="(selectCurrentUserClaimsDeviceUsersUpdate$ | async) || (selectCurrentUserClaimsDeviceUsersDelete$ | async)">
+    <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
+      <mat-icon>more_vert</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      color="warn"
-      id="deleteDeviceUserBtn"
-      (click)="openDeleteDeviceUserModal(row)"
-      *ngIf="(selectCurrentUserClaimsDeviceUsersDelete$ | async) && !row.isLocked"
-      matTooltip="{{ 'Delete Device User' | translate }}"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
+
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        id="editDeviceUserBtn{{i}}"
+        *ngIf="(selectCurrentUserClaimsDeviceUsersUpdate$ | async) && !row.isLocked"
+        (click)="openEditModal(row)"
+      >
+        <mat-icon>edit</mat-icon>
+        <span>{{ 'Edit Device User' | translate }}</span>
+      </button>
+
+      <button
+        mat-menu-item
+        id="deleteDeviceUserBtn{{i}}"
+        *ngIf="(selectCurrentUserClaimsDeviceUsersDelete$ | async) && !row.isLocked"
+        (click)="openDeleteDeviceUserModal(row)"
+      >
+        <mat-icon color="warn">delete</mat-icon>
+        <span>{{ 'Delete Device User' | translate }}</span>
+      </button>
+    </mat-menu>
   </div>
 </ng-template>
 <!--pagination(if required)-->

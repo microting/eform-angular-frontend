@@ -50,46 +50,9 @@ export class SecurityPageComponent implements OnInit, OnDestroy {
       sortProp: {id: 'UserAmount'}
     },
     {
+      pinned: 'right',
       header: this.translateService.stream('Actions'),
       field: 'actions',
-      type: 'button',
-      buttons: [
-        {
-          color: 'accent',
-          type: 'icon',
-          icon: 'edit',
-          tooltip: this.translateService.stream('Edit Group'),
-          click: (record) => this.router.navigate(['update-group', record.id], {relativeTo: this.route}),
-        },
-        {
-          color: 'primary',
-          type: 'icon',
-          icon: 'summarize',
-          tooltip: this.translateService.stream('eForms permissions'),
-          click: (record) => this.router.navigate([`group/${record.id}/eforms-permissions`], {relativeTo: this.route}),
-        },
-        {
-          color: 'primary',
-          type: 'icon',
-          icon: 'lock_open',
-          tooltip: this.translateService.stream('General Permissions'),
-          click: (record) => this.router.navigate([`group/${record.id}/general-permissions`], {relativeTo: this.route}),
-        },
-        {
-          color: 'accent',
-          type: 'icon',
-          icon: 'settings',
-          tooltip: this.translateService.stream('Group settings'),
-          click: (record) => this.openSettingsModal(record),
-        },
-        {
-          color: 'warn',
-          type: 'icon',
-          icon: 'delete',
-          tooltip: this.translateService.stream('Delete Group'),
-          click: (record) => this.openDeleteModal(record),
-        },
-      ]
     },
   ];
   securityGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
