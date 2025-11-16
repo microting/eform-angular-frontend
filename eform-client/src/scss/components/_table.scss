@@ -1,10 +1,22 @@
+/**
+ * Table Component Styles
+ * 
+ * Provides theming and customization for Material table components (mtx-grid).
+ * Includes color configurations for light and dark themes, and typography settings.
+ */
+
 @use 'sass:map';
 @use '@angular/material' as mat;
 
+/**
+ * Base Table Styles
+ * 
+ * Sets default styling for mtx-grid table component.
+ */
 .mtx-grid {
   max-height: 78.5vh;
   border: 0 !important;
-  outline: 1px solid rgba(255,255,255,0.2);
+  outline: 1px solid rgba(255, 255, 255, 0.2);
 
   .mat-mdc-standard-chip {
     height: unset;
@@ -18,33 +30,49 @@
     min-height: 82px;
   }
 
-  &.mtx-grid-toolbar-display-block, .mtx-grid-toolbar-display-block {
+  &.mtx-grid-toolbar-display-block,
+  .mtx-grid-toolbar-display-block {
     .mtx-grid-toolbar {
       display: block !important;
     }
   }
 }
 
+/**
+ * Color Mixin
+ * 
+ * Applies theme-aware background colors to table cells.
+ * Provides different color schemes for light and dark themes.
+ * 
+ * @param {Map} $theme - The Material theme map
+ */
 @mixin color($theme) {
   $color-config: mat.m2-get-color-config($theme);
   $is-dark-theme: map.get($color-config, 'is-dark');
+  
+  // Light theme colors
   $background-powder-color: #b3d3ea;
   $background-yellow-color: #e6d178;
   $background-red-light-color: #f8d7da;
   $background-red-dark-color: #f5a5a8;
+  
+  // Adjust colors for dark theme
   @if $is-dark-theme {
     $background-powder-color: #4c6071;
     $background-yellow-color: #7e6f3a;
     $background-red-light-color: #f8d7da;
     $background-red-dark-color: #f5a5a8;
   }
+  
   mtx-grid {
     .background-yellow {
       background-color: $background-yellow-color !important;
     }
+    
     .background-red-light {
       background-color: $background-red-light-color !important;
     }
+    
     .background-red-dark {
       background-color: $background-red-dark-color !important;
     }
@@ -54,24 +82,43 @@
     }
   }
 }
+
+/**
+ * Typography Mixin
+ * 
+ * Applies typography settings to table header and body text.
+ * Uses theme typography configuration for consistent text styling.
+ * 
+ * @param {Map} $theme - The Material theme map
+ */
 @mixin typography($theme) {
   $typography-config: mat.m2-get-typography-config($theme);
   $header-text: map.get($typography-config, 'subtitle-2');
   $normal-text: map.get($typography-config, 'body-2');
+  
   mtx-grid thead * {
     @each $prop, $value in $header-text {
-      $prop: $value;
+      #{$prop}: $value;
     }
   }
+  
   mtx-grid tbody * {
     @each $prop, $value in $normal-text {
-      $prop: $value;
+      #{$prop}: $value;
     }
   }
 }
 
+/**
+ * Main Theme Mixin
+ * 
+ * Entry point for applying all theme-specific table styles.
+ * 
+ * @param {Map} $theme - The Material theme map
+ */
 @mixin theme($theme) {
   $color-config: mat.m2-get-color-config($theme);
+  
   @if $color-config != null {
     @include color($theme);
     @include typography($theme);

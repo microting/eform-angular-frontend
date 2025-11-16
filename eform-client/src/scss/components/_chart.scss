@@ -1,13 +1,28 @@
+/**
+ * Chart Component Styles
+ * 
+ * Provides theming for ngx-charts components with support for light and dark themes.
+ * Customizes chart appearance including text, backgrounds, tooltips, and legends.
+ */
+
 @use 'sass:map';
 @use '@angular/material' as mat;
 
+/**
+ * Color Mixin
+ * 
+ * Applies theme-aware styling to chart components.
+ * Provides comprehensive dark theme support with carefully chosen colors.
+ * 
+ * @param {Map} $theme - The Material theme map
+ */
 @mixin color($theme) {
   $color-config: mat.m2-get-color-config($theme);
   $is-dark-theme: map.get($color-config, 'is-dark');
   $background: map.get(map.get($theme, 'background'), 'card');
 
   @if ($is-dark-theme) {
-    /*Backgrounds*/
+    // Dark theme color palette
     $color-bg-darkest: #13141b;
     $color-bg-darker: #1b1e27;
     $color-bg-dark: #232837;
@@ -15,16 +30,17 @@
     $color-bg-light: #455066;
     $color-bg-lighter: #5b6882;
 
-    /*Text*/
+    // Dark theme text colors
     $color-text-dark: #72809b;
     $color-text-med-dark: #919db5;
-    $color-text-med: #A0AABE;
+    $color-text-med: #a0aabe;
     $color-text-med-light: #d9dce1;
     $color-text-light: #f0f1f6;
     $color-text-lighter: #fff;
 
     background: $color-bg-darker;
 
+    // Base chart text styling
     .ngx-charts {
       text {
         fill: $color-text-med;
@@ -46,6 +62,7 @@
         fill: #fff;
       }
 
+      // Grid panel styling
       .grid-panel {
         &.odd {
           rect {
@@ -54,18 +71,21 @@
         }
       }
 
+      // Force-directed graph styling
       .force-directed-graph {
         .edge {
           stroke: $color-bg-light;
         }
       }
 
+      // Number card styling
       .number-card {
         p {
           color: $color-text-light;
         }
       }
 
+      // Gauge chart styling
       .gauge {
         .background-arc {
           path {
@@ -84,6 +104,7 @@
         }
       }
 
+      // Linear gauge styling
       .linear-gauge {
         .background-bar {
           path {
@@ -96,6 +117,7 @@
         }
       }
 
+      // Timeline styling
       .timeline {
         .brush-background {
           fill: rgba(255, 255, 255, 0.05);
@@ -109,11 +131,13 @@
         }
       }
 
+      // Polar chart styling
       .polar-chart .polar-chart-background {
         fill: rgb(30, 34, 46);
       }
     }
 
+    // Chart legend styling for dark theme
     .chart-legend {
       .legend-labels {
         background: $background !important;
@@ -144,6 +168,7 @@
       }
     }
 
+    // Advanced pie legend styling for dark theme
     .advanced-pie-legend {
       color: $color-text-med;
 
@@ -164,7 +189,8 @@
       font-size: 0.8em;
       color: $color-text-med;
     }
-  } @else { // light theme
+  } @else {
+    // Light theme legend styling
     .advanced-pie-legend {
       .legend-items-container {
         .legend-items {
@@ -172,16 +198,29 @@
         }
       }
     }
-}
+  }
 }
 
+/**
+ * Main Theme Mixin
+ * 
+ * Entry point for applying theme-specific chart styles.
+ * 
+ * @param {Map} $theme - The Material theme map
+ */
 @mixin theme($theme) {
   $color-config: mat.m2-get-color-config($theme);
+  
   @if $color-config != null {
     @include color($theme);
   }
 }
 
+/**
+ * Common Chart Styles
+ * 
+ * Styles applied regardless of theme.
+ */
 .legend-title-text {
   text-overflow: clip !important;
   padding-right: 5px;

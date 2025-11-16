@@ -1,21 +1,57 @@
-/* You can add global styles to this file, and also import other style files 2 */
+/**
+ * Theme Configuration for eForm Angular Frontend
+ * 
+ * This file defines the Material Design theme configuration for the application.
+ * It uses Angular Material's M2 theme APIs which are compatible with Material 2 and Material 3.
+ * 
+ * Structure:
+ * - Typography configuration
+ * - Color palettes (light and dark themes)
+ * - Theme definitions
+ * - Component theme includes
+ * 
+ * Note: When migrating to Material 3, update theme APIs from m2-* to the new M3 APIs.
+ * See: https://material.angular.io/guide/theming
+ */
 
+// Core Angular Material imports
 @use '@angular/material' as mat;
 @use '@ng-matero/extensions' as mtx;
+
+// Third-party library styles
 @use './ngx-editor/ngx-editor' as ngx-editor;
-@use '../components/text' as text;
 @use '../libs/ngx-gallery/ngx-gallery' as ngx-gallery;
+@use '../libs/ngx-toastr/ngx-toastr' as ngx-toastr;
+
+// Component theme mixins
+@use '../components/text' as text;
 @use '../components/table' as table;
 @use '../components/chart' as chart;
-@use '../libs/ngx-toastr/ngx-toastr' as ngx-toastr;
-//@use '../libs/ng-datepicker/ng-datepicker' as ng-datepicker;
 @use '../components/tag' as tag;
+
+// Include Material core styles (only once per app)
 @include mat.core();
 
-
+// Typography configuration
 $letter-spacing: normal;
 $eform-font-family: Nunito Sans, Roboto, "Helvetica Neue", sans-serif;
-// Define a typography
+/**
+ * Typography Configuration
+ * 
+ * Defines custom typography levels for the application.
+ * These settings override Material's default typography scale.
+ * 
+ * Typography Levels:
+ * - headline-4: Large page titles (1.3rem, weight 400)
+ * - headline-5: Section headers (1.2rem, weight 300)
+ * - headline-6: Subsection headers (1.17rem, weight 300)
+ * - subtitle-1: Prominent text (1.15rem, weight 300)
+ * - subtitle-2: Table headers (12.8px, weight 300)
+ * - body-1: Default body text and table content (16px, weight 300)
+ * - body-2: Secondary body text (1rem, weight 300)
+ * - caption: Small text (1rem, weight 300)
+ * - button: Button text (14px, weight 300)
+ */
 $eform-typography: mat.m2-define-typography-config(
   $font-family: $eform-font-family,
   $headline-4: mat.m2-define-typography-level(
@@ -49,14 +85,14 @@ $eform-typography: mat.m2-define-typography-config(
   $subtitle-2: mat.m2-define-typography-level(
     $font-family: $eform-font-family,
     $font-weight: 300,
-    $font-size: 12.8px, // font size for: table header
+    $font-size: 12.8px,
     $line-height: 1.2,
     $letter-spacing: $letter-spacing,
   ),
   $body-1: mat.m2-define-typography-level(
     $font-family: $eform-font-family,
     $font-weight: 300,
-    $font-size: 16px, // font size for: default level text, text in table
+    $font-size: 16px,
     $line-height: 1.2,
     $letter-spacing: $letter-spacing,
   ),
@@ -77,12 +113,18 @@ $eform-typography: mat.m2-define-typography-config(
   $button: mat.m2-define-typography-level(
     $font-family: $eform-font-family,
     $font-weight: 300,
-    $font-size: 14px, //  font size for: button text, button icon(?)
+    $font-size: 14px,
     $line-height: 1.15,
     $letter-spacing: $letter-spacing,
-  ));
+  )
+);
 
-// Define a light theme
+/**
+ * Light Theme Configuration
+ * 
+ * Defines the color palette and theme for light mode.
+ * Uses Material Design color palettes with custom configurations.
+ */
 $eform-light-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
 $eform-light-accent: mat.m2-define-palette(mat.$m2-pink-palette);
 $eform-light-theme: mat.m2-define-light-theme((
@@ -93,7 +135,12 @@ $eform-light-theme: mat.m2-define-light-theme((
   typography: $eform-typography,
 ));
 
-// Define a dark theme
+/**
+ * Dark Theme Configuration
+ * 
+ * Defines the color palette and theme for dark mode.
+ * Uses Material Design color palettes optimized for dark backgrounds.
+ */
 $eform-dark-primary: mat.m2-define-palette(mat.$m2-blue-grey-palette);
 $eform-dark-accent: mat.m2-define-palette(mat.$m2-pink-palette);
 $eform-dark-theme: mat.m2-define-dark-theme((
@@ -104,25 +151,42 @@ $eform-dark-theme: mat.m2-define-dark-theme((
   typography: $eform-typography,
 ));
 
+/**
+ * Theme Application
+ * 
+ * Applies theme styles to components based on the active theme (light or dark).
+ * Each theme class (.theme-light, .theme-dark) includes all component themes.
+ * 
+ * Component themes included:
+ * - Angular Material components (all-component-themes)
+ * - Matero Extensions components
+ * - Custom components (text, table, chart, tag, etc.)
+ * - Third-party libraries (ngx-editor, ngx-gallery, ngx-toastr)
+ */
 body {
   @each $key, $val in (('light', $eform-light-theme), ('dark', $eform-dark-theme)) {
     &.theme-#{$key} {
+      // Include Angular Material component themes
       @include mat.all-component-themes($val);
+      
+      // Include Matero Extensions component themes
       @include mtx.all-component-themes($val);
+      
+      // Include third-party library themes
       @include ngx-editor.theme($val);
-      @include text.theme($val);
       @include ngx-gallery.theme($val);
-      @include table.theme($val);
       @include ngx-toastr.theme($val);
+      
+      // Include custom component themes
+      @include text.theme($val);
+      @include table.theme($val);
       @include chart.theme($val);
-      //@include ng-datepicker.theme($val);
       @include tag.theme($val);
-      //@include mtx.all-experimental-component-themes($val);
     }
   }
 
   &.mat-typography {
-    margin: 0 0 0 0;
+    margin: 0;
   }
 
   #main-header-text {
@@ -130,9 +194,17 @@ body {
   }
 }
 
+/**
+ * Material Design Component Overrides
+ * 
+ * Custom styles to override default Material Design component behavior.
+ * These overrides ensure consistent styling across the application.
+ */
+
+// Chip component adjustments
 .mdc-evolution-chip__action {
   padding-top: 3px !important;
-  padding-bottom: 0px !important;
+  padding-bottom: 0 !important;
 }
 
 .mdc-evolution-chip__text-label > span {
@@ -140,18 +212,15 @@ body {
   top: -1px;
 }
 
+// Icon button sizing
 .mat-mdc-icon-button {
   padding: 0 !important;
   width: 28px !important;
   height: 28px !important;
 }
-.mat-calendar-previous-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-button-base {
-  --mdc-icon-button-state-layer-size: 40px !important;
-  width: var(--mdc-icon-button-state-layer-size) !important;
-  height: var(--mdc-icon-button-state-layer-size) !important;
-  padding: 8px !important;
-}
 
+// Calendar navigation buttons
+.mat-calendar-previous-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-button-base,
 .mat-calendar-next-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-button-base {
   --mdc-icon-button-state-layer-size: 40px !important;
   width: var(--mdc-icon-button-state-layer-size) !important;
@@ -159,33 +228,28 @@ body {
   padding: 8px !important;
 }
 
-//  padding: 0px;// !important;
-//  height: 28px;// !important;
-//  width: 28px;// !important;
-//}
-//
-//.mat-calendar-previous-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-button-base {
-//  --mdc-icon-button-state-layer-size: 40px;
-//  width: var(--mdc-icon-button-state-layer-size);
-//  height: var(--mdc-icon-button-state-layer-size);
-//  padding: 8px !important;
-//}
-
-
+// Microting UID color reference
 .microting-uid {
   color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 300);
 }
 
+// Table header alignment
 .mat-sort-header-content {
   text-align: start !important;
 }
 
+// Dark theme text field label color
 .theme-dark {
   .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
-    color: white; // Replace with your desired color value
+    color: white;
   }
 }
 
+/**
+ * Dialog Component Overrides
+ * 
+ * Customizes dialog appearance with rounded corners and adjusted spacing.
+ */
 .cdk-overlay-container {
   @include mat.dialog-overrides((
     container-shape: 20px,
@@ -194,7 +258,14 @@ body {
   ));
 }
 
-/* Global button shape overrides */
+/**
+ * Button Shape Customization
+ * 
+ * Applies consistent border radius to all Material button variants.
+ * This creates a more modern, rounded appearance across the application.
+ */
+
+// Standard buttons
 button.mat-mdc-raised-button,
 a.mat-mdc-raised-button,
 button.mat-mdc-unelevated-button,
@@ -206,13 +277,13 @@ a.mat-mdc-text-button {
   border-radius: 20px;
 }
 
-/* Icon buttons */
+// Icon buttons
 button.mat-mdc-icon-button,
 a.mat-mdc-icon-button {
   border-radius: 20px;
 }
 
-/* Optional: FABs */
+// Floating Action Buttons (FABs)
 button.mat-mdc-fab,
 a.mat-mdc-fab,
 button.mat-mdc-mini-fab,

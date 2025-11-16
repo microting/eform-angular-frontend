@@ -1,5 +1,22 @@
+/**
+ * Utilities Index
+ * 
+ * Central entry point for all utility styles and variables.
+ * This file exports variables and includes utility mixins for use throughout the application.
+ * 
+ * Structure:
+ * - @forward: Exports variables and functions for use in other files
+ * - @use: Includes utility styles that generate CSS classes
+ * 
+ * Usage:
+ * @use 'utilities' as *; // Imports all forwarded items and utility classes
+ */
+
+// Export variables for use in components
 @forward "variables";
 @forward "colors";
+
+// Include utility class generators
 @use "flex";
 @use "grid";
 @use "spacing";

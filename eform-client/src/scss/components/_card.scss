@@ -1,11 +1,29 @@
+/**
+ * Card Component Styles
+ * 
+ * Provides utility classes for customizing card header and body spacing.
+ * These classes allow for flexible card layouts with different padding configurations.
+ */
+
+/**
+ * Card Header Variants
+ */
+
+// Extended header with less vertical padding
 .card-header-extended {
   padding: 0.3rem 1.7rem;
 }
 
+// Simple header with standard padding
 .card-header-simple {
   padding: 1.2rem 1.7rem;
 }
 
+/**
+ * Card Body Variants
+ */
+
+// Minimal spacing for card body
 .card-body-no-spaces {
   padding: 0.2rem 1rem;
 }

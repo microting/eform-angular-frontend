@@ -1,16 +1,30 @@
+/**
+ * Text Component Styles
+ * 
+ * Provides utility classes and theme-aware text styling.
+ * Includes link colors, text colors, and white-space utilities.
+ */
+
 @use 'sass:map';
 @use '@angular/material' as mat;
 @use '../utilities/colors' as *;
 
+/**
+ * Link Styles
+ */
 a {
   &.link-primary {
     color: $eform-red;
+    
     &:hover {
       color: $eform-red-dark;
     }
   }
 }
 
+/**
+ * Text Color Utilities
+ */
 .text-danger {
   color: $eform-red;
 }
@@ -26,12 +40,27 @@ a {
 .text-white {
   color: white;
 }
+
+/**
+ * White-space Utilities
+ * 
+ * Generates utility classes for controlling white-space behavior.
+ * Usage: .text-nowrap, .text-pre, .text-normal, etc.
+ */
 @each $key in (nowrap, unset, break-spaces, normal, pre, pre-line, pre-wrap) {
   .text-#{$key} {
     white-space: $key;
   }
 }
 
+/**
+ * Theme-aware Text Colors Mixin
+ * 
+ * Generates text color classes based on theme palette colors.
+ * Provides .text-warn, .text-accent, and .text-primary classes.
+ * 
+ * @param {Map} $theme - The Material theme map
+ */
 @mixin color($theme) {
   $color-config: mat.m2-get-color-config($theme);
   $warn-palette: map.get($color-config, 'warn');
@@ -45,8 +74,16 @@ a {
   }
 }
 
+/**
+ * Main Theme Mixin
+ * 
+ * Entry point for applying theme-specific text styles.
+ * 
+ * @param {Map} $theme - The Material theme map
+ */
 @mixin theme($theme) {
   $color-config: mat.m2-get-color-config($theme);
+  
   @if $color-config != null {
     @include color($theme);
   }
