@@ -30,6 +30,7 @@
 <mtx-grid
   [data]="securityGroups.entities"
   [columns]="tableHeaders"
+  [cellTemplate]="{actions: actionsTpl}"
   [showPaginator]="true"
   [paginationTemplate]="paginatorTpl"
   [pageOnFront]="false"
@@ -41,6 +42,61 @@
   [sortDirection]="selectSecurityIsSortDsc$ | async"
   (sortChange)="onSortTable($event)">
 </mtx-grid>
+
+<ng-template #actionsTpl let-row let-i="index">
+  <div class="security-group-actions" id="action-items-{{i}}">
+    <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        id="editSecurityGroupBtn{{i}}"
+        (click)="router.navigate(['update-group', row.id], {relativeTo: route})"
+      >
+        <mat-icon color="accent">edit</mat-icon>
+        <span>{{ 'Edit Group' | translate }}</span>
+      </button>
+
+      <button
+        mat-menu-item
+        id="eformsPermissionsBtn{{i}}"
+        (click)="router.navigate(['group/' + row.id + '/eforms-permissions'], {relativeTo: route})"
+      >
+        <mat-icon color="primary">summarize</mat-icon>
+        <span>{{ 'eForms permissions' | translate }}</span>
+      </button>
+
+      <button
+        mat-menu-item
+        id="generalPermissionsBtn{{i}}"
+        (click)="router.navigate(['group/' + row.id + '/general-permissions'], {relativeTo: route})"
+      >
+        <mat-icon color="primary">lock_open</mat-icon>
+        <span>{{ 'General Permissions' | translate }}</span>
+      </button>
+
+      <button
+        mat-menu-item
+        id="groupSettingsBtn{{i}}"
+        (click)="openSettingsModal(row)"
+      >
+        <mat-icon color="accent">settings</mat-icon>
+        <span>{{ 'Group settings' | translate }}</span>
+      </button>
+
+      <button
+        mat-menu-item
+        id="deleteSecurityGroupBtn{{i}}"
+        (click)="openDeleteModal(row)"
+      >
+        <mat-icon color="warn">delete</mat-icon>
+        <span>{{ 'Delete Group' | translate }}</span>
+      </button>
+    </mat-menu>
+  </div>
+</ng-template>
 
 <ng-template #paginatorTpl>
   <eform-pagination

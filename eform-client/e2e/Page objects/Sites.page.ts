@@ -139,6 +139,7 @@ export default sitesPage;
 export class SitesRowObject {
   constructor() {}
 
+  index: number;
   element: WebdriverIO.Element;
   siteId: number;
   units: string;
@@ -148,6 +149,7 @@ export class SitesRowObject {
   deleteBtn: WebdriverIO.Element;
 
   async getRow(rowNum): Promise<SitesRowObject> {
+    this.index = rowNum;
     this.element = (await $$('tbody > tr'))[rowNum - 1];
     if (this.element) {
       this.siteId = +(await this.element.$('#siteUUId')).getText();
@@ -173,8 +175,23 @@ export class SitesRowObject {
     return this;
   }
 
+  async openRowMenu() {
+    const index = this.index - 1;
+    const menuBtn = await $(`#action-items-${index} #actionMenu`);
+    await menuBtn.waitForDisplayed({ timeout: 5000 });
+    await menuBtn.waitForClickable({ timeout: 5000 });
+    await menuBtn.scrollIntoView();
+    await menuBtn.click();
+    await browser.pause(200);
+  }
+
   async openEditModal(site?: { name?: string; tags?: string[] }) {
-    this.editBtn.click();
+    await this.openRowMenu();
+    const index = this.index - 1;
+    const editBtn = await $(`#editSiteBtn${index}`);
+    await editBtn.waitForDisplayed({ timeout: 5000 });
+    await editBtn.waitForClickable({ timeout: 5000 });
+    await editBtn.click();
     await browser.pause(500);
     await (await sitesPage.siteEditCancelBtn()).waitForDisplayed({ timeout: 40000 });
     if (site) {
@@ -209,7 +226,12 @@ export class SitesRowObject {
   }
 
   async openDeleteModal() {
-    await this.deleteBtn.click();
+    await this.openRowMenu();
+    const index = this.index - 1;
+    const deleteBtn = await $(`#deleteSiteBtn${index}`);
+    await deleteBtn.waitForDisplayed({ timeout: 5000 });
+    await deleteBtn.waitForClickable({ timeout: 5000 });
+    await deleteBtn.click();
     await browser.pause(500);
     await (await sitesPage.siteDeleteCancelBtn()).waitForClickable({ timeout: 40000 });
   }

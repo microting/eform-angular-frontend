@@ -56,7 +56,12 @@ export class Workers extends PageWithNavbarPage {
     // browser.pause(16000);
   }
   public async editWorker(worker: WorkersRowObject, firstName: string, lastName: string) {
-    await worker.editBtn.click();
+    await worker.openRowMenu();
+    const index = worker.index - 1;
+    const editBtn = await $(`#workerEditBtn${index}`);
+    await editBtn.waitForDisplayed({ timeout: 5000 });
+    await editBtn.waitForClickable({ timeout: 5000 });
+    await editBtn.click();
     // browser.pause(8000);
     await (await $('#firstNameEdit')).waitForDisplayed({timeout: 8000});
     await (await this.firstNameEditBox()).clearValue();
@@ -74,6 +79,7 @@ export default workers;
 
 export class WorkersRowObject {
   constructor(rowNumber) {
+    this.index = rowNumber + 1;
     this.siteId = +$$('#workerUID')[rowNumber + 1].getText();
     this.firstName = $$('#workerFirstName')[rowNumber + 1].getText();
     this.lastName = $$('#workerLastName')[rowNumber + 1].getText();
@@ -81,9 +87,20 @@ export class WorkersRowObject {
     this.deleteBtn = $$('#workerDeleteBtn')[rowNumber + 1];
   }
 
+  index: number;
   siteId: number;
   firstName;
   lastName;
   editBtn;
   deleteBtn;
+
+  async openRowMenu() {
+    const index = this.index - 1;
+    const menuBtn = await $(`#action-items-${index} #actionMenu`);
+    await menuBtn.waitForDisplayed({ timeout: 5000 });
+    await menuBtn.waitForClickable({ timeout: 5000 });
+    await menuBtn.scrollIntoView();
+    await menuBtn.click();
+    await browser.pause(200);
+  }
 }

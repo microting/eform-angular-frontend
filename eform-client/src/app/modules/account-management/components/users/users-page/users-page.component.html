@@ -60,36 +60,42 @@
   </ng-template>
 
   <ng-template #actionsTpl let-row let-i="index">
-    <div class="d-flex">
-      <button
-        mat-icon-button
-        color="accent"
-        (click)="openEditModal(row.id)"
-        *ngIf="selectCurrentUserClaimsUsersUpdate$ | async"
-        matTooltip="{{ 'Edit user' | translate }}"
-        id="userAdministrationEditBtn-{{i}}"
-      >
-        <mat-icon>edit</mat-icon>
+    <div class="user-actions" id="action-items-{{i}}">
+      <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
+        <mat-icon>more_vert</mat-icon>
       </button>
-      <button
-        mat-icon-button
-        [disabled]="row.id === 1"
-        color="warn"
-        (click)="openRemoveUserModal(row)"
-        *ngIf="selectCurrentUserClaimsUsersDelete$ | async"
-        matTooltip="{{ 'Delete user' | translate }}"
-        id="userAdministrationDeleteBtn-{{i}}"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        color="primary"
-        (click)="openSetPasswordModal(row)"
-        matTooltip="{{ 'Set password' | translate }}"
-        id="userAdministrationResetPasswordBtn-{{i}}">
-        <mat-icon>vpn_key</mat-icon>
-      </button>
+
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          id="userAdministrationEditBtn-{{i}}"
+          *ngIf="selectCurrentUserClaimsUsersUpdate$ | async"
+          (click)="openEditModal(row.id)"
+        >
+          <mat-icon color="accent">edit</mat-icon>
+          <span>{{ 'Edit user' | translate }}</span>
+        </button>
+
+        <button
+          mat-menu-item
+          id="userAdministrationDeleteBtn-{{i}}"
+          *ngIf="selectCurrentUserClaimsUsersDelete$ | async"
+          [disabled]="row.id === 1"
+          (click)="openRemoveUserModal(row)"
+        >
+          <mat-icon color="warn">delete</mat-icon>
+          <span>{{ 'Delete user' | translate }}</span>
+        </button>
+
+        <button
+          mat-menu-item
+          id="userAdministrationResetPasswordBtn-{{i}}"
+          (click)="openSetPasswordModal(row)"
+        >
+          <mat-icon color="primary">vpn_key</mat-icon>
+          <span>{{ 'Set password' | translate }}</span>
+        </button>
+      </mat-menu>
     </div>
   </ng-template>
 

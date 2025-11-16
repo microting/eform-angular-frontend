@@ -21,6 +21,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MtxSelectModule,
     MtxGridModule,
     MatDialogModule,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
   ],
 })
 export class EmailRecipientsModule {

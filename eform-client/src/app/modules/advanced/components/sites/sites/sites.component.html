@@ -42,27 +42,33 @@
     <app-eform-tag [tags]="getTagsBySiteDto(row)"/>
   </div>
 </ng-template>
-<ng-template #actionsTpl let-row>
-  <div *ngIf="(selectCurrentUserClaimsSitesDelete$ | async) || (selectCurrentUserClaimsSitesUpdate$ | async)">
-    <button
-      mat-icon-button
-      id="editSiteBtn"
-      *ngIf="(selectCurrentUserClaimsSitesUpdate$ | async) && !row.isLocked"
-      (click)="openEditModal(row)"
-      matTooltip="{{ 'Edit site' | translate }}"
-    >
-      <mat-icon>edit</mat-icon>
+<ng-template #actionsTpl let-row let-i="index">
+  <div class="site-actions" id="action-items-{{i}}" *ngIf="(selectCurrentUserClaimsSitesDelete$ | async) || (selectCurrentUserClaimsSitesUpdate$ | async)">
+    <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
+      <mat-icon>more_vert</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      color="warn"
-      id="deleteSiteBtn"
-      *ngIf="(selectCurrentUserClaimsSitesDelete$ | async) && !row.isLocked"
-      (click)="openDeleteModal(row)"
-      matTooltip="{{ 'Delete site' | translate }}"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
+
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        id="editSiteBtn{{i}}"
+        *ngIf="(selectCurrentUserClaimsSitesUpdate$ | async) && !row.isLocked"
+        (click)="openEditModal(row)"
+      >
+        <mat-icon>edit</mat-icon>
+        <span>{{ 'Edit site' | translate }}</span>
+      </button>
+
+      <button
+        mat-menu-item
+        id="deleteSiteBtn{{i}}"
+        *ngIf="(selectCurrentUserClaimsSitesDelete$ | async) && !row.isLocked"
+        (click)="openDeleteModal(row)"
+      >
+        <mat-icon color="warn">delete</mat-icon>
+        <span>{{ 'Delete site' | translate }}</span>
+      </button>
+    </mat-menu>
   </div>
 </ng-template>
 

@@ -170,6 +170,7 @@ const userAdministrationPage = new UserAdministrationPage();
 export default userAdministrationPage;
 
 export class UserAdministrationRowObject {
+  index: number;
   id: number;
   email: string;
   fullName: string;
@@ -178,6 +179,7 @@ export class UserAdministrationRowObject {
   deleteBtn: Cypress.Chainable<JQuery<HTMLElement>>;
 
   getRow(rowNum: number) {
+    this.index = rowNum;
     const index = rowNum - 1;
     
     cy.get(`#userAdministrationId-${index}`).invoke('text').then(text => {
@@ -199,8 +201,16 @@ export class UserAdministrationRowObject {
     return this;
   }
 
+  openRowMenu() {
+    const index = this.index - 1;
+    cy.get(`#action-items-${index} #actionMenu`).should('be.visible').click();
+    cy.wait(200);
+  }
+
   edit(user: UserAdministrationObject, clickCancel = false) {
-    this.editBtn.should('be.visible').click();
+    const index = this.index - 1;
+    this.openRowMenu();
+    cy.get(`#userAdministrationEditBtn-${index}`).should('be.visible').click();
     cy.get('#editFirstName').should('be.visible');
     
     if (user.firstName) {
@@ -257,7 +267,9 @@ export class UserAdministrationRowObject {
   }
 
   delete(clickCancel = false) {
-    this.deleteBtn.should('be.visible').click();
+    const index = this.index - 1;
+    this.openRowMenu();
+    cy.get(`#userAdministrationDeleteBtn-${index}`).should('be.visible').click();
     cy.get('#userDeleteCancelBtn').should('be.visible');
     
     if (clickCancel) {

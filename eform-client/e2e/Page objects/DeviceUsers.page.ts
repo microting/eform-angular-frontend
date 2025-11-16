@@ -139,7 +139,12 @@ class DeviceUsersPage extends PageWithNavbarPage {
     name = '',
     surname = ''
   ) {
-    deviceUser.editBtn.click();
+    await deviceUser.openRowMenu();
+    const index = deviceUser.index - 1;
+    const editBtn = await $(`#editDeviceUserBtn${index}`);
+    await editBtn.waitForDisplayed({ timeout: 5000 });
+    await editBtn.waitForClickable({ timeout: 5000 });
+    await editBtn.click();
     // browser.pause(5000);
     await (await $('#firstName')).waitForDisplayed({ timeout: 40000 });
     if (name != null) {
@@ -164,6 +169,7 @@ export default deviceUsersPage;
 export class DeviceUsersRowObject {
   constructor() {}
 
+  index: number;
   siteId: number;
   firstName: string;
   lastName: string;
@@ -171,6 +177,7 @@ export class DeviceUsersRowObject {
   deleteBtn;
 
   async getRow(rowNum: number) {
+    this.index = rowNum;
     if ((await $$('#deviceUserId'))[rowNum - 1]) {
       this.siteId = +(await (await $$('#deviceUserId')[rowNum - 1]).getText());
       try {
@@ -189,9 +196,23 @@ export class DeviceUsersRowObject {
     return this;
   }
 
+  async openRowMenu() {
+    const index = this.index - 1;
+    const menuBtn = await $(`#action-items-${index} #actionMenu`);
+    await menuBtn.waitForDisplayed({ timeout: 5000 });
+    await menuBtn.waitForClickable({ timeout: 5000 });
+    await menuBtn.scrollIntoView();
+    await menuBtn.click();
+    await browser.pause(200);
+  }
+
   async delete() {
-    this.deleteBtn.waitForClickable({ timeout: 40000 });
-    this.deleteBtn.click();
+    const index = this.index - 1;
+    await this.openRowMenu();
+    const deleteBtn = await $(`#deleteDeviceUserBtn${index}`);
+    await deleteBtn.waitForDisplayed({ timeout: 5000 });
+    await deleteBtn.waitForClickable({ timeout: 5000 });
+    await deleteBtn.click();
     await (await deviceUsersPage.saveDeleteBtn()).waitForClickable({
       timeout: 40000,
     });
