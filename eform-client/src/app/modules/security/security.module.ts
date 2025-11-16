@@ -26,6 +26,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -43,6 +45,10 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
     MatDialogModule,
     MatCardModule,
     MtxSelectModule,
+    MatIconModule,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
   ],
   declarations: [
     SecurityPageComponent,
