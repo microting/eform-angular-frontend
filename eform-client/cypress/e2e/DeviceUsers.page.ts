@@ -156,7 +156,9 @@ class DeviceUsersPage extends PageWithNavbarPage{
     name = '',
     surname = ''
   ): void {
-    deviceUser.editBtn().should('be.visible').click();
+    const index = deviceUser.index - 1;
+    deviceUser.openRowMenu();
+    cy.get(`#editDeviceUserBtn${index}`).should('be.visible').click();
     // @ts-ignore
     cy.get('#firstName').should('be.visible');
     if (name !== '') {
@@ -178,6 +180,7 @@ const deviceUsersPage = new DeviceUsersPage();
 export default deviceUsersPage;
 
 export class DeviceUsersRowObject {
+  index: number;
   siteId: number;
   firstName: string;
   lastName: string;
@@ -187,6 +190,7 @@ export class DeviceUsersRowObject {
   deleteBtn: Cypress.Chainable<JQuery<HTMLElement>>;
 
   getRow(rowNum: number) {
+    this.index = rowNum;
     // @ts-ignore
     if (cy.get('#deviceUserId').eq(rowNum - 1).should('exist')) {
       // @ts-ignore
@@ -203,8 +207,16 @@ export class DeviceUsersRowObject {
     return this;
   }
 
+  openRowMenu() {
+    const index = this.index - 1;
+    cy.get(`#action-items-${index} #actionMenu`).should('be.visible').click();
+    cy.wait(200);
+  }
+
   delete() {
-    this.deleteBtn.should('be.visible').click();
+    const index = this.index - 1;
+    this.openRowMenu();
+    cy.get(`#deleteDeviceUserBtn${index}`).should('be.visible').click();
     deviceUsersPage.saveDeleteBtn().should('be.visible').click();
     // @ts-ignore
     cy.get('#spinner-animation').should('not.exist', { timeout: 40000 });
