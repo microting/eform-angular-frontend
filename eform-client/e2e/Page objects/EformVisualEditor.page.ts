@@ -192,17 +192,17 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
           await this.clickLanguageCheckbox(true, checklist.translations[i].languageId);
-          // await browser.pause(500);
+          await browser.pause(500);
           await (
             await this.mainCheckListNameTranslationByLanguageId(checklist.translations[i].languageId)
           ).setValue(checklist.translations[i].name);
-          // await browser.pause(500);
+          await browser.pause(500);
           await (
             await (
               await this.mainCheckListDescriptionTranslationByLanguageId(checklist.translations[i].languageId)
             ).$(`.NgxEditor__Content`)
           ).setValue(checklist.translations[i].description);
-          // await browser.pause(500);
+          await browser.pause(500);
         }
       }
       if (checklist.tags) {
@@ -223,7 +223,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     }
     if (clickSave) {
       await this.clickSave();
-      // await browser.pause(500);
+      await browser.pause(500);
     }
   }
 
@@ -660,7 +660,7 @@ export class ChecklistFieldRowObj {
   async makeCopy() {
     await this.copyBtn.scrollIntoView();
     await this.copyBtn.click();
-    // await browser.pause(500);
+    await browser.pause(500);
   }
 
   async addNewNestedField(checklistFieldObj: ChecklistFieldObj) {
@@ -829,6 +829,7 @@ export class ChecklistRowObj {
 
   async openEditModal(translations?: CommonTranslationsModel[]) {
     await this.editChecklistBtn.click();
+    await browser.pause(1000);
     await (
       await eformVisualEditorPage.changeChecklistSaveCancelBtn()
     ).waitForClickable({

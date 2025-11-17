@@ -63,25 +63,30 @@ class PluginRowObject {
   id: number;
   name: string;
   version: string;
-  statusBtn;
+  statusBtn: WebdriverIO.Element;
   status: string;
-  settingsBtn;
+  settingsBtn: WebdriverIO.Element;
   rowNumber: number;
 
   public async getRow(rowNum: number): Promise<PluginRowObject> {
     this.rowNumber= rowNum -1;
-
+    await this.clickActionsMenu();
     this.id = +await ($('#plugin-id'+this.rowNumber)).getText();
     this.name = await (await $('#plugin-name'+this.rowNumber)).getText();
     this.version = await (await $('#plugin-version'+this.rowNumber)).getText();
     this.settingsBtn = await $('#plugin-settings-link'+this.rowNumber);
     this.statusBtn = await $('#plugin-status-button'+this.rowNumber);
-    const pluginStatus = await $('#plugin-status'+this.rowNumber);
-    this.status = await (await this.statusBtn.$('mat-icon')).getText();
+    // To get status, we need to open the menu first since the button is inside mat-menu
+    const statusIcon = await this.statusBtn.$('mat-icon');
+    this.status = await statusIcon.getText();
+    // Close the menu by clicking elsewhere or pressing escape
+    await browser.keys('Escape');
+    await browser.pause(500);
     return this;
   }
 
   async enableOrDisablePlugin(timeout = 100000) {
+    await this.clickActionsMenu();
     await this.statusBtn.click();
     await browser.pause(500);
     await (await pluginPage.pluginOKBtn()).waitForDisplayed({ timeout: 40000 });
@@ -91,5 +96,11 @@ class PluginRowObject {
     await loginPage.login();
     await myEformsPage.Navbar.goToPluginsPage();
     await browser.pause(500);
+  }
+
+  private async clickActionsMenu() {
+    await browser.pause(1000);
+    await (await $$('#actionMenu')[this.rowNumber]).click();
+    await browser.pause(1000);
   }
 }

@@ -766,6 +766,7 @@ describe('Visual editor page', function () {
     let mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     await mainChecklist.fields[1].changePosition(mainChecklist.fields[0]);
+    await browser.pause(1000);
     checklist = {
       ...checklist,
       fields: [checklist.fields[1], checklist.fields[0]],
@@ -858,6 +859,7 @@ describe('Visual editor page', function () {
     await mainChecklist.checklists[0].fields[1].changePosition(
       mainChecklist.checklists[0].fields[0]
     );
+    await browser.pause(1000);
     checklist = {
       ...checklist,
       checklists: [

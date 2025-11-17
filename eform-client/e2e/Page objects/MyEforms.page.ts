@@ -161,22 +161,30 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public async clearEFormTable() {
-    await browser.pause(500);
+    await browser.pause(2000);
     const rowCount = await this.rowNum();
-    let indexForDelete = 1;
     for (let i = 1; i <= rowCount; i++) {
-      const eformsRowObject = await this.getEformRowObj(i, false);
-      if (
-        eformsRowObject &&
-        eformsRowObject.deleteBtn &&
-        (await eformsRowObject.deleteBtn.isDisplayed())
-      ) {
-        await eformsRowObject.deleteEForm();
-      } else {
-        indexForDelete += 1;
-      }
+      await (await this.getEformRowObj(1)).deleteEForm();
     }
   }
+
+  // public async clearEFormTable() {
+  //   await browser.pause(500);
+  //   const rowCount = await this.rowNum();
+  //   let indexForDelete = 1;
+  //   for (let i = 1; i <= rowCount; i++) {
+  //     const eformsRowObject = await this.getEformRowObj(i, false);
+  //     if (
+  //       eformsRowObject &&
+  //       eformsRowObject.deleteBtn &&
+  //       (await eformsRowObject.deleteBtn.isDisplayed())
+  //     ) {
+  //       await eformsRowObject.deleteEForm();
+  //     } else {
+  //       indexForDelete += 1;
+  //     }
+  //   }
+  // }
 
   async createNewEform(
     eFormLabel,
@@ -275,7 +283,7 @@ export default myEformsPage;
 class MyEformsRowObject {
   constructor() {
   }
-
+  currentPosition: number;
   element: WebdriverIO.Element;
   id: number;
   createdAt: Date;
@@ -290,48 +298,55 @@ class MyEformsRowObject {
   goVisualEditorBtn: WebdriverIO.Element;
 
   async getRow(rowNum: number) {
-    const currentPosition = rowNum - 1;
-    this.element = (await $$('#mainPageEFormsTableBody tr.mat-mdc-row'))[currentPosition];
-    this.id = +(await (await $$('#eform-id-' + (currentPosition)))[0].getText());
+    this.currentPosition = rowNum - 1;
+    this.element = (await $$('#mainPageEFormsTableBody tr.mat-mdc-row'))[this.currentPosition];
+    this.id = +(await (await $$('#eform-id-' + (this.currentPosition)))[0].getText());
     try {
-      const val = (await $$('#eform-created-at-' + (currentPosition)))[0];
+      const val = (await $$('#eform-created-at-' + (this.currentPosition)))[0];
       this.createdAt = new Date(await val.getText());
     } catch (e) {
     }
     try {
-      const val = (await $$('#eform-label-' + (currentPosition)))[0];
+      const val = (await $$('#eform-label-' + (this.currentPosition)))[0];
       this.eFormName = await val.getText();
     } catch (e) {
     }
-    const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[currentPosition];
+    const val2 = (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[this.currentPosition];
     this.tags = await this.element.$$('.mat-column-tags mat-chip span span span.mat-mdc-chip-action-label');
     // this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
-    this.editTagsBtn = (await $$('#eform-edit-btn-' + (currentPosition)))[0];
+    this.editTagsBtn = (await $$('#eform-edit-btn-' + (this.currentPosition)))[0];
     this.editPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[
-      currentPosition
-      ].$('#eform-pairing-btn-' + (currentPosition));
+      this.currentPosition
+      ].$('#eform-pairing-btn-' + (this.currentPosition));
     this.addPairEformBtn = await (await $$(`#mainPageEFormsTableBody tr.mat-mdc-row`))[
-      currentPosition
-      ].$('#eform-add-btn-' + (currentPosition));
-    this.editColumnsBtn = (await $$('#edit-columnts-btn-' + (currentPosition)))[0];
-    this.deleteBtn = await this.element.$('.mat-column-actions [id^="delete-eform-btn"]');
-    this.uploadZipArchiveBtn = (await $$('#upload-zip-btn-' + (currentPosition)))[0];
-    this.goVisualEditorBtn = await this.element.$('.mat-column-actions [id^="edit-eform-btn"]');
+      this.currentPosition
+      ].$('#eform-add-btn-' + (this.currentPosition));
+    this.editColumnsBtn = await $('#edit-columns-btn-' + (this.currentPosition));
+    this.deleteBtn = await $('#delete-eform-btn-' + (this.currentPosition));
+    this.uploadZipArchiveBtn = await $('#upload-zip-btn-' + (this.currentPosition));
+    this.goVisualEditorBtn = await $('#edit-eform-btn-' + (this.currentPosition));
     return this;
   }
 
   async deleteEForm() {
-    if (await this.deleteBtn) {
-      await (await this.deleteBtn).scrollIntoView();
-      await (await this.deleteBtn).waitForClickable({timeout: 40000});
-      await (await this.deleteBtn).click();
-      await browser.pause(500);
+    // if (await this.deleteBtn) {
+      await this.clickActionsMenu();
+      // await (await this.deleteBtn).scrollIntoView();
+      // await (await this.deleteBtn).waitForClickable({timeout: 40000});
+      await this.deleteBtn.click();
+      await browser.pause(1000);
       const eFormDeleteDeleteBtn = await $('#eFormDeleteDeleteBtn');
-      await eFormDeleteDeleteBtn.waitForDisplayed({timeout: 40000});
-      await eFormDeleteDeleteBtn.waitForClickable({timeout: 40000});
+      // await eFormDeleteDeleteBtn.waitForDisplayed({timeout: 40000});
+      // await eFormDeleteDeleteBtn.waitForClickable({timeout: 40000});
       await eFormDeleteDeleteBtn.click();
-      await browser.pause(500);
-    }
+      await browser.pause(1000);
+    // }
+  }
+
+  private async clickActionsMenu() {
+    await browser.pause(1000);
+    await (await $$('#actionMenu'))[this.currentPosition].click();
+    await browser.pause(1000);
   }
 
   async addTag(tag: string) {
@@ -422,6 +437,7 @@ class MyEformsRowObject {
   }
 
   async goToVisualEditor() {
+    await this.clickActionsMenu();
     await this.goVisualEditorBtn.click();
     await browser.pause(500);
     await (await $('#manageTags')).waitForClickable({timeout: 40000});

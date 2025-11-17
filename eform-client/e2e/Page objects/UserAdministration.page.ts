@@ -196,6 +196,7 @@ export default userAdministration;
 export class UserAdministrationRowObject {
   constructor() {}
 
+  index: number;
   element;
   id: number;
   email: string;
@@ -205,6 +206,7 @@ export class UserAdministrationRowObject {
   deleteBtn;
 
   async getRow(rowNum: number): Promise<UserAdministrationRowObject> {
+    this.index = rowNum;
     rowNum = rowNum - 1;
     this.id = +await (await $('#userAdministrationId-'+rowNum)).getText();
     this.email = await (await $('#userAdministrationEmail-'+rowNum)).getText();
@@ -215,8 +217,23 @@ export class UserAdministrationRowObject {
     return this;
   }
 
+  async openRowMenu() {
+    const index = this.index - 1;
+    const menuBtn = await $(`#action-items-${index} #actionMenu`);
+    await menuBtn.waitForDisplayed({ timeout: 5000 });
+    await menuBtn.waitForClickable({ timeout: 5000 });
+    await menuBtn.scrollIntoView();
+    await menuBtn.click();
+    await browser.pause(200);
+  }
+
   public async openEdit(user: UserAdministrationObject) {
-    await this.editBtn.click();
+    await this.openRowMenu();
+    const index = this.index - 1;
+    const editBtn = await $(`#userAdministrationEditBtn-${index}`);
+    await editBtn.waitForDisplayed({ timeout: 5000 });
+    await editBtn.waitForClickable({ timeout: 5000 });
+    await editBtn.click();
     await (await userAdministration.editFirstName()).waitForDisplayed({ timeout: 40000 });
     if (user.firstName) {
       await (await userAdministration.editFirstName()).clearValue();
@@ -278,7 +295,12 @@ export class UserAdministrationRowObject {
   }
 
   public async openDelete() {
-    await this.deleteBtn.click();
+    await this.openRowMenu();
+    const index = this.index - 1;
+    const deleteBtn = await $(`#userAdministrationDeleteBtn-${index}`);
+    await deleteBtn.waitForDisplayed({ timeout: 5000 });
+    await deleteBtn.waitForClickable({ timeout: 5000 });
+    await deleteBtn.click();
     await (await userAdministration.userDeleteCancelBtn()).waitForDisplayed({ timeout: 40000 });
   }
 

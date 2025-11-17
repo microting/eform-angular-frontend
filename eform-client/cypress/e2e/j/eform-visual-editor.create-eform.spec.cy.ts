@@ -1,9 +1,5 @@
 import loginPage from '../Login.page';
 import {generateRandmString, getRandomInt, selectValueInNgSelectorNoSelector} from '../helper-functions';
-import { Navbar } from '../Navbar.page';
-import { myEformsPage } from '../MyEforms.page';
-
-const navbar = new Navbar();
 
 describe('Visual editor - Create eForm', () => {
   beforeEach(() => {
@@ -34,8 +30,8 @@ describe('Visual editor - Create eForm', () => {
     const eformDescription = generateRandmString();
 
     // Set main checklist name and description
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
-    cy.get('#mainCheckListDescriptionTranslation_1').clear().type(eformDescription);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
+    cy.get('#mainCheckListDescriptionTranslation_0').clear().type(eformDescription);
 
     // Save the eForm without adding any fields
     cy.intercept('POST', '**/api/template-visual-editor/').as('saveeForm');
@@ -52,8 +48,8 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
-    cy.get('#mainCheckListNameTranslation_1').should('have.value', eformName);
-    cy.get('#mainCheckListDescriptionTranslation_1').should('have.value', eformDescription);
+    cy.get('#mainCheckListNameTranslation_0').should('have.value', eformName);
+    cy.get('#mainCheckListDescriptionTranslation_0').should('have.value', eformDescription);
 
     // No fields should be present
     cy.get('#fields_0').should('not.exist');
@@ -66,8 +62,8 @@ describe('Visual editor - Create eForm', () => {
     const fieldDescription = generateRandmString();
 
     // Set main checklist name and description
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
-    cy.get('#mainCheckListDescriptionTranslation_1').clear().type(eformDescription);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
+    cy.get('#mainCheckListDescriptionTranslation_0').clear().type(eformDescription);
 
     // Add a field (Info element/None type)
     cy.get('#initialFieldCreateBtn').click();
@@ -93,8 +89,8 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
-    cy.get('#mainCheckListNameTranslation_1').should('have.value', eformName);
-    cy.get('#mainCheckListDescriptionTranslation_1').should('have.value', eformDescription);
+    cy.get('#mainCheckListNameTranslation_0').should('have.value', eformName);
+    cy.get('#mainCheckListDescriptionTranslation_0').should('have.value', eformDescription);
 
     // Verify field exists with correct properties
     cy.get('#fieldSection0').should('exist');
@@ -108,8 +104,8 @@ describe('Visual editor - Create eForm', () => {
     const fieldDescription = generateRandmString();
 
     // Set main checklist name and description
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
-    cy.get('#mainCheckListDescriptionTranslation_1').clear().type(eformDescription);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
+    cy.get('#mainCheckListDescriptionTranslation_0').clear().type(eformDescription);
 
     // Add a PDF field
     cy.get('#initialFieldCreateBtn').click();
@@ -140,7 +136,7 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
-    cy.get('#mainCheckListNameTranslation_1').should('have.value', eformName);
+    cy.get('#mainCheckListNameTranslation_0').should('have.value', eformName);
     cy.get('#fieldSection0').should('contain', fieldName);
   });
 
@@ -150,8 +146,8 @@ describe('Visual editor - Create eForm', () => {
     const fieldName = generateRandmString();
 
     // Set main checklist name and description
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
-    cy.get('#mainCheckListDescriptionTranslation_1').clear().type(eformDescription);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
+    cy.get('#mainCheckListDescriptionTranslation_0').clear().type(eformDescription);
 
     // Add a field
     cy.get('#initialFieldCreateBtn').click();
@@ -200,8 +196,8 @@ describe('Visual editor - Create eForm', () => {
     const decimalCount = 0;
 
     // Set main checklist name and description
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
-    cy.get('#mainCheckListDescriptionTranslation_1').clear().type(eformDescription);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
+    cy.get('#mainCheckListDescriptionTranslation_0').clear().type(eformDescription);
 
     // Add a Number field
     cy.get('#initialFieldCreateBtn').click();
@@ -234,7 +230,7 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
-    cy.get('#mainCheckListNameTranslation_1').should('have.value', eformName);
+    cy.get('#mainCheckListNameTranslation_0').should('have.value', eformName);
     cy.get('#fieldSection0').should('contain', fieldName);
   });
 
@@ -243,7 +239,7 @@ describe('Visual editor - Create eForm', () => {
     const fieldName = generateRandmString();
 
     // Set main checklist name
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
 
     // Add a field
     cy.get('#initialFieldCreateBtn').click();
@@ -280,7 +276,7 @@ describe('Visual editor - Create eForm', () => {
     const nestedFieldName = generateRandmString();
 
     // Set main checklist name
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
 
     // Add a field group
     cy.get('#initialFieldCreateBtn').click();
@@ -340,7 +336,7 @@ describe('Visual editor - Create eForm', () => {
     const nestedFieldName = generateRandmString();
 
     // Set main checklist name
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
 
     // Add a field group
     cy.get('#initialFieldCreateBtn').click();
@@ -399,7 +395,7 @@ describe('Visual editor - Create eForm', () => {
     const nestedChecklist2Name = generateRandmString();
 
     // Set main checklist name
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
 
     // Add first nested checklist
     cy.get('#initialChecklistCreateBtn').click();
@@ -424,7 +420,7 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
-    cy.get('#mainCheckListNameTranslation_1').should('have.value', eformName);
+    cy.get('#mainCheckListNameTranslation_0').should('have.value', eformName);
   });
 
   it('should create visual template with one nested checklist and with some fields', () => {
@@ -434,7 +430,7 @@ describe('Visual editor - Create eForm', () => {
     const fieldName = generateRandmString();
 
     // Set main checklist name
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
 
     // Add first nested checklist
     cy.get('#initialChecklistCreateBtn').click();
@@ -467,7 +463,7 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
-    cy.get('#mainCheckListNameTranslation_1').should('have.value', eformName);
+    cy.get('#mainCheckListNameTranslation_0').should('have.value', eformName);
   });
 
   it('should create visual template with one nested checklist and with pdfField', () => {
@@ -477,7 +473,7 @@ describe('Visual editor - Create eForm', () => {
     const fieldName = generateRandmString();
 
     // Set main checklist name
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
 
     // Add first nested checklist
     cy.get('#initialChecklistCreateBtn').click();
@@ -515,7 +511,7 @@ describe('Visual editor - Create eForm', () => {
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
-    cy.get('#mainCheckListNameTranslation_1').should('have.value', eformName);
+    cy.get('#mainCheckListNameTranslation_0').should('have.value', eformName);
   });
 
   it('should create visual template and change order field (not nested)', () => {
@@ -524,12 +520,12 @@ describe('Visual editor - Create eForm', () => {
     const field2Name = generateRandmString();
 
     // Set main checklist name
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
 
     // Add first field
     cy.get('#initialFieldCreateBtn').click();
     cy.get('#fieldTypeSelector input').clear().type('Info');
-    selectValueInNgSelectorNoSelector('Info');
+    selectValueInNgSelectorNoSelector('Info element');
     cy.get('#fieldNameTranslation_0').clear().type(field1Name);
     cy.get('#changeFieldSaveBtn').click();
     cy.wait(1000);
@@ -537,19 +533,14 @@ describe('Visual editor - Create eForm', () => {
     // Add second field
     cy.get('#initialFieldCreateBtn').click();
     cy.get('#fieldTypeSelector input').clear().type('Info');
-    selectValueInNgSelectorNoSelector('Info');
+    selectValueInNgSelectorNoSelector('Info element');
     cy.get('#fieldNameTranslation_0').clear().type(field2Name);
     cy.get('#changeFieldSaveBtn').click();
     cy.wait(1000);
 
-    cy.get('#fieldSection0') // draggable
-      .trigger('mousedown', { button: 0, bubbles: true })
-      .trigger('mousemove', { pageX: 10, pageY: 0 });
-
-    cy.get('#fieldSection1') // droppable
-
-      .trigger('mousemove', { position: 'center' })
-      .trigger('mouseup', { button: 0, bubbles: true });
+    // Change field order using drag and drop
+    cy.get('#fieldSection1').trigger('dragstart');
+    cy.get('#fieldSection0').trigger('drop');
     cy.wait(1000);
 
     // Save the eForm
@@ -558,7 +549,7 @@ describe('Visual editor - Create eForm', () => {
     cy.wait('@saveeForm', { timeout: 60000 });
 
     // Verify field order when edited
-    // cy.get('#spinner-animation').should('not.exist');
+    cy.get('#spinner-animation').should('not.exist');
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
@@ -575,7 +566,7 @@ describe('Visual editor - Create eForm', () => {
     const field2Name = generateRandmString();
 
     // Set main checklist name
-    cy.get('#mainCheckListNameTranslation_1').clear().type(eformName);
+    cy.get('#mainCheckListNameTranslation_0').clear().type(eformName);
 
     // Add nested checklist
     cy.get('#initialChecklistCreateBtn').click();
@@ -586,7 +577,7 @@ describe('Visual editor - Create eForm', () => {
     // Add first field to nested checklist
     cy.get('#addNewNestedField0').click();
     cy.get('#fieldTypeSelector input').clear().type('Info');
-    selectValueInNgSelectorNoSelector('Info');
+    selectValueInNgSelectorNoSelector('Info element');
     cy.get('#fieldNameTranslation_0').clear().type(field1Name);
     cy.get('#changeFieldSaveBtn').click();
     cy.wait(1000);
@@ -594,19 +585,14 @@ describe('Visual editor - Create eForm', () => {
     // Add second field to nested checklist
     cy.get('#addNewNestedField0').click();
     cy.get('#fieldTypeSelector input').clear().type('Info');
-    selectValueInNgSelectorNoSelector('Info');
+    selectValueInNgSelectorNoSelector('Info element');
     cy.get('#fieldNameTranslation_0').clear().type(field2Name);
     cy.get('#changeFieldSaveBtn').click();
     cy.wait(1000);
 
     // Change nested field order using drag and drop
-    cy.get('#fieldSection1') // draggable
-      .trigger('mousedown', { button: 0, bubbles: true })
-      .trigger('mousemove', { pageX: 10, pageY: 0 });
-
-    cy.get('#fieldSection0') // droppable
-      .trigger('mousemove', { position: 'center' })
-      .trigger('mouseup', { button: 0, bubbles: true });
+    cy.get('#fields_0 #fieldSection1').trigger('dragstart');
+    cy.get('#fields_0 #fieldSection0').trigger('drop');
     cy.wait(1000);
 
     // Save the eForm
@@ -615,12 +601,12 @@ describe('Visual editor - Create eForm', () => {
     cy.wait('@saveeForm', { timeout: 60000 });
 
     // Verify nested field order when edited
-    // cy.get('#spinner-animation').should('not.exist');
+    cy.get('#spinner-animation').should('not.exist');
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
-    cy.get('#mainCheckListNameTranslation_1').should('have.value', eformName);
+    cy.get('#mainCheckListNameTranslation_0').should('have.value', eformName);
   });
 
   it('should correct read created eform from xml', () => {
@@ -692,13 +678,16 @@ describe('Visual editor - Create eForm', () => {
     cy.wait('@geteForm', { timeout: 60000 });
 
     // Verify eForm created from XML has correct properties
-    cy.get('#mainCheckListNameTranslation_1').should('have.value', eformName);
+    cy.get('#mainCheckListNameTranslation_0').should('have.value', eformName);
     cy.get('#fieldSection0').should('contain', 'Number 2');
   });
 
   afterEach(() => {
     // Clean up - delete created eForm
-    navbar.goToMyEForms();
-    myEformsPage.clearEFormTable();
+    cy.get('#cancelEditBtn').click();
+    cy.wait(500);
+    cy.get('#delete-eform-btn-0').click();
+    cy.get('#eFormDeleteDeleteBtn').click();
+    cy.wait(1000);
   });
 });

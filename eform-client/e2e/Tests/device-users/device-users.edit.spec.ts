@@ -91,7 +91,12 @@ describe('Device users page', function () {
     const lastDeviceUserBeforeEdit = await deviceUsersPage.getDeviceUser(
       rowNumBeforeEdit
     );
-    await lastDeviceUserBeforeEdit.editBtn.click();
+    await lastDeviceUserBeforeEdit.openRowMenu();
+    const index = lastDeviceUserBeforeEdit.index - 1;
+    const editBtn = await $(`#editDeviceUserBtn${index}`);
+    await editBtn.waitForDisplayed({ timeout: 5000 });
+    await editBtn.waitForClickable({ timeout: 5000 });
+    await editBtn.click();
     // browser.pause(4000);
     await (await $('#firstName')).waitForDisplayed({ timeout: 10000 });
     await (await deviceUsersPage.editFirstNameInput()).click();

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, copyArrayItem, transferArrayItem } from '@angular/cdk/drag-drop';
+import { DragulaService } from 'ng2-dragula';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
@@ -36,6 +36,7 @@ import {loadAppMenu, selectCurrentUserLocale} from 'src/app/state';
 })
 export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   private authStore = inject(Store);
+  private dragulaService = inject(DragulaService);
   private navigationMenuService = inject(NavigationMenuService);
   private securityGroupsService = inject(SecurityGroupsService);
   private authStateService = inject(AuthStateService);
@@ -64,6 +65,32 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   }
 
   constructor() {
+    const dragulaService = this.dragulaService;
+
+    dragulaService.createGroup('MENU_ITEMS', {
+      moves: (el, container, handle) => {
+        return handle.classList.contains('dragula-handle');
+      },
+      copy: (el, source) => {
+        return source.id === 'mainMenu' || source.id === 'pluginMenu';
+      },
+      copyItem: (data: NavigationMenuItemModel) => {
+        return { ...data, type: NavigationMenuItemTypeEnum.Link, isInternalLink: true, };
+      },
+      accepts: (el, target) => {
+        // To avoid dragging from right to left container
+        return (
+          (target.classList.contains('dragula-item') ||
+            (target.classList.contains('dragula-dropdown') &&
+              !el.classList.contains('dragula-dropdown'))) &&
+          target.id !== 'mainMenu' &&
+          target.id !== 'pluginMenu'
+        );
+      },
+    });
+    this.dragulaService.drop('MENU_ITEMS').subscribe(({ name }) => {
+      this.dragulaService.find(name).drake.cancel(true);
+    });
   }
 
   ngOnInit(): void {
@@ -106,37 +133,8 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     ];
   }
 
-  dropMenuItem(event: CdkDragDrop<NavigationMenuItemModel[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      // Copy from template menu
-      const item = { 
-        ...event.previousContainer.data[event.previousIndex], 
-        type: NavigationMenuItemTypeEnum.Link, 
-        isInternalLink: true 
-      };
-      this.navigationMenuModel.actualMenu.splice(event.currentIndex, 0, item);
-    }
-    this.navigationMenuModel.actualMenu = [...this.navigationMenuModel.actualMenu];
-  }
-
-  dropMenuItemChild(event: CdkDragDrop<NavigationMenuItemModel[]>, parentIndex: number) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      // Copy from template menu
-      const item = { 
-        ...event.previousContainer.data[event.previousIndex], 
-        type: NavigationMenuItemTypeEnum.Link, 
-        isInternalLink: true 
-      };
-      this.navigationMenuModel.actualMenu[parentIndex].children.splice(event.currentIndex, 0, item);
-    }
-    this.navigationMenuModel.actualMenu = [...this.navigationMenuModel.actualMenu];
-  }
-
   ngOnDestroy(): void {
+    this.dragulaService.destroy('MENU_ITEMS');
   }
 
   onItemDelete(
@@ -227,6 +225,10 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     return translations.find(
       (x) => x.localeName === language
     ).name;
+  }
+
+  menuItemModelChange($event: any[]) {
+    this.navigationMenuModel.actualMenu = [...$event];
   }
 
   getSecurityGroupNames(ids: number[]): string[] {

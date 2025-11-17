@@ -1,9 +1,5 @@
 import loginPage from '../Login.page';
 import {selectValueInNgSelectorNoSelector} from '../helper-functions';
-import { Navbar } from '../Navbar.page';
-import { myEformsPage } from '../MyEforms.page';
-
-const navbar = new Navbar();
 
 
 // @ts-ignore
@@ -514,8 +510,10 @@ describe('My eforms', () => {
   // });
 
   afterEach(() => {
-    // Clean up - delete created eForm
-    navbar.goToMyEForms();
-    myEformsPage.clearEFormTable();
+    /* ==== Generated with Cypress Studio ==== */
+    cy.get('#cancelEditBtn').click();
+    cy.get('#delete-eform-btn-0').click();
+    cy.get('#eFormDeleteDeleteBtn').click();
+    /* ==== End Cypress Studio ==== */
   });
 });

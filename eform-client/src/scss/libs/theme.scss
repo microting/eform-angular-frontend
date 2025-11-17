@@ -185,3 +185,37 @@ body {
     color: white; // Replace with your desired color value
   }
 }
+
+.cdk-overlay-container {
+  @include mat.dialog-overrides((
+    container-shape: 20px,
+    container-elevation-shadow: none,
+    actions-padding: 20px,
+  ));
+}
+
+/* Global button shape overrides */
+button.mat-mdc-raised-button,
+a.mat-mdc-raised-button,
+button.mat-mdc-unelevated-button,
+a.mat-mdc-unelevated-button,
+button.mat-mdc-outlined-button,
+a.mat-mdc-outlined-button,
+button.mat-mdc-text-button,
+a.mat-mdc-text-button {
+  border-radius: 20px;
+}
+
+/* Icon buttons */
+button.mat-mdc-icon-button,
+a.mat-mdc-icon-button {
+  border-radius: 20px;
+}
+
+/* Optional: FABs */
+button.mat-mdc-fab,
+a.mat-mdc-fab,
+button.mat-mdc-mini-fab,
+a.mat-mdc-mini-fab {
+  border-radius: 20px;
+}

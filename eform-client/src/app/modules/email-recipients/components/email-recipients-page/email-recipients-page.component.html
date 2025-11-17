@@ -56,24 +56,32 @@
   (sortChange)="onSortTable($event)"
 />
 
-<ng-template #actionsTpl let-row>
-  <button
-    mat-icon-button
-    id="emailRecipientEditBtn"
-    matTooltip="{{ 'Edit email recipient' | translate }}"
-    (click)="openEditModal(row)"
-  >
-    <mat-icon>edit</mat-icon>
-  </button>
-  <button
-    mat-icon-button
-    color="warn"
-    id="emailRecipientDeleteBtn"
-    matTooltip="{{ 'Delete email recipient' | translate }}"
-    (click)="openDeleteModal(row)"
-  >
-    <mat-icon>delete</mat-icon>
-  </button>
+<ng-template #actionsTpl let-row let-i="index">
+  <div class="email-recipient-actions" id="action-items-{{i}}">
+    <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        id="emailRecipientEditBtn{{i}}"
+        (click)="openEditModal(row)"
+      >
+        <mat-icon>edit</mat-icon>
+        <span>{{ 'Edit email recipient' | translate }}</span>
+      </button>
+
+      <button
+        mat-menu-item
+        id="emailRecipientDeleteBtn{{i}}"
+        (click)="openDeleteModal(row)"
+      >
+        <mat-icon color="warn">delete</mat-icon>
+        <span>{{ 'Delete email recipient' | translate }}</span>
+      </button>
+    </mat-menu>
+  </div>
 </ng-template>
 
 <ng-template #tagsTpl let-row>

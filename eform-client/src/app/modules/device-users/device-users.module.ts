@@ -19,6 +19,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -36,6 +37,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MtxGridModule,
     MatIconModule,
     MatDialogModule,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
   ],
   declarations: [
     DeviceUsersPageComponent,

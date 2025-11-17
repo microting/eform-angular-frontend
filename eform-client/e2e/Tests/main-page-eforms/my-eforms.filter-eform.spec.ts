@@ -2,6 +2,7 @@ import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import { generateRandmString } from '../../Helpers/helper-functions';
 import { $ } from '@wdio/globals';
+import {afterEach} from "mocha";
 
 const expect = require('chai').expect;
 const testTag1 = 'Test tag';
@@ -54,21 +55,8 @@ describe('My eforms', function () {
     expect(await myEformsPage.rowNum()).eq(2);
   });
   after(async () => {
-    await (await myEformsPage.eformFilter()).click();
-    await browser.keys(['Control', 'a', 'Control', 'Delete']);
-    await browser.pause(500);
-    let lastTag = await $('#tagSelector ng-select > div > div > .ng-value > span.ng-value-icon');
-    await lastTag.click();
-    await browser.pause(500);
-    lastTag = await $('#tagSelector ng-select > div > div > .ng-value > span.ng-value-icon');
-    await lastTag.click();
-    await browser.pause(500);
-    await myEformsPage.removeTags([testTag1, testTag2]);
-    await browser.pause(500);
-    for (let i = 0; i < namesEForms.length; i++) {
-      const form = await myEformsPage.getEformsRowObjByNameEForm(namesEForms[i]);
-      await form.deleteEForm();
-      await browser.pause(500);
-    }
+    // delete created checklist
+    await myEformsPage.Navbar.goToMyEForms();
+    await myEformsPage.clearEFormTable();
   });
 });

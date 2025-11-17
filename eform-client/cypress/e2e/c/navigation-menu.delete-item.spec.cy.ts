@@ -18,7 +18,7 @@ describe('Navigation menu - Delete item', function () {
 
     navigationMenuPage.getMenuItems().its('length').then(initialCount => {
       navigationMenuPage.collapseTemplates(1);
-
+      
       navigationMenuPage.createCustomDropdown(dropdown);
 
       // Create 2 items from templates menu
@@ -52,12 +52,12 @@ describe('Navigation menu - Delete item', function () {
     navigationMenuPage.getMenuItems().its('length').then(menuItemsCount => {
       // Get count of elements in dropdown
       navigationMenuPage.getDropdownBodyChilds(menuItemsCount - 1).its('length').then(dropdownCount => {
-
+        
         // Delete 3 elements from dropdown
         navigationMenuPage.deleteElementFromDropdown(menuItemsCount - 1, 0);
         navigationMenuPage.deleteElementFromDropdown(menuItemsCount - 1, 0);
         navigationMenuPage.deleteElementFromDropdown(menuItemsCount - 1, 0);
-
+        
         cy.intercept('POST', '**/api/navigation-menu').as('saveMenu1');
         navigationMenuPage.clickSaveMenuBtn();
         cy.wait('@saveMenu1', { timeout: 30000 });
@@ -68,10 +68,10 @@ describe('Navigation menu - Delete item', function () {
         // Delete menu items
         navigationMenuPage.deleteElementFromMenuItems(0);
         navigationMenuPage.deleteElementFromMenuItems(0); // delete 2 template elements
-
+        
         navigationMenuPage.getMenuItems().its('length').then(currentCount => {
           navigationMenuPage.deleteElementFromMenuItems(currentCount - 1); // delete created dropdown
-
+          
           cy.intercept('POST', '**/api/navigation-menu').as('saveMenu2');
           navigationMenuPage.clickSaveMenuBtn();
           cy.wait('@saveMenu2', { timeout: 30000 });

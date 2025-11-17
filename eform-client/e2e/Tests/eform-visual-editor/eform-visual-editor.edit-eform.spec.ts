@@ -324,6 +324,7 @@ describe('Visual editor page', function () {
   //   console.log(`end`);
   // });
   afterEach(async () => {
+    await browser.pause(1000);
     await myEformsPage.Navbar.goToMyEForms();
     await myEformsPage.clearEFormTable();
   });

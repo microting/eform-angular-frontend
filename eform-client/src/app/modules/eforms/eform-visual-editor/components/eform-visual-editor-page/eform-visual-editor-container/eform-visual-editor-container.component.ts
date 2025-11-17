@@ -26,7 +26,7 @@ import {
   VisualEditorFieldModalComponent,
   VisualEditorChecklistDeleteModalComponent, VisualEditorChecklistModalComponent
 } from '../../';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {DragulaService} from 'ng2-dragula';
 import {AuthStateService} from 'src/app/common/store';
 import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/components';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
@@ -45,6 +45,7 @@ import {Store} from '@ngrx/store';
     standalone: false
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
+  private dragulaService = inject(DragulaService);
   private tagsService = inject(EformTagService);
   private visualEditorService = inject(EformVisualEditorService);
   private router = inject(Router);
@@ -86,6 +87,34 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
   constructor() {
+    this.dragulaService.createGroup('CHECK_LISTS', {
+      moves: (el, container, handle) => {
+        return (
+          handle.classList.contains('dragula-handle') && handle.id === 'moveBtn'
+        );
+      },
+      accepts: (el, target) => {
+        return target.id === 'editorChecklists' && el.id.includes('checkList_');
+      },
+    });
+    this.dragulaService.createGroup('FIELDS', {
+      moves: (el, container, handle) => {
+        return (
+          (handle.id === 'moveFieldBtn' || handle.id === 'moveNestedFieldBtn') &&
+          handle.classList.contains('dragula-handle')
+        );
+      },
+      accepts: (el, target) => {
+        if (el.classList.contains('field-group')) {
+          return (
+            !target.classList.contains('field-group-container')
+            || target.classList.contains('editor-fields')
+          );
+        }
+        return target.classList.contains('editor-fields')
+          || target.classList.contains('nested-fields');
+      },
+    });
   }
 
   get isAllNamesEmpty() {
@@ -213,22 +242,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   toggleCollapse() {
     this.isItemsCollapsed = !this.isItemsCollapsed;
-  }
-
-  dropChecklist(event: CdkDragDrop<EformVisualEditorModel[]>) {
-    if (event.previousIndex !== event.currentIndex) {
-      moveItemInArray(this.visualEditorTemplateModel.checkLists, event.previousIndex, event.currentIndex);
-      this.visualEditorTemplateModel.checkLists = [...this.visualEditorTemplateModel.checkLists]; // Create new reference
-      this.dragulaPositionChecklistChanged(this.visualEditorTemplateModel.checkLists);
-    }
-  }
-
-  dropField(event: CdkDragDrop<EformVisualEditorFieldModel[]>) {
-    if (event.previousIndex !== event.currentIndex) {
-      moveItemInArray(this.visualEditorTemplateModel.fields, event.previousIndex, event.currentIndex);
-      this.visualEditorTemplateModel.fields = [...this.visualEditorTemplateModel.fields]; // Create new reference
-      this.dragulaPositionFieldChanged(this.visualEditorTemplateModel.fields);
-    }
   }
 
   dragulaPositionChecklistChanged(model: EformVisualEditorModel[]) {
@@ -774,6 +787,9 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.dragulaService.destroy('CHECK_LISTS');
+    this.dragulaService.destroy('FIELDS');
+    // this.dragulaService.destroy('NESTED_FIELDS');
   }
 
 
