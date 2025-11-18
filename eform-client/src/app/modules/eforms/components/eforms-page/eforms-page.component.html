@@ -1,39 +1,44 @@
 <eform-new-subheader>
-  <div class="">
+  <div class="d-flex flex-row justify-content-center align-items-center gap-12">
+    <div class="line-vert"></div>
     <button
-      mat-icon-button
+      class="btn-secondary btn-secondary--icon-rounded-border"
       id="importEformsBtn"
       matTooltip="{{ 'Import eforms' | translate }}"
       *ngIf="selectCurrentUserClaimsEformsCreate$ | async"
       (click)="openEformsImportModal()">
-      <mat-icon>file_upload</mat-icon>
+      <app-icon name="upload" size="20" class="icon-secondary"></app-icon>
     </button>
     <button
-      mat-icon-button
+      class="btn-secondary btn-secondary--icon-rounded-border"
       id="eformsManageTagsBtn"
       (click)="openTagsModal()"
       matTooltip="{{ 'Manage tags' | translate }}"
       *ngIf="selectEformAllowManagingEformTags$ | async"
     >
-      <mat-icon>discount</mat-icon>
+      <app-icon name="tags" size="20" class="icon-secondary"></app-icon>
     </button>
-    <a
-      mat-icon-button
-      id="eformsVisualEditor"
-      *ngIf="selectCurrentUserClaimsEformsCreate$ | async"
-      [routerLink]="['visual-editor']"
-      matTooltip="{{ 'New eForm' | translate }}"
-    >
-      <mat-icon>add</mat-icon>
-    </a>
+
     <button
-      mat-icon-button
       matTooltip="{{ 'New eForm from XML' | translate }}"
       id="newEFormBtn"
       *ngIf="selectCurrentUserClaimsEformsCreate$ | async"
       (click)="openNewEformModal()"
+      class="btn-secondary btn-secondary--icon-rounded-border"
     >
-      <mat-icon>code</mat-icon>
+      <app-icon name="xmlFile" size="20" class="icon-secondary"></app-icon>
+    </button>
+
+    <div class="line-vert"></div>
+
+    <button
+      id="eformsVisualEditor"
+      class="btn-primary btn-primary--icon-left"
+      *ngIf="selectCurrentUserClaimsEformsCreate$ | async"
+      [routerLink]="['visual-editor']"
+    >
+      <mat-icon>add</mat-icon>
+      <span>{{ 'New eForm' | translate }}</span>
     </button>
   </div>
 </eform-new-subheader>

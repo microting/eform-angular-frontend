@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files 2 */
-
 @use '@angular/material' as mat;
 @use '@ng-matero/extensions' as mtx;
 @use './ngx-editor/ngx-editor' as ngx-editor;
@@ -10,9 +9,8 @@
 @use '../libs/ngx-toastr/ngx-toastr' as ngx-toastr;
 //@use '../libs/ng-datepicker/ng-datepicker' as ng-datepicker;
 @use '../components/tag' as tag;
+@use '../utilities/colors' as *;
 @include mat.core();
-
-
 $letter-spacing: normal;
 $eform-font-family: Nunito Sans, Roboto, "Helvetica Neue", sans-serif;
 // Define a typography
@@ -81,9 +79,9 @@ $eform-typography: mat.m2-define-typography-config(
     $line-height: 1.15,
     $letter-spacing: $letter-spacing,
   ));
-
 // Define a light theme
-$eform-light-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+//$eform-light-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+$eform-light-primary: mat.m2-define-palette(mat.$m2-teal-palette);
 $eform-light-accent: mat.m2-define-palette(mat.$m2-pink-palette);
 $eform-light-theme: mat.m2-define-light-theme((
   color: (
@@ -92,9 +90,9 @@ $eform-light-theme: mat.m2-define-light-theme((
   ),
   typography: $eform-typography,
 ));
-
 // Define a dark theme
-$eform-dark-primary: mat.m2-define-palette(mat.$m2-blue-grey-palette);
+//$eform-dark-primary: mat.m2-define-palette(mat.$m2-blue-grey-palette);
+$eform-dark-primary: mat.m2-define-palette(mat.$m2-teal-palette);
 $eform-dark-accent: mat.m2-define-palette(mat.$m2-pink-palette);
 $eform-dark-theme: mat.m2-define-dark-theme((
   color: (
@@ -103,7 +101,6 @@ $eform-dark-theme: mat.m2-define-dark-theme((
   ),
   typography: $eform-typography,
 ));
-
 body {
   @each $key, $val in (('light', $eform-light-theme), ('dark', $eform-dark-theme)) {
     &.theme-#{$key} {
@@ -120,26 +117,21 @@ body {
       //@include mtx.all-experimental-component-themes($val);
     }
   }
-
   &.mat-typography {
     margin: 0 0 0 0;
   }
-
   #main-header-text {
     font-weight: 400;
   }
 }
-
 .mdc-evolution-chip__action {
   padding-top: 3px !important;
   padding-bottom: 0px !important;
 }
-
 .mdc-evolution-chip__text-label > span {
   position: relative;
   top: -1px;
 }
-
 .mat-mdc-icon-button {
   padding: 0 !important;
   width: 28px !important;
@@ -151,14 +143,12 @@ body {
   height: var(--mdc-icon-button-state-layer-size) !important;
   padding: 8px !important;
 }
-
 .mat-calendar-next-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-button-base {
   --mdc-icon-button-state-layer-size: 40px !important;
   width: var(--mdc-icon-button-state-layer-size) !important;
   height: var(--mdc-icon-button-state-layer-size) !important;
   padding: 8px !important;
 }
-
 //  padding: 0px;// !important;
 //  height: 28px;// !important;
 //  width: 28px;// !important;
@@ -170,22 +160,17 @@ body {
 //  height: var(--mdc-icon-button-state-layer-size);
 //  padding: 8px !important;
 //}
-
-
 .microting-uid {
   color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 300);
 }
-
 .mat-sort-header-content {
   text-align: start !important;
 }
-
 .theme-dark {
   .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
     color: white; // Replace with your desired color value
   }
 }
-
 .cdk-overlay-container {
   @include mat.dialog-overrides((
     container-shape: 20px,
@@ -193,7 +178,6 @@ body {
     actions-padding: 20px,
   ));
 }
-
 /* Global button shape overrides */
 button.mat-mdc-raised-button,
 a.mat-mdc-raised-button,
@@ -205,17 +189,27 @@ button.mat-mdc-text-button,
 a.mat-mdc-text-button {
   border-radius: 20px;
 }
-
 /* Icon buttons */
 button.mat-mdc-icon-button,
 a.mat-mdc-icon-button {
   border-radius: 20px;
 }
-
 /* Optional: FABs */
 button.mat-mdc-fab,
 a.mat-mdc-fab,
 button.mat-mdc-mini-fab,
 a.mat-mdc-mini-fab {
   border-radius: 20px;
+}
+body, .theme-light {
+  --mdc-theme-primary: #{$primary};
+  --mdc-theme-on-primary: #{$on-primary};
+  --mdc-theme-primary-dark: #{$primary-dark-light-mode};
+  --mdc-theme-on-primary-dark: #{$on-primary-dark};
+}
+body, .theme-dark {
+  --mdc-theme-primary: #{$primary-dark};
+  --mdc-theme-on-primary: #{$on-primary-dark};
+  --mdc-theme-primary-dark: #{$primary-dark-dark-mode};
+  --mdc-theme-on-primary-dark: #{$on-primary-dark};
 }

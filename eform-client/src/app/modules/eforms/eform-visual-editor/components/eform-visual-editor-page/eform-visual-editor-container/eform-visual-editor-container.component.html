@@ -2,26 +2,30 @@
   [forceStaticTitle]="true"
   [title]="(selectedTemplateId ? 'eForm' : 'New eForm') | translate"
 >
+  <div class="d-flex flex-row justify-content-center align-items-center gap-12">
   <button
-    mat-raised-button
+    class="btn-secondary btn-secondary--icon-rounded-border"
     *ngIf="selectCurrentUserIsAdmin$ | async"
     id="reportEditHeadersBtn"
     color="accent"
     (click)="showHeadersEditModal()"
+    matTooltip="{{ 'Edit headers' | translate }}"
   >
-    {{ 'Edit headers' | translate }}
+    <app-icon name="pencil" size="20" class="icon-secondary"></app-icon>
   </button>
   <button
-    mat-icon-button
+    class="btn-secondary btn-secondary--icon-rounded-border"
     id="manageTags"
     (click)="openTagsModal()"
     matTooltip="{{ 'Manage tags' | translate }}"
   >
-    <mat-icon>discount</mat-icon>
+    <app-icon name="tags" size="20" class="icon-secondary"></app-icon>
   </button>
+
+  <div class="line-vert"></div>
+
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     (click)="
         selectedTemplateId ? updateVisualTemplate() : createVisualTemplate()
       "
@@ -29,16 +33,17 @@
     id="saveCreateEformBtn"
     [disabled]="isAllNamesEmpty"
   >
-    {{ (selectedTemplateId ? 'Save' : 'Create') | translate }}
+    <mat-icon>add</mat-icon>
+    <span>{{ (selectedTemplateId ? 'Save' : 'Create') | translate }}</span>
   </button>
   <button
-    mat-raised-button
-    color="primary"
     id="cancel{{(selectedTemplateId ? 'Edit' : 'Create')}}Btn"
     [routerLink]="['/']"
+    class="btn-cancel"
   >
     {{'Cancel'| translate}}
   </button>
+  </div>
 </eform-new-subheader>
 
 <mat-card class="d-flex flex-column mb-3" style="padding-right: 0; padding-left: 0; padding-bottom: 0">

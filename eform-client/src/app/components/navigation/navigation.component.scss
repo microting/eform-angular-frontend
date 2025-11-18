@@ -15,6 +15,17 @@ mat-tree {
         line-height: 1.4em;
       }
     }
+
+    .selected-node {
+      background-color: var(--mdc-theme-primary) !important;
+      color: var(--mdc-theme-on-primary) !important;
+      border-radius: var(--rounded-full);
+
+      &:hover{
+          background-color: var(--mdc-theme-primary-dark) !important;
+      }
+    }
+
   }
 
   mat-nested-tree-node { // styles for nested tree nodes
