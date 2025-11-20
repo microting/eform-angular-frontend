@@ -8,7 +8,7 @@
       <!-- use a disabled button to provide padding for tree leaf -->
       <a mat-button
          style="width: 100%"
-         color="{{this.router.url === node.link ? 'accent' : ''}}"
+         [class.selected-node]="router.url === node.link"
          *ngIf="node.isInternalLink"
          routerLink="{{ node.link }}"
          class="nav-link px-3"

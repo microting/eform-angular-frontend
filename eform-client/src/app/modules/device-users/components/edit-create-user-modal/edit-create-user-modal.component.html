@@ -34,18 +34,17 @@
   </div>
 </div>
 
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     (click)="edit ? updateSingle() : createDeviceUser()"
     [disabled]="!simpleSiteModel.userFirstName || !simpleSiteModel.userLastName"
     id="{{edit ? 'saveEditBtn' : 'saveCreateBtn'}}"
   >
-    {{(edit ? 'Save' : 'Create') | translate}}
+    <span>{{(edit ? 'Save' : 'Create') | translate}}</span>
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     id="{{edit ? 'cancelEditBtn' : 'cancelCreateBtn'}}"
     (click)="hide()"
   >

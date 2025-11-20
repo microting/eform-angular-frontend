@@ -62,17 +62,16 @@
     </ng-container>
   </div>
 </div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     (click)="edit ? updateFolder() : createFolder()"
     id="{{edit ? 'saveEditBtn' : 'folderSaveBtn'}}"
   >
     {{(edit ? 'Save' : 'Create') | translate}}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     id="{{edit ? 'cancelEditBtn' : 'cancelCreateBtn'}}"
     (click)="hide()"
   >

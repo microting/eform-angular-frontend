@@ -1,20 +1,22 @@
 <eform-new-subheader>
+<div class="d-flex justify-content-center align-items-center gap-12">
   <button
-    mat-icon-button
+    class="btn-secondary btn-secondary--icon-rounded-border"
     (click)="openTagsModal()"
     matTooltip="{{ 'Manage tags' | translate }}"
   >
     <mat-icon>discount</mat-icon>
   </button>
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     id="createEmailRecipientBtn"
     matTooltip="{{ 'Add Recipients' | translate }}"
     (click)="openCreateModal()"
   >
-    {{ 'Add Recipients' | translate }}
+    <mat-icon>add</mat-icon>
+    <span>{{ 'Add Recipients' | translate }}</span>
   </button>
+</div>
 </eform-new-subheader>
 
 <ng-template #toolbarTpl>

@@ -1,8 +1,7 @@
 <eform-new-subheader [title]="title | translate" [forceStaticTitle]="true">
   <button
     *ngIf="edit"
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     id="entityUpdateSaveBtn"
     (click)="updateEntityGroup()"
     [disabled]="entityGroupEditModel.isLocked && !entityGroupEditModel.isEditable"
@@ -11,8 +10,7 @@
   </button>
   <button
     *ngIf="!edit"
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     id="entityCreateSaveBtn"
     (click)="createEntityGroup()"
     [disabled]="!entityGroupEditModel.name"
@@ -20,8 +18,7 @@
     {{ 'Create' | translate }}
   </button>
   <button
-    mat-raised-button
-    color="primary"
+    class="btn-cancel"
     id="entitySearchUpdateCancelBtn"
     (click)="goBack()"
   >

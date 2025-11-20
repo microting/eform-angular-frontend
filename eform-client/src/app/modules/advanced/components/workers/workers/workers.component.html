@@ -1,12 +1,13 @@
 <eform-new-subheader>
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
+    id="newDeviceUserBtn"
     id="workerCreateBtn"
     *ngIf="selectCurrentUserClaimsWorkersCreate$ | async"
     (click)="openCreateModal()"
   >
-    {{ 'Create Worker' | translate }}
+    <mat-icon>add</mat-icon>
+    <span>{{ 'Create Worker' | translate }}</span>
   </button>
 </eform-new-subheader>
 

@@ -1,8 +1,7 @@
 <eform-new-subheader>
   <div>
     <button
-      mat-raised-button
-      color="accent"
+      class="btn-primary btn-primary--icon-left"
       matTooltip="Save settings"
       id="ProfileSettingsSaveBtn"
       (click)="updateUserProfileSettings()">
@@ -75,17 +74,16 @@
         <div class="d-flex pt-2">
           <div class="align-self-center align-self-end mb-3">
             <button
-              mat-raised-button
-              color="primary"
+              class="btn-primary btn-primary--icon-left"
               *ngIf="profilePictureUploader?.queue?.length === 0"
               id="loginPageImageUploadBtn"
               (click)="loginPagefileInput.click()"
             >
-              {{ 'Upload' | translate }}
+              <mat-icon>upload</mat-icon>
+              <span>{{ 'Upload' | translate }}</span>
             </button>
             <button
-              mat-raised-button
-              color="warn"
+              class="btn-warning"
               *ngIf="profilePictureUploader?.queue?.length > 0"
               (click)="loginPagefileInput.click()"
             >
@@ -102,8 +100,7 @@
           </div>
           <div class="align-self-center align-self-end mb-3 pl-2">
             <button
-              mat-raised-button
-              color="accent"
+             class="btn-cancel"
               id="resetProfilePicture"
               (click)="resetProfilePicture()"
               matTooltip="{{ 'Reset' | translate }}"

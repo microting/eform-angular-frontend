@@ -11,9 +11,9 @@
     <mat-label>{{ 'Name' | translate }}</mat-label>
   </mat-form-field>
 </div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
-    mat-raised-button
+    class="btn-primary btn-primary--icon-left"
     color="accent"
     id="newTagSaveBtn"
     [disabled]="!name"
@@ -22,7 +22,7 @@
     {{ 'Save' | translate }}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     id="newTagSaveCancelBtn"
     (click)="cancelCreate()"
   >
