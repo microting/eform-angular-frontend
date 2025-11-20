@@ -46,6 +46,7 @@ h2 {
 }
 :root {
   --rounded-full: #{$border-rounded-full};
+  --font-family: #{$eform-font-family};
 }
 
 
@@ -60,8 +61,9 @@ body, .theme-light {
   --tp-white-text: black;
   --border: #{$border-light};
   --icon-secondary: #{$icon-secondary-light};
-  --bg: $bg-light;
-  --text-header: $text-header-light;
+  --bg:  #{$bg-light};
+  --text-header: #{$text-header-light};
+  //--mat-card-elevated-container-color: #{$bg-light}!important;
 }
 
 body, .theme-dark {
@@ -72,8 +74,9 @@ body, .theme-dark {
   --tp-white-text: white;
   --border: #{$border-dark};
   --icon-secondary: #{$icon-secondary-dark};
-  --bg: $bg-dark;
-  --text-header: $text-header-dark;
+  --bg: #{$bg-dark};
+  --text-header: #{$text-header-dark};
+  //--mat-card-elevated-container-color: #{$bg-dark}!important;
 }
 
 a {
@@ -428,7 +431,7 @@ ngx-material-timepicker-container {
       align-items: center;
     }
     span {
-      //font-family: var(--font-family, "Nunito Sans");
+      font-family: var(--font-family);
       font-size: var(--Text-size-sm, 14px);
       font-style: normal;
       //font-weight: 600;
@@ -443,6 +446,7 @@ ngx-material-timepicker-container {
   border-radius: var(--rounded-full);
   background: unset;
   cursor: pointer;
+  color: var(--text-header)!important;
 
   &--icon-rounded-border{
     display: flex;
@@ -473,7 +477,7 @@ ngx-material-timepicker-container {
   cursor: pointer;
 
   /* Text/sm/Medium */
-  //font-family: var(--font-family, "Nunito Sans");
+  font-family: var(--font-family);
   font-size: var(--Text-size-sm, 14px);
   font-style: normal;
   //font-weight: 600;

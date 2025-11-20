@@ -1,8 +1,7 @@
 <ng-container *ngIf="selectAuthIsAuth$ | async">
 <eform-new-subheader [subtitle]="adminSettingsModel.assemblyVersion">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     matTooltip="{{ 'Save settings' | translate }}"
     matTooltipPosition="left"
     id="applicationSettingsSaveBtn"

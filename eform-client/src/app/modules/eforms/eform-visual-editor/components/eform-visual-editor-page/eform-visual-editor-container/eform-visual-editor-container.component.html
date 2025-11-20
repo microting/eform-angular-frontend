@@ -11,7 +11,7 @@
     (click)="showHeadersEditModal()"
     matTooltip="{{ 'Edit headers' | translate }}"
   >
-    <app-icon name="pencil" size="20" class="icon-secondary"></app-icon>
+    <mat-icon class="icon-secondary">border_color</mat-icon>
   </button>
   <button
     class="btn-secondary btn-secondary--icon-rounded-border"
@@ -19,7 +19,7 @@
     (click)="openTagsModal()"
     matTooltip="{{ 'Manage tags' | translate }}"
   >
-    <app-icon name="tags" size="20" class="icon-secondary"></app-icon>
+    <mat-icon class="icon-secondary">style</mat-icon>
   </button>
 
   <div class="line-vert"></div>
@@ -146,7 +146,7 @@
       mat-icon-button
       id="initialFieldCreateBtn"
       [matTooltip]="'Add field' | translate"
-      color="accent"
+      color="primary"
       (click)="showFieldModal()"
     >
       <mat-icon>add</mat-icon>
@@ -154,7 +154,7 @@
     <button
       *ngIf="visualEditorTemplateModel.fields.length === 0"
       mat-icon-button
-      color="accent"
+      color="primary"
       id="initialChecklistCreateBtn"
       [matTooltip]="'Add sub eForm' | translate"
       (click)="showChecklistModal()"

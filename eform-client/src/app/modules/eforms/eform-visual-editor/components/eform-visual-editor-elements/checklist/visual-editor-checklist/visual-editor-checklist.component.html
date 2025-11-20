@@ -24,7 +24,7 @@
             *ngIf="checklist.fields.length == 0"
             mat-icon-button
             [matTooltip]="'New sub eForm' | translate"
-            color="accent"
+            color="primary"
             id="addNewNestedChecklist{{ checklistIndex }}"
             (click)="onAddNewNestedChecklist()"
           >
@@ -33,7 +33,7 @@
           <button
             *ngIf="checklist.checkLists.length == 0"
             mat-icon-button
-            color="accent"
+            color="primary"
             [matTooltip]="'New nested field' | translate"
             id="addNewNestedField{{ checklistIndex }}"
             (click)="onAddNewNestedField()"

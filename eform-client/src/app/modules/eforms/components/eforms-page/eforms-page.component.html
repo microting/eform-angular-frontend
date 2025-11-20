@@ -7,7 +7,7 @@
       matTooltip="{{ 'Import eforms' | translate }}"
       *ngIf="selectCurrentUserClaimsEformsCreate$ | async"
       (click)="openEformsImportModal()">
-      <app-icon name="upload" size="20" class="icon-secondary"></app-icon>
+      <mat-icon class="icon-secondary">upload</mat-icon>
     </button>
     <button
       class="btn-secondary btn-secondary--icon-rounded-border"
@@ -16,7 +16,7 @@
       matTooltip="{{ 'Manage tags' | translate }}"
       *ngIf="selectEformAllowManagingEformTags$ | async"
     >
-      <app-icon name="tags" size="20" class="icon-secondary"></app-icon>
+      <mat-icon class="icon-secondary">style</mat-icon>
     </button>
 
     <button
@@ -26,7 +26,7 @@
       (click)="openNewEformModal()"
       class="btn-secondary btn-secondary--icon-rounded-border"
     >
-      <app-icon name="xmlFile" size="20" class="icon-secondary"></app-icon>
+      <mat-icon class="icon-secondary">text_snippet</mat-icon>
     </button>
 
     <div class="line-vert"></div>

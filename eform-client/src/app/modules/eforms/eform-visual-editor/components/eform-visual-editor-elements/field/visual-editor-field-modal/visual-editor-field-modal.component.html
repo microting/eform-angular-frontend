@@ -162,17 +162,17 @@
   >
   </app-visual-editor-additional-field-show-picture>
 </div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end gap-12">
   <button
-    mat-raised-button
+    class="btn-primary btn-primary--icon-left"
     color="accent"
     (click)="isFieldSelected ? onUpdateField() : onCreateField()"
     id="changeFieldSaveBtn"
   >
-    {{'Save' | translate}}
+    <span>{{'Save' | translate}}</span>
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     (click)="hide()"
     id="changeFieldSaveCancelBtn"
   >

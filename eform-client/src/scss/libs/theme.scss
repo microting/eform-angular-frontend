@@ -82,7 +82,7 @@ $eform-typography: mat.m2-define-typography-config(
 // Define a light theme
 //$eform-light-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
 $eform-light-primary: mat.m2-define-palette(mat.$m2-teal-palette);
-$eform-light-accent: mat.m2-define-palette(mat.$m2-pink-palette);
+$eform-light-accent: mat.m2-define-palette(mat.$m2-teal-palette);
 $eform-light-theme: mat.m2-define-light-theme((
   color: (
     primary: $eform-light-primary,

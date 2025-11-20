@@ -34,17 +34,16 @@
     </ng-container>
   </ng-container>
 </div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end gap-12">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     (click)="isChecklistSelected ? onUpdateChecklist() : onCreateChecklist()"
     id="changeChecklistSaveBtn"
   >
-    {{(isChecklistSelected ? 'Save' : 'Create') | translate}}
+    <span>{{(isChecklistSelected ? 'Save' : 'Create') | translate}}</span>
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     (click)="hide()"
     id="changeChecklistSaveCancelBtn"
   >
