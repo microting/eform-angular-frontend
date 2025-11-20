@@ -24,17 +24,16 @@
     />
   </mat-form-field>
 </div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     id="customDropdownCreateBtn"
     (click)="hide(true)"
   >
     {{'Add' | translate}}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     id="menuItemDeleteCancelBtn"
     (click)="hide()"
   >

@@ -64,6 +64,8 @@ body, .theme-light {
   --bg:  #{$bg-light};
   --text-header: #{$text-header-light};
   //--mat-card-elevated-container-color: #{$bg-light}!important;
+  --primary: #{$primary-light};
+  --warning: #{$warning-light};
 }
 
 body, .theme-dark {
@@ -77,6 +79,8 @@ body, .theme-dark {
   --bg: #{$bg-dark};
   --text-header: #{$text-header-dark};
   //--mat-card-elevated-container-color: #{$bg-dark}!important;
+  --primary: #{$primary-dark};
+  --warning: #{$warning-dark};
 }
 
 a {
@@ -472,9 +476,32 @@ ngx-material-timepicker-container {
   gap: var(--156-px, 6px);
   border-radius: var(--rounded-full);
   border: 1px solid var(--border);
-  background: var(--bg);
+  //background: var(--bg);
+  background: unset;
   color: var(--text-header);
   cursor: pointer;
+
+  /* Text/sm/Medium */
+  font-family: var(--font-family);
+  font-size: var(--Text-size-sm, 14px);
+  font-style: normal;
+  //font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
+}
+
+
+.btn-warning{
+  display: flex;
+  height: 48px;
+  padding: var(--312-px, 12px) var(--832-px, 32px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--156-px, 6px);
+  border-radius: var(--rounded-full);
+  background: var(--warning);
+  color: var(--text-header);
+  cursor: pointer;
+  border: unset;
 
   /* Text/sm/Medium */
   font-family: var(--font-family);

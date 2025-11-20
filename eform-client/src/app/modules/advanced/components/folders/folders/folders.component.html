@@ -13,14 +13,14 @@
       (deleteNode)="openDeleteModal($event)"
     ></app-eform-tree-view-picker>
     <button
-      mat-raised-button
+     class="btn-primary btn-primary--icon-left"
       style="margin-top: 10px"
       id="newFolderBtn"
       (click)="openCreateModal()"
       *ngIf="selectCurrentUserClaimsWorkersCreate$ | async"
     >
       <mat-icon>add</mat-icon>
-      {{ 'Add new' | translate }}
+      <span>{{ 'Add new' | translate }}</span>
     </button>
   </mat-card-content>
 </mat-card>

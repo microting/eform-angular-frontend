@@ -1,7 +1,6 @@
 <eform-new-subheader [title]="'Create Security Group' | translate" [forceStaticTitle]="true">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     [disabled]="!securityGroupCreateModel.name"
     (click)="createSecurityGroup()"
     matTooltip="{{ 'Create Group' | translate }}"

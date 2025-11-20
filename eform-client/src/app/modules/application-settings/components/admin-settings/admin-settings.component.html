@@ -83,8 +83,7 @@
             </div>
             <div class="align-self-center align-self-end mb-3">
               <button
-                mat-raised-button
-                color="primary"
+                class="btn-primary btn-primary--icon-left"
                 *ngIf="loginPageImageUploader?.queue?.length === 0"
                 id="loginPageImageUploadBtn"
                 (click)="loginPagefileInput.click()"
@@ -92,7 +91,7 @@
                 {{ 'Upload' | translate }}
               </button>
               <button
-                mat-raised-button
+                class="btn-warning"
                 color="warn"
                 *ngIf="loginPageImageUploader?.queue?.length > 0"
                 (click)="loginPagefileInput.click()"
@@ -192,8 +191,7 @@
             </div>
             <div class="align-self-center align-self-end mb-3">
               <button
-                mat-raised-button
-                color="primary"
+                class="btn-primary btn-primary--icon-left"
                 *ngIf="headerImageUploader?.queue?.length === 0"
                 id="siteHeaderUploadBtn"
                 (click)="headerImageUploaderInput.click()"
@@ -201,8 +199,7 @@
                 {{ 'Upload' | translate }}
               </button>
               <button
-                mat-raised-button
-                color="warn"
+                class="btn-warning"
                 *ngIf="headerImageUploader?.queue?.length > 0"
                 (click)="headerImageUploaderInput.click()"
               >

@@ -1,7 +1,6 @@
 <eform-new-subheader [title]="'Update security group' | translate" [forceStaticTitle]="true">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     [disabled]="!securityGroupModel.groupName"
     (click)="updateSecurityGroup()"
     matTooltip="{{ 'Update Group' | translate }}"
@@ -40,12 +39,12 @@
     </div>
     <div class="d-flex flex-column">
       <button
-        mat-raised-button
-        color="accent"
+       class="btn-primary btn-primary--icon-left"
         (click)="addUserToGroup(usersSelector)"
         matTooltip="{{ 'Add user to group' | translate }}"
       >
-        + {{ 'Bind to Group' | translate }}
+        <mat-icon>add</mat-icon>
+        <span>{{ 'Bind to Group' | translate }}</span>
       </button>
     </div>
   </div>

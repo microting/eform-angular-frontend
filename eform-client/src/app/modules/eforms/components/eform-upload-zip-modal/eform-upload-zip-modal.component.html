@@ -1,16 +1,14 @@
 <h3 mat-dialog-title>{{'Upload template ZIP' | translate}}</h3>
-<div mat-dialog-content class="d-flex flex-column align-items-start">
+<div mat-dialog-content class="d-flex flex-column align-items-start" style="height: 100%; min-height: 100px">
   <button
-    mat-raised-button
-    color="primary"
+    class="btn-primary btn-primary--icon-left"
     *ngIf="zipFileUploader?.queue?.length == 0"
     (click)="zipInput.click()"
   >
-    {{'Upload' | translate}}
+    <span>{{'Upload' | translate}}</span>
   </button>
   <button
-    mat-raised-button
-    color="warn"
+    class="btn-warning"
     *ngIf="zipFileUploader?.queue?.length > 0"
     (click)="zipInput.click()"
   >
@@ -32,17 +30,17 @@
     </div>
   </div>
 </div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     (click)="uploadTemplateZIP()"
     [disabled]="zipFileUploader?.queue?.length == 0"
   >
-    {{'Upload' | translate}}
+    <mat-icon>upload</mat-icon>
+    <span>{{'Upload' | translate}}</span>
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     (click)="hideZipModal()"
   >
     {{'Close' | translate}}

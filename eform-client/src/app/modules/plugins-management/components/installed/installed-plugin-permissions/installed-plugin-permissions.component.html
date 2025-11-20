@@ -22,17 +22,16 @@
     </mat-card>
   </div>
 </div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     (click)="updatePluginPermissions()"
     id="saveBtn"
   >
-    {{ 'Save' | translate }}
+    <span>{{ 'Save' | translate }}</span>
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     (click)="hide()"
     id="cancelCreateBtn"
   >
