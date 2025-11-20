@@ -39,6 +39,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {AppIconComponent} from "src/app/components/icons/app-icon/app-icon.component";
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MtxGridModule,
     MatSlideToggleModule,
     MatDatepickerModule,
+    AppIconComponent,
   ],
 })
 export class EformVisualEditorModule {

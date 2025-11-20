@@ -11,6 +11,7 @@ import {
 } from 'src/app/state';
 import {AuthStateService} from 'src/app/common/store';
 import {TranslateService} from '@ngx-translate/core';
+import IconService from './icons/index';
 
 @Component({
     selector: 'app-root',
@@ -18,6 +19,7 @@ import {TranslateService} from '@ngx-translate/core';
     standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy {
+  private iconService = inject(IconService);
   private router = inject(Router);
   private authStore = inject(Store);
   private userSettings = inject(UserSettingsService);
@@ -31,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
 
   ngOnInit(): void {
+    this.iconService.register();
     this.authSyncStorageService.init();
     this.selectIsAuth$.pipe(debounceTime(1000), take(1)).subscribe((isAuth) => {
       if (isAuth) {

@@ -25,17 +25,16 @@
     </mat-form-field>
   </div>
 </div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
     id="workerSaveBtn"
-    mat-raised-button
-    color="warn"
+    class="btn-warning"
     (click)="moveUnit()"
   >
     {{'Move' | translate}}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     (click)="hide()"
   >
     {{'Cancel' | translate}}

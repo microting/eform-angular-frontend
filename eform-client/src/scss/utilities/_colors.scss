@@ -1,9 +1,46 @@
+// Gray shades
 $eform-gray-light: #F1F1F1;
 $eform-gray: #263238;
 $eform-gray-dark: #000a12;
-$eform-red-dark: #7f0000;
+
+// Red shades
 $eform-red-light: #f05545;
 $eform-red: #b71c1c;
+$eform-red-dark: #7f0000;
+
+// Orange
 $eform-orange: #d9921e;
+
+// Green shades
 $eform-green: #61BA5B;
 $eform-green-dark: #4B9F45;
+$eform-teal: #289694;
+$eform-teal-dark: #00716F;
+
+// Light theme
+$primary: #289694;
+$primary-light: #289694;
+$warning-light: #E2A01C;
+$primary-light-light-mode: #F5FCFC;
+$primary-dark-light-mode: #00716F;
+$on-primary: #FFFFFF;
+
+// Dark theme
+$primary-dark: #4FCAC8;
+$primary-light-dark-mode: #0D4746;
+$primary-dark-dark-mode: #00ADAB;
+$on-primary-dark: #0F1316;
+$warning-dark: #F4C25E;
+
+
+$border-light: #EBEFF2;
+$border-dark: #37383A;
+
+$icon-secondary-light: #0F1316;
+$icon-secondary-dark: #FFFFFF;
+
+$bg-light: #FFFFFF;
+$bg-dark: #202122;
+
+$text-header-light: #0F1316;
+$text-header-dark: #F3F5F7;

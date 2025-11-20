@@ -40,18 +40,18 @@
   </div>
 </div>
 </div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     id="createEformBtn"
     [disabled]="!eFormCreateModel.eFormXml"
     (click)="createTemplate()"
   >
-    {{'Create' | translate}}
+    <mat-icon>add</mat-icon>
+    <span>{{'Create' | translate}}</span>
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     id="cancelCreateEformBtn"
     (click)="hide()"
   >
