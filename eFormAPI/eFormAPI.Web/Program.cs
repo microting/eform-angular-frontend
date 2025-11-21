@@ -43,8 +43,8 @@ using Hosting.Enums;
 using Hosting.Helpers;
 using Hosting.Helpers.DbOptions;
 using Hosting.Settings;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -147,9 +147,9 @@ public class Program
 
     // public static ReloadDbConfiguration ReloadDbConfigurationDelegate { get; set; }
 
-    public static async void LoadNavigationMenuEnabledPlugins(IWebHost webHost)
+    public static async void LoadNavigationMenuEnabledPlugins(IHost host)
     {
-        using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
+        using var scope = host.Services.GetService<IServiceScopeFactory>().CreateScope();
         BaseDbContext dbContext = null;
         try
         {
@@ -182,9 +182,9 @@ public class Program
         }
     }
 
-    public static void MigrateDb(IWebHost webHost)
+    public static void MigrateDb(IHost host)
     {
-        using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
+        using var scope = host.Services.GetService<IServiceScopeFactory>().CreateScope();
         BaseDbContext dbContext = null;
         try
         {
@@ -274,9 +274,9 @@ public class Program
         }
     }
 
-    private static async Task InitializeSettings(IWebHost webHost, string[] args)
+    private static async Task InitializeSettings(IHost host, string[] args)
     {
-        using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
+        using var scope = host.Services.GetService<IServiceScopeFactory>().CreateScope();
         var settingsService = scope.ServiceProvider.GetRequiredService<ISettingsService>();
         var existsResult = settingsService.ConnectionStringExist();
         if(!existsResult.Success)// do need to initialize database
@@ -407,7 +407,7 @@ public class Program
         }
     }
 
-    private static IWebHost BuildWebHost(string[] args)
+    private static IHost BuildWebHost(string[] args)
     {
         Console.WriteLine("BuildWebHost");
         // print all args
@@ -480,93 +480,96 @@ public class Program
         Environment.SetEnvironmentVariable("PROJECT_ID", projectId);
         Console.WriteLine("PROJECT_ID: " + projectId);
 
-        return WebHost.CreateDefaultBuilder(args)
-            .ConfigureKestrel(serverOptions =>
+        return Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
             {
-                serverOptions.Limits.MaxRequestBodySize = 100 * 1024 * 1024;// 100Mb
-            })
-            .UseUrls($"http://0.0.0.0:{port}")
-            // .UseIISIntegration()
-            .ConfigureAppConfiguration((hostContext, config) =>
-            {
-                Log.LogEvent("Delete all default configuration providers");
-                // delete all default configuration providers
-                config.Sources.Clear();
-                config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
-
-                var filePath = Path.Combine(hostContext.HostingEnvironment.ContentRootPath,
-                    "connection.json");
-
-                if (!File.Exists(filePath))
+                webBuilder.ConfigureKestrel(serverOptions =>
                 {
-                    ConnectionStringManager.CreateDefault(filePath);
-                }
-
-                if (!string.IsNullOrEmpty(connectionString))
+                    serverOptions.Limits.MaxRequestBodySize = 100 * 1024 * 1024;// 100Mb
+                })
+                .UseUrls($"http://0.0.0.0:{port}")
+                // .UseIISIntegration()
+                .ConfigureAppConfiguration((hostContext, config) =>
                 {
-                    Log.LogEvent($"Creating ConnectionString file with the ConnectionString: {connectionString}");
-                    ConnectionStringManager.CreateWithConnectionString(filePath, connectionString);
-                }
+                    Log.LogEvent("Delete all default configuration providers");
+                    // delete all default configuration providers
+                    config.Sources.Clear();
+                    config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
 
-                config.AddJsonFile("connection.json", optional: true, reloadOnChange: true);
-                var mainSettings = ConnectionStringManager.Read(filePath);
-                _defaultConnectionString = mainSettings?.ConnectionStrings?.DefaultConnection;
-                config.AddEfConfiguration(_defaultConnectionString);
-                EnabledPlugins = PluginHelper.GetPlugins(_defaultConnectionString);
-                DisabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
+                    var filePath = Path.Combine(hostContext.HostingEnvironment.ContentRootPath,
+                        "connection.json");
 
-                var contextFactory = new BaseDbContextFactory();
-                if (_defaultConnectionString != "...")
-                {
-                    string pattern = @"Database=(\d+)_Angular;";
-                    Match match = Regex.Match(_defaultConnectionString!, pattern);
-
-                    if (match.Success)
+                    if (!File.Exists(filePath))
                     {
-                        string numberString = match.Groups[1].Value;
-                        int number = int.Parse(numberString);
-                        var disableSentry = Environment.GetEnvironmentVariable("DISABLE_SENTRY");
-                        var sentryDisabled = !string.IsNullOrEmpty(disableSentry) && 
-                                            (disableSentry.ToLower() == "true" || disableSentry == "1");
-                        if (!sentryDisabled)
-                        {
-                            SentrySdk.ConfigureScope(scope =>
-                            {
-                                scope.SetTag("customerNo", number.ToString());
-                                Console.WriteLine("customerNo: " + number);
-                                scope.SetTag("osVersion", Environment.OSVersion.ToString());
-                                Console.WriteLine("osVersion: " + Environment.OSVersion);
-                                scope.SetTag("osArchitecture", RuntimeInformation.OSArchitecture.ToString());
-                                Console.WriteLine("osArchitecture: " + RuntimeInformation.OSArchitecture);
-                                scope.SetTag("osName", RuntimeInformation.OSDescription);
-                                Console.WriteLine("osName: " + RuntimeInformation.OSDescription);
-                            });
-                        }
+                        ConnectionStringManager.CreateDefault(filePath);
                     }
 
-                    using var dbContext = contextFactory.CreateDbContext([_defaultConnectionString]);
-                    foreach (var plugin in EnabledPlugins)
+                    if (!string.IsNullOrEmpty(connectionString))
                     {
-                        var pluginEntity = dbContext.EformPlugins
-                            .FirstOrDefault(x => x.PluginId == plugin.PluginId);
+                        Log.LogEvent($"Creating ConnectionString file with the ConnectionString: {connectionString}");
+                        ConnectionStringManager.CreateWithConnectionString(filePath, connectionString);
+                    }
 
-                        if (pluginEntity != null && !string.IsNullOrEmpty(pluginEntity.ConnectionString))
+                    config.AddJsonFile("connection.json", optional: true, reloadOnChange: true);
+                    var mainSettings = ConnectionStringManager.Read(filePath);
+                    _defaultConnectionString = mainSettings?.ConnectionStrings?.DefaultConnection;
+                    config.AddEfConfiguration(_defaultConnectionString);
+                    EnabledPlugins = PluginHelper.GetPlugins(_defaultConnectionString);
+                    DisabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
+
+                    var contextFactory = new BaseDbContextFactory();
+                    if (_defaultConnectionString != "...")
+                    {
+                        string pattern = @"Database=(\d+)_Angular;";
+                        Match match = Regex.Match(_defaultConnectionString!, pattern);
+
+                        if (match.Success)
                         {
-                            if (_defaultConnectionString.Contains("127.0.0.1"))
+                            string numberString = match.Groups[1].Value;
+                            int number = int.Parse(numberString);
+                            var disableSentry = Environment.GetEnvironmentVariable("DISABLE_SENTRY");
+                            var sentryDisabled = !string.IsNullOrEmpty(disableSentry) && 
+                                                (disableSentry.ToLower() == "true" || disableSentry == "1");
+                            if (!sentryDisabled)
                             {
-                                pluginEntity.ConnectionString = pluginEntity.ConnectionString.Replace(
-                                    "mariadb-cluster-mariadb-galera",
-                                    "127.0.0.1");
+                                SentrySdk.ConfigureScope(scope =>
+                                {
+                                    scope.SetTag("customerNo", number.ToString());
+                                    Console.WriteLine("customerNo: " + number);
+                                    scope.SetTag("osVersion", Environment.OSVersion.ToString());
+                                    Console.WriteLine("osVersion: " + Environment.OSVersion);
+                                    scope.SetTag("osArchitecture", RuntimeInformation.OSArchitecture.ToString());
+                                    Console.WriteLine("osArchitecture: " + RuntimeInformation.OSArchitecture);
+                                    scope.SetTag("osName", RuntimeInformation.OSDescription);
+                                    Console.WriteLine("osName: " + RuntimeInformation.OSDescription);
+                                });
                             }
+                        }
 
-                            plugin.AddPluginConfig(config, pluginEntity.ConnectionString);
+                        using var dbContext = contextFactory.CreateDbContext([_defaultConnectionString]);
+                        foreach (var plugin in EnabledPlugins)
+                        {
+                            var pluginEntity = dbContext.EformPlugins
+                                .FirstOrDefault(x => x.PluginId == plugin.PluginId);
+
+                            if (pluginEntity != null && !string.IsNullOrEmpty(pluginEntity.ConnectionString))
+                            {
+                                if (_defaultConnectionString.Contains("127.0.0.1"))
+                                {
+                                    pluginEntity.ConnectionString = pluginEntity.ConnectionString.Replace(
+                                        "mariadb-cluster-mariadb-galera",
+                                        "127.0.0.1");
+                                }
+
+                                plugin.AddPluginConfig(config, pluginEntity.ConnectionString);
+                            }
                         }
                     }
-                }
 
-                config.AddEnvironmentVariables();
+                    config.AddEnvironmentVariables();
+                })
+                .UseStartup<Startup>();
             })
-            .UseStartup<Startup>()
             .Build();
     }
 }
