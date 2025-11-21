@@ -11,7 +11,7 @@ RUN yarn install
 RUN yarn build
 RUN if [ -n "$SENTRY_AUTH_TOKEN" ] && [ "$DISABLE_SENTRY" != "true" ]; then yarn sentrysourcemap; else echo "Sentry sourcemap upload skipped (DISABLE_SENTRY=$DISABLE_SENTRY)"; fi
 
-FROM mcr.microsoft.com/dotnet/sdk:9.0-noble AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:10.0-noble AS build-env
 WORKDIR /app
 ARG GITVERSION
 ARG DISABLE_SENTRY
@@ -22,7 +22,7 @@ RUN dotnet publish -o out /p:Version=$GITVERSION --runtime linux-x64 --configura
 RUN pwd
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:9.0-noble
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble
 WORKDIR /app
 ARG DISABLE_SENTRY
 ENV DISABLE_SENTRY=${DISABLE_SENTRY}
