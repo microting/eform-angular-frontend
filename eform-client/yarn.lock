@@ -337,6 +337,15 @@
     "@angular-eslint/utils" "20.5.1"
     ts-api-utils "^2.1.0"
 
+"@angular-eslint/eslint-plugin@20.6.0":
+  version "20.6.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-20.6.0.tgz#f2466a168ef8b0a689b61f8ca81377afdd90f278"
+  integrity sha512-hvFtluNRjMqlkwxYGMO1RFgJ5N5/InFZZSHIOput+XXVXYwPrNjbyMY29/ndynpvNktcVq1UPpjv5JAucp0GlA==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "20.6.0"
+    "@angular-eslint/utils" "20.6.0"
+    ts-api-utils "^2.1.0"
+
 "@angular-eslint/schematics@20.5.1":
   version "20.5.1"
   resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-20.5.1.tgz#925095293324c4af47bae70c429a288839ac97e3"
