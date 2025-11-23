@@ -1,7 +1,6 @@
 <eform-new-subheader>
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary btn-primary--icon-left"
     (click)="openNewUserModal()"
     *ngIf="selectCurrentUserClaimsUsersCreate$ | async"
     matTooltip="{{ 'Create user' | translate }}"

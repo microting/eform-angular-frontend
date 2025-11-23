@@ -5,6 +5,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GalleryModule} from 'ng-gallery';
 import {TranslateModule} from '@ngx-translate/core';
 import {LightboxModule} from 'ng-gallery/lightbox';
+import { AppIconComponent } from './components/icons/app-icon/app-icon.component';
+
 // TODO fix ngx-mask
 //import {NgxMaskModule} from 'ngx-mask';
 import {ToastrModule} from 'ngx-toastr';
@@ -136,6 +138,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     MatProgressSpinnerModule,
     // EformDateFnsDateModule,
     EformMatDateFnsDateModule,
+    AppIconComponent,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],

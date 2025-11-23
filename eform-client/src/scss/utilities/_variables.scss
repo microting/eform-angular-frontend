@@ -25,3 +25,6 @@ $cursors: (pointer, text, move, copy, 'no-drop', default);
 $positions: static, relative, absolute, fixed, sticky !default;
 $displays: none, inline, inline-block, block, table, table-row, table-cell, grid, flex, inline-flex !default;
 $icon-size: 18px;
+
+
+$border-rounded-full: 9999px;

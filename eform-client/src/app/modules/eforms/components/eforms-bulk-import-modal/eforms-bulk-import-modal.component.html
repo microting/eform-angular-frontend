@@ -2,17 +2,16 @@
 <div mat-dialog-content class="">
   <div class="d-flex flex-row justify-content-start">
     <button
-      mat-raised-button
-      color="primary"
+      class="btn-primary btn-primary--icon-left"
       *ngIf="xlsxEformsFileUploader?.queue?.length == 0"
       (click)="xlsxEforms.click()"
       [loading]="loaderService.isLoading | async"
     >
-      {{ 'Upload' | translate }}
+      <mat-icon>upload</mat-icon>
+      <span>{{ 'Upload' | translate }}</span>
     </button>
     <button
-      mat-raised-button
-      color="warn"
+      class="btn-warning"
       *ngIf="xlsxEformsFileUploader?.queue?.length > 0"
       (click)="xlsxEforms.click()"
       [loading]="loaderService.isLoading | async"
@@ -44,7 +43,7 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    mat-raised-button
+    class="btn-cancel"
     (click)="excelEformsModal()"
   >
     {{ 'Close' | translate }}
