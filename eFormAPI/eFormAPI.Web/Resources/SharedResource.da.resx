@@ -694,8 +694,6 @@
   </data>
   <data name="PasswordSuccessfullyUpdated" xml:space="preserve">
     <value>Adgangskode opdateret</value>
-  </data><data name="UserNotFound" xml:space="preserve">
-    <value>User with {0} not found</value>
   </data>
     <data name="ForgotPasswordEmailSubject" xml:space="preserve">
       <value>Nulstilling af adgangskode</value>
