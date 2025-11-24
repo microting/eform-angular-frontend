@@ -16,6 +16,14 @@ mat-tree {
       }
     }
 
+
+    &:hover{
+      border-radius: var(--rounded-full)!important;
+    }
+    &:focus{
+      border-radius: var(--rounded-full)!important;
+    }
+
     .selected-node {
       background-color: var(--mdc-theme-primary) !important;
       color: var(--mdc-theme-on-primary) !important;
@@ -59,6 +67,9 @@ mat-tree {
           }
         }
       }
+    }
+    .selected-node {
+      width: calc(100% - 20px)!important;
     }
   }
 }

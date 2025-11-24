@@ -452,6 +452,15 @@ ngx-material-timepicker-container {
   cursor: pointer;
   color: var(--text-header)!important;
 
+  &:disabled,
+  &[disabled] {
+    background-color: var(--border) !important;
+    color: var(--tp-text) !important;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    pointer-events: none;
+  }
+
   &--icon-rounded-border{
     display: flex;
     padding: var(--3514-px, 14px);
@@ -487,6 +496,15 @@ ngx-material-timepicker-container {
   font-style: normal;
   //font-weight: 600;
   line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
+
+  &:disabled,
+  &[disabled] {
+    background-color: var(--border) !important;
+    color: var(--tp-text) !important;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    pointer-events: none;
+  }
 }
 
 
@@ -509,4 +527,13 @@ ngx-material-timepicker-container {
   font-style: normal;
   //font-weight: 600;
   line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
+
+  &:disabled,
+  &[disabled] {
+    background-color: var(--border) !important;
+    color: var(--tp-text) !important;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    pointer-events: none;
+  }
 }
