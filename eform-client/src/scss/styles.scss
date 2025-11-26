@@ -66,6 +66,8 @@ body, .theme-light {
   //--mat-card-elevated-container-color: #{$bg-light}!important;
   --primary: #{$primary-light};
   --warning: #{$warning-light};
+  --error: #{$error-light};
+  --btn-delete-text: #{$text-header-dark};
 }
 
 body, .theme-dark {
@@ -81,6 +83,8 @@ body, .theme-dark {
   //--mat-card-elevated-container-color: #{$bg-dark}!important;
   --primary: #{$primary-dark};
   --warning: #{$warning-dark};
+  --error: #{$error-dark};
+  --btn-delete-text: #{$text-header-light};
 }
 
 a {
@@ -537,3 +541,35 @@ ngx-material-timepicker-container {
     pointer-events: none;
   }
 }
+
+.btn-delete{
+  display: flex;
+  height: 48px;
+  padding: var(--312-px, 12px) var(--832-px, 32px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--156-px, 6px);
+  border-radius: var(--rounded-full);
+  background: var(--error);
+  color: var(--btn-delete-text);
+  cursor: pointer;
+  border: unset;
+
+  /* Text/sm/Medium */
+  font-family: var(--font-family);
+  font-size: var(--Text-size-sm, 14px);
+  font-style: normal;
+  //font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
+
+  &:disabled,
+  &[disabled] {
+    background-color: var(--border) !important;
+    color: var(--tp-text) !important;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    pointer-events: none;
+  }
+}
+
+
