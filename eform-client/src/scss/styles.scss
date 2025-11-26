@@ -183,6 +183,7 @@ a {
   justify-content: stretch;
   min-height: 100px;
   min-width: 250px !important;
+  color: black !important;
 }
 
 .white-background {
@@ -201,6 +202,7 @@ a {
   justify-content: stretch;
   min-height: 100px;
   min-width: 250px !important;
+  color: black !important;
 }
 
 .green-background {
@@ -219,12 +221,14 @@ a {
   justify-content: stretch;
   min-height: 100px;
   min-width: 250px !important;
+  color: black !important;
 }
 
 .red-background {
   background-color: var(--tp-td-bg) !important;
   border-bottom: 1px solid #EBEFF2 !important;
   border-right: 1px solid #EBEFF2 !important;
+  padding: 5px !important;
 }
 
 .red-background .plan-container {
@@ -236,6 +240,7 @@ a {
   justify-content: stretch;
   min-height: 100px;
   min-width: 250px !important;
+  color: #DB0D0D !important;
 }
 
 .device-icon {

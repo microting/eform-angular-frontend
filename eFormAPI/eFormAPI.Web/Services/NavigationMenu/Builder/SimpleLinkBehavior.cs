@@ -42,8 +42,9 @@ public class SimpleLinkBehavior : AbstractBehavior
     public override void Setup(MenuItem menuItem)
     {
         menuItem.Name = MenuItemModel.Name;
-        menuItem.MenuTemplateId = MenuItemModel.RelatedTemplateItemId.Value; // value must be
-        menuItem.E2EId = DbContext.MenuTemplates.Single(x => x.Id == MenuItemModel.RelatedTemplateItemId).E2EId;
+        // menuItem.MenuTemplateId = MenuItemModel.RelatedTemplateItemId.Value; // value must be
+        // menuItem.E2EId = DbContext.MenuTemplates.Single(x => x.Id == MenuItemModel.RelatedTemplateItemId).E2EId;
+        menuItem.E2EId = MenuItemModel.E2EId;
         menuItem.ParentId = ParentId;
 
         DbContext.MenuItems.Add(menuItem);

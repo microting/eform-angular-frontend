@@ -3,4 +3,5 @@ export class DeviceUserRequestModel {
   public sort?: string;
   public isSortDsc?: boolean;
   public propertyIds?: number[];
+  public showResigned?: boolean;
 }
