@@ -45,8 +45,8 @@
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <ng-template #toolbarTpl>
-  <div class="d-flex flex-row justify-content-start flex-nowrap">
-    <div class="d-flex flex-column mr-2 ml-2">
+  <div class="d-flex flex-row justify-content-start flex-nowrap align-items-center gap-12">
+    <div class="d-flex flex-column">
       <mat-form-field>
         <mat-label>{{ 'Search eForm' | translate }}</mat-label>
         <input
@@ -104,7 +104,7 @@
   actions: actionsTpl}"
   [showPaginator]="false"
   [pageOnFront]="false"
-  [rowStriped]="true"
+  [rowStriped]="false"
   [showToolbar]="true"
   [showColumnMenuButton]="false"
   [toolbarTemplate]="toolbarTpl"
