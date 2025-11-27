@@ -8,6 +8,24 @@
 mat-mdc-tree-node.mat-mdc-tree-node {
   min-height: 30px;
   max-height: 30px;
+  display: inline-flex;
+
+  &:hover{
+    border-radius: var(--rounded-full)!important;
+  }
+  &:focus{
+    border-radius: var(--rounded-full)!important;
+  }
+
+  .selected-node {
+    background-color: var(--mdc-theme-primary) !important;
+    color: var(--mdc-theme-on-primary) !important;
+    border-radius: var(--rounded-full);
+
+    &:hover{
+      background-color: var(--mdc-theme-primary-dark) !important;
+    }
+  }
 }
 
 .collapse-button {
@@ -16,16 +34,16 @@ mat-mdc-tree-node.mat-mdc-tree-node {
 }
 
 .selected-folder {
-  color: mat.m2-get-color-from-palette(mat.$m2-pink-palette, 300);
+  color: mat.m2-get-color-from-palette(mat.$m2-teal-palette, 300);
 }
 
 .microting-uid {
-  color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 300);
+  color: var(--text-header) !important;
   margin-left: .5rem;
 }
 
 .folder:hover {
-  color: mat.m2-get-color-from-palette(mat.$m2-pink-palette, 300);
+  color: mat.m2-get-color-from-palette(mat.$m2-teal-palette, 300);
   transition: color .5s;
 }
 

@@ -1,10 +1,20 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 @use '../utilities/colors' as *;
+body, .theme-light {
+  --error: #{$error-light};
+  --warning: #{$warning-light};
+
+}
+
+body, .theme-dark {
+  --error: #{$error-dark};
+  --warning: #{$warning-dark};
+}
 
 a {
   &.link-primary {
-    color: $eform-red;
+    color: var(--error);
     &:hover {
       color: $eform-red-dark;
     }
@@ -12,11 +22,11 @@ a {
 }
 
 .text-danger {
-  color: $eform-red;
+  color: var(--error) ;
 }
 
 .text-warning {
-  color: $eform-orange;
+  color: var(--warning) ;
 }
 
 .text-black {

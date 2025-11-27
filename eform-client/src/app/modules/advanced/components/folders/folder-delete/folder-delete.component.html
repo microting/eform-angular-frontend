@@ -33,17 +33,16 @@
     </div>
   </div>
 </div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
-    mat-raised-button
-    color="warn"
+    class="btn-delete"
     id="saveDeleteBtn"
     (click)="deleteFolder()"
   >
     {{'Delete' | translate}}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     id="cancelDeleteBtn"
     (click)="hide()"
   >
