@@ -61,7 +61,7 @@ body, .theme-light {
   --tp-white-text: black;
   --border: #{$border-light};
   --icon-secondary: #{$icon-secondary-light};
-  --bg:  #{$bg-light};
+  --bg: #{$bg-light};
   --text-header: #{$text-header-light};
   //--mat-card-elevated-container-color: #{$bg-light}!important;
   --primary: #{$primary-light};
@@ -70,6 +70,8 @@ body, .theme-light {
   --btn-delete-text: #{$text-header-dark};
   --text-body: #{$text-body-light};
   --card: #{$card-light};
+  --mat-table-row-item-outline-color: #{$border-light}!important;
+  --mat-card-elevated-container-color: #{$bg-light}!important;
 }
 
 body, .theme-dark {
@@ -89,6 +91,8 @@ body, .theme-dark {
   --btn-delete-text: #{$text-header-light};
   --text-body: #{$text-body-dark};
   --card: #{$card-dark};
+  --mat-table-row-item-outline-color: #{$border-dark}!important;
+  --mat-card-elevated-container-color: #{$bg-dark}!important;
 }
 
 a {
@@ -451,7 +455,7 @@ ngx-material-timepicker-container {
       font-family: var(--font-family);
       font-size: var(--Text-size-sm, 14px);
       font-style: normal;
-      //font-weight: 600;
+      font-weight: 600;
       line-height: var(--Text-line-height-sm, 22px);
     }
   }
@@ -503,11 +507,10 @@ ngx-material-timepicker-container {
   color: var(--text-header);
   cursor: pointer;
 
-  /* Text/sm/Medium */
   font-family: var(--font-family);
   font-size: var(--Text-size-sm, 14px);
   font-style: normal;
-  //font-weight: 600;
+  font-weight: 600;
   line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
 
   &:disabled,
@@ -534,11 +537,10 @@ ngx-material-timepicker-container {
   cursor: pointer;
   border: unset;
 
-  /* Text/sm/Medium */
   font-family: var(--font-family);
   font-size: var(--Text-size-sm, 14px);
   font-style: normal;
-  //font-weight: 600;
+  font-weight: 600;
   line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
 
   &:disabled,
@@ -564,11 +566,10 @@ ngx-material-timepicker-container {
   cursor: pointer;
   border: unset;
 
-  /* Text/sm/Medium */
   font-family: var(--font-family);
   font-size: var(--Text-size-sm, 14px);
   font-style: normal;
-  //font-weight: 600;
+  font-weight: 600;
   line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
 
   &:disabled,
@@ -590,6 +591,14 @@ ngx-material-timepicker-container {
   align-self: stretch;
   border: unset!important;
   box-shadow: unset!important;
+  h2{
+    color: var(--text-header, #0F1316);
+    font-family: var(--font-family, "Nunito Sans");
+    font-size: var(--Header-size-md, 24px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: var(--Header-line-height-md, 32px); /* 133.333% */
+  }
 }
 
 .mat-app-background{
@@ -663,7 +672,7 @@ ngx-material-timepicker-container {
       font-family: var(--font-family, "Nunito Sans");
       font-size: var(--Text-size-sm, 14px);
       font-style: normal;
-      //font-weight: 600;
+      font-weight: 600;
       line-height: var(--Text-line-height-sm, 22px);
     }
 
@@ -672,7 +681,7 @@ ngx-material-timepicker-container {
       font-family: var(--font-family, "Nunito Sans");
       font-size: var(--Text-size-sm, 14px);
       font-style: normal;
-      //font-weight: 600;
+      font-weight: 600;
       line-height: var(--Text-line-height-sm, 22px);
     }
   }
@@ -682,19 +691,94 @@ ngx-material-timepicker-container {
   border-right-color: var(--border) !important;
 }
 
+.mat-mdc-cell{
+  border-bottom-color: var(--border) !important;
+}
+.mtx-grid-toolbar{
+  border: unset !important;
+}
+
 .mtx-grid{
-  outline: unset !important;
+  border-color: var(--border) !important;
+  border: unset !important;
+  outline: unset!important;
+
   .mat-mdc-table{
     background: var(--bg)!important;
+    border-bottom: 1px solid var(--border)!important;
+    border-color: var(--border) !important;
     .mat-mdc-header-row, thead{
-      border-bottom: 1px solid var(--border);
-      background: var(--card,);
+      border-color: var(--border) !important;
+      background: var(--card)!important;
+      tr{
+        border-color: var(--border) !important;
+        th{
+          border-color: var(--border) !important;
+          color: var(--text-header, #0F1316);
+          font-family: var(--font-family, "Nunito Sans");
+          font-size: var(--Text-size-sm, 14px);
+          font-style: normal;
+          font-weight: 600;
+          line-height: var(--Text-line-height-sm, 22px);
+        }
+      }
     }
-
   }
-  thead{
-    border-bottom: 1px solid var(--border);
-    background: var(--card,);
+  tbody{
+    border-color: var(--border) !important;
+    tr{
+      border-color: var(--border) !important;
+      td{
+        border-color: var(--border) !important;
+        color: var(--text-body);
+        font-family: var(--font-family, "Nunito Sans");
+        font-size: var(--Text-size-sm, 14px);
+        font-style: normal;
+        font-weight: 500;
+        line-height: var(--Text-line-height-sm, 22px);
+      }
+      //&:last-child {
+      //  border-bottom: 1px solid var(--border)!important;
+      //}
+    }
   }
 
+}
+
+.mat-mdc-paginator-outer-container, .mat-mdc-paginator-outer-container, .mat-mdc-paginator{
+  background: var(--bg)!important;
+  border: unset !important;
+}
+.mat-mdc-paginator-container, .mat-mdc-select-value-text, .mat-mdc-select-arrow svg{
+  color: var(--text-header, #0F1316);
+  font-family: var(--font-family, "Nunito Sans");
+  font-size: var(--Text-size-sm, 14px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: var(--Text-line-height-sm, 22px);
+
+  .mat-mdc-form-field .mdc-text-field{
+    border-radius: var(--rounded-full, 9999px)!important;
+    border: 1px solid var(--border, #EBEFF2)!important;
+    background: var(--bg, #FFF)!important;
+  }
+
+  .mdc-notched-outline__leading, .mdc-notched-outline__notch, .mdc-notched-outline__trailing{
+    border: unset !important;
+    outline: unset !important;
+  }
+}
+
+.mat-mdc-dialog-surface{
+  background-color: var(--bg)!important;
+  border-radius: var(--rounded-20, 20px);
+  display: flex;
+  padding: var(--832-px, 32px);
+  //flex-direction: column;
+  //align-items: center;
+  gap: var(--624-px, 24px);
+}
+
+.mat-mdc-card{
+  box-shadow: unset !important;
 }
