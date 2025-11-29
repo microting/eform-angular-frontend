@@ -1,15 +1,18 @@
 <div class="h-100 d-flex flex-column" *ngIf="selectIsAuth$ | async">
   <!--  <app-header></app-header>-->
-  <mat-toolbar style="padding-top: 5px; padding-bottom: 5px" class="d-flex align-items-center">
-    <div *ngIf="headerSettingsModel.imageLinkVisible" class="d-flex">
-      <div class="logo-container">
-        <img height="30px" id="site-header-image" [src]="logoImage | authImage | async"
-             *ngIf="headerSettingsModel.imageLinkVisible" alt="">
+  <mat-toolbar style="padding-top: 5px; padding-bottom: 5px" class="d-flex align-items-center nav-header">
+    <div class="d-flex align-items-center gap-12">
+      <button mat-icon-button (click)="toggleDrawer()" [hidden]="(selectConnectionStringExists$ | async) === false">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div *ngIf="headerSettingsModel.imageLinkVisible" class="d-flex">
+        <div class="logo-container">
+          <img height="30px" id="site-header-image" [src]="logoImage | authImage | async"
+               *ngIf="headerSettingsModel.imageLinkVisible" alt="">
+        </div>
       </div>
     </div>
-    <button mat-icon-button (click)="toggleDrawer()" [hidden]="(selectConnectionStringExists$ | async) === false">
-      <mat-icon>menu</mat-icon>
-    </button>
+
     <span class="spacer"></span>
     <div class="tag">
       <mat-icon>account_circle</mat-icon>
@@ -30,7 +33,7 @@
       </mat-menu>
     </div>
   </mat-toolbar>
-  <mat-drawer-container autosize style="height: 100%;">
+  <mat-drawer-container autosize style="height: 100%;" class="mat-app-background">
     <mat-drawer
       #drawer
       [mode]="sidenavMode"
@@ -38,7 +41,7 @@
       <app-navigation (clickOnLink)="onClickOnLink()"></app-navigation>
       <app-footer></app-footer>
     </mat-drawer>
-    <div class="mb-auto p-4" *ngIf="selectIsAuth$ | async">
+    <div class="mb-auto mat-app-background" *ngIf="selectIsAuth$ | async">
       <app-userback-widget></app-userback-widget>
       <router-outlet></router-outlet>
     </div>

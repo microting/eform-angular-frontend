@@ -61,13 +61,17 @@ body, .theme-light {
   --tp-white-text: black;
   --border: #{$border-light};
   --icon-secondary: #{$icon-secondary-light};
-  --bg:  #{$bg-light};
+  --bg: #{$bg-light};
   --text-header: #{$text-header-light};
   //--mat-card-elevated-container-color: #{$bg-light}!important;
   --primary: #{$primary-light};
   --warning: #{$warning-light};
   --error: #{$error-light};
   --btn-delete-text: #{$text-header-dark};
+  --text-body: #{$text-body-light};
+  --card: #{$card-light};
+  --mat-table-row-item-outline-color: #{$border-light}!important;
+  --mat-card-elevated-container-color: #{$bg-light}!important;
 }
 
 body, .theme-dark {
@@ -85,6 +89,10 @@ body, .theme-dark {
   --warning: #{$warning-dark};
   --error: #{$error-dark};
   --btn-delete-text: #{$text-header-light};
+  --text-body: #{$text-body-dark};
+  --card: #{$card-dark};
+  --mat-table-row-item-outline-color: #{$border-dark}!important;
+  --mat-card-elevated-container-color: #{$bg-dark}!important;
 }
 
 a {
@@ -447,7 +455,7 @@ ngx-material-timepicker-container {
       font-family: var(--font-family);
       font-size: var(--Text-size-sm, 14px);
       font-style: normal;
-      //font-weight: 600;
+      font-weight: 600;
       line-height: var(--Text-line-height-sm, 22px);
     }
   }
@@ -499,11 +507,10 @@ ngx-material-timepicker-container {
   color: var(--text-header);
   cursor: pointer;
 
-  /* Text/sm/Medium */
   font-family: var(--font-family);
   font-size: var(--Text-size-sm, 14px);
   font-style: normal;
-  //font-weight: 600;
+  font-weight: 600;
   line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
 
   &:disabled,
@@ -530,11 +537,10 @@ ngx-material-timepicker-container {
   cursor: pointer;
   border: unset;
 
-  /* Text/sm/Medium */
   font-family: var(--font-family);
   font-size: var(--Text-size-sm, 14px);
   font-style: normal;
-  //font-weight: 600;
+  font-weight: 600;
   line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
 
   &:disabled,
@@ -560,11 +566,10 @@ ngx-material-timepicker-container {
   cursor: pointer;
   border: unset;
 
-  /* Text/sm/Medium */
   font-family: var(--font-family);
   font-size: var(--Text-size-sm, 14px);
   font-style: normal;
-  //font-weight: 600;
+  font-weight: 600;
   line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
 
   &:disabled,
@@ -578,3 +583,202 @@ ngx-material-timepicker-container {
 }
 
 
+.eform-sub-header{
+  background: var(--bg)!important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border: unset!important;
+  box-shadow: unset!important;
+  h2{
+    color: var(--text-header, #0F1316);
+    font-family: var(--font-family, "Nunito Sans");
+    font-size: var(--Header-size-md, 24px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: var(--Header-line-height-md, 32px); /* 133.333% */
+  }
+}
+
+.mat-app-background{
+  background: var(--bg)!important;
+}
+.nav-header{
+  display: flex;
+  width: 1920px;
+  padding: var(--520-px, 20px);
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border, #EBEFF2);
+  background: var(--bg)!important;
+}
+
+
+.mat-mdc-form-field {
+
+  .mat-mdc-floating-label{
+    color: var(--text-body) !important;
+  }
+
+  .mat-mdc-form-field-focus-overlay {
+    background: unset !important;
+  }
+
+  .mdc-text-field {
+    border: 1px solid var(--border);
+    border-radius: 4px!important;
+
+    background-color: var(--bg) !important;
+
+    &__ripple{
+      ::before{
+        background-color: var(--bg) !important;
+      }
+      ::after{
+        background-color: var(--bg) !important;
+      }
+    }
+
+    &__input {
+      background-color: var(--bg) !important;
+    }
+
+    &--filled:not(.mdc-text-field--disabled) {
+      background-color: var(--bg) !important;
+      .mdc-line-ripple{
+        &::before {
+          border-bottom: unset !important;
+        }
+        &::after {
+          border-bottom-color: var(--bg) !important;
+        }
+      }
+
+      .mat-mdc-floating-label{
+        color: var(--text-body) !important;
+      }
+    }
+  }
+}
+
+.mat-drawer-inner-container{
+  background: var(--bg)!important;
+  .mat-tree, .mat-expansion-panel{
+    background: var(--bg)!important;
+
+    a{
+      color: var(--text-header, #0F1316);
+      font-family: var(--font-family, "Nunito Sans");
+      font-size: var(--Text-size-sm, 14px);
+      font-style: normal;
+      font-weight: 600;
+      line-height: var(--Text-line-height-sm, 22px);
+    }
+
+    .nav-link{
+      color: var(--text-header, #0F1316);
+      font-family: var(--font-family, "Nunito Sans");
+      font-size: var(--Text-size-sm, 14px);
+      font-style: normal;
+      font-weight: 600;
+      line-height: var(--Text-line-height-sm, 22px);
+    }
+  }
+}
+.mat-drawer-side{
+  background: var(--bg)!important;
+  border-right-color: var(--border) !important;
+}
+
+.mat-mdc-cell{
+  border-bottom-color: var(--border) !important;
+}
+.mtx-grid-toolbar{
+  border: unset !important;
+}
+
+.mtx-grid{
+  border-color: var(--border) !important;
+  border: unset !important;
+  outline: unset!important;
+
+  .mat-mdc-table{
+    background: var(--bg)!important;
+    border-bottom: 1px solid var(--border)!important;
+    border-color: var(--border) !important;
+    .mat-mdc-header-row, thead{
+      border-color: var(--border) !important;
+      background: var(--card)!important;
+      tr{
+        border-color: var(--border) !important;
+        th{
+          border-color: var(--border) !important;
+          color: var(--text-header, #0F1316);
+          font-family: var(--font-family, "Nunito Sans");
+          font-size: var(--Text-size-sm, 14px);
+          font-style: normal;
+          font-weight: 600;
+          line-height: var(--Text-line-height-sm, 22px);
+        }
+      }
+    }
+  }
+  tbody{
+    border-color: var(--border) !important;
+    tr{
+      border-color: var(--border) !important;
+      td{
+        border-color: var(--border) !important;
+        color: var(--text-body);
+        font-family: var(--font-family, "Nunito Sans");
+        font-size: var(--Text-size-sm, 14px);
+        font-style: normal;
+        font-weight: 500;
+        line-height: var(--Text-line-height-sm, 22px);
+      }
+      //&:last-child {
+      //  border-bottom: 1px solid var(--border)!important;
+      //}
+    }
+  }
+
+}
+
+.mat-mdc-paginator-outer-container, .mat-mdc-paginator-outer-container, .mat-mdc-paginator{
+  background: var(--bg)!important;
+  border: unset !important;
+}
+.mat-mdc-paginator-container, .mat-mdc-select-value-text, .mat-mdc-select-arrow svg{
+  color: var(--text-header, #0F1316);
+  font-family: var(--font-family, "Nunito Sans");
+  font-size: var(--Text-size-sm, 14px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: var(--Text-line-height-sm, 22px);
+
+  .mat-mdc-form-field .mdc-text-field{
+    border-radius: var(--rounded-full, 9999px)!important;
+    border: 1px solid var(--border, #EBEFF2)!important;
+    background: var(--bg, #FFF)!important;
+  }
+
+  .mdc-notched-outline__leading, .mdc-notched-outline__notch, .mdc-notched-outline__trailing{
+    border: unset !important;
+    outline: unset !important;
+  }
+}
+
+.mat-mdc-dialog-surface{
+  background-color: var(--bg)!important;
+  border-radius: var(--rounded-20, 20px);
+  display: flex;
+  padding: var(--832-px, 32px);
+  //flex-direction: column;
+  //align-items: center;
+  gap: var(--624-px, 24px);
+}
+
+.mat-mdc-card{
+  box-shadow: unset !important;
+}
