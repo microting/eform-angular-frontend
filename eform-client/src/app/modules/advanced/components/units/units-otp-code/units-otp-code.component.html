@@ -1,6 +1,8 @@
-<h3 mat-dialog-title>{{'Activate OTP code for' | translate}} : {{selectedUnitModel.microtingUid}}!</h3>
+<h1 mat-dialog-title class="align-items-center">
+  <mat-icon class="text-warning">error</mat-icon>
+</h1>
 <div mat-dialog-content>
-  <h1 class="text-danger">{{'WARNING' | translate}}!</h1>
+  <h1>{{'New OTP for' | translate}} #{{selectedUnitModel.microtingUid}}</h1>
   <ul>
     <li>{{ 'When pressing OK, you will deactivate the current device paired with this location' | translate }}.</li>
     <li>{{ 'If there is data on the current device, this data will be lost after pressing OK' | translate }}</li>
@@ -9,16 +11,15 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    mat-raised-button
-    color="warn"
-    (click)="requestOtp()"
-  >
-    {{'OK' | translate}}
-  </button>
-  <button
-    mat-raised-button
+    class="btn-cancel"
     (click)="hide()"
   >
     {{'Cancel' | translate}}
+  </button>
+  <button
+    class="btn-warning btn-primary--icon-left"
+    (click)="requestOtp()"
+  >
+    <span>{{'OK' | translate}}</span>
   </button>
 </div>

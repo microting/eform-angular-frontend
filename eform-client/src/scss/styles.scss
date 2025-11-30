@@ -58,7 +58,7 @@ body, .theme-light {
   --tp-th-bg: #f7f9fa;
   --tp-border: #EBEFF2;
   --tp-text: #111827;
-  --tp-white-text: black;
+  --tp-white-text: #0F1316;
   --border: #{$border-light};
   --icon-secondary: #{$icon-secondary-light};
   --bg: #{$bg-light};
@@ -452,7 +452,6 @@ ngx-material-timepicker-container {
       align-items: center;
     }
     span {
-      font-family: var(--font-family);
       font-size: var(--Text-size-sm, 14px);
       font-style: normal;
       font-weight: 600;
@@ -507,7 +506,6 @@ ngx-material-timepicker-container {
   color: var(--text-header);
   cursor: pointer;
 
-  font-family: var(--font-family);
   font-size: var(--Text-size-sm, 14px);
   font-style: normal;
   font-weight: 600;
@@ -537,7 +535,6 @@ ngx-material-timepicker-container {
   cursor: pointer;
   border: unset;
 
-  font-family: var(--font-family);
   font-size: var(--Text-size-sm, 14px);
   font-style: normal;
   font-weight: 600;
@@ -566,7 +563,34 @@ ngx-material-timepicker-container {
   cursor: pointer;
   border: unset;
 
-  font-family: var(--font-family);
+  font-size: var(--Text-size-sm, 14px);
+  font-style: normal;
+  font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
+
+  &:disabled,
+  &[disabled] {
+    background-color: var(--border) !important;
+    color: var(--tp-text) !important;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    pointer-events: none;
+  }
+}
+
+.warning-btn {
+  display: flex;
+  height: 48px;
+  padding: var(--312-px, 12px) var(--832-px, 32px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--156-px, 6px);
+  border-radius: var(--rounded-full);
+  background: var(--warning);
+  color: var(--btn-delete-text);
+  cursor: pointer;
+  border: unset;
+
   font-size: var(--Text-size-sm, 14px);
   font-style: normal;
   font-weight: 600;
@@ -593,7 +617,6 @@ ngx-material-timepicker-container {
   box-shadow: unset!important;
   h2{
     color: var(--text-header, #0F1316);
-    font-family: var(--font-family, "Nunito Sans");
     font-size: var(--Header-size-md, 24px);
     font-style: normal;
     font-weight: 600;
@@ -669,7 +692,6 @@ ngx-material-timepicker-container {
 
     a{
       color: var(--text-header, #0F1316);
-      font-family: var(--font-family, "Nunito Sans");
       font-size: var(--Text-size-sm, 14px);
       font-style: normal;
       font-weight: 600;
@@ -678,7 +700,6 @@ ngx-material-timepicker-container {
 
     .nav-link{
       color: var(--text-header, #0F1316);
-      font-family: var(--font-family, "Nunito Sans");
       font-size: var(--Text-size-sm, 14px);
       font-style: normal;
       font-weight: 600;
@@ -715,7 +736,6 @@ ngx-material-timepicker-container {
         th{
           border-color: var(--border) !important;
           color: var(--text-header, #0F1316);
-          font-family: var(--font-family, "Nunito Sans");
           font-size: var(--Text-size-sm, 14px);
           font-style: normal;
           font-weight: 600;
@@ -731,7 +751,6 @@ ngx-material-timepicker-container {
       td{
         border-color: var(--border) !important;
         color: var(--text-body);
-        font-family: var(--font-family, "Nunito Sans");
         font-size: var(--Text-size-sm, 14px);
         font-style: normal;
         font-weight: 500;
@@ -751,7 +770,6 @@ ngx-material-timepicker-container {
 }
 .mat-mdc-paginator-container, .mat-mdc-select-value-text, .mat-mdc-select-arrow svg{
   color: var(--text-header, #0F1316);
-  font-family: var(--font-family, "Nunito Sans");
   font-size: var(--Text-size-sm, 14px);
   font-style: normal;
   font-weight: 500;
@@ -781,4 +799,6 @@ ngx-material-timepicker-container {
 
 .mat-mdc-card{
   box-shadow: unset !important;
+  border: 1px solid var(--border) !important;
+  //border-color: var(--border) !important;
 }

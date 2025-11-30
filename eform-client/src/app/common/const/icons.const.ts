@@ -49,3 +49,18 @@ export const PdfIcon = '<svg role="img" aria-hidden="true" focusable="false" dat
   '362.5 248 336V272C248 245.5 226.5 224 200 224H176C167.2 224 160 231.2 160 240V368zM288 224C279.2 224 272 231.2 272 240V368C272 ' +
   '376.8 279.2 384 288 384C296.8 384 304 376.8 304 368V320H336C344.8 320 352 312.8 352 304C352 295.2 344.8 288 336 ' +
   '288H304V256H336C344.8 256 352 248.8 352 240C352 231.2 344.8 224 336 224H288zM256 0L384 128H256V0z"></path></svg>';
+export const PasswordValidationIcon = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+  '<g clip-path="url(#clip0_3100_46162)">\n' +
+  '<path d="M11.1733 13.8863C11.1733 13.8863 11.6942 13.8863 12.215 14.9974C12.215 14.9974 13.8694 12.2196 15.34 11.6641" stroke="#289694" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+  '<path d="M14.1196 5.83203H14.1271" stroke="#289694" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+  '<path d="M9.95264 5.83203H9.96014" stroke="#289694" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+  '<path d="M5.78613 5.83203H5.79362" stroke="#289694" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+  '<path d="M6.57644 9.97237H4.17354C2.78894 9.97237 1.6665 8.85308 1.6665 7.47237V4.16406C1.6665 2.78335 2.78894 1.66406 4.17354 1.66406H15.8261C17.2107 1.66406 18.3332 2.78335 18.3332 4.16406V7.60649" stroke="#289694" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+  '<path d="M18.3328 13.332C18.3328 10.5706 16.088 8.33203 13.3188 8.33203C10.5496 8.33203 8.30469 10.5706 8.30469 13.332C8.30469 16.0934 10.5496 18.332 13.3188 18.332C16.088 18.332 18.3328 16.0934 18.3328 13.332Z" stroke="#289694" stroke-width="1.5" stroke-linecap="round"/>\n' +
+  '</g>\n' +
+  '<defs>\n' +
+  '<clipPath id="clip0_3100_46162">\n' +
+  '<rect width="20" height="20" fill="white"/>\n' +
+  '</clipPath>\n' +
+  '</defs>\n' +
+  '</svg>\n'
