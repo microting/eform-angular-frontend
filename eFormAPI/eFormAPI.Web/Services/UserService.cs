@@ -63,8 +63,6 @@ public class UserService(
                 await userManager.UpdateAsync(user);
                 return user;
             }
-
-            throw new Exception("User not found!");
         }
 
         return user;
