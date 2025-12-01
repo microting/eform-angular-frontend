@@ -685,8 +685,14 @@ ngx-material-timepicker-container {
   }
 }
 
+
+.mat-tree{
+  background-color: var(--bg)!important;
+}
+
 .mat-drawer-inner-container{
   background: var(--bg)!important;
+
   .mat-tree, .mat-expansion-panel{
     background: var(--bg)!important;
 
@@ -797,8 +803,72 @@ ngx-material-timepicker-container {
   gap: var(--624-px, 24px);
 }
 
+eform-new-subheader{
+  .mat-mdc-card{
+    box-shadow: unset !important;
+    border: none !important;
+  }
+}
+
 .mat-mdc-card{
   box-shadow: unset !important;
   border: 1px solid var(--border) !important;
   //border-color: var(--border) !important;
+}
+
+.mat-mdc-menu-panel{
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: var(--rounded-8, 8px);
+  border: 1px solid var(--border, #EBEFF2)!important;
+  background: var(--bg, #FFF)!important;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10);
+
+  .mat-mdc-menu-content{
+    display: inline-flex;
+    padding: var(--28-px, 8px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--14-px, 4px);
+    button{
+      display: flex;
+      height: 40px;
+      padding: var(--28-px, 8px) var(--416-px, 16px);
+      align-items: center;
+      gap: var(--28-px, 8px);
+      align-self: stretch;
+      .mat-icon{
+        margin: 0!important;
+      }
+      span{
+        color: var(--text-header, #0F1316)!important;
+        font-family: var(--font-family, "Nunito Sans");
+        font-size: var(--Text-size-sm, 14px);
+        font-style: normal;
+        font-weight: 600;
+        line-height: var(--Text-line-height-sm, 22px);
+      }
+    }
+
+    .mat-mdc-menu-item {
+      display: flex;
+      height: 40px;
+      padding: var(--28-px, 8px) var(--416-px, 16px);
+      align-items: flex-start;
+      gap: var(--28-px, 8px);
+      align-self: stretch;
+      min-height: unset!important;
+      .mat-mdc-menu-item-text {
+        color: var(--text-header, #0F1316) !important;
+        font-family: var(--font-family, "Nunito Sans");
+        font-size: var(--Text-size-sm, 14px) !important;
+        font-style: normal !important;
+        font-weight: 600 !important;
+        line-height: var(--Text-line-height-sm, 22px) !important;
+      }
+    }
+  }
+
+
 }
