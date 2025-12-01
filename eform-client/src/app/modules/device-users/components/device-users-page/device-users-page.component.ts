@@ -18,6 +18,9 @@ import {DeleteModalComponent} from 'src/app/common/modules/eform-shared/componen
 import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsDeviceUsersCreate} from 'src/app/state/auth/auth.selector';
 import {selectDeviceUsersFilters, selectDeviceUsersNameFilter} from "src/app/state/device-user/device-user.selector";
+import {MatIconRegistry} from "@angular/material/icon";
+import {DomSanitizer} from "@angular/platform-browser";
+import {PasswordValidationIcon} from "src/app/common/const";
 
 @AutoUnsubscribe()
 @Component({
@@ -32,6 +35,8 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private translateService = inject(TranslateService);
+  private iconRegistry = inject(MatIconRegistry);
+  private sanitizer = inject(DomSanitizer);
 
   sitesDto: Array<SiteDto>;
 
@@ -60,6 +65,7 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   private selectDeviceUsersNameFilter$ = this.authStore.select(selectDeviceUsersNameFilter);
 
   ngOnInit() {
+    this.iconRegistry.addSvgIconLiteral('password-validation', this.sanitizer.bypassSecurityTrustHtml(PasswordValidationIcon));
     this.getDeviceUsersFiltered();
     let actionsEnabled = false;
     this.selectCurrentUserClaimsDeviceUsersUpdate$.subscribe(x => {

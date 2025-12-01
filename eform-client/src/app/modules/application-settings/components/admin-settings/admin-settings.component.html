@@ -278,15 +278,17 @@
         <h4>{{ 'Languages' | translate }}</h4>
       </mat-card-header>
       <mat-card-content>
-        <ng-container *ngFor="let language of languagesModel.languages">
-          <p class="p-0 pb-2 m-0">
-            <mat-checkbox
-              [(ngModel)]="language.isActive"
-              [ngModelOptions]="{standalone: true}">
-              {{language.name}} ({{language.languageCode}})
-            </mat-checkbox>
-          </p>
-        </ng-container>
+        <div class="d-flex flex-wrap">
+          <ng-container *ngFor="let language of languagesModel.languages">
+            <p class="p-0 pb-2 m-0" style="width: 50%;">
+              <mat-checkbox
+                [(ngModel)]="language.isActive"
+                [ngModelOptions]="{standalone: true}">
+                {{language.name}} ({{language.languageCode}})
+              </mat-checkbox>
+            </p>
+          </ng-container>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
