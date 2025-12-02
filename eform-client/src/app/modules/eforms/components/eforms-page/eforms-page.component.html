@@ -1,5 +1,18 @@
 <eform-new-subheader>
   <div class="d-flex flex-row justify-content-center align-items-center gap-12">
+    <div class="text-field--rounded mt-4">
+      <mat-form-field>
+        <mat-label>{{ 'Search eForm' | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          [ngModel]="selectEformsNameFilter$ | async"
+          (ngModelChange)="onLabelInputChanged($event)"
+          id="labelInput"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
     <div class="line-vert"></div>
     <button
       class="btn-secondary btn-secondary--icon-rounded-border"
@@ -47,22 +60,11 @@
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <ng-template #toolbarTpl>
   <div class="d-flex flex-row justify-content-start flex-nowrap align-items-center gap-12">
-    <div class="d-flex flex-column">
-      <mat-form-field>
-        <mat-label>{{ 'Search eForm' | translate }}</mat-label>
-        <input
-          matInput
-          type="text"
-          [ngModel]="selectEformsNameFilter$ | async"
-          (ngModelChange)="onLabelInputChanged($event)"
-          id="labelInput"
-        />
-      </mat-form-field>
-    </div>
-    <div class="d-flex flex-column" *ngIf="selectCurrentUserClaimsEformsReadTags$ | async">
-      <mat-form-field>
+    <div class="d-flex flex-column align-items-end " *ngIf="selectCurrentUserClaimsEformsReadTags$ | async">
+      <mat-form-field >
         <mat-label>{{ 'Tags' | translate }}</mat-label>
         <mtx-select
+
           class="custom"
           [dropdownPosition]="'bottom'"
           [items]="availableTags"

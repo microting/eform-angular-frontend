@@ -1,4 +1,19 @@
 <eform-new-subheader>
+  <div class="d-flex flex-row justify-content-center align-items-center gap-12">
+    <div class="text-field--rounded mt-4">
+    <mat-form-field>
+      <mat-label>{{ 'Search' | translate }}</mat-label>
+      <input
+        matInput
+        type="text"
+        (ngModelChange)="onNameFilterChanged($event)"
+        [ngModel]="selectEntitySelectNameFilter$ | async"
+        id="labelInput"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+    <div class="line-vert"></div>
   <button
     class="btn-primary btn-primary--icon-left"
     id="entitySelectCreateBtn"
@@ -10,24 +25,8 @@
     <mat-icon>add</mat-icon>
     <span>{{ 'New list' | translate }}</span>
   </button>
-</eform-new-subheader>
-
-<ng-template #toolbarTpl>
-  <div class="d-flex flex-row justify-content-start flex-nowrap">
-    <div class="d-flex flex-column mr-2 ml-2">
-      <mat-form-field>
-        <mat-label>{{ 'Search' | translate }}</mat-label>
-        <input
-          matInput
-          type="text"
-          (ngModelChange)="onNameFilterChanged($event)"
-          [ngModel]="selectEntitySelectNameFilter$ | async"
-          id="labelInput"
-        />
-      </mat-form-field>
-    </div>
   </div>
-</ng-template>
+</eform-new-subheader>
 
 <mtx-grid
   [data]="advEntitySelectableGroupListModel.entities"
@@ -37,9 +36,8 @@
   [paginationTemplate]="paginatorTpl"
   [pageOnFront]="false"
   [rowStriped]="false"
-  [showToolbar]="true"
+  [showToolbar]="false"
   [showColumnMenuButton]="false"
-  [toolbarTemplate]="toolbarTpl"
   [sortActive]="selectEntitySelectSort$ | async"
   [sortDirection]="selectEntitySelectIsSortDsc$ | async"
   (sortChange)="sortTable($event)">

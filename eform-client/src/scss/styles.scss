@@ -417,6 +417,7 @@ ngx-material-timepicker-container {
   background-color: var(--mdc-theme-primary) !important;
   color: var(--mdc-theme-on-primary) !important;
   cursor: pointer;
+  height: 48px;
 
   &:hover {
     background-color: var(--mdc-theme-primary-dark, #00695C) !important;
@@ -467,6 +468,7 @@ ngx-material-timepicker-container {
   background: unset;
   cursor: pointer;
   color: var(--text-header)!important;
+  height: 48px;
 
   &:disabled,
   &[disabled] {
@@ -635,6 +637,89 @@ ngx-material-timepicker-container {
   align-items: center;
   border-bottom: 1px solid var(--border, #EBEFF2);
   background: var(--bg)!important;
+}
+
+body.theme-dark .NgxEditor, body.theme-light .NgxEditor{
+  background: var(--bg)!important;
+  border-bottom: unset!important;
+  border: 1px solid var(--border)!important;
+  color: var(--tp-text) !important;
+  .NgxEditor__MenuBar{
+    background: var(--bg)!important;
+  }
+}
+
+.ng-dropdown-panel{
+  background: var(--bg)!important;
+  border: 1px solid var(--border)!important;
+}
+
+
+.text-field{
+  &--rounded{
+
+    .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label{
+      top: calc(48px/2) !important;
+    }
+    .mat-mdc-form-field {
+      .mat-mdc-form-field-icon-suffix{
+        color: var(--tp-text);
+      }
+      .mat-mdc-form-field-flex{
+        align-items: center;
+        height: 48px;
+      }
+
+      .mat-mdc-floating-label{
+        color: var(--text-body) !important;
+      }
+
+      .mat-mdc-form-field-focus-overlay {
+        background: unset !important;
+      }
+
+      .mat-mdc-form-field-infix{
+       min-height: 48px!important;
+      }
+      .mdc-text-field {
+        height: 48px!important;
+        border: 1px solid var(--border);
+        border-radius: var(--rounded-full, 9999px)!important;
+
+        background-color: var(--bg) !important;
+
+        &__ripple{
+          ::before{
+            background-color: var(--bg) !important;
+          }
+          ::after{
+            background-color: var(--bg) !important;
+          }
+        }
+
+        &__input {
+          background-color: var(--bg) !important;
+        }
+
+        &--filled:not(.mdc-text-field--disabled) {
+          background-color: var(--bg) !important;
+          .mdc-line-ripple{
+            &::before {
+              border-bottom: unset !important;
+            }
+            &::after {
+              border-bottom-color: var(--bg) !important;
+            }
+          }
+
+          .mat-mdc-floating-label{
+            color: var(--text-body) !important;
+          }
+        }
+      }
+    }
+
+  }
 }
 
 
