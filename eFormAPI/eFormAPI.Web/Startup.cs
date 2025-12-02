@@ -66,7 +66,7 @@ using Services.Mailing.EmailRecipients;
 using Services.Mailing.EmailService;
 using Services.Mailing.EmailTags;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models;
 using System.IO;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
@@ -294,9 +294,23 @@ public class Startup(IConfiguration configuration)
                 Scheme = "Bearer"
             });
 
-            c.AddSecurityRequirement(document => new OpenApiSecurityRequirement()
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement()
             {
-                [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        },
+                        Scheme = "oauth2",
+                        Name = "Bearer",
+                        In = ParameterLocation.Header
+
+                    },
+                    new List<string>()
+                }
             });
         });
         try
