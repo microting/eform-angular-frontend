@@ -65,6 +65,7 @@ body, .theme-light {
   --text-header: #{$text-header-light};
   //--mat-card-elevated-container-color: #{$bg-light}!important;
   --primary: #{$primary-light};
+  --primary-light: #{$primary-light-light-mode};
   --warning: #{$warning-light};
   --error: #{$error-light};
   --btn-delete-text: #{$text-header-dark};
@@ -86,6 +87,7 @@ body, .theme-dark {
   --text-header: #{$text-header-dark};
   //--mat-card-elevated-container-color: #{$bg-dark}!important;
   --primary: #{$primary-dark};
+  --primary-light: #{$primary-light-dark-mode};
   --warning: #{$warning-dark};
   --error: #{$error-dark};
   --btn-delete-text: #{$text-header-light};
@@ -641,12 +643,17 @@ ngx-material-timepicker-container {
 
 body.theme-dark .NgxEditor, body.theme-light .NgxEditor{
   background: var(--bg)!important;
-  border-bottom: unset!important;
-  border: 1px solid var(--border)!important;
+  //border-bottom: unset!important;
+  border: none!important;
   color: var(--tp-text) !important;
-  .NgxEditor__MenuBar{
-    background: var(--bg)!important;
+  &__MenuBar{
+    background: var(--card) !important;
   }
+}
+
+formatting-text-editor{
+  border: 1px solid var(--border)!important;
+  border-radius: 4px!important;
 }
 
 .ng-dropdown-panel{
@@ -954,6 +961,4 @@ eform-new-subheader{
       }
     }
   }
-
-
 }

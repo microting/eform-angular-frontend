@@ -26,7 +26,6 @@
     matTreeNodePadding=""
     [ngClass]="{'children': getLevel(node) > 0}">
     <div
-      style="padding-left: 2px;"
       [ngClass]="{'folder': !lockSelectedNode, 'no-drop': lockSelectedNode,
       'selected-folder': selectedFolderIds.includes(node.id)}"
       (click)="selected(node.id)"

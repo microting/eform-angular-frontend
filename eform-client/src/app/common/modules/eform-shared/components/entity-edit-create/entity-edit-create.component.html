@@ -1,4 +1,5 @@
 <eform-new-subheader [title]="title | translate" [forceStaticTitle]="true">
+<div class="d-flex flex-row align-items-center gap-12">
   <button
     *ngIf="edit"
     class="btn-primary btn-primary--icon-left"
@@ -24,6 +25,7 @@
   >
     {{ 'Cancel' | translate }}
   </button>
+</div>
 </eform-new-subheader>
 
 <mat-card>
@@ -48,10 +50,10 @@
         type="text">
     </mat-form-field>
 
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-end align-items-center gap-12 mb-4">
       <button
         id="editEntitySearchImportBtn"
-        mat-icon-button
+        class="btn-secondary btn-secondary--icon-rounded-border"
         [disabled]="entityGroupEditModel.isLocked && !entityGroupEditModel.isEditable"
         (click)="openImportEntityGroup()"
       >
@@ -59,7 +61,7 @@
       </button>
       <button
         id="addSingleEntitySelectableItem"
-        mat-icon-button
+        class="btn-secondary btn-secondary--icon-rounded-border"
         (click)="addNewEntityItem()"
         [disabled]="entityGroupEditModel.isLocked && !entityGroupEditModel.isEditable"
       >
