@@ -1,0 +1,62 @@
+<mat-form-field class="w-100">
+  <mat-label> {{ selectedNodeName || ('Folder not selected' | translate) }}</mat-label>
+  <mat-select
+    [disabled]="disabled"
+    [value]="selectedNodeId"
+    [compareWith]="compareById"
+    panelClass="folder-tree-select-panel"
+    (openedChange)="onPanelOpened($event)"
+    [multiple]="false"
+  >
+    <mat-select-trigger>
+      {{ selectedNodeName || ('Folder not selected' | translate) }}
+    </mat-select-trigger>
+
+    <mat-option>
+      <div class="tree-container" (click)="$event.stopPropagation()">
+
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+
+          <mat-tree-node
+            *matTreeNodeDef="let node; when: hasChild"
+            matTreeNodePadding
+            class="node-row d-flex flex-row justify-content-between align-items-center gap-12"
+            [class.selected]="node.id === selectedNodeId"
+          >
+
+            <div (click)="treeControl.toggle(node)"
+                 class="node-label d-flex flex-row align-items-center gap-12"
+            >
+              <mat-icon>{{ node.id === selectedNodeId ? 'folder' : 'folder_open' }}</mat-icon>
+              <span>{{ node.name }}</span>
+            </div>
+            <button mat-icon-button matTreeNodeToggle>
+              <mat-icon>
+                {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+              </mat-icon>
+            </button>
+          </mat-tree-node>
+
+          <mat-tree-node
+            *matTreeNodeDef="let node"
+            matTreeNodePadding
+            class="node-row leaf"
+            [class.selected]="node.id === selectedNodeId"
+          >
+            <div
+              (click)="selectNode(node)"
+              class="node-label d-flex flex-row align-items-center gap-12"
+
+            >
+              <mat-icon>{{ node.id === selectedNodeId ? 'folder' : 'folder_open' }}</mat-icon>
+              <span>{{ node.name }}</span>
+            </div>
+
+          </mat-tree-node>
+
+        </mat-tree>
+
+      </div>
+    </mat-option>
+  </mat-select>
+</mat-form-field>
