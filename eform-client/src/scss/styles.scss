@@ -65,6 +65,7 @@ body, .theme-light {
   --text-header: #{$text-header-light};
   //--mat-card-elevated-container-color: #{$bg-light}!important;
   --primary: #{$primary-light};
+  --primary-light: #{$primary-light-light-mode};
   --warning: #{$warning-light};
   --error: #{$error-light};
   --btn-delete-text: #{$text-header-dark};
@@ -86,6 +87,7 @@ body, .theme-dark {
   --text-header: #{$text-header-dark};
   //--mat-card-elevated-container-color: #{$bg-dark}!important;
   --primary: #{$primary-dark};
+  --primary-light: #{$primary-light-dark-mode};
   --warning: #{$warning-dark};
   --error: #{$error-dark};
   --btn-delete-text: #{$text-header-light};
@@ -417,6 +419,7 @@ ngx-material-timepicker-container {
   background-color: var(--mdc-theme-primary) !important;
   color: var(--mdc-theme-on-primary) !important;
   cursor: pointer;
+  height: 48px;
 
   &:hover {
     background-color: var(--mdc-theme-primary-dark, #00695C) !important;
@@ -467,6 +470,7 @@ ngx-material-timepicker-container {
   background: unset;
   cursor: pointer;
   color: var(--text-header)!important;
+  height: 48px;
 
   &:disabled,
   &[disabled] {
@@ -637,6 +641,94 @@ ngx-material-timepicker-container {
   background: var(--bg)!important;
 }
 
+body.theme-dark .NgxEditor, body.theme-light .NgxEditor{
+  background: var(--bg)!important;
+  //border-bottom: unset!important;
+  border: none!important;
+  color: var(--tp-text) !important;
+  &__MenuBar{
+    background: var(--card) !important;
+  }
+}
+
+formatting-text-editor{
+  border: 1px solid var(--border)!important;
+  border-radius: 4px!important;
+}
+
+.ng-dropdown-panel{
+  background: var(--bg)!important;
+  border: 1px solid var(--border)!important;
+}
+
+
+.text-field{
+  &--rounded{
+
+    .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label{
+      top: calc(48px/2) !important;
+    }
+    .mat-mdc-form-field {
+      .mat-mdc-form-field-icon-suffix{
+        color: var(--tp-text);
+      }
+      .mat-mdc-form-field-flex{
+        align-items: center;
+        height: 48px;
+      }
+
+      .mat-mdc-floating-label{
+        color: var(--text-body) !important;
+      }
+
+      .mat-mdc-form-field-focus-overlay {
+        background: unset !important;
+      }
+
+      .mat-mdc-form-field-infix{
+       min-height: 48px!important;
+      }
+      .mdc-text-field {
+        height: 48px!important;
+        border: 1px solid var(--border);
+        border-radius: var(--rounded-full, 9999px)!important;
+
+        background-color: var(--bg) !important;
+
+        &__ripple{
+          ::before{
+            background-color: var(--bg) !important;
+          }
+          ::after{
+            background-color: var(--bg) !important;
+          }
+        }
+
+        &__input {
+          background-color: var(--bg) !important;
+        }
+
+        &--filled:not(.mdc-text-field--disabled) {
+          background-color: var(--bg) !important;
+          .mdc-line-ripple{
+            &::before {
+              border-bottom: unset !important;
+            }
+            &::after {
+              border-bottom-color: var(--bg) !important;
+            }
+          }
+
+          .mat-mdc-floating-label{
+            color: var(--text-body) !important;
+          }
+        }
+      }
+    }
+
+  }
+}
+
 
 .mat-mdc-form-field {
 
@@ -685,11 +777,14 @@ ngx-material-timepicker-container {
   }
 }
 
+
+.mat-tree{
+  background-color: var(--bg)!important;
+}
+
 .mat-drawer-inner-container{
   background: var(--bg)!important;
-  .mat-tree{
-    background-color: var(--bg)!important;
-  }
+
   .mat-tree, .mat-expansion-panel{
     background: var(--bg)!important;
 
@@ -866,6 +961,4 @@ eform-new-subheader{
       }
     }
   }
-
-
 }

@@ -42,14 +42,30 @@ mat-mdc-tree-node.mat-mdc-tree-node {
   margin-left: .5rem;
 }
 
-.folder:hover {
-  color: mat.m2-get-color-from-palette(mat.$m2-teal-palette, 300);
-  transition: color .5s;
-}
-
 .cursor {
   cursor: pointer;
   &.no-drop{
     cursor: no-drop;
   }
+}
+
+
+mat-tree-node.children {
+  padding-left: 56px !important;
+}
+mat-tree-node{
+  display: flex;
+  height: 40px;
+  padding: var(--28-px, 8px) var(--28-px, 8px) var(--28-px, 8px) var(--832-px, 32px)!important;
+  align-items: center;
+  gap: var(--156-px, 6px);
+  align-self: stretch;
+  background: var(--bg)!important;
+  &:hover, &:active{
+    color: var(--primary);
+    background: var(--primary-light, #F5FCFC)!important;
+    transition: color .5s;
+  }
+  //&[aria-expanded="true"]
+
 }
