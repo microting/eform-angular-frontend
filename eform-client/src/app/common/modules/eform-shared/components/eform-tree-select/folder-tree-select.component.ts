@@ -34,10 +34,12 @@ interface FlatNode {
   templateUrl: './folder-tree-select.component.html',
   styleUrls: ['./folder-tree-select.component.scss']
 })
+
 export class FolderTreeSelectComponent implements OnChanges {
   @Input() nodes: FolderDto[] = [];
   @Input() selectedNodeId: number | null = null;
   @Input() disabled = false;
+  @Input() id: string = '';
 
   @Output() nodeSelected = new EventEmitter<FolderDto>();
 
