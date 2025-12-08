@@ -1,6 +1,7 @@
-<mat-form-field class="w-100">
+<mat-form-field class="w-100 p-2">
   <mat-label> {{ selectedNodeName || ('Folder not selected' | translate) }}</mat-label>
   <mat-select
+    [attr.id]="id"
     [disabled]="disabled"
     [value]="selectedNodeId"
     [compareWith]="compareById"
@@ -28,7 +29,8 @@
                  class="node-label d-flex flex-row align-items-center gap-12"
             >
               <mat-icon>{{ node.id === selectedNodeId ? 'folder' : 'folder_open' }}</mat-icon>
-              <span>{{ node.name }}</span>
+              <span class="folder-tree-name">{{ node.name }} <small class="microting-uid">({{ node.microtingUId }})</small></span>
+
             </div>
             <button mat-icon-button matTreeNodeToggle>
               <mat-icon>
@@ -49,7 +51,8 @@
 
             >
               <mat-icon>{{ node.id === selectedNodeId ? 'folder' : 'folder_open' }}</mat-icon>
-              <span>{{ node.name }}</span>
+              <span class="folder-tree-name">{{ node.name }} <small class="microting-uid">({{ node.microtingUId }})</small></span>
+
             </div>
 
           </mat-tree-node>
