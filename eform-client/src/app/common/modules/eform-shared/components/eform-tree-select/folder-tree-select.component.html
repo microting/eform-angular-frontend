@@ -1,4 +1,4 @@
-<mat-form-field class="w-100 p-2">
+<mat-form-field class="w-100 p-2" [attr.id]="id">
   <mat-label> {{ selectedNodeName || ('Folder not selected' | translate) }}</mat-label>
   <mat-select
     [attr.id]="id"
@@ -6,7 +6,6 @@
     [value]="selectedNodeId"
     [compareWith]="compareById"
     panelClass="folder-tree-select-panel"
-    (openedChange)="onPanelOpened($event)"
     [multiple]="false"
   >
     <mat-select-trigger>
