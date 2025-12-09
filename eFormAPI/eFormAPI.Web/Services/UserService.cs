@@ -53,8 +53,21 @@ public class UserService(
 
     public async Task<EformUser> GetByUsernameAsync(string username)
     {
-        return await dbContext.Users.FirstOrDefaultAsync(x => x.UserName == username);
+        var user = await dbContext.Users.FirstOrDefaultAsync(x => x.UserName == username);
+        if (user == null)
+        {
+            user = await dbContext.Users.FirstOrDefaultAsync(x => x.Email == username);
+            if (user != null)
+            {
+                user.UserName = username;
+                await userManager.UpdateAsync(user);
+                return user;
+            }
+        }
+
+        return user;
     }
+
 
     public int UserId
     {
