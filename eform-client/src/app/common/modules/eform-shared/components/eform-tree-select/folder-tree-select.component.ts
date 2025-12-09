@@ -75,7 +75,7 @@ export class FolderTreeSelectComponent implements OnChanges {
   ngOnChanges() {
     this.dataSource.data = this.nodes;
 
-    if (this.selectedNodeId != null) {
+    if (this.selectedNodeId != null && this.nodes.length > 0) {
       const flat = this.flatten(this.nodes);
       const selected = flat.find(x => x.id === this.selectedNodeId);
       this.selectedNodeId = selected.id;
