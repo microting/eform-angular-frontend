@@ -14,24 +14,24 @@
     </div>
 
     <span class="spacer"></span>
-    <div class="tag">
-      <mat-icon>account_circle</mat-icon>
-      <button mat-icon-button [matMenuTriggerFor]="menu" id="sign-out-dropdown">
-        <mat-icon style="padding-top: 2px !important; padding-left: 5px !important;">settings</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <ng-container *ngFor="let menu of allAppMenus$ | async">
-          <ng-container *ngIf="checkGuards(menu.guards) | async">
-            <a mat-menu-item
-               routerLink="{{ menu.link }}"
-               [id]="menu.e2EId"
-            ><!--color="{{this.router.url === menu.link ? 'accent' : ''}}"-->
-              {{ menu.name }}
-            </a>
-          </ng-container>
-        </ng-container>
-      </mat-menu>
-    </div>
+<!--    <div class="tag">-->
+<!--      <mat-icon>account_circle</mat-icon>-->
+<!--      <button mat-icon-button [matMenuTriggerFor]="menu" id="sign-out-dropdown">-->
+<!--        <mat-icon style="padding-top: 2px !important; padding-left: 5px !important;">settings</mat-icon>-->
+<!--      </button>-->
+<!--      <mat-menu #menu="matMenu">-->
+<!--        <ng-container *ngFor="let menu of allAppMenus$ | async">-->
+<!--          <ng-container *ngIf="checkGuards(menu.guards) | async">-->
+<!--            <a mat-menu-item-->
+<!--               routerLink="{{ menu.link }}"-->
+<!--               [id]="menu.e2EId"-->
+<!--            >&lt;!&ndash;color="{{this.router.url === menu.link ? 'accent' : ''}}"&ndash;&gt;-->
+<!--              {{ menu.name }}-->
+<!--            </a>-->
+<!--          </ng-container>-->
+<!--        </ng-container>-->
+<!--      </mat-menu>-->
+<!--    </div>-->
   </mat-toolbar>
   <mat-drawer-container autosize style="height: 100%;" class="mat-app-background">
     <mat-drawer

@@ -1,24 +1,30 @@
-<footer class="footer stick-down">
-  <div id="footer-widgets">
-    <br>
-    <div class="d-flex justify-content-center">
-      <a href="https://www.microting.com/terms-of-service" target="_blank">
-        {{'Terms of Service' | translate}}
-      </a>
+<footer class="footer stick-down" [matMenuTriggerFor]="profileMenu" id="sign-out-dropdown">
+  <div class="profile-block">
+    <img class="avatar" [src]="avatarUrl" alt="avatar"/>
+    <div class="info">
+      <div class="name">{{ fullName }}</div>
+      <div class="email">{{ userName }}</div>
     </div>
-    <div class="d-flex justify-content-center">
-      <a href="https://www.microting.com/privacy-policy" target="_blank">
-        {{'Privacy Policy' | translate}}
-      </a>
-    </div>
-    <div class="d-flex justify-content-center">
-      <a href="https://www.microting.com/data-protection-terms" target="_blank">
-        {{'Data Protection Terms (GDPR)' | translate}}
-      </a>
-      <b></b>
-    </div>
+    <mat-icon class="expand-icon">expand_more</mat-icon>
   </div>
-  <div class="footer-copyright text-center p-2 copyright-section">
-    <div>© Microting A/S 2007 - {{date.getFullYear()}} <div class="footer-version">eForm Backend v{{version}}</div> </div>
-  </div>
+
+  <mat-menu #profileMenu="matMenu" class="profile-menu-panel">
+    <div class="menu-header">
+      <img class="avatar-lg" [src]="avatarUrl"/>
+      <div>
+        <div class="name">{{ fullName }}</div>
+        <div class="email">{{ userName }}</div>
+      </div>
+    </div>
+    <ng-container *ngFor="let menu of allAppMenus$ | async">
+      <ng-container *ngIf="checkGuards(menu.guards) | async">
+        <a mat-menu-item
+           routerLink="{{ menu.link }}"
+           [id]="menu.e2EId"
+        >
+          {{ menu.name }}
+        </a>
+      </ng-container>
+    </ng-container>
+  </mat-menu>
 </footer>
