@@ -56,10 +56,24 @@ body, .theme-dark {
   align-self: stretch;
   background: var(--bg);
   border-top: 1px solid var(--border, #EBEFF2);
+  overflow: hidden;
   &:hover {
-    background: var(--primary-light, #F5FCFC);
-    color: var(--primary, #289694);
+    background-color: var(--mdc-theme-primary-dark, #00695C) !important;
+    color: var(--mdc-theme-on-primary) !important;
     cursor: pointer;
+
+    .info {
+      .name {
+        color: var(--mdc-theme-on-primary) !important;
+      }
+      .email {
+        color: var(--mdc-theme-on-primary) !important;
+      }
+    }
+  }
+
+  .expand-icon{
+    color: var(--text-header);
   }
 }
 
@@ -72,6 +86,8 @@ body, .theme-dark {
   cursor: pointer;
   padding: 0;
   background: transparent;
+  width: 100%;
+  overflow: hidden;
 
   &:hover {
     background: transparent;
@@ -170,8 +186,9 @@ a{
   line-height: var(--Text-line-height-sm, 22px);
 
   &:hover {
-    background: var(--primary-light, #F5FCFC);
-    color: var(--primary, #289694);
+    background-color: var(--mdc-theme-primary-dark, #00695C) !important;
+    color: var(--mdc-theme-on-primary) !important;
+    border-radius: var(--rounded-full, 9999px);
   }
 }
 
@@ -185,6 +202,4 @@ a{
   border: 1px solid var(--border, #EBEFF2);
   background: var(--bg, #FFF);
   box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10);
-
-
 }

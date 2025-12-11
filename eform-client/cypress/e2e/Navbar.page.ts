@@ -68,7 +68,7 @@ export class Navbar {
   }
 
   public myEformsBtn() {
-    return cy.get('#my-eforms').should('be.visible').click();
+    return cy.get('#my-eforms').should('be.visible').click({force: true});
   }
 
   public clickOnSubMenuItem(menuItem) {
@@ -107,7 +107,7 @@ export class Navbar {
         this.advancedBtn();
       }
     });
-    this.applicationSettingsBtn().click();
+    this.applicationSettingsBtn().click({ force: true });
     // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }

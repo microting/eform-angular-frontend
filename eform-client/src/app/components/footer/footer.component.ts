@@ -16,7 +16,6 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {snakeToCamel} from "src/app/common/helpers";
 
-
 @Component({
   selector: 'app-footer',
   standalone: true,
