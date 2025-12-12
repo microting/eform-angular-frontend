@@ -408,6 +408,10 @@ ngx-material-timepicker-container {
   gap: 12px;
 }
 
+.gap-24{
+  gap: 24px;
+}
+
 .line-vert{
   width: 1px;
   height: 20px;
@@ -959,6 +963,48 @@ eform-new-subheader{
         font-weight: 600 !important;
         line-height: var(--Text-line-height-sm, 22px) !important;
       }
+    }
+  }
+}
+.card{
+  &--no-border{
+    box-shadow: unset !important;
+    border: none !important;
+
+    .mat-mdc-card-content{
+      padding: 0!important;
+    }
+  }
+
+  &--rounded{
+    display: flex;
+    width: 788px;
+    padding: var(--520-px, 20px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--624-px, 24px);
+    border-radius: var(--rounded-12, 12px)!important;
+    border: 1px solid var(--border, #EBEFF2);
+    background: var(--bg, #FFF);
+
+    .mat-mdc-card-header{
+      align-items: center;
+      width: 100%;
+      padding: 0!important;
+      text-align: left;
+
+      h4{
+        color: var(--text-header, #0F1316);
+        font-family: var(--font-family, "Nunito Sans");
+        font-size: var(--Header-size-sm, 20px);
+        font-style: normal;
+        font-weight: 600;
+        line-height: var(--Header-line-height-sm, 28px);
+      }
+    }
+    .mat-mdc-card-content{
+      padding: 0!important;
+      width: 100%;
     }
   }
 }
