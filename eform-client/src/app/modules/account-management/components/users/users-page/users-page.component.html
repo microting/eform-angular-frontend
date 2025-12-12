@@ -1,26 +1,28 @@
 <eform-new-subheader>
-  <button
-    class="btn-primary btn-primary--icon-left"
-    (click)="openNewUserModal()"
-    *ngIf="selectCurrentUserClaimsUsersCreate$ | async"
-    matTooltip="{{ 'Create user' | translate }}"
-    id="createNewUserBtn"
-  >
-    {{ 'New User' | translate }}
-  </button>
+  <div class="d-flex flex-row align-items-center gap-12">
+    <mat-checkbox
+      *ngIf="selectCurrentUserIsAdmin$ | async"
+      id="isChecked"
+      (click)="checked($event)"
+      [(ngModel)]="isChecked"
+      color="primary"
+    >
+      {{ 'Force users to use 2-f-auth' | translate }}
+    </mat-checkbox>
+    <div class="line-vert"></div>
+    <button
+      class="btn-primary btn-primary--icon-left"
+      (click)="openNewUserModal()"
+      *ngIf="selectCurrentUserClaimsUsersCreate$ | async"
+      matTooltip="{{ 'Create user' | translate }}"
+      id="createNewUserBtn"
+    >
+      {{ 'New User' | translate }}
+    </button>
+  </div>
 </eform-new-subheader>
 
 <div class="d-flex flex-column">
-  <mat-checkbox
-    *ngIf="selectCurrentUserIsAdmin$ | async"
-    id="isChecked"
-    (click)="checked($event)"
-    [(ngModel)]="isChecked"
-    color="primary"
-  >
-    {{ 'Force users to use 2-f-auth' | translate }}
-  </mat-checkbox>
-
   <mtx-grid
     id="userInfoTable"
     [data]="userInfoModelList.entities"
@@ -29,7 +31,7 @@
     [showPaginator]="true"
     [paginationTemplate]="paginatorTpl"
     [pageOnFront]="false"
-    [rowStriped]="true"
+    [rowStriped]="false"
     [showToolbar]="false"
     [showColumnMenuButton]="false"
     [sortActive]="selectUsersSort$ | async"
@@ -39,23 +41,24 @@
 
   <ng-template #idTpl let-row>
     <ng-container *ngIf="selectCurrentUserIsAdmin$ | async;">
-      <span title="{{ 'Is device user' | translate }}">{{row.id}}<small class="microting-uid"> ({{row.isDeviceUser}})</small></span>
+      <span title="{{ 'Is device user' | translate }}">{{ row.id }}<small class="microting-uid"> ({{ row.isDeviceUser }}
+        )</small></span>
     </ng-container>
   </ng-template>
 
 
   <ng-template #idTpl let-row let-i="index">
-    <div class="userAdministrationId" id="userAdministrationId-{{i}}">{{row.id}}</div>
+    <div class="userAdministrationId" id="userAdministrationId-{{i}}">{{ row.id }}</div>
   </ng-template>
 
   <ng-template #emailTpl let-row let-i="index">
-    <div id="userAdministrationEmail-{{i}}">{{row.email}}</div>
+    <div id="userAdministrationEmail-{{i}}">{{ row.email }}</div>
   </ng-template>
   <ng-template #fullNameTpl let-row let-i="index">
-    <div id="userAdministrationFullName-{{i}}">{{row.firstName}} {{row.lastName}}</div>
+    <div id="userAdministrationFullName-{{i}}">{{ row.firstName }} {{ row.lastName }}</div>
   </ng-template>
   <ng-template #roleTpl let-row let-i="index">
-    <div id="userAdministrationRole-{{i}}">{{row.role}}</div>
+    <div id="userAdministrationRole-{{i}}">{{ row.role }}</div>
   </ng-template>
 
   <ng-template #actionsTpl let-row let-i="index">
@@ -110,7 +113,7 @@
   <ng-template #archiveManufacturerTpl let-row>
     <ng-container *ngIf="row.archiveOsVersion !== null">
       <div class="manufacturer" id="manufacturer-{{row.id}}">
-        {{row.archiveModel}} ({{row.archiveOsVersion}})
+        {{ row.archiveModel }} ({{ row.archiveOsVersion }})
       </div>
     </ng-container>
   </ng-template>
@@ -119,7 +122,7 @@
   <ng-template #timeRegistrationManufacturerTpl let-row>
     <ng-container *ngIf="row.timeRegistrationOsVersion !== null">
       <div class="manufacturer" id="manufacturer-{{row.id}}">
-        {{row.timeRegistrationModel}} ({{row.timeRegistrationOsVersion}})
+        {{ row.timeRegistrationModel }} ({{ row.timeRegistrationOsVersion }})
       </div>
     </ng-container>
   </ng-template>
