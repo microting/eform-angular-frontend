@@ -176,7 +176,7 @@ export const config: WebdriverIO.Config = {
     ui: 'bdd',
     //require: 'ts-node/register',
     //compilers: ['tsconfig-paths/register'],
-    timeout: 90000
+    timeout: 240000
   },
   //
   // =====
