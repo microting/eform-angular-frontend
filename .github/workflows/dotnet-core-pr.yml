@@ -55,7 +55,7 @@ jobs:
     - name: Wait for MariaDB
       run: |
         for i in {1..30}; do
-          if docker exec mariadb-test mysql -uroot -psecretpassword -e "SELECT 1" &>/dev/null; then
+          if docker exec mariadbtest mysql -uroot -psecretpassword -e "SELECT 1" &>/dev/null; then
             echo "MariaDB is ready!"
             break
           fi
