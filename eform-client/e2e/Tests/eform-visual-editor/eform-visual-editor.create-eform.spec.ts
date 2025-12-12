@@ -344,6 +344,7 @@ describe('Visual editor page', function () {
     await mainChecklist.getAllFields();
     await eformVisualEditorPage.clickSave();
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+    await browser.pause(1500);
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
@@ -421,6 +422,7 @@ describe('Visual editor page', function () {
       await mainChecklist.getAllFields();
       await eformVisualEditorPage.clickSave();
       await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+      await browser.pause(1500);
       mainChecklist = new MainCheckListRowObj();
       await mainChecklist.getAllFields();
       expect(
@@ -520,6 +522,7 @@ describe('Visual editor page', function () {
     await mainChecklist.fields[0].delete();
     await eformVisualEditorPage.clickSave();
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+    await browser.pause(1500);
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
@@ -567,6 +570,7 @@ describe('Visual editor page', function () {
     };
     await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+    await browser.pause(1500);
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     // for (let i = 0; i < checklistObj.checklists.length; i++) {
@@ -633,6 +637,7 @@ describe('Visual editor page', function () {
     };
     await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+    await browser.pause(1500);
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     // for (let i = 0; i < checklistObj.checklists.length; i++) {
@@ -710,6 +715,7 @@ describe('Visual editor page', function () {
     };
     await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+    await browser.pause(1500);
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     // for (let i = 0; i < checklistObj.checklists.length; i++) {
@@ -932,6 +938,7 @@ describe('Visual editor page', function () {
       XMLForEformFractions.XML.replace(/Number 1/g, eformName)
     );
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+    await browser.pause(1500);
     const mainChecklist = await new MainCheckListRowObj();
     await mainChecklist.getAllFields();
 
