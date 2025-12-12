@@ -75,7 +75,6 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     // Components
     AppComponent,
     HeaderComponent,
-    FooterComponent,
     NavigationComponent,
     SpinnerComponent,
     ConnectionSetupComponent,
@@ -138,7 +137,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     MatProgressSpinnerModule,
     // EformDateFnsDateModule,
     EformMatDateFnsDateModule,
-    AppIconComponent,
+    AppIconComponent, FooterComponent,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],

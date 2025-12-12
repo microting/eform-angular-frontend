@@ -58,6 +58,16 @@ mat-tree {
 
         .mat-expansion-panel-header {
           padding-left: 1rem;
+          &:hover{
+            background-color: var(--mdc-theme-primary-dark) !important;
+            color: var(--mdc-theme-on-primary) !important;
+            border-radius: var(--rounded-full);
+            a{
+              span{
+                color: var(--mdc-theme-on-primary) !important;
+              }
+            }
+          }
         }
 
         .mat-expansion-panel-content {

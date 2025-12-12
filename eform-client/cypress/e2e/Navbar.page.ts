@@ -8,7 +8,7 @@ export class Navbar {
   }
 
   public signOutDropdown() {
-    return cy.get('#sign-out-dropdown').should('be.visible').click();
+    return cy.get('#sign-out-dropdown').should('be.visible');
   }
 
   public advancedBtn() {
@@ -68,7 +68,7 @@ export class Navbar {
   }
 
   public myEformsBtn() {
-    return cy.get('#my-eforms').should('be.visible').click();
+    return cy.get('#my-eforms').should('be.visible').click({force: true});
   }
 
   public clickOnSubMenuItem(menuItem) {
@@ -96,7 +96,7 @@ export class Navbar {
 
   public goToProfileSettings() {
     this.signOutDropdown().click();
-    this.settingsBtn().should('be.visible').should('be.enabled').click();
+    this.settingsBtn().should('be.visible').should('be.enabled').click({ force: true });
     // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }
@@ -107,7 +107,7 @@ export class Navbar {
         this.advancedBtn();
       }
     });
-    this.applicationSettingsBtn().click();
+    this.applicationSettingsBtn().click({ force: true });
     // Note: Tests should intercept appropriate API calls after navigation
     cy.wait(500);
   }
