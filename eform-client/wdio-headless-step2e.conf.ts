@@ -232,11 +232,11 @@ export const config: WebdriverIO.Config = {
    * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
    * @param {Object} test test details
    */
-  beforeTest: function (test) {
+  beforeTest: async function (test) {
     console.log('[DEBUG] Starting test:', test.title);
     console.log('[DEBUG] Test file:', test.file);
     try {
-      const url = browser.getUrl();
+      const url = await browser.getUrl();
       console.log('[DEBUG] Initial URL:', url);
     } catch (e) {
       console.log('[DEBUG] Could not retrieve initial URL:', e.message);
@@ -256,7 +256,7 @@ export const config: WebdriverIO.Config = {
    * Hook that gets executed _after_ a hook within the suite ends (e.g. runs after calling
    * afterEach in Mocha)
    */
-  afterHook: function (test, context, { error, result, duration, passed }, hookName) {
+  afterHook: async function (test, context, { error, result, duration, passed }, hookName) {
     if (error) {
       console.log('[DEBUG] Hook failed:', hookName);
       console.log('[DEBUG] Hook error:', error.message);
@@ -266,7 +266,7 @@ export const config: WebdriverIO.Config = {
       try {
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
         const screenshotPath = `./errorShots/hook-failure-${timestamp}.png`;
-        browser.saveScreenshot(screenshotPath);
+        await browser.saveScreenshot(screenshotPath);
         console.log('[DEBUG] Hook failure screenshot saved to:', screenshotPath);
       } catch (e) {
         console.log('[DEBUG] Could not save hook failure screenshot:', e.message);
@@ -274,7 +274,7 @@ export const config: WebdriverIO.Config = {
       
       // Try to get current URL
       try {
-        const url = browser.getUrl();
+        const url = await browser.getUrl();
         console.log('[DEBUG] URL at hook failure:', url);
       } catch (e) {
         console.log('[DEBUG] Could not retrieve URL:', e.message);
@@ -285,7 +285,7 @@ export const config: WebdriverIO.Config = {
    * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) ends.
    * @param {Object} test test details
    */
-  afterTest(test, context, { error, result, duration, passed, retries }) {
+  afterTest: async function (test, context, { error, result, duration, passed, retries }) {
     const path = require('path');
 
     // if test passed, ignore, else take and save screenshot.
@@ -299,7 +299,7 @@ export const config: WebdriverIO.Config = {
     
     // Capture browser console logs
     try {
-      const logs = browser.getLogs('browser');
+      const logs = await browser.getLogs('browser');
       console.log('[DEBUG] Browser console logs:');
       logs.forEach(log => {
         console.log(`  [${log.level}] ${log.message}`);
@@ -310,7 +310,7 @@ export const config: WebdriverIO.Config = {
     
     // Capture current URL
     try {
-      const url = browser.getUrl();
+      const url = await browser.getUrl();
       console.log('[DEBUG] Current URL:', url);
     } catch (e) {
       console.log('[DEBUG] Could not retrieve URL:', e.message);
@@ -339,7 +339,7 @@ export const config: WebdriverIO.Config = {
     const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
 
     console.log('Saving screenshot to:', filePath);
-    browser.saveScreenshot(filePath);
+    await browser.saveScreenshot(filePath);
     console.log('Saved screenshot to:', filePath);
   },
   /**
