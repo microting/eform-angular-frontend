@@ -217,6 +217,9 @@ describe('Visual editor page', function () {
     const mainCheckListRowObj = new MainCheckListRowObj();
     await mainCheckListRowObj.getAllFields();
     await mainCheckListRowObj.fields[0].changeColor('red');
+    // Reload data after changeColor to ensure DOM is synchronized before saving
+    const mainChecklistReloaded = new MainCheckListRowObj();
+    await mainChecklistReloaded.getAllFields();
     await eformVisualEditorPage.clickSave();
     const eform = await myEformsPage.getLastMyEformsRowObj();
 
