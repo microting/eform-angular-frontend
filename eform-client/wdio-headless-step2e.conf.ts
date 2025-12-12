@@ -232,20 +232,55 @@ export const config: WebdriverIO.Config = {
    * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
    * @param {Object} test test details
    */
-  // beforeTest: function (test) {
-  // },
+  beforeTest: function (test) {
+    console.log('[DEBUG] Starting test:', test.title);
+    console.log('[DEBUG] Test file:', test.file);
+    try {
+      const url = browser.getUrl();
+      console.log('[DEBUG] Initial URL:', url);
+    } catch (e) {
+      console.log('[DEBUG] Could not retrieve initial URL:', e.message);
+    }
+  },
   /**
    * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
    * beforeEach in Mocha)
    */
-  // beforeHook: function () {
-  // },
+  beforeHook: function (test, context, hookName) {
+    console.log('[DEBUG] Before hook:', hookName);
+    if (hookName && hookName.includes('before all')) {
+      console.log('[DEBUG] This is the "before all" hook - where login happens');
+    }
+  },
   /**
    * Hook that gets executed _after_ a hook within the suite ends (e.g. runs after calling
    * afterEach in Mocha)
    */
-  // afterHook: function () {
-  // },
+  afterHook: function (test, context, { error, result, duration, passed }, hookName) {
+    if (error) {
+      console.log('[DEBUG] Hook failed:', hookName);
+      console.log('[DEBUG] Hook error:', error.message);
+      console.log('[DEBUG] Hook duration:', duration);
+      
+      // Take screenshot on hook failure
+      try {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const screenshotPath = `./errorShots/hook-failure-${timestamp}.png`;
+        browser.saveScreenshot(screenshotPath);
+        console.log('[DEBUG] Hook failure screenshot saved to:', screenshotPath);
+      } catch (e) {
+        console.log('[DEBUG] Could not save hook failure screenshot:', e.message);
+      }
+      
+      // Try to get current URL
+      try {
+        const url = browser.getUrl();
+        console.log('[DEBUG] URL at hook failure:', url);
+      } catch (e) {
+        console.log('[DEBUG] Could not retrieve URL:', e.message);
+      }
+    }
+  },
   /**
    * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) ends.
    * @param {Object} test test details
@@ -256,6 +291,29 @@ export const config: WebdriverIO.Config = {
     // if test passed, ignore, else take and save screenshot.
     if (passed) {
       return;
+    }
+
+    console.log('[DEBUG] Test failed:', test.title);
+    console.log('[DEBUG] Error:', error ? error.message : 'No error message');
+    console.log('[DEBUG] Duration:', duration);
+    
+    // Capture browser console logs
+    try {
+      const logs = browser.getLogs('browser');
+      console.log('[DEBUG] Browser console logs:');
+      logs.forEach(log => {
+        console.log(`  [${log.level}] ${log.message}`);
+      });
+    } catch (e) {
+      console.log('[DEBUG] Could not retrieve browser logs:', e.message);
+    }
+    
+    // Capture current URL
+    try {
+      const url = browser.getUrl();
+      console.log('[DEBUG] Current URL:', url);
+    } catch (e) {
+      console.log('[DEBUG] Could not retrieve URL:', e.message);
     }
 
     /*
