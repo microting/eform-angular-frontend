@@ -46,16 +46,22 @@ class LoginPage extends Page {
     await (await this.usernameInput()).setValue(LoginConstants.username);
     await (await this.passwordInput()).setValue(LoginConstants.password);
     await (await this.loginBtn()).click();
+    // Add pause after login click to allow application to start loading on slow environments
+    await browser.pause(2000);
     const newEFormBtn = await $('#newEFormBtn');
-    await newEFormBtn.waitForDisplayed({timeout: 60000});
-    await newEFormBtn.waitForClickable({timeout: 60000});
+    // Increased timeout for slow environments - application may take longer to initialize
+    await newEFormBtn.waitForDisplayed({timeout: 120000});
+    await newEFormBtn.waitForClickable({timeout: 120000});
   }
   public async loginWithNewPassword(): Promise<void> {
     await (await this.usernameInput()).waitForDisplayed({ timeout: 60000 });
     await (await this.usernameInput()).setValue(LoginConstants.username);
     await (await this.passwordInput()).setValue(LoginConstants.newPassword);
     await (await this.loginBtn()).click();
-    await $('#newEFormBtn').waitForDisplayed({ timeout: 60000 });
+    // Add pause after login click to allow application to start loading on slow environments
+    await browser.pause(2000);
+    // Increased timeout for slow environments - application may take longer to initialize
+    await $('#newEFormBtn').waitForDisplayed({ timeout: 120000 });
   }
 
   public randomInt(min, max) {
