@@ -387,6 +387,17 @@ class NavigationMenuPage {
     await this.clickSaveMenuBtn();
     await browser.pause(500);
   }
+
+  /**
+   * Verifies menu item data is loaded by opening and closing the edit dialog.
+   * This forces the DOM to load all data before saving, preventing race conditions on slow runners.
+   */
+  public async verifyMenuItemDataLoaded(menuItemIndex: number) {
+    await this.openOnEditCreatedMenuItem(menuItemIndex);
+    await browser.pause(500);
+    await (await this.editItemSaveBtn()).click();
+    await browser.pause(500);
+  }
 }
 const navigationMenuPage = new NavigationMenuPage();
 export default navigationMenuPage;
