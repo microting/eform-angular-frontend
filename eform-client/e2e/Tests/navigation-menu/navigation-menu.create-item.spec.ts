@@ -50,10 +50,7 @@ describe(' Navigation menu - Create item', function () {
     expect(count + 1).eq((await navigationMenuPage.menuItems()).length);
 
     // Verify the menu item data is loaded before saving
-    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItems()).length - 1);
-    await browser.pause(500);
-    await (await navigationMenuPage.editItemSaveBtn()).click();
-    await browser.pause(500);
+    await navigationMenuPage.verifyMenuItemDataLoaded((await navigationMenuPage.menuItems()).length - 1);
 
     await navigationMenuPage.clickSaveMenuBtn();
 
@@ -90,10 +87,7 @@ describe(' Navigation menu - Create item', function () {
     expect(count + 1).eq((await navigationMenuPage.menuItems()).length);
 
     // Verify the menu item data is loaded before saving
-    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItems()).length - 1);
-    await browser.pause(500);
-    await (await navigationMenuPage.editItemSaveBtn()).click();
-    await browser.pause(500);
+    await navigationMenuPage.verifyMenuItemDataLoaded((await navigationMenuPage.menuItems()).length - 1);
 
     await navigationMenuPage.clickSaveMenuBtn();
     await browser.pause(500);
@@ -130,10 +124,7 @@ describe(' Navigation menu - Create item', function () {
     expect(count + 1).eq((await navigationMenuPage.menuItems()).length);
 
     // Verify the menu item data is loaded before saving
-    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItems()).length - 1);
-    await browser.pause(500);
-    await (await navigationMenuPage.editItemSaveBtn()).click();
-    await browser.pause(500);
+    await navigationMenuPage.verifyMenuItemDataLoaded((await navigationMenuPage.menuItems()).length - 1);
 
     await navigationMenuPage.clickSaveMenuBtn();
     await browser.pause(500);
