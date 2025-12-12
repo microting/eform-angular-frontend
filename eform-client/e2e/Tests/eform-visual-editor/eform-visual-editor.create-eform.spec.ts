@@ -334,6 +334,8 @@ describe('Visual editor page', function () {
     await mainChecklist.getAllFields();
     await browser.pause(500);
     await mainChecklist.fields[0].makeCopy();
+    mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     await eformVisualEditorPage.clickSave();
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     mainChecklist = new MainCheckListRowObj();
@@ -409,6 +411,8 @@ describe('Visual editor page', function () {
       await mainChecklist.getAllFields();
       await mainChecklist.fields[0].nestedFields[0].changeColor('red');
       await mainChecklist.fields[0].nestedFields[0].makeCopy();
+      mainChecklist = new MainCheckListRowObj();
+      await mainChecklist.getAllFields();
       await eformVisualEditorPage.clickSave();
       await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
       mainChecklist = new MainCheckListRowObj();
