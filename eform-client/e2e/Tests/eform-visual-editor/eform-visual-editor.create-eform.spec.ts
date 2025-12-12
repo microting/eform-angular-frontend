@@ -69,6 +69,7 @@ describe('Visual editor page', function () {
       'name in table eforms not valid; template not create'
     ).eq(checklistWithoutFields.translations[0].name);
     await eform.goToVisualEditor();
+    await browser.pause(1500);
     const visualTemplate = new MainCheckListRowObj();
     await visualTemplate.getAllFields();
     expect(
@@ -113,6 +114,7 @@ describe('Visual editor page', function () {
       checklist.translations[0].name
     );
     await eform.goToVisualEditor();
+    await browser.pause(1500);
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
@@ -170,7 +172,7 @@ describe('Visual editor page', function () {
       checklistWithPdfFile.translations[0].name
     );
     await eform.goToVisualEditor();
-    await browser.pause(500);
+    await browser.pause(1500);
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
@@ -227,6 +229,7 @@ describe('Visual editor page', function () {
       checklist.translations[0].name
     );
     await eform.goToVisualEditor();
+    await browser.pause(1500);
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
@@ -287,7 +290,7 @@ describe('Visual editor page', function () {
       checklistWithPdfFile.translations[0].name
     );
     await eform.goToVisualEditor();
-    await browser.pause(1200);
+    await browser.pause(1500);
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
@@ -783,6 +786,7 @@ describe('Visual editor page', function () {
     const eform = await myEformsPage.getLastMyEformsRowObj();
 
     await eform.goToVisualEditor();
+    await browser.pause(1500);
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
@@ -884,6 +888,7 @@ describe('Visual editor page', function () {
     const eform = await myEformsPage.getLastMyEformsRowObj();
 
     await eform.goToVisualEditor();
+    await browser.pause(1500);
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
