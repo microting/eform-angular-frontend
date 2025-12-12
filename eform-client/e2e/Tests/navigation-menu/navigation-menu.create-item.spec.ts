@@ -49,6 +49,9 @@ describe(' Navigation menu - Create item', function () {
     await browser.pause(1000);
     expect(count + 1).eq((await navigationMenuPage.menuItems()).length);
 
+    // Verify the menu item data is loaded before saving
+    await navigationMenuPage.verifyMenuItemDataLoaded((await navigationMenuPage.menuItems()).length - 1);
+
     await navigationMenuPage.clickSaveMenuBtn();
 
     await browser.pause(500);
@@ -83,6 +86,9 @@ describe(' Navigation menu - Create item', function () {
 
     expect(count + 1).eq((await navigationMenuPage.menuItems()).length);
 
+    // Verify the menu item data is loaded before saving
+    await navigationMenuPage.verifyMenuItemDataLoaded((await navigationMenuPage.menuItems()).length - 1);
+
     await navigationMenuPage.clickSaveMenuBtn();
     await browser.pause(500);
 
@@ -116,6 +122,9 @@ describe(' Navigation menu - Create item', function () {
     await browser.pause(500);
 
     expect(count + 1).eq((await navigationMenuPage.menuItems()).length);
+
+    // Verify the menu item data is loaded before saving
+    await navigationMenuPage.verifyMenuItemDataLoaded((await navigationMenuPage.menuItems()).length - 1);
 
     await navigationMenuPage.clickSaveMenuBtn();
     await browser.pause(500);
