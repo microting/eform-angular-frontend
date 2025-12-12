@@ -277,7 +277,7 @@ export class Navbar {
   }
 
   public async goToMyEForms() {
-    await (await this.myEformsBtn()).click();
+    await (await this.myEformsBtn()).click({force: true});
   }
 
   public async goToSecurity() {
