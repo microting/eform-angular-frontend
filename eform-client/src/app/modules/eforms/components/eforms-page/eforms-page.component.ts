@@ -238,7 +238,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   openNewEformModal() {
     this.eformCreateModalComponentAfterClosedSub$ = this.dialog.open(EformCreateModalComponent, {
       ...dialogConfigHelper(this.overlay, this.availableTags),
-      minWidth: 400,
+      minWidth: 1024,
     }).afterClosed().subscribe(data => data ? this.loadAllTags() : undefined);
   }
 

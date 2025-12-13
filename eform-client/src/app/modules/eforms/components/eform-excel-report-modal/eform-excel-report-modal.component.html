@@ -40,6 +40,9 @@
 <!--        </button>-->
 <!--      </div>-->
       <div class="modal-footer">
+        <button id="cancelCreateEformBtn"
+                class="btn-accent text-black-50 btn-small-height" (click)="close()">{{'Close' | translate}}
+        </button>
         <button
           class="btn-success btn-small-height"
           (click)="downloadExcelReport()">{{ 'Download' | translate }}
@@ -47,9 +50,6 @@
 <!--        <button mdbBtn id="cancelCreateEformBtn"-->
 <!--                class="btn-accent text-black-50 btn-small-height" (click)="close()">{{'Close' | translate}}-->
 <!--        </button>-->
-        <button id="cancelCreateEformBtn"
-                class="btn-accent text-black-50 btn-small-height" (click)="close()">{{'Close' | translate}}
-        </button>
       </div>
     </div>
   </div>

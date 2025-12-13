@@ -67,19 +67,18 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-cancel"
+    id="cancelParingBtn"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
+  <button
+    class="btn-primary btn-primary--icon-left"
     (click)="submitDeployment()"
     [disabled]="saveButtonDisabled"
     id="saveParingBtn"
   >
     {{'Save' | translate }}
-  </button>
-  <button
-    mat-raised-button
-    id="cancelParingBtn"
-    (click)="hide()"
-  >
-    {{'Cancel' | translate}}
   </button>
 </div>
