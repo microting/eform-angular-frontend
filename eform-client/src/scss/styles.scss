@@ -916,6 +916,10 @@ eform-new-subheader{
   //border-color: var(--border) !important;
 }
 
+div.mat-mdc-select-panel {
+  overflow: hidden !important;
+}
+
 .mat-mdc-menu-panel{
   display: inline-flex;
   flex-direction: column;

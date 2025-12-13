@@ -72,7 +72,8 @@
   }
 
   .tree-container{
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   mat-tree-node.selected {
