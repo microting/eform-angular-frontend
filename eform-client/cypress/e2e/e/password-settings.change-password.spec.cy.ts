@@ -15,9 +15,8 @@ describe('Password settings - Change password', function () {
     // Change password to new password
     passwordSettingsPage.setNewPassword();
 
-    // Logout
+    // Logout (waits for login page to load)
     passwordSettingsPage.Navbar.logout();
-    cy.get('#loginBtn', { timeout: 10000 }).should('be.visible');
 
     // Login with new password to verify change worked
     cy.visit('http://localhost:4200');
@@ -33,9 +32,8 @@ describe('Password settings - Change password', function () {
     // Revert password back to original
     passwordSettingsPage.revertToOldPassword();
 
-    // Logout
+    // Logout (waits for login page to load)
     passwordSettingsPage.Navbar.logout();
-    cy.get('#loginBtn', { timeout: 10000 }).should('be.visible');
 
     // Login with original password to verify revert worked
     cy.visit('http://localhost:4200');

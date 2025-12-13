@@ -91,7 +91,8 @@ export class Navbar {
     this.signOutDropdown().click();
     cy.wait(500);
     this.logoutBtn().click();
-    cy.wait(500);
+    // Wait for login page to be fully loaded
+    cy.get('#loginBtn', { timeout: 10000 }).should('be.visible');
   }
 
   public goToProfileSettings() {
