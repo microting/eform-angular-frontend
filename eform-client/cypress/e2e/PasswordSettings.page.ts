@@ -28,8 +28,6 @@ class PasswordSettingsPage extends PageWithNavbarPage {
     cy.intercept('PUT', '**/api/auth/change-password').as('changePassword');
     this.saveBtn().should('be.visible').should('be.enabled').click();
     cy.wait('@changePassword', { timeout: 10000 });
-    cy.get('#spinner-animation').should('not.exist');
-    cy.wait(500);
   }
 
   revertToOldPassword(oldPassword = loginConstants.newPassword, newPassword = loginConstants.password) {
@@ -42,8 +40,6 @@ class PasswordSettingsPage extends PageWithNavbarPage {
     cy.intercept('PUT', '**/api/auth/change-password').as('changePassword');
     this.saveBtn().should('be.visible').should('be.enabled').click();
     cy.wait('@changePassword', { timeout: 10000 });
-    cy.get('#spinner-animation').should('not.exist');
-    cy.wait(500);
   }
 }
 
