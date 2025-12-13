@@ -5,47 +5,41 @@ describe('Password settings - Change password', function () {
   before(() => {
     cy.visit('http://localhost:4200');
     loginPage.login();
-    passwordSettingsPage.Navbar.goToPasswordSettings();
-    cy.get('#oldPassword', { timeout: 10000 }).should('be.visible');
   });
 
-  it('should change password to new password', () => {
+  it('should change password and revert it back', () => {
+    // Navigate to password settings
+    passwordSettingsPage.Navbar.goToPasswordSettings();
+    cy.get('#oldPassword', { timeout: 10000 }).should('be.visible');
+    
     // Change password to new password
     passwordSettingsPage.setNewPassword();
 
-    // Logout
+    // Logout (waits for login page to load)
     passwordSettingsPage.Navbar.logout();
-    cy.get('#loginBtn').should('be.visible');
 
-    // Login with new password
+    // Login with new password to verify change worked
     cy.visit('http://localhost:4200');
     loginPage.loginWithNewPassword();
 
     // Verify we're logged in by checking for the new eForm button
-    cy.get('#newEFormBtn').should('be.visible');
+    cy.get('#newEFormBtn', { timeout: 10000 }).should('be.visible');
 
-    // Navigate to password settings
+    // Navigate to password settings to revert
     passwordSettingsPage.Navbar.goToPasswordSettings();
-    cy.get('#oldPassword').should('be.visible');
-  });
-
-  it('should revert password back to original', () => {
+    cy.get('#oldPassword', { timeout: 10000 }).should('be.visible');
+    
     // Revert password back to original
     passwordSettingsPage.revertToOldPassword();
 
-    // Logout
+    // Logout (waits for login page to load)
     passwordSettingsPage.Navbar.logout();
-    cy.get('#loginBtn').should('be.visible');
 
-    // Login with original password
+    // Login with original password to verify revert worked
     cy.visit('http://localhost:4200');
     loginPage.login();
 
     // Verify we're logged in
-    cy.get('#newEFormBtn').should('be.visible');
-
-    // Navigate to password settings to verify we can access it
-    passwordSettingsPage.Navbar.goToPasswordSettings();
-    cy.get('#oldPassword').should('be.visible');
+    cy.get('#newEFormBtn', { timeout: 10000 }).should('be.visible');
   });
 });

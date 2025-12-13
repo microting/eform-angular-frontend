@@ -4,7 +4,7 @@ import applicationSettingsPage from '../../Page objects/ApplicationSettings.page
 import ApplicationSettingsConstants from '../../Constants/ApplicationSettingsConstants';
 import { expect } from 'chai';
 
-describe('Application settings page - site header section', function () {
+describe('Application settings page - login page section', function () {
   before(async () => {
     await loginPage.open('/auth');
     await loginPage.login();
