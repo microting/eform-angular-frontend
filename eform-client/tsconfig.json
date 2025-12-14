@@ -4,6 +4,7 @@
     "forceConsistentCasingInFileNames": false,
     "strict": false,
     "module": "ES2022",
+    "lib": ["ES2022", "dom"],
     "outDir": "./dist/out-src",
     "sourceMap": true,
     "declaration": false,
