@@ -6,7 +6,7 @@ import { expect } from 'chai';
 
 describe('Application settings page - site header section', function () {
   before(async () => {
-    await loginPage.open('/auth');
+    await loginPage.open('/');
     await loginPage.login();
   });
   it('should change main text', async () => {

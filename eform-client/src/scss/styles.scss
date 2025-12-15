@@ -893,14 +893,18 @@ formatting-text-editor{
   }
 }
 
+.mat-mdc-dialog-actions {
+  gap: 10px;
+}
+
 .mat-mdc-dialog-surface{
   background-color: var(--bg)!important;
   border-radius: var(--rounded-20, 20px);
   display: flex;
-  padding: var(--832-px, 32px);
+  padding: 0px;
   //flex-direction: column;
   //align-items: center;
-  gap: var(--624-px, 24px);
+  gap: 24px;
 }
 
 eform-new-subheader{
@@ -914,6 +918,10 @@ eform-new-subheader{
   box-shadow: unset !important;
   border: 1px solid var(--border) !important;
   //border-color: var(--border) !important;
+}
+
+div.mat-mdc-select-panel {
+  overflow: hidden !important;
 }
 
 .mat-mdc-menu-panel{

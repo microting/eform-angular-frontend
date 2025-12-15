@@ -62,7 +62,7 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   public selectCurrentUserClaimsDeviceUsersCreate$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
   public selectCurrentUserClaimsDeviceUsersUpdate$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
   public selectCurrentUserClaimsDeviceUsersDelete$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
-  private selectDeviceUsersNameFilter$ = this.authStore.select(selectDeviceUsersNameFilter);
+  public selectDeviceUsersNameFilter$ = this.authStore.select(selectDeviceUsersNameFilter);
 
   ngOnInit() {
     this.iconRegistry.addSvgIconLiteral('password-validation', this.sanitizer.bypassSecurityTrustHtml(PasswordValidationIcon));

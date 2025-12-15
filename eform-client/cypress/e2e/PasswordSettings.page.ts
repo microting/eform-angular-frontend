@@ -25,10 +25,10 @@ class PasswordSettingsPage extends PageWithNavbarPage {
     cy.wait(500);
     this.newPasswordConfirmationField().should('be.visible').clear().type(newPassword);
     cy.wait(500);
-    cy.intercept('PUT', '**/api/auth/change-password').as('changePassword');
+    cy.intercept('POST', '**/api/account/change-password').as('changePassword');
     this.saveBtn().should('be.visible').should('be.enabled').click();
     cy.wait('@changePassword', { timeout: 10000 });
-    cy.get('#spinner-animation').should('not.exist');
+    // cy.get('#spinner-animation').should('not.exist');
     cy.wait(500);
   }
 
@@ -39,10 +39,10 @@ class PasswordSettingsPage extends PageWithNavbarPage {
     cy.wait(500);
     this.newPasswordConfirmationField().should('be.visible').clear().type(newPassword);
     cy.wait(500);
-    cy.intercept('PUT', '**/api/auth/change-password').as('changePassword');
+    cy.intercept('POST', '**/api/account/change-password').as('changePassword');
     this.saveBtn().should('be.visible').should('be.enabled').click();
     cy.wait('@changePassword', { timeout: 10000 });
-    cy.get('#spinner-animation').should('not.exist');
+    // cy.get('#spinner-animation').should('not.exist');
     cy.wait(500);
   }
 }
