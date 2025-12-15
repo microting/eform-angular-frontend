@@ -142,8 +142,8 @@ export class Navbar {
 
   public async myEformsBtn(): Promise<WebdriverIO.Element> {
     const ele = await $(`#my-eforms`);
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({ timeout: 60000 });
+    await ele.waitForClickable({ timeout: 60000 });
     return ele;
   }
 

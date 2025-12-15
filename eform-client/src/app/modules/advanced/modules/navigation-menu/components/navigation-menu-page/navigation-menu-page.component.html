@@ -3,11 +3,12 @@
     <button
       class="btn-secondary btn-secondary--icon-rounded-border"
       id="resetBtn"
-      matTooltip="{{ 'Reset' | translate }}"
       (click)="showResetNavigationMenuModal()"
     >
       <mat-icon>undo</mat-icon>
+      <span>{{ 'Reset' | translate }}</span>
     </button>
+    <div class="line-vert"></div>
     <button
       class="btn-primary btn-primary--icon-left"
       id="navigationMenuSaveBtn"
@@ -19,8 +20,8 @@
   </div>
 </eform-new-subheader>
 
-<div class="d-flex flex-row align-items-start">
-  <mat-accordion multi="true" displayMode="flat" class="mr-2">
+<div class="d-flex flex-row align-items-start px-3 gap-12">
+  <mat-accordion multi="true" displayMode="flat">
     <mat-expansion-panel *ngFor="
           let menuTemplate of navigationMenuModel.menuTemplates;
           let templateIndex = index" id="menuTemplate">

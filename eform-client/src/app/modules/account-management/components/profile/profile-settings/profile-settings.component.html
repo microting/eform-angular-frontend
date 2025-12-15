@@ -1,162 +1,316 @@
-<eform-new-subheader>
-  <div>
-    <button
-      class="btn-primary btn-primary--icon-left"
-      matTooltip="Save settings"
-      id="ProfileSettingsSaveBtn"
-      (click)="updateUserProfileSettings()">
-      {{ 'Save' | translate }}
-    </button>
-  </div>
-</eform-new-subheader>
+<eform-new-subheader></eform-new-subheader>
 
-<div [formGroup]="profileForm" class="d-flex flex-row justify-content-between align-items-start">
-  <mat-card class="p-3" *ngIf="selectCurrentUserIsAdmin$ | async">
-    <mat-card-header>
-      <mat-card-title>{{ 'Google Authenticator' | translate }}</mat-card-title>
-    </mat-card-header>
-    <div class="mb-1">
-      <mat-checkbox
-        id="2fauthForsed"
-        formControlName="isTwoFactorEnabled"
-        (change)="toggleTwoFactor()"
-        color="primary">
-        {{ 'Status' | translate }}
-      </mat-checkbox>
-    </div>
-    <p class="text-danger">
-      ({{ 'change will logout you from the application' | translate }})
-    </p>
-    <ng-container *ngIf="googleAuthInfoModel.psk">
-      <div class="p-0">
-        <div
-          [innerHTML]="'Google Authenticator description' | translate"></div>
-        <p>
-          <strong>{{ googleAuthInfoModel.psk }}</strong>
-        </p>
-      </div>
-      <div class="p-0">
-        <button
-          mat-raised-button
-          color="warn"
-          id="deleteGoogleAuthenticatorInfo"
-          matTooltip="{{ 'Remove google authenticator secret key' | translate }}"
-          (click)="deleteGoogleAuthenticatorInfo()">
-          {{ 'Remove PSK' | translate }}
-        </button>
-      </div>
-    </ng-container>
-  </mat-card>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{ 'Profile picture' | translate}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="d-flex flex-wrap justify-content-between">
-        <div>
-          <img
-            alt=""
-            *ngIf="userSettingsModel.profilePicture"
-            class="p-3"
-            height="32"
-            width="32"
-            [src]="'api/images/login-page-images?fileName=' + userSettingsModel.profilePicture | authImage | async"
-          />
-          <img
-            alt=""
-            *ngIf="!userSettingsModel.profilePicture && userSettingsModel.emailSha256"
-            class="p-3"
-            height="32"
-            width="32"
-            [src]="'https://www.gravatar.com/avatar/{{userSettingsModel.profilePicture}}?s=32&d=identicon'"
-          />
-        </div>
-        <div class="d-flex pt-2">
-          <div class="align-self-center align-self-end mb-3">
-            <button
-              class="btn-primary btn-primary--icon-left"
-              *ngIf="profilePictureUploader?.queue?.length === 0"
-              id="loginPageImageUploadBtn"
-              (click)="loginPagefileInput.click()"
-            >
-              <mat-icon>upload</mat-icon>
-              <span>{{ 'Upload' | translate }}</span>
-            </button>
-            <button
-              class="btn-warning"
-              *ngIf="profilePictureUploader?.queue?.length > 0"
-              (click)="loginPagefileInput.click()"
-            >
-              {{ 'Pending' | translate }}
-            </button>
-            <input
-              class="input-invisible"
-              type="file"
-              ng2FileSelect
-              #loginPagefileInput
-              [uploader]="profilePictureUploader"
-              id="loginPageFileInput"
+<div [formGroup]="profileForm" class="d-flex flex-row justify-content-center">
+
+  <mat-card class="card--no-border" style="width: 70%">
+    <div class="d-flex flex-column gap-48">
+
+      <div class="d-flex flex-column gap-12">
+        <h2>{{ 'Profile picture' | translate}}</h2>
+        <div class="d-flex flex-wrap justify-content-start align-items-center gap-24">
+          <div>
+            <img
+              alt=""
+              *ngIf="userSettingsModel.profilePicture"
+              height="96"
+              width="96"
+              style="border-radius: 10px"
+              [src]="'api/images/login-page-images?fileName=' + userSettingsModel.profilePicture | authImage | async"
+            />
+            <img
+              alt=""
+              *ngIf="!userSettingsModel.profilePicture && userSettingsModel.emailSha256"
+              height="96"
+              width="96"
+              style="border-radius: 10px"
+              [src]="'https://www.gravatar.com/avatar/{{userSettingsModel.profilePicture}}?s=32&d=identicon'"
             />
           </div>
-          <div class="align-self-center align-self-end mb-3 pl-2">
-            <button
-             class="btn-cancel"
-              id="resetProfilePicture"
-              (click)="resetProfilePicture()"
-              matTooltip="{{ 'Reset' | translate }}"
-            >
-              {{ 'Reset' | translate }}
-            </button>
+          <div class="d-flex flex-row align-items-center gap-12">
+            <div>
+              <button
+                class="btn-primary btn-primary--icon-left"
+                *ngIf="profilePictureUploader?.queue?.length === 0"
+                id="loginPageImageUploadBtn"
+                (click)="loginPagefileInput.click()"
+              >
+                <mat-icon>upload</mat-icon>
+                <span>{{ 'Upload' | translate }}</span>
+              </button>
+              <button
+                class="btn-warning"
+                *ngIf="profilePictureUploader?.queue?.length > 0"
+                (click)="loginPagefileInput.click()"
+              >
+                {{ 'Pending' | translate }}
+              </button>
+              <input
+                class="input-invisible"
+                type="file"
+                ng2FileSelect
+                #loginPagefileInput
+                [uploader]="profilePictureUploader"
+                id="loginPageFileInput"
+              />
+            </div>
+            <div>
+              <button
+                class="btn-cancel"
+                id="resetProfilePicture"
+                (click)="resetProfilePicture()"
+                matTooltip="{{ 'Reset' | translate }}"
+              >
+                {{ 'Reset' | translate }}
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="d-flex flex-column gap-12">
+        <h2>{{ 'General' | translate }}</h2>
+        <div class="d-flex flex-row gap-12">
+          <mat-form-field>
+            <mat-label>{{ 'Language' | translate }}</mat-label>
+            <mtx-select
+              id="ProfileLanguageSelector"
+              [bindLabel]="'name'"
+              [bindValue]="'languageCode'"
+              [clearable]="false"
+              formControlName="locale"
+              [items]="activeLanguages">
+            </mtx-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="selectCurrentUserIsAdmin$ | async">
+            <mat-label>{{ 'Formats' | translate }}</mat-label>
+            <mtx-select
+              id="ProfileFormatSelector"
+              [bindLabel]="'text'"
+              [bindValue]="'id'"
+              [clearable]="false"
+              formControlName="formats"
+              [items]="countries">
+            </mtx-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="selectCurrentUserIsAdmin$ | async">
+            <mat-label>{{ 'Timezone' | translate }}</mat-label>
+            <mtx-select
+              id="ProfileTimeZoneSelector"
+              [bindLabel]="'name'"
+              [bindValue]="'id'"
+              [clearable]="false"
+              formControlName="timeZone"
+              [items]="timeZones.timeZoneModels">
+            </mtx-select>
+          </mat-form-field>
+        </div>
+        <div class="mb-1">
+          <mat-checkbox
+            id="darkTheme"
+            formControlName="darkTheme">
+            {{ 'Dark theme' | translate }}
+          </mat-checkbox>
+        </div>
+      </div>
+
+
+
+      <div class="d-flex flex-column gap-12" *ngIf="selectCurrentUserIsAdmin$ | async">
+        <div class="d-flex flex-column">
+          <h2>{{ 'Google Authenticator' | translate }}</h2>
+          <div class="text-danger">
+            ({{ 'change will logout you from the application' | translate }})
           </div>
         </div>
+        <mat-checkbox
+          id="2fauthForsed"
+          formControlName="isTwoFactorEnabled"
+          (change)="toggleTwoFactor()"
+          color="primary">
+          {{ 'Status' | translate }}
+        </mat-checkbox>
 
+        <ng-container *ngIf="googleAuthInfoModel.psk">
+          <div class="p-0">
+            <div
+              [innerHTML]="'Google Authenticator description' | translate"></div>
+            <p>
+              <strong>{{ googleAuthInfoModel.psk }}</strong>
+            </p>
+          </div>
+          <div class="p-0">
+            <button
+              mat-raised-button
+              color="warn"
+              id="deleteGoogleAuthenticatorInfo"
+              matTooltip="{{ 'Remove google authenticator secret key' | translate }}"
+              (click)="deleteGoogleAuthenticatorInfo()">
+              {{ 'Remove PSK' | translate }}
+            </button>
+          </div>
+        </ng-container>
       </div>
-    </mat-card-content>
-  </mat-card>
 
-  <mat-card class="p-3">
-    <mat-card-header>
-      <mat-card-title>{{ 'General' | translate }}</mat-card-title>
-    </mat-card-header>
-    <mat-form-field>
-      <mat-label>{{ 'Language' | translate }}</mat-label>
-      <mtx-select
-        id="ProfileLanguageSelector"
-        [bindLabel]="'name'"
-        [bindValue]="'languageCode'"
-        [clearable]="false"
-        formControlName="locale"
-        [items]="activeLanguages">
-      </mtx-select>
-    </mat-form-field>
-    <mat-form-field *ngIf="selectCurrentUserIsAdmin$ | async">
-      <mat-label>{{ 'Formats' | translate }}</mat-label>
-      <mtx-select
-        id="ProfileFormatSelector"
-        [bindLabel]="'text'"
-        [bindValue]="'id'"
-        [clearable]="false"
-        formControlName="formats"
-        [items]="countries">
-      </mtx-select>
-    </mat-form-field>
-    <mat-form-field *ngIf="selectCurrentUserIsAdmin$ | async">
-      <mat-label>{{ 'Timezone' | translate }}</mat-label>
-      <mtx-select
-        id="ProfileTimeZoneSelector"
-        [bindLabel]="'name'"
-        [bindValue]="'id'"
-        [clearable]="false"
-        formControlName="timeZone"
-        [items]="timeZones.timeZoneModels">
-      </mtx-select>
-    </mat-form-field>
-    <div class="mb-1">
-      <mat-checkbox
-        id="darkTheme"
-        formControlName="darkTheme">
-        {{ 'Dark theme' | translate }}
-      </mat-checkbox>
+      <div>
+        <button
+          class="btn-primary btn-primary--icon-left"
+          matTooltip="Save settings"
+          id="ProfileSettingsSaveBtn"
+          (click)="updateUserProfileSettings()">
+          {{ 'Save' | translate }}
+        </button>
+      </div>
     </div>
   </mat-card>
+
+<!--  <mat-card class="p-3" *ngIf="selectCurrentUserIsAdmin$ | async">-->
+<!--    <mat-card-header>-->
+<!--      <mat-card-title>{{ 'Google Authenticator' | translate }}</mat-card-title>-->
+<!--    </mat-card-header>-->
+<!--    <div class="mb-1">-->
+<!--      <mat-checkbox-->
+<!--        id="2fauthForsed"-->
+<!--        formControlName="isTwoFactorEnabled"-->
+<!--        (change)="toggleTwoFactor()"-->
+<!--        color="primary">-->
+<!--        {{ 'Status' | translate }}-->
+<!--      </mat-checkbox>-->
+<!--    </div>-->
+<!--    <p class="text-danger">-->
+<!--      ({{ 'change will logout you from the application' | translate }})-->
+<!--    </p>-->
+<!--    <ng-container *ngIf="googleAuthInfoModel.psk">-->
+<!--      <div class="p-0">-->
+<!--        <div-->
+<!--          [innerHTML]="'Google Authenticator description' | translate"></div>-->
+<!--        <p>-->
+<!--          <strong>{{ googleAuthInfoModel.psk }}</strong>-->
+<!--        </p>-->
+<!--      </div>-->
+<!--      <div class="p-0">-->
+<!--        <button-->
+<!--          mat-raised-button-->
+<!--          color="warn"-->
+<!--          id="deleteGoogleAuthenticatorInfo"-->
+<!--          matTooltip="{{ 'Remove google authenticator secret key' | translate }}"-->
+<!--          (click)="deleteGoogleAuthenticatorInfo()">-->
+<!--          {{ 'Remove PSK' | translate }}-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+<!--  </mat-card>-->
+<!--  <mat-card>-->
+<!--    <mat-card-header>-->
+<!--      <mat-card-title>{{ 'Profile picture' | translate}}</mat-card-title>-->
+<!--    </mat-card-header>-->
+<!--    <mat-card-content>-->
+<!--      <div class="d-flex flex-wrap justify-content-between">-->
+<!--        <div>-->
+<!--          <img-->
+<!--            alt=""-->
+<!--            *ngIf="userSettingsModel.profilePicture"-->
+<!--            class="p-3"-->
+<!--            height="32"-->
+<!--            width="32"-->
+<!--            [src]="'api/images/login-page-images?fileName=' + userSettingsModel.profilePicture | authImage | async"-->
+<!--          />-->
+<!--          <img-->
+<!--            alt=""-->
+<!--            *ngIf="!userSettingsModel.profilePicture && userSettingsModel.emailSha256"-->
+<!--            class="p-3"-->
+<!--            height="32"-->
+<!--            width="32"-->
+<!--            [src]="'https://www.gravatar.com/avatar/{{userSettingsModel.profilePicture}}?s=32&d=identicon'"-->
+<!--          />-->
+<!--        </div>-->
+<!--        <div class="d-flex pt-2">-->
+<!--          <div class="align-self-center align-self-end mb-3">-->
+<!--            <button-->
+<!--              class="btn-primary btn-primary&#45;&#45;icon-left"-->
+<!--              *ngIf="profilePictureUploader?.queue?.length === 0"-->
+<!--              id="loginPageImageUploadBtn"-->
+<!--              (click)="loginPagefileInput.click()"-->
+<!--            >-->
+<!--              <mat-icon>upload</mat-icon>-->
+<!--              <span>{{ 'Upload' | translate }}</span>-->
+<!--            </button>-->
+<!--            <button-->
+<!--              class="btn-warning"-->
+<!--              *ngIf="profilePictureUploader?.queue?.length > 0"-->
+<!--              (click)="loginPagefileInput.click()"-->
+<!--            >-->
+<!--              {{ 'Pending' | translate }}-->
+<!--            </button>-->
+<!--            <input-->
+<!--              class="input-invisible"-->
+<!--              type="file"-->
+<!--              ng2FileSelect-->
+<!--              #loginPagefileInput-->
+<!--              [uploader]="profilePictureUploader"-->
+<!--              id="loginPageFileInput"-->
+<!--            />-->
+<!--          </div>-->
+<!--          <div class="align-self-center align-self-end mb-3 pl-2">-->
+<!--            <button-->
+<!--             class="btn-cancel"-->
+<!--              id="resetProfilePicture"-->
+<!--              (click)="resetProfilePicture()"-->
+<!--              matTooltip="{{ 'Reset' | translate }}"-->
+<!--            >-->
+<!--              {{ 'Reset' | translate }}-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--      </div>-->
+<!--    </mat-card-content>-->
+<!--  </mat-card>-->
+
+<!--  <mat-card class="p-3">-->
+<!--    <mat-card-header>-->
+<!--      <mat-card-title>{{ 'General' | translate }}</mat-card-title>-->
+<!--    </mat-card-header>-->
+<!--    <mat-form-field>-->
+<!--      <mat-label>{{ 'Language' | translate }}</mat-label>-->
+<!--      <mtx-select-->
+<!--        id="ProfileLanguageSelector"-->
+<!--        [bindLabel]="'name'"-->
+<!--        [bindValue]="'languageCode'"-->
+<!--        [clearable]="false"-->
+<!--        formControlName="locale"-->
+<!--        [items]="activeLanguages">-->
+<!--      </mtx-select>-->
+<!--    </mat-form-field>-->
+<!--    <mat-form-field *ngIf="selectCurrentUserIsAdmin$ | async">-->
+<!--      <mat-label>{{ 'Formats' | translate }}</mat-label>-->
+<!--      <mtx-select-->
+<!--        id="ProfileFormatSelector"-->
+<!--        [bindLabel]="'text'"-->
+<!--        [bindValue]="'id'"-->
+<!--        [clearable]="false"-->
+<!--        formControlName="formats"-->
+<!--        [items]="countries">-->
+<!--      </mtx-select>-->
+<!--    </mat-form-field>-->
+<!--    <mat-form-field *ngIf="selectCurrentUserIsAdmin$ | async">-->
+<!--      <mat-label>{{ 'Timezone' | translate }}</mat-label>-->
+<!--      <mtx-select-->
+<!--        id="ProfileTimeZoneSelector"-->
+<!--        [bindLabel]="'name'"-->
+<!--        [bindValue]="'id'"-->
+<!--        [clearable]="false"-->
+<!--        formControlName="timeZone"-->
+<!--        [items]="timeZones.timeZoneModels">-->
+<!--      </mtx-select>-->
+<!--    </mat-form-field>-->
+<!--    <div class="mb-1">-->
+<!--      <mat-checkbox-->
+<!--        id="darkTheme"-->
+<!--        formControlName="darkTheme">-->
+<!--        {{ 'Dark theme' | translate }}-->
+<!--      </mat-checkbox>-->
+<!--    </div>-->
+<!--  </mat-card>-->
 </div>
