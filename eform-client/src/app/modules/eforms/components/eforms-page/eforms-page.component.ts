@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import {Subject, Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
-import {CodeIcon, CsvIcon, ExcelIcon, FileUploadIcon, UserClaimsEnum, WordIcon} from 'src/app/common/const';
+import {UserClaimsEnum} from 'src/app/common/const';
 import {
   SavedTagModel,
   TemplateListModel,
@@ -17,8 +17,6 @@ import {
 import {saveAs} from 'file-saver';
 import {EformsStateService} from '../../store';
 import {Sort} from '@angular/material/sort';
-import {MatIconRegistry} from '@angular/material/icon';
-import {DomSanitizer} from '@angular/platform-browser';
 import {MatDialog} from '@angular/material/dialog';
 import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/components';
 import {
@@ -129,14 +127,6 @@ export class EformsPageComponent implements OnInit, OnDestroy {
       header: this.translateService.stream('Actions'), field: 'actions'},
   ];
   constructor() {
-    const iconRegistry = inject(MatIconRegistry);
-    const sanitizer = inject(DomSanitizer);
-
-    iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(WordIcon));
-    iconRegistry.addSvgIconLiteral('file-code', sanitizer.bypassSecurityTrustHtml(CodeIcon));
-    iconRegistry.addSvgIconLiteral('file-csv', sanitizer.bypassSecurityTrustHtml(CsvIcon));
-    iconRegistry.addSvgIconLiteral('file-upload', sanitizer.bypassSecurityTrustHtml(FileUploadIcon));
-    iconRegistry.addSvgIconLiteral('file-excel', sanitizer.bypassSecurityTrustHtml(ExcelIcon));
     this.searchSubjectSub$ = this.searchSubject.pipe(debounceTime(500)).subscribe((val: string) => {
       this.eformsStateService.updateNameFilter(val);
       this.loadAllTags();

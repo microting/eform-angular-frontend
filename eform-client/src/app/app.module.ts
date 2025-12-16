@@ -1,11 +1,12 @@
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {APP_INITIALIZER, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GalleryModule} from 'ng-gallery';
 import {TranslateModule} from '@ngx-translate/core';
 import {LightboxModule} from 'ng-gallery/lightbox';
 import { AppIconComponent } from './components/icons/app-icon/app-icon.component';
+import IconService from './components/icons';
 
 // TODO fix ngx-mask
 //import {NgxMaskModule} from 'ngx-mask';
@@ -66,6 +67,11 @@ import {
 } from './state';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
+// Factory function for APP_INITIALIZER to register icons
+export function registerIconsFactory(iconService: IconService) {
+  return () => iconService.register();
+}
 
 @NgModule({
   declarations: [
@@ -140,7 +146,15 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     AppIconComponent, FooterComponent,
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [providers],
+  providers: [
+    providers,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: registerIconsFactory,
+      deps: [IconService],
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
