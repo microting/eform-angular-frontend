@@ -308,6 +308,11 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-20.6.0.tgz#f006547068f771c4ccc0a85e512a42798ba5c9ee"
   integrity sha512-axeU33lBOcfQ/kcpBc/70vR69PFX9kqgUtroENK0lq6dBeRgi6LJVbBOAHRtR2Xfxd9Lv4YbqWuJ0oQ5BwSTGQ==
 
+"@angular-eslint/bundled-angular-compiler@21.0.1":
+  version "21.0.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-21.0.1.tgz#dbb54acc52fe1649a691d06c500bf462f2fe2189"
+  integrity sha512-Kb59SopkJ2sDgZSysL+ZqcfqM2cbK+gciAyHljkrCUsqo66eEq5KCZUU//RVoo4MHi+qL/dFy54JG/+A/35xcQ==
+
 "@angular-eslint/eslint-plugin-template@20.5.1":
   version "20.5.1"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-20.5.1.tgz#cc58d3906ac20b8b4f73fe3c542cb79611e057fd"
@@ -335,6 +340,15 @@
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "20.5.1"
     "@angular-eslint/utils" "20.5.1"
+    ts-api-utils "^2.1.0"
+
+"@angular-eslint/eslint-plugin@21.0.1":
+  version "21.0.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-21.0.1.tgz#ed6891497fc3a1afcccd5f308a925253efac7fd0"
+  integrity sha512-tSb5qgIwoMrX3Z17dSsHrNFWrgBWafxK7IQudU0RXxdzq6joq1qDrzHwLT3Jn+Y6ocn0jdavAefEGHAhomCjcQ==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "21.0.1"
+    "@angular-eslint/utils" "21.0.1"
     ts-api-utils "^2.1.0"
 
 "@angular-eslint/schematics@20.5.1":
@@ -371,6 +385,13 @@
   integrity sha512-usjCCjbdtqy4p8I3BMPn6LrXECFLCohBa75h59PK0kV/TEb8OlnIWIWTVtZAMw/MgohtExl69GkSNmL3ElWbUQ==
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "20.6.0"
+
+"@angular-eslint/utils@21.0.1":
+  version "21.0.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-21.0.1.tgz#15230c24976ae836b271651496ac5c00acc8a27c"
+  integrity sha512-tovWIDiEsfSAsPWH+/wL9Hfl/Hc+2j2IP+Z85I6uWTbynLVdyURx8gmJjKBUTSCmcyrgBnTbnnlr4DTM6/aFOg==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "21.0.1"
 
 "@angular-material-extensions/password-strength@^16.0.0":
   version "16.0.0"
