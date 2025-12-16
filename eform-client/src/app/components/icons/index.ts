@@ -15,7 +15,7 @@ import {
 } from 'src/app/common/const';
 
 @Injectable({ providedIn: 'root' })
-class IconService {
+export class IconService {
   constructor(private registry: MatIconRegistry, private sanitizer: DomSanitizer) {}
 
   register(): void {
@@ -48,5 +48,3 @@ class IconService {
     });
   }
 }
-
-export default IconService

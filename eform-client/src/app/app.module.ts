@@ -6,7 +6,7 @@ import {GalleryModule} from 'ng-gallery';
 import {TranslateModule} from '@ngx-translate/core';
 import {LightboxModule} from 'ng-gallery/lightbox';
 import { AppIconComponent } from './components/icons/app-icon/app-icon.component';
-import IconService from './components/icons';
+import { IconService } from './components/icons';
 
 // TODO fix ngx-mask
 //import {NgxMaskModule} from 'ngx-mask';
