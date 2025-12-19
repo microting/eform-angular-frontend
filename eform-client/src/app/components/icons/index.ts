@@ -36,8 +36,8 @@ export class IconService {
       'file-excel': ExcelIcon,
       'file-pdf': PdfIcon,
       'password-validation': PasswordValidationIcon,
-      'android': AndroidIcon,
-      'ios': iOSIcon,
+      'android-icon': AndroidIcon,
+      'ios-icon': iOSIcon,
     };
 
     Object.entries(globalIcons).forEach(([name, svg]) => {
