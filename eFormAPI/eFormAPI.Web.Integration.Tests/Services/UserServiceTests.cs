@@ -128,6 +128,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
             DbContext.Users.Add(user);
             await DbContext.SaveChangesAsync();
 
+            // Mock is needed because GetByUsernameAsync calls UpdateAsync when finding user by email
             _userManager.Setup(x => x.UpdateAsync(It.IsAny<EformUser>()))
                 .ReturnsAsync(IdentityResult.Success);
 
