@@ -29,7 +29,7 @@ using eFormAPI.Web.Services;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using Microsoft.AspNetCore.Identity;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Moq;
+using NSubstitute;
 using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Abstractions;
@@ -41,35 +41,37 @@ namespace eFormAPI.Web.Integration.Tests.Services
     [TestFixture]
     public class AccountServiceTests : DbTestFixture
     {
-        private Mock<IEFormCoreService> _coreHelper;
-        private Mock<UserManager<EformUser>> _userManager;
-        private Mock<IUserService> _userService;
-        private Mock<IDbOptions<ApplicationSettings>> _appSettings;
-        private Mock<ILocalizationService> _localizationService;
-        private Mock<IEmailService> _emailService;
+        private IEFormCoreService _coreHelper;
+#pragma warning disable NUnit1032
+        private UserManager<EformUser> _userManager;
+#pragma warning restore NUnit1032
+        private IUserService _userService;
+        private IDbOptions<ApplicationSettings> _appSettings;
+        private ILocalizationService _localizationService;
+        private IEmailService _emailService;
         private AccountService _accountService;
 
         public override void DoSetup()
         {
-            var store = new Mock<IUserStore<EformUser>>();
-            _userManager = new Mock<UserManager<EformUser>>(store.Object, null, null, null, null, null, null, null, null);
-            _coreHelper = new Mock<IEFormCoreService>();
-            _userService = new Mock<IUserService>();
-            _appSettings = new Mock<IDbOptions<ApplicationSettings>>();
-            _localizationService = new Mock<ILocalizationService>();
-            _emailService = new Mock<IEmailService>();
+            var store = Substitute.For<IUserStore<EformUser>>();
+            _userManager = Substitute.For<UserManager<EformUser>>(store, null, null, null, null, null, null, null, null);
+            _coreHelper = Substitute.For<IEFormCoreService>();
+            _userService = Substitute.For<IUserService>();
+            _appSettings = Substitute.For<IDbOptions<ApplicationSettings>>();
+            _localizationService = Substitute.For<ILocalizationService>();
+            _emailService = Substitute.For<IEmailService>();
 
-            _localizationService.Setup(x => x.GetString(It.IsAny<string>()))
-                .Returns((string key) => key);
+            _localizationService.GetString(Arg.Any<string>())
+                .Returns(args => args.Arg<string>());
             
             _accountService = new AccountService(
-                _coreHelper.Object,
-                _userManager.Object,
-                _userService.Object,
-                _appSettings.Object,
-                _localizationService.Object,
+                _coreHelper,
+                _userManager,
+                _userService,
+                _appSettings,
+                _localizationService,
                 DbContext,
-                _emailService.Object);
+                _emailService);
         }
 
         [Test]
@@ -90,8 +92,8 @@ namespace eFormAPI.Web.Integration.Tests.Services
         public async Task GetUserInfo_WithNoUser_ShouldReturnNull()
         {
             // Arrange
-            _userService.Setup(x => x.GetCurrentUserAsync())
-                .ReturnsAsync((EformUser)null);
+            _userService.GetCurrentUserAsync()
+                .Returns((EformUser)null);
 
             // Act
             var result = await _accountService.GetUserInfo();
@@ -120,11 +122,11 @@ namespace eFormAPI.Web.Integration.Tests.Services
                 DarkTheme = false
             };
 
-            _userService.Setup(x => x.GetCurrentUserAsync())
-                .ReturnsAsync(user);
+            _userService.GetCurrentUserAsync()
+                .Returns(user);
             
-            _userManager.Setup(x => x.UpdateAsync(It.IsAny<EformUser>()))
-                .ReturnsAsync(IdentityResult.Success);
+            _userManager.UpdateAsync(Arg.Any<EformUser>())
+                .Returns(IdentityResult.Success);
 
             // Act
             var result = await _accountService.UpdateUserSettings(settings);
@@ -138,8 +140,8 @@ namespace eFormAPI.Web.Integration.Tests.Services
         public async Task GetUserSettings_WithNoUser_ShouldReturnError()
         {
             // Arrange
-            _userService.Setup(x => x.GetCurrentUserAsync())
-                .ReturnsAsync((EformUser)null);
+            _userService.GetCurrentUserAsync()
+                .Returns((EformUser)null);
 
             // Act
             var result = await _accountService.GetUserSettings();
@@ -161,11 +163,11 @@ namespace eFormAPI.Web.Integration.Tests.Services
                 ProfilePictureSnapshot = "picture_thumb.jpg"
             };
 
-            _userService.Setup(x => x.GetCurrentUserAsync())
-                .ReturnsAsync(user);
+            _userService.GetCurrentUserAsync()
+                .Returns(user);
             
-            _userManager.Setup(x => x.UpdateAsync(It.IsAny<EformUser>()))
-                .ReturnsAsync(IdentityResult.Success);
+            _userManager.UpdateAsync(Arg.Any<EformUser>())
+                .Returns(IdentityResult.Success);
 
             // Act
             var result = await _accountService.ProfilePictureDelete();

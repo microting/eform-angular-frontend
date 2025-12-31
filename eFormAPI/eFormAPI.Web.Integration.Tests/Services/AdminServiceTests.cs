@@ -25,7 +25,7 @@ SOFTWARE.
 using NUnit.Framework;
 using eFormAPI.Web.Services;
 using Microsoft.Extensions.Logging;
-using Moq;
+using NSubstitute;
 using Microting.eFormApi.BasePn.Abstractions;
 using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
@@ -38,37 +38,39 @@ namespace eFormAPI.Web.Integration.Tests.Services
     [TestFixture]
     public class AdminServiceTests : DbTestFixture
     {
-        private Mock<ILogger<AdminService>> _logger;
-        private Mock<UserManager<EformUser>> _userManager;
-        private Mock<IDbOptions<ApplicationSettings>> _appSettings;
-        private Mock<IUserService> _userService;
-        private Mock<ILocalizationService> _localizationService;
-        private Mock<IEFormCoreService> _coreHelper;
+        private ILogger<AdminService> _logger;
+#pragma warning disable NUnit1032
+        private UserManager<EformUser> _userManager;
+#pragma warning restore NUnit1032
+        private IDbOptions<ApplicationSettings> _appSettings;
+        private IUserService _userService;
+        private ILocalizationService _localizationService;
+        private IEFormCoreService _coreHelper;
         private AdminService _adminService;
 
         public override void DoSetup()
         {
-            _logger = new Mock<ILogger<AdminService>>();
-            var store = new Mock<IUserStore<EformUser>>();
-            _userManager = new Mock<UserManager<EformUser>>(store.Object, null, null, null, null, null, null, null, null);
-            _appSettings = new Mock<IDbOptions<ApplicationSettings>>();
-            _userService = new Mock<IUserService>();
-            _localizationService = new Mock<ILocalizationService>();
-            _coreHelper = new Mock<IEFormCoreService>();
+            _logger = Substitute.For<ILogger<AdminService>>();
+            var store = Substitute.For<IUserStore<EformUser>>();
+            _userManager = Substitute.For<UserManager<EformUser>>(store, null, null, null, null, null, null, null, null);
+            _appSettings = Substitute.For<IDbOptions<ApplicationSettings>>();
+            _userService = Substitute.For<IUserService>();
+            _localizationService = Substitute.For<ILocalizationService>();
+            _coreHelper = Substitute.For<IEFormCoreService>();
 
-            _localizationService.Setup(x => x.GetString(It.IsAny<string>()))
-                .Returns((string key) => key);
+            _localizationService.GetString(Arg.Any<string>())
+                .Returns(args => args.Arg<string>());
 
-            _appSettings.Setup(x => x.Value).Returns(new ApplicationSettings());
+            _appSettings.Value.Returns(new ApplicationSettings());
 
             _adminService = new AdminService(
-                _logger.Object,
-                _userManager.Object,
-                _appSettings.Object,
-                _userService.Object,
-                _localizationService.Object,
+                _logger,
+                _userManager,
+                _appSettings,
+                _userService,
+                _localizationService,
                 DbContext,
-                _coreHelper.Object);
+                _coreHelper);
         }
 
         [Test]

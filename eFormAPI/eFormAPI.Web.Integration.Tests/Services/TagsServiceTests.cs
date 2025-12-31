@@ -26,7 +26,7 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using eFormAPI.Web.Services;
 using Microsoft.Extensions.Logging;
-using Moq;
+using NSubstitute;
 using Microting.eFormApi.BasePn.Abstractions;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Models.Tags;
@@ -36,30 +36,30 @@ namespace eFormAPI.Web.Integration.Tests.Services
     [TestFixture]
     public class TagsServiceTests : DbTestFixture
     {
-        private Mock<ILogger<TagsService>> _logger;
-        private Mock<IEFormCoreService> _coreHelper;
-        private Mock<ILocalizationService> _localizationService;
-        private Mock<IUserService> _userService;
+        private ILogger<TagsService> _logger;
+        private IEFormCoreService _coreHelper;
+        private ILocalizationService _localizationService;
+        private IUserService _userService;
         private TagsService _tagsService;
 
         public override void DoSetup()
         {
-            _logger = new Mock<ILogger<TagsService>>();
-            _coreHelper = new Mock<IEFormCoreService>();
-            _localizationService = new Mock<ILocalizationService>();
-            _userService = new Mock<IUserService>();
+            _logger = Substitute.For<ILogger<TagsService>>();
+            _coreHelper = Substitute.For<IEFormCoreService>();
+            _localizationService = Substitute.For<ILocalizationService>();
+            _userService = Substitute.For<IUserService>();
 
-            _localizationService.Setup(x => x.GetString(It.IsAny<string>()))
-                .Returns((string key) => key);
+            _localizationService.GetString(Arg.Any<string>())
+                .Returns(args => args.Arg<string>());
             
-            _localizationService.Setup(x => x.GetStringWithFormat(It.IsAny<string>(), It.IsAny<object[]>()))
-                .Returns((string key, object[] args) => key);
+            _localizationService.GetStringWithFormat(Arg.Any<string>(), Arg.Any<object[]>())
+                .Returns(args => args.Arg<string>());
 
             _tagsService = new TagsService(
-                _logger.Object,
-                _coreHelper.Object,
-                _localizationService.Object,
-                _userService.Object,
+                _logger,
+                _coreHelper,
+                _localizationService,
+                _userService,
                 DbContext);
         }
 
@@ -74,8 +74,8 @@ namespace eFormAPI.Web.Integration.Tests.Services
         public async Task GetSavedTags_WithNoUser_ShouldReturnEmptyList()
         {
             // Arrange
-            _userService.Setup(x => x.GetCurrentUserAsync())
-                .ReturnsAsync((Microting.eFormApi.BasePn.Infrastructure.Database.Entities.EformUser)null);
+            _userService.GetCurrentUserAsync()
+                .Returns((Microting.eFormApi.BasePn.Infrastructure.Database.Entities.EformUser)null);
 
             // Act
             var result = await _tagsService.GetSavedTags();

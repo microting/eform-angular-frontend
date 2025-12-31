@@ -29,7 +29,7 @@ using eFormAPI.Web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Moq;
+using NSubstitute;
 using Microting.eFormApi.BasePn.Abstractions;
 
 namespace eFormAPI.Web.Integration.Tests.Services
@@ -37,23 +37,25 @@ namespace eFormAPI.Web.Integration.Tests.Services
     [TestFixture]
     public class UserServiceTests : DbTestFixture
     {
-        private Mock<UserManager<EformUser>> _userManager;
-        private Mock<IHttpContextAccessor> _httpAccessor;
-        private Mock<IEFormCoreService> _coreHelper;
+#pragma warning disable NUnit1032
+        private UserManager<EformUser> _userManager;
+#pragma warning restore NUnit1032
+        private IHttpContextAccessor _httpAccessor;
+        private IEFormCoreService _coreHelper;
         private UserService _userService;
 
         public override void DoSetup()
         {
-            var store = new Mock<IUserStore<EformUser>>();
-            _userManager = new Mock<UserManager<EformUser>>(store.Object, null, null, null, null, null, null, null, null);
-            _httpAccessor = new Mock<IHttpContextAccessor>();
-            _coreHelper = new Mock<IEFormCoreService>();
+            var store = Substitute.For<IUserStore<EformUser>>();
+            _userManager = Substitute.For<UserManager<EformUser>>(store, null, null, null, null, null, null, null, null);
+            _httpAccessor = Substitute.For<IHttpContextAccessor>();
+            _coreHelper = Substitute.For<IEFormCoreService>();
 
             _userService = new UserService(
                 DbContext,
-                _userManager.Object,
-                _httpAccessor.Object,
-                _coreHelper.Object);
+                _userManager,
+                _httpAccessor,
+                _coreHelper);
         }
 
         [Test]
@@ -129,8 +131,8 @@ namespace eFormAPI.Web.Integration.Tests.Services
             await DbContext.SaveChangesAsync();
 
             // Mock is needed because GetByUsernameAsync calls UpdateAsync when finding user by email
-            _userManager.Setup(x => x.UpdateAsync(It.IsAny<EformUser>()))
-                .ReturnsAsync(IdentityResult.Success);
+            _userManager.UpdateAsync(Arg.Any<EformUser>())
+                .Returns(IdentityResult.Success);
 
             // Act
             var result = await _userService.GetByUsernameAsync("test@example.com");

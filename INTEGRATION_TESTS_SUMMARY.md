@@ -6,7 +6,7 @@ This implementation adds integration test infrastructure and initial test covera
 ## What Was Added
 
 ### 1. Test Infrastructure (eFormAPI.Web.Integration.Tests.csproj)
-- **Moq 4.20.72** - Industry-standard mocking framework for isolating dependencies
+- **NSubstitute 5.3.0** - Mocking framework for isolating dependencies
 - **Microsoft.AspNetCore.Mvc.Testing 10.0.0** - ASP.NET Core testing utilities for full-stack API testing
 - Directory structure: `Services/` and `Controllers/` for organized test placement
 
@@ -105,7 +105,7 @@ Following the "minimal changes" principle:
   - Data cleanup between tests
 
 ### Dependency Mocking
-- Mock external dependencies (EFormCore, UserManager, etc.)
+- Mock external dependencies (EFormCore, UserManager, etc.) using NSubstitute
 - Use real DbContext for data operations
 - Isolate services from external API calls
 

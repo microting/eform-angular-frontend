@@ -8,7 +8,7 @@ This directory contains integration tests for the eFormAPI.Web application contr
 
 ### Test Framework
 - **NUnit 4.4.0** - Test framework
-- **Moq 4.20.72** - Mocking framework
+- **NSubstitute 5.3.0** - Mocking framework
 - **Microsoft.AspNetCore.Mvc.Testing 10.0.0** - ASP.NET Core testing utilities
 
 ### Base Test Fixture
@@ -74,20 +74,20 @@ dotnet test --verbosity detailed
 [TestFixture]
 public class ExampleServiceTests : DbTestFixture
 {
-    private Mock<ILogger<ExampleService>> _logger;
-    private Mock<IDependency> _dependency;
+    private ILogger<ExampleService> _logger;
+    private IDependency _dependency;
     private ExampleService _service;
 
     public override void DoSetup()
     {
-        // Setup mocks
-        _logger = new Mock<ILogger<ExampleService>>();
-        _dependency = new Mock<IDependency>();
+        // Setup mocks using NSubstitute
+        _logger = Substitute.For<ILogger<ExampleService>>();
+        _dependency = Substitute.For<IDependency>();
         
         // Create service with dependencies
         _service = new ExampleService(
-            _logger.Object,
-            _dependency.Object,
+            _logger,
+            _dependency,
             DbContext);
     }
 

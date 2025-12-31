@@ -25,7 +25,7 @@ SOFTWARE.
 using NUnit.Framework;
 using eFormAPI.Web.Services;
 using Microsoft.Extensions.Logging;
-using Moq;
+using NSubstitute;
 using Microting.eFormApi.BasePn.Abstractions;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Hosting.Helpers.DbOptions;
@@ -40,53 +40,53 @@ namespace eFormAPI.Web.Integration.Tests.Services
     [TestFixture]
     public class SettingsServiceTests : DbTestFixture
     {
-        private Mock<ILogger<SettingsService>> _logger;
-        private Mock<IWritableOptions<ConnectionStrings>> _connectionStrings;
-        private Mock<IDbOptions<ApplicationSettings>> _applicationSettings;
-        private Mock<IDbOptions<LoginPageSettings>> _loginPageSettings;
-        private Mock<IDbOptions<HeaderSettings>> _headerSettings;
-        private Mock<IDbOptions<EmailSettings>> _emailSettings;
-        private Mock<IEFormCoreService> _coreHelper;
-        private Mock<ILocalizationService> _localizationService;
-        private Mock<IDbOptions<ConnectionStringsSdk>> _connectionStringsSdk;
-        private Mock<IDbOptions<EformTokenOptions>> _tokenOptions;
+        private ILogger<SettingsService> _logger;
+        private IWritableOptions<ConnectionStrings> _connectionStrings;
+        private IDbOptions<ApplicationSettings> _applicationSettings;
+        private IDbOptions<LoginPageSettings> _loginPageSettings;
+        private IDbOptions<HeaderSettings> _headerSettings;
+        private IDbOptions<EmailSettings> _emailSettings;
+        private IEFormCoreService _coreHelper;
+        private ILocalizationService _localizationService;
+        private IDbOptions<ConnectionStringsSdk> _connectionStringsSdk;
+        private IDbOptions<EformTokenOptions> _tokenOptions;
         private SettingsService _settingsService;
 
         public override void DoSetup()
         {
-            _logger = new Mock<ILogger<SettingsService>>();
-            _connectionStrings = new Mock<IWritableOptions<ConnectionStrings>>();
-            _applicationSettings = new Mock<IDbOptions<ApplicationSettings>>();
-            _loginPageSettings = new Mock<IDbOptions<LoginPageSettings>>();
-            _headerSettings = new Mock<IDbOptions<HeaderSettings>>();
-            _emailSettings = new Mock<IDbOptions<EmailSettings>>();
-            _coreHelper = new Mock<IEFormCoreService>();
-            _localizationService = new Mock<ILocalizationService>();
-            _connectionStringsSdk = new Mock<IDbOptions<ConnectionStringsSdk>>();
-            _tokenOptions = new Mock<IDbOptions<EformTokenOptions>>();
+            _logger = Substitute.For<ILogger<SettingsService>>();
+            _connectionStrings = Substitute.For<IWritableOptions<ConnectionStrings>>();
+            _applicationSettings = Substitute.For<IDbOptions<ApplicationSettings>>();
+            _loginPageSettings = Substitute.For<IDbOptions<LoginPageSettings>>();
+            _headerSettings = Substitute.For<IDbOptions<HeaderSettings>>();
+            _emailSettings = Substitute.For<IDbOptions<EmailSettings>>();
+            _coreHelper = Substitute.For<IEFormCoreService>();
+            _localizationService = Substitute.For<ILocalizationService>();
+            _connectionStringsSdk = Substitute.For<IDbOptions<ConnectionStringsSdk>>();
+            _tokenOptions = Substitute.For<IDbOptions<EformTokenOptions>>();
 
-            _localizationService.Setup(x => x.GetString(It.IsAny<string>()))
-                .Returns((string key) => key);
+            _localizationService.GetString(Arg.Any<string>())
+                .Returns(args => args.Arg<string>());
 
-            _connectionStringsSdk.Setup(x => x.Value).Returns(new ConnectionStringsSdk());
-            _applicationSettings.Setup(x => x.Value).Returns(new ApplicationSettings());
-            _loginPageSettings.Setup(x => x.Value).Returns(new LoginPageSettings());
-            _headerSettings.Setup(x => x.Value).Returns(new HeaderSettings());
-            _emailSettings.Setup(x => x.Value).Returns(new EmailSettings());
-            _tokenOptions.Setup(x => x.Value).Returns(new EformTokenOptions());
+            _connectionStringsSdk.Value.Returns(new ConnectionStringsSdk());
+            _applicationSettings.Value.Returns(new ApplicationSettings());
+            _loginPageSettings.Value.Returns(new LoginPageSettings());
+            _headerSettings.Value.Returns(new HeaderSettings());
+            _emailSettings.Value.Returns(new EmailSettings());
+            _tokenOptions.Value.Returns(new EformTokenOptions());
 
             _settingsService = new SettingsService(
-                _logger.Object,
-                _connectionStrings.Object,
-                _applicationSettings.Object,
-                _loginPageSettings.Object,
-                _headerSettings.Object,
-                _emailSettings.Object,
-                _coreHelper.Object,
-                _localizationService.Object,
-                _connectionStringsSdk.Object,
+                _logger,
+                _connectionStrings,
+                _applicationSettings,
+                _loginPageSettings,
+                _headerSettings,
+                _emailSettings,
+                _coreHelper,
+                _localizationService,
+                _connectionStringsSdk,
                 DbContext,
-                _tokenOptions.Object);
+                _tokenOptions);
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
         public void GetDefaultLocale_WithNoLocale_ShouldReturnEnUS()
         {
             // Arrange
-            _applicationSettings.Setup(x => x.Value).Returns(new ApplicationSettings { DefaultLocale = null });
+            _applicationSettings.Value.Returns(new ApplicationSettings { DefaultLocale = null });
 
             // Act
             var result = _settingsService.GetDefaultLocale();
@@ -116,7 +116,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
         {
             // Arrange
             var customLocale = "de-DE";
-            _applicationSettings.Setup(x => x.Value).Returns(new ApplicationSettings { DefaultLocale = customLocale });
+            _applicationSettings.Value.Returns(new ApplicationSettings { DefaultLocale = customLocale });
 
             // Act
             var result = _settingsService.GetDefaultLocale();
@@ -131,7 +131,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
         public void ConnectionStringExist_WithNoConnectionString_ShouldReturnFalse()
         {
             // Arrange
-            _connectionStringsSdk.Setup(x => x.Value).Returns(new ConnectionStringsSdk { SdkConnection = null });
+            _connectionStringsSdk.Value.Returns(new ConnectionStringsSdk { SdkConnection = null });
 
             // Act
             var result = _settingsService.ConnectionStringExist();
@@ -145,7 +145,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
         public void ConnectionStringExist_WithConnectionString_ShouldReturnTrue()
         {
             // Arrange
-            _connectionStringsSdk.Setup(x => x.Value).Returns(new ConnectionStringsSdk { SdkConnection = "Server=localhost;" });
+            _connectionStringsSdk.Value.Returns(new ConnectionStringsSdk { SdkConnection = "Server=localhost;" });
 
             // Act
             var result = _settingsService.ConnectionStringExist();
