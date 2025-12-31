@@ -69,7 +69,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
                 .Returns(args => args.Arg<string>());
 
             _connectionStringsSdk.Value.Returns(new ConnectionStringsSdk());
-            _applicationSettings.Value.Returns(new ApplicationSettings());
+            // Note: _applicationSettings.Value is not set here to allow individual tests to configure it
             _loginPageSettings.Value.Returns(new LoginPageSettings());
             _headerSettings.Value.Returns(new HeaderSettings());
             _emailSettings.Value.Returns(new EmailSettings());
@@ -92,6 +92,9 @@ namespace eFormAPI.Web.Integration.Tests.Services
         [Test]
         public void SettingsService_InitializesCorrectly()
         {
+            // Arrange
+            _applicationSettings.Value.Returns(new ApplicationSettings());
+            
             // Assert
             Assert.That(_settingsService, Is.Not.Null);
         }
