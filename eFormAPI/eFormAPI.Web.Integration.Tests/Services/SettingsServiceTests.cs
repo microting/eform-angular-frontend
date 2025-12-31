@@ -100,7 +100,8 @@ namespace eFormAPI.Web.Integration.Tests.Services
         public void GetDefaultLocale_WithNoLocale_ShouldReturnEnUS()
         {
             // Arrange
-            _applicationSettings.Value.Returns(new ApplicationSettings { DefaultLocale = null });
+            var appSettings = new ApplicationSettings { DefaultLocale = null };
+            _applicationSettings.Value.Returns(appSettings);
 
             // Act
             var result = _settingsService.GetDefaultLocale();
@@ -108,6 +109,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
             // Assert
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Success, Is.True);
+            // The service returns "en-US" as the default when locale is null or empty
             Assert.That(result.Model, Is.EqualTo("en-US"));
         }
 

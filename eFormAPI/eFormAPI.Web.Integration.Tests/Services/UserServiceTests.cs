@@ -64,7 +64,6 @@ namespace eFormAPI.Web.Integration.Tests.Services
             // Arrange
             var user = new EformUser
             {
-                Id = 1,
                 Email = "test@example.com",
                 FirstName = "Test",
                 LastName = "User",
@@ -98,7 +97,6 @@ namespace eFormAPI.Web.Integration.Tests.Services
             // Arrange
             var user = new EformUser
             {
-                Id = 1,
                 Email = "test@example.com",
                 FirstName = "Test",
                 LastName = "User",
@@ -121,7 +119,6 @@ namespace eFormAPI.Web.Integration.Tests.Services
             // Arrange
             var user = new EformUser
             {
-                Id = 1,
                 Email = "test@example.com",
                 FirstName = "Test",
                 LastName = "User",
