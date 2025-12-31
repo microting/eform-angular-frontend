@@ -88,7 +88,7 @@ public class SettingsService(
             var locale = applicationSettings.Value.DefaultLocale;
             if (string.IsNullOrEmpty(locale))
             {
-                return new OperationDataResult<string>(true, "en-US");
+                return new OperationDataResult<string>(true, model: "en-US");
             }
 
             return new OperationDataResult<string>(true, model: locale);
@@ -99,7 +99,7 @@ public class SettingsService(
             logger.LogError(e.Message);
             logger.LogTrace(e.StackTrace);
             // We do this if any of the above fail for some reason, then we set it to default en-US
-            return new OperationDataResult<string>(true, "en-US");
+            return new OperationDataResult<string>(true, model: "en-US");
         }
     }
 
