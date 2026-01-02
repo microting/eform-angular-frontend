@@ -39,6 +39,8 @@ using Abstractions;
 using Hosting.Helpers.DbOptions;
 using eFormCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Enums;
@@ -170,7 +172,7 @@ public class SettingsService(
                 new MariaDbServerVersion(ServerVersion.AutoDetect(angularConnectionString)),
                 b =>
                     b.EnableRetryOnFailure()
-                        .TranslateParameterizedCollectionsToConstants());
+                        .UseParameterizedCollectionMode(ParameterTranslationMode.Constant));
 
 
             await using var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
