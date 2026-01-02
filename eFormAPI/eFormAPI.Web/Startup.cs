@@ -50,6 +50,8 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -110,7 +112,7 @@ public class Startup(IConfiguration configuration)
                         ServerVersion.AutoDetect(Configuration["ConnectinString"])), mySqlOptionsAction: builder =>
                     {
                         builder.EnableRetryOnFailure();
-                        builder.TranslateParameterizedCollectionsToConstants();
+                        builder.UseParameterizedCollectionMode(ParameterTranslationMode.Constant);
                     }));
 
             services.AddHealthChecks()
@@ -162,7 +164,7 @@ public class Startup(IConfiguration configuration)
                                 ServerVersion.AutoDetect(Configuration.MyConnectionString())), mySqlOptionsAction: builder =>
                             {
                                 builder.EnableRetryOnFailure();
-                                builder.TranslateParameterizedCollectionsToConstants();
+                                builder.UseParameterizedCollectionMode(ParameterTranslationMode.Constant);
                             }));
 
                     services.AddHealthChecks()
