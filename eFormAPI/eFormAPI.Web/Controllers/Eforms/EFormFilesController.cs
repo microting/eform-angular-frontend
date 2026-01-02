@@ -646,10 +646,6 @@ public class EFormFilesController(
 
     private async Task<OperationResult> RotateImageS3(string fileName)
     {
-        Console.WriteLine(@"Memory used before collection:       {0:N0}",
-            GC.GetTotalMemory(false));
-        Console.WriteLine(@"Environment.ProcessorCount:          {0}",
-            Environment.ProcessorCount);
         var fileId = int.Parse(fileName.Split('_').First());
         var core = await coreHelper.GetCore();
         var dbContext = core.DbContextHelper.GetDbContext();
@@ -699,11 +695,6 @@ public class EFormFilesController(
         System.IO.File.Delete(filePathResized);
         // await RotateFileAndPutToStorage(Path.Combine(Path.GetTempPath(), smallFilename), core, smallFilename);
         // await RotateFileAndPutToStorage(Path.Combine(Path.GetTempPath(), bigFilename), core, bigFilename);
-        Console.WriteLine(@"Memory used before collection:       {0:N0}",
-            GC.GetTotalMemory(false));
-        GC.Collect();
-        Console.WriteLine(@"Memory used after full collection:   {0:N0}",
-            GC.GetTotalMemory(true));
         return await RotateFileAndPutToStorage(filePath, core, fileName);
     }
 

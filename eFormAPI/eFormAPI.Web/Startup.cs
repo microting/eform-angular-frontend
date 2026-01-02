@@ -301,9 +301,9 @@ public class Startup(IConfiguration configuration)
         });
         try
         {
-            Console.WriteLine("Startup.ConfigureServices: GoogleTranslate");
+            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate");
             var apiKey = Environment.GetEnvironmentVariable("API_KEY");
-            Console.WriteLine("Startup.ConfigureServices: GoogleTranslate: " + apiKey);
+            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate: " + apiKey);
             services.Configure(new Action<GoogleTranslateOptions>(options =>
             {
                 options.ApiKey = apiKey;
@@ -311,7 +311,7 @@ public class Startup(IConfiguration configuration)
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Startup.ConfigureServices: GoogleTranslate failed with:" + ex.Message);
+            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate failed with:" + ex.Message);
             Log.LogException(ex.Message);
         }
         ConnectServices(services);

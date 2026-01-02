@@ -257,17 +257,18 @@ public static class PluginHelper
         // create plugin loaders
         Console.ForegroundColor = ConsoleColor.Green;
         var pluginsDir = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
-        Console.WriteLine($@"[INF] Trying to discover plugins in folder : {pluginsDir}");
+        Console.WriteLine($@"info: Trying to discover plugins in folder : {pluginsDir}");
         if (!Directory.Exists(pluginsDir))
         {
             try
             {
                 Directory.CreateDirectory(pluginsDir);
             }
-            catch
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(@"[ERR] Unable to create directory for plugins");
+                Console.WriteLine($"fail: {ex.Message}");
+                Console.WriteLine($"      {ex.StackTrace}");
                 throw new Exception("Unable to create directory for plugins");
             }
         }
@@ -339,7 +340,7 @@ public static class PluginHelper
                              .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($@"[INF] Found plugin : {type.Name}");
+                    Console.WriteLine($@"info: Found plugin : {type.Name}");
                     var plugin = (IEformPlugin) Activator.CreateInstance(type);
                     plugins.Add(plugin);
                 }
@@ -347,7 +348,7 @@ public static class PluginHelper
         }
 
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($@"[INF] {plugins.Count} plugins found");
+        Console.WriteLine($@"info: {plugins.Count} plugins found");
 
         Console.ForegroundColor = ConsoleColor.Gray;
         return plugins;
