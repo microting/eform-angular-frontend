@@ -10,6 +10,7 @@ export class Navbar {
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
+      second: '2-digit',
       hour12: false
     }).replace(/[ ]/g, '--').replace(':', '-');
 
@@ -18,7 +19,7 @@ export class Navbar {
       `chrome-${timestamp}`.replace(/[/]/g, '__')
     ).replace(/%../, '.');
 
-    const filePath = path.resolve('./', `${filename}.png`);
+    const filePath = path.resolve('./errorShots/', `${filename}.png`);
 
     console.log('Saving screenshot to:', filePath);
     await browser.saveScreenshot(filePath);
