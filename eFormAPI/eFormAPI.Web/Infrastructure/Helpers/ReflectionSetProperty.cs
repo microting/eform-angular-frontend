@@ -63,9 +63,10 @@ public static class ReflectionSetProperty
                 }
             }
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
+            Console.WriteLine($"fail: {ex.Message}");
+            Console.WriteLine($"      {ex.StackTrace}");
             throw;
         }
 

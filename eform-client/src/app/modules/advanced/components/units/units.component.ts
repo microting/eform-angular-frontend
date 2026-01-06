@@ -11,9 +11,6 @@ import {Overlay} from '@angular/cdk/overlay';
 import { TranslateService } from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsSitesCreate} from 'src/app/state/auth/auth.selector';
-import {PasswordValidationIcon} from "src/app/common/const";
-import {MatIconRegistry} from "@angular/material/icon";
-import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-units',
@@ -26,8 +23,6 @@ export class UnitsComponent implements OnInit {
   dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private translateService = inject(TranslateService);
-  private iconRegistry = inject(MatIconRegistry);
-  private sanitizer = inject(DomSanitizer);
 
   @ViewChild('modalUnitsMove', {static: true}) modalUnitsMove;
   unitModels: Array<UnitDto> = [];
@@ -49,7 +44,6 @@ export class UnitsComponent implements OnInit {
   unitsOtpCodeComponentAfterClosedSub$: Subscription;
 
   ngOnInit() {
-    this.iconRegistry.addSvgIconLiteral('password-validation', this.sanitizer.bypassSecurityTrustHtml(PasswordValidationIcon));
     this.loadAllUnits();
     // this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
     //   if(x.sitesDelete || x.sitesUpdate) {
