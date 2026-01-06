@@ -483,11 +483,18 @@ public class Startup(IConfiguration configuration)
         foreach (var user in users)
         {
             var fullName = (user.FirstName + user.LastName).Trim().ToLower().Replace(" ", "");
-            var worker = sdkDbContext.Workers.FirstOrDefault(x =>
-                (x.FirstName + x.LastName).Trim().ToLower().Replace(" ", "") == fullName && x.WorkflowState != "removed");
-            if (worker == null) continue;
-            worker.Email = user.Email;
-            worker.Update(sdkDbContext).GetAwaiter().GetResult();
+            try
+            {
+                var worker = sdkDbContext.Workers.FirstOrDefault(x =>
+                    (x.FirstName + x.LastName).Trim().ToLower().Replace(" ", "") == fullName &&
+                    x.WorkflowState != "removed");
+                if (worker == null) continue;
+                worker.Email = user.Email;
+                worker.Update(sdkDbContext).GetAwaiter().GetResult();
+            } catch (Exception ex)
+            {
+                Log.LogException($"Error updating worker for user {user.Id}: {ex.Message}");
+            }
         }
     }
 }
