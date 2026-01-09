@@ -426,4 +426,8 @@ export const etET = {
   'This page lists all open source software used in this project': 'This page lists all open source software used in this project',
   'License Text': 'License Text',
   'Loading license text': 'Loading license text',
+  'Failed to load license text': 'Failed to load license text. Please visit the repository.',
+  Package: 'Package',
+  License: 'License',
+  Repository: 'Repository',
 };

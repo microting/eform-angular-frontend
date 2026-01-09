@@ -36,7 +36,7 @@
               <p>{{ 'Loading license text' | translate }}...</p>
             </div>
             <div *ngIf="license.error" class="error-message">
-              <p>{{ license.error }}</p>
+              <p>{{ license.error | translate }}</p>
             </div>
             <pre *ngIf="license.licenseText && !license.loading">{{ license.licenseText }}</pre>
           </div>

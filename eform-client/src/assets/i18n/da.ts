@@ -460,4 +460,8 @@ export const da = {
   'This page lists all open source software used in this project': 'Denne side viser al open source software brugt i dette projekt',
   'License Text': 'Licens tekst',
   'Loading license text': 'Indlæser licens tekst',
+  'Failed to load license text': 'Kunne ikke indlæse licens tekst. Besøg venligst repository.',
+  Package: 'Pakke',
+  License: 'Licens',
+  Repository: 'Repository',
 };

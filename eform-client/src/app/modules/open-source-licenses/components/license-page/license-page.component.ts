@@ -81,7 +81,7 @@ export class LicensePageComponent implements OnInit {
           license.loading = false;
         },
         error: (err) => {
-          license.error = 'Failed to load license text. Please visit the repository.';
+          license.error = 'Failed to load license text';
           license.loading = false;
         }
       });
