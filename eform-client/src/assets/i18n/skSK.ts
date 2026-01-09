@@ -424,10 +424,6 @@ export const skSK = {
   'Open source licenses': 'Open source licenses',
   'OpenSourceLicenses': 'Open source licenses',
   'This page lists all open source software used in this project': 'This page lists all open source software used in this project',
-  'Package': 'Package',
-  'Version': 'Version',
-  'License': 'License',
-  'Repository': 'Repository',
   'License Text': 'License Text',
   'Loading license text': 'Loading license text',
 };
