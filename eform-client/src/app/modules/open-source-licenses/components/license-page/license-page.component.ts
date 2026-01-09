@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -29,6 +29,8 @@ interface LicenseInfo {
   ]
 })
 export class LicensePageComponent implements OnInit {
+  private http = inject(HttpClient);
+
   licenses: LicenseInfo[] = [
     // Angular packages - MIT License
     { name: '@angular/animations', version: '20.1.2', license: 'MIT', repository: 'https://github.com/angular/angular', licenseUrl: 'https://raw.githubusercontent.com/angular/angular/main/LICENSE' },
@@ -39,12 +41,12 @@ export class LicensePageComponent implements OnInit {
     { name: '@angular/forms', version: '20.1.2', license: 'MIT', repository: 'https://github.com/angular/angular', licenseUrl: 'https://raw.githubusercontent.com/angular/angular/main/LICENSE' },
     { name: '@angular/material', version: '20.1.2', license: 'MIT', repository: 'https://github.com/angular/components', licenseUrl: 'https://raw.githubusercontent.com/angular/components/main/LICENSE' },
     { name: '@angular/router', version: '20.1.2', license: 'MIT', repository: 'https://github.com/angular/angular', licenseUrl: 'https://raw.githubusercontent.com/angular/angular/main/LICENSE' },
-    
+
     // NgRx - MIT License
     { name: '@ngrx/store', version: '19.2.1', license: 'MIT', repository: 'https://github.com/ngrx/platform', licenseUrl: 'https://raw.githubusercontent.com/ngrx/platform/main/LICENSE' },
     { name: '@ngrx/effects', version: '19.2.1', license: 'MIT', repository: 'https://github.com/ngrx/platform', licenseUrl: 'https://raw.githubusercontent.com/ngrx/platform/main/LICENSE' },
     { name: '@ngrx/entity', version: '19.2.1', license: 'MIT', repository: 'https://github.com/ngrx/platform', licenseUrl: 'https://raw.githubusercontent.com/ngrx/platform/main/LICENSE' },
-    
+
     // Other major dependencies
     { name: 'rxjs', version: '7.8.2', license: 'Apache-2.0', repository: 'https://github.com/ReactiveX/rxjs', licenseUrl: 'https://raw.githubusercontent.com/ReactiveX/rxjs/master/LICENSE.txt' },
     { name: 'd3', version: '7.9.0', license: 'ISC', repository: 'https://github.com/d3/d3', licenseUrl: 'https://raw.githubusercontent.com/d3/d3/main/LICENSE' },
@@ -56,7 +58,7 @@ export class LicensePageComponent implements OnInit {
     { name: 'file-saver', version: '2.0.5', license: 'MIT', repository: 'https://github.com/eligrey/FileSaver.js', licenseUrl: 'https://raw.githubusercontent.com/eligrey/FileSaver.js/master/LICENSE.md' },
     { name: 'pdf-lib', version: '1.16.0', license: 'MIT', repository: 'https://github.com/Hopding/pdf-lib', licenseUrl: 'https://raw.githubusercontent.com/Hopding/pdf-lib/master/LICENSE.md' },
     { name: 'ngx-toastr', version: '19.1.0', license: 'MIT', repository: 'https://github.com/scttcper/ngx-toastr', licenseUrl: 'https://raw.githubusercontent.com/scttcper/ngx-toastr/master/LICENSE' },
-    
+
     // .NET packages - various licenses
     { name: 'Microsoft.AspNetCore.Authentication.JwtBearer', version: '10.0.1', license: 'MIT', repository: 'https://github.com/dotnet/aspnetcore', licenseUrl: 'https://raw.githubusercontent.com/dotnet/aspnetcore/main/LICENSE.txt' },
     { name: 'Microsoft.EntityFrameworkCore', version: '10.0.1', license: 'MIT', repository: 'https://github.com/dotnet/efcore', licenseUrl: 'https://raw.githubusercontent.com/dotnet/efcore/main/LICENSE.txt' },
@@ -64,8 +66,6 @@ export class LicensePageComponent implements OnInit {
     { name: 'Sentry', version: '6.0.0', license: 'MIT', repository: 'https://github.com/getsentry/sentry-dotnet', licenseUrl: 'https://raw.githubusercontent.com/getsentry/sentry-dotnet/main/LICENSE' },
     { name: 'sendgrid', version: '9.29.3', license: 'MIT', repository: 'https://github.com/sendgrid/sendgrid-csharp', licenseUrl: 'https://raw.githubusercontent.com/sendgrid/sendgrid-csharp/main/LICENSE' },
   ];
-
-  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     // Sort licenses by name
