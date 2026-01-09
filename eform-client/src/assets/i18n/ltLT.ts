@@ -421,4 +421,13 @@ export const ltLT = {
   'Edit user': 'Redaguoti naudotoją',
   'Create user': 'Sukurti vartotoją',
   'Done button enabled': 'Mygtukas Atlikta įjungtas',
+  'Open source licenses': 'Open source licenses',
+  'OpenSourceLicenses': 'Open source licenses',
+  'This page lists all open source software used in this project': 'This page lists all open source software used in this project',
+  'Package': 'Package',
+  'Version': 'Version',
+  'License': 'License',
+  'Repository': 'Repository',
+  'License Text': 'License Text',
+  'Loading license text': 'Loading license text',
 };

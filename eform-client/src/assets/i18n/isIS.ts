@@ -421,4 +421,13 @@ export const isIS = {
   'Edit user': 'Breyta notanda',
   'Create user': 'Búa til notanda',
   'Done button enabled': 'Lokið hnappur virkur',
+  'Open source licenses': 'Open source licenses',
+  'OpenSourceLicenses': 'Open source licenses',
+  'This page lists all open source software used in this project': 'This page lists all open source software used in this project',
+  'Package': 'Package',
+  'Version': 'Version',
+  'License': 'License',
+  'Repository': 'Repository',
+  'License Text': 'License Text',
+  'Loading license text': 'Loading license text',
 };

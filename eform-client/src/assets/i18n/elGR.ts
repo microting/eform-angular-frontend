@@ -421,4 +421,13 @@ export const elGR = {
   'Edit user': 'Επεξεργασία χρήστη',
   'Create user': 'Δημιουργία χρήστη',
   'Done button enabled': 'Ενεργοποιήθηκε το κουμπί Τέλος',
+  'Open source licenses': 'Open source licenses',
+  'OpenSourceLicenses': 'Open source licenses',
+  'This page lists all open source software used in this project': 'This page lists all open source software used in this project',
+  'Package': 'Package',
+  'Version': 'Version',
+  'License': 'License',
+  'Repository': 'Repository',
+  'License Text': 'License Text',
+  'Loading license text': 'Loading license text',
 };

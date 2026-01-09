@@ -421,4 +421,13 @@ export const nlNL = {
   'Edit user': 'Bewerk gebruiker',
   'Create user': 'Gebruiker aanmaken',
   'Done button enabled': 'Knop Gereed ingeschakeld',
+  'Open source licenses': 'Open source licenses',
+  'OpenSourceLicenses': 'Open source licenses',
+  'This page lists all open source software used in this project': 'This page lists all open source software used in this project',
+  'Package': 'Package',
+  'Version': 'Version',
+  'License': 'License',
+  'Repository': 'Repository',
+  'License Text': 'License Text',
+  'Loading license text': 'Loading license text',
 };

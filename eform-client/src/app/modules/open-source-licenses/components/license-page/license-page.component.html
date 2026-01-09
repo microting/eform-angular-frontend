@@ -1,0 +1,47 @@
+<div class="license-page-container">
+  <div class="page-header">
+    <h1>{{ 'Open source licenses' | translate }}</h1>
+    <p>{{ 'This page lists all open source software used in this project' | translate }}</p>
+  </div>
+
+  <div class="licenses-list">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let license of licenses" (opened)="onPanelOpened(license)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ license.name }}
+          </mat-panel-title>
+          <mat-panel-description>
+            v{{ license.version }} - {{ license.license }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="license-content">
+          <div class="license-info">
+            <p><strong>{{ 'Package' | translate }}:</strong> {{ license.name }}</p>
+            <p><strong>{{ 'Version' | translate }}:</strong> {{ license.version }}</p>
+            <p><strong>{{ 'License' | translate }}:</strong> {{ license.license }}</p>
+            <p>
+              <strong>{{ 'Repository' | translate }}:</strong> 
+              <a [href]="license.repository" target="_blank" rel="noopener noreferrer">
+                {{ license.repository }}
+              </a>
+            </p>
+          </div>
+
+          <div class="license-text">
+            <h3>{{ 'License Text' | translate }}</h3>
+            <div *ngIf="license.loading" class="loading-spinner">
+              <mat-spinner diameter="40"></mat-spinner>
+              <p>{{ 'Loading license text' | translate }}...</p>
+            </div>
+            <div *ngIf="license.error" class="error-message">
+              <p>{{ license.error }}</p>
+            </div>
+            <pre *ngIf="license.licenseText && !license.loading">{{ license.licenseText }}</pre>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
