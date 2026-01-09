@@ -2,8 +2,15 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 interface LicenseInfo {
   name: string;
@@ -14,6 +21,16 @@ interface LicenseInfo {
   licenseText?: string;
   loading?: boolean;
   error?: string;
+  isDirect?: boolean;
+  isNuGet?: boolean;
+}
+
+interface LicenseData {
+  generated: string;
+  totalPackages: number;
+  directPackages: number;
+  nugetPackages?: number;
+  packages: LicenseInfo[];
 }
 
 @Component({
@@ -25,51 +42,88 @@ interface LicenseInfo {
     CommonModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
-    TranslateModule
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatChipsModule,
+    TranslateModule,
+    FormsModule
   ]
 })
 export class LicensePageComponent implements OnInit {
   private http = inject(HttpClient);
 
-  licenses: LicenseInfo[] = [
-    // Angular packages - MIT License
-    { name: '@angular/animations', version: '20.1.2', license: 'MIT', repository: 'https://github.com/angular/angular', licenseUrl: 'https://raw.githubusercontent.com/angular/angular/main/LICENSE' },
-    { name: '@angular/cdk', version: '20.1.2', license: 'MIT', repository: 'https://github.com/angular/components', licenseUrl: 'https://raw.githubusercontent.com/angular/components/main/LICENSE' },
-    { name: '@angular/common', version: '20.3.14', license: 'MIT', repository: 'https://github.com/angular/angular', licenseUrl: 'https://raw.githubusercontent.com/angular/angular/main/LICENSE' },
-    { name: '@angular/compiler', version: '20.1.2', license: 'MIT', repository: 'https://github.com/angular/angular', licenseUrl: 'https://raw.githubusercontent.com/angular/angular/main/LICENSE' },
-    { name: '@angular/core', version: '20.1.2', license: 'MIT', repository: 'https://github.com/angular/angular', licenseUrl: 'https://raw.githubusercontent.com/angular/angular/main/LICENSE' },
-    { name: '@angular/forms', version: '20.1.2', license: 'MIT', repository: 'https://github.com/angular/angular', licenseUrl: 'https://raw.githubusercontent.com/angular/angular/main/LICENSE' },
-    { name: '@angular/material', version: '20.1.2', license: 'MIT', repository: 'https://github.com/angular/components', licenseUrl: 'https://raw.githubusercontent.com/angular/components/main/LICENSE' },
-    { name: '@angular/router', version: '20.1.2', license: 'MIT', repository: 'https://github.com/angular/angular', licenseUrl: 'https://raw.githubusercontent.com/angular/angular/main/LICENSE' },
-
-    // NgRx - MIT License
-    { name: '@ngrx/store', version: '19.2.1', license: 'MIT', repository: 'https://github.com/ngrx/platform', licenseUrl: 'https://raw.githubusercontent.com/ngrx/platform/main/LICENSE' },
-    { name: '@ngrx/effects', version: '19.2.1', license: 'MIT', repository: 'https://github.com/ngrx/platform', licenseUrl: 'https://raw.githubusercontent.com/ngrx/platform/main/LICENSE' },
-    { name: '@ngrx/entity', version: '19.2.1', license: 'MIT', repository: 'https://github.com/ngrx/platform', licenseUrl: 'https://raw.githubusercontent.com/ngrx/platform/main/LICENSE' },
-
-    // Other major dependencies
-    { name: 'rxjs', version: '7.8.2', license: 'Apache-2.0', repository: 'https://github.com/ReactiveX/rxjs', licenseUrl: 'https://raw.githubusercontent.com/ReactiveX/rxjs/master/LICENSE.txt' },
-    { name: 'd3', version: '7.9.0', license: 'ISC', repository: 'https://github.com/d3/d3', licenseUrl: 'https://raw.githubusercontent.com/d3/d3/main/LICENSE' },
-    { name: 'moment', version: '2.30.1', license: 'MIT', repository: 'https://github.com/moment/moment', licenseUrl: 'https://raw.githubusercontent.com/moment/moment/develop/LICENSE' },
-    { name: 'luxon', version: '3.7.2', license: 'MIT', repository: 'https://github.com/moment/luxon', licenseUrl: 'https://raw.githubusercontent.com/moment/luxon/master/license.md' },
-    { name: 'date-fns', version: '4.1.0', license: 'MIT', repository: 'https://github.com/date-fns/date-fns', licenseUrl: 'https://raw.githubusercontent.com/date-fns/date-fns/main/LICENSE.md' },
-    { name: 'ramda', version: '0.32.0', license: 'MIT', repository: 'https://github.com/ramda/ramda', licenseUrl: 'https://raw.githubusercontent.com/ramda/ramda/master/LICENSE.txt' },
-    { name: 'uuid', version: '13.0.0', license: 'MIT', repository: 'https://github.com/uuidjs/uuid', licenseUrl: 'https://raw.githubusercontent.com/uuidjs/uuid/main/LICENSE.md' },
-    { name: 'file-saver', version: '2.0.5', license: 'MIT', repository: 'https://github.com/eligrey/FileSaver.js', licenseUrl: 'https://raw.githubusercontent.com/eligrey/FileSaver.js/master/LICENSE.md' },
-    { name: 'pdf-lib', version: '1.16.0', license: 'MIT', repository: 'https://github.com/Hopding/pdf-lib', licenseUrl: 'https://raw.githubusercontent.com/Hopding/pdf-lib/master/LICENSE.md' },
-    { name: 'ngx-toastr', version: '19.1.0', license: 'MIT', repository: 'https://github.com/scttcper/ngx-toastr', licenseUrl: 'https://raw.githubusercontent.com/scttcper/ngx-toastr/master/LICENSE' },
-
-    // .NET packages - various licenses
-    { name: 'Microsoft.AspNetCore.Authentication.JwtBearer', version: '10.0.1', license: 'MIT', repository: 'https://github.com/dotnet/aspnetcore', licenseUrl: 'https://raw.githubusercontent.com/dotnet/aspnetcore/main/LICENSE.txt' },
-    { name: 'Microsoft.EntityFrameworkCore', version: '10.0.1', license: 'MIT', repository: 'https://github.com/dotnet/efcore', licenseUrl: 'https://raw.githubusercontent.com/dotnet/efcore/main/LICENSE.txt' },
-    { name: 'Swashbuckle.AspNetCore', version: '10.1.0', license: 'MIT', repository: 'https://github.com/domaindrivendev/Swashbuckle.AspNetCore', licenseUrl: 'https://raw.githubusercontent.com/domaindrivendev/Swashbuckle.AspNetCore/master/LICENSE' },
-    { name: 'Sentry', version: '6.0.0', license: 'MIT', repository: 'https://github.com/getsentry/sentry-dotnet', licenseUrl: 'https://raw.githubusercontent.com/getsentry/sentry-dotnet/main/LICENSE' },
-    { name: 'sendgrid', version: '9.29.3', license: 'MIT', repository: 'https://github.com/sendgrid/sendgrid-csharp', licenseUrl: 'https://raw.githubusercontent.com/sendgrid/sendgrid-csharp/main/LICENSE' },
-  ];
+  allLicenses: LicenseInfo[] = [];
+  filteredLicenses: LicenseInfo[] = [];
+  totalPackages = 0;
+  directPackages = 0;
+  nestedPackages = 0;
+  npmPackages = 0;
+  nugetPackages = 0;
+  
+  showFilter: 'all' | 'direct' | 'nested' = 'direct';
+  searchQuery = '';
+  loading = true;
 
   ngOnInit(): void {
-    // Sort licenses by name
-    this.licenses.sort((a, b) => a.name.localeCompare(b.name));
+    this.loadLicenses();
+  }
+
+  loadLicenses(): void {
+    this.http.get<LicenseData>('/assets/licenses.json').subscribe({
+      next: (data) => {
+        this.allLicenses = data.packages;
+        this.totalPackages = data.totalPackages;
+        this.directPackages = data.directPackages;
+        this.nestedPackages = data.totalPackages - data.directPackages;
+        this.nugetPackages = data.nugetPackages || 0;
+        this.npmPackages = data.totalPackages - this.nugetPackages;
+        this.applyFilters();
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load licenses', err);
+        this.loading = false;
+      }
+    });
+  }
+
+  applyFilters(): void {
+    let filtered = this.allLicenses;
+
+    // Apply show filter
+    if (this.showFilter === 'direct') {
+      filtered = filtered.filter(l => l.isDirect);
+    } else if (this.showFilter === 'nested') {
+      filtered = filtered.filter(l => !l.isDirect);
+    }
+
+    // Apply search query
+    if (this.searchQuery.trim()) {
+      const query = this.searchQuery.toLowerCase();
+      filtered = filtered.filter(l => 
+        l.name.toLowerCase().includes(query) ||
+        l.license.toLowerCase().includes(query)
+      );
+    }
+
+    this.filteredLicenses = filtered.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  onFilterChange(filter: 'all' | 'direct' | 'nested'): void {
+    this.showFilter = filter;
+    this.applyFilters();
+  }
+
+  onSearchChange(): void {
+    this.applyFilters();
+  }
+
+  clearSearch(): void {
+    this.searchQuery = '';
+    this.applyFilters();
   }
 
   onPanelOpened(license: LicenseInfo): void {
@@ -86,5 +140,13 @@ export class LicensePageComponent implements OnInit {
         }
       });
     }
+  }
+
+  getPackageTypeLabel(license: LicenseInfo): string {
+    return license.isNuGet ? 'NuGet' : 'npm';
+  }
+
+  getDependencyTypeLabel(license: LicenseInfo): string {
+    return license.isDirect ? 'Direct' : 'Transitive';
   }
 }
