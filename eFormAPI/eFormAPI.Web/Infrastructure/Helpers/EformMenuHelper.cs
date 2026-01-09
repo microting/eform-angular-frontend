@@ -84,6 +84,15 @@ public static class EformMenuHelper
                 Link = "/auth/sign-out",
                 Position = 4,
                 ParentId = 10
+            },
+            new RightMenuItemModel
+            {
+                Name = "Open source licenses",
+                LocaleName = "OpenSourceLicenses",
+                E2EId = "open-source-licenses",
+                Link = "/open-source-licenses",
+                Position = 5,
+                ParentId = 10
             }
         };
     }

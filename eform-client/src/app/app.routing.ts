@@ -86,6 +86,13 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./plugins/plugins.module').then((m) => m.PluginsModule),
       },
+      {
+        path: 'open-source-licenses',
+        loadChildren: () =>
+          import('./modules/open-source-licenses/open-source-licenses.module').then(
+            (m) => m.OpenSourceLicensesModule
+          ),
+      },
     ],
   },
   {

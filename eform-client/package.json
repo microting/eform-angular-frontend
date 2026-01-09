@@ -54,7 +54,8 @@
     "e2e": "ng e2e",
     "run-cypress": "npx cypress run --browser chrome",
     "open-cypress": "npx cypress open",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org microting-as --project angular-frontend ./dist && sentry-cli sourcemaps upload --org microting-as --project angular-frontend ./dist"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org microting-as --project angular-frontend ./dist && sentry-cli sourcemaps upload --org microting-as --project angular-frontend ./dist",
+    "generate-licenses": "node generate-licenses.js && cd ../eFormAPI && dotnet list package --include-transitive --format json > /tmp/dotnet-packages.json && cd ../eform-client && node add-dotnet-licenses.js"
   },
   "prettier": {
     "singleQuote": true
