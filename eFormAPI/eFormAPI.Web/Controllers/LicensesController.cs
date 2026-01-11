@@ -67,17 +67,19 @@ public class LicensesController(IHttpClientFactory httpClientFactory) : Controll
         // Check if domain is in the allowed list
         var isAllowedDomain = AllowedDomains.Any(domain =>
             uri.Host.Equals(domain, StringComparison.OrdinalIgnoreCase) ||
-            uri.Host.EndsWith("." + domain, StringComparison.OrdinalIgnoreCase));
+            (uri.Host.EndsWith("." + domain, StringComparison.OrdinalIgnoreCase) &&
+             uri.Host.Length > domain.Length + 1));
 
         if (!isAllowedDomain)
         {
-            return BadRequest($"Domain '{uri.Host}' is not in the allowed list");
+            return BadRequest("The requested URL is not from an allowed domain");
         }
 
         try
         {
-            // Fetch the license text
+            // Fetch the license text with timeout
             var httpClient = httpClientFactory.CreateClient();
+            httpClient.Timeout = TimeSpan.FromSeconds(30);
             var response = await httpClient.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
