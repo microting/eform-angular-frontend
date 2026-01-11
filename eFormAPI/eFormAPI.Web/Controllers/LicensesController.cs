@@ -35,7 +35,7 @@ using Microsoft.AspNetCore.Mvc;
 public class LicensesController : Controller
 {
     private static readonly HttpClient HttpClient = new HttpClient();
-    private static readonly string[] AllowedDomains = 
+    private static readonly string[] AllowedDomains =
     {
         "raw.githubusercontent.com",
         "github.com",
@@ -85,7 +85,7 @@ public class LicensesController : Controller
         {
             // Fetch the license text
             var response = await HttpClient.GetAsync(url);
-            
+
             if (!response.IsSuccessStatusCode)
             {
                 return StatusCode((int)response.StatusCode, "Failed to fetch license");
