@@ -1,9 +1,28 @@
+<eform-new-subheader [title]="'Open source licenses' | translate">
+  <div class="d-flex flex-row justify-content-center align-items-center gap-12">
+    <div class="text-field--rounded">
+      <mat-form-field>
+        <mat-label>{{ 'Search packages' | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchChange()"
+          [placeholder]="'Search by name or license' | translate"
+        />
+        <button mat-icon-button matSuffix *ngIf="searchQuery" (click)="clearSearch()">
+          <mat-icon>clear</mat-icon>
+        </button>
+        <mat-icon matSuffix *ngIf="!searchQuery">search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+</eform-new-subheader>
+
 <div class="license-page-container">
-  <div class="page-header">
-    <h1>{{ 'Open source licenses' | translate }}</h1>
+  <div class="stats-header" *ngIf="!loading">
     <p>{{ 'This page lists all open source software used in this project' | translate }}</p>
-    
-    <div class="stats" *ngIf="!loading">
+    <div class="stats">
       <mat-chip-set>
         <mat-chip>{{ 'Total' | translate }}: {{ totalPackages }}</mat-chip>
         <mat-chip>npm: {{ npmPackages }}</mat-chip>
@@ -26,15 +45,6 @@
         {{ 'All dependencies' | translate }} ({{ totalPackages }})
       </mat-button-toggle>
     </mat-button-toggle-group>
-
-    <mat-form-field class="search-field">
-      <mat-label>{{ 'Search packages' | translate }}</mat-label>
-      <input matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" [placeholder]="'Search by name or license' | translate">
-      <button mat-icon-button matSuffix *ngIf="searchQuery" (click)="clearSearch()">
-        <mat-icon>clear</mat-icon>
-      </button>
-      <mat-icon matSuffix *ngIf="!searchQuery">search</mat-icon>
-    </mat-form-field>
   </div>
 
   <div class="loading-container" *ngIf="loading">
