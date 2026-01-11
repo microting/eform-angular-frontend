@@ -11,6 +11,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { LicensesService } from 'src/app/common/services/licenses.service';
+import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 
 interface LicenseInfo {
   name: string;
@@ -49,11 +51,13 @@ interface LicenseData {
     MatIconModule,
     MatChipsModule,
     TranslateModule,
-    FormsModule
+    FormsModule,
+    EformSharedModule
   ]
 })
 export class LicensePageComponent implements OnInit {
   private http = inject(HttpClient);
+  private licensesService = inject(LicensesService);
 
   allLicenses: LicenseInfo[] = [];
   filteredLicenses: LicenseInfo[] = [];
@@ -129,7 +133,7 @@ export class LicensePageComponent implements OnInit {
   onPanelOpened(license: LicenseInfo): void {
     if (!license.licenseText && !license.loading && !license.error && license.licenseUrl) {
       license.loading = true;
-      this.http.get(license.licenseUrl, { responseType: 'text' }).subscribe({
+      this.licensesService.fetchLicenseText(license.licenseUrl).subscribe({
         next: (text) => {
           license.licenseText = text;
           license.loading = false;

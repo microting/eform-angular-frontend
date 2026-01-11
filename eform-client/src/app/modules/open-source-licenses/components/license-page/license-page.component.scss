@@ -4,14 +4,8 @@
   margin: 0 auto;
 }
 
-.page-header {
+.stats-header {
   margin-bottom: 32px;
-
-  h1 {
-    font-size: 32px;
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
 
   p {
     color: rgba(0, 0, 0, 0.6);
@@ -39,11 +33,6 @@
 
   mat-button-toggle-group {
     flex-shrink: 0;
-  }
-
-  .search-field {
-    flex: 1;
-    min-width: 250px;
   }
 }
 
@@ -170,7 +159,7 @@
 
 // Dark theme support
 :host-context(.dark-theme) {
-  .page-header p {
+  .stats-header p {
     color: rgba(255, 255, 255, 0.7);
   }
 
