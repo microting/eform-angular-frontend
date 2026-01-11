@@ -65,10 +65,11 @@ public class LicensesController(IHttpClientFactory httpClientFactory) : Controll
         }
 
         // Check if domain is in the allowed list
+        // Must be exact match or a proper subdomain (e.g., foo.github.com)
+        // Note: EndsWith with "." prefix ensures only real subdomains match, not "evil-github.com"
         var isAllowedDomain = AllowedDomains.Any(domain =>
             uri.Host.Equals(domain, StringComparison.OrdinalIgnoreCase) ||
-            (uri.Host.EndsWith("." + domain, StringComparison.OrdinalIgnoreCase) &&
-             uri.Host.Length > domain.Length + 1));
+            uri.Host.EndsWith("." + domain, StringComparison.OrdinalIgnoreCase));
 
         if (!isAllowedDomain)
         {
