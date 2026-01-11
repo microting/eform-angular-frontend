@@ -25,6 +25,7 @@ SOFTWARE.
 namespace eFormAPI.Web.Controllers;
 
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -32,9 +33,8 @@ using Microsoft.AspNetCore.Mvc;
 
 [Authorize]
 [Route("api/licenses")]
-public class LicensesController : Controller
+public class LicensesController(IHttpClientFactory httpClientFactory) : Controller
 {
-    private static readonly HttpClient HttpClient = new HttpClient();
     private static readonly string[] AllowedDomains =
     {
         "raw.githubusercontent.com",
@@ -65,16 +65,9 @@ public class LicensesController : Controller
         }
 
         // Check if domain is in the allowed list
-        var isAllowedDomain = false;
-        foreach (var domain in AllowedDomains)
-        {
-            if (uri.Host.Equals(domain, StringComparison.OrdinalIgnoreCase) ||
-                uri.Host.EndsWith("." + domain, StringComparison.OrdinalIgnoreCase))
-            {
-                isAllowedDomain = true;
-                break;
-            }
-        }
+        var isAllowedDomain = AllowedDomains.Any(domain =>
+            uri.Host.Equals(domain, StringComparison.OrdinalIgnoreCase) ||
+            uri.Host.EndsWith("." + domain, StringComparison.OrdinalIgnoreCase));
 
         if (!isAllowedDomain)
         {
@@ -84,7 +77,8 @@ public class LicensesController : Controller
         try
         {
             // Fetch the license text
-            var response = await HttpClient.GetAsync(url);
+            var httpClient = httpClientFactory.CreateClient();
+            var response = await httpClient.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -94,13 +88,13 @@ public class LicensesController : Controller
             var content = await response.Content.ReadAsStringAsync();
             return Content(content, "text/plain");
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException)
         {
-            return StatusCode(500, $"Error fetching license: {ex.Message}");
+            return StatusCode(500, "Error fetching license from remote server");
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            return StatusCode(500, $"Unexpected error: {ex.Message}");
+            return StatusCode(500, "An unexpected error occurred");
         }
     }
 }
