@@ -81,15 +81,46 @@ public class LicensesController(IHttpClientFactory httpClientFactory) : Controll
             // Fetch the license text with timeout
             var httpClient = httpClientFactory.CreateClient();
             httpClient.Timeout = TimeSpan.FromSeconds(30);
-            var response = await httpClient.GetAsync(url);
-
-            if (!response.IsSuccessStatusCode)
+            
+            // Try multiple variations of license file names
+            var urlsToTry = new[] { url, url + ".txt", url + ".md" };
+            
+            foreach (var urlToTry in urlsToTry)
             {
-                return StatusCode((int)response.StatusCode, "Failed to fetch license");
+                // Re-validate each URL variation
+                if (!Uri.TryCreate(urlToTry, UriKind.Absolute, out var uriToTry))
+                {
+                    continue;
+                }
+                
+                // Ensure the modified URL is still in allowed domains
+                var isStillAllowed = AllowedDomains.Any(domain =>
+                    uriToTry.Host.Equals(domain, StringComparison.OrdinalIgnoreCase) ||
+                    uriToTry.Host.EndsWith("." + domain, StringComparison.OrdinalIgnoreCase));
+                
+                if (!isStillAllowed)
+                {
+                    continue;
+                }
+                
+                var response = await httpClient.GetAsync(urlToTry);
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    return Content(content, "text/plain");
+                }
+                
+                // If not found (404), try the next variation
+                if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+                {
+                    // For non-404 errors, return immediately
+                    return StatusCode((int)response.StatusCode, "Failed to fetch license");
+                }
             }
-
-            var content = await response.Content.ReadAsStringAsync();
-            return Content(content, "text/plain");
+            
+            // All variations failed
+            return StatusCode(404, "License file not found with any common extension (LICENSE, LICENSE.txt, LICENSE.md)");
         }
         catch (HttpRequestException)
         {
