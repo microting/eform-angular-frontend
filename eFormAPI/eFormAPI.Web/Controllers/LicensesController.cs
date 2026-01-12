@@ -81,46 +81,70 @@ public class LicensesController(IHttpClientFactory httpClientFactory) : Controll
             // Fetch the license text with timeout
             var httpClient = httpClientFactory.CreateClient();
             httpClient.Timeout = TimeSpan.FromSeconds(30);
-            
-            // Try multiple variations of license file names
-            var urlsToTry = new[] { url, url + ".txt", url + ".md" };
-            
-            foreach (var urlToTry in urlsToTry)
+
+            // Helper local function to try a set of URLs
+            async Task<IActionResult?> TryFetchAsync(string[] candidates)
             {
-                // Re-validate each URL variation
-                if (!Uri.TryCreate(urlToTry, UriKind.Absolute, out var uriToTry))
+                foreach (var urlToTry in candidates)
                 {
-                    continue;
+                    // Re\-validate each URL variation
+                    if (!Uri.TryCreate(urlToTry, UriKind.Absolute, out var uriToTry))
+                    {
+                        continue;
+                    }
+
+                    // Ensure the modified URL is still in allowed domains
+                    var isStillAllowed = AllowedDomains.Any(domain =>
+                        uriToTry.Host.Equals(domain, StringComparison.OrdinalIgnoreCase) ||
+                        uriToTry.Host.EndsWith("." + domain, StringComparison.OrdinalIgnoreCase));
+
+                    if (!isStillAllowed)
+                    {
+                        continue;
+                    }
+
+                    var response = await httpClient.GetAsync(urlToTry);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+                        return Content(content, "text/plain");
+                    }
+
+                    // If not found (404), try the next variation
+                    if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+                    {
+                        // For non\-404 errors, return immediately
+                        return StatusCode((int)response.StatusCode, "Failed to fetch license");
+                    }
                 }
-                
-                // Ensure the modified URL is still in allowed domains
-                var isStillAllowed = AllowedDomains.Any(domain =>
-                    uriToTry.Host.Equals(domain, StringComparison.OrdinalIgnoreCase) ||
-                    uriToTry.Host.EndsWith("." + domain, StringComparison.OrdinalIgnoreCase));
-                
-                if (!isStillAllowed)
-                {
-                    continue;
-                }
-                
-                var response = await httpClient.GetAsync(urlToTry);
-                
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    return Content(content, "text/plain");
-                }
-                
-                // If not found (404), try the next variation
-                if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
-                {
-                    // For non-404 errors, return immediately
-                    return StatusCode((int)response.StatusCode, "Failed to fetch license");
-                }
+
+                return null;
             }
-            
+
+            // First pass: original URLs
+            var urlsToTry = new[] { url, url + ".txt", url + ".md" };
+            var result = await TryFetchAsync(urlsToTry);
+            if (result is not null)
+            {
+                return result;
+            }
+
+            // Second pass: try replacing "main" with "master" for GitHub URLs
+            var urlsWithMaster = urlsToTry
+                .Select(u => u.Replace("/main/", "/master/", StringComparison.OrdinalIgnoreCase))
+                .Distinct()
+                .ToArray();
+
+            result = await TryFetchAsync(urlsWithMaster);
+            if (result is not null)
+            {
+                return result;
+            }
+
             // All variations failed
-            return StatusCode(404, "License file not found with any common extension (LICENSE, LICENSE.txt, LICENSE.md)");
+            return StatusCode(404,
+                "License file not found with any common extension (LICENSE, LICENSE.txt, LICENSE.md) or 'main' -> 'master' fallback");
         }
         catch (HttpRequestException)
         {
