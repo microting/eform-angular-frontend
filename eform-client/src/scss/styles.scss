@@ -178,14 +178,18 @@ a {
 }
 //.background-yellow{background-color: var(--yellow) !important;}
 .grey-background {
-  background-color: var(--tp-td-bg) !important;
-  border-right: 1px solid #EBEFF2 !important;
-  border-bottom: 1px solid #EBEFF2 !important;
+  //background-color: var(--tp-td-bg) !important;
+  border-radius: var(--rounded-2, 2px)!important;
+  background: var(--border, #EBEFF2)!important;
+  border-right: 1px solid var(--border, #EBEFF2) !important;
+  border-bottom: 1px solid var(--border, #EBEFF2) !important;
   padding: 5px !important;
 }
 
 .grey-background .plan-container {
-  background-color: #EBEFF2 !important;
+  //background-color: #EBEFF2 !important;
+  border-radius: var(--rounded-2, 2px)!important;
+  background: var(--border, #EBEFF2)!important;
   width: 100% !important;
   height: 100% !important;
   display: flex;
@@ -193,18 +197,24 @@ a {
   justify-content: stretch;
   min-height: 100px;
   min-width: 250px !important;
-  color: black !important;
+  color: var(--text-header, #0F1316)!important;
 }
 
 .white-background {
-  background-color: var(--tp-td-bg) !important;
-  border-right: 1px solid #EBEFF2 !important;
-  border-bottom: 1px solid #EBEFF2 !important;
+  //background-color: var(--tp-td-bg) !important;
+
+  border-radius: var(--rounded-2, 2px)!important;
+  //background: var(--border, #EBEFF2)!important;
+
+  border-right: 1px solid var(--border, #EBEFF2) !important;
+  border-bottom: 1px solid var(--border, #EBEFF2) !important;
   padding: 5px !important;
 }
 
 .white-background .plan-container {
-  background-color: var(--tp-td-bg) !important;
+  //background-color: var(--tp-td-bg) !important;
+  border-radius: var(--rounded-2, 2px)!important;
+  //background: var(--border, #EBEFF2)!important;
   width: 100% !important;
   height: 100% !important;
   display: flex;
@@ -212,18 +222,22 @@ a {
   justify-content: stretch;
   min-height: 100px;
   min-width: 250px !important;
-  color: black !important;
+  color: var(--text-header, #0F1316)!important;
 }
 
 .green-background {
-  background-color: var(--tp-td-bg) !important;
-  border-right: 1px solid #EBEFF2 !important;
-  border-bottom: 1px solid #EBEFF2 !important;
+  //background-color: var(--tp-td-bg) !important;
+  border-radius: var(--rounded-2, 2px)!important;
+  background: var(--success-light, #D4EDDA)!important;
+  border-right: 1px solid var(--border, #EBEFF2) !important;
+  border-bottom: 1px solid var(--border, #EBEFF2) !important;
   padding: 5px !important;
 }
 
 .green-background .plan-container {
-  background-color: #E2F7E7 !important;
+  //background-color: #E2F7E7 !important;
+  border-radius: var(--rounded-2, 2px)!important;
+  background: var(--success-light, #D4EDDA)!important;
   width: 100% !important;
   height: 100% !important;
   display: flex;
@@ -231,18 +245,22 @@ a {
   justify-content: stretch;
   min-height: 100px;
   min-width: 250px !important;
-  color: black !important;
+  color: var(--text-header, #0F1316)!important;
 }
 
 .red-background {
-  background-color: var(--tp-td-bg) !important;
-  border-bottom: 1px solid #EBEFF2 !important;
-  border-right: 1px solid #EBEFF2 !important;
+  //background-color: var(--tp-td-bg) !important;
+  border-radius: var(--rounded-2, 2px)!important;
+  background: var(--error-light, #F8D7DA)!important;
+  border-bottom: 1px solid var(--border, #EBEFF2) !important;
+  border-right: 1px solid var(--border, #EBEFF2) !important;
   padding: 5px !important;
 }
 
 .red-background .plan-container {
-  background-color: #FFE1E1 !important;
+  //background-color: #FFE1E1 !important;
+  border-radius: var(--rounded-2, 2px)!important;
+  background: var(--error-light, #F8D7DA)!important;
   width: 100% !important;
   height: 100% !important;
   display: flex;
@@ -403,6 +421,10 @@ ngx-material-timepicker-container {
 
 
 // New styling
+
+.gap-4{
+  gap: 4px;
+}
 
 .gap-12{
   gap: 12px;
