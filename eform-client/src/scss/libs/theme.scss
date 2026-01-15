@@ -11,8 +11,11 @@
 @use '../components/tag' as tag;
 @use '../utilities/colors' as *;
 @include mat.core();
+
 $letter-spacing: normal;
 $eform-font-family: Nunito Sans, Roboto, "Helvetica Neue", sans-serif;
+
+
 // Define a typography
 $eform-typography: mat.m2-define-typography-config(
   $font-family: $eform-font-family,
@@ -79,6 +82,8 @@ $eform-typography: mat.m2-define-typography-config(
     $line-height: 1.15,
     $letter-spacing: $letter-spacing,
   ));
+
+
 // Define a light theme
 //$eform-light-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
 $eform-light-primary: mat.m2-define-palette(mat.$m2-teal-palette);
@@ -90,6 +95,8 @@ $eform-light-theme: mat.m2-define-light-theme((
   ),
   typography: $eform-typography,
 ));
+
+
 // Define a dark theme
 //$eform-dark-primary: mat.m2-define-palette(mat.$m2-blue-grey-palette);
 $eform-dark-primary: mat.m2-define-palette(mat.$m2-teal-palette);
@@ -101,11 +108,42 @@ $eform-dark-theme: mat.m2-define-dark-theme((
   ),
   typography: $eform-typography,
 ));
+
+
+$eform-m3-light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$cyan-palette
+  ),
+  typography: (
+    brand-family: $eform-font-family,
+  ),
+  density: (
+    scale: 0,
+  ),
+));
+
+$eform-m3-dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$cyan-palette,
+  ),
+  typography: (
+    brand-family: $eform-font-family,
+  ),
+  density: (
+    scale: 0,
+  ),
+));
+
+
 body {
   @each $key, $val in (('light', $eform-light-theme), ('dark', $eform-dark-theme)) {
     &.theme-#{$key} {
-      @include mat.all-component-themes($val);
-      @include mtx.all-component-themes($val);
+      //@include mat.all-component-themes($val);
+      @include mat.all-component-themes(
+          if($key == 'light', $eform-m3-light-theme, $eform-m3-dark-theme)
+      );
       @include ngx-editor.theme($val);
       @include text.theme($val);
       @include ngx-gallery.theme($val);
@@ -154,12 +192,12 @@ body {
 //  width: 28px;// !important;
 //}
 //
-//.mat-calendar-previous-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-button-base {
-//  --mdc-icon-button-state-layer-size: 40px;
-//  width: var(--mdc-icon-button-state-layer-size);
-//  height: var(--mdc-icon-button-state-layer-size);
-//  padding: 8px !important;
-//}
+.mat-calendar-previous-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-button-base {
+  --mdc-icon-button-state-layer-size: 40px;
+  width: var(--mdc-icon-button-state-layer-size);
+  height: var(--mdc-icon-button-state-layer-size);
+  padding: 8px !important;
+}
 .microting-uid {
   color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 300);
 }
