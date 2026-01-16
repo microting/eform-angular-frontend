@@ -28,7 +28,7 @@ module.exports = {
     '^.+\\.(ts|js|html)$': [
       'jest-preset-angular',
       {
-        tsconfig: '<rootDir>/src/tsconfig.spec.json',
+        tsconfig: '<rootDir>/tsconfig.jest.json',
         stringifyContentPathRegex: '\\.html$'
       }
     ]

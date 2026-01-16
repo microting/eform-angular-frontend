@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "forceConsistentCasingInFileNames": false,
+    "strict": false,
+    "module": "ESNext",
+    "lib": ["ES2022", "dom"],
+    "outDir": "../out-tsc/spec",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "bundler",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "src/*": ["./src/*"]
+    },
+    "types": [
+      "jest",
+      "node",
+      "jasmine"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "files": [
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts"
+  ]
+}
