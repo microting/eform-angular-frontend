@@ -502,10 +502,10 @@
     tslib "^2.3.0"
     yargs "^18.0.0"
 
-"@angular/compiler@20.1.2":
-  version "20.1.2"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-20.1.2.tgz#db73cdda6eb274362c499ebf15513beee0efe782"
-  integrity sha512-BCYQArXAknOyMB5rgx9yK3p5uYFhgN91Jxo5Fbuso6M+7p1PoxOE4E9XrqQfhpVJOl9hcz7vNFnQ4Oer0R83UQ==
+"@angular/compiler@20.3.16":
+  version "20.3.16"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-20.3.16.tgz#9970a72d4c7dac5b5bf1b2e9292e55eb22046623"
+  integrity sha512-Pt9Ms9GwTThgzdxWBwMfN8cH1JEtQ2DK5dc2yxYtPSaD+WKmG9AVL1PrzIYQEbaKcWk2jxASUHpEWSlNiwo8uw==
   dependencies:
     tslib "^2.3.0"
 
