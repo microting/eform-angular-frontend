@@ -16,10 +16,10 @@ describe('UnitsOtpCodeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockUnitsService = {
-          requestOtp: jest.fn(),
+          requestOtp: vi.fn(),
         };
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
     mockDialogData = { id: 1, microtingUid: 12345, siteName: 'Test Site' } as UnitDto;
 

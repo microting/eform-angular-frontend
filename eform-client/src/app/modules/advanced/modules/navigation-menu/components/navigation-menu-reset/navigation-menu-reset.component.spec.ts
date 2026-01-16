@@ -11,7 +11,7 @@ describe('NavigationMenuResetComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
 
     TestBed.configureTestingModule({

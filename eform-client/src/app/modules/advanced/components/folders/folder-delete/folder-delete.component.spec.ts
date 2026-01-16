@@ -16,10 +16,10 @@ describe('FolderDeleteComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockFoldersService = {
-          deleteSingleFolder: jest.fn(),
+          deleteSingleFolder: vi.fn(),
         };
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
     mockDialogData = { id: 1, name: 'Test Folder' } as FolderDto;
 

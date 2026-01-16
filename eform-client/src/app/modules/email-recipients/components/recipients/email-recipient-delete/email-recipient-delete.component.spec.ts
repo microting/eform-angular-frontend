@@ -14,17 +14,17 @@ describe('EmailRecipientDeleteComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const mockEmailRecipientsService = {
-          delete: jest.fn(),
+          delete: vi.fn(),
         };
     const mockToastrService = {
-          success: jest.fn(),
-          error: jest.fn(),
+          success: vi.fn(),
+          error: vi.fn(),
         };
     const mockTranslateService = {
-          instant: jest.fn(),
+          instant: vi.fn(),
         };
     const mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
     
     TestBed.configureTestingModule({

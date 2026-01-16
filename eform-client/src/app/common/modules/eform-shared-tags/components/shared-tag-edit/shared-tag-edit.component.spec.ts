@@ -11,7 +11,7 @@ describe('EmailRecipientTagEditComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const mockDialogRef = {
-      close: jest.fn(),
+      close: vi.fn(),
     };
 
     TestBed.configureTestingModule({

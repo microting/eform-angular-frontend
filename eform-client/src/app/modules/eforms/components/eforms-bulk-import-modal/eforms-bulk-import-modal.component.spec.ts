@@ -16,25 +16,25 @@ describe('EformsBulkImportModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const mockToastrService = {
-      success: jest.fn(),
-      error: jest.fn(),
-      warning: jest.fn(),
+      success: vi.fn(),
+      error: vi.fn(),
+      warning: vi.fn(),
     };
     const mockTranslateService = {
-      instant: jest.fn((key: string) => key),
-      stream: jest.fn((key: string) => of(key)),
+      instant: vi.fn((key: string) => key),
+      stream: vi.fn((key: string) => of(key)),
     };
     const mockLoaderService = {
-      setLoading: jest.fn(),
+      setLoading: vi.fn(),
     };
     const mockAuthStateService = {
-      connectionStringExists: jest.fn(),
+      connectionStringExists: vi.fn(),
     };
     const mockDialogRef = {
-      close: jest.fn(),
+      close: vi.fn(),
     };
     const mockStore = {
-      select: jest.fn(() => of('mock-token')),
+      select: vi.fn(() => of('mock-token')),
     };
 
     TestBed.configureTestingModule({

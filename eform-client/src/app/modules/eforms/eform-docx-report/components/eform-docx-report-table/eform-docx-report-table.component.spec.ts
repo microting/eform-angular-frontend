@@ -11,11 +11,11 @@ describe('EformDocxReportTableComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const mockRouter = {
-      navigate: jest.fn(),
+      navigate: vi.fn(),
     };
     const mockTranslateService = {
-      stream: jest.fn((key: string) => key),
-      instant: jest.fn((key: string) => key),
+      stream: vi.fn((key: string) => key),
+      instant: vi.fn((key: string) => key),
     };
 
     TestBed.configureTestingModule({

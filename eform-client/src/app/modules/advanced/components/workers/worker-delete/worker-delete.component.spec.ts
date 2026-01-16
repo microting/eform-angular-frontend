@@ -16,10 +16,10 @@ describe('WorkerDeleteComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockWorkersService = {
-          deleteSingleWorker: jest.fn(),
+          deleteSingleWorker: vi.fn(),
         };
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
     mockDialogData = { workerUId: 123, firstName: 'John', lastName: 'Doe' } as WorkerDto;
 

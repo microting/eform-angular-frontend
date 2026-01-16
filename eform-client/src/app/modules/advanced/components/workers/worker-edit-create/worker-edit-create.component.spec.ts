@@ -17,15 +17,15 @@ describe('WorkerEditCreateComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockWorkersService = {
-          createWorker: jest.fn(),
-          updateSingleWorker: jest.fn(),
+          createWorker: vi.fn(),
+          updateSingleWorker: vi.fn(),
         };
     mockDeviceUserService = {
-          getCommonDictionarySites: jest.fn(),
-          getSingleSimpleSite: jest.fn(),
+          getCommonDictionarySites: vi.fn(),
+          getSingleSimpleSite: vi.fn(),
         };
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
     mockDialogData = new WorkerDto();
 

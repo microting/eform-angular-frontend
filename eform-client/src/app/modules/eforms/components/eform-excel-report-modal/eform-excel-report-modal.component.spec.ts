@@ -12,7 +12,7 @@ describe('EformExcelReportModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const mockEFormService = {
-      downloadEformExcel: jest.fn().mockReturnValue(of(new Blob())),
+      downloadEformExcel: vi.fn().mockReturnValue(of(new Blob())),
     };
 
     TestBed.configureTestingModule({

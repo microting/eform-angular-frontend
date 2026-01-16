@@ -10,7 +10,7 @@ describe('EformDocxReportHeaderEditorComponent', () => {
 
   beforeEach(async () => {
     const mockDialogRef = {
-      close: jest.fn(),
+      close: vi.fn(),
     };
     
     await TestBed.configureTestingModule({

@@ -17,15 +17,15 @@ describe('FoldersComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockFoldersService = {
-          getAllFolders: jest.fn(),
-          getAllFoldersList: jest.fn(),
+          getAllFolders: vi.fn(),
+          getAllFoldersList: vi.fn(),
         };
     mockDialog = {
-          open: jest.fn(),
+          open: vi.fn(),
         };
     mockStore = {
-          select: jest.fn(),
-          dispatch: jest.fn(),
+          select: vi.fn(),
+          dispatch: vi.fn(),
         };
     mockStore.select.mockReturnValue(of(true));
 

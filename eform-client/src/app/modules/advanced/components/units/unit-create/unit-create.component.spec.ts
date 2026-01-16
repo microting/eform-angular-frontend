@@ -17,13 +17,13 @@ describe('UnitCreateComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockUnitsService = {
-          createUnit: jest.fn(),
+          createUnit: vi.fn(),
         };
     mockDeviceUserService = {
-          getDeviceUsersFiltered: jest.fn(),
+          getDeviceUsersFiltered: vi.fn(),
         };
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
 
     TestBed.configureTestingModule({
