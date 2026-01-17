@@ -1,5 +1,5 @@
 // Setup file for Jest
-// Note: Zone.js and TestBed initialization are handled by @angular-builders/jest
+// Zone.js is automatically loaded by jest-preset-angular
 
 // Add custom matchers or global test setup here
 Object.defineProperty(window, 'CSS', { value: null });
