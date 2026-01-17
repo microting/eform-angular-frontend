@@ -5,8 +5,6 @@
     "module": "ES2022",
     "moduleResolution": "Bundler",
     "types": [
-      "vitest/globals",
-      "vitest",
       "node"
     ],
     "esModuleInterop": true,
