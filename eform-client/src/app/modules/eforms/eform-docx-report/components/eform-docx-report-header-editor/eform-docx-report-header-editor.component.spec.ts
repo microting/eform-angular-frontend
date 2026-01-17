@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -12,7 +11,7 @@ describe('EformDocxReportHeaderEditorComponent', () => {
 
   beforeEach(async () => {
     const mockDialogRef = {
-      close: vi.fn(),
+      close: jest.fn(),
     };
     
     await TestBed.configureTestingModule({

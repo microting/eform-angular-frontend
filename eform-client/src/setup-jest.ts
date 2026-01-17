@@ -1,20 +1,5 @@
 // Setup file for Jest
-import 'zone.js';
-import 'zone.js/testing';
-import { getTestBed } from '@angular/core/testing';
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
-
-// Initialize Angular testing environment
-getTestBed().initTestEnvironment(
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting(),
-);
-
-// Note: Jasmine compatibility layer has been removed.
-// All tests now use native Jest syntax.
+// Note: Zone.js and TestBed initialization are handled by @angular-builders/jest
 
 // Add custom matchers or global test setup here
 Object.defineProperty(window, 'CSS', { value: null });

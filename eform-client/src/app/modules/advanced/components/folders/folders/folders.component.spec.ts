@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -19,15 +18,15 @@ describe('FoldersComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockFoldersService = {
-          getAllFolders: vi.fn(),
-          getAllFoldersList: vi.fn(),
+          getAllFolders: jest.fn(),
+          getAllFoldersList: jest.fn(),
         };
     mockDialog = {
-          open: vi.fn(),
+          open: jest.fn(),
         };
     mockStore = {
-          select: vi.fn(),
-          dispatch: vi.fn(),
+          select: jest.fn(),
+          dispatch: jest.fn(),
         };
     mockStore.select.mockReturnValue(of(true));
 

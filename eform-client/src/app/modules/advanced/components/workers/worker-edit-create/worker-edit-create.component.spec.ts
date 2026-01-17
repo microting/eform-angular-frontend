@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -19,15 +18,15 @@ describe('WorkerEditCreateComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockWorkersService = {
-          createWorker: vi.fn(),
-          updateSingleWorker: vi.fn(),
+          createWorker: jest.fn(),
+          updateSingleWorker: jest.fn(),
         };
     mockDeviceUserService = {
-          getCommonDictionarySites: vi.fn(),
-          getSingleSimpleSite: vi.fn(),
+          getCommonDictionarySites: jest.fn(),
+          getSingleSimpleSite: jest.fn(),
         };
     mockDialogRef = {
-          close: vi.fn(),
+          close: jest.fn(),
         };
     mockDialogData = new WorkerDto();
 

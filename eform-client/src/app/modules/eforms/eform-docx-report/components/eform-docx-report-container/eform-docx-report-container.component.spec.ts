@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -15,23 +14,23 @@ describe('EformDocxReportContainerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const mockTranslateService = {
-      instant: vi.fn()
+      instant: jest.fn()
     };
     const mockEmailRecipientsService = {
-      getAll: vi.fn()
+      getAll: jest.fn()
     };
     const mockEformDocxReportService = {
-      get: vi.fn()
+      get: jest.fn()
     };
     const mockRouter = {
-      navigate: vi.fn()
+      navigate: jest.fn()
     };
     const mockActivatedRoute = {
-      params: { subscribe: vi.fn() }
+      params: { subscribe: jest.fn() }
     };
     const mockToastrService = {
-      success: vi.fn(),
-      error: vi.fn()
+      success: jest.fn(),
+      error: jest.fn()
     };
     
     TestBed.configureTestingModule({

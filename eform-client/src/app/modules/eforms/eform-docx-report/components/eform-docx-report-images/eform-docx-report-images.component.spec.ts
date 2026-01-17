@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -15,16 +14,16 @@ describe('EformDocxReportImagesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const mockGallery = {
-      ref: vi.fn().mockReturnValue({
-        load: vi.fn()
+      ref: jest.fn().mockReturnValue({
+        load: jest.fn()
       })
     };
     const mockLightbox = {
-      open: vi.fn()
+      open: jest.fn()
     };
     const mockTemplateFilesService = {
-      getImage: vi.fn().mockReturnValue(of(new Blob())),
-      rotateImage: vi.fn().mockReturnValue(of({ success: true }))
+      getImage: jest.fn().mockReturnValue(of(new Blob())),
+      rotateImage: jest.fn().mockReturnValue(of({ success: true }))
     };
 
     TestBed.configureTestingModule({

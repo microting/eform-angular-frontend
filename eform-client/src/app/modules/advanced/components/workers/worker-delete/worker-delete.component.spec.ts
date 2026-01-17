@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -18,10 +17,10 @@ describe('WorkerDeleteComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockWorkersService = {
-          deleteSingleWorker: vi.fn(),
+          deleteSingleWorker: jest.fn(),
         };
     mockDialogRef = {
-          close: vi.fn(),
+          close: jest.fn(),
         };
     mockDialogData = { workerUId: 123, firstName: 'John', lastName: 'Doe' } as WorkerDto;
 

@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -18,22 +17,22 @@ describe('EformsBulkImportModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const mockToastrService = {
-      success: vi.fn(),
-      error: vi.fn(),
-      warning: vi.fn(),
+      success: jest.fn(),
+      error: jest.fn(),
+      warning: jest.fn(),
     };
     const mockTranslateService = {
       instant: vi.fn((key: string) => key),
       stream: vi.fn((key: string) => of(key)),
     };
     const mockLoaderService = {
-      setLoading: vi.fn(),
+      setLoading: jest.fn(),
     };
     const mockAuthStateService = {
-      connectionStringExists: vi.fn(),
+      connectionStringExists: jest.fn(),
     };
     const mockDialogRef = {
-      close: vi.fn(),
+      close: jest.fn(),
     };
     const mockStore = {
       select: vi.fn(() => of('mock-token')),

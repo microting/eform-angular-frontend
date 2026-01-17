@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -18,10 +17,10 @@ describe('UnitsOtpCodeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockUnitsService = {
-          requestOtp: vi.fn(),
+          requestOtp: jest.fn(),
         };
     mockDialogRef = {
-          close: vi.fn(),
+          close: jest.fn(),
         };
     mockDialogData = { id: 1, microtingUid: 12345, siteName: 'Test Site' } as UnitDto;
 
