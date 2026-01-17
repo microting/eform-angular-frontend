@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -12,7 +13,7 @@ describe('NavigationMenuResetComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
 
     TestBed.configureTestingModule({

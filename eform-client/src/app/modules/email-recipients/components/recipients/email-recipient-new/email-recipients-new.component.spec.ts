@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -15,17 +16,17 @@ describe('EmailRecipientCreateComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const mockEmailRecipientsService = {
-          create: jest.fn(),
+          create: vi.fn(),
         };
     const mockToastrService = {
-          success: jest.fn(),
-          error: jest.fn(),
+          success: vi.fn(),
+          error: vi.fn(),
         };
     const mockTranslateService = {
-          instant: jest.fn(),
+          instant: vi.fn(),
         };
     const mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
     
     TestBed.configureTestingModule({

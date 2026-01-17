@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -18,13 +19,13 @@ describe('UnitCreateComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockUnitsService = {
-          createUnit: jest.fn(),
+          createUnit: vi.fn(),
         };
     mockDeviceUserService = {
-          getDeviceUsersFiltered: jest.fn(),
+          getDeviceUsersFiltered: vi.fn(),
         };
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
 
     TestBed.configureTestingModule({

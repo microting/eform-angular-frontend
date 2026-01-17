@@ -106,10 +106,10 @@
           }
         },
         "test": {
-          "builder": "@angular-builders/jest:run",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "config": "jest.config.js",
-            "zoneless": false
+            "tsConfig": "src/tsconfig.spec.json",
+            "runnerConfig": "vitest.config.mts"
           }
         }
       }

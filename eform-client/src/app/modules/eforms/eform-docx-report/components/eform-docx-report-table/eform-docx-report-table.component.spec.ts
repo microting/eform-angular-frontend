@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -12,7 +13,7 @@ describe('EformDocxReportTableComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const mockRouter = {
-      navigate: jest.fn(),
+      navigate: vi.fn(),
     };
     const mockTranslateService = {
       stream: vi.fn((key: string) => key),

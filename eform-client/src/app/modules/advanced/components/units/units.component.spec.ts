@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -20,17 +21,17 @@ describe('UnitsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockUnitsService = {
-          getAllUnits: jest.fn(),
+          getAllUnits: vi.fn(),
         };
     mockDialog = {
-          open: jest.fn(),
+          open: vi.fn(),
         };
     mockStore = {
-          select: jest.fn(),
-          dispatch: jest.fn(),
+          select: vi.fn(),
+          dispatch: vi.fn(),
         };
     mockTranslateService = {
-          stream: jest.fn(),
+          stream: vi.fn(),
         };
     mockTranslateService.stream.mockReturnValue(of('Test'));
 
