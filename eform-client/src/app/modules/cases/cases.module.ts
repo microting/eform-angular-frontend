@@ -5,7 +5,7 @@ import {GalleryModule} from 'ng-gallery';
 import {LightboxModule} from 'ng-gallery/lightbox';
 import {TranslateModule} from '@ngx-translate/core';
 import {EformCasesModule} from 'src/app/common/modules/eform-cases/eform-cases.module';
-import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
+
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {CasesRoutingModule} from './cases.routing';
 import {CaseEditComponent, CasesTableComponent} from './components';
@@ -20,25 +20,24 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
     imports: [
-        TranslateModule,
-        EformSharedModule,
-        CasesRoutingModule,
-        CommonModule,
-        EformImportedModule,
-        LightboxModule,
-        GalleryModule,
-        FormsModule,
-        EformCasesModule,
-        MatSortModule,
-        MatInputModule,
-        MtxGridModule,
-        MatTooltipModule,
-        MatIconModule,
-        MatButtonModule,
-        MatCardModule,
-        MatDatepickerModule,
-        CasesTableComponent, CaseEditComponent,
-    ],
+    TranslateModule,
+    EformSharedModule,
+    CasesRoutingModule,
+    CommonModule,
+    LightboxModule,
+    GalleryModule,
+    FormsModule,
+    EformCasesModule,
+    MatSortModule,
+    MatInputModule,
+    MtxGridModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDatepickerModule,
+    CasesTableComponent, CaseEditComponent,
+],
 })
 export class CasesModule {
 }

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {AuthService, TitleService, UserSettingsService} from 'src/app/common/services';
-import {Router} from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {take, zip, debounceTime} from 'rxjs';
 import {
@@ -11,11 +11,12 @@ import {
 } from 'src/app/state';
 import {AuthStateService} from 'src/app/common/store';
 import {TranslateService} from '@ngx-translate/core';
+import { SpinnerComponent } from './eform-spinner/spinner.component';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    standalone: false
+    imports: [SpinnerComponent, RouterOutlet]
 })
 export class AppComponent implements OnInit, OnDestroy {
   private router = inject(Router);

@@ -12,7 +12,7 @@ import {
   EmailRecipientsPageComponent,
   EmailRecipientsTagsComponent,
 } from './components';
-import {EformSharedTagsModule} from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
+
 import {MatSortModule} from '@angular/material/sort';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -25,31 +25,30 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 
 @NgModule({
     imports: [
-        CommonModule,
-        EformSharedModule,
-        CommonModule,
-        NgSelectModule,
-        TranslateModule,
-        FormsModule,
-        EmailRecipientsRouting,
-        EformSharedTagsModule,
-        MatSortModule,
-        MatIconModule,
-        MatButtonModule,
-        MatTooltipModule,
-        MatInputModule,
-        MtxSelectModule,
-        MtxGridModule,
-        MatDialogModule,
-        MatMenu,
-        MatMenuItem,
-        MatMenuTrigger,
-        EmailRecipientsPageComponent,
-        EmailRecipientsNewComponent,
-        EmailRecipientEditComponent,
-        EmailRecipientDeleteComponent,
-        EmailRecipientsTagsComponent,
-    ],
+    CommonModule,
+    EformSharedModule,
+    CommonModule,
+    NgSelectModule,
+    TranslateModule,
+    FormsModule,
+    EmailRecipientsRouting,
+    MatSortModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatInputModule,
+    MtxSelectModule,
+    MtxGridModule,
+    MatDialogModule,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
+    EmailRecipientsPageComponent,
+    EmailRecipientsNewComponent,
+    EmailRecipientEditComponent,
+    EmailRecipientDeleteComponent,
+    EmailRecipientsTagsComponent,
+],
 })
 export class EmailRecipientsModule {
 }

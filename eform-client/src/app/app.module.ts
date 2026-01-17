@@ -73,7 +73,8 @@ export function registerIconsFactory(iconService: IconService) {
   return () => iconService.register();
 }
 
-@NgModule({
+@NgModule(/* TODO(standalone-migration): clean up removed NgModule class manually. 
+{
     declarations: [
         // Components
         AppComponent],
@@ -155,7 +156,7 @@ export function registerIconsFactory(iconService: IconService) {
         }
     ],
     bootstrap: [AppComponent],
-})
+} */)
 export class AppModule {
   constructor(
     private matIconRegistry: MatIconRegistry,
