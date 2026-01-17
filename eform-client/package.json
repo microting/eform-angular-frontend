@@ -13,11 +13,11 @@
     "start-port": "ng serve --port 4300 --proxy-config proxy.config.json",
     "build": "ng build",
     "sentrysourcemap": "yarn sentry:sourcemaps",
-    "test:ci": "vitest run --coverage --reporter=junit --reporter=default",
+    "test:ci": "./node_modules/.bin/ng test --no-watch --coverage",
     "test": "./node_modules/.bin/wdio wdio.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
-    "test:unit": "vitest run --coverage",
+    "test:unit": "./node_modules/.bin/ng test --no-watch",
     "test:local_unit": "vitest",
-    "test:watch": "vitest",
+    "test:watch": "./node_modules/.bin/ng test",
     "test2": "wdio wdio-step2.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
     "testheadless": "./node_modules/.bin/wdio wdio-headless.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
     "testheadless2a": "./node_modules/.bin/wdio wdio-headless-step2a.conf.ts --disable-gpu --browsers=ChromeHeadless --autoCompileOpts.tsNodeOpts.project=e2e/tsconfig.e2e.json",
@@ -55,8 +55,7 @@
     "run-cypress": "npx cypress run --browser chrome",
     "open-cypress": "npx cypress open",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org microting-as --project angular-frontend ./dist && sentry-cli sourcemaps upload --org microting-as --project angular-frontend ./dist",
-    "generate-licenses": "node generate-licenses.js && cd ../eFormAPI && dotnet list package --include-transitive --format json > /tmp/dotnet-packages.json && cd ../eform-client && node add-dotnet-licenses.js",
-    "test:ui": "vitest --ui"
+    "generate-licenses": "node generate-licenses.js && cd ../eFormAPI && dotnet list package --include-transitive --format json > /tmp/dotnet-packages.json && cd ../eform-client && node add-dotnet-licenses.js"
   },
   "prettier": {
     "singleQuote": true

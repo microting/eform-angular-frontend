@@ -5,18 +5,20 @@
     "module": "ES2022",
     "moduleResolution": "Bundler",
     "types": [
-      "jest",
-      "node",
-      "jasmine"
+      "vitest/globals",
+      "vitest",
+      "node"
     ],
     "esModuleInterop": true,
     "emitDecoratorMetadata": true
   },
   "files": [
-    "polyfills.ts"
+    "polyfills.ts",
+    "test-setup.ts"
   ],
   "include": [
     "**/*.spec.ts",
-    "**/*.d.ts"
+    "**/*.d.ts",
+    "test-helpers.ts"
   ]
 }

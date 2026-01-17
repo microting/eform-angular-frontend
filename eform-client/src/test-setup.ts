@@ -1,20 +1,14 @@
-// Setup file for Vitest - Manual TestBed setup without @analogjs helper
-import '@angular/compiler';
-import '@analogjs/vitest-angular/setup-zone';
-
+// Test setup file for Angular CLI's built-in Vitest support
 import { getTestBed } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
 
-// Manually initialize Angular testing environment
+// Initialize Angular testing environment
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting(),
-  {
-    teardown: { destroyAfterEach: false }
-  }
 );
 
 // Browser mocks
@@ -27,7 +21,7 @@ Object.defineProperty(window, 'getComputedStyle', {
 });
 
 Object.defineProperty(document, 'doctype', {
-  value: '<!DOCTYPE html}'
+  value: '<!DOCTYPE html>'
 });
 
 Object.defineProperty(document.body.style, 'transform', {

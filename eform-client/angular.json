@@ -15,7 +15,7 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
             "aot": true,
             "outputPath": {
@@ -106,9 +106,11 @@
           }
         },
         "test": {
-          "builder": "@angular-builders/jest:run",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "configPath": "jest.config.js"
+            "tsConfig": "src/tsconfig.spec.json",
+            "buildTarget": "eform-angular:build:development",
+            "runnerConfig": "vitest.config.ts"
           }
         }
       }
