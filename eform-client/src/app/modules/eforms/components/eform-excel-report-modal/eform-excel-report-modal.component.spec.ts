@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MockTranslatePipe } from 'src/test-helpers';
 import { EformExcelReportModalComponent } from './eform-excel-report-modal.component';
@@ -17,6 +18,7 @@ describe('EformExcelReportModalComponent', () => {
     };
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [ EformExcelReportModalComponent, MockTranslatePipe ],
       providers: [
         { provide: EFormService, useValue: mockEFormService },

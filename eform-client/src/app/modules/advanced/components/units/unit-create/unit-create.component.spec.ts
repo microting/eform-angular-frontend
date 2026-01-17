@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UnitCreateComponent } from './unit-create.component';
 import { UnitsService } from 'src/app/common/services';
@@ -28,6 +29,7 @@ describe('UnitCreateComponent', () => {
         };
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [UnitCreateComponent, MockTranslatePipe],
       providers: [
         { provide: UnitsService, useValue: mockUnitsService },

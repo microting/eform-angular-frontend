@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MockTranslatePipe } from 'src/test-helpers';
 import { EformsBulkImportModalComponent } from './eforms-bulk-import-modal.component';
@@ -39,6 +40,7 @@ describe('EformsBulkImportModalComponent', () => {
     };
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [ EformsBulkImportModalComponent, MockTranslatePipe ],
       providers: [
         { provide: ToastrService, useValue: mockToastrService },

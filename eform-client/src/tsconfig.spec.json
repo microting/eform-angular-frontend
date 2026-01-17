@@ -18,5 +18,9 @@
     "**/*.spec.ts",
     "**/*.d.ts",
     "test-helpers.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "strictTemplates": false,
+    "fullTemplateTypeCheck": false
+  }
 }

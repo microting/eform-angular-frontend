@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { WorkerDeleteComponent } from './worker-delete.component';
 import { WorkersService } from 'src/app/common/services';
@@ -25,6 +26,7 @@ describe('WorkerDeleteComponent', () => {
     mockDialogData = { workerUId: 123, firstName: 'John', lastName: 'Doe' } as WorkerDto;
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [WorkerDeleteComponent, MockTranslatePipe],
       providers: [
         { provide: WorkersService, useValue: mockWorkersService },

@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UnitsComponent } from './units.component';
 import { UnitsService } from 'src/app/common/services';
@@ -35,6 +36,7 @@ describe('UnitsComponent', () => {
     mockTranslateService.stream.mockReturnValue(of('Test'));
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [UnitsComponent],
       providers: [
         { provide: UnitsService, useValue: mockUnitsService },

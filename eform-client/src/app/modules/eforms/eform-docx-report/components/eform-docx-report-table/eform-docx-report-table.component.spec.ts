@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,6 +21,7 @@ describe('EformDocxReportTableComponent', () => {
     };
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [ EformDocxReportTableComponent, MockTranslatePipe ],
       providers: [
         { provide: Router, useValue: mockRouter },

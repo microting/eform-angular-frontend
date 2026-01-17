@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NavigationMenuResetComponent } from './navigation-menu-reset.component';
@@ -16,6 +17,7 @@ describe('NavigationMenuResetComponent', () => {
         };
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [ NavigationMenuResetComponent, MockTranslatePipe ],
       providers: [
         { provide: MatDialogRef, useValue: mockDialogRef }

@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FoldersComponent } from './folders.component';
 import { FoldersService } from 'src/app/common/services';
@@ -31,6 +32,7 @@ describe('FoldersComponent', () => {
     mockStore.select.mockReturnValue(of(true));
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [FoldersComponent],
       providers: [
         { provide: FoldersService, useValue: mockFoldersService },

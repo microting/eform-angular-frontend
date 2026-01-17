@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FolderDeleteComponent } from './folder-delete.component';
 import { FoldersService } from 'src/app/common/services';
@@ -25,6 +26,7 @@ describe('FolderDeleteComponent', () => {
     mockDialogData = { id: 1, name: 'Test Folder' } as FolderDto;
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [FolderDeleteComponent, MockTranslatePipe],
       providers: [
         { provide: FoldersService, useValue: mockFoldersService },

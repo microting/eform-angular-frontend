@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MockTranslatePipe } from 'src/test-helpers';
@@ -16,6 +17,7 @@ describe('EmailRecipientTagNewComponent', () => {
     };
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [ SharedTagCreateComponent, MockTranslatePipe ],
       providers: [
         { provide: MatDialogRef, useValue: mockDialogRef }

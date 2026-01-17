@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { EmailRecipientEditComponent } from './email-recipient-edit.component';
@@ -37,6 +38,7 @@ describe('EmailRecipientEditComponent', () => {
     };
     
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [ EmailRecipientEditComponent, MockTranslatePipe ],
       providers: [
         { provide: EmailRecipientsService, useValue: mockEmailRecipientsService },

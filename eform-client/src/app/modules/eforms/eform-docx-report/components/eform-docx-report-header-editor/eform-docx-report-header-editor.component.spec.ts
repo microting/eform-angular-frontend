@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MockTranslatePipe } from 'src/test-helpers';
 import { EformDocxReportHeaderEditorComponent } from './eform-docx-report-header-editor.component';
@@ -15,6 +16,7 @@ describe('EformDocxReportHeaderEditorComponent', () => {
     };
     
     await TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [ EformDocxReportHeaderEditorComponent, MockTranslatePipe ],
       providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },

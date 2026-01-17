@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UnitsOtpCodeComponent } from './units-otp-code.component';
 import { UnitsService } from 'src/app/common/services/advanced';
@@ -25,6 +26,7 @@ describe('UnitsOtpCodeComponent', () => {
     mockDialogData = { id: 1, microtingUid: 12345, siteName: 'Test Site' } as UnitDto;
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [UnitsOtpCodeComponent, MockTranslatePipe],
       providers: [
         { provide: UnitsService, useValue: mockUnitsService },

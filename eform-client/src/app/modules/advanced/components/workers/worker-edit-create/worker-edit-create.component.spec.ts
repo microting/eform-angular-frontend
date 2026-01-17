@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { WorkerEditCreateComponent } from './worker-edit-create.component';
 import { WorkersService, DeviceUserService } from 'src/app/common/services';
@@ -31,6 +32,7 @@ describe('WorkerEditCreateComponent', () => {
     mockDialogData = new WorkerDto();
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [WorkerEditCreateComponent, MockTranslatePipe],
       providers: [
         { provide: WorkersService, useValue: mockWorkersService },
@@ -68,6 +70,7 @@ describe('WorkerEditCreateComponent', () => {
     
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [WorkerEditCreateComponent, MockTranslatePipe],
       providers: [
         { provide: WorkersService, useValue: mockWorkersService },

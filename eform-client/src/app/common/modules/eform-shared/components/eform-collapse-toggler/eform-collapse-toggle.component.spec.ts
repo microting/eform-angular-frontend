@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { EformCollapseToggleComponent } from './eform-collapse-toggle.component';
@@ -10,6 +11,7 @@ describe('EformCollapseTogglerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [ EformCollapseToggleComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })

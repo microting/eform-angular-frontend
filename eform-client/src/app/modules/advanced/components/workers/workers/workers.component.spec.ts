@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { WorkersComponent } from './workers.component';
 import { WorkersService } from 'src/app/common/services';
@@ -38,6 +39,7 @@ describe('WorkersComponent', () => {
     mockStore.select.mockReturnValue(of(true));
 
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [WorkersComponent],
       providers: [
         { provide: WorkersService, useValue: mockWorkersService },
