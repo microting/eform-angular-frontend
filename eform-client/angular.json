@@ -109,7 +109,6 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "src/tsconfig.spec.json",
-            "buildTarget": "eform-angular:build:development",
             "runnerConfig": "vitest.config.ts"
           }
         }

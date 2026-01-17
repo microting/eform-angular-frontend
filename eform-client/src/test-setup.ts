@@ -1,4 +1,7 @@
 // Test setup file for Angular CLI's built-in Vitest support
+// Import compiler for JIT compilation in tests
+import '@angular/compiler';
+
 import { getTestBed } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
@@ -21,7 +24,7 @@ Object.defineProperty(window, 'getComputedStyle', {
 });
 
 Object.defineProperty(document, 'doctype', {
-  value: '<!DOCTYPE html>'
+  value: '<!DOCTYPE html}'
 });
 
 Object.defineProperty(document.body.style, 'transform', {
