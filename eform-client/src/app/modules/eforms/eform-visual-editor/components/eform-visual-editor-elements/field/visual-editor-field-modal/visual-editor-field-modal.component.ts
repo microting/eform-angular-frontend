@@ -12,17 +12,38 @@ import {getTranslatedTypes} from '../../../../const/eform-visual-editor-element-
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
 import {AuthStateService} from 'src/app/common/store';
-import {TranslateService} from '@ngx-translate/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import {TranslationRequestModel, TranslationService} from 'src/app/common/services';
 import {selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgSwitch, NgIf, NgFor, NgSwitchCase } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect, MtxSelectOptionTemplate } from '@ng-matero/extensions/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MtxPopover, MtxPopoverTrigger } from '@ng-matero/extensions/popover';
+import { CdkDrag } from '@angular/cdk/drag-drop';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { FormattingTextEditorComponent } from '../../../../../../../common/modules/eform-imported/formatting-text-editor/formatting-text-editor.component';
+import { VisualEditorAdditionalFieldNumberComponent } from '../visual-editor-additional-fields/visual-editor-additional-field-number/visual-editor-additional-field-number.component';
+import { VisualEditorAdditionalFieldDateComponent } from '../visual-editor-additional-fields/visual-editor-additional-field-date/visual-editor-additional-field-date.component';
+import { VisualEditorAdditionalFieldSaveButtonComponent } from '../visual-editor-additional-fields/visual-editor-additional-field-save-button/visual-editor-additional-field-save-button.component';
+import { VisualEditorAdditionalFieldPdfComponent } from '../visual-editor-additional-fields/visual-editor-additional-field-pdf/visual-editor-additional-field-pdf.component';
+import { VisualEditorAdditionalFieldOptionsComponent } from '../visual-editor-additional-fields/visual-editor-additional-field-options/visual-editor-additional-field-options.component';
+import { VisualEditorAdditionalFieldEntitySearchComponent } from '../visual-editor-additional-fields/visual-editor-additional-field-entity-search/visual-editor-additional-field-entity-search.component';
+import { VisualEditorAdditionalFieldEntitySelectComponent } from '../visual-editor-additional-fields/visual-editor-additional-field-entity-select/visual-editor-additional-field-entity-select.component';
+import { VisualEditorAdditionalFieldShowPictureComponent } from '../visual-editor-additional-fields/visual-editor-additional-field-show-picture/visual-editor-additional-field-show-picture.component';
 
 @Component({
     selector: 'app-visual-editor-field-modal',
     templateUrl: './visual-editor-field-modal.component.html',
     styleUrls: ['./visual-editor-field-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgSwitch, MatCard, MatCardHeader, MatCardContent, MatFormField, MatLabel, MtxSelect, ReactiveFormsModule, FormsModule, MtxSelectOptionTemplate, MtxPopover, CdkDrag, MtxPopoverTrigger, NgIf, MatCheckbox, NgFor, MatIconButton, MatIcon, MatInput, FormattingTextEditorComponent, NgSwitchCase, VisualEditorAdditionalFieldNumberComponent, VisualEditorAdditionalFieldDateComponent, VisualEditorAdditionalFieldSaveButtonComponent, VisualEditorAdditionalFieldPdfComponent, VisualEditorAdditionalFieldOptionsComponent, VisualEditorAdditionalFieldEntitySearchComponent, VisualEditorAdditionalFieldEntitySelectComponent, VisualEditorAdditionalFieldShowPictureComponent, MatDialogActions, TranslatePipe]
 })
 export class VisualEditorFieldModalComponent implements OnInit {
   private authStateService = inject(AuthStateService);

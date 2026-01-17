@@ -17,14 +17,14 @@ describe('NavigationMenuItemDeleteComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ NavigationMenuItemDeleteComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, NavigationMenuItemDeleteComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: { model: {}, firstLevelIndex: 0 } }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

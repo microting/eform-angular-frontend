@@ -4,13 +4,16 @@ import {
   NavigationMenuItemModel,
 } from 'src/app/common/models';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-navigation-menu-item-delete',
     templateUrl: './navigation-menu-item-delete.component.html',
     styleUrls: ['./navigation-menu-item-delete.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, TranslatePipe]
 })
 export class NavigationMenuItemDeleteComponent implements OnInit {
   dialogRef = inject<MatDialogRef<NavigationMenuItemDeleteComponent>>(MatDialogRef);

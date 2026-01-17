@@ -18,14 +18,14 @@ describe('EformExcelReportModalComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ EformExcelReportModalComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, EformExcelReportModalComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: EFormService, useValue: mockEFormService },
         FormBuilder
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

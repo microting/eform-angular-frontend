@@ -39,17 +39,16 @@ describe('WorkersComponent', () => {
     mockStore.select.mockReturnValue(of(true));
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [WorkersComponent],
-      providers: [
+    imports: [FormsModule, WorkersComponent],
+    providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

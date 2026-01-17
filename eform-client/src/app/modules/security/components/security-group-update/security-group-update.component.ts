@@ -8,14 +8,20 @@ import {
 } from 'src/app/common/models';
 import {SecurityGroupsService, AdminService} from 'src/app/common/services';
 import {MtxSelect} from '@ng-matero/extensions/select';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {TranslateService} from '@ngx-translate/core';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { EformNewSubheaderComponent } from '../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-security-group-update',
     templateUrl: './security-group-update.component.html',
     styleUrls: ['./security-group-update.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatTooltip, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MtxSelect, MatIcon, MtxGrid, TranslatePipe]
 })
 export class SecurityGroupUpdateComponent implements OnInit {
   private adminService = inject(AdminService);

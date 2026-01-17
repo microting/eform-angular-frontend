@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { ToastrService } from 'ngx-toastr';
 import {Subscription, take} from 'rxjs';
@@ -9,18 +9,26 @@ import {
   FolderModel,
   FolderUpdateModel, LanguagesModel,
 } from 'src/app/common/models';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import {tap} from 'rxjs/operators';
 import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import {selectCurrentUserLanguageId, selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgIf, NgFor } from '@angular/common';
+import { MatInput } from '@angular/material/input';
+import { FormattingTextEditorComponent } from '../../../../../common/modules/eform-imported/formatting-text-editor/formatting-text-editor.component';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-folder-edit-create',
     templateUrl: './folder-edit-create.component.html',
     styleUrls: ['./folder-edit-create.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatCard, MatCardContent, MatFormField, MatLabel, MtxSelect, ReactiveFormsModule, FormsModule, NgIf, MatInput, NgFor, FormattingTextEditorComponent, MatDialogActions, TranslatePipe]
 })
 export class FolderEditCreateComponent implements OnInit, OnDestroy {
   private foldersService = inject(FoldersService);

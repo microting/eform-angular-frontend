@@ -1,12 +1,15 @@
 import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {UserInfoModel} from 'src/app/common/models';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-remove-user-modal',
     templateUrl: './remove-user-modal.component.html',
     styleUrls: ['./remove-user-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, TranslatePipe]
 })
 export class RemoveUserModalComponent implements OnInit {
   dialogRef = inject<MatDialogRef<RemoveUserModalComponent>>(MatDialogRef);

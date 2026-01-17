@@ -1,7 +1,13 @@
 import {Component, Input, OnInit, OnDestroy, Output, EventEmitter, forwardRef} from '@angular/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {CommonTranslationsModel} from 'src/app/common/models';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { NgIf } from '@angular/common';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { FormattingTextEditorComponent } from '../../../eform-imported/formatting-text-editor/formatting-text-editor.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -15,7 +21,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
             multi: true
         }
     ],
-    standalone: false
+    imports: [MatCard, NgIf, MatCardHeader, MatCardContent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, FormattingTextEditorComponent, TranslatePipe]
 })
 export class EformTranslationComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() model: CommonTranslationsModel = {id: undefined, description: '', name: '', languageId: 1};

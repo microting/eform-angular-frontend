@@ -11,10 +11,9 @@ describe('EformCollapseTogglerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ EformCollapseToggleComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    imports: [FormsModule, EformCollapseToggleComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

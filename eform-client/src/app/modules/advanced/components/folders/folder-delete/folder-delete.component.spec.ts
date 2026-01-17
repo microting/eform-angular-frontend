@@ -26,15 +26,15 @@ describe('FolderDeleteComponent', () => {
     mockDialogData = { id: 1, name: 'Test Folder' } as FolderDto;
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [FolderDeleteComponent, MockTranslatePipe],
-      providers: [
+    imports: [FormsModule, FolderDeleteComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: FoldersService, useValue: mockFoldersService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

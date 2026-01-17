@@ -36,17 +36,16 @@ describe('UnitsComponent', () => {
     mockTranslateService.stream.mockReturnValue(of('Test'));
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [UnitsComponent],
-      providers: [
+    imports: [FormsModule, UnitsComponent],
+    providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

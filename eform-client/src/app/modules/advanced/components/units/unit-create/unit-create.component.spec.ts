@@ -29,15 +29,15 @@ describe('UnitCreateComponent', () => {
         };
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [UnitCreateComponent, MockTranslatePipe],
-      providers: [
+    imports: [FormsModule, UnitCreateComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
         { provide: MatDialogRef, useValue: mockDialogRef }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

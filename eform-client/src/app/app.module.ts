@@ -74,88 +74,87 @@ export function registerIconsFactory(iconService: IconService) {
 }
 
 @NgModule({
-  declarations: [
-    // Layouts
-    SimpleLayoutComponent,
-    FullLayoutComponent,
-    // Components
-    AppComponent,
-    HeaderComponent,
-    NavigationComponent,
-    SpinnerComponent,
-    ConnectionSetupComponent,
-  ],
-  imports: [
-    NgxMaterialTimepickerModule,
-    NgxMaskDirective, NgxMaskPipe,
-    // Libs
-    BrowserModule,
-    HttpClientModule,
-    StoreModule.forRoot({
-      appMenus: appMenuReducer,
-      appSettings: appSettingsReducer,
-      auth: authReducer,
-      cases: casesReducer,
-      deviceUsers: deviceUsersReducer,
-      eforms: eformReducer,
-      emailRecipients: emailRecipientsReducer,
-      entitySearch: entitySearchReducer,
-      entitySelect: entitySelectReducer,
-      plugins: pluginsReducer,
-      security: securityReducer,
-      users: usersReducer,
-    }),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
-    }),
-    EffectsModule.forRoot(AppMenuEffects),
-    AppRoutingModule,
-    TranslateModule.forRoot(translateConfig),
-    BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      autoDismiss: true,
-      timeOut: 3000,
-      preventDuplicates: true,
-      positionClass: 'toast-bottom-right',
-    }),
-    // TODO fix ngx-mask
-    // NgxMaskModule.forRoot(),
-    GalleryModule,
-    LightboxModule,
-    NgxChartsModule,
-    SharedPnModule,
-    MatSidenavModule,
-    MatButtonModule,
-    MatTreeModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatExpansionModule,
-    MtxSelectModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatInputModule,
-    // Modules
-    PluginsModule,
-    EformSharedModule,
-    MatProgressSpinnerModule,
-    // EformDateFnsDateModule,
-    EformMatDateFnsDateModule,
-    AppIconComponent, FooterComponent,
-  ],
-  schemas: [NO_ERRORS_SCHEMA],
-  providers: [
-    providers,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: registerIconsFactory,
-      deps: [IconService],
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent],
+    declarations: [
+        // Components
+        AppComponent],
+    imports: [
+        NgxMaterialTimepickerModule,
+        NgxMaskDirective, NgxMaskPipe,
+        // Libs
+        BrowserModule,
+        HttpClientModule,
+        StoreModule.forRoot({
+            appMenus: appMenuReducer,
+            appSettings: appSettingsReducer,
+            auth: authReducer,
+            cases: casesReducer,
+            deviceUsers: deviceUsersReducer,
+            eforms: eformReducer,
+            emailRecipients: emailRecipientsReducer,
+            entitySearch: entitySearchReducer,
+            entitySelect: entitySelectReducer,
+            plugins: pluginsReducer,
+            security: securityReducer,
+            users: usersReducer,
+        }),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25, // Retains last 25 states
+            logOnly: environment.production, // Restrict extension to log-only mode
+        }),
+        EffectsModule.forRoot(AppMenuEffects),
+        AppRoutingModule,
+        TranslateModule.forRoot(translateConfig),
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+            autoDismiss: true,
+            timeOut: 3000,
+            preventDuplicates: true,
+            positionClass: 'toast-bottom-right',
+        }),
+        // TODO fix ngx-mask
+        // NgxMaskModule.forRoot(),
+        GalleryModule,
+        LightboxModule,
+        NgxChartsModule,
+        SharedPnModule,
+        MatSidenavModule,
+        MatButtonModule,
+        MatTreeModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatExpansionModule,
+        MtxSelectModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatCardModule,
+        MatInputModule,
+        // Modules
+        PluginsModule,
+        EformSharedModule,
+        MatProgressSpinnerModule,
+        // EformDateFnsDateModule,
+        EformMatDateFnsDateModule,
+        AppIconComponent, FooterComponent,
+        // Layouts
+        SimpleLayoutComponent,
+        FullLayoutComponent,
+        HeaderComponent,
+        NavigationComponent,
+        SpinnerComponent,
+        ConnectionSetupComponent,
+    ],
+    schemas: [NO_ERRORS_SCHEMA],
+    providers: [
+        providers,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: registerIconsFactory,
+            deps: [IconService],
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(

@@ -17,13 +17,13 @@ describe('NavigationMenuResetComponent', () => {
         };
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ NavigationMenuResetComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, NavigationMenuResetComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: MatDialogRef, useValue: mockDialogRef }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

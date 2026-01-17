@@ -8,12 +8,16 @@ import {
 } from '@angular/core';
 import {EformVisualEditorFieldModel, LanguagesModel} from 'src/app/common/models';
 import * as R from 'ramda';
+import { NgFor, NgIf } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-visual-editor-additional-field-pdf',
     templateUrl: './visual-editor-additional-field-pdf.component.html',
     styleUrls: ['./visual-editor-additional-field-pdf.component.scss'],
-    standalone: false
+    imports: [NgFor, NgIf, MatCard, MatCardHeader, MatCardContent, MatButton, TranslatePipe]
 })
 export class VisualEditorAdditionalFieldPdfComponent
   implements OnChanges, OnDestroy {

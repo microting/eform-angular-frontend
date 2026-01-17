@@ -1,13 +1,17 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output, inject } from '@angular/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Observable, Subscription} from 'rxjs';
-import {MatTreeNestedDataSource} from '@angular/material/tree';
+import { MatTreeNestedDataSource, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, MatNestedTreeNode, MatTreeNodeToggle, MatTreeNodeOutlet } from '@angular/material/tree';
 import {NestedTreeControl} from '@angular/cdk/tree';
-import {Router} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth, selectCurrentUserClaims, leftAppMenus, loadAppMenu} from 'src/app/state';
 import {snakeToCamel} from 'src/app/common/helpers';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader } from '@angular/material/expansion';
 
 interface MenuNode {
   name: string;
@@ -25,7 +29,7 @@ interface MenuNode {
     selector: 'app-navigation',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
-    standalone: false
+    imports: [NgIf, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, MatButton, RouterLink, MatIcon, MatNestedTreeNode, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatTreeNodeToggle, MatTreeNodeOutlet, AsyncPipe]
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   router = inject(Router);

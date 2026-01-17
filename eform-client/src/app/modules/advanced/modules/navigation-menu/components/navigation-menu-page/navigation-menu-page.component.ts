@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
-import { DragulaService } from 'ng2-dragula';
+import { DragulaService, DragulaModule } from 'ng2-dragula';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
@@ -26,13 +26,23 @@ import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Store} from '@ngrx/store';
 import {loadAppMenu, selectCurrentUserLocale} from 'src/app/state';
+import { EformNewSubheaderComponent } from '../../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatIcon } from '@angular/material/icon';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { NgFor, NgIf } from '@angular/common';
+import { NavigationMenuTemplateItemComponent } from '../menu-item/navigation-menu-template-item/navigation-menu-template-item.component';
+import { NavigationMenuCustomComponent } from '../menu-custom/navigation-menu-custom/navigation-menu-custom.component';
+import { MatCard } from '@angular/material/card';
+import { MatIconButton } from '@angular/material/button';
+import { NavigationMenuItemComponent } from '../menu-item/navigation-menu-item/navigation-menu-item.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-navigation-menu-page',
     templateUrl: './navigation-menu-page.component.html',
     styleUrls: ['./navigation-menu-page.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatIcon, MatAccordion, NgFor, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, DragulaModule, NavigationMenuTemplateItemComponent, NavigationMenuCustomComponent, MatCard, NgIf, MatIconButton, NavigationMenuItemComponent, TranslatePipe]
 })
 export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   private authStore = inject(Store);

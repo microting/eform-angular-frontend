@@ -1,13 +1,20 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {WorkerDto, WorkerCreateModel, WorkerModel, CommonDictionaryModel} from 'src/app/common/models';
 import {WorkersService, DeviceUserService} from 'src/app/common/services';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgIf } from '@angular/common';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-worker-edit-create',
     templateUrl: './worker-edit-create.component.html',
     styleUrls: ['./worker-edit-create.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgIf, MatFormField, MatLabel, MtxSelect, ReactiveFormsModule, FormsModule, MatInput, MatDialogActions, TranslatePipe]
 })
 export class WorkerEditCreateComponent implements OnInit {
   private simpleSitesService = inject(DeviceUserService);

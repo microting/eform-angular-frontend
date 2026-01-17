@@ -30,17 +30,17 @@ describe('EmailRecipientDeleteComponent', () => {
         };
     
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ EmailRecipientDeleteComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, EmailRecipientDeleteComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: EmailRecipientsService, useValue: mockEmailRecipientsService },
         { provide: ToastrService, useValue: mockToastrService },
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: {} }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

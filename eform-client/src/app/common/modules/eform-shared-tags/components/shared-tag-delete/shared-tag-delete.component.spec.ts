@@ -17,14 +17,14 @@ describe('EmailRecipientTagDeleteComponent', () => {
     };
     
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ SharedTagDeleteComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, SharedTagDeleteComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: {} }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

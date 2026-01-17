@@ -35,18 +35,18 @@ describe('EformDocxReportContainerComponent', () => {
     };
     
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ EformDocxReportContainerComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, EformDocxReportContainerComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: EmailRecipientsService, useValue: mockEmailRecipientsService },
         { provide: EformDocxReportService, useValue: mockEformDocxReportService },
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: ToastrService, useValue: mockToastrService }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

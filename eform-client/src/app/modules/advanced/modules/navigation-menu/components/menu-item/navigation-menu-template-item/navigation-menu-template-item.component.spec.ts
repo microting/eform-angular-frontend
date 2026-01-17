@@ -11,10 +11,9 @@ describe('NavigationMenuTemplateItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ NavigationMenuTemplateItemComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    imports: [FormsModule, NavigationMenuTemplateItemComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

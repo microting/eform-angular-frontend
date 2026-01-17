@@ -26,15 +26,15 @@ describe('WorkerDeleteComponent', () => {
     mockDialogData = { workerUId: 123, firstName: 'John', lastName: 'Doe' } as WorkerDto;
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [WorkerDeleteComponent, MockTranslatePipe],
-      providers: [
+    imports: [FormsModule, WorkerDeleteComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

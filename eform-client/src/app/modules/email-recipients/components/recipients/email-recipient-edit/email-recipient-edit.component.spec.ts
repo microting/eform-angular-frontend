@@ -38,17 +38,17 @@ describe('EmailRecipientEditComponent', () => {
     };
     
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ EmailRecipientEditComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, EmailRecipientEditComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: EmailRecipientsService, useValue: mockEmailRecipientsService },
         { provide: ToastrService, useValue: mockToastrService },
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

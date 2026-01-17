@@ -26,15 +26,15 @@ describe('UnitsOtpCodeComponent', () => {
     mockDialogData = { id: 1, microtingUid: 12345, siteName: 'Test Site' } as UnitDto;
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [UnitsOtpCodeComponent, MockTranslatePipe],
-      providers: [
+    imports: [FormsModule, UnitsOtpCodeComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

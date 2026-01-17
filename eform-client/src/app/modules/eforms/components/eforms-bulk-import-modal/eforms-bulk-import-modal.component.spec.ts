@@ -40,18 +40,18 @@ describe('EformsBulkImportModalComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ EformsBulkImportModalComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, EformsBulkImportModalComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: ToastrService, useValue: mockToastrService },
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: LoaderService, useValue: mockLoaderService },
         { provide: AuthStateService, useValue: mockAuthStateService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: Store, useValue: mockStore }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

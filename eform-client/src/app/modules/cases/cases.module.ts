@@ -19,26 +19,26 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
-  imports: [
-    TranslateModule,
-    EformSharedModule,
-    CasesRoutingModule,
-    CommonModule,
-    EformImportedModule,
-    LightboxModule,
-    GalleryModule,
-    FormsModule,
-    EformCasesModule,
-    MatSortModule,
-    MatInputModule,
-    MtxGridModule,
-    MatTooltipModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatDatepickerModule,
-  ],
-  declarations: [CasesTableComponent, CaseEditComponent],
+    imports: [
+        TranslateModule,
+        EformSharedModule,
+        CasesRoutingModule,
+        CommonModule,
+        EformImportedModule,
+        LightboxModule,
+        GalleryModule,
+        FormsModule,
+        EformCasesModule,
+        MatSortModule,
+        MatInputModule,
+        MtxGridModule,
+        MatTooltipModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDatepickerModule,
+        CasesTableComponent, CaseEditComponent,
+    ],
 })
 export class CasesModule {
 }

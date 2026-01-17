@@ -9,9 +9,9 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 import {SecurityStateService} from '../store';
 import {Sort} from '@angular/material/sort';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {TranslateService} from '@ngx-translate/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
@@ -22,13 +22,23 @@ import {
   selectSecurityNameFilter, selectSecurityPagination,
   selectSecuritySort
 } from "src/app/state/security/security.selector";
+import { EformNewSubheaderComponent } from '../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { EformPaginationComponent } from '../../../../common/modules/eform-shared/components/eform-pagination/eform-pagination.component';
+import { AsyncPipe } from '@angular/common';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-security-page',
     templateUrl: './security-page.component.html',
     styleUrls: ['./security-page.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, RouterLink, MatTooltip, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MtxGrid, MatIconButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem, EformPaginationComponent, AsyncPipe, TranslatePipe]
 })
 export class SecurityPageComponent implements OnInit, OnDestroy {
   private store = inject(Store);

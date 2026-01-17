@@ -11,10 +11,9 @@ describe('EformTreeViewPickerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ EformTreeViewPickerComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    imports: [FormsModule, EformTreeViewPickerComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

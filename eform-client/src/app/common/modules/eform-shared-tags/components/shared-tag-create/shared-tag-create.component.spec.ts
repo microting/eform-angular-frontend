@@ -17,13 +17,13 @@ describe('EmailRecipientTagNewComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ SharedTagCreateComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, SharedTagCreateComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: MatDialogRef, useValue: mockDialogRef }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

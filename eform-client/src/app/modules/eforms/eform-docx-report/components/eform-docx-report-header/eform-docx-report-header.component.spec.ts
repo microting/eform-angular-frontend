@@ -11,10 +11,10 @@ describe('EformDocxReportHeaderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ EformDocxReportHeaderComponent, MockTranslatePipe ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    imports: [FormsModule, EformDocxReportHeaderComponent],
+    declarations: [MockTranslatePipe],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

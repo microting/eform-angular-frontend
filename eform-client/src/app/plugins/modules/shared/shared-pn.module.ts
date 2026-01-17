@@ -20,33 +20,31 @@ import {
 } from 'src/app/common/interceptors';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    NgSelectModule,
-    FormsModule,
-    NgxChartsModule,
-  ],
-  declarations: [
-    PaginationPnComponent,
-    SubheaderPnComponent,
-    PellPnComponent,
-    PageSizePnComponent,
-    UserbackWidgetComponent
-  ],
-  exports: [
-    PaginationPnComponent,
-    SubheaderPnComponent,
-    PellPnComponent,
-    PageSizePnComponent,
-    UserbackWidgetComponent
-  ],
-  providers: [
-    SharedPnService,
-    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    // TODO 5th May 2020: the above line is not suppose to be here, for some reason some plugins will not work without this line.
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        NgSelectModule,
+        FormsModule,
+        NgxChartsModule,
+        PaginationPnComponent,
+        SubheaderPnComponent,
+        PellPnComponent,
+        PageSizePnComponent,
+        UserbackWidgetComponent,
+    ],
+    exports: [
+        PaginationPnComponent,
+        SubheaderPnComponent,
+        PellPnComponent,
+        PageSizePnComponent,
+        UserbackWidgetComponent
+    ],
+    providers: [
+        SharedPnService,
+        { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+        // TODO 5th May 2020: the above line is not suppose to be here, for some reason some plugins will not work without this line.
+    ],
 })
 export class SharedPnModule {}

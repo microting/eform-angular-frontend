@@ -4,21 +4,26 @@ import {
   MarketplacePluginModel, MarketplacePluginsModel,
   MarketplacePluginsRequestModel
 } from 'src/app/common/models/plugins-management';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {MarketplacePluginInstallComponent} from 'src/app/modules/plugins-management/components';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-plugins-marketplace-page',
     templateUrl: './marketplace-plugins-page.component.html',
     styleUrls: ['./marketplace-plugins-page.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatButton, RouterLink, MtxGrid, MatIconButton, MatTooltip, MatIcon, TranslatePipe]
 })
 export class MarketplacePluginsPageComponent implements OnInit, OnDestroy{
   private pluginManagementService = inject(PluginsManagementService);

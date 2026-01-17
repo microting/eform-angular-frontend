@@ -32,16 +32,16 @@ describe('WorkerEditCreateComponent', () => {
     mockDialogData = new WorkerDto();
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [WorkerEditCreateComponent, MockTranslatePipe],
-      providers: [
+    imports: [FormsModule, WorkerEditCreateComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {
@@ -70,16 +70,16 @@ describe('WorkerEditCreateComponent', () => {
     
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [WorkerEditCreateComponent, MockTranslatePipe],
-      providers: [
+    imports: [FormsModule, WorkerEditCreateComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: existingWorker }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
 
     fixture = TestBed.createComponent(WorkerEditCreateComponent);
     component = fixture.componentInstance;

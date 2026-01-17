@@ -18,33 +18,31 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    FormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTooltipModule,
-  ],
-  declarations: [
-    SharedTagDeleteComponent,
-    SharedTagEditComponent,
-    SharedTagCreateComponent,
-    SharedTagsComponent,
-    EformsTagsComponent,
-    SharedTagMultipleCreateComponent,
-  ],
-  exports: [
-    SharedTagDeleteComponent,
-    SharedTagEditComponent,
-    SharedTagCreateComponent,
-    SharedTagsComponent,
-    EformsTagsComponent,
-    SharedTagMultipleCreateComponent,
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        FormsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTooltipModule,
+        SharedTagDeleteComponent,
+        SharedTagEditComponent,
+        SharedTagCreateComponent,
+        SharedTagsComponent,
+        EformsTagsComponent,
+        SharedTagMultipleCreateComponent,
+    ],
+    exports: [
+        SharedTagDeleteComponent,
+        SharedTagEditComponent,
+        SharedTagCreateComponent,
+        SharedTagsComponent,
+        EformsTagsComponent,
+        SharedTagMultipleCreateComponent,
+    ],
 })
 export class EformSharedTagsModule {
 }

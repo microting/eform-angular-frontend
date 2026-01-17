@@ -11,10 +11,10 @@ describe('NavigationMenuCustomComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ NavigationMenuCustomComponent, MockTranslatePipe ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    imports: [FormsModule, NavigationMenuCustomComponent],
+    declarations: [MockTranslatePipe],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

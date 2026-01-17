@@ -32,16 +32,15 @@ describe('FoldersComponent', () => {
     mockStore.select.mockReturnValue(of(true));
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [FoldersComponent],
-      providers: [
+    imports: [FormsModule, FoldersComponent],
+    providers: [
         { provide: FoldersService, useValue: mockFoldersService },
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
         { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, QueryList, ViewChildren, inject } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkActive } from '@angular/router';
 import {Subscription} from 'rxjs';
 import {
   CaseEditRequest,
@@ -20,13 +20,23 @@ import {ToastrService} from 'ngx-toastr';
 import {MatDialog} from '@angular/material/dialog';
 import {selectCurrentUserClaimsCaseUpdate} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import { EformNewSubheaderComponent } from '../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardContent, MatCardFooter } from '@angular/material/card';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatDatepickerToggle, MatDatepickerInput, MatDatepicker } from '@angular/material/datepicker';
+import { MatInput } from '@angular/material/input';
+import { CaseEditElementComponent as CaseEditElementComponent_1 } from '../../../../common/modules/eform-cases/components/case-edit/case-edit-element/case-edit-element.component';
+import { MatButton } from '@angular/material/button';
+import { CaseEditNavComponent } from '../../../../common/modules/eform-cases/components/case-edit-nav/case-edit-nav.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-case-edit',
     templateUrl: './case-edit.component.html',
     styleUrls: ['./case-edit.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, NgIf, MatCard, MatCardHeader, MatCardContent, MatFormField, MatLabel, MatDatepickerToggle, MatSuffix, MatInput, MatDatepickerInput, MatDatepicker, MatError, NgFor, CaseEditElementComponent_1, RouterLinkActive, MatButton, CaseEditNavComponent, MatCardFooter, TranslatePipe, AsyncPipe]
 })
 export class CaseEditComponent implements OnInit, OnDestroy {
   private authStore = inject(Store);

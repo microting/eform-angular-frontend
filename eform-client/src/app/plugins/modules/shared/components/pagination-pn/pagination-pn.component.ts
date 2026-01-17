@@ -8,13 +8,14 @@ import {
 } from '@angular/core';
 import { Observable, range } from 'rxjs';
 import { filter, map, toArray } from 'rxjs/operators';
+import { NgIf, NgFor, NgClass, AsyncPipe } from '@angular/common';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'pagination-pn',
     templateUrl: './pagination-pn.component.html',
     styleUrls: ['./pagination-pn.component.scss'],
-    standalone: false
+    imports: [NgIf, NgFor, NgClass, AsyncPipe]
 })
 export class PaginationPnComponent implements OnInit, OnChanges {
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix

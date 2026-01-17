@@ -8,14 +8,14 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {PaginationModel} from 'src/app/common/models';
-import {PageEvent} from '@angular/material/paginator';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'eform-pagination',
     templateUrl: './eform-pagination.component.html',
     styleUrls: ['./eform-pagination.component.scss'],
-    standalone: false
+    imports: [MatPaginator]
 })
 export class EformPaginationComponent implements OnInit, OnChanges {
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix

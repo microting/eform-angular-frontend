@@ -57,20 +57,18 @@ import {AppIconComponent} from "src/app/components/icons/app-icon/app-icon.compo
         MtxButtonModule,
         MatChipsModule,
         AppIconComponent,
+        EformsPageComponent,
+        EformEditParingModalComponent,
+        EformCreateModalComponent,
+        EformColumnsModalComponent,
+        EformEditTagsModalComponent,
+        EformRemoveEformModalComponent,
+        EformUploadZipModalComponent,
+        EformExcelReportModalComponent,
+        EformsBulkImportModalComponent,
+        EformDuplicateConfirmModalComponent,
     ],
-  declarations: [
-    EformsPageComponent,
-    EformEditParingModalComponent,
-    EformCreateModalComponent,
-    EformColumnsModalComponent,
-    EformEditTagsModalComponent,
-    EformRemoveEformModalComponent,
-    EformUploadZipModalComponent,
-    EformExcelReportModalComponent,
-    EformsBulkImportModalComponent,
-    EformDuplicateConfirmModalComponent,
-  ],
-  exports: []
+    exports: []
 })
 export class EFormsModule {
 }

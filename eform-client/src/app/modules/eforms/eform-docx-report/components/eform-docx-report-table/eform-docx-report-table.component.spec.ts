@@ -21,14 +21,14 @@ describe('EformDocxReportTableComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ EformDocxReportTableComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, EformDocxReportTableComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: Router, useValue: mockRouter },
         { provide: TranslateService, useValue: mockTranslateService }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

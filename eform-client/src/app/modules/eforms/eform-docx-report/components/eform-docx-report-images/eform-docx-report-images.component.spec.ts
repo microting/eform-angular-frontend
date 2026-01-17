@@ -28,15 +28,15 @@ describe('EformDocxReportImagesComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ EformDocxReportImagesComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, EformDocxReportImagesComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: Gallery, useValue: mockGallery },
         { provide: Lightbox, useValue: mockLightbox },
         { provide: TemplateFilesService, useValue: mockTemplateFilesService }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

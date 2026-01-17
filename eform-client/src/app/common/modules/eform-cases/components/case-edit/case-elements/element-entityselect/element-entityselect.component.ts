@@ -2,13 +2,15 @@ import { AfterViewInit, Component, Input, OnInit, inject } from '@angular/core';
 import { FieldValueDto } from 'src/app/common/models';
 import { CommonDictionaryTextModel } from 'src/app/common/models/common';
 import { EntitySelectService } from 'src/app/common/services/advanced';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-entityselect',
     templateUrl: './element-entityselect.component.html',
     styleUrls: ['./element-entityselect.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatLabel, MtxSelect]
 })
 export class ElementEntityselectComponent implements OnInit, AfterViewInit {
   private entitySelectService = inject(EntitySelectService);

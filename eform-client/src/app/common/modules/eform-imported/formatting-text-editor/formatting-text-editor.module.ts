@@ -4,9 +4,8 @@ import {NgxEditorModule} from 'ngx-editor';
 import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
-  imports: [NgxEditorModule, ReactiveFormsModule],
-  declarations: [FormattingTextEditorComponent],
-  exports: [FormattingTextEditorComponent],
+    imports: [NgxEditorModule, ReactiveFormsModule, FormattingTextEditorComponent],
+    exports: [FormattingTextEditorComponent],
 })
 export class FormattingTextEditorModule {
 }

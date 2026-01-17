@@ -1,18 +1,21 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {FileUploader} from 'ng2-file-upload';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { FileUploader, FileUploadModule } from 'ng2-file-upload';
 import {ToastrService} from 'ngx-toastr';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {AuthStateService} from 'src/app/common/store';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import {selectBearerToken} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgIf, NgStyle } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-eform-uplo ad-zip-modal',
     templateUrl: './eform-upload-zip-modal.component.html',
     styleUrls: ['./eform-upload-zip-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgIf, FileUploadModule, NgStyle, MatDialogActions, MatIcon, TranslatePipe]
 })
 export class EformUploadZipModalComponent implements OnInit {
   private toastrService = inject(ToastrService);

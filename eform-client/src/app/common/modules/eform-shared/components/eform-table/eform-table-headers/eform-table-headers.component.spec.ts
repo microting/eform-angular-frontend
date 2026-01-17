@@ -11,10 +11,9 @@ describe('EformTableHeadersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ EformTableHeadersComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    imports: [FormsModule, EformTableHeadersComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   });
 

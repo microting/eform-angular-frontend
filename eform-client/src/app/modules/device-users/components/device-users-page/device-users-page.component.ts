@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {DeviceUserService} from 'src/app/common/services';
 import {DeviceUsersStateService} from '../store';
 import {AuthStateService} from 'src/app/common/store';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
@@ -12,18 +12,27 @@ import {
 } from '../';
 import {Subscription, zip} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {DeleteModalSettingModel, SiteDto} from 'src/app/common/models';
 import {DeleteModalComponent} from 'src/app/common/modules/eform-shared/components';
 import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsDeviceUsersCreate} from 'src/app/state/auth/auth.selector';
 import {selectDeviceUsersFilters, selectDeviceUsersNameFilter} from "src/app/state/device-user/device-user.selector";
+import { EformNewSubheaderComponent } from '../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-device-users-page',
     templateUrl: './device-users-page.component.html',
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MatIcon, MatSuffix, NgIf, MatTooltip, MtxGrid, MatIconButton, MatMenuTrigger, MatMenu, MatMenuItem, AsyncPipe, TranslatePipe]
 })
 export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   private authStore = inject(Store);

@@ -3,20 +3,26 @@ import {Router} from '@angular/router';
 import {WorkerDto} from 'src/app/common/models';
 import {WorkersService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {WorkerDeleteComponent, WorkerEditCreateComponent} from '../';
 import {Subscription} from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsWorkersCreate} from 'src/app/state/auth/auth.selector';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-workers',
     templateUrl: './workers.component.html',
-    standalone: false
+    imports: [EformNewSubheaderComponent, NgIf, MatIcon, MtxGrid, MatIconButton, MatMenuTrigger, MatTooltip, MatMenu, MatMenuItem, AsyncPipe, TranslatePipe]
 })
 export class WorkersComponent implements OnInit {
   private authStore = inject(Store);

@@ -1,13 +1,18 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {CdkDragDrop, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, moveItemInArray, CdkDrag } from '@angular/cdk/drag-drop';
 import {getRandomInt} from 'src/app/common/helpers';
 import {EntityItemModel} from 'src/app/common/models';
+import { NgFor, NgIf } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-entity-list-elements',
-  templateUrl: './entity-list-elements.component.html',
-  styleUrls: ['./entity-list-elements.component.scss'],
-  standalone: false
+    selector: 'app-entity-list-elements',
+    templateUrl: './entity-list-elements.component.html',
+    styleUrls: ['./entity-list-elements.component.scss'],
+    imports: [CdkDropList, NgFor, CdkDrag, MatIcon, NgIf, MatTooltip, MatIconButton, TranslatePipe]
 })
 export class EntityListElementsComponent {
   @Input() entityItemModels: any[] = [];
