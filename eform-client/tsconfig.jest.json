@@ -8,7 +8,7 @@
     "outDir": "../out-tsc/spec",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -21,8 +21,7 @@
     },
     "types": [
       "jest",
-      "node",
-      "jasmine"
+      "node"
     ],
     "typeRoots": [
       "node_modules/@types"
