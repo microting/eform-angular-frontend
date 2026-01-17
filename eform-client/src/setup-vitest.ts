@@ -1,15 +1,15 @@
-// Setup file for Vitest - Use Analog's zone patching
-import '@analogjs/vite-plugin-angular/setup-vitest';
+// Setup file for Vitest - Manual TestBed setup without @analogjs helper
+import '@angular/compiler';
+import '@analogjs/vitest-angular/setup-zone';
 
-// Import Angular testing utilities
-import { TestBed } from '@angular/core/testing';
+import { getTestBed } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
 
-// Initialize Angular testing environment
-TestBed.initTestEnvironment(
+// Manually initialize Angular testing environment
+getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting(),
   {
@@ -27,7 +27,7 @@ Object.defineProperty(window, 'getComputedStyle', {
 });
 
 Object.defineProperty(document, 'doctype', {
-  value: '<!DOCTYPE html>'
+  value: '<!DOCTYPE html}'
 });
 
 Object.defineProperty(document.body.style, 'transform', {

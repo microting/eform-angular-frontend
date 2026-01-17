@@ -156,6 +156,11 @@
   dependencies:
     ts-morph "^21.0.0"
 
+"@analogjs/vitest-angular@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.npmjs.org/@analogjs/vitest-angular/-/vitest-angular-2.2.2.tgz"
+  integrity sha512-vIN0UCVY3wG/EvVh9tCYT40LsnrYhiEAhIwkz+Rdp9Yj2SMRQHBTaZLeNMTUwoLjcb5kOH2uCQFWkEC34HZWjw==
+
 "@angular-builders/common@5.0.3":
   version "5.0.3"
   resolved "https://registry.npmjs.org/@angular-builders/common/-/common-5.0.3.tgz"
