@@ -1,0 +1,102 @@
+<eform-new-subheader [title]="'Open source licenses' | translate">
+  <div class="d-flex flex-row justify-content-center align-items-center gap-12">
+    <div class="text-field--rounded">
+      <mat-form-field>
+        <mat-label>{{ 'Search packages' | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchChange()"
+          [placeholder]="'Search by name or license' | translate"
+        />
+        <button mat-icon-button matSuffix *ngIf="searchQuery" (click)="clearSearch()">
+          <mat-icon>clear</mat-icon>
+        </button>
+        <mat-icon matSuffix *ngIf="!searchQuery">search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+</eform-new-subheader>
+
+<div class="license-page-container">
+  <div class="stats-header" *ngIf="!loading">
+    <p>{{ 'This page lists all open source software used in this project' | translate }}</p>
+    <div class="stats">
+      <mat-chip-set>
+        <mat-chip>{{ 'Total' | translate }}: {{ totalPackages }}</mat-chip>
+        <mat-chip>npm: {{ npmPackages }}</mat-chip>
+        <mat-chip>NuGet: {{ nugetPackages }}</mat-chip>
+        <mat-chip>{{ 'Direct' | translate }}: {{ directPackages }}</mat-chip>
+        <mat-chip>{{ 'Transitive' | translate }}: {{ nestedPackages }}</mat-chip>
+      </mat-chip-set>
+    </div>
+  </div>
+
+  <div class="filters" *ngIf="!loading">
+    <mat-button-toggle-group [value]="showFilter" (change)="onFilterChange($event.value)">
+      <mat-button-toggle value="direct">
+        {{ 'Direct dependencies' | translate }} ({{ directPackages }})
+      </mat-button-toggle>
+      <mat-button-toggle value="nested">
+        {{ 'Transitive dependencies' | translate }} ({{ nestedPackages }})
+      </mat-button-toggle>
+      <mat-button-toggle value="all">
+        {{ 'All dependencies' | translate }} ({{ totalPackages }})
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>{{ 'Loading licenses' | translate }}...</p>
+  </div>
+
+  <div class="licenses-list" *ngIf="!loading">
+    <p class="results-count">{{ 'Showing' | translate }} {{ filteredLicenses.length }} {{ 'of' | translate }} {{ totalPackages }} {{ 'packages' | translate }}</p>
+    
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let license of filteredLicenses" (opened)="onPanelOpened(license)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ license.name }}
+            <span class="package-badges">
+              <span class="badge badge-type">{{ getPackageTypeLabel(license) }}</span>
+              <span class="badge badge-dependency" *ngIf="license.isDirect">{{ getDependencyTypeLabel(license) }}</span>
+            </span>
+          </mat-panel-title>
+          <mat-panel-description>
+            v{{ license.version }} - {{ license.license }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="license-content">
+          <div class="license-info">
+            <p><strong>{{ 'Package' | translate }}:</strong> {{ license.name }}</p>
+            <p><strong>{{ 'Version' | translate }}:</strong> {{ license.version }}</p>
+            <p><strong>{{ 'License' | translate }}:</strong> {{ license.license }}</p>
+            <p><strong>{{ 'Type' | translate }}:</strong> {{ getPackageTypeLabel(license) }} ({{ getDependencyTypeLabel(license) }})</p>
+            <p>
+              <strong>{{ 'Repository' | translate }}:</strong>
+              <a [href]="license.repository" target="_blank" rel="noopener noreferrer">
+                {{ license.repository }}
+              </a>
+            </p>
+          </div>
+
+          <div class="license-text" *ngIf="license.licenseUrl">
+            <h3>{{ 'License Text' | translate }}</h3>
+            <div *ngIf="license.loading" class="loading-spinner">
+              <mat-spinner diameter="40"></mat-spinner>
+              <p>{{ 'Loading license text' | translate }}...</p>
+            </div>
+            <div *ngIf="license.error" class="error-message">
+              <p>{{ license.error | translate }}</p>
+            </div>
+            <pre *ngIf="license.licenseText && !license.loading">{{ license.licenseText }}</pre>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

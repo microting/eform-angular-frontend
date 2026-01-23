@@ -13,7 +13,7 @@
 @include mat.core();
 
 $letter-spacing: normal;
-$eform-font-family: Nunito Sans, Roboto, "Helvetica Neue", sans-serif;
+$eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
 
 
 // Define a typography
@@ -117,6 +117,7 @@ $eform-m3-light-theme: mat.define-theme((
   ),
   typography: (
     brand-family: $eform-font-family,
+    plain-family: $eform-font-family
   ),
   density: (
     scale: 0,
@@ -130,6 +131,7 @@ $eform-m3-dark-theme: mat.define-theme((
   ),
   typography: (
     brand-family: $eform-font-family,
+    plain-family: $eform-font-family
   ),
   density: (
     scale: 0,
