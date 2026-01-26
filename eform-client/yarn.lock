@@ -169,7 +169,7 @@
     jest-preset-angular "14.6.0"
     lodash "^4.17.15"
 
-"@angular-devkit/architect@0.2003.15":
+"@angular-devkit/architect@0.2003.15", "@angular-devkit/architect@>=0.2000.0 < 0.2100.0":
   version "0.2003.15"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.2003.15.tgz#09d4e520205dcfe44ae0dd5e4f865596c1fdec98"
   integrity sha512-HmGnUTLVwpvOFilc3gTP6CL9o+UbkVyu9S4WENkQbInbW3zp54lkzY71uWJIP7QvuXPa+bS4WHEmoGNQtNvv1A==
@@ -177,12 +177,20 @@
     "@angular-devkit/core" "20.3.15"
     rxjs "7.8.2"
 
-"@angular-devkit/architect@0.2003.9", "@angular-devkit/architect@>= 0.2000.0 < 0.2100.0", "@angular-devkit/architect@>=0.2000.0 < 0.2100.0":
+"@angular-devkit/architect@0.2003.9":
   version "0.2003.9"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.2003.9.tgz#951761c3cc39c00803475b9413d3b77700bba109"
   integrity sha512-p0GO2H8hiZjRHI9sm4tXTF3OpWaEnkqvB0GBGJfGp8RvpPfDA2t3j2NAUNtd75H+B0xdfyWLmNq9YJGpy6gznA==
   dependencies:
     "@angular-devkit/core" "20.3.9"
+    rxjs "7.8.2"
+
+"@angular-devkit/architect@>= 0.2100.0 < 0.2200.0":
+  version "0.2101.1"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.2101.1.tgz#d36db61c0b7e3b2fe3e925900f2acf65be37f653"
+  integrity sha512-8x7hKcFs3hnpDaIj9fyzinh4X74oQaMxMsZzBf4dBL7EwokjPIf2fadQsZd8a5M+Ja4tIgTnXH9ySyaRFWGNXA==
+  dependencies:
+    "@angular-devkit/core" "21.1.1"
     rxjs "7.8.2"
 
 "@angular-devkit/build-angular@20.3.9":
@@ -255,7 +263,7 @@
     "@angular-devkit/architect" "0.2003.9"
     rxjs "7.8.2"
 
-"@angular-devkit/core@20.3.15":
+"@angular-devkit/core@20.3.15", "@angular-devkit/core@>= 20.0.0 < 21.0.0", "@angular-devkit/core@^20.0.0":
   version "20.3.15"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-20.3.15.tgz#d61e2b915b2347da9f33c37f39c6c163cc5d29ea"
   integrity sha512-s7sE4S5Hy62dLrtHwizbZaMcupAE8fPhm6rF+jBkhHZ75zXGhGzXP8WKFztYCAuGnis4pPnGSEKP/xVTc2lw6Q==
@@ -267,7 +275,7 @@
     rxjs "7.8.2"
     source-map "0.7.6"
 
-"@angular-devkit/core@20.3.9", "@angular-devkit/core@>= 20.0.0 < 21.0.0", "@angular-devkit/core@^20.0.0":
+"@angular-devkit/core@20.3.9":
   version "20.3.9"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-20.3.9.tgz#aea55e08f04189738afacc6784badec4388039c6"
   integrity sha512-bXsAGIUb4p60x548YmvnMvjwd3FwWz6re1uTM7dV0XH8nQn3XMhOQ3Q3sAckzJHxkDuaRhB3K/a4kupoOmVfTQ==
@@ -283,6 +291,18 @@
   version "21.0.4"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-21.0.4.tgz#86047e6b3654cf2effc5cadebb02b5387fdc2825"
   integrity sha512-Mbze8tMtBs7keSOx4UIR9utLQs1uSiGjfTaOkCu/dbBEiG6umopy1OlUCvHiHyeiYqh+wR0yiGtTS+Cexo5iLg==
+  dependencies:
+    ajv "8.17.1"
+    ajv-formats "3.0.1"
+    jsonc-parser "3.3.1"
+    picomatch "4.0.3"
+    rxjs "7.8.2"
+    source-map "0.7.6"
+
+"@angular-devkit/core@21.1.1", "@angular-devkit/core@>= 21.0.0 < 22.0.0":
+  version "21.1.1"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-21.1.1.tgz#4a889c8e75849811981d33b3ab59a88157485eae"
+  integrity sha512-rCwfBUemyRoAfrO4c85b49lkPiD5WljWE+IK7vjUNIFFf4TXOS4tg4zxqopUDVE4zEjXORa5oHCEc5HCerjn1g==
   dependencies:
     ajv "8.17.1"
     ajv-formats "3.0.1"
@@ -324,13 +344,13 @@
     ora "8.2.0"
     rxjs "7.8.2"
 
-"@angular-eslint/builder@20.5.1":
-  version "20.5.1"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-20.5.1.tgz#390c05f6a42fed19de10840443f8fc702a94a5cd"
-  integrity sha512-jUnqrMbMQ/UR8xPncg3NW3I18dlnV68V0HHozZgX3rjHuDOa7Yq4jwjFaaxfaId5KsNDoEGtjZCAz1lgw/+4Gw==
+"@angular-eslint/builder@21.0.1":
+  version "21.0.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-21.0.1.tgz#d1d2915dcd28cc371251911f064751d3de50c767"
+  integrity sha512-6BqpmW0XvjTOs2YOHwzeZcQ32eL8vs8SCHjt1cQnq1+libOVDXky1eb/jRs7ouyA49UagLDoM34K1kjrYo8P3Q==
   dependencies:
-    "@angular-devkit/architect" ">= 0.2000.0 < 0.2100.0"
-    "@angular-devkit/core" ">= 20.0.0 < 21.0.0"
+    "@angular-devkit/architect" ">= 0.2100.0 < 0.2200.0"
+    "@angular-devkit/core" ">= 21.0.0 < 22.0.0"
 
 "@angular-eslint/bundled-angular-compiler@20.5.0":
   version "20.5.0"
