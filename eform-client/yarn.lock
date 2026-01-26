@@ -255,7 +255,7 @@
     "@angular-devkit/architect" "0.2003.9"
     rxjs "7.8.2"
 
-"@angular-devkit/core@20.3.15":
+"@angular-devkit/core@20.3.15", "@angular-devkit/core@>= 20.0.0 < 21.0.0", "@angular-devkit/core@^20.0.0":
   version "20.3.15"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-20.3.15.tgz#d61e2b915b2347da9f33c37f39c6c163cc5d29ea"
   integrity sha512-s7sE4S5Hy62dLrtHwizbZaMcupAE8fPhm6rF+jBkhHZ75zXGhGzXP8WKFztYCAuGnis4pPnGSEKP/xVTc2lw6Q==
@@ -267,7 +267,7 @@
     rxjs "7.8.2"
     source-map "0.7.6"
 
-"@angular-devkit/core@20.3.9", "@angular-devkit/core@>= 20.0.0 < 21.0.0", "@angular-devkit/core@^20.0.0":
+"@angular-devkit/core@20.3.9":
   version "20.3.9"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-20.3.9.tgz#aea55e08f04189738afacc6784badec4388039c6"
   integrity sha512-bXsAGIUb4p60x548YmvnMvjwd3FwWz6re1uTM7dV0XH8nQn3XMhOQ3Q3sAckzJHxkDuaRhB3K/a4kupoOmVfTQ==
@@ -283,6 +283,18 @@
   version "21.0.4"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-21.0.4.tgz#86047e6b3654cf2effc5cadebb02b5387fdc2825"
   integrity sha512-Mbze8tMtBs7keSOx4UIR9utLQs1uSiGjfTaOkCu/dbBEiG6umopy1OlUCvHiHyeiYqh+wR0yiGtTS+Cexo5iLg==
+  dependencies:
+    ajv "8.17.1"
+    ajv-formats "3.0.1"
+    jsonc-parser "3.3.1"
+    picomatch "4.0.3"
+    rxjs "7.8.2"
+    source-map "0.7.6"
+
+"@angular-devkit/core@21.1.1":
+  version "21.1.1"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-21.1.1.tgz#4a889c8e75849811981d33b3ab59a88157485eae"
+  integrity sha512-rCwfBUemyRoAfrO4c85b49lkPiD5WljWE+IK7vjUNIFFf4TXOS4tg4zxqopUDVE4zEjXORa5oHCEc5HCerjn1g==
   dependencies:
     ajv "8.17.1"
     ajv-formats "3.0.1"
