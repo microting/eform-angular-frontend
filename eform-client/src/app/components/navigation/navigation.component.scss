@@ -21,11 +21,18 @@ mat-tree {
         line-height: 1.4em;
       }
 
-      &:hover{
-        border-radius: var(--rounded-full)!important;
+      &:hover {
+        border-radius: var(--rounded-full) !important;
         background-color: var(--mdc-theme-primary-dark, #00695C) !important;
         color: var(--mdc-theme-on-primary) !important;
+        .mat-icon{
+          color: var(--mdc-theme-on-primary) !important;
+        }
+        svg{
+          fill: var(--mdc-theme-on-primary) !important;
+        }
       }
+
       //&:focus {
       //  background-color: var(--mdc-theme-primary-dark, #00695C) !important;
       //  border-radius: var(--rounded-full) !important;
@@ -34,16 +41,22 @@ mat-tree {
     }
 
 
-
-
     .selected-node {
       background-color: var(--mdc-theme-primary) !important;
       color: var(--mdc-theme-on-primary) !important;
       border-radius: var(--rounded-full);
 
-      &:hover{
-          background-color: var(--mdc-theme-primary-dark) !important;
+      &:hover {
+        background-color: var(--mdc-theme-primary-dark) !important;
+        color: var(--mdc-theme-on-primary) !important;
+
+        .mat-icon {
           color: var(--mdc-theme-on-primary) !important;
+        }
+
+        svg {
+          fill: var(--mdc-theme-on-primary) !important;
+        }
       }
     }
 
@@ -58,12 +71,14 @@ mat-tree {
 
         .mat-expansion-panel-header {
           padding-left: 1rem;
-          &:hover{
+
+          &:hover {
             background-color: var(--mdc-theme-primary-dark) !important;
             color: var(--mdc-theme-on-primary) !important;
             border-radius: var(--rounded-full);
-            a{
-              span{
+
+            a {
+              span {
                 color: var(--mdc-theme-on-primary) !important;
               }
             }
@@ -84,24 +99,25 @@ mat-tree {
         }
 
         mat-tree-node {
-          .nav-link{
-            &:hover{
-              width: calc(100% - 20px)!important;
-              border-radius: var(--rounded-full)!important;
+          .nav-link {
+            &:hover {
+              width: calc(100% - 20px) !important;
+              border-radius: var(--rounded-full) !important;
               background-color: var(--mdc-theme-primary-dark, #00695C) !important;
               color: var(--mdc-theme-on-primary) !important;
             }
           }
+
           span {
             white-space: initial;
           }
         }
       }
     }
-    .selected-node {
-      width: calc(100% - 20px)!important;
-    }
 
+    .selected-node {
+      width: calc(100% - 20px) !important;
+    }
 
   }
 }
