@@ -43,7 +43,7 @@ describe('NavigationMenuItemEditComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NavigationMenuItemEditComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {

@@ -43,7 +43,7 @@ describe('NavigationMenuCustomDropdownComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NavigationMenuCustomDropdownComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {

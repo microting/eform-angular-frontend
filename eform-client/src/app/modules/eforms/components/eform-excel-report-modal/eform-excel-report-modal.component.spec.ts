@@ -43,7 +43,7 @@ describe('EformExcelReportModalComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EformExcelReportModalComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {

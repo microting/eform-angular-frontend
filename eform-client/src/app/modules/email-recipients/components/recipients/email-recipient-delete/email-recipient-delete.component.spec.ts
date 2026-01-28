@@ -54,7 +54,7 @@ describe('EmailRecipientDeleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EmailRecipientDeleteComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {

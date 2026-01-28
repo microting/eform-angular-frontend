@@ -62,7 +62,7 @@ describe('EformsBulkImportModalComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EformsBulkImportModalComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {
