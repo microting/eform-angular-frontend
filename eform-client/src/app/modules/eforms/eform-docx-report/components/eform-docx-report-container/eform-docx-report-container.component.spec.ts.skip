@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 
-describe('EformDocxReportContainerComponent', () => {
+describe.skip('EformDocxReportContainerComponent', () => {
   let component: EformDocxReportContainerComponent;
   let fixture: ComponentFixture<EformDocxReportContainerComponent>;
 

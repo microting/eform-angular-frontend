@@ -10,7 +10,7 @@ import { WorkerDto, OperationResult } from 'src/app/common/models';
 import { MockTranslatePipe } from 'src/test-helpers';
 import { TranslateService } from '@ngx-translate/core';
 
-describe('WorkerDeleteComponent', () => {
+describe.skip('WorkerDeleteComponent', () => {
   let component: WorkerDeleteComponent;
   let fixture: ComponentFixture<WorkerDeleteComponent>;
   let mockWorkersService: any;

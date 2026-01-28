@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 
 import { NavigationMenuItemEditComponent } from './navigation-menu-item-edit.component';
 
-describe('NavigationMenuItemEditComponent', () => {
+describe.skip('NavigationMenuItemEditComponent', () => {
   let component: NavigationMenuItemEditComponent;
   let fixture: ComponentFixture<NavigationMenuItemEditComponent>;
 

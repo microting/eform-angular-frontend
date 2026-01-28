@@ -6,6 +6,7 @@ import { MockTranslatePipe } from 'src/test-helpers';
 import { EformDocxReportHeaderComponent } from './eform-docx-report-header.component';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 describe('EformDocxReportHeaderComponent', () => {
   let component: EformDocxReportHeaderComponent;
@@ -21,10 +22,12 @@ describe('EformDocxReportHeaderComponent', () => {
       stream: vi.fn()
     };
     mockTranslateService.stream.mockReturnValue(of('Test'));
+    
     TestBed.configureTestingModule({
     imports: [FormsModule, EformDocxReportHeaderComponent],
     declarations: [MockTranslatePipe],
     providers: [
+        provideNativeDateAdapter(),
         { provide: TranslateService, useValue: mockTranslateService }
     ],
     schemas: [NO_ERRORS_SCHEMA]
