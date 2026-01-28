@@ -21,8 +21,9 @@ describe('EmailRecipientEditComponent', () => {
       use: vi.fn(),
       setDefaultLang: vi.fn(),
       currentLang: 'en',
-      stream: vi.fn((key: string) => of(key))
+      stream: vi.fn()
     };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
     const mockEmailRecipientsService = {
           update: vi.fn(),
         };

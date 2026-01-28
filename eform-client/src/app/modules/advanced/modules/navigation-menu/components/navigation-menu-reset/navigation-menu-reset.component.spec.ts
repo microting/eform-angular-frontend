@@ -20,8 +20,9 @@ describe('NavigationMenuResetComponent', () => {
       use: vi.fn(),
       setDefaultLang: vi.fn(),
       currentLang: 'en',
-      stream: vi.fn((key: string) => of(key))
+      stream: vi.fn()
     };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
     mockDialogRef = {
           close: vi.fn(),
         };
