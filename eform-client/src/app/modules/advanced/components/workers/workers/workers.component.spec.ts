@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { WorkerDto, OperationDataResult } from 'src/app/common/models';
+import { AppMenuStateService } from 'src/app/common/store';
 
 describe('WorkersComponent', () => {
   let component: WorkersComponent;
@@ -29,6 +30,10 @@ describe('WorkersComponent', () => {
       stream: vi.fn()
     };
     mockTranslateService.stream.mockReturnValue(of('Test'));
+    const mockAppMenuStateService = {
+      updateState: vi.fn(),
+      loadMobileMenuItems: vi.fn()
+    };
     mockWorkersService = {
           getAllWorkers: vi.fn(),
         };
@@ -50,6 +55,7 @@ describe('WorkersComponent', () => {
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
         { provide: TranslateService, useValue: mockTranslateService },
+        { provide: AppMenuStateService, useValue: mockAppMenuStateService },
         { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
     ],
     schemas: [NO_ERRORS_SCHEMA]

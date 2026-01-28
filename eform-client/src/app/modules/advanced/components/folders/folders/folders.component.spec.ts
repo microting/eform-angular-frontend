@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { FolderDto, OperationDataResult } from 'src/app/common/models';
 import { TranslateService } from '@ngx-translate/core';
+import { AppMenuStateService } from 'src/app/common/store';
 
 describe('FoldersComponent', () => {
   let component: FoldersComponent;
@@ -28,6 +29,10 @@ describe('FoldersComponent', () => {
       stream: vi.fn()
     };
     mockTranslateService.stream.mockReturnValue(of('Test'));
+    const mockAppMenuStateService = {
+      updateState: vi.fn(),
+      loadMobileMenuItems: vi.fn()
+    };
     mockFoldersService = {
           getAllFolders: vi.fn(),
           getAllFoldersList: vi.fn(),
@@ -48,6 +53,7 @@ describe('FoldersComponent', () => {
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
         { provide: TranslateService, useValue: mockTranslateService },
+        { provide: AppMenuStateService, useValue: mockAppMenuStateService },
         { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
     ],
     schemas: [NO_ERRORS_SCHEMA]
