@@ -1,12 +1,15 @@
 import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import { SecurityGroupModel } from 'src/app/common/models';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-security-group-remove',
     templateUrl: './security-group-remove.component.html',
     styleUrls: ['./security-group-remove.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, TranslatePipe]
 })
 export class SecurityGroupRemoveComponent implements OnInit {
   dialogRef = inject<MatDialogRef<SecurityGroupRemoveComponent>>(MatDialogRef);

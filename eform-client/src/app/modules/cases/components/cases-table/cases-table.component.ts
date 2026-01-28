@@ -1,4 +1,4 @@
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {composeCasesTableHeaders, dialogConfigHelper} from 'src/app/common/helpers';
 import {
@@ -19,8 +19,8 @@ import {AppMenuStateService, AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 import {Sort} from '@angular/material/sort';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {TranslateService} from '@ngx-translate/core';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {CaseRemoveModalComponent} from 'src/app/common/modules/eform-cases/components';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
@@ -33,12 +33,21 @@ import {
   selectCurrentUserClaimsCaseUpdate,
   selectCurrentUserIsAdmin
 } from 'src/app/state';
+import { EformNewSubheaderComponent } from '../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { EformPaginationComponent } from '../../../../common/modules/eform-shared/components/eform-pagination/eform-pagination.component';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-cases-table',
     templateUrl: './cases-table.component.html',
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, NgIf, MtxGrid, MatIconButton, RouterLink, MatTooltip, MatIcon, EformPaginationComponent, TranslatePipe, AsyncPipe]
 })
 export class CasesTableComponent implements OnInit, OnDestroy {
   private activateRoute = inject(ActivatedRoute);

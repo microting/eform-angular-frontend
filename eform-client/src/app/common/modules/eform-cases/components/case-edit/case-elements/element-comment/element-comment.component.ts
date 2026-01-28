@@ -1,12 +1,15 @@
 import { Component, Input} from '@angular/core';
 import { FieldValueDto } from 'src/app/common/models';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-comment',
     templateUrl: './element-comment.component.html',
     styleUrls: ['./element-comment.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatInput, ReactiveFormsModule, FormsModule]
 })
 export class ElementCommentComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();

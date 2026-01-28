@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'eform-page-size',
     templateUrl: './eform-page-size.component.html',
-    standalone: false
+    imports: [NgSelectComponent, ReactiveFormsModule, FormsModule, TranslatePipe]
 })
 export class EformPageSizeComponent {
   @Input() pageSize: number;

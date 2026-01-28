@@ -1,6 +1,8 @@
-// Setup file for Jest
-import 'zone.js';
-import 'zone.js/testing';
+// Test setup file for Angular CLI's built-in Vitest support
+// Note: Vitest does NOT use Zone.js or ProxyZone - use native async/await instead
+// Import compiler for JIT compilation in tests
+import '@angular/compiler';
+
 import { getTestBed } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
@@ -13,10 +15,7 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting(),
 );
 
-// Note: Jasmine compatibility layer has been removed.
-// All tests now use native Jest syntax.
-
-// Add custom matchers or global test setup here
+// Browser mocks
 Object.defineProperty(window, 'CSS', { value: null });
 Object.defineProperty(window, 'getComputedStyle', {
   value: () => ({
@@ -26,17 +25,12 @@ Object.defineProperty(window, 'getComputedStyle', {
 });
 
 Object.defineProperty(document, 'doctype', {
-  value: '<!DOCTYPE html>'
+  value: '<!DOCTYPE html}'
 });
 
 Object.defineProperty(document.body.style, 'transform', {
-  value: () => {
-    return {
-      enumerable: true,
-      configurable: true
-    };
-  }
+  value: () => ({
+    enumerable: true,
+    configurable: true
+  })
 });
-
-
-

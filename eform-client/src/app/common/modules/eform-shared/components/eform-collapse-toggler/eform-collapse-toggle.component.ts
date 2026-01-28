@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-eform-collapse-toggle',
     templateUrl: './eform-collapse-toggle.component.html',
     styleUrls: ['./eform-collapse-toggle.component.scss'],
-    standalone: false
+    imports: [NgIf]
 })
 export class EformCollapseToggleComponent implements OnInit {
   @Input() collapse: any;

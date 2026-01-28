@@ -1,7 +1,9 @@
 import { Component, Input, OnInit, OnDestroy, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { AppMenuStateService } from 'src/app/common/store';
+import { NgStyle, NgIf, NgFor } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -9,7 +11,7 @@ import { AppMenuStateService } from 'src/app/common/store';
     selector: 'eform-subheader',
     templateUrl: './eform-subheader.component.html',
     styleUrls: ['./eform-subheader.component.scss'],
-    standalone: false
+    imports: [NgStyle, NgIf, NgFor, RouterLink, TranslatePipe]
 })
 export class EformSubheaderComponent implements OnInit, OnDestroy {
   private router = inject(Router);

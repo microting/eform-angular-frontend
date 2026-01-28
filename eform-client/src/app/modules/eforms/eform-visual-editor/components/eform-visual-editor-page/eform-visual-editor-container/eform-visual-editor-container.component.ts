@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import * as R from 'ramda';
 import {Subscription, take} from 'rxjs';
@@ -26,7 +26,7 @@ import {
   VisualEditorFieldModalComponent,
   VisualEditorChecklistDeleteModalComponent, VisualEditorChecklistModalComponent
 } from '../../';
-import {DragulaService} from 'ng2-dragula';
+import { DragulaService, DragulaModule } from 'ng2-dragula';
 import {AuthStateService} from 'src/app/common/store';
 import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/components';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
@@ -36,13 +36,24 @@ import {tap} from 'rxjs/operators';
 import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import {selectCurrentUserIsAdmin, selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import { EformNewSubheaderComponent } from '../../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { NgIf, NgClass, NgFor, AsyncPipe } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { MatCard } from '@angular/material/card';
+import { EformVisualEditorHeaderComponent } from '../eform-visual-editor-header/eform-visual-editor-header.component';
+import { MatIconButton } from '@angular/material/button';
+import { VisualEditorChecklistComponent } from '../../eform-visual-editor-elements/checklist/visual-editor-checklist/visual-editor-checklist.component';
+import { VisualEditorFieldComponent } from '../../eform-visual-editor-elements/field/visual-editor-field/visual-editor-field.component';
+import { EformsTagsComponent as EformsTagsComponent_1 } from '../../../../../../common/modules/eform-shared-tags/components/eforms-tags/eforms-tags.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-eform-visual-editor-container',
     templateUrl: './eform-visual-editor-container.component.html',
     styleUrls: ['./eform-visual-editor-container.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, NgIf, MatTooltip, MatIcon, RouterLink, MatCard, EformVisualEditorHeaderComponent, MatIconButton, NgClass, DragulaModule, NgFor, VisualEditorChecklistComponent, VisualEditorFieldComponent, EformsTagsComponent_1, AsyncPipe, TranslatePipe]
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   private dragulaService = inject(DragulaService);

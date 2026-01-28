@@ -2,16 +2,21 @@ import { Component, OnInit, inject } from '@angular/core';
 import {FolderDto, SiteNameDto, TemplateDto, DeployCheckbox, DeployModel} from 'src/app/common/models';
 import {FoldersService, SitesService, EFormService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Store} from "@ngrx/store";
 import {selectCurrentUserClaimsEformsPairingRead} from 'src/app/state/auth/auth.selector';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgIf, NgFor } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { EformTreeViewPickerComponent } from '../../../../common/modules/eform-shared/components/eform-tree-view-picker/eform-tree-view-picker.component';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
     selector: 'app-eform-edit-paring-modal',
     templateUrl: './eform-edit-paring-modal.component.html',
     styleUrls: ['./eform-edit-paring-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgIf, MatCard, MatCardHeader, MatCardContent, EformTreeViewPickerComponent, NgFor, MatCheckbox, MatDialogActions, TranslatePipe]
 })
 export class EformEditParingModalComponent implements OnInit {
   private authStore = inject(Store);

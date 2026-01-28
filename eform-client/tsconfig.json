@@ -8,14 +8,13 @@
     "outDir": "./dist/out-src",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "paths": {
-      "*": [ "./*" ],
       "src/*": ["./src/*"]
     },
     "types": [

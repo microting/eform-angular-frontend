@@ -50,15 +50,13 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
         MatMenu,
         MatMenuItem,
         MatMenuTrigger,
+        ChangePasswordComponent,
+        ProfileSettingsComponent,
+        UsersPageComponent,
+        UserModalComponent,
+        RemoveUserModalComponent,
+        UserSetPasswordComponent,
     ],
-  declarations: [
-    ChangePasswordComponent,
-    ProfileSettingsComponent,
-    UsersPageComponent,
-    UserModalComponent,
-    RemoveUserModalComponent,
-    UserSetPasswordComponent,
-  ],
 })
 export class AccountManagementModule {
 }

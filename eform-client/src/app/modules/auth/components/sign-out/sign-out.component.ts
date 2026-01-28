@@ -5,8 +5,7 @@ import { AuthStateService } from 'src/app/common/store';
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'sign-out',
-    template: '',
-    standalone: false
+    template: ''
 })
 export class SignOutComponent implements OnInit, AfterViewChecked {
   private authStateService = inject(AuthStateService);

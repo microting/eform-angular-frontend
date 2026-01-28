@@ -7,12 +7,16 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {Subscription} from 'rxjs';
+import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-navigation-menu-custom',
     templateUrl: './navigation-menu-custom.component.html',
     styleUrls: ['./navigation-menu-custom.component.scss'],
-    standalone: false
+    imports: [MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatIcon, MatTooltip, TranslatePipe]
 })
 export class NavigationMenuCustomComponent implements OnInit {
   dialog = inject(MatDialog);

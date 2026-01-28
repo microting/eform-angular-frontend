@@ -7,13 +7,16 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { SortModel, TableHeaderElementModel } from 'src/app/common/models';
+import { NgTemplateOutlet, NgFor, NgIf } from '@angular/common';
+import { MatSortHeader } from '@angular/material/sort';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: '[table-headers]',
     templateUrl: './eform-table-headers.component.html',
     styleUrls: ['./eform-table-headers.component.scss'],
-    standalone: false
+    imports: [NgTemplateOutlet, NgFor, NgIf, MatSortHeader, TranslatePipe]
 })
 export class EformTableHeadersComponent implements OnInit {
   // todo need to remove from this line to end

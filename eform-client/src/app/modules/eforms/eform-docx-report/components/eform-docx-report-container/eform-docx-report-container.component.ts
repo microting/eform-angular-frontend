@@ -16,14 +16,19 @@ import {parseISO} from 'date-fns';
 import {saveAs} from 'file-saver';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {catchError} from 'rxjs/operators';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { EformDocxReportHeaderComponent } from '../eform-docx-report-header/eform-docx-report-header.component';
+import { NgIf, NgFor } from '@angular/common';
+import { EformDocxReportTableComponent } from '../eform-docx-report-table/eform-docx-report-table.component';
+import { EformDocxReportImagesComponent } from '../eform-docx-report-images/eform-docx-report-images.component';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-eform-docx-report-container',
     templateUrl: './eform-docx-report-container.component.html',
     styleUrls: ['./eform-docx-report-container.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, EformDocxReportHeaderComponent, NgIf, NgFor, EformDocxReportTableComponent, EformDocxReportImagesComponent, TranslatePipe]
 })
 export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);

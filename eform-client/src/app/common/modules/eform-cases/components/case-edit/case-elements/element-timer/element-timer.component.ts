@@ -1,13 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {differenceInSeconds} from 'date-fns';
 import {FieldValueDto} from 'src/app/common/models';
+import { NgIf } from '@angular/common';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-timer',
     templateUrl: './element-timer.component.html',
     styleUrls: ['./element-timer.component.scss'],
-    standalone: false
+    imports: [NgIf]
 })
 export class ElementTimerComponent implements OnInit {
   fieldValueObj: FieldValueDto = new FieldValueDto();

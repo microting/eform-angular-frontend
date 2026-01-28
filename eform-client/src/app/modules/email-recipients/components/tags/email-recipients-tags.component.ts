@@ -21,8 +21,7 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 @Component({
     selector: 'app-email-recipients-tags',
     templateUrl: './email-recipients-tags.component.html',
-    styleUrls: ['./email-recipients-tags.component.scss'],
-    standalone: false
+    styleUrls: ['./email-recipients-tags.component.scss']
 })
 export class EmailRecipientsTagsComponent implements OnChanges, OnDestroy {
   private tagsService = inject(EmailRecipientsTagsService);

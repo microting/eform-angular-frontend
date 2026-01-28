@@ -13,10 +13,10 @@ import {
 import {UsersStateService} from '../store';
 import {AuthStateService} from 'src/app/common/store';
 import {Sort} from '@angular/material/sort';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
@@ -35,12 +35,21 @@ import {
   selectCurrentUserIsAdmin
 } from 'src/app/state';
 import {format} from "date-fns";
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { EformPaginationComponent } from '../../../../../common/modules/eform-shared/components/eform-pagination/eform-pagination.component';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-users-page',
     templateUrl: './users-page.component.html',
-    standalone: false
+    imports: [EformNewSubheaderComponent, NgIf, MatCheckbox, ReactiveFormsModule, FormsModule, MatTooltip, MtxGrid, MatIconButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem, EformPaginationComponent, AsyncPipe, TranslatePipe]
 })
 export class UsersPageComponent implements OnInit, OnDestroy {
   private adminService = inject(AdminService);

@@ -1,4 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FolderDeleteComponent } from './folder-delete.component';
 import { FoldersService } from 'src/app/common/services';
@@ -6,6 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { FolderDto, OperationResult } from 'src/app/common/models';
 import { MockTranslatePipe } from 'src/test-helpers';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('FolderDeleteComponent', () => {
   let component: FolderDeleteComponent;
@@ -14,25 +17,36 @@ describe('FolderDeleteComponent', () => {
   let mockDialogRef: any;
   let mockDialogData: FolderDto;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn()
+    };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
     mockFoldersService = {
-          deleteSingleFolder: jest.fn(),
+          deleteSingleFolder: vi.fn(),
         };
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
     mockDialogData = { id: 1, name: 'Test Folder' } as FolderDto;
 
     TestBed.configureTestingModule({
-      declarations: [FolderDeleteComponent, MockTranslatePipe],
-      providers: [
+    imports: [FormsModule, FolderDeleteComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: FoldersService, useValue: mockFoldersService },
         { provide: MatDialogRef, useValue: mockDialogRef },
-        { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
-  }));
+        { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
+        { provide: TranslateService, useValue: mockTranslateService }
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FolderDeleteComponent);

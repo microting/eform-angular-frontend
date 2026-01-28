@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DateFormatterModel} from '../../../../models/common';
-import {formatDate} from '@angular/common';
+import { formatDate, NgIf, DatePipe } from '@angular/common';
 
 @Component({
     selector: 'date-formatter',
     templateUrl: './date-formatter.component.html',
     styleUrls: ['./date-formatter.component.scss'],
-    standalone: false
+    imports: [NgIf, DatePipe]
 })
 export class DateFormatterComponent implements OnInit {
   dateFormatter: DateFormatterModel = new DateFormatterModel();

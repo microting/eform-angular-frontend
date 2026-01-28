@@ -21,8 +21,7 @@ import {Overlay} from '@angular/cdk/overlay';
 @Component({
     selector: 'app-eforms-tags',
     templateUrl: './eforms-tags.component.html',
-    styleUrls: ['./eforms-tags.component.scss'],
-    standalone: false
+    styleUrls: ['./eforms-tags.component.scss']
 })
 export class EformsTagsComponent implements OnDestroy, OnChanges {
   private eFormTagService = inject(EformTagService);

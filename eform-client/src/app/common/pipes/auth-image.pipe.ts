@@ -4,10 +4,7 @@ import {AuthStateService} from 'src/app/common/store';
 import {selectBearerToken} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
-@Pipe({
-    name: 'authImage',
-    standalone: false
-})
+@Pipe({ name: 'authImage' })
 export class AuthImagePipe implements PipeTransform {
   private http = inject(HttpClient);
   private authStore = inject(Store);

@@ -32,8 +32,8 @@ import {
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import { TranslateService } from '@ngx-translate/core';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {
   selectCurrentUserClaims,
   selectCurrentUserClaimsEformsCreate, selectCurrentUserClaimsEformsReadTags,
@@ -46,13 +46,28 @@ import {
   selectEformsSort,
   selectEformsTagIds
 } from 'src/app/state/eform/eform.selector';
+import { EformNewSubheaderComponent } from '../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
+import { AppIconComponent } from '../../../../components/icons/app-icon/app-icon.component';
+import { RouterLink } from '@angular/router';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { DateFormatterComponent } from '../../../../common/modules/eform-shared/components/date-formatter/date-formatter.component';
+import { MatIconButton } from '@angular/material/button';
+import { EformTagComponent } from '../../../../common/modules/eform-shared/components/eform-tag/eform-tag.component';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { EformsTagsComponent as EformsTagsComponent_1 } from '../../../../common/modules/eform-shared-tags/components/eforms-tags/eforms-tags.component';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-eform-page',
     templateUrl: './eforms-page.component.html',
     styleUrls: ['./eforms-page.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MatIcon, MatSuffix, NgIf, MatTooltip, AppIconComponent, RouterLink, MtxSelect, MtxGrid, DateFormatterComponent, MatIconButton, EformTagComponent, MatMenuTrigger, MatMenu, MatMenuItem, EformsTagsComponent_1, AsyncPipe, TranslatePipe]
 })
 export class EformsPageComponent implements OnInit, OnDestroy {
   private store = inject(Store);

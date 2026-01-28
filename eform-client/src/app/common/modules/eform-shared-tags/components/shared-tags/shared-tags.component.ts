@@ -3,13 +3,19 @@ import {
   CommonDictionaryModel,
   SharedTagModel,
 } from 'src/app/common/models';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgIf, NgFor } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-shared-tags',
     templateUrl: './shared-tags.component.html',
     styleUrls: ['./shared-tags.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgIf, MatIcon, NgFor, MatIconButton, MatTooltip, MatDialogActions, TranslatePipe]
 })
 export class SharedTagsComponent implements OnInit {
   dialogRef = inject<MatDialogRef<SharedTagsComponent>>(MatDialogRef);

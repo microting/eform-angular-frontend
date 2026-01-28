@@ -13,7 +13,7 @@ import {
   InstalledPluginsRequestModel,
   PluginGroupPermissionsListModel,
 } from 'src/app/common/models';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
@@ -24,14 +24,21 @@ import {
 } from '../../';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-installed-plugins-page',
     templateUrl: './installed-plugins-page.component.html',
     styleUrls: ['./installed-plugins-page.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, MtxGrid, MatIconButton, MatMenuTrigger, MatTooltip, MatIcon, MatMenu, MatMenuItem, NgIf, RouterLink, TranslatePipe]
 })
 export class InstalledPluginsPageComponent implements OnInit, OnDestroy{
   private pluginManagementService = inject(PluginsManagementService);

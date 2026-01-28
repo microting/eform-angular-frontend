@@ -6,22 +6,30 @@ import {
 import {EformsTagsComponent} from 'src/app/common/modules/eform-shared-tags/components';
 import {EformTagService, SitesService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {SiteDeleteComponent, SiteEditComponent} from 'src/app/modules/advanced/components';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsSitesDelete, selectCurrentUserClaimsSitesUpdate} from 'src/app/state/auth/auth.selector';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { EformTagComponent } from '../../../../../common/modules/eform-shared/components/eform-tag/eform-tag.component';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { EformsTagsComponent as EformsTagsComponent_1 } from '../../../../../common/modules/eform-shared-tags/components/eforms-tags/eforms-tags.component';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-sites',
     templateUrl: './sites.component.html',
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatTooltip, MatIcon, MtxGrid, NgFor, EformTagComponent, NgIf, MatIconButton, MatMenuTrigger, MatMenu, MatMenuItem, EformsTagsComponent_1, AsyncPipe, TranslatePipe]
 })
 export class SitesComponent implements OnInit, OnDestroy {
   private authStore = inject(Store);

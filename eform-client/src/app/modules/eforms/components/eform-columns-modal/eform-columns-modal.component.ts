@@ -2,13 +2,18 @@ import { Component, OnInit, inject } from '@angular/core';
 import {TemplateColumnModel, UpdateColumnsModel} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {EFormService} from 'src/app/common/services/eform';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-eform-column-modal',
     templateUrl: './eform-columns-modal.component.html',
     styleUrls: ['./eform-columns-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MtxSelect, ReactiveFormsModule, FormsModule, MatDialogActions, TranslatePipe]
 })
 export class EformColumnsModalComponent implements OnInit {
   private eFormService = inject(EFormService);

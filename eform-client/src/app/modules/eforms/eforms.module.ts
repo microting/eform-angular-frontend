@@ -17,7 +17,7 @@ import {
   EformUploadZipModalComponent,
   EformDuplicateConfirmModalComponent,
 } from './components';
-import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
+
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -35,30 +35,27 @@ import {AppIconComponent} from "src/app/components/icons/app-icon/app-icon.compo
 
 @NgModule({
     imports: [
-        CommonModule,
-        EformsRouting,
-        EformSharedModule,
-        ReactiveFormsModule,
-        FileUploadModule,
-        FormsModule,
-        TranslateModule.forChild(),
-        EformSharedTagsModule,
-        MatDatepickerModule,
-        MatInputModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        MatIconModule,
-        MatDialogModule,
-        MatMenuModule,
-        MtxSelectModule,
-        MatCardModule,
-        MtxGridModule,
-        MatTooltipModule,
-        MtxButtonModule,
-        MatChipsModule,
-        AppIconComponent,
-    ],
-  declarations: [
+    CommonModule,
+    EformsRouting,
+    EformSharedModule,
+    ReactiveFormsModule,
+    FileUploadModule,
+    FormsModule,
+    TranslateModule.forChild(),
+    MatDatepickerModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    MatMenuModule,
+    MtxSelectModule,
+    MatCardModule,
+    MtxGridModule,
+    MatTooltipModule,
+    MtxButtonModule,
+    MatChipsModule,
+    AppIconComponent,
     EformsPageComponent,
     EformEditParingModalComponent,
     EformCreateModalComponent,
@@ -69,8 +66,8 @@ import {AppIconComponent} from "src/app/components/icons/app-icon/app-icon.compo
     EformExcelReportModalComponent,
     EformsBulkImportModalComponent,
     EformDuplicateConfirmModalComponent,
-  ],
-  exports: []
+],
+    exports: []
 })
 export class EFormsModule {
 }

@@ -8,14 +8,16 @@ import { EFormService } from 'src/app/common/services';
 import { EformDocxReportGenerateModel } from 'src/app/common/models';
 import { AppMenuStateService } from 'src/app/common/store';
 import {ToastrService} from 'ngx-toastr';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { EformXlsxReportHeaderComponent } from '../eform-xlsx-report-header/eform-xlsx-report-header.component';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-eform-xlsx-report-container',
     templateUrl: './eform-xlsx-report-container.component.html',
     styleUrls: ['./eform-xlsx-report-container.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, EformXlsxReportHeaderComponent, TranslatePipe]
 })
 export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);

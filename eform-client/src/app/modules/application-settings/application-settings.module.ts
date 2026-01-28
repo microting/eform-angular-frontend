@@ -15,22 +15,22 @@ import {MatInputModule} from '@angular/material/input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ApplicationSettingsRouting,
-    EformSharedModule,
-    FormsModule,
-    TranslateModule,
-    FileUploadModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MtxSelectModule,
-  ],
-  declarations: [AdminSettingsComponent],
+    imports: [
+        CommonModule,
+        ApplicationSettingsRouting,
+        EformSharedModule,
+        FormsModule,
+        TranslateModule,
+        FileUploadModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatTooltipModule,
+        MatCardModule,
+        MatIconModule,
+        MatInputModule,
+        MtxSelectModule,
+        AdminSettingsComponent,
+    ],
 })
 export class ApplicationSettingsModule {
 }

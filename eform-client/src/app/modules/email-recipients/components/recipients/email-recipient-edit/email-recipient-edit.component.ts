@@ -3,14 +3,21 @@ import {Subscription} from 'rxjs';
 import {EmailRecipientsService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {EmailRecipientModel, EmailRecipientUpdateModel, CommonDictionaryModel} from 'src/app/common/models';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-email-recipient-edit',
     templateUrl: './email-recipient-edit.component.html',
     styleUrls: ['./email-recipient-edit.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MtxSelect, ReactiveFormsModule, FormsModule, MatInput, MatDialogActions, MatButton, TranslatePipe]
 })
 export class EmailRecipientEditComponent implements OnInit, OnDestroy {
   private emailRecipientsService = inject(EmailRecipientsService);

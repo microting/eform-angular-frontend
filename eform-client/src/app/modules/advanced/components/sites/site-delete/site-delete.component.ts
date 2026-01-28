@@ -1,13 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {SiteNameDto} from 'src/app/common/models/dto';
 import {SitesService} from 'src/app/common/services/advanced';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { DateFormatterComponent } from '../../../../../common/modules/eform-shared/components/date-formatter/date-formatter.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-site-delete',
     templateUrl: './site-delete.component.html',
     styleUrls: ['./site-delete.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, DateFormatterComponent, MatDialogActions, TranslatePipe]
 })
 export class SiteDeleteComponent implements OnInit {
   private sitesService = inject(SitesService);

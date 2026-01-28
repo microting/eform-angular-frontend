@@ -3,16 +3,17 @@ import {EFormService} from 'src/app/common/services/eform';
 import {EformDownloadExcelModel, TemplateDto} from 'src/app/common/models';
 import {saveAs} from 'file-saver';
 import {format} from 'date-fns';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-eform-excel-report-modal',
     templateUrl: './eform-excel-report-modal.component.html',
     styleUrls: ['./eform-excel-report-modal.component.scss'],
-    standalone: false
+    imports: [ReactiveFormsModule, TranslatePipe]
 })
 export class EformExcelReportModalComponent implements OnInit, OnDestroy {
   private eFormService = inject(EFormService);

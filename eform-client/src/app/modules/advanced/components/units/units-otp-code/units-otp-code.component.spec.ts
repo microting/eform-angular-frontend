@@ -1,4 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UnitsOtpCodeComponent } from './units-otp-code.component';
 import { UnitsService } from 'src/app/common/services/advanced';
@@ -6,6 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { UnitDto, OperationDataResult } from 'src/app/common/models';
 import { MockTranslatePipe } from 'src/test-helpers';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('UnitsOtpCodeComponent', () => {
   let component: UnitsOtpCodeComponent;
@@ -14,25 +17,36 @@ describe('UnitsOtpCodeComponent', () => {
   let mockDialogRef: any;
   let mockDialogData: UnitDto;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn()
+    };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
     mockUnitsService = {
-          requestOtp: jest.fn(),
+          requestOtp: vi.fn(),
         };
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
     mockDialogData = { id: 1, microtingUid: 12345, siteName: 'Test Site' } as UnitDto;
 
     TestBed.configureTestingModule({
-      declarations: [UnitsOtpCodeComponent, MockTranslatePipe],
-      providers: [
+    imports: [FormsModule, UnitsOtpCodeComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: MatDialogRef, useValue: mockDialogRef },
-        { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
-  }));
+        { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
+        { provide: TranslateService, useValue: mockTranslateService }
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UnitsOtpCodeComponent);

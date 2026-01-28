@@ -1,6 +1,6 @@
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, APP_INITIALIZER, importProvidersFrom } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './app/app.module';
+import { AppModule, registerIconsFactory } from './app/app.module';
 import { environment } from './environments/environment';
 import * as Sentry from '@sentry/angular';
 import { registerLocaleData } from '@angular/common';
@@ -30,6 +30,43 @@ import localeSl from '@angular/common/locales/sl';
 import localeSv from '@angular/common/locales/sv';
 import localeTr from '@angular/common/locales/tr';
 import localeUk from '@angular/common/locales/uk';
+import { providers } from './app/app.declarations';
+import { IconService } from './app/components/icons';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { appMenuReducer, appSettingsReducer, authReducer, casesReducer, deviceUsersReducer, eformReducer, emailRecipientsReducer, entitySearchReducer, entitySelectReducer, pluginsReducer, securityReducer, usersReducer, AppMenuEffects } from './app/state';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment as environment_1 } from 'src/environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { AppRoutingModule } from './app/app.routing';
+import { TranslateModule } from '@ngx-translate/core';
+import { translateConfig } from './app/common/helpers';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { SharedPnModule } from './app/plugins/modules/shared/shared-pn.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MtxSelectModule } from '@ng-matero/extensions/select';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { PluginsModule } from './app/plugins/plugins.module';
+import { EformSharedModule } from './app/common/modules/eform-shared/eform-shared.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EformMatDateFnsDateModule } from './app/common/modules/eform-date-adapter/eform-mat-datefns-date-adapter.module';
+import { AppComponent } from './app/components/app.component';
 
 registerLocaleData(localeBg);
 registerLocaleData(localeCz);
@@ -75,8 +112,48 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
+bootstrapApplication(AppComponent, {
+    providers: [
+        importProvidersFrom(NgxMaterialTimepickerModule, NgxMaskDirective, NgxMaskPipe, 
+        // Libs
+        BrowserModule, HttpClientModule, StoreModule.forRoot({
+            appMenus: appMenuReducer,
+            appSettings: appSettingsReducer,
+            auth: authReducer,
+            cases: casesReducer,
+            deviceUsers: deviceUsersReducer,
+            eforms: eformReducer,
+            emailRecipients: emailRecipientsReducer,
+            entitySearch: entitySearchReducer,
+            entitySelect: entitySelectReducer,
+            plugins: pluginsReducer,
+            security: securityReducer,
+            users: usersReducer,
+        }), StoreDevtoolsModule.instrument({
+            maxAge: 25, // Retains last 25 states
+            logOnly: environment.production, // Restrict extension to log-only mode
+        }), EffectsModule.forRoot(AppMenuEffects), AppRoutingModule, TranslateModule.forRoot(translateConfig), BrowserAnimationsModule, ToastrModule.forRoot({
+            autoDismiss: true,
+            timeOut: 3000,
+            preventDuplicates: true,
+            positionClass: 'toast-bottom-right',
+        }), 
+        // TODO fix ngx-mask
+        // NgxMaskModule.forRoot(),
+        GalleryModule, LightboxModule, NgxChartsModule, SharedPnModule, MatSidenavModule, MatButtonModule, MatTreeModule, MatIconModule, MatToolbarModule, MatMenuModule, MatExpansionModule, MtxSelectModule, FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, 
+        // Modules
+        PluginsModule, EformSharedModule, MatProgressSpinnerModule, 
+        // EformDateFnsDateModule,
+        EformMatDateFnsDateModule),
+        providers,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: registerIconsFactory,
+            deps: [IconService],
+            multi: true
+        },
+    ]
+})
   // eslint-disable-next-line no-console
   .then((success) => console.log('Bootstrap success'))
   .catch((err) => console.debug(err));

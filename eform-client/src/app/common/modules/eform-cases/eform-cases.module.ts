@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
 import { TranslateModule } from '@ngx-translate/core';
-import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
+
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {
   CaseEditConfirmationComponent,
@@ -48,11 +48,10 @@ import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
-  imports: [
+    imports: [
     TranslateModule,
     EformSharedModule,
     CommonModule,
-    EformImportedModule,
     LightboxModule,
     GalleryModule,
     FormsModule,
@@ -69,8 +68,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MtxSelectModule,
     MatDatepickerModule,
     ReactiveFormsModule,
-  ],
-  declarations: [
     CaseEditNavComponent,
     CaseEditSwitchComponent,
     CaseEditElementComponent,
@@ -99,37 +96,37 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     CaseArchiveModalComponent,
     DeletePictureDialogComponent,
     AddPictureDialogComponent,
-  ],
-  providers: [],
-  exports: [
-    CaseEditNavComponent,
-    CaseEditSwitchComponent,
-    CaseEditElementComponent,
-    CaseEditConfirmationComponent,
-    ElementTextComponent,
-    ElementNumberComponent,
-    ElementNumberStepperComponent,
-    ElementCheckboxComponent,
-    ElementSingleselectComponent,
-    ElementPdfComponent,
-    ElementAudioComponent,
-    ElementDateComponent,
-    ElementCommentComponent,
-    ElementEntityselectComponent,
-    ElementEntitysearchComponent,
-    ElementMultiselectComponent,
-    ElementInfoboxComponent,
-    ElementTimerComponent,
-    CaseRemoveModalComponent,
-    ElementContainerComponent,
-    ElementPictureComponent,
-    ElementSignatureComponent,
-    // CasePostNewComponent,
-    // CasePostViewComponent,
-    // CasePostsPageComponent,
-    CaseArchiveModalComponent,
-    DeletePictureDialogComponent,
-    AddPictureDialogComponent,
-  ],
+],
+    providers: [],
+    exports: [
+        CaseEditNavComponent,
+        CaseEditSwitchComponent,
+        CaseEditElementComponent,
+        CaseEditConfirmationComponent,
+        ElementTextComponent,
+        ElementNumberComponent,
+        ElementNumberStepperComponent,
+        ElementCheckboxComponent,
+        ElementSingleselectComponent,
+        ElementPdfComponent,
+        ElementAudioComponent,
+        ElementDateComponent,
+        ElementCommentComponent,
+        ElementEntityselectComponent,
+        ElementEntitysearchComponent,
+        ElementMultiselectComponent,
+        ElementInfoboxComponent,
+        ElementTimerComponent,
+        CaseRemoveModalComponent,
+        ElementContainerComponent,
+        ElementPictureComponent,
+        ElementSignatureComponent,
+        // CasePostNewComponent,
+        // CasePostViewComponent,
+        // CasePostsPageComponent,
+        CaseArchiveModalComponent,
+        DeletePictureDialogComponent,
+        AddPictureDialogComponent,
+    ],
 })
 export class EformCasesModule {}

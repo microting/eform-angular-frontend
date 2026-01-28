@@ -5,13 +5,22 @@ import {AppSettingsService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import { EformNewSubheaderComponent } from '../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-database-setup',
     templateUrl: './connection-setup.component.html',
     styleUrls: ['./connection-setup.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatButton, MatTooltip, ReactiveFormsModule, FormsModule, MatCard, MatCardHeader, MatCardContent, MatFormField, MatLabel, MatInput, MtxSelect, TranslatePipe]
 })
 export class ConnectionSetupComponent implements OnInit, OnDestroy {
   private settingsService = inject(AppSettingsService);
