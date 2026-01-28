@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ describe('EformDocxReportTableComponent', () => {
   let component: EformDocxReportTableComponent;
   let fixture: ComponentFixture<EformDocxReportTableComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     const mockRouter = {
       navigate: vi.fn(),
     };
@@ -30,7 +30,7 @@ describe('EformDocxReportTableComponent', () => {
     schemas: [NO_ERRORS_SCHEMA]
 })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EformDocxReportTableComponent);

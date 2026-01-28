@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { WorkerEditCreateComponent } from './worker-edit-create.component';
@@ -17,7 +17,7 @@ describe('WorkerEditCreateComponent', () => {
   let mockDialogRef: any;
   let mockDialogData: WorkerDto;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     mockWorkersService = {
           createWorker: vi.fn(),
           updateSingleWorker: vi.fn(),
@@ -42,7 +42,7 @@ describe('WorkerEditCreateComponent', () => {
     ],
     schemas: [NO_ERRORS_SCHEMA]
 }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkerEditCreateComponent);

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -11,7 +11,7 @@ describe('NavigationMenuCustomLinkComponent', () => {
   let component: NavigationMenuCustomLinkComponent;
   let fixture: ComponentFixture<NavigationMenuCustomLinkComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     const mockDialogRef = {
       close: vi.fn(),
     };
@@ -26,7 +26,7 @@ describe('NavigationMenuCustomLinkComponent', () => {
     schemas: [NO_ERRORS_SCHEMA]
 })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NavigationMenuCustomLinkComponent);

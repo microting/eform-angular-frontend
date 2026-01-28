@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -11,7 +11,7 @@ describe('NavigationMenuResetComponent', () => {
   let fixture: ComponentFixture<NavigationMenuResetComponent>;
   let mockDialogRef: any;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     mockDialogRef = {
           close: vi.fn(),
         };
@@ -25,7 +25,7 @@ describe('NavigationMenuResetComponent', () => {
     schemas: [NO_ERRORS_SCHEMA]
 })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NavigationMenuResetComponent);

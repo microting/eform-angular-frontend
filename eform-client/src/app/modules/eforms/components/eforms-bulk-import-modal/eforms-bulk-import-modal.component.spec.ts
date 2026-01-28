@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MockTranslatePipe } from 'src/test-helpers';
@@ -16,7 +16,7 @@ describe('EformsBulkImportModalComponent', () => {
   let component: EformsBulkImportModalComponent;
   let fixture: ComponentFixture<EformsBulkImportModalComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     const mockToastrService = {
       success: vi.fn(),
       error: vi.fn(),
@@ -53,7 +53,7 @@ describe('EformsBulkImportModalComponent', () => {
     schemas: [NO_ERRORS_SCHEMA]
 })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EformsBulkImportModalComponent);

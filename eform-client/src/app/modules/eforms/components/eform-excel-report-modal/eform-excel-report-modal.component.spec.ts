@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MockTranslatePipe } from 'src/test-helpers';
@@ -12,7 +12,7 @@ describe('EformExcelReportModalComponent', () => {
   let component: EformExcelReportModalComponent;
   let fixture: ComponentFixture<EformExcelReportModalComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     const mockEFormService = {
       downloadEformExcel: vi.fn().mockReturnValue(of(new Blob())),
     };
@@ -27,7 +27,7 @@ describe('EformExcelReportModalComponent', () => {
     schemas: [NO_ERRORS_SCHEMA]
 })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EformExcelReportModalComponent);

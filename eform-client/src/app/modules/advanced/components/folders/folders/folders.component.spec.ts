@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FoldersComponent } from './folders.component';
@@ -17,7 +17,7 @@ describe('FoldersComponent', () => {
   let mockDialog: any;
   let mockStore: any;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     mockFoldersService = {
           getAllFolders: vi.fn(),
           getAllFoldersList: vi.fn(),
@@ -41,7 +41,7 @@ describe('FoldersComponent', () => {
     ],
     schemas: [NO_ERRORS_SCHEMA]
 }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FoldersComponent);

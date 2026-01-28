@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -14,7 +14,7 @@ describe('EmailRecipientCreateComponent', () => {
   let component: EmailRecipientsNewComponent;
   let fixture: ComponentFixture<EmailRecipientsNewComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     const mockEmailRecipientsService = {
           create: vi.fn(),
         };
@@ -42,7 +42,7 @@ describe('EmailRecipientCreateComponent', () => {
     schemas: [NO_ERRORS_SCHEMA]
 })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EmailRecipientsNewComponent);

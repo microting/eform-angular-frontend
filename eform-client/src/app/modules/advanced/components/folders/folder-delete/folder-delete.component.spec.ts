@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FolderDeleteComponent } from './folder-delete.component';
@@ -16,7 +16,7 @@ describe('FolderDeleteComponent', () => {
   let mockDialogRef: any;
   let mockDialogData: FolderDto;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     mockFoldersService = {
           deleteSingleFolder: vi.fn(),
         };
@@ -35,7 +35,7 @@ describe('FolderDeleteComponent', () => {
     ],
     schemas: [NO_ERRORS_SCHEMA]
 }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FolderDeleteComponent);

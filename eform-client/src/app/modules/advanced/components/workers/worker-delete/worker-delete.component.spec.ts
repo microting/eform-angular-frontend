@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { WorkerDeleteComponent } from './worker-delete.component';
@@ -16,7 +16,7 @@ describe('WorkerDeleteComponent', () => {
   let mockDialogRef: any;
   let mockDialogData: WorkerDto;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     mockWorkersService = {
           deleteSingleWorker: vi.fn(),
         };
@@ -35,7 +35,7 @@ describe('WorkerDeleteComponent', () => {
     ],
     schemas: [NO_ERRORS_SCHEMA]
 }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkerDeleteComponent);

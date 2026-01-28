@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MockTranslatePipe } from 'src/test-helpers';
@@ -13,7 +13,7 @@ describe('EformDocxReportImagesComponent', () => {
   let component: EformDocxReportImagesComponent;
   let fixture: ComponentFixture<EformDocxReportImagesComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     const mockGallery = {
       ref: vi.fn().mockReturnValue({
         load: vi.fn()
@@ -38,7 +38,7 @@ describe('EformDocxReportImagesComponent', () => {
     schemas: [NO_ERRORS_SCHEMA]
 })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EformDocxReportImagesComponent);

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { WorkersComponent } from './workers.component';
@@ -19,7 +19,7 @@ describe('WorkersComponent', () => {
   let mockStore: any;
   let mockTranslateService: any;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     mockWorkersService = {
           getAllWorkers: vi.fn(),
         };
@@ -49,7 +49,7 @@ describe('WorkersComponent', () => {
     ],
     schemas: [NO_ERRORS_SCHEMA]
 }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkersComponent);

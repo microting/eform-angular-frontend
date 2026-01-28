@@ -1,8 +1,5 @@
 // Test setup file for Angular CLI's built-in Vitest support
-// Import Zone.js for async testing support
-import 'zone.js';
-import 'zone.js/testing';
-
+// Note: Vitest does NOT use Zone.js or ProxyZone - use native async/await instead
 // Import compiler for JIT compilation in tests
 import '@angular/compiler';
 
