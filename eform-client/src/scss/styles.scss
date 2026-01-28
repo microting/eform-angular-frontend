@@ -3,7 +3,7 @@
 @use "utilities" as *;
 @use "libs/index" as libs;
 
-$eform-font-family: Nunito Sans, Roboto, "Helvetica Neue", sans-serif;
+$eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
 // h-100 for base elements
 html, body {
   height: 100vh;
@@ -198,6 +198,9 @@ a {
   min-height: 100px;
   min-width: 250px !important;
   color: var(--text-header, #0F1316)!important;
+  .plan-text{
+    color: var(--text-header, #0F1316)!important;
+  }
 }
 
 .white-background {
@@ -223,6 +226,9 @@ a {
   min-height: 100px;
   min-width: 250px !important;
   color: var(--text-header, #0F1316)!important;
+  .plan-text{
+    color: var(--text-header, #0F1316)!important;
+  }
 }
 
 .green-background {
@@ -246,6 +252,10 @@ a {
   min-height: 100px;
   min-width: 250px !important;
   color: var(--text-header, #0F1316)!important;
+
+  .plan-text{
+    color: var(--text-header, #0F1316)!important;
+  }
 }
 
 .red-background {
@@ -269,6 +279,9 @@ a {
   min-height: 100px;
   min-width: 250px !important;
   color: #DB0D0D !important;
+  .plan-text{
+    color: var(--text-header, #0F1316)!important;
+  }
 }
 
 .device-icon {
@@ -1227,4 +1240,15 @@ div.mat-mdc-select-panel {
       transform: rotate(180deg);
     }
   }
+}
+
+th.mat-table-sticky-right{
+  border-left: 1px solid var(--border, #EBEFF2)!important;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05)!important;
+}
+
+td.mat-table-sticky-right{
+  border-left: 1px solid var(--border, #EBEFF2)!important;
+  background: var(--bg, #FFF)!important;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05)!important;
 }
