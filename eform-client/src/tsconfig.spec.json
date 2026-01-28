@@ -4,7 +4,7 @@
     "outDir": "../out-tsc/spec",
     "module": "ES2022",
     "moduleResolution": "Bundler",
-    "types": ["vitest/globals", "node"],
+    "types": ["node"],
     "esModuleInterop": true,
     "emitDecoratorMetadata": true
   },
