@@ -41,31 +41,67 @@
   mtx-grid {
     .background-yellow {
       background-color: $background-yellow-color !important;
-      color: var(--text-header, #0F1316)!important;
+      color: #0F1316!important;
       span{
-        color: var(--text-header, #0F1316)!important;
+        color: #0F1316!important;
+      }
+      td.mat-table-sticky-right{
+        background-color: $background-yellow-color !important;
+      }
+      .mat-mdc-form-field{
+        padding: 4px!important;
+      }
+      .mat-mdc-form-field .mdc-text-field__input{
+        background-color: unset!important;
       }
     }
     .background-red-light {
       background-color: $background-red-light-color !important;
-      color: var(--text-header, #0F1316)!important;
+      color: #0F1316!important;
       span{
-        color: var(--text-header, #0F1316)!important;
+        color: #0F1316!important;
+      }
+      td.mat-table-sticky-right{
+        background-color: $background-red-light-color !important;
+      }
+      .mat-mdc-form-field{
+        padding: 4px!important;
+      }
+      .mat-mdc-form-field .mdc-text-field__input{
+        background-color: unset!important;
       }
     }
     .background-red-dark {
       background-color: $background-red-dark-color !important;
-      color: var(--text-header, #0F1316)!important;
+      color: #0F1316!important;
       span{
-        color: var(--text-header, #0F1316)!important;
+        color: #0F1316!important;
+      }
+      td.mat-table-sticky-right{
+        background-color: $background-red-dark-color !important;
+      }
+      .mat-mdc-form-field{
+        padding: 4px!important;
+      }
+      .mat-mdc-form-field .mdc-text-field__input{
+        background-color: unset!important;
       }
     }
 
     .background-powder {
       background-color: $background-powder-color !important;
-      color: var(--text-header, #0F1316)!important;
+      color: #0F1316!important;
       span{
-        color: var(--text-header, #0F1316)!important;
+        color: #0F1316!important;
+      }
+      td.mat-table-sticky-right{
+        background-color: $background-powder-color !important;
+      }
+      .mat-mdc-form-field{
+        padding: 4px!important;
+      }
+      .mat-mdc-form-field .mdc-text-field__input{
+        background-color: unset!important;
       }
     }
   }
