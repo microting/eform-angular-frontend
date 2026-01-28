@@ -20,6 +20,15 @@ describe('UnitsComponent', () => {
   let mockTranslateService: any;
 
   beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn()
+    };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
     mockUnitsService = {
           getAllUnits: vi.fn(),
         };
@@ -30,10 +39,6 @@ describe('UnitsComponent', () => {
           select: vi.fn(),
           dispatch: vi.fn(),
         };
-    mockTranslateService = {
-          stream: vi.fn(),
-        };
-    mockTranslateService.stream.mockReturnValue(of('Test'));
 
     TestBed.configureTestingModule({
     imports: [FormsModule, UnitsComponent],

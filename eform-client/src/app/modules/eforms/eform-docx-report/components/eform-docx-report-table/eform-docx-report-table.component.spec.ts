@@ -6,18 +6,23 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MockTranslatePipe } from 'src/test-helpers';
 import { EformDocxReportTableComponent } from './eform-docx-report-table.component';
+import { of } from 'rxjs';
 
 describe('EformDocxReportTableComponent', () => {
   let component: EformDocxReportTableComponent;
   let fixture: ComponentFixture<EformDocxReportTableComponent>;
 
   beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn((key: string) => key)
+    };
     const mockRouter = {
       navigate: vi.fn(),
-    };
-    const mockTranslateService = {
-      stream: vi.fn((key: string) => key),
-      instant: vi.fn((key: string) => key),
     };
 
     TestBed.configureTestingModule({

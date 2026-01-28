@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { of } from 'rxjs';
 
 import { EmailRecipientsNewComponent } from './email-recipients-new.component';
 import { EmailRecipientsService } from 'src/app/common/services';
@@ -15,15 +16,20 @@ describe('EmailRecipientCreateComponent', () => {
   let fixture: ComponentFixture<EmailRecipientsNewComponent>;
 
   beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn((key: string) => of(key))
+    };
     const mockEmailRecipientsService = {
           create: vi.fn(),
         };
     const mockToastrService = {
           success: vi.fn(),
           error: vi.fn(),
-        };
-    const mockTranslateService = {
-          instant: vi.fn(),
         };
     const mockDialogRef = {
           close: vi.fn(),

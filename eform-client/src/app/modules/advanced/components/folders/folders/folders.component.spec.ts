@@ -9,6 +9,7 @@ import { Overlay } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { FolderDto, OperationDataResult } from 'src/app/common/models';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('FoldersComponent', () => {
   let component: FoldersComponent;
@@ -18,6 +19,14 @@ describe('FoldersComponent', () => {
   let mockStore: any;
 
   beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn((key: string) => of(key))
+    };
     mockFoldersService = {
           getAllFolders: vi.fn(),
           getAllFoldersList: vi.fn(),
@@ -37,6 +46,7 @@ describe('FoldersComponent', () => {
         { provide: FoldersService, useValue: mockFoldersService },
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
+        { provide: TranslateService, useValue: mockTranslateService },
         { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
     ],
     schemas: [NO_ERRORS_SCHEMA]

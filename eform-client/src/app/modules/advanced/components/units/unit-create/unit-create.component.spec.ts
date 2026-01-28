@@ -9,6 +9,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { UnitModel, SiteDto, DeviceUserRequestModel, OperationResult, OperationDataResult } from 'src/app/common/models';
 import { MockTranslatePipe } from 'src/test-helpers';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('UnitCreateComponent', () => {
   let component: UnitCreateComponent;
@@ -18,6 +19,14 @@ describe('UnitCreateComponent', () => {
   let mockDialogRef: any;
 
   beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn((key: string) => of(key))
+    };
     mockUnitsService = {
           createUnit: vi.fn(),
         };
@@ -34,7 +43,8 @@ describe('UnitCreateComponent', () => {
     providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
-        { provide: MatDialogRef, useValue: mockDialogRef }
+        { provide: MatDialogRef, useValue: mockDialogRef },
+        { provide: TranslateService, useValue: mockTranslateService }
     ],
     schemas: [NO_ERRORS_SCHEMA]
 }).compileComponents();

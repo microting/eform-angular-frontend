@@ -17,14 +17,18 @@ describe('EformsBulkImportModalComponent', () => {
   let fixture: ComponentFixture<EformsBulkImportModalComponent>;
 
   beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn((key: string) => of(key))
+    };
     const mockToastrService = {
       success: vi.fn(),
       error: vi.fn(),
       warning: vi.fn(),
-    };
-    const mockTranslateService = {
-      instant: vi.fn((key: string) => key),
-      stream: vi.fn((key: string) => of(key)),
     };
     const mockLoaderService = {
       setLoading: vi.fn(),

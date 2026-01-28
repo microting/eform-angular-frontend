@@ -7,12 +7,21 @@ import { EformExcelReportModalComponent } from './eform-excel-report-modal.compo
 import { EFormService } from 'src/app/common/services/eform';
 import { FormBuilder } from '@angular/forms';
 import { of } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('EformExcelReportModalComponent', () => {
   let component: EformExcelReportModalComponent;
   let fixture: ComponentFixture<EformExcelReportModalComponent>;
 
   beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn((key: string) => of(key))
+    };
     const mockEFormService = {
       downloadEformExcel: vi.fn().mockReturnValue(of(new Blob())),
     };
@@ -22,7 +31,8 @@ describe('EformExcelReportModalComponent', () => {
     declarations: [MockTranslatePipe],
     providers: [
         { provide: EFormService, useValue: mockEFormService },
-        FormBuilder
+        FormBuilder,
+        { provide: TranslateService, useValue: mockTranslateService }
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

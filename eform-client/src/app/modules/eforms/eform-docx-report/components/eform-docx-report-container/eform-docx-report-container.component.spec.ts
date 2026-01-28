@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { EmailRecipientsService, EformDocxReportService } from 'src/app/common/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { of } from 'rxjs';
 
 describe('EformDocxReportContainerComponent', () => {
   let component: EformDocxReportContainerComponent;
@@ -15,7 +16,12 @@ describe('EformDocxReportContainerComponent', () => {
 
   beforeEach(async () => {
     const mockTranslateService = {
-      instant: vi.fn()
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn((key: string) => of(key))
     };
     const mockEmailRecipientsService = {
       getAll: vi.fn()

@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MockTranslatePipe } from 'src/test-helpers';
+import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 import { SharedTagCreateComponent } from './shared-tag-create.component';
 
@@ -12,6 +14,14 @@ describe('EmailRecipientTagNewComponent', () => {
   let fixture: ComponentFixture<SharedTagCreateComponent>;
 
   beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn((key: string) => of(key))
+    };
     const mockDialogRef = {
       close: vi.fn(),
     };
@@ -20,7 +30,8 @@ describe('EmailRecipientTagNewComponent', () => {
     imports: [FormsModule, SharedTagCreateComponent],
     declarations: [MockTranslatePipe],
     providers: [
-        { provide: MatDialogRef, useValue: mockDialogRef }
+        { provide: MatDialogRef, useValue: mockDialogRef },
+        { provide: TranslateService, useValue: mockTranslateService }
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

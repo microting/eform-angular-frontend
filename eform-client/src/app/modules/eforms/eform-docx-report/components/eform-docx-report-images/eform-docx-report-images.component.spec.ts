@@ -8,12 +8,21 @@ import { TemplateFilesService } from 'src/app/common/services';
 import { Gallery } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
 import { of } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('EformDocxReportImagesComponent', () => {
   let component: EformDocxReportImagesComponent;
   let fixture: ComponentFixture<EformDocxReportImagesComponent>;
 
   beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn((key: string) => of(key))
+    };
     const mockGallery = {
       ref: vi.fn().mockReturnValue({
         load: vi.fn()
@@ -33,7 +42,8 @@ describe('EformDocxReportImagesComponent', () => {
     providers: [
         { provide: Gallery, useValue: mockGallery },
         { provide: Lightbox, useValue: mockLightbox },
-        { provide: TemplateFilesService, useValue: mockTemplateFilesService }
+        { provide: TemplateFilesService, useValue: mockTemplateFilesService },
+        { provide: TranslateService, useValue: mockTranslateService }
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

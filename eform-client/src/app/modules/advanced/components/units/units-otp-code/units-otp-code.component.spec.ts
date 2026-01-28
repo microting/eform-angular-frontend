@@ -8,6 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { UnitDto, OperationDataResult } from 'src/app/common/models';
 import { MockTranslatePipe } from 'src/test-helpers';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('UnitsOtpCodeComponent', () => {
   let component: UnitsOtpCodeComponent;
@@ -17,6 +18,14 @@ describe('UnitsOtpCodeComponent', () => {
   let mockDialogData: UnitDto;
 
   beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn((key: string) => of(key))
+    };
     mockUnitsService = {
           requestOtp: vi.fn(),
         };
@@ -31,7 +40,8 @@ describe('UnitsOtpCodeComponent', () => {
     providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: MatDialogRef, useValue: mockDialogRef },
-        { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
+        { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
+        { provide: TranslateService, useValue: mockTranslateService }
     ],
     schemas: [NO_ERRORS_SCHEMA]
 }).compileComponents();

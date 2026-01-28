@@ -8,6 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { WorkerDto, CommonDictionaryModel, OperationDataResult, OperationResult } from 'src/app/common/models';
 import { MockTranslatePipe } from 'src/test-helpers';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('WorkerEditCreateComponent', () => {
   let component: WorkerEditCreateComponent;
@@ -31,6 +32,14 @@ describe('WorkerEditCreateComponent', () => {
         };
     mockDialogData = new WorkerDto();
 
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en'
+    };
+
     TestBed.configureTestingModule({
     imports: [FormsModule, WorkerEditCreateComponent],
     declarations: [MockTranslatePipe],
@@ -38,7 +47,8 @@ describe('WorkerEditCreateComponent', () => {
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
         { provide: MatDialogRef, useValue: mockDialogRef },
-        { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
+        { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
+        { provide: TranslateService, useValue: mockTranslateService }
     ],
     schemas: [NO_ERRORS_SCHEMA]
 }).compileComponents();
@@ -68,6 +78,14 @@ describe('WorkerEditCreateComponent', () => {
     const existingWorker = new WorkerDto();
     existingWorker.workerUId = 123;
     
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en'
+    };
+
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
     imports: [FormsModule, WorkerEditCreateComponent],
@@ -76,7 +94,8 @@ describe('WorkerEditCreateComponent', () => {
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
         { provide: MatDialogRef, useValue: mockDialogRef },
-        { provide: MAT_DIALOG_DATA, useValue: existingWorker }
+        { provide: MAT_DIALOG_DATA, useValue: existingWorker },
+        { provide: TranslateService, useValue: mockTranslateService }
     ],
     schemas: [NO_ERRORS_SCHEMA]
 }).compileComponents();

@@ -20,6 +20,15 @@ describe('WorkersComponent', () => {
   let mockTranslateService: any;
 
   beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn()
+    };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
     mockWorkersService = {
           getAllWorkers: vi.fn(),
         };
@@ -30,10 +39,6 @@ describe('WorkersComponent', () => {
           select: vi.fn(),
           dispatch: vi.fn(),
         };
-    mockTranslateService = {
-          stream: vi.fn(),
-        };
-    mockTranslateService.stream.mockReturnValue(of('Test'));
 
     // Setup store select to return observables
     mockStore.select.mockReturnValue(of(true));
