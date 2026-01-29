@@ -19,12 +19,16 @@ describe('EmailRecipientDeleteComponent', () => {
     const mockTranslateService = {
       instant: vi.fn((key: string) => key),
       get: vi.fn((key: string) => of(key)),
-      use: vi.fn(),
+      use: vi.fn(() => of(null)),
       setDefaultLang: vi.fn(),
       currentLang: 'en',
-      stream: vi.fn()
+      stream: vi.fn((key: string) => of(key)),
+      getParsedResult: vi.fn((translations: any, key: string) => key),
+      getCurrentLang: vi.fn(() => 'en'),
+      onLangChange: of({ lang: 'en', translations: {} }),
+      onTranslationChange: of({ lang: 'en', translations: {} }),
+      onDefaultLangChange: of({ lang: 'en', translations: {} })
     };
-    mockTranslateService.stream.mockReturnValue(of('Test'));
     const mockEmailRecipientsService = {
           delete: vi.fn(),
         };
