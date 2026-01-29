@@ -12,6 +12,8 @@ import {
 import {AuthStateService} from 'src/app/common/store';
 import {TranslateService} from '@ngx-translate/core';
 import { SpinnerComponent } from './eform-spinner/spinner.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CustomOverlayContainer } from 'src/app/common/services/custom-overlay-container.service';
 
 @Component({
     selector: 'app-root',
@@ -28,8 +30,29 @@ export class AppComponent implements OnInit, OnDestroy {
   private ngTitle = inject(Title);
   private titleService = inject(TitleService);
   private authSyncStorageService = inject(AuthSyncStorageService);
+  private dialog = inject(MatDialog);
+  private overlayContainer = inject(CustomOverlayContainer);
 
   public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
+
+  constructor() {
+    // Automatically move overlay container into dialogs for Angular 21 popover compatibility
+    // This ensures dropdowns (mtx-select, ng-select) appear above modal content
+    this.dialog.afterOpened.subscribe(dialogRef => {
+      // Use setTimeout to ensure dialog element is in DOM
+      setTimeout(() => {
+        const dialogElement = document.querySelector('.mat-mdc-dialog-container');
+        if (dialogElement) {
+          this.overlayContainer.setContainerParent(dialogElement as HTMLElement);
+        }
+      }, 0);
+
+      // Restore overlay container when dialog closes
+      dialogRef.afterClosed().subscribe(() => {
+        this.overlayContainer.restoreContainerParent();
+      });
+    });
+  }
 
   ngOnInit(): void {
     this.authSyncStorageService.init();
