@@ -1,13 +1,21 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ChangePasswordModel } from 'src/app/common/models/user';
 import { AuthService } from 'src/app/common/services';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatCard } from '@angular/material/card';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, ReactiveFormsModule, MatCard, MatFormField, MatLabel, MatInput, MatIcon, MatSuffix, NgIf, MatError, MatPasswordStrengthModule, TranslatePipe]
 })
 export class ChangePasswordComponent implements OnInit {
   private authService = inject(AuthService);

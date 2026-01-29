@@ -1,12 +1,17 @@
 import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {EntityItemModel} from 'src/app/common/models';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-entity-item-edit-name',
     templateUrl: './entity-item-edit-name.component.html',
     styleUrls: ['./entity-item-edit-name.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MatDialogActions, TranslatePipe]
 })
 export class EntityItemEditNameComponent implements OnInit {
   dialogRef = inject<MatDialogRef<EntityItemEditNameComponent>>(MatDialogRef);

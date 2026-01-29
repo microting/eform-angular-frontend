@@ -1,22 +1,21 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AppSettingsService } from 'src/app/common/services/settings';
 import { AuthService } from 'src/app/common/services/auth';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {AuthStateService} from 'src/app/common/store';
 import {applicationLanguages} from "src/app/common/const";
+import { MatFormField, MatLabel, MatPrefix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-restore-password',
     templateUrl: './restore-password.component.html',
-    standalone: false
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatIcon, MatPrefix, MatInput, MatButton, RouterLink, TranslatePipe]
 })
 export class RestorePasswordComponent implements OnInit {
   private translateService = inject(TranslateService);

@@ -1,4 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { WorkerEditCreateComponent } from './worker-edit-create.component';
 import { WorkersService, DeviceUserService } from 'src/app/common/services';
@@ -6,6 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { WorkerDto, CommonDictionaryModel, OperationDataResult, OperationResult } from 'src/app/common/models';
 import { MockTranslatePipe } from 'src/test-helpers';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('WorkerEditCreateComponent', () => {
   let component: WorkerEditCreateComponent;
@@ -15,31 +18,41 @@ describe('WorkerEditCreateComponent', () => {
   let mockDialogRef: any;
   let mockDialogData: WorkerDto;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     mockWorkersService = {
-          createWorker: jest.fn(),
-          updateSingleWorker: jest.fn(),
+          createWorker: vi.fn(),
+          updateSingleWorker: vi.fn(),
         };
     mockDeviceUserService = {
-          getCommonDictionarySites: jest.fn(),
-          getSingleSimpleSite: jest.fn(),
+          getCommonDictionarySites: vi.fn(),
+          getSingleSimpleSite: vi.fn(),
         };
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
     mockDialogData = new WorkerDto();
 
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en'
+    };
+
     TestBed.configureTestingModule({
-      declarations: [WorkerEditCreateComponent, MockTranslatePipe],
-      providers: [
+    imports: [FormsModule, WorkerEditCreateComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
         { provide: MatDialogRef, useValue: mockDialogRef },
-        { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
-  }));
+        { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
+        { provide: TranslateService, useValue: mockTranslateService }
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkerEditCreateComponent);
@@ -65,17 +78,27 @@ describe('WorkerEditCreateComponent', () => {
     const existingWorker = new WorkerDto();
     existingWorker.workerUId = 123;
     
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en'
+    };
+
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      declarations: [WorkerEditCreateComponent, MockTranslatePipe],
-      providers: [
+    imports: [FormsModule, WorkerEditCreateComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
         { provide: MatDialogRef, useValue: mockDialogRef },
-        { provide: MAT_DIALOG_DATA, useValue: existingWorker }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+        { provide: MAT_DIALOG_DATA, useValue: existingWorker },
+        { provide: TranslateService, useValue: mockTranslateService }
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
 
     fixture = TestBed.createComponent(WorkerEditCreateComponent);
     component = fixture.componentInstance;

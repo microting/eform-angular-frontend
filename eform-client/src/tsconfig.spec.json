@@ -2,19 +2,23 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
-    "types": [
-      "jest",
-      "node",
-      "jasmine"
-    ],
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "types": ["node"],
     "esModuleInterop": true,
     "emitDecoratorMetadata": true
   },
   "files": [
-    "polyfills.ts"
+    "polyfills.ts",
+    "test-setup.ts"
   ],
   "include": [
     "**/*.spec.ts",
-    "**/*.d.ts"
-  ]
+    "**/*.d.ts",
+    "test-helpers.ts"
+  ],
+  "angularCompilerOptions": {
+    "strictTemplates": false,
+    "fullTemplateTypeCheck": false
+  }
 }

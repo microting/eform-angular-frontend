@@ -8,8 +8,8 @@ import {
   TemplateRequestModel
 } from 'src/app/common/models';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {TranslateService} from '@ngx-translate/core';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
@@ -20,13 +20,17 @@ import {
 } from 'src/app/modules/security/components';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-security-group-eforms-permissions',
     templateUrl: './security-group-eforms-permissions.component.html',
     styleUrls: ['./security-group-eforms-permissions.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatFormField, MatLabel, MatInput, MatTooltip, MtxGrid, TranslatePipe]
 })
 export class SecurityGroupEformsPermissionsComponent implements OnInit, OnDestroy {
   private securityGroupEformsService = inject(SecurityGroupEformsPermissionsService);

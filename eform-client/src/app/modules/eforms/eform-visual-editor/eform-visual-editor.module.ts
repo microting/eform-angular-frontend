@@ -3,8 +3,8 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {DragulaModule} from 'ng2-dragula';
-import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
-import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
+
+
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {
   VisualEditorChecklistModalComponent,
@@ -42,7 +42,28 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {AppIconComponent} from "src/app/components/icons/app-icon/app-icon.component";
 
 @NgModule({
-  declarations: [
+    imports: [
+    CommonModule,
+    EformVisualEditorRouting,
+    CommonModule,
+    EformSharedModule,
+    TranslateModule,
+    FormsModule,
+    DragulaModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatInputModule,
+    MtxSelectModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MtxPopoverModule,
+    DragDropModule,
+    MtxGridModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    AppIconComponent,
     EformVisualEditorContainerComponent,
     EformVisualEditorHeaderComponent,
     VisualEditorFieldModalComponent,
@@ -60,33 +81,8 @@ import {AppIconComponent} from "src/app/components/icons/app-icon/app-icon.compo
     VisualEditorAdditionalFieldOptionEditComponent,
     VisualEditorAdditionalFieldOptionDeleteComponent,
     VisualEditorAdditionalFieldDateComponent,
-    VisualEditorAdditionalFieldShowPictureComponent
-  ],
-  imports: [
-    CommonModule,
-    EformVisualEditorRouting,
-    CommonModule,
-    EformSharedModule,
-    TranslateModule,
-    FormsModule,
-    DragulaModule,
-    EformImportedModule,
-    EformSharedTagsModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatInputModule,
-    MtxSelectModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MtxPopoverModule,
-    DragDropModule,
-    MtxGridModule,
-    MatSlideToggleModule,
-    MatDatepickerModule,
-    AppIconComponent,
-  ],
+    VisualEditorAdditionalFieldShowPictureComponent,
+],
 })
 export class EformVisualEditorModule {
 }

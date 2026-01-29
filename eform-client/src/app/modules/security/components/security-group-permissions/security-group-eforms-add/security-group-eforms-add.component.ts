@@ -1,15 +1,19 @@
 import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {TemplateListModel, EformBindGroupModel} from 'src/app/common/models';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {TranslateService} from '@ngx-translate/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-security-group-eforms-add',
     templateUrl: './security-group-eforms-add.component.html',
     styleUrls: ['./security-group-eforms-add.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, MtxGrid, MatDialogActions, MatButton, TranslatePipe]
 })
 export class SecurityGroupEformsAddComponent implements OnInit {
   private securityGroupEformsService = inject(SecurityGroupEformsPermissionsService);

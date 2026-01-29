@@ -1,14 +1,18 @@
 import { Component, Input} from '@angular/core';
 import {format, set} from 'date-fns';
 import { FieldValueDto } from 'src/app/common/models';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import { MatDatepickerInputEvent, MatDatepickerToggle, MatDatepickerInput, MatDatepicker } from '@angular/material/datepicker';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-date',
     templateUrl: './element-date.component.html',
     styleUrls: ['./element-date.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatLabel, MatDatepickerToggle, MatSuffix, MatInput, MatDatepickerInput, MatDatepicker, NgIf, MatError, TranslatePipe]
 })
 export class ElementDateComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();

@@ -13,12 +13,20 @@ import {
 import {selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 import {take} from 'rxjs';
+import { NgIf, NgFor } from '@angular/common';
+import { MatCard, MatCardHeader } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton } from '@angular/material/button';
+import { DragulaModule } from 'ng2-dragula';
+import { VisualEditorFieldComponent } from '../../field/visual-editor-field/visual-editor-field.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-visual-editor-checklist',
     templateUrl: './visual-editor-checklist.component.html',
     styleUrls: ['./visual-editor-checklist.component.scss'],
-    standalone: false
+    imports: [NgIf, MatCard, MatCardHeader, MatIcon, MatTooltip, MatIconButton, DragulaModule, NgFor, VisualEditorFieldComponent, TranslatePipe]
 })
 export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   private authStore = inject(Store);

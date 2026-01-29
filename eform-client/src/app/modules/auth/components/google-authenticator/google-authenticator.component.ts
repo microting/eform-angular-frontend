@@ -1,21 +1,18 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   GoogleAuthenticatorModel,
   LoginRequestModel,
 } from 'src/app/common/models/auth';
 import { AuthStateService } from 'src/app/common/store';
+import { NgIf } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-google-authenticator',
     templateUrl: './google-authenticator.component.html',
-    standalone: false
+    imports: [NgIf, ReactiveFormsModule, RouterLink, TranslatePipe]
 })
 export class GoogleAuthenticatorComponent implements OnInit {
   private authStateService = inject(AuthStateService);

@@ -6,10 +6,10 @@ import {
   AppSettingsService,
   LoaderService,
 } from 'src/app/common/services';
-import {Router} from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import {EventBrokerService, snakeToCamel} from 'src/app/common/helpers';
 import {HeaderSettingsModel} from 'src/app/common/models';
-import {MatDrawer, MatDrawerMode} from '@angular/material/sidenav';
+import { MatDrawer, MatDrawerMode, MatDrawerContainer } from '@angular/material/sidenav';
 import {debounceTime, filter, map} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {
@@ -20,13 +20,22 @@ import {
   selectSideMenuOpened,
   rightAppMenus, selectCurrentUserClaims, selectCurrentUserName, selectCurrentUserFullName, selectCurrentUserAvatarUrl,
 } from 'src/app/state';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { NavigationComponent } from '../../navigation/navigation.component';
+import { FooterComponent } from '../../footer/footer.component';
+import { UserbackWidgetComponent } from '../../../plugins/modules/shared/components/userback-widget/userback-widget.component';
+import { SimpleLayoutComponent } from '../simple-layout/simple-layout.component';
+import { AuthImagePipe } from 'src/app/common/pipes';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-full-layout-root',
     templateUrl: `./full-layout.component.html`,
     styleUrls: ['./full-layout.component.scss'],
-    standalone: false
+    imports: [NgIf, MatToolbar, MatIconButton, MatIcon, MatDrawerContainer, MatDrawer, NavigationComponent, FooterComponent, UserbackWidgetComponent, RouterOutlet, SimpleLayoutComponent, AsyncPipe, AuthImagePipe]
 })
 export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   authStateService = inject(AuthStateService);

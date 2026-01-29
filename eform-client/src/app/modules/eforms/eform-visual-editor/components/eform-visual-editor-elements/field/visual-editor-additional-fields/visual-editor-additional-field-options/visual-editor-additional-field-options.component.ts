@@ -4,20 +4,29 @@ import {
   EformVisualEditorFieldModel, LanguagesModel,
 } from 'src/app/common/models';
 import * as R from 'ramda';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatDialogContent, MatDialogActions, MatDialogTitle } from '@angular/material/dialog';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Overlay} from '@angular/cdk/overlay';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { NgFor, NgIf } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-visual-editor-additional-field-options',
     templateUrl: './visual-editor-additional-field-options.component.html',
     styleUrls: ['./visual-editor-additional-field-options.component.scss'],
-    standalone: false
+    imports: [MatCard, MatCardHeader, MatCardContent, MatFormField, MatInput, ReactiveFormsModule, FormsModule, MatTooltip, MatButton, NgFor, NgIf, MtxGrid, MatIconButton, MatIcon, TranslatePipe]
 })
 export class VisualEditorAdditionalFieldOptionsComponent
   implements OnInit, OnDestroy {
@@ -188,7 +197,7 @@ export class VisualEditorAdditionalFieldOptionsComponent
         {{ 'Cancel' | translate }}
       </button>
     </div>`,
-    standalone: false
+    imports: [CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MatDialogActions, MatButton, TranslatePipe]
 })
 export class VisualEditorAdditionalFieldOptionEditComponent {
   dialogRef = inject<MatDialogRef<VisualEditorAdditionalFieldOptionEditComponent>>(MatDialogRef);
@@ -226,7 +235,7 @@ export class VisualEditorAdditionalFieldOptionEditComponent {
         {{ 'Cancel' | translate }}
       </button>
     </div>`,
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, TranslatePipe]
 })
 export class VisualEditorAdditionalFieldOptionDeleteComponent {
   dialogRef = inject<MatDialogRef<VisualEditorAdditionalFieldOptionDeleteComponent>>(MatDialogRef);

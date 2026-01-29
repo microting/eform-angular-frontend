@@ -1,11 +1,17 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {EformVisualEditorFieldModel, LanguagesModel} from 'src/app/common/models';
+import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgFor, NgIf } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-visual-editor-additional-field-number',
     templateUrl: './visual-editor-additional-field-number.component.html',
     styleUrls: ['./visual-editor-additional-field-number.component.scss'],
-    standalone: false
+    imports: [MatCard, MatCardContent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, NgFor, NgIf, MatCardHeader, TranslatePipe]
 })
 export class VisualEditorAdditionalFieldNumberComponent
   implements OnInit, OnDestroy {

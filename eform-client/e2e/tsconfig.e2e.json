@@ -1,22 +1,44 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "../",
+    "forceConsistentCasingInFileNames": false,
+    "strict": false,
     "module": "commonjs",
-    "target": "es5",
+    "target": "es2018",
+    "lib": ["es2018", "dom"],
+    "outDir": "../dist/out-e2e",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "Node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "src/*": ["./src/*"]
+    },
     "types": [
       "node",
       "webdriverio/async",
       "@wdio/globals/types",
       "@wdio/mocha-framework",
       "mocha"
-//      "expect-webdriverio",
-//      "@wdio/local-runner",
-//      "@wdio/spec-reporter",
-//      "@wdio/globals/types"
     ],
-    "moduleResolution": "Node"
+    "typeRoots": [
+      "../node_modules/@types"
+    ]
   },
   "ts-node": {
-    "files": true
-  }
+    "files": true,
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "Node"
+    }
+  },
+  "include": [
+    "./**/*.ts"
+  ]
 }

@@ -1,13 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {SiteDto} from 'src/app/common/models/dto';
 import {UnitsService} from 'src/app/common/services/advanced';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-new-otp-modal',
     templateUrl: './new-otp-modal.component.html',
     styleUrls: ['./new-otp-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, MatIcon, CdkScrollable, MatDialogContent, MatDialogActions, TranslatePipe]
 })
 export class NewOtpModalComponent implements OnInit {
   private unitsService = inject(UnitsService);

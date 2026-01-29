@@ -8,7 +8,12 @@ import {
 } from '@angular/core';
 import { FolderDto } from 'src/app/common/models/dto/folder.dto';
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, MatTreeNodeToggle } from '@angular/material/tree';
+import { NgIf, NgClass } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface FlatNode {
   expandable: boolean;
@@ -20,7 +25,7 @@ interface FlatNode {
     selector: 'app-eform-tree-view-picker',
     templateUrl: './eform-tree-view-picker.component.html',
     styleUrls: ['./eform-tree-view-picker.component.scss'],
-    standalone: false
+    imports: [NgIf, MatIconButton, MatIcon, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, NgClass, MatMenuTrigger, MatMenu, MatMenuItem, MatTreeNodeToggle, TranslatePipe]
 })
 export class EformTreeViewPickerComponent implements OnChanges, OnDestroy {
   @Input() nodes: FolderDto[] = [];

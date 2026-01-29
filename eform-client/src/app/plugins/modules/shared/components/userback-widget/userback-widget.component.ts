@@ -11,8 +11,7 @@ import {selectOthersSettings} from 'src/app/state/application-settings/applicati
 @Component({
     selector: 'app-userback-widget',
     templateUrl: './userback-widget.component.html',
-    styleUrls: ['./userback-widget.component.scss'],
-    standalone: false
+    styleUrls: ['./userback-widget.component.scss']
 })
 export class UserbackWidgetComponent implements OnInit, OnDestroy {
   private authStore = inject(Store);

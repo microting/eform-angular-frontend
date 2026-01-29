@@ -4,10 +4,7 @@ import {AuthStateService} from 'src/app/common/store';
 import {selectBearerToken} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
-@Pipe({
-    name: 'authAudio',
-    standalone: false
-})
+@Pipe({ name: 'authAudio' })
 export class AuthAudioPipe implements PipeTransform {
   private http = inject(HttpClient);
   private authStore = inject(Store);

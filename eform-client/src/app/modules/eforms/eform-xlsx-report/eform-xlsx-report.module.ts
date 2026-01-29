@@ -15,23 +15,21 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
-  declarations: [
-    EformXlsxReportContainerComponent,
-    EformXlsxReportHeaderComponent,
-  ],
-  imports: [
-    CommonModule,
-    TranslateModule,
-    EformSharedModule,
-    RouterModule,
-    ReactiveFormsModule,
-    EformXlsxReportRouting,
-    FormsModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDatepickerModule,
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        EformSharedModule,
+        RouterModule,
+        ReactiveFormsModule,
+        EformXlsxReportRouting,
+        FormsModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        EformXlsxReportContainerComponent,
+        EformXlsxReportHeaderComponent,
+    ],
 })
 export class EformXlsxReportModule {
 }

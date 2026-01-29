@@ -19,24 +19,36 @@ import {
   EmailRecipientsService,
   EmailRecipientsTagsService,
 } from 'src/app/common/services';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {
   selectEmailRecipientsIsSortDsc,
   selectEmailRecipientsPagination, selectEmailRecipientsSort,
   selectEmailRecipientsTagIds
 } from "src/app/state/email-recipients/email-recipiencts.selector";
+import { EformNewSubheaderComponent } from '../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { EformTagComponent } from '../../../../common/modules/eform-shared/components/eform-tag/eform-tag.component';
+import { EformPaginationComponent } from '../../../../common/modules/eform-shared/components/eform-pagination/eform-pagination.component';
+import { EmailRecipientsTagsComponent as EmailRecipientsTagsComponent_1 } from '../tags/email-recipients-tags.component';
+import { AsyncPipe } from '@angular/common';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-email-recipients-page',
     templateUrl: './email-recipients-page.component.html',
     styleUrls: ['./email-recipients-page.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatTooltip, MatIcon, MatFormField, MatLabel, MtxSelect, ReactiveFormsModule, FormsModule, MtxGrid, MatIconButton, MatMenuTrigger, MatMenu, MatMenuItem, EformTagComponent, EformPaginationComponent, EmailRecipientsTagsComponent_1, AsyncPipe, TranslatePipe]
 })
 export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   private store = inject(Store);

@@ -5,14 +5,24 @@ import {
 } from 'src/app/common/models';
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import {TranslationRequestModel, TranslationService} from 'src/app/common/services';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgFor, NgIf } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormattingTextEditorComponent } from '../../../../../../../common/modules/eform-imported/formatting-text-editor/formatting-text-editor.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-visual-editor-checklist-modal',
     templateUrl: './visual-editor-checklist-modal.component.html',
     styleUrls: ['./visual-editor-checklist-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgFor, NgIf, MatCard, MatCardHeader, MatCardContent, MatIconButton, MatIcon, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, FormattingTextEditorComponent, MatDialogActions, TranslatePipe]
 })
 export class VisualEditorChecklistModalComponent implements OnInit {
   dialogRef = inject<MatDialogRef<VisualEditorChecklistModalComponent>>(MatDialogRef);

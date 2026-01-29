@@ -1,6 +1,9 @@
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { of } from 'rxjs';
 
 import { EmailRecipientsNewComponent } from './email-recipients-new.component';
 import { EmailRecipientsService } from 'src/app/common/services';
@@ -12,39 +15,46 @@ describe('EmailRecipientCreateComponent', () => {
   let component: EmailRecipientsNewComponent;
   let fixture: ComponentFixture<EmailRecipientsNewComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn()
+    };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
     const mockEmailRecipientsService = {
-          create: jest.fn(),
+          create: vi.fn(),
         };
     const mockToastrService = {
-          success: jest.fn(),
-          error: jest.fn(),
-        };
-    const mockTranslateService = {
-          instant: jest.fn(),
+          success: vi.fn(),
+          error: vi.fn(),
         };
     const mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
     
     TestBed.configureTestingModule({
-      declarations: [ EmailRecipientsNewComponent, MockTranslatePipe ],
-      providers: [
+    imports: [FormsModule, EmailRecipientsNewComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: EmailRecipientsService, useValue: mockEmailRecipientsService },
         { provide: ToastrService, useValue: mockToastrService },
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: [] }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EmailRecipientsNewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // Don't call fixture.detectChanges() here - do it in individual tests
   });
 
   it('should create', () => {

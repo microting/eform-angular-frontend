@@ -1,4 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UnitCreateComponent } from './unit-create.component';
 import { UnitsService } from 'src/app/common/services';
@@ -7,6 +9,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { UnitModel, SiteDto, DeviceUserRequestModel, OperationResult, OperationDataResult } from 'src/app/common/models';
 import { MockTranslatePipe } from 'src/test-helpers';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('UnitCreateComponent', () => {
   let component: UnitCreateComponent;
@@ -15,27 +18,38 @@ describe('UnitCreateComponent', () => {
   let mockDeviceUserService: any;
   let mockDialogRef: any;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn()
+    };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
     mockUnitsService = {
-          createUnit: jest.fn(),
+          createUnit: vi.fn(),
         };
     mockDeviceUserService = {
-          getDeviceUsersFiltered: jest.fn(),
+          getDeviceUsersFiltered: vi.fn(),
         };
     mockDialogRef = {
-          close: jest.fn(),
+          close: vi.fn(),
         };
 
     TestBed.configureTestingModule({
-      declarations: [UnitCreateComponent, MockTranslatePipe],
-      providers: [
+    imports: [FormsModule, UnitCreateComponent],
+    declarations: [MockTranslatePipe],
+    providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
-        { provide: MatDialogRef, useValue: mockDialogRef }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
-  }));
+        { provide: MatDialogRef, useValue: mockDialogRef },
+        { provide: TranslateService, useValue: mockTranslateService }
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UnitCreateComponent);

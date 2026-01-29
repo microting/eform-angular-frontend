@@ -2,13 +2,20 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } fro
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {EFormCreateModel} from 'src/app/common/models/eforms';
 import {EFormService} from 'src/app/common/services/eform';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-eform-create-modal',
     templateUrl: './eform-create-modal.component.html',
     styleUrls: ['./eform-create-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MtxSelect, ReactiveFormsModule, FormsModule, MatInput, MatDialogActions, MatIcon, TranslatePipe]
 })
 export class EformCreateModalComponent implements OnInit {
   private eFormService = inject(EFormService);

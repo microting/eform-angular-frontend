@@ -5,13 +5,20 @@ import {Lightbox} from 'ng-gallery/lightbox';
 import {TemplateFilesService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {catchError} from 'rxjs/operators';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardContent, MatCardImage, MatCardFooter } from '@angular/material/card';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
+import { AuthImagePipe } from 'src/app/common/pipes';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-eform-docx-report-images',
     templateUrl: './eform-docx-report-images.component.html',
     styleUrls: ['./eform-docx-report-images.component.scss'],
-    standalone: false
+    imports: [NgFor, MatCard, MatCardHeader, MatCardContent, MatCardImage, MatCardFooter, MatIconButton, MatTooltip, MatIcon, NgIf, AsyncPipe, TranslatePipe, AuthImagePipe]
 })
 export class EformDocxReportImagesComponent implements OnDestroy, OnChanges {
   gallery = inject(Gallery);

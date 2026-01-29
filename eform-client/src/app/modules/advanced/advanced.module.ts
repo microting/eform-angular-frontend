@@ -24,8 +24,8 @@ import {
   FolderEditCreateComponent,
   FolderDeleteComponent,
 } from './components';
-import {EformImportedModule} from '../../common/modules/eform-imported/eform-imported.module';
-import {EformSharedTagsModule} from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
+
+
 import {MatSortModule} from '@angular/material/sort';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
@@ -40,16 +40,14 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 
 @NgModule({
-  imports: [
+    imports: [
     AdvancedRoutingModule,
     CommonModule,
     TranslateModule,
     EformSharedModule,
     NgSelectModule,
     FormsModule,
-    EformImportedModule,
     ReactiveFormsModule,
-    EformSharedTagsModule,
     MatSortModule,
     MatCardModule,
     MatIconModule,
@@ -64,8 +62,6 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
     MatMenu,
     MatMenuItem,
     MatMenuTrigger,
-  ],
-  declarations: [
     EntitySearchComponent,
     EntitySelectComponent,
     SitesComponent,
@@ -83,7 +79,7 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
     FoldersComponent,
     FolderEditCreateComponent,
     FolderDeleteComponent,
-  ],
+],
 })
 export class AdvancedModule {
 }

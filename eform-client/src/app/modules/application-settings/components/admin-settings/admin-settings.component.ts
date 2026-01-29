@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import {v4 as uuid} from 'uuid';
-import {FileItem, FileUploader, FileUploaderOptions} from 'ng2-file-upload';
+import { FileItem, FileUploader, FileUploaderOptions, FileUploadModule } from 'ng2-file-upload';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {AdminSettingsModel, LanguagesModel} from 'src/app/common/models';
 import {AppSettingsService} from 'src/app/common/services';
@@ -11,12 +11,24 @@ import {selectAuthIsAuth, selectBearerToken, selectCurrentUserIsAdmin} from 'src
 import {Store} from '@ngrx/store';
 import {zip} from 'rxjs';
 import {tap} from 'rxjs/operators';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { EformNewSubheaderComponent } from '../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIconButton } from '@angular/material/button';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { AuthImagePipe } from 'src/app/common/pipes';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-admin-settings',
     templateUrl: './admin-settings.component.html',
     styleUrls: ['./admin-settings.component.scss'],
-    standalone: false
+    imports: [NgIf, EformNewSubheaderComponent, MatTooltip, MatCard, MatCardHeader, MatIcon, MatCardContent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MatSuffix, FileUploadModule, MatIconButton, MatCheckbox, NgFor, AsyncPipe, AuthImagePipe, TranslatePipe]
 })
 export class AdminSettingsComponent implements OnInit, AfterViewInit {
   private settingsService = inject(AppSettingsService);
