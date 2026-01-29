@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, DestroyRef } from '@angular/core';
+import { Component, inject, OnInit, DestroyRef, ChangeDetectorRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   selectCurrentUserFullName,
@@ -36,6 +36,7 @@ export class FooterComponent implements OnInit {
   private authStore = inject(Store);
   private destroyRef = inject(DestroyRef);
   private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
+  private cdr = inject(ChangeDetectorRef);
 
   fullName = '';
   userName = '';
@@ -46,15 +47,27 @@ export class FooterComponent implements OnInit {
   ngOnInit() {
     this.store.select(selectCurrentUserFullName)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(name => this.fullName = name);
+      .subscribe(name => {
+        this.fullName = name;
+        // Trigger change detection after async update
+        this.cdr.markForCheck();
+      });
 
     this.store.select(selectCurrentUserName)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(user => this.userName = user);
+      .subscribe(user => {
+        this.userName = user;
+        // Trigger change detection after async update
+        this.cdr.markForCheck();
+      });
 
     this.store.select(selectCurrentUserAvatarUrl)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(url => this.avatarUrl = url);
+      .subscribe(url => {
+        this.avatarUrl = url;
+        // Trigger change detection after async update
+        this.cdr.markForCheck();
+      });
   }
 
   checkGuards(guards: string[]): Observable<boolean> {

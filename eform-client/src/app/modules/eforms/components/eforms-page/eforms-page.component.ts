@@ -178,6 +178,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
         .subscribe((data) => {
           if (data && data.success) {
             this.availableTags = data.model;
+            // Trigger change detection after async update
+            this.cdr.markForCheck();
             this.loadSelectedUserTags();
           }
         });

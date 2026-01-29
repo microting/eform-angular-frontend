@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild, inject, ChangeDetectorRef } from '@angular/core';
 import {AuthStateService} from 'src/app/common/store';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Observable, of, Subscription, take, tap} from 'rxjs';
@@ -46,6 +46,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   private eventBrokerService = inject(EventBrokerService);
   private settingsService = inject(AppSettingsService);
   private loaderService = inject(LoaderService);
+  private cdr = inject(ChangeDetectorRef);
 
   @ViewChild('drawer') drawer: MatDrawer;
   isDarkThemeAsync$: Subscription;
@@ -136,6 +137,8 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         } else if (!this.headerSettingsModel.imageLink) {
           this.logoImage = '../../../assets/images/logo.png';
         }
+        // Trigger change detection after async update
+        this.cdr.markForCheck();
       }
     }));
   }
