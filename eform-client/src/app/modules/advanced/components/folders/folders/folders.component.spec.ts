@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, ChangeDetectorRef } from '@angular/core';
 import { FoldersComponent } from './folders.component';
 import { FoldersService } from 'src/app/common/services';
 import { MatDialog } from '@angular/material/dialog';
@@ -33,6 +33,13 @@ describe('FoldersComponent', () => {
       updateState: vi.fn(),
       loadMobileMenuItems: vi.fn()
     };
+    const mockChangeDetectorRef = {
+      markForCheck: vi.fn(),
+      detectChanges: vi.fn(),
+      checkNoChanges: vi.fn(),
+      detach: vi.fn(),
+      reattach: vi.fn()
+    };
     mockFoldersService = {
           getAllFolders: vi.fn(),
           getAllFoldersList: vi.fn(),
@@ -54,6 +61,7 @@ describe('FoldersComponent', () => {
         { provide: Store, useValue: mockStore },
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: AppMenuStateService, useValue: mockAppMenuStateService },
+        { provide: ChangeDetectorRef, useValue: mockChangeDetectorRef },
         { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
     ],
     schemas: [NO_ERRORS_SCHEMA]
