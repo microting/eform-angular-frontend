@@ -149,8 +149,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
       .subscribe((operation) => {
         if (operation && operation.success) {
           this.templateListModel = operation.model;
-          // Manually trigger change detection to avoid ExpressionChangedAfterItHasBeenCheckedError
-          this.cdr.detectChanges();
+          // Mark component for check to avoid ExpressionChangedAfterItHasBeenCheckedError
+          this.cdr.markForCheck();
         }
       });
   }
