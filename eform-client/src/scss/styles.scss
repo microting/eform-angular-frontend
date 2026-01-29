@@ -1533,6 +1533,26 @@ app-footer {
   z-index: 10000 !important;
 }
 
+// Angular 21: Fix popover top layer blocking dropdowns
+// The popover attribute places modal in browser's "top layer" which blocks dropdowns
+// We need to ensure dropdowns also render in or above the top layer
+[popover] .ng-dropdown-panel,
+.cdk-overlay-popover .ng-dropdown-panel {
+  z-index: 2147483647 !important; // Max z-index value to appear above popover top layer
+}
+
+// Ensure the overlay container itself can contain high z-index elements
+.cdk-overlay-container {
+  z-index: 2147483647 !important;
+  position: fixed !important;
+  pointer-events: none !important;
+}
+
+// Allow interaction with elements inside the overlay container
+.cdk-overlay-container > * {
+  pointer-events: auto !important;
+}
+
 // Fix Angular 21 dialog/modal positioning and backdrop
 .cdk-global-overlay-wrapper {
   display: flex !important;
