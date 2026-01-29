@@ -1521,3 +1521,14 @@ app-footer {
   border: none !important;
 
 }
+
+// Fix z-index for ng-select/mtx-select dropdowns in modals (Angular 21)
+// Material dialogs have z-index 1000, so dropdown panels need to be higher
+.ng-dropdown-panel {
+  z-index: 10000 !important;
+}
+
+// Ensure cdk-overlay-container (used by mtx-select with appendTo="body") is above dialogs
+.cdk-overlay-container .ng-dropdown-panel {
+  z-index: 10000 !important;
+}

@@ -5,6 +5,7 @@
       <mat-label>{{'Security groups' | translate}}</mat-label>
       <mtx-select
         dropdownPosition="bottom"
+        appendTo="body"
         [(ngModel)]="item.securityGroupsIds"
         [bindValue]="'id'"
         [bindLabel]="'name'"
