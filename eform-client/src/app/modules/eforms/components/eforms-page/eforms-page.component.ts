@@ -164,7 +164,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
       .subscribe((operation) => {
         if (operation && operation.success) {
           this.templateListModel = operation.model;
-          this.cdr.detectChanges();
+          this.cdr.markForCheck();
         }
       });
   }
