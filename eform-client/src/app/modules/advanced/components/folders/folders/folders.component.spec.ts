@@ -27,6 +27,8 @@ describe('FoldersComponent', () => {
       setDefaultLang: vi.fn(),
       currentLang: 'en',
       stream: vi.fn((key: string) => of(key)),
+      getParsedResult: vi.fn((translations: any, key: string) => key),
+      getCurrentLang: vi.fn(() => 'en'),
       onLangChange: of({ lang: 'en', translations: {} }),
       onTranslationChange: of({ lang: 'en', translations: {} }),
       onDefaultLangChange: of({ lang: 'en', translations: {} })
