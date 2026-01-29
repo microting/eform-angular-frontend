@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA , EventEmitter } from '@angular/core';
 import { MockTranslatePipe } from 'src/test-helpers';
 import { EformExcelReportModalComponent } from './eform-excel-report-modal.component';
 import { EFormService } from 'src/app/common/services/eform';
@@ -23,9 +23,9 @@ describe('EformExcelReportModalComponent', () => {
       stream: vi.fn((key: string) => of(key)),
       getParsedResult: vi.fn((translations: any, key: string) => key),
       getCurrentLang: vi.fn(() => 'en'),
-      onLangChange: of({ lang: 'en', translations: {} }),
-      onTranslationChange: of({ lang: 'en', translations: {} }),
-      onDefaultLangChange: of({ lang: 'en', translations: {} })
+      onLangChange: new EventEmitter(),
+      onTranslationChange: new EventEmitter(),
+      onDefaultLangChange: new EventEmitter()
     };
     const mockEFormService = {
       downloadEformExcel: vi.fn().mockReturnValue(of(new Blob())),

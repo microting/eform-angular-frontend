@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { NO_ERRORS_SCHEMA, ChangeDetectorRef } from '@angular/core';
+import { NO_ERRORS_SCHEMA, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { FoldersComponent } from './folders.component';
 import { FoldersService } from 'src/app/common/services';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,9 +29,9 @@ describe('FoldersComponent', () => {
       stream: vi.fn((key: string) => of(key)),
       getParsedResult: vi.fn((translations: any, key: string) => key),
       getCurrentLang: vi.fn(() => 'en'),
-      onLangChange: of({ lang: 'en', translations: {} }),
-      onTranslationChange: of({ lang: 'en', translations: {} }),
-      onDefaultLangChange: of({ lang: 'en', translations: {} })
+      onLangChange: new EventEmitter(),
+      onTranslationChange: new EventEmitter(),
+      onDefaultLangChange: new EventEmitter()
     };
     const mockAppMenuStateService = {
       updateState: vi.fn(),
