@@ -67,6 +67,8 @@ import {
 } from './state';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {OverlayContainer} from '@angular/cdk/overlay';
+import {CustomOverlayContainer} from './common/services/custom-overlay-container.service';
 
 // Factory function for APP_INITIALIZER to register icons
 export function registerIconsFactory(iconService: IconService) {
@@ -153,6 +155,10 @@ export function registerIconsFactory(iconService: IconService) {
             useFactory: registerIconsFactory,
             deps: [IconService],
             multi: true
+        },
+        {
+            provide: OverlayContainer,
+            useClass: CustomOverlayContainer
         }
     ],
     bootstrap: [AppComponent],
