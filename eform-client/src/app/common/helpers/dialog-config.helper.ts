@@ -4,9 +4,8 @@ import { MatDialogConfig } from '@angular/material/dialog';
 export function dialogConfigHelper(overlay: Overlay, data?: any): MatDialogConfig {
   return {
     disableClose: true,
-    hasBackdrop: true,
     minWidth: 300,
-    scrollStrategy: overlay.scrollStrategies.block(),
+    scrollStrategy: overlay.scrollStrategies.reposition(),
     data: data,
   }
 }

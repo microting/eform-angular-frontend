@@ -4,7 +4,7 @@
     <mat-form-field>
       <mat-label>{{ 'Security groups' | translate }}</mat-label>
       <mtx-select
-        dropdownPosition="bottom"
+        [dropdownPosition]="'bottom'"
         [(ngModel)]="customLinkModel.securityGroupsIds"
         [bindValue]="'id'"
         [bindLabel]="'name'"

@@ -13,7 +13,7 @@
       <mat-label>{{ 'Current tags' | translate }}</mat-label>
       <mtx-select
         class="custom"
-        dropdownPosition="bottom"
+        [dropdownPosition]="'bottom'"
         [(ngModel)]="site.tags"
         [bindValue]="'id'"
         [bindLabel]="'name'"
