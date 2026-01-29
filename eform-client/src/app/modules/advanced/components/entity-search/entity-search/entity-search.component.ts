@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import {
   EntityGroupModel,
   Paged,
@@ -48,6 +48,7 @@ export class EntitySearchComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
 
   advEntitySearchableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();
   entitySearchRemoveComponentAfterClosedSub$: Subscription;
@@ -84,6 +85,8 @@ export class EntitySearchComponent implements OnInit, OnDestroy {
         if (data && data.model) {
           this.advEntitySearchableGroupListModel = data.model;
           this.store.dispatch(updateEntitySearchTotal({total: data.model.total}));
+          // Trigger change detection after async update
+          this.cdr.detectChanges();
         }
       });
   }
