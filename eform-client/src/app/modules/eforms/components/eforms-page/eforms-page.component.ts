@@ -165,7 +165,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
         if (operation && operation.success) {
           this.templateListModel = operation.model;
           // Trigger change detection after async update
-          this.cdr.markForCheck();
+          this.cdr.detectChanges();
         }
       });
   }
@@ -179,7 +179,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
           if (data && data.success) {
             this.availableTags = data.model;
             // Trigger change detection after async update
-            this.cdr.markForCheck();
+            this.cdr.detectChanges();
             this.loadSelectedUserTags();
           }
         });

@@ -138,7 +138,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
           this.logoImage = '../../../assets/images/logo.png';
         }
         // Trigger change detection after async update
-        this.cdr.markForCheck();
+        this.cdr.detectChanges();
       }
     }));
   }

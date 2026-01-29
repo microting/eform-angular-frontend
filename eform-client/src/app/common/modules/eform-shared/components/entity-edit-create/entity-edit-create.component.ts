@@ -93,7 +93,7 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
             }
             this.actualizeEntityItemPositions();
             // Trigger change detection after async update
-            this.cdr.markForCheck();
+            this.cdr.detectChanges();
           }
         });
     } else if (this.header === 'selectable'){
@@ -112,7 +112,7 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
             }
             this.actualizeEntityItemPositions();
             // Trigger change detection after async update
-            this.cdr.markForCheck();
+            this.cdr.detectChanges();
           }
         });
     }

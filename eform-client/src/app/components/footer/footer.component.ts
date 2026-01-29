@@ -50,7 +50,7 @@ export class FooterComponent implements OnInit {
       .subscribe(name => {
         this.fullName = name;
         // Trigger change detection after async update
-        this.cdr.markForCheck();
+        this.cdr.detectChanges();
       });
 
     this.store.select(selectCurrentUserName)
@@ -58,7 +58,7 @@ export class FooterComponent implements OnInit {
       .subscribe(user => {
         this.userName = user;
         // Trigger change detection after async update
-        this.cdr.markForCheck();
+        this.cdr.detectChanges();
       });
 
     this.store.select(selectCurrentUserAvatarUrl)
@@ -66,7 +66,7 @@ export class FooterComponent implements OnInit {
       .subscribe(url => {
         this.avatarUrl = url;
         // Trigger change detection after async update
-        this.cdr.markForCheck();
+        this.cdr.detectChanges();
       });
   }
 
