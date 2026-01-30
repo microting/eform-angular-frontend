@@ -504,8 +504,13 @@ ngx-material-timepicker-container {
 }
 
 .cdk-overlay-backdrop {
-  background-color: rgba(0, 0, 0, 1) !important;
+  background-color: rgba(0, 0, 0, 0.32) !important;
 }
+
+// Angular 21 Dialog Top-Layer Fix
+// Per ng-select issue #2738: When using appendTo='.cdk-overlay-pane', 
+// dropdowns render inside the dialog's top-layer context.
+// No additional CSS needed - just the appendTo attribute on mtx-select components.
 
 
 // New styling

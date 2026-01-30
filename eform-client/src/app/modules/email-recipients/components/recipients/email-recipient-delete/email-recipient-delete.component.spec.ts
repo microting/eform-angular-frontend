@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA , EventEmitter } from '@angular/core';
 import { of } from 'rxjs';
 
 import { EmailRecipientDeleteComponent } from './email-recipient-delete.component';
@@ -19,12 +19,22 @@ describe('EmailRecipientDeleteComponent', () => {
     const mockTranslateService = {
       instant: vi.fn((key: string) => key),
       get: vi.fn((key: string) => of(key)),
-      use: vi.fn(),
+      use: vi.fn(() => of(null)),
       setDefaultLang: vi.fn(),
+      getDefaultLang: vi.fn(() => 'en'),
+      addLangs: vi.fn(),
+      getLangs: vi.fn(() => ['en']),
+      getBrowserLang: vi.fn(() => 'en'),
+      getBrowserCultureLang: vi.fn(() => 'en'),
       currentLang: 'en',
-      stream: vi.fn()
+      defaultLang: 'en',
+      stream: vi.fn((key: string) => of(key)),
+      getParsedResult: vi.fn((translations: any, key: string) => key),
+      getCurrentLang: vi.fn(() => 'en'),
+      onLangChange: new EventEmitter(),
+      onTranslationChange: new EventEmitter(),
+      onDefaultLangChange: new EventEmitter()
     };
-    mockTranslateService.stream.mockReturnValue(of('Test'));
     const mockEmailRecipientsService = {
           delete: vi.fn(),
         };
