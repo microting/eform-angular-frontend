@@ -1521,3 +1521,53 @@ app-footer {
   border: none !important;
 
 }
+
+.modal-header, .mat-mdc-dialog-title{
+  display: flex!important;
+  justify-content: space-between!important;
+  gap: 12px;
+  align-items: center!important;
+  color: var(--text-header, #0F1316)!important;
+}
+
+.modal-body{
+  color: var(--text-header, #0F1316)!important;
+  height: 100%;
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    border: 1px solid var(--border, #EBEFF2) !important;
+
+    thead tr th,
+    tbody tr td {
+      border: 1px solid var(--border, #EBEFF2) !important;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    thead tr th {
+      background: var(--card, #F7F9FA) !important;
+      font-weight: 600;
+    }
+  }
+}
+
+.version-section {
+  h5 {
+    border-bottom: 1px solid var(--border, #EBEFF2) !important;
+    margin-bottom: 20px;
+  }
+}
+
+.mat-mdc-menu-content {
+  button {
+    &:hover {
+      background-color: var(--mdc-theme-primary-dark, #00695C) !important;
+      mat-icon, span {
+        color: var(--mdc-theme-on-primary) !important;
+      }
+      border-radius: var(--rounded-full, 9999px);
+    }
+  }
+}
