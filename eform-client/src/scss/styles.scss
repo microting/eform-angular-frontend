@@ -507,6 +507,12 @@ ngx-material-timepicker-container {
   background-color: rgba(0, 0, 0, 0.32) !important;
 }
 
+// Fix ng-dropdown positioning when appended to .cdk-overlay-pane in Angular 21 modals
+// The dropdown needs to use fixed positioning to calculate correctly relative to viewport
+.cdk-overlay-pane .ng-dropdown-panel {
+  position: fixed !important;
+}
+
 
 // New styling
 

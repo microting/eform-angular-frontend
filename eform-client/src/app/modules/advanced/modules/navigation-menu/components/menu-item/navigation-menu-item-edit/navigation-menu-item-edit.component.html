@@ -4,6 +4,7 @@
     <mat-form-field>
       <mat-label>{{'Security groups' | translate}}</mat-label>
       <mtx-select
+        [appendTo]="'.cdk-overlay-pane'"
         [dropdownPosition]="'bottom'"
         [(ngModel)]="item.securityGroupsIds"
         [bindValue]="'id'"
