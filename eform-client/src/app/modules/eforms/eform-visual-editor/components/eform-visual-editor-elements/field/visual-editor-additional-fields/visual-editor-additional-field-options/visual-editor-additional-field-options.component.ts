@@ -170,18 +170,16 @@ export class VisualEditorAdditionalFieldOptionsComponent
         />
       </mat-form-field>
     </div>
-    <div mat-dialog-actions class="d-flex flex-row justify-content-end">
+    <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-24">
       <button
-        mat-raised-button
-        color="accent"
+        class="btn-primary btn-primary--icon-left"
         (click)="hide(true)"
         id="changeFieldOptionTranslateSaveBtn"
       >
         {{ 'Save' | translate }}
       </button>
       <button
-        mat-raised-button
-        color="primary"
+        class="btn-cancel"
         (click)="hide()"
         id="changeFieldOptionTranslateSaveCancelBtn"
       >

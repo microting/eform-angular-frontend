@@ -67,10 +67,15 @@ import {
 } from './state';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { AuthStateService } from './common/store/service/auth-state.service';
 
 // Factory function for APP_INITIALIZER to register icons
 export function registerIconsFactory(iconService: IconService) {
   return () => iconService.register();
+}
+
+export function initLocaleFactory(authStateService: AuthStateService) {
+  return () => authStateService.initLocale();
 }
 
 @NgModule({
@@ -153,7 +158,13 @@ export function registerIconsFactory(iconService: IconService) {
       useFactory: registerIconsFactory,
       deps: [IconService],
       multi: true
-    }
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initLocaleFactory,
+      deps: [AuthStateService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
