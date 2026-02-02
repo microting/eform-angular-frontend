@@ -1092,6 +1092,7 @@ div.mat-mdc-select-panel {
     align-items: flex-start;
     gap: var(--14-px, 4px);
 
+
     button {
       display: flex;
       height: 40px;
@@ -1111,6 +1112,23 @@ div.mat-mdc-select-panel {
         font-style: normal;
         font-weight: 600;
         line-height: var(--Text-line-height-sm, 22px);
+      }
+
+      &[aria-disabled="true"]{
+        cursor: not-allowed !important;
+      }
+    }
+
+    .btn-delete-menu{
+      color: var(---error) !important;
+      span, mat-icon, .mat-mdc-menu-item-text{
+        color: var(--error) !important;
+      }
+      &:hover{
+        background: var(--error) !important;
+        span, mat-icon, .mat-mdc-menu-item-text{
+          color: var(--btn-delete-text)!important;
+        }
       }
     }
 

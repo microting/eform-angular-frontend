@@ -81,6 +81,7 @@
         <button
           mat-menu-item
           id="userAdministrationDeleteBtn-{{i}}"
+          class="btn-delete-menu"
           *ngIf="selectCurrentUserClaimsUsersDelete$ | async"
           [disabled]="row.id === 1"
           (click)="openRemoveUserModal(row)"
