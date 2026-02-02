@@ -54,7 +54,7 @@
             </button>
           </ng-container>
           <ng-container *ngIf="showDeleteAction && !node.isLocked">
-            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn">
+            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn" class="btn-delete-menu">
               <mat-icon>delete</mat-icon>
               <span>{{ 'Delete folder' | translate }}</span>
             </button>
@@ -101,7 +101,7 @@
             </button>
           </ng-container>
           <ng-container *ngIf="showDeleteAction && !node.isLocked">
-            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn">
+            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn" class="btn-delete-menu">
               <mat-icon>delete</mat-icon>
               <span>{{ 'Delete folder' | translate }}</span>
             </button>
