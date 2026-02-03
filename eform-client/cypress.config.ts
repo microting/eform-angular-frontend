@@ -8,7 +8,13 @@ export default defineConfig({
       // implement node event listeners here
       on('task', {
         'readXlsx': readXlsx.read
-      })
+      }),
+      on('task', {
+        log(message) {
+          console.log(message);
+          return null;
+        },
+      });
     },
     baseUrl: 'http://localhost:4200',
     viewportWidth: 2560,
