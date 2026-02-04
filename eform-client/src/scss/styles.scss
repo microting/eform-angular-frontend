@@ -1542,8 +1542,8 @@ app-footer {
 
 .modal-header, .mat-mdc-dialog-title{
   display: flex!important;
-  justify-content: space-between!important;
-  gap: 12px;
+  //justify-content: space-between!important;
+  //gap: 12px;
   align-items: center!important;
   color: var(--text-header, #0F1316)!important;
 }
