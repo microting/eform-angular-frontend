@@ -1,23 +1,23 @@
-<div *ngIf="fieldId != 0">
+<div *ngIf="fieldId != 0" class="bordered-card px-4 pt-4">
   <button
-    mat-icon-button
-    color="primary"
+   class="btn-primary btn-primary--icon-left"
     [disabled]="buttonsLocked"
     matTooltip="{{'Add new image' | translate}}"
     (click)="openAddImage()"
   >
     <mat-icon>add</mat-icon>
+    <span>Add new image</span>
   </button>
-</div>
+
 <div class="d-flex flex-row flex-wrap justify-content-between">
   <mat-card
   *ngFor="let image of images; let i = index"
   style="width: 500px;"
-  class="d-flex flex-column justify-content-between m-1"
+  class="d-flex flex-column justify-content-between py-4 card--no-border"
 >
   <mat-card-content>
     <img
-      style="max-height: 300px; max-width: 300px; object-fit: cover;"
+      style="max-height: 300px; max-width: 300px; object-fit: cover; border-radius: 4px"
       mat-card-image
       (click)="openPicture(i)"
       [src]="image.src | authImage | async"
@@ -25,25 +25,22 @@
     >
   </mat-card-content>
   <mat-card-footer>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center align-items-center gap-24">
       <button
-        mat-icon-button
-        color="primary"
+        class="btn-cancel"
         matTooltip="{{'Rotate on 90' | translate}}"
         (click)="rotatePicture(image)">
         <mat-icon>rotate_90_degrees_cw</mat-icon>
       </button>
       <button
-        mat-icon-button
-        color="warn"
+        class="btn-delete"
         [disabled]="buttonsLocked"
         matTooltip="{{'Delete picture' | translate}}"
         (click)="openDeleteImage(image)">
         <mat-icon>delete</mat-icon>
       </button>
       <button
-        mat-icon-button
-        color="primary"
+        class="btn-primary btn-primary--icon-left"
         matTooltip="{{'Open location' | translate}}"
         [disabled]="!image.googleMapsLat && !image.googleMapsLon || buttonsLocked"
         (click)="openGpsWindow(image.googleMapsUrl)">
@@ -52,4 +49,5 @@
     </div>
   </mat-card-footer>
 </mat-card>
+</div>
 </div>
