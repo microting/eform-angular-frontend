@@ -1,13 +1,21 @@
 FROM node:18.12.1 as node-env
 WORKDIR /app
+ARG DISABLE_SENTRY
 ENV PATH /app/node_modules/.bin:$PATH
 COPY eform-client ./
 RUN npm install
-RUN npm run build
+RUN if [ "$DISABLE_SENTRY" = "true" ]; then \
+      echo "Building with Sentry disabled (docker configuration)"; \
+      npm run build -- --configuration=docker; \
+    else \
+      echo "Building with Sentry enabled (production configuration)"; \
+      npm run build; \
+    fi
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build-env
 WORKDIR /app
 ARG GITVERSION
+ARG DISABLE_SENTRY
 
 # Copy csproj and restore as distinct layers
 COPY eFormAPI/eFormAPI.Web ./
@@ -17,6 +25,8 @@ RUN pwd
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
+ARG DISABLE_SENTRY
+ENV DISABLE_SENTRY=${DISABLE_SENTRY}
 COPY --from=build-env /app/out .
 COPY --from=node-env /app/dist wwwroot
 RUN rm connection.json; exit 0
