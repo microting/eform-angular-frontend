@@ -50,6 +50,7 @@ body, .theme-dark {
 
 .footer {
   display: flex;
+  flex-direction: column;
   padding: var(--416-px, 16px);
   align-items: center;
   gap: var(--28-px, 8px);
@@ -213,4 +214,33 @@ a {
       border-radius: var(--rounded-full, 9999px);
     }
   }
+}
+
+
+.legal-links {
+  font-size: 10px!important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 4px;
+  background: var(--bg)!important;
+  border-top: 1px solid var(--border, #EBEFF2);
+  width: 100%;
+  color: var(--border, #EBEFF2)!important;
+}
+
+.legal-links a {
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 10px!important;
+  color: var(--text-body, #7F868D)!important;
+}
+
+
+.legal-links a:hover {
+  color: var(--mdc-theme-on-primary)!important;
 }
