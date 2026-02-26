@@ -8,7 +8,13 @@ COPY eform-client ./
 RUN apt-get update
 RUN apt-get -y -q install ca-certificates
 RUN yarn install
-RUN yarn build
+RUN if [ "$DISABLE_SENTRY" = "true" ]; then \
+      echo "Building with Sentry disabled (docker configuration)"; \
+      yarn build --configuration=docker; \
+    else \
+      echo "Building with Sentry enabled (production configuration)"; \
+      yarn build; \
+    fi
 RUN if [ -n "$SENTRY_AUTH_TOKEN" ] && [ "$DISABLE_SENTRY" != "true" ]; then yarn sentrysourcemap; else echo "Sentry sourcemap upload skipped (DISABLE_SENTRY=$DISABLE_SENTRY)"; fi
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0-noble AS build-env
