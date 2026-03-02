@@ -1,10 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {EformDocxReportGenerateModel} from 'src/app/common/models';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {format} from 'date-fns';
-import {MatIconRegistry} from '@angular/material/icon';
-import {WordIcon} from 'src/app/common/const';
-import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-eform-docx-report-header',
@@ -20,13 +17,6 @@ export class EformDocxReportHeaderComponent implements OnInit {
   @Input() range: Date[];
   @Input() templateId: number;
   generateForm: FormGroup;
-
-  constructor() {
-    const iconRegistry = inject(MatIconRegistry);
-    const sanitizer = inject(DomSanitizer);
-
-    iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(WordIcon));
-  }
 
   ngOnInit() {
     this.generateForm = new FormGroup({

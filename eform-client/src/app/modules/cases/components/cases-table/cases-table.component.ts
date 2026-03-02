@@ -1,6 +1,5 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {PdfIcon, WordIcon} from 'src/app/common/const';
 import {composeCasesTableHeaders, dialogConfigHelper} from 'src/app/common/helpers';
 import {
   PageSettingsModel,
@@ -21,8 +20,6 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 import {Sort} from '@angular/material/sort';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {MatIconRegistry} from '@angular/material/icon';
-import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {CaseRemoveModalComponent} from 'src/app/common/modules/eform-cases/components';
 import {MatDialog} from '@angular/material/dialog';
@@ -61,14 +58,6 @@ export class CasesTableComponent implements OnInit, OnDestroy {
   public selectCasesIsSortDsc$ = this.authStore.select(selectCasesIsSortDsc);
   public selectCasesPagination$ = this.authStore.select(selectCasesPagination);
   public selectCasesNameFilter$ = this.authStore.select(selectCasesNameFilter);
-
-  constructor() {
-    const iconRegistry = inject(MatIconRegistry);
-    const sanitizer = inject(DomSanitizer);
-
-    iconRegistry.addSvgIconLiteral('file-word', sanitizer.bypassSecurityTrustHtml(WordIcon));
-    iconRegistry.addSvgIconLiteral('file-pdf', sanitizer.bypassSecurityTrustHtml(PdfIcon));
-  }
 
   currentTemplate: TemplateDto = new TemplateDto();
   eformPermissionsSimpleModel: EformPermissionsSimpleModel = new EformPermissionsSimpleModel();

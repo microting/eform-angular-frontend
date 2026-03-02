@@ -221,8 +221,8 @@
       </button>
       <button
         mat-menu-item
-        color="warn"
         id="delete-eform-btn-{{ i }}"
+        class="btn-delete-menu"
         (click)="openEformDeleteModal(row)"
         *ngIf="
                   checkEformPermissions(
@@ -231,10 +231,10 @@
                   ) && !row.isLocked
                 "
       >
-        <mat-icon>delete</mat-icon>
+        <mat-icon color="warn">delete</mat-icon>
         <span>{{ 'Delete eForm' | translate }}</span>
       </button>
-      <a
+      <button
         *ngIf="
                   checkEformPermissions(
                     row.id,
@@ -249,7 +249,7 @@
       >
         <mat-icon>edit</mat-icon>
         <span>{{ 'Edit eForm' | translate }}</span>
-      </a>
+      </button>
 
 
       <button

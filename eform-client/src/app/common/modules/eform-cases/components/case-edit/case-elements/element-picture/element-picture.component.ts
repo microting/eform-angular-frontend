@@ -197,26 +197,23 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
           'No file uploaded yet.' | translate
         }}
         <button
-          mat-raised-button
-          color="primary"
+          class="btn-primary btn-primary--icon-left"
           (click)="fileUpload.click()"
         >
           {{ 'Select image' | translate }}
         </button>
       </div>
     </div>
-    <div mat-dialog-actions class="d-flex flex-row justify-content-end">
+    <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-24">
       <button
-        mat-raised-button
-        color="accent"
+        class="btn-primary btn-primary--icon-left"
         (click)="onAddPicture()"
         [disabled]="!image"
       >
         {{ 'Save' | translate }}
       </button>
       <button
-        mat-raised-button
-        color="primary"
+        class="btn-cancel"
         (click)="hide()"
       >
         {{ 'Cancel' | translate }}
@@ -251,17 +248,15 @@ export class AddPictureDialogComponent {
     <div mat-dialog-title>
       {{ 'Are you sure you want to delete it' | translate }}?
     </div>
-    <div mat-dialog-actions class="d-flex flex-row justify-content-end">
+    <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-24">
       <button
-        mat-raised-button
-        color="warn"
+        class="btn-delete"
         (click)="onDeletePicture()"
       >
         {{ 'Delete' | translate }}
       </button>
       <button
-        mat-raised-button
-        color="primary"
+        class="btn-cancel"
         (click)="hide()"
       >
         {{ 'Cancel' | translate }}

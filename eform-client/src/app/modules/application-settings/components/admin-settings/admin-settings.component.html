@@ -12,8 +12,8 @@
 </eform-new-subheader>
 
 <div class="d-flex flex-column gap-24 px-3">
-  <div class="d-flex flex-row justify-content-between gap-24">
-    <mat-card class="card--rounded" style="width: 100%">
+  <div class="settings-row">
+    <mat-card class="card--rounded settings-card">
       <mat-card-header class="d-flex">
         <h4>
           {{ 'Login Page' | translate }}
@@ -75,13 +75,13 @@
               [src]="loginPageImageLink | authImage | async"
             />
           </div>
-          <div class="d-flex">
-            <div class="align-self-center">
+          <div class="d-flex flex-row flex-wrap align-items-center justify-content-between gap-24">
+            <div >
               <p>{{ 'Recommended parameters' | translate }}:</p>
               <p>{{ 'Resolution' | translate }} - 90x100</p>
               <p>{{ 'Proportions' | translate }} - 1:1.5</p>
             </div>
-            <div class="align-self-center align-self-end mb-3">
+            <div class="d-flex flex-row align-items-center gap-12">
               <button
                 class="btn-primary btn-primary--icon-left"
                 *ngIf="loginPageImageUploader?.queue?.length === 0"
@@ -107,7 +107,7 @@
                 id="loginPageFileInput"
               />
               <button
-                mat-icon-button
+                class="btn-secondary btn-secondary--icon-rounded-border"
                 id="loginPageImageVisibilityToggler"
                 (click)="adminSettingsModel.loginPageSettingsModel.imageLinkVisible = !adminSettingsModel
                           .loginPageSettingsModel.imageLinkVisible">
@@ -120,7 +120,7 @@
         </div>
       </mat-card-content>
     </mat-card>
-    <mat-card class="card--rounded" style="width: 100%">
+    <mat-card class="card--rounded settings-card">
       <mat-card-header>
         <h4 class="d-flex">
           {{ 'Site header' | translate }}
@@ -183,13 +183,13 @@
               [src]="headerImageLink | authImage | async"
             />
           </div>
-          <div class="d-flex">
-            <div class="align-self-center">
+          <div class="d-flex flex-row flex-wrap align-items-center justify-content-between gap-24">
+            <div>
               <p>{{ 'Recommended parameters' | translate }}:</p>
               <p>{{ 'Resolution' | translate }} - 170x80</p>
               <p>{{ 'Proportions' | translate }} - 2:1</p>
             </div>
-            <div class="align-self-center align-self-end mb-3">
+            <div class="d-flex flex-row align-items-center gap-12">
               <button
                 class="btn-primary btn-primary--icon-left"
                 *ngIf="headerImageUploader?.queue?.length === 0"
@@ -214,7 +214,7 @@
                 id="siteHeaderFileInput"
               />
               <button
-                mat-icon-button
+                class="btn-secondary btn-secondary--icon-rounded-border"
                 id="siteHeaderImageVisibilityToggler"
                 (click)="adminSettingsModel.headerSettingsModel.imageLinkVisible = !adminSettingsModel
                           .headerSettingsModel.imageLinkVisible">
@@ -228,8 +228,8 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div class="d-flex flex-row justify-content-between gap-24">
-    <mat-card class="card--rounded" style="width: 100%" >
+  <div class="settings-row">
+    <mat-card class="card--rounded settings-card">
       <mat-card-header>
         <h4>
           {{ 'SDK information' | translate }}
@@ -273,7 +273,7 @@
         </mat-form-field>
       </mat-card-content>
     </mat-card>
-    <mat-card class="card--rounded" style="width: 100%" >
+    <mat-card class="card--rounded settings-card">
       <mat-card-header>
         <h4>{{ 'Languages' | translate }}</h4>
       </mat-card-header>

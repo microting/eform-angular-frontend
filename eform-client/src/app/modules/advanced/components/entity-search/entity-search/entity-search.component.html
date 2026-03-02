@@ -71,6 +71,7 @@
 
       <button
         mat-menu-item
+        class="btn-delete-menu"
         id="entitySearchDeleteBtn{{i}}"
         (click)="openModalSearchRemove(row)"
         [disabled]="(selectCurrentUserClaimsEntitySearchDelete$ | async) === false || row.isLocked"

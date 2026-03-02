@@ -50,6 +50,8 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -110,7 +112,7 @@ public class Startup(IConfiguration configuration)
                         ServerVersion.AutoDetect(Configuration["ConnectinString"])), mySqlOptionsAction: builder =>
                     {
                         builder.EnableRetryOnFailure();
-                        builder.TranslateParameterizedCollectionsToConstants();
+                        builder.UseParameterizedCollectionMode(ParameterTranslationMode.Constant);
                     }));
 
             services.AddHealthChecks()
@@ -162,7 +164,7 @@ public class Startup(IConfiguration configuration)
                                 ServerVersion.AutoDetect(Configuration.MyConnectionString())), mySqlOptionsAction: builder =>
                             {
                                 builder.EnableRetryOnFailure();
-                                builder.TranslateParameterizedCollectionsToConstants();
+                                builder.UseParameterizedCollectionMode(ParameterTranslationMode.Constant);
                             }));
 
                     services.AddHealthChecks()
@@ -301,9 +303,9 @@ public class Startup(IConfiguration configuration)
         });
         try
         {
-            Console.WriteLine("Startup.ConfigureServices: GoogleTranslate");
+            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate");
             var apiKey = Environment.GetEnvironmentVariable("API_KEY");
-            Console.WriteLine("Startup.ConfigureServices: GoogleTranslate: " + apiKey);
+            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate: " + apiKey);
             services.Configure(new Action<GoogleTranslateOptions>(options =>
             {
                 options.ApiKey = apiKey;
@@ -311,7 +313,7 @@ public class Startup(IConfiguration configuration)
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Startup.ConfigureServices: GoogleTranslate failed with:" + ex.Message);
+            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate failed with:" + ex.Message);
             Log.LogException(ex.Message);
         }
         ConnectServices(services);
@@ -481,11 +483,18 @@ public class Startup(IConfiguration configuration)
         foreach (var user in users)
         {
             var fullName = (user.FirstName + user.LastName).Trim().ToLower().Replace(" ", "");
-            var worker = sdkDbContext.Workers.FirstOrDefault(x =>
-                (x.FirstName + x.LastName).Trim().ToLower().Replace(" ", "") == fullName && x.WorkflowState != "removed");
-            if (worker == null) continue;
-            worker.Email = user.Email;
-            worker.Update(sdkDbContext).GetAwaiter().GetResult();
+            try
+            {
+                var worker = sdkDbContext.Workers.FirstOrDefault(x =>
+                    (x.FirstName + x.LastName).Trim().ToLower().Replace(" ", "") == fullName &&
+                    x.WorkflowState != "removed");
+                if (worker == null) continue;
+                worker.Email = user.Email;
+                worker.Update(sdkDbContext).GetAwaiter().GetResult();
+            } catch (Exception ex)
+            {
+                Log.LogException($"Error updating worker for user {user.Id}: {ex.Message}");
+            }
         }
     }
 }

@@ -135,8 +135,11 @@ public class DeviceUsersService(
                     localizationService.GetStringWithFormat("UserUserNameAlreadyExist", siteName));
             }
 
+            var random = new Random();
+            var randomNumber = random.Next(10000, 99999);
+            var email = $"{deviceUserModel.UserFirstName}_{deviceUserModel.UserLastName}_{randomNumber}_invalid@microting.com";
             var siteDto = await core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
-                null, deviceUserModel.LanguageCode);
+                email, deviceUserModel.LanguageCode);
 
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var id = await sdkDbContext.Sites.Where(x => x.MicrotingUid == siteDto.SiteId).Select(x => x.Id)

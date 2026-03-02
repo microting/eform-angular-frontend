@@ -11,8 +11,8 @@
 </eform-new-subheader>
 
 <ng-template #toolbarTpl>
-  <div class="d-flex flex-row align-items-baseline">
-    <div class="d-flex flex-column mr-4">
+  <div class="d-flex flex-row align-items-center gap-24">
+    <div class="d-flex flex-column">
       <mat-form-field>
         <mat-label>{{ 'Group Name' | translate }}</mat-label>
         <input
@@ -23,9 +23,9 @@
         />
       </mat-form-field>
     </div>
-    <div class="d-flex flex-column mr-4">
+    <div class="d-flex flex-column">
       <mat-form-field>
-        <mat-label>{{'Select User' | translate}}</mat-label>
+        <mat-label>{{ 'Select User' | translate }}</mat-label>
         <mtx-select
           #usersSelector
           class="custom"
@@ -37,10 +37,9 @@
         </mtx-select>
       </mat-form-field>
     </div>
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column mb-4">
       <button
-        mat-raised-button
-        color="accent"
+        class="btn-primary btn-primary--icon-left"
         (click)="addUserToGroup(usersSelector)"
         matTooltip="{{ 'Add user to group' | translate }}"
       >

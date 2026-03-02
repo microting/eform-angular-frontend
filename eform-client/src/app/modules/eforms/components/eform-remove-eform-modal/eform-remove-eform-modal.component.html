@@ -28,18 +28,17 @@
 
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    mat-raised-button
-    color="warn"
-    id="eFormDeleteDeleteBtn"
-    (click)="deleteEfrom()"
-  >
-    {{'Delete' | translate}}
-  </button>
-  <button
-    mat-raised-button
+    class="btn-cancel"
     id="eFormDeleteCancelBtn"
     (click)="hide()"
   >
     {{'Close' | translate}}
+  </button>
+  <button
+    class="btn-delete"
+    id="eFormDeleteDeleteBtn"
+    (click)="deleteEfrom()"
+  >
+    {{'Delete' | translate}}
   </button>
 </div>

@@ -22,6 +22,13 @@ mat-mdc-tree-node.mat-mdc-tree-node {
     color: var(--mdc-theme-on-primary) !important;
     border-radius: var(--rounded-full);
 
+    .mat-icon{
+      color: var(--mdc-theme-on-primary) !important;
+    }
+    svg{
+      fill: var(--mdc-theme-on-primary) !important;
+    }
+
     &:hover{
       background-color: var(--mdc-theme-primary-dark) !important;
     }

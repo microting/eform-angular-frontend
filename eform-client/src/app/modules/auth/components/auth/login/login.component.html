@@ -1,8 +1,8 @@
 <div>
   <form [formGroup]="formLogin" class="d-flex flex-column align-items-center"><!--style="font-size: 1rem;"-->
-    <mat-form-field>
+    <mat-form-field style="width: 100%">
       <mat-label>{{ 'Username' | translate }}</mat-label>
-      <mat-icon matPrefix>person</mat-icon>
+<!--      <mat-icon matPrefix>person</mat-icon>-->
       <input
         matInput
         formControlName="username"
@@ -14,7 +14,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>{{ 'Password' | translate }}</mat-label>
-      <mat-icon matPrefix>lock</mat-icon>
+<!--      <mat-icon matPrefix>lock</mat-icon>-->
       <input
         matInput
         formControlName="password"
@@ -28,7 +28,7 @@
       type="submit"
       id="loginBtn"
       class="btn-primary btn-primary--icon-left"
-      style="text-transform: uppercase; color: #0F1316"
+      style="text-transform: uppercase; color: #0F1316; width: 100%"
       (click)="submitLoginForm()"
     >
       {{ 'Login' | translate }}

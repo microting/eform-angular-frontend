@@ -72,7 +72,7 @@ public class Program
     public static void Main(string[] args)
     {
         var disableSentry = Environment.GetEnvironmentVariable("DISABLE_SENTRY");
-        var sentryDisabled = !string.IsNullOrEmpty(disableSentry) && 
+        var sentryDisabled = !string.IsNullOrEmpty(disableSentry) &&
                             (disableSentry.ToLower() == "true" || disableSentry == "1");
 
         if (!sentryDisabled)
@@ -235,7 +235,7 @@ public class Program
 
                             dbContext.MenuItemSecurityGroups.Add(securityGroup);
                             dbContext.SaveChanges();
-                            Console.WriteLine($"Adding missing admin settings to menu item {menuItem.Name}");
+                            Console.WriteLine($"info: Adding missing admin settings to menu item {menuItem.Name}");
                         }
 
                     }
@@ -409,11 +409,10 @@ public class Program
 
     private static IHost BuildWebHost(string[] args)
     {
-        Console.WriteLine("BuildWebHost");
         // print all args
         foreach (var arg in args)
         {
-            Console.WriteLine("arg: " + arg);
+            Console.WriteLine("info: arg: " + arg);
         }
         var defaultConfig = new ConfigurationBuilder()
             .AddCommandLine(args)
@@ -421,7 +420,7 @@ public class Program
             .Build();
 
         Environment.SetEnvironmentVariable("API_KEY", defaultConfig["api-key"]);
-        Console.WriteLine("API_KEY: " + defaultConfig["api-key"]);
+        Console.WriteLine("info: API_KEY: " + defaultConfig["api-key"]);
 
         var port = defaultConfig.GetValue("port", 5000);
         var connectionString = defaultConfig.GetValue("ConnectionString", "");
@@ -470,15 +469,15 @@ public class Program
         }
 
         Environment.SetEnvironmentVariable("CLIENT_EMAIL", clientEmail);
-        Console.WriteLine("CLIENT_EMAIL: " + clientEmail);
+        Console.WriteLine("info: CLIENT_EMAIL: " + clientEmail);
         Environment.SetEnvironmentVariable("PRIVATE_KEY_ID", privateKeyId);
-        Console.WriteLine("PRIVATE_KEY_ID: " + privateKeyId);
+        Console.WriteLine("info: PRIVATE_KEY_ID: " + privateKeyId);
         Environment.SetEnvironmentVariable("PRIVATE_KEY", privateKey);
-        Console.WriteLine("PRIVATE_KEY: " + privateKey);
+        Console.WriteLine("info: PRIVATE_KEY: " + privateKey);
         Environment.SetEnvironmentVariable("CLIENT_ID", clientId);
-        Console.WriteLine("CLIENT_ID: " + clientId);
+        Console.WriteLine("info: CLIENT_ID: " + clientId);
         Environment.SetEnvironmentVariable("PROJECT_ID", projectId);
-        Console.WriteLine("PROJECT_ID: " + projectId);
+        Console.WriteLine("info: PROJECT_ID: " + projectId);
 
         return Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
@@ -528,20 +527,20 @@ public class Program
                             string numberString = match.Groups[1].Value;
                             int number = int.Parse(numberString);
                             var disableSentry = Environment.GetEnvironmentVariable("DISABLE_SENTRY");
-                            var sentryDisabled = !string.IsNullOrEmpty(disableSentry) && 
+                            var sentryDisabled = !string.IsNullOrEmpty(disableSentry) &&
                                                 (disableSentry.ToLower() == "true" || disableSentry == "1");
                             if (!sentryDisabled)
                             {
                                 SentrySdk.ConfigureScope(scope =>
                                 {
                                     scope.SetTag("customerNo", number.ToString());
-                                    Console.WriteLine("customerNo: " + number);
+                                    Console.WriteLine("info: customerNo: " + number);
                                     scope.SetTag("osVersion", Environment.OSVersion.ToString());
-                                    Console.WriteLine("osVersion: " + Environment.OSVersion);
+                                    Console.WriteLine("info: osVersion: " + Environment.OSVersion);
                                     scope.SetTag("osArchitecture", RuntimeInformation.OSArchitecture.ToString());
-                                    Console.WriteLine("osArchitecture: " + RuntimeInformation.OSArchitecture);
+                                    Console.WriteLine("info: osArchitecture: " + RuntimeInformation.OSArchitecture);
                                     scope.SetTag("osName", RuntimeInformation.OSDescription);
-                                    Console.WriteLine("osName: " + RuntimeInformation.OSDescription);
+                                    Console.WriteLine("info: osName: " + RuntimeInformation.OSDescription);
                                 });
                             }
                         }

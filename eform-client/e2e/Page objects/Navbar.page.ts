@@ -10,6 +10,7 @@ export class Navbar {
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
+      second: '2-digit',
       hour12: false
     }).replace(/[ ]/g, '--').replace(':', '-');
 
@@ -18,7 +19,7 @@ export class Navbar {
       `chrome-${timestamp}`.replace(/[/]/g, '__')
     ).replace(/%../, '.');
 
-    const filePath = path.resolve('./', `${filename}.png`);
+    const filePath = path.resolve('./errorShots/', `${filename}.png`);
 
     console.log('Saving screenshot to:', filePath);
     await browser.saveScreenshot(filePath);
@@ -142,8 +143,8 @@ export class Navbar {
 
   public async myEformsBtn(): Promise<WebdriverIO.Element> {
     const ele = await $(`#my-eforms`);
-    await ele.waitForDisplayed({ timeout: 40000 });
-    await ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({ timeout: 60000 });
+    await ele.waitForClickable({ timeout: 60000 });
     return ele;
   }
 

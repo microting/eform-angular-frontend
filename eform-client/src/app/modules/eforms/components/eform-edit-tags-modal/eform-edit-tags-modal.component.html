@@ -54,17 +54,17 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
-    id="tagEditSaveBtn"
-    class="btn-primary btn-primary--icon-left"
-    (click)="updateTemplateTags()"
-  >
-    <span>{{ 'Save' | translate }}</span>
-  </button>
-  <button
     id="tagEditSaveCancelBtn"
     class="btn-cancel"
     (click)="hide()"
   >
     {{ 'Cancel' | translate }}
+  </button>
+  <button
+    id="tagEditSaveBtn"
+    class="btn-primary btn-primary--icon-left"
+    (click)="updateTemplateTags()"
+  >
+    <span>{{ 'Save' | translate }}</span>
   </button>
 </div>

@@ -63,6 +63,7 @@
       <button
         mat-menu-item
         id="entitySelectDeleteBtn{{i}}"
+        class="btn-delete-menu"
         (click)="openModalSelectRemove(row)"
         [disabled]="(selectCurrentUserClaimsEntitySelectDelete$ | async) === false || row.isLocked"
       >

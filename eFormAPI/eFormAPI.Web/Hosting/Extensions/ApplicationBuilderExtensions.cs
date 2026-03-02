@@ -72,11 +72,11 @@ public static class ApplicationBuilderExtensions
     public static void UseEFormPlugins(this IApplicationBuilder app, List<IEformPlugin> plugins)
     {
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($@"[INF] Trying to load {plugins.Count} plugins...");
+        Console.WriteLine($@"info: Trying to load {plugins.Count} plugins...");
         foreach (var plugin in plugins)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($@"[INF] Loading plugin : {plugin.Name}");
+            Console.WriteLine($@"info: Loading plugin : {plugin.Name}");
             plugin.Configure(app);
         }
         Console.ForegroundColor = ConsoleColor.Gray;

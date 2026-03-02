@@ -2,6 +2,8 @@
 @use "../../../../scss/utilities/variables" as *;
 .mat-drawer {
   max-width: 15vw;
+  border-top-right-radius: 0!important;
+  border-bottom-right-radius: 0!important;
 }
 @media (max-width: 1200px) {
   .mat-drawer {

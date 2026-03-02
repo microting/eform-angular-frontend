@@ -23,6 +23,8 @@ SOFTWARE.
 */
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -46,7 +48,7 @@ namespace eFormAPI.Web.Tests
                 ServerVersion.AutoDetect(connectionStr)), mySqlOptionsAction: builder =>
             {
                 builder.EnableRetryOnFailure();
-                builder.TranslateParameterizedCollectionsToConstants();
+                builder.UseParameterizedCollectionMode(ParameterTranslationMode.Constant);
             });
             DbContext = new BaseDbContext(optionsBuilder.Options);
 

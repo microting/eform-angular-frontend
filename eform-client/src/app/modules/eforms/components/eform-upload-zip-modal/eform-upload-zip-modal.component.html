@@ -32,17 +32,17 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
+    class="btn-cancel"
+    (click)="hideZipModal()"
+  >
+    {{'Close' | translate}}
+  </button>
+  <button
     class="btn-primary btn-primary--icon-left"
     (click)="uploadTemplateZIP()"
     [disabled]="zipFileUploader?.queue?.length == 0"
   >
     <mat-icon>upload</mat-icon>
     <span>{{'Upload' | translate}}</span>
-  </button>
-  <button
-    class="btn-cancel"
-    (click)="hideZipModal()"
-  >
-    {{'Close' | translate}}
   </button>
 </div>

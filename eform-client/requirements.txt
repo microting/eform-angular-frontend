@@ -1,0 +1,2 @@
+# Python dependencies for generate-licenses.py script
+requests>=2.31.0

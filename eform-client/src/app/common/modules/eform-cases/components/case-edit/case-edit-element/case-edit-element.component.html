@@ -1,10 +1,10 @@
-<section id="section{{ element.id }}" class="d-flex flex-column">
+<section id="section{{ element.id }}" class="d-flex flex-column gap-12">
   <!--<section id="section{{element.id}}" *ngIf="element.dataItemList">-->
-  <mat-card class="mb-4">
-    <mat-card-header>
+  <mat-card class="mb-4 px-4 pt-4">
+    <mat-card-header class="mb-3">
       {{ element.label }}
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content style="padding: 0">
       <mat-radio-group *ngIf="element.approvalEnabled" [(ngModel)]="element.status" class="d-flex flex-column">
         <mat-radio-button value="not_checked">
           {{ 'Not checked' | translate }}

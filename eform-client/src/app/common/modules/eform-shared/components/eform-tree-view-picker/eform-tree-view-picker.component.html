@@ -37,7 +37,7 @@
       </div>
       <small class="microting-uid">({{ node.microtingUId }})</small>
       <ng-container *ngIf="showActions">
-        <button mat-icon-button [matMenuTriggerFor]="menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="ml-2 mt-1">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
@@ -54,7 +54,7 @@
             </button>
           </ng-container>
           <ng-container *ngIf="showDeleteAction && !node.isLocked">
-            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn">
+            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn" class="btn-delete-menu">
               <mat-icon>delete</mat-icon>
               <span>{{ 'Delete folder' | translate }}</span>
             </button>
@@ -101,7 +101,7 @@
             </button>
           </ng-container>
           <ng-container *ngIf="showDeleteAction && !node.isLocked">
-            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn">
+            <button mat-menu-item (click)="delete(node.id)" id="deleteFolderTreeBtn" class="btn-delete-menu">
               <mat-icon>delete</mat-icon>
               <span>{{ 'Delete folder' | translate }}</span>
             </button>

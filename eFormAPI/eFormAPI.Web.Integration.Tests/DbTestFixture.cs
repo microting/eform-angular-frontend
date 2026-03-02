@@ -23,6 +23,8 @@ SOFTWARE.
 */
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using NUnit.Framework;
 using System;
@@ -45,7 +47,7 @@ namespace eFormAPI.Web.Integration.Tests
                     new MariaDbServerVersion(
                         ServerVersion.AutoDetect(connectionStr)),
                     b => b.EnableRetryOnFailure()
-                        .TranslateParameterizedCollectionsToConstants());
+                        .UseParameterizedCollectionMode(ParameterTranslationMode.Constant));
             DbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
 
             DbContext.Database.Migrate();
