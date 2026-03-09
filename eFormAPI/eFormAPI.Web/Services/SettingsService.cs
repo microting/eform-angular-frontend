@@ -122,13 +122,23 @@ public class SettingsService(
             $"host= {initialSettingsModel.ConnectionStringSdk.Host};" +
             $"Database={sdkDbName};{initialSettingsModel.ConnectionStringSdk.Auth}" +
             $"port={initialSettingsModel.ConnectionStringSdk.Port};" +
-            "Convert Zero Datetime = true;SslMode=none;";
+            "Convert Zero Datetime = true;SslMode=none;" +
+            "Connection Timeout=300;Default Command Timeout=300;";
+
+        // Use a larger command timeout for the setup phase to handle slow databases
+        var sdkSetupConnectionString =
+            $"host= {initialSettingsModel.ConnectionStringSdk.Host};" +
+            $"Database={sdkDbName};{initialSettingsModel.ConnectionStringSdk.Auth}" +
+            $"port={initialSettingsModel.ConnectionStringSdk.Port};" +
+            "Convert Zero Datetime = true;SslMode=none;" +
+            "Connection Timeout=300;Default Command Timeout=900;";
 
         var angularConnectionString =
             $"host= {initialSettingsModel.ConnectionStringSdk.Host};" +
             $"Database={angularDbName};{initialSettingsModel.ConnectionStringSdk.Auth}" +
             $"port={initialSettingsModel.ConnectionStringSdk.Port};" +
-            "Convert Zero Datetime = true;SslMode=none;";
+            "Convert Zero Datetime = true;SslMode=none;" +
+            "Connection Timeout=300;Default Command Timeout=300;";
 
 
         if (!string.IsNullOrEmpty(connectionStringsSdk.Value.SdkConnection))
@@ -139,13 +149,13 @@ public class SettingsService(
 
         try
         {
-            Log.LogEvent($"SettingsService.ConnectionStringExist: connection string is {sdkConnectionString}");
-            var adminTools = new AdminTools(sdkConnectionString);
+            Log.LogEvent($"SettingsService.ConnectionStringExist: connection string is {sdkSetupConnectionString}");
+            var adminTools = new AdminTools(sdkSetupConnectionString);
             //                 Setup SDK DB
             await adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
             //                var core = await _coreHelper.GetCore();
             Core core = new Core();
-            await core.StartSqlOnly(sdkConnectionString);
+            await core.StartSqlOnly(sdkSetupConnectionString);
             await core.SetSdkSetting(Settings.customerNo, customerNo);
         }
         catch (Exception exception)
@@ -172,7 +182,8 @@ public class SettingsService(
                 new MariaDbServerVersion(ServerVersion.AutoDetect(angularConnectionString)),
                 b =>
                     b.EnableRetryOnFailure()
-                        .UseParameterizedCollectionMode(ParameterTranslationMode.Constant));
+                        .UseParameterizedCollectionMode(ParameterTranslationMode.Constant)
+                        .CommandTimeout(300));
 
 
             await using var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
