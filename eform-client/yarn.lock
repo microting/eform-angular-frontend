@@ -560,10 +560,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@20.3.16":
-  version "20.3.16"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-20.3.16.tgz#c30038600e190ece0fa38452ef729e7b46416897"
-  integrity sha512-KSFPKvOmWWLCJBbEO+CuRUXfecX2FRuO0jNi9c54ptXMOPHlK1lIojUnyXmMNzjdHgRug8ci9qDuftvC2B7MKg==
+"@angular/core@20.3.17":
+  version "20.3.17"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-20.3.17.tgz#e396f0f2a6f47a85524e8d313082f65e35001059"
+  integrity sha512-YlQqxMeHI9XJw7I7oM3hYFQd4lQbK37IdlD9ztROIw5FjX6i6lmLU7+X1MQGSRi2r+X9l3IZtl33hRTNvkoUBw==
   dependencies:
     tslib "^2.3.0"
 
@@ -2183,9 +2183,9 @@
   integrity sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==
 
 "@hono/node-server@^1.19.7":
-  version "1.19.9"
-  resolved "https://registry.yarnpkg.com/@hono/node-server/-/node-server-1.19.9.tgz#8f37119b1acf283fd3f6035f3d1356fdb97a09ac"
-  integrity sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw==
+  version "1.19.10"
+  resolved "https://registry.yarnpkg.com/@hono/node-server/-/node-server-1.19.10.tgz#e230fbb7fb31891cafc653d01deee03f437dd66b"
+  integrity sha512-hZ7nOssGqRgyV3FVVQdfi+U4q02uB23bpnYpdvNXkYTRRyWx84b7yf1ans+dnJ/7h41sGL3CeQTfO+ZGxuO+Iw==
 
 "@humanwhocodes/config-array@^0.13.0":
   version "0.13.0"
@@ -5977,9 +5977,9 @@ baseline-browser-mapping@^2.9.0:
   integrity sha512-lIyg0szRfYbiy67j9KN8IyeD7q7hcmqnJ1ddWmNt19ItGpNN64mnllmxUNFIOdOm6by97jlL6wfpTTJrmnjWAA==
 
 basic-ftp@^5.0.2:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/basic-ftp/-/basic-ftp-5.1.0.tgz#00eb8128ce536aa697c45716c739bf38e8d890f5"
-  integrity sha512-RkaJzeJKDbaDWTIPiJwubyljaEPwpVWkm9Rt5h9Nd6h7tEXTJ3VB4qxdZBioV7JO5yLUaOKwz7vDOzlncUsegw==
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/basic-ftp/-/basic-ftp-5.2.0.tgz#7c2dff63c918bde60e6bad1f2ff93dcf5137a40a"
+  integrity sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==
 
 batch@0.6.1:
   version "0.6.1"
@@ -8403,11 +8403,17 @@ fast-uri@^3.0.1:
   resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.1.0.tgz#66eecff6c764c0df9b762e62ca7edcfb53b4edfa"
   integrity sha512-iPeeDKJSWf4IEOasVVrknXpaBV0IApz/gp7S2bb7Z4Lljbl2MGJRqInZiUrQwV16cpzw/D3S5j5Julj/gT52AA==
 
+fast-xml-builder@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/fast-xml-builder/-/fast-xml-builder-1.0.0.tgz#a485d7e8381f1db983cf006f849d1066e2935241"
+  integrity sha512-fpZuDogrAgnyt9oDDz+5DBz0zgPdPZz6D4IR7iESxRXElrlGTRkHJ9eEt+SACRJwT0FNFrt71DFQIUFBJfX/uQ==
+
 fast-xml-parser@^5.3.3:
-  version "5.3.6"
-  resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-5.3.6.tgz#85a69117ca156b1b3c52e426495b6de266cb6a4b"
-  integrity sha512-QNI3sAvSvaOiaMl8FYU4trnEzCwiRr8XMWgAHzlrWpTSj+QaCSvOf1h82OEP1s4hiAXhnbXSyFWCf4ldZzZRVA==
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-5.4.1.tgz#0c81b8ecfb3021e5ad83aa3df904af19a05bc601"
+  integrity sha512-BQ30U1mKkvXQXXkAGcuyUA/GA26oEB7NzOtsxCDtyu62sjGw5QraKFhx2Em3WQNjPw9PG6MQ9yuIIgkSDfGu5A==
   dependencies:
+    fast-xml-builder "^1.0.0"
     strnum "^2.1.2"
 
 fastest-levenshtein@^1.0.16:
@@ -9269,9 +9275,9 @@ immediate@~3.0.5:
   integrity sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==
 
 immutable@^5.0.2:
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-5.1.4.tgz#e3f8c1fe7b567d56cf26698f31918c241dae8c1f"
-  integrity sha512-p6u1bG3YSnINT5RQmx/yRZBpenIl30kVxkTLDyHLIMk0gict704Q9n+thfDI7lTRm9vXdDYutVzXhzcThxTnXA==
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-5.1.5.tgz#93ee4db5c2a9ab42a4a783069f3c5d8847d40165"
+  integrity sha512-t7xcm2siw+hlUM68I+UEOK+z84RzmN59as9DZ7P1l0994DKUWV7UXBMQZVxaoMSRQ+PBZbHCOoBt7a2wxOMt+A==
 
 import-fresh@^3.2.1, import-fresh@^3.3.0:
   version "3.3.1"
@@ -9681,10 +9687,10 @@ jake@^10.8.5:
     filelist "^1.0.4"
     picocolors "^1.1.1"
 
-jasmine-core@~5.12.0:
-  version "5.12.1"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-5.12.1.tgz#17961990e04a7f7ffafa0e1488875cc9b9d51de3"
-  integrity sha512-P/UbRZ0LKwXe7wEpwDheuhunPwITn4oPALhrJEQJo6756EwNGnsK/TSQrWojBB4cQDQ+VaxWYws9tFNDuiMh2Q==
+jasmine-core@~6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-6.0.1.tgz#c3f22635d54e6a8316e1bc5c7e7008fe5a94df95"
+  integrity sha512-gUtzV5ASR0MLBwDNqri4kBsgKNCcRQd9qOlNw/w/deavD0cl3JmWXXfH8JhKM4LTg6LPTt2IOQ4px3YYfgh2Xg==
 
 jest-changed-files@30.2.0:
   version "30.2.0"
@@ -13806,9 +13812,9 @@ tar-stream@^3.0.0, tar-stream@^3.1.5:
     streamx "^2.15.0"
 
 tar@^7.4.3, tar@^7.5.1, tar@^7.5.4, tar@^7.5.7:
-  version "7.5.9"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-7.5.9.tgz#817ac12a54bc4362c51340875b8985d7dc9724b8"
-  integrity sha512-BTLcK0xsDh2+PUe9F6c2TlRp4zOOBMTkoQHQIWSIzI0R7KG46uEwq4OPk2W7bZcprBMsuaeFsqwYr7pjh6CuHg==
+  version "7.5.11"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-7.5.11.tgz#1250fae45d98806b36d703b30973fa8e0a6d8868"
+  integrity sha512-ChjMH33/KetonMTAtpYdgUFr0tbz69Fp2v7zWxQfYZX4g5ZN2nOBXm1R2xyA+lMIKrLKIoKAwFj93jE/avX9cQ==
   dependencies:
     "@isaacs/fs-minipass" "^4.0.0"
     chownr "^3.0.0"
