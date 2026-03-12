@@ -1,32 +1,44 @@
 <h3 mat-dialog-title>{{'Are you sure you want to delete' | translate}}?</h3>
 <div mat-dialog-content>
-  <div class="d-flex flex-row justify-content-between">
-    <div class="d-flex flex-column">
-      <p>ID</p>
+<!--  <div class="d-flex flex-row justify-content-between">-->
+<!--    <div class="d-flex flex-column">-->
+<!--      <p>ID</p>-->
+<!--    </div>-->
+<!--    <div class="d-flex flex-column">-->
+<!--      <strong>{{tagModel.id}}</strong>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="d-flex flex-row justify-content-between">-->
+<!--    <div class="d-flex flex-column">-->
+<!--      <p>{{'Name' | translate}}</p>-->
+<!--    </div>-->
+<!--    <div class="d-flex flex-column">-->
+<!--      <strong>{{tagModel.name}}</strong>-->
+<!--    </div>-->
+<!--  </div>-->
+  <div class="tag-info">
+
+    <div class="info-row">
+      <span class="label">ID</span>
+      <span class="value">{{ tagModel.id }}</span>
     </div>
-    <div class="d-flex flex-column">
-      <strong>{{tagModel.id}}</strong>
+
+    <div class="info-row">
+      <span class="label">{{ 'Name' | translate }}</span>
+      <span class="value">{{ tagModel.name }}</span>
     </div>
-  </div>
-  <div class="d-flex flex-row justify-content-between">
-    <div class="d-flex flex-column">
-      <p>{{'Name' | translate}}</p>
-    </div>
-    <div class="d-flex flex-column">
-      <strong>{{tagModel.name}}</strong>
-    </div>
+
   </div>
 </div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+<div mat-dialog-actions class="d-flex flex-row justify-content-end mt-0 pt-0">
   <button
-    mat-raised-button
-    color="warn"
+    class="btn-delete"
     id="tagDeleteSaveBtn"
     (click)="deleteTag()">
     {{'Delete' | translate}}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     id="tagDeleteSaveCancelBtn"
     (click)="cancelDelete()">
     {{'Close' | translate}}

@@ -16,19 +16,21 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MtxGrid} from "@ng-matero/extensions/grid";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    FormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTooltipModule,
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        FormsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTooltipModule,
+        MtxGrid,
+    ],
   declarations: [
     SharedTagDeleteComponent,
     SharedTagEditComponent,
