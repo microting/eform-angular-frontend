@@ -1,55 +1,69 @@
 <h3 mat-dialog-title>{{ 'Tags management' | translate }}</h3>
-<div mat-dialog-content>
-  <div class="d-flex flex-column">
-  <div class="d-flex flex-row justify-content-end align-items-center gap-12 mb-2">
+
+<div mat-dialog-content style="min-width: 420px; overflow-x: hidden">
+
+  <mtx-grid
+    [data]="availableTags"
+    [columns]="tableHeaders"
+    [cellTemplate]="{ actions: actionsTpl }"
+    [rowStriped]="false"
+    [showPaginator]="false"
+    [showToolbar]="false"
+  >
+  </mtx-grid>
+
+  <!-- ADD MORE TAGS -->
+  <div class="d-flex flex-row justify-content-start align-items-center gap-12 py-2">
     <button
       *ngIf="showMultipleCreateBtn"
-      class="btn-primary btn-primary--icon-left"
+      mat-button
+      color="primary"
       id="newTagsBtn"
       (click)="showMultipleCreateTagModal()"
       type="button">
       <mat-icon>add</mat-icon>
-      <span>{{'Add bulk' | translate}}</span>
+      <span>{{ 'Add bulk' | translate }}</span>
     </button>
     <button
-      class="btn-primary btn-primary--icon-left"
+      mat-button
+      color="primary"
       id="newTagBtn"
       (click)="showCreateTagModal()"
       type="button">
       <mat-icon>add</mat-icon>
-      <span>{{'Add new' | translate}}</span>
+      <span>{{ 'Add new' | translate }}</span>
     </button>
   </div>
-  <div class="d-flex flex-column">
-    <div class="d-flex flex-row tag-row align-items-center" *ngFor="let tag of availableTags">
-      <div id="tagName">
-        {{tag.name}}
-      </div>
-      <div class="spacer"></div>
-      <div>
-        <button *ngIf="!tag.isLocked"
-          color="accent"
-          mat-icon-button
-          (click)="showEditTagModal(tag)"
-          id="editTagBtn"
-          matTooltip="{{'Edit' | translate}}"
-        >
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button *ngIf="!tag.isLocked"
-          mat-icon-button
-          color="warn"
-          (click)="showDeleteTagModal(tag)"
-          id="deleteTagBtn"
-          matTooltip="{{'Delete' | translate}}"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    </div>
+</div>
+
+<ng-template #actionsTpl let-row>
+  <div>
+    <button
+      *ngIf="!row.isLocked"
+      mat-icon-button
+      color="accent"
+      class="small-icon-btn"
+      (click)="showEditTagModal(row)"
+      matTooltip="{{ 'Edit' | translate }}"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+
+    <button
+      *ngIf="!row.isLocked"
+      mat-icon-button
+      color="warn"
+      class="small-icon-btn"
+      (click)="showDeleteTagModal(row)"
+      matTooltip="{{ 'Delete' | translate }}"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+
   </div>
-</div></div>
-<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+</ng-template>
+
+<div mat-dialog-actions class="d-flex justify-content-end pt-0 mt-0">
   <button
     class="btn-cancel"
     (click)="hide()"
@@ -57,4 +71,3 @@
     {{ 'Close' | translate }}
   </button>
 </div>
-

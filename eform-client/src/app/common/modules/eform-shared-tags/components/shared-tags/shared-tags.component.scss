@@ -1,3 +1,14 @@
+$border-light: #e2e6e9;
+$border-dark: #37383A;
+
+body, .theme-light {
+  --border: #{$border-light};
+}
+
+body, .theme-dark {
+  --border: #{$border-dark};
+}
+
 .scrollable-block {
   max-height: 400px;
   overflow: auto;
@@ -12,4 +23,28 @@
   &:last-of-type {
     border: none;
   }
+}
+.mtx-grid{
+  border: 1px solid var(--border, #EBEFF2)!important;
+  //background: var(--border, #EBEFF2)!important;
+  border-radius: var(--rounded-2, 4px) !important;
+}
+
+.table-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.small-icon-btn {
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  padding: 0;
+}
+
+.small-icon-btn mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
 }

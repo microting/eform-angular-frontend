@@ -1,0 +1,52 @@
+$border-light: #e2e6e9;
+$border-dark: #37383A;
+$card-light: #F7F9FA;
+$card-dark: #2D2F31;
+$text-header-light: #0F1316;
+$text-header-dark: #F3F5F7;
+$text-body-light: #7F868D;
+$text-body-dark: #C1C5C9;
+
+
+
+
+body, .theme-light {
+  --border: #{$border-light};
+  --card: #{$card-light};
+  --text-header: #{$text-header-light};
+  --text-body: #{$text-body-light};
+}
+
+body, .theme-dark {
+  --border: #{$border-dark};
+  --card: #{$card-dark};
+  --text-header: #{$text-header-dark};
+  --text-body: #{$text-body-dark};
+}
+
+.tag-info {
+  background: var(--card, #F7F9FA);;
+  border-radius: 10px;
+  padding: 16px 18px;
+  border: 1px solid var(--border, #EBEFF2);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.info-row:not(:last-child) {
+  border-bottom: 1px solid var(--border, #EBEFF2);
+}
+
+.label {
+  font-size: 13px;
+  color: var(--text-body, #EBEFF2);;
+}
+
+.value {
+  font-weight: 600;
+  color: var(--text-header, #EBEFF2);;
+}
