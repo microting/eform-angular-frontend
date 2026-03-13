@@ -5,7 +5,7 @@
   <mtx-grid
     [data]="availableTags"
     [columns]="tableHeaders"
-    [cellTemplate]="{ actions: actionsTpl }"
+    [cellTemplate]="{ name: nameTpl, actions: actionsTpl }"
     [rowStriped]="false"
     [showPaginator]="false"
     [showToolbar]="false"
@@ -35,6 +35,12 @@
     </button>
   </div>
 </div>
+
+<ng-template #nameTpl let-row>
+  <div id="tagName">
+    {{row.name}}
+  </div>
+</ng-template>
 
 <ng-template #actionsTpl let-row>
   <div>
