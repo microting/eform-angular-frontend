@@ -47,6 +47,10 @@ export class Navbar {
     return cy.get('#plugins-settings');
   }
 
+  public cmsBtn() {
+    return cy.get('#cms');
+  }
+
   public menuEditorBtn() {
     return cy.get('#menu-editor').should('be.visible');
   }
@@ -171,6 +175,12 @@ export class Navbar {
         cy.wait(500);
       }
     });
+  }
+
+  public goToCmsPage() {
+    this.advancedBtn();
+    this.cmsBtn().should('be.visible').click();
+    cy.wait(500);
   }
 
   public goToPluginsPage() {

@@ -1,0 +1,54 @@
+<div style="padding: 16px">
+  <div style="margin-bottom: 16px">
+    <button id="cmsNewPageBtn" mat-raised-button color="primary" (click)="newPage()">
+      <mat-icon>add</mat-icon> New page
+    </button>
+  </div>
+
+  <mat-table [dataSource]="pages">
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+      <mat-cell *matCellDef="let page">{{ page.title }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="slug">
+      <mat-header-cell *matHeaderCellDef>Slug</mat-header-cell>
+      <mat-cell *matCellDef="let page">{{ page.slug }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isLandingPage">
+      <mat-header-cell *matHeaderCellDef>Landing page</mat-header-cell>
+      <mat-cell *matCellDef="let page">
+        <mat-icon *ngIf="page.isLandingPage" color="primary">home</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isPublished">
+      <mat-header-cell *matHeaderCellDef>Published</mat-header-cell>
+      <mat-cell *matCellDef="let page">
+        <mat-icon *ngIf="page.isPublished" color="accent">check_circle</mat-icon>
+        <mat-icon *ngIf="!page.isPublished" color="warn">unpublished</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="updatedAt">
+      <mat-header-cell *matHeaderCellDef>Last updated</mat-header-cell>
+      <mat-cell *matCellDef="let page">{{ page.updatedAt | date:'short' }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+      <mat-cell *matCellDef="let page">
+        <button mat-icon-button (click)="editPage(page.id)" matTooltip="Edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deletePage(page.id)" matTooltip="Delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

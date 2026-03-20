@@ -3985,6 +3985,13 @@
   resolved "https://registry.yarnpkg.com/@testim/chrome-version/-/chrome-version-1.1.4.tgz#86e04e677cd6c05fa230dd15ac223fa72d1d7090"
   integrity sha512-kIhULpw9TrGYnHp/8VfdcneIcxKnLixmADtukQRtJUmsVlMg0niMkwV0xZmi8hqa57xqilIHjWFA0GKvEjVU5g==
 
+"@tinymce/tinymce-angular@^9.1.1":
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/@tinymce/tinymce-angular/-/tinymce-angular-9.1.1.tgz#8a3a986af109e8466a728449962c99879533a1f2"
+  integrity sha512-4W15Ruheqg9hnCUhtNoYX/SnvytT9N0ugv1Tk/aXXXVQMUCQwL3MQBNn8SNer8iZvkDbP+11au0zWW9dWVGSVA==
+  dependencies:
+    tslib "^2.3.0"
+
 "@tootallnate/once@2":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
@@ -14041,6 +14048,11 @@ tinygradient@^1.0.0:
   dependencies:
     "@types/tinycolor2" "^1.4.0"
     tinycolor2 "^1.0.0"
+
+tinymce@^8.3.2:
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-8.3.2.tgz#bfdba186b00d61598eafbc29cab778de7f8e1e33"
+  integrity sha512-iZ8aIUtrgGOw2AkukNf8spUM0LOzNLoCHRepwXQwWmHxP2TI5LzHjjG0SmXGxbya4EmoD5/pAox0ZXJfLO5DUw==
 
 tinyrainbow@^1.2.0:
   version "1.2.0"

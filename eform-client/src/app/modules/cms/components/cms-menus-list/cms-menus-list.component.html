@@ -1,0 +1,32 @@
+<div style="padding: 16px">
+  <div style="margin-bottom: 16px">
+    <button mat-raised-button color="primary" (click)="showNewMenuForm = !showNewMenuForm">
+      <mat-icon>add</mat-icon> New menu
+    </button>
+  </div>
+
+  <div *ngIf="showNewMenuForm" style="display: flex; gap: 8px; margin-bottom: 16px; align-items: center">
+    <mat-form-field appearance="outline" style="flex: 1; max-width: 300px">
+      <mat-label>Menu name</mat-label>
+      <input matInput [(ngModel)]="newMenuName" (keyup.enter)="createMenu()">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="createMenu()">Create</button>
+    <button mat-button (click)="showNewMenuForm = false">Cancel</button>
+  </div>
+
+  <mat-card *ngFor="let menu of menus" style="margin-bottom: 8px">
+    <mat-card-content style="display: flex; align-items: center; justify-content: space-between">
+      <span>{{ menu.name }} ({{ menu.items?.length || 0 }} items)</span>
+      <div>
+        <button mat-icon-button (click)="editMenu(menu.id!)" matTooltip="Edit items">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteMenu(menu.id!)" matTooltip="Delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <p *ngIf="menus.length === 0" style="color: #666">No menus yet. Create one to get started.</p>
+</div>

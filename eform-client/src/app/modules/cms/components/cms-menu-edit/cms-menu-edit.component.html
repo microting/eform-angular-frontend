@@ -1,0 +1,46 @@
+<div style="padding: 16px; max-width: 800px">
+  <h2>Edit menu: {{ menu?.name }}</h2>
+
+  <div style="margin-bottom: 16px">
+    <button mat-raised-button color="primary" (click)="addItem()">
+      <mat-icon>add</mat-icon> Add item
+    </button>
+  </div>
+
+  <div cdkDropList (cdkDropListDropped)="drop($event)" class="menu-item-list">
+    <div *ngFor="let item of flatItems; let i = index"
+         cdkDrag
+         class="menu-item-row"
+         [style.padding-left.px]="item.indentLevel * 32 + 8">
+
+      <mat-icon cdkDragHandle style="cursor: grab; color: #999; margin-right: 8px">drag_handle</mat-icon>
+
+      <span style="flex: 1; min-width: 0">
+        <strong>{{ item.title }}</strong>
+        <span style="color: #666; font-size: 0.85rem; margin-left: 8px">
+          {{ item.externalUrl || getPageTitle(item.pageId) }}
+        </span>
+        <span *ngIf="item.target === '_blank'" style="color: #999; font-size: 0.8rem; margin-left: 4px">(new tab)</span>
+      </span>
+
+      <button mat-icon-button (click)="outdent(i)" [disabled]="item.indentLevel === 0" matTooltip="Outdent">
+        <mat-icon>format_indent_decrease</mat-icon>
+      </button>
+      <button mat-icon-button (click)="indent(i)" [disabled]="item.indentLevel >= 2" matTooltip="Indent">
+        <mat-icon>format_indent_increase</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="removeItem(i)" matTooltip="Remove">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <p *ngIf="flatItems.length === 0" style="color: #666; padding: 16px">
+      No items yet. Click "Add item" to get started.
+    </p>
+  </div>
+
+  <div style="display: flex; gap: 8px; margin-top: 16px">
+    <button mat-raised-button color="primary" (click)="save()">Save menu</button>
+    <button mat-button (click)="cancel()">Cancel</button>
+  </div>
+</div>

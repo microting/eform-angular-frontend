@@ -65,6 +65,8 @@ import {
   securityReducer,
   usersReducer,
 } from './state';
+import {cmsReducer, CmsEffects} from './state/cms';
+import {CmsService} from './common/services/cms';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { AuthStateService } from './common/store/service/auth-state.service';
@@ -109,12 +111,13 @@ export function initLocaleFactory(authStateService: AuthStateService) {
       plugins: pluginsReducer,
       security: securityReducer,
       users: usersReducer,
+      cms: cmsReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
-    EffectsModule.forRoot(AppMenuEffects),
+    EffectsModule.forRoot([AppMenuEffects, CmsEffects]),
     AppRoutingModule,
     TranslateModule.forRoot(translateConfig),
     BrowserAnimationsModule,
@@ -153,6 +156,7 @@ export function initLocaleFactory(authStateService: AuthStateService) {
   schemas: [NO_ERRORS_SCHEMA],
   providers: [
     providers,
+    CmsService,
     {
       provide: APP_INITIALIZER,
       useFactory: registerIconsFactory,

@@ -12,6 +12,7 @@ import {
   UsersState,
   PluginsState,
 } from './';
+import {CmsState} from './cms/cms.reducer';
 
 export interface AppState {
   appMenus: AppMenuState;
@@ -26,4 +27,5 @@ export interface AppState {
   cases: CasesState;
   users: UsersState;
   plugins: PluginsState;
+  cms: CmsState;
 }

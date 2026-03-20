@@ -1,0 +1,23 @@
+<div class="cms-settings-form" style="padding: 16px">
+  <div style="margin-bottom: 16px">
+    <mat-slide-toggle id="cmsEnabledToggle" [(ngModel)]="settings.isCmsEnabled">
+      Enable CMS (show landing page to unauthenticated visitors)
+    </mat-slide-toggle>
+  </div>
+
+  <div style="margin-bottom: 16px">
+    <mat-slide-toggle [(ngModel)]="settings.isMenuSticky">
+      Sticky menu (menu stays at top when scrolling)
+    </mat-slide-toggle>
+  </div>
+
+  <mat-form-field appearance="outline" style="width: 300px; display: block; margin-bottom: 16px">
+    <mat-label>Active menu</mat-label>
+    <mat-select [(ngModel)]="settings.activeMenuId">
+      <mat-option [value]="null">— None —</mat-option>
+      <mat-option *ngFor="let menu of menus" [value]="menu.id">{{ menu.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button id="cmsSettingsSaveBtn" mat-raised-button color="primary" (click)="save()">Save settings</button>
+</div>

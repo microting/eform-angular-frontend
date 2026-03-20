@@ -133,10 +133,13 @@ public class MenuService(
 
             if (enablePlugins.Any())
             {
-                menuTemplates.AddRange(enablePlugins.Select(x => new NavigationMenuTemplateModel()
+                var loadedPluginIds = Program.EnabledPlugins.Select(p => p.PluginId).ToHashSet();
+                menuTemplates.AddRange(enablePlugins
+                    .Where(x => loadedPluginIds.Contains(x.PluginId))
+                    .Select(x => new NavigationMenuTemplateModel()
                 {
                     Id = x.Id,
-                    Name = Program.EnabledPlugins.Single(p => p.PluginId == x.PluginId).Name, // changed plugin
+                    Name = Program.EnabledPlugins.First(p => p.PluginId == x.PluginId).Name,
                     Items = dbContext.MenuTemplates
                         .Where(p => p.EformPluginId == x.Id && !string.IsNullOrEmpty(p.DefaultLink))
                         .Select(p => new NavigationMenuTemplateItemModel
@@ -272,12 +275,7 @@ public class MenuService(
                 .OrderBy(x => x.Position)
                 .Select(x => new MenuItemModel
                 {
-                    Name = dbContext.MenuItemTranslations.Any(d =>
-                        d.MenuItemId == x.Id && d.LocaleName == currentLocale)
-                        ? dbContext.MenuItemTranslations
-                            .First(d => d.MenuItemId == x.Id && d.LocaleName == currentLocale).Name
-                        : dbContext.MenuItemTranslations.First(d => d.MenuItemId == x.Id && d.LocaleName == "en-US")
-                            .Name,
+                    Name = dbContext.MenuItemTranslations.First(d => d.MenuItemId == x.Id && d.LocaleName == currentLocale).Name,
                     LocaleName = currentLocale,
                     E2EId = x.E2EId,
                     Link = x.Link,
@@ -302,12 +300,7 @@ public class MenuService(
                         .OrderBy(p => p.Position)
                         .Select(p => new MenuItemModel
                         {
-                            Name = dbContext.MenuItemTranslations.Any(d =>
-                                d.MenuItemId == p.Id && d.LocaleName == currentLocale)
-                                ? dbContext.MenuItemTranslations
-                                    .First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).Name
-                                : dbContext.MenuItemTranslations
-                                    .First(d => d.MenuItemId == p.Id && d.LocaleName == "en-US").Name,
+                            Name = dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).Name,
                             //LocaleName = _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).LocaleName,
                             LocaleName = currentLocale,
                             E2EId = p.E2EId,

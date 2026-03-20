@@ -428,6 +428,7 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IWordService, WordService>();
         services.AddScoped<ITemplateVisualEditorService, EFormVisualEditorService>();
         services.AddScoped<ITranslationService, TranslationService>();
+        services.AddScoped<ICmsService, CmsService>();
     }
 
     private ICollection<PluginPermissionModel> GetPluginsPermissions()

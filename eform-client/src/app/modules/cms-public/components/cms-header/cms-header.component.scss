@@ -1,0 +1,45 @@
+.cms-header {
+  &.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.cms-header-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: default;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 12px;
+}
+
+.login-btn {
+  margin-left: 8px;
+}
+
+.burger-btn {
+  margin-left: 8px;
+}
+
+.mobile-menu {
+  background: white;
+  border-top: 1px solid #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  .child-item {
+    padding-left: 32px;
+    font-size: 0.9rem;
+    color: #666;
+  }
+}

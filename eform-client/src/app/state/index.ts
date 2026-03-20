@@ -11,3 +11,4 @@ export * from './entity-select';
 export * from './security';
 export * from './users';
 export * from './plugins';
+export * from './cms';
