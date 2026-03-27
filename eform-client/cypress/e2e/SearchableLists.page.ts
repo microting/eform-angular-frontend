@@ -140,23 +140,31 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   // Row and item operations
-  public rowNum() {
-    return cy.get('tbody > tr').its('length');
+  public rowNum(): Cypress.Chainable<number> {
+    return cy.get('body').then($body => {
+      return $body.find('tbody > tr').length;
+    });
   }
 
-  public items() {
-    return cy.get('app-entity-search-edit ul li').its('length');
+  public items(): Cypress.Chainable<number> {
+    return cy.get('body').then($body => {
+      return $body.find('app-entity-search-edit ul li').length;
+    });
   }
 
-  public getFirstRowObject() {
+  public getFirstRowObject(): Cypress.Chainable<{ name: string }> {
     return cy.get('tbody > tr').first().then($row => {
       const name = $row.find('#entitySearchName').text();
-      return {
-        name: name,
-        editBtn: cy.get('#entitySearchUpdateBtn').first(),
-        deleteBtn: cy.get('#entitySearchDeleteBtn').first()
-      };
+      return { name };
     });
+  }
+
+  public clickFirstEditBtn() {
+    cy.get('#entitySearchUpdateBtn').first().click();
+  }
+
+  public clickFirstDeleteBtn() {
+    cy.get('#entitySearchDeleteBtn').first().click();
   }
 
   // Create operations
@@ -252,39 +260,39 @@ export class SearchableListsPage extends PageWithNavbarPage {
     this.rowNum().then(count => {
       const index = count - 1;
       this.entitySearchEditBtn(index).click();
-      cy.wait(250);
-      this.entitySearchEditNameBox().should('be.visible').clear().type(newName);
-      cy.wait(250);
-      this.entitySearchEditSaveBtn().click();
-      cy.wait(250);
     });
+    cy.wait(250);
+    this.entitySearchEditNameBox().should('be.visible').clear().type(newName);
+    cy.wait(250);
+    this.entitySearchEditSaveBtn().click();
+    cy.wait(250);
   }
 
   public editSearchableListNameAndItem(newName: string, newItemName: string) {
     this.rowNum().then(count => {
       const index = count - 1;
       this.entitySearchEditBtn(index).click();
-      cy.wait(250);
-      this.entitySearchEditNameBox().should('be.visible').clear().type(newName);
-      cy.wait(250);
-      this.editItemName(newItemName);
-      cy.wait(250);
-      this.entitySearchEditSaveBtn().click();
-      cy.wait(250);
     });
+    cy.wait(250);
+    this.entitySearchEditNameBox().should('be.visible').clear().type(newName);
+    cy.wait(250);
+    this.editItemName(newItemName);
+    cy.wait(250);
+    this.entitySearchEditSaveBtn().click();
+    cy.wait(250);
   }
 
   public deleteItemFromList() {
     this.rowNum().then(count => {
       const index = count - 1;
       this.entitySearchEditBtn(index).click();
-      cy.wait(250);
-      this.entitySearchEditNameBox().should('be.visible');
-      this.deleteItem();
-      cy.wait(250);
-      this.entitySearchEditSaveBtn().click();
-      cy.wait(250);
     });
+    cy.wait(250);
+    this.entitySearchEditNameBox().should('be.visible');
+    this.deleteItem();
+    cy.wait(250);
+    this.entitySearchEditSaveBtn().click();
+    cy.wait(250);
   }
 
   // Delete operations

@@ -16,12 +16,21 @@
 <mtx-grid
   [data]="workersDto"
   [columns]="tableHeaders"
-  [cellTemplate]="{actions: actionsTpl}"
+  [cellTemplate]="{workerUId: workerUIdTpl, firstName: workerFirstNameTpl, lastName: workerLastNameTpl, actions: actionsTpl}"
   [showPaginator]="false"
   [pageOnFront]="false"
   [rowStriped]="false"
   [showColumnMenuButton]="false">
 </mtx-grid>
+<ng-template #workerUIdTpl let-row>
+  <div id="workerUID">{{row.workerUId}}</div>
+</ng-template>
+<ng-template #workerFirstNameTpl let-row>
+  <div id="workerFirstName">{{row.firstName}}</div>
+</ng-template>
+<ng-template #workerLastNameTpl let-row>
+  <div id="workerLastName">{{row.lastName}}</div>
+</ng-template>
 <ng-template #actionsTpl let-row let-i="index">
   <div class="worker-actions" id="action-items-{{i}}" *ngIf="(selectCurrentUserClaimsWorkersDelete$ | async) || (selectCurrentUserClaimsWorkersUpdate$ | async)">
     <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">

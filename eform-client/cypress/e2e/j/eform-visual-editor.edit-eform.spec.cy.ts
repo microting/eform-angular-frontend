@@ -69,6 +69,7 @@ describe('My eforms', () => {
     cy.wait('@saveeForm', { timeout: 60000 });
     // cy.wait(10000);
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
+    cy.get('#actionMenu').eq(0).click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
     /* ==== End Cypress Studio ==== */
@@ -512,6 +513,7 @@ describe('My eforms', () => {
   afterEach(() => {
     /* ==== Generated with Cypress Studio ==== */
     cy.get('#cancelEditBtn').click();
+    cy.get('#actionMenu').eq(0).click();
     cy.get('#delete-eform-btn-0').click();
     cy.get('#eFormDeleteDeleteBtn').click();
     /* ==== End Cypress Studio ==== */

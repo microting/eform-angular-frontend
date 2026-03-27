@@ -125,9 +125,9 @@ class DeviceUsersPage extends PageWithNavbarPage{
     // @ts-ignore
     cy.get('#newDeviceUserBtn').should('be.visible').click();
     // @ts-ignore
-    cy.get('#createFirstNameInput').should('be.visible').type(firstName);
+    cy.get('#firstName').should('be.visible').type(firstName);
     // @ts-ignore
-    cy.get('#createLastNameInput').should('be.visible').type(lastName);
+    cy.get('#lastName').should('be.visible').type(lastName);
     // @ts-ignore
     cy.get('#saveCreateBtn').should('be.visible').click();
     // @ts-ignore
