@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../../Page objects/Login.page';
-import { MyEformsPage } from '../../../Page objects/MyEforms.page';
-import { FoldersPage, FoldersRowObject } from '../../../Page objects/Folders.page';
-import { generateRandmString } from '../../../Helpers/helper-functions';
-import { applicationLanguages } from '../../../../src/app/common/const';
+import { LoginPage } from '../../Page objects/Login.page';
+import { MyEformsPage } from '../../Page objects/MyEforms.page';
+import { FoldersPage, FoldersRowObject } from '../../Page objects/Folders.page';
+import { generateRandmString } from '../../Helpers/helper-functions';
+import { applicationLanguages } from '../../../src/app/common/const';
 
 const folderName = [
   generateRandmString(),

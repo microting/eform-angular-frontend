@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../../Page objects/Login.page';
-import { MyEformsPage } from '../../../Page objects/MyEforms.page';
-import { FoldersPage } from '../../../Page objects/Folders.page';
-import { generateRandmString } from '../../../Helpers/helper-functions';
+import { LoginPage } from '../../Page objects/Login.page';
+import { MyEformsPage } from '../../Page objects/MyEforms.page';
+import { FoldersPage } from '../../Page objects/Folders.page';
+import { generateRandmString } from '../../Helpers/helper-functions';
 
 const nameFolder = generateRandmString();
 const nameFolderChildren = generateRandmString();
