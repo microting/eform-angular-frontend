@@ -68,7 +68,6 @@ def main():
     if int(get_git_status()) > 0:
         run_command("git checkout master", shell=True)
         run_command("git pull", shell=True)
-
         current_number_of_commits = get_commit_count()
 
         os.chdir("eFormAPI/eFormAPI.Web")
@@ -98,7 +97,7 @@ def main():
         if new_number_of_commits > current_number_of_commits:
             new_version = update_git_version()
             print(f"Updated Microting eForm and pushed new version {new_version}")
-            os.chdir("../..")
+            os.chdir(os.path.join("..", ".."))
             run_command(f"github_changelog_generator -u microting -p eform-angular-frontend -t {os.getenv('CHANGELOG_GITHUB_TOKEN')}", shell=True)
             run_command(["git", "add", "CHANGELOG.md"])
             run_command(["git", "commit", "-m", "Updating changelog"])
