@@ -1,4 +1,15 @@
 import { Page, expect } from '@playwright/test';
+import { Guid } from 'guid-typescript';
+
+export function generateRandmString(length: number = 36): string {
+  return Guid.raw().toString().slice(0, length);
+}
+
+export function getRandomInt(min: number, max: number): number {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
 
 export async function selectDateOnNewDatePicker(page: Page, year: number, month: number, day: number) {
   await page.waitForTimeout(500);
@@ -19,6 +30,7 @@ export async function selectDateRangeOnNewDatePicker(
   yearFrom: number, monthFrom: number, dayFrom: number,
   yearTo: number, monthTo: number, dayTo: number,
 ) {
+  await page.locator('.mat-datepicker-popup').waitFor({ state: 'visible', timeout: 20000 });
   await selectDateOnNewDatePicker(page, yearFrom, monthFrom, dayFrom);
   await selectDateOnNewDatePicker(page, yearTo, monthTo, dayTo);
 }
@@ -31,7 +43,7 @@ export async function selectValueInNgSelector(
   intercept = false,
 ) {
   const ngSelector = page.locator(selector);
-  await ngSelector.waitFor({ state: 'visible' });
+  await ngSelector.waitFor({ state: 'visible', timeout: 40000 });
   if (intercept) {
     await Promise.all([
       page.waitForResponse('**'),
@@ -42,10 +54,36 @@ export async function selectValueInNgSelector(
     await ngSelector.locator('input').fill(value);
   }
   await page.waitForTimeout(500);
+  const dropdownPanel = page.locator('ng-dropdown-panel');
+  await dropdownPanel.waitFor({ state: 'visible', timeout: 40000 });
   const option = selectorInModal
     ? page.locator('.ng-option').filter({ hasText: value }).first()
     : ngSelector.locator('.ng-option').filter({ hasText: value }).first();
   await option.scrollIntoViewIfNeeded();
+  await option.click();
+  await page.waitForTimeout(500);
+}
+
+export async function selectValueInNgSelectorWithSeparateValueAndSearchValue(
+  page: Page,
+  selector: string,
+  valueForSearch: string,
+  valueForSelect: string = '',
+  selectorInModal = false,
+) {
+  const ngSelector = page.locator(selector);
+  await ngSelector.waitFor({ state: 'visible', timeout: 40000 });
+  const input = ngSelector.locator('input');
+  await input.waitFor({ state: 'visible', timeout: 40000 });
+  await input.fill(valueForSearch);
+  await page.waitForTimeout(500);
+  const displayValue = valueForSelect ? valueForSelect : valueForSearch;
+  const dropdownPanel = page.locator('ng-dropdown-panel');
+  await dropdownPanel.waitFor({ state: 'visible', timeout: 40000 });
+  const option = selectorInModal
+    ? dropdownPanel.locator('.ng-option').filter({ hasText: displayValue }).first()
+    : dropdownPanel.locator('.ng-option').filter({ hasText: displayValue }).first();
+  await option.waitFor({ state: 'visible', timeout: 40000 });
   await option.click();
   await page.waitForTimeout(500);
 }
