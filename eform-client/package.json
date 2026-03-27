@@ -159,7 +159,6 @@
     "@wdio/spec-reporter": "9.20.0",
     "angular-mocks": "^1.8.3",
     "chai": "^6.0.1",
-    "chromedriver": "^144.0.1",
     "cypress": "15.6.0",
     "eslint": "^8.57.1",
     "fs-extra": "^11.3.1",
@@ -174,7 +173,6 @@
     "ts-node": "10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "5.8.3",
-    "wdio-chromedriver-service": "8.1.1",
     "wdio-docker-service": "3.2.1",
     "webdriverio": "9.20.0",
     "xlsx": "^0.18.5"
