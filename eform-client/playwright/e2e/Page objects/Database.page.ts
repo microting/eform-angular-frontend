@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 import BasePage from './Page';
-import DatabaseConfigurationConstants from '../../e2e/Constants/DatabaseConfigurationConstants';
+import DatabaseConfigurationConstants from '../Constants/DatabaseConfigurationConstants';
 
 export class DatabasePage extends BasePage {
   constructor(page: Page) {

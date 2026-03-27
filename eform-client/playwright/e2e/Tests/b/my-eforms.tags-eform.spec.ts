@@ -24,7 +24,7 @@ test.describe('Main page', () => {
   });
 
   test('should create eform', async () => {
-    await (await myEformsPage.idSortBtn()).click();
+    await myEformsPage.idSortBtn().click();
     const rowCountBeforeCreation = await myEformsPage.rowNum();
     await myEformsPage.createNewEform(newEformLabel);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
@@ -36,9 +36,9 @@ test.describe('Main page', () => {
   test('should not perform any changes by doing nothing and clicking "Save" in tag edit window', async () => {
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
     await eform.editTagsBtn.click();
-    await (await myEformsPage.tagEditSaveBtn()).click();
+    await myEformsPage.tagEditSaveBtn().click();
     expect(
-      (await myEformsPage.getEformsRowObjByNameEForm(newEformLabel)).tags.length
+      await (await myEformsPage.getEformsRowObjByNameEForm(newEformLabel)).tags.count()
     ).toBe(0);
   });
 
@@ -51,7 +51,7 @@ test.describe('Main page', () => {
     await (await myEformsPage.getEformsRowObjByNameEForm(newEformLabel)).addTag(testTag);
     await page.waitForTimeout(500);
     expect(
-      await (await myEformsPage.getEformsRowObjByNameEForm(newEformLabel)).tags[0].textContent()
+      await (await myEformsPage.getEformsRowObjByNameEForm(newEformLabel)).tags.first().textContent()
     ).toBe(testTag);
   });
 
@@ -61,7 +61,7 @@ test.describe('Main page', () => {
     await loginPage.waitForSpinnerHide(40000);
     await page.waitForTimeout(500);
     eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
-    expect(eform.tags.length).toBe(0);
+    expect(await eform.tags.count()).toBe(0);
   });
 
   test('should delete tag from list', async () => {

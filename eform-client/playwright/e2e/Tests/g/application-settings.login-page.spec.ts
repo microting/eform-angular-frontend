@@ -26,18 +26,18 @@ test.describe('Application settings page - site header section', () => {
   test('should change main text', async () => {
     await myEformsPage.Navbar.goToApplicationSettings();
     await loginPage.waitForSpinnerHide(40000);
-    await (await applicationSettingsPage.LoginPage.mainTextInput()).waitForDisplayed({ timeout: 240000 });
-    await (await applicationSettingsPage.LoginPage.mainTextInput()).setValue(
+    await (await applicationSettingsPage.LoginPage.mainTextInput()).waitFor({ state: 'visible', timeout: 240000 });
+    await (await applicationSettingsPage.LoginPage.mainTextInput()).fill(
       ApplicationSettingsConstants.LoginPage.customMainText
     );
-    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitFor({ state: 'visible', timeout: 40000 });
     await applicationSettingsPage.save();
-    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitFor({ state: 'visible', timeout: 40000 });
     await applicationSettingsPage.Navbar.logout();
-    await (await loginPage.usernameInput()).waitForDisplayed({ timeout: 40000 });
-    expect(await (await loginPage.loginBtn()).isDisplayed()).toBeTruthy();
+    await (await loginPage.usernameInput()).waitFor({ state: 'visible', timeout: 40000 });
+    expect(await (await loginPage.loginBtn()).isVisible()).toBeTruthy();
     expect(
-      await (await loginPage.mainText()).getText()
+      await (await loginPage.mainText()).textContent()
     ).toBe(ApplicationSettingsConstants.LoginPage.customMainText);
   });
 
@@ -45,18 +45,18 @@ test.describe('Application settings page - site header section', () => {
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
     await loginPage.waitForSpinnerHide(40000);
-    await (await applicationSettingsPage.LoginPage.secondaryTextInput()).waitForDisplayed({ timeout: 240000 });
-    await (await applicationSettingsPage.LoginPage.secondaryTextInput()).setValue(
+    await (await applicationSettingsPage.LoginPage.secondaryTextInput()).waitFor({ state: 'visible', timeout: 240000 });
+    await (await applicationSettingsPage.LoginPage.secondaryTextInput()).fill(
       ApplicationSettingsConstants.LoginPage.customSecondaryText
     );
-    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitFor({ state: 'visible', timeout: 40000 });
     await applicationSettingsPage.save();
-    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitFor({ state: 'visible', timeout: 40000 });
     await applicationSettingsPage.Navbar.logout();
-    await (await loginPage.usernameInput()).waitForDisplayed({ timeout: 40000 });
-    expect(await (await loginPage.loginBtn()).isDisplayed()).toBeTruthy();
+    await (await loginPage.usernameInput()).waitFor({ state: 'visible', timeout: 40000 });
+    expect(await (await loginPage.loginBtn()).isVisible()).toBeTruthy();
     expect(
-      await (await loginPage.secondaryText()).getText()
+      await (await loginPage.secondaryText()).textContent()
     ).toBe(ApplicationSettingsConstants.LoginPage.customSecondaryText);
   });
 
@@ -64,16 +64,16 @@ test.describe('Application settings page - site header section', () => {
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
     await loginPage.waitForSpinnerHide(40000);
-    await (await applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn()).waitForDisplayed({ timeout: 240000 });
+    await (await applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn()).waitFor({ state: 'visible', timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn()).click();
-    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitFor({ state: 'visible', timeout: 40000 });
     await applicationSettingsPage.save();
-    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitFor({ state: 'visible', timeout: 40000 });
     await applicationSettingsPage.Navbar.logout();
-    await (await loginPage.usernameInput()).waitForDisplayed({ timeout: 40000 });
-    expect(await (await loginPage.loginBtn()).isDisplayed()).toBeTruthy();
+    await (await loginPage.usernameInput()).waitFor({ state: 'visible', timeout: 40000 });
+    expect(await (await loginPage.loginBtn()).isVisible()).toBeTruthy();
     expect(
-      await (await loginPage.mainText()).isDisplayed()
+      await (await loginPage.mainText()).isVisible()
     ).toBe(false);
   });
 
@@ -81,16 +81,16 @@ test.describe('Application settings page - site header section', () => {
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
     await loginPage.waitForSpinnerHide(40000);
-    await (await applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn()).waitForDisplayed({ timeout: 240000 });
+    await (await applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn()).waitFor({ state: 'visible', timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn()).click();
-    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitFor({ state: 'visible', timeout: 40000 });
     await applicationSettingsPage.save();
-    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitFor({ state: 'visible', timeout: 40000 });
     await applicationSettingsPage.Navbar.logout();
-    await (await loginPage.usernameInput()).waitForDisplayed({ timeout: 40000 });
-    expect(await (await loginPage.loginBtn()).isDisplayed()).toBeTruthy();
+    await (await loginPage.usernameInput()).waitFor({ state: 'visible', timeout: 40000 });
+    expect(await (await loginPage.loginBtn()).isVisible()).toBeTruthy();
     expect(
-      await (await loginPage.secondaryText()).isDisplayed()
+      await (await loginPage.secondaryText()).isVisible()
     ).toBe(false);
   });
 
@@ -98,16 +98,16 @@ test.describe('Application settings page - site header section', () => {
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
     await loginPage.waitForSpinnerHide(40000);
-    await (await applicationSettingsPage.LoginPage.imageVisibilityToggler()).waitForDisplayed({ timeout: 240000 });
+    await (await applicationSettingsPage.LoginPage.imageVisibilityToggler()).waitFor({ state: 'visible', timeout: 240000 });
     await (await applicationSettingsPage.LoginPage.imageVisibilityToggler()).click();
-    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitFor({ state: 'visible', timeout: 40000 });
     await applicationSettingsPage.save();
-    await (await myEformsPage.Navbar.signOutDropdown()).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.Navbar.signOutDropdown()).waitFor({ state: 'visible', timeout: 40000 });
     await page.waitForTimeout(1000);
     await applicationSettingsPage.Navbar.logout();
-    expect(await (await loginPage.loginBtn()).isDisplayed()).toBeTruthy();
+    expect(await (await loginPage.loginBtn()).isVisible()).toBeTruthy();
     expect(
-      await (await loginPage.image()).isDisplayed()
+      await (await loginPage.image()).isVisible()
     ).toBe(false);
   });
 
@@ -115,34 +115,34 @@ test.describe('Application settings page - site header section', () => {
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
     await loginPage.waitForSpinnerHide(40000);
-    await (await applicationSettingsPage.SiteHeader.mainTextInput()).waitForDisplayed({ timeout: 240000 });
+    await (await applicationSettingsPage.SiteHeader.mainTextInput()).waitFor({ state: 'visible', timeout: 240000 });
     await applicationSettingsPage.LoginPage.reset();
-    await (await applicationSettingsPage.SiteHeader.mainTextInput()).waitForDisplayed({ timeout: 240000 });
+    await (await applicationSettingsPage.SiteHeader.mainTextInput()).waitFor({ state: 'visible', timeout: 240000 });
     await applicationSettingsPage.Navbar.logout();
-    expect(await (await loginPage.loginBtn()).isDisplayed()).toBeTruthy();
+    expect(await (await loginPage.loginBtn()).isVisible()).toBeTruthy();
     expect(
-      await (await loginPage.mainText()).getText()
+      await (await loginPage.mainText()).textContent()
     ).toBe(ApplicationSettingsConstants.LoginPage.originalMainText);
   });
 
   // test('should reset secondary text', async () => {
   //   expect(
-  //     await (await loginPage.secondaryText()).getText()
+  //     await (await loginPage.secondaryText()).textContent()
   //   ).toBe(ApplicationSettingsConstants.LoginPage.originalSecondaryText);
   // });
   // test('should reset main text visibility', async () => {
   //   expect(
-  //     await (await loginPage.mainText()).isDisplayed()
+  //     await (await loginPage.mainText()).isVisible()
   //   ).toBeTruthy();
   // });
   // test('should reset secondary text visibility', async () => {
   //   expect(
-  //     await (await loginPage.secondaryText()).isDisplayed()
+  //     await (await loginPage.secondaryText()).isVisible()
   //   ).toBeTruthy();
   // });
   // test('should reset image visibility', async () => {
   //   expect(
-  //     await (await loginPage.image()).isDisplayed()
+  //     await (await loginPage.image()).isVisible()
   //   ).toBeTruthy();
   // });
 });

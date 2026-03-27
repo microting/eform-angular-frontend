@@ -27,25 +27,25 @@ test.describe('Application settings page - site header section', () => {
   //   await myEformsPage.Navbar.goToApplicationSettings();
   //   await page.locator('#mainTextLoginPage').waitFor({ state: 'visible', timeout: 240000 });
   //   await page.locator('#spinner-animation').waitFor({ state: 'hidden', timeout: 50000 });
-  //   await (await applicationSettingsPage.SiteHeader.mainTextInput()).setValue(
+  //   await (await applicationSettingsPage.SiteHeader.mainTextInput()).fill(
   //     ApplicationSettingsConstants.SiteHeader.customMainText
   //   );
   //   await applicationSettingsPage.save();
   //   await page.locator('#sign-out-dropdown').waitFor({ state: 'visible', timeout: 240000 });
   //   await page.locator('#spinner-animation').waitFor({ state: 'hidden', timeout: 50000 });
   //   expect(
-  //     await (await applicationSettingsPage.siteHeaderMainText()).getText()
+  //     await (await applicationSettingsPage.siteHeaderMainText()).textContent()
   //   ).toBe(ApplicationSettingsConstants.SiteHeader.customMainText);
   // });
   // test('should change secondary text', async () => {
-  //   await (await applicationSettingsPage.SiteHeader.secondaryTextInput()).setValue(
+  //   await (await applicationSettingsPage.SiteHeader.secondaryTextInput()).fill(
   //     ApplicationSettingsConstants.SiteHeader.customSecondaryText
   //   );
   //   await applicationSettingsPage.save();
   //   await page.locator('#sign-out-dropdown').waitFor({ state: 'visible', timeout: 40000 });
   //   await page.locator('#spinner-animation').waitFor({ state: 'hidden', timeout: 50000 });
   //   expect(
-  //     await (await applicationSettingsPage.siteHeaderSecondaryText()).getText()
+  //     await (await applicationSettingsPage.siteHeaderSecondaryText()).textContent()
   //   ).toBe(ApplicationSettingsConstants.SiteHeader.customSecondaryText);
   // });
   // test('should hide main text', async () => {
@@ -57,7 +57,7 @@ test.describe('Application settings page - site header section', () => {
   //   await page.locator('#spinner-animation').waitFor({ state: 'hidden', timeout: 50000 });
   //   await loginPage.open('/');
   //   expect(
-  //     await (await applicationSettingsPage.siteHeaderMainText()).isDisplayed()
+  //     await (await applicationSettingsPage.siteHeaderMainText()).isVisible()
   //   ).toBe(false);
   // });
   // test('should hide secondary text', async () => {
@@ -69,7 +69,7 @@ test.describe('Application settings page - site header section', () => {
   //   await page.locator('#spinner-animation').waitFor({ state: 'hidden', timeout: 50000 });
   //   await loginPage.open('/');
   //   expect(
-  //     await (await applicationSettingsPage.siteHeaderSecondaryText()).isDisplayed()
+  //     await (await applicationSettingsPage.siteHeaderSecondaryText()).isVisible()
   //   ).toBe(false);
   // });
 
@@ -84,7 +84,7 @@ test.describe('Application settings page - site header section', () => {
     await page.locator('#sign-out-dropdown').waitFor({ state: 'visible', timeout: 40000 });
     await loginPage.open('/');
     expect(
-      await (await applicationSettingsPage.siteHeaderImage()).isDisplayed()
+      await (await applicationSettingsPage.siteHeaderImage()).isVisible()
     ).toBe(false);
   });
 
@@ -95,27 +95,27 @@ test.describe('Application settings page - site header section', () => {
   //   await loginPage.open('/application-settings');
   //   await page.locator('#spinner-animation').waitFor({ state: 'hidden', timeout: 50000 });
   //   expect(
-  //     await (await applicationSettingsPage.siteHeaderMainText()).isDisplayed()
+  //     await (await applicationSettingsPage.siteHeaderMainText()).isVisible()
   //   ).toBeTruthy();
   // });
   // test('should reset site header secondary text', async () => {
   //   expect(
-  //     await (await applicationSettingsPage.siteHeaderMainText()).getText()
+  //     await (await applicationSettingsPage.siteHeaderMainText()).textContent()
   //   ).toBe(ApplicationSettingsConstants.SiteHeader.originalMainText);
   // });
   // test('should reset site header main text visibility', async () => {
   //   expect(
-  //     await (await applicationSettingsPage.siteHeaderSecondaryText()).isDisplayed()
+  //     await (await applicationSettingsPage.siteHeaderSecondaryText()).isVisible()
   //   ).toBeTruthy();
   // });
   // test('should reset site header secondary text visibility', async () => {
   //   expect(
-  //     await (await applicationSettingsPage.siteHeaderSecondaryText()).getText()
+  //     await (await applicationSettingsPage.siteHeaderSecondaryText()).textContent()
   //   ).toBe(ApplicationSettingsConstants.SiteHeader.originalSecondaryText);
   // });
   // test('should reset site header image text visibility', async () => {
   //   expect(
-  //     await (await applicationSettingsPage.siteHeaderImage()).isDisplayed()
+  //     await (await applicationSettingsPage.siteHeaderImage()).isVisible()
   //   ).toBeTruthy();
   // });
 });

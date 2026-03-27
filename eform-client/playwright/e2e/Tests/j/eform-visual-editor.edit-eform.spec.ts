@@ -11,7 +11,7 @@ import {
   generateRandmString,
   getRandomInt,
 } from '../../helper-functions';
-import { EformFieldTypesEnum } from '../../../src/app/common/const';
+import { EformFieldTypesEnum } from '../../../../src/app/common/const';
 import { MyEformsPage } from '../../Page objects/MyEforms.page';
 import { Guid } from 'guid-typescript';
 import XMLForEformSimple from '../../Constants/XMLForEformSimple';

@@ -95,11 +95,11 @@ test.describe('Device users page', () => {
     await editBtn.click();
     await page.locator('#firstName').waitFor({ state: 'visible', timeout: 10000 });
     await (await deviceUsersPage.editFirstNameInput()).click();
-    await (await deviceUsersPage.editFirstNameInput()).clearValue();
-    await (await deviceUsersPage.editFirstNameInput()).setValue(newName);
+    await (await deviceUsersPage.editFirstNameInput()).clear();
+    await (await deviceUsersPage.editFirstNameInput()).fill(newName);
     await (await deviceUsersPage.editLastNameInput()).click();
-    await (await deviceUsersPage.editLastNameInput()).clearValue();
-    await (await deviceUsersPage.editLastNameInput()).setValue(newSurname);
+    await (await deviceUsersPage.editLastNameInput()).clear();
+    await (await deviceUsersPage.editLastNameInput()).fill(newSurname);
     await (await deviceUsersPage.cancelEditBtn()).click();
     await page.locator('#newDeviceUserBtn').waitFor({ state: 'visible', timeout: 40000 });
     const rowNumAfterEdit = await deviceUsersPage.rowNum();

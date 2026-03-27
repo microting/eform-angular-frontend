@@ -10,7 +10,7 @@ import {
   generateRandmString,
   getRandomInt,
 } from '../../helper-functions';
-import { EformFieldTypesEnum } from '../../../src/app/common/const';
+import { EformFieldTypesEnum } from '../../../../src/app/common/const';
 import { MyEformsPage } from '../../Page objects/MyEforms.page';
 import XMLForEformFractions from '../../Constants/XMLForEformFractions';
 

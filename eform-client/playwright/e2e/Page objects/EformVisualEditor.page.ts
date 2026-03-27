@@ -141,7 +141,7 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
       }
       if (checklist.tags) {
         for (let i = 0; i < checklist.tags.length; i++) {
-          await selectValueInNgSelector(this.page, this.mainCheckListTagsSelector(), checklist.tags[i]);
+          await selectValueInNgSelector(this.page, '#mainCheckListTagsSelector', checklist.tags[i]);
         }
       }
       if (checklist.fields) {

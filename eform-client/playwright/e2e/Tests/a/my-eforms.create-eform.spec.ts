@@ -23,7 +23,7 @@ test.describe('My eforms', () => {
     const newEformLabel = Guid.create().toString();
     await myEformsPage.createNewEform(newEformLabel);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
-    expect(eform.tags.length).toBe(0);
+    expect(await eform.tags.count()).toBe(0);
     const countBeforeDelete = await myEformsPage.rowNum();
     await eform.deleteEForm();
     const newRowCount = await myEformsPage.rowNum();
@@ -37,8 +37,8 @@ test.describe('My eforms', () => {
     await myEformsPage.createNewEform(newEformLabel, [createdTag]);
     arrayNamesTag.push(createdTag);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
-    expect(eform.tags.length).toBe(1);
-    expect(await eform.tags[0].getText()).toBe(createdTag);
+    expect(await eform.tags.count()).toBe(1);
+    expect(await eform.tags.first().textContent()).toBe(createdTag);
     const countBeforeDelete = await myEformsPage.rowNum();
     await eform.deleteEForm();
     const newRowCount = await myEformsPage.rowNum();
@@ -49,14 +49,15 @@ test.describe('My eforms', () => {
     const myEformsPage = new MyEformsPage(page);
     const newEformLabel = Guid.create().toString();
     const createdTags = [Guid.create().toString(), Guid.create().toString()];
-    await myEformsPage.createNewEform(newEformLabel, [createdTags]);
+    await myEformsPage.createNewEform(newEformLabel, createdTags);
     arrayNamesTag = [...arrayNamesTag, ...createdTags];
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    const tagCount = await eform.tags.count();
     let tagsTexts = [];
-    for (let i = 0; i < eform.tags.length; i++) {
-      tagsTexts.push(await eform.tags[i].getText());
+    for (let i = 0; i < tagCount; i++) {
+      tagsTexts.push(await eform.tags.nth(i).textContent());
     }
-    expect(eform.tags.length).toBe(createdTags.length);
+    expect(tagCount).toBe(createdTags.length);
     expect(tagsTexts).toEqual(expect.arrayContaining(createdTags));
     const countBeforeDelete = await myEformsPage.rowNum();
     await eform.deleteEForm();
@@ -68,14 +69,15 @@ test.describe('My eforms', () => {
     const newEformLabel = Guid.create().toString();
     const createdTags = [Guid.create().toString()];
     const tagAddedNum = 1;
-    const addedAndSelectedTags = await myEformsPage.createNewEform(newEformLabel, [createdTags], tagAddedNum);
+    const addedAndSelectedTags = await myEformsPage.createNewEform(newEformLabel, createdTags, tagAddedNum);
     arrayNamesTag = [...arrayNamesTag, ...createdTags];
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    const tagCount = await eform.tags.count();
     let tagsTexts = [];
-    for (let i = 0; i < eform.tags.length; i++) {
-      tagsTexts.push(await eform.tags[i].getText());
+    for (let i = 0; i < tagCount; i++) {
+      tagsTexts.push(await eform.tags.nth(i).textContent());
     }
-    expect(eform.tags.length).toBe(createdTags.length + tagAddedNum);
+    expect(tagCount).toBe(createdTags.length + tagAddedNum);
     expect(tagsTexts).toEqual(expect.arrayContaining(createdTags));
     expect(tagsTexts).toEqual(expect.arrayContaining(addedAndSelectedTags.selected));
     const countBeforeDelete = await myEformsPage.rowNum();
@@ -89,11 +91,12 @@ test.describe('My eforms', () => {
     const tagAddedNum = 1;
     const addedAndSelectedTags = await myEformsPage.createNewEform(newEformLabel, [], tagAddedNum);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    const tagCount = await eform.tags.count();
     let tagsTexts = [];
-    for (let i = 0; i < eform.tags.length; i++) {
-      tagsTexts.push(await eform.tags[i].getText());
+    for (let i = 0; i < tagCount; i++) {
+      tagsTexts.push(await eform.tags.nth(i).textContent());
     }
-    expect(eform.tags.length).toBe(tagAddedNum);
+    expect(tagCount).toBe(tagAddedNum);
     expect(tagsTexts).toEqual(expect.arrayContaining(addedAndSelectedTags.selected));
     const countBeforeDelete = await myEformsPage.rowNum();
     await eform.deleteEForm();
@@ -106,11 +109,12 @@ test.describe('My eforms', () => {
     const tagAddedNum = 2;
     const addedAndSelectedTags = await myEformsPage.createNewEform(newEformLabel, [], tagAddedNum);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    const tagCount = await eform.tags.count();
     let tagsTexts = [];
-    for (let i = 0; i < eform.tags.length; i++) {
-      tagsTexts.push(await eform.tags[i].getText());
+    for (let i = 0; i < tagCount; i++) {
+      tagsTexts.push(await eform.tags.nth(i).textContent());
     }
-    expect(eform.tags.length).toBe(tagAddedNum);
+    expect(tagCount).toBe(tagAddedNum);
     expect(tagsTexts).toEqual(expect.arrayContaining(addedAndSelectedTags.selected));
     const countBeforeDelete = await myEformsPage.rowNum();
     await eform.deleteEForm();
@@ -120,8 +124,8 @@ test.describe('My eforms', () => {
 
   test('should not create eform if xml is empty', async () => {
     const myEformsPage = new MyEformsPage(page);
-    await (await myEformsPage.newEformBtn()).click();
-    await (await myEformsPage.createEformBtn()).waitFor({ state: 'visible', timeout: 5000 });
-    expect(await (await myEformsPage.createEformBtn()).isEnabled()).toBe(false);
+    await myEformsPage.newEformBtn().click();
+    await myEformsPage.createEformBtn().waitFor({ state: 'visible', timeout: 5000 });
+    expect(await myEformsPage.createEformBtn().isEnabled()).toBe(false);
   });
 });

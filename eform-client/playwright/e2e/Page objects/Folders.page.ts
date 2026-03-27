@@ -171,7 +171,7 @@ export class FoldersPage extends PageWithNavbarPage {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
         const da = applicationLanguagesTranslated[0];
-        await selectValueInNgSelector(this.page, this.createLanguageSelector(), da.text);
+        await selectValueInNgSelector(this.page, '#createLanguageSelector', da.text);
         await this.page.waitForTimeout(500);
         await this.createNameInput(
           applicationLanguagesTranslated.findIndex((x) => x.text === da.text)
@@ -184,7 +184,7 @@ export class FoldersPage extends PageWithNavbarPage {
           const language = applicationLanguagesTranslated.find(
             (x) => x.text === nameConverted[i].language
           );
-          await selectValueInNgSelector(this.page, this.createLanguageSelector(), language!.text);
+          await selectValueInNgSelector(this.page, '#createLanguageSelector', language!.text);
           await this.page.waitForTimeout(500);
           await this.createNameInput(
             applicationLanguagesTranslated.findIndex((x) => x.text === language!.text)
@@ -197,7 +197,7 @@ export class FoldersPage extends PageWithNavbarPage {
       if (typeof description === typeof '') {
         const descriptionConvert = description as string;
         const da = applicationLanguagesTranslated[0];
-        await selectValueInNgSelector(this.page, this.createLanguageSelector(), da.text);
+        await selectValueInNgSelector(this.page, '#createLanguageSelector', da.text);
         await this.page.waitForTimeout(500);
         await this.createDescriptionInput(
           applicationLanguagesTranslated.findIndex((x) => x.text === da.text)
@@ -213,7 +213,7 @@ export class FoldersPage extends PageWithNavbarPage {
           const language = applicationLanguagesTranslated.find(
             (x) => x.text === descriptionConvert[i].language
           );
-          await selectValueInNgSelector(this.page, this.createLanguageSelector(), language!.text);
+          await selectValueInNgSelector(this.page, '#createLanguageSelector', language!.text);
           await this.page.waitForTimeout(500);
           await this.createDescriptionInput(
             applicationLanguagesTranslated.findIndex((x) => x.text === language!.text)

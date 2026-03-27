@@ -54,6 +54,10 @@ test.describe('Device users page should not add new device user', () => {
     loginPage = new LoginPage(page);
     myEformsPage = new MyEformsPage(page);
     deviceUsersPage = new DeviceUsersPage(page);
+    await loginPage.open('/');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToDeviceUsersPage();
+    await page.locator('#newDeviceUserBtn').waitFor({ state: 'visible', timeout: 40000 });
   });
 
   test.afterAll(async () => {
@@ -63,10 +67,9 @@ test.describe('Device users page should not add new device user', () => {
   test('with only first name', async () => {
     const name = generateRandmString();
     await page.locator('#newDeviceUserBtn').waitFor({ state: 'visible', timeout: 40000 });
-    await page.locator('#newDeviceUserBtn').waitFor({ state: 'visible', timeout: 40000 });
-    await (await deviceUsersPage.newDeviceUserBtn()).click();
+    await deviceUsersPage.newDeviceUserBtn().click();
     await page.locator('#firstName').waitFor({ state: 'visible', timeout: 10000 });
-    await (await deviceUsersPage.createFirstNameInput()).setValue(name);
+    await (await deviceUsersPage.createFirstNameInput()).fill(name);
     expect(
       await (await deviceUsersPage.saveCreateBtn()).isEnabled()
     ).toBe(false);
@@ -80,7 +83,7 @@ test.describe('Device users page should not add new device user', () => {
     await page.locator('#newDeviceUserBtn').waitFor({ state: 'visible', timeout: 40000 });
     await (await deviceUsersPage.newDeviceUserBtn()).click();
     await page.locator('#firstName').waitFor({ state: 'visible', timeout: 10000 });
-    await (await deviceUsersPage.createLastNameInput()).setValue(lastName);
+    await (await deviceUsersPage.createLastNameInput()).fill(lastName);
     expect(
       await (await deviceUsersPage.saveCreateBtn()).isEnabled()
     ).toBe(false);
