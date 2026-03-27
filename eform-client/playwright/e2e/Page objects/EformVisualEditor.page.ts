@@ -301,7 +301,8 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
 
   async clickLanguageCheckbox(value: boolean, index: number) {
     const checkbox = this.page.locator(`#languageCheckbox${index}`);
-    if ((await checkbox.inputValue()) !== value.toString()) {
+    const isChecked = await checkbox.isChecked();
+    if (isChecked !== value) {
       await checkbox.click();
     }
   }

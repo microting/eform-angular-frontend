@@ -4,7 +4,7 @@ import { PageWithNavbarPage } from './PageWithNavbar.page';
 import XMLForEform from '../Constants/XMLForEform';
 import { FoldersRowObject } from './Folders.page';
 import { DeviceUsersRowObject } from './DeviceUsers.page';
-import tagsModalPage from './TagsModal.page';
+import { TagsModalPage } from './TagsModal.page';
 import { Page, Locator } from '@playwright/test';
 
 export class MyEformsPage extends PageWithNavbarPage {
@@ -253,15 +253,16 @@ export class MyEformsPage extends PageWithNavbarPage {
   }
 
   async createNewTags(nameTags: string[]) {
+    const tagsModal = new TagsModalPage(this.page);
     await (await this.waitForEformsManageTagsBtn()).click();
-    await (await tagsModalPage.tagsModalCloseBtn()).waitFor({
+    await tagsModal.tagsModalCloseBtn().waitFor({
       state: 'visible',
       timeout: 40000,
     });
     for (let i = 0; i < nameTags.length; i++) {
-      await tagsModalPage.createTag(nameTags[i]);
+      await tagsModal.createTag(nameTags[i]);
     }
-    await tagsModalPage.closeTagModal();
+    await tagsModal.closeTagModal();
     await this.newEformBtn().waitFor({ state: 'visible', timeout: 40000 });
   }
 
@@ -270,14 +271,14 @@ export class MyEformsPage extends PageWithNavbarPage {
   }
 
   async removeTags(nameTags: string[]) {
+    const tagsModal = new TagsModalPage(this.page);
     await (await this.waitForEformsManageTagsBtn()).click();
-    const closeBtn = await tagsModalPage.tagsModalCloseBtn();
-    await closeBtn.waitFor({ state: 'visible', timeout: 40000 });
+    await tagsModal.tagsModalCloseBtn().waitFor({ state: 'visible', timeout: 40000 });
     for (let i = 0; i < nameTags.length; i++) {
-      const tag = await tagsModalPage.getTagByName(nameTags[i]);
+      const tag = await tagsModal.getTagByName(nameTags[i]);
       await tag.deleteTag();
     }
-    await tagsModalPage.closeTagModal();
+    await tagsModal.closeTagModal();
     await this.newEformBtn().waitFor({ state: 'visible', timeout: 40000 });
   }
 
