@@ -1,7 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 
-export class PasswordSettings extends PageWithNavbarPage {
+export class PasswordSettingsPage extends PageWithNavbarPage {
   constructor(page: Page) {
     super(page);
   }

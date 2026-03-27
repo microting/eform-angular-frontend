@@ -11,7 +11,7 @@ import {
   CommonTranslationsModel,
 } from '../../../src/app/common/models';
 import { eformVisualEditorElementColors } from '../../../src/app/modules/eforms/eform-visual-editor/const';
-import { selectValueInNgSelector } from '../../e2e/Helpers/helper-functions';
+import { selectValueInNgSelector } from '../helper-functions';
 
 export class EformVisualEditorPage extends PageWithNavbarPage {
   constructor(page: Page) {

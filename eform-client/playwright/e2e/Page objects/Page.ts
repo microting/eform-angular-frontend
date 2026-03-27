@@ -8,7 +8,9 @@ export default class BasePage {
   }
 
   async open(path: string) {
-    await this.page.goto(path);
+    const baseURL = 'http://localhost:4200';
+    const url = path.startsWith('http') ? path : `${baseURL}${path}`;
+    await this.page.goto(url);
   }
 
   public spinnerAnimation(): Locator {
@@ -16,19 +18,11 @@ export default class BasePage {
   }
 
   public async waitForSpinnerHide(timeout: number = 90000) {
-    // do a while loop to wait for the spinner to hide for the given timeout
-    let i = 1000;
-    // while (i <= timeout) {
-    //   if (await this.spinnerAnimation().isVisible()) {
-    //     await this.page.waitForTimeout(1000);
-    //     i += 1000;
-    //   } else {
-    //     break;
-    //   }
-    // }
-
-    // TODO: This is not working as expected, probably because of this bug https://github.com/webdriverio/webdriverio/issues/13253
-    //await this.spinnerAnimation().waitFor({state: 'hidden', timeout: timeout});
+    try {
+      await this.spinnerAnimation().waitFor({ state: 'hidden', timeout });
+    } catch {
+      // Spinner may not appear at all, which is fine
+    }
   }
 
   public async waitForSpinnerShow(timeout: number = 90000) {

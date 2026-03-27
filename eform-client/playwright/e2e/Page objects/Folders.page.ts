@@ -1,7 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import { applicationLanguagesTranslated } from '../../../src/app/common/const';
-import { selectValueInNgSelector } from '../../e2e/Helpers/helper-functions';
+import { selectValueInNgSelector } from '../helper-functions';
 
 export class FoldersPage extends PageWithNavbarPage {
   constructor(page: Page) {

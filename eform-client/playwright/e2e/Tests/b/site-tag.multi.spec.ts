@@ -57,7 +57,7 @@ test.describe('Site tags', () => {
   test('should delete tag', async () => {
     await sitesPage.removeTags([aTagName]);
   });
-  test('should delete tag', async () => {
+  test('should delete b tag', async () => {
     await sitesPage.removeTags([bTagName]);
   });
   test('should delete user', async () => {

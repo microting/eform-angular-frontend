@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 import { PageWithNavbarPage } from './PageWithNavbar.page';
-import { generateRandmString } from '../../e2e/Helpers/helper-functions';
+import { generateRandmString } from '../helper-functions';
 
 export class SelectableListsPage extends PageWithNavbarPage {
   constructor(page: Page) {
