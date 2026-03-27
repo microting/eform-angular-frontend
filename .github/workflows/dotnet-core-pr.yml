@@ -192,7 +192,9 @@ jobs:
     - name: Get standard output
       run: cat docker_run_log
     - name: Pretest changes to work with Docker container
-      run: sed -i 's/localhost/mariadbtest/g' eform-client/playwright/e2e/Constants/DatabaseConfigurationConstants.ts
+      run: |
+        sed -i 's/localhost/mariadbtest/g' eform-client/e2e/Constants/DatabaseConfigurationConstants.ts
+        sed -i 's/localhost/mariadbtest/g' eform-client/playwright/e2e/Constants/DatabaseConfigurationConstants.ts
     - name: DB Configuration
       uses: cypress-io/github-action@v5
       with:
