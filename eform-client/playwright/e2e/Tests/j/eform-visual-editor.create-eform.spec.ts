@@ -1,18 +1,18 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../Page objects/Login.page';
+import { LoginPage } from '../../Page objects/Login.page';
 import {
   EformVisualEditorPage,
   ChecklistFieldObj,
   MainChecklistObj,
   MainCheckListRowObj,
-} from '../Page objects/EformVisualEditor.page';
+} from '../../Page objects/EformVisualEditor.page';
 import {
   generateRandmString,
   getRandomInt,
-} from '../helper-functions';
+} from '../../helper-functions';
 import { EformFieldTypesEnum } from '../../../src/app/common/const';
-import { MyEformsPage } from '../Page objects/MyEforms.page';
-import XMLForEformFractions from '../Constants/XMLForEformFractions';
+import { MyEformsPage } from '../../Page objects/MyEforms.page';
+import XMLForEformFractions from '../../Constants/XMLForEformFractions';
 
 test.describe('Visual editor page', () => {
   let page;

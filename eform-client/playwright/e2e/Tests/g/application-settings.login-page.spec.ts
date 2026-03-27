@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../Page objects/Login.page';
-import { MyEformsPage } from '../Page objects/MyEforms.page';
-import { ApplicationSettingsPage } from '../Page objects/ApplicationSettings.page';
-import ApplicationSettingsConstants from '../Constants/ApplicationSettingsConstants';
+import { LoginPage } from '../../Page objects/Login.page';
+import { MyEformsPage } from '../../Page objects/MyEforms.page';
+import { ApplicationSettingsPage } from '../../Page objects/ApplicationSettings.page';
+import ApplicationSettingsConstants from '../../Constants/ApplicationSettingsConstants';
 
 test.describe('Application settings page - site header section', () => {
   let page;

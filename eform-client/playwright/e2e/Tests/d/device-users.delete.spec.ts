@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../Page objects/Login.page';
-import { MyEformsPage } from '../Page objects/MyEforms.page';
-import { DeviceUsersPage } from '../Page objects/DeviceUsers.page';
+import { LoginPage } from '../../Page objects/Login.page';
+import { MyEformsPage } from '../../Page objects/MyEforms.page';
+import { DeviceUsersPage } from '../../Page objects/DeviceUsers.page';
 
 test.describe('Device users page', () => {
   let page;

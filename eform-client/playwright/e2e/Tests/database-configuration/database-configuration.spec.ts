@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { DatabasePage } from '../Page objects/Database.page';
-import DatabaseConfigurationConstants from '../Constants/DatabaseConfigurationConstants';
-import { LoginPage } from '../Page objects/Login.page';
+import { DatabasePage } from '../../Page objects/Database.page';
+import DatabaseConfigurationConstants from '../../Constants/DatabaseConfigurationConstants';
+import { LoginPage } from '../../Page objects/Login.page';
 
 test.describe('Database', () => {
   test('should be configured successfully', async ({ page }) => {

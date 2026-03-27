@@ -1,7 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
-import { LoginPage } from '../Page objects/Login.page';
-import { MyEformsPage } from '../Page objects/MyEforms.page';
-import { testSorting } from '../helper-functions';
+import { LoginPage } from '../../Page objects/Login.page';
+import { MyEformsPage } from '../../Page objects/MyEforms.page';
+import { testSorting } from '../../helper-functions';
 
 test.describe('Main page', () => {
   let page: Page;

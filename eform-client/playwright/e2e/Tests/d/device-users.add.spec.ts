@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../Page objects/Login.page';
-import { MyEformsPage } from '../Page objects/MyEforms.page';
-import { DeviceUsersPage, DeviceUsersRowObject } from '../Page objects/DeviceUsers.page';
-import { generateRandmString } from '../helper-functions';
+import { LoginPage } from '../../Page objects/Login.page';
+import { MyEformsPage } from '../../Page objects/MyEforms.page';
+import { DeviceUsersPage, DeviceUsersRowObject } from '../../Page objects/DeviceUsers.page';
+import { generateRandmString } from '../../helper-functions';
 
 const nameDeviceUser = generateRandmString();
 let countDeviceUsersBeforeCreating = 0;

@@ -3,7 +3,7 @@ import { LoginPage } from '../../Page objects/Login.page';
 import { MyEformsPage } from '../../Page objects/MyEforms.page';
 import { DeviceUsersPage } from '../../Page objects/DeviceUsers.page';
 import { SitesPage } from '../../Page objects/Sites.page';
-import { generateRandmString } from '../../Helpers/helper-functions';
+import { generateRandmString } from '../../helper-functions';
 
 const aTagName = generateRandmString();
 const bTagName = generateRandmString();

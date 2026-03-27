@@ -1,8 +1,8 @@
 import { test, expect, Page } from '@playwright/test';
-import { LoginPage } from '../Page objects/Login.page';
-import { MyEformsPage } from '../Page objects/MyEforms.page';
-import { DeviceUsersPage, DeviceUsersRowObject } from '../Page objects/DeviceUsers.page';
-import { FoldersPage, FoldersRowObject } from '../Page objects/Folders.page';
+import { LoginPage } from '../../Page objects/Login.page';
+import { MyEformsPage } from '../../Page objects/MyEforms.page';
+import { DeviceUsersPage, DeviceUsersRowObject } from '../../Page objects/DeviceUsers.page';
+import { FoldersPage, FoldersRowObject } from '../../Page objects/Folders.page';
 
 const users = new Array<DeviceUsersRowObject>();
 const folders = new Array<FoldersRowObject>();

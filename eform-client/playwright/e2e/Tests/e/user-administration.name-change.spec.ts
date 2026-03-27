@@ -5,7 +5,7 @@ import {
   UserAdministration,
   UserAdministrationObject,
 } from '../../Page objects/UserAdministration.page';
-import { generateRandmString } from '../../Helpers/helper-functions';
+import { generateRandmString } from '../../helper-functions';
 
 test.describe('User administration settings', () => {
   let page;

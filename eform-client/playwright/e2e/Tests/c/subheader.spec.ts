@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../Page objects/Login.page';
-import { NavigationMenuPage } from '../Page objects/NavigationMenu.page';
-import { MyEformsPage } from '../Page objects/MyEforms.page';
+import { LoginPage } from '../../Page objects/Login.page';
+import { NavigationMenuPage } from '../../Page objects/NavigationMenu.page';
+import { MyEformsPage } from '../../Page objects/MyEforms.page';
 
 let translation = '';
 
