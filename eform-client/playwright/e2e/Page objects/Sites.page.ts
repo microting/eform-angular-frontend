@@ -145,7 +145,7 @@ export class SitesRowObject {
         const tagsTexts: string[] = [];
         const count = await list.count();
         for (let i = 0; i < count; i++) {
-          tagsTexts.push(await list.nth(i).textContent() || '');
+          tagsTexts.push((await list.nth(i).textContent() || '').trim());
         }
         this.tags = tagsTexts;
       }

@@ -7,7 +7,7 @@ import { FoldersPage, FoldersRowObject } from '../../Page objects/Folders.page';
 const users = new Array<DeviceUsersRowObject>();
 const folders = new Array<FoldersRowObject>();
 
-test.describe('Main page', () => {
+test.describe.serial('Main page', () => {
   let page: Page;
   let loginPage: LoginPage;
   let myEformsPage: MyEformsPage;
@@ -67,13 +67,13 @@ test.describe('Main page', () => {
     ).toContain(`${folders[0].name}`);
     const siteIds = await page.locator('#microtingId').all();
     for (let i = 0; i < siteIds.length; i++) {
+      const siteIdText = await siteIds[i].textContent();
       const index = users.findIndex(
-        (user) => user.siteId === +siteIds[i].textContent()
+        (user) => user.siteId === +(siteIdText || '0')
       );
       if (index !== -1) {
-        expect(
-          await page.locator(`#mat-checkbox-${index}`).inputValue()
-        ).toBe('true');
+        const checkbox = page.locator(`#mat-checkbox-${index}`).locator('input[type="checkbox"]');
+        expect(await checkbox.isChecked()).toBe(true);
       }
     }
     await (await myEformsPage.cancelParingBtn()).click();

@@ -17,7 +17,7 @@ test.afterAll(async () => {
   await page.close();
 });
 
-test.describe('My eforms', () => {
+test.describe.serial('My eforms', () => {
   test('should create eform without any tags', async () => {
     const myEformsPage = new MyEformsPage(page);
     const newEformLabel = Guid.create().toString();

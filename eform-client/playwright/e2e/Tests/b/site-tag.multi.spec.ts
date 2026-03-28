@@ -8,7 +8,7 @@ import { generateRandmString } from '../../helper-functions';
 const aTagName = generateRandmString();
 const bTagName = generateRandmString();
 
-test.describe('Site tags', () => {
+test.describe.serial('Site tags', () => {
   let page;
   let loginPage: LoginPage;
   let myEformsPage: MyEformsPage;

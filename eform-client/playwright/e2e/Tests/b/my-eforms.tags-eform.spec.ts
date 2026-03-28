@@ -6,7 +6,7 @@ import { generateRandmString } from '../../helper-functions';
 const testTag = 'Test tag';
 const newEformLabel = generateRandmString();
 
-test.describe('Main page', () => {
+test.describe.serial('Main page', () => {
   let page: Page;
   let loginPage: LoginPage;
   let myEformsPage: MyEformsPage;
@@ -51,7 +51,7 @@ test.describe('Main page', () => {
     await (await myEformsPage.getEformsRowObjByNameEForm(newEformLabel)).addTag(testTag);
     await page.waitForTimeout(500);
     expect(
-      await (await myEformsPage.getEformsRowObjByNameEForm(newEformLabel)).tags.first().textContent()
+      (await (await myEformsPage.getEformsRowObjByNameEForm(newEformLabel)).tags.first().textContent())?.trim()
     ).toBe(testTag);
   });
 
