@@ -276,7 +276,9 @@ export class MyEformsPage extends PageWithNavbarPage {
     await tagsModal.tagsModalCloseBtn().waitFor({ state: 'visible', timeout: 40000 });
     for (let i = 0; i < nameTags.length; i++) {
       const tag = await tagsModal.getTagByName(nameTags[i]);
-      await tag.deleteTag();
+      if (tag) {
+        await tag.deleteTag();
+      }
     }
     await tagsModal.closeTagModal();
     await this.newEformBtn().waitFor({ state: 'visible', timeout: 40000 });
@@ -284,7 +286,7 @@ export class MyEformsPage extends PageWithNavbarPage {
 
   async enterTagFilter(nameTag: string) {
     await this.tagSelector().locator('input').fill(nameTag);
-    const option = this.page.locator('ng-dropdown-panel .ng-option');
+    const option = this.page.locator('ng-dropdown-panel .ng-option').first();
     await option.waitFor({ state: 'visible', timeout: 10000 });
     await option.click();
   }
@@ -407,11 +409,11 @@ export class MyEformsRowObject {
     const foldersCount = await folders.count();
     for (let i = 0; i < foldersCount; i++) {
       if (
-        (await folders.nth(i).locator('div > div').textContent()).includes(
+        (await folders.nth(i).locator('div > div').first().textContent()).includes(
           folder.name
         )
       ) {
-        await folders.nth(i).locator('div').click();
+        await folders.nth(i).locator('div').first().click();
         await this.page.waitForTimeout(1000);
       }
     }

@@ -50,8 +50,9 @@ export class Workers extends PageWithNavbarPage {
     return await this.page.locator('#tableBody > tr').count();
   }
 
-  getWorker(num: number): WorkersRowObject {
-    return new WorkersRowObject(this.page, num);
+  async getWorker(num: number): Promise<WorkersRowObject> {
+    const worker = new WorkersRowObject(this.page, num);
+    return await worker.init();
   }
 
   public async createNewWorker(firstName: string, lastName: string) {

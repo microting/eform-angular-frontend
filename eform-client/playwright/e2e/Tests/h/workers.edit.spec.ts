@@ -38,7 +38,7 @@ test.describe('Workers page should edit Worker', () => {
     const surName = '¡@£$½';
     const workerBeforEdit = await workers.getWorker((await workers.rowNum()) + 1);
     await workers.editWorker(workerBeforEdit, name, surName);
-    const workerAfterEdit = workers.getWorker((await workers.rowNum()) + 1);
+    const workerAfterEdit = await workers.getWorker((await workers.rowNum()) + 1);
     expect(workerAfterEdit.firstName).toBe(name);
     expect(workerAfterEdit.lastName).toBe(surName);
   });

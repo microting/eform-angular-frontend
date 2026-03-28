@@ -228,7 +228,7 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
         await this.fieldTypeSelector().locator('input').fill(
           DanishEformFieldTypesEnum[checklistFieldObj.type]
         );
-        const option = this.page.locator('ng-dropdown-panel').locator('.ng-option');
+        const option = this.page.locator('ng-dropdown-panel').locator('.ng-option').first();
         await option.waitFor({ state: 'visible', timeout: 40000 });
         await option.click();
       }
@@ -471,10 +471,10 @@ export class ChecklistFieldRowObj {
         .split('; ');
       this.name = str[0];
       this.type = (DanishEformFieldTypesEnum as any)[str[1]];
-      this.deleteBtn = this.element.locator('#deleteBtn');
-      this.editBtn = this.element.locator('#editBtn');
-      this.copyBtn = this.element.locator('#copyBtn');
-      this.moveFieldBtn = this.element.locator('#moveFieldBtn');
+      this.deleteBtn = this.element.locator('#deleteBtn').first();
+      this.editBtn = this.element.locator('#editBtn').first();
+      this.copyBtn = this.element.locator('#copyBtn').first();
+      this.moveFieldBtn = this.element.locator('#moveFieldBtn').first();
       this.fieldIsNotComplete = (await this.element.locator('#isNotFieldComplete').count()) > 0;
       const backgroundColor = await this.element.locator('div>div>div').first().evaluate(
         (el) => getComputedStyle(el).backgroundColor

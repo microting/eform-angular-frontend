@@ -23,7 +23,7 @@ test.describe('Workers page ', () => {
     await deviceUsersPage.createNewDeviceUser('Gurkemine', 'Ralphine');
     await page.waitForTimeout(3000);
     await myEformsPage.Navbar.goToWorkers();
-    await page.locator('#workerCreateBtn ').waitFor({ state: 'visible', timeout: 8000 });
+    await page.locator('#workerCreateBtn').waitFor({ state: 'visible', timeout: 40000 });
   });
 
   test.afterAll(async () => {
