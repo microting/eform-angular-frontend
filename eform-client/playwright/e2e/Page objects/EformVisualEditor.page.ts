@@ -378,8 +378,9 @@ export class MainCheckListRowObj {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
           const checkbox = this.page.locator(`#languageCheckbox${checklist.translations[i].languageId}`);
-          if ((await checkbox.inputValue()) === false.toString()) {
-            await checkbox.locator('..').click();
+          const innerInput = checkbox.locator('input[type="checkbox"]');
+          if (!(await innerInput.isChecked())) {
+            await checkbox.click();
           }
           await this.page.locator(`#mainCheckListNameTranslation_${checklist.translations[i].languageId}`).fill(
             checklist.translations[i].name
@@ -465,7 +466,7 @@ export class ChecklistFieldRowObj {
       this.element = this.page.locator(`#field_${this.index}`);
     }
     if (await this.element.isVisible()) {
-      const str: string[] = (await this.element.locator('.field-name-and-type').textContent() || '')
+      const str: string[] = (await this.element.locator('.field-name-and-type').first().textContent() || '')
         .replace('menu\n', '')
         .split('; ');
       this.name = str[0];

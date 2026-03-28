@@ -382,8 +382,8 @@ export class MyEformsRowObject {
     const count = await tagSelectorValues.count();
     for (let i = 0; i < count; i++) {
       const tagName = await tagSelectorValues.nth(i).locator('span.ng-value-label').textContent();
-      const deleteTagButton = tagSelectorValues.nth(i).locator('span');
-      if (tags.includes(tagName)) {
+      const deleteTagButton = tagSelectorValues.nth(i).locator('span.ng-value-icon');
+      if (tags.includes(tagName?.trim())) {
         await deleteTagButton.click();
       }
     }

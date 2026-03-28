@@ -471,7 +471,7 @@ export class SearchableListRowObject {
     if ((await this.page.locator(id).count()) >= rowNum) {
       this.id = this.page.locator('#entitySearchMUid').nth(rowNum - 1);
       try {
-        this.name = await this.page.locator('#entitySearchName').nth(rowNum - 1).textContent() || '';
+        this.name = (await this.page.locator('#entitySearchName').nth(rowNum - 1).textContent() || '').trim();
       } catch (e) {}
       try {
         this.editBtn = this.page.locator(`#entitySearchUpdateBtn${rowNum - 1}`);

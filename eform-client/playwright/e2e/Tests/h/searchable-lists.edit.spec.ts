@@ -47,7 +47,7 @@ test.describe.serial('Entity Search', () => {
     const searchableList = await searchableLists.getFirstRowObject();
     expect(searchableList.name).toBe(name);
     await (await searchableLists.entitySearchEditBtn(searchableList.index - 1)).click();
-    expect(await (await searchableLists.firstEntityItemName()).textContent()).toBe(itemName);
+    expect((await (await searchableLists.firstEntityItemName()).textContent()).trim()).toBe(itemName);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
   });
 
@@ -59,7 +59,7 @@ test.describe.serial('Entity Search', () => {
     expect(searchableList.name).toBe(newName);
     await (await searchableLists.entitySearchEditBtn(searchableList.index - 1)).click();
     await page.waitForTimeout(500);
-    expect(await (await searchableLists.firstEntityItemName()).textContent()).toBe(newItemName);
+    expect((await (await searchableLists.firstEntityItemName()).textContent()).trim()).toBe(newItemName);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
     await searchableLists.cleanup();
   });
@@ -108,19 +108,19 @@ test.describe.serial('Entity Search', () => {
     expect(searchableList.name).toBe(newName);
     await (await searchableLists.entitySearchEditBtn(searchableList.index - 1)).click();
     await page.waitForTimeout(500);
-    expect(await (await searchableLists.firstEntityItemName()).textContent()).toBe('f');
+    expect((await (await searchableLists.firstEntityItemName()).textContent()).trim()).toBe('f');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
     await page.waitForTimeout(500);
-    expect(await (await searchableLists.firstEntityItemName()).textContent()).toBe('g');
+    expect((await (await searchableLists.firstEntityItemName()).textContent()).trim()).toBe('g');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
     await page.waitForTimeout(500);
-    expect(await (await searchableLists.firstEntityItemName()).textContent()).toBe('h');
+    expect((await (await searchableLists.firstEntityItemName()).textContent()).trim()).toBe('h');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
     await page.waitForTimeout(500);
-    expect(await (await searchableLists.firstEntityItemName()).textContent()).toBe('i');
+    expect((await (await searchableLists.firstEntityItemName()).textContent()).trim()).toBe('i');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
     await page.waitForTimeout(500);
-    expect(await (await searchableLists.firstEntityItemName()).textContent()).toBe('j');
+    expect((await (await searchableLists.firstEntityItemName()).textContent()).trim()).toBe('j');
     await (await searchableLists.entitySearchItemDeleteBtn()).click();
     await page.waitForTimeout(500);
     await (await searchableLists.entitySearchEditCancelBtn()).click();

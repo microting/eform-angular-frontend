@@ -39,7 +39,10 @@ test.describe.serial('Main page', () => {
 
   test.afterAll(async () => {
     await page.waitForTimeout(1000);
-    await (await myEformsPage.getEformsRowObjByNameEForm('test Eform')).deleteEForm();
+    const eform = await myEformsPage.getEformsRowObjByNameEForm('test Eform');
+    if (eform) {
+      await eform.deleteEForm();
+    }
     await myEformsPage.Navbar.goToDeviceUsersPage();
     for (let i = 0; i < users.length; i++) {
       await (await deviceUsersPage.getDeviceUserByName(users[i].firstName)).delete();

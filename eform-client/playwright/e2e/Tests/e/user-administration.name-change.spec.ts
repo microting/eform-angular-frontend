@@ -19,8 +19,9 @@ test.describe.serial('User administration settings', () => {
     loginPage = new LoginPage(page);
     myEformsPage = new MyEformsPage(page);
     userAdministration = new UserAdministration(page);
-    await loginPage.open('/auth');
+    await loginPage.open('/');
     await loginPage.login();
+    await page.waitForTimeout(500);
   });
 
   test.afterAll(async () => {

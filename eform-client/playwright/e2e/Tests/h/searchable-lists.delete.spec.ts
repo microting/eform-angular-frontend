@@ -46,7 +46,7 @@ test.describe.serial('Entity Search', () => {
     const searchableList = await searchableLists.getFirstRowObject();
     expect(searchableList.name).toBe(name);
     await (await searchableLists.entitySearchEditBtn(searchableList.index - 1)).click();
-    expect(await (await searchableLists.firstEntityItemName()).textContent()).toBe(itemName);
+    expect((await (await searchableLists.firstEntityItemName()).textContent()).trim()).toBe(itemName);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
   });
 
