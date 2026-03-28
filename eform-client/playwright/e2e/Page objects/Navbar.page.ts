@@ -233,7 +233,7 @@ export class Navbar {
   public async clickOnHeaderMenuItem2(headerMenuItem: string): Promise<Locator> {
     const ele = this.page.locator(
       `//*[mat-tree-node]//*[contains(text(), '${headerMenuItem}')]`
-    );
+    ).first();
     await ele.waitFor({ state: 'visible', timeout: 40000 });
     return ele;
   }

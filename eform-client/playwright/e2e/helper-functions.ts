@@ -107,8 +107,8 @@ export async function testSorting(
     await page.locator(selectorTableHeader).locator('.mat-sort-header-icon').click({ force: true });
     await page.waitForTimeout(500);
 
-    const style = await page.locator(selectorTableHeader).locator('.ng-trigger-leftPointer').getAttribute('style') ?? '';
-    const sorted = style.includes('transform: rotate(45deg)')
+    const ariaSort = await page.locator(selectorTableHeader).getAttribute('aria-sort') ?? '';
+    const sorted = ariaSort === 'descending'
       ? [...elementsBefore].sort().reverse()
       : [...elementsBefore].sort();
 
