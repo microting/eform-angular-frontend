@@ -14,7 +14,7 @@ import { EformFieldTypesEnum } from '../../../../src/app/common/const';
 import { MyEformsPage } from '../../Page objects/MyEforms.page';
 import XMLForEformFractions from '../../Constants/XMLForEformFractions';
 
-test.describe('Visual editor page', () => {
+test.describe.serial('Visual editor page', () => {
   let page;
   let loginPage: LoginPage;
   let eformVisualEditorPage: EformVisualEditorPage;

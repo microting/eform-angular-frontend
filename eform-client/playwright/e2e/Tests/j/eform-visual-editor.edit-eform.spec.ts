@@ -16,7 +16,7 @@ import { MyEformsPage } from '../../Page objects/MyEforms.page';
 import { Guid } from 'guid-typescript';
 import XMLForEformSimple from '../../Constants/XMLForEformSimple';
 
-test.describe('Visual editor page', () => {
+test.describe.serial('Visual editor page', () => {
   let page;
   let loginPage: LoginPage;
   let eformVisualEditorPage: EformVisualEditorPage;

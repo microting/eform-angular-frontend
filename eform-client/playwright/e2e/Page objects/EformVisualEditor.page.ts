@@ -475,7 +475,7 @@ export class ChecklistFieldRowObj {
       this.copyBtn = this.element.locator('#copyBtn');
       this.moveFieldBtn = this.element.locator('#moveFieldBtn');
       this.fieldIsNotComplete = (await this.element.locator('#isNotFieldComplete').count()) > 0;
-      const backgroundColor = await this.element.locator('div>div>div').evaluate(
+      const backgroundColor = await this.element.locator('div>div>div').first().evaluate(
         (el) => getComputedStyle(el).backgroundColor
       );
       // Convert rgb to hex
@@ -512,7 +512,7 @@ export class ChecklistFieldRowObj {
   async changeColor(colorName: string) {
     while (this.color.description.toLowerCase() !== colorName) {
       await this.colorsBtn[colorName as keyof typeof this.colorsBtn].click();
-      const backgroundColor = await this.element.locator('div>div>div').evaluate(
+      const backgroundColor = await this.element.locator('div>div>div').first().evaluate(
         (el) => getComputedStyle(el).backgroundColor
       );
       const hex = backgroundColor
