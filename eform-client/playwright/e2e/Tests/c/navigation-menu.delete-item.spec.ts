@@ -84,7 +84,7 @@ test.describe.serial('Navigation menu - Delete item', () => {
 
     // check how many items are left in the dropdown
     expect(countInDropdown - 3).toBe((await navigationMenuPage.dropdownBodyChilds(
-      await navigationMenuPage.menuItems().count() - 1)).length);
+      await navigationMenuPage.menuItems().count() - 1)).count());
 
     // remember count elements in menu items
     const countInMenuItems = await navigationMenuPage.menuItems().count();
