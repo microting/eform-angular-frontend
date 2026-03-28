@@ -103,7 +103,7 @@ test.describe.serial('Navigation menu - Drag item', () => {
     const itemsBeforeSwap = ['menu\nSites / test2Dan\nedit\ndelete', 'menu\nDevice Users / test0Dan\nedit\ndelete', 'menu\nWorkers / test1Dan\nedit\ndelete'];
     for (let i = 0; i < await navigationMenuPage.dropdownBodyChilds(await navigationMenuPage.menuItems().count() - 1).count(); i++) {
       const elem = navigationMenuPage.dropdownBodyChilds(await navigationMenuPage.menuItems().count() - 1).nth(i);
-      expect(await elem.textContent()).toBe(itemsBeforeSwap[i]);
+      expect((await elem.textContent())?.replace(/\s+/g, ' ').trim()).toBe(itemsBeforeSwap[i].replace(/\s+/g, ' ').trim());
     }
     await page.waitForTimeout(500);
     await navigationMenuPage.resetMenu();

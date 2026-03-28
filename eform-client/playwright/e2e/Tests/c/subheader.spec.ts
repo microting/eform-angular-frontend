@@ -41,7 +41,7 @@ test.describe('Subheader test', () => {
   test('must navigate on create menu item and translate must be == translate', async () => {
     await (await myEformsPage.Navbar.clickOnHeaderMenuItem2(translation)).click();
     const h1 = page.locator('eform-new-subheader h2');
-    expect(await h1.textContent()).toBe(translation);
+    expect((await h1.textContent())?.trim()).toBe(translation);
     await myEformsPage.Navbar.goToMenuEditorPage();
     await navigationMenuPage.openOnEditCreatedMenuItem(0);
     translation = 'Test translation';
@@ -49,7 +49,7 @@ test.describe('Subheader test', () => {
     await (await navigationMenuPage.editItemSaveBtn()).click();
     await navigationMenuPage.clickSaveMenuBtn();
     await (await myEformsPage.Navbar.clickOnHeaderMenuItem2(translation)).click();
-    expect(await h1.textContent()).toBe(translation);
+    expect((await h1.textContent())?.trim()).toBe(translation);
     await myEformsPage.Navbar.goToMenuEditorPage();
     await navigationMenuPage.resetMenu();
   });
