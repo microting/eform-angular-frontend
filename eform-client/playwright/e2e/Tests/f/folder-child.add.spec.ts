@@ -7,7 +7,7 @@ import { generateRandmString } from '../../helper-functions';
 const nameFolder = generateRandmString();
 let page;
 
-test.describe('Create folder', () => {
+test.describe.serial('Create folder', () => {
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
     const loginPage = new LoginPage(page);
@@ -16,7 +16,7 @@ test.describe('Create folder', () => {
     await loginPage.open('/');
     await loginPage.login();
     await myEformsPage.Navbar.goToFolderPage();
-    await (await foldersPage.newFolderBtn()).waitFor({ state: 'visible', timeout: 40000 });
+    await foldersPage.newFolderBtn().waitFor({ state: 'visible', timeout: 40000 });
     const description = generateRandmString();
     await foldersPage.createNewFolder(nameFolder, description);
   });

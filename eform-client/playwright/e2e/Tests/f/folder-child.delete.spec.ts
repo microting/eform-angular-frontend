@@ -8,7 +8,7 @@ const nameFolder = generateRandmString();
 const childName = generateRandmString();
 let page;
 
-test.describe('Delete folder', () => {
+test.describe.serial('Delete folder', () => {
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
     const loginPage = new LoginPage(page);
@@ -17,7 +17,7 @@ test.describe('Delete folder', () => {
     await loginPage.open('/');
     await loginPage.login();
     await myEformsPage.Navbar.goToFolderPage();
-    await (await foldersPage.newFolderBtn()).waitFor({ state: 'visible', timeout: 40000 });
+    await foldersPage.newFolderBtn().waitFor({ state: 'visible', timeout: 40000 });
     const description = generateRandmString();
     await foldersPage.createNewFolder(nameFolder, description);
     const childDescription = generateRandmString();

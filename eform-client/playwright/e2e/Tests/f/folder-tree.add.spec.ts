@@ -14,7 +14,7 @@ const folderName = [
 ];
 let page;
 
-test.describe('Create folder', () => {
+test.describe.serial('Create folder', () => {
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
     const loginPage = new LoginPage(page);
@@ -23,7 +23,7 @@ test.describe('Create folder', () => {
     await loginPage.open('/');
     await loginPage.login();
     await myEformsPage.Navbar.goToFolderPage();
-    await (await foldersPage.newFolderBtn()).waitFor({ state: 'visible', timeout: 40000 });
+    await foldersPage.newFolderBtn().waitFor({ state: 'visible', timeout: 40000 });
   });
 
   test.afterAll(async () => {
@@ -31,7 +31,8 @@ test.describe('Create folder', () => {
     const foldersPage = new FoldersPage(page);
     await page.waitForTimeout(1500);
     for (let i = 0; i < 5; i++) {
-      const folderObj = new FoldersRowObject(page);
+      const foldersPage = new FoldersPage(page);
+      const folderObj = new FoldersRowObject(page, foldersPage);
       const folder = await folderObj.getRow(1);
       await folder.delete();
       await loginPage.waitForSpinnerHide();
@@ -73,38 +74,28 @@ test.describe('Create folder', () => {
     const description = generateRandmString();
 
     const da = applicationLanguages[0];
-    await (
-      await (await foldersPage.createLanguageSelector()).locator('input')
-    ).fill(da.text);
+    await foldersPage.createLanguageSelector().locator('input').fill(da.text);
     let value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
-    await (
-      await foldersPage.createDescriptionInput(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    await foldersPage.createDescriptionInput(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).fill(description);
 
     await page.keyboard.press('Control+a');
-    await (
-      await foldersPage.createDescriptionInputPellBold(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    await foldersPage.createDescriptionInputPellBold(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).click();
     await foldersPage.closeCreateFolder();
     const foldersRowObject = await foldersPage.getFolderByName(folderName[1]);
     await foldersRowObject.openEditModal();
 
-    await (
-      await (await foldersPage.editLanguageSelector()).locator('input')
-    ).fill(da.text);
+    await foldersPage.editLanguageSelector().locator('input').fill(da.text);
     value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
-    const html = await (
-      await foldersPage.editDescriptionInput(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    const html = await foldersPage.editDescriptionInput(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).innerHTML();
 
     expect(html).toBe(`<div>\n  <b>${description}</b>\n</div>`);
@@ -117,36 +108,28 @@ test.describe('Create folder', () => {
     const description = generateRandmString();
 
     const da = applicationLanguages[0];
-    await (await foldersPage.createLanguageSelector()).locator('input').fill(da.text);
+    await foldersPage.createLanguageSelector().locator('input').fill(da.text);
     let value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
-    await (
-      await foldersPage.createDescriptionInput(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    await foldersPage.createDescriptionInput(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).fill(description);
 
     await page.keyboard.press('Control+a');
-    await (
-      await foldersPage.createDescriptionInputPellUnderline(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    await foldersPage.createDescriptionInputPellUnderline(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).click();
     await foldersPage.closeCreateFolder();
     const foldersRowObject = await foldersPage.getFolderByName(folderName[2]);
     await foldersRowObject.openEditModal();
 
-    await (
-      await (await foldersPage.editLanguageSelector()).locator('input')
-    ).fill(da.text);
+    await foldersPage.editLanguageSelector().locator('input').fill(da.text);
     value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
-    const html = await (
-      await foldersPage.editDescriptionInput(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    const html = await foldersPage.editDescriptionInput(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).innerHTML();
 
     expect(html).toBe(`<div>\n  <u>${description}</u>\n</div>`);
@@ -159,38 +142,28 @@ test.describe('Create folder', () => {
     const description = generateRandmString();
 
     const da = applicationLanguages[0];
-    await (
-      await (await foldersPage.createLanguageSelector()).locator('input')
-    ).fill(da.text);
+    await foldersPage.createLanguageSelector().locator('input').fill(da.text);
     let value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
-    await (
-      await foldersPage.createDescriptionInput(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    await foldersPage.createDescriptionInput(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).fill(description);
 
     await page.keyboard.press('Control+a');
-    await (
-      await foldersPage.createDescriptionInputPellItalic(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    await foldersPage.createDescriptionInputPellItalic(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).click();
     await foldersPage.closeCreateFolder();
     const foldersRowObject = await foldersPage.getFolderByName(folderName[3]);
     await foldersRowObject.openEditModal();
 
-    await (
-      await (await foldersPage.editLanguageSelector()).locator('input')
-    ).fill(da.text);
+    await foldersPage.editLanguageSelector().locator('input').fill(da.text);
     value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
-    const html = await (
-      await foldersPage.editDescriptionInput(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    const html = await foldersPage.editDescriptionInput(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).innerHTML();
 
     expect(html).toBe(`<div>\n  <i>${description}</i>\n</div>`);
@@ -203,38 +176,28 @@ test.describe('Create folder', () => {
     const description = generateRandmString();
 
     const da = applicationLanguages[0];
-    await (
-      await (await foldersPage.createLanguageSelector()).locator('input')
-    ).fill(da.text);
+    await foldersPage.createLanguageSelector().locator('input').fill(da.text);
     let value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
-    await (
-      await foldersPage.createDescriptionInput(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    await foldersPage.createDescriptionInput(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).fill(description);
 
     await page.keyboard.press('Control+a');
-    await (
-      await foldersPage.createDescriptionInputPellStrikeThrough(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    await foldersPage.createDescriptionInputPellStrikeThrough(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).click();
     await foldersPage.closeCreateFolder();
     const foldersRowObject = await foldersPage.getFolderByName(folderName[4]);
     await foldersRowObject.openEditModal();
 
-    await (
-      await (await foldersPage.editLanguageSelector()).locator('input')
-    ).fill(da.text);
+    await foldersPage.editLanguageSelector().locator('input').fill(da.text);
     value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
-    const html = await (
-      await foldersPage.editDescriptionInput(
-        applicationLanguages.findIndex((x) => x.text === da.text)
-      )
+    const html = await foldersPage.editDescriptionInput(
+      applicationLanguages.findIndex((x) => x.text === da.text)
     ).innerHTML();
 
     expect(html).toBe(`<div>\n  <s>${description}</s>\n</div>`);

@@ -10,7 +10,7 @@ const newName = generateRandmString();
 const newDescription = generateRandmString();
 let page;
 
-test.describe('Create folder', () => {
+test.describe.serial('Create folder', () => {
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
     const loginPage = new LoginPage(page);

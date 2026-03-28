@@ -7,7 +7,7 @@ import { generateRandmString } from '../../helper-functions';
 let name = generateRandmString();
 let page;
 
-test.describe('Folder page', () => {
+test.describe.serial('Folder page', () => {
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
     const loginPage = new LoginPage(page);
@@ -17,7 +17,7 @@ test.describe('Folder page', () => {
     await loginPage.login();
     await myEformsPage.Navbar.goToFolderPage();
     const description = generateRandmString();
-    await (await foldersPage.newFolderBtn()).waitFor({ state: 'visible', timeout: 10000 });
+    await foldersPage.newFolderBtn().waitFor({ state: 'visible', timeout: 10000 });
     await foldersPage.createNewFolder(name, description);
   });
 
@@ -51,7 +51,7 @@ test.describe('Folder page', () => {
     await page.locator('.folder-tree-name').waitFor({ state: 'visible', timeout: 40000 });
     const lastFolderBeforeEdit = await foldersPage.getFolderByName(name);
     await lastFolderBeforeEdit.editFolder(null, newDescription);
-    await (await foldersPage.newFolderBtn()).waitFor({ state: 'visible', timeout: 40000 });
+    await foldersPage.newFolderBtn().waitFor({ state: 'visible', timeout: 40000 });
     const folder = await foldersPage.getFolderByName(name);
     expect(folder.name).toBe(lastFolderBeforeEdit.name);
     expect(

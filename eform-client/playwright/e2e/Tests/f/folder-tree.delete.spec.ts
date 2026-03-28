@@ -7,7 +7,7 @@ import { generateRandmString } from '../../helper-functions';
 let nameFolder = generateRandmString();
 let page;
 
-test.describe('Delete folder', () => {
+test.describe.serial('Delete folder', () => {
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
     const loginPage = new LoginPage(page);
