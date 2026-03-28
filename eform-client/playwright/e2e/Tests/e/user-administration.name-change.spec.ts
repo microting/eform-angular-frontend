@@ -29,13 +29,10 @@ test.describe.serial('User administration settings', () => {
   });
 
   test('should set name to Foo Bar', async () => {
-    const responsePromise = page.waitForResponse(
-      resp => resp.url().includes('/api/admin/get-users') && resp.status() === 200,
-      { timeout: 120000 }
-    );
     await myEformsPage.Navbar.goToUserAdministration();
-    await responsePromise;
-    await page.locator('#userAdministrationId-0').waitFor({ state: 'visible', timeout: 60000 });
+    await page.locator('#createNewUserBtn').waitFor({ state: 'visible', timeout: 60000 });
+    // Wait for grid data to load
+    await page.locator('#userAdministrationEmail-0').waitFor({ state: 'visible', timeout: 60000 });
     const user: UserAdministrationObject = {
       firstName: 'Foo',
       lastName: 'Bar',

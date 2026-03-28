@@ -54,7 +54,8 @@ test.describe.serial('Main page', () => {
     await page.close();
   });
 
-  test('should pair several device users', { timeout: 240000 }, async () => {
+  test('should pair several device users', async () => {
+    test.setTimeout(240000);
     await (await myEformsPage.idSortBtn()).click();
     await loginPage.waitForSpinnerHide(40000);
     await page.waitForTimeout(1000);
