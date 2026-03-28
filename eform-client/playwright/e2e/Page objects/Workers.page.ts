@@ -43,7 +43,7 @@ export class Workers extends PageWithNavbarPage {
   }
 
   public firstElement(): Locator {
-    return this.page.locator(`//*[contains(@class, 'custom')]//*[contains(text(), 'Gurkemine Ralphine')]`);
+    return this.page.locator('ng-dropdown-panel .ng-option').first();
   }
 
   public async rowNum(): Promise<number> {
@@ -87,9 +87,7 @@ export class Workers extends PageWithNavbarPage {
 export class WorkersRowObject {
   constructor(page: Page, rowNumber: number) {
     this.page = page;
-    this.index = rowNumber + 1;
-    // Note: these will need to be populated asynchronously in Playwright
-    // The sync constructor pattern from WDIO doesn't translate directly
+    this.index = rowNumber;
   }
 
   page: Page;
@@ -101,12 +99,13 @@ export class WorkersRowObject {
   deleteBtn: Locator;
 
   async init(): Promise<WorkersRowObject> {
-    const rowNumber = this.index - 1;
-    this.siteId = +(await this.page.locator('#workerUID').nth(this.index).textContent() || '0');
-    this.firstName = await this.page.locator('#workerFirstName').nth(this.index).textContent() || '';
-    this.lastName = await this.page.locator('#workerLastName').nth(this.index).textContent() || '';
-    this.editBtn = this.page.locator('#workerEditBtn').nth(this.index);
-    this.deleteBtn = this.page.locator('#workerDeleteBtn').nth(this.index);
+    const i = this.index - 1;
+    await this.page.locator('#workerUID').nth(i).waitFor({ state: 'visible', timeout: 10000 });
+    this.siteId = +(await this.page.locator('#workerUID').nth(i).textContent() || '0');
+    this.firstName = (await this.page.locator('#workerFirstName').nth(i).textContent() || '').trim();
+    this.lastName = (await this.page.locator('#workerLastName').nth(i).textContent() || '').trim();
+    this.editBtn = this.page.locator('#workerEditBtn').nth(i);
+    this.deleteBtn = this.page.locator('#workerDeleteBtn').nth(i);
     return this;
   }
 

@@ -387,6 +387,7 @@ export class FoldersRowObject {
 
   async delete(clickCancel = false) {
     if (!(await this.page.locator('#deleteFolderTreeBtn').isVisible())) {
+      if (!this.dropdown) return;
       await this.dropdown.click();
       await this.page.locator('#deleteFolderTreeBtn').waitFor({ state: 'visible', timeout: 40000 });
     }
@@ -559,6 +560,7 @@ export class FoldersTreeRowObject {
 
   async delete(clickCancel = false) {
     if (!(await this.page.locator('#deleteFolderTreeBtn').isVisible())) {
+      if (!this.dropdown) return;
       await this.dropdown.click();
       await this.page.waitForTimeout(500);
       await this.page.locator('#deleteFolderTreeBtn').waitFor({ state: 'visible', timeout: 40000 });

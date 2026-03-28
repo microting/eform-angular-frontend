@@ -21,18 +21,19 @@ test.describe('Main page', () => {
   });
 
   test('should be able to sort by ID', async () => {
-    await testSorting(await myEformsPage.idSortBtn(), '#eform-id', 'ID');
+    await testSorting(page, '.eform-id-header .mat-header-cell-inner .mat-sort-header', '#eform-id', 'ID');
   });
 
   test('should be able to sort by "Created at"', async () => {
     await testSorting(
-      await myEformsPage.createdAtSortBtn(),
+      page,
+      '.eform-created-at-header .mat-header-cell-inner .mat-sort-header',
       '#eform-created-at',
       'Created at'
     );
   });
 
   test('should be able to sort by "Name eForm"', async () => {
-    await testSorting(await myEformsPage.eformNameSortBtn(), '#eform-label', 'Name eForm');
+    await testSorting(page, '.eform-name-header .mat-header-cell-inner .mat-sort-header', '#eform-label', 'Name eForm');
   });
 });
