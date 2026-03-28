@@ -3,7 +3,7 @@ import { LoginPage } from '../../Page objects/Login.page';
 import { NavigationMenuPage } from '../../Page objects/NavigationMenu.page';
 import { MyEformsPage } from '../../Page objects/MyEforms.page';
 
-test.describe('Navigation menu - Drag item', () => {
+test.describe.serial('Navigation menu - Drag item', () => {
   let page: Page;
   let loginPage: LoginPage;
   let navigationMenuPage: NavigationMenuPage;

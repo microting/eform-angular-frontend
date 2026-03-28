@@ -3,7 +3,7 @@ import { LoginPage } from '../../Page objects/Login.page';
 import { NavigationMenuPage } from '../../Page objects/NavigationMenu.page';
 import { MyEformsPage } from '../../Page objects/MyEforms.page';
 
-test.describe('Navigation menu - Edit item', () => {
+test.describe.serial('Navigation menu - Edit item', () => {
   let page: Page;
   let loginPage: LoginPage;
   let navigationMenuPage: NavigationMenuPage;
@@ -60,7 +60,7 @@ test.describe('Navigation menu - Edit item', () => {
     const securityGroups = await navigationMenuPage.securityGroupsValue();
     for (const securityGroup of customLink.securityGroups) {
       const i = customLink.securityGroups.indexOf(securityGroup);
-      expect(await securityGroups[i].textContent()).toBe(securityGroup);
+      expect(await securityGroups.nth(i).textContent()).toBe(securityGroup);
     }
     expect(await (await navigationMenuPage.editLinkInput()).inputValue()).toContain(customLink.link);
     for (const translation of customLink.translations) {

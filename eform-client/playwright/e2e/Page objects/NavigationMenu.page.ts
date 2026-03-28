@@ -319,7 +319,7 @@ export class NavigationMenuPage {
   public async deleteSecurityGroupsInEditItem() {
     const count = await this.securityGroupsValue().count();
     for (let i = 0; i < count; i++) {
-      await this.editSecurityGroupsSelector().locator('.ng-value span').click();
+      await this.editSecurityGroupsSelector().locator('.ng-value span').first().click();
     }
   }
 
