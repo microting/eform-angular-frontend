@@ -38,7 +38,7 @@ test.describe('My eforms', () => {
     arrayNamesTag.push(createdTag);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
     expect(await eform.tags.count()).toBe(1);
-    expect(await eform.tags.first().textContent()).toBe(createdTag);
+    expect((await eform.tags.first().textContent())?.trim()).toBe(createdTag);
     const countBeforeDelete = await myEformsPage.rowNum();
     await eform.deleteEForm();
     const newRowCount = await myEformsPage.rowNum();
@@ -55,7 +55,7 @@ test.describe('My eforms', () => {
     const tagCount = await eform.tags.count();
     let tagsTexts = [];
     for (let i = 0; i < tagCount; i++) {
-      tagsTexts.push(await eform.tags.nth(i).textContent());
+      tagsTexts.push((await eform.tags.nth(i).textContent())?.trim());
     }
     expect(tagCount).toBe(createdTags.length);
     expect(tagsTexts).toEqual(expect.arrayContaining(createdTags));
@@ -75,7 +75,7 @@ test.describe('My eforms', () => {
     const tagCount = await eform.tags.count();
     let tagsTexts = [];
     for (let i = 0; i < tagCount; i++) {
-      tagsTexts.push(await eform.tags.nth(i).textContent());
+      tagsTexts.push((await eform.tags.nth(i).textContent())?.trim());
     }
     expect(tagCount).toBe(createdTags.length + tagAddedNum);
     expect(tagsTexts).toEqual(expect.arrayContaining(createdTags));
@@ -94,7 +94,7 @@ test.describe('My eforms', () => {
     const tagCount = await eform.tags.count();
     let tagsTexts = [];
     for (let i = 0; i < tagCount; i++) {
-      tagsTexts.push(await eform.tags.nth(i).textContent());
+      tagsTexts.push((await eform.tags.nth(i).textContent())?.trim());
     }
     expect(tagCount).toBe(tagAddedNum);
     expect(tagsTexts).toEqual(expect.arrayContaining(addedAndSelectedTags.selected));
@@ -112,7 +112,7 @@ test.describe('My eforms', () => {
     const tagCount = await eform.tags.count();
     let tagsTexts = [];
     for (let i = 0; i < tagCount; i++) {
-      tagsTexts.push(await eform.tags.nth(i).textContent());
+      tagsTexts.push((await eform.tags.nth(i).textContent())?.trim());
     }
     expect(tagCount).toBe(tagAddedNum);
     expect(tagsTexts).toEqual(expect.arrayContaining(addedAndSelectedTags.selected));

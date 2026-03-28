@@ -25,7 +25,7 @@ test.describe('Navigation menu - Edit item', () => {
 
   test('element must be created from custom link with security group', async () => {
     await page.waitForTimeout(2000);
-    const count = (await navigationMenuPage.menuItems()).length;
+    const count = await navigationMenuPage.menuItems().count();
     await navigationMenuPage.collapseTemplates(1);
     await page.waitForTimeout(1500);
     const customLink = {
@@ -35,7 +35,7 @@ test.describe('Navigation menu - Edit item', () => {
     };
     await navigationMenuPage.createCustomLink(customLink);
     await page.waitForTimeout(500);
-    expect(count + 1).toBe((await navigationMenuPage.menuItems()).length);
+    expect(count + 1).toBe(await navigationMenuPage.menuItems().count());
     await page.waitForTimeout(500);
     await navigationMenuPage.clickSaveMenuBtn();
     await page.waitForTimeout(500);
@@ -49,13 +49,13 @@ test.describe('Navigation menu - Edit item', () => {
     };
     await navigationMenuPage.collapseTemplates(1);
     await page.waitForTimeout(1500);
-    await navigationMenuPage.editCustomLink(customLink, (await navigationMenuPage.menuItems()).length - 1);
+    await navigationMenuPage.editCustomLink(customLink, await navigationMenuPage.menuItems().count() - 1);
     await page.waitForTimeout(500);
 
     await navigationMenuPage.clickSaveMenuBtn();
     await page.waitForTimeout(500);
 
-    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItems()).length - 1);
+    await navigationMenuPage.openOnEditCreatedMenuItem(await navigationMenuPage.menuItems().count() - 1);
     await page.waitForTimeout(1500);
     const securityGroups = await navigationMenuPage.securityGroupsValue();
     for (const securityGroup of customLink.securityGroups) {
@@ -67,7 +67,7 @@ test.describe('Navigation menu - Edit item', () => {
       const i = customLink.translations.indexOf(translation);
       if (translation) {
         expect(await (await navigationMenuPage.editItemTranslation(
-          (await navigationMenuPage.menuItems()).length - 1, 0, i)).inputValue()).toBe(translation);
+          await navigationMenuPage.menuItems().count() - 1, 0, i)).inputValue()).toBe(translation);
       }
     }
     await (await navigationMenuPage.editItemSaveBtn()).click();
@@ -79,7 +79,7 @@ test.describe('Navigation menu - Edit item', () => {
 
   test('element must be created from custom dropdown with security group', async () => {
     await page.waitForTimeout(1500);
-    const count = (await navigationMenuPage.menuItems()).length;
+    const count = await navigationMenuPage.menuItems().count();
     const dropdown = {
       securityGroups: ['eForm admins'],
       translations: ['test1', 'test2', 'test3']
@@ -88,7 +88,7 @@ test.describe('Navigation menu - Edit item', () => {
     await page.waitForTimeout(1500);
     await navigationMenuPage.createCustomDropdown(dropdown);
     await page.waitForTimeout(500);
-    expect(count + 1).toBe((await navigationMenuPage.menuItems()).length);
+    expect(count + 1).toBe(await navigationMenuPage.menuItems().count());
     await navigationMenuPage.clickSaveMenuBtn();
     await page.waitForTimeout(500);
   });
@@ -98,13 +98,13 @@ test.describe('Navigation menu - Edit item', () => {
       securityGroups: ['eForm users'],
       translations: ['Test11', 'Test22', 'Test31']
     };
-    await navigationMenuPage.editCustomDropdown(dropdown, (await navigationMenuPage.menuItems()).length - 1);
+    await navigationMenuPage.editCustomDropdown(dropdown, await navigationMenuPage.menuItems().count() - 1);
     await page.waitForTimeout(500);
 
     await navigationMenuPage.clickSaveMenuBtn();
     await page.waitForTimeout(500);
 
-    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItems()).length - 1);
+    await navigationMenuPage.openOnEditCreatedMenuItem(await navigationMenuPage.menuItems().count() - 1);
     await page.waitForTimeout(500);
     const securityGroupValues = await navigationMenuPage.securityGroupsValue();
     for (const securityGroup of dropdown.securityGroups) {
@@ -115,7 +115,7 @@ test.describe('Navigation menu - Edit item', () => {
       const i = dropdown.translations.indexOf(translation);
       if (translation) {
         expect(await (await navigationMenuPage.editItemTranslation(
-          (await navigationMenuPage.menuItems()).length - 1, 0, i)).inputValue()).toBe(translation);
+          await navigationMenuPage.menuItems().count() - 1, 0, i)).inputValue()).toBe(translation);
       }
     }
     await (await navigationMenuPage.editItemSaveBtn()).click();
@@ -126,12 +126,12 @@ test.describe('Navigation menu - Edit item', () => {
 
   test('element must be moved from templates to list', async () => {
     await page.waitForTimeout(1500);
-    const count = (await navigationMenuPage.menuItems()).length;
+    const count = await navigationMenuPage.menuItems().count();
     await navigationMenuPage.collapseTemplates(0);
     await navigationMenuPage.createMenuItemFromTemplate(0);
     await page.waitForTimeout(500);
 
-    expect(count + 1).toBe((await navigationMenuPage.menuItems()).length);
+    expect(count + 1).toBe(await navigationMenuPage.menuItems().count());
     await navigationMenuPage.clickSaveMenuBtn();
     await page.waitForTimeout(500);
     await navigationMenuPage.collapseTemplates(0);

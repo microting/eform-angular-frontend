@@ -40,7 +40,7 @@ test.describe('Profile settings', () => {
     await myEformsPage.Navbar.goToMyEForms();
     await page.locator('#sign-out-dropdown').waitFor({ state: 'visible', timeout: 40000 });
     for (const translation of translationsEFormsPageEng) {
-      expect(await page.locator(translation.key).textContent()).toBe(translation.value);
+      expect((await page.locator(translation.key).textContent())?.trim()).toBe(translation.value);
     }
   });
 
@@ -52,7 +52,7 @@ test.describe('Profile settings', () => {
     await myEformsPage.Navbar.goToMyEForms();
     await page.locator('#sign-out-dropdown').waitFor({ state: 'visible', timeout: 40000 });
     for (const translation of translationsEFormsPageDan) {
-      expect(await page.locator(translation.key).textContent()).toBe(translation.value);
+      expect((await page.locator(translation.key).textContent())?.trim()).toBe(translation.value);
     }
   });
 });

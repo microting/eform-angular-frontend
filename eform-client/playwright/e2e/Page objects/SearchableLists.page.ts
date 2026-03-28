@@ -201,7 +201,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await this.page.waitForTimeout(1500);
   }
 
-  public async createSearchableList_MultipleItems(name: string, itemNames: string) {
+  public async createSearchableList_MultipleItems(name: string, itemNames: string | string[]) {
     await this.createEntitySearchBtn().click();
     await this.page.waitForTimeout(250);
     await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 400 });
@@ -210,7 +210,8 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await this.entitySearchCreateImportBtn().click();
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateImportItemTextArea().click();
-    await this.page.keyboard.type(itemNames);
+    const text = Array.isArray(itemNames) ? itemNames.join('') : itemNames;
+    await this.page.keyboard.type(text);
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateImportItemSaveBtn().click();
     await this.page.waitForTimeout(250);
@@ -250,7 +251,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await this.page.waitForTimeout(1500);
   }
 
-  public async createSearchableList_MultipleItems_Cancels(name: string, itemNames: string) {
+  public async createSearchableList_MultipleItems_Cancels(name: string, itemNames: string | string[]) {
     await this.createEntitySearchBtn().click();
     await this.page.waitForTimeout(250);
     await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 400 });
@@ -259,7 +260,8 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await this.entitySearchCreateImportBtn().click();
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateImportItemTextArea().click();
-    await this.page.keyboard.type(itemNames);
+    const text = Array.isArray(itemNames) ? itemNames.join('') : itemNames;
+    await this.page.keyboard.type(text);
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateImportItemSaveBtn().click();
     await this.page.waitForTimeout(250);

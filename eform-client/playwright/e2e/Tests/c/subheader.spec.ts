@@ -26,12 +26,12 @@ test.describe('Subheader test', () => {
   });
 
   test('element must be moved from templates to list', async () => {
-    const count = (await navigationMenuPage.menuItems()).length;
+    const count = await navigationMenuPage.menuItems().count();
     await navigationMenuPage.collapseTemplates(0);
     await navigationMenuPage.createMenuItemFromTemplate(0);
     await navigationMenuPage.collapseTemplates(0);
 
-    expect(count + 1).toBe((await navigationMenuPage.menuItems()).length);
+    expect(count + 1).toBe(await navigationMenuPage.menuItems().count());
     await navigationMenuPage.clickSaveMenuBtn();
     await navigationMenuPage.openOnEditCreatedMenuItem(0);
     translation = await (await navigationMenuPage.editItemTranslation(0, 0, 1)).inputValue();

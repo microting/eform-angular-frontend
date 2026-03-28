@@ -25,7 +25,7 @@ test.describe('Navigation menu - Drag item', () => {
   });
 
   test('element must be created from custom dropdown which elements', async () => {
-    const count = (await navigationMenuPage.menuItems()).length;
+    const count = await navigationMenuPage.menuItems().count();
     await navigationMenuPage.collapseTemplates(1);
     const dropdown = {
       securityGroups: [],
@@ -35,10 +35,10 @@ test.describe('Navigation menu - Drag item', () => {
     await navigationMenuPage.createCustomDropdown(dropdown);
     await page.waitForTimeout(500);
 
-    expect(count + 1).toBe((await navigationMenuPage.menuItems()).length);
+    expect(count + 1).toBe(await navigationMenuPage.menuItems().count());
 
-    const currentDropDrownBodyCount = (await navigationMenuPage.menuItems()).length;
-    await navigationMenuPage.collapseMenuItemDropdown((await navigationMenuPage.menuItems()).length - 1);
+    const currentDropDrownBodyCount = await navigationMenuPage.menuItems().count();
+    await navigationMenuPage.collapseMenuItemDropdown(await navigationMenuPage.menuItems().count() - 1);
     await navigationMenuPage.dragTemplateOnElementInCreatedDropdown(1, currentDropDrownBodyCount - 1);
     await page.waitForTimeout(500);
     await navigationMenuPage.dragTemplateOnElementInCreatedDropdown(2, currentDropDrownBodyCount - 1);
@@ -46,7 +46,7 @@ test.describe('Navigation menu - Drag item', () => {
     await navigationMenuPage.dragTemplateOnElementInCreatedDropdown(3, currentDropDrownBodyCount - 1);
     await page.waitForTimeout(500);
 
-    expect(3).toBe((await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItems()).length - 1)).length);
+    expect(3).toBe(await navigationMenuPage.dropdownBodyChilds(await navigationMenuPage.menuItems().count() - 1).count());
   });
 
   test('should edit elements in dropdown', async () => {
@@ -54,17 +54,17 @@ test.describe('Navigation menu - Drag item', () => {
       {
         indexChildDropdown: 0,
         translations_array: ['test0Eng', 'test0Dan', 'test0Ger'],
-        indexDropdownInMenu: (await navigationMenuPage.menuItems()).length - 1
+        indexDropdownInMenu: await navigationMenuPage.menuItems().count() - 1
       },
       {
         indexChildDropdown: 1,
         translations_array: ['test1Eng', 'test1Dan', 'test1Ger'],
-        indexDropdownInMenu: (await navigationMenuPage.menuItems()).length - 1
+        indexDropdownInMenu: await navigationMenuPage.menuItems().count() - 1
       },
       {
         indexChildDropdown: 2,
         translations_array: ['test2Eng', 'test2Dan', 'test2Ger'],
-        indexDropdownInMenu: (await navigationMenuPage.menuItems()).length - 1
+        indexDropdownInMenu: await navigationMenuPage.menuItems().count() - 1
       }];
 
     for (const data of array) {
@@ -76,8 +76,8 @@ test.describe('Navigation menu - Drag item', () => {
     await page.waitForTimeout(500);
 
     for (const item of array) {
-      const foo = await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItems()).length - 1);
-      const bar = foo[item.indexChildDropdown];
+      const foo = navigationMenuPage.dropdownBodyChilds(await navigationMenuPage.menuItems().count() - 1);
+      const bar = foo.nth(item.indexChildDropdown);
       const text = bar.locator('#editBtn');
       await text.click();
       await page.waitForTimeout(500);
@@ -85,7 +85,7 @@ test.describe('Navigation menu - Drag item', () => {
       for (const translation of item.translations_array) {
         const i = item.translations_array.indexOf(translation);
         expect(await (await navigationMenuPage.editItemTranslation(
-          (await navigationMenuPage.menuItems()).length - 1, item.indexChildDropdown, i))
+          await navigationMenuPage.menuItems().count() - 1, item.indexChildDropdown, i))
           .inputValue()).toBe(translation);
       }
       await (await navigationMenuPage.editItemSaveBtn()).click();
@@ -94,15 +94,15 @@ test.describe('Navigation menu - Drag item', () => {
   });
 
   test('swap elements in dropdown', async () => {
-    await navigationMenuPage.dragAndDropElementOfDropdown((await navigationMenuPage.menuItemsChilds()).length,
+    await navigationMenuPage.dragAndDropElementOfDropdown(await navigationMenuPage.menuItemsChilds().count(),
       2, 0);
     await page.waitForTimeout(500);
     await navigationMenuPage.clickSaveMenuBtn();
     await page.waitForTimeout(500);
 
     const itemsBeforeSwap = ['menu\nSites / test2Dan\nedit\ndelete', 'menu\nDevice Users / test0Dan\nedit\ndelete', 'menu\nWorkers / test1Dan\nedit\ndelete'];
-    for (let i = 0; i < (await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItems()).length - 1)).length; i++) {
-      const elem = (await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItems()).length - 1))[i];
+    for (let i = 0; i < await navigationMenuPage.dropdownBodyChilds(await navigationMenuPage.menuItems().count() - 1).count(); i++) {
+      const elem = navigationMenuPage.dropdownBodyChilds(await navigationMenuPage.menuItems().count() - 1).nth(i);
       expect(await elem.textContent()).toBe(itemsBeforeSwap[i]);
     }
     await page.waitForTimeout(500);

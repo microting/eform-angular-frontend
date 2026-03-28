@@ -222,9 +222,7 @@ export class NavigationMenuPage {
 
   public async setSecurityGroupCustomDropdownSelector(textSecurityGroup: string) {
     await this.securityGroupsCustomDropdownSelector().click();
-    await this.page.locator(
-      `//*["ng-dropdown-panel"]//*[text()="${textSecurityGroup}"]`
-    ).click();
+    await this.page.locator('ng-dropdown-panel .ng-option').filter({ hasText: textSecurityGroup }).first().click();
     await this.page.waitForTimeout(500);
   }
 
@@ -329,9 +327,7 @@ export class NavigationMenuPage {
     await this.deleteSecurityGroupsInEditItem();
     for (const textSecurityGroup of securityGroups) {
       await this.editSecurityGroupsSelector().click();
-      await this.page.locator(
-        `//*["ng-dropdown-panel"]//*[text()="${textSecurityGroup}"]`
-      ).click();
+      await this.page.locator('ng-dropdown-panel .ng-option').filter({ hasText: textSecurityGroup }).first().click();
       await this.page.waitForTimeout(500);
     }
   }

@@ -23,7 +23,7 @@ export class ProfileSettingsPage extends PageWithNavbarPage {
   public async chooseLanguage(language: string) {
     await this.languageSelector().click();
     await this.page.waitForTimeout(2000);
-    await this.page.locator(`//*["ng-dropdown-panel"]//*[text()="${language}"]`).click();
+    await this.page.locator('ng-dropdown-panel .ng-option').filter({ hasText: language }).first().click();
     await this.page.waitForTimeout(1000);
   }
 }

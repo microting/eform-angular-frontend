@@ -111,7 +111,7 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
   async selectedLanguages(): Promise<number[]> {
     const selectedLanguages: number[] = [];
     for (let i = 0; i < applicationLanguagesTranslated.length; i++) {
-      const checkbox = this.page.locator(`#languageCheckbox${applicationLanguagesTranslated[i].id}-input`);
+      const checkbox = this.page.locator(`#languageCheckbox${applicationLanguagesTranslated[i].id}`).locator('input[type="checkbox"]');
       if (await checkbox.isChecked()) {
         selectedLanguages.push(i);
       }
@@ -301,7 +301,8 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
 
   async clickLanguageCheckbox(value: boolean, index: number) {
     const checkbox = this.page.locator(`#languageCheckbox${index}`);
-    const isChecked = await checkbox.isChecked();
+    const innerInput = checkbox.locator('input[type="checkbox"]');
+    const isChecked = await innerInput.isChecked();
     if (isChecked !== value) {
       await checkbox.click();
     }
@@ -358,7 +359,7 @@ export class MainCheckListRowObj {
       this.checklists.push(await clRow.load());
     }
     for (let i = 0; i < applicationLanguagesTranslated.length; i++) {
-      const checkbox = this.page.locator(`#languageCheckbox${applicationLanguagesTranslated[i].id}-input`);
+      const checkbox = this.page.locator(`#languageCheckbox${applicationLanguagesTranslated[i].id}`).locator('input[type="checkbox"]');
       if (await checkbox.isChecked()) {
         this.translations.push({
           languageId: i,
