@@ -19,7 +19,7 @@ test.describe.serial('Delete folder', () => {
 
   test.afterAll(async () => {
     const foldersPage = new FoldersPage(page);
-    await page.locator('.folder-tree-name').waitFor({ state: 'visible', timeout: 40000 });
+    await page.locator('.folder-tree-name').first().waitFor({ state: 'visible', timeout: 40000 });
     const folder = await foldersPage.getFolderByName(nameFolder);
     const countFoldersBeforeDelete = await foldersPage.rowNum();
     await folder.delete();
@@ -34,7 +34,7 @@ test.describe.serial('Delete folder', () => {
     await foldersPage.createNewFolder(nameFolder, description);
     const rowNumBeforeDelete = await foldersPage.rowNum();
 
-    await page.locator('.folder-tree-name').waitFor({ state: 'visible', timeout: 40000 });
+    await page.locator('.folder-tree-name').first().waitFor({ state: 'visible', timeout: 40000 });
     const folder = await foldersPage.getFolderByName(nameFolder);
     await folder.delete();
     const rowNumAfterDelete = await foldersPage.rowNum();

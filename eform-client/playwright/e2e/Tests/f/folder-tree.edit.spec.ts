@@ -48,7 +48,7 @@ test.describe.serial('Folder page', () => {
   test('Should change description', async () => {
     const foldersPage = new FoldersPage(page);
     const newDescription = generateRandmString();
-    await page.locator('.folder-tree-name').waitFor({ state: 'visible', timeout: 40000 });
+    await page.locator('.folder-tree-name').first().waitFor({ state: 'visible', timeout: 40000 });
     const lastFolderBeforeEdit = await foldersPage.getFolderByName(name);
     await lastFolderBeforeEdit.editFolder(null, newDescription);
     await foldersPage.newFolderBtn().waitFor({ state: 'visible', timeout: 40000 });
@@ -61,7 +61,7 @@ test.describe.serial('Folder page', () => {
 
   test('Should not change name and description if cancel was clicked', async () => {
     const foldersPage = new FoldersPage(page);
-    await page.locator('.folder-tree-name').waitFor({ state: 'visible', timeout: 40000 });
+    await page.locator('.folder-tree-name').first().waitFor({ state: 'visible', timeout: 40000 });
     const newName = generateRandmString();
     const newDescription = generateRandmString();
     const lastFolderPageBeforeEdit = await foldersPage.getFolderByName(name);

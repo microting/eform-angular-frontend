@@ -501,7 +501,7 @@ export class FoldersRowObject {
 
   async expandChildren() {
     if ((await this.page.locator('app-eform-tree-view-picker > mat-tree > mat-tree-node[aria-expanded="false"]').count()) > 0) {
-      await this.page.locator('app-eform-tree-view-picker > mat-tree > mat-tree-node[aria-expanded="false"] > button').click();
+      await this.page.locator('app-eform-tree-view-picker > mat-tree > mat-tree-node[aria-expanded="false"] > button').first().click();
     }
     await this.page.waitForTimeout(1000);
   }

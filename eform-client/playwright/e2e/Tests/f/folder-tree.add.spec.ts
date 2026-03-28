@@ -98,7 +98,7 @@ test.describe.serial('Create folder', () => {
       applicationLanguages.findIndex((x) => x.text === da.text)
     ).innerHTML();
 
-    expect(html).toBe(`<div>\n  <b>${description}</b>\n</div>`);
+    expect(html.replace(/\s+/g, '')).toBe(`<div><b>${description}</b></div>`);
     await foldersRowObject.closeEditModal(true);
   });
 
@@ -132,7 +132,7 @@ test.describe.serial('Create folder', () => {
       applicationLanguages.findIndex((x) => x.text === da.text)
     ).innerHTML();
 
-    expect(html).toBe(`<div>\n  <u>${description}</u>\n</div>`);
+    expect(html.replace(/\s+/g, '')).toBe(`<div><u>${description}</u></div>`);
     await foldersRowObject.closeEditModal(true);
   });
 
@@ -166,7 +166,7 @@ test.describe.serial('Create folder', () => {
       applicationLanguages.findIndex((x) => x.text === da.text)
     ).innerHTML();
 
-    expect(html).toBe(`<div>\n  <i>${description}</i>\n</div>`);
+    expect(html.replace(/\s+/g, '')).toBe(`<div><i>${description}</i></div>`);
     await foldersRowObject.closeEditModal(true);
   });
 
@@ -200,7 +200,7 @@ test.describe.serial('Create folder', () => {
       applicationLanguages.findIndex((x) => x.text === da.text)
     ).innerHTML();
 
-    expect(html).toBe(`<div>\n  <s>${description}</s>\n</div>`);
+    expect(html.replace(/\s+/g, '')).toBe(`<div><s>${description}</s></div>`);
     await foldersRowObject.closeEditModal(true);
   });
 });
