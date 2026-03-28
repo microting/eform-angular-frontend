@@ -144,9 +144,9 @@ test.describe('Navigation menu - Create item', () => {
     await navigationMenuPage.openOnEditCreatedMenuItem(await navigationMenuPage.menuItems().count() - 1);
     await page.waitForTimeout(500);
 
-    const securityGroupValues = await navigationMenuPage.securityGroupsValue();
+    const securityGroupValues = navigationMenuPage.securityGroupsValue();
     for (let i = 0; i < dropdown.securityGroups.length; i++) {
-      expect(await securityGroupValues[i].textContent()).toBe(dropdown.securityGroups[i]);
+      expect(await securityGroupValues.nth(i).textContent()).toBe(dropdown.securityGroups[i]);
     }
     for (const translation of dropdown.translations) {
       const i = dropdown.translations.indexOf(translation);

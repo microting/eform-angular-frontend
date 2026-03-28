@@ -44,6 +44,8 @@ export async function selectValueInNgSelector(
 ) {
   const ngSelector = page.locator(selector);
   await ngSelector.waitFor({ state: 'visible', timeout: 40000 });
+  await ngSelector.click();
+  await page.waitForTimeout(300);
   if (intercept) {
     await Promise.all([
       page.waitForResponse('**'),

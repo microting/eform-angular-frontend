@@ -234,8 +234,8 @@ export class MyEformsPage extends PageWithNavbarPage {
       for (let i = 0; i < tagAddedNum; i++) {
         await this.createEformTagSelector().click();
         await this.page.waitForTimeout(500);
-        const selectedTag = this.page.locator('.ng-option:not(.ng-option-selected)');
-        selectedTags.push(await selectedTag.textContent());
+        const selectedTag = this.page.locator('.ng-option:not(.ng-option-selected)').first();
+        selectedTags.push((await selectedTag.textContent())?.trim());
         await selectedTag.waitFor({ state: 'visible', timeout: 40000 });
         await selectedTag.click();
         await this.page.waitForTimeout(500);

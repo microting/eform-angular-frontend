@@ -42,7 +42,7 @@ test.describe('Visual editor page', () => {
     await page.waitForTimeout(500);
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     await page.waitForTimeout(500);
-    let mainChecklist = new MainCheckListRowObj();
+    let mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     const checklist: MainChecklistObj = {
       translations: [
         {
@@ -67,7 +67,7 @@ test.describe('Visual editor page', () => {
     await mainChecklist.edit(checklistObjForEdit);
     await eformVisualEditorPage.clickSave();
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     expect(mainChecklist.translations[0].name).toBe(checklistObjForEdit.translations[0].name);
     expect(mainChecklist.translations[0].description).toBe(checklistObjForEdit.translations[0].description);
@@ -103,7 +103,7 @@ test.describe('Visual editor page', () => {
     await page.waitForTimeout(500);
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     await page.waitForTimeout(500);
-    let mainChecklist = new MainCheckListRowObj();
+    let mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     const checklistObjForEdit: MainChecklistObj = {
       ...checklist,
@@ -131,11 +131,11 @@ test.describe('Visual editor page', () => {
     await eformVisualEditorPage.openAllLanguages();
     await eformVisualEditorPage.createVisualTemplateField(newField);
     await mainChecklist.edit(checklistObjForEdit);
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     await mainChecklist.fields[1].makeCopy();
     await mainChecklist.fields[1].changePosition(mainChecklist.fields[0]);
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     await mainChecklist.fields[1].edit({ type: EformFieldTypesEnum.None });
     await mainChecklist.fields[1].changeColor('red');
@@ -146,7 +146,7 @@ test.describe('Visual editor page', () => {
     ];
     await eformVisualEditorPage.clickSave();
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.openAllLanguages();
     await mainChecklist.getAllFields();
     await eformVisualEditorPage.openAllLanguages();
@@ -227,7 +227,7 @@ test.describe('Visual editor page', () => {
   //   console.log(`go to visual editor on created eform`);
   //   await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
   //   await page.waitForTimeout(500);
-  //   let mainChecklist = new MainCheckListRowObj();
+  //   let mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
   //   console.log(`get all fields`);
   //   await mainChecklist.getAllFields();
   //   await page.waitForTimeout(500);
@@ -247,7 +247,7 @@ test.describe('Visual editor page', () => {
   //   await page.waitForTimeout(500);
   //   console.log(`change color on field`);
   //   await mainChecklist.checklists[0].fields[0].changeColor('grey');
-  //   mainChecklist = new MainCheckListRowObj();
+  //   mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
   //   console.log(`get all fields second time`);
   //   await mainChecklist.getAllFields();
   //   await page.waitForTimeout(500);
@@ -267,7 +267,7 @@ test.describe('Visual editor page', () => {
   //     },
   //     checklist.checklists[0].fields[0],
   //   ];
-  //   mainChecklist = new MainCheckListRowObj();
+  //   mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
   //   console.log(`get all fields third time`);
   //   await mainChecklist.getAllFields();
   //   await page.waitForTimeout(500);
@@ -285,7 +285,7 @@ test.describe('Visual editor page', () => {
   //   console.log(`go to edited eform visual editor`);
   //   await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
   //   await page.waitForTimeout(500);
-  //   mainChecklist = new MainCheckListRowObj();
+  //   mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
   //   console.log(`get all fields fourth time`);
   //   await mainChecklist.getAllFields();
   //   await page.waitForTimeout(500);

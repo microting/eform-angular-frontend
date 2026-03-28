@@ -81,7 +81,7 @@ test.describe('Visual editor page', () => {
     expect(eform.eFormName).toBe(checklistWithoutFields.translations[0].name);
     await eform.goToVisualEditor();
     await page.waitForTimeout(1500);
-    const visualTemplate = new MainCheckListRowObj();
+    const visualTemplate = new MainCheckListRowObj(page, eformVisualEditorPage);
     await visualTemplate.getAllFields();
     expect(visualTemplate.translations[0].name).toBe(checklistWithoutFields.translations[0].name);
     expect(visualTemplate.translations[0].description).toBe(checklistWithoutFields.translations[0].description);
@@ -119,7 +119,7 @@ test.describe('Visual editor page', () => {
     expect(eform.eFormName).toBe(checklist.translations[0].name);
     await eform.goToVisualEditor();
     await page.waitForTimeout(1500);
-    const mainChecklist = new MainCheckListRowObj();
+    const mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     expect(mainChecklist.translations[0].name).toBe(checklist.translations[0].name);
     expect(mainChecklist.translations[0].description).toBe(checklist.translations[0].description);
@@ -163,7 +163,7 @@ test.describe('Visual editor page', () => {
     expect(eform.eFormName).toBe(checklistWithPdfFile.translations[0].name);
     await eform.goToVisualEditor();
     await page.waitForTimeout(1500);
-    const mainChecklist = new MainCheckListRowObj();
+    const mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     expect(mainChecklist.translations[0].name).toBe(checklistWithPdfFile.translations[0].name);
     expect(mainChecklist.translations[0].description).toBe(checklistWithPdfFile.translations[0].description);
@@ -197,11 +197,11 @@ test.describe('Visual editor page', () => {
       ],
     };
     await eformVisualEditorPage.createVisualTemplate(checklist);
-    let mainCheckListRowObj = new MainCheckListRowObj();
+    let mainCheckListRowObj = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainCheckListRowObj.getAllFields();
     await mainCheckListRowObj.fields[0].changeColor('red');
     // Reload data after changeColor to ensure DOM is synchronized before saving
-    mainCheckListRowObj = new MainCheckListRowObj();
+    mainCheckListRowObj = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainCheckListRowObj.getAllFields();
     await eformVisualEditorPage.clickSave();
     const eform = await myEformsPage.getLastMyEformsRowObj();
@@ -209,7 +209,7 @@ test.describe('Visual editor page', () => {
     expect(eform.eFormName).toBe(checklist.translations[0].name);
     await eform.goToVisualEditor();
     await page.waitForTimeout(1500);
-    const mainChecklist = new MainCheckListRowObj();
+    const mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     expect(mainChecklist.translations[0].name).toBe(checklist.translations[0].name);
     expect(mainChecklist.translations[0].description).toBe(checklist.translations[0].description);
@@ -256,7 +256,7 @@ test.describe('Visual editor page', () => {
     expect(eform.eFormName).toBe(checklistWithPdfFile.translations[0].name);
     await eform.goToVisualEditor();
     await page.waitForTimeout(1500);
-    const mainChecklist = new MainCheckListRowObj();
+    const mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     expect(mainChecklist.translations[0].name).toBe(checklistWithPdfFile.translations[0].name);
     expect(mainChecklist.translations[0].description).toBe(checklistWithPdfFile.translations[0].description);
@@ -292,16 +292,16 @@ test.describe('Visual editor page', () => {
     };
     await eformVisualEditorPage.createVisualTemplate(checklistObj);
     checklistObj.fields = [...checklistObj.fields, checklistObj.fields[0]];
-    let mainChecklist = new MainCheckListRowObj();
+    let mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     await page.waitForTimeout(500);
     await mainChecklist.fields[0].makeCopy();
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     await eformVisualEditorPage.clickSave();
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     await page.waitForTimeout(1500);
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     expect(mainChecklist.translations[0].name).toBe(checklistObj.translations[0].name);
     expect(mainChecklist.translations[0].description).toBe(checklistObj.translations[0].description);
@@ -341,7 +341,7 @@ test.describe('Visual editor page', () => {
         ],
       };
       await eformVisualEditorPage.createVisualTemplate(checklistObj);
-      let mainChecklist = new MainCheckListRowObj();
+      let mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
       await mainChecklist.getAllFields();
       const nestedField: ChecklistFieldObj = {
         type: EformFieldTypesEnum.None,
@@ -357,16 +357,16 @@ test.describe('Visual editor page', () => {
       };
       await mainChecklist.fields[0].collapseToggle();
       await mainChecklist.fields[0].addNewNestedField(nestedField);
-      mainChecklist = new MainCheckListRowObj();
+      mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
       await mainChecklist.getAllFields();
       await mainChecklist.fields[0].nestedFields[0].changeColor('red');
       await mainChecklist.fields[0].nestedFields[0].makeCopy();
-      mainChecklist = new MainCheckListRowObj();
+      mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
       await mainChecklist.getAllFields();
       await eformVisualEditorPage.clickSave();
       await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
       await page.waitForTimeout(1500);
-      mainChecklist = new MainCheckListRowObj();
+      mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
       await mainChecklist.getAllFields();
       expect(mainChecklist.translations[0].name).toBe(checklistObj.translations[0].name);
       expect(mainChecklist.translations[0].description).toBe(checklistObj.translations[0].description);
@@ -410,7 +410,7 @@ test.describe('Visual editor page', () => {
       ],
     };
     await eformVisualEditorPage.createVisualTemplate(checklistObj);
-    let mainChecklist = new MainCheckListRowObj();
+    let mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     const nestedField: ChecklistFieldObj = {
       type: EformFieldTypesEnum.None,
@@ -426,17 +426,17 @@ test.describe('Visual editor page', () => {
     };
     await mainChecklist.fields[0].collapseToggle();
     await mainChecklist.fields[0].addNewNestedField(nestedField);
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     await mainChecklist.fields[0].nestedFields[0].changeColor('red');
     await mainChecklist.fields[0].nestedFields[0].makeCopy();
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     await mainChecklist.fields[0].delete();
     await eformVisualEditorPage.clickSave();
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     await page.waitForTimeout(1500);
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     expect(mainChecklist.translations[0].name).toBe(checklistObj.translations[0].name);
     expect(mainChecklist.translations[0].description).toBe(checklistObj.translations[0].description);
@@ -479,7 +479,7 @@ test.describe('Visual editor page', () => {
     await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     await page.waitForTimeout(1500);
-    const mainChecklist = new MainCheckListRowObj();
+    const mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     // for (let i = 0; i < checklistObj.checklists.length; i++) {
     //   expect(
@@ -544,7 +544,7 @@ test.describe('Visual editor page', () => {
     await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     await page.waitForTimeout(1500);
-    const mainChecklist = new MainCheckListRowObj();
+    const mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     // for (let i = 0; i < checklistObj.checklists.length; i++) {
     //   expect(
@@ -618,7 +618,7 @@ test.describe('Visual editor page', () => {
     await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     await page.waitForTimeout(1500);
-    const mainChecklist = new MainCheckListRowObj();
+    const mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     // for (let i = 0; i < checklistObj.checklists.length; i++) {
     //   expect(
@@ -677,7 +677,7 @@ test.describe('Visual editor page', () => {
       ],
     };
     await eformVisualEditorPage.createVisualTemplate(checklist);
-    let mainChecklist = new MainCheckListRowObj();
+    let mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     await mainChecklist.fields[1].changePosition(mainChecklist.fields[0]);
     await page.waitForTimeout(1000);
@@ -691,7 +691,7 @@ test.describe('Visual editor page', () => {
 
     await eform.goToVisualEditor();
     await page.waitForTimeout(1500);
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     expect(mainChecklist.translations[0].name).toBe(checklist.translations[0].name);
     expect(mainChecklist.translations[0].description).toBe(checklist.translations[0].description);
@@ -759,7 +759,7 @@ test.describe('Visual editor page', () => {
       ],
     };
     await eformVisualEditorPage.createVisualTemplate(checklist);
-    let mainChecklist = new MainCheckListRowObj();
+    let mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     await mainChecklist.checklists[0].fields[1].changePosition(
       mainChecklist.checklists[0].fields[0]
@@ -783,7 +783,7 @@ test.describe('Visual editor page', () => {
 
     await eform.goToVisualEditor();
     await page.waitForTimeout(1500);
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     expect(mainChecklist.translations[0].name).toBe(checklist.translations[0].name);
     expect(mainChecklist.translations[0].description).toBe(checklist.translations[0].description);
@@ -816,7 +816,7 @@ test.describe('Visual editor page', () => {
     );
     await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     await page.waitForTimeout(1500);
-    const mainChecklist = new MainCheckListRowObj();
+    const mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
 
     expect(mainChecklist.translations[0].name).toBe(eformFromXml.translations[0].name);

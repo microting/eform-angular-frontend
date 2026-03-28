@@ -106,10 +106,10 @@ test.describe('Navigation menu - Edit item', () => {
 
     await navigationMenuPage.openOnEditCreatedMenuItem(await navigationMenuPage.menuItems().count() - 1);
     await page.waitForTimeout(500);
-    const securityGroupValues = await navigationMenuPage.securityGroupsValue();
+    const securityGroupValues = navigationMenuPage.securityGroupsValue();
     for (const securityGroup of dropdown.securityGroups) {
       const i = dropdown.securityGroups.indexOf(securityGroup);
-      expect(await securityGroupValues[i].textContent()).toBe(securityGroup);
+      expect(await securityGroupValues.nth(i).textContent()).toBe(securityGroup);
     }
     for (const translation of dropdown.translations) {
       const i = dropdown.translations.indexOf(translation);
