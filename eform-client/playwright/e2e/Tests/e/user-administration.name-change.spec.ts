@@ -29,7 +29,7 @@ test.describe.serial('User administration settings', () => {
   });
 
   test('should set name to Foo Bar', async () => {
-    await page.goto('http://localhost:4200/account-management');
+    await myEformsPage.Navbar.goToUserAdministration();
     await page.locator('#createNewUserBtn').waitFor({ state: 'visible', timeout: 60000 });
     await page.locator('#userAdministrationId-0').waitFor({ state: 'visible', timeout: 60000 });
     const user: UserAdministrationObject = {
