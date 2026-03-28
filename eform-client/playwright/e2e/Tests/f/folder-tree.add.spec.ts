@@ -75,7 +75,7 @@ test.describe.serial('Create folder', () => {
 
     const da = applicationLanguages[0];
     await foldersPage.createLanguageSelector().locator('input').fill(da.text);
-    let value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+    let value = page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
     await foldersPage.createDescriptionInput(
@@ -91,7 +91,7 @@ test.describe.serial('Create folder', () => {
     await foldersRowObject.openEditModal();
 
     await foldersPage.editLanguageSelector().locator('input').fill(da.text);
-    value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+    value = page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
     const html = await foldersPage.editDescriptionInput(
@@ -109,7 +109,7 @@ test.describe.serial('Create folder', () => {
 
     const da = applicationLanguages[0];
     await foldersPage.createLanguageSelector().locator('input').fill(da.text);
-    let value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+    let value = page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
     await foldersPage.createDescriptionInput(
@@ -125,7 +125,7 @@ test.describe.serial('Create folder', () => {
     await foldersRowObject.openEditModal();
 
     await foldersPage.editLanguageSelector().locator('input').fill(da.text);
-    value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+    value = page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
     const html = await foldersPage.editDescriptionInput(
@@ -143,7 +143,7 @@ test.describe.serial('Create folder', () => {
 
     const da = applicationLanguages[0];
     await foldersPage.createLanguageSelector().locator('input').fill(da.text);
-    let value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+    let value = page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
     await foldersPage.createDescriptionInput(
@@ -159,7 +159,7 @@ test.describe.serial('Create folder', () => {
     await foldersRowObject.openEditModal();
 
     await foldersPage.editLanguageSelector().locator('input').fill(da.text);
-    value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+    value = page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
     const html = await foldersPage.editDescriptionInput(
@@ -177,7 +177,7 @@ test.describe.serial('Create folder', () => {
 
     const da = applicationLanguages[0];
     await foldersPage.createLanguageSelector().locator('input').fill(da.text);
-    let value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+    let value = page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
     await foldersPage.createDescriptionInput(
@@ -193,7 +193,7 @@ test.describe.serial('Create folder', () => {
     await foldersRowObject.openEditModal();
 
     await foldersPage.editLanguageSelector().locator('input').fill(da.text);
-    value = page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+    value = page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
     await value.waitFor({ state: 'visible', timeout: 40000 });
     await value.click();
     const html = await foldersPage.editDescriptionInput(

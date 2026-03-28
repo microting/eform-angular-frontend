@@ -278,7 +278,7 @@ export class FoldersRowObject {
       const language = applicationLanguagesTranslated[i];
       await this.foldersPage.editLanguageSelector().locator('input').fill(language.text);
       await this.page.waitForTimeout(500);
-      const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${language.text}`);
+      const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: language.text }).first();
       await value.waitFor({ state: 'visible', timeout: 40000 });
       await value.click();
       await this.page.waitForTimeout(500);
@@ -312,7 +312,7 @@ export class FoldersRowObject {
         const da = applicationLanguagesTranslated[0];
         await this.foldersPage.createLanguageSelector().locator('input').fill(da.text);
         await this.page.waitForTimeout(500);
-        const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+        const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
         await value.waitFor({ state: 'visible', timeout: 40000 });
         await value.click();
         await this.page.waitForTimeout(500);
@@ -329,7 +329,7 @@ export class FoldersRowObject {
           );
           await this.foldersPage.createLanguageSelector().locator('input').fill(language!.text);
           await this.page.waitForTimeout(500);
-          const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${language!.text}`);
+          const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: language!.text }).first();
           await value.waitFor({ state: 'visible', timeout: 40000 });
           await value.click();
           await this.page.waitForTimeout(500);
@@ -346,7 +346,7 @@ export class FoldersRowObject {
         const da = applicationLanguagesTranslated[0];
         await this.foldersPage.createLanguageSelector().locator('input').fill(da.text);
         await this.page.waitForTimeout(500);
-        const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+        const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
         await value.waitFor({ state: 'visible', timeout: 40000 });
         await value.click();
         await this.page.waitForTimeout(500);
@@ -366,7 +366,7 @@ export class FoldersRowObject {
           );
           await this.foldersPage.createLanguageSelector().locator('input').fill(language!.text);
           await this.page.waitForTimeout(500);
-          const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${language!.text}`);
+          const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: language!.text }).first();
           await value.waitFor({ state: 'visible', timeout: 40000 });
           await value.click();
           await this.page.waitForTimeout(500);
@@ -423,7 +423,7 @@ export class FoldersRowObject {
         const nameConverted = name as string;
         const da = applicationLanguagesTranslated[0];
         await this.foldersPage.editLanguageSelector().locator('input').fill(da.text);
-        const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+        const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
         await value.waitFor({ state: 'visible', timeout: 40000 });
         await value.click();
         await this.foldersPage.editNameInput(
@@ -438,7 +438,7 @@ export class FoldersRowObject {
             (x) => x.text === nameConverted[i].language
           );
           await this.foldersPage.editLanguageSelector().locator('input').fill(language!.text);
-          const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${language!.text}`);
+          const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: language!.text }).first();
           await value.waitFor({ state: 'visible', timeout: 40000 });
           await value.click();
           await this.foldersPage.editNameInput(
@@ -453,7 +453,7 @@ export class FoldersRowObject {
         const descriptionConvert = description as string;
         const da = applicationLanguagesTranslated[0];
         await this.foldersPage.editLanguageSelector().locator('input').fill(da.text);
-        const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+        const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
         await value.waitFor({ state: 'visible', timeout: 40000 });
         await value.click();
         await this.foldersPage.editDescriptionInput(
@@ -471,7 +471,7 @@ export class FoldersRowObject {
             (x) => x.text === descriptionConvert[i].language
           );
           await this.foldersPage.editLanguageSelector().locator('input').fill(language!.text);
-          const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${language!.text}`);
+          const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: language!.text }).first();
           await value.waitFor({ state: 'visible', timeout: 40000 });
           await value.click();
           await this.foldersPage.editDescriptionInput(
@@ -544,7 +544,7 @@ export class FoldersTreeRowObject {
     for (let i = 0; i < applicationLanguagesTranslated.length; i++) {
       const language = applicationLanguagesTranslated[i];
       await this.foldersPage.editLanguageSelector().locator('input').fill(language.text);
-      const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${language.text}`);
+      const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: language.text }).first();
       await value.waitFor({ state: 'visible', timeout: 40000 });
       await value.click();
       descriptions.push({
@@ -602,7 +602,7 @@ export class FoldersTreeRowObject {
         const da = applicationLanguagesTranslated[0];
         await this.foldersPage.editLanguageSelector().locator('input').fill(da.text);
         await this.page.waitForTimeout(500);
-        const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+        const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
         await value.waitFor({ state: 'visible', timeout: 40000 });
         await value.click();
         await this.page.waitForTimeout(500);
@@ -618,7 +618,7 @@ export class FoldersTreeRowObject {
           );
           await this.foldersPage.editLanguageSelector().locator('input').fill(language!.text);
           await this.page.waitForTimeout(500);
-          const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${language!.text}`);
+          const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: language!.text }).first();
           await value.waitFor({ state: 'visible', timeout: 40000 });
           await value.click();
           await this.page.waitForTimeout(500);
@@ -634,7 +634,7 @@ export class FoldersTreeRowObject {
         const da = applicationLanguagesTranslated[0];
         await this.foldersPage.editLanguageSelector().locator('input').fill(da.text);
         await this.page.waitForTimeout(500);
-        const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${da.text}`);
+        const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: da.text }).first();
         await value.waitFor({ state: 'visible', timeout: 40000 });
         await value.click();
         await this.page.waitForTimeout(500);
@@ -653,7 +653,7 @@ export class FoldersTreeRowObject {
           );
           await this.foldersPage.editLanguageSelector().locator('input').fill(language!.text);
           await this.page.waitForTimeout(500);
-          const value = this.page.locator('ng-dropdown-panel').locator(`.ng-option=${language!.text}`);
+          const value = this.page.locator('ng-dropdown-panel').locator('.ng-option').filter({ hasText: language!.text }).first();
           await value.waitFor({ state: 'visible', timeout: 40000 });
           await value.click();
           await this.page.waitForTimeout(500);
