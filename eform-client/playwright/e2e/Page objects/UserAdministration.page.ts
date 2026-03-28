@@ -156,6 +156,7 @@ export class UserAdministrationRowObject {
   async getRow(rowNum: number): Promise<UserAdministrationRowObject> {
     this.index = rowNum;
     rowNum = rowNum - 1;
+    await this.page.locator('#userAdministrationId-' + rowNum).waitFor({ state: 'visible', timeout: 40000 });
     this.id = +(await this.page.locator('#userAdministrationId-' + rowNum).textContent() || '0');
     this.email = (await this.page.locator('#userAdministrationEmail-' + rowNum).textContent() || '').trim();
     this.fullName = (await this.page.locator('#userAdministrationFullName-' + rowNum).textContent() || '').trim();
