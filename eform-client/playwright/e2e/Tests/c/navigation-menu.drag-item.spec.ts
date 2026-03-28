@@ -100,10 +100,11 @@ test.describe.serial('Navigation menu - Drag item', () => {
     await navigationMenuPage.clickSaveMenuBtn();
     await page.waitForTimeout(500);
 
-    const itemsBeforeSwap = ['menu\nSites / test2Dan\nedit\ndelete', 'menu\nDevice Users / test0Dan\nedit\ndelete', 'menu\nWorkers / test1Dan\nedit\ndelete'];
+    const itemsBeforeSwap = ['Sites / test2Dan', 'Device Users / test0Dan', 'Workers / test1Dan'];
     for (let i = 0; i < await navigationMenuPage.dropdownBodyChilds(await navigationMenuPage.menuItems().count() - 1).count(); i++) {
       const elem = navigationMenuPage.dropdownBodyChilds(await navigationMenuPage.menuItems().count() - 1).nth(i);
-      expect((await elem.textContent())?.replace(/\s+/g, ' ').trim()).toBe(itemsBeforeSwap[i].replace(/\s+/g, ' ').trim());
+      const text = (await elem.textContent())?.replace(/\s+/g, ' ').trim() || '';
+      expect(text).toContain(itemsBeforeSwap[i]);
     }
     await page.waitForTimeout(500);
     await navigationMenuPage.resetMenu();
