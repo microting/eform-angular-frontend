@@ -30,6 +30,7 @@ test.describe.serial('User administration settings', () => {
 
   test('should set name to Foo Bar', async () => {
     await myEformsPage.Navbar.goToUserAdministration();
+    await page.locator('#createNewUserBtn').waitFor({ state: 'visible', timeout: 40000 });
     const user: UserAdministrationObject = {
       firstName: 'Foo',
       lastName: 'Bar',
