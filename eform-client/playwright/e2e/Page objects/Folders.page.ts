@@ -262,7 +262,7 @@ export class FoldersRowObject {
       }
       this.dropdown = element.locator('button.mat-mdc-menu-trigger');
       try {
-        this.name = await element.locator('div > div').textContent() || '';
+        this.name = (await element.locator('div > div').textContent() || '').trim();
       } catch (e) {
       }
       this.folderTreeOpenClose = element.locator('mat-tree-node');
@@ -531,7 +531,7 @@ export class FoldersTreeRowObject {
         this.folderTreeElement = element.locator('#folderTreeId');
       } catch (e) {}
       try {
-        this.nameTree = await element.locator('.folder-tree-name').textContent() || '';
+        this.nameTree = (await element.locator('.folder-tree-name').textContent() || '').trim();
       } catch (e) {}
     }
     return this;
