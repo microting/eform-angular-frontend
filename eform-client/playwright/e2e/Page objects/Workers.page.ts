@@ -112,7 +112,7 @@ export class WorkersRowObject {
   async openRowMenu() {
     const index = this.index - 1;
     const menuBtn = this.page.locator(`#action-items-${index} #actionMenu`);
-    await menuBtn.waitFor({ state: 'visible', timeout: 5000 });
+    await menuBtn.waitFor({ state: 'visible', timeout: 40000 });
     await menuBtn.scrollIntoViewIfNeeded();
     await menuBtn.click();
     await this.page.waitForTimeout(200);

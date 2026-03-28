@@ -44,7 +44,7 @@ test.describe('Workers page ', () => {
     const surName = 'Éhl©µ';
     await workers.createNewWorker(name, surName);
     await page.waitForTimeout(2000);
-    const newWorker = await workers.getWorker((await workers.rowNum()) + 1);
+    const newWorker = await workers.getWorker(await workers.rowNum());
     expect(newWorker.firstName).toBe(name);
     expect(newWorker.lastName).toBe(surName);
   });

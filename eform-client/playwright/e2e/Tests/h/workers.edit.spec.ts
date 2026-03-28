@@ -36,9 +36,9 @@ test.describe('Workers page should edit Worker', () => {
   test('with special character', async () => {
     const name = 'tóíǻøæ';
     const surName = '¡@£$½';
-    const workerBeforEdit = await workers.getWorker((await workers.rowNum()) + 1);
+    const workerBeforEdit = await workers.getWorker(await workers.rowNum());
     await workers.editWorker(workerBeforEdit, name, surName);
-    const workerAfterEdit = await workers.getWorker((await workers.rowNum()) + 1);
+    const workerAfterEdit = await workers.getWorker(await workers.rowNum());
     expect(workerAfterEdit.firstName).toBe(name);
     expect(workerAfterEdit.lastName).toBe(surName);
   });
