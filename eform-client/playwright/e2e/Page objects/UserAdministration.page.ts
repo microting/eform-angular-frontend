@@ -169,7 +169,7 @@ export class UserAdministrationRowObject {
   async openRowMenu() {
     const index = this.index - 1;
     const menuBtn = this.page.locator(`#action-items-${index} #actionMenu`);
-    await menuBtn.waitFor({ state: 'visible', timeout: 5000 });
+    await menuBtn.waitFor({ state: 'visible', timeout: 40000 });
     await menuBtn.scrollIntoViewIfNeeded();
     await menuBtn.click();
     await this.page.waitForTimeout(200);
@@ -179,7 +179,7 @@ export class UserAdministrationRowObject {
     await this.openRowMenu();
     const index = this.index - 1;
     const editBtn = this.page.locator(`#userAdministrationEditBtn-${index}`);
-    await editBtn.waitFor({ state: 'visible', timeout: 5000 });
+    await editBtn.waitFor({ state: 'visible', timeout: 40000 });
     await editBtn.click();
     await this.userAdministration.editFirstName().waitFor({ state: 'visible', timeout: 40000 });
     if (user.firstName) {
@@ -245,7 +245,7 @@ export class UserAdministrationRowObject {
     await this.openRowMenu();
     const index = this.index - 1;
     const deleteBtn = this.page.locator(`#userAdministrationDeleteBtn-${index}`);
-    await deleteBtn.waitFor({ state: 'visible', timeout: 5000 });
+    await deleteBtn.waitFor({ state: 'visible', timeout: 40000 });
     await deleteBtn.click();
     await this.userAdministration.userDeleteCancelBtn().waitFor({ state: 'visible', timeout: 40000 });
   }

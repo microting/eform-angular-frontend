@@ -58,9 +58,7 @@ export async function selectValueInNgSelector(
   await page.waitForTimeout(500);
   const dropdownPanel = page.locator('ng-dropdown-panel');
   await dropdownPanel.waitFor({ state: 'visible', timeout: 40000 });
-  const option = selectorInModal
-    ? page.locator('.ng-option').filter({ hasText: value }).first()
-    : ngSelector.locator('.ng-option').filter({ hasText: value }).first();
+  const option = dropdownPanel.locator('.ng-option').filter({ hasText: value }).first();
   await option.scrollIntoViewIfNeeded();
   await option.click();
   await page.waitForTimeout(500);

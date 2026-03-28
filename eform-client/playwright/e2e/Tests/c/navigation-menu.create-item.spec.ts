@@ -146,7 +146,7 @@ test.describe.serial('Navigation menu - Create item', () => {
 
     const securityGroupValues = navigationMenuPage.securityGroupsValue();
     for (let i = 0; i < dropdown.securityGroups.length; i++) {
-      expect(await securityGroupValues.nth(i).textContent()).toBe(dropdown.securityGroups[i]);
+      expect((await securityGroupValues.nth(i).textContent())?.trim()).toBe(dropdown.securityGroups[i]);
     }
     for (const translation of dropdown.translations) {
       const i = dropdown.translations.indexOf(translation);

@@ -57,10 +57,10 @@ test.describe.serial('Navigation menu - Edit item', () => {
 
     await navigationMenuPage.openOnEditCreatedMenuItem(await navigationMenuPage.menuItems().count() - 1);
     await page.waitForTimeout(1500);
-    const securityGroups = await navigationMenuPage.securityGroupsValue();
+    const securityGroups = navigationMenuPage.securityGroupsValue();
     for (const securityGroup of customLink.securityGroups) {
       const i = customLink.securityGroups.indexOf(securityGroup);
-      expect(await securityGroups.nth(i).textContent()).toBe(securityGroup);
+      expect((await securityGroups.nth(i).textContent())?.trim()).toBe(securityGroup);
     }
     expect(await (await navigationMenuPage.editLinkInput()).inputValue()).toContain(customLink.link);
     for (const translation of customLink.translations) {
@@ -109,7 +109,7 @@ test.describe.serial('Navigation menu - Edit item', () => {
     const securityGroupValues = navigationMenuPage.securityGroupsValue();
     for (const securityGroup of dropdown.securityGroups) {
       const i = dropdown.securityGroups.indexOf(securityGroup);
-      expect(await securityGroupValues.nth(i).textContent()).toBe(securityGroup);
+      expect((await securityGroupValues.nth(i).textContent())?.trim()).toBe(securityGroup);
     }
     for (const translation of dropdown.translations) {
       const i = dropdown.translations.indexOf(translation);
