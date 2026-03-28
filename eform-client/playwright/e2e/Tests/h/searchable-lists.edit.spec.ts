@@ -3,7 +3,7 @@ import { LoginPage } from '../../Page objects/Login.page';
 import { Guid } from 'guid-typescript';
 import { SearchableListsPage, SearchableListRowObject } from '../../Page objects/SearchableLists.page';
 
-test.describe('Entity Search', () => {
+test.describe.serial('Entity Search', () => {
   let page;
   let loginPage: LoginPage;
   let searchableLists: SearchableListsPage;

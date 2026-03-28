@@ -34,7 +34,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   public firstEntityItemName(): Locator {
-    return this.page.locator(`.createEntityItemName`);
+    return this.page.locator(`.createEntityItemName`).first();
   }
 
   public createEntitySearchBtn(): Locator {
@@ -58,7 +58,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   public entitySearchCreateSingleItemEditBtn(): Locator {
-    return this.page.locator('.entityItemEditBtn');
+    return this.page.locator('.entityItemEditBtn').first();
   }
 
   public entitySearchCreateItemNameBox(): Locator {
@@ -115,11 +115,11 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   public entitySearchItemEditBtn(): Locator {
-    return this.page.locator(`.entityItemEditBtn`);
+    return this.page.locator(`.entityItemEditBtn`).first();
   }
 
   public entitySearchItemDeleteBtn(): Locator {
-    return this.page.locator(`.entityItemDeleteBtn`);
+    return this.page.locator(`.entityItemDeleteBtn`).first();
   }
 
   public entitySearchEditItemNameBox(): Locator {

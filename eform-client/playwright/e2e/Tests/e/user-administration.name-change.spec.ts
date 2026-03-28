@@ -7,7 +7,7 @@ import {
 } from '../../Page objects/UserAdministration.page';
 import { generateRandmString } from '../../helper-functions';
 
-test.describe('User administration settings', () => {
+test.describe.serial('User administration settings', () => {
   let page;
   let loginPage: LoginPage;
   let myEformsPage: MyEformsPage;
@@ -19,7 +19,7 @@ test.describe('User administration settings', () => {
     loginPage = new LoginPage(page);
     myEformsPage = new MyEformsPage(page);
     userAdministration = new UserAdministration(page);
-    await loginPage.open('/');
+    await loginPage.open('/auth');
     await loginPage.login();
   });
 
