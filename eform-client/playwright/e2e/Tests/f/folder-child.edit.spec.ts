@@ -61,8 +61,10 @@ test.describe.serial('Create folder', () => {
   test('Should change description', async () => {
     const foldersPage = new FoldersPage(page);
     await page.waitForTimeout(500);
+    let folder = await foldersPage.getFolderByName(nameFolder);
+    await folder.expandChildren();
     const childFolder = await foldersPage.getFolderFromTree(
-      await foldersPage.getFolderRowNumByName(newName),
+      await foldersPage.getFolderRowNumByName(nameFolder),
       1
     );
     await childFolder.editFolderChild(null, newDescription);
@@ -77,9 +79,11 @@ test.describe.serial('Create folder', () => {
   test('Should not change first name and description if cancel was clicked', async () => {
     const foldersPage = new FoldersPage(page);
     await page.waitForTimeout(500);
+    let parentFolder = await foldersPage.getFolderByName(nameFolder);
+    await parentFolder.expandChildren();
     const rowParentsCountBeforeEditing = await foldersPage.rowNumParents();
     const childFolderBeforeEdit = await foldersPage.getFolderFromTree(
-      await foldersPage.getFolderRowNumByName(newName),
+      await foldersPage.getFolderRowNumByName(nameFolder),
       1
     );
     const childFolderBeforeEditDescription = (await childFolderBeforeEdit
