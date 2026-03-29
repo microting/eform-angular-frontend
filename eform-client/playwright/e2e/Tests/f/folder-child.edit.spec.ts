@@ -42,14 +42,14 @@ test.describe.serial('Create folder', () => {
   test('Should change name', async () => {
     const foldersPage = new FoldersPage(page);
     await page.waitForTimeout(500);
-    const folder = await foldersPage.getFolderByName(nameFolder);
+    let folder = await foldersPage.getFolderByName(nameFolder);
     await folder.expandChildren();
     const childFolderBeforeEdit = await foldersPage.getFolderFromTree(
       await foldersPage.getFolderRowNumByName(nameFolderChildren),
       1
     );
     await childFolderBeforeEdit.editFolderChild(newName, null);
-    const folder = await foldersPage.getFolderByName(nameFolder);
+    folder = await foldersPage.getFolderByName(nameFolder);
     await folder.expandChildren();
     const childFolderAfterEdit = await foldersPage.getFolderFromTree(
       await foldersPage.getFolderRowNumByName(newName),
