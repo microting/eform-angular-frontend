@@ -68,7 +68,7 @@ test.describe.serial('Create folder', () => {
       1
     );
     await childFolder.editFolderChild(null, newDescription);
-    const folder = await foldersPage.getFolderByName(nameFolder);
+    folder = await foldersPage.getFolderByName(nameFolder);
     await folder.expandChildren();
     const descriptionAfterEdit = await childFolder.getDescription();
     expect(
