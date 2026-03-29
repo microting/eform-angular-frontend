@@ -7,7 +7,7 @@ export class UserAdministration extends PageWithNavbarPage {
   }
 
   public async rowNum(): Promise<number> {
-    return await this.page.locator('.userAdministrationId').count();
+    return await this.page.locator('[id^="userAdministrationEmail-"]').count();
   }
 
   public userInfoTable(): Locator {
@@ -129,6 +129,12 @@ export class UserAdministration extends PageWithNavbarPage {
       await this.createAdministrationUserBtn().click();
     }
     await this.createNewUserBtn().waitFor({ state: 'visible', timeout: 40000 });
+    await this.page.waitForTimeout(500);
+    await this.page.goto('/');
+    await this.page.waitForTimeout(500);
+    await this.Navbar.goToUserAdministration();
+    await this.createNewUserBtn().waitFor({ state: 'visible', timeout: 40000 });
+    await this.page.waitForTimeout(500);
   }
 
   public async createNewUser(user: UserAdministrationObject, clickCancel = false) {
