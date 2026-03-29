@@ -101,8 +101,16 @@ test.describe.serial('Create folder', () => {
 
   test('Should delete folder 2', async () => {
     const foldersPage = new FoldersPage(page);
+    // Delete child first, then parent
+    let folder = await foldersPage.getFolderByName(nameFolder);
+    await folder.expandChildren();
+    const child = await foldersPage.getFolderFromTree(
+      await foldersPage.getFolderRowNumByName(nameFolder), 1
+    );
+    await child.delete();
+    await page.waitForTimeout(2000);
     const rowCountBeforeDelete = await foldersPage.rowNum();
-    const folder = await foldersPage.getFolder(1);
+    folder = await foldersPage.getFolderByName(nameFolder);
     await folder.delete();
     await expect.poll(async () => await foldersPage.rowNum(), { timeout: 10000 }).toBe(rowCountBeforeDelete - 1);
   });

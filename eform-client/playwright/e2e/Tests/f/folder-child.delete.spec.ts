@@ -32,11 +32,12 @@ test.describe.serial('Delete folder', () => {
 
   test('Delete folder child with name and description', async () => {
     const foldersPage = new FoldersPage(page);
-    const rowCountBeforeDelete = await foldersPage.rowChildrenNum();
+    const childrenLocator = page.locator('app-eform-tree-view-picker > mat-tree > mat-tree-node.children');
+    const rowCountBeforeDelete = await childrenLocator.count();
     await (await foldersPage
       .getFolderFromTree(await foldersPage.getFolderRowNumByName(childName), 1))
       .delete();
-    await expect.poll(async () => await foldersPage.rowChildrenNum(), { timeout: 10000 }).toBe(rowCountBeforeDelete - 1);
+    await expect.poll(async () => await childrenLocator.count(), { timeout: 10000 }).toBe(rowCountBeforeDelete - 1);
   });
 
   test('If cancel was clicked', async () => {
