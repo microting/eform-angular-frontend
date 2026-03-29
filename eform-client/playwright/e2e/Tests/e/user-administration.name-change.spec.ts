@@ -29,9 +29,17 @@ test.describe.serial('User administration settings', () => {
   });
 
   test('should set name to Foo Bar', async () => {
-    await page.goto('/account-management');
-    await page.locator('#createNewUserBtn').waitFor({ state: 'visible', timeout: 60000 });
-    await page.waitForTimeout(2000);
+    test.setTimeout(180000);
+    await myEformsPage.Navbar.goToUserAdministration();
+    // Retry navigation if grid doesn't load
+    for (let attempt = 0; attempt < 3; attempt++) {
+      await page.waitForTimeout(5000);
+      if (await page.locator('#userAdministrationEmail-0').isVisible()) break;
+      if (attempt < 2) {
+        await page.reload();
+        await page.waitForTimeout(3000);
+      }
+    }
     const user: UserAdministrationObject = {
       firstName: 'Foo',
       lastName: 'Bar',

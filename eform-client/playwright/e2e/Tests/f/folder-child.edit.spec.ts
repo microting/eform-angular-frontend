@@ -104,7 +104,6 @@ test.describe.serial('Create folder', () => {
     const rowCountBeforeDelete = await foldersPage.rowNum();
     const folder = await foldersPage.getFolder(1);
     await folder.delete();
-    const rowCountAfterDelete = await foldersPage.rowNum();
-    expect(rowCountBeforeDelete - 1).toBe(rowCountAfterDelete);
+    await expect.poll(async () => await foldersPage.rowNum(), { timeout: 10000 }).toBe(rowCountBeforeDelete - 1);
   });
 });
