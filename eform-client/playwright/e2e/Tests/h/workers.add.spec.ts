@@ -33,8 +33,9 @@ test.describe('Workers page ', () => {
   test('should add new Worker with first and last name', async () => {
     const name = 'Monty';
     const surName = 'Python';
+    const rowCountBefore = await workers.rowNum();
     await workers.createNewWorker(name, surName);
-    await page.waitForTimeout(2000);
+    await expect.poll(async () => await workers.rowNum(), { timeout: 10000 }).toBe(rowCountBefore + 1);
     const newWorker = await workers.getWorker(await workers.rowNum());
     expect(newWorker.firstName).toBe(name);
     expect(newWorker.lastName).toBe(surName);
@@ -42,8 +43,9 @@ test.describe('Workers page ', () => {
   test('should add new Worker with special character', async () => {
     const name = 'René';
     const surName = 'Éhl©µ';
+    const rowCountBefore = await workers.rowNum();
     await workers.createNewWorker(name, surName);
-    await page.waitForTimeout(2000);
+    await expect.poll(async () => await workers.rowNum(), { timeout: 10000 }).toBe(rowCountBefore + 1);
     const newWorker = await workers.getWorker(await workers.rowNum());
     expect(newWorker.firstName).toBe(name);
     expect(newWorker.lastName).toBe(surName);
