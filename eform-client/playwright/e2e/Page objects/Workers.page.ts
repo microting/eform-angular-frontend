@@ -65,6 +65,7 @@ export class Workers extends PageWithNavbarPage {
     await this.lastNameBox().pressSequentially(lastName);
     await this.page.waitForTimeout(1000);
     await this.workerSaveBtn().click();
+    await this.workerCreateBtn().waitFor({ state: 'visible', timeout: 40000 });
   }
 
   public async editWorker(worker: WorkersRowObject, firstName: string, lastName: string) {
@@ -81,6 +82,7 @@ export class Workers extends PageWithNavbarPage {
     await this.lastNameEditBox().pressSequentially(lastName);
     await this.page.waitForTimeout(2000);
     await this.workerEditSaveBtn().click();
+    await this.workerCreateBtn().waitFor({ state: 'visible', timeout: 40000 });
   }
 }
 

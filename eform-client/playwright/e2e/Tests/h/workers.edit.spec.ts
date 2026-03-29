@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../Page objects/Login.page';
 import { MyEformsPage } from '../../Page objects/MyEforms.page';
 import { Workers } from '../../Page objects/Workers.page';
+import { DeviceUsersPage } from '../../Page objects/DeviceUsers.page';
 
 test.describe('Workers page should edit Worker', () => {
   let page;
@@ -14,10 +15,18 @@ test.describe('Workers page should edit Worker', () => {
     loginPage = new LoginPage(page);
     myEformsPage = new MyEformsPage(page);
     workers = new Workers(page);
+    const deviceUsersPage = new DeviceUsersPage(page);
     await loginPage.open('/');
     await loginPage.login();
+    // Create a device user so a site is available for worker creation
+    await myEformsPage.Navbar.goToDeviceUsersPage();
+    await deviceUsersPage.createNewDeviceUser('EditTest', 'User');
+    await page.waitForTimeout(3000);
+    // Create a worker to edit
     await myEformsPage.Navbar.goToWorkers();
-    await page.waitForTimeout(8000);
+    await page.locator('#workerCreateBtn').waitFor({ state: 'visible', timeout: 40000 });
+    await workers.createNewWorker('InitialFirst', 'InitialLast');
+    await page.waitForTimeout(2000);
   });
 
   test.afterAll(async () => {
