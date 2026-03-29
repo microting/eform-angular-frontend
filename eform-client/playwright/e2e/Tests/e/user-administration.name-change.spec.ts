@@ -71,9 +71,7 @@ test.describe.serial('User administration settings', () => {
     const countUserBeforeCreate = await userAdministration.rowNum();
     await page.waitForTimeout(500);
     await userAdministration.createNewUser(user);
-    expect(countUserBeforeCreate + 1).toBe(
-      await userAdministration.rowNum()
-    );
+    await expect.poll(async () => await userAdministration.rowNum(), { timeout: 40000 }).toBe(countUserBeforeCreate + 1);
   });
   test('should change new user role', async () => {
     let userObject = await userAdministration.getUserByNumber(2);
@@ -101,8 +99,6 @@ test.describe.serial('User administration settings', () => {
   test('should delete created user', async () => {
     const countUserBeforeDelete = await userAdministration.rowNum();
     await (await userAdministration.getUserByNumber(2)).delete();
-    expect(countUserBeforeDelete - 1).toBe(
-      await userAdministration.rowNum()
-    );
+    await expect.poll(async () => await userAdministration.rowNum(), { timeout: 40000 }).toBe(countUserBeforeDelete - 1);
   });
 });
