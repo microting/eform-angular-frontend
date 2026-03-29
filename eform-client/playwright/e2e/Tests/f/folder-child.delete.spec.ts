@@ -50,24 +50,27 @@ test.describe.serial('Delete folder', () => {
     await (await foldersPage
       .getFolderByName(nameFolder))
       .createChild(newChildName, childDescription);
-    const rowCountBeforeDelete = await foldersPage.rowChildrenNum();
     const folder = await foldersPage.getFolderByName(nameFolder);
     await folder.expandChildren();
+    const childrenLocator = page.locator('app-eform-tree-view-picker > mat-tree > mat-tree-node.children');
+    const rowCountBeforeDelete = await childrenLocator.count();
     await (await foldersPage
       .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1))
       .delete(true);
-    const rowCountAfterDelete = await foldersPage.rowChildrenNum();
+    const rowCountAfterDelete = await childrenLocator.count();
     expect(rowCountBeforeDelete).toBe(rowCountAfterDelete);
   });
 
   test('Should delete folder 1', async () => {
     const foldersPage = new FoldersPage(page);
-    const rowCountBeforeDelete = await foldersPage.rowChildrenNum();
+    const folder = await foldersPage.getFolderByName(nameFolder);
+    await folder.expandChildren();
+    const childrenLocator = page.locator('app-eform-tree-view-picker > mat-tree > mat-tree-node.children');
+    const rowCountBeforeDelete = await childrenLocator.count();
     await (await foldersPage
       .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1))
       .delete();
-    const rowCountAfterDelete = await foldersPage.rowChildrenNum();
-    expect(rowCountBeforeDelete - 1).toBe(rowCountAfterDelete);
+    await expect.poll(async () => await childrenLocator.count(), { timeout: 10000 }).toBe(rowCountBeforeDelete - 1);
   });
 
   test('Should delete folder 2', async () => {
