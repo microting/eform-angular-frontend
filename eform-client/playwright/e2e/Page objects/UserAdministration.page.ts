@@ -214,6 +214,7 @@ export class UserAdministrationRowObject {
       await this.page.keyboard.press('Enter');
     }
     if (user.password) {
+      await this.userAdministration.editPassword().waitFor({ state: 'visible', timeout: 40000 });
       await this.userAdministration.editPassword().clear();
       await this.page.waitForTimeout(500);
       await this.userAdministration.editPassword().fill(user.password);
