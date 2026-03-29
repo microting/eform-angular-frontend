@@ -30,9 +30,9 @@ test.describe.serial('User administration settings', () => {
 
   test('should set name to Foo Bar', async () => {
     await myEformsPage.Navbar.goToUserAdministration();
+    await page.waitForURL('**/account-management', { timeout: 60000 });
     await page.locator('#createNewUserBtn').waitFor({ state: 'visible', timeout: 60000 });
-    // Wait for grid data to load
-    await page.locator('#userAdministrationEmail-0').waitFor({ state: 'visible', timeout: 60000 });
+    await page.waitForTimeout(2000);
     const user: UserAdministrationObject = {
       firstName: 'Foo',
       lastName: 'Bar',

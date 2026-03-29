@@ -76,7 +76,7 @@ test.describe.serial('Main page', () => {
         (user) => user.siteId === +(siteIdText || '0')
       );
       if (index !== -1) {
-        const checkbox = page.locator(`#mat-checkbox-${index}`).locator('input[type="checkbox"]');
+        const checkbox = page.locator(`#checkbox${users[index].siteId}`).locator('input[type="checkbox"]');
         expect(await checkbox.isChecked()).toBe(true);
       }
     }

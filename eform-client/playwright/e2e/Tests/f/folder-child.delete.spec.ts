@@ -36,6 +36,7 @@ test.describe.serial('Delete folder', () => {
     await (await foldersPage
       .getFolderFromTree(await foldersPage.getFolderRowNumByName(childName), 1))
       .delete();
+    await page.waitForTimeout(1000);
     const rowCountAfterDelete = await foldersPage.rowChildrenNum();
     expect(rowCountAfterDelete).toBe(rowCountBeforeDelete - 1);
   });

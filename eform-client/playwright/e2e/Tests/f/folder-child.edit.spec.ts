@@ -42,6 +42,8 @@ test.describe.serial('Create folder', () => {
   test('Should change name', async () => {
     const foldersPage = new FoldersPage(page);
     await page.waitForTimeout(500);
+    const folder = await foldersPage.getFolderByName(nameFolder);
+    await folder.expandChildren();
     const childFolderBeforeEdit = await foldersPage.getFolderFromTree(
       await foldersPage.getFolderRowNumByName(nameFolderChildren),
       1
