@@ -43,7 +43,6 @@ test.describe.serial('User administration settings', () => {
     const user: UserAdministrationObject = {
       firstName: 'Foo',
       lastName: 'Bar',
-      password: 'secretpassword',
     };
     let userObject = await userAdministration.getUserByNumber();
     await userObject.edit(user);
@@ -54,7 +53,6 @@ test.describe.serial('User administration settings', () => {
     const user: UserAdministrationObject = {
       firstName: 'John',
       lastName: 'Smith',
-      password: 'secretpassword',
     };
     let userObject = await userAdministration.getUserByNumber();
     await userObject.edit(user);
@@ -81,7 +79,6 @@ test.describe.serial('User administration settings', () => {
     let userObject = await userAdministration.getUserByNumber(2);
     const user: UserAdministrationObject = {
       role: 'Admin',
-      password: randomPassword,
     };
     await userObject.edit(user);
     userObject = await userAdministration.getUserByNumber(2);
@@ -94,7 +91,6 @@ test.describe.serial('User administration settings', () => {
     const user: UserAdministrationObject = {
       role: 'User',
       group: 'eForm users',
-      password: randomPassword,
     };
     await userObject.edit(user);
     userObject = await userAdministration.getUserByNumber(2);
