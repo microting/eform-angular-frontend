@@ -6934,6 +6934,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wdio/globals@npm:^9.0.0":
+  version: 9.27.0
+  resolution: "@wdio/globals@npm:9.27.0"
+  peerDependencies:
+    expect-webdriverio: ^5.6.5
+    webdriverio: ^9.0.0
+  peerDependenciesMeta:
+    expect-webdriverio:
+      optional: false
+    webdriverio:
+      optional: false
+  checksum: 10c0/95fc7bf7ea4e7196f779cf8fe75f97f7e6eb80673c43d75d9fce33119b00dcb70468244b505a6e71d1e76a527a3ceb06beb99ec47918241784b1ac4adb018d82
+  languageName: node
+  linkType: hard
+
 "@wdio/local-runner@npm:9.22.0":
   version: 9.22.0
   resolution: "@wdio/local-runner@npm:9.22.0"
@@ -10445,6 +10460,7 @@ __metadata:
     "@vitest/coverage-v8": "npm:^4.0.0"
     "@vitest/ui": "npm:^4.0.0"
     "@wdio/cli": "npm:9.20.1"
+    "@wdio/globals": "npm:^9.0.0"
     "@wdio/local-runner": "npm:9.22.0"
     "@wdio/mocha-framework": "npm:9.23.2"
     "@wdio/spec-reporter": "npm:9.20.0"

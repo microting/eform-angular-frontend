@@ -8,6 +8,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
+
     selector: 'app-shared-tag-create',
     templateUrl: './shared-tag-create.component.html',
     styleUrls: ['./shared-tag-create.component.scss'],

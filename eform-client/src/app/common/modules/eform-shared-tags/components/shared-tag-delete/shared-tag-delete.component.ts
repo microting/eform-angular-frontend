@@ -6,6 +6,7 @@ import { MatButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
+
     selector: 'app-shared-tag-delete',
     templateUrl: './shared-tag-delete.component.html',
     styleUrls: ['./shared-tag-delete.component.scss'],

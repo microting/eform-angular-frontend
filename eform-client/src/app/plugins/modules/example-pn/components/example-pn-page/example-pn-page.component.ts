@@ -3,6 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 // import {LocaleService} from 'app/services';
 
 @Component({
+  standalone: false,
   selector: 'app-example-pn-page',
   templateUrl: './example-pn-page.component.html'
 })

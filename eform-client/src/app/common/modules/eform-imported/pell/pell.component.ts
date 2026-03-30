@@ -4,6 +4,7 @@ import * as pell from './pell';
 
 
 @Component({
+  standalone: false,
   selector: 'pell-editor',
   templateUrl: './pell.component.html',
   encapsulation: ViewEncapsulation.None,

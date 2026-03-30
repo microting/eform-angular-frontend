@@ -11,6 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
+
     selector: 'app-shared-tag-edit',
     templateUrl: './shared-tag-edit.component.html',
     styleUrls: ['./shared-tag-edit.component.scss'],
