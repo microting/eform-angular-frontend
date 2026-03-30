@@ -1,9 +1,9 @@
-import BasePage from './Page';
+import { PageWithNavbarPage } from './PageWithNavbar.page';
 import { LoginPage } from './Login.page';
 import { MyEformsPage } from './MyEforms.page';
 import { Page, Locator } from '@playwright/test';
 
-export class PluginPage extends BasePage {
+export class PluginPage extends PageWithNavbarPage {
   constructor(page: Page) {
     super(page);
   }
