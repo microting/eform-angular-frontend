@@ -486,6 +486,10 @@ public class Program
                 webBuilder.ConfigureKestrel(serverOptions =>
                 {
                     serverOptions.Limits.MaxRequestBodySize = 100 * 1024 * 1024;// 100Mb
+                    serverOptions.ConfigureEndpointDefaults(listenOptions =>
+                    {
+                        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2;
+                    });
                 })
                 .UseUrls($"http://0.0.0.0:{port}")
                 // .UseIISIntegration()
