@@ -1,0 +1,60 @@
+<header class="cms-header" [class.sticky]="isMenuSticky">
+  <mat-toolbar color="primary">
+
+    <!-- Logo / site name -->
+    <span class="cms-header-title" *ngIf="menu">{{ menu.name }}</span>
+    <span class="cms-header-title" *ngIf="!menu">eForm</span>
+
+    <span class="spacer"></span>
+
+    <!-- Desktop nav -->
+    <nav class="desktop-nav" *ngIf="(isMobile$ | async) === false">
+      <ng-container *ngFor="let item of menu?.items">
+        <ng-container *ngIf="item.children?.length; else simpleLink">
+          <!-- Item with children → use mat-menu dropdown -->
+          <button mat-button [matMenuTriggerFor]="subMenu">
+            {{ item.title }}
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #subMenu="matMenu">
+            <button mat-menu-item *ngFor="let child of item.children"
+                    (click)="navigateToItem(child)">
+              {{ child.title }}
+            </button>
+          </mat-menu>
+        </ng-container>
+        <ng-template #simpleLink>
+          <button mat-button (click)="navigateToItem(item)">{{ item.title }}</button>
+        </ng-template>
+      </ng-container>
+    </nav>
+
+    <!-- Login button -->
+    <button mat-raised-button (click)="navigateToLogin()" class="login-btn">
+      Login
+    </button>
+
+    <!-- Mobile burger button -->
+    <button mat-icon-button class="burger-btn" *ngIf="isMobile$ | async"
+            (click)="toggleMobileMenu()" aria-label="Menu">
+      <mat-icon>{{ mobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
+
+  </mat-toolbar>
+
+  <!-- Mobile dropdown menu -->
+  <div class="mobile-menu" *ngIf="(isMobile$ | async) && mobileMenuOpen">
+    <mat-nav-list>
+      <ng-container *ngFor="let item of menu?.items">
+        <mat-list-item (click)="navigateToItem(item); closeMobileMenu()">
+          {{ item.title }}
+        </mat-list-item>
+        <ng-container *ngFor="let child of item.children">
+          <mat-list-item class="child-item" (click)="navigateToItem(child); closeMobileMenu()">
+            &nbsp;&nbsp;{{ child.title }}
+          </mat-list-item>
+        </ng-container>
+      </ng-container>
+    </mat-nav-list>
+  </div>
+</header>

@@ -1,21 +1,16 @@
-import { Component, EventEmitter, OnInit, inject } from '@angular/core';
+import {Component, EventEmitter, OnInit, inject} from '@angular/core';
 import {
   CommonDictionaryModel,
   SharedTagModel,
 } from 'src/app/common/models';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
-import { CdkScrollable } from '@angular/cdk/scrolling';
-import { NgIf, NgFor } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
-import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe } from '@ngx-translate/core';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
 
 @Component({
-    selector: 'app-shared-tags',
-    templateUrl: './shared-tags.component.html',
-    styleUrls: ['./shared-tags.component.scss'],
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgIf, MatIcon, NgFor, MatIconButton, MatTooltip, MatDialogActions, TranslatePipe]
+  selector: 'app-shared-tags',
+  templateUrl: './shared-tags.component.html',
+  styleUrls: ['./shared-tags.component.scss'],
+  standalone: false
 })
 export class SharedTagsComponent implements OnInit {
   dialogRef = inject<MatDialogRef<SharedTagsComponent>>(MatDialogRef);
@@ -26,6 +21,20 @@ export class SharedTagsComponent implements OnInit {
   public showEditTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
   public showDeleteTag: EventEmitter<SharedTagModel> = new EventEmitter<SharedTagModel>();
   public showMultipleCreateTag: EventEmitter<void> = new EventEmitter<void>();
+  public tableHeaders: MtxGridColumn[] = [
+    {
+      header: 'Label',
+      field: 'name',
+      sortable: false,
+      width: '250px',
+    },
+    {
+      header: '',
+      field: 'actions',
+      width: '80px',
+    },
+  ];
+
 
   constructor() {
     const availableTags = inject(MAT_DIALOG_DATA) ?? [];

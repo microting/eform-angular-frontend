@@ -61,6 +61,7 @@
 
       <button
         mat-menu-item
+        class="btn-delete-menu"
         id="deleteSiteBtn{{i}}"
         *ngIf="(selectCurrentUserClaimsSitesDelete$ | async) && !row.isLocked"
         (click)="openDeleteModal(row)"

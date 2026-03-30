@@ -38,21 +38,21 @@ class WorkersPage extends PageWithNavbarPage {
 
   cancelCreateBtn() {
     // @ts-ignore
-    return cy.get('#cancelCreateBtn')
+    return cy.get('#workerCancelCreateBtn')
       .should('be.visible')
       .should('be.enabled');
   }
 
   editFirstNameInput() {
     // @ts-ignore
-    return cy.get('#firstNameEdit')
+    return cy.get('#firstName')
       .should('be.visible')
       .should('be.enabled');
   }
 
   editLastNameInput() {
     // @ts-ignore
-    return cy.get('#lastNameEdit')
+    return cy.get('#lastName')
       .should('be.visible')
       .should('be.enabled');
   }
@@ -66,14 +66,14 @@ class WorkersPage extends PageWithNavbarPage {
 
   cancelEditBtn() {
     // @ts-ignore
-    return cy.get('#cancelEditBtn')
+    return cy.get('#workerCancelEditBtn')
       .should('be.visible')
       .should('be.enabled');
   }
 
   saveDeleteBtn() {
     // @ts-ignore
-    return cy.get('#saveDeleteBtn')
+    return cy.get('#deleteWorkerDeleteBtn')
       .should('be.visible')
       .should('be.enabled');
   }
@@ -81,7 +81,7 @@ class WorkersPage extends PageWithNavbarPage {
   // @ts-ignore
   public cancelDeleteBtn(): Cypress.Chainable<JQuery<HTMLElement>> {
     // @ts-ignore
-    return cy.get('#cancelDeleteBtn').should('be.visible').should('be.enabled');
+    return cy.get('#workerCancelDeleteBtn').should('be.visible').should('be.enabled');
   }
 
   // @ts-ignore
@@ -131,14 +131,14 @@ class WorkersPage extends PageWithNavbarPage {
     worker.openRowMenu();
     cy.get(`#workerEditBtn${index}`).should('be.visible').click();
     // @ts-ignore
-    cy.get('#firstNameEdit').should('be.visible');
+    cy.get('#firstName').should('be.visible');
     if (firstName !== '') {
       // @ts-ignore
-      cy.get('#firstNameEdit').click().clear().type(firstName);
+      cy.get('#firstName').click().clear().type(firstName);
     }
     if (lastName !== '') {
       // @ts-ignore
-      cy.get('#lastNameEdit').click().clear().type(lastName);
+      cy.get('#lastName').click().clear().type(lastName);
     }
     cy.wait(500);
     // @ts-ignore
@@ -174,9 +174,9 @@ export class WorkersRowObject {
       // @ts-ignore
       this.lastName = cy.get('#workerLastName').eq(rowNum - 1).invoke('text').catch(() => '');
       // @ts-ignore
-      this.editBtn = cy.get('#workerEditBtn').eq(rowNum - 1);
+      this.editBtn = cy.get('[id^=workerEditBtn]').eq(rowNum - 1);
       // @ts-ignore
-      this.deleteBtn = cy.get('#workerDeleteBtn').eq(rowNum - 1);
+      this.deleteBtn = cy.get('[id^=workerDeleteBtn]').eq(rowNum - 1);
     }
     return this;
   }

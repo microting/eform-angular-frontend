@@ -222,6 +222,7 @@
       <button
         mat-menu-item
         id="delete-eform-btn-{{ i }}"
+        class="btn-delete-menu"
         (click)="openEformDeleteModal(row)"
         *ngIf="
                   checkEformPermissions(

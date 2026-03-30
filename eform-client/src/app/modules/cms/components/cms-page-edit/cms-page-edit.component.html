@@ -1,0 +1,32 @@
+<div style="padding: 16px; max-width: 1200px">
+  <h2>{{ pageId ? 'Edit page' : 'New page' }}</h2>
+
+  <div style="display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap">
+    <mat-form-field appearance="outline" style="flex: 1; min-width: 200px">
+      <mat-label>Title</mat-label>
+      <input id="cmsPageTitle" matInput [(ngModel)]="page.title" (ngModelChange)="onTitleChange()" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="flex: 1; min-width: 200px">
+      <mat-label>Slug (URL identifier)</mat-label>
+      <input matInput [(ngModel)]="page.slug" required>
+    </mat-form-field>
+  </div>
+
+  <div style="display: flex; gap: 24px; margin-bottom: 16px">
+    <mat-slide-toggle id="cmsPageIsLandingPage" [(ngModel)]="page.isLandingPage">Landing page</mat-slide-toggle>
+    <mat-slide-toggle id="cmsPageIsPublished" [(ngModel)]="page.isPublished">Published</mat-slide-toggle>
+  </div>
+
+  <div style="margin-bottom: 16px">
+    <editor
+      [init]="tinymceConfig"
+      [(ngModel)]="page.body">
+    </editor>
+  </div>
+
+  <div style="display: flex; gap: 8px">
+    <button id="cmsPageSaveBtn" mat-raised-button color="primary" (click)="save()">Save</button>
+    <button mat-button (click)="cancel()">Cancel</button>
+  </div>
+</div>

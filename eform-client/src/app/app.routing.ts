@@ -93,7 +93,19 @@ export const routes: Routes = [
             (m) => m.OpenSourceLicensesModule
           ),
       },
+      {
+        path: 'cms',
+        canActivate: [IsAuthGuard],
+        loadChildren: () =>
+          import('./modules/cms/cms.module').then((m) => m.CmsModule),
+      },
     ],
+  },
+  {
+    path: 'landing',
+    component: SimpleLayoutComponent,
+    loadChildren: () =>
+      import('./modules/cms-public/cms-public.module').then((m) => m.CmsPublicModule),
   },
   {
     path: 'auth',

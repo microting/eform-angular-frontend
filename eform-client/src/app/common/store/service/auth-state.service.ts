@@ -14,6 +14,7 @@ import {
   selectCurrentUserLanguageId,
   selectCurrentUserLocale
 } from 'src/app/state/auth/auth.selector';
+import {selectIsCmsEnabled} from 'src/app/state/cms';
 import {TranslateService} from '@ngx-translate/core';
 import {
   connectionStringExistCount,
@@ -193,7 +194,9 @@ export class AuthStateService {
       // console.error('Error in logout: ', e);
     }
     this.updateCurrentUserLocaleAndDarkTheme(userLocale, false); // update locale to default locale and theme
-    this.router.navigate(['/auth']).then();
+    this.authStore.select(selectIsCmsEnabled).pipe(take(1)).subscribe(isCmsEnabled => {
+      this.router.navigate([isCmsEnabled ? '/landing' : '/auth']).then();
+    });
   }
 
   isConnectionStringExist() {

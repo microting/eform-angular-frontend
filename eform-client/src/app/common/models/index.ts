@@ -14,3 +14,4 @@ export * from './tags';
 export * from './plugins-management';
 export * from './common-pagination-state';
 export * from './navigation-menu';
+export * from './cms';

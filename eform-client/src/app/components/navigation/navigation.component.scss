@@ -62,7 +62,7 @@ mat-tree {
 
   }
 
-  mat-nested-tree-node { // styles for nested tree nodes
+  .mat-nested-tree-node { // styles for nested tree nodes
     mat-accordion {
       mat-expansion-panel {
         &:not([class*=mat-elevation-z]) {
@@ -77,10 +77,20 @@ mat-tree {
             color: var(--mdc-theme-on-primary) !important;
             border-radius: var(--rounded-full);
 
+            .mat-expansion-indicator{
+              background: red!important;
+              svg{
+                fill: red!important;
+              }
+            }
+
             a {
               span {
                 color: var(--mdc-theme-on-primary) !important;
               }
+            }
+            .mat-icon{
+              color: var(--mdc-theme-on-primary) !important;
             }
           }
         }

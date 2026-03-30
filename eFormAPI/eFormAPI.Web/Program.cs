@@ -214,6 +214,7 @@ public class Program
                 logger.LogError(e, "Error while migrating db");
             }
 
+
             try
             {
                 var connectionStrings =

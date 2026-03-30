@@ -81,6 +81,7 @@ describe('My eforms', () => {
   afterEach(() => {
     /* ==== Generated with Cypress Studio ==== */
     cy.get('#cancelEditBtn').click();
+    cy.get('#actionMenu').eq(0).click();
     cy.get('#delete-eform-btn-0 > .mat-button-wrapper > .mat-icon').click();
     cy.get('#eFormDeleteDeleteBtn > .mat-button-wrapper').click();
     /* ==== End Cypress Studio ==== */

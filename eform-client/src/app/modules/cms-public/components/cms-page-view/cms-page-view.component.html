@@ -1,0 +1,7 @@
+<ng-container *ngIf="page$ | async as page">
+  <app-cms-header
+    [menu]="page.menu"
+    [isMenuSticky]="(isMenuSticky$ | async) ?? false">
+  </app-cms-header>
+  <div id="cmsPageBody" class="cms-page-body" [innerHTML]="page.body | safeHtml"></div>
+</ng-container>

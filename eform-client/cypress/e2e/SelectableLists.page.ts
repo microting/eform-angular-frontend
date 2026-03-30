@@ -120,8 +120,11 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   // Row and item operations
-  public rowNum() {
-    return cy.get('tbody > tr').its('length');
+  public rowNum(): Cypress.Chainable<number> {
+    return cy.get('tbody').then($tbody => {
+      const rows = $tbody.find('tr');
+      return rows.length;
+    });
   }
 
   public itemsEditPageCount() {
@@ -132,32 +135,38 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return cy.get('.createEntityItemName').its('length');
   }
 
-  public getFirstRowObject() {
+  public getFirstRowObject(): Cypress.Chainable<{id: string, name: string, description: string}> {
     return cy.get('tbody > tr').first().then($row => {
-      const id = $row.find('.id').text();
-      const name = $row.find('.name').text();
-      const description = $row.find('.description').text();
       return {
-        id: id,
-        name: name,
-        description: description,
-        editBtn: cy.get('button.entitySelectEditBtn').first(),
-        deleteBtn: cy.get('button.entitySelectDeleteBtn').first()
+        id: $row.find('.id').text().trim(),
+        name: $row.find('.name').text().trim(),
+        description: $row.find('.description').text().trim(),
       };
     });
   }
 
-  public getLastRowObject() {
+  public clickFirstRowEditBtn() {
+    cy.get('button.entitySelectEditBtn').first().click();
+  }
+
+  public clickFirstRowDeleteBtn() {
+    cy.get('button.entitySelectDeleteBtn').first().click();
+  }
+
+  public clickLastRowEditBtn() {
+    cy.get('button.entitySelectEditBtn').last().click();
+  }
+
+  public clickLastRowDeleteBtn() {
+    cy.get('button.entitySelectDeleteBtn').last().click();
+  }
+
+  public getLastRowObject(): Cypress.Chainable<{id: string, name: string, description: string}> {
     return cy.get('tbody > tr').last().then($row => {
-      const id = $row.find('.id').text();
-      const name = $row.find('.name').text();
-      const description = $row.find('.description').text();
       return {
-        id: id,
-        name: name,
-        description: description,
-        editBtn: cy.get('button.entitySelectEditBtn').last(),
-        deleteBtn: cy.get('button.entitySelectDeleteBtn').last()
+        id: $row.find('.id').text().trim(),
+        name: $row.find('.name').text().trim(),
+        description: $row.find('.description').text().trim(),
       };
     });
   }
@@ -334,11 +343,11 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public cleanup() {
-    cy.get('button.entitySelectDeleteBtn').first().then($btn => {
-      if ($btn.length > 0) {
-        cy.wrap($btn).click();
+    cy.get('body').then($body => {
+      if ($body.find('button.entitySelectDeleteBtn').length > 0) {
+        cy.get('button.entitySelectDeleteBtn').first().click();
         this.entitySelectDeleteDeleteBtn().click();
-        // Note: Tests should intercept DELETE API calls if they need to wait
+        cy.wait(500);
       }
     });
   }

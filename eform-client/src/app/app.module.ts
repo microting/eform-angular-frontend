@@ -65,12 +65,19 @@ import {
   securityReducer,
   usersReducer,
 } from './state';
+import {cmsReducer, CmsEffects} from './state/cms';
+import {CmsService} from './common/services/cms';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { AuthStateService } from './common/store/service/auth-state.service';
 
 // Factory function for APP_INITIALIZER to register icons
 export function registerIconsFactory(iconService: IconService) {
   return () => iconService.register();
+}
+
+export function initLocaleFactory(authStateService: AuthStateService) {
+  return () => authStateService.initLocale();
 }
 
 @NgModule(/* TODO(standalone-migration): clean up removed NgModule class manually. 

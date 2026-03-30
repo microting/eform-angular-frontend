@@ -8,7 +8,7 @@ describe('Selectable Lists - Sort', function () {
     loginPage.login();
     selectableListsPage.goToEntitySelectPage();
     selectableListsPage.entitySelectCreateBtn().should('be.visible', { timeout: 40000 });
-    
+
     // Create dummy selectable lists for sorting tests
     for (let i = 0; i < 3; i++) {
       selectableListsPage.createSelectableList_NoItem(
@@ -44,16 +44,28 @@ describe('Selectable Lists - Sort', function () {
 
   after(() => {
     // Cleanup all created lists
-    selectableListsPage.rowNum().then(count => {
-      // Delete all lists except 'Device users' if it exists
-      for (let i = 0; i < count; i++) {
-        selectableListsPage.getFirstRowObject().then(row => {
-          if (row.name !== 'Device users') {
-            selectableListsPage.deleteList();
-            cy.wait(500);
+    cy.get('body').then($body => {
+      const deleteButtons = $body.find('button.entitySelectDeleteBtn');
+      const count = deleteButtons.length;
+      if (count === 0) return;
+
+      // Chain deletions sequentially
+      const deleteNext = (remaining: number) => {
+        if (remaining <= 0) return;
+        cy.get('body').then($b => {
+          if ($b.find('button.entitySelectDeleteBtn').length > 0) {
+            selectableListsPage.getFirstRowObject().then(row => {
+              if (row.name !== 'Device users') {
+                selectableListsPage.deleteList();
+                cy.wait(500).then(() => deleteNext(remaining - 1));
+              } else {
+                deleteNext(remaining - 1);
+              }
+            });
           }
         });
-      }
+      };
+      deleteNext(count);
     });
   });
 });

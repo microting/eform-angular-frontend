@@ -49,6 +49,14 @@ cypress/videos/
 /blob-report/
 /playwright/.cache/
 
+# Yarn Berry
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # Python
 __pycache__/
 *.py[cod]
