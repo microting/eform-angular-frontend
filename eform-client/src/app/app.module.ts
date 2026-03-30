@@ -80,12 +80,9 @@ export function initLocaleFactory(authStateService: AuthStateService) {
   return () => authStateService.initLocale();
 }
 
-@NgModule(/* TODO(standalone-migration): clean up removed NgModule class manually. 
-{
-    declarations: [
-        // Components
-        AppComponent],
+@NgModule({
     imports: [
+        AppComponent,
         NgxMaterialTimepickerModule,
         NgxMaskDirective, NgxMaskPipe,
         // Libs
@@ -161,10 +158,16 @@ export function initLocaleFactory(authStateService: AuthStateService) {
             useFactory: registerIconsFactory,
             deps: [IconService],
             multi: true
-        }
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initLocaleFactory,
+            deps: [AuthStateService],
+            multi: true,
+        },
     ],
     bootstrap: [AppComponent],
-} */)
+})
 export class AppModule {
   constructor(
     private matIconRegistry: MatIconRegistry,
