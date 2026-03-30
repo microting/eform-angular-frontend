@@ -38,6 +38,9 @@ import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { appMenuReducer, appSettingsReducer, authReducer, casesReducer, deviceUsersReducer, eformReducer, emailRecipientsReducer, entitySearchReducer, entitySelectReducer, pluginsReducer, securityReducer, usersReducer, AppMenuEffects } from './app/state';
+import { cmsReducer, CmsEffects } from './app/state/cms';
+import { AuthStateService } from './app/common/store/service/auth-state.service';
+import { initLocaleFactory } from './app/app.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment as environment_1 } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
@@ -129,10 +132,11 @@ bootstrapApplication(AppComponent, {
             plugins: pluginsReducer,
             security: securityReducer,
             users: usersReducer,
+            cms: cmsReducer,
         }), StoreDevtoolsModule.instrument({
             maxAge: 25, // Retains last 25 states
             logOnly: environment.production, // Restrict extension to log-only mode
-        }), EffectsModule.forRoot(AppMenuEffects), AppRoutingModule, TranslateModule.forRoot(translateConfig), BrowserAnimationsModule, ToastrModule.forRoot({
+        }), EffectsModule.forRoot(AppMenuEffects, CmsEffects), AppRoutingModule, TranslateModule.forRoot(translateConfig), BrowserAnimationsModule, ToastrModule.forRoot({
             autoDismiss: true,
             timeOut: 3000,
             preventDuplicates: true,
@@ -151,6 +155,12 @@ bootstrapApplication(AppComponent, {
             useFactory: registerIconsFactory,
             deps: [IconService],
             multi: true
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initLocaleFactory,
+            deps: [AuthStateService],
+            multi: true,
         },
     ]
 })
