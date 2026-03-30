@@ -435,6 +435,10 @@ Use this section to track overall migration progress:
 - Update this document as tests are migrated
 - Consider grouping related tests for efficient migration
 
+## Next Step: Cypress to Playwright
+
+The Cypress tests have been migrated to Playwright. See [CYPRESS_TO_PLAYWRIGHT_MIGRATION.md](CYPRESS_TO_PLAYWRIGHT_MIGRATION.md) for the complete migration guide, including setup, patterns, and a catalog of 20 pitfalls with solutions.
+
 ## References
 
 - [Cypress Documentation](https://docs.cypress.io/)
