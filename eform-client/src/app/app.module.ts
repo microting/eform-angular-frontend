@@ -104,12 +104,13 @@ export function initLocaleFactory(authStateService: AuthStateService) {
             plugins: pluginsReducer,
             security: securityReducer,
             users: usersReducer,
+            cms: cmsReducer,
         }),
         StoreDevtoolsModule.instrument({
             maxAge: 25, // Retains last 25 states
             logOnly: environment.production, // Restrict extension to log-only mode
         }),
-        EffectsModule.forRoot(AppMenuEffects),
+        EffectsModule.forRoot(AppMenuEffects, CmsEffects),
         AppRoutingModule,
         TranslateModule.forRoot(translateConfig),
         BrowserAnimationsModule,
