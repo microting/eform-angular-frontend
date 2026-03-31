@@ -71,10 +71,15 @@ export class EformsTagsComponent implements OnDestroy, OnChanges {
   onTagUpdate(model: SharedTagModel, dialogRefUpdateTag: MatDialogRef<SharedTagEditComponent>) {
     this.updateTag$ = this.eFormTagService
       .updateTag(model)
-      .subscribe((data) => {
-        if (data && data.success) {
+      .subscribe({
+        next: (data) => {
+          if (data && data.success) {
+            this.tagsChanged.emit();
+          }
           dialogRefUpdateTag.close();
-          this.tagsChanged.emit();
+        },
+        error: () => {
+          dialogRefUpdateTag.close();
         }
       });
   }
@@ -82,10 +87,15 @@ export class EformsTagsComponent implements OnDestroy, OnChanges {
   onTagCreate(model: SharedTagCreateModel, dialogRefUpdateTag: MatDialogRef<SharedTagCreateComponent>) {
     this.createTag$ = this.eFormTagService
       .createTag(model)
-      .subscribe((data) => {
-        if (data && data.success) {
+      .subscribe({
+        next: (data) => {
+          if (data && data.success) {
+            this.tagsChanged.emit();
+          }
           dialogRefUpdateTag.close();
-          this.tagsChanged.emit();
+        },
+        error: () => {
+          dialogRefUpdateTag.close();
         }
       });
   }
@@ -93,10 +103,15 @@ export class EformsTagsComponent implements OnDestroy, OnChanges {
   onTagDelete(model: SharedTagModel, dialogRefUpdateTag: MatDialogRef<SharedTagDeleteComponent>) {
     this.deleteTag$ = this.eFormTagService
       .deleteTag(model.id)
-      .subscribe((data) => {
-        if (data && data.success) {
+      .subscribe({
+        next: (data) => {
+          if (data && data.success) {
+            this.tagsChanged.emit();
+          }
           dialogRefUpdateTag.close();
-          this.tagsChanged.emit();
+        },
+        error: () => {
+          dialogRefUpdateTag.close();
         }
       });
   }

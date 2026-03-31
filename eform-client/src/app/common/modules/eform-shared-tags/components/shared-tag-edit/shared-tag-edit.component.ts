@@ -31,6 +31,7 @@ export class SharedTagEditComponent implements OnDestroy {
 
   updateItem() {
     this.updatedTag.emit(this.tagModel);
+    this.dialogRef.close();
   }
 
   cancelEdit() {

@@ -20,6 +20,7 @@ export class SharedTagDeleteComponent {
 
   deleteTag() {
     this.deletedTag.emit(this.tagModel);
+    this.dialogRef.close();
   }
 
   cancelDelete() {
