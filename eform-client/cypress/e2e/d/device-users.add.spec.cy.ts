@@ -127,7 +127,7 @@ describe('Device users page - Should not add new device user', function () {
       if ($el.text() === nameDeviceUser) {
         cy.intercept('DELETE', '**/api/device-users/delete/*').as('deleteUser');
         cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');
-        cy.get('#deleteDeviceUserBtn').eq(index).click();
+        cy.get(`#deleteDeviceUserBtn${index}`).click();
         cy.wait(500);
         cy.get('#saveDeleteBtn').should('be.visible').click();
         cy.wait('@deleteUser', { timeout: 30000 });

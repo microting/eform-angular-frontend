@@ -187,8 +187,8 @@ export class DeviceUsersRowObject {
       try {
         this.lastName = await $(`#deviceUserLastName-${i}`).getText();
       } catch (e) {}
-      this.editBtn = (await $$('#editDeviceUserBtn'))[i];
-      this.deleteBtn = (await $$('#deleteDeviceUserBtn'))[i];
+      this.editBtn = await $(`#editDeviceUserBtn${i}`);
+      this.deleteBtn = await $(`#deleteDeviceUserBtn${i}`);
     }
     return this;
   }

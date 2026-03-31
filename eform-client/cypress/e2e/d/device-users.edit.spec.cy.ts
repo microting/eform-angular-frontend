@@ -36,7 +36,7 @@ describe('Device users page - Edit device user', function () {
       cy.get('[id^="deviceUserLastName-"]').last().invoke('text').then((oldLastName) => {
 
         // Click edit button on last row
-        cy.get('#editDeviceUserBtn').last().should('be.visible').click();
+        cy.get('[id^="editDeviceUserBtn"]').last().should('be.visible').click();
         cy.wait(500);
         cy.get('#firstName').should('be.visible');
 
@@ -66,7 +66,7 @@ describe('Device users page - Edit device user', function () {
     cy.get('[id^="deviceUserFirstName-"]').last().invoke('text').then((oldFirstName) => {
 
       // Click edit button on last row
-      cy.get('#editDeviceUserBtn').last().should('be.visible').click();
+      cy.get('[id^="editDeviceUserBtn"]').last().should('be.visible').click();
       cy.wait(500);
       cy.get('#firstName').should('be.visible');
 
@@ -93,7 +93,7 @@ describe('Device users page - Edit device user', function () {
     cy.get('[id^="deviceUserFirstName-"]').should('be.visible');
 
     // Click edit button on last row
-    cy.get('#editDeviceUserBtn').last().should('be.visible').click();
+    cy.get('[id^="editDeviceUserBtn"]').last().should('be.visible').click();
     cy.wait(500);
     cy.get('#firstName').should('be.visible');
 
@@ -126,7 +126,7 @@ describe('Device users page - Edit device user', function () {
         cy.get('[id^="deviceUserLastName-"]').last().invoke('text').then((oldLastName) => {
 
           // Click edit button on last row
-          cy.get('#editDeviceUserBtn').last().should('be.visible').click();
+          cy.get('[id^="editDeviceUserBtn"]').last().should('be.visible').click();
           cy.wait(500);
           cy.get('#firstName').should('be.visible');
 

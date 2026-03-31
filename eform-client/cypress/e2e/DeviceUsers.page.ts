@@ -201,9 +201,9 @@ export class DeviceUsersRowObject {
       // @ts-ignore
       this.lastName = cy.get(`#deviceUserLastName-${i}`).invoke('text').catch(() => '');
       // @ts-ignore
-      this.editBtn = cy.get('#editDeviceUserBtn').eq(i);
+      this.editBtn = cy.get(`#editDeviceUserBtn${i}`);
       // @ts-ignore
-      this.deleteBtn = cy.get('#deleteDeviceUserBtn').eq(i);
+      this.deleteBtn = cy.get(`#deleteDeviceUserBtn${i}`);
     }
     return this;
   }
