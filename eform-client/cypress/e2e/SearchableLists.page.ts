@@ -160,7 +160,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public getFirstRowObject(): Cypress.Chainable<{ name: string }> {
     return cy.get('tbody > tr').first().then($row => {
-      const name = $row.find('#entitySearchName').text();
+      const name = $row.find('[id^="entitySearchName-"]').text();
       return { name };
     });
   }

@@ -64,8 +64,8 @@ describe('Workers page - Add new worker', function () {
         ).to.equal(rowCountBeforeCreation + 1);
 
         // Verify the last worker has correct data
-        cy.get('#workerFirstName').last().should('have.text', firstName);
-        cy.get('#workerLastName').last().should('have.text', lastName);
+        cy.get('[id^="workerFirstName-"]').last().should('have.text', firstName);
+        cy.get('[id^="workerLastName-"]').last().should('have.text', lastName);
       });
     });
   });
@@ -103,8 +103,8 @@ describe('Workers page - Add new worker', function () {
         ).to.equal(rowCountBeforeCreation + 1);
 
         // Verify the last worker has correct data
-        cy.get('#workerFirstName').last().should('have.text', firstName);
-        cy.get('#workerLastName').last().should('have.text', lastName);
+        cy.get('[id^="workerFirstName-"]').last().should('have.text', firstName);
+        cy.get('[id^="workerLastName-"]').last().should('have.text', lastName);
       });
     });
   });
@@ -135,7 +135,7 @@ describe('Workers page - Add new worker', function () {
     deviceUsersPage.Navbar.goToDeviceUsersPage();
     cy.get('#newDeviceUserBtn').should('be.visible');
     
-    cy.get('#deviceUserFirstName').each(($el, index) => {
+    cy.get('[id^="deviceUserFirstName-"]').each(($el, index) => {
       if ($el.text() === deviceUserFirstName) {
         cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
         cy.get(`#action-items-${index} #actionMenu`).should('be.visible').click();

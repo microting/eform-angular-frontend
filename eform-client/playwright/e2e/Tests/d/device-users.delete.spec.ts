@@ -25,14 +25,14 @@ test.describe('Device users page', () => {
 
   test('should not delete if cancel was clicked', async () => {
     const rowNumBeforeDelete = await deviceUsersPage.rowNum();
-    await page.locator('#deviceUserId').waitFor({ state: 'visible', timeout: 40000 });
+    await page.locator('#deviceUserId-0').waitFor({ state: 'visible', timeout: 40000 });
     const lastDeviceUser = await deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
     await lastDeviceUser.openRowMenu();
     const index = lastDeviceUser.index - 1;
     const deleteBtn = page.locator(`#deleteDeviceUserBtn${index}`);
     await deleteBtn.waitFor({ state: 'visible', timeout: 5000 });
     await deleteBtn.click();
-    await (await deviceUsersPage.cancelDeleteBtn()).click();
+    await deviceUsersPage.cancelDeleteBtn().click();
     await myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumAfterCancelDelete = await deviceUsersPage.rowNum();
     expect(rowNumBeforeDelete).toBe(rowNumAfterCancelDelete);
@@ -41,14 +41,14 @@ test.describe('Device users page', () => {
   test('should delete user', async () => {
     await myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumBeforeDelete = await deviceUsersPage.rowNum();
-    await page.locator('#deviceUserId').waitFor({ state: 'visible', timeout: 40000 });
+    await page.locator('#deviceUserId-0').waitFor({ state: 'visible', timeout: 40000 });
     const lastDeviceUser = await deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
     await lastDeviceUser.openRowMenu();
     const index = lastDeviceUser.index - 1;
     const deleteBtn = page.locator(`#deleteDeviceUserBtn${index}`);
     await deleteBtn.waitFor({ state: 'visible', timeout: 5000 });
     await deleteBtn.click();
-    await (await deviceUsersPage.saveDeleteBtn()).click();
+    await deviceUsersPage.saveDeleteBtn().click();
     await myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumAfterDelete = await deviceUsersPage.rowNum();
     expect(rowNumBeforeDelete).toBe(rowNumAfterDelete + 1);

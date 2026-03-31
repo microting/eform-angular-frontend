@@ -29,11 +29,11 @@ describe('Device users page - Edit device user', function () {
     cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
     const newName = Guid.create().toString();
 
-    cy.get('#deviceUserFirstName').should('be.visible');
+    cy.get('[id^="deviceUserFirstName-"]').should('be.visible');
 
     // Get last device user data before edit
-    cy.get('#deviceUserFirstName').last().invoke('text').then((oldFirstName) => {
-      cy.get('#deviceUserLastName').last().invoke('text').then((oldLastName) => {
+    cy.get('[id^="deviceUserFirstName-"]').last().invoke('text').then((oldFirstName) => {
+      cy.get('[id^="deviceUserLastName-"]').last().invoke('text').then((oldLastName) => {
 
         // Click edit button on last row
         cy.get('#editDeviceUserBtn').last().should('be.visible').click();
@@ -51,8 +51,8 @@ describe('Device users page - Edit device user', function () {
         cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
 
         // Verify changes
-        cy.get('#deviceUserFirstName').last().should('have.text', newName);
-        cy.get('#deviceUserLastName').last().should('have.text', oldLastName);
+        cy.get('[id^="deviceUserFirstName-"]').last().should('have.text', newName);
+        cy.get('[id^="deviceUserLastName-"]').last().should('have.text', oldLastName);
       });
     });
   });
@@ -60,10 +60,10 @@ describe('Device users page - Edit device user', function () {
   it('should edit device user\'s last name', () => {
     const newSurname = Guid.create().toString();
 
-    cy.get('#deviceUserFirstName').should('be.visible');
+    cy.get('[id^="deviceUserFirstName-"]').should('be.visible');
 
     // Get last device user data before edit
-    cy.get('#deviceUserFirstName').last().invoke('text').then((oldFirstName) => {
+    cy.get('[id^="deviceUserFirstName-"]').last().invoke('text').then((oldFirstName) => {
 
       // Click edit button on last row
       cy.get('#editDeviceUserBtn').last().should('be.visible').click();
@@ -81,8 +81,8 @@ describe('Device users page - Edit device user', function () {
       cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
 
       // Verify changes
-      cy.get('#deviceUserFirstName').last().should('have.text', oldFirstName);
-      cy.get('#deviceUserLastName').last().should('have.text', newSurname);
+      cy.get('[id^="deviceUserFirstName-"]').last().should('have.text', oldFirstName);
+      cy.get('[id^="deviceUserLastName-"]').last().should('have.text', newSurname);
     });
   });
 
@@ -90,7 +90,7 @@ describe('Device users page - Edit device user', function () {
     const newName = Guid.create().toString();
     const newSurname = Guid.create().toString();
 
-    cy.get('#deviceUserFirstName').should('be.visible');
+    cy.get('[id^="deviceUserFirstName-"]').should('be.visible');
 
     // Click edit button on last row
     cy.get('#editDeviceUserBtn').last().should('be.visible').click();
@@ -109,8 +109,8 @@ describe('Device users page - Edit device user', function () {
     cy.get('#newDeviceUserBtn', { timeout: 10000 }).should('be.visible');
 
     // Verify changes
-    cy.get('#deviceUserFirstName').last().should('have.text', newName);
-    cy.get('#deviceUserLastName').last().should('have.text', newSurname);
+    cy.get('[id^="deviceUserFirstName-"]').last().should('have.text', newName);
+    cy.get('[id^="deviceUserLastName-"]').last().should('have.text', newSurname);
   });
 
   it('should not change first name and last name if cancel was clicked', () => {
@@ -122,8 +122,8 @@ describe('Device users page - Edit device user', function () {
 
     // Get count and data before edit
     deviceUsersPage.rowNum().then((rowNumBeforeEdit) => {
-      cy.get('#deviceUserFirstName').last().invoke('text').then((oldFirstName) => {
-        cy.get('#deviceUserLastName').last().invoke('text').then((oldLastName) => {
+      cy.get('[id^="deviceUserFirstName-"]').last().invoke('text').then((oldFirstName) => {
+        cy.get('[id^="deviceUserLastName-"]').last().invoke('text').then((oldLastName) => {
 
           // Click edit button on last row
           cy.get('#editDeviceUserBtn').last().should('be.visible').click();
@@ -141,8 +141,8 @@ describe('Device users page - Edit device user', function () {
             expect(rowNumBeforeEdit).to.equal(rowNumAfterEdit);
           });
 
-          cy.get('#deviceUserFirstName').last().should('have.text', oldFirstName);
-          cy.get('#deviceUserLastName').last().should('have.text', oldLastName);
+          cy.get('[id^="deviceUserFirstName-"]').last().should('have.text', oldFirstName);
+          cy.get('[id^="deviceUserLastName-"]').last().should('have.text', oldLastName);
         });
       });
     });

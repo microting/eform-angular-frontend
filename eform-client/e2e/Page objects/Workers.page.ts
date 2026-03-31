@@ -80,9 +80,9 @@ export default workers;
 export class WorkersRowObject {
   constructor(rowNumber) {
     this.index = rowNumber + 1;
-    this.siteId = +$$('#workerUID')[rowNumber + 1].getText();
-    this.firstName = $$('#workerFirstName')[rowNumber + 1].getText();
-    this.lastName = $$('#workerLastName')[rowNumber + 1].getText();
+    this.siteId = +$(`#workerUID-${rowNumber + 1}`).getText();
+    this.firstName = $(`#workerFirstName-${rowNumber + 1}`).getText();
+    this.lastName = $(`#workerLastName-${rowNumber + 1}`).getText();
     this.editBtn = $$('#workerEditBtn')[rowNumber + 1];
     this.deleteBtn = $$('#workerDeleteBtn')[rowNumber + 1];
   }

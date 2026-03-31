@@ -162,16 +162,17 @@ export class DeviceUsersRowObject {
 
   async getRow(rowNum: number) {
     this.index = rowNum;
-    if ((await this.page.locator('#deviceUserId').count()) >= rowNum) {
-      this.siteId = +(await this.page.locator('#deviceUserId').nth(rowNum - 1).textContent() || '0');
+    const i = rowNum - 1;
+    if ((await this.page.locator(`#deviceUserId-${i}`).count()) >= 1) {
+      this.siteId = +(await this.page.locator(`#deviceUserId-${i}`).textContent() || '0');
       try {
-        this.firstName = await this.page.locator('#deviceUserFirstName').nth(rowNum - 1).textContent() || '';
+        this.firstName = await this.page.locator(`#deviceUserFirstName-${i}`).textContent() || '';
       } catch (e) {}
       try {
-        this.lastName = await this.page.locator('#deviceUserLastName').nth(rowNum - 1).textContent() || '';
+        this.lastName = await this.page.locator(`#deviceUserLastName-${i}`).textContent() || '';
       } catch (e) {}
-      this.editBtn = this.page.locator('#editDeviceUserBtn').nth(rowNum - 1);
-      this.deleteBtn = this.page.locator('#deleteDeviceUserBtn').nth(rowNum - 1);
+      this.editBtn = this.page.locator('#editDeviceUserBtn').nth(i);
+      this.deleteBtn = this.page.locator('#deleteDeviceUserBtn').nth(i);
     }
     return this;
   }

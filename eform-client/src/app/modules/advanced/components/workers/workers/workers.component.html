@@ -22,14 +22,14 @@
   [rowStriped]="false"
   [showColumnMenuButton]="false">
 </mtx-grid>
-<ng-template #workerUIdTpl let-row>
-  <div id="workerUID">{{row.workerUId}}</div>
+<ng-template #workerUIdTpl let-row let-i="index">
+  <div id="workerUID-{{i}}">{{row.workerUId}}</div>
 </ng-template>
-<ng-template #workerFirstNameTpl let-row>
-  <div id="workerFirstName">{{row.firstName}}</div>
+<ng-template #workerFirstNameTpl let-row let-i="index">
+  <div id="workerFirstName-{{i}}">{{row.firstName}}</div>
 </ng-template>
-<ng-template #workerLastNameTpl let-row>
-  <div id="workerLastName">{{row.lastName}}</div>
+<ng-template #workerLastNameTpl let-row let-i="index">
+  <div id="workerLastName-{{i}}">{{row.lastName}}</div>
 </ng-template>
 <ng-template #actionsTpl let-row let-i="index">
   <div class="worker-actions" id="action-items-{{i}}" *ngIf="(selectCurrentUserClaimsWorkersDelete$ | async) || (selectCurrentUserClaimsWorkersUpdate$ | async)">

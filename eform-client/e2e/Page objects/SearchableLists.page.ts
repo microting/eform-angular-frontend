@@ -541,11 +541,11 @@ export class SearchableListRowObject {
 
   async getRow(rowNum: number): Promise<SearchableListRowObject> {
     this.index = rowNum;
-    const id = '#entitySearchMUid';
-    if ((await $$(id))[rowNum - 1]) {
-      this.id = (await $$('#entitySearchMUid'))[rowNum - 1];
+    const i = rowNum - 1;
+    if (await $(`#entitySearchMUid-${i}`).isExisting()) {
+      this.id = await $(`#entitySearchMUid-${i}`);
       try {
-        this.name = await (await $$('#entitySearchName'))[rowNum - 1].getText();
+        this.name = await $(`#entitySearchName-${i}`).getText();
       } catch (e) {}
       try {
         this.editBtn = await $(`#entitySearchUpdateBtn${rowNum - 1}`);

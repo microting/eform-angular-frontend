@@ -105,7 +105,7 @@ describe('Searchable Lists - Edit', function () {
 
     // Verify changes
     searchableListsPage.rowNum().then(rowNumber => {
-      cy.get('tbody > tr').eq(rowNumber - 1).find('#entitySearchName').should('contain.text', newName);
+      cy.get('tbody > tr').eq(rowNumber - 1).find('[id^="entitySearchName-"]').should('contain.text', newName);
       searchableListsPage.entitySearchEditBtn(rowNumber - 1).click();
     });
     cy.wait(500);

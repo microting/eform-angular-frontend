@@ -45,7 +45,7 @@ describe('Main page', function () {
       'Wrong folder selected'
     ).contain(`${folders[0].name}`);
     //const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
-    const siteIds = await $$('#microtingId');
+    const siteIds = await $$('[id^="microtingId-"]');
     for (let i = 0; i < siteIds.length; i++) {
       const index = users.findIndex(
         (user) => user.siteId === +siteIds[i].getText()
@@ -68,7 +68,7 @@ describe('Main page', function () {
     //await (await $('td.cdk-column-siteUId > mtx-grid-cell > span')).waitForDisplayed({ timeout: 40000 });
     //await browser.pause(1000);
     //const siteIds = await $$('td.cdk-column-siteUId > mtx-grid-cell > span');
-    const siteIds = await $$('#microtingId');
+    const siteIds = await $$('[id^="microtingId-"]');
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].getText())) {
         expect(

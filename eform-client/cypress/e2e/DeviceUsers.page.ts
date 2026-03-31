@@ -191,18 +191,19 @@ export class DeviceUsersRowObject {
 
   getRow(rowNum: number) {
     this.index = rowNum;
+    const i = rowNum - 1;
     // @ts-ignore
-    if (cy.get('#deviceUserId').eq(rowNum - 1).should('exist')) {
+    if (cy.get(`#deviceUserId-${i}`).should('exist')) {
       // @ts-ignore
-      this.siteId = +(cy.get('#deviceUserId').eq(rowNum - 1).invoke('text'));
+      this.siteId = +(cy.get(`#deviceUserId-${i}`).invoke('text'));
       // @ts-ignore
-      this.firstName = cy.get('#deviceUserFirstName').eq(rowNum - 1).invoke('text').catch(() => '');
+      this.firstName = cy.get(`#deviceUserFirstName-${i}`).invoke('text').catch(() => '');
       // @ts-ignore
-      this.lastName = cy.get('#deviceUserLastName').eq(rowNum - 1).invoke('text').catch(() => '');
+      this.lastName = cy.get(`#deviceUserLastName-${i}`).invoke('text').catch(() => '');
       // @ts-ignore
-      this.editBtn = cy.get('#editDeviceUserBtn').eq(rowNum - 1);
+      this.editBtn = cy.get('#editDeviceUserBtn').eq(i);
       // @ts-ignore
-      this.deleteBtn = cy.get('#deleteDeviceUserBtn').eq(rowNum - 1);
+      this.deleteBtn = cy.get('#deleteDeviceUserBtn').eq(i);
     }
     return this;
   }

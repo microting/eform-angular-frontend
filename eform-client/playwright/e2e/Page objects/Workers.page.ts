@@ -102,10 +102,10 @@ export class WorkersRowObject {
 
   async init(): Promise<WorkersRowObject> {
     const i = this.index - 1;
-    await this.page.locator('#workerUID').nth(i).waitFor({ state: 'visible', timeout: 10000 });
-    this.siteId = +(await this.page.locator('#workerUID').nth(i).textContent() || '0');
-    this.firstName = (await this.page.locator('#workerFirstName').nth(i).textContent() || '').trim();
-    this.lastName = (await this.page.locator('#workerLastName').nth(i).textContent() || '').trim();
+    await this.page.locator(`#workerUID-${i}`).waitFor({ state: 'visible', timeout: 10000 });
+    this.siteId = +(await this.page.locator(`#workerUID-${i}`).textContent() || '0');
+    this.firstName = (await this.page.locator(`#workerFirstName-${i}`).textContent() || '').trim();
+    this.lastName = (await this.page.locator(`#workerLastName-${i}`).textContent() || '').trim();
     this.editBtn = this.page.locator('#workerEditBtn').nth(i);
     this.deleteBtn = this.page.locator('#workerDeleteBtn').nth(i);
     return this;

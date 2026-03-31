@@ -62,13 +62,13 @@
   [toolbarTemplate]="toolbarTpl">
 </mtx-grid>
 <ng-template #idTpl let-row let-i="index">
-  <div class="deviceUserId" id="deviceUserId">{{row.siteUid}}</div>
+  <div class="deviceUserId" id="deviceUserId-{{i}}">{{row.siteUid}}</div>
 </ng-template>
-<ng-template #deviceUserFirstNameTpl let-row>
-  <div class="deviceUserId" id="deviceUserFirstName">{{ row.firstName ?? 'N/A' }}</div>
+<ng-template #deviceUserFirstNameTpl let-row let-i="index">
+  <div class="deviceUserId" id="deviceUserFirstName-{{i}}">{{ row.firstName ?? 'N/A' }}</div>
 </ng-template>
-<ng-template #deviceUserLastNameTpl let-row>
-  <div class="deviceUserId" id="deviceUserLastName">{{ row.lastName ?? 'N/A' }}</div>
+<ng-template #deviceUserLastNameTpl let-row let-i="index">
+  <div class="deviceUserId" id="deviceUserLastName-{{i}}">{{ row.lastName ?? 'N/A' }}</div>
 </ng-template>
 <ng-template #unitIdTpl let-row>
   {{ row.unitId ?? 'N/A' }}

@@ -133,12 +133,12 @@ export class SitesRowObject {
     this.index = rowNum;
     this.element = this.page.locator('tbody > tr').nth(rowNum - 1);
     if ((await this.page.locator('tbody > tr').count()) >= rowNum) {
-      this.siteId = +(await this.element.locator('#siteUUId').textContent() || '0');
-      this.units = await this.element.locator('#units').textContent() || '';
-      this.siteName = await this.element.locator('#siteName').textContent() || '';
+      this.siteId = +(await this.page.locator(`#siteUUId-${rowNum - 1}`).textContent() || '0');
+      this.units = await this.page.locator(`[id^="units-${rowNum - 1}-"]`).first().textContent() || '';
+      this.siteName = await this.page.locator(`#siteName-${rowNum - 1}`).textContent() || '';
       let list: Locator | null = null;
       try {
-        list = this.element.locator('#tags').locator('span');
+        list = this.page.locator(`#tags-${rowNum - 1}`).locator('span');
       } catch (e) {
       }
       if (list) {

@@ -42,13 +42,13 @@
   (sortChange)="sortTable($event)">
 </mtx-grid>
 <ng-template #microtingUUIDTpl let-row let-i="index">
-  <div class="entitySearchMUid" id="entitySearchMUid">{{ row.microtingUUID }}</div>
+  <div class="entitySearchMUid" id="entitySearchMUid-{{i}}">{{ row.microtingUUID }}</div>
 </ng-template>
 <ng-template #entitySelectNameTpl let-row let-i="index">
-  <div class="entitySearchName" id="entitySearchName">{{ row.name }}</div>
+  <div class="entitySearchName" id="entitySearchName-{{i}}">{{ row.name }}</div>
 </ng-template>
 <ng-template #entitySelectDescriptionTpl let-row let-i="index">
-  <div class="entitySelectDescription" id="entitySelectDescription">{{ row.description }}</div>
+  <div class="entitySelectDescription" id="entitySelectDescription-{{i}}">{{ row.description }}</div>
 </ng-template>
 
 <ng-template #actionsTpl let-row let-i="index">

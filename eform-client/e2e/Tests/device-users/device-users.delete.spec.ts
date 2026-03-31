@@ -13,7 +13,7 @@ describe('Device users page', function () {
   });
   it('should not delete if cancel was clicked', async () => {
     const rowNumBeforeDelete = await deviceUsersPage.rowNum();
-    await $('#deviceUserId').waitForDisplayed({ timeout: 40000 });
+    await $('#deviceUserId-0').waitForDisplayed({ timeout: 40000 });
     const lastDeviceUser = await deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
     await lastDeviceUser.openRowMenu();
     const index = lastDeviceUser.index - 1;
@@ -29,7 +29,7 @@ describe('Device users page', function () {
   it('should delete user', async () => {
     await myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumBeforeDelete = await deviceUsersPage.rowNum();
-    await (await $('#deviceUserId')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#deviceUserId-0')).waitForDisplayed({ timeout: 40000 });
     const lastDeviceUser = await deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
     await lastDeviceUser.openRowMenu();
     const index = lastDeviceUser.index - 1;

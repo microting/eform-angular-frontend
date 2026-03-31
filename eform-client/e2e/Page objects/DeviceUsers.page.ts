@@ -178,20 +178,17 @@ export class DeviceUsersRowObject {
 
   async getRow(rowNum: number) {
     this.index = rowNum;
-    if ((await $$('#deviceUserId'))[rowNum - 1]) {
-      this.siteId = +(await (await $$('#deviceUserId')[rowNum - 1]).getText());
+    const i = rowNum - 1;
+    if (await $(`#deviceUserId-${i}`).isExisting()) {
+      this.siteId = +(await $(`#deviceUserId-${i}`).getText());
       try {
-        this.firstName = await (
-          await $$('#deviceUserFirstName')[rowNum - 1]
-        ).getText();
+        this.firstName = await $(`#deviceUserFirstName-${i}`).getText();
       } catch (e) {}
       try {
-        this.lastName = await (
-          await $$('#deviceUserLastName')[rowNum - 1]
-        ).getText();
+        this.lastName = await $(`#deviceUserLastName-${i}`).getText();
       } catch (e) {}
-      this.editBtn = (await $$('#editDeviceUserBtn'))[rowNum - 1];
-      this.deleteBtn = (await $$('#deleteDeviceUserBtn'))[rowNum - 1];
+      this.editBtn = (await $$('#editDeviceUserBtn'))[i];
+      this.deleteBtn = (await $$('#deleteDeviceUserBtn'))[i];
     }
     return this;
   }

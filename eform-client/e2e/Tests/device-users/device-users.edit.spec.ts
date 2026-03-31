@@ -18,7 +18,7 @@ describe('Device users page', function () {
   });
   it('should change first name', async () => {
     const newName = Guid.create().toString();
-    await (await $('#deviceUserFirstName')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#deviceUserFirstName-0')).waitForDisplayed({ timeout: 40000 });
     const lastDeviceUserBeforeEdit = await deviceUsersPage.getDeviceUser(
       await deviceUsersPage.rowNum()
     );
@@ -39,7 +39,7 @@ describe('Device users page', function () {
   });
   it('should change last name', async () => {
     const newSurname = Guid.create().toString();
-    await (await $('#deviceUserFirstName')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#deviceUserFirstName-0')).waitForDisplayed({ timeout: 40000 });
     const lastDeviceUserBeforeEdit = await deviceUsersPage.getDeviceUser(
       await deviceUsersPage.rowNum()
     );
@@ -61,7 +61,7 @@ describe('Device users page', function () {
   it('should change first name and last name', async () => {
     const newName = Guid.create().toString();
     const newSurname = Guid.create().toString();
-    await (await $('#deviceUserFirstName')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#deviceUserFirstName-0')).waitForDisplayed({ timeout: 40000 });
     const lastDeviceUserBeforeEdit = await deviceUsersPage.getDeviceUser(
       await deviceUsersPage.rowNum()
     );

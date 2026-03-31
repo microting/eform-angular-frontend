@@ -36,8 +36,8 @@
                 <tbody id="pairingModalTableBody" role="rowgroup">
                 <ng-container *ngFor="let siteDto of sitesDto; let i = index">
                   <tr class="mat-row cdk-row {{i%2 ? 'mat-row-odd' : ''}}">
-                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id" id="microtingId">{{siteDto.siteUId}}</td>
-                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id" id="deviceUserFullName">{{siteDto.siteName}}</td>
+                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id" id="microtingId-{{i}}">{{siteDto.siteUId}}</td>
+                    <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id" id="deviceUserFullName-{{i}}">{{siteDto.siteName}}</td>
                     <td role="cell" class="mat-cell cdk-cell cdk-column-id mat-column-id">
                       <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
                         <div class="mat-checkbox" *ngIf="checkboxModel.id == siteDto.siteUId">

@@ -29,7 +29,7 @@ describe('Device users page - Delete device user', function () {
     cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
 
     deviceUsersPage.rowNum().then((rowNumBeforeDelete) => {
-      cy.get('#deviceUserId').should('be.visible');
+      cy.get('[id^="deviceUserId-"]').should('be.visible');
 
       // Click delete button on last row
       cy.get('#deleteDeviceUserBtn').last().should('be.visible').click();
@@ -49,7 +49,7 @@ describe('Device users page - Delete device user', function () {
     cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
 
     deviceUsersPage.rowNum().then((rowNumBeforeDelete) => {
-      cy.get('#deviceUserId').should('be.visible');
+      cy.get('[id^="deviceUserId-"]').should('be.visible');
 
       // Click delete button on last row
       cy.intercept('DELETE', '**/api/device-users/delete/*').as('deleteUser');

@@ -44,8 +44,8 @@ describe('Device users page - Add new device user', function () {
         ).to.equal(rowCountBeforeCreation + 1);
 
         // Verify the last user has correct data
-        cy.get('#deviceUserFirstName').last().should('have.text', nameDeviceUser);
-        cy.get('#deviceUserLastName').last().should('have.text', surname);
+        cy.get('[id^="deviceUserFirstName-"]').last().should('have.text', nameDeviceUser);
+        cy.get('[id^="deviceUserLastName-"]').last().should('have.text', surname);
       });
     });
   });
@@ -123,7 +123,7 @@ describe('Device users page - Should not add new device user', function () {
 
   it('should clean up created test data', () => {
     // Find and delete the test user
-    cy.get('#deviceUserFirstName').each(($el, index) => {
+    cy.get('[id^="deviceUserFirstName-"]').each(($el, index) => {
       if ($el.text() === nameDeviceUser) {
         cy.intercept('DELETE', '**/api/device-users/delete/*').as('deleteUser');
         cy.intercept('POST', '**/api/device-users/index').as('reloadDeviceUsers');

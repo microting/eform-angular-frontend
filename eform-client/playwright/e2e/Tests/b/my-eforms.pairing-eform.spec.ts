@@ -69,7 +69,7 @@ test.describe.serial('Main page', () => {
     expect(
       await page.locator('mat-tree-node > .selected-folder > div').textContent()
     ).toContain(`${folders[0].name}`);
-    const siteIds = await page.locator('#microtingId').all();
+    const siteIds = await page.locator('[id^="microtingId-"]').all();
     for (let i = 0; i < siteIds.length; i++) {
       const siteIdText = await siteIds[i].textContent();
       const index = users.findIndex(
@@ -89,7 +89,7 @@ test.describe.serial('Main page', () => {
     await page.waitForTimeout(1000);
     (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
     await loginPage.waitForSpinnerHide(40000);
-    const siteIds = await page.locator('#microtingId').all();
+    const siteIds = await page.locator('[id^="microtingId-"]').all();
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].textContent())) {
         expect(

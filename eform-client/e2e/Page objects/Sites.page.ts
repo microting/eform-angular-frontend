@@ -152,12 +152,12 @@ export class SitesRowObject {
     this.index = rowNum;
     this.element = (await $$('tbody > tr'))[rowNum - 1];
     if (this.element) {
-      this.siteId = +(await this.element.$('#siteUUId')).getText();
-      this.units = await (await this.element.$('#units')).getText();
-      this.siteName = await (await this.element.$('#siteName')).getText();
+      this.siteId = +(await this.element.$(`#siteUUId-${rowNum - 1}`)).getText();
+      this.units = await (await this.element.$(`[id^="units-${rowNum - 1}"]`)).getText();
+      this.siteName = await (await this.element.$(`#siteName-${rowNum - 1}`)).getText();
       let list = null;
       try {
-        list = (await (await this.element.$('#tags')).$$('span'));
+        list = (await (await this.element.$(`#tags-${rowNum - 1}`)).$$('span'));
       }catch (e) {
       }
       if(list) {

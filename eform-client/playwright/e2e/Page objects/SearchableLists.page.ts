@@ -467,11 +467,12 @@ export class SearchableListRowObject {
 
   async getRow(rowNum: number): Promise<SearchableListRowObject> {
     this.index = rowNum;
-    const id = '#entitySearchMUid';
-    if ((await this.page.locator(id).count()) >= rowNum) {
-      this.id = this.page.locator('#entitySearchMUid').nth(rowNum - 1);
+    const i = rowNum - 1;
+    const id = `#entitySearchMUid-${i}`;
+    if ((await this.page.locator(id).count()) >= 1) {
+      this.id = this.page.locator(`#entitySearchMUid-${i}`);
       try {
-        this.name = (await this.page.locator('#entitySearchName').nth(rowNum - 1).textContent() || '').trim();
+        this.name = (await this.page.locator(`#entitySearchName-${i}`).textContent() || '').trim();
       } catch (e) {}
       try {
         this.editBtn = this.page.locator(`#entitySearchUpdateBtn${rowNum - 1}`);

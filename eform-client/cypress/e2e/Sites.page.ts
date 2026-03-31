@@ -138,9 +138,9 @@ export class SitesRowObject {
     this.index = rowNum;
     this.element = cy.get('tbody > tr').eq(rowNum - 1);
     if (this.element) {
-      this.siteId = +(this.element.find('#siteUUId').invoke('text'));
-      this.units = (this.element.find('#units')).invoke('text');
-      this.siteName = (this.element.find('#siteName')).invoke('text');
+      this.siteId = +(this.element.find(`#siteUUId-${rowNum - 1}`).invoke('text'));
+      this.units = (this.element.find(`[id^="units-${rowNum - 1}"]`)).invoke('text');
+      this.siteName = (this.element.find(`#siteName-${rowNum - 1}`)).invoke('text');
       const list = (this.element.find('mat-chip-list mat-chip span')).toArray();
       this.tags = list.map((el: HTMLElement) => el.innerText);
       this.editBtn = this.element.find('#editSiteBtn');
