@@ -24,6 +24,12 @@ ng-dropdown-panel, .ng-dropdown-panel {
   z-index: 1100 !important;
 }
 
+// Prevent focused mat-form-field from creating a stacking context
+// that intercepts clicks on ng-select dropdown panels
+.mat-mdc-form-field.mat-focused {
+  z-index: auto !important;
+}
+
 $eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
 // h-100 for base elements
 html, body {

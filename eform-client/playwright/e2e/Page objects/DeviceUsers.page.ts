@@ -93,8 +93,12 @@ export class DeviceUsersPage extends PageWithNavbarPage {
     await this.page.waitForTimeout(500);
     await this.createLastNameInput().fill(lastName);
     await this.page.waitForTimeout(500);
-    await this.saveCreateBtn().click();
+    const [response] = await Promise.all([
+      this.page.waitForResponse(resp => resp.url().includes('/api/device-users') && resp.status() === 200, { timeout: 40000 }),
+      this.saveCreateBtn().click(),
+    ]);
     await this.newDeviceUserBtn().waitFor({ state: 'visible', timeout: 40000 });
+    await this.page.waitForTimeout(1000);
   }
 
   public async createDeviceUserFromScratch(name: string, surname: string) {
@@ -171,8 +175,8 @@ export class DeviceUsersRowObject {
       try {
         this.lastName = await this.page.locator(`#deviceUserLastName-${i}`).textContent() || '';
       } catch (e) {}
-      this.editBtn = this.page.locator('#editDeviceUserBtn').nth(i);
-      this.deleteBtn = this.page.locator('#deleteDeviceUserBtn').nth(i);
+      this.editBtn = this.page.locator(`#editDeviceUserBtn${i}`);
+      this.deleteBtn = this.page.locator(`#deleteDeviceUserBtn${i}`);
     }
     return this;
   }
