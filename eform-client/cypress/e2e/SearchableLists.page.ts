@@ -67,8 +67,13 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return cy.get('#entitySearchUpdateCancelBtn');
   }
 
+  public openRowMenu(index = 0) {
+    cy.get(`#action-items${index} #actionMenu`).click();
+  }
+
   public entitySearchEditBtn(index = 0) {
-    return cy.get('#entitySearchUpdateBtn').eq(index);
+    this.openRowMenu(index);
+    return cy.get(`#entitySearchUpdateBtn${index}`);
   }
 
   public entitySearchEditNameBox() {
@@ -123,8 +128,9 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return cy.get('#entitySearchUpdateCancelBtn');
   }
 
-  public entitySearchDeleteBtn() {
-    return cy.get('#entitySearchDeleteBtn');
+  public entitySearchDeleteBtn(index = 0) {
+    this.openRowMenu(index);
+    return cy.get(`#entitySearchDeleteBtn${index}`);
   }
 
   public entitySearchDeleteDeleteBtn() {
@@ -160,11 +166,13 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   public clickFirstEditBtn() {
-    cy.get('#entitySearchUpdateBtn').first().click();
+    this.openRowMenu(0);
+    cy.get('#entitySearchUpdateBtn0').click();
   }
 
   public clickFirstDeleteBtn() {
-    cy.get('#entitySearchDeleteBtn').first().click();
+    this.openRowMenu(0);
+    cy.get('#entitySearchDeleteBtn0').click();
   }
 
   // Create operations
@@ -297,7 +305,8 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   // Delete operations
   public deleteList() {
-    cy.get('#entitySearchDeleteBtn').first().click();
+    this.openRowMenu(0);
+    cy.get('#entitySearchDeleteBtn0').click();
     this.entitySearchDeleteDeleteBtn().click();
     cy.wait(500);
   }
@@ -315,11 +324,12 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   public cleanup() {
-    cy.get('#entitySearchDeleteBtn').first().then($btn => {
-      if ($btn.length > 0) {
-        cy.wrap($btn).click();
+    cy.get('body').then($body => {
+      if ($body.find('[id^="action-items"]').length > 0) {
+        this.openRowMenu(0);
+        cy.get('#entitySearchDeleteBtn0').click();
         this.entitySearchDeleteDeleteBtn().click();
-        // Note: Tests should intercept DELETE API calls if they need to wait
+        cy.wait(500);
       }
     });
   }

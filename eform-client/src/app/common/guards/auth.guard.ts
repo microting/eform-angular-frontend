@@ -6,8 +6,8 @@ import {
   UrlTree,
 } from '@angular/router';
 import {Store} from '@ngrx/store';
-import {combineLatest, Observable} from 'rxjs';
-import {filter, map, take} from 'rxjs/operators';
+import {combineLatest, Observable, of} from 'rxjs';
+import {catchError, filter, map, take, timeout} from 'rxjs/operators';
 import {
   selectAuthIsAuth,
   selectLoginRedirectUrl
@@ -44,6 +44,7 @@ export class AuthGuard {
     ]).pipe(
       filter(([_isAuth, _isCmsEnabled, isCmsLoaded]) => isCmsLoaded),
       take(1),
+      timeout(10000),
       map(([isAuth, isCmsEnabled, _isCmsLoaded, loginRedirectUrl]) => {
         if (!isAuth) {
           return this.router.createUrlTree([isCmsEnabled ? '/landing' : '/auth']);
@@ -52,6 +53,10 @@ export class AuthGuard {
           return this.router.createUrlTree([`/${loginRedirectUrl}`]);
         }
         return true;
+      }),
+      catchError(() => {
+        // CMS config failed to load in time — fall back to standard auth
+        return of(this.router.createUrlTree(['/auth']));
       })
     );
   }

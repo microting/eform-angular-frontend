@@ -1,6 +1,6 @@
 import {PageWithNavbarPage} from './PageWithNavbar.page';
 import {applicationLanguages} from '../../src/app/common/const/application-languages.const';
-import {selectValueInNgSelector} from 'cypress/e2e/helper-functions';
+import {selectValueInNgSelector} from './helper-functions';
 
 class FoldersPage extends PageWithNavbarPage {
 
