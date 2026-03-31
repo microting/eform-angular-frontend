@@ -3,10 +3,22 @@
 @use "utilities" as *;
 @use "libs/index" as libs;
 
-// Fix Angular Material 21 issue where mat-form-field subscript wrapper
-// intercepts pointer events on overlapping elements (dropdowns, buttons)
+// Fix Angular Material 21 issue where mat-form-field elements
+// intercept pointer events on overlapping elements (dialog buttons, dropdowns)
 .mat-mdc-form-field-subscript-wrapper {
   pointer-events: none;
+}
+
+// Ensure dialog action buttons are always clickable above form fields
+[mat-dialog-actions], .mat-mdc-dialog-actions {
+  position: relative;
+  z-index: 1;
+}
+
+// Fix ng-select dropdown panels (appended to body by mtx-select) being hidden
+// behind CDK overlay container (z-index: 1000) when used inside dialogs
+ng-dropdown-panel, .ng-dropdown-panel {
+  z-index: 1050 !important;
 }
 
 $eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
