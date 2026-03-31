@@ -68,16 +68,8 @@ export async function selectValueInNgSelectorNoSelector(
   page: Page,
   value: string,
 ) {
-  const ngSelector = page.locator('ng-select').first();
-  await ngSelector.waitFor({ state: 'visible', timeout: 40000 });
-  await ngSelector.click();
-  await page.waitForTimeout(300);
-  await ngSelector.locator('input').clear();
-  await ngSelector.locator('input').fill(value);
-  await page.waitForTimeout(500);
-  const dropdownPanel = page.locator('ng-dropdown-panel');
-  await dropdownPanel.waitFor({ state: 'visible', timeout: 40000 });
-  const option = dropdownPanel.locator('.ng-option').filter({ hasText: value }).first();
+  const option = page.locator('.ng-option').filter({ hasText: value }).first();
+  await option.waitFor({ state: 'visible', timeout: 40000 });
   await option.scrollIntoViewIfNeeded();
   await option.click();
   await page.waitForTimeout(500);
