@@ -25,6 +25,7 @@ export class SharedTagMultipleCreateComponent implements OnInit {
 
   createTags() {
     this.createdTags.emit({ tagNames: this.textareaValue.split('\n') });
+    this.dialogRef.close();
   }
 
   cancelCreate() {

@@ -959,6 +959,12 @@ formatting-text-editor {
   background-color: var(--bg) !important;
 }
 
+// Ensure expanded mat-expansion-panel content is visible
+// Angular Material 21 @layer CSS may cause visibility transition issues
+.mat-expansion-panel.mat-expanded > .mat-expansion-panel-content {
+  visibility: visible !important;
+}
+
 .mat-drawer-inner-container {
   background: var(--bg) !important;
 

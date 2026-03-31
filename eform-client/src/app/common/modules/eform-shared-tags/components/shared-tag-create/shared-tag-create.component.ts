@@ -24,6 +24,7 @@ export class SharedTagCreateComponent implements OnInit {
 
   createItem() {
     this.createdTag.emit({ name: this.name } as SharedTagCreateModel);
+    this.dialogRef.close();
     this.name = '';
   }
 
