@@ -3,6 +3,12 @@
 @use "utilities" as *;
 @use "libs/index" as libs;
 
+// Fix Angular Material 21 issue where mat-form-field subscript wrapper
+// intercepts pointer events on overlapping elements (dropdowns, buttons)
+.mat-mdc-form-field-subscript-wrapper {
+  pointer-events: none;
+}
+
 $eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
 // h-100 for base elements
 html, body {
