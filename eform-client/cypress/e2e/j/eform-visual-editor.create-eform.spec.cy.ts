@@ -45,7 +45,7 @@ describe('Visual editor - Create eForm', () => {
 
     // Verify eForm has correct properties when edited
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -87,7 +87,7 @@ describe('Visual editor - Create eForm', () => {
 
     // Verify eForm has correct properties when edited
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -135,7 +135,7 @@ describe('Visual editor - Create eForm', () => {
 
     // Verify eForm has correct properties when edited
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -179,7 +179,7 @@ describe('Visual editor - Create eForm', () => {
 
     // Verify field has red color when edited
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -231,7 +231,7 @@ describe('Visual editor - Create eForm', () => {
 
     // Verify eForm has correct properties when edited
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -268,7 +268,7 @@ describe('Visual editor - Create eForm', () => {
 
     // Verify eForm has two fields when edited
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -323,7 +323,7 @@ describe('Visual editor - Create eForm', () => {
     // Verify eForm has correct structure when edited
     cy.get('#spinner-animation').should('not.exist');
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -389,7 +389,7 @@ describe('Visual editor - Create eForm', () => {
     // Verify field group is deleted when edited
     cy.get('#spinner-animation').should('not.exist');
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -425,7 +425,7 @@ describe('Visual editor - Create eForm', () => {
     // Verify eForm has nested checklists when edited
     cy.get('#spinner-animation').should('not.exist');
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -469,7 +469,7 @@ describe('Visual editor - Create eForm', () => {
     // Verify eForm structure when edited
     cy.get('#spinner-animation').should('not.exist');
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -518,7 +518,7 @@ describe('Visual editor - Create eForm', () => {
     // Verify eForm structure when edited
     cy.get('#spinner-animation').should('not.exist');
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -562,7 +562,7 @@ describe('Visual editor - Create eForm', () => {
     // Verify field order when edited
     cy.get('#spinner-animation').should('not.exist');
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -615,7 +615,7 @@ describe('Visual editor - Create eForm', () => {
     // Verify nested field order when edited
     cy.get('#spinner-animation').should('not.exist');
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -687,7 +687,7 @@ describe('Visual editor - Create eForm', () => {
     // Open in visual editor
     cy.get('#spinner-animation').should('not.exist');
     cy.intercept('GET', '**/api/template-visual-editor/**').as('geteForm');
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#edit-eform-btn-0').click();
     cy.wait('@geteForm', { timeout: 60000 });
 
@@ -700,7 +700,7 @@ describe('Visual editor - Create eForm', () => {
     // Clean up - delete created eForm
     cy.get('#cancelEditBtn').click();
     cy.wait(500);
-    cy.get('#actionMenu').eq(0).click();
+    cy.get('#actionMenu0').click();
     cy.get('#delete-eform-btn-0').click();
     cy.get('#eFormDeleteDeleteBtn').click();
     cy.wait(1000);

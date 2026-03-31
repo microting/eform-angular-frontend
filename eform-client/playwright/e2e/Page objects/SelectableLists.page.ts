@@ -12,7 +12,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async openRowMenu(i = 0) {
-    const menuBtn = this.page.locator(`#action-items${i} #actionMenu`);
+    const menuBtn = this.page.locator(`#actionMenu${i}`);
     await menuBtn.waitFor({ state: 'visible', timeout: 5000 });
     await menuBtn.scrollIntoViewIfNeeded();
     await menuBtn.click();

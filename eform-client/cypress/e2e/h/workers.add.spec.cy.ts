@@ -117,7 +117,7 @@ describe('Workers page - Add new worker', function () {
       for (let i = 0; i < workersToDelete; i++) {
         // Always delete the last worker - open action menu first
         cy.intercept('POST', '**/api/workers/delete').as('deleteWorker');
-        cy.get('[id^=action-items-] #actionMenu').last().should('be.visible').click();
+        cy.get('[id^=action-items-] [id^=actionMenu]').last().should('be.visible').click();
         cy.wait(200);
         cy.get('[id^=workerDeleteBtn]').last().should('be.visible').click();
         cy.get('#deleteWorkerDeleteBtn').should('be.visible').click();
@@ -138,7 +138,7 @@ describe('Workers page - Add new worker', function () {
     cy.get('[id^="deviceUserFirstName-"]').each(($el, index) => {
       if ($el.text() === deviceUserFirstName) {
         cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
-        cy.get(`#action-items-${index} #actionMenu`).should('be.visible').click();
+        cy.get(`#action-items-${index} [id^=actionMenu]`).should('be.visible').click();
         cy.wait(200);
         cy.get(`#deleteDeviceUserBtn${index}`).should('be.visible').click();
         cy.get('#saveDeleteBtn').should('be.visible').click();

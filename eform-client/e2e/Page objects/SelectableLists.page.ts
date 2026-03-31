@@ -14,7 +14,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public async openRowMenu(i = 0) {
-    const menuBtn = await $(`#action-items${i} #actionMenu`);
+    const menuBtn = await $(`#actionMenu${i}`);
     await menuBtn.waitForDisplayed({ timeout: 5000 });
     await menuBtn.waitForClickable({ timeout: 5000 });
     await menuBtn.scrollIntoView();

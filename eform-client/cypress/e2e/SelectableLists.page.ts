@@ -146,22 +146,22 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public clickFirstRowEditBtn() {
-    cy.get('[id^="action-items"]').first().find('#actionMenu').click();
+    cy.get('[id^="action-items"]').first().find('[id^="actionMenu"]').click();
     cy.get('[id^="entitySelectEditBtn"]').first().click();
   }
 
   public clickFirstRowDeleteBtn() {
-    cy.get('[id^="action-items"]').first().find('#actionMenu').click();
+    cy.get('[id^="action-items"]').first().find('[id^="actionMenu"]').click();
     cy.get('[id^="entitySelectDeleteBtn"]').first().click();
   }
 
   public clickLastRowEditBtn() {
-    cy.get('[id^="action-items"]').last().find('#actionMenu').click();
+    cy.get('[id^="action-items"]').last().find('[id^="actionMenu"]').click();
     cy.get('[id^="entitySelectEditBtn"]').last().click();
   }
 
   public clickLastRowDeleteBtn() {
-    cy.get('[id^="action-items"]').last().find('#actionMenu').click();
+    cy.get('[id^="action-items"]').last().find('[id^="actionMenu"]').click();
     cy.get('[id^="entitySelectDeleteBtn"]').last().click();
   }
 
@@ -293,7 +293,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   // Edit operations
   public editSelectableListNameOnly(newName: string) {
     this.rowNum().then(count => {
-      cy.get('[id^="action-items"]').eq(count - 1).find('#actionMenu').click();
+      cy.get('[id^="action-items"]').eq(count - 1).find('[id^="actionMenu"]').click();
       cy.get(`#entitySelectEditBtn${count - 1}`).click();
       cy.wait(250);
       this.entitySelectEditName().should('be.visible').clear().type(newName);
@@ -305,7 +305,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
 
   public editSelectableListNameAndItem(newName: string, newItemName: string) {
     this.rowNum().then(count => {
-      cy.get('[id^="action-items"]').eq(count - 1).find('#actionMenu').click();
+      cy.get('[id^="action-items"]').eq(count - 1).find('[id^="actionMenu"]').click();
       cy.get(`#entitySelectEditBtn${count - 1}`).click();
       cy.wait(250);
       this.entitySelectEditName().should('be.visible').clear().type(newName);
@@ -319,7 +319,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
 
   public deleteItemFromList() {
     this.rowNum().then(count => {
-      cy.get('[id^="action-items"]').eq(count - 1).find('#actionMenu').click();
+      cy.get('[id^="action-items"]').eq(count - 1).find('[id^="actionMenu"]').click();
       cy.get(`#entitySelectEditBtn${count - 1}`).click();
       cy.wait(250);
       this.entitySelectEditName().should('be.visible');
@@ -332,7 +332,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
 
   // Delete operations
   public deleteList() {
-    cy.get('[id^="action-items"]').first().find('#actionMenu').click();
+    cy.get('[id^="action-items"]').first().find('[id^="actionMenu"]').click();
     cy.get('[id^="entitySelectDeleteBtn"]').first().click();
     this.entitySelectDeleteDeleteBtn().click();
     cy.wait(500);
@@ -353,7 +353,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public cleanup() {
     cy.get('body').then($body => {
       if ($body.find('[id^="action-items"]').length > 0) {
-        cy.get('[id^="action-items"]').first().find('#actionMenu').click();
+        cy.get('[id^="action-items"]').first().find('[id^="actionMenu"]').click();
         cy.get('[id^="entitySelectDeleteBtn"]').first().click();
         this.entitySelectDeleteDeleteBtn().click();
         cy.wait(500);

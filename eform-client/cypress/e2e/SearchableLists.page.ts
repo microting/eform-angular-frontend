@@ -68,7 +68,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   public openRowMenu(index = 0) {
-    cy.get(`#action-items${index} #actionMenu`).click();
+    cy.get(`#actionMenu${index}`).click();
   }
 
   public entitySearchEditBtn(index = 0) {

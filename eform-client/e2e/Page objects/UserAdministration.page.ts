@@ -219,7 +219,7 @@ export class UserAdministrationRowObject {
 
   async openRowMenu() {
     const index = this.index - 1;
-    const menuBtn = await $(`#action-items-${index} #actionMenu`);
+    const menuBtn = await $(`#actionMenu${index}`);
     await menuBtn.waitForDisplayed({ timeout: 5000 });
     await menuBtn.waitForClickable({ timeout: 5000 });
     await menuBtn.scrollIntoView();

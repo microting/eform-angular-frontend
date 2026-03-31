@@ -151,7 +151,7 @@ export class SitesRowObject {
 
   openRowMenu() {
     const index = this.index - 1;
-    cy.get(`#action-items-${index} #actionMenu`).should('be.visible').click();
+    cy.get(`#actionMenu${index}`).should('be.visible').click();
     cy.wait(200);
   }
 

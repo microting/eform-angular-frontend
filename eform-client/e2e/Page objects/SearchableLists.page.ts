@@ -506,7 +506,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   public async openRowMenu(i = 0) {
-    const menuBtn = await $(`#action-items${i} #actionMenu`);
+    const menuBtn = await $(`#actionMenu${i}`);
     await menuBtn.waitForClickable({ timeout: 1000 });
     await menuBtn.click();
     await browser.pause(200);

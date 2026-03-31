@@ -345,7 +345,7 @@ class MyEformsRowObject {
 
   private async clickActionsMenu() {
     await browser.pause(1000);
-    await (await $$('#actionMenu'))[this.currentPosition].click();
+    await (await $(`#actionMenu${this.currentPosition}`)).click();
     await browser.pause(1000);
   }
 

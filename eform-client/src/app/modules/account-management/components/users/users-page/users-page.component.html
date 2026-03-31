@@ -63,7 +63,7 @@
 
   <ng-template #actionsTpl let-row let-i="index">
     <div class="user-actions" id="action-items-{{i}}">
-      <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
+      <button id="actionMenu{{i}}" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
         <mat-icon>more_vert</mat-icon>
       </button>
 

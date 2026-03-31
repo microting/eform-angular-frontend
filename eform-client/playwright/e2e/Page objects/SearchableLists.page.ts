@@ -430,7 +430,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   public async openRowMenu(i = 0) {
-    const menuBtn = this.page.locator(`#action-items${i} #actionMenu`);
+    const menuBtn = this.page.locator(`#actionMenu${i}`);
     await menuBtn.waitFor({ state: 'visible', timeout: 1000 });
     await menuBtn.click();
     await this.page.waitForTimeout(200);

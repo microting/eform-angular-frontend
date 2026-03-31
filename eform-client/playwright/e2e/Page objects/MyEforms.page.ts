@@ -353,7 +353,7 @@ export class MyEformsRowObject {
 
   private async clickActionsMenu() {
     await this.page.waitForTimeout(1000);
-    await this.page.locator('#actionMenu').nth(this.currentPosition).click();
+    await this.page.locator(`#actionMenu${this.currentPosition}`).click();
     await this.page.waitForTimeout(1000);
   }
 

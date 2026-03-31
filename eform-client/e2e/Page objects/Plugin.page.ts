@@ -100,7 +100,7 @@ class PluginRowObject {
 
   private async clickActionsMenu() {
     await browser.pause(1000);
-    await (await $$('#actionMenu')[this.rowNumber]).click();
+    await (await $(`#actionMenu${this.rowNumber}`)).click();
     await browser.pause(1000);
   }
 }
