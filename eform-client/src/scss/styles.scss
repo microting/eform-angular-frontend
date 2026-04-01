@@ -959,9 +959,16 @@ formatting-text-editor {
   background-color: var(--bg) !important;
 }
 
-// Ensure expanded mat-expansion-panel content is visible
-// Angular Material 21 @layer CSS may cause visibility transition issues
+// Ensure expanded mat-expansion-panel content and child tree nodes are visible
+// Angular Material/CDK 21 applies visibility: hidden to collapsed tree nodes
+// and expansion panel content. Override when expanded.
 .mat-expansion-panel.mat-expanded > .mat-expansion-panel-content {
+  visibility: visible !important;
+}
+
+.mat-expansion-panel.mat-expanded .mat-tree-node,
+.mat-expansion-panel.mat-expanded .cdk-tree-node,
+.mat-expansion-panel.mat-expanded mat-tree-node {
   visibility: visible !important;
 }
 
