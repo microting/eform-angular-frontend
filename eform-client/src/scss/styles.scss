@@ -24,10 +24,16 @@ ng-dropdown-panel, .ng-dropdown-panel {
   z-index: 1100 !important;
 }
 
-// Prevent focused mat-form-field from creating a stacking context
-// that intercepts clicks on ng-select dropdown panels
+// Prevent mat-form-field from creating a stacking context that intercepts
+// clicks on ng-select/mtx-select dropdown panels appended to body.
+// The .mdc-text-field has will-change: opacity, transform, color which creates
+// a stacking context; this must be removed so the dropdown panel (z-index: 1100)
+// renders above the form field.
 .mat-mdc-form-field.mat-focused {
   z-index: auto !important;
+}
+.mdc-text-field {
+  will-change: auto !important;
 }
 
 $eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
