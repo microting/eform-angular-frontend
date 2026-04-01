@@ -242,9 +242,12 @@ export class MyEformsPage extends PageWithNavbarPage {
         await this.page.locator('#createEformBtn').waitFor({ state: 'visible', timeout: 10000 });
       }
     }
-    await (await this.waitForCreateEformBtn()).click();
+    const [response] = await Promise.all([
+      this.page.waitForResponse(resp => resp.url().includes('/api/template') && resp.status() === 200, { timeout: 40000 }),
+      (await this.waitForCreateEformBtn()).click(),
+    ]);
     await this.newEformBtn().waitFor({ state: 'visible', timeout: 40000 });
-    await this.page.waitForTimeout(500);
+    await this.page.waitForTimeout(1000);
     return { added: addedTags, selected: selectedTags };
   }
 
@@ -326,7 +329,7 @@ export class MyEformsRowObject {
     }
     try {
       const val = this.page.locator('#eform-label-' + (this.currentPosition)).first();
-      this.eFormName = await val.textContent();
+      this.eFormName = (await val.textContent())?.trim();
     } catch (e) {
     }
     this.tags = this.element.locator('.mat-column-tags mat-chip span span span.mat-mdc-chip-action-label');
