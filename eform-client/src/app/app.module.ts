@@ -2,6 +2,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {APP_INITIALIZER, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {OVERLAY_DEFAULT_CONFIG} from '@angular/cdk/overlay';
 import {GalleryModule} from 'ng-gallery';
 import {TranslateModule} from '@ngx-translate/core';
 import {LightboxModule} from 'ng-gallery/lightbox';
@@ -153,6 +154,10 @@ export function initLocaleFactory(authStateService: AuthStateService) {
     schemas: [NO_ERRORS_SCHEMA],
     providers: [
         providers,
+        {
+            provide: OVERLAY_DEFAULT_CONFIG,
+            useValue: { usePopover: false },
+        },
         {
             provide: APP_INITIALIZER,
             useFactory: registerIconsFactory,
