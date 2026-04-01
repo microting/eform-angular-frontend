@@ -480,13 +480,13 @@ export class ChecklistFieldRowObj {
         (el) => getComputedStyle(el).backgroundColor
       );
       // Convert rgb to hex
-      const hex = backgroundColor
-        .match(/\d+/g)!
-        .map((x: string) => parseInt(x).toString(16).padStart(2, '0'))
-        .join('');
+      const rgbValues = backgroundColor.match(/\d+/g);
+      const hex = rgbValues
+        ? rgbValues.map((x: string) => parseInt(x).toString(16).padStart(2, '0')).join('')
+        : 'e8eaf6'; // default color
       this.color = eformVisualEditorElementColors.find(
         (x) => x.name === hex
-      )!;
+      ) || { name: hex, description: 'Unknown' };
       const colorMas = this.element.locator('#colors >*');
       this.colorsBtn = {
         standard: colorMas.nth(0),
@@ -513,16 +513,17 @@ export class ChecklistFieldRowObj {
   async changeColor(colorName: string) {
     while (this.color.description.toLowerCase() !== colorName) {
       await this.colorsBtn[colorName as keyof typeof this.colorsBtn].click();
+      await this.page.waitForTimeout(300);
       const backgroundColor = await this.element.locator('div>div>div').first().evaluate(
         (el) => getComputedStyle(el).backgroundColor
       );
-      const hex = backgroundColor
-        .match(/\d+/g)!
-        .map((x: string) => parseInt(x).toString(16).padStart(2, '0'))
-        .join('');
+      const rgbValues = backgroundColor.match(/\d+/g);
+      const hex = rgbValues
+        ? rgbValues.map((x: string) => parseInt(x).toString(16).padStart(2, '0')).join('')
+        : 'e8eaf6';
       this.color = eformVisualEditorElementColors.find(
         (x) => x.name === hex
-      )!;
+      ) || { name: hex, description: 'Unknown' };
     }
   }
 

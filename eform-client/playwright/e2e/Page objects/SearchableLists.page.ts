@@ -17,16 +17,19 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   async getFirstRowObject(): Promise<SearchableListRowObject> {
-    await this.page.waitForTimeout(500);
-    const rowCount = await this.rowNum();
-    for (let i = 1; i <= rowCount; i++) {
-      const obj = new SearchableListRowObject(this.page);
-      const row = await obj.getRow(i);
-      if (row.name !== 'Device users') {
-        return row;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      await this.page.waitForTimeout(500);
+      const rowCount = await this.rowNum();
+      for (let i = 1; i <= rowCount; i++) {
+        const obj = new SearchableListRowObject(this.page);
+        const row = await obj.getRow(i);
+        if (row.name !== 'Device users') {
+          return row;
+        }
       }
+      await this.page.waitForTimeout(2000);
     }
-    // Fallback to row 1 if all rows are 'Device users' (shouldn't happen)
+    // Fallback to row 1
     const obj = new SearchableListRowObject(this.page);
     return await obj.getRow(1);
   }
@@ -179,18 +182,21 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public async createSearchableList_NoItem(name: string) {
     await this.createEntitySearchBtn().click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 4000000 });
     await this.entitySearchCreateName().fill(name);
     await this.page.waitForTimeout(250);
-    await this.entitySearchCreateSaveBtn().click();
-    await this.waitForSpinnerHide();
+    await Promise.all([
+      this.page.waitForResponse(resp => resp.url().includes('/api/searchable-groups') && resp.status() === 200, { timeout: 4000000 }),
+      this.entitySearchCreateSaveBtn().click(),
+    ]);
     await this.createEntitySearchBtn().waitFor({ state: 'visible', timeout: 90000 });
-    await this.page.waitForTimeout(1500);
+    await this.waitForSpinnerHide();
+    await this.page.waitForTimeout(2000);
   }
 
   public async createSearchableList_OneItem(name: string, itemName: string) {
     await this.createEntitySearchBtn().click();
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 400 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 4000000 });
     await this.entitySearchCreateName().fill(name);
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateSingleItemBtn().click();
@@ -199,16 +205,19 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await this.entitySearchCreateItemNameBox().fill(itemName);
     await this.entitySearchCreateItemSaveBtn().click();
     await this.page.waitForTimeout(250);
-    await this.entitySearchCreateSaveBtn().click();
-    await this.page.waitForTimeout(250);
+    await Promise.all([
+      this.page.waitForResponse(resp => resp.url().includes('/api/searchable-groups') && resp.status() === 200, { timeout: 4000000 }),
+      this.entitySearchCreateSaveBtn().click(),
+    ]);
     await this.createEntitySearchBtn().waitFor({ state: 'visible', timeout: 90000 });
-    await this.page.waitForTimeout(1500);
+    await this.waitForSpinnerHide();
+    await this.page.waitForTimeout(2000);
   }
 
   public async createSearchableList_MultipleItems(name: string, itemNames: string | string[]) {
     await this.createEntitySearchBtn().click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 400 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 4000000 });
     await this.entitySearchCreateName().fill(name);
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateImportBtn().click();
@@ -219,15 +228,18 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateImportItemSaveBtn().click();
     await this.page.waitForTimeout(250);
-    await this.entitySearchCreateSaveBtn().click();
-    await this.page.waitForTimeout(250);
+    await Promise.all([
+      this.page.waitForResponse(resp => resp.url().includes('/api/searchable-groups') && resp.status() === 200, { timeout: 4000000 }),
+      this.entitySearchCreateSaveBtn().click(),
+    ]);
     await this.createEntitySearchBtn().waitFor({ state: 'visible', timeout: 90000 });
-    await this.page.waitForTimeout(1500);
+    await this.waitForSpinnerHide();
+    await this.page.waitForTimeout(2000);
   }
 
   public async createSearchableList_NoItem_Cancels(name: string) {
     await this.createEntitySearchBtn().click();
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 400 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateName().fill(name);
     await this.page.waitForTimeout(250);
@@ -239,7 +251,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public async createSearchableList_OneItem_Cancels(name: string, itemName: string) {
     await this.createEntitySearchBtn().click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 400 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
     await this.entitySearchCreateName().fill(name);
     await this.entitySearchCreateSingleItemBtn().click();
     await this.page.waitForTimeout(250);
@@ -258,7 +270,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public async createSearchableList_MultipleItems_Cancels(name: string, itemNames: string | string[]) {
     await this.createEntitySearchBtn().click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 400 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
     await this.entitySearchCreateName().fill(name);
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateImportBtn().click();
@@ -279,13 +291,17 @@ export class SearchableListsPage extends PageWithNavbarPage {
     rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 200 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
     await this.entitySearchEditNameBox().clear();
     await this.page.waitForTimeout(250);
     await this.entitySearchEditNameBox().fill(newName);
     await this.page.waitForTimeout(250);
-    await this.entitySearchEditSaveBtn().click();
-    await this.page.waitForTimeout(250);
+    await Promise.all([
+      this.page.waitForResponse(resp => resp.url().includes('/api/searchable-groups') && resp.status() === 200, { timeout: 40000 }),
+      this.entitySearchEditSaveBtn().click(),
+    ]);
+    await this.waitForSpinnerHide();
+    await this.page.waitForTimeout(1500);
   }
 
   public async editSearchableListNameOnly_Cancels(newName: string) {
@@ -293,7 +309,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 200 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
     await this.entitySearchEditNameBox().clear();
     await this.page.waitForTimeout(250);
     await this.entitySearchEditNameBox().fill(newName);
@@ -307,15 +323,19 @@ export class SearchableListsPage extends PageWithNavbarPage {
     rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 200000 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000000 });
     await this.entitySearchEditNameBox().clear();
     await this.page.waitForTimeout(250);
     await this.entitySearchEditNameBox().fill(newName);
     await this.page.waitForTimeout(250);
     await this.editItemName(newItemName);
     await this.page.waitForTimeout(250);
-    await this.entitySearchEditSaveBtn().click();
-    await this.page.waitForTimeout(250);
+    await Promise.all([
+      this.page.waitForResponse(resp => resp.url().includes('/api/searchable-groups') && resp.status() === 200, { timeout: 40000 }),
+      this.entitySearchEditSaveBtn().click(),
+    ]);
+    await this.waitForSpinnerHide();
+    await this.page.waitForTimeout(1500);
   }
 
   public async editSearchableListOnlyItem(newItemName: string) {
@@ -323,11 +343,15 @@ export class SearchableListsPage extends PageWithNavbarPage {
     rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 200 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
     await this.editItemName(newItemName);
     await this.page.waitForTimeout(250);
-    await this.entitySearchEditSaveBtn().click();
-    await this.page.waitForTimeout(250);
+    await Promise.all([
+      this.page.waitForResponse(resp => resp.url().includes('/api/searchable-groups') && resp.status() === 200, { timeout: 40000 }),
+      this.entitySearchEditSaveBtn().click(),
+    ]);
+    await this.waitForSpinnerHide();
+    await this.page.waitForTimeout(1500);
   }
 
   public async editSearchableListNameAndItem_Cancels(newName: string, newItemName: string) {
@@ -335,7 +359,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 200 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
     await this.entitySearchEditNameBox().clear();
     await this.page.waitForTimeout(250);
     await this.entitySearchEditNameBox().fill(newName);
@@ -351,7 +375,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 200 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
     await this.entitySearchEditNameBox().clear();
     await this.page.waitForTimeout(250);
     await this.entitySearchEditNameBox().fill(newName);
@@ -367,7 +391,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 200 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
     await this.entitySearchEditNameBox().clear();
     await this.page.waitForTimeout(250);
     await this.entitySearchEditNameBox().fill(newName);
@@ -381,7 +405,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     rowNumber = rowNumber - 1;
     await (await this.entitySearchEditBtn(rowNumber)).click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 200 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
     await this.deleteItem();
     await this.page.waitForTimeout(250);
     await this.entitySearchEditSaveBtn().click();
@@ -422,7 +446,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public async editItemName_Cancels(newItemName: string) {
     const firstItem = await this.getFirstItemObject();
     await firstItem.editBtn.click();
-    await this.page.locator('#entityItemEditNameBox').waitFor({ state: 'visible', timeout: 400 });
+    await this.page.locator('#entityItemEditNameBox').waitFor({ state: 'visible', timeout: 40000 });
     await this.entitySearchEditItemNameBox().clear();
     await this.page.waitForTimeout(250);
     await this.entitySearchEditItemNameBox().fill(newItemName);

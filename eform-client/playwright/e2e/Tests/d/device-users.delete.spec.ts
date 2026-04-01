@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../Page objects/Login.page';
 import { MyEformsPage } from '../../Page objects/MyEforms.page';
 import { DeviceUsersPage } from '../../Page objects/DeviceUsers.page';
+import { generateRandmString } from '../../helper-functions';
 
 test.describe('Device users page', () => {
   let page;
@@ -17,6 +18,8 @@ test.describe('Device users page', () => {
     await loginPage.open('/');
     await loginPage.login();
     await myEformsPage.Navbar.goToDeviceUsersPage();
+    // Create a device user for delete tests to use
+    await deviceUsersPage.createNewDeviceUser(generateRandmString(), generateRandmString());
   });
 
   test.afterAll(async () => {
