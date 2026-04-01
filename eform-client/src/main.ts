@@ -1,8 +1,9 @@
-import { enableProdMode, APP_INITIALIZER, importProvidersFrom } from '@angular/core';
+import { enableProdMode, APP_INITIALIZER, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule, registerIconsFactory } from './app/app.module';
 import { environment } from './environments/environment';
 import * as Sentry from '@sentry/angular';
+import { OVERLAY_DEFAULT_CONFIG } from '@angular/cdk/overlay';
 import { registerLocaleData } from '@angular/common';
 import localeBg from '@angular/common/locales/bg';
 import localeCz from '@angular/common/locales/cs';
@@ -117,7 +118,8 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(NgxMaterialTimepickerModule, NgxMaskDirective, NgxMaskPipe, 
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        importProvidersFrom(NgxMaterialTimepickerModule, NgxMaskDirective, NgxMaskPipe,
         // Libs
         BrowserModule, HttpClientModule, StoreModule.forRoot({
             appMenus: appMenuReducer,
@@ -161,6 +163,10 @@ bootstrapApplication(AppComponent, {
             useFactory: initLocaleFactory,
             deps: [AuthStateService],
             multi: true,
+        },
+        {
+            provide: OVERLAY_DEFAULT_CONFIG,
+            useValue: { usePopover: false },
         },
     ]
 })
