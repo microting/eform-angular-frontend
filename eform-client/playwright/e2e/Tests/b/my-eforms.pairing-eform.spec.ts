@@ -26,8 +26,12 @@ test.describe.serial('Main page', () => {
     // Create 2 device users
     await deviceUsersPage.createNewDeviceUser('testName1', 'testLastName1');
     await deviceUsersPage.createNewDeviceUser('testName2', 'testLastName2');
-    users.push(await deviceUsersPage.getDeviceUserByName('testName1'));
-    users.push(await deviceUsersPage.getDeviceUserByName('testName2'));
+    const user1 = await deviceUsersPage.getDeviceUserByName('testName1');
+    expect(user1).not.toBeNull();
+    users.push(user1);
+    const user2 = await deviceUsersPage.getDeviceUserByName('testName2');
+    expect(user2).not.toBeNull();
+    users.push(user2);
     await myEformsPage.Navbar.goToFolderPage();
     // Create folder
     await foldersPage.createNewFolder('test folder', 'desc');
@@ -40,16 +44,22 @@ test.describe.serial('Main page', () => {
   test.afterAll(async () => {
     await page.waitForTimeout(1000);
     const eform = await myEformsPage.getEformsRowObjByNameEForm('test Eform');
-    if (eform) {
+    if (eform != null) {
       await eform.deleteEForm();
     }
     await myEformsPage.Navbar.goToDeviceUsersPage();
     for (let i = 0; i < users.length; i++) {
-      await (await deviceUsersPage.getDeviceUserByName(users[i].firstName)).delete();
+      const user = await deviceUsersPage.getDeviceUserByName(users[i].firstName);
+      if (user != null) {
+        await user.delete();
+      }
     }
     await myEformsPage.Navbar.goToFolderPage();
     for (let i = 0; i < folders.length; i++) {
-      await (await foldersPage.getFolderByName(folders[i].name)).delete();
+      const folder = await foldersPage.getFolderByName(folders[i].name);
+      if (folder != null) {
+        await folder.delete();
+      }
     }
     await page.close();
   });

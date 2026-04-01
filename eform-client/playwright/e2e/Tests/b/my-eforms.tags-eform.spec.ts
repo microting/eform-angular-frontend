@@ -28,6 +28,7 @@ test.describe.serial('Main page', () => {
     const rowCountBeforeCreation = await myEformsPage.rowNum();
     await myEformsPage.createNewEform(newEformLabel);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    expect(eform).not.toBeNull();
     expect(eform.eFormName).toBe(newEformLabel);
     const rowCountAfterCreation = await myEformsPage.rowNum();
     expect(rowCountBeforeCreation + 1).toBe(rowCountAfterCreation);
@@ -35,6 +36,7 @@ test.describe.serial('Main page', () => {
 
   test('should not perform any changes by doing nothing and clicking "Save" in tag edit window', async () => {
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    expect(eform).not.toBeNull();
     await eform.editTagsBtn.click();
     await myEformsPage.tagEditSaveBtn().click();
     expect(
@@ -57,10 +59,12 @@ test.describe.serial('Main page', () => {
 
   test('should delete eForm tag from eform', async () => {
     let eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    expect(eform).not.toBeNull();
     await eform.deleteTags([testTag]);
     await loginPage.waitForSpinnerHide(40000);
     await page.waitForTimeout(500);
     eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    expect(eform).not.toBeNull();
     expect(await eform.tags.count()).toBe(0);
   });
 

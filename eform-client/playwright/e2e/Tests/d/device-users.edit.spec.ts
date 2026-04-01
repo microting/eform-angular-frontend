@@ -108,10 +108,10 @@ test.describe('Device users page', () => {
       rowNumAfterEdit
     );
     expect(lastDeviceUserAfterEdit.firstName).toBe(
-      lastDeviceUserAfterEdit.firstName
+      lastDeviceUserBeforeEdit.firstName
     );
     expect(lastDeviceUserAfterEdit.lastName).toBe(
-      lastDeviceUserAfterEdit.lastName
+      lastDeviceUserBeforeEdit.lastName
     );
   });
 });

@@ -29,6 +29,7 @@ test.describe.serial('Entity Search', () => {
     const name = Guid.create().toString();
     await searchableLists.createSearchableList_NoItem(name);
     const searchableList = await searchableLists.getFirstRowObject();
+    expect(searchableList).not.toBeNull();
     expect(searchableList.name).toBe(name);
   });
 
@@ -36,6 +37,7 @@ test.describe.serial('Entity Search', () => {
     const newName = 'New Name';
     await searchableLists.editSearchableListNameOnly(newName);
     const searchableList = await searchableLists.getFirstRowObject();
+    expect(searchableList).not.toBeNull();
     expect(searchableList.name).toBe(newName);
     await searchableLists.cleanup();
   });
@@ -45,6 +47,7 @@ test.describe.serial('Entity Search', () => {
     const itemName = Guid.create().toString();
     await searchableLists.createSearchableList_OneItem(name, itemName);
     const searchableList = await searchableLists.getFirstRowObject();
+    expect(searchableList).not.toBeNull();
     expect(searchableList.name).toBe(name);
     await (await searchableLists.entitySearchEditBtn(searchableList.index - 1)).click();
     expect((await (await searchableLists.firstEntityItemName()).textContent()).trim()).toBe(itemName);
@@ -56,6 +59,7 @@ test.describe.serial('Entity Search', () => {
     const newItemName = 'New Item Name';
     await searchableLists.editSearchableListNameAndItem(newName, newItemName);
     const searchableList = await searchableLists.getFirstRowObject();
+    expect(searchableList).not.toBeNull();
     expect(searchableList.name).toBe(newName);
     await (await searchableLists.entitySearchEditBtn(searchableList.index - 1)).click();
     await page.waitForTimeout(500);
@@ -69,6 +73,7 @@ test.describe.serial('Entity Search', () => {
     const itemNames = ['a \n', 'b\n', 'c\n', 'd\n', 'e'];
     await searchableLists.createSearchableList_MultipleItems(name, itemNames);
     const searchableList = await searchableLists.getFirstRowObject();
+    expect(searchableList).not.toBeNull();
     expect(searchableList.name).toBe(name);
   });
 
