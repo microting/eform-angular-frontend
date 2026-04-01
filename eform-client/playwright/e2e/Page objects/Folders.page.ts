@@ -171,6 +171,7 @@ export class FoldersPage extends PageWithNavbarPage {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
         const da = applicationLanguagesTranslated[0];
+        await this.createLanguageSelector().waitFor({ state: 'visible', timeout: 40000 });
         await selectValueInNgSelector(this.page, '#createLanguageSelector', da.text);
         await this.page.waitForTimeout(500);
         await this.createNameInput(

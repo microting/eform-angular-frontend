@@ -165,13 +165,17 @@ export class MyEformsPage extends PageWithNavbarPage {
   async getEformsRowObjByNameEForm(
     nameEform: string
   ): Promise<MyEformsRowObject | null> {
-    await this.page.waitForTimeout(500);
-    const rowNum = await this.rowNum();
-    for (let i = 1; i < rowNum + 1; i++) {
-      const form = await this.getEformRowObj(i, false);
-      if (form.eFormName === nameEform) {
-        return form;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      await this.page.waitForTimeout(500);
+      const rowNum = await this.rowNum();
+      for (let i = 1; i < rowNum + 1; i++) {
+        const form = await this.getEformRowObj(i, false);
+        if (form.eFormName === nameEform) {
+          return form;
+        }
       }
+      // Wait longer before retrying — table may still be refreshing
+      await this.page.waitForTimeout(2000);
     }
     return null;
   }
@@ -247,7 +251,8 @@ export class MyEformsPage extends PageWithNavbarPage {
       (await this.waitForCreateEformBtn()).click(),
     ]);
     await this.newEformBtn().waitFor({ state: 'visible', timeout: 40000 });
-    await this.page.waitForTimeout(1000);
+    await this.waitForSpinnerHide();
+    await this.page.waitForTimeout(500);
     return { added: addedTags, selected: selectedTags };
   }
 

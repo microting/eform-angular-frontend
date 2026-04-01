@@ -17,14 +17,18 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
 
   async getFirstRowObject(): Promise<SearchableListRowObject> {
-    await this.page.waitForTimeout(250);
-    const obj = new SearchableListRowObject(this.page);
-    const row = await obj.getRow(1);
-    if (row.name !== 'Device users') {
-      return row;
-    } else {
-      return await obj.getRow(2);
+    await this.page.waitForTimeout(500);
+    const rowCount = await this.rowNum();
+    for (let i = 1; i <= rowCount; i++) {
+      const obj = new SearchableListRowObject(this.page);
+      const row = await obj.getRow(i);
+      if (row.name !== 'Device users') {
+        return row;
+      }
     }
+    // Fallback to row 1 if all rows are 'Device users' (shouldn't happen)
+    const obj = new SearchableListRowObject(this.page);
+    return await obj.getRow(1);
   }
 
   async getFirstItemObject(): Promise<EntitySearchItemRowObject> {
@@ -175,11 +179,11 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public async createSearchableList_NoItem(name: string) {
     await this.createEntitySearchBtn().click();
     await this.page.waitForTimeout(250);
-    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 400 });
+    await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 40000 });
     await this.entitySearchCreateName().fill(name);
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateSaveBtn().click();
-    await this.page.waitForTimeout(250);
+    await this.waitForSpinnerHide();
     await this.createEntitySearchBtn().waitFor({ state: 'visible', timeout: 90000 });
     await this.page.waitForTimeout(1500);
   }
