@@ -8,27 +8,36 @@ describe('Password settings', function () {
   before(async () => {
     loginPage.open('/');
     loginPage.login();
-    myEformsPage.Navbar.goToPasswordSettings();
   });
 
-  it('should set password to 2Times2WillDo', async () => {
+  it('should change password and revert it back', async () => {
+    // Navigate to password settings
+    myEformsPage.Navbar.goToPasswordSettings();
+    
+    // Change password to new password
     passwordSettings.setNewPassword();
+    
+    // Logout
     passwordSettings.Navbar.logout();
+    
+    // Login with new password to verify change worked
     loginPage.open('/');
     loginPage.loginWithNewPassword();
+    
+    // Navigate to password settings to revert
     myEformsPage.Navbar.goToPasswordSettings();
-    // expect(myEformsPage.Navbar.verifyHeaderMenuItem('My eForms')).equal('My eForms');
-    // expect(myEformsPage.Navbar.verifyHeaderMenuItem('Device Users')).equal('Device Users');
-    // expect(myEformsPage.Navbar.verifyHeaderMenuItem('Advanced')).equal('Advanced');
-  });
-  it('should revert to old password', async () => {
+    
+    // Revert password back to original
     passwordSettings.revertToOldPassword();
+    
+    // Logout
     passwordSettings.Navbar.logout();
+    
+    // Login with original password to verify revert worked
     loginPage.open('/');
     loginPage.login();
+    
+    // Verify we can access password settings again
     myEformsPage.Navbar.goToPasswordSettings();
-    // expect(myEformsPage.Navbar.verifyHeaderMenuItem('Meine eForms')).equal('Meine eForms');
-    // expect(myEformsPage.Navbar.verifyHeaderMenuItem('Gerätebenutzer')).equal('Gerätebenutzer');
-    // expect(myEformsPage.Navbar.verifyHeaderMenuItem('Fortgeschritten')).equal('Fortgeschritten');
   });
 });
