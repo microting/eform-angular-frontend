@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild, inject, ChangeDetectorRef } from '@angular/core';
 import {
   EntityGroupEditModel,
   EntityItemModel,
@@ -37,6 +37,7 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
   private location = inject(Location);
   dialog = inject(MatDialog);
   private overlay = inject(Overlay);
+  private cdr = inject(ChangeDetectorRef);
 
   entityGroupEditModel: EntityGroupEditModel = new EntityGroupEditModel();
   @ViewChild('frame', { static: true }) frame;
@@ -91,6 +92,8 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
               description: data.model.description,
             }
             this.actualizeEntityItemPositions();
+            // Trigger change detection after async update
+            this.cdr.detectChanges();
           }
         });
     } else if (this.header === 'selectable'){
@@ -108,6 +111,8 @@ export class EntityEditCreateComponent implements OnInit, OnDestroy{
               description: data.model.description,
             }
             this.actualizeEntityItemPositions();
+            // Trigger change detection after async update
+            this.cdr.detectChanges();
           }
         });
     }

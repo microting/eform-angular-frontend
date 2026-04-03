@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {HeaderSettingsModel} from 'src/app/common/models/settings';
@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   private eventBrokerService = inject(EventBrokerService);
   private settingsService = inject(AppSettingsService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;
   logoImage: any;
@@ -46,6 +47,8 @@ export class HeaderComponent implements OnInit {
             } else if (!this.headerSettingsModel.imageLink) {
               this.logoImage = '../../../assets/images/logo.png';
             }
+            // Trigger change detection after async update
+            this.cdr.detectChanges();
           }
         }));
       } else {

@@ -13,14 +13,14 @@
       <mat-label>{{ 'Current tags' | translate }}</mat-label>
       <mtx-select
         class="custom"
+        [appendTo]="'.cdk-overlay-pane'"
         [dropdownPosition]="'bottom'"
         [(ngModel)]="site.tags"
         [bindValue]="'id'"
         [bindLabel]="'name'"
         [items]="availableTags"
         id="tagSelector"
-        [multiple]="true"
-        appendTo="body">
+        [multiple]="true">
       </mtx-select>
     </mat-form-field>
   </div>

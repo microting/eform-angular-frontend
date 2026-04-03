@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, inject } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, inject, ChangeDetectorRef } from '@angular/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Observable, Subscription} from 'rxjs';
 import { MatTreeNestedDataSource, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, MatNestedTreeNode, MatTreeNodeToggle, MatTreeNodeOutlet } from '@angular/material/tree';
@@ -34,6 +34,7 @@ interface MenuNode {
 export class NavigationComponent implements OnInit, OnDestroy {
   router = inject(Router);
   private authStore = inject(Store);
+  private cdr = inject(ChangeDetectorRef);
 
   @Output() clickOnLink: EventEmitter<void> = new EventEmitter<void>();
 
@@ -58,6 +59,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
         if (x.length > 0) {
           this.menu.data = [...x];
           this.restoreOpenedMenu();
+          // Trigger change detection after async update
+          this.cdr.detectChanges();
         }
       });
     });

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FoldersService } from 'src/app/common/services';
 import {FolderDto, LanguagesModel} from 'src/app/common/models';
@@ -27,6 +27,7 @@ export class FoldersComponent implements OnInit {
   private foldersService = inject(FoldersService);
   private dialog = inject(MatDialog);
   private overlay = inject(Overlay);
+  private cdr = inject(ChangeDetectorRef);
 
   foldersFlatList: Array<FolderDto> = [];
   foldersDto: Array<FolderDto> = [];
@@ -64,6 +65,8 @@ export class FoldersComponent implements OnInit {
     this.foldersService.getAllFolders().subscribe((operation) => {
       if (operation && operation.success) {
         this.foldersDto = operation.model;
+        // Trigger change detection after async update
+        this.cdr.detectChanges();
       }
     });
   }

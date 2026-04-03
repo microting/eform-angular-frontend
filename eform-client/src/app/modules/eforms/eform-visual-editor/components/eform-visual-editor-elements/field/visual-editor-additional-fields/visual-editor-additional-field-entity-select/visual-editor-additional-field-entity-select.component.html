@@ -3,7 +3,7 @@
     <mat-form-field>
       <mat-label>{{'Selected entity group select' | translate}}</mat-label>
       <mtx-select
-        appendTo="body"
+        [appendTo]="'.cdk-overlay-pane'"
         [dropdownPosition]="'bottom'"
         [clearable]="false"
         [bindLabel]="'name'"

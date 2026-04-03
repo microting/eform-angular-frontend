@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import {
   Paged,
   EntityGroupModel,
@@ -50,6 +50,7 @@ export class EntitySelectComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
 
   advEntitySelectableGroupListModel: Paged<EntityGroupModel> = new Paged<EntityGroupModel>();
   entitySelectRemoveComponentAfterClosedSub$: Subscription;
@@ -87,6 +88,8 @@ export class EntitySelectComponent implements OnInit, OnDestroy {
         if (data && data.model) {
           this.advEntitySelectableGroupListModel = data.model;
           this.store.dispatch(updateEntitySelectTotal({total: data.model.total}));
+          // Trigger change detection after async update
+          this.cdr.detectChanges();
         }
       });
   }

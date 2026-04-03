@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject, ChangeDetectorRef } from '@angular/core';
 import {Subject, Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {UserClaimsEnum} from 'src/app/common/const';
@@ -78,6 +78,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
 
   @ViewChild('modalTags', {static: true}) modalTags: EformsTagsComponent;
 
@@ -163,6 +164,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
       .subscribe((operation) => {
         if (operation && operation.success) {
           this.templateListModel = operation.model;
+          // Mark for check instead of immediate detectChanges for Angular 21 compatibility
+          this.cdr.markForCheck();
         }
       });
   }
@@ -176,6 +179,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
           if (data && data.success) {
             this.availableTags = data.model;
             this.loadSelectedUserTags();
+            // Mark for check instead of immediate detectChanges for Angular 21 compatibility
+            this.cdr.markForCheck();
           }
         });
     // } else {
