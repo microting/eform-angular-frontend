@@ -318,6 +318,9 @@ public class Startup(IConfiguration configuration)
         }
         ConnectServices(services);
 
+        // gRPC
+        services.AddGrpc();
+
         // plugins
         services.AddEFormPlugins(Program.EnabledPlugins);
     }
@@ -381,6 +384,14 @@ public class Startup(IConfiguration configuration)
 
         // Plugins
         app.UseEFormPlugins(Program.EnabledPlugins);
+
+        // gRPC
+        app.UseRouting();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapGrpcService<Services.GrpcServices.EformAuthGrpcService>();
+        });
+
         // Route all unknown requests to app root
         app.UseAngularMiddleware(env);
         FixUserToWorkerLinks();
