@@ -196,17 +196,7 @@ jobs:
         sed -i 's/localhost/mariadbtest/g' eform-client/e2e/Constants/DatabaseConfigurationConstants.ts
         sed -i 's/localhost/mariadbtest/g' eform-client/playwright/e2e/Constants/DatabaseConfigurationConstants.ts
     - name: DB Configuration
-      uses: cypress-io/github-action@v5
-      with:
-        start: echo 'hi'
-        wait-on: "http://localhost:4200"
-        wait-on-timeout: 120
-        browser: chrome
-        record: false
-        spec: cypress/e2e/db/*
-        config-file: cypress.config.ts
-        working-directory: eform-client
-        command-prefix: "--"
+      run: cd eform-client && npx playwright test playwright/e2e/Tests/database-configuration/
     - name: Playwright ${{matrix.test}} test
       run: cd eform-client && npx playwright test playwright/e2e/Tests/${{matrix.test}}/
     - name: Stop the newly build Docker container
