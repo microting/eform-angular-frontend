@@ -133,9 +133,9 @@ export class SitesRowObject {
     this.index = rowNum;
     this.element = this.page.locator('tbody > tr').nth(rowNum - 1);
     if ((await this.page.locator('tbody > tr').count()) >= rowNum) {
-      this.siteId = +(await this.element.locator('#siteUUId').textContent() || '0');
-      this.units = await this.element.locator('#units').textContent() || '';
-      this.siteName = await this.element.locator('#siteName').textContent() || '';
+      this.siteId = +(await this.element.locator('#siteUUId').first().textContent() || '0');
+      this.units = await this.element.locator('#units').first().textContent() || '';
+      this.siteName = await this.element.locator('#siteName').first().textContent() || '';
       let list: Locator | null = null;
       try {
         list = this.element.locator('#tags').locator('span');
