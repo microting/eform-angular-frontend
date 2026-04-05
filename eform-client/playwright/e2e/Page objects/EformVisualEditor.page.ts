@@ -101,11 +101,11 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
   }
 
   changeChecklistSaveCancelBtn(): Locator {
-    return this.page.locator('#changeChecklistSaveCancelBtn');
+    return this.page.locator('#changeChecklistSaveCancelBtn').last();
   }
 
   changeChecklistSaveBtn(): Locator {
-    return this.page.locator('#changeChecklistSaveBtn');
+    return this.page.locator('#changeChecklistSaveBtn').last();
   }
 
   async selectedLanguages(): Promise<number[]> {
