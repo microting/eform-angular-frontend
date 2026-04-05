@@ -486,8 +486,8 @@ public class Program
                 webBuilder.ConfigureKestrel(serverOptions =>
                 {
                     serverOptions.Limits.MaxRequestBodySize = 100 * 1024 * 1024;// 100Mb
-                    var restPort = int.Parse(port);
-                    var grpcPort = restPort + 1;
+                    var restPort = port;
+                    var grpcPort = port + 1;
                     // REST + web: HTTP/1.1 and HTTP/2
                     serverOptions.ListenAnyIP(restPort, listenOptions =>
                     {
