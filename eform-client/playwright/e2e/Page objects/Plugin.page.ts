@@ -54,7 +54,7 @@ export class PluginPage extends PageWithNavbarPage {
 
   async getPluginRowObjByName(namePlugin: string): Promise<PluginRowObject | null> {
     await this.page.waitForTimeout(500);
-    for (let i = 1; i < await this.rowNum(); i++) {
+    for (let i = 1; i <= await this.rowNum(); i++) {
       const plugin = await this.getPluginRowObjByIndex(i);
       if (plugin.name === namePlugin) {
         return plugin;
