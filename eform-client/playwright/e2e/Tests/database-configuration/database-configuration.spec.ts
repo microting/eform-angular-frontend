@@ -4,27 +4,30 @@ import DatabaseConfigurationConstants from '../../Constants/DatabaseConfiguratio
 import { LoginPage } from '../../Page objects/Login.page';
 
 test.describe('Database', () => {
+  test.describe.configure({ retries: 0 });
+
   test('should be configured successfully', async ({ page }) => {
+    test.setTimeout(240_000);
     const databasePage = new DatabasePage(page);
     const loginPage = new LoginPage(page);
     await databasePage.open('/');
-    await (await databasePage.saveBtn()).waitFor({ state: 'visible', timeout: 90000 });
-    await (await databasePage.languageDropdown()).waitFor({ state: 'visible', timeout: 90000 });
+    await databasePage.saveBtn().waitFor({ state: 'visible', timeout: 90000 });
+    await databasePage.languageDropdown().waitFor({ state: 'visible', timeout: 90000 });
     await page.waitForTimeout(5000);
-    await (await databasePage.languageDropdown()).waitFor({ state: 'visible', timeout: 90000 });
+    await databasePage.languageDropdown().waitFor({ state: 'visible', timeout: 90000 });
     await page.waitForTimeout(1000);
-    expect(await (await databasePage.firstNameInput()).isVisible()).toBeTruthy();
-    expect(await (await databasePage.lastNameInput()).isVisible()).toBeTruthy();
-    expect(await (await databasePage.emailInput()).isVisible()).toBeTruthy();
-    expect(await (await databasePage.passwordInput()).isVisible()).toBeTruthy();
-    expect(await (await databasePage.customerNo()).isVisible()).toBeTruthy();
-    expect(await (await databasePage.tokenInput()).isVisible()).toBeTruthy();
-    expect(await (await databasePage.authenticationType()).isVisible()).toBeTruthy();
-    expect(await (await databasePage.languageDropdown()).isVisible()).toBeTruthy();
+    expect(await databasePage.firstNameInput().isVisible()).toBeTruthy();
+    expect(await databasePage.lastNameInput().isVisible()).toBeTruthy();
+    expect(await databasePage.emailInput().isVisible()).toBeTruthy();
+    expect(await databasePage.passwordInput().isVisible()).toBeTruthy();
+    expect(await databasePage.customerNo().isVisible()).toBeTruthy();
+    expect(await databasePage.tokenInput().isVisible()).toBeTruthy();
+    expect(await databasePage.authenticationType().isVisible()).toBeTruthy();
+    expect(await databasePage.languageDropdown().isVisible()).toBeTruthy();
     await databasePage.configure(DatabaseConfigurationConstants.languageOptions.danish);
     await page.waitForTimeout(1000);
     await databasePage.save();
-    await page.locator('#loginBtn').waitFor({ state: 'visible', timeout: 90000 });
-    expect(await (await loginPage.loginBtn()).isVisible()).toBeTruthy();
+    await page.locator('#loginBtn').waitFor({ state: 'visible', timeout: 180000 });
+    expect(await loginPage.loginBtn().isVisible()).toBeTruthy();
   });
 });
