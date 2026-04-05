@@ -486,12 +486,17 @@ public class Program
                 webBuilder.ConfigureKestrel(serverOptions =>
                 {
                     serverOptions.Limits.MaxRequestBodySize = 100 * 1024 * 1024;// 100Mb
-                    serverOptions.ConfigureEndpointDefaults(listenOptions =>
+                    // REST + web: HTTP/1.1 and HTTP/2
+                    serverOptions.ListenAnyIP(int.Parse(port), listenOptions =>
                     {
                         listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2;
                     });
+                    // gRPC: HTTP/2 only (h2c — cleartext HTTP/2)
+                    serverOptions.ListenAnyIP(int.Parse(port) + 1, listenOptions =>
+                    {
+                        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+                    });
                 })
-                .UseUrls($"http://0.0.0.0:{port}")
                 // .UseIISIntegration()
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
