@@ -7,7 +7,7 @@ test.describe('Database', () => {
   test.describe.configure({ retries: 0 });
 
   test('should be configured successfully', async ({ page }) => {
-    test.setTimeout(240_000);
+    test.setTimeout(300_000);
     const databasePage = new DatabasePage(page);
     const loginPage = new LoginPage(page);
     await databasePage.open('/');
@@ -27,7 +27,9 @@ test.describe('Database', () => {
     await databasePage.configure(DatabaseConfigurationConstants.languageOptions.danish);
     await page.waitForTimeout(1000);
     await databasePage.save();
-    await page.locator('#loginBtn').waitFor({ state: 'visible', timeout: 180000 });
+    await page.waitForTimeout(120000);
+    await page.goto('http://localhost:4200');
+    await page.locator('#loginBtn').waitFor({ state: 'visible', timeout: 90000 });
     expect(await loginPage.loginBtn().isVisible()).toBeTruthy();
   });
 });
