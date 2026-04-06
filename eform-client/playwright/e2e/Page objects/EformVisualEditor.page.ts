@@ -288,9 +288,12 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
   async clickSave() {
     const saveBtn = this.saveCreateEformBtn();
     await saveBtn.scrollIntoViewIfNeeded();
+    const saveResponse = this.page.waitForResponse(
+      r => r.url().includes('/api/templates') && (r.request().method() === 'POST' || r.request().method() === 'PUT'),
+      { timeout: 60000 }
+    );
     await saveBtn.click();
-    // Note: myEformsPage.newEformBtn() would need to be passed in or imported
-    // await myEformsPage.newEformBtn().waitFor({ state: 'visible', timeout: 40000 });
+    await saveResponse;
   }
 
   async openAllLanguages() {

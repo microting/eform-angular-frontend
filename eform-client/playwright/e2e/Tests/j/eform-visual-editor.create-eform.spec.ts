@@ -690,7 +690,7 @@ test.describe.serial('Visual editor page', () => {
     const eform = await myEformsPage.getLastMyEformsRowObj();
 
     await eform.goToVisualEditor();
-    await page.waitForTimeout(1500);
+    await eformVisualEditorPage.manageTags().waitFor({ state: 'visible', timeout: 40000 });
     mainChecklist = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainChecklist.getAllFields();
     expect(mainChecklist.translations[0].name).toBe(checklist.translations[0].name);
