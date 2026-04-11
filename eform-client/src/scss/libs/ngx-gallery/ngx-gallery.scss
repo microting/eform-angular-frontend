@@ -1,26 +1,9 @@
-@use 'sass:map';
-@use '@angular/material' as mat;
 @use "lib/gallery";
 @use "lib/lightbox";
 
-@mixin color($theme) {
-  $color-config: mat.m2-get-color-config($theme);
-  $background: map.get($theme, 'background');
-
+@mixin theme {
   gallery {
-    background: map.get($background, 'card') !important;
-  }
-
-  .g-backdrop {
-    //background-color: map.get($background, 'card') !important;
-  }
-
-}
-
-@mixin theme($theme) {
-  $color-config: mat.m2-get-color-config($theme);
-  @if $color-config != null {
-    @include color($theme);
+    background: var(--card) !important;
   }
 }
 

@@ -1,40 +1,28 @@
-@use 'sass:map';
-@use 'sass:color';
-@use '@angular/material' as mat;
-
-@mixin color($theme) {
-  $color-config: mat.m2-get-color-config($theme);
-  $is-dark-theme: map.get($color-config, 'is-dark');
-
-  $foreground: map.get($color-config, foreground);
-  $label-color: mat.m2-get-color-from-palette($foreground, secondary-text);
-
-  $primary-palette: map.get($color-config, 'primary');
-  $background: map.get($theme, 'background');
-
+@mixin theme {
   .NgxEditor__MenuBar {
-    background-color: color.scale(map.get($background, 'card'), $lightness: +30%);
+    background-color: var(--card);
   }
 
   .NgxEditor {
-    color: if($is-dark-theme, white, black);
-    background-color: map.get($background, 'card');
-    border-bottom: 1px solid mat.m2-get-color-from-palette($primary-palette, 50) !important;
+    background-color: var(--card);
+    border-bottom: 1px solid var(--border) !important;
 
     &:focus-within:not([readonly]) {
-      box-shadow: 0 1px 0 0 mat.m2-get-color-from-palette($primary-palette, 500) !important;
-      border-bottom: 1px solid mat.m2-get-color-from-palette($primary-palette, 500) !important;
+      box-shadow: 0 1px 0 0 var(--primary) !important;
+      border-bottom: 1px solid var(--primary) !important;
     }
+
     .NgxEditor__Placeholder:before {
-      color: $label-color;
+      color: var(--text-body);
     }
   }
-}
 
-@mixin theme($theme) {
-  $color-config: mat.m2-get-color-config($theme);
-  @if $color-config != null {
-    @include color($theme);
+  body.theme-light .NgxEditor {
+    color: black;
+  }
+
+  body.theme-dark .NgxEditor {
+    color: white;
   }
 }
 

@@ -1,6 +1,3 @@
-@use 'sass:map';
-@use '@angular/material' as mat;
-
 .mtx-grid {
   max-height: 78.5vh;
   border: 0 !important;
@@ -25,151 +22,45 @@
   }
 }
 
-@mixin color($theme) {
-  $color-config: mat.m2-get-color-config($theme);
-  $is-dark-theme: map.get($color-config, 'is-dark');
-  $background-powder-color: #b3d3ea;
-  $background-yellow-color: #e6d178;
-  $background-red-light-color: #f8d7da;
-  $background-red-dark-color: #f5a5a8;
-  @if $is-dark-theme {
-    $background-powder-color: #4c6071;
-    $background-yellow-color: #7e6f3a;
-    $background-red-light-color: #f8d7da;
-    $background-red-dark-color: #f5a5a8;
-  }
+@mixin _grid-backgrounds($powder, $yellow, $red-light, $red-dark) {
   mtx-grid {
-    .background-yellow {
-      background-color: $background-yellow-color !important;
-      color: #0F1316 !important;
-
-      span {
+    @each $name, $bg in (('yellow', $yellow), ('red-light', $red-light), ('red-dark', $red-dark), ('powder', $powder)) {
+      .background-#{$name} {
+        background-color: $bg !important;
         color: #0F1316 !important;
-      }
 
-      td.mat-table-sticky-right {
-        background-color: $background-yellow-color !important;
-
-        #actionMenu {
-          .mat-icon {
-            color: #0F1316 !important;
-          }
+        span {
+          color: #0F1316 !important;
         }
-      }
 
-      .mat-mdc-form-field {
-        padding: 4px !important;
-      }
+        td.mat-table-sticky-right {
+          background-color: $bg !important;
 
-      .mat-mdc-form-field .mdc-text-field__input {
-        background-color: unset !important;
-      }
-    }
-
-    .background-red-light {
-      background-color: $background-red-light-color !important;
-      color: #0F1316 !important;
-
-      span {
-        color: #0F1316 !important;
-      }
-
-      td.mat-table-sticky-right {
-        background-color: $background-red-light-color !important;
-
-        #actionMenu {
-          .mat-icon {
-            color: #0F1316 !important;
-          }
-        }
-      }
-
-      .mat-mdc-form-field {
-        padding: 4px !important;
-      }
-
-      .mat-mdc-form-field .mdc-text-field__input {
-        background-color: unset !important;
-      }
-    }
-
-    .background-red-dark {
-      background-color: $background-red-dark-color !important;
-      color: #0F1316 !important;
-
-      span {
-        color: #0F1316 !important;
-      }
-
-      td.mat-table-sticky-right {
-        background-color: $background-red-dark-color !important;
-
-        #actionMenu {
-          .mat-icon {
-            color: #0F1316 !important;
-          }
-        }
-      }
-
-      .mat-mdc-form-field {
-        padding: 4px !important;
-      }
-
-      .mat-mdc-form-field .mdc-text-field__input {
-        background-color: unset !important;
-      }
-    }
-
-    .background-powder {
-      background-color: $background-powder-color !important;
-      color: #0F1316 !important;
-
-      span {
-        color: #0F1316 !important;
-      }
-
-      td.mat-table-sticky-right {
-        background-color: $background-powder-color !important;
-
-        #actionMenu {
-          .mat-icon {
-            color: #0F1316 !important;
+          #actionMenu {
+            .mat-icon {
+              color: #0F1316 !important;
+            }
           }
         }
 
-      }
+        .mat-mdc-form-field {
+          padding: 4px !important;
+        }
 
-      .mat-mdc-form-field {
-        padding: 4px !important;
-      }
-
-      .mat-mdc-form-field .mdc-text-field__input {
-        background-color: unset !important;
+        .mat-mdc-form-field .mdc-text-field__input {
+          background-color: unset !important;
+        }
       }
     }
   }
 }
 
-@mixin typography($theme) {
-  $typography-config: mat.m2-get-typography-config($theme);
-  $header-text: map.get($typography-config, 'subtitle-2');
-  $normal-text: map.get($typography-config, 'body-2');
-  mtx-grid thead * {
-    @each $prop, $value in $header-text {
-      $prop: $value;
-    }
+@mixin theme {
+  body.theme-light {
+    @include _grid-backgrounds(#b3d3ea, #e6d178, #f8d7da, #f5a5a8);
   }
-  mtx-grid tbody * {
-    @each $prop, $value in $normal-text {
-      $prop: $value;
-    }
-  }
-}
 
-@mixin theme($theme) {
-  $color-config: mat.m2-get-color-config($theme);
-  @if $color-config != null {
-    @include color($theme);
-    @include typography($theme);
+  body.theme-dark {
+    @include _grid-backgrounds(#4c6071, #7e6f3a, #f8d7da, #f5a5a8);
   }
 }
