@@ -12,8 +12,8 @@ mat-tree {
     .nav-link {
       width: 100%;
       text-align: inherit;
-      min-height: 36px;
-      padding: 0 14px !important;
+      min-height: 40px;
+      padding: 0 16px !important;
       display: flex;
       align-items: center;
       justify-content: start;
@@ -24,11 +24,11 @@ mat-tree {
       letter-spacing: 0.1px;
 
       .mat-icon {
-        width: 18px;
-        height: 18px;
-        font-size: 18px;
-        line-height: 18px;
-        margin-right: 10px;
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+        line-height: 20px;
+        margin-right: 12px;
       }
 
       span {
@@ -102,9 +102,9 @@ mat-tree {
         }
 
         .mat-expansion-panel-header {
-          height: 36px !important;
-          min-height: 36px !important;
-          padding: 0 14px 0 10px !important;
+          height: 40px !important;
+          min-height: 40px !important;
+          padding: 0 16px 0 12px !important;
           border-radius: var(--rounded-full) !important;
           font-family: var(--brand-font-family, var(--font-family)) !important;
           font-size: 14px !important;
@@ -158,8 +158,8 @@ mat-tree {
 
         mat-tree-node {
           .nav-link {
-            min-height: 32px;
-            font-size: 13px;
+            min-height: 36px;
+            font-size: 14px;
 
             &:hover {
               width: 100% !important;
