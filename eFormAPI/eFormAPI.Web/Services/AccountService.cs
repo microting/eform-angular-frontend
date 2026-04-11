@@ -101,6 +101,7 @@ public class AccountService(
         var timeZone = string.IsNullOrEmpty(user.TimeZone) ? "Europe/Copenhagen" : user.TimeZone;
         var formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats;
         var darkTheme = user.DarkTheme;
+        var themeVariant = string.IsNullOrEmpty(user.ThemeVariant) ? "eform" : user.ThemeVariant;
         var locale = string.IsNullOrEmpty(user.Locale) ? "da" : user.Locale;
         var core = await coreHelper.GetCore();
         var dbContextHelper = core.DbContextHelper;
@@ -121,6 +122,7 @@ public class AccountService(
             Locale = locale,
             LanguageId = languageId,
             DarkTheme = darkTheme,
+            ThemeVariant = themeVariant,
             Formats = formats,
             TimeZone = timeZone,
             LoginRedirectUrl = securityGroupRedirectLink,
@@ -158,6 +160,10 @@ public class AccountService(
         user.TimeZone = model.TimeZone;
         user.Formats = model.Formats;
         user.DarkTheme = model.DarkTheme;
+        if (!string.IsNullOrEmpty(model.ThemeVariant))
+        {
+            user.ThemeVariant = model.ThemeVariant;
+        }
         var updateResult = await userManager.UpdateAsync(user);
         if (!updateResult.Succeeded)
         {
