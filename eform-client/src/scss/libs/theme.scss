@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files 2 */
 @use '@angular/material' as mat;
 @use '../themes/eform' as eform;
+@use '../themes/workspace' as workspace;
 @use '../themes/theme-mixin' as theme-mixin;
 @use './ngx-editor/ngx-editor' as ngx-editor;
 @use '../components/text' as text;
@@ -20,6 +21,14 @@ body {
 
   &.theme-dark {
     @include theme-mixin.apply-theme(eform.$eform-tokens, dark);
+  }
+
+  &.theme-workspace.theme-light {
+    @include theme-mixin.apply-theme(workspace.$workspace-tokens, light);
+  }
+
+  &.theme-workspace.theme-dark {
+    @include theme-mixin.apply-theme(workspace.$workspace-tokens, dark);
   }
 
   @include ngx-editor.theme;

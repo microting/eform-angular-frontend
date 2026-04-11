@@ -39,4 +39,14 @@
     container-elevation-shadow: none,
     actions-padding: 20px,
   ));
+
+  @include mat.card-overrides((
+    elevated-container-shape: map.get($tokens, card-shape),
+    outlined-container-shape: map.get($tokens, card-shape),
+    filled-container-shape: map.get($tokens, card-shape),
+  ));
+
+  @include mat.chips-overrides((
+    container-shape-radius: map.get($tokens, chip-shape),
+  ));
 }
