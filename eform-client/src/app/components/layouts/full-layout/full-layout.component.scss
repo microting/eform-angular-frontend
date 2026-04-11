@@ -34,3 +34,11 @@
   align-items: center;
   gap: 10px;
 }
+
+.content-card {
+  background-color: var(--content-card-bg);
+  border-radius: var(--content-card-radius);
+  margin: var(--content-card-margin);
+  min-height: calc(100% - 2 * var(--content-card-margin, 0px));
+  overflow: auto;
+}

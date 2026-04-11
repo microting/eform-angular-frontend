@@ -41,7 +41,7 @@
       <app-navigation (clickOnLink)="onClickOnLink()"></app-navigation>
       <app-footer></app-footer>
     </mat-drawer>
-    <div class="mb-auto mat-app-background" *ngIf="selectIsAuth$ | async">
+    <div class="mb-auto content-card" *ngIf="selectIsAuth$ | async">
       <app-userback-widget></app-userback-widget>
       <router-outlet></router-outlet>
     </div>

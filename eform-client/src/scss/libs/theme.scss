@@ -16,11 +16,11 @@
 
 body {
   &.theme-light {
-    @include theme-mixin.apply-theme(eform.$eform-tokens, light);
+    @include theme-mixin.apply-theme(workspace.$workspace-tokens, light);
   }
 
   &.theme-dark {
-    @include theme-mixin.apply-theme(eform.$eform-tokens, dark);
+    @include theme-mixin.apply-theme(workspace.$workspace-tokens, dark);
   }
 
   &.theme-workspace.theme-light {
@@ -92,18 +92,3 @@ body {
   }
 }
 
-body, .theme-light {
-  --mdc-theme-primary: #{$primary};
-  --mdc-theme-on-primary: #{$on-primary};
-  --mdc-theme-primary-dark: #{$primary-dark-light-mode};
-  --mdc-theme-on-primary-dark: #{$on-primary-dark};
-  --mat-app-background-color: #{$bg-light};
-}
-
-body, .theme-dark {
-  --mdc-theme-primary: #{$primary-dark};
-  --mdc-theme-on-primary: #{$on-primary-dark};
-  --mdc-theme-primary-dark: #{$primary-dark-dark-mode};
-  --mdc-theme-on-primary-dark: #{$on-primary-dark};
-  --mat-app-background-color: #{$bg-dark};
-}

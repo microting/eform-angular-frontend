@@ -10,7 +10,7 @@ html, body {
   font-size: 14px;
   margin: 0;
   --theme-body-font-color: var(--black-800);
-  font-family: $eform-font-family;
+  font-family: var(--font-family, #{$eform-font-family});
 
   .mat-mdc-option {
     font-size: unset !important;
@@ -50,32 +50,17 @@ h2 {
 :root {
   --rounded-full: #{$border-rounded-full};
   --font-family: #{$eform-font-family};
-}
-
-
-body, .theme-light {
   --black-800: #242729;
   --blue-600: #0077cc;
   --theme-body-font-color: var(--black-800);
+}
+
+body, .theme-light {
   --tp-td-bg: #ffffff;
   --tp-th-bg: #f7f9fa;
   --tp-border: #EBEFF2;
   --tp-text: #111827;
   --tp-white-text: #0F1316;
-  --border: #{$border-light};
-  --icon-secondary: #{$icon-secondary-light};
-  --bg: #{$bg-light};
-  --text-header: #{$text-header-light};
-  //--mat-card-elevated-container-color: #{$bg-light}!important;
-  --primary: #{$primary-light};
-  --primary-light: #{$primary-light-light-mode};
-  --warning: #{$warning-light};
-  --error: #{$error-light};
-  --btn-delete-text: #{$text-header-dark};
-  --text-body: #{$text-body-light};
-  --card: #{$card-light};
-  --mat-table-row-item-outline-color: #{$border-light} !important;
-  --mat-card-elevated-container-color: #{$bg-light} !important;
 }
 
 body, .theme-dark {
@@ -84,20 +69,6 @@ body, .theme-dark {
   --tp-border: #2B2B2B;
   --tp-text: #E6E6E6;
   --tp-white-text: white;
-  --border: #{$border-dark};
-  --icon-secondary: #{$icon-secondary-dark};
-  --bg: #{$bg-dark};
-  --text-header: #{$text-header-dark};
-  //--mat-card-elevated-container-color: #{$bg-dark}!important;
-  --primary: #{$primary-dark};
-  --primary-light: #{$primary-light-dark-mode};
-  --warning: #{$warning-dark};
-  --error: #{$error-dark};
-  --btn-delete-text: #{$text-header-light};
-  --text-body: #{$text-body-dark};
-  --card: #{$card-dark};
-  --mat-table-row-item-outline-color: #{$border-dark} !important;
-  --mat-card-elevated-container-color: #{$bg-dark} !important;
 }
 
 a {
@@ -540,8 +511,8 @@ ngx-material-timepicker-container {
   cursor: pointer;
   height: 48px;
 
-  &:hover {
-    background-color: var(--mdc-theme-primary-dark, #00695C) !important;
+  &:hover:not(:disabled) {
+    background-color: var(--primary-hover) !important;
   }
 
   &:disabled,
@@ -986,19 +957,36 @@ formatting-text-editor {
   border: unset !important;
 }
 
+.mtx-grid .mat-mdc-row:hover,
+.mat-mdc-row:hover {
+  background: var(--table-row-hover) !important;
+}
+
+.mat-mdc-unelevated-button:hover:not(:disabled),
+.mat-mdc-raised-button:hover:not(:disabled) {
+  background-color: var(--primary-hover) !important;
+}
+
+button,
+.btn-primary,
+.btn-secondary,
+.btn-cancel {
+  font-family: var(--brand-font-family, var(--font-family)) !important;
+}
+
 .mtx-grid {
   border-color: var(--border) !important;
   border: unset !important;
   outline: unset !important;
 
   .mat-mdc-table {
-    background: var(--bg) !important;
+    background: var(--card) !important;
     border-bottom: 1px solid var(--border) !important;
     border-color: var(--border) !important;
 
     .mat-mdc-header-row, thead {
       border-color: var(--border) !important;
-      background: var(--card) !important;
+      background: var(--table-header-bg, var(--card)) !important;
 
       tr {
         border-color: var(--border) !important;
