@@ -1,184 +1,172 @@
-@use 'sass:map';
-@use '@angular/material' as mat;
+@mixin _dark-chart {
+  $color-bg-darker: #1b1e27;
+  $color-bg-dark: #232837;
+  $color-bg-med: #2f3646;
+  $color-bg-light: #455066;
 
-@mixin color($theme) {
-  $color-config: mat.m2-get-color-config($theme);
-  $is-dark-theme: map.get($color-config, 'is-dark');
-  $background: map.get(map.get($theme, 'background'), 'card');
+  $color-text-dark: #72809b;
+  $color-text-med: #A0AABE;
+  $color-text-light: #f0f1f6;
 
-  @if ($is-dark-theme) {
-    /*Backgrounds*/
-    $color-bg-darkest: #13141b;
-    $color-bg-darker: #1b1e27;
-    $color-bg-dark: #232837;
-    $color-bg-med: #2f3646;
-    $color-bg-light: #455066;
-    $color-bg-lighter: #5b6882;
+  background: $color-bg-darker;
 
-    /*Text*/
-    $color-text-dark: #72809b;
-    $color-text-med-dark: #919db5;
-    $color-text-med: #A0AABE;
-    $color-text-med-light: #d9dce1;
-    $color-text-light: #f0f1f6;
-    $color-text-lighter: #fff;
+  .ngx-charts {
+    text {
+      fill: $color-text-med;
+    }
 
-    background: $color-bg-darker;
+    .tooltip-anchor {
+      fill: rgb(255, 255, 255);
+    }
 
-    .ngx-charts {
-      text {
-        fill: $color-text-med;
-      }
+    .gridline-path {
+      stroke: $color-bg-med;
+    }
 
-      .tooltip-anchor {
-        fill: rgb(255, 255, 255);
-      }
+    .refline-path {
+      stroke: $color-bg-light;
+    }
 
-      .gridline-path {
-        stroke: $color-bg-med;
-      }
+    .reference-area {
+      fill: #fff;
+    }
 
-      .refline-path {
-        stroke: $color-bg-light;
-      }
-
-      .reference-area {
-        fill: #fff;
-      }
-
-      .grid-panel {
-        &.odd {
-          rect {
-            fill: rgba(255, 255, 255, 0.05);
-          }
-        }
-      }
-
-      .force-directed-graph {
-        .edge {
-          stroke: $color-bg-light;
-        }
-      }
-
-      .number-card {
-        p {
-          color: $color-text-light;
-        }
-      }
-
-      .gauge {
-        .background-arc {
-          path {
-            fill: $color-bg-med;
-          }
-        }
-
-        .gauge-tick {
-          path {
-            stroke: $color-text-med;
-          }
-
-          text {
-            fill: $color-text-med;
-          }
-        }
-      }
-
-      .linear-gauge {
-        .background-bar {
-          path {
-            fill: $color-bg-med;
-          }
-        }
-
-        .units {
-          fill: $color-text-dark;
-        }
-      }
-
-      .timeline {
-        .brush-background {
+    .grid-panel {
+      &.odd {
+        rect {
           fill: rgba(255, 255, 255, 0.05);
         }
-
-        .brush {
-          .selection {
-            fill: rgba(255, 255, 255, 0.1);
-            stroke: #aaa;
-          }
-        }
-      }
-
-      .polar-chart .polar-chart-background {
-        fill: rgb(30, 34, 46);
       }
     }
 
-    .chart-legend {
-      .legend-labels {
-        background: $background !important;
+    .force-directed-graph {
+      .edge {
+        stroke: $color-bg-light;
       }
+    }
 
-      .legend-item {
-        &:hover {
-          color: #fff;
+    .number-card {
+      p {
+        color: $color-text-light;
+      }
+    }
+
+    .gauge {
+      .background-arc {
+        path {
+          fill: $color-bg-med;
         }
       }
 
-      .legend-label {
-        &:hover {
+      .gauge-tick {
+        path {
+          stroke: $color-text-med;
+        }
+
+        text {
+          fill: $color-text-med;
+        }
+      }
+    }
+
+    .linear-gauge {
+      .background-bar {
+        path {
+          fill: $color-bg-med;
+        }
+      }
+
+      .units {
+        fill: $color-text-dark;
+      }
+    }
+
+    .timeline {
+      .brush-background {
+        fill: rgba(255, 255, 255, 0.05);
+      }
+
+      .brush {
+        .selection {
+          fill: rgba(255, 255, 255, 0.1);
+          stroke: #aaa;
+        }
+      }
+    }
+
+    .polar-chart .polar-chart-background {
+      fill: rgb(30, 34, 46);
+    }
+  }
+
+  .chart-legend {
+    .legend-labels {
+      background: var(--card) !important;
+    }
+
+    .legend-item {
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    .legend-label {
+      &:hover {
+        color: #fff !important;
+      }
+
+      .active {
+        .legend-label-text {
           color: #fff !important;
-        }
-
-        .active {
-          .legend-label-text {
-            color: #fff !important;
-            text-overflow: clip !important;
-            padding-right: 5px;
-          }
-        }
-      }
-
-      .scale-legend-label {
-        color: $color-text-med;
-      }
-    }
-
-    .advanced-pie-legend {
-      color: $color-text-med;
-
-      .legend-item {
-        &:hover {
-          color: #fff !important;
-        }
-      }
-
-      .legend-items-container {
-        .legend-items {
-          overflow: visible !important;
+          text-overflow: clip !important;
+          padding-right: 5px;
         }
       }
     }
 
-    .number-card .number-card-label {
-      font-size: 0.8em;
+    .scale-legend-label {
       color: $color-text-med;
     }
-  } @else { // light theme
-    .advanced-pie-legend {
-      .legend-items-container {
-        .legend-items {
-          overflow: visible !important;
-        }
+  }
+
+  .advanced-pie-legend {
+    color: $color-text-med;
+
+    .legend-item {
+      &:hover {
+        color: #fff !important;
       }
     }
-}
+
+    .legend-items-container {
+      .legend-items {
+        overflow: visible !important;
+      }
+    }
+  }
+
+  .number-card .number-card-label {
+    font-size: 0.8em;
+    color: $color-text-med;
+  }
 }
 
-@mixin theme($theme) {
-  $color-config: mat.m2-get-color-config($theme);
-  @if $color-config != null {
-    @include color($theme);
+@mixin _light-chart {
+  .advanced-pie-legend {
+    .legend-items-container {
+      .legend-items {
+        overflow: visible !important;
+      }
+    }
+  }
+}
+
+@mixin theme {
+  body.theme-light {
+    @include _light-chart;
+  }
+  body.theme-dark {
+    @include _dark-chart;
   }
 }
 

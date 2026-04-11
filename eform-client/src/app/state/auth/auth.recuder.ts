@@ -7,6 +7,7 @@ import {
   loadAuthSuccess, logout,
   refreshToken,
   updateCurrentUserLocaleAndDarkTheme, updateDarkTheme, updateSideMenuOpened,
+  updateThemeVariant,
   updateUserInfo, updateUserLocale
 } from './';
 import {StoreStatusEnum} from 'src/app/common/const';
@@ -21,6 +22,7 @@ export interface AuthCurrentUser {
   locale?: string;
   languageId?: number;
   darkTheme?: boolean;
+  themeVariant?: string;
   loginRedirectUrl?: string;
   claims?: UserClaimsModel;
   isFirstUser: boolean,
@@ -61,6 +63,7 @@ export const authInitialState: AuthState = {
     locale: 'da', // TODO add env for test run
     languageId: 0,
     darkTheme: false,
+    themeVariant: 'eform',
     loginRedirectUrl: '',
     isFirstUser: false,
     avatarUrl: '',
@@ -158,6 +161,7 @@ const _authReducer = createReducer(
     currentUser: {
       ...state.currentUser,
       darkTheme: payload.userSettings.model.darkTheme,
+      themeVariant: payload.userSettings.model.themeVariant || 'eform',
       locale: payload.userSettings.model.locale,
       loginRedirectUrl: payload.userSettings.model.loginRedirectUrl || '',
       claims: payload.userClaims,
@@ -207,6 +211,13 @@ const _authReducer = createReducer(
     currentUser: {
       ...state.currentUser,
       darkTheme: payload
+    }
+  })),
+  on(updateThemeVariant, (state, {payload}) => ({
+    ...state,
+    currentUser: {
+      ...state.currentUser,
+      themeVariant: payload
     }
   })),
 );

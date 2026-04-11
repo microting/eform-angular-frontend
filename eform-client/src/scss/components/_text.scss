@@ -1,10 +1,8 @@
-@use 'sass:map';
-@use '@angular/material' as mat;
 @use '../utilities/colors' as *;
+
 body, .theme-light {
   --error: #{$error-light};
   --warning: #{$warning-light};
-
 }
 
 body, .theme-dark {
@@ -22,11 +20,11 @@ a {
 }
 
 .text-danger {
-  color: var(--error) ;
+  color: var(--error);
 }
 
 .text-warning {
-  color: var(--warning) ;
+  color: var(--warning);
 }
 
 .text-black {
@@ -36,28 +34,19 @@ a {
 .text-white {
   color: white;
 }
+
 @each $key in (nowrap, unset, break-spaces, normal, pre, pre-line, pre-wrap) {
   .text-#{$key} {
     white-space: $key;
   }
 }
 
-@mixin color($theme) {
-  $color-config: mat.m2-get-color-config($theme);
-  $warn-palette: map.get($color-config, 'warn');
-  $accent-palette: map.get($color-config, 'accent');
-  $primary-palette: map.get($color-config, 'primary');
-
-  @each $key, $val in (('warn', $warn-palette), ('accent', $accent-palette), ('primary', $primary-palette)) {
-    .text-#{$key} {
-      color: mat.m2-get-color-from-palette($val, 500);
-    }
+@mixin theme {
+  .text-primary,
+  .text-accent {
+    color: var(--primary);
   }
-}
-
-@mixin theme($theme) {
-  $color-config: mat.m2-get-color-config($theme);
-  @if $color-config != null {
-    @include color($theme);
+  .text-warn {
+    color: var(--error);
   }
 }

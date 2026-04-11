@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+
+$workspace-brand-family: ('Google Sans', 'Google Sans Text', Roboto, sans-serif);
+$workspace-plain-family: (Roboto, Arial, sans-serif);
+
+$workspace-tokens: (
+  brand-family: $workspace-brand-family,
+  plain-family: $workspace-plain-family,
+  primary-palette: mat.$azure-palette,
+  density-scale: -1,
+  button-shape: 20px,
+  icon-button-shape: 20px,
+  fab-shape: 16px,
+  dialog-shape: 28px,
+  card-shape: 16px,
+  chip-shape: 8px,
+);
