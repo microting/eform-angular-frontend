@@ -1,0 +1,14 @@
+@use '@angular/material' as mat;
+
+$eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
+
+$eform-tokens: (
+  brand-family: $eform-font-family,
+  plain-family: $eform-font-family,
+  primary-palette: mat.$cyan-palette,
+  density-scale: 0,
+  button-shape: 20px,
+  icon-button-shape: 20px,
+  fab-shape: 20px,
+  dialog-shape: 20px,
+);

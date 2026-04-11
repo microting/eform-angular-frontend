@@ -1,0 +1,42 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin apply-theme($tokens, $mode) {
+  $theme: mat.define-theme((
+    color: (
+      theme-type: $mode,
+      primary: map.get($tokens, primary-palette),
+    ),
+    typography: (
+      brand-family: map.get($tokens, brand-family),
+      plain-family: map.get($tokens, plain-family),
+    ),
+    density: (
+      scale: map.get($tokens, density-scale),
+    ),
+  ));
+
+  @include mat.all-component-themes($theme);
+
+  @include mat.button-overrides((
+    filled-container-shape: map.get($tokens, button-shape),
+    outlined-container-shape: map.get($tokens, button-shape),
+    protected-container-shape: map.get($tokens, button-shape),
+    text-container-shape: map.get($tokens, button-shape),
+  ));
+
+  @include mat.icon-button-overrides((
+    container-shape: map.get($tokens, icon-button-shape),
+  ));
+
+  @include mat.fab-overrides((
+    container-shape: map.get($tokens, fab-shape),
+    small-container-shape: map.get($tokens, fab-shape),
+  ));
+
+  @include mat.dialog-overrides((
+    container-shape: map.get($tokens, dialog-shape),
+    container-elevation-shadow: none,
+    actions-padding: 20px,
+  ));
+}

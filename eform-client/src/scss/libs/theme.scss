@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files 2 */
 @use '@angular/material' as mat;
+@use '../themes/eform' as eform;
+@use '../themes/theme-mixin' as theme-mixin;
 @use './ngx-editor/ngx-editor' as ngx-editor;
 @use '../components/text' as text;
 @use '../libs/ngx-gallery/ngx-gallery' as ngx-gallery;
@@ -11,41 +13,13 @@
 
 @include mat.core();
 
-$eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
-
-$eform-m3-light-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: mat.$cyan-palette,
-  ),
-  typography: (
-    brand-family: $eform-font-family,
-    plain-family: $eform-font-family,
-  ),
-  density: (
-    scale: 0,
-  ),
-));
-
-$eform-m3-dark-theme: mat.define-theme((
-  color: (
-    theme-type: dark,
-    primary: mat.$cyan-palette,
-  ),
-  typography: (
-    brand-family: $eform-font-family,
-    plain-family: $eform-font-family,
-  ),
-  density: (
-    scale: 0,
-  ),
-));
-
 body {
-  @each $key, $theme in (('light', $eform-m3-light-theme), ('dark', $eform-m3-dark-theme)) {
-    &.theme-#{$key} {
-      @include mat.all-component-themes($theme);
-    }
+  &.theme-light {
+    @include theme-mixin.apply-theme(eform.$eform-tokens, light);
+  }
+
+  &.theme-dark {
+    @include theme-mixin.apply-theme(eform.$eform-tokens, dark);
   }
 
   @include ngx-editor.theme;
@@ -107,31 +81,6 @@ body {
   .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
     color: white;
   }
-}
-
-.cdk-overlay-container {
-  @include mat.dialog-overrides((
-    container-shape: 20px,
-    container-elevation-shadow: none,
-    actions-padding: 20px,
-  ));
-}
-
-/* Global button shape overrides (M3) */
-html {
-  @include mat.button-overrides((
-    filled-container-shape: 20px,
-    outlined-container-shape: 20px,
-    protected-container-shape: 20px,
-    text-container-shape: 20px,
-  ));
-  @include mat.icon-button-overrides((
-    container-shape: 20px,
-  ));
-  @include mat.fab-overrides((
-    container-shape: 20px,
-    small-container-shape: 20px,
-  ));
 }
 
 body, .theme-light {
