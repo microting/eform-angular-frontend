@@ -241,6 +241,8 @@ public class Startup(IConfiguration configuration)
         services.ConfigureDbOptions<EmailSettings>(Configuration.GetSection("EmailSettings"));
         services.ConfigureDbOptions<LoginPageSettings>(Configuration.GetSection("LoginPageSettings"));
         services.ConfigureDbOptions<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
+        services.ConfigureDbOptions<eFormAPI.Web.Infrastructure.Models.Settings.Admin.AppearanceSettings>(
+            Configuration.GetSection("AppearanceSettings"));
         var configurationSection = Configuration.GetSection("ConnectionStringsSdk");
         if (Configuration.MyConnectionString().Contains("127.0.0.1"))
         {

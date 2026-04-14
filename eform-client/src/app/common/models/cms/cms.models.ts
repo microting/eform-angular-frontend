@@ -1,6 +1,7 @@
 export interface CmsPublicConfigModel {
   isCmsEnabled: boolean;
   isMenuSticky: boolean;
+  themeVariant?: 'eform' | 'workspace';
 }
 
 export interface CmsMenuItemModel {

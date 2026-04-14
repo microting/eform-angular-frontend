@@ -1,0 +1,161 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin apply-theme($tokens, $mode) {
+  $theme: mat.define-theme((
+    color: (
+      theme-type: $mode,
+      primary: map.get($tokens, primary-palette),
+    ),
+    typography: (
+      brand-family: map.get($tokens, brand-family),
+      plain-family: map.get($tokens, plain-family),
+    ),
+    density: (
+      scale: map.get($tokens, density-scale),
+    ),
+  ));
+
+  @include mat.all-component-themes($theme);
+
+  $colors: map.get($tokens, colors);
+  $mode-colors: map.get($colors, $mode);
+
+  @include mat.button-overrides((
+    filled-container-shape: map.get($tokens, button-shape),
+    outlined-container-shape: map.get($tokens, button-shape),
+    protected-container-shape: map.get($tokens, button-shape),
+    text-container-shape: map.get($tokens, button-shape),
+    filled-container-color: map.get($mode-colors, primary),
+    filled-label-text-color: map.get($mode-colors, on-primary),
+    filled-state-layer-color: map.get($mode-colors, on-primary),
+    filled-ripple-color: rgba(255, 255, 255, 0.24),
+    outlined-label-text-color: map.get($mode-colors, primary),
+    outlined-outline-color: map.get($mode-colors, border),
+    outlined-state-layer-color: map.get($mode-colors, primary),
+    text-label-text-color: map.get($mode-colors, primary),
+    text-state-layer-color: map.get($mode-colors, primary),
+    protected-container-color: map.get($mode-colors, card),
+    protected-label-text-color: map.get($mode-colors, primary),
+    protected-state-layer-color: map.get($mode-colors, primary),
+    tonal-container-color: map.get($mode-colors, primary-light),
+    tonal-label-text-color: map.get($mode-colors, primary-pressed),
+    tonal-state-layer-color: map.get($mode-colors, primary),
+  ));
+
+  @include mat.form-field-overrides((
+    filled-container-color: map.get($mode-colors, input-fill),
+    filled-focus-active-indicator-color: map.get($mode-colors, input-focus-underline),
+    filled-caret-color: map.get($mode-colors, primary),
+    filled-focus-label-text-color: map.get($mode-colors, primary),
+    outlined-focus-outline-color: map.get($mode-colors, primary),
+    outlined-focus-label-text-color: map.get($mode-colors, primary),
+    outlined-caret-color: map.get($mode-colors, primary),
+  ));
+
+  @include mat.table-overrides((
+    background-color: map.get($mode-colors, card),
+    header-headline-color: map.get($mode-colors, text-header),
+    row-item-label-text-color: map.get($mode-colors, text-header),
+    row-item-outline-color: map.get($mode-colors, border),
+  ));
+
+  @include mat.list-overrides((
+    list-item-hover-state-layer-color: map.get($mode-colors, primary),
+    list-item-focus-state-layer-color: map.get($mode-colors, primary),
+    list-item-selected-container-color: map.get($mode-colors, selected-surface),
+    list-item-label-text-color: map.get($mode-colors, text-header),
+  ));
+
+  @include mat.icon-button-overrides((
+    container-shape: map.get($tokens, icon-button-shape),
+  ));
+
+  @include mat.fab-overrides((
+    container-shape: map.get($tokens, fab-shape),
+    small-container-shape: map.get($tokens, fab-shape),
+  ));
+
+  @include mat.dialog-overrides((
+    container-shape: map.get($tokens, dialog-shape),
+    container-elevation-shadow: none,
+    actions-padding: 20px,
+  ));
+
+  @include mat.card-overrides((
+    elevated-container-shape: map.get($tokens, card-shape),
+    outlined-container-shape: map.get($tokens, card-shape),
+    filled-container-shape: map.get($tokens, card-shape),
+  ));
+
+  @include mat.chips-overrides((
+    container-shape-radius: map.get($tokens, chip-shape),
+  ));
+
+  --font-family: #{map.get($tokens, plain-family)};
+  --brand-font-family: #{map.get($tokens, brand-family)};
+  --nav-item-height: #{map.get($tokens, nav-item-height)};
+  --nav-item-radius: #{map.get($tokens, nav-item-radius)};
+  --dropdown-option-height: #{map.get($tokens, dropdown-option-height)};
+  --dropdown-panel-radius: #{map.get($tokens, dropdown-panel-radius)};
+  --primary-button-height: #{map.get($tokens, primary-button-height)};
+  --icon-button-size: #{map.get($tokens, icon-button-size)};
+  --primary: #{map.get($mode-colors, primary)};
+  --primary-hover: #{map.get($mode-colors, primary-hover)};
+  --primary-pressed: #{map.get($mode-colors, primary-pressed)};
+  --primary-light: #{map.get($mode-colors, primary-light)};
+  --primary-dark: #{map.get($mode-colors, primary-dark)};
+  --on-primary: #{map.get($mode-colors, on-primary)};
+  --link: #{map.get($mode-colors, link)};
+  --focus-ring: #{map.get($mode-colors, focus-ring)};
+  --hover-surface: #{map.get($mode-colors, hover-surface)};
+  --selected-surface: #{map.get($mode-colors, selected-surface)};
+  --nav-selected-surface: #{map.get($mode-colors, nav-selected-surface)};
+  --nav-selected-text: #{map.get($mode-colors, nav-selected-text)};
+  --table-header-bg: #{map.get($mode-colors, table-header-bg)};
+  --table-row-hover: #{map.get($mode-colors, table-row-hover)};
+  --input-fill: #{map.get($mode-colors, input-fill)};
+  --input-focus-underline: #{map.get($mode-colors, input-focus-underline)};
+  --bg: #{map.get($mode-colors, bg)};
+  --text-header: #{map.get($mode-colors, text-header)};
+  --text-body: #{map.get($mode-colors, text-body)};
+  --card: #{map.get($mode-colors, card)};
+  --border: #{map.get($mode-colors, border)};
+  --icon-secondary: #{map.get($mode-colors, icon-secondary)};
+  --error: #{map.get($mode-colors, error)};
+  --warning: #{map.get($mode-colors, warning)};
+  --btn-delete-text: #{map.get($mode-colors, btn-delete-text)};
+  --content-card-bg: #{map.get($mode-colors, content-card-bg)};
+  --content-card-radius: #{map.get($mode-colors, content-card-radius)};
+  --content-card-margin: #{map.get($mode-colors, content-card-margin)};
+
+  --mdc-theme-primary: #{map.get($mode-colors, primary)};
+  --mdc-theme-on-primary: #{map.get($mode-colors, on-primary)};
+  --mdc-theme-primary-dark: #{map.get($mode-colors, primary-dark)};
+  --mdc-theme-on-primary-dark: #{map.get($mode-colors, on-primary)};
+  --mat-app-background-color: #{map.get($mode-colors, bg)};
+  --mat-table-row-item-outline-color: #{map.get($mode-colors, border)};
+  --mat-table-background-color: #{map.get($mode-colors, card)};
+  --mat-table-row-item-container-color: #{map.get($mode-colors, card)};
+  --mat-table-header-container-color: #{map.get($mode-colors, table-header-bg)};
+  --mat-card-elevated-container-color: #{map.get($mode-colors, card)};
+  --mat-card-elevated-container-elevation: 0;
+  --mat-card-filled-container-color: #{map.get($mode-colors, card)};
+  --mat-sidenav-content-background-color: #{map.get($mode-colors, bg)};
+  --mdc-filled-button-container-color: #{map.get($mode-colors, primary)};
+  --mdc-filled-button-label-text-color: #{map.get($mode-colors, on-primary)};
+  --mdc-protected-button-container-color: #{map.get($mode-colors, card)};
+  --mdc-protected-button-label-text-color: #{map.get($mode-colors, primary)};
+  --mdc-outlined-button-label-text-color: #{map.get($mode-colors, primary)};
+  --mdc-outlined-button-outline-color: #{map.get($mode-colors, border)};
+  --mdc-text-button-label-text-color: #{map.get($mode-colors, primary)};
+
+  ::selection {
+    background: #{map.get($mode-colors, primary)};
+    color: #{map.get($mode-colors, on-primary)};
+  }
+  ::-moz-selection {
+    background: #{map.get($mode-colors, primary)};
+    color: #{map.get($mode-colors, on-primary)};
+  }
+}
