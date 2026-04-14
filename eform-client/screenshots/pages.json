@@ -1,8 +1,14 @@
 [
   { "name": "my-eforms",            "url": "/",                                "open": null },
+  { "name": "cases-list",           "url": "/cases",                           "open": null },
+  { "name": "templates-list",       "url": "/searchable-list",                 "open": null },
   { "name": "sites",                "url": "/advanced/sites",                  "open": null },
   { "name": "workers",              "url": "/advanced/workers",                "open": null },
-  { "name": "profile-settings",     "url": "/account-management/settings",     "open": null },
+  { "name": "profile-settings",     "url": "/account-management/account-settings", "open": null },
   { "name": "application-settings", "url": "/application-settings",            "open": null },
-  { "name": "tags-dropdown-open",   "url": "/",                                "open": "tags-dropdown" }
+  { "name": "items-planning",       "url": "/plugins/items-planning-pn/plannings", "open": null },
+  { "name": "backend-configuration","url": "/plugins/backend-configuration-pn/properties", "open": null },
+  { "name": "time-planning",        "url": "/plugins/time-planning-pn/plannings", "open": null },
+  { "name": "tags-dropdown-open",   "url": "/",                                "open": "tags-dropdown" },
+  { "name": "delete-confirm-dialog","url": "/cases",                           "open": "first-row-delete" }
 ]
