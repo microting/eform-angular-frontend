@@ -292,5 +292,52 @@
       </mat-card-content>
     </mat-card>
   </div>
+
+  <div class="settings-row">
+    <mat-card class="card--rounded settings-card">
+      <mat-card-header class="d-flex">
+        <h4>
+          {{ 'Appearance' | translate }}
+        </h4>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="theme-picker-label">{{ 'Theme variant' | translate }}</p>
+        <div class="theme-picker">
+          <label
+            class="theme-option"
+            [class.theme-option--selected]="adminSettingsModel.themeVariant === 'eform'"
+          >
+            <input
+              type="radio"
+              name="themeVariant"
+              value="eform"
+              [(ngModel)]="adminSettingsModel.themeVariant"
+            />
+            <div class="theme-swatch theme-swatch--eform">
+              <span class="swatch-primary"></span>
+              <span class="swatch-surface"></span>
+            </div>
+            <span class="theme-option-label">{{ 'eForm Classic' | translate }}</span>
+          </label>
+          <label
+            class="theme-option"
+            [class.theme-option--selected]="adminSettingsModel.themeVariant === 'workspace'"
+          >
+            <input
+              type="radio"
+              name="themeVariant"
+              value="workspace"
+              [(ngModel)]="adminSettingsModel.themeVariant"
+            />
+            <div class="theme-swatch theme-swatch--workspace">
+              <span class="swatch-primary"></span>
+              <span class="swatch-surface"></span>
+            </div>
+            <span class="theme-option-label">{{ 'Google Workspace' | translate }}</span>
+          </label>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 </ng-container>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2, inject } from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {AuthService, TitleService, UserSettingsService} from 'src/app/common/services';
 import {Router} from '@angular/router';
@@ -9,6 +9,7 @@ import {
   AuthSyncStorageService,
   updateUserInfo,
 } from 'src/app/state';
+import {loadCmsConfig, selectCmsThemeVariant} from 'src/app/state/cms';
 import {AuthStateService} from 'src/app/common/store';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -27,11 +28,17 @@ export class AppComponent implements OnInit, OnDestroy {
   private ngTitle = inject(Title);
   private titleService = inject(TitleService);
   private authSyncStorageService = inject(AuthSyncStorageService);
+  private renderer = inject(Renderer2);
 
   public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  private selectCmsThemeVariant$ = this.authStore.select(selectCmsThemeVariant);
 
   ngOnInit(): void {
     this.authSyncStorageService.init();
+    this.authStore.dispatch(loadCmsConfig());
+    this.selectCmsThemeVariant$.subscribe((variant) => {
+      this.applyThemeVariant(variant ?? 'eform');
+    });
     this.selectIsAuth$.pipe(debounceTime(1000), take(1)).subscribe((isAuth) => {
       if (isAuth) {
         zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
@@ -68,6 +75,13 @@ export class AppComponent implements OnInit, OnDestroy {
         this.ngTitle.setTitle(defaultTitle);
       }
     });
+  }
+
+  private applyThemeVariant(variant: 'eform' | 'workspace') {
+    const body = document.body;
+    this.renderer.removeClass(body, 'theme-eform');
+    this.renderer.removeClass(body, 'theme-workspace');
+    this.renderer.addClass(body, `theme-${variant}`);
   }
 
   ngOnDestroy(): void {

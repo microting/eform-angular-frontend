@@ -8,6 +8,7 @@ import {AuthStateService} from 'src/app/common/store';
 import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import * as R from 'ramda';
 import {selectAuthIsAuth, selectBearerToken, selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
+import {loadCmsConfig} from 'src/app/state/cms';
 import {Store} from '@ngrx/store';
 import {zip} from 'rxjs';
 import {tap} from 'rxjs/operators';
@@ -201,6 +202,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
             this.headerImageUploader.clearQueue();
             this.loginPageImageUploader.clearQueue();
             this.eventBrokerService.emit<void>('get-header-settings', null);
+            this.authStore.dispatch(loadCmsConfig());
           }
         });
     }

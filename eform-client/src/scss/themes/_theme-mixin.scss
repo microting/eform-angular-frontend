@@ -94,6 +94,12 @@
 
   --font-family: #{map.get($tokens, plain-family)};
   --brand-font-family: #{map.get($tokens, brand-family)};
+  --nav-item-height: #{map.get($tokens, nav-item-height)};
+  --nav-item-radius: #{map.get($tokens, nav-item-radius)};
+  --dropdown-option-height: #{map.get($tokens, dropdown-option-height)};
+  --dropdown-panel-radius: #{map.get($tokens, dropdown-panel-radius)};
+  --primary-button-height: #{map.get($tokens, primary-button-height)};
+  --icon-button-size: #{map.get($tokens, icon-button-size)};
   --primary: #{map.get($mode-colors, primary)};
   --primary-hover: #{map.get($mode-colors, primary-hover)};
   --primary-pressed: #{map.get($mode-colors, primary-pressed)};
@@ -105,6 +111,7 @@
   --hover-surface: #{map.get($mode-colors, hover-surface)};
   --selected-surface: #{map.get($mode-colors, selected-surface)};
   --nav-selected-surface: #{map.get($mode-colors, nav-selected-surface)};
+  --nav-selected-text: #{map.get($mode-colors, nav-selected-text)};
   --table-header-bg: #{map.get($mode-colors, table-header-bg)};
   --table-row-hover: #{map.get($mode-colors, table-row-hover)};
   --input-fill: #{map.get($mode-colors, input-fill)};
@@ -142,4 +149,13 @@
   --mdc-outlined-button-label-text-color: #{map.get($mode-colors, primary)};
   --mdc-outlined-button-outline-color: #{map.get($mode-colors, border)};
   --mdc-text-button-label-text-color: #{map.get($mode-colors, primary)};
+
+  ::selection {
+    background: #{map.get($mode-colors, primary)};
+    color: #{map.get($mode-colors, on-primary)};
+  }
+  ::-moz-selection {
+    background: #{map.get($mode-colors, primary)};
+    color: #{map.get($mode-colors, on-primary)};
+  }
 }

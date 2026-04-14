@@ -16,11 +16,19 @@
 
 body {
   &.theme-light {
-    @include theme-mixin.apply-theme(workspace.$workspace-tokens, light);
+    @include theme-mixin.apply-theme(eform.$eform-tokens, light);
   }
 
   &.theme-dark {
-    @include theme-mixin.apply-theme(workspace.$workspace-tokens, dark);
+    @include theme-mixin.apply-theme(eform.$eform-tokens, dark);
+  }
+
+  &.theme-eform.theme-light {
+    @include theme-mixin.apply-theme(eform.$eform-tokens, light);
+  }
+
+  &.theme-eform.theme-dark {
+    @include theme-mixin.apply-theme(eform.$eform-tokens, dark);
   }
 
   &.theme-workspace.theme-light {
@@ -59,9 +67,10 @@ body {
 }
 
 .mat-mdc-icon-button {
-  padding: 0 !important;
-  width: 28px !important;
-  height: 28px !important;
+  padding: 12px !important;
+  width: var(--icon-button-size, 48px) !important;
+  height: var(--icon-button-size, 48px) !important;
+  --mdc-icon-button-state-layer-size: var(--icon-button-size, 48px) !important;
 }
 
 .mat-calendar-previous-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-button-base {

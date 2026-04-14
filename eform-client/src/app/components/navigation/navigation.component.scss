@@ -12,12 +12,12 @@ mat-tree {
     .nav-link {
       width: 100%;
       text-align: inherit;
-      min-height: 40px;
+      min-height: var(--nav-item-height, 48px);
       padding: 0 16px !important;
       display: flex;
       align-items: center;
       justify-content: start;
-      border-radius: var(--rounded-full) !important;
+      border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
       font-family: var(--brand-font-family, var(--font-family)) !important;
       font-size: 14px;
       font-weight: 500;
@@ -58,28 +58,28 @@ mat-tree {
 
     .selected-node {
       background-color: var(--nav-selected-surface, #e8eaed) !important;
-      color: var(--text-header) !important;
+      color: var(--nav-selected-text, var(--on-primary)) !important;
       border-radius: var(--rounded-full);
       font-weight: 500;
 
       .mat-icon {
-        color: var(--text-header) !important;
+        color: var(--nav-selected-text, var(--on-primary)) !important;
       }
 
       svg {
-        fill: var(--text-header) !important;
+        fill: var(--nav-selected-text, var(--on-primary)) !important;
       }
 
       &:hover {
         background-color: var(--nav-selected-surface, #e8eaed) !important;
-        color: var(--text-header) !important;
+        color: var(--nav-selected-text, var(--on-primary)) !important;
 
         .mat-icon {
-          color: var(--text-header) !important;
+          color: var(--nav-selected-text, var(--on-primary)) !important;
         }
 
         svg {
-          fill: var(--text-header) !important;
+          fill: var(--nav-selected-text, var(--on-primary)) !important;
         }
       }
     }
@@ -102,10 +102,10 @@ mat-tree {
         }
 
         .mat-expansion-panel-header {
-          height: 40px !important;
-          min-height: 40px !important;
+          height: var(--nav-item-height, 48px) !important;
+          min-height: var(--nav-item-height, 48px) !important;
           padding: 0 16px 0 12px !important;
-          border-radius: var(--rounded-full) !important;
+          border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
           font-family: var(--brand-font-family, var(--font-family)) !important;
           font-size: 14px !important;
           font-weight: 500 !important;

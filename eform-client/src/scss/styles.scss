@@ -509,8 +509,9 @@ ngx-material-timepicker-container {
   background-color: var(--mdc-theme-primary) !important;
   color: var(--mdc-theme-on-primary) !important;
   cursor: pointer;
-  height: 36px;
-  padding: 0 24px;
+  height: var(--primary-button-height, 48px);
+  padding: 0 28px;
+  font-size: 14px;
 
   &:hover:not(:disabled) {
     background-color: var(--primary-hover) !important;
@@ -528,8 +529,8 @@ ngx-material-timepicker-container {
 
   &--icon-left {
     display: inline-flex;
-    height: 36px;
-    padding: 0 20px;
+    height: var(--primary-button-height, 48px);
+    padding: 0 24px;
     justify-content: center;
     align-items: center;
     gap: var(--156-px, 6px);
