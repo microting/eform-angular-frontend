@@ -14,7 +14,7 @@ import * as R from 'ramda';
 import {AuthStateService} from 'src/app/common/store';
 import {TranslateService} from '@ngx-translate/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {TranslationRequestModel, TranslationService} from 'src/app/common/services';
+import {EFormService, TranslationRequestModel, TranslationService} from 'src/app/common/services';
 import {selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
 
@@ -29,6 +29,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   private authStore = inject(Store);
   private translateService = inject(TranslateService);
   private translationService = inject(TranslationService);
+  private eformService = inject(EFormService);
   dialogRef = inject<MatDialogRef<VisualEditorFieldModalComponent>>(MatDialogRef);
 
   @ViewChild('popTemplate', { static: true }) popTemplate;
@@ -50,26 +51,32 @@ export class VisualEditorFieldModalComponent implements OnInit {
   }
 
   setFieldTypes() {
-    const typesForAdminOnly = [
-      EformFieldTypesEnum.Audio,
-      EformFieldTypesEnum.Movie,
-      EformFieldTypesEnum.NumberStepper,
-    ];
-    if (this.recursionModel.fieldIsNested) {
-      this.fieldTypes = [
-        ...getTranslatedTypes(this.translateService).filter(
-          (x) => x.id !== EformFieldTypesEnum.FieldGroup
-        ),
-      ];
-    } else {
-      this.fieldTypes = [...getTranslatedTypes(this.translateService)];
-    }
-    this.selectCurrentUserIsAdmin$.subscribe((isAdmin) => {
-      if (isAdmin) {
-        this.fieldTypes = [...this.fieldTypes, ...getTranslatedTypes(this.translateService).filter(
-          (x) => typesForAdminOnly.includes(x.id)
-        )];
+    this.eformService.getFieldTypes().subscribe(res => {
+      const dbFieldTypes = res?.success && res.model ? res.model : [];
+      const allTypes = getTranslatedTypes(this.translateService, dbFieldTypes);
+
+      const adminOnlyNames = ['Audio', 'Movie', 'NumberStepper'];
+      const fieldGroupName = 'FieldGroup';
+
+      const dbFieldGroupId = dbFieldTypes.find(ft => ft.type === fieldGroupName)?.id;
+      const dbAdminIds = dbFieldTypes
+        .filter(ft => adminOnlyNames.includes(ft.type))
+        .map(ft => ft.id);
+
+      if (this.recursionModel.fieldIsNested) {
+        this.fieldTypes = allTypes.filter(x => x.id !== dbFieldGroupId);
+      } else {
+        this.fieldTypes = [...allTypes];
       }
+
+      this.selectCurrentUserIsAdmin$.subscribe((isAdmin) => {
+        if (isAdmin) {
+          this.fieldTypes = [
+            ...this.fieldTypes,
+            ...allTypes.filter(x => dbAdminIds.includes(x.id))
+          ];
+        }
+      });
     });
   }
 
