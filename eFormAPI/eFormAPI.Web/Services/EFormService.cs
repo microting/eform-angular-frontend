@@ -934,10 +934,13 @@ public class EFormService(
     private static async Task CreateFields(int eformId, MicrotingDbContext sdkDbContext,
         List<Microting.eForm.Infrastructure.Data.Entities.Field> fieldsList)
     {
+        var fieldGroupTypeId = (await sdkDbContext.FieldTypes
+            .FirstAsync(ft => ft.Type == Microting.eForm.Infrastructure.Constants.Constants.FieldTypes.FieldGroup)).Id;
+
         foreach (var field in fieldsList)
         {
             field.CheckListId = eformId;
-            if (field.FieldTypeId == 17) // field group
+            if (field.FieldTypeId == fieldGroupTypeId)
             {
                 foreach (var fieldChild in field.Children)
                 {
