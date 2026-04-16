@@ -1,0 +1,8 @@
+[
+  { "name": "my-eforms",            "url": "/",                                "open": null },
+  { "name": "sites",                "url": "/advanced/sites",                  "open": null },
+  { "name": "workers",              "url": "/advanced/workers",                "open": null },
+  { "name": "profile-settings",     "url": "/account-management/settings",     "open": null },
+  { "name": "application-settings", "url": "/application-settings",            "open": null },
+  { "name": "tags-dropdown-open",   "url": "/",                                "open": "tags-dropdown" }
+]
