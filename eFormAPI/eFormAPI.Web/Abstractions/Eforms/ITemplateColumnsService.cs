@@ -33,4 +33,5 @@ public interface ITemplateColumnsService
     Task<OperationDataResult<List<TemplateColumnModel>>> GetAvailableColumns(int templateId);
     Task<OperationDataResult<DisplayTemplateColumnsModel>> GetCurrentColumns(int templateId);
     Task<OperationResult> UpdateColumns(UpdateTemplateColumnsModel model);
+    Task<OperationDataResult<List<FieldTypeModel>>> GetFieldTypes();
 }

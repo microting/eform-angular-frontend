@@ -31,6 +31,7 @@ namespace eFormAPI.Web.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Abstractions;
 using Abstractions.Eforms;
@@ -163,6 +164,30 @@ public class EFormColumnsService(
             logger.LogError(e.Message);
             logger.LogTrace(e.StackTrace);
             return new OperationResult(false, localizationService.GetString("ErrorWhileUpdatingColumns"));
+        }
+    }
+
+    public async Task<OperationDataResult<List<FieldTypeModel>>> GetFieldTypes()
+    {
+        try
+        {
+            var core = await coreHelper.GetCore();
+            await using var dbContext = core.DbContextHelper.GetDbContext();
+            var fieldTypes = await dbContext.FieldTypes
+                .Select(ft => new FieldTypeModel
+                {
+                    Id = ft.Id,
+                    Type = ft.Type,
+                    Description = ft.Description
+                })
+                .ToListAsync();
+            return new OperationDataResult<List<FieldTypeModel>>(true, fieldTypes);
+        }
+        catch (Exception e)
+        {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            return new OperationDataResult<List<FieldTypeModel>>(false, e.Message);
         }
     }
 }

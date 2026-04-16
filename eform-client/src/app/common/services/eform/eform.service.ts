@@ -99,6 +99,10 @@ export class EFormService {
     return this.apiBaseService.post(TemplateColumnMethods.GetColumns, model);
   }
 
+  getFieldTypes(): Observable<OperationDataResult<{id: number; type: string; description: string}[]>> {
+    return this.apiBaseService.get(TemplateColumnMethods.GetColumns + '/field-types');
+  }
+
   downloadEformXML(templateId: number): Observable<any> {
     return this.apiBaseService.getBlobData(
       TemplateFilesMethods.DownloadXML + '/' + templateId
