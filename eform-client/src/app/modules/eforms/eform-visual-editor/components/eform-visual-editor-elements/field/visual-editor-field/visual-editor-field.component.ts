@@ -9,6 +9,7 @@ import {
 } from 'src/app/common/models';
 import {
   eformVisualEditorElementColors,
+  eformVisualEditorElementTypes,
 } from '../../../../const';
 import { LocaleService, EFormService } from 'src/app/common/services';
 import {TranslateService} from '@ngx-translate/core';
@@ -83,10 +84,15 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
       return '';
     }
     const dbType = this.dbFieldTypes.find(x => x.id === fieldType);
-    if (dbType) {
-      return this.translateService.instant(dbType.type);
+    if (!dbType) {
+      return '';
     }
-    return '';
+    const hardcoded = eformVisualEditorElementTypes.find(e =>
+      EformFieldTypesEnum[e.id]?.toLowerCase() === dbType.type.toLowerCase()
+    );
+    return hardcoded
+      ? this.translateService.instant(hardcoded.name)
+      : dbType.type;
   }
 
   ngOnInit() {
