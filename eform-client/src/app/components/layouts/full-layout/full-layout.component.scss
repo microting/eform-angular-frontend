@@ -17,6 +17,11 @@
   justify-content: space-between;
 }
 
+:host ::ng-deep .mat-drawer-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .tag {
   width: $icon-size + $icon-size + $icon-size;
   justify-content: space-between;

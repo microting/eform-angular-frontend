@@ -33,7 +33,7 @@
 <!--      </mat-menu>-->
 <!--    </div>-->
   </mat-toolbar>
-  <mat-drawer-container autosize style="height: 100%;" class="mat-app-background">
+  <mat-drawer-container autosize style="flex: 1; overflow: hidden;" class="mat-app-background">
     <mat-drawer
       #drawer
       [mode]="sidenavMode"
@@ -41,7 +41,7 @@
       <app-navigation (clickOnLink)="onClickOnLink()"></app-navigation>
       <app-footer></app-footer>
     </mat-drawer>
-    <div class="mb-auto mat-app-background" *ngIf="selectIsAuth$ | async">
+    <div class="mb-auto mat-app-background" style="flex: 1; overflow: auto;" *ngIf="selectIsAuth$ | async">
       <app-userback-widget></app-userback-widget>
       <router-outlet></router-outlet>
     </div>
