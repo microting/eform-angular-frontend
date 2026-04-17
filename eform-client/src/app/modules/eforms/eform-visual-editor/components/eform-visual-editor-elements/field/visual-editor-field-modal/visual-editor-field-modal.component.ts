@@ -51,32 +51,45 @@ export class VisualEditorFieldModalComponent implements OnInit {
   }
 
   setFieldTypes() {
+    this.buildFieldTypeList(null);
+
     this.eformService.getFieldTypes().subscribe(res => {
-      const dbFieldTypes = res?.success && res.model ? res.model : [];
-      const allTypes = getTranslatedTypes(this.translateService, dbFieldTypes);
-
-      const adminOnlyNames = ['Audio', 'Movie', 'NumberStepper'];
-      const fieldGroupName = 'FieldGroup';
-
-      const dbFieldGroupId = dbFieldTypes.find(ft => ft.type === fieldGroupName)?.id;
-      const dbAdminIds = dbFieldTypes
-        .filter(ft => adminOnlyNames.includes(ft.type))
-        .map(ft => ft.id);
-
-      if (this.recursionModel.fieldIsNested) {
-        this.fieldTypes = allTypes.filter(x => x.id !== dbFieldGroupId);
-      } else {
-        this.fieldTypes = [...allTypes];
+      if (res?.success && res.model?.length > 0) {
+        this.buildFieldTypeList(res.model);
       }
+    });
+  }
 
-      this.selectCurrentUserIsAdmin$.subscribe((isAdmin) => {
-        if (isAdmin) {
-          this.fieldTypes = [
-            ...this.fieldTypes,
-            ...allTypes.filter(x => dbAdminIds.includes(x.id))
-          ];
-        }
-      });
+  private buildFieldTypeList(dbFieldTypes: {id: number; type: string}[] | null) {
+    const allTypes = getTranslatedTypes(this.translateService, dbFieldTypes ?? undefined);
+
+    const adminOnlyNames = ['Audio', 'Movie', 'NumberStepper'];
+    const fieldGroupName = 'FieldGroup';
+
+    let fieldGroupId: number | undefined;
+    let adminIds: number[] = [];
+
+    if (dbFieldTypes) {
+      fieldGroupId = dbFieldTypes.find(ft => ft.type === fieldGroupName)?.id;
+      adminIds = dbFieldTypes.filter(ft => adminOnlyNames.includes(ft.type)).map(ft => ft.id);
+    } else {
+      fieldGroupId = EformFieldTypesEnum.FieldGroup;
+      adminIds = [EformFieldTypesEnum.Audio, EformFieldTypesEnum.Movie, EformFieldTypesEnum.NumberStepper];
+    }
+
+    if (this.recursionModel.fieldIsNested) {
+      this.fieldTypes = allTypes.filter(x => x.id !== fieldGroupId);
+    } else {
+      this.fieldTypes = [...allTypes];
+    }
+
+    this.selectCurrentUserIsAdmin$.subscribe((isAdmin) => {
+      if (isAdmin) {
+        this.fieldTypes = [
+          ...this.fieldTypes,
+          ...allTypes.filter(x => adminIds.includes(x.id))
+        ];
+      }
     });
   }
 
