@@ -107,7 +107,7 @@ public class Startup(IConfiguration configuration)
         {
             Log.LogEvent($"We do have a ConnectionString {Configuration["ConnectionString"]}");
             services.AddEntityFrameworkMySql()
-                .AddDbContext<BaseDbContext>(o => o.UseMySql(
+                .AddDbContextPool<BaseDbContext>(o => o.UseMySql(
                     Configuration["ConnectionString"], new MariaDbServerVersion(
                         ServerVersion.AutoDetect(Configuration["ConnectinString"])), mySqlOptionsAction: builder =>
                     {
@@ -159,7 +159,7 @@ public class Startup(IConfiguration configuration)
                 {
                     Log.LogEvent($"ConnectionString is {Configuration.MyConnectionString()}");
                     services.AddEntityFrameworkMySql()
-                        .AddDbContext<BaseDbContext>(o => o.UseMySql(
+                        .AddDbContextPool<BaseDbContext>(o => o.UseMySql(
                             Configuration.MyConnectionString(), new MariaDbServerVersion(
                                 ServerVersion.AutoDetect(Configuration.MyConnectionString())), mySqlOptionsAction: builder =>
                             {
@@ -208,7 +208,7 @@ public class Startup(IConfiguration configuration)
                     // We use this hack to get the project started and we actually don't use this connection, but it's needed for the service to start.
                     // Once we have the correct connectionstring in the connection.json, we restart the server and the above method is used.
                     services.AddEntityFrameworkMySql()
-                        .AddDbContext<BaseDbContext>(o => o.UseMySql(
+                        .AddDbContextPool<BaseDbContext>(o => o.UseMySql(
                             "server=localhost;", new MariaDbServerVersion(
                                 new Version(10, 4, 0)), mySqlOptionsAction: builder =>
                             {
