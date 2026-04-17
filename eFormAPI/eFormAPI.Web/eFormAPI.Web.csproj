@@ -59,7 +59,7 @@
     <PackageReference Include="Microting.EformAngularFrontendBase" Version="10.0.22" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="10.0.18" />
     <PackageReference Include="PureOtp" Version="1.0.0.1" />
-    <PackageReference Include="Sentry" Version="6.3.1" />
+    <PackageReference Include="Sentry" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="2.0.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.76.0" />
