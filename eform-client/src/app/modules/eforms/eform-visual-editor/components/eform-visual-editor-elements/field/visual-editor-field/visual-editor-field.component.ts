@@ -9,9 +9,9 @@ import {
 } from 'src/app/common/models';
 import {
   eformVisualEditorElementColors,
-  eformVisualEditorElementTypes,
+  getTranslatedTypes
 } from '../../../../const';
-import { LocaleService, EFormService } from 'src/app/common/services';
+import { LocaleService } from 'src/app/common/services';
 import {TranslateService} from '@ngx-translate/core';
 import {getRandomInt} from 'src/app/common/helpers';
 import {selectCurrentUserLanguageId} from 'src/app/state/auth/auth.selector';
@@ -26,7 +26,6 @@ import {Store} from '@ngrx/store';
 export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   private authStore = inject(Store);
   private translateService = inject(TranslateService);
-  private eformService = inject(EFormService);
 
   @Input() field: EformVisualEditorFieldModel;
   @Input() fieldIndex: number;
@@ -50,8 +49,6 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   // dragulaElementContainerName = this.fieldIsNested ? 'NESTED_FIELDS' : 'FIELDS';
   @Input() appLanguages: LanguagesModel = new LanguagesModel();
   private selectCurrentUserLanguageId$ = this.authStore.select(selectCurrentUserLanguageId);
-
-  private dbFieldTypes: {id: number; type: string}[] = [];
 
   get fieldTypes() {
     return EformFieldTypesEnum;
@@ -80,27 +77,14 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   }
 
   fieldTypeTranslation(fieldType: number): string {
-    if (!fieldType) {
-      return '';
+    if(fieldType) {
+      const types = [...getTranslatedTypes(this.translateService)];
+      return types.find(x => x.id === fieldType)?.name ?? '';
     }
-    const dbType = this.dbFieldTypes.find(x => x.id === fieldType);
-    if (!dbType) {
-      return '';
-    }
-    const hardcoded = eformVisualEditorElementTypes.find(e =>
-      EformFieldTypesEnum[e.id]?.toLowerCase() === dbType.type.toLowerCase()
-    );
-    return hardcoded
-      ? this.translateService.instant(hardcoded.name)
-      : dbType.type;
+    return '';
   }
 
   ngOnInit() {
-    this.eformService.getFieldTypes().subscribe(res => {
-      if (res && res.success && res.model) {
-        this.dbFieldTypes = res.model;
-      }
-    });
   }
 
   onAddNewField() {
