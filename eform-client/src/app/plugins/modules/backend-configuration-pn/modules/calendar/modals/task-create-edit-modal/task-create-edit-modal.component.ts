@@ -12,7 +12,7 @@ import {EformFieldTypesEnum} from 'src/app/common/const/eform-field-types';
 import {Store} from '@ngrx/store';
 import {selectCurrentUserLanguageId} from 'src/app/state/auth/auth.selector';
 import {BackendConfigurationPnCalendarService, BackendConfigurationPnPropertiesService} from '../../../../services';
-import {CALENDAR_COLORS, CalendarBoardModel, CalendarTaskModel, RepeatEditScope} from '../../../../models/calendar';
+import {CALENDAR_COLORS, CalendarBoardModel, CalendarRepeatMeta, CalendarTaskModel, RepeatEditScope} from '../../../../models/calendar';
 import {CalendarRepeatService, RepeatSelectOption} from '../../services/calendar-repeat.service';
 import {computeCopyDate} from '../../services/calendar-copy-date.helper';
 import {getCurrentLocale} from '../../services/calendar-locale.helper';
@@ -59,6 +59,7 @@ export class TaskCreateEditModalComponent implements OnInit {
   isLoadingTemplate = false;
   showEformDetails = false;
   filteredEmployees: CommonDictionaryModel[] = [];
+  private customRepeatMeta: CalendarRepeatMeta | null = null;
   private currentLanguageId = 1;  // default to English
 
   // Individual form controls
@@ -389,9 +390,12 @@ export class TaskCreateEditModalComponent implements OnInit {
       CustomRepeatModalComponent,
       dialogConfigHelper(this.overlay, {date: this.dateControl.value ?? new Date()})
     );
-    ref.afterClosed().subscribe(meta => {
+    ref.afterClosed().subscribe((meta: CalendarRepeatMeta | null) => {
       if (!meta) {
         this.repeatControl.setValue('none', {emitEvent: false});
+        this.customRepeatMeta = null;
+      } else {
+        this.customRepeatMeta = meta;
       }
     });
   }
@@ -430,6 +434,34 @@ export class TaskCreateEditModalComponent implements OnInit {
     };
     const repeatRuleValue = this.repeatControl.value ?? 'none';
 
+    // For custom repeat, map the meta's kind back to a standard repeatType
+    // and use the meta's step as repeatEvery
+    let resolvedRepeatType = repeatRuleMap[repeatRuleValue] ?? 0;
+    let resolvedRepeatEvery = 1;
+    let repeatEndMode = 0; // 0=Never
+    let repeatOccurrences: number | null = null;
+    let repeatUntilDate: string | null = null;
+
+    if (repeatRuleValue === 'custom' && this.customRepeatMeta) {
+      const meta = this.customRepeatMeta;
+      const kindMap: Record<string, number> = {
+        'daily': 1, 'everyNd': 1,
+        'weeklyOne': 2, 'weeklyMulti': 2, 'everyNWeekOne': 2, 'everyNWeekMulti': 2, 'everyNWeekAll': 2,
+        'monthlyDom': 3, 'everyNMonthDom': 3,
+        'yearlyOne': 4, 'everyNYear': 4,
+      };
+      resolvedRepeatType = kindMap[meta.kind] ?? 0;
+      resolvedRepeatEvery = meta.n ?? 1;
+
+      if (meta.endMode === 'after' && meta.afterCount) {
+        repeatEndMode = 1;
+        repeatOccurrences = meta.afterCount;
+      } else if (meta.endMode === 'until' && meta.untilTs) {
+        repeatEndMode = 2;
+        repeatUntilDate = new Date(meta.untilTs).toISOString();
+      }
+    }
+
     const payload: any = {
       // Backend CalendarTaskCreateRequestModel fields
       translates: [{name: this.titleControl.value, languageId: 1}],
@@ -441,8 +473,11 @@ export class TaskCreateEditModalComponent implements OnInit {
       boardId: this.boardControl.value,
       color: this.filteredBoards.find(b => b.id === this.boardControl.value)?.color ?? CALENDAR_COLORS[0],
       descriptionHtml: this.descriptionControl.value ?? '',
-      repeatType: repeatRuleMap[repeatRuleValue] ?? 0,
-      repeatEvery: 1,
+      repeatType: resolvedRepeatType,
+      repeatEvery: resolvedRepeatEvery,
+      repeatEndMode,
+      repeatOccurrences,
+      repeatUntilDate,
       driveLink: this.driveLinkControl.value ?? '',
       propertyId: this.propertyControl.value ?? this.data.propertyId,
       status: 1,
