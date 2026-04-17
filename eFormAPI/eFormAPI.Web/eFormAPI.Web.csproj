@@ -65,7 +65,7 @@
     <PackageReference Include="Grpc.AspNetCore" Version="2.76.0" />
     <PackageReference Include="sendgrid" Version="9.29.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.6" />
-    <PackageReference Include="System.Threading.AccessControl" Version="10.0.5" />
+    <PackageReference Include="System.Threading.AccessControl" Version="10.0.6" />
   </ItemGroup>
 
   <ItemGroup>
