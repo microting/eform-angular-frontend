@@ -25,6 +25,7 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Hosting.Helpers;
 
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
 using System;
@@ -317,6 +318,11 @@ public static class PluginHelper
                         typeof(PluginConfigurationProvider<>),
                         typeof(ConfigurationProvider),
                         typeof(DbContext),
+                        // Share Microting.EformAngularFrontendBase so the plugin's BaseDbContext
+                        // is the same Type object the host registers in DI. Without this, each
+                        // plugin loads its own copy of BaseDbContext in a separate ALC, and
+                        // plugin services cannot resolve the host's BaseDbContext registration.
+                        typeof(BaseDbContext),
                         typeof(WarningsConfiguration),
                         typeof(WarningBehavior),
                         typeof(DbContextOptionsBuilder),
