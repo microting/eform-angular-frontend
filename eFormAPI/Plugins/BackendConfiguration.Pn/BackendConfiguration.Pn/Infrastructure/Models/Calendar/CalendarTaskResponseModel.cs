@@ -26,5 +26,6 @@ public class CalendarTaskResponseModel
     public bool IsAllDay { get; set; }
     public int? ExceptionId { get; set; }
     public int? EformId { get; set; }
+    public int? SdkCaseId { get; set; }
     public int? ItemPlanningTagId { get; set; }
 }
