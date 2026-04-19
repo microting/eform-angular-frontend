@@ -372,6 +372,7 @@ public class BackendConfigurationCalendarService(
                     PlanningId = compliance.PlanningId,
                     IsAllDay = compIsAllDay,
                     EformId = arp?.AreaRule?.EformId,
+                    SdkCaseId = compliance.MicrotingSdkCaseId,
                     ItemPlanningTagId = arp?.ItemPlanningTagId
                 };
 
