@@ -396,3 +396,4 @@ eFormAPI/eFormAPI.Web/init.json
 *.DotSettings.user
 
 eform-client/.angular
+.claude
