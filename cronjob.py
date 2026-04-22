@@ -62,12 +62,26 @@ def read_package_references(csproj_path):
 
 
 def get_latest_stable_version(package_name):
-    url = f"https://api.nuget.org/v3-flatcontainer/{package_name.lower()}/index.json"
+    # Use the NuGet search API instead of the flat-container API: it returns
+    # only *listed* packages in proper semver order, which filters out the
+    # junk old versions (e.g. `2010.2.11.1`) that the flat container still
+    # includes in its raw `versions` array.
+    url = (
+        "https://azuresearch-usnc.nuget.org/query"
+        f"?q=packageid:{package_name}"
+        "&prerelease=false"
+        "&take=1"
+    )
     response = requests.get(url, timeout=30)
     if response.status_code != 200:
         return None
-    stable = [v for v in response.json().get("versions", []) if "-" not in v]
-    return stable[-1] if stable else None
+    data = response.json().get("data", [])
+    if not data:
+        return None
+    version = data[0].get("version")
+    if version and "-" in version:
+        return None
+    return version
 
 
 def update_csproj_versions(csproj_path, bumps):
