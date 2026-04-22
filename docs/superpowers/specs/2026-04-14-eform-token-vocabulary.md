@@ -54,17 +54,17 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--surface-warning-light` | `#fef3c7` | `#3D3520` | timeplanning assigned-site:68 | warning badge bg |
 | `--surface-info-light` | `#e3f2fd` | `#1A2A3D` | cms-menu-edit:30 | info highlight bg |
 | `--surface-purple-light` | `#f3e5f5` | `#2D1F3D` | license-page:85 | license type bg |
-| `--surface-error-row` | `#fef2f2` | `#3A2222` | kanban board-reports:26 | `.overdue-item { background }` |
-| `--surface-success-badge` | `#d1fae5` | `#1A3A2A` | kanban board-statistics:9 | `.stat-badge.positive { background }` |
-| `--surface-error-badge` | `#fee2e2` | `#3D2022` | kanban board-statistics:10 | `.stat-badge.negative { background }` |
+| `--surface-error-row` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--surface-success-badge` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--surface-error-badge` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
 | `--surface-yellow` | `#e6d178` | `#7e6f3a` | _table.scss:32/37 | table yellow row bg |
 | `--surface-red-dark` | `#f5a5a8` | `#f5a5a8` | _table.scss:34 | table red-dark row bg |
 | ~~`--surface-red-light-row`~~ | — | — | merged into `--surface-danger-light` (#F8D7DA) | — |
-| `--calendar-event-bg` | `rgba(26, 115, 232, 0.08)` | `rgba(79, 202, 200, 0.12)` | calendar-week-grid:187 | calendar event highlight |
-| `--calendar-column-bg` | `#fafafa` | `#2A2C2E` | calendar-week-grid:4 | calendar week header bg |
-| `--kanban-column-bg` | `#f4f5f7` | `#2A2C2E` | board-column:1 | `.column { background }` |
-| `--kanban-drag-placeholder` | `#e2e8f0` | `#37383A` | board-view:10 | drag placeholder bg |
-| `--tracker-highlight` | `#fff2cc` | `#3D3520` | task-tracker-table | tracker row bg |
+| `--calendar-event-bg` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
+| `--calendar-column-bg` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
+| `--kanban-column-bg` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--kanban-drag-placeholder` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--tracker-highlight` | — | — | moved to Plugin-Specific Tokens (tracker) | — |
 
 ### Text
 
@@ -78,9 +78,9 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--text-on-dark` | `#374151` | `#D1D5DB` | kanban card:38, gantt:374151 | dark text on light bg |
 | `--text-error` | `#DB0D0D` | `#FF8282` | styles.scss:323 | `.red-text`, `.red-background .plan-text` |
 | `--link` | `#0D96DB` | `#90CAF9` | styles.scss:390; license-page:81/178; eform-new-subheader:16 | `.blue-text`, license links, subheader links (merged `--text-link`, `--text-link-alt`, `--text-subheader-link`) |
-| `--text-calendar-accent` | `#1a73e8` | `#8AB4F8` | calendar-sidebar:18 | calendar today, links |
-| `--text-calendar-secondary` | `#5f6368` | `#9AA0A6` | calendar-sidebar:173 | calendar label text |
-| `--text-calendar-muted` | `#70757a` | `#9AA0A6` | calendar-week-grid:11 | calendar day label |
+| `--text-calendar-accent` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
+| `--text-calendar-secondary` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
+| `--text-calendar-muted` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
 | ~~`--text-subheader-link`~~ | — | — | merged into `--link` (#0D96DB) | — |
 | `--text-warning-dark` | `#92400e` | `#FCD34D` | assigned-site:69 | warning badge text |
 
@@ -88,9 +88,9 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 
 | Token | Light | Dark | Source | Example |
 |---|---|---|---|---|
-| `--state-hover-bg` | `#f3f4f6` | `#37383A` | kanban board-reports:9 | button hover bg |
-| `--state-active-bg` | `#3b82f6` | `#60A5FA` | kanban board-reports:8 | `.active { background }` |
-| `--state-focus-ring` | `#3b82f6` | `#60A5FA` | kanban column-menu:30 | input focus border |
+| `--state-hover-bg` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--state-active-bg` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--state-focus-ring` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
 | `--state-highlight-yellow` | `#fbc02d` | `#F9A825` | time-plannings-table:43 | highlight outline |
 | `--state-highlight-overlay` | `rgba(255, 249, 196, 0.5)` | `rgba(249, 168, 37, 0.2)` | time-plannings-table:45 | yellow highlight inset |
 | `--state-scrollbar-thumb` | `#999999` | same | styles.scss:41 | scrollbar thumb |
@@ -104,9 +104,9 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--border-muted` | `#e0e0e0` | `#3A3C3E` | cms-menu-edit:2, backendconfig calendar (many) | subtle borders |
 | `--border-lighter` | `#EBEFF2` | `#2B2B2B` | already tokenized as `--tp-border` | table borders |
 | `--border-dashed` | `#d1d5db` | `#4A4C4E` | kanban board-view:28, assigned-site:62 | dashed drop-zone borders |
-| `--border-drag` | `#94a3b8` | `#64748B` | kanban board-view:12, board-column:7 | drag placeholder border |
+| `--border-drag` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
 | `--border-separator` | `#edeff3` | `#37383A` | assigned-site:7, property-worker-create:50 | section separator |
-| `--border-calendar` | `#dadce0` | `#3A3C3E` | calendar-week-grid:25 (approx) | calendar grid border |
+| `--border-calendar` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
 | `--border-input` | `#dee2e6` | `#3A3C3E` | version-history-modal:46 | input/panel border |
 
 ### Status (error, warning, success, info)
@@ -119,7 +119,7 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--status-error-icon` | `#d32f2f` | `#EF5350` | styles.scss:445 | red warning icon |
 | ~~`--status-error-text`~~ | — | — | merged into `--text-error` (#DB0D0D) | — |
 | `--status-error-strong` | `#a71d2a` | `#E57373` | styles.scss:156 | `.priority-urgent { background }` |
-| `--status-error-calendar` | `#ea4335` | `#F28B82` | calendar-day-column:49 | calendar error marker |
+| `--status-error-calendar` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
 | `--status-warning-orange` | `#ff9800` | `#FFB74D` | absence-requests-table:7 | pending status icon |
 | ~~`--status-success-icon`~~ | — | — | merged into `--status-success` (#4caf50) | — |
 | `--status-error-reject` | `#f44336` | `#FF8282` | absence-requests-table:17 | rejected status icon |
@@ -127,12 +127,12 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--status-danger-medium` | `#f5a5a8` | `#E57373` | styles.scss:166 | `.priority-medium { background }` |
 | ~~`--status-danger-low`~~ | — | — | merged into `--surface-danger-light` (#F8D7DA) | — |
 | `--status-safe` | `#a3d7b1` | `#81C995` | styles.scss:151 | `.priority-green { background }` |
-| `--status-kanban-positive` | `#10b981` | `#34D399` | kanban board-list:10b981 | positive trend color |
-| `--status-kanban-negative` | `#ef4444` | `#F87171` | kanban board-reports:19 | negative trend / danger |
-| `--status-kanban-positive-bg` | `#059669` | `#34D399` | kanban board-statistics:9 | positive badge text |
-| `--status-kanban-negative-bg` | `#dc2626` | `#F87171` | kanban board-statistics:10 | negative badge text |
-| `--status-tracker-blue` | `#1e88e5` | `#64B5F6` | task-tracker-table | tracker status icon |
-| `--status-tracker-yellow` | `#fada22` | `#FFF176` | task-tracker-table | tracker warning |
+| `--status-kanban-positive` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--status-kanban-negative` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--status-kanban-positive-bg` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--status-kanban-negative-bg` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--status-tracker-blue` | — | — | moved to Plugin-Specific Tokens (tracker) | — |
+| `--status-tracker-yellow` | — | — | moved to Plugin-Specific Tokens (tracker) | — |
 | `--status-bar-0` | `#bdbdbd` | same | status-bar-compact:2 | case status 0 |
 | `--status-bar-33` | `#757575` | same | status-bar-compact:3 | case status 33 |
 | `--status-bar-66` | `#ffbb33` | same | status-bar-compact:4 | case status 66 |
@@ -216,8 +216,8 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--progress-circle-size` | `50px` | same | styles.scss:399-400 | `.progress-circle { width, height }` |
 | `--progress-avatar-size` | `35px` | same | styles.scss:460-461 | `.progress-circle .avatar { width, height }` |
 | `--warning-icon-size` | `19px` | same | styles.scss:427-428 | `mat-icon.red-warning-avatar-icon` |
-| `--kanban-column-width` | `280px` | same | board-column:1 | `.column { min-width, max-width }` |
-| `--card-detail-panel-width` | `480px` | same | card-detail-dialog:2 | side panel width |
+| `--kanban-column-width` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--card-detail-panel-width` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
 | `--scrollbar-size` | `8px` | same | styles.scss:34-35 | scrollbar width/height |
 
 ## Spacing (padding, margin, gap)
@@ -241,10 +241,60 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--elevation-dropdown` | `0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12)` | same | _material-dropdown:184 | dropdown menu shadow |
 | `--elevation-dropdown-up` | `0 -5px 5px -3px rgba(0,0,0,.2), 0 -8px 10px 1px rgba(0,0,0,.14), 0 -3px 14px 2px rgba(0,0,0,.12)` | same | _material-dropdown:188 | dropdown up shadow |
 | `--elevation-scrollbar` | `inset 0 0 6px rgba(0, 0, 0, 0.1)` | same | styles.scss:40 | scrollbar track/thumb shadow |
-| `--elevation-detail-panel` | `-4px 0 24px rgba(0,0,0,0.15)` | `-4px 0 24px rgba(0,0,0,0.40)` | card-detail-dialog:2 | kanban detail panel |
+| `--elevation-detail-panel` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+| `--elevation-calendar-event` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
+| `--elevation-calendar-modal` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
+| `--elevation-hover` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
+
+## Plugin-Specific Tokens
+
+These tokens are used in only one plugin repo and not in the host app. They stay here for reference but are NOT added to the global `_eform.scss`. They remain as hardcoded values in their plugin SCSS files.
+
+### Calendar Plugin (eform-backendconfiguration-plugin calendar module)
+
+| Token | Light | Dark | Source | Example |
+|---|---|---|---|---|
+| `--calendar-event-bg` | `rgba(26, 115, 232, 0.08)` | `rgba(79, 202, 200, 0.12)` | calendar-week-grid:187 | calendar event highlight |
+| `--calendar-column-bg` | `#fafafa` | `#2A2C2E` | calendar-week-grid:4 | calendar week header bg |
+| `--text-calendar-accent` | `#1a73e8` | `#8AB4F8` | calendar-sidebar:18 | calendar today, links |
+| `--text-calendar-secondary` | `#5f6368` | `#9AA0A6` | calendar-sidebar:173 | calendar label text |
+| `--text-calendar-muted` | `#70757a` | `#9AA0A6` | calendar-week-grid:11 | calendar day label |
+| `--border-calendar` | `#dadce0` | `#3A3C3E` | calendar-week-grid:25 | calendar grid border |
+| `--status-error-calendar` | `#ea4335` | `#F28B82` | calendar-day-column:49 | calendar error marker |
 | `--elevation-calendar-event` | `0 2px 6px rgba(0, 0, 0, 0.25)` | `0 2px 6px rgba(0, 0, 0, 0.50)` | calendar-week-grid:165 | calendar event popover |
 | `--elevation-calendar-modal` | `0 8px 28px rgba(0, 0, 0, 0.28)` | `0 8px 28px rgba(0, 0, 0, 0.55)` | task-create-edit-modal:5 | calendar task modal |
-| `--elevation-hover` | `0 4px 12px rgba(0, 0, 0, 0.15)` | `0 4px 12px rgba(0, 0, 0, 0.40)` | kanban board-list:4 | board card hover |
+
+### Kanban Plugin (eform-kanban-plugin)
+
+| Token | Light | Dark | Source | Example |
+|---|---|---|---|---|
+| `--kanban-column-bg` | `#f4f5f7` | `#2A2C2E` | board-column:1 | `.column { background }` |
+| `--kanban-drag-placeholder` | `#e2e8f0` | `#37383A` | board-view:10 | drag placeholder bg |
+| `--surface-error-row` | `#fef2f2` | `#3A2222` | board-reports:26 | `.overdue-item { background }` |
+| `--surface-success-badge` | `#d1fae5` | `#1A3A2A` | board-statistics:9 | `.stat-badge.positive { background }` |
+| `--surface-error-badge` | `#fee2e2` | `#3D2022` | board-statistics:10 | `.stat-badge.negative { background }` |
+| `--text-quaternary` | `#9ca3af` | `#6B7280` | column-menu:77, board-column:12 | placeholder/hint text |
+| `--text-on-dark` | `#374151` | `#D1D5DB` | card:38 | dark text on light bg |
+| `--state-hover-bg` | `#f3f4f6` | `#37383A` | board-reports:9 | button hover bg |
+| `--state-active-bg` | `#3b82f6` | `#60A5FA` | board-reports:8 | `.active { background }` |
+| `--state-focus-ring` | `#3b82f6` | `#60A5FA` | column-menu:30 | input focus border |
+| `--border-drag` | `#94a3b8` | `#64748B` | board-view:12, board-column:7 | drag placeholder border |
+| `--status-kanban-positive` | `#10b981` | `#34D399` | board-list | positive trend color |
+| `--status-kanban-negative` | `#ef4444` | `#F87171` | board-reports:19 | negative trend / danger |
+| `--status-kanban-positive-bg` | `#059669` | `#34D399` | board-statistics:9 | positive badge text |
+| `--status-kanban-negative-bg` | `#dc2626` | `#F87171` | board-statistics:10 | negative badge text |
+| `--kanban-column-width` | `280px` | same | board-column:1 | `.column { min-width, max-width }` |
+| `--card-detail-panel-width` | `480px` | same | card-detail-dialog:2 | side panel width |
+| `--elevation-detail-panel` | `-4px 0 24px rgba(0,0,0,0.15)` | `-4px 0 24px rgba(0,0,0,0.40)` | card-detail-dialog:2 | detail panel shadow |
+| `--elevation-hover` | `0 4px 12px rgba(0, 0, 0, 0.15)` | `0 4px 12px rgba(0, 0, 0, 0.40)` | board-list:4 | board card hover |
+
+### Tracker Plugin (task-tracker)
+
+| Token | Light | Dark | Source | Example |
+|---|---|---|---|---|
+| `--tracker-highlight` | `#fff2cc` | `#3D3520` | task-tracker-table | tracker row bg |
+| `--status-tracker-blue` | `#1e88e5` | `#64B5F6` | task-tracker-table | tracker status icon |
+| `--status-tracker-yellow` | `#fada22` | `#FFF176` | task-tracker-table | tracker warning |
 
 ## Plugin Coverage
 
