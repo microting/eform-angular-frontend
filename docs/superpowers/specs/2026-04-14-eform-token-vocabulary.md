@@ -50,7 +50,7 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--surface-muted` | `#f5f5f5` | TBD-dark | styles.scss:145 (license page) | `.background: #f5f5f5` |
 | `--surface-powder` | `#b3d3ea` | `#4c6071` | _table.scss:31/36 | table highlight row bg |
 | `--surface-success-light` | `#D4EDDA` | TBD-dark | styles.scss:279 | `.green-background` (already uses `var(--success-light)`) |
-| `--surface-error-light` | `#F8D7DA` | TBD-dark | styles.scss:319 | `.red-background` (already uses `var(--error-light)`) |
+| `--surface-danger-light` | `#F8D7DA` | TBD-dark | styles.scss:171,319 | `.red-background`, `.priority-low` bg (merged `--surface-error-light`, `--status-danger-low`, `--surface-red-light-row`) |
 | `--surface-warning-light` | `#fef3c7` | TBD-dark | timeplanning assigned-site:68 | warning badge bg |
 | `--surface-info-light` | `#e3f2fd` | TBD-dark | cms-menu-edit:30 | info highlight bg |
 | `--surface-purple-light` | `#f3e5f5` | TBD-dark | license-page:85 | license type bg |
@@ -59,7 +59,7 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--surface-error-badge` | `#fee2e2` | TBD-dark | kanban board-statistics:10 | `.stat-badge.negative { background }` |
 | `--surface-yellow` | `#e6d178` | `#7e6f3a` | _table.scss:32/37 | table yellow row bg |
 | `--surface-red-dark` | `#f5a5a8` | `#f5a5a8` | _table.scss:34 | table red-dark row bg |
-| `--surface-red-light-row` | `#f8d7da` | TBD-dark | styles.scss:171 | `.priority-low` bg |
+| ~~`--surface-red-light-row`~~ | — | — | merged into `--surface-danger-light` (#F8D7DA) | — |
 | `--calendar-event-bg` | `rgba(26, 115, 232, 0.08)` | TBD-dark | calendar-week-grid:187 | calendar event highlight |
 | `--calendar-column-bg` | `#fafafa` | TBD-dark | calendar-week-grid:4 | calendar week header bg |
 | `--kanban-column-bg` | `#f4f5f7` | TBD-dark | board-column:1 | `.column { background }` |
@@ -77,12 +77,11 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--text-placeholder` | `#B3B9BF` | TBD-dark | styles.scss:363 | `.device-icon { color }`, `.grey-text` |
 | `--text-on-dark` | `#374151` | TBD-dark | kanban card:38, gantt:374151 | dark text on light bg |
 | `--text-error` | `#DB0D0D` | TBD-dark | styles.scss:323 | `.red-text`, `.red-background .plan-text` |
-| `--text-link` | `#0D96DB` | TBD-dark | styles.scss:390 | `.blue-text` |
-| `--text-link-alt` | `#1976d2` | `#90caf9` | license-page:81/178 | license link color |
+| `--link` | `#0D96DB` | TBD-dark | styles.scss:390; license-page:81/178; eform-new-subheader:16 | `.blue-text`, license links, subheader links (merged `--text-link`, `--text-link-alt`, `--text-subheader-link`) |
 | `--text-calendar-accent` | `#1a73e8` | TBD-dark | calendar-sidebar:18 | calendar today, links |
 | `--text-calendar-secondary` | `#5f6368` | TBD-dark | calendar-sidebar:173 | calendar label text |
 | `--text-calendar-muted` | `#70757a` | TBD-dark | calendar-week-grid:11 | calendar day label |
-| `--text-subheader-link` | `#0275d8` | TBD-dark | eform-new-subheader:16 | subheader breadcrumb link |
+| ~~`--text-subheader-link`~~ | — | — | merged into `--link` (#0D96DB) | — |
 | `--text-warning-dark` | `#92400e` | TBD-dark | assigned-site:69 | warning badge text |
 
 ### State (hover, pressed, focus, disabled)
@@ -114,19 +113,19 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 
 | Token | Light | Dark | Source | Example |
 |---|---|---|---|---|
-| `--status-active-bg` | `#4caf50` | TBD-dark | styles.scss:133 | `.status-active { background }` |
-| `--status-inactive-bg` | `#f44336` | TBD-dark | styles.scss:138 | `.status-inactive { background }` |
-| `--status-success` | `#319C4C` | TBD-dark | styles.scss:403 | progress circle gradient |
+| ~~`--status-active-bg`~~ | — | — | merged into `--status-success` (#4caf50) | — |
+| ~~`--status-inactive-bg`~~ | — | — | use `--error` (#f44336) instead | — |
+| `--status-success` | `#4caf50` | TBD-dark | styles.scss:133,403; absence-requests-table:12 | status active bg, success icon, progress circle (merged `--status-active-bg`, `--status-success-icon`) |
 | `--status-error-icon` | `#d32f2f` | TBD-dark | styles.scss:445 | red warning icon |
-| `--status-error-text` | `#DB0D0D` | TBD-dark | styles.scss:386 | `.red-text` |
+| ~~`--status-error-text`~~ | — | — | merged into `--text-error` (#DB0D0D) | — |
 | `--status-error-strong` | `#a71d2a` | TBD-dark | styles.scss:156 | `.priority-urgent { background }` |
 | `--status-error-calendar` | `#ea4335` | TBD-dark | calendar-day-column:49 | calendar error marker |
 | `--status-warning-orange` | `#ff9800` | TBD-dark | absence-requests-table:7 | pending status icon |
-| `--status-success-icon` | `#4caf50` | TBD-dark | absence-requests-table:12 | approved status icon |
+| ~~`--status-success-icon`~~ | — | — | merged into `--status-success` (#4caf50) | — |
 | `--status-error-reject` | `#f44336` | TBD-dark | absence-requests-table:17 | rejected status icon |
 | `--status-danger-high` | `#dc3545` | TBD-dark | styles.scss:161 | `.priority-high { background }` |
 | `--status-danger-medium` | `#f5a5a8` | TBD-dark | styles.scss:166 | `.priority-medium { background }` |
-| `--status-danger-low` | `#f8d7da` | TBD-dark | styles.scss:171 | `.priority-low { background }` |
+| ~~`--status-danger-low`~~ | — | — | merged into `--surface-danger-light` (#F8D7DA) | — |
 | `--status-safe` | `#a3d7b1` | TBD-dark | styles.scss:151 | `.priority-green { background }` |
 | `--status-kanban-positive` | `#10b981` | TBD-dark | kanban board-list:10b981 | positive trend color |
 | `--status-kanban-negative` | `#ef4444` | TBD-dark | kanban board-reports:19 | negative trend / danger |
