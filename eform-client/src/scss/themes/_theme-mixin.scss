@@ -1,0 +1,161 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+// ---------------------------------------------------------------------------
+// eform-theme($tokens, $mode)
+// ---------------------------------------------------------------------------
+// Emits CSS custom properties for every token in the map.
+//   $tokens — the full $eform-tokens (or $workspace-tokens) map
+//   $mode   — 'light' or 'dark'
+// ---------------------------------------------------------------------------
+
+@mixin eform-theme($tokens, $mode) {
+  $colors: map.get($tokens, colors);
+  $mode-colors: map.get($colors, $mode);
+
+  // --- Mode-independent tokens (top-level keys) ---
+
+  // Typography
+  --font-family: #{map.get($tokens, font-family)};
+  --font-size-base: #{map.get($tokens, font-size-base)};
+  --font-size-body: #{map.get($tokens, font-size-body)};
+  --font-size-table-header: #{map.get($tokens, font-size-table-header)};
+  --font-size-button: #{map.get($tokens, font-size-button)};
+  --font-size-plan-title: #{map.get($tokens, font-size-plan-title)};
+  --font-size-plan-warning: #{map.get($tokens, font-size-plan-warning)};
+  --font-weight-light: #{map.get($tokens, font-weight-light)};
+  --font-weight-normal: #{map.get($tokens, font-weight-normal)};
+  --font-weight-medium: #{map.get($tokens, font-weight-medium)};
+  --font-weight-semibold: #{map.get($tokens, font-weight-semibold)};
+  --font-weight-bold: #{map.get($tokens, font-weight-bold)};
+
+  // Shape
+  --radius-sm: #{map.get($tokens, radius-sm)};
+  --radius-md: #{map.get($tokens, radius-md)};
+  --radius-lg: #{map.get($tokens, radius-lg)};
+  --radius-xl: #{map.get($tokens, radius-xl)};
+  --radius-full: #{map.get($tokens, radius-full)};
+  --radius-dialog: #{map.get($tokens, radius-dialog)};
+  --radius-rounded-full: #{map.get($tokens, radius-rounded-full)};
+  --radius-checkbox: #{map.get($tokens, radius-checkbox)};
+  --radius-tag: #{map.get($tokens, radius-tag)};
+
+  // Sizing
+  --icon-btn-size: #{map.get($tokens, icon-btn-size)};
+  --icon-size: #{map.get($tokens, icon-size)};
+  --calendar-btn-size: #{map.get($tokens, calendar-btn-size)};
+  --progress-circle-size: #{map.get($tokens, progress-circle-size)};
+  --progress-avatar-size: #{map.get($tokens, progress-avatar-size)};
+  --warning-icon-size: #{map.get($tokens, warning-icon-size)};
+  --scrollbar-size: #{map.get($tokens, scrollbar-size)};
+
+  // Spacing
+  --spacing-xs: #{map.get($tokens, spacing-xs)};
+  --spacing-sm: #{map.get($tokens, spacing-sm)};
+  --spacing-md: #{map.get($tokens, spacing-md)};
+  --spacing-lg: #{map.get($tokens, spacing-lg)};
+  --spacing-xl: #{map.get($tokens, spacing-xl)};
+  --spacing-2xl: #{map.get($tokens, spacing-2xl)};
+  --chip-padding-top: #{map.get($tokens, chip-padding-top)};
+
+  // Elevation (mode-independent)
+  --elevation-dropdown: #{map.get($tokens, elevation-dropdown)};
+  --elevation-dropdown-up: #{map.get($tokens, elevation-dropdown-up)};
+  --elevation-scrollbar: #{map.get($tokens, elevation-scrollbar)};
+
+  // --- Mode-dependent color tokens ---
+
+  // Existing tokens
+  --primary: #{map.get($mode-colors, primary)};
+  --primary-light: #{map.get($mode-colors, primary-light)};
+  --warning: #{map.get($mode-colors, warning)};
+  --error: #{map.get($mode-colors, error)};
+  --border: #{map.get($mode-colors, border)};
+  --icon-secondary: #{map.get($mode-colors, icon-secondary)};
+  --bg: #{map.get($mode-colors, bg)};
+  --text-header: #{map.get($mode-colors, text-header)};
+  --text-body: #{map.get($mode-colors, text-body)};
+  --card: #{map.get($mode-colors, card)};
+  --btn-delete-text: #{map.get($mode-colors, btn-delete-text)};
+  --mdc-theme-primary: #{map.get($mode-colors, mdc-theme-primary)};
+  --mdc-theme-primary-dark: #{map.get($mode-colors, mdc-theme-primary-dark)};
+  --tp-td-bg: #{map.get($mode-colors, tp-td-bg)};
+  --tp-th-bg: #{map.get($mode-colors, tp-th-bg)};
+  --tp-border: #{map.get($mode-colors, tp-border)};
+  --tp-text: #{map.get($mode-colors, tp-text)};
+  --tp-white-text: #{map.get($mode-colors, tp-white-text)};
+  --black-800: #{map.get($mode-colors, black-800)};
+  --blue-600: #{map.get($mode-colors, blue-600)};
+
+  // Brand
+  --brand-teal: #{map.get($mode-colors, brand-teal)};
+  --brand-teal-dark: #{map.get($mode-colors, brand-teal-dark)};
+  --brand-teal-light: #{map.get($mode-colors, brand-teal-light)};
+
+  // Surface & Background
+  --surface-elevated: #{map.get($mode-colors, surface-elevated)};
+  --surface-subtle: #{map.get($mode-colors, surface-subtle)};
+  --surface-muted: #{map.get($mode-colors, surface-muted)};
+  --surface-powder: #{map.get($mode-colors, surface-powder)};
+  --surface-success-light: #{map.get($mode-colors, surface-success-light)};
+  --surface-danger-light: #{map.get($mode-colors, surface-danger-light)};
+  --surface-warning-light: #{map.get($mode-colors, surface-warning-light)};
+  --surface-info-light: #{map.get($mode-colors, surface-info-light)};
+  --surface-purple-light: #{map.get($mode-colors, surface-purple-light)};
+  --surface-yellow: #{map.get($mode-colors, surface-yellow)};
+  --surface-red-dark: #{map.get($mode-colors, surface-red-dark)};
+
+  // Text
+  --text-primary: #{map.get($mode-colors, text-primary)};
+  --text-secondary: #{map.get($mode-colors, text-secondary)};
+  --text-tertiary: #{map.get($mode-colors, text-tertiary)};
+  --text-quaternary: #{map.get($mode-colors, text-quaternary)};
+  --text-placeholder: #{map.get($mode-colors, text-placeholder)};
+  --text-on-dark: #{map.get($mode-colors, text-on-dark)};
+  --text-error: #{map.get($mode-colors, text-error)};
+  --link: #{map.get($mode-colors, link)};
+  --text-warning-dark: #{map.get($mode-colors, text-warning-dark)};
+
+  // State
+  --state-highlight-yellow: #{map.get($mode-colors, state-highlight-yellow)};
+  --state-highlight-overlay: #{map.get($mode-colors, state-highlight-overlay)};
+  --state-scrollbar-thumb: #{map.get($mode-colors, state-scrollbar-thumb)};
+
+  // Border & Divider
+  --border-primary: #{map.get($mode-colors, border-primary)};
+  --border-secondary: #{map.get($mode-colors, border-secondary)};
+  --border-muted: #{map.get($mode-colors, border-muted)};
+  --border-lighter: #{map.get($mode-colors, border-lighter)};
+  --border-dashed: #{map.get($mode-colors, border-dashed)};
+  --border-separator: #{map.get($mode-colors, border-separator)};
+  --border-input: #{map.get($mode-colors, border-input)};
+
+  // Status
+  --status-success: #{map.get($mode-colors, status-success)};
+  --status-error-icon: #{map.get($mode-colors, status-error-icon)};
+  --status-error-strong: #{map.get($mode-colors, status-error-strong)};
+  --status-warning-orange: #{map.get($mode-colors, status-warning-orange)};
+  --status-error-reject: #{map.get($mode-colors, status-error-reject)};
+  --status-danger-high: #{map.get($mode-colors, status-danger-high)};
+  --status-danger-medium: #{map.get($mode-colors, status-danger-medium)};
+  --status-safe: #{map.get($mode-colors, status-safe)};
+  --status-bar-0: #{map.get($mode-colors, status-bar-0)};
+  --status-bar-33: #{map.get($mode-colors, status-bar-33)};
+  --status-bar-66: #{map.get($mode-colors, status-bar-66)};
+  --status-bar-70: #{map.get($mode-colors, status-bar-70)};
+  --status-bar-77: #{map.get($mode-colors, status-bar-77)};
+  --status-bar-100: #{map.get($mode-colors, status-bar-100)};
+  --status-bar-110: #{map.get($mode-colors, status-bar-110)};
+  --status-bar-track: #{map.get($mode-colors, status-bar-track)};
+
+  // Elevation (mode-dependent)
+  --elevation-card: #{map.get($mode-colors, elevation-card)};
+  --elevation-panel: #{map.get($mode-colors, elevation-panel)};
+
+  // Material component overrides using token values
+  @include mat.dialog-overrides((
+    container-shape: map.get($tokens, radius-dialog),
+    container-elevation-shadow: none,
+    actions-padding: map.get($tokens, spacing-2xl),
+  ));
+}
