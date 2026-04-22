@@ -162,7 +162,7 @@ def commit_modified_csprojs(csproj_paths, issue_number):
 
 
 def push_new_version_tag():
-    subprocess.run(["git", "fetch", "--tags"], check=True)
+    subprocess.run(["git", "fetch", "--tags", "--force"], check=True)
     tags_output = (
         subprocess.check_output(["git", "tag", "--sort=-v:refname"])
         .decode("utf-8")
