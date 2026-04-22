@@ -46,25 +46,25 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | Token | Light | Dark | Source | Example |
 |---|---|---|---|---|
 | `--surface-elevated` | `#F7F9FA` | `#2D2F31` | already tokenized as `--card` | card backgrounds |
-| `--surface-subtle` | `#f9fafb` | TBD-dark | kanban board-settings:4 | `.column-row { background }` |
-| `--surface-muted` | `#f5f5f5` | TBD-dark | styles.scss:145 (license page) | `.background: #f5f5f5` |
+| `--surface-subtle` | `#f9fafb` | `#2A2C2E` | kanban board-settings:4 | `.column-row { background }` |
+| `--surface-muted` | `#f5f5f5` | `#2A2C2E` | styles.scss:145 (license page) | `.background: #f5f5f5` |
 | `--surface-powder` | `#b3d3ea` | `#4c6071` | _table.scss:31/36 | table highlight row bg |
-| `--surface-success-light` | `#D4EDDA` | TBD-dark | styles.scss:279 | `.green-background` (already uses `var(--success-light)`) |
-| `--surface-danger-light` | `#F8D7DA` | TBD-dark | styles.scss:171,319 | `.red-background`, `.priority-low` bg (merged `--surface-error-light`, `--status-danger-low`, `--surface-red-light-row`) |
-| `--surface-warning-light` | `#fef3c7` | TBD-dark | timeplanning assigned-site:68 | warning badge bg |
-| `--surface-info-light` | `#e3f2fd` | TBD-dark | cms-menu-edit:30 | info highlight bg |
-| `--surface-purple-light` | `#f3e5f5` | TBD-dark | license-page:85 | license type bg |
-| `--surface-error-row` | `#fef2f2` | TBD-dark | kanban board-reports:26 | `.overdue-item { background }` |
-| `--surface-success-badge` | `#d1fae5` | TBD-dark | kanban board-statistics:9 | `.stat-badge.positive { background }` |
-| `--surface-error-badge` | `#fee2e2` | TBD-dark | kanban board-statistics:10 | `.stat-badge.negative { background }` |
+| `--surface-success-light` | `#D4EDDA` | `#1A3A2A` | styles.scss:279 | `.green-background` (already uses `var(--success-light)`) |
+| `--surface-danger-light` | `#F8D7DA` | `#3D2022` | styles.scss:171,319 | `.red-background`, `.priority-low` bg (merged `--surface-error-light`, `--status-danger-low`, `--surface-red-light-row`) |
+| `--surface-warning-light` | `#fef3c7` | `#3D3520` | timeplanning assigned-site:68 | warning badge bg |
+| `--surface-info-light` | `#e3f2fd` | `#1A2A3D` | cms-menu-edit:30 | info highlight bg |
+| `--surface-purple-light` | `#f3e5f5` | `#2D1F3D` | license-page:85 | license type bg |
+| `--surface-error-row` | `#fef2f2` | `#3A2222` | kanban board-reports:26 | `.overdue-item { background }` |
+| `--surface-success-badge` | `#d1fae5` | `#1A3A2A` | kanban board-statistics:9 | `.stat-badge.positive { background }` |
+| `--surface-error-badge` | `#fee2e2` | `#3D2022` | kanban board-statistics:10 | `.stat-badge.negative { background }` |
 | `--surface-yellow` | `#e6d178` | `#7e6f3a` | _table.scss:32/37 | table yellow row bg |
 | `--surface-red-dark` | `#f5a5a8` | `#f5a5a8` | _table.scss:34 | table red-dark row bg |
 | ~~`--surface-red-light-row`~~ | — | — | merged into `--surface-danger-light` (#F8D7DA) | — |
-| `--calendar-event-bg` | `rgba(26, 115, 232, 0.08)` | TBD-dark | calendar-week-grid:187 | calendar event highlight |
-| `--calendar-column-bg` | `#fafafa` | TBD-dark | calendar-week-grid:4 | calendar week header bg |
-| `--kanban-column-bg` | `#f4f5f7` | TBD-dark | board-column:1 | `.column { background }` |
-| `--kanban-drag-placeholder` | `#e2e8f0` | TBD-dark | board-view:10 | drag placeholder bg |
-| `--tracker-highlight` | `#fff2cc` | TBD-dark | task-tracker-table | tracker row bg |
+| `--calendar-event-bg` | `rgba(26, 115, 232, 0.08)` | `rgba(79, 202, 200, 0.12)` | calendar-week-grid:187 | calendar event highlight |
+| `--calendar-column-bg` | `#fafafa` | `#2A2C2E` | calendar-week-grid:4 | calendar week header bg |
+| `--kanban-column-bg` | `#f4f5f7` | `#2A2C2E` | board-column:1 | `.column { background }` |
+| `--kanban-drag-placeholder` | `#e2e8f0` | `#37383A` | board-view:10 | drag placeholder bg |
+| `--tracker-highlight` | `#fff2cc` | `#3D3520` | task-tracker-table | tracker row bg |
 
 ### Text
 
@@ -72,27 +72,27 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 |---|---|---|---|---|
 | `--text-primary` | `#0F1316` | `#F3F5F7` | already tokenized as `--text-header` | headings |
 | `--text-secondary` | `#7F868D` | `#C1C5C9` | already tokenized as `--text-body` | body text |
-| `--text-tertiary` | `#6b7280` | TBD-dark | kanban (many), timeplanning assigned-site:5 | secondary labels, meta text |
-| `--text-quaternary` | `#9ca3af` | TBD-dark | kanban column-menu:77, board-column:12 | placeholder/hint text |
-| `--text-placeholder` | `#B3B9BF` | TBD-dark | styles.scss:363 | `.device-icon { color }`, `.grey-text` |
-| `--text-on-dark` | `#374151` | TBD-dark | kanban card:38, gantt:374151 | dark text on light bg |
-| `--text-error` | `#DB0D0D` | TBD-dark | styles.scss:323 | `.red-text`, `.red-background .plan-text` |
-| `--link` | `#0D96DB` | TBD-dark | styles.scss:390; license-page:81/178; eform-new-subheader:16 | `.blue-text`, license links, subheader links (merged `--text-link`, `--text-link-alt`, `--text-subheader-link`) |
-| `--text-calendar-accent` | `#1a73e8` | TBD-dark | calendar-sidebar:18 | calendar today, links |
-| `--text-calendar-secondary` | `#5f6368` | TBD-dark | calendar-sidebar:173 | calendar label text |
-| `--text-calendar-muted` | `#70757a` | TBD-dark | calendar-week-grid:11 | calendar day label |
+| `--text-tertiary` | `#6b7280` | `#9CA3AF` | kanban (many), timeplanning assigned-site:5 | secondary labels, meta text |
+| `--text-quaternary` | `#9ca3af` | `#6B7280` | kanban column-menu:77, board-column:12 | placeholder/hint text |
+| `--text-placeholder` | `#B3B9BF` | `#6B7280` | styles.scss:363 | `.device-icon { color }`, `.grey-text` |
+| `--text-on-dark` | `#374151` | `#D1D5DB` | kanban card:38, gantt:374151 | dark text on light bg |
+| `--text-error` | `#DB0D0D` | `#FF8282` | styles.scss:323 | `.red-text`, `.red-background .plan-text` |
+| `--link` | `#0D96DB` | `#90CAF9` | styles.scss:390; license-page:81/178; eform-new-subheader:16 | `.blue-text`, license links, subheader links (merged `--text-link`, `--text-link-alt`, `--text-subheader-link`) |
+| `--text-calendar-accent` | `#1a73e8` | `#8AB4F8` | calendar-sidebar:18 | calendar today, links |
+| `--text-calendar-secondary` | `#5f6368` | `#9AA0A6` | calendar-sidebar:173 | calendar label text |
+| `--text-calendar-muted` | `#70757a` | `#9AA0A6` | calendar-week-grid:11 | calendar day label |
 | ~~`--text-subheader-link`~~ | — | — | merged into `--link` (#0D96DB) | — |
-| `--text-warning-dark` | `#92400e` | TBD-dark | assigned-site:69 | warning badge text |
+| `--text-warning-dark` | `#92400e` | `#FCD34D` | assigned-site:69 | warning badge text |
 
 ### State (hover, pressed, focus, disabled)
 
 | Token | Light | Dark | Source | Example |
 |---|---|---|---|---|
-| `--state-hover-bg` | `#f3f4f6` | TBD-dark | kanban board-reports:9 | button hover bg |
-| `--state-active-bg` | `#3b82f6` | TBD-dark | kanban board-reports:8 | `.active { background }` |
-| `--state-focus-ring` | `#3b82f6` | TBD-dark | kanban column-menu:30 | input focus border |
-| `--state-highlight-yellow` | `#fbc02d` | TBD-dark | time-plannings-table:43 | highlight outline |
-| `--state-highlight-overlay` | `rgba(255, 249, 196, 0.5)` | TBD-dark | time-plannings-table:45 | yellow highlight inset |
+| `--state-hover-bg` | `#f3f4f6` | `#37383A` | kanban board-reports:9 | button hover bg |
+| `--state-active-bg` | `#3b82f6` | `#60A5FA` | kanban board-reports:8 | `.active { background }` |
+| `--state-focus-ring` | `#3b82f6` | `#60A5FA` | kanban column-menu:30 | input focus border |
+| `--state-highlight-yellow` | `#fbc02d` | `#F9A825` | time-plannings-table:43 | highlight outline |
+| `--state-highlight-overlay` | `rgba(255, 249, 196, 0.5)` | `rgba(249, 168, 37, 0.2)` | time-plannings-table:45 | yellow highlight inset |
 | `--state-scrollbar-thumb` | `#999999` | same | styles.scss:41 | scrollbar thumb |
 
 ### Border & Divider
@@ -100,14 +100,14 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | Token | Light | Dark | Source | Example |
 |---|---|---|---|---|
 | `--border-primary` | `#e2e6e9` | `#37383A` | already tokenized as `--border` | main border |
-| `--border-secondary` | `#e5e7eb` | TBD-dark | kanban (many), timeplanning assigned-site:29 | secondary borders |
-| `--border-muted` | `#e0e0e0` | TBD-dark | cms-menu-edit:2, backendconfig calendar (many) | subtle borders |
+| `--border-secondary` | `#e5e7eb` | `#3A3C3E` | kanban (many), timeplanning assigned-site:29 | secondary borders |
+| `--border-muted` | `#e0e0e0` | `#3A3C3E` | cms-menu-edit:2, backendconfig calendar (many) | subtle borders |
 | `--border-lighter` | `#EBEFF2` | `#2B2B2B` | already tokenized as `--tp-border` | table borders |
-| `--border-dashed` | `#d1d5db` | TBD-dark | kanban board-view:28, assigned-site:62 | dashed drop-zone borders |
-| `--border-drag` | `#94a3b8` | TBD-dark | kanban board-view:12, board-column:7 | drag placeholder border |
-| `--border-separator` | `#edeff3` | TBD-dark | assigned-site:7, property-worker-create:50 | section separator |
-| `--border-calendar` | `#dadce0` | TBD-dark | calendar-week-grid:25 (approx) | calendar grid border |
-| `--border-input` | `#dee2e6` | TBD-dark | version-history-modal:46 | input/panel border |
+| `--border-dashed` | `#d1d5db` | `#4A4C4E` | kanban board-view:28, assigned-site:62 | dashed drop-zone borders |
+| `--border-drag` | `#94a3b8` | `#64748B` | kanban board-view:12, board-column:7 | drag placeholder border |
+| `--border-separator` | `#edeff3` | `#37383A` | assigned-site:7, property-worker-create:50 | section separator |
+| `--border-calendar` | `#dadce0` | `#3A3C3E` | calendar-week-grid:25 (approx) | calendar grid border |
+| `--border-input` | `#dee2e6` | `#3A3C3E` | version-history-modal:46 | input/panel border |
 
 ### Status (error, warning, success, info)
 
@@ -115,24 +115,24 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 |---|---|---|---|---|
 | ~~`--status-active-bg`~~ | — | — | merged into `--status-success` (#4caf50) | — |
 | ~~`--status-inactive-bg`~~ | — | — | use `--error` (#f44336) instead | — |
-| `--status-success` | `#4caf50` | TBD-dark | styles.scss:133,403; absence-requests-table:12 | status active bg, success icon, progress circle (merged `--status-active-bg`, `--status-success-icon`) |
-| `--status-error-icon` | `#d32f2f` | TBD-dark | styles.scss:445 | red warning icon |
+| `--status-success` | `#4caf50` | `#66BB6A` | styles.scss:133,403; absence-requests-table:12 | status active bg, success icon, progress circle (merged `--status-active-bg`, `--status-success-icon`) |
+| `--status-error-icon` | `#d32f2f` | `#EF5350` | styles.scss:445 | red warning icon |
 | ~~`--status-error-text`~~ | — | — | merged into `--text-error` (#DB0D0D) | — |
-| `--status-error-strong` | `#a71d2a` | TBD-dark | styles.scss:156 | `.priority-urgent { background }` |
-| `--status-error-calendar` | `#ea4335` | TBD-dark | calendar-day-column:49 | calendar error marker |
-| `--status-warning-orange` | `#ff9800` | TBD-dark | absence-requests-table:7 | pending status icon |
+| `--status-error-strong` | `#a71d2a` | `#E57373` | styles.scss:156 | `.priority-urgent { background }` |
+| `--status-error-calendar` | `#ea4335` | `#F28B82` | calendar-day-column:49 | calendar error marker |
+| `--status-warning-orange` | `#ff9800` | `#FFB74D` | absence-requests-table:7 | pending status icon |
 | ~~`--status-success-icon`~~ | — | — | merged into `--status-success` (#4caf50) | — |
-| `--status-error-reject` | `#f44336` | TBD-dark | absence-requests-table:17 | rejected status icon |
-| `--status-danger-high` | `#dc3545` | TBD-dark | styles.scss:161 | `.priority-high { background }` |
-| `--status-danger-medium` | `#f5a5a8` | TBD-dark | styles.scss:166 | `.priority-medium { background }` |
+| `--status-error-reject` | `#f44336` | `#FF8282` | absence-requests-table:17 | rejected status icon |
+| `--status-danger-high` | `#dc3545` | `#E57373` | styles.scss:161 | `.priority-high { background }` |
+| `--status-danger-medium` | `#f5a5a8` | `#E57373` | styles.scss:166 | `.priority-medium { background }` |
 | ~~`--status-danger-low`~~ | — | — | merged into `--surface-danger-light` (#F8D7DA) | — |
-| `--status-safe` | `#a3d7b1` | TBD-dark | styles.scss:151 | `.priority-green { background }` |
-| `--status-kanban-positive` | `#10b981` | TBD-dark | kanban board-list:10b981 | positive trend color |
-| `--status-kanban-negative` | `#ef4444` | TBD-dark | kanban board-reports:19 | negative trend / danger |
-| `--status-kanban-positive-bg` | `#059669` | TBD-dark | kanban board-statistics:9 | positive badge text |
-| `--status-kanban-negative-bg` | `#dc2626` | TBD-dark | kanban board-statistics:10 | negative badge text |
-| `--status-tracker-blue` | `#1e88e5` | TBD-dark | task-tracker-table | tracker status icon |
-| `--status-tracker-yellow` | `#fada22` | TBD-dark | task-tracker-table | tracker warning |
+| `--status-safe` | `#a3d7b1` | `#81C995` | styles.scss:151 | `.priority-green { background }` |
+| `--status-kanban-positive` | `#10b981` | `#34D399` | kanban board-list:10b981 | positive trend color |
+| `--status-kanban-negative` | `#ef4444` | `#F87171` | kanban board-reports:19 | negative trend / danger |
+| `--status-kanban-positive-bg` | `#059669` | `#34D399` | kanban board-statistics:9 | positive badge text |
+| `--status-kanban-negative-bg` | `#dc2626` | `#F87171` | kanban board-statistics:10 | negative badge text |
+| `--status-tracker-blue` | `#1e88e5` | `#64B5F6` | task-tracker-table | tracker status icon |
+| `--status-tracker-yellow` | `#fada22` | `#FFF176` | task-tracker-table | tracker warning |
 | `--status-bar-0` | `#bdbdbd` | same | status-bar-compact:2 | case status 0 |
 | `--status-bar-33` | `#757575` | same | status-bar-compact:3 | case status 33 |
 | `--status-bar-66` | `#ffbb33` | same | status-bar-compact:4 | case status 66 |
@@ -236,15 +236,15 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 
 | Token | Light | Dark | Source | Example |
 |---|---|---|---|---|
-| `--elevation-card` | `0 4px 20px 0 rgba(0, 0, 0, 0.10)` | TBD-dark | styles.scss:1103 | card shadow |
-| `--elevation-panel` | `0 0 20px 0 rgba(0, 0, 0, 0.05)` | TBD-dark | styles.scss:1410, 1416 | side panel shadow |
+| `--elevation-card` | `0 4px 20px 0 rgba(0, 0, 0, 0.10)` | `0 4px 20px 0 rgba(0, 0, 0, 0.30)` | styles.scss:1103 | card shadow |
+| `--elevation-panel` | `0 0 20px 0 rgba(0, 0, 0, 0.05)` | `0 0 20px 0 rgba(0, 0, 0, 0.20)` | styles.scss:1410, 1416 | side panel shadow |
 | `--elevation-dropdown` | `0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12)` | same | _material-dropdown:184 | dropdown menu shadow |
 | `--elevation-dropdown-up` | `0 -5px 5px -3px rgba(0,0,0,.2), 0 -8px 10px 1px rgba(0,0,0,.14), 0 -3px 14px 2px rgba(0,0,0,.12)` | same | _material-dropdown:188 | dropdown up shadow |
 | `--elevation-scrollbar` | `inset 0 0 6px rgba(0, 0, 0, 0.1)` | same | styles.scss:40 | scrollbar track/thumb shadow |
-| `--elevation-detail-panel` | `-4px 0 24px rgba(0,0,0,0.15)` | TBD-dark | card-detail-dialog:2 | kanban detail panel |
-| `--elevation-calendar-event` | `0 2px 6px rgba(0, 0, 0, 0.25)` | TBD-dark | calendar-week-grid:165 | calendar event popover |
-| `--elevation-calendar-modal` | `0 8px 28px rgba(0, 0, 0, 0.28)` | TBD-dark | task-create-edit-modal:5 | calendar task modal |
-| `--elevation-hover` | `0 4px 12px rgba(0, 0, 0, 0.15)` | TBD-dark | kanban board-list:4 | board card hover |
+| `--elevation-detail-panel` | `-4px 0 24px rgba(0,0,0,0.15)` | `-4px 0 24px rgba(0,0,0,0.40)` | card-detail-dialog:2 | kanban detail panel |
+| `--elevation-calendar-event` | `0 2px 6px rgba(0, 0, 0, 0.25)` | `0 2px 6px rgba(0, 0, 0, 0.50)` | calendar-week-grid:165 | calendar event popover |
+| `--elevation-calendar-modal` | `0 8px 28px rgba(0, 0, 0, 0.28)` | `0 8px 28px rgba(0, 0, 0, 0.55)` | task-create-edit-modal:5 | calendar task modal |
+| `--elevation-hover` | `0 4px 12px rgba(0, 0, 0, 0.15)` | `0 4px 12px rgba(0, 0, 0, 0.40)` | kanban board-list:4 | board card hover |
 
 ## Plugin Coverage
 
@@ -277,6 +277,6 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 - **Already tokenized as CSS custom properties**: 21 (the `--primary`, `--border`, `--text-header`, etc. in styles.scss)
 - **New tokens proposed**: ~135
 - **Biggest offenders** (most hardcoded values): kanban-plugin (98), backendconfiguration-plugin (78), timeplanning-plugin (62), host app (~120)
-- **Colors needing dark-mode values (TBD-dark)**: ~50 colors. Many are Tailwind palette colors used in kanban/timeplanning that have no dark counterparts defined.
+- **Colors needing dark-mode values (TBD-dark)**: 0 (all resolved)
 - **Most repeated un-tokenized color**: `#6b7280` (Tailwind gray-500) appears across kanban, timeplanning, and backendconfiguration -- should become `--text-tertiary`.
 - **Most repeated un-tokenized border**: `#e5e7eb` (Tailwind gray-200) appears across kanban, timeplanning, backendconfiguration -- should become `--border-secondary`.
