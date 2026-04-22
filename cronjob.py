@@ -162,18 +162,26 @@ def commit_modified_csprojs(csproj_paths, issue_number):
 
 
 def push_new_version_tag():
+    subprocess.run(["git", "fetch", "--tags"], check=True)
     tags_output = (
-        subprocess.check_output(["git", "tag", "--sort=-creatordate"])
+        subprocess.check_output(["git", "tag", "--sort=-v:refname"])
         .decode("utf-8")
         .strip()
     )
     if not tags_output:
         print("No tags found in the repository.")
         return
-    latest = tags_output.splitlines()[0].lstrip("v")
-    major, minor, build = map(int, latest.split("."))
+    major = minor = build = None
+    for line in tags_output.splitlines():
+        parts = line.lstrip("v").split(".")
+        if len(parts) == 3 and all(p.isdigit() for p in parts):
+            major, minor, build = map(int, parts)
+            break
+    if major is None:
+        print("No semver-formatted tags found.")
+        return
     new_tag = f"v{major}.{minor}.{build + 1}"
-    print(f"Current Git Version: {latest}. Creating new tag {new_tag}.")
+    print(f"Highest tag: v{major}.{minor}.{build}. Creating new tag {new_tag}.")
     subprocess.run(["git", "tag", new_tag], check=True)
     subprocess.run(["git", "push", "--tags"], check=True)
     subprocess.run(["git", "push"], check=True)
