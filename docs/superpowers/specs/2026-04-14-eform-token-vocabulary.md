@@ -175,6 +175,18 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `#ddd` | basecustomer import:11 | table border |
 | `#FFFFFF` | dashboard chart (4 plugins) | chart background |
 
+### Missed Hardcoded Values (added in spot-check)
+
+| Value | File | Line(s) | Maps to token | Notes |
+|---|---|---|---|---|
+| `#fff` | `_material-dropdown.scss` | 193, 466, 481 | `--card` | dropdown panel bg, selected option bg (currently in commented-out code) |
+| `#fff` | `_material-dropdown.scss` | 395 | `--bg` | multi-select tag text color (currently in commented-out code) |
+| `#00695C` | `navigation.component.scss` | 26 | `--brand-teal-dark` | fallback value in `var(--mdc-theme-primary-dark, #00695C)` |
+| `red` | `navigation.component.scss` | 81-84 | `--error` | expansion indicator hover (hardcoded `red`) |
+| `white` | `theme.scss` | 211 | (dark-mode text) | `.mdc-floating-label { color: white }` in dark theme |
+| `#f8f9fa` | `theme.scss` | (not found) | `--surface-subtle` | — checked but not present in current theme.scss |
+| `rgba(0, 0, 0, .20)` | `_material-dropdown.scss` | 340 | `--border-muted` | `.ng-select-container:after` border-bottom (in commented-out code) |
+
 ## Typography
 
 | Token | Value | Dark | Source | Example |
