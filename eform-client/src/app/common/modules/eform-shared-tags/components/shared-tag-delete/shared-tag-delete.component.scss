@@ -47,6 +47,6 @@ body, .theme-dark {
 }
 
 .value {
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold, 600);
   color: var(--text-header, #EBEFF2);;
 }

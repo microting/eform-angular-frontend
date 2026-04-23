@@ -9,7 +9,7 @@
 
   p {
     color: rgba(0, 0, 0, 0.6);
-    font-size: 14px;
+    font-size: var(--font-size-base, 14px);
     margin-bottom: 16px;
   }
 
@@ -50,7 +50,7 @@
 
 .results-count {
   color: rgba(0, 0, 0, 0.6);
-  font-size: 14px;
+  font-size: var(--font-size-base, 14px);
   margin-bottom: 16px;
 }
 
@@ -74,15 +74,15 @@
     padding: 2px 8px;
     border-radius: 12px;
     font-size: 11px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium, 500);
 
     &.badge-type {
-      background-color: #e3f2fd;
+      background-color: var(--surface-info-light, #e3f2fd);
       color: #1976d2;
     }
 
     &.badge-dependency {
-      background-color: #f3e5f5;
+      background-color: var(--surface-purple-light, #f3e5f5);
       color: #7b1fa2;
     }
   }
@@ -92,15 +92,15 @@
   .license-info {
     margin-bottom: 24px;
     padding: 16px;
-    background-color: #f5f5f5;
-    border-radius: 4px;
+    background-color: var(--surface-muted, #f5f5f5);
+    border-radius: var(--radius-sm, 4px);
 
     p {
       margin: 8px 0;
-      font-size: 14px;
+      font-size: var(--font-size-base, 14px);
 
       strong {
-        font-weight: 600;
+        font-weight: var(--font-weight-semibold, 600);
       }
 
       a {
@@ -118,7 +118,7 @@
   .license-text {
     h3 {
       font-size: 18px;
-      font-weight: 500;
+      font-weight: var(--font-weight-medium, 500);
       margin-bottom: 16px;
     }
 
@@ -137,14 +137,14 @@
     .error-message {
       padding: 16px;
       background-color: #ffebee;
-      border-radius: 4px;
+      border-radius: var(--radius-sm, 4px);
       color: #c62828;
     }
 
     pre {
-      background-color: #f5f5f5;
+      background-color: var(--surface-muted, #f5f5f5);
       padding: 16px;
-      border-radius: 4px;
+      border-radius: var(--radius-sm, 4px);
       overflow-x: auto;
       white-space: pre-wrap;
       word-wrap: break-word;
