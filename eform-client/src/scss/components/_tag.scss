@@ -7,7 +7,7 @@
   min-width: $icon-size;
   height: $icon-size;
   color: var(--bg, #fff);
-  background: gray;
+  background: var(--tag-fallback-bg, gray);
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

@@ -8,7 +8,7 @@
   margin-bottom: 32px;
 
   p {
-    color: rgba(0, 0, 0, 0.6);
+    color: var(--text-muted, rgba(0, 0, 0, 0.6));
     font-size: var(--font-size-base, 14px);
     margin-bottom: 16px;
   }
@@ -44,12 +44,12 @@
 
   p {
     margin-top: 16px;
-    color: rgba(0, 0, 0, 0.6);
+    color: var(--text-muted, rgba(0, 0, 0, 0.6));
   }
 }
 
 .results-count {
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--text-muted, rgba(0, 0, 0, 0.6));
   font-size: var(--font-size-base, 14px);
   margin-bottom: 16px;
 }
@@ -78,12 +78,12 @@
 
     &.badge-type {
       background-color: var(--surface-info-light, #e3f2fd);
-      color: #1976d2;
+      color: var(--badge-type-text, #1976d2);
     }
 
     &.badge-dependency {
       background-color: var(--surface-purple-light, #f3e5f5);
-      color: #7b1fa2;
+      color: var(--badge-dependency-text, #7b1fa2);
     }
   }
 }
@@ -104,7 +104,7 @@
       }
 
       a {
-        color: #1976d2;
+        color: var(--badge-type-text, #1976d2);
         text-decoration: none;
         word-break: break-all;
 
@@ -130,15 +130,15 @@
 
       p {
         margin-top: 16px;
-        color: rgba(0, 0, 0, 0.6);
+        color: var(--text-muted, rgba(0, 0, 0, 0.6));
       }
     }
 
     .error-message {
       padding: 16px;
-      background-color: #ffebee;
+      background-color: var(--surface-error-message, #ffebee);
       border-radius: var(--radius-sm, 4px);
-      color: #c62828;
+      color: var(--text-error-message, #c62828);
     }
 
     pre {
@@ -160,27 +160,27 @@
 // Dark theme support
 :host-context(.dark-theme) {
   .stats-header p {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-muted, rgba(255, 255, 255, 0.7));
   }
 
   .loading-container p {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-muted, rgba(255, 255, 255, 0.7));
   }
 
   .results-count {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-muted, rgba(255, 255, 255, 0.7));
   }
 
   .package-badges {
     .badge {
       &.badge-type {
         background-color: rgba(33, 150, 243, 0.2);
-        color: #90caf9;
+        color: var(--badge-type-text, #90caf9);
       }
 
       &.badge-dependency {
         background-color: rgba(156, 39, 176, 0.2);
-        color: #ce93d8;
+        color: var(--badge-dependency-text, #ce93d8);
       }
     }
   }
@@ -190,23 +190,23 @@
       background-color: rgba(255, 255, 255, 0.05);
 
       a {
-        color: #90caf9;
+        color: var(--badge-type-text, #90caf9);
       }
     }
 
     .license-text {
       .loading-spinner p {
-        color: rgba(255, 255, 255, 0.7);
+        color: var(--text-muted, rgba(255, 255, 255, 0.7));
       }
 
       .error-message {
-        background-color: rgba(198, 40, 40, 0.2);
-        color: #ef5350;
+        background-color: var(--surface-error-message, rgba(198, 40, 40, 0.2));
+        color: var(--text-error-message, #ef5350);
       }
 
       pre {
         background-color: rgba(255, 255, 255, 0.05);
-        color: rgba(255, 255, 255, 0.87);
+        color: var(--text-black, rgba(255, 255, 255, 0.87));
       }
     }
   }

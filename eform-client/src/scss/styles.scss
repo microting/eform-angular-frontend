@@ -33,7 +33,7 @@ h2 {
   &::-webkit-scrollbar {
     width: var(--scrollbar-size, 8px);
     height: var(--scrollbar-size, 8px);
-    background-color: black;
+    background-color: var(--scrollbar-bg, black);
   }
 
   &::-webkit-scrollbar-thumb {
@@ -126,7 +126,7 @@ a {
 }
 
 .reportCaseUnarchive {
-  color: green !important;
+  color: var(--status-green-text, green) !important;
 }
 
 .status-active {
@@ -371,11 +371,11 @@ a {
 }
 
 .black-text {
-  color: black !important;
+  color: var(--text-black, black) !important;
 }
 
 .green-text {
-  color: green !important;
+  color: var(--status-green-text, green) !important;
 }
 
 .white-text {
@@ -400,10 +400,10 @@ a {
   height: var(--progress-circle-size, 50px);
   border-radius: var(--radius-full, 50%);
   background: conic-gradient(
-      #319C4C 0%,
-      #319C4C calc(var(--percentage) * 1%),
-      lightgrey calc(var(--percentage) * 1%),
-      lightgrey 100%
+      var(--progress-fill, #319C4C) 0%,
+      var(--progress-fill, #319C4C) calc(var(--percentage) * 1%),
+      var(--progress-track, lightgrey) calc(var(--percentage) * 1%),
+      var(--progress-track, lightgrey) 100%
   );
 }
 

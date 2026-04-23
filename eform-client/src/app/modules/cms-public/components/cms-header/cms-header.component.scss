@@ -40,6 +40,6 @@
   .child-item {
     padding-left: 32px;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-child-muted, #666);
   }
 }

@@ -1,4 +1,4 @@
-$foreground: #FFF;
+$foreground: var(--text-white, #FFF);
 
 .spinner-container{
   position: fixed;
@@ -24,7 +24,7 @@ $foreground: #FFF;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.3);
+    background-color: var(--spinner-overlay-bg, rgba(0,0,0,0.3));
   }
 }
 
