@@ -137,6 +137,29 @@ $workspace-tokens: (
       status-bar-110: #d50000,
       status-bar-track: #e9ecef,
 
+      text-black: #{rgba(0, 0, 0, 0.87)},
+      text-white: #ffffff,
+      text-muted: #{rgba(0, 0, 0, 0.6)},
+      text-child-muted: #666666,
+      text-error-message: #c62828,
+
+      surface-subheader: #F1F1F1,
+      surface-error-message: #ffebee,
+
+      spinner-overlay-bg: #{rgba(0, 0, 0, 0.3)},
+      scrollbar-bg: #1a1a1a,
+      pell-actionbar-bg: #ffffff,
+      progress-fill: #319C4C,
+      progress-track: lightgrey,
+      tag-fallback-bg: gray,
+
+      badge-type-text: #1976d2,
+      badge-dependency-text: #7b1fa2,
+
+      breadcrumb-link: #0275d8,
+
+      status-green-text: green,
+
       elevation-card: #{0 4px 20px 0 rgba(0, 0, 0, 0.10)},
       elevation-panel: #{0 0 20px 0 rgba(0, 0, 0, 0.05)},
     ),
@@ -218,6 +241,29 @@ $workspace-tokens: (
       status-bar-100: #007e33,
       status-bar-110: #d50000,
       status-bar-track: #e9ecef,
+
+      text-black: #{rgba(255, 255, 255, 0.87)},
+      text-white: #ffffff,
+      text-muted: #{rgba(255, 255, 255, 0.7)},
+      text-child-muted: #9CA3AF,
+      text-error-message: #ef5350,
+
+      surface-subheader: #2D2F31,
+      surface-error-message: #{rgba(198, 40, 40, 0.2)},
+
+      spinner-overlay-bg: #{rgba(0, 0, 0, 0.5)},
+      scrollbar-bg: #1a1a1a,
+      pell-actionbar-bg: #2D2F31,
+      progress-fill: #4CAF50,
+      progress-track: #555555,
+      tag-fallback-bg: #555555,
+
+      badge-type-text: #90caf9,
+      badge-dependency-text: #ce93d8,
+
+      breadcrumb-link: #90caf9,
+
+      status-green-text: #66BB6A,
 
       elevation-card: #{0 4px 20px 0 rgba(0, 0, 0, 0.30)},
       elevation-panel: #{0 0 20px 0 rgba(0, 0, 0, 0.20)},

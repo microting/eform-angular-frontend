@@ -148,6 +148,35 @@
   --status-bar-110: #{map.get($mode-colors, status-bar-110)};
   --status-bar-track: #{map.get($mode-colors, status-bar-track)};
 
+  // Text (extended)
+  --text-black: #{map.get($mode-colors, text-black)};
+  --text-white: #{map.get($mode-colors, text-white)};
+  --text-muted: #{map.get($mode-colors, text-muted)};
+  --text-child-muted: #{map.get($mode-colors, text-child-muted)};
+  --text-error-message: #{map.get($mode-colors, text-error-message)};
+
+  // Surface (extended)
+  --surface-subheader: #{map.get($mode-colors, surface-subheader)};
+  --surface-error-message: #{map.get($mode-colors, surface-error-message)};
+
+  // Component
+  --spinner-overlay-bg: #{map.get($mode-colors, spinner-overlay-bg)};
+  --scrollbar-bg: #{map.get($mode-colors, scrollbar-bg)};
+  --pell-actionbar-bg: #{map.get($mode-colors, pell-actionbar-bg)};
+  --progress-fill: #{map.get($mode-colors, progress-fill)};
+  --progress-track: #{map.get($mode-colors, progress-track)};
+  --tag-fallback-bg: #{map.get($mode-colors, tag-fallback-bg)};
+
+  // Badge
+  --badge-type-text: #{map.get($mode-colors, badge-type-text)};
+  --badge-dependency-text: #{map.get($mode-colors, badge-dependency-text)};
+
+  // Link
+  --breadcrumb-link: #{map.get($mode-colors, breadcrumb-link)};
+
+  // Status (extended)
+  --status-green-text: #{map.get($mode-colors, status-green-text)};
+
   // Elevation (mode-dependent)
   --elevation-card: #{map.get($mode-colors, elevation-card)};
   --elevation-panel: #{map.get($mode-colors, elevation-panel)};

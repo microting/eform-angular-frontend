@@ -59,6 +59,8 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--surface-error-badge` | — | — | moved to Plugin-Specific Tokens (kanban) | — |
 | `--surface-yellow` | `#e6d178` | `#7e6f3a` | _table.scss:32/37 | table yellow row bg |
 | `--surface-red-dark` | `#f5a5a8` | `#f5a5a8` | _table.scss:34 | table red-dark row bg |
+| `--surface-subheader` | `#F1F1F1` | `#2D2F31` | eform-subheader:2, eforms-page:6 | subheader/input bg |
+| `--surface-error-message` | `#ffebee` | `rgba(198,40,40,0.2)` | license-page:139 | error message bg |
 | ~~`--surface-red-light-row`~~ | — | — | merged into `--surface-danger-light` (#F8D7DA) | — |
 | `--calendar-event-bg` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
 | `--calendar-column-bg` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
@@ -83,6 +85,11 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--text-calendar-muted` | — | — | moved to Plugin-Specific Tokens (calendar) | — |
 | ~~`--text-subheader-link`~~ | — | — | merged into `--link` (#0D96DB) | — |
 | `--text-warning-dark` | `#92400e` | `#FCD34D` | assigned-site:69 | warning badge text |
+| `--text-black` | `rgba(0,0,0,0.87)` | `rgba(255,255,255,0.87)` | _text.scss:33, visual-editor-field:4 | high-contrast text |
+| `--text-white` | `#ffffff` | `#ffffff` | _spinner.scss:1 | white text on colored bg |
+| `--text-muted` | `rgba(0,0,0,0.6)` | `rgba(255,255,255,0.7)` | license-page (multiple) | subdued label text |
+| `--text-child-muted` | `#666666` | `#9CA3AF` | cms-header:43 | muted nav/child text |
+| `--text-error-message` | `#c62828` | `#ef5350` | license-page:141 | error message text |
 
 ### State (hover, pressed, focus, disabled)
 
@@ -141,6 +148,16 @@ These are already emitted as `--var` in `styles.scss` (light/dark pairs):
 | `--status-bar-100` | `#007e33` | same | status-bar-compact:7 | case status 100 |
 | `--status-bar-110` | `#d50000` | same | status-bar-compact:8 | case status 110 |
 | `--status-bar-track` | `#e9ecef` | same | status-bar-compact:16 | progress bar track |
+| `--status-green-text` | `green` | `#66BB6A` | styles.scss:129,378 | green text utility |
+| `--badge-type-text` | `#1976d2` | `#90caf9` | license-page:81,107 | license badge type text |
+| `--badge-dependency-text` | `#7b1fa2` | `#ce93d8` | license-page:86 | license badge dependency text |
+| `--spinner-overlay-bg` | `rgba(0,0,0,0.3)` | `rgba(0,0,0,0.5)` | _spinner.scss:27, spinner.component:7 | spinner overlay bg |
+| `--scrollbar-bg` | `#1a1a1a` | `#1a1a1a` | styles.scss:36 | scrollbar track bg |
+| `--pell-actionbar-bg` | `#ffffff` | `#2D2F31` | _pell.scss:20 | pell editor toolbar bg |
+| `--progress-fill` | `#319C4C` | `#4CAF50` | styles.scss:403 | progress circle fill |
+| `--progress-track` | `lightgrey` | `#555555` | styles.scss:405 | progress circle track |
+| `--tag-fallback-bg` | `gray` | `#555555` | _tag.scss:10 | fallback tag bg |
+| `--breadcrumb-link` | `#0275d8` | `#90caf9` | eform-new-subheader:16 | breadcrumb link color |
 
 ### Misc Colors (plugin-specific, not shared enough for global tokens)
 
