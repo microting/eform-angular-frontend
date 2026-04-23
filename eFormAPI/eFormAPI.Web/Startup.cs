@@ -382,11 +382,9 @@ public class Startup(IConfiguration configuration)
             });
         }
 
-        // Plugins
-        app.UseEFormPlugins(Program.EnabledPlugins);
-
-        // gRPC
+        // gRPC + Plugins
         app.UseRouting();
+        app.UseEFormPlugins(Program.EnabledPlugins);
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapGrpcService<Services.GrpcServices.EformAuthGrpcService>();
