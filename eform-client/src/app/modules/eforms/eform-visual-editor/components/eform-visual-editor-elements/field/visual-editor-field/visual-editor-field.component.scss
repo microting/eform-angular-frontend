@@ -1,7 +1,7 @@
 $transition-duration: .5s;
 
 [id^='fieldSection'] {
-  color: black;
+  color: var(--text-black, black);
 }
 
 .section-collapse {

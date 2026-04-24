@@ -13,7 +13,7 @@
 
 .cms-header-title {
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium, 500);
   cursor: default;
 }
 
@@ -33,13 +33,13 @@
 }
 
 .mobile-menu {
-  background: white;
-  border-top: 1px solid #e0e0e0;
+  background: var(--bg, white);
+  border-top: 1px solid var(--border-muted, #e0e0e0);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   .child-item {
     padding-left: 32px;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-child-muted, #666);
   }
 }
