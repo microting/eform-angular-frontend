@@ -169,6 +169,8 @@
     "jsdom": "27",
     "mammoth": "^1.10.0",
     "path": "^0.12.7",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
     "run-sequence": "^2.2.1",
     "ts-node": "10.9.2",
     "tsconfig-paths": "^4.2.0",

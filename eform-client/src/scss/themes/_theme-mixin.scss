@@ -1,161 +1,198 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
-@mixin apply-theme($tokens, $mode) {
-  $theme: mat.define-theme((
-    color: (
-      theme-type: $mode,
-      primary: map.get($tokens, primary-palette),
-    ),
-    typography: (
-      brand-family: map.get($tokens, brand-family),
-      plain-family: map.get($tokens, plain-family),
-    ),
-    density: (
-      scale: map.get($tokens, density-scale),
-    ),
-  ));
+// ---------------------------------------------------------------------------
+// eform-theme($tokens, $mode)
+// ---------------------------------------------------------------------------
+// Emits CSS custom properties for every token in the map.
+//   $tokens — the full $eform-tokens (or $workspace-tokens) map
+//   $mode   — 'light' or 'dark'
+// ---------------------------------------------------------------------------
 
-  @include mat.all-component-themes($theme);
-
+@mixin eform-theme($tokens, $mode) {
   $colors: map.get($tokens, colors);
   $mode-colors: map.get($colors, $mode);
 
-  @include mat.button-overrides((
-    filled-container-shape: map.get($tokens, button-shape),
-    outlined-container-shape: map.get($tokens, button-shape),
-    protected-container-shape: map.get($tokens, button-shape),
-    text-container-shape: map.get($tokens, button-shape),
-    filled-container-color: map.get($mode-colors, primary),
-    filled-label-text-color: map.get($mode-colors, on-primary),
-    filled-state-layer-color: map.get($mode-colors, on-primary),
-    filled-ripple-color: rgba(255, 255, 255, 0.24),
-    outlined-label-text-color: map.get($mode-colors, primary),
-    outlined-outline-color: map.get($mode-colors, border),
-    outlined-state-layer-color: map.get($mode-colors, primary),
-    text-label-text-color: map.get($mode-colors, primary),
-    text-state-layer-color: map.get($mode-colors, primary),
-    protected-container-color: map.get($mode-colors, card),
-    protected-label-text-color: map.get($mode-colors, primary),
-    protected-state-layer-color: map.get($mode-colors, primary),
-    tonal-container-color: map.get($mode-colors, primary-light),
-    tonal-label-text-color: map.get($mode-colors, primary-pressed),
-    tonal-state-layer-color: map.get($mode-colors, primary),
-  ));
+  // --- Mode-independent tokens (top-level keys) ---
 
-  @include mat.form-field-overrides((
-    filled-container-color: map.get($mode-colors, input-fill),
-    filled-focus-active-indicator-color: map.get($mode-colors, input-focus-underline),
-    filled-caret-color: map.get($mode-colors, primary),
-    filled-focus-label-text-color: map.get($mode-colors, primary),
-    outlined-focus-outline-color: map.get($mode-colors, primary),
-    outlined-focus-label-text-color: map.get($mode-colors, primary),
-    outlined-caret-color: map.get($mode-colors, primary),
-  ));
+  // Typography
+  --font-family: #{map.get($tokens, font-family)};
+  --font-size-base: #{map.get($tokens, font-size-base)};
+  --font-size-body: #{map.get($tokens, font-size-body)};
+  --font-size-table-header: #{map.get($tokens, font-size-table-header)};
+  --font-size-button: #{map.get($tokens, font-size-button)};
+  --font-size-plan-title: #{map.get($tokens, font-size-plan-title)};
+  --font-size-plan-warning: #{map.get($tokens, font-size-plan-warning)};
+  --font-weight-light: #{map.get($tokens, font-weight-light)};
+  --font-weight-normal: #{map.get($tokens, font-weight-normal)};
+  --font-weight-medium: #{map.get($tokens, font-weight-medium)};
+  --font-weight-semibold: #{map.get($tokens, font-weight-semibold)};
+  --font-weight-bold: #{map.get($tokens, font-weight-bold)};
 
-  @include mat.table-overrides((
-    background-color: map.get($mode-colors, card),
-    header-headline-color: map.get($mode-colors, text-header),
-    row-item-label-text-color: map.get($mode-colors, text-header),
-    row-item-outline-color: map.get($mode-colors, border),
-  ));
+  // Shape
+  --radius-sm: #{map.get($tokens, radius-sm)};
+  --radius-md: #{map.get($tokens, radius-md)};
+  --radius-lg: #{map.get($tokens, radius-lg)};
+  --radius-xl: #{map.get($tokens, radius-xl)};
+  --radius-full: #{map.get($tokens, radius-full)};
+  --radius-dialog: #{map.get($tokens, radius-dialog)};
+  --radius-rounded-full: #{map.get($tokens, radius-rounded-full)};
+  --radius-checkbox: #{map.get($tokens, radius-checkbox)};
+  --radius-tag: #{map.get($tokens, radius-tag)};
 
-  @include mat.list-overrides((
-    list-item-hover-state-layer-color: map.get($mode-colors, primary),
-    list-item-focus-state-layer-color: map.get($mode-colors, primary),
-    list-item-selected-container-color: map.get($mode-colors, selected-surface),
-    list-item-label-text-color: map.get($mode-colors, text-header),
-  ));
+  // Sizing
+  --icon-btn-size: #{map.get($tokens, icon-btn-size)};
+  --icon-size: #{map.get($tokens, icon-size)};
+  --calendar-btn-size: #{map.get($tokens, calendar-btn-size)};
+  --progress-circle-size: #{map.get($tokens, progress-circle-size)};
+  --progress-avatar-size: #{map.get($tokens, progress-avatar-size)};
+  --warning-icon-size: #{map.get($tokens, warning-icon-size)};
+  --scrollbar-size: #{map.get($tokens, scrollbar-size)};
 
-  @include mat.icon-button-overrides((
-    container-shape: map.get($tokens, icon-button-shape),
-  ));
+  // Spacing
+  --spacing-xs: #{map.get($tokens, spacing-xs)};
+  --spacing-sm: #{map.get($tokens, spacing-sm)};
+  --spacing-md: #{map.get($tokens, spacing-md)};
+  --spacing-lg: #{map.get($tokens, spacing-lg)};
+  --spacing-xl: #{map.get($tokens, spacing-xl)};
+  --spacing-2xl: #{map.get($tokens, spacing-2xl)};
+  --chip-padding-top: #{map.get($tokens, chip-padding-top)};
 
-  @include mat.fab-overrides((
-    container-shape: map.get($tokens, fab-shape),
-    small-container-shape: map.get($tokens, fab-shape),
-  ));
+  // Elevation (mode-independent)
+  --elevation-dropdown: #{map.get($tokens, elevation-dropdown)};
+  --elevation-dropdown-up: #{map.get($tokens, elevation-dropdown-up)};
+  --elevation-scrollbar: #{map.get($tokens, elevation-scrollbar)};
 
-  @include mat.dialog-overrides((
-    container-shape: map.get($tokens, dialog-shape),
-    container-elevation-shadow: none,
-    actions-padding: 20px,
-  ));
+  // --- Mode-dependent color tokens ---
 
-  @include mat.card-overrides((
-    elevated-container-shape: map.get($tokens, card-shape),
-    outlined-container-shape: map.get($tokens, card-shape),
-    filled-container-shape: map.get($tokens, card-shape),
-  ));
-
-  @include mat.chips-overrides((
-    container-shape-radius: map.get($tokens, chip-shape),
-  ));
-
-  --font-family: #{map.get($tokens, plain-family)};
-  --brand-font-family: #{map.get($tokens, brand-family)};
-  --nav-item-height: #{map.get($tokens, nav-item-height)};
-  --nav-item-radius: #{map.get($tokens, nav-item-radius)};
-  --dropdown-option-height: #{map.get($tokens, dropdown-option-height)};
-  --dropdown-panel-radius: #{map.get($tokens, dropdown-panel-radius)};
-  --primary-button-height: #{map.get($tokens, primary-button-height)};
-  --icon-button-size: #{map.get($tokens, icon-button-size)};
+  // Existing tokens
   --primary: #{map.get($mode-colors, primary)};
-  --primary-hover: #{map.get($mode-colors, primary-hover)};
-  --primary-pressed: #{map.get($mode-colors, primary-pressed)};
   --primary-light: #{map.get($mode-colors, primary-light)};
-  --primary-dark: #{map.get($mode-colors, primary-dark)};
-  --on-primary: #{map.get($mode-colors, on-primary)};
-  --link: #{map.get($mode-colors, link)};
-  --focus-ring: #{map.get($mode-colors, focus-ring)};
-  --hover-surface: #{map.get($mode-colors, hover-surface)};
-  --selected-surface: #{map.get($mode-colors, selected-surface)};
-  --nav-selected-surface: #{map.get($mode-colors, nav-selected-surface)};
-  --nav-selected-text: #{map.get($mode-colors, nav-selected-text)};
-  --table-header-bg: #{map.get($mode-colors, table-header-bg)};
-  --table-row-hover: #{map.get($mode-colors, table-row-hover)};
-  --input-fill: #{map.get($mode-colors, input-fill)};
-  --input-focus-underline: #{map.get($mode-colors, input-focus-underline)};
+  --warning: #{map.get($mode-colors, warning)};
+  --error: #{map.get($mode-colors, error)};
+  --border: #{map.get($mode-colors, border)};
+  --icon-secondary: #{map.get($mode-colors, icon-secondary)};
   --bg: #{map.get($mode-colors, bg)};
   --text-header: #{map.get($mode-colors, text-header)};
   --text-body: #{map.get($mode-colors, text-body)};
   --card: #{map.get($mode-colors, card)};
-  --border: #{map.get($mode-colors, border)};
-  --icon-secondary: #{map.get($mode-colors, icon-secondary)};
-  --error: #{map.get($mode-colors, error)};
-  --warning: #{map.get($mode-colors, warning)};
   --btn-delete-text: #{map.get($mode-colors, btn-delete-text)};
+  --mdc-theme-primary: #{map.get($mode-colors, mdc-theme-primary)};
+  --mdc-theme-primary-dark: #{map.get($mode-colors, mdc-theme-primary-dark)};
+  --tp-td-bg: #{map.get($mode-colors, tp-td-bg)};
+  --tp-th-bg: #{map.get($mode-colors, tp-th-bg)};
+  --tp-border: #{map.get($mode-colors, tp-border)};
+  --tp-text: #{map.get($mode-colors, tp-text)};
+  --tp-white-text: #{map.get($mode-colors, tp-white-text)};
+  --black-800: #{map.get($mode-colors, black-800)};
+  --blue-600: #{map.get($mode-colors, blue-600)};
+
+  // Brand
+  --brand-teal: #{map.get($mode-colors, brand-teal)};
+  --brand-teal-dark: #{map.get($mode-colors, brand-teal-dark)};
+  --brand-teal-light: #{map.get($mode-colors, brand-teal-light)};
+
+  // Surface & Background
+  --surface-elevated: #{map.get($mode-colors, surface-elevated)};
+  --surface-subtle: #{map.get($mode-colors, surface-subtle)};
+  --surface-muted: #{map.get($mode-colors, surface-muted)};
+  --surface-powder: #{map.get($mode-colors, surface-powder)};
+  --surface-success-light: #{map.get($mode-colors, surface-success-light)};
+  --surface-danger-light: #{map.get($mode-colors, surface-danger-light)};
+  --surface-warning-light: #{map.get($mode-colors, surface-warning-light)};
+  --surface-info-light: #{map.get($mode-colors, surface-info-light)};
+  --surface-purple-light: #{map.get($mode-colors, surface-purple-light)};
+  --surface-yellow: #{map.get($mode-colors, surface-yellow)};
+  --surface-red-dark: #{map.get($mode-colors, surface-red-dark)};
+
+  // Text
+  --text-primary: #{map.get($mode-colors, text-primary)};
+  --text-secondary: #{map.get($mode-colors, text-secondary)};
+  --text-tertiary: #{map.get($mode-colors, text-tertiary)};
+  --text-quaternary: #{map.get($mode-colors, text-quaternary)};
+  --text-placeholder: #{map.get($mode-colors, text-placeholder)};
+  --text-on-dark: #{map.get($mode-colors, text-on-dark)};
+  --text-error: #{map.get($mode-colors, text-error)};
+  --link: #{map.get($mode-colors, link)};
+  --text-warning-dark: #{map.get($mode-colors, text-warning-dark)};
+
+  // State
+  --state-highlight-yellow: #{map.get($mode-colors, state-highlight-yellow)};
+  --state-highlight-overlay: #{map.get($mode-colors, state-highlight-overlay)};
+  --state-scrollbar-thumb: #{map.get($mode-colors, state-scrollbar-thumb)};
+
+  // Border & Divider
+  --border-primary: #{map.get($mode-colors, border-primary)};
+  --border-secondary: #{map.get($mode-colors, border-secondary)};
+  --border-muted: #{map.get($mode-colors, border-muted)};
+  --border-lighter: #{map.get($mode-colors, border-lighter)};
+  --border-dashed: #{map.get($mode-colors, border-dashed)};
+  --border-separator: #{map.get($mode-colors, border-separator)};
+  --border-input: #{map.get($mode-colors, border-input)};
+
+  // Status
+  --status-success: #{map.get($mode-colors, status-success)};
+  --status-error-icon: #{map.get($mode-colors, status-error-icon)};
+  --status-error-strong: #{map.get($mode-colors, status-error-strong)};
+  --status-warning-orange: #{map.get($mode-colors, status-warning-orange)};
+  --status-error-reject: #{map.get($mode-colors, status-error-reject)};
+  --status-danger-high: #{map.get($mode-colors, status-danger-high)};
+  --status-danger-medium: #{map.get($mode-colors, status-danger-medium)};
+  --status-safe: #{map.get($mode-colors, status-safe)};
+  --status-bar-0: #{map.get($mode-colors, status-bar-0)};
+  --status-bar-33: #{map.get($mode-colors, status-bar-33)};
+  --status-bar-66: #{map.get($mode-colors, status-bar-66)};
+  --status-bar-70: #{map.get($mode-colors, status-bar-70)};
+  --status-bar-77: #{map.get($mode-colors, status-bar-77)};
+  --status-bar-100: #{map.get($mode-colors, status-bar-100)};
+  --status-bar-110: #{map.get($mode-colors, status-bar-110)};
+  --status-bar-track: #{map.get($mode-colors, status-bar-track)};
+
+  // Text (extended)
+  --text-black: #{map.get($mode-colors, text-black)};
+  --text-white: #{map.get($mode-colors, text-white)};
+  --text-muted: #{map.get($mode-colors, text-muted)};
+  --text-child-muted: #{map.get($mode-colors, text-child-muted)};
+  --text-error-message: #{map.get($mode-colors, text-error-message)};
+
+  // Surface (extended)
+  --surface-subheader: #{map.get($mode-colors, surface-subheader)};
+  --surface-error-message: #{map.get($mode-colors, surface-error-message)};
+
+  // Component
+  --spinner-overlay-bg: #{map.get($mode-colors, spinner-overlay-bg)};
+  --scrollbar-bg: #{map.get($mode-colors, scrollbar-bg)};
+  --pell-actionbar-bg: #{map.get($mode-colors, pell-actionbar-bg)};
+  --progress-fill: #{map.get($mode-colors, progress-fill)};
+  --progress-track: #{map.get($mode-colors, progress-track)};
+  --tag-fallback-bg: #{map.get($mode-colors, tag-fallback-bg)};
+
+  // Badge
+  --badge-type-text: #{map.get($mode-colors, badge-type-text)};
+  --badge-dependency-text: #{map.get($mode-colors, badge-dependency-text)};
+
+  // Link
+  --breadcrumb-link: #{map.get($mode-colors, breadcrumb-link)};
+
+  // Status (extended)
+  --status-green-text: #{map.get($mode-colors, status-green-text)};
+
+  // Elevation (mode-dependent)
+  --elevation-card: #{map.get($mode-colors, elevation-card)};
+  --elevation-panel: #{map.get($mode-colors, elevation-panel)};
+
+  // Feature-branch tokens
+  --input-fill: #{map.get($mode-colors, input-fill)};
+  --input-focus-underline: #{map.get($mode-colors, input-focus-underline)};
+  --nav-selected-surface: #{map.get($mode-colors, nav-selected-surface)};
   --content-card-bg: #{map.get($mode-colors, content-card-bg)};
   --content-card-radius: #{map.get($mode-colors, content-card-radius)};
   --content-card-margin: #{map.get($mode-colors, content-card-margin)};
 
-  --mdc-theme-primary: #{map.get($mode-colors, primary)};
-  --mdc-theme-on-primary: #{map.get($mode-colors, on-primary)};
-  --mdc-theme-primary-dark: #{map.get($mode-colors, primary-dark)};
-  --mdc-theme-on-primary-dark: #{map.get($mode-colors, on-primary)};
-  --mat-app-background-color: #{map.get($mode-colors, bg)};
-  --mat-table-row-item-outline-color: #{map.get($mode-colors, border)};
-  --mat-table-background-color: #{map.get($mode-colors, card)};
-  --mat-table-row-item-container-color: #{map.get($mode-colors, card)};
-  --mat-table-header-container-color: #{map.get($mode-colors, table-header-bg)};
-  --mat-card-elevated-container-color: #{map.get($mode-colors, card)};
-  --mat-card-elevated-container-elevation: 0;
-  --mat-card-filled-container-color: #{map.get($mode-colors, card)};
-  --mat-sidenav-content-background-color: #{map.get($mode-colors, bg)};
-  --mdc-filled-button-container-color: #{map.get($mode-colors, primary)};
-  --mdc-filled-button-label-text-color: #{map.get($mode-colors, on-primary)};
-  --mdc-protected-button-container-color: #{map.get($mode-colors, card)};
-  --mdc-protected-button-label-text-color: #{map.get($mode-colors, primary)};
-  --mdc-outlined-button-label-text-color: #{map.get($mode-colors, primary)};
-  --mdc-outlined-button-outline-color: #{map.get($mode-colors, border)};
-  --mdc-text-button-label-text-color: #{map.get($mode-colors, primary)};
-
-  ::selection {
-    background: #{map.get($mode-colors, primary)};
-    color: #{map.get($mode-colors, on-primary)};
-  }
-  ::-moz-selection {
-    background: #{map.get($mode-colors, primary)};
-    color: #{map.get($mode-colors, on-primary)};
-  }
+  // Material component overrides using token values
+  @include mat.dialog-overrides((
+    container-shape: map.get($tokens, radius-dialog),
+    container-elevation-shadow: none,
+    actions-padding: map.get($tokens, spacing-2xl),
+  ));
 }

@@ -5,9 +5,22 @@ import {
 } from 'src/app/common/models';
 import {TranslateService} from '@ngx-translate/core';
 
-export function getTranslatedTypes(translateService: TranslateService): EformVisualEditorFieldTypeModel[] {
+export function getTranslatedTypes(
+  translateService: TranslateService,
+  dbFieldTypes?: {id: number; type: string}[]
+): EformVisualEditorFieldTypeModel[] {
+  let types = [...eformVisualEditorElementTypes];
+
+  if (dbFieldTypes && dbFieldTypes.length > 0) {
+    types = types.map(t => {
+      const enumName = EformFieldTypesEnum[t.id];
+      const dbEntry = dbFieldTypes.find(db => db.type.toLowerCase() === (enumName || '').toLowerCase());
+      return dbEntry ? {...t, id: dbEntry.id} : t;
+    });
+  }
+
   let translatedTypes: EformVisualEditorFieldTypeModel[] = [];
-  eformVisualEditorElementTypes.map((x) => {
+  types.map((x) => {
     translateService.get(x.name).
     subscribe(y => translatedTypes = [...translatedTypes, {...x, name: y}]);
   });

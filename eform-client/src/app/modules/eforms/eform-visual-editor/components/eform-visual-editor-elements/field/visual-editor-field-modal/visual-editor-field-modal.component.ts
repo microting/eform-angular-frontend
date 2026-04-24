@@ -38,6 +38,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   fieldTypes: EformVisualEditorFieldTypeModel[];
   appLanguages: LanguagesModel = new LanguagesModel();
   translationPossible = false;
+  private dbFieldTypes: {id: number; type: string}[] = [];
   public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
 
   get languages() {
@@ -50,24 +51,25 @@ export class VisualEditorFieldModalComponent implements OnInit {
   }
 
   setFieldTypes() {
-    const typesForAdminOnly = [
-      EformFieldTypesEnum.Audio,
-      EformFieldTypesEnum.Movie,
-      EformFieldTypesEnum.NumberStepper,
-    ];
+    const db = this.dbFieldTypes.length > 0 ? this.dbFieldTypes : undefined;
+    const allTypes = getTranslatedTypes(this.translateService, db);
+
+    const fieldGroupId = db
+      ? db.find(ft => ft.type === 'FieldGroup')?.id ?? EformFieldTypesEnum.FieldGroup
+      : EformFieldTypesEnum.FieldGroup;
+    const adminOnlyIds = db
+      ? db.filter(ft => ['Audio', 'Movie', 'NumberStepper'].includes(ft.type)).map(ft => ft.id)
+      : [EformFieldTypesEnum.Audio, EformFieldTypesEnum.Movie, EformFieldTypesEnum.NumberStepper];
+
     if (this.recursionModel.fieldIsNested) {
-      this.fieldTypes = [
-        ...getTranslatedTypes(this.translateService).filter(
-          (x) => x.id !== EformFieldTypesEnum.FieldGroup
-        ),
-      ];
+      this.fieldTypes = allTypes.filter(x => x.id !== fieldGroupId);
     } else {
-      this.fieldTypes = [...getTranslatedTypes(this.translateService)];
+      this.fieldTypes = [...allTypes];
     }
     this.selectCurrentUserIsAdmin$.subscribe((isAdmin) => {
       if (isAdmin) {
-        this.fieldTypes = [...this.fieldTypes, ...getTranslatedTypes(this.translateService).filter(
-          (x) => typesForAdminOnly.includes(x.id)
+        this.fieldTypes = [...this.fieldTypes, ...allTypes.filter(
+          (x) => adminOnlyIds.includes(x.id)
         )];
       }
     });
@@ -103,11 +105,13 @@ export class VisualEditorFieldModalComponent implements OnInit {
     model?: EformVisualEditorRecursionFieldModel;
     appLanguages: LanguagesModel;
     translationPossible: boolean;
+    dbFieldTypes?: {id: number; type: string}[];
 }>(MAT_DIALOG_DATA);
 
     this.translationPossible = model.translationPossible;
     this.selectedLanguages = model.selectedLanguages;
     this.appLanguages = model.appLanguages;
+    this.dbFieldTypes = model.dbFieldTypes ?? [];
     // this.setSelectedLanguage();
     if (model.model) {
       this.recursionModel = R.clone(model.model);

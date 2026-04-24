@@ -56,6 +56,13 @@ public class EFormColumnsController(
         return await templateColumnsService.GetCurrentColumns(templateId);
     }
 
+    [HttpGet]
+    [Route("field-types")]
+    public async Task<OperationDataResult<List<FieldTypeModel>>> GetFieldTypes()
+    {
+        return await templateColumnsService.GetFieldTypes();
+    }
+
     [HttpPost]
     [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateColumns)]
     public async Task<IActionResult> UpdateColumns([FromBody] UpdateTemplateColumnsModel model)

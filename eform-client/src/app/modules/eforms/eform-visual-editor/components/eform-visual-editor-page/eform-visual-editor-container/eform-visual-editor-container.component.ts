@@ -16,6 +16,7 @@ import {
   EformVisualEditorUpdateModel, LanguagesModel,
 } from 'src/app/common/models';
 import {
+  EFormService,
   EformDocxReportService,
   EformTagService,
   EformVisualEditorService, TranslationService,
@@ -57,6 +58,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   private reportService = inject(EformDocxReportService);
   private appSettingsStateService = inject(AppSettingsStateService);
   private translationService = inject(TranslationService);
+  private eformService = inject(EFormService);
 
   @ViewChild('tagsModal') tagsModal: EformsTagsComponent;
 
@@ -83,6 +85,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   getLanguagesSub$: Subscription;
   appLanguages: LanguagesModel = new LanguagesModel();
   translationPossible: boolean;
+  dbFieldTypes: {id: number; type: string; description: string}[] = [];
   public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
   private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
@@ -129,6 +132,15 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getEnabledLanguages();
+    this.loadDbFieldTypes();
+  }
+
+  loadDbFieldTypes() {
+    this.eformService.getFieldTypes().subscribe(res => {
+      if (res?.success && res.model) {
+        this.dbFieldTypes = res.model;
+      }
+    });
   }
 
   getReportHeaders(templateId: number) {
@@ -320,7 +332,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   showFieldModal(model?: EformVisualEditorRecursionFieldModel) {
     this.visualEditorFieldModalComponentAfterClosedSub$ = this.dialog.open(VisualEditorFieldModalComponent,
       // eslint-disable-next-line max-len
-      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages, appLanguages: this.appLanguages, translationPossible: this.translationPossible}), minWidth: 600})
+      {...dialogConfigHelper(this.overlay, {model: model, selectedLanguages: this.selectedLanguages, appLanguages: this.appLanguages, translationPossible: this.translationPossible, dbFieldTypes: this.dbFieldTypes}), minWidth: 600})
       .afterClosed()
       .subscribe(data => data.result ? (data.create ? this.onFieldCreate(data.model) : this.onFieldUpdate(data.model)) : undefined);
   }

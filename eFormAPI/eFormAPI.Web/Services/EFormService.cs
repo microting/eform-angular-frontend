@@ -767,11 +767,11 @@ public class EFormService(
                 JasperExportEnabled = x.JasperExportEnabled,
                 DocxExportEnabled = x.DocxExportEnabled,
                 ExcelExportEnabled = x.ExcelExportEnabled,
-                //ReportH1 = x.ReportH1,
-                //ReportH2 = x.ReportH2,
-                //ReportH3 = x.ReportH3,
-                //ReportH4 = x.ReportH4,
-                //ReportH5 = x.ReportH5,
+                ReportH1 = x.ReportH1,
+                ReportH2 = x.ReportH2,
+                ReportH3 = x.ReportH3,
+                ReportH4 = x.ReportH4,
+                ReportH5 = x.ReportH5,
                 IsLocked = false,
                 IsEditable = true,
                 IsHidden = false,
@@ -934,18 +934,25 @@ public class EFormService(
     private static async Task CreateFields(int eformId, MicrotingDbContext sdkDbContext,
         List<Microting.eForm.Infrastructure.Data.Entities.Field> fieldsList)
     {
+        var fieldGroupTypeId = (await sdkDbContext.FieldTypes
+            .FirstAsync(ft => ft.Type == Microting.eForm.Infrastructure.Constants.Constants.FieldTypes.FieldGroup)).Id;
+
         foreach (var field in fieldsList)
         {
             field.CheckListId = eformId;
-            if (field.FieldTypeId == 17) // field group
+            var children = field.Children?.ToList() ?? [];
+            field.Children = [];
+            await field.Create(sdkDbContext);
+
+            if (field.FieldTypeId == fieldGroupTypeId && children.Count > 0)
             {
-                foreach (var fieldChild in field.Children)
+                foreach (var child in children)
                 {
-                    fieldChild.CheckListId = eformId;
+                    child.CheckListId = eformId;
+                    child.ParentFieldId = field.Id;
+                    await child.Create(sdkDbContext);
                 }
             }
-
-            await field.Create(sdkDbContext);
         }
     }
 

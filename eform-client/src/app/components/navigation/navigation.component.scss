@@ -135,6 +135,13 @@ mat-tree {
               color: var(--text-header) !important;
             }
 
+            .mat-expansion-indicator{
+              background: var(--error, red)!important;
+              svg{
+                fill: var(--error, red)!important;
+              }
+            }
+
             .mat-expansion-indicator svg {
               fill: var(--text-header) !important;
             }
@@ -189,16 +196,16 @@ mat-tree {
 
 .mat-mdc-menu-item, .mat-mdc-icon-button {
   .mat-icon {
-    width: 18px;
-    height: 18px;
-    font-size: 18px;
-    line-height: 18px
+    width: var(--icon-size, 18px);
+    height: var(--icon-size, 18px);
+    font-size: var(--icon-size, 18px);
+    line-height: var(--icon-size, 18px)
   }
 }
 
 .menu-icon {
   vertical-align: middle;
-  font-size: 18px;
+  font-size: var(--icon-size, 18px);
 }
 
 

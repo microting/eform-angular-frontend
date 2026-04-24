@@ -27,10 +27,10 @@
     @each $name, $bg in (('yellow', $yellow), ('red-light', $red-light), ('red-dark', $red-dark), ('powder', $powder)) {
       .background-#{$name} {
         background-color: $bg !important;
-        color: #0F1316 !important;
+        color: var(--text-primary, #0F1316) !important;
 
         span {
-          color: #0F1316 !important;
+          color: var(--text-primary, #0F1316) !important;
         }
 
         td.mat-table-sticky-right {
@@ -38,13 +38,13 @@
 
           #actionMenu {
             .mat-icon {
-              color: #0F1316 !important;
+              color: var(--text-primary, #0F1316) !important;
             }
           }
         }
 
         .mat-mdc-form-field {
-          padding: 4px !important;
+          padding: var(--spacing-xs, 4px) !important;
         }
 
         .mat-mdc-form-field .mdc-text-field__input {

@@ -3,7 +3,7 @@
 }
 
 .ng-select.custom .ng-value {
-  background-color: #F1F1F1;
+  background-color: var(--surface-subheader, #F1F1F1);
 }
 
 .ng-select-inline {

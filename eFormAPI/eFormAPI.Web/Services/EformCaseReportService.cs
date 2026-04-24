@@ -152,9 +152,12 @@ public class EformCaseReportService(
             }
         }
 
+        var pictureFieldTypeId = (await sdkDbContext.FieldTypes
+            .FirstAsync(ft => ft.Type == Constants.FieldTypes.Picture)).Id;
+
         var imagesForEform = await sdkDbContext.FieldValues
             .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-            .Where(x => x.Field.FieldTypeId == 5)
+            .Where(x => x.Field.FieldTypeId == pictureFieldTypeId)
             .Where(x => casesIds.Contains((int) x.CaseId))
             .OrderBy(x => x.CaseId)
             .ToListAsync();
@@ -290,7 +293,7 @@ public class EformCaseReportService(
 
             reportEformCaseModel.ImagesCount = await sdkDbContext.FieldValues
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                .Where(x => x.Field.FieldTypeId == 5)
+                .Where(x => x.Field.FieldTypeId == pictureFieldTypeId)
                 .Where(x => x.CaseId == caseDto.Id)
                 .Select(x => x.Id)
                 .CountAsync();

@@ -79,8 +79,9 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   fieldTypeTranslation(fieldType: number): string {
     if(fieldType) {
       const types = [...getTranslatedTypes(this.translateService)];
-      return types.find(x => x.id === fieldType).name;
+      return types.find(x => x.id === fieldType)?.name ?? '';
     }
+    return '';
   }
 
   ngOnInit() {

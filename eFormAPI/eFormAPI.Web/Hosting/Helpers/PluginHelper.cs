@@ -25,6 +25,7 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Hosting.Helpers;
 
+using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
 using System;
@@ -32,6 +33,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Enums;
@@ -57,6 +59,12 @@ using Microting.eFormApi.BasePn.Services;
 
 public static class PluginHelper
 {
+    // Plugin metadata is immutable for the lifetime of the process — new plugin DLLs
+    // only take effect after a restart. Memoizing avoids the AssemblyLoadContext +
+    // Activator.CreateInstance cascade being triggered once per enabled plugin on every login.
+    private static readonly Lazy<List<IEformPlugin>> _allPluginsCache =
+        new(LoadAllPluginsFromDisk, LazyThreadSafetyMode.ExecutionAndPublication);
+
     public static List<IEformPlugin> GetPlugins(string connectionString)
     {
         Log.LogEvent($"PluginHelper.GetPlugins with connectionString {connectionString}");
@@ -251,7 +259,9 @@ public static class PluginHelper
     }
 
 
-    public static List<IEformPlugin> GetAllPlugins()
+    public static List<IEformPlugin> GetAllPlugins() => _allPluginsCache.Value;
+
+    private static List<IEformPlugin> LoadAllPluginsFromDisk()
     {
         var plugins = new List<IEformPlugin>();
         // create plugin loaders
@@ -308,6 +318,11 @@ public static class PluginHelper
                         typeof(PluginConfigurationProvider<>),
                         typeof(ConfigurationProvider),
                         typeof(DbContext),
+                        // Share Microting.EformAngularFrontendBase so the plugin's BaseDbContext
+                        // is the same Type object the host registers in DI. Without this, each
+                        // plugin loads its own copy of BaseDbContext in a separate ALC, and
+                        // plugin services cannot resolve the host's BaseDbContext registration.
+                        typeof(BaseDbContext),
                         typeof(WarningsConfiguration),
                         typeof(WarningBehavior),
                         typeof(DbContextOptionsBuilder),
