@@ -7,33 +7,18 @@
 mat-tree {
   mat-tree-node {
     display: inline-flex;
-    margin: 4px 0;
 
     .nav-link {
       width: 100%;
       text-align: inherit;
-      min-height: var(--nav-item-height, 48px);
-      padding: 0 16px !important;
+      min-height: 48px;
       display: flex;
       align-items: center;
       justify-content: start;
-      border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
-      font-family: var(--brand-font-family, var(--font-family)) !important;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.1px;
-
-      .mat-icon {
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-        line-height: 20px;
-        margin-right: 12px;
-      }
 
       span {
         white-space: initial;
-        line-height: 1.3em;
+        line-height: 1.4em;
       }
 
       &:hover {
@@ -78,70 +63,46 @@ mat-tree {
   }
 
   .mat-nested-tree-node { // styles for nested tree nodes
-    display: block;
-    margin: 0 !important;
-    padding: 8px 0;
-
     mat-accordion {
       mat-expansion-panel {
-        background: transparent !important;
-        display: block;
-        margin: 0 !important;
-
         &:not([class*=mat-elevation-z]) {
           box-shadow: none !important;
         }
 
         .mat-expansion-panel-header {
-          height: var(--nav-item-height, 48px) !important;
-          min-height: var(--nav-item-height, 48px) !important;
-          padding: 0 16px 0 12px !important;
-          border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
-          font-family: var(--brand-font-family, var(--font-family)) !important;
-          font-size: 14px !important;
-          font-weight: 500 !important;
-          color: var(--text-header);
-
-          .mat-expansion-panel-header-title,
-          .mat-content,
-          span,
-          a {
-            font-weight: 500 !important;
-            font-size: 14px !important;
-          }
-
-          .mat-content {
-            align-items: center;
-          }
-
-          .mat-expansion-indicator svg {
-            fill: var(--icon-secondary);
-          }
+          padding-left: 1rem;
 
           &:hover {
-            background-color: var(--mdc-theme-primary-dark, #00695C) !important;
+            background-color: var(--mdc-theme-primary-dark) !important;
             color: var(--mdc-theme-on-primary) !important;
+            border-radius: var(--rounded-full);
 
-            .mat-icon {
-              color: var(--mdc-theme-on-primary) !important;
+            .mat-expansion-indicator{
+              background: red!important;
+              svg{
+                fill: red!important;
+              }
             }
 
-            .mat-expansion-indicator svg {
-              fill: var(--mdc-theme-on-primary) !important;
+            a {
+              span {
+                color: var(--mdc-theme-on-primary) !important;
+              }
+            }
+            .mat-icon{
+              color: var(--mdc-theme-on-primary) !important;
             }
           }
         }
 
         .mat-expansion-panel-content {
           .mat-expansion-panel-body {
-            padding: 0 0 0 8px !important;
-
             mat-tree-node {
               display: inline-flex;
 
               span {
                 white-space: initial;
-                line-height: 1.3em;
+                line-height: 1.4em;
               }
             }
           }
@@ -149,18 +110,11 @@ mat-tree {
 
         mat-tree-node {
           .nav-link {
-            min-height: 36px;
-            font-size: 14px;
-
             &:hover {
-              width: 100% !important;
+              width: calc(100% - 20px) !important;
               border-radius: var(--rounded-full) !important;
               background-color: var(--mdc-theme-primary-dark, #00695C) !important;
               color: var(--mdc-theme-on-primary) !important;
-
-              .mat-icon {
-                color: var(--mdc-theme-on-primary) !important;
-              }
             }
           }
 
@@ -172,7 +126,7 @@ mat-tree {
     }
 
     .selected-node {
-      width: 100% !important;
+      width: calc(100% - 20px) !important;
     }
 
   }
@@ -180,16 +134,16 @@ mat-tree {
 
 .mat-mdc-menu-item, .mat-mdc-icon-button {
   .mat-icon {
-    width: var(--icon-size, 18px);
-    height: var(--icon-size, 18px);
-    font-size: var(--icon-size, 18px);
-    line-height: var(--icon-size, 18px)
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    line-height: 18px
   }
 }
 
 .menu-icon {
   vertical-align: middle;
-  font-size: var(--icon-size, 18px);
+  font-size: 18px;
 }
 
 
