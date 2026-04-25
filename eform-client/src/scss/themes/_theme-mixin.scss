@@ -226,7 +226,13 @@ $eform-m3-dark-theme: mat.define-theme((
   --content-card-radius: #{map.get($mode-colors, content-card-radius)};
   --content-card-margin: #{map.get($mode-colors, content-card-margin)};
 
-  // Material component overrides using token values
+  // Material component overrides
+  --mat-table-row-item-outline-color: #{map.get($mode-colors, border)} !important;
+  --mat-card-elevated-container-color: #{map.get($mode-colors, bg)} !important;
+  --mat-table-background-color: #{map.get($mode-colors, tp-td-bg)};
+  --mat-table-header-headline-color: #{map.get($mode-colors, text-header)};
+  --mat-table-row-item-label-text-color: #{map.get($mode-colors, text-body)};
+
   @include mat.dialog-overrides((
     container-shape: map.get($tokens, radius-dialog),
     container-elevation-shadow: none,
