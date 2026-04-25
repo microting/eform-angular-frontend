@@ -120,8 +120,8 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
         [adminSettings,
           othersSettings,
           languages]) => {
-        this.adminSettingsModel = R.clone(adminSettings.model);
-        this.previousAdminSettings = R.clone(adminSettings.model);
+        this.adminSettingsModel = JSON.parse(JSON.stringify(adminSettings.model));
+        this.previousAdminSettings = JSON.parse(JSON.stringify(adminSettings.model));
         this.othersSettings.isEnableWidget = othersSettings.model.isUserbackWidgetEnabled;
         this.languagesModel = languages.model;
       }))
