@@ -113,7 +113,7 @@ export async function testSorting(
   const elementsBefore = await getCells();
 
   for (let i = 0; i < 2; i++) {
-    await page.locator(selectorTableHeader).locator('.mat-sort-header-icon').click({ force: true });
+    await page.locator(selectorTableHeader).locator('.mat-sort-header-container').click({ force: true });
     await page.waitForTimeout(500);
 
     const ariaSort = await page.locator(selectorTableHeader).getAttribute('aria-sort') ?? '';
