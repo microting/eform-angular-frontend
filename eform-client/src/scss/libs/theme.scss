@@ -129,14 +129,14 @@ button.mat-mdc-mini-fab,
 a.mat-mdc-mini-fab {
   border-radius: var(--radius-xl, 20px);
 }
-body, .theme-light {
+body.theme-light {
   --mdc-theme-primary: #{$primary};
   --mdc-theme-on-primary: #{$on-primary};
   --mdc-theme-primary-dark: #{$primary-dark-light-mode};
   --mdc-theme-on-primary-dark: #{$on-primary-dark};
   --mat-app-background-color: #{$bg-light}
 }
-body, .theme-dark {
+body.theme-dark {
   --mdc-theme-primary: #{$primary-dark};
   --mdc-theme-on-primary: #{$on-primary-dark};
   --mdc-theme-primary-dark: #{$primary-dark-dark-mode};

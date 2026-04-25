@@ -514,7 +514,7 @@ ngx-material-timepicker-container {
   font-size: 14px;
 
   &:hover:not(:disabled) {
-    background-color: var(--primary-hover) !important;
+    background-color: var(--mdc-theme-primary-dark, #00695C) !important;
   }
 
   &:disabled,
@@ -853,11 +853,6 @@ formatting-text-editor {
 
   .mat-mdc-form-field-subscript-wrapper {
     background: transparent !important;
-    display: none !important;
-  }
-
-  &.mat-form-field-invalid .mat-mdc-form-field-subscript-wrapper {
-    display: block !important;
   }
 
   .mdc-text-field {
@@ -1021,7 +1016,7 @@ formatting-text-editor {
 
 .mat-mdc-unelevated-button:hover:not(:disabled),
 .mat-mdc-raised-button:hover:not(:disabled) {
-  background-color: var(--primary-hover) !important;
+  background-color: var(--mdc-theme-primary-dark, #00695C) !important;
 }
 
 button,

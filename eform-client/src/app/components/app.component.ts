@@ -82,6 +82,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.renderer.removeClass(body, 'theme-eform');
     this.renderer.removeClass(body, 'theme-workspace');
     this.renderer.addClass(body, `theme-${variant}`);
+    // Ensure a mode class exists so theme.scss selectors like
+    // body.theme-eform.theme-light apply. Layout components
+    // (SimpleLayout/FullLayout) manage light/dark switching later.
+    if (!body.classList.contains('theme-light') && !body.classList.contains('theme-dark')) {
+      this.renderer.addClass(body, 'theme-light');
+    }
   }
 
   ngOnDestroy(): void {
