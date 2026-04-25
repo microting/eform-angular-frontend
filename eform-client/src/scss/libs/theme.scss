@@ -10,6 +10,9 @@
 //@use '../libs/ng-datepicker/ng-datepicker' as ng-datepicker;
 @use '../components/tag' as tag;
 @use '../utilities/colors' as *;
+@use '../themes/eform' as eform;
+@use '../themes/workspace' as workspace;
+@use '../themes/theme-mixin' as themeMixin;
 @include mat.core();
 
 $letter-spacing: normal;
@@ -254,4 +257,22 @@ body, .theme-dark {
   --mdc-theme-primary-dark: #{$primary-dark-dark-mode};
   --mdc-theme-on-primary-dark: #{$on-primary-dark};
   --mat-app-background-color: #{$bg-dark}
+}
+
+body.theme-eform {
+  &.theme-light {
+    @include themeMixin.eform-theme(eform.$eform-tokens, 'light');
+  }
+  &.theme-dark {
+    @include themeMixin.eform-theme(eform.$eform-tokens, 'dark');
+  }
+}
+
+body.theme-workspace {
+  &.theme-light {
+    @include themeMixin.eform-theme(workspace.$workspace-tokens, 'light');
+  }
+  &.theme-dark {
+    @include themeMixin.eform-theme(workspace.$workspace-tokens, 'dark');
+  }
 }
