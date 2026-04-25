@@ -43,10 +43,8 @@ $eform-m3-dark-theme: mat.define-theme((
 // ---------------------------------------------------------------------------
 
 @mixin eform-theme($tokens, $mode) {
-  // Apply Angular Material component themes (form fields, buttons, etc.)
-  @include mat.all-component-themes(
-    if($mode == 'light', $eform-m3-light-theme, $eform-m3-dark-theme)
-  );
+  // NOTE: mat.all-component-themes() is called in theme.scss's body.theme-light/dark
+  // loop — not here — to avoid emitting the full Material CSS 4+ times.
   $colors: map.get($tokens, colors);
   $mode-colors: map.get($colors, $mode);
 
