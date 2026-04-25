@@ -38,13 +38,13 @@ mat-tree {
 
       &:hover {
         border-radius: var(--rounded-full) !important;
-        background-color: var(--hover-surface) !important;
-        color: var(--text-header) !important;
+        background-color: var(--mdc-theme-primary-dark, #00695C) !important;
+        color: var(--mdc-theme-on-primary) !important;
         .mat-icon{
-          color: var(--text-header) !important;
+          color: var(--mdc-theme-on-primary) !important;
         }
         svg{
-          fill: var(--text-header) !important;
+          fill: var(--mdc-theme-on-primary) !important;
         }
       }
 
@@ -57,29 +57,20 @@ mat-tree {
 
 
     .selected-node {
-      background-color: var(--nav-selected-surface, #e8eaed) !important;
-      color: var(--nav-selected-text, var(--on-primary)) !important;
+      background-color: var(--mdc-theme-primary) !important;
+      color: var(--mdc-theme-on-primary) !important;
       border-radius: var(--rounded-full);
-      font-weight: 500;
-
-      .mat-icon {
-        color: var(--nav-selected-text, var(--on-primary)) !important;
-      }
-
-      svg {
-        fill: var(--nav-selected-text, var(--on-primary)) !important;
-      }
 
       &:hover {
-        background-color: var(--nav-selected-surface, #e8eaed) !important;
-        color: var(--nav-selected-text, var(--on-primary)) !important;
+        background-color: var(--mdc-theme-primary-dark) !important;
+        color: var(--mdc-theme-on-primary) !important;
 
         .mat-icon {
-          color: var(--nav-selected-text, var(--on-primary)) !important;
+          color: var(--mdc-theme-on-primary) !important;
         }
 
         svg {
-          fill: var(--nav-selected-text, var(--on-primary)) !important;
+          fill: var(--mdc-theme-on-primary) !important;
         }
       }
     }
@@ -128,22 +119,15 @@ mat-tree {
           }
 
           &:hover {
-            background-color: var(--hover-surface) !important;
-            color: var(--text-header) !important;
+            background-color: var(--mdc-theme-primary-dark, #00695C) !important;
+            color: var(--mdc-theme-on-primary) !important;
 
             .mat-icon {
-              color: var(--text-header) !important;
-            }
-
-            .mat-expansion-indicator{
-              background: var(--error, red)!important;
-              svg{
-                fill: var(--error, red)!important;
-              }
+              color: var(--mdc-theme-on-primary) !important;
             }
 
             .mat-expansion-indicator svg {
-              fill: var(--text-header) !important;
+              fill: var(--mdc-theme-on-primary) !important;
             }
           }
         }
@@ -171,11 +155,11 @@ mat-tree {
             &:hover {
               width: 100% !important;
               border-radius: var(--rounded-full) !important;
-              background-color: var(--hover-surface) !important;
-              color: var(--text-header) !important;
+              background-color: var(--mdc-theme-primary-dark, #00695C) !important;
+              color: var(--mdc-theme-on-primary) !important;
 
               .mat-icon {
-                color: var(--text-header) !important;
+                color: var(--mdc-theme-on-primary) !important;
               }
             }
           }
