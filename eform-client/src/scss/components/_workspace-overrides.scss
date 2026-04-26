@@ -440,6 +440,20 @@ body.theme-workspace {
     background-color: var(--content-card-bg, #ffffff) !important;
   }
 
+  // Primary button inside dialogs — solid blue (Google Drive "Done" style)
+  .mat-mdc-dialog-container .btn-primary {
+    background-color: var(--mdc-theme-primary, #0b57d0) !important;
+    color: #ffffff !important;
+
+    .mat-icon {
+      color: #ffffff !important;
+    }
+  }
+
+  .mat-mdc-dialog-container .btn-primary:hover {
+    background-color: var(--mdc-theme-primary-dark, #0842a0) !important;
+  }
+
   // Cancel / secondary button inside dialogs — match primary height
   .btn-cancel {
     height: 36px !important;
