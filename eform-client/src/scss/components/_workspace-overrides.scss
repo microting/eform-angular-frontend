@@ -272,13 +272,24 @@ body.theme-workspace {
       border: 1px solid var(--icon-secondary, #747775) !important;
       height: 48px !important;
       padding: 0 0 0 16px !important;
+      overflow: hidden !important;
 
       &--filled:not(.mdc-text-field--disabled) {
         background-color: var(--content-card-bg, #ffffff) !important;
       }
 
+      // Force input element background to match wrapper (overrides --bg inheritance)
+      .mat-mdc-input-element {
+        background-color: transparent !important;
+      }
+
       // Remove Material's default filled underline
       .mdc-line-ripple {
+        display: none !important;
+      }
+
+      // Hide filled-style focus overlay
+      .mat-mdc-form-field-focus-overlay {
         display: none !important;
       }
 
@@ -287,6 +298,11 @@ body.theme-workspace {
         border-color: var(--mdc-theme-primary, #0b57d0) !important;
         border-width: 2px !important;
       }
+    }
+
+    .mat-mdc-form-field-flex {
+      height: 48px !important;
+      align-items: center !important;
     }
 
     .mat-mdc-form-field-infix {
