@@ -46,8 +46,8 @@ body.theme-workspace {
 
   // --- Sort header — Google Drive style ---
 
-  // Hide the mtx-grid sort/filter icon (≡) — Google Drive doesn't show these
-  .mtx-grid-icon.mat-sort-header-icon {
+  // Hide the mtx-grid sort/filter icon (≡) only on the actively sorted column
+  .mat-sort-header-sorted .mtx-grid-icon.mat-sort-header-icon {
     display: none !important;
   }
 
