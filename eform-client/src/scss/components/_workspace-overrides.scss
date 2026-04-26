@@ -44,9 +44,9 @@ body.theme-workspace {
     border-bottom-style: solid;
   }
 
-  // Active sort indicator — only the arrow is blue (title stays normal)
+  // Active sort indicator — arrow matches header text color (like Google Drive)
   .mat-sort-header-sorted .mat-sort-header-arrow {
-    color: var(--sort-indicator-active, #0b57d0) !important;
+    color: var(--text-header, #1f1f1f) !important;
     opacity: 1 !important;
   }
 
