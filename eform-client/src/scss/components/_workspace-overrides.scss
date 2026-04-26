@@ -64,9 +64,10 @@ body.theme-workspace {
     border-bottom-style: solid;
   }
 
-  // Remove sticky-column left border (Google Drive has no column separators)
+  // Remove sticky-column left border & shadow (Google Drive has no column separators)
   .mat-mdc-table-sticky-border-elem-right {
     border-left: none !important;
+    box-shadow: none !important;
   }
 
   // --- Sort header — Google Drive style ---
