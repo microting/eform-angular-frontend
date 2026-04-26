@@ -261,25 +261,49 @@ body.theme-workspace {
     background: var(--content-card-bg, #ffffff) !important;
   }
 
-  // --- Dropdown / select panels — Google Drive style ---
+  // --- Form-field — Google Drive style (white bg, 8px radius) ---
+  // Override .mdc-text-field (which sets 9999px pill + tinted bg via !important in styles.scss)
+  .mdc-text-field,
+  .mat-mdc-form-field .mdc-text-field {
+    border-radius: 8px !important;
+    background-color: var(--content-card-bg, #ffffff) !important;
+    border-color: var(--icon-secondary, #747775) !important;
+
+    &--filled:not(.mdc-text-field--disabled) {
+      background-color: var(--content-card-bg, #ffffff) !important;
+    }
+
+    &__ripple {
+      &::before,
+      &::after {
+        background-color: var(--content-card-bg, #ffffff) !important;
+      }
+    }
+
+    &__input {
+      background-color: var(--content-card-bg, #ffffff) !important;
+    }
+  }
+
+  // --- Dropdown / select panels — Google Drive style (very subtle shadow) ---
   .mat-mdc-select-panel,
   .mtx-select-panel,
   .mat-mdc-autocomplete-panel {
     background-color: var(--content-card-bg, #ffffff) !important;
     border-radius: 8px !important;
     border: none !important;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
-                rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
-                rgba(0, 0, 0, 0.12) 0px 1px 10px 0px !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+                rgba(0, 0, 0, 0.06) 0px 1px 2px 0px !important;
   }
 
-  // Dropdown options — match menu item style
+  // Dropdown options — match Google Drive (40px height, 16px padding)
   .mat-mdc-option {
     font-size: 14px !important;
     font-weight: 400 !important;
     font-family: var(--font-family) !important;
     color: var(--text-header, #1f1f1f) !important;
-    min-height: 36px !important;
+    min-height: 40px !important;
+    padding: 0 16px !important;
     border-radius: 0 !important;
 
     &:hover,
@@ -289,14 +313,13 @@ body.theme-workspace {
     }
   }
 
-  // --- ng-select dropdown panel — Google Drive style ---
+  // --- ng-select dropdown panel — Google Drive style (subtle shadow) ---
   .ng-dropdown-panel {
     background-color: var(--content-card-bg, #ffffff) !important;
     border-radius: 8px !important;
     border: none !important;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
-                rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
-                rgba(0, 0, 0, 0.12) 0px 1px 10px 0px !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+                rgba(0, 0, 0, 0.06) 0px 1px 2px 0px !important;
     overflow: hidden;
 
     .ng-option {
@@ -304,19 +327,33 @@ body.theme-workspace {
       font-weight: 400 !important;
       font-family: var(--font-family) !important;
       color: var(--text-header, #1f1f1f) !important;
-      height: 36px !important;
-      min-height: 36px !important;
+      height: 40px !important;
+      min-height: 40px !important;
       display: flex !important;
       align-items: center !important;
-      padding: 0 12px !important;
+      padding: 0 16px !important;
+
+      .ng-option-label {
+        font-weight: 400 !important;
+        color: var(--text-header, #1f1f1f) !important;
+      }
 
       &:hover,
       &.ng-option-marked {
         background-color: var(--table-row-hover, #f1f3f4) !important;
+
+        .ng-option-label {
+          color: var(--text-header, #1f1f1f) !important;
+        }
       }
 
-      &.ng-option-selected {
+      &.ng-option-selected,
+      &[aria-selected="true"] {
         background-color: var(--sort-indicator-bg, #c2e7ff) !important;
+
+        .ng-option-label {
+          color: var(--text-header, #1f1f1f) !important;
+        }
       }
     }
   }
