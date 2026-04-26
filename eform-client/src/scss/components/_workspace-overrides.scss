@@ -193,6 +193,13 @@ body.theme-workspace {
     font-family: var(--font-family) !important;
   }
 
+  // Menu item hover — Google Drive light gray (not Material's dark overlay)
+  .mat-mdc-menu-item:hover,
+  .mat-mdc-menu-item.cdk-keyboard-focused,
+  .mat-mdc-menu-item.cdk-program-focused {
+    background-color: var(--table-row-hover, #f1f3f4) !important;
+  }
+
   // Menu separator — Google Drive style
   .mat-mdc-menu-panel .mat-divider {
     margin: 8px 0 7px !important;
