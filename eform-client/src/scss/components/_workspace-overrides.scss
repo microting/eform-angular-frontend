@@ -193,7 +193,11 @@ body.theme-workspace {
     font-family: var(--font-family) !important;
   }
 
-  // Menu item hover — Google Drive light gray (not Material's dark overlay)
+  // Menu item hover — Google Drive light gray, square shape (no rounded corners)
+  .mat-mdc-menu-item {
+    border-radius: 0 !important;
+  }
+
   .mat-mdc-menu-item:hover,
   .mat-mdc-menu-item.cdk-keyboard-focused,
   .mat-mdc-menu-item.cdk-program-focused {
