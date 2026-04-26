@@ -102,6 +102,7 @@ body.theme-workspace {
 
   // --- Action menu (mat-menu) — Google Drive style ---
   .mat-mdc-menu-panel {
+    background-color: var(--content-card-bg, #ffffff) !important;
     border-radius: 4px !important;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
                 rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
