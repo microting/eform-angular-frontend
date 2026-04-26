@@ -261,19 +261,31 @@ body.theme-workspace {
     background: var(--content-card-bg, #ffffff) !important;
   }
 
-  // --- Select/dropdown form-fields — Google Drive outlined style (8px radius, white bg) ---
-  // Only target select/dropdown fields; leave search inputs with their default pill shape.
+  // --- Form fields — Google Drive outlined style (8px radius, white bg) ---
+  // Applies to selects, dropdowns, and text inputs. Search inputs keep their pill shape.
   .mat-mdc-form-field-type-mtx-select,
-  .mat-mdc-form-field-type-mat-select {
+  .mat-mdc-form-field-type-mat-select,
+  .mat-mdc-form-field-type-mat-input {
     .mdc-text-field {
       border-radius: 8px !important;
       background-color: var(--content-card-bg, #ffffff) !important;
-      border-color: var(--icon-secondary, #747775) !important;
+      border: 1px solid var(--icon-secondary, #747775) !important;
       height: 48px !important;
-      padding: 0 0 0 5px !important;
+      padding: 0 0 0 16px !important;
 
       &--filled:not(.mdc-text-field--disabled) {
         background-color: var(--content-card-bg, #ffffff) !important;
+      }
+
+      // Remove Material's default filled underline
+      .mdc-line-ripple {
+        display: none !important;
+      }
+
+      // Focus state — blue border like Google outlined fields
+      &--focused {
+        border-color: var(--mdc-theme-primary, #0b57d0) !important;
+        border-width: 2px !important;
       }
     }
 
@@ -283,12 +295,12 @@ body.theme-workspace {
       padding-bottom: 8px !important;
     }
 
-    // Hide the subscript/hint area below the chip
+    // Hide the subscript/hint area below the field
     .mat-mdc-form-field-subscript-wrapper {
       display: none !important;
     }
 
-    // Label text — match Google Drive 14px/500, vertically centered in 32px chip
+    // Label — centered when empty, floats above when focused/filled
     .mat-mdc-floating-label:not(.mdc-floating-label--float-above) {
       font-weight: 500 !important;
       top: 50% !important;
@@ -303,13 +315,12 @@ body.theme-workspace {
       color: var(--icon-secondary, #444746) !important;
     }
 
-    // Arrow — nudge inward from right edge
+    // Arrow — nudge inward from right edge (selects only)
     .ng-arrow-wrapper {
       margin-right: 12px !important;
     }
 
     // Make mtx-select and ng-select fill the full infix width
-    // Reset the negative margins that mtx-select uses to break out of Material padding
     mtx-select,
     ng-select {
       width: 100% !important;
