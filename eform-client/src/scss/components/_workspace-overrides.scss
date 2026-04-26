@@ -95,6 +95,46 @@ body.theme-workspace {
     border-color: var(--sort-indicator-arrow, #004a77) !important;
   }
 
+  // --- Header hover — pointer cursor on sortable headers ---
+  .mat-sort-header-container {
+    cursor: pointer;
+  }
+
+  // --- Action menu (mat-menu) — Google Drive style ---
+  .mat-mdc-menu-panel {
+    border-radius: 4px !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
+                rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+                rgba(0, 0, 0, 0.12) 0px 1px 10px 0px !important;
+  }
+
+  .mat-mdc-menu-content {
+    padding: 0 !important;
+  }
+
+  .mat-mdc-menu-item {
+    font-size: 13px;
+    color: var(--text-header, #1f1f1f);
+    min-height: 36px;
+    padding: 0 12px !important;
+
+    .mat-icon {
+      margin-right: 12px;
+      color: var(--icon-secondary, #444746);
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  // --- Three-dot action button — 36px circle ---
+  .mat-mdc-icon-button {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 18px;
+    padding: 6px !important;
+  }
+
   // mtx-grid table overrides
   .mtx-grid {
     .mat-mdc-table {
