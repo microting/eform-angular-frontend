@@ -63,35 +63,36 @@ body.theme-workspace {
     visibility: visible;
   }
 
-  // Actively sorted — blue circle pill with white arrow
+  // Actively sorted — light blue circle with dark arrow (matches Google Drive)
   .mat-sort-header-sorted .mat-sort-header-arrow {
     opacity: 1 !important;
     visibility: visible;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
-    min-width: 20px;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
     border-radius: 50%;
-    background-color: var(--sort-indicator-active, #0b57d0);
+    background-color: var(--sort-indicator-bg, #c2e7ff);
     margin-left: 4px;
     flex-shrink: 0;
     position: relative;
     overflow: visible;
+    color: var(--sort-indicator-arrow, #004a77) !important;
   }
 
-  // White arrow parts inside the blue pill
+  // Dark arrow parts inside the light blue pill
   .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-stem {
-    background: var(--content-card-bg, #ffffff) !important;
+    background: var(--sort-indicator-arrow, #004a77) !important;
   }
 
   .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-indicator,
   .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-left,
   .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-middle,
   .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-right {
-    background: var(--content-card-bg, #ffffff) !important;
-    border-color: var(--content-card-bg, #ffffff) !important;
+    background: var(--sort-indicator-arrow, #004a77) !important;
+    border-color: var(--sort-indicator-arrow, #004a77) !important;
   }
 
   // mtx-grid table overrides
