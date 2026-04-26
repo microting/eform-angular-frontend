@@ -64,6 +64,11 @@ body.theme-workspace {
     border-bottom-style: solid;
   }
 
+  // Remove sticky-column left border (Google Drive has no column separators)
+  .mat-mdc-table-sticky-border-elem-right {
+    border-left: none !important;
+  }
+
   // --- Sort header — Google Drive style ---
 
   // Hide the mtx-grid sort/filter icon (≡) only on the actively sorted column
