@@ -10,21 +10,23 @@ body.theme-workspace {
 
   .mat-mdc-table {
     background-color: var(--content-card-bg, #ffffff) !important;
+    font-family: var(--font-family) !important;
   }
 
   .mat-mdc-header-row {
     background-color: var(--content-card-bg, #ffffff);
-    height: 40px;
+    height: 48px;
   }
 
   .mat-mdc-header-cell {
-    color: var(--text-tertiary, #5f6368);
-    font-size: var(--font-size-table-header, 12px);
+    color: var(--icon-secondary, #444746);
+    font-size: var(--font-size-table-header, 14px);
     font-weight: 500;
+    font-family: var(--font-family) !important;
   }
 
   .mat-mdc-row {
-    height: 40px;
+    height: 48px;
     background-color: var(--content-card-bg, #ffffff);
 
     &:hover {
@@ -32,8 +34,26 @@ body.theme-workspace {
     }
   }
 
+  // Selected / active row — Google Drive light-blue highlight
+  .mat-mdc-row.active,
+  .mat-mdc-row.selected,
+  .mat-mdc-row[aria-selected="true"],
+  .mat-mdc-row.row-selected,
+  .mat-mdc-row:has(button[aria-expanded="true"]),
+  .mat-mdc-row:has(button[aria-expanded="true"]):hover {
+    background-color: var(--sort-indicator-bg, #c2e7ff) !important;
+
+    .mat-mdc-cell {
+      background-color: var(--sort-indicator-bg, #c2e7ff) !important;
+    }
+  }
+
   .mat-mdc-cell {
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--icon-secondary, #444746);
+    font-family: var(--font-family) !important;
+    background-color: var(--content-card-bg, #ffffff) !important;
   }
 
   // Subtle row borders
@@ -110,22 +130,55 @@ body.theme-workspace {
   }
 
   .mat-mdc-menu-content {
-    padding: 0 !important;
+    padding: 8px 0 !important;
   }
 
   .mat-mdc-menu-item {
-    font-size: 13px;
-    color: var(--text-header, #1f1f1f);
-    min-height: 36px;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: var(--text-header, #1f1f1f) !important;
+    height: 32px !important;
+    min-height: 32px !important;
     padding: 0 12px !important;
+    line-height: 20px !important;
+    font-family: var(--font-family) !important;
+    gap: 12px !important;
+
+    // Override Material's internal text span (Google Drive uses 14px / 400)
+    .mat-mdc-menu-item-text {
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      color: var(--text-header, #1f1f1f) !important;
+      font-family: var(--font-family) !important;
+    }
 
     .mat-icon {
-      margin-right: 12px;
-      color: var(--icon-secondary, #444746);
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
+      margin-right: 0 !important;
+      color: var(--icon-secondary, #444746) !important;
+      font-size: 20px !important;
+      width: 20px !important;
+      height: 20px !important;
     }
+  }
+
+  // Override Material's internal min-height on menu items
+  .mat-mdc-menu-panel .mat-mdc-menu-item {
+    min-height: 32px !important;
+  }
+
+  // Override the high-specificity eform rules that set font-weight: 600
+  .mat-mdc-menu-panel .mat-mdc-menu-content .mat-mdc-menu-item .mat-mdc-menu-item-text,
+  .mat-mdc-menu-panel .mat-mdc-menu-content button span {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: var(--text-header, #1f1f1f) !important;
+    font-family: var(--font-family) !important;
+  }
+
+  // Menu separator — Google Drive style
+  .mat-mdc-menu-panel .mat-divider {
+    margin: 8px 0 7px !important;
+    border-top-color: rgb(199, 199, 199) !important;
   }
 
   // --- Three-dot action button — 36px circle ---
@@ -134,27 +187,30 @@ body.theme-workspace {
     height: 36px !important;
     border-radius: 18px;
     padding: 6px !important;
+    color: var(--icon-secondary, #444746) !important;
   }
 
   // mtx-grid table overrides
   .mtx-grid {
     .mat-mdc-table {
       background-color: var(--content-card-bg, #ffffff) !important;
+      font-family: var(--font-family) !important;
     }
 
     .mat-mdc-header-row {
       background-color: var(--content-card-bg, #ffffff);
-      height: 40px;
+      height: 48px;
     }
 
     .mat-mdc-header-cell {
-      color: var(--text-tertiary, #5f6368);
-      font-size: var(--font-size-table-header, 12px);
+      color: var(--icon-secondary, #444746);
+      font-size: var(--font-size-table-header, 14px);
       font-weight: 500;
+      font-family: var(--font-family) !important;
     }
 
     .mat-mdc-row {
-      height: 40px;
+      height: 48px;
       background-color: var(--content-card-bg, #ffffff);
 
       &:hover {
@@ -163,7 +219,10 @@ body.theme-workspace {
     }
 
     .mat-mdc-cell {
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--icon-secondary, #444746);
+      font-family: var(--font-family) !important;
     }
   }
 }
