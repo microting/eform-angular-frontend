@@ -261,27 +261,18 @@ body.theme-workspace {
     background: var(--content-card-bg, #ffffff) !important;
   }
 
-  // --- Form-field — Google Drive style (white bg, 8px radius) ---
-  // Override .mdc-text-field (which sets 9999px pill + tinted bg via !important in styles.scss)
-  .mdc-text-field,
-  .mat-mdc-form-field .mdc-text-field {
-    border-radius: 8px !important;
-    background-color: var(--content-card-bg, #ffffff) !important;
-    border-color: var(--icon-secondary, #747775) !important;
-
-    &--filled:not(.mdc-text-field--disabled) {
+  // --- Select/dropdown form-fields — Google Drive outlined style (8px radius, white bg) ---
+  // Only target select/dropdown fields; leave search inputs with their default pill shape.
+  .mat-mdc-form-field-type-mtx-select,
+  .mat-mdc-form-field-type-mat-select {
+    .mdc-text-field {
+      border-radius: 8px !important;
       background-color: var(--content-card-bg, #ffffff) !important;
-    }
+      border-color: var(--icon-secondary, #747775) !important;
 
-    &__ripple {
-      &::before,
-      &::after {
+      &--filled:not(.mdc-text-field--disabled) {
         background-color: var(--content-card-bg, #ffffff) !important;
       }
-    }
-
-    &__input {
-      background-color: var(--content-card-bg, #ffffff) !important;
     }
   }
 
