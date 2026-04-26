@@ -170,6 +170,12 @@ body.theme-workspace {
       font-size: 20px !important;
       width: 20px !important;
       height: 20px !important;
+
+      // Lighten filled SVG icons to match outlined weight
+      svg {
+        transform: scale(0.85);
+        opacity: 0.75;
+      }
     }
   }
 
@@ -238,3 +244,5 @@ body.theme-workspace {
     }
   }
 }
+
+
