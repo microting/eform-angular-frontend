@@ -170,6 +170,8 @@ $workspace-tokens: (
       content-card-bg: #FFFFFF,
       content-card-radius: 16px,
       content-card-margin: 16px,
+      table-row-hover: #f1f3f4,
+      sort-indicator-active: #0b57d0,
     ),
 
     // ----- Dark mode -----
@@ -283,6 +285,8 @@ $workspace-tokens: (
       content-card-bg: #28292e,
       content-card-radius: 16px,
       content-card-margin: 16px,
+      table-row-hover: #2d2e33,
+      sort-indicator-active: #a8c7fa,
     ),
   ),
 );

@@ -223,6 +223,8 @@ $eform-m3-dark-theme: mat.define-theme((
   --content-card-bg: #{map.get($mode-colors, content-card-bg)};
   --content-card-radius: #{map.get($mode-colors, content-card-radius)};
   --content-card-margin: #{map.get($mode-colors, content-card-margin)};
+  --table-row-hover: #{map.get($mode-colors, table-row-hover)};
+  --sort-indicator-active: #{map.get($mode-colors, sort-indicator-active)};
 
   // Material component overrides
   --mat-table-row-item-outline-color: #{map.get($mode-colors, border)} !important;

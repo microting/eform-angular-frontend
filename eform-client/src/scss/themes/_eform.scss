@@ -186,6 +186,8 @@ $eform-tokens: (
       content-card-bg: #FFFFFF,
       content-card-radius: 0,
       content-card-margin: 0,
+      table-row-hover: #f5f5f5,
+      sort-indicator-active: #289694,
     ),
 
     // ----- Dark mode -----
@@ -313,6 +315,8 @@ $eform-tokens: (
       content-card-bg: #202122,
       content-card-radius: 0,
       content-card-margin: 0,
+      table-row-hover: #2a2a2a,
+      sort-indicator-active: #4FCAC8,
     ),
   ),
 );

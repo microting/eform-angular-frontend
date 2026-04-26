@@ -9,11 +9,11 @@ body.theme-workspace {
   // --- Table styling (Google Drive-like) ---
 
   .mat-mdc-table {
-    background: var(--content-card-bg, #ffffff);
+    background-color: var(--content-card-bg, #ffffff) !important;
   }
 
   .mat-mdc-header-row {
-    background: var(--content-card-bg, #ffffff);
+    background-color: var(--content-card-bg, #ffffff);
     height: 40px;
   }
 
@@ -25,6 +25,11 @@ body.theme-workspace {
 
   .mat-mdc-row {
     height: 40px;
+    background-color: var(--content-card-bg, #ffffff);
+
+    &:hover {
+      background-color: var(--table-row-hover, #f1f3f4) !important;
+    }
   }
 
   .mat-mdc-cell {
@@ -39,14 +44,23 @@ body.theme-workspace {
     border-bottom-style: solid;
   }
 
+  // Active sort indicator — blue arrow
+  .mat-sort-header-sorted .mat-sort-header-content {
+    color: var(--sort-indicator-active, #0b57d0);
+  }
+
+  .mat-sort-header-sorted .mat-sort-header-arrow {
+    color: var(--sort-indicator-active, #0b57d0) !important;
+  }
+
   // mtx-grid table overrides
   .mtx-grid {
     .mat-mdc-table {
-      background: var(--content-card-bg, #ffffff);
+      background-color: var(--content-card-bg, #ffffff) !important;
     }
 
     .mat-mdc-header-row {
-      background: var(--content-card-bg, #ffffff);
+      background-color: var(--content-card-bg, #ffffff);
       height: 40px;
     }
 
@@ -58,6 +72,11 @@ body.theme-workspace {
 
     .mat-mdc-row {
       height: 40px;
+      background-color: var(--content-card-bg, #ffffff);
+
+      &:hover {
+        background-color: var(--table-row-hover, #f1f3f4) !important;
+      }
     }
 
     .mat-mdc-cell {
