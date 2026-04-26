@@ -255,6 +255,70 @@ body.theme-workspace {
       font-family: var(--font-family) !important;
     }
   }
-}
 
+  // --- Sub-header (filter bar with Etiketter) — white bg like Google Drive ---
+  .eform-sub-header {
+    background: var(--content-card-bg, #ffffff) !important;
+  }
+
+  // --- Dropdown / select panels — Google Drive style ---
+  .mat-mdc-select-panel,
+  .mtx-select-panel,
+  .mat-mdc-autocomplete-panel {
+    background-color: var(--content-card-bg, #ffffff) !important;
+    border-radius: 8px !important;
+    border: none !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
+                rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+                rgba(0, 0, 0, 0.12) 0px 1px 10px 0px !important;
+  }
+
+  // Dropdown options — match menu item style
+  .mat-mdc-option {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    font-family: var(--font-family) !important;
+    color: var(--text-header, #1f1f1f) !important;
+    min-height: 36px !important;
+    border-radius: 0 !important;
+
+    &:hover,
+    &.mat-mdc-option-active,
+    &.mdc-list-item--selected:not(.mat-mdc-option-multiple) {
+      background-color: var(--table-row-hover, #f1f3f4) !important;
+    }
+  }
+
+  // --- ng-select dropdown panel — Google Drive style ---
+  .ng-dropdown-panel {
+    background-color: var(--content-card-bg, #ffffff) !important;
+    border-radius: 8px !important;
+    border: none !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
+                rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+                rgba(0, 0, 0, 0.12) 0px 1px 10px 0px !important;
+    overflow: hidden;
+
+    .ng-option {
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      font-family: var(--font-family) !important;
+      color: var(--text-header, #1f1f1f) !important;
+      height: 36px !important;
+      min-height: 36px !important;
+      display: flex !important;
+      align-items: center !important;
+      padding: 0 12px !important;
+
+      &:hover,
+      &.ng-option-marked {
+        background-color: var(--table-row-hover, #f1f3f4) !important;
+      }
+
+      &.ng-option-selected {
+        background-color: var(--sort-indicator-bg, #c2e7ff) !important;
+      }
+    }
+  }
+}
 
