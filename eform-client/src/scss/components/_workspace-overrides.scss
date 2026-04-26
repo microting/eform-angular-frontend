@@ -44,10 +44,54 @@ body.theme-workspace {
     border-bottom-style: solid;
   }
 
-  // Active sort indicator — arrow matches header text color (like Google Drive)
+  // --- Sort header — Google Drive style ---
+
+  // Hide the mtx-grid sort/filter icon (≡) — Google Drive doesn't show these
+  .mtx-grid-icon.mat-sort-header-icon {
+    display: none !important;
+  }
+
+  // Hide arrow on unsorted columns
+  .mat-sort-header-arrow {
+    opacity: 0 !important;
+    visibility: hidden;
+  }
+
+  // Subtle hint on hover
+  .mat-sort-header:hover .mat-sort-header-arrow {
+    opacity: 0.38 !important;
+    visibility: visible;
+  }
+
+  // Actively sorted — blue circle pill with white arrow
   .mat-sort-header-sorted .mat-sort-header-arrow {
-    color: var(--text-header, #1f1f1f) !important;
     opacity: 1 !important;
+    visibility: visible;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border-radius: 50%;
+    background-color: var(--sort-indicator-active, #0b57d0);
+    margin-left: 4px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: visible;
+  }
+
+  // White arrow parts inside the blue pill
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-stem {
+    background: var(--content-card-bg, #ffffff) !important;
+  }
+
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-indicator,
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-left,
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-middle,
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-right {
+    background: var(--content-card-bg, #ffffff) !important;
+    border-color: var(--content-card-bg, #ffffff) !important;
   }
 
   // mtx-grid table overrides
