@@ -435,6 +435,22 @@ body.theme-workspace {
                 0 1px 2px 0 rgba(0, 0, 0, 0.15) !important;
   }
 
+  // --- Dialog / Modal — Google Drive style (white bg, compact buttons) ---
+  .mat-mdc-dialog-surface {
+    background-color: var(--content-card-bg, #ffffff) !important;
+  }
+
+  // Cancel / secondary button inside dialogs — match primary height
+  .btn-cancel {
+    height: 36px !important;
+    padding: 8px 24px !important;
+    font-weight: 500 !important;
+  }
+
+  .btn-cancel:hover {
+    background-color: var(--table-row-hover, #f1f3f4) !important;
+  }
+
   // Secondary icon buttons — compact + hover fill
   .btn-secondary--icon-rounded-border {
     height: 36px !important;
