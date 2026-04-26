@@ -1,0 +1,67 @@
+// ---------------------------------------------------------------------------
+// Workspace theme overrides — Google Drive-like table styling
+// ---------------------------------------------------------------------------
+// All rules scoped under body.theme-workspace so they never affect eform theme.
+// ---------------------------------------------------------------------------
+
+body.theme-workspace {
+
+  // --- Table styling (Google Drive-like) ---
+
+  .mat-mdc-table {
+    background: var(--content-card-bg, #ffffff);
+  }
+
+  .mat-mdc-header-row {
+    background: var(--content-card-bg, #ffffff);
+    height: 40px;
+  }
+
+  .mat-mdc-header-cell {
+    color: var(--text-tertiary, #5f6368);
+    font-size: var(--font-size-table-header, 12px);
+    font-weight: 500;
+  }
+
+  .mat-mdc-row {
+    height: 40px;
+  }
+
+  .mat-mdc-cell {
+    font-size: 13px;
+  }
+
+  // Subtle row borders
+  .mat-mdc-row,
+  .mat-mdc-header-row {
+    border-bottom-color: var(--border, #dde3ea);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+  }
+
+  // mtx-grid table overrides
+  .mtx-grid {
+    .mat-mdc-table {
+      background: var(--content-card-bg, #ffffff);
+    }
+
+    .mat-mdc-header-row {
+      background: var(--content-card-bg, #ffffff);
+      height: 40px;
+    }
+
+    .mat-mdc-header-cell {
+      color: var(--text-tertiary, #5f6368);
+      font-size: var(--font-size-table-header, 12px);
+      font-weight: 500;
+    }
+
+    .mat-mdc-row {
+      height: 40px;
+    }
+
+    .mat-mdc-cell {
+      font-size: 13px;
+    }
+  }
+}
