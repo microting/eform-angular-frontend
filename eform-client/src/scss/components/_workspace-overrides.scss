@@ -269,10 +269,52 @@ body.theme-workspace {
       border-radius: 8px !important;
       background-color: var(--content-card-bg, #ffffff) !important;
       border-color: var(--icon-secondary, #747775) !important;
+      height: 48px !important;
+      padding: 0 0 0 5px !important;
 
       &--filled:not(.mdc-text-field--disabled) {
         background-color: var(--content-card-bg, #ffffff) !important;
       }
+    }
+
+    .mat-mdc-form-field-infix {
+      min-height: 48px !important;
+      padding-top: 24px !important;
+      padding-bottom: 8px !important;
+    }
+
+    // Hide the subscript/hint area below the chip
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none !important;
+    }
+
+    // Label text — match Google Drive 14px/500, vertically centered in 32px chip
+    .mat-mdc-floating-label:not(.mdc-floating-label--float-above) {
+      font-weight: 500 !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      left: 16px !important;
+    }
+
+    // Keep label color constant (no color change on focus)
+    .mat-mdc-floating-label,
+    .mdc-text-field--focused .mat-mdc-floating-label,
+    .mat-mdc-floating-label.mdc-floating-label--float-above {
+      color: var(--icon-secondary, #444746) !important;
+    }
+
+    // Arrow — nudge inward from right edge
+    .ng-arrow-wrapper {
+      margin-right: 12px !important;
+    }
+
+    // Make mtx-select and ng-select fill the full infix width
+    // Reset the negative margins that mtx-select uses to break out of Material padding
+    mtx-select,
+    ng-select {
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
   }
 
@@ -348,6 +390,60 @@ body.theme-workspace {
         }
       }
     }
+  }
+
+  // --- Sidebar nav — compact height matching Google Drive (32px) ---
+  mat-tree {
+    --mat-tree-node-min-height: var(--nav-item-height, 32px);
+    --mat-button-text-container-height: var(--nav-item-height, 32px);
+
+    .mat-mdc-button-touch-target {
+      height: var(--nav-item-height, 32px) !important;
+    }
+  }
+
+  mat-tree .mat-nested-tree-node mat-expansion-panel {
+    --mat-expansion-header-collapsed-state-height: var(--nav-item-height, 32px);
+    --mat-expansion-header-expanded-state-height: var(--nav-item-height, 32px);
+  }
+
+  // --- Buttons — Google Drive style ---
+
+  // Primary button — Google Drive light blue active style (#c2e7ff bg, black text)
+  .btn-primary {
+    height: 36px !important;
+    background-color: var(--sort-indicator-bg, #c2e7ff) !important;
+    color: var(--text-header, #1f1f1f) !important;
+
+    .mat-icon {
+      color: var(--text-header, #1f1f1f) !important;
+    }
+  }
+
+  .btn-primary--icon-left {
+    height: 36px !important;
+    padding: 8px 16px !important;
+
+    span {
+      font-weight: 500 !important;
+    }
+  }
+
+  .btn-primary:hover {
+    background-color: #a3d4f5 !important;
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1),
+                0 1px 2px 0 rgba(0, 0, 0, 0.15) !important;
+  }
+
+  // Secondary icon buttons — compact + hover fill
+  .btn-secondary--icon-rounded-border {
+    height: 36px !important;
+    padding: 8px !important;
+  }
+
+  .btn-secondary--icon-rounded-border:hover,
+  .btn-secondary--icon-square-border:hover {
+    background-color: var(--table-row-hover, #f1f3f4) !important;
   }
 }
 

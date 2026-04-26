@@ -220,6 +220,10 @@ $eform-m3-dark-theme: mat.define-theme((
   --input-fill: #{map.get($mode-colors, input-fill)};
   --input-focus-underline: #{map.get($mode-colors, input-focus-underline)};
   --nav-selected-surface: #{map.get($mode-colors, nav-selected-surface)};
+  --nav-selected-text: #{map.get($mode-colors, nav-selected-text)};
+  --nav-hover-surface: #{map.get($mode-colors, nav-hover-surface)};
+  --nav-hover-text: #{map.get($mode-colors, nav-hover-text)};
+  --nav-item-height: #{map.get($mode-colors, nav-item-height)};
   --content-card-bg: #{map.get($mode-colors, content-card-bg)};
   --content-card-radius: #{map.get($mode-colors, content-card-radius)};
   --content-card-margin: #{map.get($mode-colors, content-card-margin)};

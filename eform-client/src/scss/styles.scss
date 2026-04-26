@@ -961,7 +961,7 @@ formatting-text-editor {
             &:hover {
               .mat-expansion-indicator {
                 svg {
-                  fill: var(--mdc-theme-on-primary) !important;
+                  fill: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
                 }
               }
             }
