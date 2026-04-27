@@ -8,6 +8,7 @@ export class UserInfoModel {
   fullName: string;
   role: string;
   darkTheme: boolean;
+  themeVariant?: string;
   isDeviceUser: boolean;
   language: string;
   timeZone: string;
@@ -36,6 +37,7 @@ export class UserInfoModel {
       this.fullName = data.fullName;
       this.role = data.role;
       this.darkTheme = data.darkTheme;
+      this.themeVariant = data.themeVariant;
       this.isDeviceUser = data.isDeviceUser;
       this.language = data.language;
       this.timeZone = data.timeZone;

@@ -2,14 +2,49 @@
 @use '@angular/material' as mat;
 
 // ---------------------------------------------------------------------------
+// M3 theme definitions for Angular Material component styling
+// ---------------------------------------------------------------------------
+$eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
+
+$eform-m3-light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$cyan-palette
+  ),
+  typography: (
+    brand-family: $eform-font-family,
+    plain-family: $eform-font-family
+  ),
+  density: (
+    scale: 0,
+  ),
+));
+
+$eform-m3-dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$cyan-palette,
+  ),
+  typography: (
+    brand-family: $eform-font-family,
+    plain-family: $eform-font-family
+  ),
+  density: (
+    scale: 0,
+  ),
+));
+
+// ---------------------------------------------------------------------------
 // eform-theme($tokens, $mode)
 // ---------------------------------------------------------------------------
-// Emits CSS custom properties for every token in the map.
+// Emits Angular Material component themes + CSS custom properties.
 //   $tokens — the full $eform-tokens (or $workspace-tokens) map
 //   $mode   — 'light' or 'dark'
 // ---------------------------------------------------------------------------
 
 @mixin eform-theme($tokens, $mode) {
+  // NOTE: mat.all-component-themes() is called in theme.scss's body.theme-light/dark
+  // loop — not here — to avoid emitting the full Material CSS 4+ times.
   $colors: map.get($tokens, colors);
   $mode-colors: map.get($colors, $mode);
 
@@ -181,7 +216,28 @@
   --elevation-card: #{map.get($mode-colors, elevation-card)};
   --elevation-panel: #{map.get($mode-colors, elevation-panel)};
 
-  // Material component overrides using token values
+  // Feature-branch tokens
+  --input-fill: #{map.get($mode-colors, input-fill)};
+  --input-focus-underline: #{map.get($mode-colors, input-focus-underline)};
+  --nav-selected-surface: #{map.get($mode-colors, nav-selected-surface)};
+  --nav-selected-text: #{map.get($mode-colors, nav-selected-text)};
+  --nav-hover-surface: #{map.get($mode-colors, nav-hover-surface)};
+  --nav-hover-text: #{map.get($mode-colors, nav-hover-text)};
+  --nav-item-height: #{map.get($mode-colors, nav-item-height)};
+  --content-card-bg: #{map.get($mode-colors, content-card-bg)};
+  --content-card-radius: #{map.get($mode-colors, content-card-radius)};
+  --content-card-margin: #{map.get($mode-colors, content-card-margin)};
+  --table-row-hover: #{map.get($mode-colors, table-row-hover)};
+  --sort-indicator-bg: #{map.get($mode-colors, sort-indicator-bg)};
+  --sort-indicator-arrow: #{map.get($mode-colors, sort-indicator-arrow)};
+
+  // Material component overrides
+  --mat-table-row-item-outline-color: #{map.get($mode-colors, border)} !important;
+  --mat-card-elevated-container-color: #{map.get($mode-colors, bg)} !important;
+  --mat-table-background-color: #{map.get($mode-colors, tp-td-bg)};
+  --mat-table-header-headline-color: #{map.get($mode-colors, text-header)};
+  --mat-table-row-item-label-text-color: #{map.get($mode-colors, text-body)};
+
   @include mat.dialog-overrides((
     container-shape: map.get($tokens, radius-dialog),
     container-elevation-shadow: none,

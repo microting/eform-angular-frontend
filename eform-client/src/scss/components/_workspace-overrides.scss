@@ -1,0 +1,506 @@
+// ---------------------------------------------------------------------------
+// Workspace theme overrides — Google Drive-like table styling
+// ---------------------------------------------------------------------------
+// All rules scoped under body.theme-workspace so they never affect eform theme.
+// ---------------------------------------------------------------------------
+
+body.theme-workspace {
+
+  // --- Global outlined icons (Google Workspace uses thin outlined icons) ---
+  .mat-icon {
+    font-family: 'Material Symbols Outlined' !important;
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24 !important;
+  }
+
+  // --- Table styling (Google Drive-like) ---
+
+  .mat-mdc-table {
+    background-color: var(--content-card-bg, #ffffff) !important;
+    font-family: var(--font-family) !important;
+  }
+
+  .mat-mdc-header-row {
+    background-color: var(--content-card-bg, #ffffff);
+    height: 48px;
+  }
+
+  .mat-mdc-header-cell {
+    color: var(--icon-secondary, #444746);
+    font-size: var(--font-size-table-header, 14px);
+    font-weight: 500;
+    font-family: var(--font-family) !important;
+  }
+
+  .mat-mdc-row {
+    height: 48px;
+    background-color: var(--content-card-bg, #ffffff);
+
+    &:hover {
+      background-color: var(--table-row-hover, #f1f3f4) !important;
+    }
+  }
+
+  // Selected / active row — Google Drive light-blue highlight
+  .mat-mdc-row.active,
+  .mat-mdc-row.selected,
+  .mat-mdc-row[aria-selected="true"],
+  .mat-mdc-row.row-selected,
+  .mat-mdc-row:has(button[aria-expanded="true"]),
+  .mat-mdc-row:has(button[aria-expanded="true"]):hover {
+    background-color: var(--sort-indicator-bg, #c2e7ff) !important;
+
+    .mat-mdc-cell {
+      background-color: var(--sort-indicator-bg, #c2e7ff) !important;
+    }
+  }
+
+  .mat-mdc-cell {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--icon-secondary, #444746);
+    font-family: var(--font-family) !important;
+    background-color: var(--content-card-bg, #ffffff) !important;
+  }
+
+  // Subtle row borders
+  .mat-mdc-row,
+  .mat-mdc-header-row {
+    border-bottom-color: var(--border, #dde3ea);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+  }
+
+  // Remove sticky-column left border & shadow (Google Drive has no column separators)
+  .mat-mdc-table-sticky-border-elem-right {
+    border-left: none !important;
+    box-shadow: none !important;
+  }
+
+  // --- Sort header — Google Drive style ---
+
+  // Hide the mtx-grid sort/filter icon (≡) only on the actively sorted column
+  .mat-sort-header-sorted .mtx-grid-icon.mat-sort-header-icon {
+    display: none !important;
+  }
+
+  // Hide arrow on unsorted columns
+  .mat-sort-header-arrow {
+    opacity: 0 !important;
+    visibility: hidden;
+  }
+
+  // Subtle hint on hover
+  .mat-sort-header:hover .mat-sort-header-arrow {
+    opacity: 0.38 !important;
+    visibility: visible;
+  }
+
+  // Actively sorted — light blue circle with dark arrow (matches Google Drive)
+  .mat-sort-header-sorted .mat-sort-header-arrow {
+    opacity: 1 !important;
+    visibility: visible;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 50%;
+    background-color: var(--sort-indicator-bg, #c2e7ff);
+    margin-left: 4px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: visible;
+    color: var(--sort-indicator-arrow, #004a77) !important;
+  }
+
+  // Dark arrow parts inside the light blue pill
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-stem {
+    background: var(--sort-indicator-arrow, #004a77) !important;
+  }
+
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-indicator,
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-left,
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-middle,
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-right {
+    background: var(--sort-indicator-arrow, #004a77) !important;
+    border-color: var(--sort-indicator-arrow, #004a77) !important;
+  }
+
+  // --- Header hover — pointer cursor on sortable headers ---
+  .mat-sort-header-container {
+    cursor: pointer;
+  }
+
+  // --- Action menu (mat-menu) — Google Drive style ---
+  .mat-mdc-menu-panel {
+    background-color: var(--content-card-bg, #ffffff) !important;
+    border-radius: 4px !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
+                rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+                rgba(0, 0, 0, 0.12) 0px 1px 10px 0px !important;
+  }
+
+  .mat-mdc-menu-content {
+    padding: 8px 0 !important;
+  }
+
+  .mat-mdc-menu-item {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: var(--text-header, #1f1f1f) !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    align-items: center !important;
+    padding: 0 12px !important;
+    line-height: 20px !important;
+    font-family: var(--font-family) !important;
+    gap: 12px !important;
+
+    // Override Material's internal text span (Google Drive uses 14px / 400)
+    .mat-mdc-menu-item-text {
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      color: var(--text-header, #1f1f1f) !important;
+      font-family: var(--font-family) !important;
+    }
+
+    .mat-icon {
+      margin-right: 0 !important;
+      color: var(--icon-secondary, #444746) !important;
+      font-size: 20px !important;
+      width: 20px !important;
+      height: 20px !important;
+
+      // Lighten filled SVG icons to match outlined weight
+      svg {
+        transform: scale(0.85);
+        opacity: 0.75;
+      }
+    }
+  }
+
+  // Override Material's internal min-height on menu items
+  .mat-mdc-menu-panel .mat-mdc-menu-item {
+    min-height: 32px !important;
+  }
+
+  // Override the high-specificity eform rules that set font-weight: 600
+  .mat-mdc-menu-panel .mat-mdc-menu-content .mat-mdc-menu-item .mat-mdc-menu-item-text,
+  .mat-mdc-menu-panel .mat-mdc-menu-content button span {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: var(--text-header, #1f1f1f) !important;
+    font-family: var(--font-family) !important;
+  }
+
+  // Menu item hover — Google Drive light gray, square shape (no rounded corners)
+  .mat-mdc-menu-item {
+    border-radius: 0 !important;
+  }
+
+  .mat-mdc-menu-item:hover,
+  .mat-mdc-menu-item.cdk-keyboard-focused,
+  .mat-mdc-menu-item.cdk-program-focused {
+    background-color: var(--table-row-hover, #f1f3f4) !important;
+  }
+
+  // Menu separator — Google Drive style
+  .mat-mdc-menu-panel .mat-divider {
+    margin: 8px 0 7px !important;
+    border-top-color: rgb(199, 199, 199) !important;
+  }
+
+  // --- Three-dot action button — 36px circle ---
+  .mat-mdc-icon-button {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 18px;
+    padding: 6px !important;
+    color: var(--icon-secondary, #444746) !important;
+  }
+
+  // mtx-grid table overrides
+  .mtx-grid {
+    .mat-mdc-table {
+      background-color: var(--content-card-bg, #ffffff) !important;
+      font-family: var(--font-family) !important;
+    }
+
+    .mat-mdc-header-row {
+      background-color: var(--content-card-bg, #ffffff);
+      height: 48px;
+    }
+
+    .mat-mdc-header-cell {
+      color: var(--icon-secondary, #444746);
+      font-size: var(--font-size-table-header, 14px);
+      font-weight: 500;
+      font-family: var(--font-family) !important;
+    }
+
+    .mat-mdc-row {
+      height: 48px;
+      background-color: var(--content-card-bg, #ffffff);
+
+      &:hover {
+        background-color: var(--table-row-hover, #f1f3f4) !important;
+      }
+    }
+
+    .mat-mdc-cell {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--icon-secondary, #444746);
+      font-family: var(--font-family) !important;
+    }
+  }
+
+  // --- Sub-header (filter bar with Etiketter) — white bg like Google Drive ---
+  .eform-sub-header {
+    background: var(--content-card-bg, #ffffff) !important;
+  }
+
+  // --- Form fields — Google Drive outlined style (8px radius, white bg) ---
+  // Applies to selects, dropdowns, and text inputs. Search inputs keep their pill shape.
+  .mat-mdc-form-field-type-mtx-select,
+  .mat-mdc-form-field-type-mat-select,
+  .mat-mdc-form-field-type-mat-input {
+    .mdc-text-field {
+      border-radius: 8px !important;
+      background-color: var(--content-card-bg, #ffffff) !important;
+      border: 1px solid var(--icon-secondary, #747775) !important;
+      height: 48px !important;
+      padding: 0 0 0 16px !important;
+      overflow: hidden !important;
+
+      &--filled:not(.mdc-text-field--disabled) {
+        background-color: var(--content-card-bg, #ffffff) !important;
+      }
+
+      // Force input element background to match wrapper (overrides --bg inheritance)
+      .mat-mdc-input-element {
+        background-color: transparent !important;
+      }
+
+      // Remove Material's default filled underline
+      .mdc-line-ripple {
+        display: none !important;
+      }
+
+      // Hide filled-style focus overlay
+      .mat-mdc-form-field-focus-overlay {
+        display: none !important;
+      }
+
+      // Focus state — blue border like Google outlined fields
+      &--focused {
+        border-color: var(--mdc-theme-primary, #0b57d0) !important;
+        border-width: 2px !important;
+      }
+    }
+
+    .mat-mdc-form-field-flex {
+      height: 48px !important;
+      align-items: center !important;
+    }
+
+    .mat-mdc-form-field-infix {
+      min-height: 48px !important;
+      padding-top: 24px !important;
+      padding-bottom: 8px !important;
+    }
+
+    // Hide the subscript/hint area below the field
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none !important;
+    }
+
+    // Label — centered when empty, floats above when focused/filled
+    .mat-mdc-floating-label:not(.mdc-floating-label--float-above) {
+      font-weight: 500 !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      left: 16px !important;
+    }
+
+    // Keep label color constant (no color change on focus)
+    .mat-mdc-floating-label,
+    .mdc-text-field--focused .mat-mdc-floating-label,
+    .mat-mdc-floating-label.mdc-floating-label--float-above {
+      color: var(--icon-secondary, #444746) !important;
+    }
+
+    // Arrow — nudge inward from right edge (selects only)
+    .ng-arrow-wrapper {
+      margin-right: 12px !important;
+    }
+
+    // Make mtx-select and ng-select fill the full infix width
+    mtx-select,
+    ng-select {
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+  // --- Dropdown / select panels — Google Drive style ---
+  .mat-mdc-select-panel,
+  .mtx-select-panel,
+  .mat-mdc-autocomplete-panel {
+    background-color: var(--content-card-bg, #ffffff) !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--border, #dde3ea) !important;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px 2px,
+                rgba(0, 0, 0, 0.08) 0px 1px 2px 0px !important;
+  }
+
+  // Dropdown options — match Google Drive (40px height, 16px padding)
+  .mat-mdc-option {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    font-family: var(--font-family) !important;
+    color: var(--text-header, #1f1f1f) !important;
+    min-height: 40px !important;
+    padding: 0 16px !important;
+    border-radius: 0 !important;
+
+    &:hover,
+    &.mat-mdc-option-active,
+    &.mdc-list-item--selected:not(.mat-mdc-option-multiple) {
+      background-color: var(--table-row-hover, #f1f3f4) !important;
+    }
+  }
+
+  // --- ng-select dropdown panel — Google Drive style ---
+  .ng-dropdown-panel {
+    background-color: var(--content-card-bg, #ffffff) !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--border, #dde3ea) !important;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px 2px,
+                rgba(0, 0, 0, 0.08) 0px 1px 2px 0px !important;
+    overflow: hidden;
+    margin-top: 4px !important;
+
+    .ng-option {
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      font-family: var(--font-family) !important;
+      color: var(--text-header, #1f1f1f) !important;
+      height: 40px !important;
+      min-height: 40px !important;
+      display: flex !important;
+      align-items: center !important;
+      padding: 0 16px !important;
+
+      .ng-option-label {
+        font-weight: 400 !important;
+        color: var(--text-header, #1f1f1f) !important;
+      }
+
+      &:hover,
+      &.ng-option-marked {
+        background-color: var(--table-row-hover, #f1f3f4) !important;
+
+        .ng-option-label {
+          color: var(--text-header, #1f1f1f) !important;
+        }
+      }
+
+      &.ng-option-selected,
+      &[aria-selected="true"] {
+        background-color: var(--sort-indicator-bg, #c2e7ff) !important;
+
+        .ng-option-label {
+          color: var(--text-header, #1f1f1f) !important;
+        }
+      }
+    }
+  }
+
+  // --- Sidebar nav — compact height matching Google Drive (32px) ---
+  mat-tree {
+    --mat-tree-node-min-height: var(--nav-item-height, 32px);
+    --mat-button-text-container-height: var(--nav-item-height, 32px);
+
+    .mat-mdc-button-touch-target {
+      height: var(--nav-item-height, 32px) !important;
+    }
+  }
+
+  mat-tree .mat-nested-tree-node mat-expansion-panel {
+    --mat-expansion-header-collapsed-state-height: var(--nav-item-height, 32px);
+    --mat-expansion-header-expanded-state-height: var(--nav-item-height, 32px);
+  }
+
+  // --- Buttons — Google Drive style ---
+
+  // Primary button — Google Drive light blue active style (#c2e7ff bg, black text)
+  .btn-primary {
+    height: 36px !important;
+    background-color: var(--sort-indicator-bg, #c2e7ff) !important;
+    color: var(--text-header, #1f1f1f) !important;
+
+    .mat-icon {
+      color: var(--text-header, #1f1f1f) !important;
+    }
+  }
+
+  .btn-primary--icon-left {
+    height: 36px !important;
+    padding: 8px 16px !important;
+
+    span {
+      font-weight: 500 !important;
+    }
+  }
+
+  .btn-primary:hover {
+    background-color: #a3d4f5 !important;
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1),
+                0 1px 2px 0 rgba(0, 0, 0, 0.15) !important;
+  }
+
+  // --- Dialog / Modal — Google Drive style (white bg, compact buttons) ---
+  .mat-mdc-dialog-surface {
+    background-color: var(--content-card-bg, #ffffff) !important;
+  }
+
+  // Primary button inside dialogs — solid blue (Google Drive "Done" style)
+  .mat-mdc-dialog-container .btn-primary {
+    background-color: var(--mdc-theme-primary, #0b57d0) !important;
+    color: #ffffff !important;
+
+    .mat-icon {
+      color: #ffffff !important;
+    }
+  }
+
+  .mat-mdc-dialog-container .btn-primary:hover {
+    background-color: var(--mdc-theme-primary-dark, #0842a0) !important;
+  }
+
+  // Cancel / secondary button inside dialogs — match primary height
+  .btn-cancel {
+    height: 36px !important;
+    padding: 8px 24px !important;
+    font-weight: 500 !important;
+  }
+
+  .btn-cancel:hover {
+    background-color: var(--table-row-hover, #f1f3f4) !important;
+  }
+
+  // Secondary icon buttons — compact + hover fill
+  .btn-secondary--icon-rounded-border {
+    height: 36px !important;
+    padding: 8px !important;
+  }
+
+  .btn-secondary--icon-rounded-border:hover,
+  .btn-secondary--icon-square-border:hover {
+    background-color: var(--table-row-hover, #f1f3f4) !important;
+  }
+}
+

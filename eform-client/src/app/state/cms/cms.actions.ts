@@ -5,7 +5,7 @@ export const loadCmsConfig = createAction('[Cms] Load Config');
 
 export const loadCmsConfigSuccess = createAction(
   '[Cms] Load Config Success',
-  (payload: {isCmsEnabled: boolean; isMenuSticky: boolean}) => ({payload})
+  (payload: {isCmsEnabled: boolean; isMenuSticky: boolean; themeVariant?: 'eform' | 'workspace'}) => ({payload})
 );
 
 export const loadCmsConfigFailure = createAction(

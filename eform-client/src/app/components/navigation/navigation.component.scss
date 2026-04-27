@@ -11,7 +11,7 @@ mat-tree {
     .nav-link {
       width: 100%;
       text-align: inherit;
-      min-height: 48px;
+      min-height: var(--nav-item-height, 48px);
       display: flex;
       align-items: center;
       justify-content: start;
@@ -23,13 +23,13 @@ mat-tree {
 
       &:hover {
         border-radius: var(--rounded-full) !important;
-        background-color: var(--mdc-theme-primary-dark, #00695C) !important;
-        color: var(--mdc-theme-on-primary) !important;
+        background-color: var(--nav-hover-surface, var(--mdc-theme-primary-dark, #00695C)) !important;
+        color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
         .mat-icon{
-          color: var(--mdc-theme-on-primary) !important;
+          color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
         }
         svg{
-          fill: var(--mdc-theme-on-primary) !important;
+          fill: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
         }
       }
 
@@ -42,20 +42,24 @@ mat-tree {
 
 
     .selected-node {
-      background-color: var(--mdc-theme-primary) !important;
-      color: var(--mdc-theme-on-primary) !important;
+      background-color: var(--nav-selected-surface, var(--mdc-theme-primary)) !important;
+      color: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
       border-radius: var(--rounded-full);
 
+      .mat-icon {
+        color: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
+      }
+
       &:hover {
-        background-color: var(--mdc-theme-primary-dark) !important;
-        color: var(--mdc-theme-on-primary) !important;
+        background-color: var(--nav-selected-surface, var(--mdc-theme-primary-dark)) !important;
+        color: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
 
         .mat-icon {
-          color: var(--mdc-theme-on-primary) !important;
+          color: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
         }
 
         svg {
-          fill: var(--mdc-theme-on-primary) !important;
+          fill: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
         }
       }
     }
@@ -71,26 +75,27 @@ mat-tree {
 
         .mat-expansion-panel-header {
           padding-left: 1rem;
+          --mat-expansion-header-indicator-color: var(--icon-secondary, #444746);
+
+          // Align expansion header icon with regular nav-link icons
+          // (regular .mat-icon gets margin-left: -4px from Material button styles)
+          .mat-icon {
+            margin-left: -4px;
+          }
 
           &:hover {
-            background-color: var(--mdc-theme-primary-dark) !important;
-            color: var(--mdc-theme-on-primary) !important;
+            background-color: var(--nav-hover-surface, var(--mdc-theme-primary-dark)) !important;
+            color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
             border-radius: var(--rounded-full);
-
-            .mat-expansion-indicator{
-              background: var(--error, red)!important;
-              svg{
-                fill: var(--error, red)!important;
-              }
-            }
+            --mat-expansion-header-indicator-color: var(--icon-secondary, #444746);
 
             a {
               span {
-                color: var(--mdc-theme-on-primary) !important;
+                color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
               }
             }
             .mat-icon{
-              color: var(--mdc-theme-on-primary) !important;
+              color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
             }
           }
         }
@@ -113,8 +118,8 @@ mat-tree {
             &:hover {
               width: calc(100% - 20px) !important;
               border-radius: var(--rounded-full) !important;
-              background-color: var(--mdc-theme-primary-dark, #00695C) !important;
-              color: var(--mdc-theme-on-primary) !important;
+              background-color: var(--nav-hover-surface, var(--mdc-theme-primary-dark, #00695C)) !important;
+              color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
             }
           }
 
@@ -134,16 +139,16 @@ mat-tree {
 
 .mat-mdc-menu-item, .mat-mdc-icon-button {
   .mat-icon {
-    width: var(--icon-size, 18px);
-    height: var(--icon-size, 18px);
-    font-size: var(--icon-size, 18px);
-    line-height: var(--icon-size, 18px)
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    line-height: 18px
   }
 }
 
 .menu-icon {
   vertical-align: middle;
-  font-size: var(--icon-size, 18px);
+  font-size: 18px;
 }
 
 

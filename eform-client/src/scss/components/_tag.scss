@@ -6,15 +6,15 @@
 .tag {
   min-width: $icon-size;
   height: $icon-size;
-  color: var(--bg, #fff);
-  background: var(--tag-fallback-bg, gray);
+  color: #fff;
+  background: gray;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   width: fit-content;
   padding: 5px 10px;
-  border-radius: var(--radius-tag, $icon-size);
+  border-radius: $icon-size;
 }
 .tag ~ .tag {
   margin-left: 10px;

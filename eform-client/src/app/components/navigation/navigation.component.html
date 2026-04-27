@@ -11,6 +11,7 @@
          [class.selected-node]="router.url === node.link"
          *ngIf="node.isInternalLink"
          routerLink="{{ node.link }}"
+         routerLinkActive="selected-node"
          class="nav-link px-3"
          [id]="node.e2EId"
          (click)="onClickOnNode()"

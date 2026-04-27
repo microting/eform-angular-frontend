@@ -45,6 +45,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
         private IDbOptions<ApplicationSettings> _applicationSettings;
         private IDbOptions<LoginPageSettings> _loginPageSettings;
         private IDbOptions<HeaderSettings> _headerSettings;
+        private IDbOptions<AppearanceSettings> _appearanceSettings;
         private IDbOptions<EmailSettings> _emailSettings;
         private IEFormCoreService _coreHelper;
         private ILocalizationService _localizationService;
@@ -59,6 +60,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
             _applicationSettings = Substitute.For<IDbOptions<ApplicationSettings>>();
             _loginPageSettings = Substitute.For<IDbOptions<LoginPageSettings>>();
             _headerSettings = Substitute.For<IDbOptions<HeaderSettings>>();
+            _appearanceSettings = Substitute.For<IDbOptions<AppearanceSettings>>();
             _emailSettings = Substitute.For<IDbOptions<EmailSettings>>();
             _coreHelper = Substitute.For<IEFormCoreService>();
             _localizationService = Substitute.For<ILocalizationService>();
@@ -72,6 +74,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
             // Note: _applicationSettings.Value is not set here to allow individual tests to configure it
             _loginPageSettings.Value.Returns(new LoginPageSettings());
             _headerSettings.Value.Returns(new HeaderSettings());
+            _appearanceSettings.Value.Returns(new AppearanceSettings());
             _emailSettings.Value.Returns(new EmailSettings());
             _tokenOptions.Value.Returns(new EformTokenOptions());
 
@@ -81,6 +84,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
                 _applicationSettings,
                 _loginPageSettings,
                 _headerSettings,
+                _appearanceSettings,
                 _emailSettings,
                 _coreHelper,
                 _localizationService,

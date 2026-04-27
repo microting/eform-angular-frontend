@@ -178,6 +178,21 @@ $eform-tokens: (
       // Elevation (mode-dependent)
       elevation-card: #{0 4px 20px 0 rgba(0, 0, 0, 0.10)},
       elevation-panel: #{0 0 20px 0 rgba(0, 0, 0, 0.05)},
+
+      // Feature-branch tokens
+      input-fill: transparent,
+      input-focus-underline: #289694,
+      nav-selected-surface: #289694,
+      nav-selected-text: #ffffff,
+      nav-hover-surface: #00716F,
+      nav-hover-text: #ffffff,
+      nav-item-height: 48px,
+      content-card-bg: #FFFFFF,
+      content-card-radius: 0,
+      content-card-margin: 0,
+      table-row-hover: #f5f5f5,
+      sort-indicator-bg: #e0f2f1,
+      sort-indicator-arrow: #00695c,
     ),
 
     // ----- Dark mode -----
@@ -297,6 +312,21 @@ $eform-tokens: (
       // Elevation (mode-dependent)
       elevation-card: #{0 4px 20px 0 rgba(0, 0, 0, 0.30)},
       elevation-panel: #{0 0 20px 0 rgba(0, 0, 0, 0.20)},
+
+      // Feature-branch tokens
+      input-fill: #2D2F31,
+      input-focus-underline: #4FCAC8,
+      nav-selected-surface: #0D4746,
+      nav-selected-text: #ffffff,
+      nav-hover-surface: #00ADAB,
+      nav-hover-text: #ffffff,
+      nav-item-height: 48px,
+      content-card-bg: #202122,
+      content-card-radius: 0,
+      content-card-margin: 0,
+      table-row-hover: #2a2a2a,
+      sort-indicator-bg: #0D4746,
+      sort-indicator-arrow: #4FCAC8,
     ),
   ),
 );

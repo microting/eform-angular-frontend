@@ -272,6 +272,30 @@ public class Program
                 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                 logger.LogError(e, "Error while adding missing admin settings to all menu items");
             }
+
+            try
+            {
+                var connectionStrings =
+                    scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
+                if (connectionStrings.Value.DefaultConnection != "...")
+                {
+                    const string key = "AppearanceSettings:ThemeVariant";
+                    if (!dbContext.ConfigurationValues.Any(x => x.Id == key))
+                    {
+                        dbContext.ConfigurationValues.Add(new Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.EformConfigurationValue
+                        {
+                            Id = key,
+                            Value = "eform"
+                        });
+                        dbContext.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                logger.LogError(e, "Error while seeding AppearanceSettings:ThemeVariant");
+            }
         }
     }
 

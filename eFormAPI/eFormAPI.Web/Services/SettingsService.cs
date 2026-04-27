@@ -60,6 +60,7 @@ public class SettingsService(
     IDbOptions<ApplicationSettings> applicationSettings,
     IDbOptions<LoginPageSettings> loginPageSettings,
     IDbOptions<HeaderSettings> headerSettings,
+    IDbOptions<AppearanceSettings> appearanceSettings,
     IDbOptions<EmailSettings> emailSettings,
     IEFormCoreService coreHelper,
     ILocalizationService localizationService,
@@ -435,7 +436,10 @@ public class SettingsService(
                     HttpServerAddress = await core.GetSdkSetting(Settings.httpServerAddress)
                 },
                 SiteLink = await core.GetSdkSetting(Settings.httpServerAddress),
-                AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString()
+                AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString(),
+                ThemeVariant = string.IsNullOrEmpty(appearanceSettings.Value.ThemeVariant)
+                    ? "eform"
+                    : appearanceSettings.Value.ThemeVariant
             };
             return new OperationDataResult<AdminSettingsModel>(true, model);
         }
@@ -495,6 +499,14 @@ public class SettingsService(
             if (!string.IsNullOrEmpty(adminSettingsModel.SiteLink))
             {
                 await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SiteLink);
+            }
+
+            if (!string.IsNullOrEmpty(adminSettingsModel.ThemeVariant))
+            {
+                await appearanceSettings.UpdateDb(option =>
+                {
+                    option.ThemeVariant = adminSettingsModel.ThemeVariant;
+                }, dbContext);
             }
 
             // if (adminSettingsModel.SwiftSettingsModel != null)

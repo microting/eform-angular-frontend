@@ -46,7 +46,7 @@ export class AppSettingsStateService {
       .pipe(
         tap((response) => {
           if (response && response.success) {
-            this.authStore.dispatch(updateAdminSettings(adminSettings));
+            this.authStore.dispatch(updateAdminSettings(JSON.parse(JSON.stringify(adminSettings))));
           }
         })
       );
