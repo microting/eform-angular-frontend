@@ -38,8 +38,10 @@ using Abstractions;
 using Abstractions.Advanced;
 using Abstractions.Eforms;
 using Abstractions.Security;
+using Hosting;
 using Hosting.Extensions;
 using Hosting.Security;
+using Microsoft.AspNetCore.Routing;
 using Infrastructure.Models.Settings.Plugins;
 using Services;
 using Services.Security;
@@ -322,6 +324,11 @@ public class Startup(IConfiguration configuration)
 
         // gRPC
         services.AddGrpc();
+
+        // Each plugin's AddGrpc() call registers a duplicate "Unimplemented service"
+        // fallback endpoint. Multiple duplicates cause AmbiguousMatchException on any
+        // unmapped gRPC route. This policy keeps a single fallback at routing time.
+        services.AddSingleton<MatcherPolicy, DeduplicateUnimplementedGrpcMatcherPolicy>();
 
         // plugins
         services.AddEFormPlugins(Program.EnabledPlugins);
