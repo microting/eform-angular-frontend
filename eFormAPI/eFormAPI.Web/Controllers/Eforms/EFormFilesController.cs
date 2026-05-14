@@ -286,6 +286,12 @@ public class EFormFilesController(
                 await using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await newFile.CopyToAsync(stream);
+                    // CopyToAsync leaves the stream at EOF; without a rewind,
+                    // ComputeHashAsync reads zero bytes and stores the MD5 of
+                    // empty input (d41d8cd98f00b204e9800998ecf8427e) for every
+                    // upload. Caught by the flutter-eform parity harness photo
+                    // scenario.
+                    stream.Position = 0;
                     var grr = await md5.ComputeHashAsync(stream);
                     hash = BitConverter.ToString(grr).Replace("-", "").ToLower();
                 }
