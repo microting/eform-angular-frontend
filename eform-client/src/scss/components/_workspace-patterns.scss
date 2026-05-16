@@ -391,8 +391,11 @@ body.theme-workspace {
     color: var(--md-on-surface);
     border-right: 1px solid var(--md-surface-variant);
     box-shadow: var(--md-shadow);
-    width: 280px;
     font-family: var(--font-family);
+    // No explicit width — Angular Material's autosize observer reads this to
+    // compute content margin. Forcing width here makes the content area stay
+    // offset even when the drawer is closed. Let the drawer size from its
+    // own content (capped by max-width from full-layout.component.scss).
     transition: width 0.25s ease;
   }
 
