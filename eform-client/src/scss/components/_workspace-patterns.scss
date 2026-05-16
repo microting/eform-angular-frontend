@@ -725,4 +725,124 @@ body.theme-workspace {
       align-items: start;
     }
   }
+
+  // =========================================================================
+  // Angular sidebar nav (mat-tree .nav-link / .selected-node)
+  // =========================================================================
+  // The legacy .nav-link/.selected-node rules in
+  // app/components/navigation/navigation.component.scss use --rounded-full
+  // (9999px = pill) — the design spec wants 8px rounded rectangles. Override
+  // here so the workspace variant gets the design's nav item shape.
+
+  mat-tree .nav-link {
+    border-radius: var(--radius-lg, 8px) !important;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    color: var(--md-on-surface) !important;
+    min-height: 40px;
+    padding: 10px 12px !important;
+
+    .mat-icon,
+    .menu-icon {
+      color: var(--md-primary);
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      border-radius: var(--radius-lg, 8px) !important;
+      background-color: var(--md-surface-variant) !important;
+      color: var(--md-on-surface) !important;
+
+      .mat-icon,
+      .menu-icon {
+        color: var(--md-primary) !important;
+      }
+
+      svg {
+        fill: var(--md-primary) !important;
+      }
+    }
+  }
+
+  mat-tree .selected-node {
+    border-radius: var(--radius-lg, 8px) !important;
+    background-color: var(--md-primary-container) !important;
+    color: var(--md-primary) !important;
+    font-weight: 500;
+
+    .mat-icon,
+    .menu-icon {
+      color: var(--md-primary) !important;
+    }
+
+    &:hover {
+      border-radius: var(--radius-lg, 8px) !important;
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary-container)) !important;
+      color: var(--md-primary) !important;
+
+      .mat-icon,
+      .menu-icon {
+        color: var(--md-primary) !important;
+      }
+
+      svg {
+        fill: var(--md-primary) !important;
+      }
+    }
+  }
+
+  // Expansion-panel header (parent items with children, e.g. "Opgaver")
+  mat-tree .mat-expansion-panel-header {
+    border-radius: var(--radius-lg, 8px) !important;
+    min-height: 40px;
+    padding: 0 12px !important;
+
+    a {
+      font-weight: 500;
+      color: var(--md-on-surface);
+      font-size: 0.9375rem;
+    }
+
+    .mat-icon,
+    .menu-icon {
+      color: var(--md-primary);
+      font-size: 22px;
+    }
+
+    &:hover {
+      border-radius: var(--radius-lg, 8px) !important;
+      background-color: var(--md-surface-variant) !important;
+      color: var(--md-on-surface) !important;
+
+      a span,
+      a {
+        color: var(--md-on-surface) !important;
+      }
+
+      .mat-icon,
+      .menu-icon {
+        color: var(--md-primary) !important;
+      }
+    }
+  }
+
+  // Nested nav items reachable via expansion-panel sub-tree should round to
+  // the same 8px shape, not the pill fallback.
+  mat-tree .mat-nested-tree-node mat-tree-node .nav-link {
+    border-radius: var(--radius-lg, 8px) !important;
+
+    &:hover {
+      width: calc(100% - 20px) !important;
+      border-radius: var(--radius-lg, 8px) !important;
+      background-color: var(--md-surface-variant) !important;
+      color: var(--md-on-surface) !important;
+    }
+  }
+
+  mat-tree mat-tree-node a.mat-mdc-button-base.nav-link {
+    border-radius: var(--radius-lg, 8px) !important;
+  }
 }
