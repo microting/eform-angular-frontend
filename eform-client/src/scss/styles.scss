@@ -837,7 +837,7 @@ formatting-text-editor {
       .mdc-text-field {
         height: 48px !important;
         border: 1px solid var(--border);
-        border-radius: var(--rounded-full, 9999px) !important;
+        border-radius: var(--search-field-radius, var(--rounded-full, 9999px)) !important;
 
         background-color: var(--bg) !important;
 
