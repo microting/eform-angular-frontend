@@ -708,7 +708,11 @@ body.theme-workspace {
 
   // Descending — flip the lines vertically so the longest line is at the
   // bottom (visually mirrors the ascending state).
-  .mat-sort-header-descending .mat-sort-header-icon,
+  //
+  // IMPORTANT: only use aria-sort here. Angular Material puts the class
+  // .mat-sort-header-descending on EVERY column to indicate that column's
+  // default direction — it's not a live state. aria-sort is the only
+  // attribute that actually flips on the active column.
   [aria-sort="descending"] .mat-sort-header-icon {
     transform: rotate(180deg);
   }
