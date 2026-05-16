@@ -781,6 +781,8 @@ body.theme-workspace {
     box-sizing: border-box;
     height: 40px;
     min-height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
     border-radius: 0 !important;
     padding: 0 var(--spacing-md, 12px) !important;
     color: var(--md-on-surface);
