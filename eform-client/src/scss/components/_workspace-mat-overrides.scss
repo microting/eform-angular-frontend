@@ -641,6 +641,18 @@ body.theme-workspace {
     vertical-align: top;
   }
 
+  // Sticky actions column — neutralise the legacy left-border + shadow +
+  // tinted bg so the cell visually merges with the rest of the row
+  // (including hover).
+  th.mat-table-sticky-right,
+  td.mat-table-sticky-right,
+  th.mat-mdc-table-sticky-border-elem-right,
+  td.mat-mdc-table-sticky-border-elem-right {
+    border-left: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
   // Selected row — primary-container highlight (matches design system)
   .mat-mdc-row.selected,
   .mat-mdc-row[aria-selected="true"],
