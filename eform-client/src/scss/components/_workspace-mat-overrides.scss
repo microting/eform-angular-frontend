@@ -762,16 +762,27 @@ body.theme-workspace {
     min-width: 200px;
   }
 
+  // Beat the legacy `.mat-mdc-menu-panel .mat-mdc-menu-content` rule that
+  // sets display: inline-flex + padding: 8px — that inset the content area
+  // by 8px on every side, so menu items couldn't fill the panel edge to edge.
+  .mat-mdc-menu-panel .mat-mdc-menu-content,
   .mat-mdc-menu-content {
-    padding: var(--spacing-xs, 4px) 0;
+    display: flex !important;
+    flex-direction: column;
+    padding: var(--spacing-xs, 4px) 0 !important;
+    width: 100%;
+    box-sizing: border-box;
     font-family: var(--font-family);
   }
 
+  .mat-mdc-menu-panel .mat-mdc-menu-content button.mat-mdc-menu-item,
   .mat-mdc-menu-item {
+    width: 100% !important;
+    box-sizing: border-box;
     height: 40px;
     min-height: 40px !important;
     border-radius: 0 !important;
-    padding: 0 var(--spacing-md, 12px);
+    padding: 0 var(--spacing-md, 12px) !important;
     color: var(--md-on-surface);
     font-family: var(--font-family);
     font-size: 14px;
