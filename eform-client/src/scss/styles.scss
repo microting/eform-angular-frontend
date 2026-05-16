@@ -990,11 +990,14 @@ formatting-text-editor {
 
 .mtx-grid {
   border-color: var(--border) !important;
-  border: unset !important;
+  border: var(--mtx-grid-border, unset) !important;
+  border-radius: var(--mtx-grid-radius, 0) !important;
   outline: unset !important;
+  overflow: hidden;
+  background: var(--md-surface-container, var(--card)) !important;
 
   .mat-mdc-table {
-    background: var(--bg) !important;
+    background: var(--md-surface-container, var(--card)) !important;
     border-bottom: 1px solid var(--border) !important;
     border-color: var(--border) !important;
 

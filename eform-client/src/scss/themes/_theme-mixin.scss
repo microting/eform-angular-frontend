@@ -249,6 +249,8 @@ $eform-m3-dark-theme: mat.define-theme((
   --nav-item-height: #{map.get($mode-colors, nav-item-height)};
   --nav-item-radius: #{map.get($mode-colors, nav-item-radius)};
   --search-field-radius: #{map.get($mode-colors, search-field-radius)};
+  --mtx-grid-border: #{map.get($mode-colors, mtx-grid-border)};
+  --mtx-grid-radius: #{map.get($mode-colors, mtx-grid-radius)};
   --content-card-bg: #{map.get($mode-colors, content-card-bg)};
   --content-card-radius: #{map.get($mode-colors, content-card-radius)};
   --content-card-margin: #{map.get($mode-colors, content-card-margin)};

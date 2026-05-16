@@ -565,39 +565,69 @@ body.theme-workspace {
   // =========================================================================
   // Tables (mat-mdc-table family)
   // =========================================================================
-  // All workspace table styling lives here, painted through design-system tokens.
+  // Matches medarbejdertabel.html design reference:
+  // - Outer container has 1px --md-surface-variant border + 4px radius
+  // - Header uses subtle box-shadow for divider (looks crisper than border)
+  // - Row hover uses color-mix(--md-primary 10%, transparent) — the
+  //   distinctive light-blue tint from the design spec
+  // - Last row drops its bottom border so the bottom edge looks clean
+
+  // Wrap the table area with a border (the design's .table-scroll equivalent).
+  // mtx-grid renders <mtx-grid> → div.mtx-grid-content → mat-table inside.
+  mtx-grid,
+  .mtx-grid {
+    display: block;
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--radius-sm, 4px);
+    background: var(--md-surface-container);
+    overflow: hidden;
+
+    // The toolbar above the table sits outside the border visually
+    .mtx-grid-toolbar {
+      border-bottom: 1px solid var(--md-surface-variant);
+      background: var(--md-surface-container);
+    }
+  }
 
   .mat-mdc-table {
     background-color: var(--md-surface-container);
     font-family: var(--font-family);
     color: var(--md-on-surface);
+    border: none;
   }
 
   .mat-mdc-header-row {
     background-color: var(--md-surface-container);
-    height: 48px;
-    border-bottom: 1px solid var(--md-surface-variant);
+    height: 44px;
+    border-bottom: none;
+    box-shadow: 0 1px 0 var(--md-surface-variant);
     position: sticky;
     top: 0;
     z-index: 2;
   }
 
   .mat-mdc-header-cell {
-    color: var(--md-on-surface-variant);
+    color: var(--md-on-surface);
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     font-family: var(--font-family);
     background-color: var(--md-surface-container);
+    padding: 10px 8px;
   }
 
   .mat-mdc-row {
-    height: 48px;
+    height: 44px;
     background-color: var(--md-surface-container);
     border-bottom: 1px solid var(--md-surface-variant);
+    transition: background-color 0.12s ease;
 
     &:hover {
-      background-color:
-        color-mix(in srgb, var(--md-primary) 8%, var(--md-surface-container));
+      background-color: color-mix(in srgb, var(--md-primary) 10%, transparent);
+    }
+
+    // Clean bottom edge — last row's border merges with the container border
+    &:last-child {
+      border-bottom: none;
     }
   }
 
@@ -607,6 +637,8 @@ body.theme-workspace {
     color: var(--md-on-surface);
     font-family: var(--font-family);
     background-color: transparent;
+    padding: 10px 8px;
+    vertical-align: top;
   }
 
   // Selected row — primary-container highlight (matches design system)
@@ -614,6 +646,10 @@ body.theme-workspace {
   .mat-mdc-row[aria-selected="true"],
   .mat-mdc-row.row-selected {
     background-color: var(--md-primary-container);
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--md-on-surface) 4%, var(--md-primary-container));
+    }
 
     .mat-mdc-cell {
       color: var(--md-primary);
