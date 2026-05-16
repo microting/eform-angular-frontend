@@ -1036,4 +1036,137 @@ body.theme-workspace {
       background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-alert));
     }
   }
+
+  // =========================================================================
+  // Multiselect (mtx-select / ng-select) — table-toolbar tag filter
+  // =========================================================================
+  // The toolbar's "Etiketter" picker wraps an ng-select inside a mat-form-field.
+  // Compact it (no longer span the full width), restyle the outlined container
+  // with --md-outline, and paint selected tag chips with --md-secondary-container.
+
+  // Constrain the mat-form-field that hosts mtx-select inside the mtx-grid
+  // toolbar so it doesn't span the entire content row.
+  mtx-grid .mtx-grid-toolbar .mat-mdc-form-field,
+  .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
+    max-width: 320px;
+    width: 100%;
+  }
+
+  // Outer ng-select container — transparent so the form-field's floating
+  // label and bg remain visible. The mat-form-field wrapper paints the
+  // outlined border and surface around us.
+  mtx-select .ng-select {
+    .ng-select-container {
+      min-height: 40px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      transition: none;
+    }
+
+    &.ng-select-focused .ng-select-container,
+    &.ng-select-opened .ng-select-container {
+      border: none;
+      box-shadow: none;
+    }
+
+    &:hover:not(.ng-select-focused):not(.ng-select-opened) .ng-select-container {
+      border: none;
+    }
+
+    .ng-placeholder {
+      color: var(--md-on-surface-variant);
+      font-size: 14px;
+    }
+
+    .ng-input > input {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+      font-size: 14px;
+    }
+
+    // Selected value chips (multi-select)
+    .ng-value {
+      background: var(--md-secondary-container);
+      color: var(--md-on-surface);
+      border-radius: var(--radius-rounded-full, 999px);
+      padding: 2px 4px 2px 10px;
+      margin: 4px 4px 4px 0;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: none;
+
+      .ng-value-icon {
+        order: 2;
+        padding: 0 6px;
+        color: var(--md-on-surface-variant);
+        border-left: none;
+
+        &:hover {
+          background: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+          border-radius: 999px;
+          color: var(--md-on-surface);
+        }
+      }
+    }
+
+    // Single-select value text
+    .ng-value-container .ng-value:not(.ng-value-disabled) {
+      color: var(--md-on-surface);
+    }
+
+    .ng-arrow-wrapper {
+      .ng-arrow {
+        border-color: var(--md-on-surface-variant) transparent transparent;
+      }
+    }
+
+    .ng-clear-wrapper {
+      color: var(--md-on-surface-variant);
+
+      &:hover {
+        color: var(--md-on-surface);
+      }
+    }
+  }
+
+  // Dropdown panel — portaled outside the field
+  .ng-dropdown-panel {
+    background: var(--md-surface-container);
+    border: 1px solid var(--md-outline);
+    border-radius: var(--radius-sm, 4px);
+    box-shadow: var(--md-shadow);
+    overflow: hidden;
+
+    .ng-dropdown-panel-items .ng-option {
+      background: transparent;
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+      font-size: 14px;
+      padding: 8px 12px;
+
+      &.ng-option-marked,
+      &:hover {
+        background: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+        color: var(--md-on-surface);
+      }
+
+      &.ng-option-selected {
+        background: var(--md-primary-container);
+        color: var(--md-primary);
+
+        &.ng-option-marked {
+          background: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary-container));
+        }
+      }
+
+      &.ng-option-disabled {
+        color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+      }
+    }
+  }
 }
