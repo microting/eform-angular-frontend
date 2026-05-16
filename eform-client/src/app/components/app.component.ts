@@ -12,6 +12,7 @@ import {
 import {loadCmsConfig, selectCmsThemeVariant} from 'src/app/state/cms';
 import {AuthStateService} from 'src/app/common/store';
 import {TranslateService} from '@ngx-translate/core';
+import {MatPaginatorShowAllService} from 'src/app/common/modules/eform-shared/components/eform-pagination/mat_paginator_show_all.service';
 
 @Component({
     selector: 'app-root',
@@ -29,12 +30,14 @@ export class AppComponent implements OnInit, OnDestroy {
   private titleService = inject(TitleService);
   private authSyncStorageService = inject(AuthSyncStorageService);
   private renderer = inject(Renderer2);
+  private paginatorShowAllService = inject(MatPaginatorShowAllService);
 
   public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
   private selectCmsThemeVariant$ = this.authStore.select(selectCmsThemeVariant);
 
   ngOnInit(): void {
     this.authSyncStorageService.init();
+    this.paginatorShowAllService.start();
     this.authStore.dispatch(loadCmsConfig());
     this.selectCmsThemeVariant$.subscribe((variant) => {
       this.applyThemeVariant(variant ?? 'eform');

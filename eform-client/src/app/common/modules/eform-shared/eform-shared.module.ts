@@ -87,7 +87,7 @@ import {MatChip} from "@angular/material/chips";
     EntityImportListComponent,
     DeleteModalComponent,
     EformTranslationComponent,
-    EformTagComponent
+    EformTagComponent,
   ],
   exports: [
     EformPaginationComponent,
@@ -109,7 +109,7 @@ import {MatChip} from "@angular/material/chips";
     EntityImportListComponent,
     DeleteModalComponent,
     EformTranslationComponent,
-    EformTagComponent
+    EformTagComponent,
   ],
   providers: [{provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl}],
 })

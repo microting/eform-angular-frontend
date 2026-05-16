@@ -901,23 +901,36 @@ body.theme-workspace {
       margin: 0 12px;
     }
 
-    // Outlined nav buttons (previous / next / first / last) match the
-    // design's .btn .btn-outlined pattern: 36px rectangle with --md-outline
-    // border and --md-primary text, primary-container on hover.
+    // Outlined nav buttons (first / previous / next / last). Replace the
+    // icon-only treatment with text labels rendered from the button's
+    // aria-label (which CustomMatPaginatorIntl translates to Første /
+    // Forrige / Næste / Sidste).
     .mat-mdc-icon-button {
-      width: 36px !important;
+      width: auto !important;
       height: 36px !important;
-      padding: 0 !important;
+      min-width: 64px;
+      padding: 0 14px !important;
       border-radius: var(--radius-sm, 4px) !important;
       border: 1px solid var(--md-outline);
       background: transparent;
       color: var(--md-primary);
+      font-family: var(--font-family);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0;
 
+      // Hide Material's built-in SVG icons
+      .mat-mdc-paginator-icon,
+      svg,
       .mat-icon,
       .material-symbols-outlined {
+        display: none !important;
+      }
+
+      // Render the aria-label as visible text
+      &::before {
+        content: attr(aria-label);
         color: var(--md-primary);
-        font-size: 20px;
-        line-height: 20px;
       }
 
       &:hover:not(:disabled) {
@@ -929,17 +942,83 @@ body.theme-workspace {
         color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
         border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
 
-        .mat-icon,
-        .material-symbols-outlined {
+        &::before {
           color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
         }
       }
     }
 
-    // The page-size dropdown — compact, design-system outlined
+    // "Vis alle" button — injected by MatPaginatorShowAllDirective.
+    // Filled variant of the same outlined button family to highlight
+    // "show all" as the most prominent affordance.
+    .mat-mdc-paginator-show-all {
+      height: 36px;
+      min-width: 64px;
+      padding: 0 14px;
+      margin-left: 8px;
+      border-radius: var(--radius-sm, 4px);
+      border: 1px solid var(--md-primary);
+      background: var(--md-primary);
+      color: var(--md-on-primary);
+      font-family: var(--font-family);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+
+      &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+      }
+
+      &:disabled {
+        background: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+        color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+        border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+        cursor: not-allowed;
+      }
+    }
+
+    // The page-size dropdown — match the design's .field + <select> pattern:
+    // outlined rectangle, 4px radius, --md-outline border, no floating label.
     .mat-mdc-paginator-page-size-select {
       margin: 0 8px 0 4px;
-      width: 88px;
+      width: 100px;
+
+      .mat-mdc-text-field-wrapper {
+        background: var(--md-surface);
+        border: 1px solid var(--md-outline);
+        border-radius: var(--radius-sm, 4px);
+        height: 36px;
+        padding: 0 4px 0 12px;
+      }
+
+      .mat-mdc-form-field-flex {
+        height: 36px;
+        align-items: center;
+      }
+
+      .mat-mdc-form-field-infix {
+        min-height: 34px;
+        padding: 0;
+      }
+
+      // Hide Material's notched-outline pieces — we paint the border on
+      // the wrapper above.
+      .mdc-notched-outline,
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border: none !important;
+      }
+
+      .mat-mdc-select {
+        font-family: var(--font-family);
+        font-size: 14px;
+        color: var(--md-on-surface);
+      }
+
+      .mat-mdc-select-arrow {
+        color: var(--md-on-surface-variant);
+      }
     }
   }
 
