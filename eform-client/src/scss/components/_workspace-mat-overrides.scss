@@ -646,7 +646,9 @@ body.theme-workspace {
   // Sticky actions column — drop the legacy left-border + shadow but keep
   // an OPAQUE background that mirrors the row state. The cell stays
   // sticky during horizontal scroll, so a transparent bg would let other
-  // cells show through underneath.
+  // cells show through underneath. Transition matches the row's so the
+  // hover color flows across the whole row without the actions cell
+  // lagging behind.
   th.mat-table-sticky-right,
   td.mat-table-sticky-right,
   th.mat-mdc-table-sticky-border-elem-right,
@@ -654,6 +656,7 @@ body.theme-workspace {
     border-left: none !important;
     box-shadow: none !important;
     background-color: var(--md-surface-container) !important;
+    transition: background-color 0.12s ease;
   }
 
   // Row hover — sticky cell follows the row's hover blend
