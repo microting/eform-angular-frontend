@@ -1,0 +1,911 @@
+// _workspace-utilities.scss
+//
+// Design-system class hooks and utility classes for the new workspace theme,
+// scoped under `body.theme-workspace`. For plain HTML using DS classes
+// directly (e.g. `<button class="btn btn-filled">`). Material component
+// overrides and layout patterns live in other partials — not duplicated here.
+//
+// Token contract: --md-* (color), --status-*-bg/fg, --spacing-*, --radius-*,
+// --md-radius, --md-shadow, --font-family, --font-family-mono.
+
+body.theme-workspace {
+  // 1. Type ramp utilities (README Foundations → Typography)
+  .display {
+    font-family: var(--font-family);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--md-on-surface);
+    margin: 0;
+  }
+  .section-heading {
+    font-family: var(--font-family);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--md-on-surface);
+    margin: 0;
+  }
+  .card-title {
+    font-family: var(--font-family);
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--md-on-surface);
+    margin: 0;
+  }
+  .body-text {
+    font-family: var(--font-family);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--md-on-surface);
+  }
+  .helper,
+  .helper-text {
+    font-family: var(--font-family);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--md-on-surface-variant);
+  }
+  .drawer-subheader {
+    font-family: var(--font-family);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--md-on-surface-variant);
+    padding: var(--spacing-md, 12px) var(--spacing-lg, 16px) var(--spacing-xs, 4px);
+  }
+  .mono {
+    font-family: var(--font-family-mono);
+    font-feature-settings: "tnum" 1, "calt" 0;
+  }
+
+  // 2. Button hooks — for plain HTML `<button class="btn btn-filled">`
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm, 8px);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-sm, 4px);
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.2;
+    padding: 10px 16px;
+    background: transparent;
+    color: var(--md-on-surface);
+    transition: filter 0.18s ease, background-color 0.18s ease,
+      border-color 0.18s ease, color 0.18s ease;
+    text-decoration: none;
+    &:hover {
+      filter: brightness(0.97);
+    }
+    &:focus-visible { outline: 2px solid var(--md-primary); outline-offset: 2px; }
+    &:disabled,
+    &[aria-disabled="true"] {
+      background: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+      border-color: transparent;
+      cursor: not-allowed;
+      filter: none;
+    }
+  }
+  .btn-filled {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+  }
+  .btn-tonal {
+    background: var(--md-secondary-container);
+    color: var(--md-on-surface);
+  }
+  .btn-outlined {
+    background: transparent;
+    border: 1px solid var(--md-outline);
+    color: var(--md-on-surface);
+  }
+  .btn-text {
+    background: transparent;
+    color: var(--md-primary);
+    padding-left: var(--spacing-sm, 8px);
+    padding-right: var(--spacing-sm, 8px);
+    &:hover {
+      background: color-mix(in srgb, var(--md-primary) 8%, transparent);
+      filter: none;
+    }
+  }
+  .icon-button {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-rounded-full, 999px);
+    background: transparent;
+    color: var(--md-on-surface-variant);
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease;
+    &:hover {
+      background: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+      color: var(--md-on-surface);
+    }
+    &:focus-visible { outline: 2px solid var(--md-primary); outline-offset: 2px; }
+    &:disabled { color: color-mix(in srgb, var(--md-on-surface) 38%, transparent); cursor: not-allowed; }
+  }
+  .fab {
+    position: fixed;
+    right: 18px;
+    bottom: 22px;
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: var(--md-radius);
+    background: var(--md-primary-container);
+    color: var(--md-primary);
+    cursor: pointer;
+    box-shadow: var(--md-shadow);
+    z-index: 26;
+    display: inline-grid;
+    place-items: center;
+    &:hover { filter: brightness(0.97); }
+  }
+
+  // 3. Chips & tags (status chips use --status-*-bg/fg)
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs, 6px);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-sm, 4px);
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    background: var(--md-surface-variant);
+    color: var(--md-on-surface);
+    transition: filter 0.18s ease, background-color 0.18s ease;
+    &:hover { filter: brightness(0.97); }
+  }
+  .chip-selected {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+  }
+  .status-chip {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: var(--radius-sm, 4px);
+    font-family: var(--font-family);
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .status-chip--aktiv {
+    background: var(--status-aktiv-bg);
+    color: var(--status-aktiv-fg);
+  }
+  .status-chip--afventer {
+    background: var(--status-afventer-bg);
+    color: var(--status-afventer-fg);
+  }
+  .status-chip--inaktiv {
+    background: var(--status-inaktiv-bg);
+    color: var(--status-inaktiv-fg);
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs, 6px);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm, 4px);
+    font-family: var(--font-family);
+    font-size: 0.82rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+    background: var(--md-surface-variant);
+    color: var(--md-on-surface);
+  }
+  .tag-success {
+    // Maps to documented green band; uses status-aktiv tokens to stay token-driven.
+    background: color-mix(in srgb, var(--status-aktiv-bg) 14%, var(--md-surface));
+    color: var(--status-aktiv-bg);
+  }
+  .tag-warning {
+    background: color-mix(in srgb, var(--status-afventer-bg) 20%, var(--md-surface));
+    color: color-mix(in srgb, var(--status-afventer-bg) 70%, var(--md-on-surface));
+  }
+  .tag-error {
+    background: color-mix(in srgb, var(--md-alert) 14%, var(--md-surface));
+    color: var(--md-alert);
+  }
+  .tag-filter {
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    border-color: var(--md-outline);
+    cursor: pointer;
+  }
+  .tag-filter-active {
+    background: var(--md-primary-container);
+    color: var(--md-primary);
+    border-color: transparent;
+  }
+  .tag-removable {
+    background: var(--md-surface-variant);
+    color: var(--md-on-surface);
+    button {
+      border: none;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      font-size: 0.95rem;
+      line-height: 1;
+      padding: 0;
+    }
+  }
+  // In-cell multi-site chip wrap for table cells.
+  .ejendom-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs, 6px);
+  }
+  .ejendom-chip {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm, 4px);
+    background: var(--md-surface-variant);
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  // 4. Form fields — .field (label+control grid), .form-grid (form layout),
+  //    six .select-N variants (also aliased to their semantic names).
+  .field {
+    display: grid;
+    gap: var(--spacing-xs, 6px);
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md, 12px);
+  }
+  // Base input/select/textarea inside a workspace DS field. Scoped narrowly so
+  // we do not stomp on Material form fields (handled by overrides partial).
+  .field > input,
+  .field > select,
+  .field > textarea,
+  .form-grid > input,
+  .form-grid > select,
+  .form-grid > textarea {
+    width: 100%;
+    border: 1px solid var(--md-outline);
+    border-radius: var(--radius-sm, 4px);
+    padding: 11px 12px;
+    font: inherit;
+    font-family: var(--font-family);
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    &:focus {
+      outline: none;
+      border-color: var(--md-primary);
+    }
+  }
+  // Six select variants — match eform-style.css.
+  .select-1 select,
+  .select-filled select {
+    background: var(--md-surface-variant);
+    border-color: transparent;
+  }
+  .select-2 select,
+  .select-underlined select {
+    border: none;
+    border-bottom: 2px solid var(--md-outline);
+    border-radius: 0;
+    background: transparent;
+    padding-left: 0;
+    padding-right: 0;
+    &:focus {
+      outline: none;
+      border-bottom-color: var(--md-primary);
+    }
+  }
+  .select-3 select,
+  .select-compact select {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-size: 0.86rem;
+    background: color-mix(in srgb, var(--md-surface) 80%, var(--md-surface-variant));
+  }
+  .select-4 select,
+  .select-outline-strong select {
+    border-width: 2px;
+    border-color: var(--md-primary);
+    background: var(--md-surface-container);
+  }
+  .select-5 select,
+  .select-ghost select {
+    border-color: transparent;
+    background: var(--md-surface);
+    &:focus {
+      border-color: var(--md-primary);
+      outline: none;
+    }
+  }
+  .select-6 select,
+  .select-tonal select {
+    border-color: transparent;
+    background: color-mix(in srgb, var(--md-primary-container) 42%, var(--md-surface));
+  }
+  // Switch (sliding toggle) — generic DS hook.
+  .switch {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm, 8px);
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      width: 42px;
+      height: 24px;
+      border-radius: var(--radius-md, 6px);
+      background: var(--md-outline);
+      position: relative;
+      transition: background-color 0.2s ease;
+      &::after {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        top: 3px;
+        left: 3px;
+        border-radius: var(--radius-sm, 4px);
+        background: var(--md-on-primary);
+        transition: transform 0.2s ease;
+      }
+    }
+    input:checked + .slider { background: var(--md-primary); }
+    input:checked + .slider::after { transform: translateX(18px); }
+    input:focus-visible + .slider { outline: 2px solid var(--md-primary); outline-offset: 2px; }
+  }
+  .control-example {
+    margin-top: var(--spacing-sm, 10px);
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: auto;
+      height: auto;
+      accent-color: var(--md-primary);
+      transform: scale(1.5);
+      transform-origin: center;
+      margin-right: var(--spacing-sm, 8px);
+    }
+  }
+
+  // 5. Tabs / segmented / breadcrumbs
+  .tabs {
+    display: flex;
+    gap: var(--spacing-sm, 8px);
+    margin-bottom: var(--spacing-sm, 8px);
+    flex-wrap: wrap;
+  }
+  .tab {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-sm, 4px);
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 14px;
+    background: var(--md-surface-variant);
+    color: var(--md-on-surface);
+    transition: filter 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+    &:hover { filter: brightness(0.97); }
+  }
+  .tab--active,
+  .tab.active {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+  }
+  .segmented {
+    display: inline-flex;
+    border: 1px solid var(--md-outline);
+    border-radius: var(--radius-sm, 4px);
+    padding: 4px;
+    gap: 4px;
+  }
+  .segmented-option,
+  .segment {
+    border: none;
+    border-radius: 2px;
+    padding: 8px 14px;
+    background: transparent;
+    color: var(--md-on-surface);
+    cursor: pointer;
+    font: inherit;
+    font-family: var(--font-family);
+    &.active,
+    &[aria-selected="true"] {
+      background: var(--md-primary-container);
+      color: var(--md-primary);
+    }
+  }
+  .breadcrumbs {
+    display: flex;
+    gap: var(--spacing-sm, 8px);
+    align-items: center;
+    margin-bottom: 14px;
+    color: var(--md-on-surface-variant);
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+  }
+  .breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    color: inherit;
+  }
+  .breadcrumbs a,
+  .breadcrumb a,
+  .breadcrumb-link {
+    color: var(--md-primary);
+    text-decoration: none;
+  }
+
+  // 6. KPI card / card / list / badge
+  .kpi-card {
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--radius-sm, 4px);
+    padding: var(--spacing-md, 12px);
+    display: grid;
+    gap: var(--spacing-xs, 4px);
+    background: var(--md-surface-container);
+    color: var(--md-on-surface);
+    strong {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+  }
+  .card {
+    background: var(--md-surface-container);
+    border-radius: var(--md-radius);
+    padding: var(--spacing-xl, 20px);
+    border: 1px solid var(--md-surface-variant);
+    box-shadow: var(--md-shadow);
+    color: var(--md-on-surface);
+    h2,
+    .card-title {
+      margin-top: 0;
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+  }
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .list-item,
+  .list > li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm, 10px) 0;
+    border-bottom: 1px solid var(--md-surface-variant);
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+    border-radius: var(--radius-rounded-full, 999px);
+    padding: 2px 8px;
+    font-family: var(--font-family);
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .badge-success {
+    background: var(--status-aktiv-bg);
+    color: var(--status-aktiv-fg);
+  }
+  .badge-warning {
+    background: var(--status-afventer-bg);
+    color: var(--status-afventer-fg);
+  }
+  .badge-error {
+    background: var(--md-alert);
+    color: var(--md-on-primary);
+  }
+  .badge-neutral {
+    background: var(--md-surface-variant);
+    color: var(--md-on-surface);
+  }
+
+  // 7. Progress / slider (range) / pagination
+  .progress {
+    width: 100%;
+    height: 10px;
+    border-radius: var(--radius-sm, 4px);
+    background: var(--md-surface-variant);
+    overflow: hidden;
+  }
+  .progress-bar,
+  .progress > span {
+    display: block;
+    height: 100%;
+    background: var(--md-primary);
+    transition: width 0.2s ease;
+  }
+  // Range input slider — distinct from .switch .slider (the toggle's track).
+  .slider[type="range"],
+  input.slider[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: var(--radius-rounded-full, 999px);
+    background: var(--md-surface-variant);
+    outline: none;
+    padding: 0;
+    border: none;
+    // Per CSS spec, a whole selector list is discarded when the parser
+    // encounters an unknown pseudo-element — so vendor-prefixed thumbs must be
+    // declared in separate rules, not grouped, or both browsers drop both.
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: var(--radius-rounded-full, 999px);
+      background: var(--md-primary);
+      cursor: pointer;
+      border: none;
+    }
+    &::-moz-range-thumb {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: var(--radius-rounded-full, 999px);
+      background: var(--md-primary);
+      cursor: pointer;
+      border: none;
+    }
+    &:focus-visible::-webkit-slider-thumb {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+  }
+  .pagination {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm, 8px);
+  }
+  .pagination-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 var(--spacing-sm, 8px);
+    border: 1px solid var(--md-outline);
+    border-radius: var(--radius-sm, 4px);
+    background: var(--md-surface-container);
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.18s ease, border-color 0.18s ease,
+      color 0.18s ease;
+    &:hover {
+      background: color-mix(in srgb, var(--md-primary) 8%, var(--md-surface-container));
+    }
+    &.active,
+    &[aria-current="page"] {
+      background: var(--md-primary);
+      border-color: var(--md-primary);
+      color: var(--md-on-primary);
+    }
+    &:disabled,
+    &[aria-disabled="true"] {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+      cursor: not-allowed;
+    }
+  }
+
+  // 8. Data table — .table-example > .table-scroll > table. Row action menu
+  //    is hidden by default; JS adds `.menu-open` on `.actions-cell` and sets
+  //    inline top/left for viewport-clamped positioning.
+  .table-example {
+    margin-top: 18px;
+    &:first-of-type {
+      margin-top: var(--spacing-sm, 8px);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-family);
+    }
+    th,
+    td {
+      text-align: left;
+      padding: var(--spacing-sm, 10px) var(--spacing-sm, 8px);
+      border-bottom: 1px solid var(--md-surface-variant);
+      color: var(--md-on-surface);
+    }
+  }
+  .table-scroll {
+    max-height: 220px;
+    overflow: auto;
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--radius-sm, 4px);
+    background: var(--md-surface-container);
+    table {
+      margin: 0;
+    }
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: var(--md-surface-container);
+      box-shadow: 0 1px 0 var(--md-surface-variant);
+    }
+    tbody tr:hover {
+      background: color-mix(in srgb, var(--md-primary) 10%, transparent);
+    }
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+  }
+  .table-sort-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs, 6px);
+    margin: 0;
+    padding: 4px 8px 4px 0;
+    border: none;
+    background: transparent;
+    font: inherit;
+    font-family: var(--font-family);
+    font-weight: 600;
+    color: inherit;
+    cursor: pointer;
+    &:hover {
+      color: var(--md-primary);
+    }
+  }
+  .sort-indicator {
+    font-size: 20px;
+    opacity: 0.75;
+    &.material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+    }
+  }
+  .actions-cell {
+    position: relative;
+    text-align: left;
+  }
+  .table-action-trigger {
+    border: none;
+    background: transparent;
+    color: var(--md-on-surface);
+    border-radius: 0;
+    width: auto;
+    height: auto;
+    padding: 0 3px 0 0;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    &:hover {
+      color: var(--md-primary);
+    }
+    &:focus-visible { outline: 2px solid var(--md-primary); outline-offset: 2px; }
+  }
+  // Menu hidden by default; opened by adding `.menu-open` to `.actions-cell`.
+  // Viewport clamping (top/left/bottom) is set inline by JS — this rule only
+  // owns the visual chrome.
+  .table-action-menu {
+    display: none;
+    min-width: min(260px, calc(100vw - 24px));
+    z-index: 200;
+    background: var(--md-surface-container);
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--radius-sm, 4px);
+    box-shadow: var(--md-shadow);
+    overflow: hidden;
+  }
+  .actions-cell.menu-open .table-action-menu {
+    display: block;
+  }
+  .table-action-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm, 8px);
+    width: 100%;
+    border: none;
+    text-align: left;
+    background: transparent;
+    color: var(--md-on-surface);
+    padding: var(--spacing-xs, 6px) var(--spacing-sm, 8px);
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-weight: inherit;
+    font-size: 0.75rem;
+    &:hover {
+      background: var(--md-surface-variant);
+    }
+  }
+  .table-action-item-icon {
+    font-size: 15px;
+    flex-shrink: 0;
+    color: var(--md-on-surface-variant);
+    &.material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+  }
+  .table-action-item:hover .table-action-item-icon {
+    color: var(--md-on-surface);
+  }
+  .table-action-item-label {
+    flex: 1;
+  }
+
+  // 9. Disclosure — .assign-block with .block-header[aria-expanded] + .block-content
+  .assign-block {
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--radius-sm, 4px);
+    overflow: hidden;
+    background: var(--md-surface-container);
+  }
+  .block-header {
+    width: 100%;
+    border: 0;
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm, 10px) var(--spacing-md, 12px);
+    cursor: pointer;
+    font: inherit;
+    font-family: var(--font-family);
+    font-weight: 500;
+    // Chevron child rotates when [aria-expanded="true"].
+    .material-symbols-outlined,
+    .block-header__chevron { transition: transform 0.18s ease; }
+    &[aria-expanded="true"] .material-symbols-outlined,
+    &[aria-expanded="true"] .block-header__chevron { transform: rotate(180deg); }
+  }
+  .block-content {
+    padding: var(--spacing-sm, 10px) var(--spacing-md, 12px);
+    border-top: 1px solid var(--md-surface-variant);
+    background: var(--md-surface-container);
+    color: var(--md-on-surface);
+    p { margin: 0 0 var(--spacing-xs, 6px); }
+    ul { margin: 0; padding-left: 18px; }
+  }
+  // Default-collapsed: hide content when header is not expanded.
+  .block-header[aria-expanded="false"] + .block-content {
+    display: none;
+  }
+
+  // 10. Feedback — alert (+ success/warning/error), snackbar, native <dialog>.
+  //     Dialog footer convention: text-button (cancel) left, filled-button
+  //     (confirm) right — cancel uses `margin-right: auto` inside flex.
+  .alert {
+    border-left: 4px solid var(--md-alert);
+    background: color-mix(in srgb, var(--md-alert) 12%, transparent);
+    color: var(--md-on-surface);
+    padding: var(--spacing-sm, 10px) var(--spacing-md, 12px);
+    border-radius: var(--radius-sm, 4px);
+    margin-bottom: var(--spacing-sm, 10px);
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+  .alert--success {
+    border-left-color: var(--status-aktiv-bg);
+    background: color-mix(in srgb, var(--status-aktiv-bg) 12%, transparent);
+  }
+  .alert--warning {
+    border-left-color: var(--status-afventer-bg);
+    background: color-mix(in srgb, var(--status-afventer-bg) 18%, transparent);
+    color: var(--md-on-surface);
+  }
+  .alert--error {
+    border-left-color: var(--md-alert);
+    background: color-mix(in srgb, var(--md-alert) 14%, transparent);
+  }
+  // Toast snackbar — toggle visibility via `.show`. Token-driven (no #323232).
+  .snackbar {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%) translateY(24px);
+    background: var(--md-on-surface);
+    color: var(--md-surface);
+    padding: var(--spacing-sm, 10px) 14px;
+    border-radius: var(--radius-sm, 4px);
+    box-shadow: var(--md-shadow);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+    z-index: 100;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+  }
+  .snackbar.show,
+  .snackbar--visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0s;
+  }
+  // Native <dialog> element styling (used with .showModal()).
+  dialog {
+    border: none;
+    color: var(--md-on-surface);
+    background: var(--md-surface-container);
+    border-radius: var(--md-radius);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--md-primary) 18%, transparent),
+      var(--md-shadow);
+    padding: var(--spacing-xl, 20px);
+    max-width: 360px;
+    font-family: var(--font-family);
+    &::backdrop {
+      background: color-mix(in srgb, var(--md-on-surface) 50%, transparent);
+      backdrop-filter: blur(2px);
+    }
+    &[open] {
+      display: block;
+    }
+    h2,
+    .dialog-title {
+      margin: 0 0 var(--spacing-md, 12px);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--md-on-surface);
+    }
+    p {
+      margin: 0 0 var(--spacing-md, 12px);
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: var(--md-on-surface);
+    }
+    // Footer convention: cancel (text) left, confirm (filled) right.
+    // Use a `<menu class="dialog-actions">` or `<div class="dialog-actions">`.
+    menu,
+    .dialog-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-sm, 10px);
+      justify-content: flex-end;
+      margin: var(--spacing-lg, 16px) 0 0;
+      padding: 0;
+      list-style: none;
+      // The cancel button (text button) is pushed to the far left.
+      .btn-text:first-child,
+      [data-action="cancel"] {
+        margin-right: auto;
+      }
+    }
+  }
+}

@@ -1,0 +1,728 @@
+// =============================================================================
+// Workspace Patterns
+// -----------------------------------------------------------------------------
+// Layout-level compositions for the workspace theme (Phase 5 of the design
+// handoff). Adapted from new_theme/design_handoff_design_system/eform-style.css.
+//
+// Scope: every rule lives under `body.theme-workspace` so it does not bleed
+// into other themes. Token references only — no color literals.
+//
+// Patterns covered:
+//   1. Top app bar (.top-app-bar + existing mat-toolbar.nav-header override)
+//   2. Navigation drawer (.drawer[.open] + mat-drawer override)
+//   3. Sidebar with icon rail (.drawer.drawer--icons + body.sidebar-rail-collapsed)
+//   4. Filter panel (.filter-panel[.open])
+//   5. Table toolbar (.employee-table-toolbar-*)
+//   6. Dashboard executive card (.card.dashboard-exec, .dashboard-traffic, etc.)
+// =============================================================================
+
+body.theme-workspace {
+  // ---------------------------------------------------------------------------
+  // 1. Top app bar
+  // ---------------------------------------------------------------------------
+  // New design-system class hook + override for the existing
+  // `<mat-toolbar class="nav-header">` rendered by full-layout.component.html
+  // and any `<app-header>` that survives. Tint =
+  //   color-mix(in srgb, var(--md-primary) 10%, var(--md-surface-container))
+  // ---------------------------------------------------------------------------
+
+  .top-app-bar,
+  mat-toolbar.nav-header,
+  .mat-toolbar.nav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-2xl);
+    background: color-mix(
+      in srgb,
+      var(--md-primary) 10%,
+      var(--md-surface-container)
+    );
+    color: var(--md-on-surface);
+    border-bottom: 1px solid var(--md-surface-variant);
+    box-shadow: none;
+    font-family: var(--font-family);
+    min-height: 56px;
+  }
+
+  // Material toolbar normally inherits a different background from the
+  // Material theme — flatten it so the tinted gradient wins.
+  mat-toolbar.nav-header,
+  .mat-toolbar.nav-header {
+    .mat-toolbar-row,
+    .mat-mdc-toolbar-row {
+      background: transparent;
+      padding: 0;
+      min-height: inherit;
+    }
+  }
+
+  .top-app-bar h1,
+  .top-app-bar .top-app-bar-heading,
+  mat-toolbar.nav-header .top-app-bar-heading {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+  }
+
+  // Existing app-header element (eform-client/src/app/components/header)
+  app-header > header {
+    background: color-mix(
+      in srgb,
+      var(--md-primary) 10%,
+      var(--md-surface-container)
+    );
+    color: var(--md-on-surface);
+    border-bottom: 1px solid var(--md-surface-variant);
+    padding: var(--spacing-sm) var(--spacing-2xl);
+
+    #main-header-text {
+      font-size: 1.02rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--md-on-surface);
+    }
+
+    #secondary-header-text {
+      font-size: 0.8rem;
+      color: var(--md-on-surface-variant);
+    }
+  }
+
+  // Spacer used in mat-toolbar to push content apart
+  mat-toolbar.nav-header .spacer {
+    flex: 1 1 auto;
+  }
+
+  // ---------------------------------------------------------------------------
+  // 2. Navigation drawer (base — no icon rail variant)
+  // ---------------------------------------------------------------------------
+  // Slides over content from the left. 260px wide.
+  // ---------------------------------------------------------------------------
+
+  .drawer {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 260px;
+    height: 100vh;
+    background: var(--md-surface-container);
+    color: var(--md-on-surface);
+    border-right: 1px solid var(--md-surface-variant);
+    box-shadow: var(--md-shadow);
+    transition: left 0.25s ease;
+    z-index: 30;
+    font-family: var(--font-family);
+  }
+
+  .drawer.open {
+    left: 0;
+  }
+
+  .drawer-header {
+    font-weight: 700;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-sm);
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+  }
+
+  .drawer-nav {
+    display: grid;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm)
+      var(--spacing-sm);
+  }
+
+  .drawer-nav a {
+    color: var(--md-on-surface);
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-family);
+  }
+
+  .drawer-nav a:hover {
+    background: var(--md-surface-variant);
+  }
+
+  .drawer-subheader {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--md-on-surface-variant);
+    padding: var(--spacing-md) var(--spacing-lg) var(--spacing-xs);
+  }
+
+  // ---------------------------------------------------------------------------
+  // 3. Sidebar with icon rail
+  // ---------------------------------------------------------------------------
+  // .drawer.drawer--icons is the expanded icon+label state; collapsed mode is
+  // controlled by body.sidebar-rail-collapsed (72px wide, labels hidden).
+  // ---------------------------------------------------------------------------
+
+  .drawer.drawer--icons {
+    width: 280px;
+    left: -300px;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+
+  .drawer.drawer--icons.open {
+    left: 0;
+  }
+
+  .drawer-nav--icons {
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-lg);
+  }
+
+  .drawer-nav--icons .drawer-nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    color: var(--md-on-surface);
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    font-family: var(--font-family);
+  }
+
+  .drawer-nav--icons .drawer-nav-item:hover {
+    background: var(--md-surface-variant);
+  }
+
+  .drawer-nav-item--toggle {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+    text-align: left;
+    appearance: none;
+  }
+
+  .drawer-nav-item__icon {
+    font-size: 22px !important;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: var(--md-primary);
+    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+  }
+
+  .drawer-nav-item__label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .drawer-nav-item__chevron {
+    margin-left: auto;
+    color: var(--md-on-surface-variant);
+    transition: transform 0.18s ease;
+  }
+
+  .drawer-nav-item--toggle[aria-expanded='true']
+    .drawer-nav-item__chevron {
+    transform: rotate(180deg);
+  }
+
+  .drawer-submenu {
+    display: none;
+    gap: var(--spacing-xs);
+    margin: calc(var(--spacing-xs) * -1) 0 var(--spacing-sm) 48px;
+    padding-right: var(--spacing-md);
+  }
+
+  .drawer-nav-item--toggle[aria-expanded='true'] + .drawer-submenu {
+    display: grid;
+  }
+
+  .drawer-submenu-item {
+    color: var(--md-on-surface-variant);
+    text-decoration: none;
+    font-size: 0.84rem;
+    line-height: 1.25;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 6px;
+    font-family: var(--font-family);
+  }
+
+  .drawer-submenu-item:hover {
+    background: var(--md-surface-variant);
+    color: var(--md-on-surface);
+  }
+
+  // Drawer header with the rail collapse toggle
+  .drawer-header--with-rail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+  }
+
+  .drawer-header__title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .drawer-rail-toggle {
+    flex-shrink: 0;
+  }
+
+  .drawer-rail-toggle__icon--when-collapsed {
+    display: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 3b. Sidebar rail collapsed state — keyed off body.sidebar-rail-collapsed
+//     This selector requires the .theme-workspace AND .sidebar-rail-collapsed
+//     classes on <body> together, so we write it at root level.
+// ---------------------------------------------------------------------------
+
+body.theme-workspace.sidebar-rail-collapsed {
+  .drawer-rail-toggle__icon--when-expanded {
+    display: none;
+  }
+
+  .drawer-rail-toggle__icon--when-collapsed {
+    display: inline-block;
+  }
+
+  .drawer.drawer--icons {
+    width: 72px;
+    left: -92px;
+  }
+
+  .drawer.drawer--icons.open {
+    left: 0;
+  }
+
+  #drawer .drawer-subheader,
+  #drawer .drawer-nav:not(.drawer-nav--icons) {
+    display: none;
+  }
+
+  #drawer .drawer-header__title {
+    display: none;
+  }
+
+  #drawer .drawer-header--with-rail {
+    justify-content: center;
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+  }
+
+  .drawer-nav--icons .drawer-nav-item__label {
+    display: none;
+  }
+
+  .drawer-nav-item__chevron {
+    display: none;
+  }
+
+  .drawer-submenu {
+    display: none;
+  }
+
+  .drawer-nav--icons .drawer-nav-item {
+    justify-content: center;
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+  }
+
+  .drawer-nav--icons {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  // The existing Material sidenav (mat-drawer) collapses too, so that the
+  // current navigation matches the rail design.
+  mat-drawer.mat-drawer,
+  .mat-drawer {
+    width: 72px;
+    min-width: 72px;
+
+    .mat-mdc-list-item,
+    a.mat-mdc-list-item,
+    .mat-list-item {
+      justify-content: center;
+      padding-left: var(--spacing-sm);
+      padding-right: var(--spacing-sm);
+    }
+
+    .mat-mdc-list-item .mdc-list-item__primary-text,
+    .mat-mdc-list-item .mat-mdc-list-item-unscoped-content,
+    .mat-mdc-list-item-title {
+      display: none;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Continue workspace-scoped rules — mat-drawer overrides + filter panel +
+// table toolbar + dashboard executive card.
+// ---------------------------------------------------------------------------
+
+body.theme-workspace {
+  // ---------------------------------------------------------------------------
+  // 3c. Existing Angular sidenav overrides
+  // -----------------------------------------------------------------------------
+  // The shipping app uses <mat-drawer-container> with <mat-drawer> rather than
+  // the .drawer class. Apply the same visual language so the current nav looks
+  // like the design without templating changes.
+  // ---------------------------------------------------------------------------
+
+  mat-drawer-container.mat-drawer-container,
+  .mat-drawer-container {
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+  }
+
+  mat-drawer.mat-drawer,
+  .mat-drawer {
+    background: var(--md-surface-container);
+    color: var(--md-on-surface);
+    border-right: 1px solid var(--md-surface-variant);
+    box-shadow: var(--md-shadow);
+    width: 280px;
+    font-family: var(--font-family);
+    transition: width 0.25s ease;
+  }
+
+  // Inner content padding for the sidenav body
+  mat-drawer .mat-drawer-inner-container,
+  .mat-drawer .mat-drawer-inner-container {
+    padding: var(--spacing-sm) 0;
+  }
+
+  // Navigation list items inside the sidenav. The app uses <app-navigation>
+  // which renders a list; align typography/colour with .drawer-nav-item.
+  mat-drawer a,
+  mat-drawer .mat-mdc-list-item,
+  mat-drawer a.mat-mdc-list-item {
+    color: var(--md-on-surface);
+    text-decoration: none;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    border-radius: var(--radius-lg);
+    margin: 2px var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+
+    &:hover {
+      background: var(--md-surface-variant);
+    }
+
+    mat-icon,
+    .mat-icon {
+      color: var(--md-primary);
+      flex-shrink: 0;
+    }
+  }
+
+  // Active route indicator on sidenav links
+  mat-drawer a.active,
+  mat-drawer .mat-mdc-list-item.active,
+  mat-drawer a.router-link-active {
+    background: var(--md-secondary-container);
+    color: var(--md-on-surface);
+  }
+
+  // The .content-card container next to the drawer
+  .mat-drawer-content,
+  mat-drawer-container .content-card {
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+  }
+
+  // ---------------------------------------------------------------------------
+  // 4. Filter panel — right-edge mirror of the drawer
+  // ---------------------------------------------------------------------------
+
+  .filter-panel {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 300px;
+    height: 100vh;
+    background: var(--md-surface-container);
+    color: var(--md-on-surface);
+    border-left: 1px solid var(--md-surface-variant);
+    box-shadow: var(--md-shadow);
+    transition: right 0.25s ease;
+    z-index: 35;
+    font-family: var(--font-family);
+  }
+
+  .filter-panel.open {
+    right: 0;
+  }
+
+  .filter-panel .filter-content {
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: grid;
+    gap: var(--spacing-md);
+  }
+
+  // ---------------------------------------------------------------------------
+  // 5. Table toolbar
+  // ---------------------------------------------------------------------------
+  // Used by employee table screens — search field on the left, tag pills in the
+  // middle, action buttons + "vis fratraadte" switch on the right.
+  // ---------------------------------------------------------------------------
+
+  .employee-table-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--spacing-md) var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    font-family: var(--font-family);
+  }
+
+  .employee-table-toolbar-label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--md-on-surface-variant);
+  }
+
+  .employee-table-toolbar-search {
+    flex: 1 1 220px;
+    min-width: min(100%, 200px);
+  }
+
+  .employee-table-toolbar-tags-wrap {
+    flex: 1 1 320px;
+    min-width: min(100%, 200px);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .employee-table-toolbar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-left: auto;
+  }
+
+  .employee-table-toolbar-fratraadt {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .employee-table-toolbar-fratraadt-label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--md-on-surface-variant);
+    white-space: nowrap;
+  }
+
+  // ---------------------------------------------------------------------------
+  // 6. Dashboard executive card
+  // ---------------------------------------------------------------------------
+  // The "exec" card sits at the top of the dashboard with three columns:
+  // the main KPI on the left, a traffic-light bar in the middle, and a legend
+  // list on the right. Falls back to a single column under 1200px.
+  //
+  // Note: the canonical CSS used hex literals for the OK / warning / error
+  // segments. We replace those with token-derived equivalents:
+  //   - "ok"  -> var(--md-primary)
+  //   - "warn"-> color-mix(in srgb, var(--md-alert) 70%, var(--md-primary))
+  //              (amber-ish, but lives on the token palette)
+  //   - "bad" -> var(--md-alert)
+  // ---------------------------------------------------------------------------
+
+  .card.dashboard-exec {
+    background: var(--md-surface-container);
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--md-radius);
+    box-shadow: var(--md-shadow);
+    padding: var(--spacing-2xl);
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+  }
+
+  .dashboard-exec h1 {
+    margin: 0 0 6px;
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: var(--md-on-surface);
+  }
+
+  .dashboard-exec__subtitle {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--md-on-surface-variant);
+    max-width: 52ch;
+  }
+
+  .card.dashboard-exec__top,
+  .dashboard-exec__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+  }
+
+  .card.dashboard-exec__strip,
+  .dashboard-exec__strip {
+    display: grid;
+    grid-template-columns:
+      minmax(200px, 280px)
+      minmax(200px, 1fr)
+      minmax(200px, 300px);
+    gap: 24px;
+    align-items: center;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--md-surface-variant);
+  }
+
+  .card.dashboard-exec__legend,
+  .dashboard-exec__legend {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: var(--spacing-sm);
+    font-size: 0.82rem;
+    color: var(--md-on-surface-variant);
+  }
+
+  .dashboard-exec__legend li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+
+  .dashboard-exec__legend-meta {
+    margin-left: auto;
+    font-size: 0.75rem;
+    opacity: 0.9;
+  }
+
+  // Health-main block (label + value + badge + trend)
+  .dashboard-health-main__label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--md-on-surface-variant);
+  }
+
+  .dashboard-health-main__row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xs);
+  }
+
+  .dashboard-health-main__value {
+    font-size: 2.25rem;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--md-on-surface);
+  }
+
+  .dashboard-health-main__badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-rounded-full);
+    font-size: 0.72rem;
+    font-weight: 600;
+    background: var(--md-secondary-container);
+    color: var(--md-on-surface);
+  }
+
+  .dashboard-health-main__badge--amber {
+    // amber-ish warning derived from the alert token mixed toward surface
+    background: color-mix(in srgb, var(--md-alert) 22%, var(--md-surface));
+    color: color-mix(in srgb, var(--md-alert) 80%, var(--md-on-surface));
+  }
+
+  .dashboard-health-main__trend {
+    display: block;
+    margin-top: var(--spacing-sm);
+    font-size: 0.82rem;
+    color: var(--md-on-surface-variant);
+  }
+
+  .dashboard-health-main__trend--up {
+    // positive trend uses the primary brand colour
+    color: var(--md-primary);
+  }
+
+  // Traffic-light segmented bar
+  .dashboard-traffic {
+    display: flex;
+    height: 14px;
+    border-radius: 7px;
+    overflow: hidden;
+    background: var(--md-surface-variant);
+  }
+
+  .dashboard-traffic__bar {
+    height: 100%;
+  }
+
+  .dashboard-traffic__bar--ok {
+    background: var(--md-primary);
+  }
+
+  .dashboard-traffic__bar--warn {
+    background: color-mix(in srgb, var(--md-alert) 70%, var(--md-primary));
+  }
+
+  .dashboard-traffic__bar--bad {
+    background: var(--md-alert);
+  }
+
+  // Legend dots mirror the traffic bar colours
+  .dashboard-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dashboard-dot--ok {
+    background: var(--md-primary);
+  }
+
+  .dashboard-dot--warn {
+    background: color-mix(in srgb, var(--md-alert) 70%, var(--md-primary));
+  }
+
+  .dashboard-dot--bad {
+    background: var(--md-alert);
+  }
+
+  // Responsive collapse — match the canonical breakpoint
+  @media (max-width: 1200px) {
+    .card.dashboard-exec__strip,
+    .dashboard-exec__strip {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+  }
+}

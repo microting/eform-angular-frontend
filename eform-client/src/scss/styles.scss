@@ -4,13 +4,14 @@
 @use "libs/index" as libs;
 
 $eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
+$eform-font-family-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
 // h-100 for base elements
 html, body {
   height: 100vh;
   font-size: 14px;
   margin: 0;
   --theme-body-font-color: var(--black-800);
-  font-family: $eform-font-family;
+  font-family: var(--font-family, #{$eform-font-family});
 
   .mat-mdc-option {
     font-size: unset !important;
@@ -50,6 +51,7 @@ h2 {
 :root {
   --rounded-full: #{$border-rounded-full};
   --font-family: #{$eform-font-family};
+  --font-family-mono: #{$eform-font-family-mono};
 }
 
 
@@ -1234,17 +1236,19 @@ div.mat-mdc-select-panel {
   justify-content: center;
   align-items: center;
   gap: var(--624-px, 24px);
-  background: var(--card, #F7F9FA) !important;
+  background: var(--md-surface, #f8fafd) !important;
 }
 
 .auth-card {
   display: flex;
-  padding: var(--832-px, 32px);
+  padding: 24px;
   flex-direction: column;
   align-items: center;
-  gap: var(--624-px, 24px);
-  border-radius: var(--rounded-16, 16px) !important;
-  background: var(--bg, #FFF) !important;
+  gap: 12px;
+  border: none !important;
+  border-radius: var(--md-radius, 10px) !important;
+  background: var(--md-surface-container, #ffffff) !important;
+  box-shadow: var(--md-shadow, 0 1px 2px rgba(60, 64, 67, 0.15), 0 2px 6px rgba(60, 64, 67, 0.1)) !important;
   min-width: 20vw;
 
   #loginMainText {

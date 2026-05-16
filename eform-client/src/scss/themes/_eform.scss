@@ -13,6 +13,7 @@
 $eform-tokens: (
   // ===== Typography =====
   font-family: #{"Nunito Sans", Roboto, "Helvetica Neue", sans-serif},
+  font-family-mono: #{ui-monospace, "SFMono-Regular", Menlo, monospace},
   font-size-base: 14px,
   font-size-body: 16px,
   font-size-table-header: 12.8px,
@@ -35,6 +36,7 @@ $eform-tokens: (
   radius-rounded-full: 9999px,
   radius-checkbox: 0.125em,
   radius-tag: 18px,
+  md-radius: 8px,
 
   // ===== Sizing =====
   icon-btn-size: 28px,
@@ -63,6 +65,28 @@ $eform-tokens: (
   colors: (
     // ----- Light mode -----
     light: (
+      // Canonical design system tokens (mapped to legacy teal palette)
+      md-primary: #289694,
+      md-on-primary: #ffffff,
+      md-primary-container: #B2DFDB,
+      md-secondary-container: #ECEFF1,
+      md-surface: #FFFFFF,
+      md-surface-container: #F7F9FA,
+      md-surface-variant: #EBEFF2,
+      md-on-surface: #0F1316,
+      md-on-surface-variant: #7F868D,
+      md-outline: #e2e6e9,
+      md-alert: #F44336,
+      md-shadow: #{0 4px 20px 0 rgba(0, 0, 0, 0.10)},
+
+      // Status chips (aktiv/afventer/inaktiv) — universal status semantics
+      status-aktiv-bg: #1b5e20,
+      status-aktiv-fg: #ffffff,
+      status-afventer-bg: #f9a825,
+      status-afventer-fg: #1f1f1f,
+      status-inaktiv-bg: #c62828,
+      status-inaktiv-fg: #ffffff,
+
       // Existing tokens (preserve)
       primary: #289694,
       primary-light: #F5FCFC,
@@ -197,6 +221,28 @@ $eform-tokens: (
 
     // ----- Dark mode -----
     dark: (
+      // Canonical design system tokens (mapped to legacy teal palette)
+      md-primary: #4FCAC8,
+      md-on-primary: #0F1316,
+      md-primary-container: #0D4746,
+      md-secondary-container: #2A2C2E,
+      md-surface: #202122,
+      md-surface-container: #2D2F31,
+      md-surface-variant: #3A3C3E,
+      md-on-surface: #F3F5F7,
+      md-on-surface-variant: #C1C5C9,
+      md-outline: #37383A,
+      md-alert: #FF8282,
+      md-shadow: #{0 4px 20px 0 rgba(0, 0, 0, 0.30)},
+
+      // Status chips (aktiv/afventer/inaktiv) — universal status semantics
+      status-aktiv-bg: #2e7d32,
+      status-aktiv-fg: #ffffff,
+      status-afventer-bg: #f9a825,
+      status-afventer-fg: #1f1f1f,
+      status-inaktiv-bg: #c62828,
+      status-inaktiv-fg: #ffffff,
+
       // Existing tokens (preserve)
       primary: #4FCAC8,
       primary-light: #0D4746,

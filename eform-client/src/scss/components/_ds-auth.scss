@@ -1,0 +1,189 @@
+// ---------------------------------------------------------------------------
+// Design-system auth screen styles
+// ---------------------------------------------------------------------------
+// Cross-variant — uses --md-* tokens which both eform and workspace variants
+// emit (with different palette values). Implements the label-above-input
+// pattern and inline submit row from the design manual's login.html screen.
+// ---------------------------------------------------------------------------
+
+.ds-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.ds-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--md-on-surface, #1f1f1f);
+    line-height: 1.2;
+  }
+
+  &__required {
+    color: var(--md-alert, #b3261e);
+    font-weight: 500;
+    margin-left: 2px;
+  }
+
+  > input,
+  > select,
+  > textarea {
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    font-size: 14px;
+    font-family: var(--font-family, "Roboto", Arial, sans-serif);
+    color: var(--md-on-surface, #1f1f1f);
+    background: var(--md-surface, #f8fafd);
+    border: 1px solid var(--md-outline, #c4c7c5);
+    border-radius: var(--radius-sm, 4px);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &::placeholder {
+      color: var(--md-on-surface-variant, #444746);
+      opacity: 0.7;
+    }
+
+    &:hover:not(:disabled) {
+      border-color: var(--md-on-surface, #1f1f1f);
+    }
+
+    &:focus,
+    &:focus-visible {
+      border-color: var(--md-primary, #0b57d0);
+      box-shadow: 0 0 0 1px var(--md-primary, #0b57d0);
+    }
+
+    &:disabled {
+      background: color-mix(in srgb, var(--md-on-surface, #1f1f1f) 4%, transparent);
+      color: color-mix(in srgb, var(--md-on-surface, #1f1f1f) 38%, transparent);
+      cursor: not-allowed;
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: var(--md-alert, #b3261e);
+    }
+  }
+
+  > textarea {
+    height: auto;
+    min-height: 80px;
+    padding: 10px 12px;
+    resize: vertical;
+  }
+}
+
+.ds-login-submit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+
+  &__link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--md-primary, #0b57d0);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+      color: color-mix(in srgb, var(--md-on-surface, #1f1f1f) 12%, var(--md-primary, #0b57d0));
+    }
+  }
+
+  &__spacer {
+    flex: 1;
+  }
+}
+
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-family, "Roboto", Arial, sans-serif);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+
+  &:focus-visible {
+    outline: 2px solid var(--md-primary, #0b57d0);
+    outline-offset: 2px;
+  }
+
+  &:disabled,
+  &[disabled] {
+    cursor: not-allowed;
+    background-color: color-mix(in srgb, var(--md-on-surface, #1f1f1f) 12%, transparent);
+    color: color-mix(in srgb, var(--md-on-surface, #1f1f1f) 38%, transparent);
+  }
+
+  &--filled {
+    background-color: var(--md-primary, #0b57d0);
+    color: var(--md-on-primary, #ffffff);
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-on-surface, #1f1f1f) 8%, var(--md-primary, #0b57d0));
+    }
+  }
+
+  &--outlined {
+    background: transparent;
+    color: var(--md-primary, #0b57d0);
+    border-color: var(--md-outline, #c4c7c5);
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-primary, #0b57d0) 8%, transparent);
+    }
+  }
+
+  &--text {
+    background: transparent;
+    color: var(--md-primary, #0b57d0);
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-primary, #0b57d0) 8%, transparent);
+    }
+  }
+}
+
+// Auth page container — surface-tinted page bg with a clean white card.
+// The card uses only --md-shadow for elevation (no visible border) per the
+// design manual.
+.authentication-page {
+  background-color: var(--md-surface, #f8fafd);
+
+  .auth-card {
+    background-color: var(--md-surface-container, #ffffff);
+    border: none;
+    border-radius: var(--md-radius, 10px);
+    box-shadow: var(--md-shadow, 0 1px 2px rgba(60, 64, 67, 0.15), 0 2px 6px rgba(60, 64, 67, 0.1));
+    padding: 24px;
+    width: 100%;
+    max-width: 480px;
+
+    .mat-mdc-card-header {
+      padding: 0 0 8px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .mat-mdc-card-content {
+      padding: 0;
+    }
+  }
+}

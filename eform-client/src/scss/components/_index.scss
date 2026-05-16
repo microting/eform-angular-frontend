@@ -13,4 +13,7 @@
 @use 'chart';
 @use "tooltip";
 @use "tag";
-@use "workspace-overrides";
+@use "workspace-mat-overrides";
+@use "workspace-patterns";
+@use "workspace-utilities";
+@use "ds-auth";

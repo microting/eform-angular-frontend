@@ -1,0 +1,1039 @@
+// ---------------------------------------------------------------------------
+// Workspace Material overrides — Phase 4 (Components)
+// ---------------------------------------------------------------------------
+// Maps Angular Material 20 DOM (.mat-mdc-*) onto the design system tokens
+// defined in `body.theme-workspace.theme-{light|dark}`. Every selector lives
+// under `body.theme-workspace` so the legacy eform theme is untouched.
+//
+// Scope (DOM overrides only):
+//   - Buttons (raised / unelevated / outlined / text / icon / fab)
+//   - Form fields (mdc-text-field outlined + filled), inputs, textareas
+//   - Selects (mat-mdc-select) and the panel
+//   - Autocomplete panel
+//   - Checkboxes, radios, slide toggles
+//   - Chips (mat-mdc-standard-chip)
+//   - Tables (mat-mdc-table family) and sort headers
+//   - Menus (mat-mdc-menu)
+//   - Dialogs (mat-mdc-dialog)
+//   - Tabs (mat-mdc-tab-group)
+//   - Paginator
+//   - Tooltip
+//   - Snackbar
+//
+// Out of scope: pattern selectors (app bar, drawer, dashboard cards) and
+// design-system class hooks (.btn-filled etc.) — those live in sibling files.
+// ---------------------------------------------------------------------------
+
+body.theme-workspace {
+
+  // =========================================================================
+  // Material Symbols Outlined — global icon font (Phase 3 spec)
+  // FILL 0, wght 500, opsz 24 — matches the design system's canonical variation.
+  // Swaps Material Icons rendering for legacy <mat-icon> elements without
+  // requiring template changes (197 existing <mat-icon> instances).
+  // =========================================================================
+
+  .mat-icon,
+  .material-icons,
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined' !important;
+    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24 !important;
+
+    &.filled,
+    &.material-symbols-filled {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24 !important;
+    }
+  }
+
+  // =========================================================================
+  // Buttons
+  // =========================================================================
+  // Override the legacy 20px pill radius from libs/theme.scss with the design
+  // system's 4px on filled/tonal/outlined/text and 50% on icon-button.
+
+  // --- Filled (raised + unelevated) ---
+  .mat-mdc-raised-button,
+  .mat-mdc-unelevated-button {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+    box-shadow: none;
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      background-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+  }
+
+  // --- Tonal variant — opt-in via mat-button color="accent" or .mat-tonal hook ---
+  .mat-mdc-unelevated-button.mat-accent,
+  .mat-mdc-raised-button.mat-accent {
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-surface);
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-surface);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-secondary-container));
+    }
+  }
+
+  // --- Outlined ---
+  .mat-mdc-outlined-button {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: transparent;
+    color: var(--md-primary);
+    border: 1px solid var(--md-outline);
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-primary);
+    }
+
+    .mdc-button__label {
+      color: var(--md-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+      border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
+    }
+  }
+
+  // --- Text ---
+  .mat-mdc-text-button {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: transparent;
+    color: var(--md-primary);
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+
+    .mdc-button__label,
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+  }
+
+  // --- Icon button (28px square, circular hit area) ---
+  .mat-mdc-icon-button {
+    --mdc-icon-button-state-layer-size: 28px;
+    width: 28px;
+    height: 28px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    color: var(--md-on-surface-variant);
+    line-height: 28px;
+
+    .mat-mdc-button-touch-target {
+      width: 28px;
+      height: 28px;
+    }
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-surface-variant);
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+  }
+
+  // --- FAB (56px) ---
+  .mat-mdc-fab {
+    border-radius: var(--radius-rounded-full, 999px) !important;
+    width: 56px;
+    height: 56px;
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    box-shadow: var(--md-shadow);
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+    }
+  }
+
+  // --- Mini FAB (40px) ---
+  .mat-mdc-mini-fab {
+    border-radius: var(--radius-rounded-full, 999px) !important;
+    width: 40px;
+    height: 40px;
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    box-shadow: var(--md-shadow);
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+    }
+  }
+
+  // =========================================================================
+  // Form fields (mat-mdc-form-field)
+  // =========================================================================
+  // Material's mdc-text-field uses three sub-elements for the outline:
+  // .mdc-notched-outline__leading, __notch, __trailing. We must paint all
+  // three to get a complete border.
+
+  .mat-mdc-form-field {
+    font-family: var(--font-family);
+
+    // Compact 40px field height (design system spec)
+    .mat-mdc-form-field-infix {
+      min-height: 40px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    // Hide the legacy subscript hint area — keeps fields visually tight.
+    // (Caller can re-enable per-component if validation hints are needed.)
+    .mat-mdc-form-field-subscript-wrapper {
+      padding: 0;
+    }
+
+    // Floating label colors
+    .mdc-floating-label {
+      color: var(--md-on-surface-variant);
+      font-family: var(--font-family);
+    }
+
+    &.mat-focused .mdc-floating-label,
+    .mdc-text-field--focused .mdc-floating-label {
+      color: var(--md-primary);
+    }
+
+    // Input text + caret
+    .mat-mdc-input-element,
+    input.mat-mdc-input-element,
+    textarea.mat-mdc-input-element {
+      color: var(--md-on-surface);
+      caret-color: var(--md-primary);
+      font-family: var(--font-family);
+    }
+
+    // Placeholder
+    .mat-mdc-input-element::placeholder {
+      color: var(--md-on-surface-variant);
+    }
+  }
+
+  // --- Outlined appearance ---
+  .mdc-text-field--outlined {
+    --mdc-outlined-text-field-outline-color: var(--md-outline);
+    --mdc-outlined-text-field-hover-outline-color: var(--md-on-surface);
+    --mdc-outlined-text-field-focus-outline-color: var(--md-primary);
+    --mdc-outlined-text-field-disabled-outline-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    --mdc-outlined-text-field-error-outline-color: var(--md-alert);
+    --mdc-outlined-text-field-error-hover-outline-color: var(--md-alert);
+    --mdc-outlined-text-field-error-focus-outline-color: var(--md-alert);
+    --mdc-outlined-text-field-container-shape: var(--radius-sm, 4px);
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--md-outline);
+    }
+
+    &:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--md-on-surface);
+      }
+    }
+
+    &.mdc-text-field--focused {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--md-primary);
+        border-width: 2px;
+      }
+    }
+
+    &.mdc-text-field--invalid {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--md-alert);
+      }
+    }
+  }
+
+  // --- Filled appearance ---
+  .mdc-text-field--filled {
+    --mdc-filled-text-field-container-color: var(--md-surface-container);
+    --mdc-filled-text-field-disabled-container-color:
+      color-mix(in srgb, var(--md-on-surface) 4%, transparent);
+    --mdc-filled-text-field-active-indicator-color: var(--md-outline);
+    --mdc-filled-text-field-hover-active-indicator-color: var(--md-on-surface);
+    --mdc-filled-text-field-focus-active-indicator-color: var(--md-primary);
+    --mdc-filled-text-field-error-active-indicator-color: var(--md-alert);
+    --mdc-filled-text-field-container-shape: var(--radius-sm, 4px);
+    background-color: var(--md-surface-container);
+
+    &.mdc-text-field--disabled {
+      background-color: color-mix(in srgb, var(--md-on-surface) 4%, transparent);
+    }
+  }
+
+  // =========================================================================
+  // Select (mat-mdc-select) — uses mdc-text-field outline + arrow
+  // =========================================================================
+
+  .mat-mdc-select {
+    font-family: var(--font-family);
+    color: var(--md-on-surface);
+
+    .mat-mdc-select-value {
+      color: var(--md-on-surface);
+    }
+
+    .mat-mdc-select-placeholder {
+      color: var(--md-on-surface-variant);
+    }
+
+    .mat-mdc-select-arrow {
+      color: var(--md-on-surface-variant);
+
+      svg {
+        fill: currentColor;
+      }
+    }
+  }
+
+  // Panel that appears on click — surface-container with shadow
+  .mat-mdc-select-panel {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--radius-sm, 4px) !important;
+    box-shadow: var(--md-shadow) !important;
+    padding: var(--spacing-xs, 4px) 0;
+  }
+
+  // =========================================================================
+  // Autocomplete panel (shares mat-mdc-option styling)
+  // =========================================================================
+
+  .mat-mdc-autocomplete-panel {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--radius-sm, 4px) !important;
+    box-shadow: var(--md-shadow) !important;
+    padding: var(--spacing-xs, 4px) 0;
+  }
+
+  // Options — used by both select + autocomplete
+  .mat-mdc-option {
+    font-family: var(--font-family);
+    color: var(--md-on-surface);
+    min-height: 40px;
+
+    .mdc-list-item__primary-text {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+
+    &:hover:not(.mdc-list-item--disabled),
+    &.mat-mdc-option-active,
+    &.mdc-list-item--selected:not(.mat-mdc-option-multiple) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+
+      .mdc-list-item__primary-text {
+        color: var(--md-on-surface);
+      }
+    }
+
+    &.mdc-list-item--selected .mdc-list-item__primary-text {
+      color: var(--md-primary);
+    }
+  }
+
+  // =========================================================================
+  // Checkbox (mat-mdc-checkbox)
+  // =========================================================================
+
+  .mat-mdc-checkbox {
+    --mdc-checkbox-unselected-icon-color: var(--md-outline);
+    --mdc-checkbox-unselected-hover-icon-color: var(--md-on-surface);
+    --mdc-checkbox-unselected-focus-icon-color: var(--md-on-surface);
+    --mdc-checkbox-selected-icon-color: var(--md-primary);
+    --mdc-checkbox-selected-hover-icon-color: var(--md-primary);
+    --mdc-checkbox-selected-focus-icon-color: var(--md-primary);
+    --mdc-checkbox-selected-pressed-icon-color: var(--md-primary);
+    --mdc-checkbox-selected-checkmark-color: var(--md-on-primary);
+    --mdc-checkbox-disabled-selected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    --mdc-checkbox-disabled-unselected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+
+    .mdc-form-field {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+
+    .mdc-checkbox__background {
+      border-radius: 2px;
+    }
+  }
+
+  // =========================================================================
+  // Radio (mat-mdc-radio-button)
+  // =========================================================================
+
+  .mat-mdc-radio-button {
+    --mdc-radio-unselected-icon-color: var(--md-outline);
+    --mdc-radio-unselected-hover-icon-color: var(--md-on-surface);
+    --mdc-radio-unselected-focus-icon-color: var(--md-on-surface);
+    --mdc-radio-selected-icon-color: var(--md-primary);
+    --mdc-radio-selected-hover-icon-color: var(--md-primary);
+    --mdc-radio-selected-focus-icon-color: var(--md-primary);
+    --mdc-radio-selected-pressed-icon-color: var(--md-primary);
+    --mdc-radio-disabled-selected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    --mdc-radio-disabled-unselected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+
+    .mdc-form-field {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+  }
+
+  // =========================================================================
+  // Slide toggle (mat-mdc-slide-toggle) — used as switches
+  // =========================================================================
+
+  .mat-mdc-slide-toggle {
+    --mdc-switch-unselected-track-color: var(--md-surface-variant);
+    --mdc-switch-unselected-hover-track-color: var(--md-surface-variant);
+    --mdc-switch-unselected-focus-track-color: var(--md-surface-variant);
+    --mdc-switch-unselected-pressed-track-color: var(--md-surface-variant);
+    --mdc-switch-selected-track-color: var(--md-primary);
+    --mdc-switch-selected-hover-track-color: var(--md-primary);
+    --mdc-switch-selected-focus-track-color: var(--md-primary);
+    --mdc-switch-selected-pressed-track-color: var(--md-primary);
+    --mdc-switch-unselected-handle-color: var(--md-surface-container);
+    --mdc-switch-unselected-hover-handle-color: var(--md-surface-container);
+    --mdc-switch-unselected-focus-handle-color: var(--md-surface-container);
+    --mdc-switch-unselected-pressed-handle-color: var(--md-surface-container);
+    --mdc-switch-selected-handle-color: var(--md-on-primary);
+    --mdc-switch-selected-hover-handle-color: var(--md-on-primary);
+    --mdc-switch-selected-focus-handle-color: var(--md-on-primary);
+    --mdc-switch-selected-pressed-handle-color: var(--md-on-primary);
+    --mdc-switch-selected-icon-color: var(--md-primary);
+    --mdc-switch-unselected-icon-color: var(--md-on-surface-variant);
+    --mdc-switch-disabled-selected-track-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    --mdc-switch-disabled-unselected-track-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+
+    .mdc-form-field {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+  }
+
+  // =========================================================================
+  // Chips (mat-mdc-standard-chip)
+  // =========================================================================
+
+  .mat-mdc-chip,
+  .mat-mdc-standard-chip {
+    --mdc-chip-container-shape-radius: var(--radius-rounded-full, 999px);
+    --mdc-chip-elevated-container-color: var(--md-secondary-container);
+    --mdc-chip-label-text-color: var(--md-on-surface);
+    --mdc-chip-with-icon-icon-color: var(--md-on-surface-variant);
+    --mdc-chip-with-icon-selected-icon-color: var(--md-primary);
+    --mdc-chip-outline-color: transparent;
+    --mdc-chip-disabled-label-text-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    border-radius: var(--radius-rounded-full, 999px) !important;
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+
+    .mdc-evolution-chip__text-label {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+
+    .mat-mdc-chip-action-label {
+      color: var(--md-on-surface);
+    }
+
+    // Hover overlay
+    &:hover:not(.mdc-evolution-chip--disabled) {
+      background-color:
+        color-mix(in srgb, var(--md-on-surface) 8%, var(--md-secondary-container));
+    }
+
+    // Selected state — primary-container fill
+    &.mdc-evolution-chip--selected,
+    &.mat-mdc-chip-selected {
+      background-color: var(--md-primary-container);
+      color: var(--md-primary);
+
+      .mdc-evolution-chip__text-label,
+      .mat-mdc-chip-action-label {
+        color: var(--md-primary);
+      }
+    }
+
+    // Remove icon (chip-removable)
+    .mat-mdc-chip-remove {
+      color: var(--md-on-surface-variant);
+
+      &:hover {
+        color: var(--md-on-surface);
+      }
+    }
+  }
+
+  // =========================================================================
+  // Tables (mat-mdc-table family)
+  // =========================================================================
+  // All workspace table styling lives here, painted through design-system tokens.
+
+  .mat-mdc-table {
+    background-color: var(--md-surface-container);
+    font-family: var(--font-family);
+    color: var(--md-on-surface);
+  }
+
+  .mat-mdc-header-row {
+    background-color: var(--md-surface-container);
+    height: 48px;
+    border-bottom: 1px solid var(--md-surface-variant);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .mat-mdc-header-cell {
+    color: var(--md-on-surface-variant);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--font-family);
+    background-color: var(--md-surface-container);
+  }
+
+  .mat-mdc-row {
+    height: 48px;
+    background-color: var(--md-surface-container);
+    border-bottom: 1px solid var(--md-surface-variant);
+
+    &:hover {
+      background-color:
+        color-mix(in srgb, var(--md-primary) 8%, var(--md-surface-container));
+    }
+  }
+
+  .mat-mdc-cell {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    background-color: transparent;
+  }
+
+  // Selected row — primary-container highlight (matches design system)
+  .mat-mdc-row.selected,
+  .mat-mdc-row[aria-selected="true"],
+  .mat-mdc-row.row-selected {
+    background-color: var(--md-primary-container);
+
+    .mat-mdc-cell {
+      color: var(--md-primary);
+    }
+  }
+
+  // =========================================================================
+  // Sort header (mat-sort-header)
+  // =========================================================================
+  // Hide arrow on unsorted columns; show a 24px circle with primary-container
+  // background and primary-colored arrow on actively sorted columns.
+
+  .mat-sort-header-container {
+    cursor: pointer;
+    color: var(--md-on-surface-variant);
+
+    &:hover {
+      color: var(--md-on-surface);
+    }
+  }
+
+  .mat-sort-header-arrow {
+    opacity: 0;
+    visibility: hidden;
+    color: var(--md-primary);
+  }
+
+  .mat-sort-header:hover .mat-sort-header-arrow {
+    opacity: 0.38;
+    visibility: visible;
+  }
+
+  .mat-sort-header-sorted .mat-sort-header-arrow {
+    opacity: 1 !important;
+    visibility: visible;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 50%;
+    background-color: var(--md-primary-container);
+    margin-left: var(--spacing-xs, 4px);
+    color: var(--md-primary) !important;
+  }
+
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-stem,
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-indicator,
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-left,
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-middle,
+  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-right {
+    background-color: var(--md-primary) !important;
+    border-color: var(--md-primary) !important;
+  }
+
+  // =========================================================================
+  // Menu (mat-mdc-menu)
+  // =========================================================================
+
+  .mat-mdc-menu-panel {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--radius-sm, 4px) !important;
+    box-shadow: var(--md-shadow) !important;
+    min-width: 200px;
+  }
+
+  .mat-mdc-menu-content {
+    padding: var(--spacing-xs, 4px) 0;
+    font-family: var(--font-family);
+  }
+
+  .mat-mdc-menu-item {
+    height: 40px;
+    min-height: 40px !important;
+    border-radius: 0 !important;
+    padding: 0 var(--spacing-md, 12px);
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 400;
+
+    .mat-mdc-menu-item-text {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-surface-variant);
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      margin-right: var(--spacing-md, 12px);
+    }
+
+    &:hover:not(:disabled),
+    &.cdk-keyboard-focused,
+    &.cdk-program-focused {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+    }
+
+    &:disabled,
+    &.mat-mdc-menu-item-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    }
+  }
+
+  // =========================================================================
+  // Dialog (mat-mdc-dialog)
+  // =========================================================================
+
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-color: var(--md-surface-container);
+    --mdc-dialog-subhead-color: var(--md-on-surface);
+    --mdc-dialog-supporting-text-color: var(--md-on-surface-variant);
+    --mdc-dialog-container-shape: var(--md-radius, 10px);
+  }
+
+  .mat-mdc-dialog-surface,
+  .mdc-dialog__surface {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--md-radius, 10px) !important;
+    box-shadow:
+      0 8px 24px color-mix(in srgb, var(--md-primary) 18%, transparent),
+      0 2px 6px color-mix(in srgb, var(--md-on-surface) 8%, transparent) !important;
+    color: var(--md-on-surface);
+  }
+
+  .mat-mdc-dialog-title,
+  .mdc-dialog__title {
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: var(--spacing-xl, 16px) var(--spacing-xl, 16px) 0;
+  }
+
+  .mat-mdc-dialog-content,
+  .mdc-dialog__content {
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    padding: var(--spacing-md, 12px) var(--spacing-xl, 16px);
+  }
+
+  .mat-mdc-dialog-actions,
+  .mdc-dialog__actions {
+    padding: var(--spacing-xl, 16px);
+    gap: var(--spacing-sm, 8px);
+    justify-content: flex-end;
+  }
+
+  // =========================================================================
+  // Tabs (mat-mdc-tab-group)
+  // =========================================================================
+
+  .mat-mdc-tab-group {
+    --mat-tab-header-active-label-text-color: var(--md-primary);
+    --mat-tab-header-active-focus-label-text-color: var(--md-primary);
+    --mat-tab-header-active-hover-label-text-color: var(--md-primary);
+    --mat-tab-header-inactive-label-text-color: var(--md-on-surface-variant);
+    --mat-tab-header-inactive-focus-label-text-color: var(--md-on-surface);
+    --mat-tab-header-inactive-hover-label-text-color: var(--md-on-surface);
+    --mat-tab-header-active-ripple-color: var(--md-primary);
+    --mat-tab-header-inactive-ripple-color: var(--md-on-surface-variant);
+    --mdc-tab-indicator-active-indicator-color: var(--md-primary);
+    --mdc-secondary-navigation-tab-container-height: 48px;
+    font-family: var(--font-family);
+  }
+
+  .mat-mdc-tab-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--md-surface-variant);
+  }
+
+  .mat-mdc-tab .mdc-tab__text-label {
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: var(--md-primary);
+  }
+
+  .mat-mdc-tab .mdc-tab-indicator__content--underline {
+    border-color: var(--md-primary);
+    border-top-width: 2px;
+  }
+
+  // =========================================================================
+  // Paginator (mat-mdc-paginator)
+  // =========================================================================
+
+  .mat-mdc-paginator {
+    background-color: transparent;
+    color: var(--md-on-surface-variant);
+    font-family: var(--font-family);
+    font-size: 14px;
+
+    .mat-mdc-paginator-container {
+      color: var(--md-on-surface-variant);
+      font-family: var(--font-family);
+      min-height: 48px;
+    }
+
+    .mat-mdc-paginator-range-label,
+    .mat-mdc-paginator-page-size-label {
+      color: var(--md-on-surface-variant);
+      font-family: var(--font-family);
+    }
+
+    .mat-mdc-icon-button {
+      color: var(--md-on-surface-variant);
+
+      &:disabled {
+        color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+      }
+    }
+  }
+
+  // =========================================================================
+  // Tooltip (mat-mdc-tooltip)
+  // =========================================================================
+
+  .mat-mdc-tooltip {
+    --mdc-plain-tooltip-container-color: var(--md-on-surface);
+    --mdc-plain-tooltip-supporting-text-color: var(--md-surface-container);
+
+    .mdc-tooltip__surface {
+      background-color: var(--md-on-surface);
+      color: var(--md-surface-container);
+      border-radius: var(--radius-sm, 4px);
+      font-family: var(--font-family);
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+
+  // =========================================================================
+  // Snackbar (mat-mdc-snack-bar-container)
+  // =========================================================================
+
+  .mat-mdc-snack-bar-container {
+    --mdc-snackbar-container-color: var(--md-on-surface);
+    --mdc-snackbar-supporting-text-color: var(--md-surface-container);
+    --mat-snack-bar-button-color: var(--md-primary-container);
+
+    .mdc-snackbar__surface {
+      background-color: var(--md-on-surface) !important;
+      color: var(--md-surface-container) !important;
+      border-radius: var(--radius-sm, 4px) !important;
+      box-shadow: var(--md-shadow);
+    }
+
+    .mdc-snackbar__label {
+      color: var(--md-surface-container);
+      font-family: var(--font-family);
+      font-size: 14px;
+    }
+
+    .mat-mdc-snack-bar-action,
+    .mdc-button {
+      color: var(--md-primary-container);
+
+      .mdc-button__label {
+        color: var(--md-primary-container);
+      }
+    }
+  }
+
+  // =========================================================================
+  // App-specific accent / link utility classes
+  // The legacy app uses .text-accent for links; it picks up Angular Material's
+  // M3 accent palette (cyan) which is wrong for the workspace variant. Force
+  // .text-accent and bare <a> links to use the design-system primary color.
+  // =========================================================================
+
+  .text-accent,
+  .text-primary,
+  a:not(.mat-mdc-button):not(.mat-mdc-icon-button):not(.mat-mdc-tab-link):not([class*="btn-"]) {
+    color: var(--md-primary);
+  }
+
+  a:not(.mat-mdc-button):not(.mat-mdc-icon-button):not(.mat-mdc-tab-link):not([class*="btn-"]):hover {
+    color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+  }
+
+  // =========================================================================
+  // App-specific custom button classes (.btn-primary, .btn-cancel, etc.)
+  // These are non-Material classes defined globally in styles.scss; the new
+  // design replaces the pill radius (9999px) with 4px and removes ad-hoc
+  // heights/spacing so they match the design-system button spec.
+  // =========================================================================
+
+  .btn-primary,
+  button.btn-primary,
+  a.btn-primary {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: var(--md-primary) !important;
+    color: var(--md-on-primary) !important;
+    height: 40px;
+    box-shadow: none !important;
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary)) !important;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &[disabled] {
+      background-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+
+    &--icon-left {
+      height: 40px;
+      padding: 0 16px;
+      gap: 8px;
+
+      .mat-icon,
+      .material-symbols-outlined {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1;
+      }
+    }
+  }
+
+  .btn-secondary,
+  button.btn-secondary,
+  a.btn-secondary {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: transparent;
+    color: var(--md-primary) !important;
+    height: 40px;
+    font-family: var(--font-family);
+    font-weight: 500;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+
+    &--icon-rounded-border {
+      border-radius: var(--radius-sm, 4px) !important;
+      padding: 0 16px;
+      border: 1px solid var(--md-outline);
+    }
+
+    &--icon-square-border {
+      border-radius: var(--radius-sm, 4px) !important;
+      padding: 0 16px;
+      border: 1px solid var(--md-outline);
+      height: 40px !important;
+    }
+  }
+
+  .btn-cancel,
+  button.btn-cancel,
+  a.btn-cancel {
+    border-radius: var(--radius-sm, 4px) !important;
+    border: 1px solid var(--md-outline);
+    background: transparent;
+    color: var(--md-primary);
+    height: 40px;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+  }
+
+  .btn-warning,
+  button.btn-warning,
+  a.btn-warning {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: var(--md-secondary-container);
+    color: var(--md-on-surface);
+    height: 40px;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-weight: 500;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-secondary-container));
+    }
+  }
+
+  .btn-delete,
+  button.btn-delete,
+  a.btn-delete {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: var(--md-alert);
+    color: var(--md-on-primary);
+    height: 40px;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-weight: 500;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-alert));
+    }
+  }
+}
