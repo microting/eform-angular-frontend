@@ -392,11 +392,10 @@ body.theme-workspace {
     border-right: 1px solid var(--md-surface-variant);
     box-shadow: var(--md-shadow);
     font-family: var(--font-family);
-    // No explicit width — Angular Material's autosize observer reads this to
-    // compute content margin. Forcing width here makes the content area stay
-    // offset even when the drawer is closed. Let the drawer size from its
-    // own content (capped by max-width from full-layout.component.scss).
-    transition: width 0.25s ease;
+    // No explicit width or transition — Material owns both. Forcing a `transition:
+    // width …` shorthand here overrode Material's default `transition: all …`,
+    // which broke the transform-transitionend handler that resets
+    // mat-drawer-content's inline margin-left when the drawer closes.
   }
 
   // Inner content padding for the sidenav body
