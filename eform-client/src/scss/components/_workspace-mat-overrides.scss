@@ -857,31 +857,89 @@ body.theme-workspace {
   // =========================================================================
   // Paginator (mat-mdc-paginator)
   // =========================================================================
+  // Matches the design reference's pagination row: outlined nav buttons on
+  // the left, range/page-size labels in muted color, all driven by tokens.
 
   .mat-mdc-paginator {
-    background-color: transparent;
+    background-color: transparent !important;
     color: var(--md-on-surface-variant);
     font-family: var(--font-family);
     font-size: 14px;
+    border-top: 1px solid var(--md-surface-variant);
+
+    .mat-mdc-paginator-outer-container {
+      background-color: transparent !important;
+    }
 
     .mat-mdc-paginator-container {
       color: var(--md-on-surface-variant);
       font-family: var(--font-family);
-      min-height: 48px;
+      min-height: 56px;
+      padding: 8px 12px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .mat-mdc-paginator-range-actions {
+      gap: 6px;
+      order: 1;
+    }
+
+    .mat-mdc-paginator-page-size {
+      order: 2;
+      margin-left: auto;
+      margin-right: 0;
+      align-items: center;
     }
 
     .mat-mdc-paginator-range-label,
     .mat-mdc-paginator-page-size-label {
       color: var(--md-on-surface-variant);
       font-family: var(--font-family);
+      font-size: 14px;
+      margin: 0 12px;
     }
 
+    // Outlined nav buttons (previous / next / first / last) match the
+    // design's .btn .btn-outlined pattern: 36px rectangle with --md-outline
+    // border and --md-primary text, primary-container on hover.
     .mat-mdc-icon-button {
-      color: var(--md-on-surface-variant);
+      width: 36px !important;
+      height: 36px !important;
+      padding: 0 !important;
+      border-radius: var(--radius-sm, 4px) !important;
+      border: 1px solid var(--md-outline);
+      background: transparent;
+      color: var(--md-primary);
+
+      .mat-icon,
+      .material-symbols-outlined {
+        color: var(--md-primary);
+        font-size: 20px;
+        line-height: 20px;
+      }
+
+      &:hover:not(:disabled) {
+        background: var(--md-primary-container);
+        border-color: var(--md-primary);
+      }
 
       &:disabled {
         color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+        border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+
+        .mat-icon,
+        .material-symbols-outlined {
+          color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+        }
       }
+    }
+
+    // The page-size dropdown — compact, design-system outlined
+    .mat-mdc-paginator-page-size-select {
+      margin: 0 8px 0 4px;
+      width: 88px;
     }
   }
 
