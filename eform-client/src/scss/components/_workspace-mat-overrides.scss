@@ -659,8 +659,11 @@ body.theme-workspace {
   // =========================================================================
   // Sort header (mat-sort-header)
   // =========================================================================
-  // Hide arrow on unsorted columns; show a 24px circle with primary-container
-  // background and primary-colored arrow on actively sorted columns.
+  // Hide Material's up/down arrow entirely. Keep mtx-grid's "lines" icon as
+  // the only sort indicator; restyle it based on aria-sort state:
+  //   - none       → muted color, full opacity, no rotation
+  //   - ascending  → primary color, full opacity, no rotation
+  //   - descending → primary color, full opacity, rotated 180° (flip)
 
   .mat-sort-header-container {
     cursor: pointer;
@@ -671,39 +674,43 @@ body.theme-workspace {
     }
   }
 
+  // Material's arrow indicator — never show under workspace.
   .mat-sort-header-arrow {
-    opacity: 0;
-    visibility: hidden;
-    color: var(--md-primary);
+    display: none !important;
   }
 
-  .mat-sort-header:hover .mat-sort-header-arrow {
-    opacity: 0.38;
-    visibility: visible;
-  }
-
-  .mat-sort-header-sorted .mat-sort-header-arrow {
-    opacity: 1 !important;
-    visibility: visible;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    border-radius: 50%;
-    background-color: var(--md-primary-container);
+  // mtx-grid's "sort" lines icon — primary indicator.
+  // Match on .mat-sort-header-icon only — the svg.mtx-grid-icon qualifier
+  // bumps base specificity above the sorted/aria-sort rules below, so keep
+  // selectors balanced.
+  .mat-sort-header-icon {
+    color: var(--md-on-surface-variant);
+    opacity: 0.6;
+    width: 18px;
+    height: 18px;
+    transition: color 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
     margin-left: var(--spacing-xs, 4px);
-    color: var(--md-primary) !important;
   }
 
-  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-stem,
-  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-indicator,
-  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-left,
-  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-middle,
-  .mat-sort-header-sorted .mat-sort-header-arrow .mat-sort-header-pointer-right {
-    background-color: var(--md-primary) !important;
-    border-color: var(--md-primary) !important;
+  .mat-sort-header:hover .mat-sort-header-icon,
+  .mat-sort-header-container:hover .mat-sort-header-icon {
+    opacity: 1;
+    color: var(--md-on-surface);
+  }
+
+  // Active sort — primary color, full opacity.
+  .mat-sort-header-sorted .mat-sort-header-icon,
+  [aria-sort="ascending"] .mat-sort-header-icon,
+  [aria-sort="descending"] .mat-sort-header-icon {
+    color: var(--md-primary);
+    opacity: 1;
+  }
+
+  // Descending — flip the lines vertically so the longest line is at the
+  // bottom (visually mirrors the ascending state).
+  .mat-sort-header-descending .mat-sort-header-icon,
+  [aria-sort="descending"] .mat-sort-header-icon {
+    transform: rotate(180deg);
   }
 
   // =========================================================================
