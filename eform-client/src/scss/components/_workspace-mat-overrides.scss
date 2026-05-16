@@ -621,8 +621,10 @@ body.theme-workspace {
     border-bottom: 1px solid var(--md-surface-variant);
     transition: background-color 0.12s ease;
 
+    // Opaque blend with surface-container so a horizontally-sticky cell
+    // can inherit the same color and hide scrolling content underneath.
     &:hover {
-      background-color: color-mix(in srgb, var(--md-primary) 10%, transparent);
+      background-color: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface-container));
     }
 
     // Clean bottom edge — last row's border merges with the container border
@@ -641,16 +643,33 @@ body.theme-workspace {
     vertical-align: top;
   }
 
-  // Sticky actions column — neutralise the legacy left-border + shadow +
-  // tinted bg so the cell visually merges with the rest of the row
-  // (including hover).
+  // Sticky actions column — drop the legacy left-border + shadow but keep
+  // an OPAQUE background that mirrors the row state. The cell stays
+  // sticky during horizontal scroll, so a transparent bg would let other
+  // cells show through underneath.
   th.mat-table-sticky-right,
   td.mat-table-sticky-right,
   th.mat-mdc-table-sticky-border-elem-right,
   td.mat-mdc-table-sticky-border-elem-right {
     border-left: none !important;
     box-shadow: none !important;
-    background: transparent !important;
+    background-color: var(--md-surface-container) !important;
+  }
+
+  // Row hover — sticky cell follows the row's hover blend
+  .mat-mdc-row:hover td.mat-table-sticky-right,
+  .mat-mdc-row:hover td.mat-mdc-table-sticky-border-elem-right {
+    background-color: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface-container)) !important;
+  }
+
+  // Selected row — sticky cell uses primary-container too
+  .mat-mdc-row.selected td.mat-table-sticky-right,
+  .mat-mdc-row[aria-selected="true"] td.mat-table-sticky-right,
+  .mat-mdc-row.row-selected td.mat-table-sticky-right,
+  .mat-mdc-row.selected td.mat-mdc-table-sticky-border-elem-right,
+  .mat-mdc-row[aria-selected="true"] td.mat-mdc-table-sticky-border-elem-right,
+  .mat-mdc-row.row-selected td.mat-mdc-table-sticky-border-elem-right {
+    background-color: var(--md-primary-container) !important;
   }
 
   // Selected row — primary-container highlight (matches design system)
