@@ -163,15 +163,23 @@ export class MyEformsPage extends PageWithNavbarPage {
   }
 
   async getEformsRowObjByNameEForm(
-    nameEform: string
+    nameEform: string,
+    timeoutMs = 15000,
   ): Promise<MyEformsRowObject | null> {
-    await this.page.waitForTimeout(500);
-    const rowNum = await this.rowNum();
-    for (let i = 1; i < rowNum + 1; i++) {
-      const form = await this.getEformRowObj(i, false);
-      if (form.eFormName === nameEform) {
-        return form;
+    // The newly-created eform appears asynchronously after the create modal
+    // dismisses — the table re-queries the backend. A single-shot scan can
+    // race ahead of that refresh. Poll for up to `timeoutMs` so callers don't
+    // have to add their own waitForTimeout before this method.
+    const deadline = Date.now() + timeoutMs;
+    while (Date.now() < deadline) {
+      const rowNum = await this.rowNum();
+      for (let i = 1; i < rowNum + 1; i++) {
+        const form = await this.getEformRowObj(i, false);
+        if (form.eFormName === nameEform) {
+          return form;
+        }
       }
+      await this.page.waitForTimeout(250);
     }
     return null;
   }
@@ -242,8 +250,13 @@ export class MyEformsPage extends PageWithNavbarPage {
       }
     }
     await (await this.waitForCreateEformBtn()).click();
-    // Wait until the New eForm button is back (modal dismissed) rather than
-    // a fixed sleep — the dismiss timing depends on backend latency.
+    // Wait for the create-eform modal to fully dismiss (the modal overlays
+    // the page so newEformBtn() being "visible" can return true while the
+    // modal is still on screen). Waiting on the modal's own element being
+    // detached is the reliable signal that the create flow has finished.
+    await this.createEformBtn()
+      .waitFor({ state: 'detached', timeout: 40000 })
+      .catch(() => {/* fall through — modal already gone */});
     await this.newEformBtn().waitFor({ state: 'visible', timeout: 40000 });
     return { added: addedTags, selected: selectedTags };
   }
