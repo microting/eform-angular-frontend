@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy, inject} from '@angular/core';
+import {Injectable, NgZone, OnDestroy, inject} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
 
@@ -8,17 +8,24 @@ import {Subscription} from 'rxjs';
  * mtx-grid's internal paginator), unlike a directive whose selector only
  * attaches inside the module that declares it.
  *
- * Click handler walks back to the paginator's mat-select for the page-size
- * options and picks the largest option (which the rest of the app treats as
- * "show all"). Falls back to dispatching a click on the underlying select
- * dropdown if no large option is present.
+ * IMPORTANT: the MutationObserver is registered OUTSIDE Angular's zone.
+ * Subtree mutation events on document.body fire on every DOM change app-wide
+ * (router navigations, dialog open/close, form input, etc.). Inside the zone
+ * each event would re-schedule Angular change detection and keep NgZone
+ * perpetually unstable — which causes Playwright's auto-wait on Angular
+ * stability to hang on tests that involve heavy DOM mutations.
+ *
+ * The user's click handler IS wrapped back into the zone so the page-size
+ * change propagates through Angular's change detection like a normal event.
  */
 @Injectable({providedIn: 'root'})
 export class MatPaginatorShowAllService implements OnDestroy {
   private translate = inject(TranslateService);
+  private zone = inject(NgZone);
   private observer: MutationObserver | null = null;
   private langSub: Subscription | null = null;
   private label = 'Show all';
+  private pendingFrame: number | null = null;
 
   start(): void {
     if (typeof document === 'undefined' || this.observer) return;
@@ -34,14 +41,29 @@ export class MatPaginatorShowAllService implements OnDestroy {
       });
     });
 
-    this.observer = new MutationObserver(() => this.scanAll());
-    this.observer.observe(document.body, {childList: true, subtree: true});
-    this.scanAll();
+    this.zone.runOutsideAngular(() => {
+      this.observer = new MutationObserver(() => this.scheduleScan());
+      this.observer.observe(document.body, {childList: true, subtree: true});
+      this.scheduleScan();
+    });
   }
 
   ngOnDestroy(): void {
     this.observer?.disconnect();
     this.langSub?.unsubscribe();
+    if (this.pendingFrame !== null) {
+      cancelAnimationFrame(this.pendingFrame);
+      this.pendingFrame = null;
+    }
+  }
+
+  private scheduleScan(): void {
+    if (this.pendingFrame !== null) return;
+    // Coalesce mutation bursts into one scan per frame.
+    this.pendingFrame = requestAnimationFrame(() => {
+      this.pendingFrame = null;
+      this.scanAll();
+    });
   }
 
   private scanAll(): void {
@@ -63,7 +85,9 @@ export class MatPaginatorShowAllService implements OnDestroy {
     btn.type = 'button';
     btn.className = 'mat-mdc-paginator-show-all';
     btn.textContent = this.label;
-    btn.addEventListener('click', () => this.showAll(paginator));
+    // Re-enter the zone for the user action so Material's page-size change
+    // routes through Angular change detection like a normal click would.
+    btn.addEventListener('click', () => this.zone.run(() => this.showAll(paginator)));
     actions.appendChild(btn);
   }
 
