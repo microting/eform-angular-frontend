@@ -22,7 +22,7 @@ mat-tree {
       }
 
       &:hover {
-        border-radius: var(--rounded-full) !important;
+        border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
         background-color: var(--nav-hover-surface, var(--mdc-theme-primary-dark, #00695C)) !important;
         color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
         .mat-icon{
@@ -35,7 +35,7 @@ mat-tree {
 
       //&:focus {
       //  background-color: var(--mdc-theme-primary-dark, #00695C) !important;
-      //  border-radius: var(--rounded-full) !important;
+      //  border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
       //  color: var(--mdc-theme-on-primary) !important;
       //}
     }
@@ -44,7 +44,7 @@ mat-tree {
     .selected-node {
       background-color: var(--nav-selected-surface, var(--mdc-theme-primary)) !important;
       color: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
-      border-radius: var(--rounded-full);
+      border-radius: var(--nav-item-radius, var(--rounded-full));
 
       .mat-icon {
         color: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
@@ -86,7 +86,7 @@ mat-tree {
           &:hover {
             background-color: var(--nav-hover-surface, var(--mdc-theme-primary-dark)) !important;
             color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
-            border-radius: var(--rounded-full);
+            border-radius: var(--nav-item-radius, var(--rounded-full));
             --mat-expansion-header-indicator-color: var(--icon-secondary, #444746);
 
             a {
@@ -117,7 +117,7 @@ mat-tree {
           .nav-link {
             &:hover {
               width: calc(100% - 20px) !important;
-              border-radius: var(--rounded-full) !important;
+              border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
               background-color: var(--nav-hover-surface, var(--mdc-theme-primary-dark, #00695C)) !important;
               color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
             }
@@ -153,6 +153,6 @@ mat-tree {
 
 
 mat-tree-node a.mat-mdc-button-base.nav-link {
-  border-radius: var(--rounded-full) !important;
+  border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
   overflow: hidden !important;
 }

@@ -18,11 +18,4 @@
       <router-outlet></router-outlet>
     </mat-card-content>
   </mat-card>
-  <a
-    class="text-accent mt-2"
-    [routerLink]="['restore-password']"
-    *ngIf="settingsService.loginPageSettingsModel.isSendGridExists && !onForgotPasswordPage"
-  >
-    {{ 'Forgot password' | translate }}?
-  </a>
 </div>

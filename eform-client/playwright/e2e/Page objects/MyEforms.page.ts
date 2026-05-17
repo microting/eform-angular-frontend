@@ -5,7 +5,7 @@ import XMLForEform from '../Constants/XMLForEform';
 import { FoldersRowObject } from './Folders.page';
 import { DeviceUsersRowObject } from './DeviceUsers.page';
 import { TagsModalPage } from './TagsModal.page';
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class MyEformsPage extends PageWithNavbarPage {
   constructor(page: Page) {
@@ -163,15 +163,23 @@ export class MyEformsPage extends PageWithNavbarPage {
   }
 
   async getEformsRowObjByNameEForm(
-    nameEform: string
+    nameEform: string,
+    timeoutMs = 15000,
   ): Promise<MyEformsRowObject | null> {
-    await this.page.waitForTimeout(500);
-    const rowNum = await this.rowNum();
-    for (let i = 1; i < rowNum + 1; i++) {
-      const form = await this.getEformRowObj(i, false);
-      if (form.eFormName === nameEform) {
-        return form;
+    // The newly-created eform appears asynchronously after the create modal
+    // dismisses — the table re-queries the backend. A single-shot scan can
+    // race ahead of that refresh. Poll for up to `timeoutMs` so callers don't
+    // have to add their own waitForTimeout before this method.
+    const deadline = Date.now() + timeoutMs;
+    while (Date.now() < deadline) {
+      const rowNum = await this.rowNum();
+      for (let i = 1; i < rowNum + 1; i++) {
+        const form = await this.getEformRowObj(i, false);
+        if (form.eFormName === nameEform) {
+          return form;
+        }
       }
+      await this.page.waitForTimeout(250);
     }
     return null;
   }
@@ -209,7 +217,6 @@ export class MyEformsPage extends PageWithNavbarPage {
     xml = ''
   ) {
     await (await this.waitForNewEformBtn()).click();
-    await this.page.waitForTimeout(500);
     await this.xmlTextArea().waitFor({ state: 'visible', timeout: 40000 });
     // Create replaced xml and insert it in textarea
     if (!xml) {
@@ -218,9 +225,9 @@ export class MyEformsPage extends PageWithNavbarPage {
     await this.page.evaluate(function (xmlText) {
       (<HTMLInputElement>document.getElementById('eFormXml')).value = xmlText;
     }, xml);
-    await this.page.waitForTimeout(200);
+    // pressSequentially triggers the key event Angular's reactive form
+    // listens to (programmatic `.value =` alone won't update form status).
     await this.xmlTextArea().pressSequentially(' ');
-    await this.page.waitForTimeout(500);
     // Create new tags
     const addedTags: string[] = newTagsList;
     if (newTagsList.length > 0) {
@@ -233,18 +240,22 @@ export class MyEformsPage extends PageWithNavbarPage {
     if (tagAddedNum > 0) {
       for (let i = 0; i < tagAddedNum; i++) {
         await this.createEformTagSelector().click();
-        await this.page.waitForTimeout(500);
         const selectedTag = this.page.locator('.ng-option:not(.ng-option-selected)').first();
-        selectedTags.push((await selectedTag.textContent())?.trim());
         await selectedTag.waitFor({ state: 'visible', timeout: 40000 });
+        selectedTags.push((await selectedTag.textContent())?.trim());
         await selectedTag.click();
-        await this.page.waitForTimeout(500);
         await this.page.locator('#createEformBtn').waitFor({ state: 'visible', timeout: 10000 });
       }
     }
-    await (await this.waitForCreateEformBtn()).click();
+    // Wait for the submit button to be enabled — this is the actual
+    // form-validity signal. Without this, clicking too early lands on a
+    // still-disabled button (Angular hasn't processed the tag input yet)
+    // and the modal never dismisses, hanging the entire test budget.
+    await expect(this.createEformBtn()).toBeEnabled({ timeout: 10000 });
+    await this.createEformBtn().click();
+    // Wait for the create-eform modal to fully dismiss.
+    await this.createEformBtn().waitFor({ state: 'detached', timeout: 40000 });
     await this.newEformBtn().waitFor({ state: 'visible', timeout: 40000 });
-    await this.page.waitForTimeout(500);
     return { added: addedTags, selected: selectedTags };
   }
 
@@ -364,9 +375,18 @@ export class MyEformsRowObject {
     const tagSelector = this.page.locator('app-eform-edit-tags-modal #tagSelector input');
     await tagSelector.waitFor({ state: 'visible', timeout: 40000 });
     await tagSelector.fill(tag);
-    const ngDropdownPanel = this.page.locator('.ng-option');
-    await ngDropdownPanel.waitFor({ state: 'visible', timeout: 40000 });
-    await ngDropdownPanel.click();
+    // `.first()` to avoid strict-mode violations if another portaled
+    // .ng-option exists in the DOM from a previously-dismissed dropdown.
+    const ngOption = this.page.locator('.ng-option').first();
+    await ngOption.waitFor({ state: 'visible', timeout: 40000 });
+    await ngOption.click();
+    // mtx-select with [multiple]="true" keeps its dropdown panel open
+    // after a selection. The panel is portaled to <body> via `appendTo`,
+    // so it overlaps the modal's Save button — Playwright's actionability
+    // check on Save then never passes and the test hangs the full budget.
+    // Press Escape and wait for the panel to detach so Save is clickable.
+    await this.page.keyboard.press('Escape');
+    await this.page.locator('.ng-dropdown-panel').waitFor({ state: 'detached', timeout: 10000 }).catch(() => {/* panel already gone */});
     await (await this.myEformsPage.waitForTagEditSaveBtn()).click();
     await this.page.waitForTimeout(500);
   }

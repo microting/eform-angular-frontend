@@ -3,7 +3,8 @@
 
 .mtx-grid {
   max-height: 78.5vh;
-  border: 0 !important;
+  border: var(--mtx-grid-border, 0) !important;
+  border-radius: var(--mtx-grid-radius, 0) !important;
   outline: 1px solid rgba(255, 255, 255, 0.2);
 
   .mat-mdc-standard-chip {

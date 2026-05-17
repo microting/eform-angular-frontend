@@ -1,0 +1,1403 @@
+// ---------------------------------------------------------------------------
+// Workspace Material overrides — Phase 4 (Components)
+// ---------------------------------------------------------------------------
+// Maps Angular Material 20 DOM (.mat-mdc-*) onto the design system tokens
+// defined in `body.theme-workspace.theme-{light|dark}`. Every selector lives
+// under `body.theme-workspace` so the legacy eform theme is untouched.
+//
+// Scope (DOM overrides only):
+//   - Buttons (raised / unelevated / outlined / text / icon / fab)
+//   - Form fields (mdc-text-field outlined + filled), inputs, textareas
+//   - Selects (mat-mdc-select) and the panel
+//   - Autocomplete panel
+//   - Checkboxes, radios, slide toggles
+//   - Chips (mat-mdc-standard-chip)
+//   - Tables (mat-mdc-table family) and sort headers
+//   - Menus (mat-mdc-menu)
+//   - Dialogs (mat-mdc-dialog)
+//   - Tabs (mat-mdc-tab-group)
+//   - Paginator
+//   - Tooltip
+//   - Snackbar
+//
+// Out of scope: pattern selectors (app bar, drawer, dashboard cards) and
+// design-system class hooks (.btn-filled etc.) — those live in sibling files.
+// ---------------------------------------------------------------------------
+
+body.theme-workspace {
+
+  // =========================================================================
+  // Material Symbols Outlined — global icon font (Phase 3 spec)
+  // FILL 0, wght 500, opsz 24 — matches the design system's canonical variation.
+  // Swaps Material Icons rendering for legacy <mat-icon> elements without
+  // requiring template changes (197 existing <mat-icon> instances).
+  // =========================================================================
+
+  .mat-icon,
+  .material-icons,
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined' !important;
+    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24 !important;
+
+    &.filled,
+    &.material-symbols-filled {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24 !important;
+    }
+  }
+
+  // =========================================================================
+  // Buttons
+  // =========================================================================
+  // Override the legacy 20px pill radius from libs/theme.scss with the design
+  // system's 4px on filled/tonal/outlined/text and 50% on icon-button.
+
+  // --- Filled (raised + unelevated) ---
+  .mat-mdc-raised-button,
+  .mat-mdc-unelevated-button {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+    box-shadow: none;
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      background-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+  }
+
+  // --- Tonal variant — opt-in via mat-button color="accent" or .mat-tonal hook ---
+  .mat-mdc-unelevated-button.mat-accent,
+  .mat-mdc-raised-button.mat-accent {
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-surface);
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-surface);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-secondary-container));
+    }
+  }
+
+  // --- Outlined ---
+  .mat-mdc-outlined-button {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: transparent;
+    color: var(--md-primary);
+    border: 1px solid var(--md-outline);
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-primary);
+    }
+
+    .mdc-button__label {
+      color: var(--md-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+      border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
+    }
+  }
+
+  // --- Text ---
+  .mat-mdc-text-button {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: transparent;
+    color: var(--md-primary);
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+
+    .mdc-button__label,
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+  }
+
+  // --- Icon button (28px square, circular hit area) ---
+  .mat-mdc-icon-button {
+    --mdc-icon-button-state-layer-size: 28px;
+    width: 28px;
+    height: 28px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    color: var(--md-on-surface-variant);
+    line-height: 28px;
+
+    .mat-mdc-button-touch-target {
+      width: 28px;
+      height: 28px;
+    }
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-surface-variant);
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+  }
+
+  // --- FAB (56px) ---
+  .mat-mdc-fab {
+    border-radius: var(--radius-rounded-full, 999px) !important;
+    width: 56px;
+    height: 56px;
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    box-shadow: var(--md-shadow);
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+    }
+  }
+
+  // --- Mini FAB (40px) ---
+  .mat-mdc-mini-fab {
+    border-radius: var(--radius-rounded-full, 999px) !important;
+    width: 40px;
+    height: 40px;
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    box-shadow: var(--md-shadow);
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+    }
+  }
+
+  // =========================================================================
+  // Form fields (mat-mdc-form-field)
+  // =========================================================================
+  // Material's mdc-text-field uses three sub-elements for the outline:
+  // .mdc-notched-outline__leading, __notch, __trailing. We must paint all
+  // three to get a complete border.
+
+  .mat-mdc-form-field {
+    font-family: var(--font-family);
+
+    // Compact 40px field height (design system spec)
+    .mat-mdc-form-field-infix {
+      min-height: 40px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    // Hide the legacy subscript hint area — keeps fields visually tight.
+    // (Caller can re-enable per-component if validation hints are needed.)
+    .mat-mdc-form-field-subscript-wrapper {
+      padding: 0;
+    }
+
+    // Floating label colors
+    .mdc-floating-label {
+      color: var(--md-on-surface-variant);
+      font-family: var(--font-family);
+    }
+
+    &.mat-focused .mdc-floating-label,
+    .mdc-text-field--focused .mdc-floating-label {
+      color: var(--md-primary);
+    }
+
+    // Input text + caret
+    .mat-mdc-input-element,
+    input.mat-mdc-input-element,
+    textarea.mat-mdc-input-element {
+      color: var(--md-on-surface);
+      caret-color: var(--md-primary);
+      font-family: var(--font-family);
+    }
+
+    // Placeholder
+    .mat-mdc-input-element::placeholder {
+      color: var(--md-on-surface-variant);
+    }
+  }
+
+  // --- Outlined appearance ---
+  .mdc-text-field--outlined {
+    --mdc-outlined-text-field-outline-color: var(--md-outline);
+    --mdc-outlined-text-field-hover-outline-color: var(--md-on-surface);
+    --mdc-outlined-text-field-focus-outline-color: var(--md-primary);
+    --mdc-outlined-text-field-disabled-outline-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    --mdc-outlined-text-field-error-outline-color: var(--md-alert);
+    --mdc-outlined-text-field-error-hover-outline-color: var(--md-alert);
+    --mdc-outlined-text-field-error-focus-outline-color: var(--md-alert);
+    --mdc-outlined-text-field-container-shape: var(--radius-sm, 4px);
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--md-outline);
+    }
+
+    &:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--md-on-surface);
+      }
+    }
+
+    &.mdc-text-field--focused {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--md-primary);
+        border-width: 2px;
+      }
+    }
+
+    &.mdc-text-field--invalid {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--md-alert);
+      }
+    }
+  }
+
+  // --- Filled appearance ---
+  .mdc-text-field--filled {
+    --mdc-filled-text-field-container-color: var(--md-surface-container);
+    --mdc-filled-text-field-disabled-container-color:
+      color-mix(in srgb, var(--md-on-surface) 4%, transparent);
+    --mdc-filled-text-field-active-indicator-color: var(--md-outline);
+    --mdc-filled-text-field-hover-active-indicator-color: var(--md-on-surface);
+    --mdc-filled-text-field-focus-active-indicator-color: var(--md-primary);
+    --mdc-filled-text-field-error-active-indicator-color: var(--md-alert);
+    --mdc-filled-text-field-container-shape: var(--radius-sm, 4px);
+    background-color: var(--md-surface-container);
+
+    &.mdc-text-field--disabled {
+      background-color: color-mix(in srgb, var(--md-on-surface) 4%, transparent);
+    }
+  }
+
+  // =========================================================================
+  // Select (mat-mdc-select) — uses mdc-text-field outline + arrow
+  // =========================================================================
+
+  .mat-mdc-select {
+    font-family: var(--font-family);
+    color: var(--md-on-surface);
+
+    .mat-mdc-select-value {
+      color: var(--md-on-surface);
+    }
+
+    .mat-mdc-select-placeholder {
+      color: var(--md-on-surface-variant);
+    }
+
+    .mat-mdc-select-arrow {
+      color: var(--md-on-surface-variant);
+
+      svg {
+        fill: currentColor;
+      }
+    }
+  }
+
+  // Panel that appears on click — surface-container with shadow
+  .mat-mdc-select-panel {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--radius-sm, 4px) !important;
+    box-shadow: var(--md-shadow) !important;
+    padding: var(--spacing-xs, 4px) 0;
+  }
+
+  // =========================================================================
+  // Autocomplete panel (shares mat-mdc-option styling)
+  // =========================================================================
+
+  .mat-mdc-autocomplete-panel {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--radius-sm, 4px) !important;
+    box-shadow: var(--md-shadow) !important;
+    padding: var(--spacing-xs, 4px) 0;
+  }
+
+  // Options — used by both select + autocomplete
+  .mat-mdc-option {
+    font-family: var(--font-family);
+    color: var(--md-on-surface);
+    min-height: 40px;
+
+    .mdc-list-item__primary-text {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+
+    &:hover:not(.mdc-list-item--disabled),
+    &.mat-mdc-option-active,
+    &.mdc-list-item--selected:not(.mat-mdc-option-multiple) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+
+      .mdc-list-item__primary-text {
+        color: var(--md-on-surface);
+      }
+    }
+
+    &.mdc-list-item--selected .mdc-list-item__primary-text {
+      color: var(--md-primary);
+    }
+  }
+
+  // =========================================================================
+  // Checkbox (mat-mdc-checkbox)
+  // =========================================================================
+
+  .mat-mdc-checkbox {
+    --mdc-checkbox-unselected-icon-color: var(--md-outline);
+    --mdc-checkbox-unselected-hover-icon-color: var(--md-on-surface);
+    --mdc-checkbox-unselected-focus-icon-color: var(--md-on-surface);
+    --mdc-checkbox-selected-icon-color: var(--md-primary);
+    --mdc-checkbox-selected-hover-icon-color: var(--md-primary);
+    --mdc-checkbox-selected-focus-icon-color: var(--md-primary);
+    --mdc-checkbox-selected-pressed-icon-color: var(--md-primary);
+    --mdc-checkbox-selected-checkmark-color: var(--md-on-primary);
+    --mdc-checkbox-disabled-selected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    --mdc-checkbox-disabled-unselected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+
+    .mdc-form-field {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+
+    .mdc-checkbox__background {
+      border-radius: 2px;
+    }
+  }
+
+  // =========================================================================
+  // Radio (mat-mdc-radio-button)
+  // =========================================================================
+
+  .mat-mdc-radio-button {
+    --mdc-radio-unselected-icon-color: var(--md-outline);
+    --mdc-radio-unselected-hover-icon-color: var(--md-on-surface);
+    --mdc-radio-unselected-focus-icon-color: var(--md-on-surface);
+    --mdc-radio-selected-icon-color: var(--md-primary);
+    --mdc-radio-selected-hover-icon-color: var(--md-primary);
+    --mdc-radio-selected-focus-icon-color: var(--md-primary);
+    --mdc-radio-selected-pressed-icon-color: var(--md-primary);
+    --mdc-radio-disabled-selected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    --mdc-radio-disabled-unselected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+
+    .mdc-form-field {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+  }
+
+  // =========================================================================
+  // Slide toggle (mat-mdc-slide-toggle) — used as switches
+  // =========================================================================
+
+  .mat-mdc-slide-toggle {
+    --mdc-switch-unselected-track-color: var(--md-surface-variant);
+    --mdc-switch-unselected-hover-track-color: var(--md-surface-variant);
+    --mdc-switch-unselected-focus-track-color: var(--md-surface-variant);
+    --mdc-switch-unselected-pressed-track-color: var(--md-surface-variant);
+    --mdc-switch-selected-track-color: var(--md-primary);
+    --mdc-switch-selected-hover-track-color: var(--md-primary);
+    --mdc-switch-selected-focus-track-color: var(--md-primary);
+    --mdc-switch-selected-pressed-track-color: var(--md-primary);
+    --mdc-switch-unselected-handle-color: var(--md-surface-container);
+    --mdc-switch-unselected-hover-handle-color: var(--md-surface-container);
+    --mdc-switch-unselected-focus-handle-color: var(--md-surface-container);
+    --mdc-switch-unselected-pressed-handle-color: var(--md-surface-container);
+    --mdc-switch-selected-handle-color: var(--md-on-primary);
+    --mdc-switch-selected-hover-handle-color: var(--md-on-primary);
+    --mdc-switch-selected-focus-handle-color: var(--md-on-primary);
+    --mdc-switch-selected-pressed-handle-color: var(--md-on-primary);
+    --mdc-switch-selected-icon-color: var(--md-primary);
+    --mdc-switch-unselected-icon-color: var(--md-on-surface-variant);
+    --mdc-switch-disabled-selected-track-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    --mdc-switch-disabled-unselected-track-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+
+    .mdc-form-field {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+  }
+
+  // =========================================================================
+  // Chips (mat-mdc-standard-chip)
+  // =========================================================================
+
+  .mat-mdc-chip,
+  .mat-mdc-standard-chip {
+    --mdc-chip-container-shape-radius: var(--radius-rounded-full, 999px);
+    --mdc-chip-elevated-container-color: var(--md-secondary-container);
+    --mdc-chip-label-text-color: var(--md-on-surface);
+    --mdc-chip-with-icon-icon-color: var(--md-on-surface-variant);
+    --mdc-chip-with-icon-selected-icon-color: var(--md-primary);
+    --mdc-chip-outline-color: transparent;
+    --mdc-chip-disabled-label-text-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    border-radius: var(--radius-rounded-full, 999px) !important;
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+
+    .mdc-evolution-chip__text-label {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+
+    .mat-mdc-chip-action-label {
+      color: var(--md-on-surface);
+    }
+
+    // Hover overlay
+    &:hover:not(.mdc-evolution-chip--disabled) {
+      background-color:
+        color-mix(in srgb, var(--md-on-surface) 8%, var(--md-secondary-container));
+    }
+
+    // Selected state — primary-container fill
+    &.mdc-evolution-chip--selected,
+    &.mat-mdc-chip-selected {
+      background-color: var(--md-primary-container);
+      color: var(--md-primary);
+
+      .mdc-evolution-chip__text-label,
+      .mat-mdc-chip-action-label {
+        color: var(--md-primary);
+      }
+    }
+
+    // Remove icon (chip-removable)
+    .mat-mdc-chip-remove {
+      color: var(--md-on-surface-variant);
+
+      &:hover {
+        color: var(--md-on-surface);
+      }
+    }
+  }
+
+  // =========================================================================
+  // Tables (mat-mdc-table family)
+  // =========================================================================
+  // Matches medarbejdertabel.html design reference:
+  // - Outer container has 1px --md-surface-variant border + 4px radius
+  // - Header uses subtle box-shadow for divider (looks crisper than border)
+  // - Row hover uses color-mix(--md-primary 10%, transparent) — the
+  //   distinctive light-blue tint from the design spec
+  // - Last row drops its bottom border so the bottom edge looks clean
+
+  // Wrap the table area with a border (the design's .table-scroll equivalent).
+  // mtx-grid renders <mtx-grid> → div.mtx-grid-content → mat-table inside.
+  mtx-grid,
+  .mtx-grid {
+    display: block;
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--radius-sm, 4px);
+    background: var(--md-surface-container);
+    overflow: hidden;
+
+    // The toolbar above the table sits outside the border visually
+    .mtx-grid-toolbar {
+      border-bottom: 1px solid var(--md-surface-variant);
+      background: var(--md-surface-container);
+    }
+  }
+
+  .mat-mdc-table {
+    background-color: var(--md-surface-container);
+    font-family: var(--font-family);
+    color: var(--md-on-surface);
+    border: none;
+  }
+
+  .mat-mdc-header-row {
+    background-color: var(--md-surface-container);
+    height: 44px;
+    border-bottom: none;
+    box-shadow: 0 1px 0 var(--md-surface-variant);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .mat-mdc-header-cell {
+    color: var(--md-on-surface);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-family);
+    background-color: var(--md-surface-container);
+    padding: 10px 8px;
+  }
+
+  .mat-mdc-row {
+    height: 44px;
+    background-color: var(--md-surface-container);
+    border-bottom: 1px solid var(--md-surface-variant);
+    transition: background-color 0.12s ease;
+
+    // Opaque blend with surface-container so a horizontally-sticky cell
+    // can inherit the same color and hide scrolling content underneath.
+    &:hover {
+      background-color: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface-container));
+    }
+
+    // Clean bottom edge — last row's border merges with the container border
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .mat-mdc-cell {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    background-color: transparent;
+    padding: 10px 8px;
+    vertical-align: top;
+  }
+
+  // Sticky actions column — drop the legacy left-border + shadow but keep
+  // an OPAQUE background that mirrors the row state. The cell stays
+  // sticky during horizontal scroll, so a transparent bg would let other
+  // cells show through underneath. Transition matches the row's so the
+  // hover color flows across the whole row without the actions cell
+  // lagging behind.
+  th.mat-table-sticky-right,
+  td.mat-table-sticky-right,
+  th.mat-mdc-table-sticky-border-elem-right,
+  td.mat-mdc-table-sticky-border-elem-right {
+    border-left: none !important;
+    box-shadow: none !important;
+    background-color: var(--md-surface-container) !important;
+    transition: background-color 0.12s ease;
+  }
+
+  // Row hover — sticky cell follows the row's hover blend
+  .mat-mdc-row:hover td.mat-table-sticky-right,
+  .mat-mdc-row:hover td.mat-mdc-table-sticky-border-elem-right {
+    background-color: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface-container)) !important;
+  }
+
+  // Selected row — sticky cell uses primary-container too
+  .mat-mdc-row.selected td.mat-table-sticky-right,
+  .mat-mdc-row[aria-selected="true"] td.mat-table-sticky-right,
+  .mat-mdc-row.row-selected td.mat-table-sticky-right,
+  .mat-mdc-row.selected td.mat-mdc-table-sticky-border-elem-right,
+  .mat-mdc-row[aria-selected="true"] td.mat-mdc-table-sticky-border-elem-right,
+  .mat-mdc-row.row-selected td.mat-mdc-table-sticky-border-elem-right {
+    background-color: var(--md-primary-container) !important;
+  }
+
+  // Selected row — primary-container highlight (matches design system)
+  .mat-mdc-row.selected,
+  .mat-mdc-row[aria-selected="true"],
+  .mat-mdc-row.row-selected {
+    background-color: var(--md-primary-container);
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--md-on-surface) 4%, var(--md-primary-container));
+    }
+
+    .mat-mdc-cell {
+      color: var(--md-primary);
+    }
+  }
+
+  // =========================================================================
+  // Sort header (mat-sort-header)
+  // =========================================================================
+  // Hide Material's up/down arrow entirely. Keep mtx-grid's "lines" icon as
+  // the only sort indicator; restyle it based on aria-sort state:
+  //   - none       → muted color, full opacity, no rotation
+  //   - ascending  → primary color, full opacity, no rotation
+  //   - descending → primary color, full opacity, rotated 180° (flip)
+
+  .mat-sort-header-container {
+    cursor: pointer;
+    color: var(--md-on-surface-variant);
+
+    &:hover {
+      color: var(--md-on-surface);
+    }
+  }
+
+  // Material's arrow indicator — never show under workspace.
+  .mat-sort-header-arrow {
+    display: none !important;
+  }
+
+  // mtx-grid's "sort" lines icon — primary indicator.
+  // Match on .mat-sort-header-icon only — the svg.mtx-grid-icon qualifier
+  // bumps base specificity above the sorted/aria-sort rules below, so keep
+  // selectors balanced.
+  .mat-sort-header-icon {
+    color: var(--md-on-surface-variant);
+    opacity: 0.6;
+    width: 18px;
+    height: 18px;
+    transition: color 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
+    margin-left: var(--spacing-xs, 4px);
+  }
+
+  .mat-sort-header:hover .mat-sort-header-icon,
+  .mat-sort-header-container:hover .mat-sort-header-icon {
+    opacity: 1;
+    color: var(--md-on-surface);
+  }
+
+  // Active sort — primary color, full opacity.
+  .mat-sort-header-sorted .mat-sort-header-icon,
+  [aria-sort="ascending"] .mat-sort-header-icon,
+  [aria-sort="descending"] .mat-sort-header-icon {
+    color: var(--md-primary);
+    opacity: 1;
+  }
+
+  // Descending — flip the lines vertically so the longest line is at the
+  // bottom (visually mirrors the ascending state).
+  //
+  // IMPORTANT: only use aria-sort here. Angular Material puts the class
+  // .mat-sort-header-descending on EVERY column to indicate that column's
+  // default direction — it's not a live state. aria-sort is the only
+  // attribute that actually flips on the active column.
+  [aria-sort="descending"] .mat-sort-header-icon {
+    transform: rotate(180deg);
+  }
+
+  // =========================================================================
+  // Menu (mat-mdc-menu)
+  // =========================================================================
+
+  .mat-mdc-menu-panel {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--radius-sm, 4px) !important;
+    box-shadow: var(--md-shadow) !important;
+    min-width: 200px;
+  }
+
+  // Beat the legacy `.mat-mdc-menu-panel .mat-mdc-menu-content` rule that
+  // sets display: inline-flex + padding: 8px — that inset the content area
+  // by 8px on every side, so menu items couldn't fill the panel edge to edge.
+  .mat-mdc-menu-panel .mat-mdc-menu-content,
+  .mat-mdc-menu-content {
+    display: flex !important;
+    flex-direction: column;
+    padding: var(--spacing-xs, 4px) 0 !important;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+  }
+
+  .mat-mdc-menu-panel .mat-mdc-menu-content button.mat-mdc-menu-item,
+  .mat-mdc-menu-item {
+    width: 100% !important;
+    box-sizing: border-box;
+    height: 40px;
+    min-height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 0 !important;
+    padding: 0 var(--spacing-md, 12px) !important;
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 400;
+
+    .mat-mdc-menu-item-text {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-surface-variant);
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      margin-right: var(--spacing-md, 12px);
+    }
+
+    &:hover:not(:disabled),
+    &.cdk-keyboard-focused,
+    &.cdk-program-focused {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+    }
+
+    &:disabled,
+    &.mat-mdc-menu-item-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    }
+  }
+
+  // =========================================================================
+  // Dialog (mat-mdc-dialog)
+  // =========================================================================
+
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-color: var(--md-surface-container);
+    --mdc-dialog-subhead-color: var(--md-on-surface);
+    --mdc-dialog-supporting-text-color: var(--md-on-surface-variant);
+    --mdc-dialog-container-shape: var(--md-radius, 10px);
+  }
+
+  .mat-mdc-dialog-surface,
+  .mdc-dialog__surface {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--md-radius, 10px) !important;
+    box-shadow:
+      0 8px 24px color-mix(in srgb, var(--md-primary) 18%, transparent),
+      0 2px 6px color-mix(in srgb, var(--md-on-surface) 8%, transparent) !important;
+    color: var(--md-on-surface);
+  }
+
+  .mat-mdc-dialog-title,
+  .mdc-dialog__title {
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: var(--spacing-xl, 16px) var(--spacing-xl, 16px) 0;
+  }
+
+  .mat-mdc-dialog-content,
+  .mdc-dialog__content {
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    padding: var(--spacing-md, 12px) var(--spacing-xl, 16px);
+  }
+
+  .mat-mdc-dialog-actions,
+  .mdc-dialog__actions {
+    padding: var(--spacing-xl, 16px);
+    gap: var(--spacing-sm, 8px);
+    justify-content: flex-end;
+  }
+
+  // =========================================================================
+  // Tabs (mat-mdc-tab-group)
+  // =========================================================================
+
+  .mat-mdc-tab-group {
+    --mat-tab-header-active-label-text-color: var(--md-primary);
+    --mat-tab-header-active-focus-label-text-color: var(--md-primary);
+    --mat-tab-header-active-hover-label-text-color: var(--md-primary);
+    --mat-tab-header-inactive-label-text-color: var(--md-on-surface-variant);
+    --mat-tab-header-inactive-focus-label-text-color: var(--md-on-surface);
+    --mat-tab-header-inactive-hover-label-text-color: var(--md-on-surface);
+    --mat-tab-header-active-ripple-color: var(--md-primary);
+    --mat-tab-header-inactive-ripple-color: var(--md-on-surface-variant);
+    --mdc-tab-indicator-active-indicator-color: var(--md-primary);
+    --mdc-secondary-navigation-tab-container-height: 48px;
+    font-family: var(--font-family);
+  }
+
+  .mat-mdc-tab-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--md-surface-variant);
+  }
+
+  .mat-mdc-tab .mdc-tab__text-label {
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: var(--md-primary);
+  }
+
+  .mat-mdc-tab .mdc-tab-indicator__content--underline {
+    border-color: var(--md-primary);
+    border-top-width: 2px;
+  }
+
+  // =========================================================================
+  // Paginator (mat-mdc-paginator)
+  // =========================================================================
+  // Matches the design reference's pagination row: outlined nav buttons on
+  // the left, range/page-size labels in muted color, all driven by tokens.
+
+  .mat-mdc-paginator {
+    background-color: transparent !important;
+    color: var(--md-on-surface-variant);
+    font-family: var(--font-family);
+    font-size: 14px;
+    border-top: 1px solid var(--md-surface-variant);
+
+    .mat-mdc-paginator-outer-container {
+      background-color: transparent !important;
+    }
+
+    .mat-mdc-paginator-container {
+      color: var(--md-on-surface-variant);
+      font-family: var(--font-family);
+      min-height: 56px;
+      padding: 8px 12px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .mat-mdc-paginator-range-actions {
+      gap: 6px;
+      order: 1;
+    }
+
+    .mat-mdc-paginator-page-size {
+      order: 2;
+      margin-left: auto;
+      margin-right: 0;
+      align-items: center;
+    }
+
+    .mat-mdc-paginator-range-label,
+    .mat-mdc-paginator-page-size-label {
+      color: var(--md-on-surface-variant);
+      font-family: var(--font-family);
+      font-size: 14px;
+      margin: 0 12px;
+    }
+
+    // Outlined nav buttons (first / previous / next / last). Replace the
+    // icon-only treatment with text labels rendered from the button's
+    // aria-label (which CustomMatPaginatorIntl translates to Første /
+    // Forrige / Næste / Sidste).
+    .mat-mdc-icon-button {
+      width: auto !important;
+      height: 36px !important;
+      min-width: 64px;
+      padding: 0 14px !important;
+      border-radius: var(--radius-sm, 4px) !important;
+      border: 1px solid var(--md-outline);
+      background: transparent;
+      color: var(--md-primary);
+      font-family: var(--font-family);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0;
+
+      // Hide Material's built-in SVG icons
+      .mat-mdc-paginator-icon,
+      svg,
+      .mat-icon,
+      .material-symbols-outlined {
+        display: none !important;
+      }
+
+      // Render the aria-label as visible text
+      &::before {
+        content: attr(aria-label);
+        color: var(--md-primary);
+      }
+
+      &:hover:not(:disabled) {
+        background: var(--md-primary-container);
+        border-color: var(--md-primary);
+      }
+
+      &:disabled {
+        color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+        border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+
+        &::before {
+          color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+        }
+      }
+    }
+
+    // "Vis alle" button — injected by MatPaginatorShowAllDirective.
+    // Filled variant of the same outlined button family to highlight
+    // "show all" as the most prominent affordance.
+    .mat-mdc-paginator-show-all {
+      height: 36px;
+      min-width: 64px;
+      padding: 0 14px;
+      margin-left: 8px;
+      border-radius: var(--radius-sm, 4px);
+      border: 1px solid var(--md-primary);
+      background: var(--md-primary);
+      color: var(--md-on-primary);
+      font-family: var(--font-family);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+
+      &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+      }
+
+      &:disabled {
+        background: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+        color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+        border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+        cursor: not-allowed;
+      }
+    }
+
+    // The page-size dropdown — match the design's .field + <select> pattern:
+    // outlined rectangle, 4px radius, --md-outline border, no floating label.
+    .mat-mdc-paginator-page-size-select {
+      margin: 0 8px 0 4px;
+      width: 100px;
+
+      .mat-mdc-text-field-wrapper {
+        background: var(--md-surface);
+        border: 1px solid var(--md-outline);
+        border-radius: var(--radius-sm, 4px);
+        height: 36px;
+        padding: 0 4px 0 12px;
+      }
+
+      .mat-mdc-form-field-flex {
+        height: 36px;
+        align-items: center;
+      }
+
+      .mat-mdc-form-field-infix {
+        min-height: 34px;
+        padding: 0;
+      }
+
+      // Hide Material's notched-outline pieces — we paint the border on
+      // the wrapper above.
+      .mdc-notched-outline,
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border: none !important;
+      }
+
+      .mat-mdc-select {
+        font-family: var(--font-family);
+        font-size: 14px;
+        color: var(--md-on-surface);
+      }
+
+      .mat-mdc-select-arrow {
+        color: var(--md-on-surface-variant);
+      }
+    }
+  }
+
+  // =========================================================================
+  // Tooltip (mat-mdc-tooltip)
+  // =========================================================================
+
+  .mat-mdc-tooltip {
+    --mdc-plain-tooltip-container-color: var(--md-on-surface);
+    --mdc-plain-tooltip-supporting-text-color: var(--md-surface-container);
+
+    .mdc-tooltip__surface {
+      background-color: var(--md-on-surface);
+      color: var(--md-surface-container);
+      border-radius: var(--radius-sm, 4px);
+      font-family: var(--font-family);
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+
+  // =========================================================================
+  // Snackbar (mat-mdc-snack-bar-container)
+  // =========================================================================
+
+  .mat-mdc-snack-bar-container {
+    --mdc-snackbar-container-color: var(--md-on-surface);
+    --mdc-snackbar-supporting-text-color: var(--md-surface-container);
+    --mat-snack-bar-button-color: var(--md-primary-container);
+
+    .mdc-snackbar__surface {
+      background-color: var(--md-on-surface) !important;
+      color: var(--md-surface-container) !important;
+      border-radius: var(--radius-sm, 4px) !important;
+      box-shadow: var(--md-shadow);
+    }
+
+    .mdc-snackbar__label {
+      color: var(--md-surface-container);
+      font-family: var(--font-family);
+      font-size: 14px;
+    }
+
+    .mat-mdc-snack-bar-action,
+    .mdc-button {
+      color: var(--md-primary-container);
+
+      .mdc-button__label {
+        color: var(--md-primary-container);
+      }
+    }
+  }
+
+  // =========================================================================
+  // App-specific accent / link utility classes
+  // The legacy app uses .text-accent for links; it picks up Angular Material's
+  // M3 accent palette (cyan) which is wrong for the workspace variant. Force
+  // .text-accent and bare <a> links to use the design-system primary color.
+  // =========================================================================
+
+  .text-accent,
+  .text-primary,
+  a:not(.mat-mdc-button):not(.mat-mdc-icon-button):not(.mat-mdc-tab-link):not([class*="btn-"]) {
+    color: var(--md-primary);
+  }
+
+  a:not(.mat-mdc-button):not(.mat-mdc-icon-button):not(.mat-mdc-tab-link):not([class*="btn-"]):hover {
+    color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+  }
+
+  // =========================================================================
+  // App-specific custom button classes (.btn-primary, .btn-cancel, etc.)
+  // These are non-Material classes defined globally in styles.scss; the new
+  // design replaces the pill radius (9999px) with 4px and removes ad-hoc
+  // heights/spacing so they match the design-system button spec.
+  // =========================================================================
+
+  .btn-primary,
+  button.btn-primary,
+  a.btn-primary {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: var(--md-primary) !important;
+    color: var(--md-on-primary) !important;
+    height: 40px;
+    box-shadow: none !important;
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary)) !important;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &[disabled] {
+      background-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+
+    &--icon-left {
+      height: 40px;
+      padding: 0 16px;
+      gap: 8px;
+
+      .mat-icon,
+      .material-symbols-outlined {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1;
+      }
+    }
+  }
+
+  .btn-secondary,
+  button.btn-secondary,
+  a.btn-secondary {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: transparent;
+    color: var(--md-primary) !important;
+    height: 40px;
+    font-family: var(--font-family);
+    font-weight: 500;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+
+    &--icon-rounded-border {
+      border-radius: var(--radius-sm, 4px) !important;
+      padding: 0 16px;
+      border: 1px solid var(--md-outline);
+    }
+
+    &--icon-square-border {
+      border-radius: var(--radius-sm, 4px) !important;
+      padding: 0 16px;
+      border: 1px solid var(--md-outline);
+      height: 40px !important;
+    }
+  }
+
+  .btn-cancel,
+  button.btn-cancel,
+  a.btn-cancel {
+    border-radius: var(--radius-sm, 4px) !important;
+    border: 1px solid var(--md-outline);
+    background: transparent;
+    color: var(--md-primary);
+    height: 40px;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+  }
+
+  .btn-warning,
+  button.btn-warning,
+  a.btn-warning {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: var(--md-secondary-container);
+    color: var(--md-on-surface);
+    height: 40px;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-weight: 500;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-secondary-container));
+    }
+  }
+
+  .btn-delete,
+  button.btn-delete,
+  a.btn-delete {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: var(--md-alert);
+    color: var(--md-on-primary);
+    height: 40px;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-weight: 500;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-alert));
+    }
+  }
+
+  // =========================================================================
+  // Multiselect (mtx-select / ng-select) — table-toolbar tag filter
+  // =========================================================================
+  // The toolbar's "Etiketter" picker wraps an ng-select inside a mat-form-field.
+  // Compact it (no longer span the full width), restyle the outlined container
+  // with --md-outline, and paint selected tag chips with --md-secondary-container.
+
+  // Constrain the mat-form-field that hosts mtx-select inside the mtx-grid
+  // toolbar so it doesn't span the entire content row.
+  mtx-grid .mtx-grid-toolbar .mat-mdc-form-field,
+  .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
+    max-width: 320px;
+    width: 100%;
+  }
+
+  // Outer ng-select container — transparent so the form-field's floating
+  // label and bg remain visible. The mat-form-field wrapper paints the
+  // outlined border and surface around us.
+  mtx-select .ng-select {
+    .ng-select-container {
+      min-height: 40px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      transition: none;
+    }
+
+    &.ng-select-focused .ng-select-container,
+    &.ng-select-opened .ng-select-container {
+      border: none;
+      box-shadow: none;
+    }
+
+    &:hover:not(.ng-select-focused):not(.ng-select-opened) .ng-select-container {
+      border: none;
+    }
+
+    .ng-placeholder {
+      color: var(--md-on-surface-variant);
+      font-size: 14px;
+    }
+
+    .ng-input > input {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+      font-size: 14px;
+    }
+
+    // Selected value chips (multi-select)
+    .ng-value {
+      background: var(--md-secondary-container);
+      color: var(--md-on-surface);
+      border-radius: var(--radius-rounded-full, 999px);
+      padding: 2px 4px 2px 10px;
+      margin: 4px 4px 4px 0;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: none;
+
+      .ng-value-icon {
+        order: 2;
+        padding: 0 6px;
+        color: var(--md-on-surface-variant);
+        border-left: none;
+
+        &:hover {
+          background: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+          border-radius: 999px;
+          color: var(--md-on-surface);
+        }
+      }
+    }
+
+    // Single-select value text
+    .ng-value-container .ng-value:not(.ng-value-disabled) {
+      color: var(--md-on-surface);
+    }
+
+    .ng-arrow-wrapper {
+      .ng-arrow {
+        border-color: var(--md-on-surface-variant) transparent transparent;
+      }
+    }
+
+    .ng-clear-wrapper {
+      color: var(--md-on-surface-variant);
+
+      &:hover {
+        color: var(--md-on-surface);
+      }
+    }
+  }
+
+  // Dropdown panel — portaled outside the field
+  .ng-dropdown-panel {
+    background: var(--md-surface-container);
+    border: 1px solid var(--md-outline);
+    border-radius: var(--radius-sm, 4px);
+    box-shadow: var(--md-shadow);
+    overflow: hidden;
+
+    .ng-dropdown-panel-items .ng-option {
+      background: transparent;
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+      font-size: 14px;
+      padding: 8px 12px;
+
+      &.ng-option-marked,
+      &:hover {
+        background: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+        color: var(--md-on-surface);
+      }
+
+      &.ng-option-selected {
+        background: var(--md-primary-container);
+        color: var(--md-primary);
+
+        &.ng-option-marked {
+          background: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary-container));
+        }
+      }
+
+      &.ng-option-disabled {
+        color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+      }
+    }
+  }
+}

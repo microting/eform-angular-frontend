@@ -52,6 +52,7 @@ $eform-m3-dark-theme: mat.define-theme((
 
   // Typography
   --font-family: #{map.get($tokens, font-family)};
+  --font-family-mono: #{map.get($tokens, font-family-mono)};
   --font-size-base: #{map.get($tokens, font-size-base)};
   --font-size-body: #{map.get($tokens, font-size-body)};
   --font-size-table-header: #{map.get($tokens, font-size-table-header)};
@@ -74,6 +75,7 @@ $eform-m3-dark-theme: mat.define-theme((
   --radius-rounded-full: #{map.get($tokens, radius-rounded-full)};
   --radius-checkbox: #{map.get($tokens, radius-checkbox)};
   --radius-tag: #{map.get($tokens, radius-tag)};
+  --md-radius: #{map.get($tokens, md-radius)};
 
   // Sizing
   --icon-btn-size: #{map.get($tokens, icon-btn-size)};
@@ -99,6 +101,27 @@ $eform-m3-dark-theme: mat.define-theme((
   --elevation-scrollbar: #{map.get($tokens, elevation-scrollbar)};
 
   // --- Mode-dependent color tokens ---
+
+  // Canonical design system tokens (md-*, status chips)
+  --md-primary: #{map.get($mode-colors, md-primary)};
+  --md-on-primary: #{map.get($mode-colors, md-on-primary)};
+  --md-primary-container: #{map.get($mode-colors, md-primary-container)};
+  --md-secondary-container: #{map.get($mode-colors, md-secondary-container)};
+  --md-surface: #{map.get($mode-colors, md-surface)};
+  --md-surface-container: #{map.get($mode-colors, md-surface-container)};
+  --md-surface-variant: #{map.get($mode-colors, md-surface-variant)};
+  --md-on-surface: #{map.get($mode-colors, md-on-surface)};
+  --md-on-surface-variant: #{map.get($mode-colors, md-on-surface-variant)};
+  --md-outline: #{map.get($mode-colors, md-outline)};
+  --md-alert: #{map.get($mode-colors, md-alert)};
+  --md-shadow: #{map.get($mode-colors, md-shadow)};
+
+  --status-aktiv-bg: #{map.get($mode-colors, status-aktiv-bg)};
+  --status-aktiv-fg: #{map.get($mode-colors, status-aktiv-fg)};
+  --status-afventer-bg: #{map.get($mode-colors, status-afventer-bg)};
+  --status-afventer-fg: #{map.get($mode-colors, status-afventer-fg)};
+  --status-inaktiv-bg: #{map.get($mode-colors, status-inaktiv-bg)};
+  --status-inaktiv-fg: #{map.get($mode-colors, status-inaktiv-fg)};
 
   // Existing tokens
   --primary: #{map.get($mode-colors, primary)};
@@ -224,6 +247,10 @@ $eform-m3-dark-theme: mat.define-theme((
   --nav-hover-surface: #{map.get($mode-colors, nav-hover-surface)};
   --nav-hover-text: #{map.get($mode-colors, nav-hover-text)};
   --nav-item-height: #{map.get($mode-colors, nav-item-height)};
+  --nav-item-radius: #{map.get($mode-colors, nav-item-radius)};
+  --search-field-radius: #{map.get($mode-colors, search-field-radius)};
+  --mtx-grid-border: #{map.get($mode-colors, mtx-grid-border)};
+  --mtx-grid-radius: #{map.get($mode-colors, mtx-grid-radius)};
   --content-card-bg: #{map.get($mode-colors, content-card-bg)};
   --content-card-radius: #{map.get($mode-colors, content-card-radius)};
   --content-card-margin: #{map.get($mode-colors, content-card-margin)};
@@ -232,8 +259,11 @@ $eform-m3-dark-theme: mat.define-theme((
   --sort-indicator-arrow: #{map.get($mode-colors, sort-indicator-arrow)};
 
   // Material component overrides
+  // Page background uses --md-surface (tinted); cards use --md-surface-container (elevated white).
+  --mat-app-background-color: #{map.get($mode-colors, md-surface)};
   --mat-table-row-item-outline-color: #{map.get($mode-colors, border)} !important;
-  --mat-card-elevated-container-color: #{map.get($mode-colors, bg)} !important;
+  --mat-card-elevated-container-color: #{map.get($mode-colors, md-surface-container)} !important;
+  --mat-card-elevated-container-elevation: none !important;
   --mat-table-background-color: #{map.get($mode-colors, tp-td-bg)};
   --mat-table-header-headline-color: #{map.get($mode-colors, text-header)};
   --mat-table-row-item-label-text-color: #{map.get($mode-colors, text-body)};

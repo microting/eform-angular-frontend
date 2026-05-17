@@ -14,7 +14,7 @@ import {AuthStateService} from 'src/app/common/store';
 import {filter} from 'rxjs/operators';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription, take} from 'rxjs';
-import {TitleService, GoogleAuthService} from 'src/app/common/services';
+import {TitleService, GoogleAuthService, AppSettingsService} from 'src/app/common/services';
 import {TranslateService} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth} from 'src/app/state';
@@ -34,6 +34,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);
   private store = inject(Store);
   private fb = inject(FormBuilder);
+  private settingsService = inject(AppSettingsService);
+
+  get showForgotPasswordLink(): boolean {
+    return !!this.settingsService.loginPageSettingsModel?.isSendGridExists;
+  }
 
   formLogin: FormGroup;
   googleAuthenticatorModel: GoogleAuthenticatorModel = new GoogleAuthenticatorModel();

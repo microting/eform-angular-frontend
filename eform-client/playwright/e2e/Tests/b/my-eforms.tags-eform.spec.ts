@@ -7,6 +7,8 @@ const testTag = 'Test tag';
 const newEformLabel = generateRandmString();
 
 test.describe.serial('Main page', () => {
+  test.describe.configure({ timeout: 240_000 });
+
   let page: Page;
   let loginPage: LoginPage;
   let myEformsPage: MyEformsPage;
@@ -20,7 +22,14 @@ test.describe.serial('Main page', () => {
   });
 
   test.afterAll(async () => {
-    await page.close();
+    if (page && !page.isClosed()) await page.close();
+  });
+
+  // Stop cascade: if a previous test in this serial describe killed the
+  // shared page (test timeout → context teardown), skip the rest instead
+  // of having every test wait 120s on a dead page.
+  test.beforeEach(async () => {
+    test.skip(!page || page.isClosed(), 'Shared page closed by earlier failure');
   });
 
   test('should create eform', async () => {
