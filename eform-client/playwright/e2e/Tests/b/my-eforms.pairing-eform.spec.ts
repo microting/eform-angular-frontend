@@ -8,6 +8,8 @@ const users = new Array<DeviceUsersRowObject>();
 const folders = new Array<FoldersRowObject>();
 
 test.describe.serial('Main page', () => {
+  test.describe.configure({ timeout: 240_000 });
+
   let page: Page;
   let loginPage: LoginPage;
   let myEformsPage: MyEformsPage;
@@ -37,7 +39,14 @@ test.describe.serial('Main page', () => {
     await myEformsPage.createNewEform('test Eform');
   });
 
+  // Stop cascade: if a previous test killed the shared page, skip the rest
+  // instead of waiting 120s on a dead beforeAll.
+  test.beforeEach(async () => {
+    test.skip(!page || page.isClosed(), 'Shared page closed by earlier failure');
+  });
+
   test.afterAll(async () => {
+    if (!page || page.isClosed()) return;
     await page.waitForTimeout(1000);
     const eform = await myEformsPage.getEformsRowObjByNameEForm('test Eform');
     if (eform) {

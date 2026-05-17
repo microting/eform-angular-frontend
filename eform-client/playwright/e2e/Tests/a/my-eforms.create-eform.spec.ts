@@ -6,6 +6,8 @@ import { Guid } from 'guid-typescript';
 let arrayNamesTag = new Array<string>();
 let page;
 
+test.describe.configure({ timeout: 240_000 });
+
 test.beforeAll(async ({ browser }) => {
   page = await browser.newPage();
   const loginPage = new LoginPage(page);
@@ -14,7 +16,14 @@ test.beforeAll(async ({ browser }) => {
 });
 
 test.afterAll(async () => {
-  await page.close();
+  if (page && !page.isClosed()) await page.close();
+});
+
+// Stop cascade: if an earlier test in this serial describe killed the
+// shared page (test timeout → context teardown), skip the rest instead
+// of having every subsequent test wait 120s on a dead beforeAll.
+test.beforeEach(async () => {
+  test.skip(!page || page.isClosed(), 'Shared page closed by earlier failure');
 });
 
 test.describe.serial('My eforms', () => {

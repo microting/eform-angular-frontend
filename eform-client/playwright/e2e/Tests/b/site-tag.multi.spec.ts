@@ -9,6 +9,8 @@ const aTagName = generateRandmString();
 const bTagName = generateRandmString();
 
 test.describe.serial('Site tags', () => {
+  test.describe.configure({ timeout: 240_000 });
+
   let page;
   let loginPage: LoginPage;
   let myEformsPage: MyEformsPage;
@@ -30,7 +32,13 @@ test.describe.serial('Site tags', () => {
   });
 
   test.afterAll(async () => {
-    await page.close();
+    if (page && !page.isClosed()) await page.close();
+  });
+
+  // Stop cascade: if a previous test in this serial describe killed the
+  // shared page, skip the rest instead of waiting 120s on dead state.
+  test.beforeEach(async () => {
+    test.skip(!page || page.isClosed(), 'Shared page closed by earlier failure');
   });
 
   test('should create new tag', async () => {

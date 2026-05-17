@@ -209,7 +209,8 @@ export class MyEformsPage extends PageWithNavbarPage {
     xml = ''
   ) {
     await (await this.waitForNewEformBtn()).click();
-    await this.page.waitForTimeout(500);
+    // Wait for the create-eform modal's XML textarea instead of a hard sleep;
+    // Playwright auto-waits, so the 500ms guess was wasted walltime.
     await this.xmlTextArea().waitFor({ state: 'visible', timeout: 40000 });
     // Create replaced xml and insert it in textarea
     if (!xml) {
@@ -218,9 +219,9 @@ export class MyEformsPage extends PageWithNavbarPage {
     await this.page.evaluate(function (xmlText) {
       (<HTMLInputElement>document.getElementById('eFormXml')).value = xmlText;
     }, xml);
-    await this.page.waitForTimeout(200);
+    // pressSequentially triggers Angular change detection on the textarea.
+    // The next operation auto-waits, so no manual sleep needed afterwards.
     await this.xmlTextArea().pressSequentially(' ');
-    await this.page.waitForTimeout(500);
     // Create new tags
     const addedTags: string[] = newTagsList;
     if (newTagsList.length > 0) {
@@ -233,18 +234,17 @@ export class MyEformsPage extends PageWithNavbarPage {
     if (tagAddedNum > 0) {
       for (let i = 0; i < tagAddedNum; i++) {
         await this.createEformTagSelector().click();
-        await this.page.waitForTimeout(500);
         const selectedTag = this.page.locator('.ng-option:not(.ng-option-selected)').first();
-        selectedTags.push((await selectedTag.textContent())?.trim());
         await selectedTag.waitFor({ state: 'visible', timeout: 40000 });
+        selectedTags.push((await selectedTag.textContent())?.trim());
         await selectedTag.click();
-        await this.page.waitForTimeout(500);
         await this.page.locator('#createEformBtn').waitFor({ state: 'visible', timeout: 10000 });
       }
     }
     await (await this.waitForCreateEformBtn()).click();
+    // Wait until the New eForm button is back (modal dismissed) rather than
+    // a fixed sleep — the dismiss timing depends on backend latency.
     await this.newEformBtn().waitFor({ state: 'visible', timeout: 40000 });
-    await this.page.waitForTimeout(500);
     return { added: addedTags, selected: selectedTags };
   }
 
