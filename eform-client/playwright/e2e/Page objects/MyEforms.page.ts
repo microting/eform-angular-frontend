@@ -375,9 +375,18 @@ export class MyEformsRowObject {
     const tagSelector = this.page.locator('app-eform-edit-tags-modal #tagSelector input');
     await tagSelector.waitFor({ state: 'visible', timeout: 40000 });
     await tagSelector.fill(tag);
-    const ngDropdownPanel = this.page.locator('.ng-option');
-    await ngDropdownPanel.waitFor({ state: 'visible', timeout: 40000 });
-    await ngDropdownPanel.click();
+    // `.first()` to avoid strict-mode violations if another portaled
+    // .ng-option exists in the DOM from a previously-dismissed dropdown.
+    const ngOption = this.page.locator('.ng-option').first();
+    await ngOption.waitFor({ state: 'visible', timeout: 40000 });
+    await ngOption.click();
+    // mtx-select with [multiple]="true" keeps its dropdown panel open
+    // after a selection. The panel is portaled to <body> via `appendTo`,
+    // so it overlaps the modal's Save button — Playwright's actionability
+    // check on Save then never passes and the test hangs the full budget.
+    // Press Escape and wait for the panel to detach so Save is clickable.
+    await this.page.keyboard.press('Escape');
+    await this.page.locator('.ng-dropdown-panel').waitFor({ state: 'detached', timeout: 10000 }).catch(() => {/* panel already gone */});
     await (await this.myEformsPage.waitForTagEditSaveBtn()).click();
     await this.page.waitForTimeout(500);
   }
