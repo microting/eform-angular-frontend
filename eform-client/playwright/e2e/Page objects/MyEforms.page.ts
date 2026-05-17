@@ -5,7 +5,7 @@ import XMLForEform from '../Constants/XMLForEform';
 import { FoldersRowObject } from './Folders.page';
 import { DeviceUsersRowObject } from './DeviceUsers.page';
 import { TagsModalPage } from './TagsModal.page';
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class MyEformsPage extends PageWithNavbarPage {
   constructor(page: Page) {
@@ -217,8 +217,6 @@ export class MyEformsPage extends PageWithNavbarPage {
     xml = ''
   ) {
     await (await this.waitForNewEformBtn()).click();
-    // Wait for the create-eform modal's XML textarea instead of a hard sleep;
-    // Playwright auto-waits, so the 500ms guess was wasted walltime.
     await this.xmlTextArea().waitFor({ state: 'visible', timeout: 40000 });
     // Create replaced xml and insert it in textarea
     if (!xml) {
@@ -227,8 +225,8 @@ export class MyEformsPage extends PageWithNavbarPage {
     await this.page.evaluate(function (xmlText) {
       (<HTMLInputElement>document.getElementById('eFormXml')).value = xmlText;
     }, xml);
-    // pressSequentially triggers Angular change detection on the textarea.
-    // The next operation auto-waits, so no manual sleep needed afterwards.
+    // pressSequentially triggers the key event Angular's reactive form
+    // listens to (programmatic `.value =` alone won't update form status).
     await this.xmlTextArea().pressSequentially(' ');
     // Create new tags
     const addedTags: string[] = newTagsList;
@@ -249,14 +247,14 @@ export class MyEformsPage extends PageWithNavbarPage {
         await this.page.locator('#createEformBtn').waitFor({ state: 'visible', timeout: 10000 });
       }
     }
-    await (await this.waitForCreateEformBtn()).click();
-    // Wait for the create-eform modal to fully dismiss (the modal overlays
-    // the page so newEformBtn() being "visible" can return true while the
-    // modal is still on screen). Waiting on the modal's own element being
-    // detached is the reliable signal that the create flow has finished.
-    await this.createEformBtn()
-      .waitFor({ state: 'detached', timeout: 40000 })
-      .catch(() => {/* fall through — modal already gone */});
+    // Wait for the submit button to be enabled — this is the actual
+    // form-validity signal. Without this, clicking too early lands on a
+    // still-disabled button (Angular hasn't processed the tag input yet)
+    // and the modal never dismisses, hanging the entire test budget.
+    await expect(this.createEformBtn()).toBeEnabled({ timeout: 10000 });
+    await this.createEformBtn().click();
+    // Wait for the create-eform modal to fully dismiss.
+    await this.createEformBtn().waitFor({ state: 'detached', timeout: 40000 });
     await this.newEformBtn().waitFor({ state: 'visible', timeout: 40000 });
     return { added: addedTags, selected: selectedTags };
   }
