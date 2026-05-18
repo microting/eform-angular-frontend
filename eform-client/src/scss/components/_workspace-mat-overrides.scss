@@ -477,28 +477,46 @@ body.theme-workspace {
   // =========================================================================
 
   .mat-mdc-slide-toggle {
-    --mdc-switch-unselected-track-color: var(--md-surface-variant);
-    --mdc-switch-unselected-hover-track-color: var(--md-surface-variant);
-    --mdc-switch-unselected-focus-track-color: var(--md-surface-variant);
-    --mdc-switch-unselected-pressed-track-color: var(--md-surface-variant);
+    // Angular Material 18+ M3 reads --mat-slide-toggle-* custom properties
+    // for the visible colors. The older --mdc-switch-* tokens below are
+    // kept as a defensive fallback for any internal MDC paths that may
+    // still read them, but --mat-slide-toggle-* is the canonical surface.
+    --mat-slide-toggle-unselected-track-color: var(--md-surface-variant);
+    --mat-slide-toggle-unselected-hover-track-color: var(--md-surface-variant);
+    --mat-slide-toggle-unselected-focus-track-color: var(--md-surface-variant);
+    --mat-slide-toggle-unselected-pressed-track-color: var(--md-surface-variant);
+    --mat-slide-toggle-selected-track-color: var(--md-primary);
+    --mat-slide-toggle-selected-hover-track-color: var(--md-primary);
+    --mat-slide-toggle-selected-focus-track-color: var(--md-primary);
+    --mat-slide-toggle-selected-pressed-track-color: var(--md-primary);
+    --mat-slide-toggle-unselected-handle-color: #ffffff;
+    --mat-slide-toggle-unselected-hover-handle-color: #ffffff;
+    --mat-slide-toggle-unselected-focus-handle-color: #ffffff;
+    --mat-slide-toggle-unselected-pressed-handle-color: #ffffff;
+    --mat-slide-toggle-selected-handle-color: #ffffff;
+    --mat-slide-toggle-selected-hover-handle-color: #ffffff;
+    --mat-slide-toggle-selected-focus-handle-color: #ffffff;
+    --mat-slide-toggle-selected-pressed-handle-color: #ffffff;
+    --mat-slide-toggle-selected-icon-color: var(--md-primary);
+    --mat-slide-toggle-unselected-icon-color: var(--md-on-surface-variant);
+    --mat-slide-toggle-disabled-selected-track-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    --mat-slide-toggle-disabled-unselected-track-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    // State-layer (hover halo) — keep contained to the primary tone on selected
+    --mat-slide-toggle-selected-hover-state-layer-color: var(--md-primary);
+    --mat-slide-toggle-selected-focus-state-layer-color: var(--md-primary);
+    --mat-slide-toggle-selected-pressed-state-layer-color: var(--md-primary);
+    --mat-slide-toggle-unselected-hover-state-layer-color: var(--md-on-surface);
+    --mat-slide-toggle-unselected-focus-state-layer-color: var(--md-on-surface);
+    --mat-slide-toggle-unselected-pressed-state-layer-color: var(--md-on-surface);
+
+    // Legacy MDC namespace tokens kept as fallback (no-op on M3 18+, but
+    // harmless and may help if a future Material rev reverts to reading them).
     --mdc-switch-selected-track-color: var(--md-primary);
-    --mdc-switch-selected-hover-track-color: var(--md-primary);
-    --mdc-switch-selected-focus-track-color: var(--md-primary);
-    --mdc-switch-selected-pressed-track-color: var(--md-primary);
-    --mdc-switch-unselected-handle-color: var(--md-surface-container);
-    --mdc-switch-unselected-hover-handle-color: var(--md-surface-container);
-    --mdc-switch-unselected-focus-handle-color: var(--md-surface-container);
-    --mdc-switch-unselected-pressed-handle-color: var(--md-surface-container);
-    --mdc-switch-selected-handle-color: var(--md-on-primary);
-    --mdc-switch-selected-hover-handle-color: var(--md-on-primary);
-    --mdc-switch-selected-focus-handle-color: var(--md-on-primary);
-    --mdc-switch-selected-pressed-handle-color: var(--md-on-primary);
-    --mdc-switch-selected-icon-color: var(--md-primary);
-    --mdc-switch-unselected-icon-color: var(--md-on-surface-variant);
-    --mdc-switch-disabled-selected-track-color:
-      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
-    --mdc-switch-disabled-unselected-track-color:
-      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    --mdc-switch-unselected-track-color: var(--md-surface-variant);
+    --mdc-switch-selected-handle-color: #ffffff;
+    --mdc-switch-unselected-handle-color: #ffffff;
 
     // Spec dimensions (Design Manual: 42x24 rounded-rect track + 18x18 thumb).
     // Override Material M3's 52x32 full-pill defaults.
