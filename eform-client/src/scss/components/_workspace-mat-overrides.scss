@@ -251,20 +251,8 @@ body.theme-workspace {
   .mat-mdc-form-field {
     font-family: var(--font-family);
 
-    // Compact 40px field height (design system spec)
-    .mat-mdc-form-field-infix {
-      min-height: 40px;
-      padding-top: 8px;
-      padding-bottom: 8px;
-    }
-
-    // Hide the legacy subscript hint area — keeps fields visually tight.
-    // (Caller can re-enable per-component if validation hints are needed.)
-    .mat-mdc-form-field-subscript-wrapper {
-      padding: 0;
-    }
-
-    // Floating label colors
+    // Floating label colors (still applied even when label is promoted to
+    // static-above; the color rule wins over its `position: static` sibling).
     .mdc-floating-label {
       color: var(--md-on-surface-variant);
       font-family: var(--font-family);
@@ -287,6 +275,133 @@ body.theme-workspace {
     // Placeholder
     .mat-mdc-input-element::placeholder {
       color: var(--md-on-surface-variant);
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Stacked-label outlined-box spec (Design Manual `.field` pattern)
+  // -------------------------------------------------------------------------
+  // Promote `<mat-label>` to a static span ABOVE the wrapper, hide Material's
+  // notched-outline pieces and line-ripple, and paint a single border on
+  // `.mat-mdc-text-field-wrapper` so BOTH `appearance="outline"` and
+  // `appearance="fill"` render as the same canonical 40px outlined rectangle.
+  //
+  // !important is required throughout: Material's MDC layer ships its own
+  // !important declarations and inline transforms on the floating label,
+  // notched-outline borders, and line-ripple — non-important rules lose
+  // every cascade tie against MDC's compiled stylesheet.
+  .mat-mdc-form-field,
+  .mat-form-field-appearance-fill,
+  .mat-form-field-appearance-outline {
+    // Label: static span above the box, never animates into a notch.
+    .mdc-floating-label,
+    .mat-mdc-floating-label,
+    mat-label {
+      position: static !important;
+      transform: none !important;
+      color: var(--md-on-surface) !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      line-height: 1 !important;
+      margin: 0 0 6px 0 !important;
+      pointer-events: none;
+      overflow: visible !important;
+      max-width: 100% !important;
+    }
+
+    // Hide Material's notched-outline pieces — the wrapper paints the border.
+    .mdc-notched-outline,
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      display: none !important;
+    }
+
+    // Stack the label-wrapper above the text-field-wrapper.
+    .mat-mdc-form-field-flex {
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+
+    // Wrapper: canonical 40px outlined rectangle.
+    .mat-mdc-text-field-wrapper {
+      background: var(--md-surface) !important;
+      border: 1px solid var(--md-outline) !important;
+      border-radius: var(--radius-sm, 4px) !important;
+      padding: 0 12px !important;
+      height: 40px !important;
+      min-height: 40px !important;
+    }
+
+    // Kill the filled-appearance line-ripple — outlined box shows focus via
+    // the wrapper border instead.
+    .mdc-line-ripple,
+    .mdc-line-ripple--active,
+    .mdc-line-ripple::before,
+    .mdc-line-ripple::after {
+      display: none !important;
+    }
+
+    // Infix: input/select sit here — collapse to 24px so the wrapper hits 40px.
+    .mat-mdc-form-field-infix {
+      padding: 8px 0 !important;
+      min-height: 24px !important;
+      border: none !important;
+      width: auto;
+    }
+
+    // Native input/textarea inside the infix.
+    input.mat-mdc-input-element,
+    textarea.mat-mdc-input-element,
+    .mat-mdc-input-element {
+      color: var(--md-on-surface) !important;
+      font-family: var(--font-family) !important;
+      font-size: 14px !important;
+      line-height: 1.4 !important;
+      background: transparent !important;
+    }
+
+    // Focus: thicken border to spec's 2px primary. Reduce padding by 1px to
+    // compensate so the box doesn't jump (1px → 2px border = +1px each side).
+    &.mat-focused .mat-mdc-text-field-wrapper,
+    .mat-mdc-text-field-wrapper:focus-within {
+      border-color: var(--md-primary) !important;
+      border-width: 2px !important;
+      padding: 0 11px !important;
+    }
+
+    // Invalid / error state.
+    &.mat-form-field-invalid .mat-mdc-text-field-wrapper {
+      border-color: var(--md-alert) !important;
+    }
+
+    // Disabled state.
+    &.mat-form-field-disabled .mat-mdc-text-field-wrapper {
+      background: color-mix(in srgb, var(--md-on-surface) 4%, transparent) !important;
+      border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
+    }
+
+    // Subscript — collapse when empty, show only for errors/hints.
+    .mat-mdc-form-field-subscript-wrapper {
+      padding: 0 !important;
+      margin-top: 4px;
+
+      .mat-mdc-form-field-hint-wrapper,
+      .mat-mdc-form-field-error-wrapper {
+        padding: 0 !important;
+      }
+
+      // If neither hint nor error is showing, collapse fully (saves 20px).
+      &:not(:has(mat-error, mat-hint, .mat-mdc-form-field-error, .mat-mdc-form-field-hint)) {
+        display: none !important;
+      }
+    }
+
+    // Suffix / prefix icon spacing (search icons, clear buttons, etc).
+    .mat-mdc-form-field-icon-suffix,
+    .mat-mdc-form-field-icon-prefix {
+      color: var(--md-on-surface-variant);
+      padding: 0 4px;
     }
   }
 
@@ -358,9 +473,17 @@ body.theme-workspace {
   .mat-mdc-select {
     font-family: var(--font-family);
     color: var(--md-on-surface);
+    font-size: 14px;
+    // Match the 24px infix the stacked-label overrides establish above so
+    // the select trigger centers inside the 40px wrapper.
+    min-height: 24px;
+    line-height: 24px;
 
-    .mat-mdc-select-value {
+    .mat-mdc-select-value,
+    .mat-mdc-select-trigger {
       color: var(--md-on-surface);
+      min-height: 24px;
+      line-height: 24px;
     }
 
     .mat-mdc-select-placeholder {
@@ -426,9 +549,11 @@ body.theme-workspace {
   // =========================================================================
 
   .mat-mdc-checkbox {
+    // MDC namespace tokens — internal MDC engine reads these.
     --mdc-checkbox-unselected-icon-color: var(--md-outline);
     --mdc-checkbox-unselected-hover-icon-color: var(--md-on-surface);
     --mdc-checkbox-unselected-focus-icon-color: var(--md-on-surface);
+    --mdc-checkbox-unselected-pressed-icon-color: var(--md-on-surface);
     --mdc-checkbox-selected-icon-color: var(--md-primary);
     --mdc-checkbox-selected-hover-icon-color: var(--md-primary);
     --mdc-checkbox-selected-focus-icon-color: var(--md-primary);
@@ -437,6 +562,14 @@ body.theme-workspace {
     --mdc-checkbox-disabled-selected-icon-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
     --mdc-checkbox-disabled-unselected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+
+    // mat-* namespace mirrors — Material 18+ public surface reads these for
+    // the label color & disabled state. Without them the checkbox label
+    // ignores theme tokens and falls back to Material's default ink color.
+    --mat-checkbox-label-text-color: var(--md-on-surface);
+    --mat-checkbox-label-text-font: var(--font-family);
+    --mat-checkbox-disabled-label-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
 
     .mdc-form-field {
@@ -454,9 +587,11 @@ body.theme-workspace {
   // =========================================================================
 
   .mat-mdc-radio-button {
+    // MDC namespace tokens — internal MDC engine reads these.
     --mdc-radio-unselected-icon-color: var(--md-outline);
     --mdc-radio-unselected-hover-icon-color: var(--md-on-surface);
     --mdc-radio-unselected-focus-icon-color: var(--md-on-surface);
+    --mdc-radio-unselected-pressed-icon-color: var(--md-on-surface);
     --mdc-radio-selected-icon-color: var(--md-primary);
     --mdc-radio-selected-hover-icon-color: var(--md-primary);
     --mdc-radio-selected-focus-icon-color: var(--md-primary);
@@ -464,6 +599,14 @@ body.theme-workspace {
     --mdc-radio-disabled-selected-icon-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
     --mdc-radio-disabled-unselected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+
+    // mat-* namespace mirrors — Material 18+ public surface reads these for
+    // the label color & font. Without them the radio label ignores theme
+    // tokens.
+    --mat-radio-label-text-color: var(--md-on-surface);
+    --mat-radio-label-text-font: var(--font-family);
+    --mat-radio-disabled-label-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
 
     .mdc-form-field {
@@ -1078,21 +1221,28 @@ body.theme-workspace {
       width: 100px;
 
       .mat-mdc-text-field-wrapper {
-        background: var(--md-surface);
-        border: 1px solid var(--md-outline);
-        border-radius: var(--radius-sm, 4px);
-        height: 36px;
-        padding: 0 4px 0 12px;
+        // !important here defends the paginator's compact 36px against the
+        // global stacked-label rules higher up in this file, which use
+        // !important to override Material's own !important defaults.
+        background: var(--md-surface) !important;
+        border: 1px solid var(--md-outline) !important;
+        border-radius: var(--radius-sm, 4px) !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        padding: 0 4px 0 12px !important;
       }
 
       .mat-mdc-form-field-flex {
         height: 36px;
         align-items: center;
+        // Paginator's page-size select stays inline (row layout) — undo the
+        // global column override.
+        flex-direction: row !important;
       }
 
       .mat-mdc-form-field-infix {
-        min-height: 34px;
-        padding: 0;
+        min-height: 34px !important;
+        padding: 0 !important;
       }
 
       // Hide Material's notched-outline pieces — we paint the border on
@@ -1355,6 +1505,30 @@ body.theme-workspace {
   .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
     max-width: 320px;
     width: 100%;
+
+    // Undo the stacked-label rules higher up in this file: mtx-select renders
+    // an ng-select inline and needs the form-field-flex to keep its default
+    // row layout (label + trigger + arrow on one line via ng-select itself).
+    // Without this opt-out the column-stack flex direction breaks the
+    // selected-tag chip layout.
+    .mat-mdc-form-field-flex {
+      flex-direction: row !important;
+      align-items: center !important;
+    }
+
+    // mtx-select sets ng-select-container min-height: 40px — let the infix
+    // grow to match instead of clamping to 24px.
+    .mat-mdc-form-field-infix {
+      min-height: 40px !important;
+      padding: 0 !important;
+    }
+
+    // Wrapper grows with the chip count instead of locking to 40px.
+    .mat-mdc-text-field-wrapper {
+      height: auto !important;
+      min-height: 40px !important;
+      padding: 0 12px !important;
+    }
   }
 
   // Outer ng-select container — transparent so the form-field's floating
