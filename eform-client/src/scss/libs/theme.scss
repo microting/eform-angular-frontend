@@ -175,7 +175,9 @@ body {
   position: relative;
   top: -1px;
 }
-.mat-mdc-icon-button {
+// Legacy eform-variant icon-button sizing. The workspace variant overrides
+// this in _workspace-mat-overrides.scss to 42×42 per Design Manual §buttons.
+body.theme-eform .mat-mdc-icon-button {
   padding: 0 !important;
   width: 28px !important;
   height: 28px !important;

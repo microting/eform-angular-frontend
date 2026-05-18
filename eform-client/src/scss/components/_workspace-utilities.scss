@@ -466,6 +466,10 @@ body.theme-workspace {
   }
 
   // 6. KPI card / card / list / badge
+  .kpi-grid {
+    display: grid;
+    gap: 10px;
+  }
   .kpi-card {
     border: 1px solid var(--md-surface-variant);
     border-radius: var(--radius-sm, 4px);
@@ -546,6 +550,10 @@ body.theme-workspace {
     background: var(--md-surface-variant);
     overflow: hidden;
   }
+  // Spec markup is `<span class="progress-value">`; paint comes from
+  // `.progress > span` below. Consumers set width inline (e.g.
+  // `style="width: 65%"`). `.progress-bar` is kept for plugins that
+  // already use the older `<div class="progress-bar">` form.
   .progress-bar,
   .progress > span {
     display: block;
@@ -597,6 +605,13 @@ body.theme-workspace {
     align-items: center;
     flex-wrap: wrap;
     gap: var(--spacing-sm, 8px);
+  }
+  .pagination-simple {
+    gap: 12px;
+  }
+  .pagination-info {
+    color: var(--md-on-surface-variant);
+    font-size: 0.9rem;
   }
   .pagination-item {
     display: inline-flex;

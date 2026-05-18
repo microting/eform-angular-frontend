@@ -164,28 +164,28 @@ body.theme-workspace {
     }
   }
 
-  // --- Icon button (28px square, circular hit area) ---
+  // --- Icon button (42px square, circular hit area) ---
   .mat-mdc-icon-button {
-    --mdc-icon-button-state-layer-size: 28px;
-    width: 28px;
-    height: 28px;
+    --mdc-icon-button-state-layer-size: 42px;
+    width: 42px;
+    height: 42px;
     padding: 0 !important;
     border-radius: 50% !important;
     color: var(--md-on-surface-variant);
-    line-height: 28px;
+    line-height: 42px;
 
     .mat-mdc-button-touch-target {
-      width: 28px;
-      height: 28px;
+      width: 42px;
+      height: 42px;
     }
 
     .mat-icon,
     .material-symbols-outlined {
       color: var(--md-on-surface-variant);
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-      line-height: 20px;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
     }
 
     &:hover:not(:disabled) {
