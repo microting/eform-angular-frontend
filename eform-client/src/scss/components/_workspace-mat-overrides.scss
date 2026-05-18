@@ -500,6 +500,35 @@ body.theme-workspace {
     --mdc-switch-disabled-unselected-track-color:
       color-mix(in srgb, var(--md-on-surface) 12%, transparent);
 
+    // Spec dimensions (Design Manual: 42x24 rounded-rect track + 18x18 thumb).
+    // Override Material M3's 52x32 full-pill defaults.
+    --mdc-switch-track-width: 42px;
+    --mdc-switch-track-height: 24px;
+    --mdc-switch-track-shape: 6px;
+    --mdc-switch-handle-width: 18px;
+    --mdc-switch-handle-height: 18px;
+    --mdc-switch-handle-shape: 4px;
+    --mdc-switch-state-layer-size: 24px;
+
+    // Direct selectors as a safety net for M3 internals that hard-code sizes.
+    .mdc-switch {
+      width: 42px;
+      height: 24px;
+    }
+    .mdc-switch__track {
+      border-radius: 6px;
+      height: 24px;
+    }
+    .mdc-switch__handle {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+    }
+    // Hide the centered icon (check/cross) — the spec switch is icon-less.
+    .mdc-switch__icons {
+      display: none;
+    }
+
     .mdc-form-field {
       color: var(--md-on-surface);
       font-family: var(--font-family);

@@ -769,7 +769,10 @@ body.theme-eform {
   }
 }
 
-.nav-header {
+// Legacy eform-variant nav-header. Workspace overrides this in
+// _workspace-patterns.scss to the tinted color-mix(--md-primary 10%,
+// --md-surface-container) per Design Manual §app-bar.
+body.theme-eform .nav-header {
   display: flex;
   width: 1920px;
   padding: var(--520-px, 20px);
