@@ -1245,6 +1245,33 @@ body.theme-workspace {
       border: 1px solid var(--md-outline);
       height: 40px !important;
     }
+
+    // Outlined icon-left variant — mirror of .btn-primary--icon-left
+    // for secondary actions that need both an icon and a visible label
+    // (e.g. spec medarbejdertabel Tags button).
+    &--icon-left {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 16px;
+      gap: 8px;
+      border-radius: var(--radius-sm, 4px) !important;
+      border: 1px solid var(--md-outline);
+
+      .mat-icon,
+      .material-symbols-outlined {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1;
+      }
+    }
   }
 
   .btn-cancel,
