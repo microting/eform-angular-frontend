@@ -804,7 +804,13 @@ formatting-text-editor {
 }
 
 
-.text-field {
+// Legacy eform-variant `.text-field--rounded` pill pattern. The workspace
+// theme paints these fields with the canonical 40px outlined-rect look via
+// _workspace-mat-overrides.scss, so this legacy chain must NOT apply on
+// `body.theme-workspace` — its `top: calc(48px/2)` on the floating-label
+// overrides the workspace `top: 0` rule and traps the label inside the
+// wrapper. Scope to eform only.
+body.theme-eform .text-field {
   &--rounded {
     .mat-mdc-text-field-wrapper {
       padding-left: 16px !important;

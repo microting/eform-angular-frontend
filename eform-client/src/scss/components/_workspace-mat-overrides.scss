@@ -250,9 +250,14 @@ body.theme-workspace {
 
   .mat-mdc-form-field {
     font-family: var(--font-family);
+    // Anchor for the absolute-positioned label below, plus reserve space
+    // above the wrapper so the lifted label has somewhere to sit. 22px =
+    // 14px label height + 8px gap above the wrapper's top border.
+    position: relative;
+    padding-top: 22px;
 
-    // Floating label colors (still applied even when label is promoted to
-    // static-above; the color rule wins over its `position: static` sibling).
+    // Floating label colors (still applied; the absolute-position rule below
+    // wins on specificity for layout, this rule paints the color).
     .mdc-floating-label {
       color: var(--md-on-surface-variant);
       font-family: var(--font-family);
@@ -293,20 +298,39 @@ body.theme-workspace {
   .mat-mdc-form-field,
   .mat-form-field-appearance-fill,
   .mat-form-field-appearance-outline {
-    // Label: static span above the box, never animates into a notch.
+    // Force the wrapper + infix to be position-static so the absolute label
+    // below anchors to the outer `.mat-mdc-form-field` (which IS positioned
+    // via `position: relative` above), not to Material's deeper nested
+    // wrappers that have their own `position: relative`.
+    .mat-mdc-text-field-wrapper,
+    .mat-mdc-form-field-infix {
+      position: static !important;
+    }
+
+    // Label: absolute-position OUTSIDE the wrapper so it sits cleanly above
+    // the outlined box with a visible gap. Anchored to the outer
+    // `.mat-mdc-form-field` (position: relative + padding-top: 22px above).
     .mdc-floating-label,
     .mat-mdc-floating-label,
     mat-label {
-      position: static !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: auto !important;
       transform: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
       color: var(--md-on-surface) !important;
       font-size: 14px !important;
       font-weight: 500 !important;
-      line-height: 1 !important;
-      margin: 0 0 6px 0 !important;
+      line-height: 16px !important;
+      height: auto !important;
+      width: auto !important;
       pointer-events: none;
       overflow: visible !important;
       max-width: 100% !important;
+      white-space: nowrap;
     }
 
     // Hide Material's notched-outline pieces — the wrapper paints the border.
@@ -315,12 +339,6 @@ body.theme-workspace {
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
       display: none !important;
-    }
-
-    // Stack the label-wrapper above the text-field-wrapper.
-    .mat-mdc-form-field-flex {
-      flex-direction: column !important;
-      align-items: stretch !important;
     }
 
     // Wrapper: canonical 40px outlined rectangle.
