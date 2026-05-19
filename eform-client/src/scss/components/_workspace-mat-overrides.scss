@@ -426,7 +426,10 @@ body.theme-workspace {
   // --- Outlined appearance ---
   .mdc-text-field--outlined {
     --mdc-outlined-text-field-outline-color: var(--md-outline);
-    --mdc-outlined-text-field-hover-outline-color: var(--md-on-surface);
+    // Design manual specifies no hover state on form fields — keep the hover
+    // outline color identical to the idle color so the field looks static
+    // until focused.
+    --mdc-outlined-text-field-hover-outline-color: var(--md-outline);
     --mdc-outlined-text-field-focus-outline-color: var(--md-primary);
     --mdc-outlined-text-field-disabled-outline-color:
       color-mix(in srgb, var(--md-on-surface) 12%, transparent);
@@ -439,14 +442,6 @@ body.theme-workspace {
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
       border-color: var(--md-outline);
-    }
-
-    &:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover {
-      .mdc-notched-outline__leading,
-      .mdc-notched-outline__notch,
-      .mdc-notched-outline__trailing {
-        border-color: var(--md-on-surface);
-      }
     }
 
     &.mdc-text-field--focused {
@@ -473,7 +468,7 @@ body.theme-workspace {
     --mdc-filled-text-field-disabled-container-color:
       color-mix(in srgb, var(--md-on-surface) 4%, transparent);
     --mdc-filled-text-field-active-indicator-color: var(--md-outline);
-    --mdc-filled-text-field-hover-active-indicator-color: var(--md-on-surface);
+    --mdc-filled-text-field-hover-active-indicator-color: var(--md-outline);
     --mdc-filled-text-field-focus-active-indicator-color: var(--md-primary);
     --mdc-filled-text-field-error-active-indicator-color: var(--md-alert);
     --mdc-filled-text-field-container-shape: var(--radius-sm, 4px);
@@ -567,28 +562,34 @@ body.theme-workspace {
   // =========================================================================
 
   .mat-mdc-checkbox {
-    // MDC namespace tokens — internal MDC engine reads these.
-    --mdc-checkbox-unselected-icon-color: var(--md-outline);
-    --mdc-checkbox-unselected-hover-icon-color: var(--md-on-surface);
-    --mdc-checkbox-unselected-focus-icon-color: var(--md-on-surface);
-    --mdc-checkbox-unselected-pressed-icon-color: var(--md-on-surface);
-    --mdc-checkbox-selected-icon-color: var(--md-primary);
-    --mdc-checkbox-selected-hover-icon-color: var(--md-primary);
-    --mdc-checkbox-selected-focus-icon-color: var(--md-primary);
-    --mdc-checkbox-selected-pressed-icon-color: var(--md-primary);
-    --mdc-checkbox-selected-checkmark-color: var(--md-on-primary);
-    --mdc-checkbox-disabled-selected-icon-color:
+    // Angular Material 18+ M3 reads --mat-checkbox-*-icon-color for the
+    // visible box border/fill colors. Without these, the unselected box
+    // resolves to M3's default mid-gray (#3f4948) and the selected box to
+    // the accent-palette teal (#006a6a). Design manual uses the native
+    // input's accent-color: var(--md-primary) — mirror that with primary
+    // fill on selected + --md-outline border on unselected.
+    --mat-checkbox-unselected-icon-color: var(--md-outline);
+    --mat-checkbox-unselected-hover-icon-color: var(--md-outline);
+    --mat-checkbox-unselected-focus-icon-color: var(--md-outline);
+    --mat-checkbox-selected-icon-color: var(--md-primary);
+    --mat-checkbox-selected-hover-icon-color: var(--md-primary);
+    --mat-checkbox-selected-focus-icon-color: var(--md-primary);
+    --mat-checkbox-selected-pressed-icon-color: var(--md-primary);
+    --mat-checkbox-selected-checkmark-color: var(--md-on-primary);
+    --mat-checkbox-disabled-selected-icon-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
-    --mdc-checkbox-disabled-unselected-icon-color:
+    --mat-checkbox-disabled-unselected-icon-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
-
-    // mat-* namespace mirrors — Material 18+ public surface reads these for
-    // the label color & disabled state. Without them the checkbox label
-    // ignores theme tokens and falls back to Material's default ink color.
     --mat-checkbox-label-text-color: var(--md-on-surface);
     --mat-checkbox-label-text-font: var(--font-family);
     --mat-checkbox-disabled-label-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+
+    // Defensive --mdc- fallback (kept for older internal MDC paths; M3 18+
+    // ignores most of these in favor of the --mat-* namespace above).
+    --mdc-checkbox-unselected-icon-color: var(--md-outline);
+    --mdc-checkbox-selected-icon-color: var(--md-primary);
+    --mdc-checkbox-selected-checkmark-color: var(--md-on-primary);
 
     .mdc-form-field {
       color: var(--md-on-surface);
@@ -605,27 +606,31 @@ body.theme-workspace {
   // =========================================================================
 
   .mat-mdc-radio-button {
-    // MDC namespace tokens — internal MDC engine reads these.
-    --mdc-radio-unselected-icon-color: var(--md-outline);
-    --mdc-radio-unselected-hover-icon-color: var(--md-on-surface);
-    --mdc-radio-unselected-focus-icon-color: var(--md-on-surface);
-    --mdc-radio-unselected-pressed-icon-color: var(--md-on-surface);
-    --mdc-radio-selected-icon-color: var(--md-primary);
-    --mdc-radio-selected-hover-icon-color: var(--md-primary);
-    --mdc-radio-selected-focus-icon-color: var(--md-primary);
-    --mdc-radio-selected-pressed-icon-color: var(--md-primary);
-    --mdc-radio-disabled-selected-icon-color:
+    // Same M3 namespace shift as checkbox: Angular Material 18+ reads
+    // --mat-radio-*-icon-color, not --mdc-radio-*. Without these the
+    // unselected dot resolves to the M3 default mid-gray and the selected
+    // dot to the accent-palette teal. Radio's M3 map has all four
+    // unselected states (icon + hover + focus + pressed), unlike checkbox.
+    --mat-radio-unselected-icon-color: var(--md-outline);
+    --mat-radio-unselected-hover-icon-color: var(--md-outline);
+    --mat-radio-unselected-focus-icon-color: var(--md-outline);
+    --mat-radio-unselected-pressed-icon-color: var(--md-outline);
+    --mat-radio-selected-icon-color: var(--md-primary);
+    --mat-radio-selected-hover-icon-color: var(--md-primary);
+    --mat-radio-selected-focus-icon-color: var(--md-primary);
+    --mat-radio-selected-pressed-icon-color: var(--md-primary);
+    --mat-radio-disabled-selected-icon-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
-    --mdc-radio-disabled-unselected-icon-color:
+    --mat-radio-disabled-unselected-icon-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
-
-    // mat-* namespace mirrors — Material 18+ public surface reads these for
-    // the label color & font. Without them the radio label ignores theme
-    // tokens.
     --mat-radio-label-text-color: var(--md-on-surface);
     --mat-radio-label-text-font: var(--font-family);
     --mat-radio-disabled-label-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+
+    // Defensive --mdc- fallback (kept for older internal MDC paths).
+    --mdc-radio-unselected-icon-color: var(--md-outline);
+    --mdc-radio-selected-icon-color: var(--md-primary);
 
     .mdc-form-field {
       color: var(--md-on-surface);
