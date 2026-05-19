@@ -594,12 +594,24 @@ body.theme-workspace {
     // Suppress M3's state-layer halo (greyish/teal disc behind the box on
     // hover/focus/press) AND the CDK click ripple. Design manual checkboxes
     // have no halo — native `accent-color` with no rippled state surface.
+    // Zeroing opacity only hides the static `.mdc-checkbox__ripple` disc;
+    // the CDK `.mat-ripple-element` injected on mousedown has its opacity
+    // animated from 0 → ~0.16 by JS and its bg painted via the
+    // state-layer-COLOR tokens (a higher-specificity Material rule than
+    // `--mat-ripple-color`). Set the colors to transparent so any ripple
+    // CDK draws paints invisible regardless of the opacity animation.
     --mat-checkbox-unselected-hover-state-layer-opacity: 0;
     --mat-checkbox-unselected-focus-state-layer-opacity: 0;
     --mat-checkbox-unselected-pressed-state-layer-opacity: 0;
     --mat-checkbox-selected-hover-state-layer-opacity: 0;
     --mat-checkbox-selected-focus-state-layer-opacity: 0;
     --mat-checkbox-selected-pressed-state-layer-opacity: 0;
+    --mat-checkbox-unselected-hover-state-layer-color: transparent;
+    --mat-checkbox-unselected-focus-state-layer-color: transparent;
+    --mat-checkbox-unselected-pressed-state-layer-color: transparent;
+    --mat-checkbox-selected-hover-state-layer-color: transparent;
+    --mat-checkbox-selected-focus-state-layer-color: transparent;
+    --mat-checkbox-selected-pressed-state-layer-color: transparent;
     --mat-ripple-color: transparent;
 
     // Defensive --mdc- fallback (kept for older internal MDC paths; M3 18+
