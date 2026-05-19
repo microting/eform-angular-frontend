@@ -769,14 +769,35 @@ body.theme-workspace {
   // active rule under workspace.
   // =========================================================================
 
+  // DM .status-chip spec: weight 600 (heavier than the tag chip's 500).
+  // Bump specificity to .mat-mdc-chip.status-X so the rule beats the
+  // generic chip block below on source-order ties.
+  .mat-mdc-chip.status-active,
+  .mat-mdc-chip.status-inactive {
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      font-weight: 600;
+    }
+  }
+
   .status-active {
     background-color: var(--status-aktiv-bg) !important;
     color: var(--status-aktiv-fg) !important;
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: var(--status-aktiv-fg) !important;
+    }
   }
 
   .status-inactive {
     background-color: var(--status-inaktiv-bg) !important;
     color: var(--status-inaktiv-fg) !important;
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: var(--status-inaktiv-fg) !important;
+    }
   }
 
   // =========================================================================
@@ -785,32 +806,56 @@ body.theme-workspace {
 
   .mat-mdc-chip,
   .mat-mdc-standard-chip {
-    --mdc-chip-container-shape-radius: var(--radius-rounded-full, 999px);
-    --mdc-chip-elevated-container-color: var(--md-secondary-container);
-    --mdc-chip-label-text-color: var(--md-on-surface);
-    --mdc-chip-with-icon-icon-color: var(--md-on-surface-variant);
-    --mdc-chip-with-icon-selected-icon-color: var(--md-primary);
-    --mdc-chip-outline-color: transparent;
-    --mdc-chip-disabled-label-text-color:
+    // Design manual `.ejendom-chip` / `.status-chip` spec: 4px rounded
+    // rectangle (not full pill), surface-variant fill, no border, 0.8rem
+    // text, weight 500. Material 18+ M3 reads the --mat-chip-* namespace
+    // — the legacy --mdc-chip-* tokens are ignored, which is why the
+    // pseudo-element border (`.mdc-evolution-chip__action--primary::before`)
+    // was still painting the M3 default outline grey.
+    --mat-chip-container-shape-radius: var(--radius-sm, 4px);
+    --mat-chip-outline-width: 0;
+    --mat-chip-outline-color: transparent;
+    --mat-chip-focus-outline-color: transparent;
+    --mat-chip-disabled-outline-color: transparent;
+    --mat-chip-flat-selected-outline-width: 0;
+    --mat-chip-elevated-container-color: var(--md-surface-variant);
+    --mat-chip-elevated-selected-container-color: var(--md-primary-container);
+    --mat-chip-elevated-disabled-container-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    --mat-chip-label-text-color: var(--md-on-surface);
+    --mat-chip-selected-label-text-color: var(--md-primary);
+    --mat-chip-disabled-label-text-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
-    border-radius: var(--radius-rounded-full, 999px) !important;
-    background-color: var(--md-secondary-container);
+    --mat-chip-with-icon-icon-color: var(--md-on-surface-variant);
+    --mat-chip-with-icon-selected-icon-color: var(--md-primary);
+    --mat-chip-label-text-size: 0.8rem;
+    --mat-chip-label-text-weight: 500;
+    --mat-chip-label-text-font: var(--font-family);
+
+    // Defensive --mdc- fallback (M3 18+ ignores most of these in favor of
+    // the --mat-* namespace above).
+    --mdc-chip-container-shape-radius: var(--radius-sm, 4px);
+    --mdc-chip-elevated-container-color: var(--md-surface-variant);
+    --mdc-chip-label-text-color: var(--md-on-surface);
+    --mdc-chip-outline-color: transparent;
+
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: var(--md-surface-variant);
     color: var(--md-on-surface);
     font-family: var(--font-family);
 
-    .mdc-evolution-chip__text-label {
-      color: var(--md-on-surface);
-      font-family: var(--font-family);
-    }
-
+    .mdc-evolution-chip__text-label,
     .mat-mdc-chip-action-label {
       color: var(--md-on-surface);
+      font-family: var(--font-family);
+      font-size: 0.8rem;
+      font-weight: 500;
     }
 
     // Hover overlay
     &:hover:not(.mdc-evolution-chip--disabled) {
       background-color:
-        color-mix(in srgb, var(--md-on-surface) 8%, var(--md-secondary-container));
+        color-mix(in srgb, var(--md-on-surface) 8%, var(--md-surface-variant));
     }
 
     // Selected state — primary-container fill
