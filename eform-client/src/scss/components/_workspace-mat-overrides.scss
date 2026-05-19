@@ -929,6 +929,23 @@ body.theme-workspace {
     }
   }
 
+  // ngx-mat-grid (mtx-grid) ships `.mat-table-striped` enabled by default,
+  // and the same class is hand-applied to several non-mtx tables (edit-paring
+  // modal, area-rule-plan modal, property-areas-edit modal, dashboard chart
+  // data view). The design manual's tables use uniform rows with a single
+  // tinted hover state, so neutralize the striping by pointing mtx-grid's
+  // striping variable at the same surface-container even rows already use,
+  // and re-assert the tinted hover blend at higher specificity than
+  // mtx-grid's static `.mat-row-odd` rule.
+  .mat-mdc-table.mat-table-striped {
+    --mtx-grid-table-row-striped-background-color: var(--md-surface-container);
+
+    .mat-row-odd:hover,
+    .mat-row-even:hover {
+      background-color: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface-container));
+    }
+  }
+
   // =========================================================================
   // Sort header (mat-sort-header)
   // =========================================================================
