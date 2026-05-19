@@ -256,6 +256,10 @@ body.theme-workspace {
     position: relative;
     padding-top: 22px;
 
+    // Design manual has no hover halo on form fields; suppress M3's
+    // focus-overlay fade-in (focus opacity is already 0 by default).
+    --mat-form-field-hover-state-layer-opacity: 0;
+
     // Floating label colors (still applied; the absolute-position rule below
     // wins on specificity for layout, this rule paints the color).
     .mdc-floating-label {
@@ -584,6 +588,16 @@ body.theme-workspace {
     --mat-checkbox-label-text-font: var(--font-family);
     --mat-checkbox-disabled-label-color:
       color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+
+    // Suppress M3's state-layer halo (greyish/teal disc behind the box on
+    // hover/focus). Design manual checkboxes have no halo — they're styled
+    // via native `accent-color` with no rippled state surface.
+    --mat-checkbox-unselected-hover-state-layer-opacity: 0;
+    --mat-checkbox-unselected-focus-state-layer-opacity: 0;
+    --mat-checkbox-unselected-pressed-state-layer-opacity: 0;
+    --mat-checkbox-selected-hover-state-layer-opacity: 0;
+    --mat-checkbox-selected-focus-state-layer-opacity: 0;
+    --mat-checkbox-selected-pressed-state-layer-opacity: 0;
 
     // Defensive --mdc- fallback (kept for older internal MDC paths; M3 18+
     // ignores most of these in favor of the --mat-* namespace above).
