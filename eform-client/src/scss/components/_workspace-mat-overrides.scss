@@ -715,6 +715,19 @@ body.theme-workspace {
   }
 
   // =========================================================================
+  // Progress spinner (mat-mdc-progress-spinner) — force workspace primary blue
+  // Material 18+ M3 ships the spinner with the accent palette (cyan) by
+  // default. Same `--mat-*` token pattern as slide-toggle: the canonical
+  // surface is --mat-progress-spinner-*; --mdc-circular-progress-* is kept
+  // as a defensive fallback.
+  // =========================================================================
+
+  .mat-mdc-progress-spinner {
+    --mat-progress-spinner-active-indicator-color: var(--md-primary);
+    --mdc-circular-progress-active-indicator-color: var(--md-primary);
+  }
+
+  // =========================================================================
   // Chips (mat-mdc-standard-chip)
   // =========================================================================
 
