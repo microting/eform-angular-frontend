@@ -728,6 +728,24 @@ body.theme-workspace {
   }
 
   // =========================================================================
+  // Status chips on data tables (.status-active / .status-inactive)
+  // Wire the existing legacy chip classes to the workspace status tokens so
+  // they pick up the dark-mode swap. Legacy styles.scss now scopes its own
+  // hardcoded greens/reds under body.theme-eform, leaving these as the
+  // active rule under workspace.
+  // =========================================================================
+
+  .status-active {
+    background-color: var(--status-aktiv-bg) !important;
+    color: var(--status-aktiv-fg) !important;
+  }
+
+  .status-inactive {
+    background-color: var(--status-inaktiv-bg) !important;
+    color: var(--status-inaktiv-fg) !important;
+  }
+
+  // =========================================================================
   // Chips (mat-mdc-standard-chip)
   // =========================================================================
 
