@@ -801,6 +801,45 @@ body.theme-workspace {
   }
 
   // =========================================================================
+  // DM "A) Status tags" — `.tag.tag-{success|warning|error}` (eform-style.css
+  // lines 2164-2188). Used on the medarbejdertabel boolean columns
+  // (eForm / Ad hoc / Time / Arkiv) to show Ja / Nej. Lighter tint than
+  // the heavy filled `.status-active` / `.status-inactive` — green/amber
+  // background at 14-20% mix into --md-surface, darker text.
+  // =========================================================================
+
+  // The generic chip block below sets `color: var(--md-on-surface)` directly
+  // on `.mdc-evolution-chip__text-label` and `.mat-mdc-chip-action-label` —
+  // a more specific rule than `color` inherited from `.mat-mdc-chip.tag-X`,
+  // so the inner override paints the actual label.
+  .mat-mdc-chip.tag-success {
+    background-color: color-mix(in srgb, #2e7d32 14%, var(--md-surface)) !important;
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: #1b5e20 !important;
+    }
+  }
+
+  .mat-mdc-chip.tag-warning {
+    background-color: color-mix(in srgb, #f9a825 20%, var(--md-surface)) !important;
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: #8d6e00 !important;
+    }
+  }
+
+  .mat-mdc-chip.tag-error {
+    background-color: color-mix(in srgb, var(--md-alert) 14%, var(--md-surface)) !important;
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: var(--md-alert) !important;
+    }
+  }
+
+  // =========================================================================
   // Chips (mat-mdc-standard-chip)
   // =========================================================================
 
