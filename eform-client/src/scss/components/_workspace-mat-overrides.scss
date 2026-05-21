@@ -1828,21 +1828,16 @@ body.theme-workspace {
     }
   }
 
-  // Dropdown panel — portaled outside the field. ng-select positions
-  // the panel ~16px below the trigger and ~16px wider than it on each
-  // side. The DM .multiselect__panel spec sits 4px below the trigger
-  // and is exactly the trigger's width. Pull the panel up by 12px
-  // visually (4px gap = 16 − 12) and inset it 16px on each side via
-  // negative margin to match the trigger width.
+  // Dropdown panel — portaled to body. ng-select sets the panel's inline
+  // `left` and `width` to match the trigger, so horizontal margins would
+  // push it off-axis. Only the 4px DM gap below the trigger is needed.
   .ng-dropdown-panel {
     background: var(--md-surface-container);
     border: 1px solid var(--md-outline);
     border-radius: var(--radius-sm, 4px);
     box-shadow: var(--md-shadow);
     overflow: hidden;
-    transform: translateY(-12px);
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-top: 4px;
 
     .ng-dropdown-panel-items .ng-option {
       background: transparent;
