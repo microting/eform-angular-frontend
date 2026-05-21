@@ -406,9 +406,11 @@ body.theme-workspace {
       border-color: var(--md-alert) !important;
     }
 
-    // Disabled state.
+    // Disabled state: dim the border + text only; keep the wrapper bg
+    // identical to the active state so disabled fields don't get a grey
+    // overlay (which made readonly modals look like every dropdown had
+    // a "weird" selected-item background).
     &.mat-form-field-disabled .mat-mdc-text-field-wrapper {
-      background: color-mix(in srgb, var(--md-on-surface) 4%, transparent) !important;
       border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
     }
 
@@ -478,8 +480,7 @@ body.theme-workspace {
   // --- Filled appearance ---
   .mdc-text-field--filled {
     --mdc-filled-text-field-container-color: var(--md-surface-container);
-    --mdc-filled-text-field-disabled-container-color:
-      color-mix(in srgb, var(--md-on-surface) 4%, transparent);
+    --mdc-filled-text-field-disabled-container-color: var(--md-surface-container);
     --mdc-filled-text-field-active-indicator-color: var(--md-outline);
     --mdc-filled-text-field-hover-active-indicator-color: var(--md-outline);
     --mdc-filled-text-field-focus-active-indicator-color: var(--md-primary);
@@ -487,8 +488,10 @@ body.theme-workspace {
     --mdc-filled-text-field-container-shape: var(--radius-sm, 4px);
     background-color: var(--md-surface-container);
 
+    // Disabled keeps the same bg — see the outlined-disabled rule above
+    // for the rationale.
     &.mdc-text-field--disabled {
-      background-color: color-mix(in srgb, var(--md-on-surface) 4%, transparent);
+      background-color: var(--md-surface-container);
     }
   }
 
@@ -1713,31 +1716,35 @@ body.theme-workspace {
   // Compact it (no longer span the full width), restyle the outlined container
   // with --md-outline, and paint selected tag chips with --md-secondary-container.
 
-  // Constrain the mat-form-field that hosts mtx-select inside the mtx-grid
-  // toolbar so it doesn't span the entire content row.
-  mtx-grid .mtx-grid-toolbar .mat-mdc-form-field,
-  .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
+  // The 320px max-width cap was always toolbar-specific (the "Etiketter"
+  // tag-filter context). Don't apply it to every mat-form-field that
+  // contains an mtx-select, since compact use cases — like the calendar
+  // event modal's 90 px time-pickers — should set their own width.
+  mtx-grid .mtx-grid-toolbar .mat-mdc-form-field {
     max-width: 320px;
+  }
+
+  // Defaults for EVERY mat-form-field containing an mtx-select.
+  // width: 100% lets the field fill its flex parent — many call sites
+  // (kanban-pn card-detail, calendar-header, workflow-pn case edit, etc.)
+  // depend on this default. Consumers that need a fixed width set their
+  // own width with !important on a child class.
+  // The inner overrides force the row-layout and 40px min-height mtx-select's
+  // ng-select content needs (the stacked-label rules above would otherwise
+  // column-stack the chips and clamp the infix to 24px).
+  .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
     width: 100%;
 
-    // Undo the stacked-label rules higher up in this file: mtx-select renders
-    // an ng-select inline and needs the form-field-flex to keep its default
-    // row layout (label + trigger + arrow on one line via ng-select itself).
-    // Without this opt-out the column-stack flex direction breaks the
-    // selected-tag chip layout.
     .mat-mdc-form-field-flex {
       flex-direction: row !important;
       align-items: center !important;
     }
 
-    // mtx-select sets ng-select-container min-height: 40px — let the infix
-    // grow to match instead of clamping to 24px.
     .mat-mdc-form-field-infix {
       min-height: 40px !important;
       padding: 0 !important;
     }
 
-    // Wrapper grows with the chip count instead of locking to 40px.
     .mat-mdc-text-field-wrapper {
       height: auto !important;
       min-height: 40px !important;
