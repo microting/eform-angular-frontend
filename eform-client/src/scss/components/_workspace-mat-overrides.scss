@@ -980,7 +980,11 @@ body.theme-workspace {
     box-shadow: 0 1px 0 var(--md-surface-variant);
     position: sticky;
     top: 0;
-    z-index: 2;
+    // 11 lets the sticky header out-stack in-table content like the
+    // calendar's task blocks (z 2/3/4) and now-line indicator (z 10).
+    // Drag-ghost-task (z 20) and the time-axis corner cell (z 100 via
+    // .mat-mdc-table-sticky) intentionally remain above the header.
+    z-index: 11;
   }
 
   .mat-mdc-header-cell {
