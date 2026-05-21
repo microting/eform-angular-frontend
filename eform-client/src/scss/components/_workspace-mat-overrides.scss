@@ -1083,10 +1083,12 @@ body.theme-workspace {
 
   // The calendar week-grid renders as a single mat-mdc-row that spans the
   // full 1248 px-tall canvas (events absolutely positioned inside each
-  // day's column). The striped row-hover blend above would paint the
-  // entire surface blue whenever the pointer is anywhere inside the grid.
-  // Scope an override to .calendar-grid only — other striped tables keep
-  // their hover.
+  // day's column). Two workspace rules paint that row blue on hover:
+  //   .mat-mdc-row:hover                            (line ~1000, every row)
+  //   .mat-row-odd:hover / .mat-row-even:hover      (line ~1078, striping)
+  // Both bleed through the transparent cells onto the calendar canvas.
+  // Neutralize them just for .calendar-grid; other tables keep their hover.
+  .mtx-grid.calendar-grid .mat-mdc-table .mat-mdc-row:hover,
   .mtx-grid.calendar-grid .mat-mdc-table .mat-row-odd:hover,
   .mtx-grid.calendar-grid .mat-mdc-table .mat-row-even:hover {
     background-color: var(--md-surface-container);
