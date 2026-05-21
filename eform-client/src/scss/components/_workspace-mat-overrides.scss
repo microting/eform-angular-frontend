@@ -951,9 +951,14 @@ body.theme-workspace {
 
   // Wrap the table area with a border (the design's .table-scroll equivalent).
   // mtx-grid renders <mtx-grid> → div.mtx-grid-content → mat-table inside.
+  // Host is a flex column so the inner layout chain (set up in
+  // `_table.scss`) can shrink to fit max-height and let
+  // `.mat-table-container` scroll instead of every container growing to
+  // full content height.
   mtx-grid,
   .mtx-grid {
-    display: block;
+    display: flex;
+    flex-direction: column;
     border: 1px solid var(--md-surface-variant);
     border-radius: var(--radius-sm, 4px);
     background: var(--md-surface-container);

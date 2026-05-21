@@ -7,6 +7,24 @@
   border-radius: var(--mtx-grid-radius, 0) !important;
   outline: 1px solid rgba(255, 255, 255, 0.2);
 
+  // Make the host a flex column and let the inner mtx-grid layout chain
+  // shrink to fit so the table's scroll container (.mat-table-container,
+  // overflow: auto by default in @ng-matero/extensions/grid) actually
+  // overflows when row count exceeds max-height — without this the inner
+  // containers grow to full content height and the outer host just clips
+  // with no scrollbar exposed. The calendar grid deliberately opts out of
+  // this via its own `overflow: visible !important` rule so that sticky
+  // positioning resolves to a single shared outer scroll wrapper.
+  display: flex;
+  flex-direction: column;
+
+  .mtx-grid-main,
+  .mtx-grid-content,
+  .mat-table-container {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
   .mat-mdc-standard-chip {
     height: unset;
   }
