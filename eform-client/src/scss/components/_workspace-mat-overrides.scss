@@ -1785,8 +1785,9 @@ body.theme-workspace {
       font-size: 14px;
     }
 
-    // Selected value chips (multi-select)
-    .ng-value {
+    // Multi-select chips (single-select .ng-value falls back to plain text
+    // via ng-select defaults — matches the DM native `<select>` aesthetic).
+    &.ng-select-multiple .ng-value {
       background: var(--md-secondary-container);
       color: var(--md-on-surface);
       border-radius: var(--radius-rounded-full, 999px);
@@ -1810,11 +1811,6 @@ body.theme-workspace {
           color: var(--md-on-surface);
         }
       }
-    }
-
-    // Single-select value text
-    .ng-value-container .ng-value:not(.ng-value-disabled) {
-      color: var(--md-on-surface);
     }
 
     .ng-arrow-wrapper {
