@@ -320,12 +320,12 @@ body.theme-workspace {
       position: static !important;
     }
 
-    // Label: absolute-position OUTSIDE the wrapper so it sits cleanly above
-    // the outlined box with a visible gap. Anchored to the outer
-    // `.mat-mdc-form-field` (position: relative + padding-top: 22px above).
+    // Outer floating-label container is absolute-positioned OUTSIDE the
+    // wrapper so it sits cleanly above the outlined box with a visible gap.
+    // Anchored to the outer `.mat-mdc-form-field` (position: relative +
+    // padding-top: 22px above).
     .mdc-floating-label,
-    .mat-mdc-floating-label,
-    mat-label {
+    .mat-mdc-floating-label {
       position: absolute !important;
       top: 0 !important;
       left: 0 !important;
@@ -344,6 +344,25 @@ body.theme-workspace {
       overflow: visible !important;
       max-width: 100% !important;
       white-space: nowrap;
+    }
+
+    // Inner <mat-label> stays in normal inline flow so the required-marker
+    // span sibling lays out NEXT TO it ("Fornavn *") instead of underneath
+    // it. Promoting mat-label to absolute-with-the-outer-label (the previous
+    // selector list bug) puts both mat-label and the inline static marker
+    // at the parent's (0,0) origin, painting "*" on top of the first letter.
+    // Color / font / line-height inherit from the absolute parent.
+    mat-label {
+      position: static !important;
+      display: inline !important;
+      width: auto !important;
+      max-width: 100% !important;
+      left: auto !important;
+      right: auto !important;
+      top: auto !important;
+      transform: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
 
     // Hide Material's notched-outline pieces — the wrapper paints the border.
@@ -756,6 +775,17 @@ body.theme-workspace {
       width: 18px;
       height: 18px;
       border-radius: 4px;
+    }
+    // M3 paints the track fill via the `::before` (unselected) and `::after`
+    // (selected) pseudo-elements on `.mdc-switch__track`, and ignores our
+    // `--mat-slide-toggle-*-track-color` tokens for the unselected pseudo.
+    // Match the DM .switch spec directly: solid --md-outline gray for off,
+    // --md-primary for on.
+    .mdc-switch__track::before {
+      background: var(--md-outline) !important;
+    }
+    .mdc-switch__track::after {
+      background: var(--md-primary) !important;
     }
     // Hide the centered icon (check/cross) — the spec switch is icon-less.
     .mdc-switch__icons {
