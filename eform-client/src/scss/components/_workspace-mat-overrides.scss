@@ -174,6 +174,14 @@ body.theme-workspace {
     color: var(--md-on-surface-variant);
     line-height: 42px;
 
+    // Design manual: no halo. Suppress M3 state-layer + CDK ripple
+    // (see slide-toggle block for the dual color+opacity rationale).
+    --mat-icon-button-state-layer-color: transparent;
+    --mat-icon-button-hover-state-layer-opacity: 0;
+    --mat-icon-button-focus-state-layer-opacity: 0;
+    --mat-icon-button-pressed-state-layer-opacity: 0;
+    --mat-ripple-color: transparent;
+
     .mat-mdc-button-touch-target {
       width: 42px;
       height: 42px;
@@ -186,10 +194,6 @@ body.theme-workspace {
       width: 24px;
       height: 24px;
       line-height: 24px;
-    }
-
-    &:hover:not(:disabled) {
-      background-color: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
     }
 
     &:focus-visible {
@@ -698,13 +702,23 @@ body.theme-workspace {
       color-mix(in srgb, var(--md-on-surface) 12%, transparent);
     --mat-slide-toggle-disabled-unselected-track-color:
       color-mix(in srgb, var(--md-on-surface) 12%, transparent);
-    // State-layer (hover halo) — keep contained to the primary tone on selected
-    --mat-slide-toggle-selected-hover-state-layer-color: var(--md-primary);
-    --mat-slide-toggle-selected-focus-state-layer-color: var(--md-primary);
-    --mat-slide-toggle-selected-pressed-state-layer-color: var(--md-primary);
-    --mat-slide-toggle-unselected-hover-state-layer-color: var(--md-on-surface);
-    --mat-slide-toggle-unselected-focus-state-layer-color: var(--md-on-surface);
-    --mat-slide-toggle-unselected-pressed-state-layer-color: var(--md-on-surface);
+    // Design manual: no halo on hover or active. Suppress the M3
+    // state-layer + the CDK click ripple by zeroing opacities AND setting
+    // colors to transparent (some Material rules paint the ripple element
+    // bg via the state-layer-color token directly, bypassing opacity).
+    --mat-slide-toggle-selected-hover-state-layer-color: transparent;
+    --mat-slide-toggle-selected-focus-state-layer-color: transparent;
+    --mat-slide-toggle-selected-pressed-state-layer-color: transparent;
+    --mat-slide-toggle-unselected-hover-state-layer-color: transparent;
+    --mat-slide-toggle-unselected-focus-state-layer-color: transparent;
+    --mat-slide-toggle-unselected-pressed-state-layer-color: transparent;
+    --mat-slide-toggle-selected-hover-state-layer-opacity: 0;
+    --mat-slide-toggle-selected-focus-state-layer-opacity: 0;
+    --mat-slide-toggle-selected-pressed-state-layer-opacity: 0;
+    --mat-slide-toggle-unselected-hover-state-layer-opacity: 0;
+    --mat-slide-toggle-unselected-focus-state-layer-opacity: 0;
+    --mat-slide-toggle-unselected-pressed-state-layer-opacity: 0;
+    --mat-ripple-color: transparent;
 
     // Legacy MDC namespace tokens kept as fallback (no-op on M3 18+, but
     // harmless and may help if a future Material rev reverts to reading them).
