@@ -1847,12 +1847,6 @@ body.theme-workspace {
       font-size: 14px;
       padding: 8px 12px;
 
-      &.ng-option-marked,
-      &:hover {
-        background: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
-        color: var(--md-on-surface);
-      }
-
       &.ng-option-disabled {
         color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
       }
