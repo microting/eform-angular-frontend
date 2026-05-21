@@ -174,9 +174,12 @@ body.theme-workspace {
     color: var(--md-on-surface-variant);
     line-height: 42px;
 
-    // Design manual: no halo. Suppress M3 state-layer + CDK ripple
-    // (see slide-toggle block for the dual color+opacity rationale).
+    // Design manual: no halo. Suppress M3 state-layer + CDK ripple.
+    // Icon-button has its OWN ripple color token (separate from the
+    // generic --mat-ripple-color) — Material paints the CDK ripple
+    // element bg via --mat-icon-button-ripple-color, so we set both.
     --mat-icon-button-state-layer-color: transparent;
+    --mat-icon-button-ripple-color: transparent;
     --mat-icon-button-hover-state-layer-opacity: 0;
     --mat-icon-button-focus-state-layer-opacity: 0;
     --mat-icon-button-pressed-state-layer-opacity: 0;
