@@ -1716,24 +1716,22 @@ body.theme-workspace {
   // Compact it (no longer span the full width), restyle the outlined container
   // with --md-outline, and paint selected tag chips with --md-secondary-container.
 
-  // The 320px max-width cap was always toolbar-specific (the "Etiketter"
-  // tag-filter context). Don't apply it to every mat-form-field that
-  // contains an mtx-select, since compact use cases — like the calendar
-  // event modal's 90 px time-pickers — should set their own width.
-  mtx-grid .mtx-grid-toolbar .mat-mdc-form-field {
-    max-width: 320px;
-  }
-
   // Defaults for EVERY mat-form-field containing an mtx-select.
-  // width: 100% lets the field fill its flex parent — many call sites
-  // (kanban-pn card-detail, calendar-header, workflow-pn case edit, etc.)
-  // depend on this default. Consumers that need a fixed width set their
-  // own width with !important on a child class.
-  // The inner overrides force the row-layout and 40px min-height mtx-select's
-  // ng-select content needs (the stacked-label rules above would otherwise
-  // column-stack the chips and clamp the infix to 24px).
+  // width: 100% lets the field fill its flex parent. max-width: 320px
+  // keeps it from stretching to the FULL parent width in header rows
+  // with multiple inline fields (property-workers, calendar-header,
+  // planning filters, etc.) — without the cap, a single mtx-select
+  // takes the whole row and pushes neighbors to wrap onto new lines.
+  // Compact use cases (e.g. the calendar event modal's 90 px time-
+  // pickers) override with their own width via !important on a
+  // dedicated child class.
+  // The inner overrides force the row-layout and 40px min-height
+  // mtx-select's ng-select content needs (the stacked-label rules
+  // above would otherwise column-stack the chips and clamp the infix
+  // to 24px).
   .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
     width: 100%;
+    max-width: 320px;
 
     .mat-mdc-form-field-flex {
       flex-direction: row !important;
