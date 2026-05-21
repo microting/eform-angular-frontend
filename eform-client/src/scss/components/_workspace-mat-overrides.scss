@@ -1853,15 +1853,6 @@ body.theme-workspace {
         color: var(--md-on-surface);
       }
 
-      &.ng-option-selected {
-        background: var(--md-primary-container);
-        color: var(--md-primary);
-
-        &.ng-option-marked {
-          background: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary-container));
-        }
-      }
-
       &.ng-option-disabled {
         color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
       }

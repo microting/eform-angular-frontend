@@ -1400,24 +1400,6 @@ body.theme-eform {
   }
 
 
-  .ng-option {
-    &:hover {
-      .ng-option-label {
-        color: var(--mdc-theme-on-primary) !important;
-      }
-
-      background-color: var(--mdc-theme-primary-dark, #00695C) !important;
-    }
-
-    &[aria-selected="true"] {
-      background: var(--primary, #289694) !important;
-
-      .ng-option-label {
-        color: var(--btn-delete-text) !important;
-      }
-    }
-  }
-
 }
 
 .ng-select {
