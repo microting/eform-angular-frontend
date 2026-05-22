@@ -844,6 +844,22 @@ body.theme-workspace {
     color: var(--md-on-surface) !important;
   }
 
+  // The expansion-header's <a> wrapper has an INLINE `style="font-size:14px"`
+  // from the template. Override with !important so the header label
+  // renders at the same 0.9375rem (~13.125px at root 14px) as leaf
+  // nav-link labels — user can see the size mismatch otherwise.
+  // Also push the inner label span right by 6px so it lands at x=59 to
+  // match leaf labels (which sit at icon-x + ~38px due to mat-button's
+  // implicit padding; the header's flex layout otherwise puts the label
+  // at icon-x + 32px, leaving header labels 6px LEFT of leaf labels).
+  mat-tree .mat-expansion-panel-header .mat-content a {
+    font-size: 0.9375rem !important;
+  }
+
+  mat-tree .mat-expansion-panel-header .mat-content a > span {
+    margin-left: 6px;
+  }
+
   // Sub-items reachable via expansion-panel — match DM `.drawer-submenu` +
   // `.drawer-submenu-item` exactly: submenu indented 48px from the drawer
   // edge, items at 0.84rem with `--md-on-surface-variant` text (lifts to
