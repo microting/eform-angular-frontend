@@ -840,29 +840,48 @@ body.theme-workspace {
     }
   }
 
-  // Sub-items reachable via expansion-panel — DM "Sidebar with icon rail":
-  // smaller font (0.84rem), variant text colour at rest (lifts to on-surface
-  // on hover), and indented so the label aligns under the parent header's
-  // label rather than the icon. Reduce the panel-body's default padding so
-  // the cumulative left offset (panel-body padding + mat-tree-node indent
-  // + nav-link padding) puts the sub-item text at the parent-label x.
+  // Sub-items reachable via expansion-panel — match DM `.drawer-submenu` +
+  // `.drawer-submenu-item` exactly: submenu indented 48px from the drawer
+  // edge, items at 0.84rem with `--md-on-surface-variant` text (lifts to
+  // `--md-on-surface` on hover), 4/8 padding, 6px radius. Reset every
+  // intermediate padding/margin in the mat-tree chain so the cumulative
+  // indent matches the DM value instead of compounding.
   mat-tree .mat-nested-tree-node .mat-expansion-panel-body {
-    padding: 0 8px !important;
+    padding: 0 12px 6px 48px !important;
+  }
+
+  mat-tree .mat-nested-tree-node .mat-expansion-panel-body mat-tree-node {
+    padding-left: 0 !important;
   }
 
   mat-tree .mat-nested-tree-node mat-tree-node .nav-link {
     border-radius: var(--radius-md, 6px) !important;
     color: var(--md-on-surface-variant) !important;
     font-size: 0.84rem;
-    padding: 6px 10px !important;
-    min-height: 32px;
+    padding: 4px 8px !important;
+    margin: 0 !important;
+    min-height: 28px;
+    width: 100% !important;
 
     &:hover {
-      width: calc(100% - 20px) !important;
+      width: 100% !important;
       border-radius: var(--radius-md, 6px) !important;
       background-color: var(--md-surface-variant) !important;
       color: var(--md-on-surface) !important;
     }
+  }
+
+  // Defensive: force every nav-link label span to inherit from the link's
+  // own `color` (which we set to `--md-on-surface` for leaf, primary for
+  // selected, on-surface-variant for sub-items). Material 18 `mat-button`
+  // sometimes paints `.mdc-button__label` from its own text-button token,
+  // which under workspace can leak primary blue onto every label. This
+  // rule keeps the label text in lockstep with the parent.
+  mat-tree .nav-link .mdc-button__label,
+  mat-tree .nav-link > span,
+  mat-tree .mat-expansion-panel-header .mat-content > span,
+  mat-tree .mat-expansion-panel-header > span {
+    color: inherit !important;
   }
 
   mat-tree mat-tree-node a.mat-mdc-button-base.nav-link {
