@@ -796,30 +796,28 @@ body.theme-workspace {
     }
   }
 
-  // Expansion-panel header (parent items with children, e.g. "Opgaver")
+  // Expansion-panel header (parent items with children, e.g. "Opgaver").
+  // Match the icon-x of a non-expandable leaf nav-link: leaf has
+  // padding-left 12 + .mat-icon margin-left -4 → icon at item.x + 8.
+  // The expansion-header's inner `.mat-content` wrapper introduces a phantom
+  // ~14 px gap before the icon (Material default layout), so we pull the
+  // icon back with a deeper negative margin to land at the same x as the
+  // leaf icon. User explicitly flagged that expandable items were padded
+  // further in than leaf items.
   mat-tree .mat-expansion-panel-header {
     border-radius: var(--radius-lg, 8px) !important;
     min-height: 40px;
     padding: 0 12px !important;
-    // The header's bare <span> label is NOT wrapped in <a>, so colouring `a`
-    // alone (as the previous rule did) left the collapsed text at Material's
-    // default `#191c1c`. Paint the host + its direct text descendants so the
-    // label matches every other nav-link (`--md-on-surface`).
     color: var(--md-on-surface) !important;
     font-weight: 500;
     font-size: 0.9375rem;
-
-    > .mat-content > span,
-    a {
-      color: var(--md-on-surface);
-      font-weight: 500;
-      font-size: 0.9375rem;
-    }
 
     .mat-icon,
     .menu-icon {
       color: var(--md-primary);
       font-size: 22px;
+      // Pull the icon left so it aligns with leaf-item icons.
+      margin-left: -12px !important;
     }
 
     &:hover {
@@ -827,17 +825,23 @@ body.theme-workspace {
       background-color: var(--md-surface-variant) !important;
       color: var(--md-on-surface) !important;
 
-      > .mat-content > span,
-      a span,
-      a {
-        color: var(--md-on-surface) !important;
-      }
-
       .mat-icon,
       .menu-icon {
         color: var(--md-primary) !important;
       }
     }
+  }
+
+  // Force the bare <span> label inside expansion-panel-header to
+  // `--md-on-surface`. Material 18's expansion-header doesn't apply a
+  // text-color token to the label, so the inner `<span>` falls back to
+  // some other primary-coloured rule (still hunting which one) and renders
+  // blue. Hard-pin it here. The `:not(.mat-expansion-indicator)` keeps the
+  // chevron's own color rule intact.
+  mat-tree .mat-expansion-panel-header span:not(.mat-expansion-indicator),
+  mat-tree .mat-expansion-panel-header .mat-content,
+  mat-tree .mat-expansion-panel-header .mat-content > span {
+    color: var(--md-on-surface) !important;
   }
 
   // Sub-items reachable via expansion-panel — match DM `.drawer-submenu` +
