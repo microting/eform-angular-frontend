@@ -801,10 +801,18 @@ body.theme-workspace {
     border-radius: var(--radius-lg, 8px) !important;
     min-height: 40px;
     padding: 0 12px !important;
+    // The header's bare <span> label is NOT wrapped in <a>, so colouring `a`
+    // alone (as the previous rule did) left the collapsed text at Material's
+    // default `#191c1c`. Paint the host + its direct text descendants so the
+    // label matches every other nav-link (`--md-on-surface`).
+    color: var(--md-on-surface) !important;
+    font-weight: 500;
+    font-size: 0.9375rem;
 
+    > .mat-content > span,
     a {
-      font-weight: 500;
       color: var(--md-on-surface);
+      font-weight: 500;
       font-size: 0.9375rem;
     }
 
@@ -819,6 +827,7 @@ body.theme-workspace {
       background-color: var(--md-surface-variant) !important;
       color: var(--md-on-surface) !important;
 
+      > .mat-content > span,
       a span,
       a {
         color: var(--md-on-surface) !important;
@@ -831,14 +840,26 @@ body.theme-workspace {
     }
   }
 
-  // Nested nav items reachable via expansion-panel sub-tree should round to
-  // the same 8px shape, not the pill fallback.
+  // Sub-items reachable via expansion-panel — DM "Sidebar with icon rail":
+  // smaller font (0.84rem), variant text colour at rest (lifts to on-surface
+  // on hover), and indented so the label aligns under the parent header's
+  // label rather than the icon. Reduce the panel-body's default padding so
+  // the cumulative left offset (panel-body padding + mat-tree-node indent
+  // + nav-link padding) puts the sub-item text at the parent-label x.
+  mat-tree .mat-nested-tree-node .mat-expansion-panel-body {
+    padding: 0 8px !important;
+  }
+
   mat-tree .mat-nested-tree-node mat-tree-node .nav-link {
-    border-radius: var(--radius-lg, 8px) !important;
+    border-radius: var(--radius-md, 6px) !important;
+    color: var(--md-on-surface-variant) !important;
+    font-size: 0.84rem;
+    padding: 6px 10px !important;
+    min-height: 32px;
 
     &:hover {
       width: calc(100% - 20px) !important;
-      border-radius: var(--radius-lg, 8px) !important;
+      border-radius: var(--radius-md, 6px) !important;
       background-color: var(--md-surface-variant) !important;
       color: var(--md-on-surface) !important;
     }

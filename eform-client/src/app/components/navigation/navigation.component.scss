@@ -26,10 +26,13 @@ mat-tree {
         background-color: var(--nav-hover-surface, var(--mdc-theme-primary-dark, #00695C)) !important;
         color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
         .mat-icon{
-          color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
+          // DM "Sidebar with icon rail": icon stays primary on hover even
+          // though row text uses --nav-hover-text. Fallback to --nav-hover-text
+          // keeps legacy theme behavior (icon follows text) unchanged.
+          color: var(--nav-hover-icon, var(--nav-hover-text, var(--mdc-theme-on-primary))) !important;
         }
         svg{
-          fill: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
+          fill: var(--nav-hover-icon, var(--nav-hover-text, var(--mdc-theme-on-primary))) !important;
         }
       }
 
@@ -95,7 +98,9 @@ mat-tree {
               }
             }
             .mat-icon{
-              color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
+              // DM: icon stays primary on hover; falls back to text colour
+              // for legacy theme parity.
+              color: var(--nav-hover-icon, var(--nav-hover-text, var(--mdc-theme-on-primary))) !important;
             }
           }
         }

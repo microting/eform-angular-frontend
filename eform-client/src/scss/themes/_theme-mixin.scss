@@ -246,6 +246,7 @@ $eform-m3-dark-theme: mat.define-theme((
   --nav-selected-text: #{map.get($mode-colors, nav-selected-text)};
   --nav-hover-surface: #{map.get($mode-colors, nav-hover-surface)};
   --nav-hover-text: #{map.get($mode-colors, nav-hover-text)};
+  --nav-hover-icon: #{map.get($mode-colors, nav-hover-icon)};
   --nav-item-height: #{map.get($mode-colors, nav-item-height)};
   --nav-item-radius: #{map.get($mode-colors, nav-item-radius)};
   --search-field-radius: #{map.get($mode-colors, search-field-radius)};

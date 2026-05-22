@@ -210,6 +210,10 @@ $eform-tokens: (
       nav-selected-text: #ffffff,
       nav-hover-surface: #00716F,
       nav-hover-text: #ffffff,
+      // Legacy theme: icon follows text color on hover (preserves existing
+      // behavior — white-on-teal). Workspace overrides this token to keep
+      // icons primary on hover per DM "Sidebar with icon rail" spec.
+      nav-hover-icon: #ffffff,
       nav-item-height: 48px,
       nav-item-radius: 9999px,
       search-field-radius: 9999px,
@@ -370,6 +374,8 @@ $eform-tokens: (
       nav-selected-text: #ffffff,
       nav-hover-surface: #00ADAB,
       nav-hover-text: #ffffff,
+      // Legacy dark theme: icon follows text color on hover.
+      nav-hover-icon: #ffffff,
       nav-item-height: 48px,
       nav-item-radius: 9999px,
       search-field-radius: 9999px,

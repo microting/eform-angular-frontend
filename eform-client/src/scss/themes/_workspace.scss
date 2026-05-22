@@ -201,6 +201,9 @@ $workspace-tokens: (
       nav-selected-text: #0b57d0,
       nav-hover-surface: #e1e7ef,
       nav-hover-text: #1f1f1f,
+      // DM "Sidebar with icon rail": icon stays primary across rest+hover
+      // (text follows --nav-hover-text). Workspace primary, light theme.
+      nav-hover-icon: #0b57d0,
       nav-item-height: 40px,
       nav-item-radius: 8px,
       search-field-radius: 4px,
@@ -347,6 +350,8 @@ $workspace-tokens: (
       nav-selected-text: #a8c7fa,
       nav-hover-surface: #444746,
       nav-hover-text: #e3e3e3,
+      // DM dark theme: icon stays primary across rest+hover.
+      nav-hover-icon: #a8c7fa,
       nav-item-height: 40px,
       nav-item-radius: 8px,
       search-field-radius: 4px,
