@@ -3,11 +3,11 @@ import profileSettingsPage from '../ProfileSettings.page';
 import { expect } from 'chai';
 
 const translationsEFormsPageEng: Array<{ selector: string; value: string }> = [
-  { selector: 'eform-new-subheader h2', value: 'My eForms' },
+  { selector: 'mat-card.eform-sub-header h2', value: 'My eForms' },
 ];
 
 const translationsEFormsPageDan: Array<{ selector: string; value: string }> = [
-  { selector: 'eform-new-subheader h2', value: 'Mine eForms' },
+  { selector: 'mat-card.eform-sub-header h2', value: 'Mine eForms' },
 ];
 
 describe('Profile Settings - Language', function () {
