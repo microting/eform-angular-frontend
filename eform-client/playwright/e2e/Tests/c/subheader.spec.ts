@@ -40,7 +40,7 @@ test.describe('Subheader test', () => {
 
   test('must navigate on create menu item and translate must be == translate', async () => {
     await (await myEformsPage.Navbar.clickOnHeaderMenuItem2(translation)).click();
-    const h1 = page.locator('eform-new-subheader h2');
+    const h1 = page.locator('mat-card.eform-sub-header h2');
     expect((await h1.textContent())?.trim()).toBe(translation);
     await myEformsPage.Navbar.goToMenuEditorPage();
     await navigationMenuPage.openOnEditCreatedMenuItem(0);

@@ -40,6 +40,8 @@ import {
   selectEformAllowManagingEformTags
 } from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import {Router} from '@angular/router';
+import {AppMenuStateService} from 'src/app/common/store';
 import {
   selectEformsIsSortDsc,
   selectEformsNameFilter,
@@ -63,6 +65,13 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private translateService = inject(TranslateService);
+  private router = inject(Router);
+  private appMenuStateService = inject(AppMenuStateService);
+
+  // Resolved once in ngOnInit — getTitleByUrl subscribes to the menu store
+  // internally without unsubscribing, so calling it from the template would
+  // leak one subscription per change-detection tick.
+  public pageTitle: string = '';
 
   @ViewChild('modalTags', {static: true}) modalTags: EformsTagsComponent;
 
@@ -88,6 +97,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   eformColumnsModalComponentAfterClosedSub$: Subscription;
   eformEditParingModalComponentAfterClosedSub$: Subscription;
   eformRemoveEformModalComponentAfterClosedSub$: Subscription;
+  titleSub$: Subscription;
   private selectCurrentUserClaims$ = this.store.select(selectCurrentUserClaims);
   public selectEformAllowManagingEformTags$ = this.store.select(selectEformAllowManagingEformTags)
   public selectCurrentUserClaimsEformsCreate$ = this.store.select(selectCurrentUserClaimsEformsCreate);
@@ -137,6 +147,12 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // Resolve the page title once menus hydrate; recompute when they emit.
+    // getTitleByUrl reads from the menu store internally — we drive it from
+    // the menu emission instead of calling it per template change-detection.
+    this.titleSub$ = this.appMenuStateService.leftAppMenus$.subscribe(() => {
+      this.pageTitle = this.appMenuStateService.getTitleByUrl(this.router.url);
+    });
     this.loadEformsPermissions();
   }
 
@@ -154,19 +170,13 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   loadAllTags() {
     // load tags after call load templates (not know why)
-    //if (this.userClaims.eformsReadTags) {
-      //debugger;
-      this.getAvailableTagsSub$ = this.eFormTagService.getAvailableTags()
-        .subscribe((data) => {
-          if (data && data.success) {
-            this.availableTags = data.model;
-            this.loadSelectedUserTags();
-          }
-        });
-    // } else {
-    //   debugger;
-    //   this.loadAllTemplates();
-    // }
+    this.getAvailableTagsSub$ = this.eFormTagService.getAvailableTags()
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.availableTags = data.model;
+          this.loadSelectedUserTags();
+        }
+      });
   }
 
   saveTag(e: CommonDictionaryModel) {

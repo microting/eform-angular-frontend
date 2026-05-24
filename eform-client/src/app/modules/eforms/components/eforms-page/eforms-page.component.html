@@ -1,5 +1,6 @@
-<eform-new-subheader>
-  <div class="d-flex flex-row justify-content-center align-items-center gap-12">
+<mat-card class="eform-sub-header d-flex flex-column gap-12 mb-3 p-3" style="align-items: stretch;">
+  <h2 style="margin: 0">{{ pageTitle | translate }}</h2>
+  <div class="d-flex flex-row flex-wrap align-items-end justify-content-end gap-12">
     <div class="text-field--rounded mt-4">
       <mat-form-field>
         <mat-label>{{ 'Search eForm' | translate }}</mat-label>
@@ -13,7 +14,23 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div>
-    <div class="line-vert"></div>
+    <mat-form-field *ngIf="selectCurrentUserClaimsEformsReadTags$ | async">
+      <mat-label>{{ 'Tags' | translate }}</mat-label>
+      <mtx-select
+        class="custom"
+        [dropdownPosition]="'bottom'"
+        [items]="availableTags"
+        [ngModel]="selectEformsTagIds$ | async"
+        (add)="saveTag($event)"
+        (remove)="removeSavedTag($event)"
+        [clearable]="false"
+        [bindLabel]="'name'"
+        [bindValue]="'id'"
+        id="tagSelector"
+        [multiple]="true"
+      >
+      </mtx-select>
+    </mat-form-field>
     <button
       class="btn-secondary btn-secondary--icon-rounded-border"
       id="importEformsBtn"
@@ -31,7 +48,6 @@
     >
       <mat-icon class="icon-secondary">style</mat-icon>
     </button>
-
     <button
       matTooltip="{{ 'New eForm from XML' | translate }}"
       id="newEFormBtn"
@@ -39,12 +55,8 @@
       (click)="openNewEformModal()"
       class="btn-secondary btn-secondary--icon-rounded-border"
     >
-<!--      <mat-icon class="icon-secondary">text_snippet</mat-icon>-->
       <app-icon name="xmlFile" size="20"></app-icon>
     </button>
-
-    <div class="line-vert"></div>
-
     <button
       id="eformsVisualEditor"
       class="btn-primary btn-primary--icon-left"
@@ -55,44 +67,8 @@
       <span>{{ 'New eForm' | translate }}</span>
     </button>
   </div>
-</eform-new-subheader>
+</mat-card>
 
-<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<ng-template #toolbarTpl>
-  <div class="d-flex flex-row justify-content-start flex-nowrap align-items-center gap-12">
-    <div class="d-flex flex-column align-items-end " *ngIf="selectCurrentUserClaimsEformsReadTags$ | async">
-      <mat-form-field >
-        <mat-label>{{ 'Tags' | translate }}</mat-label>
-        <mtx-select
-
-          class="custom"
-          [dropdownPosition]="'bottom'"
-          [items]="availableTags"
-          [ngModel]="selectEformsTagIds$ | async"
-          (add)="saveTag($event)"
-          (remove)="removeSavedTag($event)"
-          [clearable]="false"
-          [bindLabel]="'name'"
-          [bindValue]="'id'"
-          id="tagSelector"
-          [multiple]="true"
-        >
-          <!--          <ng-template ng-label-tmp let-item="item">-->
-          <!--            <mat-chip-list>-->
-          <!--              <mat-chip color="primary" selected (removed)="removeSavedTag({value: {id: item.id}})">-->
-          <!--                {{item.name}}-->
-          <!--              </mat-chip>-->
-          <!--              <button matChipRemove>-->
-          <!--                <mat-icon>cancel</mat-icon>-->
-          <!--              </button>-->
-          <!--            </mat-chip-list>-->
-
-          <!--        </ng-template>-->
-        </mtx-select>
-      </mat-form-field>
-    </div>
-  </div>
-</ng-template>
 <mtx-grid
   id="mainPageEFormsTableBody"
   [data]="templateListModel.templates"
@@ -108,9 +84,8 @@
   [showPaginator]="false"
   [pageOnFront]="false"
   [rowStriped]="false"
-  [showToolbar]="true"
+  [showToolbar]="false"
   [showColumnMenuButton]="false"
-  [toolbarTemplate]="toolbarTpl"
   [sortActive]="selectEformsSort$ | async"
   [sortDirection]="selectEformsIsSortDsc$ | async"
   (sortChange)="sortTable($event)">
@@ -132,7 +107,7 @@
   <div [innerHTML]="row.description"></div>
 </ng-template>
 <ng-template #tagsTpl let-row let-i="index">
-  <div class="">
+  <div>
     <div>
       <a
         mat-icon-button
@@ -154,7 +129,7 @@
   </div>
 </ng-template>
 <ng-template #pairingUpdateTpl let-row let-i="index">
-  <div class="">
+  <div>
     <div>
       <button
         *ngIf="row.deployedSites.length > 0 &&
@@ -187,26 +162,17 @@
                     'Click to pair eForm with user(s)' | translate
                   }}"
       >
-        <!--                {{ 'Pair eForm' | translate }}-->
         <mat-icon>link</mat-icon>
       </button>
-      <!-- <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">
-        <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">
-          {{deployedSite.siteName}}
-        </p>
-      </ng-container>-->
     </div>
   </div>
 </ng-template>
 <ng-template #actionsTpl let-row let-i="index">
-  <div class="">
-
+  <div>
     <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-
-
       <button
         mat-menu-item
         *ngIf="row.hasCases &&
@@ -347,16 +313,9 @@
         <mat-icon svgIcon="file-upload"></mat-icon>
         <span>{{ 'Upload ZIP archive' | translate }}</span>
       </button>
-      <!--<button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"
-              *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"
-              [routerLink]="['./report', templateDto.id]"
-              matTooltip="{{ 'Jasper Report' | translate }}">
-        <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>
-      </button>-->
     </mat-menu>
   </div>
 </ng-template>
-<!--pagination(if required)-->
 <app-eforms-tags
   #modalTags
   [availableTags]="availableTags"
