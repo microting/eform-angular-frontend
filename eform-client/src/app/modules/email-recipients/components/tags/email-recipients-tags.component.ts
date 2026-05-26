@@ -102,7 +102,7 @@ export class EmailRecipientsTagsComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(!changes.availableTags.firstChange && changes.availableTags && this.dialogRef){
-      this.dialogRef.componentInstance.availableTags = changes.availableTags.currentValue;
+      this.dialogRef.componentInstance.setAvailableTags(changes.availableTags.currentValue);
     }
   }
 }
