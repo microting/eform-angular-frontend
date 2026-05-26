@@ -18,7 +18,7 @@
   <div class="d-flex flex-row justify-content-start align-items-center gap-12 py-2">
     <button
       *ngIf="showMultipleCreateBtn"
-      mat-button
+      mat-stroked-button
       color="primary"
       id="newTagsBtn"
       (click)="showMultipleCreateTagModal()"
@@ -27,7 +27,7 @@
       <span>{{ 'Add bulk' | translate }}</span>
     </button>
     <button
-      mat-button
+      mat-flat-button
       color="primary"
       id="newTagBtn"
       (click)="showCreateTagModal()"
