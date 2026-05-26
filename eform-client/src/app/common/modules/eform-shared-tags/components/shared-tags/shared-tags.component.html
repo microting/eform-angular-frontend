@@ -2,6 +2,7 @@
 
 <div mat-dialog-content style="min-width: 420px; overflow-x: hidden">
 
+  <!-- pageSize: mtx-grid caches the initial value, so a constant larger than any realistic row count is the simplest way to keep refreshed [data] from being clipped. Paginator is hidden. -->
   <mtx-grid
     [data]="availableTags"
     [columns]="tableHeaders"
@@ -9,7 +10,6 @@
     [rowStriped]="false"
     [showPaginator]="false"
     [showToolbar]="false"
-    <!-- mtx-grid caches pageSize on init; use a large constant so refreshed [data] is never clipped. paginator is hidden. -->
     [pageSize]="1000"
   >
   </mtx-grid>
