@@ -1476,6 +1476,10 @@ body.theme-workspace {
     .mat-mdc-paginator-page-size-select {
       margin: 0 8px 0 4px;
       width: 100px;
+      // The page-size select has no <mat-label>; suppress the 22px label-space
+      // padding from the global .mat-mdc-form-field rule so the visible select
+      // box vertically aligns with sibling 36px buttons in the paginator row.
+      padding-top: 0;
 
       .mat-mdc-text-field-wrapper {
         // !important here defends the paginator's compact 36px against the
