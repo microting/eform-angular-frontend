@@ -7,7 +7,7 @@ import {
   UserModalComponent,
   ProfileSettingsComponent,
   RemoveUserModalComponent,
-  UsersPageComponent, UserSetPasswordComponent,
+  UsersPageComponent,
 } from './components';
 import {AccountManagementRouting} from './account-management.routing';
 import {TranslateModule} from '@ngx-translate/core';
@@ -51,14 +51,13 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
         MatMenuItem,
         MatMenuTrigger,
     ],
-  declarations: [
-    ChangePasswordComponent,
-    ProfileSettingsComponent,
-    UsersPageComponent,
-    UserModalComponent,
-    RemoveUserModalComponent,
-    UserSetPasswordComponent,
-  ],
+    declarations: [
+        ChangePasswordComponent,
+        ProfileSettingsComponent,
+        UsersPageComponent,
+        UserModalComponent,
+        RemoveUserModalComponent,
+    ],
 })
 export class AccountManagementModule {
 }
