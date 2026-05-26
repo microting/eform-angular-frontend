@@ -9,7 +9,8 @@
     [rowStriped]="false"
     [showPaginator]="false"
     [showToolbar]="false"
-    [pageSize]="availableTags.length"
+    <!-- mtx-grid caches pageSize on init; use a large constant so refreshed [data] is never clipped. paginator is hidden. -->
+    [pageSize]="1000"
   >
   </mtx-grid>
 
