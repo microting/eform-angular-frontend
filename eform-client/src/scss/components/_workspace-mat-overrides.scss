@@ -1411,6 +1411,9 @@ body.theme-workspace {
       font-size: 14px;
       font-weight: 500;
       letter-spacing: 0;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
 
       // Hide Material's built-in SVG icons
       .mat-mdc-paginator-icon,
