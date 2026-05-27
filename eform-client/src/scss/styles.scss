@@ -1179,6 +1179,29 @@ body.theme-eform {
     }
   }
 
+  // The legacy .text-field--rounded wrappers in subheader templates carry
+  // an .mt-4 utility class (margin-top: 24px) that was meant to reserve
+  // space for a floating label above the input. In .text-field--rounded
+  // the label is positioned INSIDE the wrapper, so the mt-4 is dead
+  // space at the top of the toolbar row — it makes the row 69px tall
+  // even though every visible control is 48px, and that pushes the
+  // align-self: center mat-slide-toggle ~10px above the field midline.
+  // Drop the mt-4 inside the toolbar so the row collapses to the
+  // 48px control height and the toggle centers on the same midline.
+  .eform-sub-header .text-field--rounded.mt-4 {
+    margin-top: 0 !important;
+  }
+
+  // The toolbar row uses align-items: end so all 48px pills/buttons share
+  // a baseline. mat-slide-toggle is intrinsically ~32px and would sit
+  // flush with the bottom of the 48px controls. Override to center it
+  // vertically against the row so it reads as part of the same baseline.
+  // margin-top: 0 cancels the .mt-2 utility class applied in templates.
+  .eform-sub-header mat-slide-toggle {
+    align-self: center;
+    margin-top: 0 !important;
+  }
+
   // Mirror of the workspace-theme rule at _workspace-mat-overrides.scss:447.
   // Collapse the empty subscript wrapper (hint/error area) when no hint or
   // error is present. Without this the form-field box keeps a 20px tail
