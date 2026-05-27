@@ -1157,10 +1157,15 @@ body.theme-eform {
   .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
     width: 100%;
     max-width: 320px;
+  }
 
-    // Match the 48px pill height used by .text-field--rounded so an
-    // unwrapped mtx-select (e.g. Lokation in property-workers) sits flush
-    // with sibling search/tag pills in a bottom-aligned toolbar row.
+  // Force every mat-form-field inside an .eform-sub-header toolbar to the
+  // 48px pill height used by .text-field--rounded. Without this, bare
+  // mat-form-fields (mtx-select / date pickers / plain mat-input) render
+  // at the Material default ~58px and sit above sibling rounded pills.
+  // Scoped to the toolbar so other contexts (dialogs, settings forms)
+  // keep their natural heights.
+  .eform-sub-header .mat-mdc-form-field {
     .mat-mdc-text-field-wrapper {
       height: 48px !important;
       min-height: 48px !important;
