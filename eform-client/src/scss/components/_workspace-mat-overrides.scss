@@ -798,6 +798,18 @@ body.theme-workspace {
     }
   }
 
+  // Slide toggles inside an .eform-sub-header toolbar are 24px tall sitting
+  // in a row with align-items: end against 40px form-field pills / buttons.
+  // Default bottom-alignment leaves the toggle midpoint 8px BELOW the field
+  // midline. Lift it by (40 − 24) / 2 = 8px so its midpoint matches the
+  // visible pill midline. Also cancel the .mt-2 utility some templates
+  // apply to the toggle, which would otherwise nudge it down within its
+  // own flex item box.
+  .eform-sub-header mat-slide-toggle {
+    margin-top: 0 !important;
+    margin-bottom: 8px;
+  }
+
   // =========================================================================
   // Progress spinner (mat-mdc-progress-spinner) — force workspace primary blue
   // Material 18+ M3 ships the spinner with the accent palette (cyan) by
