@@ -620,6 +620,42 @@ ngx-material-timepicker-container {
     border: 1px solid var(--border);
   }
 
+  // Outlined sibling of .btn-primary--icon-left. Without this variant
+  // declared, the button falls back to the browser default
+  // `border: 2px outset black`, which is heavy and inconsistent with the
+  // surrounding filled primaries. Same geometry as the primary, but
+  // transparent background and a 1px primary-color outline.
+  &--icon-left {
+    display: inline-flex;
+    height: 48px;
+    padding: var(--312-px, 12px) var(--520-px, 20px);
+    justify-content: center;
+    align-items: center;
+    gap: var(--156-px, 6px);
+    flex-shrink: 0;
+    box-shadow: none !important;
+    background: transparent;
+    color: var(--mdc-theme-primary) !important;
+    border: 1px solid var(--mdc-theme-primary);
+
+    .mat-icon {
+      display: flex;
+      width: 20px;
+      height: 20px;
+      padding: 3.332px 3.333px 3.335px 3.333px;
+      justify-content: center;
+      align-items: center;
+      color: var(--mdc-theme-primary);
+    }
+
+    span {
+      font-size: var(--Text-size-sm, 14px);
+      font-style: normal;
+      font-weight: 600;
+      line-height: var(--Text-line-height-sm, 22px);
+    }
+  }
+
   &--icon-square-border {
     border-radius: 4px !important;
     display: flex;
@@ -1114,6 +1150,74 @@ body.theme-eform {
     box-shadow: unset !important;
     border: 1px solid var(--border) !important;
     //border-color: var(--border) !important;
+  }
+
+  // Mirror of the workspace-theme rule at _workspace-mat-overrides.scss:1771.
+  // An mtx-select inside a mat-form-field has no intrinsic width, so it
+  // stretches to the parent's full width in a flex row, pushing other
+  // controls (search inputs, buttons) onto new rows. Cap it at 320px so
+  // toolbar rows like /plugins/backend-configuration-pn/property-workers
+  // stay on a single row, matching the workspace layout.
+  .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  // Force every mat-form-field inside an .eform-sub-header toolbar to the
+  // 48px pill height used by .text-field--rounded. Without this, bare
+  // mat-form-fields (mtx-select / date pickers / plain mat-input) render
+  // at the Material default ~58px and sit above sibling rounded pills.
+  // Scoped to the toolbar so other contexts (dialogs, settings forms)
+  // keep their natural heights.
+  .eform-sub-header .mat-mdc-form-field {
+    .mat-mdc-text-field-wrapper {
+      height: 48px !important;
+      min-height: 48px !important;
+    }
+    .mat-mdc-form-field-flex {
+      height: 48px;
+      align-items: center;
+    }
+    .mat-mdc-form-field-infix {
+      min-height: 48px !important;
+    }
+  }
+
+  // The legacy .text-field--rounded wrappers in subheader templates carry
+  // an .mt-4 utility class (margin-top: 24px) that was meant to reserve
+  // space for a floating label above the input. In .text-field--rounded
+  // the label is positioned INSIDE the wrapper, so the mt-4 is dead
+  // space at the top of the toolbar row — it makes the row 69px tall
+  // even though every visible control is 48px, and that pushes the
+  // align-self: center mat-slide-toggle ~10px above the field midline.
+  // Drop the mt-4 inside the toolbar so the row collapses to the
+  // 48px control height and the toggle centers on the same midline.
+  .eform-sub-header .text-field--rounded.mt-4 {
+    margin-top: 0 !important;
+  }
+
+  // The toolbar row uses align-items: end so all 48px pills/buttons share
+  // a baseline. mat-slide-toggle is intrinsically ~32px and would sit
+  // flush with the bottom of the 48px controls. Override to center it
+  // vertically against the row so it reads as part of the same baseline.
+  // margin-top: 0 cancels the .mt-2 utility class applied in templates.
+  .eform-sub-header mat-slide-toggle {
+    align-self: center;
+    margin-top: 0 !important;
+  }
+
+  // Mirror of the workspace-theme rule at _workspace-mat-overrides.scss:447.
+  // Collapse the empty subscript wrapper (hint/error area) when no hint or
+  // error is present. Without this the form-field box keeps a 20px tail
+  // below the visible pill, dropping the pill above sibling buttons in
+  // bottom-aligned toolbar rows.
+  .mat-mdc-form-field-subscript-wrapper {
+    padding: 0 !important;
+    margin-top: 4px;
+
+    &:not(:has(mat-error, mat-hint, .mat-mdc-form-field-error, .mat-mdc-form-field-hint)) {
+      display: none !important;
+    }
   }
 
   div.mat-mdc-select-panel {
