@@ -1494,7 +1494,10 @@ body.theme-workspace {
       }
 
       .mat-mdc-form-field-flex {
-        height: 36px;
+        // 34px = 36px wrapper - 2 * 1px border (wrapper uses border-box).
+        // Matching the inner content area keeps the select baseline aligned
+        // with sibling 36px buttons instead of sliding 1px lower.
+        height: 34px;
         align-items: center;
         // Paginator's page-size select stays inline (row layout) — undo the
         // global column override.
@@ -1504,6 +1507,8 @@ body.theme-workspace {
       .mat-mdc-form-field-infix {
         min-height: 34px !important;
         padding: 0 !important;
+        display: flex;
+        align-items: center;
       }
 
       // Hide Material's notched-outline pieces — we paint the border on
