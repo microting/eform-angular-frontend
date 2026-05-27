@@ -1112,6 +1112,17 @@ body.theme-eform {
     //border-color: var(--border) !important;
   }
 
+  // Mirror of the workspace-theme rule at _workspace-mat-overrides.scss:1771.
+  // An mtx-select inside a mat-form-field has no intrinsic width, so it
+  // stretches to the parent's full width in a flex row, pushing other
+  // controls (search inputs, buttons) onto new rows. Cap it at 320px so
+  // toolbar rows like /plugins/backend-configuration-pn/property-workers
+  // stay on a single row, matching the workspace layout.
+  .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
+    width: 100%;
+    max-width: 320px;
+  }
+
   div.mat-mdc-select-panel {
     overflow: hidden !important;
   }
