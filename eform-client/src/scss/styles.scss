@@ -533,7 +533,11 @@ ngx-material-timepicker-container {
 
 .line-vert {
   width: 1px;
-  height: 20px;
+  // 40px matches the canonical toolbar-control height so the divider
+  // sits flush with sibling search inputs and buttons in bottom-aligned
+  // (align-items: end) toolbar rows. The previous 20px sat at the bottom
+  // half of the row and looked dropped.
+  height: 40px;
   background: var(--border);
 }
 
