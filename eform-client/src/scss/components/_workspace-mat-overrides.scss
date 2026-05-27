@@ -1381,8 +1381,6 @@ body.theme-workspace {
 
     .mat-mdc-paginator-page-size {
       order: 2;
-      margin-left: auto;
-      margin-right: 0;
       align-items: center;
     }
 
@@ -1411,6 +1409,9 @@ body.theme-workspace {
       font-size: 14px;
       font-weight: 500;
       letter-spacing: 0;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
 
       // Hide Material's built-in SVG icons
       .mat-mdc-paginator-icon,
@@ -1475,6 +1476,10 @@ body.theme-workspace {
     .mat-mdc-paginator-page-size-select {
       margin: 0 8px 0 4px;
       width: 100px;
+      // The page-size select has no <mat-label>; suppress the 22px label-space
+      // padding from the global .mat-mdc-form-field rule so the visible select
+      // box vertically aligns with sibling 36px buttons in the paginator row.
+      padding-top: 0;
 
       .mat-mdc-text-field-wrapper {
         // !important here defends the paginator's compact 36px against the
@@ -1489,7 +1494,10 @@ body.theme-workspace {
       }
 
       .mat-mdc-form-field-flex {
-        height: 36px;
+        // 34px = 36px wrapper - 2 * 1px border (wrapper uses border-box).
+        // Matching the inner content area keeps the select baseline aligned
+        // with sibling 36px buttons instead of sliding 1px lower.
+        height: 34px;
         align-items: center;
         // Paginator's page-size select stays inline (row layout) — undo the
         // global column override.
@@ -1499,6 +1507,8 @@ body.theme-workspace {
       .mat-mdc-form-field-infix {
         min-height: 34px !important;
         padding: 0 !important;
+        display: flex;
+        align-items: center;
       }
 
       // Hide Material's notched-outline pieces — we paint the border on
