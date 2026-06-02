@@ -198,22 +198,6 @@ public class Program
         if (dbContext != null)
         {
             using var service = dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
-            try
-            {
-                var connectionStrings =
-                    scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
-                if (connectionStrings.Value.DefaultConnection != "..." && dbContext.Database.GetPendingMigrations().Any())
-                {
-                    Log.LogEvent("Migrating Angular DB");
-                    dbContext.Database.Migrate();
-                }
-            }
-            catch (Exception e)
-            {
-                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                logger.LogError(e, "Error while migrating db");
-            }
-
 
             try
             {
