@@ -55,6 +55,8 @@ using Infrastructure.Models;
 using Infrastructure.Models.Settings.Admin;
 using Infrastructure.Models.Settings.Initial;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microting.eForm.Dto;
 using Newtonsoft.Json;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
@@ -198,14 +200,19 @@ public class Program
         if (dbContext != null)
         {
             using var service = dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
+
             try
             {
                 var connectionStrings =
                     scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
-                if (connectionStrings.Value.DefaultConnection != "..." && dbContext.Database.GetPendingMigrations().Any())
+                if (connectionStrings.Value.DefaultConnection != "...")
                 {
-                    Log.LogEvent("Migrating Angular DB");
-                    dbContext.Database.Migrate();
+                    var historyRepo = dbContext.GetService<IHistoryRepository>();
+                    if (!historyRepo.Exists() || dbContext.Database.GetPendingMigrations().Any())
+                    {
+                        Log.LogEvent("Migrating Angular DB");
+                        dbContext.Database.Migrate();
+                    }
                 }
             }
             catch (Exception e)
@@ -213,7 +220,6 @@ public class Program
                 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                 logger.LogError(e, "Error while migrating db");
             }
-
 
             try
             {
