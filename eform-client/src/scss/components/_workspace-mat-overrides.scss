@@ -255,13 +255,19 @@ body.theme-workspace {
   // .mdc-notched-outline__leading, __notch, __trailing. We must paint all
   // three to get a complete border.
 
+  // DM v2 floating-label outlined fields (fields-v2.css): label rests inside
+  // the field at rest and floats up to notch the outline on focus/fill.
+  // Outline colours per state live on the `.mdc-text-field--outlined` block
+  // below to avoid a duplicate-declaration source-order trap.
   .mat-mdc-form-field {
     font-family: var(--font-family);
-    // Anchor for the absolute-positioned label below, plus reserve space
-    // above the wrapper so the lifted label has somewhere to sit. 22px =
-    // 14px label height + 8px gap above the wrapper's top border.
-    position: relative;
-    padding-top: 22px;
+
+    // DM v2 dense variant (`--ff-h: 40px`): matches the workspace-wide 40px
+    // control density used by buttons and the toolbar pills. Populated-label
+    // size drops from 0.78 to 0.75 (11px) to fit the dense container.
+    --mat-form-field-container-height: 40px;
+    --mat-form-field-container-vertical-padding: 8px;
+    --mat-form-field-outlined-label-text-populated-size: 11px;
 
     // Design manual has no hover halo on form fields; suppress M3's
     // focus-overlay fade-in (focus opacity is already 0 by default) and
@@ -269,8 +275,13 @@ body.theme-workspace {
     --mat-form-field-hover-state-layer-opacity: 0;
     --mat-ripple-color: transparent;
 
-    // Floating label colors (still applied; the absolute-position rule below
-    // wins on specificity for layout, this rule paints the color).
+    // Vertical breathing room between stacked fields. The subscript wrapper
+    // collapses to display:none in the no-hint case (see below), so without
+    // this fields would touch — 10px gives a clear separation that doesn't
+    // double up when a hint IS rendered (the hint adds its own height).
+    margin-bottom: 10px;
+
+    // Floating label colors.
     .mdc-floating-label {
       color: var(--md-on-surface-variant);
       font-family: var(--font-family);
@@ -296,110 +307,58 @@ body.theme-workspace {
     }
   }
 
+  // Toolbar rows (.eform-sub-header) align everything to the row's end via
+  // `align-items: end`. The 10px margin-bottom above would lift fields above
+  // sibling buttons (the flex box's bottom edge sits 10px below the visible
+  // field). Strip it back to 0 inside toolbars so fields and buttons share
+  // the same baseline.
+  .eform-sub-header .mat-mdc-form-field {
+    margin-bottom: 0;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Calendar event modal (.gcal-*) — host-side overrides for the v1→v2 field
+  // layout shift. Lives here, not in the plugin component SCSS, because the
+  // dev-server file-watcher for that plugin's component CSS has been
+  // unreliable. Flag for review if/when the calendar plugin owns these.
+  // ---------------------------------------------------------------------------
+  // Toggle stacks (Aktiv/Inaktiv, Vis/Skjul overskredet): default 4px row
+  // margin is too tight before the next form-field row — slide-toggles are
+  // intrinsically shorter than mat-form-field rows. Lifted to 14px.
+  .gcal-toggle-stack {
+    margin-bottom: 14px;
+  }
+
+  // Left-rail icons: the component SCSS sets margin-top: 30px for the v1
+  // "label above the input" layout. v2 puts the input across the whole row,
+  // so re-center: (40px field − 20px icon) / 2 = 10px to the field midline.
+  .gcal-icon:not(.gcal-icon--hidden) {
+    margin-top: 10px;
+  }
+
+  // Toggle rows don't carry a semantically-useful icon — hide the eye /
+  // schedule icon but keep the column width so toggle rows still align with
+  // the rest of the modal. `.gcal-toggle-stack` is a compound class ON
+  // `.gcal-row-content` itself, not a child of it.
+  .gcal-row:has(> .gcal-row-content.gcal-toggle-stack) > .gcal-icon {
+    visibility: hidden;
+  }
+
+  // Attachment rows: hide the 80×80 red "PDF" preview tile beside non-image
+  // attachments — filename + size + Drive badge + trash button suffice.
+  .gcal-attachment-icon {
+    display: none;
+  }
+
   // -------------------------------------------------------------------------
-  // Stacked-label outlined-box spec (Design Manual `.field` pattern)
+  // Residual shared rules (input typography, subscript collapse,
+  // prefix/suffix icon spacing). Outlined focus/error/disabled borders are
+  // painted on the .mdc-notched-outline pieces below; fill-variant active
+  // indicator stays stock.
   // -------------------------------------------------------------------------
-  // Promote `<mat-label>` to a static span ABOVE the wrapper, hide Material's
-  // notched-outline pieces and line-ripple, and paint a single border on
-  // `.mat-mdc-text-field-wrapper` so BOTH `appearance="outline"` and
-  // `appearance="fill"` render as the same canonical 40px outlined rectangle.
-  //
-  // !important is required throughout: Material's MDC layer ships its own
-  // !important declarations and inline transforms on the floating label,
-  // notched-outline borders, and line-ripple — non-important rules lose
-  // every cascade tie against MDC's compiled stylesheet.
   .mat-mdc-form-field,
   .mat-form-field-appearance-fill,
   .mat-form-field-appearance-outline {
-    // Force the wrapper + infix to be position-static so the absolute label
-    // below anchors to the outer `.mat-mdc-form-field` (which IS positioned
-    // via `position: relative` above), not to Material's deeper nested
-    // wrappers that have their own `position: relative`.
-    .mat-mdc-text-field-wrapper,
-    .mat-mdc-form-field-infix {
-      position: static !important;
-    }
-
-    // Outer floating-label container is absolute-positioned OUTSIDE the
-    // wrapper so it sits cleanly above the outlined box with a visible gap.
-    // Anchored to the outer `.mat-mdc-form-field` (position: relative +
-    // padding-top: 22px above).
-    .mdc-floating-label,
-    .mat-mdc-floating-label {
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: auto !important;
-      transform: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      color: var(--md-on-surface) !important;
-      font-size: 14px !important;
-      font-weight: 500 !important;
-      line-height: 16px !important;
-      height: auto !important;
-      width: auto !important;
-      pointer-events: none;
-      overflow: visible !important;
-      max-width: 100% !important;
-      white-space: nowrap;
-    }
-
-    // Inner <mat-label> stays in normal inline flow so the required-marker
-    // span sibling lays out NEXT TO it ("Fornavn *") instead of underneath
-    // it. Promoting mat-label to absolute-with-the-outer-label (the previous
-    // selector list bug) puts both mat-label and the inline static marker
-    // at the parent's (0,0) origin, painting "*" on top of the first letter.
-    // Color / font / line-height inherit from the absolute parent.
-    mat-label {
-      position: static !important;
-      display: inline !important;
-      width: auto !important;
-      max-width: 100% !important;
-      left: auto !important;
-      right: auto !important;
-      top: auto !important;
-      transform: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-
-    // Hide Material's notched-outline pieces — the wrapper paints the border.
-    .mdc-notched-outline,
-    .mdc-notched-outline__leading,
-    .mdc-notched-outline__notch,
-    .mdc-notched-outline__trailing {
-      display: none !important;
-    }
-
-    // Wrapper: canonical 40px outlined rectangle.
-    .mat-mdc-text-field-wrapper {
-      background: var(--md-surface) !important;
-      border: 1px solid var(--md-outline) !important;
-      border-radius: var(--radius-sm, 4px) !important;
-      padding: 0 12px !important;
-      height: 40px !important;
-      min-height: 40px !important;
-    }
-
-    // Kill the filled-appearance line-ripple — outlined box shows focus via
-    // the wrapper border instead.
-    .mdc-line-ripple,
-    .mdc-line-ripple--active,
-    .mdc-line-ripple::before,
-    .mdc-line-ripple::after {
-      display: none !important;
-    }
-
-    // Infix: input/select sit here — collapse to 24px so the wrapper hits 40px.
-    .mat-mdc-form-field-infix {
-      padding: 8px 0 !important;
-      min-height: 24px !important;
-      border: none !important;
-      width: auto;
-    }
-
     // Native input/textarea inside the infix.
     input.mat-mdc-input-element,
     textarea.mat-mdc-input-element,
@@ -411,40 +370,22 @@ body.theme-workspace {
       background: transparent !important;
     }
 
-    // Focus: thicken border to spec's 2px primary. Reduce padding by 1px to
-    // compensate so the box doesn't jump (1px → 2px border = +1px each side).
-    &.mat-focused .mat-mdc-text-field-wrapper,
-    .mat-mdc-text-field-wrapper:focus-within {
-      border-color: var(--md-primary) !important;
-      border-width: 2px !important;
-      padding: 0 11px !important;
-    }
-
-    // Invalid / error state.
-    &.mat-form-field-invalid .mat-mdc-text-field-wrapper {
-      border-color: var(--md-alert) !important;
-    }
-
-    // Disabled state: dim the border + text only; keep the wrapper bg
-    // identical to the active state so disabled fields don't get a grey
-    // overlay (which made readonly modals look like every dropdown had
-    // a "weird" selected-item background).
-    &.mat-form-field-disabled .mat-mdc-text-field-wrapper {
-      border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
-    }
-
-    // Subscript — collapse when empty, show only for errors/hints.
+    // Subscript — workspace pattern: validation feedback is the field's red
+    // border + red label + red asterisk, not a text message below. Hide the
+    // error wrapper entirely and collapse the subscript unless a hint is set.
     .mat-mdc-form-field-subscript-wrapper {
       padding: 0 !important;
       margin-top: 4px;
 
-      .mat-mdc-form-field-hint-wrapper,
-      .mat-mdc-form-field-error-wrapper {
+      .mat-mdc-form-field-hint-wrapper {
         padding: 0 !important;
       }
 
-      // If neither hint nor error is showing, collapse fully (saves 20px).
-      &:not(:has(mat-error, mat-hint, .mat-mdc-form-field-error, .mat-mdc-form-field-hint)) {
+      .mat-mdc-form-field-error-wrapper {
+        display: none !important;
+      }
+
+      &:not(:has(mat-hint, .mat-mdc-form-field-hint)) {
         display: none !important;
       }
     }
@@ -522,8 +463,6 @@ body.theme-workspace {
     font-family: var(--font-family);
     color: var(--md-on-surface);
     font-size: 14px;
-    // Match the 24px infix the stacked-label overrides establish above so
-    // the select trigger centers inside the 40px wrapper.
     min-height: 24px;
     line-height: 24px;
 
@@ -1488,15 +1427,11 @@ body.theme-workspace {
     .mat-mdc-paginator-page-size-select {
       margin: 0 8px 0 4px;
       width: 100px;
-      // The page-size select has no <mat-label>; suppress the 22px label-space
-      // padding from the global .mat-mdc-form-field rule so the visible select
-      // box vertically aligns with sibling 36px buttons in the paginator row.
-      padding-top: 0;
 
       .mat-mdc-text-field-wrapper {
-        // !important here defends the paginator's compact 36px against the
-        // global stacked-label rules higher up in this file, which use
-        // !important to override Material's own !important defaults.
+        // Paginator is intentionally 36px (compact) — overrides the global
+        // 48px MD3 form-field height so the select aligns with the sibling
+        // 36px paginator buttons. !important defends against Material's own.
         background: var(--md-surface) !important;
         border: 1px solid var(--md-outline) !important;
         border-radius: var(--radius-sm, 4px) !important;
@@ -1786,10 +1721,10 @@ body.theme-workspace {
   // Compact use cases (e.g. the calendar event modal's 90 px time-
   // pickers) override with their own width via !important on a
   // dedicated child class.
-  // The inner overrides force the row-layout and 40px min-height
-  // mtx-select's ng-select content needs (the stacked-label rules
-  // above would otherwise column-stack the chips and clamp the infix
-  // to 24px).
+  // The inner overrides force the row layout mtx-select's ng-select content
+  // needs to render chips inline. Heights match the global 40px MD3 dense
+  // form-field height so mtx-select rows visually align with sibling
+  // matInput fields and the workspace's 40px buttons.
   .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
     width: 100%;
     max-width: 320px;
