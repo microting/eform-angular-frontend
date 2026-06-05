@@ -1,0 +1,50 @@
+<div
+  class="task-block"
+  [class.completed]="task.completed"
+  [class.compact]="isCompact"
+  [class.gcal-task--inactive]="task.status === false"
+  [class.resizing]="resizing"
+  [class.raised]="raised"
+  [style.top.px]="topPx"
+  [style.height.px]="heightPx"
+  [style.left]="leftStyle"
+  [style.width]="widthStyle"
+  [style.z-index]="zIndexStyle"
+  [style.background-color]="task.color"
+  cdkDrag
+  [cdkDragData]="task"
+  [cdkDragDisabled]="task.completed || resizing"
+  (cdkDragMoved)="dragMoved.emit($event)"
+  (cdkDragEnded)="dragEnded.emit($event)"
+>
+  <ng-template cdkDragPlaceholder></ng-template>
+
+  <div
+    *ngIf="!task.completed"
+    class="resize-handle resize-handle--top"
+    (mousedown)="startResize($event, 'start')"
+  ></div>
+
+  <div class="task-block-body" cdkDragHandle (click)="onBodyClick($event)">
+    <button
+      *ngIf="task.status || task.completed"
+      class="completion-btn"
+      [class.done]="task.completed"
+      (click)="onCompletionClick($event)"
+      [title]="task.completed ? ('Mark as not completed' | translate) : ('Mark as completed' | translate)"
+    >
+      <mat-icon>{{ task.completed ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+    </button>
+
+    <div class="task-content">
+      <div class="task-title"><span *ngIf="showId" class="task-id">{{ task.id }} </span>{{ task.title }}</div>
+      <div class="task-time" *ngIf="isCompact || task.duration >= 0.5">{{ displayStartText }} – {{ displayEndText }}</div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="!task.completed"
+    class="resize-handle resize-handle--bottom"
+    (mousedown)="startResize($event, 'end')"
+  ></div>
+</div>
