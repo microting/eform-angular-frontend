@@ -679,6 +679,14 @@ export class CalendarRepeatService {
       case 'monthlyDom':
         // New path: Nth-weekday-of-month rule — takes priority over legacy dayOfMonth.
         if (task.repeatOrdinalWeek != null && task.dayOfWeek != null) {
+          if (task.repeatOrdinalWeek === 1) {
+            return {
+              kind: n === 1 ? 'monthlyFirstWeekday' : 'everyNMonthFirstWeekday', n,
+              ordinalWeek: 1,
+              weekday: task.dayOfWeek,
+              endMode, afterCount, untilTs,
+            } as CalendarRepeatMeta;
+          }
           return {
             kind: n === 1 ? 'monthlyByDay' : 'everyNMonthByDay', n,
             ordinalWeek: task.repeatOrdinalWeek,
@@ -710,6 +718,14 @@ export class CalendarRepeatService {
           case 3:
             // New path: Nth-weekday-of-month rule — takes priority over legacy dayOfMonth.
             if (task.repeatOrdinalWeek != null && task.dayOfWeek != null) {
+              if (task.repeatOrdinalWeek === 1) {
+                return {
+                  kind: n === 1 ? 'monthlyFirstWeekday' : 'everyNMonthFirstWeekday', n,
+                  ordinalWeek: 1,
+                  weekday: task.dayOfWeek,
+                  endMode, afterCount, untilTs,
+                } as CalendarRepeatMeta;
+              }
               return {
                 kind: n === 1 ? 'monthlyByDay' : 'everyNMonthByDay', n,
                 ordinalWeek: task.repeatOrdinalWeek,
@@ -834,6 +850,10 @@ export class CalendarRepeatService {
       case 'yearlyOne':
       case 'everyNYear':
         return {...meta, month: date.getMonth(), dom: date.getDate()};
+
+      case 'monthlyFirstWeekday':
+      case 'everyNMonthFirstWeekday':
+        return {...meta, weekday: date.getDay()};
 
       default:
         // daily / everyNd / weeklyMulti / weeklyAll / everyNWeek{Multi,All}:

@@ -253,7 +253,7 @@ describe('CalendarRepeatService', () => {
       expect(meta.month).toBe(2);
     });
 
-    it('monthly custom stays anchored to day 1 regardless of start date (#933 scope)', () => {
+    it('no dom argument falls back to dom=1', () => {
       const date = new Date(2026, 5, 15); // 15 June 2026
       const meta = service.buildMetaFromCustomConfig(
         1, 'month', [], 'never', undefined, undefined, date,
@@ -1311,5 +1311,14 @@ describe('CalendarRepeatService — monthly kinds', () => {
     const back = service.decomposeCustomMeta(meta);
     expect(back.monthlyKind).toBe('monthlyFirstWeekday');
     expect(back.monthlyWeekday).toBe(1);
+  });
+
+  it('buildMeta: monthlyFirstWeekday weekday=0 (Sunday) — nullish coalescing handles falsy zero', () => {
+    const meta = service.buildMetaFromCustomConfig(
+      1, 'month', [], 'never', undefined, undefined, undefined,
+      'monthlyFirstWeekday', undefined, 0,
+    );
+    expect(meta.kind).toBe('monthlyFirstWeekday');
+    expect(meta.weekday).toBe(0);
   });
 });
