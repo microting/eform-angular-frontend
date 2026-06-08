@@ -17,6 +17,14 @@ public class TranslationService : ITranslationService
     public async Task<OperationDataResult<string>> TranslateText(string sourceText, string sourceLanguageCode,
         string targetLanguageCode, string apiKey)
     {
+        // E2E hook: a sentinel key returns deterministic fake text instead of
+        // calling Google, so the translate flow is testable without a real key.
+        // Never matches a real Google API key.
+        if (apiKey == "FAKE_TRANSLATE_E2E")
+        {
+            return new OperationDataResult<string>(true, "", $"[{targetLanguageCode}] {sourceText}");
+        }
+
         //string apiKey = "YOUR_API_KEY";
         string apiUrl = "https://translation.googleapis.com/language/translate/v2?key=" + apiKey;
 
