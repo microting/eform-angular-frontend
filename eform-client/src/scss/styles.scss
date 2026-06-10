@@ -1402,6 +1402,10 @@ body.theme-eform {
 
 body.theme-eform {
   .mtx-grid .mat-table-sticky-left {
+    // Opaque background so horizontally-scrolled cell content cannot show through the
+    // pinned first column (the CDK positions it sticky but never paints a background).
+    // Mirrors the right-pinned column rule (.mat-table-sticky-right) below.
+    background: var(--bg, #FFF) !important;
     border-right: 1px solid var(--border, #EBEFF2) !important;
   }
 
