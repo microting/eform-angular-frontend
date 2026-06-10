@@ -89,6 +89,16 @@ body.theme-workspace {
     flex: 1 1 auto;
   }
 
+  // Legacy filter / sub-header band. styles.scss paints `.eform-sub-header`
+  // with `var(--bg)` (#f8fafd) via an unscoped !important rule, so the filter
+  // toolbar stays tinted under the workspace theme even after the surface
+  // tokens went white. Pin it to the page surface so it matches the content
+  // area in both modes (white in light, #131314 in dark). !important + the
+  // theme-scoped specificity beats the global rule.
+  .eform-sub-header {
+    background: var(--md-surface) !important;
+  }
+
   // ---------------------------------------------------------------------------
   // 2. Navigation drawer (base — no icon rail variant)
   // ---------------------------------------------------------------------------
