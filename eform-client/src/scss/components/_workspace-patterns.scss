@@ -33,11 +33,7 @@ body.theme-workspace {
     align-items: center;
     justify-content: space-between;
     padding: var(--spacing-md) var(--spacing-2xl);
-    background: color-mix(
-      in srgb,
-      var(--md-primary) 10%,
-      var(--md-surface-container)
-    );
+    background: var(--md-surface-container);
     color: var(--md-on-surface);
     border-bottom: 1px solid var(--md-surface-variant);
     box-shadow: none;
@@ -70,11 +66,7 @@ body.theme-workspace {
 
   // Existing app-header element (eform-client/src/app/components/header)
   app-header > header {
-    background: color-mix(
-      in srgb,
-      var(--md-primary) 10%,
-      var(--md-surface-container)
-    );
+    background: var(--md-surface-container);
     color: var(--md-on-surface);
     border-bottom: 1px solid var(--md-surface-variant);
     padding: var(--spacing-sm) var(--spacing-2xl);
@@ -735,6 +727,18 @@ body.theme-workspace {
   // app/components/navigation/navigation.component.scss use --rounded-full
   // (9999px = pill) — the design spec wants 8px rounded rectangles. Override
   // here so the workspace variant gets the design's nav item shape.
+
+  // The <mat-tree> element inherits Angular Material's M3 default surface
+  // (#f7faf9 light) via --mat-tree-container-background-color, painting the
+  // whole menu a faint tint distinct from the white drawer beneath it. Pin it
+  // to the drawer surface so the menu reads as one clean surface in both modes.
+  // Scoped to mat-drawer so folder-picker / tree-select trees are untouched.
+  // The token is what Angular Material reads for the tree container fill; the
+  // raw `background` covers the host wrapper, which doesn't route through it.
+  mat-drawer mat-tree {
+    --mat-tree-container-background-color: var(--md-surface-container);
+    background: var(--md-surface-container);
+  }
 
   mat-tree .nav-link {
     border-radius: var(--radius-lg, 8px) !important;
