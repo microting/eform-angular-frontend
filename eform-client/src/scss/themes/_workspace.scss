@@ -73,7 +73,7 @@ $workspace-tokens: (
       md-on-primary: #ffffff,
       md-primary-container: #d3e3fd,
       md-secondary-container: #dfe2eb,
-      md-surface: #f8fafd,
+      md-surface: #ffffff,
       md-surface-container: #ffffff,
       md-surface-variant: #e1e7ef,
       md-on-surface: #1f1f1f,
@@ -175,7 +175,7 @@ $workspace-tokens: (
       text-child-muted: #5f6368,
       text-error-message: #b3261e,
 
-      surface-subheader: #e1e7ef,
+      surface-subheader: #ffffff,
       surface-error-message: #fde8e7,
 
       spinner-overlay-bg: #{rgba(0, 0, 0, 0.3)},
@@ -324,7 +324,7 @@ $workspace-tokens: (
       text-child-muted: #c4c7c5,
       text-error-message: #f2b8b5,
 
-      surface-subheader: #444746,
+      surface-subheader: #131314,
       surface-error-message: #{rgba(178, 38, 30, 0.2)},
 
       spinner-overlay-bg: #{rgba(0, 0, 0, 0.5)},
