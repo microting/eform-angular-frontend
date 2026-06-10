@@ -99,6 +99,28 @@ body.theme-workspace {
     background: var(--md-surface) !important;
   }
 
+  // The calendar plugin's own toolbar (.calendar-header) paints its bar with
+  // the legacy var(--bg) (#f8fafd) and its property pills with var(--bg-soft)
+  // — a token the workspace theme never defines, so the pills fall back to a
+  // hardcoded grey that also breaks in dark mode. Re-point both at the
+  // workspace surface tokens so the calendar filter bar matches the rest of
+  // the de-tinted chrome and tracks light/dark correctly.
+  .calendar-header {
+    background: var(--md-surface) !important;
+
+    // !important: the plugin's encapsulated `.calendar-header .property-pill`
+    // rule (specificity 0,4,0 with two [_ngcontent] attrs) out-specifies this
+    // theme override otherwise, and its hardcoded #f1f3f4 fallback stays light
+    // grey in dark mode.
+    .property-pill {
+      background: var(--md-surface-variant) !important;
+
+      &:hover {
+        background: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-surface-variant)) !important;
+      }
+    }
+  }
+
   // ---------------------------------------------------------------------------
   // 2. Navigation drawer (base — no icon rail variant)
   // ---------------------------------------------------------------------------
@@ -745,8 +767,14 @@ body.theme-workspace {
   // Scoped to mat-drawer so folder-picker / tree-select trees are untouched.
   // The token is what Angular Material reads for the tree container fill; the
   // raw `background` covers the host wrapper, which doesn't route through it.
+  // The expandable parent rows (Opgaver, Timeregistrering, …) render as
+  // <mat-expansion-panel>, which carries its OWN M3 surface token
+  // (--mat-expansion-container-background-color, also #f7faf9). Setting it
+  // here lets the inherited custom property flow down to those panels so they
+  // match the rest of the menu instead of keeping the tint.
   mat-drawer mat-tree {
     --mat-tree-container-background-color: var(--md-surface-container);
+    --mat-expansion-container-background-color: var(--md-surface-container);
     background: var(--md-surface-container);
   }
 
