@@ -29,13 +29,19 @@ export class AuthComponent implements OnInit {
   ngOnInit() {
     console.debug('AuthComponent - ngOnInit');
     this.getInitialData();
+    // Set the flag from the current URL on first load — NavigationEnd does not
+    // fire for the initial navigation, so a direct hit on /auth/restore-password
+    // would otherwise keep the login company header visible.
+    this.updateForgotPasswordFlag();
     this.router.events
       .pipe(filter(x => x.type === EventType.NavigationEnd))
-      .subscribe(() => {
-      this.onForgotPasswordPage = this.router.url.includes('reset-admin-password') ||
-        this.router.url.includes('restore-password-confirmation') ||
-        this.router.url.includes('restore-password');
-    })
+      .subscribe(() => this.updateForgotPasswordFlag());
+  }
+
+  private updateForgotPasswordFlag() {
+    this.onForgotPasswordPage = this.router.url.includes('reset-admin-password') ||
+      this.router.url.includes('restore-password-confirmation') ||
+      this.router.url.includes('restore-password');
   }
 
   getInitialData() {

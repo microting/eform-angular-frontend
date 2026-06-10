@@ -13,6 +13,23 @@
   width: 100%;
 }
 
+// Forgot-password card heading + instructional body (design manual
+// "Glemt adgangskode" screen). Left-aligned to sit above the form fields.
+.ds-auth-title {
+  margin: 0 0 10px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--md-on-surface, #1f1f1f);
+}
+
+.ds-auth-copy {
+  margin: 0 0 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--md-on-surface-variant, #444746);
+}
+
 .ds-field {
   display: flex;
   flex-direction: column;
