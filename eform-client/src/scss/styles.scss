@@ -1400,12 +1400,16 @@ body.theme-eform {
   }
 }
 
+// Pinned-left column must be OPAQUE on ALL themes (theme-eform, theme-workspace, dark, …),
+// otherwise the horizontally-scrolled cell content shows through the sticky first column
+// (the CDK positions it sticky but never paints a background). var(--bg) resolves per theme.
+// NB: the right-pinned rule below is theme-eform-scoped and has the same latent gap on other themes.
+.mtx-grid .mat-table-sticky-left {
+  background: var(--bg, #FFF) !important;
+}
+
 body.theme-eform {
   .mtx-grid .mat-table-sticky-left {
-    // Opaque background so horizontally-scrolled cell content cannot show through the
-    // pinned first column (the CDK positions it sticky but never paints a background).
-    // Mirrors the right-pinned column rule (.mat-table-sticky-right) below.
-    background: var(--bg, #FFF) !important;
     border-right: 1px solid var(--border, #EBEFF2) !important;
   }
 
