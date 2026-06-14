@@ -50,22 +50,22 @@
     <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="9.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
     <PackageReference Include="HtmlToOpenXml.dll" Version="3.4.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.9" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="10.0.31" />
+    <PackageReference Include="Microting.eForm" Version="10.0.35" />
     <PackageReference Include="Microting.EformAngularFrontendBase" Version="10.0.35" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="10.0.28" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="10.0.29" />
     <PackageReference Include="PureOtp" Version="1.0.0.1" />
     <PackageReference Include="Sentry" Version="6.6.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.1" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="2.0.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.80.0" />
     <PackageReference Include="sendgrid" Version="9.29.3" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.8" />
-    <PackageReference Include="System.Threading.AccessControl" Version="10.0.8" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.9" />
+    <PackageReference Include="System.Threading.AccessControl" Version="10.0.9" />
   </ItemGroup>
 
   <ItemGroup>
