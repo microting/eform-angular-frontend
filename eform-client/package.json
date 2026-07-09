@@ -35,7 +35,7 @@
     "@angular-material-extensions/password-strength": "^16.0.0",
     "@angular/animations": "20.3.16",
     "@angular/cdk": "20.2.14",
-    "@angular/common": "20.3.16",
+    "@angular/common": "20.3.25",
     "@angular/compiler": "20.3.16",
     "@angular/core": "20.3.17",
     "@angular/forms": "20.3.16",
