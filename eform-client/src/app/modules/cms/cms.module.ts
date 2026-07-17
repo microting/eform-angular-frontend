@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
-import {EditorModule, TINYMCE_SCRIPT_SRC} from '@tinymce/tinymce-angular';
+import {FormattingTextEditorModule} from 'src/app/common/modules/eform-imported/formatting-text-editor/formatting-text-editor.module';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
@@ -47,7 +47,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    EditorModule,
+    FormattingTextEditorModule,
     DragDropModule,
     MatTabsModule,
     MatTableModule,
@@ -64,7 +64,6 @@ const routes: Routes = [
   ],
   providers: [
     CmsService,
-    {provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js'},
   ],
 })
 export class CmsModule {}

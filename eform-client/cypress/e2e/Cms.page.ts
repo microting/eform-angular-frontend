@@ -55,14 +55,10 @@ export class CmsPage {
       cy.get('#cmsPageTitle').should('be.visible').clear().type(title);
     },
 
-    setBodyViaTinyMce: (content: string) => {
-      // TinyMCE loads asynchronously in an iframe; wait for it then use the API
-      cy.window().then(win => {
-        cy.wrap(null).should(() => {
-          expect((win as any).tinymce?.activeEditor).to.exist;
-        });
-        (win as any).tinymce.activeEditor.setContent(content);
-      });
+    setBody: (content: string) => {
+      cy.get('#cmsPageBodyEditor .NgxEditor__Content')
+        .should('be.visible')
+        .type(content);
     },
 
     enableLandingPage: () => {

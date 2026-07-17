@@ -2,7 +2,7 @@ import loginPage from '../Login.page';
 import cmsPage from '../Cms.page';
 
 const testPageTitle = 'Cypress CMS Landing Page';
-const testPageContent = '<h1>Welcome from Cypress</h1><p>This is automated test content for the CMS landing page.</p>';
+const testPageContent = 'Welcome from Cypress. This is automated test content for the CMS landing page.';
 
 describe('CMS - landing page shown to unauthenticated visitors', () => {
   before(() => {
@@ -32,13 +32,8 @@ describe('CMS - landing page shown to unauthenticated visitors', () => {
     cy.url().should('include', '/cms/pages');
     cmsPage.PageEdit.setTitle(testPageTitle);
 
-    // Set body content via TinyMCE API (avoids iframe complexity)
-    cy.window().should(win => {
-      expect((win as any).tinymce).to.exist;
-    });
-    cy.window().then(win => {
-      (win as any).tinymce.activeEditor.setContent(testPageContent);
-    });
+    // Set body content in the ngx-editor rich-text editor
+    cmsPage.PageEdit.setBody(testPageContent);
 
     // Mark as landing page and published
     cmsPage.PageEdit.enableLandingPage();
@@ -75,7 +70,7 @@ describe('CMS - landing page shown to unauthenticated visitors', () => {
 
     // The page body should contain the content we entered
     cy.get('#cmsPageBody').should('be.visible');
-    cy.get('#cmsPageBody').should('contain.html', 'Welcome from Cypress');
+    cy.get('#cmsPageBody').should('contain.text', 'Welcome from Cypress');
     cy.get('#cmsPageBody').should('contain.text', 'This is automated test content for the CMS landing page.');
   });
 
