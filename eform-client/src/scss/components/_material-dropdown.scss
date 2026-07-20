@@ -571,3 +571,23 @@ body {
     z-index: 100000;
   }
 }
+
+// Task-list batch-action dropdown (backend-configuration task-list page).
+// The mtx-select panel is appended to <body> (mtx-select appendTo defaults to
+// 'body'), so these rules must be global; they are scoped by classes emitted
+// ONLY by that dropdown's ng-optgroup-tmp / ng-option-tmp templates and cannot
+// affect any other dropdown. Typography matches the mockup's native <select>
+// conventions (opgaveliste.html #opgavelisteFilterHandling): bold optgroup
+// headers (font-weight 700), regular-weight options, and clearly gray disabled
+// options (native GrayText ≈ #808080, vs the subtle theme disabled token).
+body .ng-dropdown-panel .ng-optgroup .tl-batch-action-group-label {
+  font-weight: 700;
+}
+
+body .ng-dropdown-panel .ng-option .tl-batch-action-option-label {
+  font-weight: 400;
+}
+
+body .ng-dropdown-panel .ng-option.ng-option-disabled .tl-batch-action-option-label {
+  color: #808080;
+}
