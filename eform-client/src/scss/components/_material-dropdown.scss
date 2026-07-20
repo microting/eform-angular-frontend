@@ -586,6 +586,9 @@ body {
 
 .ng-dropdown-panel .tl-batch-action-option-label {
   font-weight: 400;
+  // Options indent relative to their flush-left group headers, matching the
+  // mockup's native <select> optgroup rendering.
+  padding-left: 12px;
 }
 
 .ng-dropdown-panel .ng-option-disabled .tl-batch-action-option-label {
