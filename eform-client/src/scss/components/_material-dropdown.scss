@@ -579,7 +579,7 @@ body {
 // affect any other dropdown. Typography matches the mockup's native <select>
 // conventions (opgaveliste.html #opgavelisteFilterHandling): bold optgroup
 // headers (font-weight 700), regular-weight options, and clearly gray disabled
-// options (native GrayText ≈ #808080, vs the subtle theme disabled token).
+// options (the native GrayText system color, vs the subtle theme disabled token).
 .ng-dropdown-panel .tl-batch-action-group-label {
   font-weight: 700;
 }
@@ -589,6 +589,5 @@ body {
 }
 
 .ng-dropdown-panel .ng-option-disabled .tl-batch-action-option-label {
-  color: #808080;
   color: GrayText;
 }
