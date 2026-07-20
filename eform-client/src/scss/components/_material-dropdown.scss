@@ -580,14 +580,15 @@ body {
 // conventions (opgaveliste.html #opgavelisteFilterHandling): bold optgroup
 // headers (font-weight 700), regular-weight options, and clearly gray disabled
 // options (native GrayText ≈ #808080, vs the subtle theme disabled token).
-body .ng-dropdown-panel .ng-optgroup .tl-batch-action-group-label {
+.ng-dropdown-panel .tl-batch-action-group-label {
   font-weight: 700;
 }
 
-body .ng-dropdown-panel .ng-option .tl-batch-action-option-label {
+.ng-dropdown-panel .tl-batch-action-option-label {
   font-weight: 400;
 }
 
-body .ng-dropdown-panel .ng-option.ng-option-disabled .tl-batch-action-option-label {
+.ng-dropdown-panel .ng-option-disabled .tl-batch-action-option-label {
   color: #808080;
+  color: GrayText;
 }
