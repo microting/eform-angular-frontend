@@ -96,7 +96,8 @@ export class BackendConfigurationCalendarPage extends BasePage {
 
   /**
    * Click Save and confirm the recurring-scope dialog if it appears (defaults
-   * to the pre-selected scope — "Only this").
+   * to the pre-selected scope — "Only this"), then the eForm-change
+   * confirmation if that appears too.
    */
   async save() {
     await this.page.locator('#calendarEventSaveBtn').click();
@@ -109,6 +110,19 @@ export class BackendConfigurationCalendarPage extends BasePage {
     } catch {
       // No scope dialog — event was not part of a recurring series, or the
       // save went straight through.
+    }
+    // Then, ONLY when the eForm was changed on a recurring series AND the
+    // picked scope is narrower than "all", a second confirmation explains that
+    // the eForm applies to the whole series (the backend re-points every
+    // uncompleted occurrence regardless of scope). It is chained AFTER the
+    // scope picker, so this block must stay after the one above.
+    const eformConfirm = this.page.locator('#eformChangeScopeConfirmBtn');
+    try {
+      await eformConfirm.waitFor({ state: 'visible', timeout: 2500 });
+      await eformConfirm.click();
+    } catch {
+      // No eForm-change confirmation — the eForm was untouched, the scope was
+      // "all", or the save went straight through.
     }
     // Wait for the modal to close (save succeeded + week reloaded) rather than
     // sleeping a fixed amount, so the test isn't flaky under CI load.
