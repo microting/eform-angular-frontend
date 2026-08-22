@@ -1,12 +1,7 @@
-<div
-  *ngFor="let element of element.elementList"
-  routerLinkActive="active"
-  class="pl-2 cursor-pointer"
->
+<div *ngFor="let element of element.elementList" class="eform-nav__group">
   <a
-    mat-button
+    class="eform-nav__link"
     (click)="goToSection('#section' + element.id)"
-    class="d-flex w-100"
   >
     {{ element.label }}
   </a>

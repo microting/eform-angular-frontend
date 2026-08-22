@@ -17,7 +17,6 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-picture',
     templateUrl: './element-picture.component.html',
-    styleUrls: ['./element-picture.component.scss'],
     standalone: false
 })
 export class ElementPictureComponent implements OnChanges, OnDestroy {

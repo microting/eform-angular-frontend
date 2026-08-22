@@ -16,6 +16,13 @@ import {
 export class CaseEditElementComponent implements OnInit {
   @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
   @Input() element: ElementDto = new ElementDto();
+  /**
+   * Whether to print this section's own label as a heading. The calendar
+   * complete modal turns it off for a single-section eForm, where the label
+   * only repeats the dialog title. Defaults to true so every other consumer
+   * keeps the heading it has today.
+   */
+  @Input() showSectionTitle = true;
   @Output() needUpdate: EventEmitter<void> = new EventEmitter<void>();
   requestModel: CaseEditRequest = new CaseEditRequest();
   requestModels: Array<CaseEditRequest> = [];

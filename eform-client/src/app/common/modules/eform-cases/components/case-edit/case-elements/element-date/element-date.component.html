@@ -1,5 +1,4 @@
 <mat-form-field>
-  <mat-label>{{ 'Select date' | translate }}</mat-label>
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <input
     [required]="fieldValueObj.mandatory"
@@ -11,7 +10,12 @@
     (click)="picker.open()"
   >
   <mat-datepicker #picker></mat-datepicker>
-  <mat-error class="text-warn" *ngIf="!fieldValueObj.value && fieldValueObj.mandatory">
-    {{'Date is required'| translate}}*
-  </mat-error>
 </mat-form-field>
+<!--
+  Rendered outside mat-form-field on purpose: theme-workspace sets
+  .mat-mdc-form-field-error-wrapper { display: none }, so a mat-error here would
+  never be shown to the user.
+-->
+<p class="eform-field__error" *ngIf="!fieldValueObj.value && fieldValueObj.mandatory">
+  {{'Date is required' | translate}}*
+</p>

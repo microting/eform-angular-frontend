@@ -4,7 +4,6 @@ import {DataItemDto} from 'src/app/common/models';
 @Component({
     selector: 'app-case-edit-switch',
     templateUrl: './case-edit-switch.component.html',
-    styleUrls: ['./case-edit-switch.component.scss'],
     standalone: false
 })
 export class CaseEditSwitchComponent implements OnInit {
