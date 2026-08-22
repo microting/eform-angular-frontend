@@ -1,4 +1,12 @@
 <mat-form-field>
+  <!--
+    Not a duplicate of the question label above: valueReadable is the SAVED
+    ANSWER. These three selects bind no value into mtx-select (no ngModel, no
+    [value]), so this label is the only thing that renders a previously
+    submitted answer. Removing it blanks every answered dropdown on the cases
+    and compliance review screens. Binding the value properly is follow-up work.
+  -->
+  <mat-label>{{ fieldValueObj.valueReadable }}</mat-label>
   <mtx-select
     bindValue="id"
     bindLabel="text"

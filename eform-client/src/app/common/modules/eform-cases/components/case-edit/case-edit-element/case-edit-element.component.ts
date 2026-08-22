@@ -10,7 +10,6 @@ import {
 @Component({
     selector: 'app-case-edit-element',
     templateUrl: './case-edit-element.component.html',
-    styleUrls: ['./case-edit-element.component.scss'],
     standalone: false
 })
 export class CaseEditElementComponent implements OnInit {

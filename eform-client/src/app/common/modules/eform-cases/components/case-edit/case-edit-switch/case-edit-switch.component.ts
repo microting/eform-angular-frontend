@@ -15,6 +15,15 @@ export class CaseEditSwitchComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * A FieldContainer is a grouping construct, not a question — it must not draw
+   * an accent bar around the whole group, and must not set the custom property
+   * either (it would inherit into the nested fields).
+   */
+  isAccented(dataItem: DataItemDto): boolean {
+    return dataItem.fieldType !== 'FieldContainer' && !!dataItem.color;
+  }
+
   emitNeedUpdate() {
     this.needUpdate.emit();
   }

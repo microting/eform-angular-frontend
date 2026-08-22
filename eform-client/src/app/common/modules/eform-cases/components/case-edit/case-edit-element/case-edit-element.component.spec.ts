@@ -3,6 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule} from '@angular/forms';
+import {MatRadioModule} from '@angular/material/radio';
 import {CaseEditElementComponent} from './case-edit-element.component';
 import {ElementDto} from 'src/app/common/models';
 
@@ -35,7 +36,10 @@ describe('CaseEditElementComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CaseEditElementComponent],
-      imports: [TranslateModule.forRoot(), FormsModule],
+      // MatRadioModule is required, not optional: FormsModule makes NgModel match
+      // [(ngModel)] on <mat-radio-group>, and without the real component there is
+      // no ControlValueAccessor, so NgModel throws NG01203.
+      imports: [TranslateModule.forRoot(), FormsModule, MatRadioModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 

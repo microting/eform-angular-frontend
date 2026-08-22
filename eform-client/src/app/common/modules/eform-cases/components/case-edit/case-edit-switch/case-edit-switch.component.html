@@ -2,12 +2,14 @@
   <ng-container *ngFor="let dataItem of dataItemList; let i = index">
     <div
       class="eform-field"
-      [class.eform-field--accented]="dataItem.fieldType !== 'FieldContainer' && !!dataItem.color"
-      [style.--eform-field-accent]="dataItem.color ? '#' + dataItem.color : null"
+      [class.eform-field--accented]="isAccented(dataItem)"
+      [style.--eform-field-accent]="isAccented(dataItem) ? '#' + dataItem.color : null"
       *ngIf="dataItem.fieldType != 'SaveButton'"
+      role="group"
+      [attr.aria-labelledby]="dataItem.fieldType != 'FieldContainer' ? 'eformFieldLabel' + dataItem.id : null"
     >
       <ng-container *ngIf="dataItem.fieldType != 'FieldContainer'">
-        <h3 class="eform-field__label">{{dataItem.label}}</h3>
+        <h3 class="eform-field__label" id="eformFieldLabel{{dataItem.id}}">{{dataItem.label}}</h3>
         <div
           class="eform-field__desc"
           *ngIf="dataItem.description?.inderValue"
