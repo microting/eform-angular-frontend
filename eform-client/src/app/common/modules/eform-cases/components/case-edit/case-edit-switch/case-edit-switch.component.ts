@@ -4,7 +4,6 @@ import {DataItemDto} from 'src/app/common/models';
 @Component({
     selector: 'app-case-edit-switch',
     templateUrl: './case-edit-switch.component.html',
-    styleUrls: ['./case-edit-switch.component.scss'],
     standalone: false
 })
 export class CaseEditSwitchComponent implements OnInit {
@@ -14,6 +13,15 @@ export class CaseEditSwitchComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  /**
+   * A FieldContainer is a grouping construct, not a question — it must not draw
+   * an accent bar around the whole group, and must not set the custom property
+   * either (it would inherit into the nested fields).
+   */
+  isAccented(dataItem: DataItemDto): boolean {
+    return dataItem.fieldType !== 'FieldContainer' && !!dataItem.color;
   }
 
   emitNeedUpdate() {

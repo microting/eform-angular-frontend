@@ -1305,6 +1305,152 @@ body.theme-eform {
   }
 }
 
+// ---------------------------------------------------------------------------
+// eForm fill layout (.eform-section / .eform-field)
+//
+// One rendered eForm question: a bold label, an optional muted description, then
+// the control — no card, no tinted header bar. Shared by every screen that fills
+// an eForm (calendar complete modal, cases page, compliance case page + modal,
+// backend-configuration case page) via case-edit-element / case-edit-switch.
+//
+// Global rather than component-scoped on purpose: the controls live in the
+// element-* child components, so emulated encapsulation would stop a
+// case-edit-switch stylesheet from reaching them.
+//
+// Only tokens defined by BOTH themes are used here (theme-eform and
+// theme-workspace disagree on every literal value), so the block inherits
+// whichever field chrome the active theme paints.
+// ---------------------------------------------------------------------------
+.eform-section {
+  display: block;
+  // Sibling sections are separate <app-case-edit-element> hosts, so a
+  // descendant rule cannot separate them — the margin has to sit on the
+  // section itself.
+  margin-bottom: 32px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__title {
+    margin: 0 0 24px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-header);
+  }
+}
+
+.eform-field {
+  position: relative;
+  // No :last-child reset here: the last question of a section IS the last
+  // child of app-case-edit-switch, and resetting it would butt that question
+  // against the next section's heading or the extra-fields block.
+  margin: 0 0 32px;
+
+  // The leaf field components are custom elements, which default to
+  // display: inline — without this every vertical margin below them is inert.
+  > element-audio,
+  > element-checkbox,
+  > element-comment,
+  > element-container,
+  > element-date,
+  > element-entitysearch,
+  > element-entityselect,
+  > element-multiselect,
+  > element-number,
+  > element-number-stepper,
+  > element-pdf,
+  > element-picture,
+  > element-signature,
+  > element-singleselect,
+  > element-text,
+  > element-timer {
+    display: block;
+  }
+
+  &__label {
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-header);
+  }
+
+  // With no description the label would sit 4px off the control, which is too
+  // tight; the description normally supplies that breathing room.
+  &:not(:has(.eform-field__desc)) &__label {
+    margin-bottom: 10px;
+  }
+
+  &__desc {
+    margin: 0 0 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--md-on-surface-variant);
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // dataItem.color, carried through as --eform-field-accent. Absent colour means
+  // no bar and no indent, so uncoloured fields stay flush left.
+  &--accented {
+    padding-left: 14px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      bottom: 2px;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--eform-field-accent, transparent);
+    }
+  }
+
+  // Validation text lives outside mat-form-field: theme-workspace hides
+  // .mat-mdc-form-field-error-wrapper outright, so an in-field mat-error would
+  // never be seen.
+  &__error {
+    margin: 4px 0 0;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--md-alert);
+  }
+}
+
+// Section jump-links beside a multi-section eForm (app-case-edit-nav), and the
+// nav column of the screens that host one.
+.eform-nav {
+  &__group {
+    // Nested sections indent under their parent.
+    .eform-nav__group {
+      padding-left: 12px;
+    }
+  }
+
+  &__link {
+    display: block;
+    padding: 8px 12px;
+    border-left: 2px solid transparent;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text-header);
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      border-left-color: var(--primary);
+      color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 6%, transparent);
+    }
+  }
+}
+
 .bordered-card {
   border: 1px solid var(--border) !important;
   border-bottom-left-radius: 4px;

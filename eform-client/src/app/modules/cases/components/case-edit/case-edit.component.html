@@ -6,29 +6,24 @@
 <div class="d-grid justify-content-between" style="grid-template-columns: 5fr 2fr;">
   <div class="mr-4 d-flex flex-column">
     <!-- Done at user editable -->
-    <mat-card *ngIf="currentTemplate.isDoneAtEditable" class="mb-4">
-      <mat-card-header>
-        {{ 'Submitted date' | translate }}
-      </mat-card-header>
-      <mat-card-content>
-        <mat-form-field>
-          <mat-label>{{ 'Select date' | translate }}</mat-label>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <input
-            required
-            matInput
-            [matDatepicker]="picker"
-            [value]="replyElement.doneAt"
-            (dateChange)="replyElement.doneAt = $event.value"
-            (click)="picker.open()"
-          >
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error class="text-warn" *ngIf="!replyElement.doneAt">
-            {{'Date is required'| translate}}*
-          </mat-error>
-        </mat-form-field>
-      </mat-card-content>
-    </mat-card>
+    <div class="eform-field" *ngIf="currentTemplate.isDoneAtEditable">
+      <h3 class="eform-field__label">{{ 'Submitted date' | translate }}</h3>
+      <mat-form-field>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <input
+          required
+          matInput
+          [matDatepicker]="picker"
+          [value]="replyElement.doneAt"
+          (dateChange)="replyElement.doneAt = $event.value"
+          (click)="picker.open()"
+        >
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <p class="eform-field__error" *ngIf="!replyElement.doneAt">
+        {{'Date is required'| translate}}*
+      </p>
+    </div>
 
     <!-- Elements loop -->
     <app-case-edit-element
@@ -51,9 +46,8 @@
           routerLinkActive="active"
         >
           <a
-            mat-button
+            class="eform-nav__link"
             (click)="goToSection('#section' + element.id)"
-            class="d-flex w-100"
           >
             {{ element.label }}
           </a>
