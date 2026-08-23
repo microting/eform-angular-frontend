@@ -594,3 +594,29 @@ body {
 .ng-dropdown-panel .ng-option-disabled .tl-batch-action-option-label {
   color: GrayText;
 }
+
+// Calendar complete modal — grouped worker picker.
+// Same intent as the tl-batch-action-* rules above: mimic a native <select>
+// with <optgroup>, where the group header is bold and flush and its options are
+// indented and regular weight. ng-select renders neither convention on its own,
+// and the dropdown panel is appended to <body>, so a component stylesheet
+// cannot reach these nodes — hence global rules scoped by a unique class.
+.ng-dropdown-panel .eform-worker-group-label {
+  font-weight: 700;
+  color: var(--text-header);
+}
+
+.ng-dropdown-panel .eform-worker-option-label {
+  font-weight: 400;
+
+  // Only indent when the list is actually grouped. With a single group the
+  // component renders an ungrouped list, which should stay flush.
+  //
+  // 20px rather than the 12px its tl-batch-action sibling uses: under
+  // theme-workspace an option row is padded 12px while an optgroup row is
+  // padded 16px, so 4px of the indent is spent just catching up to the header.
+  // 20px lands ~16px clear of the header, close to a native <select>.
+  &--grouped {
+    padding-left: 20px;
+  }
+}

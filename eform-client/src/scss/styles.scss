@@ -1422,6 +1422,35 @@ body.theme-eform {
   }
 }
 
+// Section jump-links beside a multi-section eForm (app-case-edit-nav), and the
+// nav column of the screens that host one.
+.eform-nav {
+  &__group {
+    // Nested sections indent under their parent.
+    .eform-nav__group {
+      padding-left: 12px;
+    }
+  }
+
+  &__link {
+    display: block;
+    padding: 8px 12px;
+    border-left: 2px solid transparent;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text-header);
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      border-left-color: var(--primary);
+      color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 6%, transparent);
+    }
+  }
+}
+
 .bordered-card {
   border: 1px solid var(--border) !important;
   border-bottom-left-radius: 4px;
