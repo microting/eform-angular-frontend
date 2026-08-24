@@ -141,10 +141,19 @@ function classesOf(raw) {
   return m ? m[1].split(/\s+/).filter(Boolean) : [];
 }
 
-/** True when the tag opens a dialog action row, in either supported form. */
+/**
+ * True when the tag opens a dialog action row.
+ *
+ * `.modal-footer` is included deliberately: it is the hand-rolled footer left
+ * behind by the old MDBootstrap dialogs, and being invisible to this check is
+ * how one of them ended up contradicting its own sibling on the same screen —
+ * workflow's Assign-site dialog led with Cancel while Remove-site trailed it.
+ * A row the gate cannot see is a row that drifts.
+ */
 function opensActionRow(tag) {
   if (tag.closing) return false;
   if (tag.name === 'mat-dialog-actions') return true;
+  if (classesOf(tag.raw).includes('modal-footer')) return true;
   return attrNames(tag.raw).includes('mat-dialog-actions');
 }
 
