@@ -542,6 +542,7 @@ ngx-material-timepicker-container {
 }
 
 .btn-primary {
+  font-family: var(--font-family, #{$eform-font-family});
   // The base class is complete on its own. It used to declare only colour,
   // radius and height, leaving padding, display, the border reset and the
   // entire type treatment to the --icon-left modifier — and the type rule was
@@ -703,9 +704,10 @@ ngx-material-timepicker-container {
 }
 
 .btn-cancel {
-  display: flex;
+  font-family: var(--font-family, #{$eform-font-family});
+  display: inline-flex;
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
@@ -733,9 +735,9 @@ ngx-material-timepicker-container {
 
 
 .btn-warning {
-  display: flex;
+  display: inline-flex;
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
@@ -767,6 +769,7 @@ ngx-material-timepicker-container {
 // .mat-mdc-text-button — a class Angular Material 20 never emits, leaving a
 // pill in the wrong colour.
 .btn-quiet {
+  font-family: var(--font-family, #{$eform-font-family});
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -796,9 +799,10 @@ ngx-material-timepicker-container {
 }
 
 .btn-delete {
-  display: flex;
+  font-family: var(--font-family, #{$eform-font-family});
+  display: inline-flex;
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
@@ -826,7 +830,7 @@ ngx-material-timepicker-container {
 .warning-btn {
   display: flex;
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
