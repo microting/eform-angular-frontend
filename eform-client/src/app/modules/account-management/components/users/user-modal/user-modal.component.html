@@ -84,6 +84,14 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
+    class="btn-cancel"
+    (click)="hide()"
+    type="button"
+    [id]="edit ? 'editUserCancelSaveBtn' : 'createAdministrationUserCancelBtn'"
+  >
+    {{ 'Cancel' | translate }}
+  </button>
+  <button
     class="btn-primary btn-primary--icon-left"
     type="submit"
     [disabled]="userForm.invalid"
@@ -91,13 +99,5 @@
     [id]="edit ? 'editUserSaveBtn' : 'createAdministrationUserBtn'"
   >
     {{ (edit ? 'Save' : 'Create') | translate }}
-  </button>
-  <button
-    class="btn-cancel"
-    (click)="hide()"
-    type="button"
-    [id]="edit ? 'editUserCancelSaveBtn' : 'createAdministrationUserCancelBtn'"
-  >
-    {{ 'Cancel' | translate }}
   </button>
 </div>

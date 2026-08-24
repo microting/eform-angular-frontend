@@ -4,7 +4,8 @@
  *
  * The app has one button system: `.btn-primary` (filled), `.btn-cancel`
  * (outlined secondary), `.btn-delete` (destructive) and `.btn-quiet` (low
- * emphasis). Angular Material's button directives are NOT part of it — the
+ * emphasis), and one order: **cancel first**, then the confirming or
+ * destructive action. Angular Material's button directives are NOT part of it — the
  * theme's override targets `.mat-mdc-text-button`, a class Material 20 never
  * emits, so `mat-button` silently renders as a pill in the wrong colour.
  *
@@ -140,10 +141,19 @@ function classesOf(raw) {
   return m ? m[1].split(/\s+/).filter(Boolean) : [];
 }
 
-/** True when the tag opens a dialog action row, in either supported form. */
+/**
+ * True when the tag opens a dialog action row.
+ *
+ * `.modal-footer` is included deliberately: it is the hand-rolled footer left
+ * behind by the old MDBootstrap dialogs, and being invisible to this check is
+ * how one of them ended up contradicting its own sibling on the same screen —
+ * workflow's Assign-site dialog led with Cancel while Remove-site trailed it.
+ * A row the gate cannot see is a row that drifts.
+ */
 function opensActionRow(tag) {
   if (tag.closing) return false;
   if (tag.name === 'mat-dialog-actions') return true;
+  if (classesOf(tag.raw).includes('modal-footer')) return true;
   return attrNames(tag.raw).includes('mat-dialog-actions');
 }
 
@@ -158,6 +168,7 @@ function checkFile(file) {
     if (tags[i].selfClosing) continue;
 
     // Walk forward tracking depth until this row closes.
+    const rowButtons = [];
     let depth = 0;
     for (let j = i; j < tags.length; j++) {
       const t = tags[j];
@@ -167,6 +178,8 @@ function checkFile(file) {
       if (j > i && !t.closing && (t.name === 'button' || t.name === 'a')) {
         const attrs = attrNames(t.raw);
         const classes = classesOf(t.raw);
+
+        rowButtons.push({ line: lineOf(html, t.start), classes, attrs });
 
         const material = MATERIAL_BUTTON_ATTRS.filter(a => attrs.includes(a));
         if (material.length) {
@@ -189,6 +202,25 @@ function checkFile(file) {
       }
 
       if (depth === 0) break;
+    }
+
+    // ---- rule 3: cancel comes first ------------------------------------
+    // A dialog's dismissing action leads; the confirming or destructive one
+    // follows. Mixed ordering is the single button inconsistency a user
+    // actually notices, because it moves the button under their cursor
+    // between one dialog and the next.
+    const actions = rowButtons.filter(b =>
+      b.classes.some(c => APPROVED_CLASSES.includes(c)) &&
+      !ICON_BUTTON_ATTRS.some(a => b.attrs.includes(a))
+    );
+    const cancelAt = actions.findIndex(b => b.classes.includes('btn-cancel'));
+    if (cancelAt > 0) {
+      const leading = actions[0].classes.filter(c => APPROVED_CLASSES.includes(c)).join(' ');
+      violations.push({
+        line: actions[0].line,
+        rule: 'cancel-not-first',
+        detail: `.${leading} precedes .btn-cancel — cancel leads the row`,
+      });
     }
   }
 
@@ -271,7 +303,8 @@ function main() {
   }
   console.log(
     '\nOne button system: .btn-primary (filled), .btn-cancel (outlined),\n' +
-    '.btn-delete (destructive), .btn-quiet (low emphasis).\n' +
+    '.btn-delete (destructive), .btn-quiet (low emphasis),\n' +
+    'and one order: cancel first, then the confirming action.\n' +
     'Material button directives are not part of it — the theme override targets\n' +
     '.mat-mdc-text-button, which Angular Material 20 does not emit.'
   );

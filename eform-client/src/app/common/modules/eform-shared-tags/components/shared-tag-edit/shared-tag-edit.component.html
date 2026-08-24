@@ -13,19 +13,19 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end pt-0 mt-0">
   <button
+    class="btn-cancel"
+    id="tagEditSaveCancelBtn"
+    (click)="cancelEdit()"
+  >
+    {{ 'Close' | translate }}
+  </button>
+  <button
     class="btn-primary btn-primary--icon-left"
     id="tagEditSaveBtn"
     [disabled]="!tagModel.name"
     (click)="updateItem()"
   >
     {{ 'Save' | translate }}
-  </button>
-  <button
-    class="btn-cancel"
-    id="tagEditSaveCancelBtn"
-    (click)="cancelEdit()"
-  >
-    {{ 'Close' | translate }}
   </button>
 </div>
 
