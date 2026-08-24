@@ -13,6 +13,21 @@
  *
  * Usage:  node scripts/check-button-conventions.js [rootDir ...]
  * Default root: src/app
+ *
+ * SCOPE — read this before trusting a green run. `src/app/plugins/` is
+ * gitignored in this repo (the plugin modules are owned by their own repos and
+ * copied in by devinstall), so a CI checkout here contains ONLY the core app:
+ * this gate protects ~173 templates, not the whole platform. Locally, where the
+ * plugin tree is present on disk, the same command does cover it.
+ *
+ * Each plugin repo therefore has to run this itself. Their CI already checks
+ * out this frontend and copies their module into it, so the step is:
+ *
+ *   node eform-angular-frontend/eform-client/scripts/check-button-conventions.js \
+ *     eform-angular-frontend/eform-client/src/app/plugins/modules/<name>
+ *
+ * Until that is wired up per plugin, a plugin can reintroduce a bare
+ * `mat-button` with no CI signal.
  */
 
 const fs = require('fs');
@@ -22,13 +37,28 @@ const APPROVED_CLASSES = ['btn-primary', 'btn-cancel', 'btn-delete', 'btn-quiet'
 
 // Material button directives. Present on an action button, these bypass the
 // design system entirely.
+//
+// Both spellings are listed on purpose. Material 20 accepts the legacy
+// hyphenated attributes AND a modern camelCase form — button.mjs declares
+// `button[matButton], a[matButton]` (appearance chosen via matButton="filled"
+// etc.) alongside `button[mat-button]`. Banning only the hyphenated set would
+// leave `<button matButton>` sailing through the very check that exists to
+// catch it.
 const MATERIAL_BUTTON_ATTRS = [
   'mat-button',
   'mat-raised-button',
   'mat-flat-button',
   'mat-stroked-button',
+  'mat-fab',
+  'mat-mini-fab',
+  'matButton',
+  'matFab',
+  'matMiniFab',
   'mdbBtn',
 ];
+
+// Icon-only triggers are not action buttons; both spellings are excluded.
+const ICON_BUTTON_ATTRS = ['mat-icon-button', 'matIconButton'];
 
 // Classes referenced by templates but defined by no stylesheet in the repo —
 // they render as unstyled browser buttons.
@@ -147,7 +177,7 @@ function checkFile(file) {
           });
         } else if (!classes.some(c => APPROVED_CLASSES.includes(c))) {
           // Icon-only buttons (a lone mat-icon trigger) are not action buttons.
-          const isIconButton = attrs.includes('mat-icon-button');
+          const isIconButton = ICON_BUTTON_ATTRS.some(a => attrs.includes(a));
           if (!isIconButton) {
             violations.push({
               line: lineOf(html, t.start),
