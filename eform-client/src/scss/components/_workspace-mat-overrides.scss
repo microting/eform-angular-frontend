@@ -135,7 +135,15 @@ body.theme-workspace {
   }
 
   // --- Text ---
-  .mat-mdc-text-button {
+  // `.mat-mdc-button` — NOT `.mat-mdc-text-button`, which this block targeted
+  // for as long as it has existed. Angular Material maps the `mat-button`
+  // directive to `.mat-mdc-button` (button.mjs: ['text', ['mat-mdc-button']]);
+  // `.mat-mdc-text-button` is emitted by nothing, so every `mat-button` in the
+  // app fell through to Material's own defaults — a 9999px pill in
+  // --mat-sys-primary teal — and looked broken next to its .btn-primary
+  // sibling. Dialog actions must still use .btn-quiet (the gate enforces it);
+  // this exists so the remaining navigation-style `mat-button`s are themed.
+  .mat-mdc-button {
     border-radius: var(--radius-sm, 4px) !important;
     background-color: transparent;
     color: var(--md-primary);
@@ -1674,6 +1682,30 @@ body.theme-workspace {
         font-weight: 500;
         line-height: 1;
       }
+    }
+  }
+
+  // Text button for the workspace theme — 40px like its siblings, 4px radius,
+  // no border. Replaces `mat-button`, which never picked up a theme.
+  .btn-quiet,
+  button.btn-quiet,
+  a.btn-quiet {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: transparent;
+    color: var(--md-primary) !important;
+    height: 40px;
+    padding: 0 16px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
     }
   }
 

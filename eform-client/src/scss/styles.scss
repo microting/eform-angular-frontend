@@ -760,6 +760,41 @@ ngx-material-timepicker-container {
   }
 }
 
+// Low-emphasis action — the fourth and last role in the button vocabulary
+// (.btn-primary filled, .btn-cancel outlined, .btn-delete destructive,
+// .btn-quiet text). It exists so there is a supported answer for the cases
+// that used to reach for `mat-button`, whose theme override targets
+// .mat-mdc-text-button — a class Angular Material 20 never emits, leaving a
+// pill in the wrong colour.
+.btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--156-px, 6px);
+  height: 48px;
+  padding: var(--312-px, 12px) var(--520-px, 20px);
+  border: none;
+  border-radius: var(--rounded-full);
+  background: transparent;
+  color: var(--mdc-theme-primary) !important;
+  cursor: pointer;
+  font-size: var(--Text-size-sm, 14px);
+  font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px);
+
+  &:hover:not(:disabled):not([disabled]) {
+    background-color: color-mix(in srgb, var(--mdc-theme-primary) 8%, transparent);
+  }
+
+  &:disabled,
+  &[disabled] {
+    color: var(--tp-text) !important;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    pointer-events: none;
+  }
+}
+
 .btn-delete {
   display: flex;
   height: 48px;

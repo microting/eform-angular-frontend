@@ -4,21 +4,19 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-around">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary"
     (click)="confirmationClicked(true)"
   >
     {{'Save & Leave' | translate}}
   </button>
   <button
-    mat-raised-button
-    color="warn"
+    class="btn-delete"
     (click)="confirmationClicked(false)"
   >
     {{'Leave' | translate}}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     (click)="cancelExit()"
   >
     {{'Cancel' | translate}}

@@ -13,15 +13,14 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    mat-raised-button
-    color="warn"
+    class="btn-primary"
     (click)="updatePluginStatus(installedPluginModel.status)"
     id="pluginOKBtn"
   >
     {{'OK' | translate}}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     (click)="hide()"
     id="pluginCancelBtn"
   >
