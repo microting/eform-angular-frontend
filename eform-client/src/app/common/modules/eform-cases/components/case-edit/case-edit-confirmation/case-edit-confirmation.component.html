@@ -4,6 +4,12 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-around">
   <button
+    class="btn-cancel"
+    (click)="cancelExit()"
+  >
+    {{'Cancel' | translate}}
+  </button>
+  <button
     class="btn-primary"
     (click)="confirmationClicked(true)"
   >
@@ -14,11 +20,5 @@
     (click)="confirmationClicked(false)"
   >
     {{'Leave' | translate}}
-  </button>
-  <button
-    class="btn-cancel"
-    (click)="cancelExit()"
-  >
-    {{'Cancel' | translate}}
   </button>
 </div>

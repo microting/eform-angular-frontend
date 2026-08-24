@@ -1,17 +1,17 @@
 <h3 mat-dialog-title>{{ 'Are you sure you want to delete checklist' | translate }}?</h3>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    class="btn-delete"
-    (click)="hide(true)"
-    id="checklistDeleteDeleteBtn"
-  >
-    {{'Delete' | translate}}
-  </button>
-  <button
     class="btn-cancel"
     (click)="hide()"
     id="checklistDeleteCancelBtn"
   >
     {{'Cancel' | translate}}
+  </button>
+  <button
+    class="btn-delete"
+    (click)="hide(true)"
+    id="checklistDeleteDeleteBtn"
+  >
+    {{'Delete' | translate}}
   </button>
 </div>

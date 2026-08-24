@@ -13,18 +13,18 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-24">
   <button
+    class="btn-cancel"
+    id="newTagsSaveCancelBtn"
+    (click)="cancelCreate()"
+  >
+    {{ 'Close' | translate }}
+  </button>
+  <button
     class="btn-primary btn-primary--icon-left"
     id="newTagsSaveBtn"
     [disabled]="!textareaValue"
     (click)="createTags()"
   >
     {{ 'Create' | translate }}
-  </button>
-  <button
-    class="btn-cancel"
-    id="newTagsSaveCancelBtn"
-    (click)="cancelCreate()"
-  >
-    {{ 'Close' | translate }}
   </button>
 </div>

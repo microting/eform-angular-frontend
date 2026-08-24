@@ -13,17 +13,17 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    class="btn-primary"
-    (click)="updatePluginStatus(installedPluginModel.status)"
-    id="pluginOKBtn"
-  >
-    {{'OK' | translate}}
-  </button>
-  <button
     class="btn-cancel"
     (click)="hide()"
     id="pluginCancelBtn"
   >
     {{'Cancel' | translate}}
+  </button>
+  <button
+    class="btn-primary"
+    (click)="updatePluginStatus(installedPluginModel.status)"
+    id="pluginOKBtn"
+  >
+    {{'OK' | translate}}
   </button>
 </div>

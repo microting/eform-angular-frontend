@@ -20,17 +20,17 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    class="btn-delete"
-    [id]="this.deleteModalSettingModel.settings.deleteButtonId"
-    (click)="onClickDelete()"
-  >
-    {{this.deleteModalSettingModel.settings.deleteButtonText ?? ('Delete' | translate)}}
-  </button>
-  <button
     class="btn-cancel"
     [id]="this.deleteModalSettingModel.settings.cancelButtonId"
     (click)="hide()"
   >
     {{this.deleteModalSettingModel.settings.cancelButtonText ?? ('Cancel' | translate)}}
+  </button>
+  <button
+    class="btn-delete"
+    [id]="this.deleteModalSettingModel.settings.deleteButtonId"
+    (click)="onClickDelete()"
+  >
+    {{this.deleteModalSettingModel.settings.deleteButtonText ?? ('Delete' | translate)}}
   </button>
 </div>
