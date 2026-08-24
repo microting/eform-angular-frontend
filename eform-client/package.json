@@ -2,7 +2,7 @@
   "name": "eform-angular",
   "version": "9.0.0",
   "license": "MIT",
-  "author": "René Schultz Madsen <rm@microting.com> (https://www.microting.com/)",
+  "author": "Ren\u00e9 Schultz Madsen <rm@microting.com> (https://www.microting.com/)",
   "repository": {
     "type": "git",
     "url": "https://github.com/microting/eform-angular-frontend"
@@ -22,7 +22,8 @@
     "run-cypress": "npx cypress run --browser chrome",
     "open-cypress": "npx cypress open",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org microting-as --project angular-frontend ./dist && sentry-cli sourcemaps upload --org microting-as --project angular-frontend ./dist",
-    "generate-licenses": "node generate-licenses.js && cd ../eFormAPI && dotnet list package --include-transitive --format json > /tmp/dotnet-packages.json && cd ../eform-client && node add-dotnet-licenses.js"
+    "generate-licenses": "node generate-licenses.js && cd ../eFormAPI && dotnet list package --include-transitive --format json > /tmp/dotnet-packages.json && cd ../eform-client && node add-dotnet-licenses.js",
+    "lint:buttons": "node scripts/check-button-conventions.js src/app"
   },
   "prettier": {
     "singleQuote": true
