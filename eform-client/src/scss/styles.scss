@@ -542,6 +542,24 @@ ngx-material-timepicker-container {
 }
 
 .btn-primary {
+  // The base class is complete on its own. It used to declare only colour,
+  // radius and height, leaving padding, display, the border reset and the
+  // entire type treatment to the --icon-left modifier — and the type rule was
+  // scoped to a child <span>. A class that needs a modifier AND a wrapper
+  // element to render correctly drifts no matter how careful callers are:
+  // an audit found ~86 buttons subtly wrong across folders that disagreed
+  // with themselves. --icon-left now means only what its name says.
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--156-px, 6px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
+  border: none;
+  box-shadow: none;
+  font-size: var(--Text-size-sm, 14px);
+  font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px);
+
   border-radius: var(--rounded-full);
   background-color: var(--mdc-theme-primary) !important;
   color: var(--mdc-theme-on-primary) !important;
@@ -594,6 +612,18 @@ ngx-material-timepicker-container {
 }
 
 .btn-secondary {
+  // Same completeness fix as .btn-primary above. Bare .btn-secondary used to
+  // inherit the browser's `border: 2px outset` and a 13.33px label, which is
+  // what the --icon-left comment below was written to work around.
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--156-px, 6px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
+  border: 1px solid var(--border);
+  font-size: var(--Text-size-sm, 14px);
+  font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px);
 
   background: unset;
   cursor: pointer;
@@ -1268,7 +1298,7 @@ body.theme-eform {
       }
 
       .btn-delete-menu {
-        color: var(---error) !important;
+        color: var(--error) !important;
 
         span, mat-icon, .mat-mdc-menu-item-text {
           color: var(--error) !important;
