@@ -20,6 +20,16 @@ jobs:
         with:
           name: container
           path: container.tar
+  button-conventions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # No install needed — the checker is dependency-free Node.
+      - name: Button conventions
+        run: cd eform-client && node scripts/check-button-conventions.js src/app
   playwright-test:
     needs: build
     runs-on: ubuntu-latest

@@ -96,29 +96,6 @@ body.theme-workspace {
       filter: none;
     }
   }
-  .btn-filled {
-    background: var(--md-primary);
-    color: var(--md-on-primary);
-  }
-  .btn-tonal {
-    background: var(--md-secondary-container);
-    color: var(--md-on-surface);
-  }
-  .btn-outlined {
-    background: transparent;
-    border: 1px solid var(--md-outline);
-    color: var(--md-on-surface);
-  }
-  .btn-text {
-    background: transparent;
-    color: var(--md-primary);
-    padding-left: var(--spacing-sm, 8px);
-    padding-right: var(--spacing-sm, 8px);
-    &:hover {
-      background: color-mix(in srgb, var(--md-primary) 8%, transparent);
-      filter: none;
-    }
-  }
   .icon-button {
     display: inline-grid;
     place-items: center;
@@ -916,11 +893,6 @@ body.theme-workspace {
       margin: var(--spacing-lg, 16px) 0 0;
       padding: 0;
       list-style: none;
-      // The cancel button (text button) is pushed to the far left.
-      .btn-text:first-child,
-      [data-action="cancel"] {
-        margin-right: auto;
-      }
     }
   }
 }

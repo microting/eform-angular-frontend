@@ -542,6 +542,25 @@ ngx-material-timepicker-container {
 }
 
 .btn-primary {
+  font-family: var(--font-family, #{$eform-font-family});
+  // The base class is complete on its own. It used to declare only colour,
+  // radius and height, leaving padding, display, the border reset and the
+  // entire type treatment to the --icon-left modifier — and the type rule was
+  // scoped to a child <span>. A class that needs a modifier AND a wrapper
+  // element to render correctly drifts no matter how careful callers are:
+  // an audit found ~86 buttons subtly wrong across folders that disagreed
+  // with themselves. --icon-left now means only what its name says.
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--156-px, 6px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
+  border: none;
+  box-shadow: none;
+  font-size: var(--Text-size-sm, 14px);
+  font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px);
+
   border-radius: var(--rounded-full);
   background-color: var(--mdc-theme-primary) !important;
   color: var(--mdc-theme-on-primary) !important;
@@ -594,6 +613,18 @@ ngx-material-timepicker-container {
 }
 
 .btn-secondary {
+  // Same completeness fix as .btn-primary above. Bare .btn-secondary used to
+  // inherit the browser's `border: 2px outset` and a 13.33px label, which is
+  // what the --icon-left comment below was written to work around.
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--156-px, 6px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
+  border: 1px solid var(--border);
+  font-size: var(--Text-size-sm, 14px);
+  font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px);
 
   background: unset;
   cursor: pointer;
@@ -673,9 +704,10 @@ ngx-material-timepicker-container {
 }
 
 .btn-cancel {
-  display: flex;
+  font-family: var(--font-family, #{$eform-font-family});
+  display: inline-flex;
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
@@ -703,9 +735,9 @@ ngx-material-timepicker-container {
 
 
 .btn-warning {
-  display: flex;
+  display: inline-flex;
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
@@ -730,10 +762,47 @@ ngx-material-timepicker-container {
   }
 }
 
-.btn-delete {
-  display: flex;
+// Low-emphasis action — the fourth and last role in the button vocabulary
+// (.btn-primary filled, .btn-cancel outlined, .btn-delete destructive,
+// .btn-quiet text). It exists so there is a supported answer for the cases
+// that used to reach for `mat-button`, whose theme override targets
+// .mat-mdc-text-button — a class Angular Material 20 never emits, leaving a
+// pill in the wrong colour.
+.btn-quiet {
+  font-family: var(--font-family, #{$eform-font-family});
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--156-px, 6px);
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
+  border: none;
+  border-radius: var(--rounded-full);
+  background: transparent;
+  color: var(--mdc-theme-primary) !important;
+  cursor: pointer;
+  font-size: var(--Text-size-sm, 14px);
+  font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px);
+
+  &:hover:not(:disabled):not([disabled]) {
+    background-color: color-mix(in srgb, var(--mdc-theme-primary) 8%, transparent);
+  }
+
+  &:disabled,
+  &[disabled] {
+    color: var(--tp-text) !important;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    pointer-events: none;
+  }
+}
+
+.btn-delete {
+  font-family: var(--font-family, #{$eform-font-family});
+  display: inline-flex;
+  height: 48px;
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
@@ -761,7 +830,7 @@ ngx-material-timepicker-container {
 .warning-btn {
   display: flex;
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
@@ -1268,7 +1337,7 @@ body.theme-eform {
       }
 
       .btn-delete-menu {
-        color: var(---error) !important;
+        color: var(--error) !important;
 
         span, mat-icon, .mat-mdc-menu-item-text {
           color: var(--error) !important;

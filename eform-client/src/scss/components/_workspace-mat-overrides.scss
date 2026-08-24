@@ -135,7 +135,15 @@ body.theme-workspace {
   }
 
   // --- Text ---
-  .mat-mdc-text-button {
+  // `.mat-mdc-button` — NOT `.mat-mdc-text-button`, which this block targeted
+  // for as long as it has existed. Angular Material maps the `mat-button`
+  // directive to `.mat-mdc-button` (button.mjs: ['text', ['mat-mdc-button']]);
+  // `.mat-mdc-text-button` is emitted by nothing, so every `mat-button` in the
+  // app fell through to Material's own defaults — a 9999px pill in
+  // --mat-sys-primary teal — and looked broken next to its .btn-primary
+  // sibling. Dialog actions must still use .btn-quiet (the gate enforces it);
+  // this exists so the remaining navigation-style `mat-button`s are themed.
+  .mat-mdc-button {
     border-radius: var(--radius-sm, 4px) !important;
     background-color: transparent;
     color: var(--md-primary);
@@ -1565,6 +1573,18 @@ body.theme-workspace {
     font-weight: 500;
     letter-spacing: 0;
 
+    // Complete on its own — see the matching comment in styles.scss. Padding
+    // and font-size used to live only in --icon-left, and the font-size only
+    // on a child <span>, so a button written without both rendered at 13.33px
+    // with no horizontal padding.
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 16px;
+    border: none;
+    font-size: 14px;
+
     &:hover:not(:disabled):not([disabled]) {
       background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary)) !important;
     }
@@ -1610,6 +1630,16 @@ body.theme-workspace {
     font-family: var(--font-family);
     font-weight: 500;
 
+    // Complete on its own; without this a bare .btn-secondary took the
+    // browser's `border: 2px outset` and a 13.33px label.
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 16px;
+    border: 1px solid var(--md-outline);
+    font-size: 14px;
+
     &:hover:not(:disabled):not([disabled]) {
       background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
     }
@@ -1652,6 +1682,30 @@ body.theme-workspace {
         font-weight: 500;
         line-height: 1;
       }
+    }
+  }
+
+  // Text button for the workspace theme — 40px like its siblings, 4px radius,
+  // no border. Replaces `mat-button`, which never picked up a theme.
+  .btn-quiet,
+  button.btn-quiet,
+  a.btn-quiet {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: transparent;
+    color: var(--md-primary) !important;
+    height: 40px;
+    padding: 0 16px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
     }
   }
 

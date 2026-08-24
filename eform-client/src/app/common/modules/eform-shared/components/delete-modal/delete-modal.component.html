@@ -20,15 +20,14 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    mat-raised-button
-    color="warn"
+    class="btn-delete"
     [id]="this.deleteModalSettingModel.settings.deleteButtonId"
     (click)="onClickDelete()"
   >
     {{this.deleteModalSettingModel.settings.deleteButtonText ?? ('Delete' | translate)}}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     [id]="this.deleteModalSettingModel.settings.cancelButtonId"
     (click)="hide()"
   >

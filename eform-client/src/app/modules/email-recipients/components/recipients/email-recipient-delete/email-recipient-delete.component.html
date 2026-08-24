@@ -27,15 +27,14 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    mat-raised-button
-    color="warn"
+    class="btn-delete"
     (click)="deleteEmailRecipient()"
     id="emailRecipientDeleteSaveBtn"
   >
     {{'Delete' | translate}}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     (click)="hide()"
     id="emailRecipientDeleteCancelBtn"
   >
