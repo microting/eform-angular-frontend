@@ -22,7 +22,7 @@
   <button
     class="btn-primary btn-primary--icon-left"
     id="newTagsSaveBtn"
-    [disabled]="!textareaValue"
+    [disabled]="tagNames.length === 0"
     (click)="createTags()"
   >
     {{ 'Create' | translate }}
