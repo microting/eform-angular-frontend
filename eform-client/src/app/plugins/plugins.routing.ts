@@ -4,11 +4,6 @@ import { AuthGuard } from 'src/app/common/guards';
 
 export const routes: Routes = [
   // INSERT ROUTES HERE
-  {
-    path: 'my-microting-pn',
-    loadChildren: () => import('./modules/my-microting-pn/my-microting-pn.module')
-      .then(m => m.MyMicrotingPnModule)
-  },
 ];
 
 @NgModule({

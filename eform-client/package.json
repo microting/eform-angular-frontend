@@ -129,7 +129,6 @@
     "jest-preset-angular": "^16.0.0",
     "jsdom": "27",
     "mammoth": "^1.10.0",
-    "mysql2": "^3.24.2",
     "path": "^0.12.7",
     "pixelmatch": "^7.1.0",
     "pngjs": "^7.0.0",

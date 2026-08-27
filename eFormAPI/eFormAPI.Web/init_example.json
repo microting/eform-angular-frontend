@@ -1,19 +1,65 @@
 {
-  "ConnectionStrings": {
-    "DefaultConnection": "host= localhost;Database=420_Angular;user = root; password = secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;Connection Timeout=300;Default Command Timeout=300;"
+  "initialSettings": {
+    "connectionStringMain": {
+      "source": "connection.json",
+      "catalogue": "/",
+      "auth": "user=root;password=Qq1234567$;",
+      "port": 3306
+    },
+    "connectionStringSdk": {
+      "host": "localhost",
+      "database": "420_sdk",
+      "auth": "user=root;password=Qq1234567$;",
+      "token": "abc1234567890abc1234567890abcdef",
+      "port": 3306,
+      "sqlServerType": "",
+      "prefixAllDatabases": false
+    },
+    "adminSetupModel": {
+      "email": "admin@admin.com",
+      "userName": "admin@admin.com",
+      "firstName": "John",
+      "lastName": "Smith",
+      "password": "Qq1234567$",
+      "darkTheme": true 
+    },
+    "generalAppSetupSettingsModel": {
+      "defaultLocale": "da",
+      "customerNo": 420
+    }
   },
-  "CustomerStatsSettings": {
-    "Username": "rm@microting.com",
-    "Password": "p23kJUomia!",
-    "TimeoutSeconds": 60
+  "smtpSettingsModel": null,
+    //{
+  //  "host": "",
+  //  "port": "25",
+  //  "login": "",
+  //  "password": ""
+  //},
+  "swiftSettingsModel": {
+    "swiftEnabled": false,
+    "swiftUserName": "XXX",
+    "swiftPassword": "XXX",
+    "swiftEndpoint": "http://XXX",
+    "keystoneEndpoint": "http://XXX"
   },
-  "MicrouserBaseDbSettings": {
-    "ConnectionString": "Persist Security Info=True;host= 165.22.18.179;Database=microuser_11_production;user = root; password = p23kJUomia;port=3306;Convert Zero Datetime = true;SslMode=none;"
+  "s3SettingsModel": {
+    "s3Enabled": false,
+    "s3AccessKeyId": "XXX",
+    "s3SecrectAccessKey": "XXX",
+    "s3Endpoint": "https://XXX",
+    "s3BucketName": "XXX"
   },
-  "EconomicSettings": {
-    "AppSecretToken": "Bqpql1hXrDbvO3n4ywQnHG6AkokTqQoXNek4cEGtX2s1",
-    "AgreementGrantToken": "TOo0KO0Ts2rJJa4Md3Sg870_uAqC6rFPxp6hrNjkcGI1",
-    "BaseUrl": "https://restapi.e-conomic.com",
-    "TimeoutSeconds": 30
-  }
+  "sdkSettingsModel": {
+    "customerNo": "420",
+    "logLevel": "4",
+    "logLimit": "25000",
+    "fileLocationPicture": "/var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/picture/",
+    "fileLocationPdf": "/var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/pdf/",
+    "fileLocationReports": "/var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/",
+    "httpServerAddress": "http://localhost:3000"
+  },
+  "sendGridSettingsModel": {
+    "apiKey": "XXX"
+  },
+  "pluginsList": [ "eform-angular-items-planning-plugin" ]
 }
