@@ -98,6 +98,17 @@
           <mat-icon color="primary">vpn_key</mat-icon>
           <span>{{ 'Set password' | translate }}</span>
         </button>
+
+        <button
+          mat-menu-item
+          id="userAdministrationConfirmEmailBtn-{{i}}"
+          *ngIf="!row.emailConfirmed && (selectCurrentUserClaimsUsersUpdate$ | async)"
+          matTooltip="{{ 'Confirm email' | translate }}"
+          (click)="openConfirmEmailModal(row)"
+        >
+          <mat-icon color="primary">mark_email_read</mat-icon>
+          <span>{{ 'Confirm email' | translate }}</span>
+        </button>
       </mat-menu>
     </div>
   </ng-template>

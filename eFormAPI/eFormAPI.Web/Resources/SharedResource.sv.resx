@@ -153,6 +153,12 @@
     <data name="ErrorWhileUpdatingUser">
         <value>Fel vid uppdatering av användare</value>
     </data>
+    <data name="EmailConfirmed">
+        <value>E-post bekräftad</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Fel vid bekräftelse av e-post</value>
+    </data>
     <data name="FileNotFound">
         <value>Filen hittades inte</value>
     </data>

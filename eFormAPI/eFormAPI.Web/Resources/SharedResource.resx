@@ -270,6 +270,12 @@
   <data name="ErrorWhileUpdatingUser" xml:space="preserve">
     <value>Error when updating user</value>
   </data>
+  <data name="EmailConfirmed" xml:space="preserve">
+    <value>Email confirmed</value>
+  </data>
+  <data name="ErrorWhileConfirmingEmail" xml:space="preserve">
+    <value>Error while confirming email</value>
+  </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>File not found</value>
   </data>

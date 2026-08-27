@@ -42,6 +42,8 @@ public interface IAdminService
 
     Task<OperationResult> Delete(int userId);
 
+    Task<OperationResult> ConfirmEmail(int userId);
+
     Task<OperationResult> DisableTwoFactorAuthForce();
 
     Task<OperationResult> EnableTwoFactorAuthForce();

@@ -3,6 +3,7 @@ export class UserInfoModel {
   createdAt?: Date;
   updatedAt?: Date;
   email: string;
+  emailConfirmed?: boolean;
   firstName: string;
   lastName: string;
   fullName: string;
@@ -32,6 +33,7 @@ export class UserInfoModel {
       this.createdAt = data.createdAt;
       this.updatedAt = data.updatedAt;
       this.email = data.email;
+      this.emailConfirmed = data.emailConfirmed;
       this.firstName = data.firstName;
       this.lastName = data.lastName;
       this.fullName = data.fullName;

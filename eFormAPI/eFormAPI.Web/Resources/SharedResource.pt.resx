@@ -153,6 +153,12 @@
     <data name="ErrorWhileUpdatingUser">
         <value>Erro ao atualizar usuário</value>
     </data>
+    <data name="EmailConfirmed">
+        <value>E-mail confirmado</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Erro ao confirmar e-mail</value>
+    </data>
     <data name="FileNotFound">
         <value>Arquivo não encontrado</value>
     </data>

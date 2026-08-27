@@ -153,6 +153,12 @@
     <data name="ErrorWhileUpdatingUser">
         <value>Erreur lors de la mise à jour de l'utilisateur</value>
     </data>
+    <data name="EmailConfirmed">
+        <value>E-mail confirmé</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Erreur lors de la confirmation de l'e-mail</value>
+    </data>
     <data name="FileNotFound">
         <value>Fichier introuvable</value>
     </data>

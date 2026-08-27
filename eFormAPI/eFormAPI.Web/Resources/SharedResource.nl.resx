@@ -153,6 +153,12 @@
     <data name="ErrorWhileUpdatingUser">
         <value>Fout bij het updaten van de gebruiker</value>
     </data>
+    <data name="EmailConfirmed">
+        <value>E-mail bevestigd</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Fout bij het bevestigen van e-mail</value>
+    </data>
     <data name="FileNotFound">
         <value>Bestand niet gevonden</value>
     </data>
