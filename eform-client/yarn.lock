@@ -532,10 +532,10 @@
     yargs "18.0.0"
     zod "4.1.13"
 
-"@angular/common@20.3.16":
-  version "20.3.16"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-20.3.16.tgz#d2f5f1bbc8d65b81989b16b02c74b2529f4541e0"
-  integrity sha512-GRAziNlntwdnJy3F+8zCOvDdy7id0gITjDnM6P9+n2lXvtDuBLGJKU3DWBbvxcCjtD6JK/g/rEX5fbCxbUHkQQ==
+"@angular/common@20.3.27":
+  version "20.3.27"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-20.3.27.tgz#52405b538e1e662b4b93a4176d6ff86fbb81f7e7"
+  integrity sha512-4ectYP60XatB9zZ40WlfmaTzjmEhaz8SSqLsbZI4VZ8gDb5qNmxWtwwt8UxS3NmDHEgqdNL8UPO4E94+yKCICg==
   dependencies:
     tslib "^2.3.0"
 
