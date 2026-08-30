@@ -80,15 +80,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             if(!request.url.includes(AuthMethods.RefreshToken)) {
               // this.authStore.dispatch(refreshToken());
               return this.authStateService.refreshToken().pipe(
-                switchMap((response: OperationDataResult<AuthResponseModel>) => {
-                  // if refresh token success, update token in request and retry request
-                  let newReq = null;
-                  if(request.headers.has('Authorization')) {
-                    const headers = request.headers.set('Authorization', `Bearer ${response.model.accessToken}`);
-                    newReq = request.clone({ headers: headers });
-                  }
-                  return next.handle(newReq || request);
-                }),
+                // This catchError must stay UPSTREAM of the switchMap below so that it only
+                // reacts to a failing token refresh. Downstream it would also catch the error
+                // of the retried request, so a genuine permission denial (a 403 that no fresh
+                // token can fix) would sign the user out.
                 catchError((refreshError) => {
                   // if refresh token is failed - logout
                   // console.error('Token refresh failed', refreshError);
@@ -96,6 +91,23 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                   this.authStateService.logout();
                   // stop the request
                   return EMPTY;
+                }),
+                switchMap((response: OperationDataResult<AuthResponseModel>) => {
+                  if (!response || !response.success || !response.model) {
+                    // the refresh did not yield a usable token - the session is dead
+                    this.loaderService.setLoading(false);
+                    this.authStateService.logout();
+                    return EMPTY;
+                  }
+                  // if refresh token success, update token in request and retry request
+                  let newReq = null;
+                  if(request.headers.has('Authorization')) {
+                    const headers = request.headers.set('Authorization', `Bearer ${response.model.accessToken}`);
+                    newReq = request.clone({ headers: headers });
+                  }
+                  // A 403 from this retry is a real permission denial: it propagates to the
+                  // caller untouched instead of tearing down the session.
+                  return next.handle(newReq || request);
                 })
               );
             } else {
