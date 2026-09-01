@@ -153,6 +153,12 @@
     <data name="ErrorWhileUpdatingUser">
         <value>Pogreška prilikom ažuriranja korisnika</value>
     </data>
+    <data name="EmailConfirmed">
+        <value>Email confirmed</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Error while confirming email</value>
+    </data>
     <data name="FileNotFound">
         <value>Datoteka nije pronađena</value>
     </data>

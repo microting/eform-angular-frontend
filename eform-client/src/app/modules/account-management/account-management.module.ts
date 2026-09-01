@@ -7,6 +7,7 @@ import {
   UserModalComponent,
   ProfileSettingsComponent,
   RemoveUserModalComponent,
+  ConfirmEmailModalComponent,
   UsersPageComponent,
 } from './components';
 import {AccountManagementRouting} from './account-management.routing';
@@ -57,6 +58,7 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
         UsersPageComponent,
         UserModalComponent,
         RemoveUserModalComponent,
+        ConfirmEmailModalComponent,
     ],
 })
 export class AccountManagementModule {

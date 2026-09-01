@@ -212,6 +212,12 @@
   <data name="ErrorWhileUpdatingUser" xml:space="preserve">
     <value>Fehler beim Aktualisieren des Benutzers</value>
   </data>
+  <data name="EmailConfirmed" xml:space="preserve">
+    <value>E-Mail bestätigt</value>
+  </data>
+  <data name="ErrorWhileConfirmingEmail" xml:space="preserve">
+    <value>Fehler beim Bestätigen der E-Mail</value>
+  </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>Datei nicht gefunden</value>
   </data>

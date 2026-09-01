@@ -23,6 +23,7 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
 import {
   UserModalComponent,
   RemoveUserModalComponent,
+  ConfirmEmailModalComponent,
   UserSetPasswordComponent
 } from 'src/app/modules/account-management/components';
 import {catchError} from 'rxjs/operators';
@@ -91,6 +92,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     {header: this.translateService.stream('Actions'), field: 'actions', sortable: false},
   ];
   userDeletedSub$: Subscription;
+  userEmailConfirmedSub$: Subscription;
   newUserModalComponentAfterClosedSub$: Subscription;
   editUserModalComponentAfterClosedSub$: Subscription;
   setUserPasswordModalComponentAfterClosedSub$: Subscription;
@@ -197,6 +199,13 @@ export class UsersPageComponent implements OnInit, OnDestroy {
       .subscribe(x => this.onUserDeleted(x, modalId));
   }
 
+  openConfirmEmailModal(selectedUser: UserInfoModel) {
+    const modalId = this.dialog.open(ConfirmEmailModalComponent,
+      dialogConfigHelper(this.overlay, selectedUser)).id;
+    this.userEmailConfirmedSub$ = this.dialog.getDialogById(modalId).componentInstance.emailConfirmed
+      .subscribe(x => this.onEmailConfirmed(x, modalId));
+  }
+
   openSetPasswordModal(selectedUser: UserInfoModel) {
 
     const modalId = this.dialog.open(UserSetPasswordComponent,
@@ -243,6 +252,15 @@ export class UsersPageComponent implements OnInit, OnDestroy {
       if (data.success) {
         this.dialog.getDialogById(modalId).close();
         this.usersStateService.onDelete();
+        this.getUserInfoList();
+      }
+    });
+  }
+
+  onEmailConfirmed(selectedUser: UserInfoModel, modalId: string) {
+    this.adminService.confirmEmail(selectedUser.id).subscribe((data) => {
+      if (data && data.success) {
+        this.dialog.getDialogById(modalId).close();
         this.getUserInfoList();
       }
     });

@@ -79,6 +79,7 @@ public class AdminService(
                         x.user.UserRoles,
                         x.user.UserName,
                         x.user.Email,
+                        x.user.EmailConfirmed,
                         x.user.Locale,
                         x.user.TimeZone,
                         x.user.Formats,
@@ -116,6 +117,7 @@ public class AdminService(
                 Id = x.Id,
                 UserName = x.UserName,
                 Email = x.Email,
+                EmailConfirmed = x.EmailConfirmed,
                 DarkTheme = x.DarkTheme,
                 ThemeVariant = x.ThemeVariant,
                 Language = x.Locale,
@@ -519,6 +521,44 @@ public class AdminService(
             logger.LogError(e.Message);
             logger.LogTrace(e.StackTrace);
             return new OperationResult(false, localizationService.GetString("ErrorWhileDeletingUser"));
+        }
+    }
+
+    public async Task<OperationResult> ConfirmEmail(int userId)
+    {
+        try
+        {
+            var user = await userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                return new OperationResult(false,
+                    localizationService.GetString("UserNotFound"));
+            }
+
+            if (user.EmailConfirmed)
+            {
+                return new OperationResult(true,
+                    localizationService.GetString("EmailConfirmed"));
+            }
+
+            user.EmailConfirmed = true;
+            var result = await userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                return new OperationResult(false,
+                    string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
+            }
+
+            return new OperationResult(true,
+                localizationService.GetString("EmailConfirmed"));
+        }
+        catch (Exception e)
+        {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false,
+                localizationService.GetString("ErrorWhileConfirmingEmail"));
         }
     }
 
