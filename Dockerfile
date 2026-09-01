@@ -24,6 +24,13 @@ RUN pwd
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble
 WORKDIR /app
+
+# ffmpeg is used to extract a poster frame from Userback video feedback
+# (microting/eform-kanban-plugin#8).
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
 ARG DISABLE_SENTRY
 ENV DISABLE_SENTRY=${DISABLE_SENTRY}
 COPY --from=build-env /app/out .
