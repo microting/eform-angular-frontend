@@ -19,6 +19,7 @@
   <app-case-edit-switch
     (needUpdate)="emitNeedUpdate()"
     [dataItemList]="element.dataItemList"
+    [caseId]="caseId"
   ></app-case-edit-switch>
 
   <ng-container *ngIf="element.extraFieldsEnabled">
@@ -34,6 +35,7 @@
       <element-picture
         (pictureUpdated)="emitNeedUpdate()"
         [fieldValues]="element.extraPictures"
+        [caseId]="caseId"
       ></element-picture>
     </div>
 
@@ -44,7 +46,9 @@
 
   <ng-container *ngIf="element.elementList">
     <app-case-edit-element
+      (needUpdate)="emitNeedUpdate()"
       [element]="elem"
+      [caseId]="caseId"
       *ngFor="let elem of element.elementList"
     ></app-case-edit-element>
   </ng-container>

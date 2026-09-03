@@ -18,7 +18,7 @@
       </ng-container>
       <ng-container [ngSwitch]="dataItem.fieldType">
         <ng-container *ngSwitchCase="'Picture'">
-          <element-picture [fieldValues]="dataItem.fieldValues" [fieldId]="dataItem.id" (pictureUpdated)="emitNeedUpdate()"></element-picture>
+          <element-picture [fieldValues]="dataItem.fieldValues" [fieldId]="dataItem.id" [caseId]="caseId" (pictureUpdated)="emitNeedUpdate()"></element-picture>
         </ng-container>
         <ng-container *ngSwitchCase="'CheckBox'">
           <element-checkbox [fieldValue]="dataItem.fieldValues[0]"></element-checkbox>
@@ -59,7 +59,9 @@
         <ng-container *ngSwitchCase="'FieldContainer'">
           <element-container
             [fieldValue]="dataItem.dataItemList"
-            [dataItemLabel]="dataItem.label">
+            [dataItemLabel]="dataItem.label"
+            [caseId]="caseId"
+            (needUpdate)="emitNeedUpdate()">
           </element-container>
         </ng-container>
         <ng-container *ngSwitchCase="'EntitySearch'">
