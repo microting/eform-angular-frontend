@@ -29,12 +29,20 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
 
   @Input() fieldValues: Array<FieldValueDto> = [];
   @Input() fieldId: number;
+  /**
+   * Case id supplied by the host component. It takes precedence over the route
+   * params below: inside a MatDialog the injected ActivatedRoute is the route
+   * the dialog was opened from, which carries neither ':id' nor ':sdkCaseId',
+   * so the fallback would resolve to NaN and the upload would fail with
+   * CaseNotFound. Routed case pages may keep omitting it.
+   */
+  @Input() caseId?: number;
   @Output() pictureUpdated: EventEmitter<void> = new EventEmitter<void>();
   buttonsLocked = false;
   geoObjects = [];
   images = [];
   galleryImages: GalleryItem[] = [];
-  caseId: number;
+  private routeCaseId: number;
 
   imageSub$: Subscription;
   rotateImageSub$: Subscription;
@@ -48,12 +56,14 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.fieldValues) {
       this.images = [];
-      this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
-        this.caseId = +params['id'];
-        if (isNaN(this.caseId)) {
-          this.caseId = +params['sdkCaseId'];
-        }
-      });
+      if (!this.hasCaseIdInput) {
+        this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
+          this.routeCaseId = +params['id'];
+          if (isNaN(this.routeCaseId)) {
+            this.routeCaseId = +params['sdkCaseId'];
+          }
+        });
+      }
       this.fieldValues.forEach(value => {
         if (value.uploadedDataObj) {
           this.geoObjects.push({
@@ -81,6 +91,21 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
         this.updateGallery();
       }
     }
+  }
+
+  /**
+   * True when the host explicitly bound a usable case id.
+   */
+  private get hasCaseIdInput(): boolean {
+    return Number.isFinite(this.caseId) && this.caseId > 0;
+  }
+
+  /**
+   * The bound input always wins; the route params are only a fallback for the
+   * routed case pages that do not pass the id down.
+   */
+  private get resolvedCaseId(): number {
+    return this.hasCaseIdInput ? this.caseId : this.routeCaseId;
   }
 
   updateGallery() {
@@ -146,7 +171,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
   addPicture(newImage: File, modalId: string) {
     const fieldId = this.fieldId;
     this.addImageSub$ = this.imageService
-      .addNewImage(fieldId, this.caseId, newImage)
+      .addNewImage(fieldId, this.resolvedCaseId, newImage)
       .subscribe(data => {
         if (data && data.success) {
           this.dialog.getDialogById(modalId).close();

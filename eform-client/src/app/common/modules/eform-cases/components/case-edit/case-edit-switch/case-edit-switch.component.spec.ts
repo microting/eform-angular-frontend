@@ -17,6 +17,7 @@ import {DataItemDto} from 'src/app/common/models';
 class StubPictureComponent {
   @Input() fieldValues: any;
   @Input() fieldId: any;
+  @Input() caseId: any;
 }
 
 function makeDataItem(overrides: Partial<DataItemDto> = {}): DataItemDto {

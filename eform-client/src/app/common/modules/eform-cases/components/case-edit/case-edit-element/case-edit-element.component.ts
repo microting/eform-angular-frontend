@@ -22,6 +22,13 @@ export class CaseEditElementComponent implements OnInit {
    * keeps the heading it has today.
    */
   @Input() showSectionTitle = true;
+  /**
+   * Id of the case being edited. Routed case pages may omit it — the picture
+   * element still falls back to the route params. Dialog hosts must supply it,
+   * because the ActivatedRoute they inject is the route the dialog was opened
+   * from and carries no case id at all.
+   */
+  @Input() caseId?: number;
   @Output() needUpdate: EventEmitter<void> = new EventEmitter<void>();
   requestModel: CaseEditRequest = new CaseEditRequest();
   requestModels: Array<CaseEditRequest> = [];

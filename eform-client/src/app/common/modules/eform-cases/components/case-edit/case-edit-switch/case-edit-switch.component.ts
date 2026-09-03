@@ -8,6 +8,12 @@ import {DataItemDto} from 'src/app/common/models';
 })
 export class CaseEditSwitchComponent implements OnInit {
   @Input() dataItemList: Array<DataItemDto> = [];
+  /**
+   * Id of the case being edited, threaded down to the picture element. Optional
+   * — it is only needed where the ActivatedRoute cannot supply it, i.e. when
+   * the case editor is rendered inside a dialog rather than on a case route.
+   */
+  @Input() caseId?: number;
   @Output() needUpdate: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() { }
