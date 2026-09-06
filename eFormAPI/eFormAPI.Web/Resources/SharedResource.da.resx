@@ -689,6 +689,12 @@
   <data name="ImageUpdatedSuccessfully" xml:space="preserve">
     <value>Nyt billede tilføjet</value>
   </data>
+  <data name="ErrorWhileUpdateImage" xml:space="preserve">
+    <value>Fejl under upload af billede</value>
+  </data>
+  <data name="ImageNotFound" xml:space="preserve">
+    <value>Billedet blev ikke fundet</value>
+  </data>
   <data name="Folders" xml:space="preserve">
     <value>Mapper</value>
   </data>

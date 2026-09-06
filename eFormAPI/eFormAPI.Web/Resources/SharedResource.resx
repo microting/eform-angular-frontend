@@ -747,6 +747,12 @@
   <data name="ImageUpdatedSuccessfully" xml:space="preserve">
     <value>Image updated successfully</value>
   </data>
+  <data name="ErrorWhileUpdateImage" xml:space="preserve">
+    <value>Error while uploading image</value>
+  </data>
+  <data name="ImageNotFound" xml:space="preserve">
+    <value>Image not found</value>
+  </data>
   <data name="Folders" xml:space="preserve">
     <value>Folders</value>
   </data>
