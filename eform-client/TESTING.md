@@ -318,7 +318,8 @@ ng test --include='**/component-name.component.spec.ts'
 
 ## Continuous Integration
 
-Tests are automatically run in GitHub Actions workflows using Jest:
+Tests are automatically run in GitHub Actions workflows using Jest. The `test-angular-unit` job in
+`.github/workflows/dotnet-core-pr.yml` and `.github/workflows/dotnet-core-master.yml` runs:
 
 ```bash
 # Run tests in CI/CD mode
@@ -327,8 +328,15 @@ npm run test:ci
 
 Jest is configured with:
 - Code coverage reporting
-- CI-specific optimizations (--ci flag)
-- Maximum of 2 workers for parallel execution
+- CI-specific optimizations (the `--ci` flag). Jest auto-detects GitHub Actions, so the flag is
+  redundant there, but it keeps the script correct if it is ever run somewhere without CI
+  detection.
+- Jest's default worker count. There is no explicit `--maxWorkers` cap, so Jest scales to
+  whatever runner it gets (3 workers on the current 4-vCPU `ubuntu-latest` runner). Capping at 2
+  measured no faster on this suite, so there is no cap left to maintain.
+
+These jobs are not configured as required status checks, so a failing Jest run does not by itself
+block a merge.
 
 ## Contributing
 

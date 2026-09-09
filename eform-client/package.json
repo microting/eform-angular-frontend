@@ -13,7 +13,7 @@
     "start-port": "ng serve --port 4300 --proxy-config proxy.config.json",
     "build": "ng build",
     "sentrysourcemap": "yarn sentry:sourcemaps",
-    "test:ci": "jest --ci --coverage --maxWorkers=2",
+    "test:ci": "jest --ci --coverage",
     "test:unit": "jest --coverage",
     "test:local_unit": "jest --watch",
     "test:watch": "jest --watch",
