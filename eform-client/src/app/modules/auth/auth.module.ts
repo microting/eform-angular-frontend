@@ -8,7 +8,6 @@ import {
   AuthComponent,
   GoogleAuthenticatorComponent,
   LoginComponent,
-  ResetAdminPasswordComponent,
   RestorePasswordComponent,
   RestorePasswordConfirmationComponent,
   SignOutComponent,
@@ -45,7 +44,6 @@ import {MatPasswordStrengthModule} from '@angular-material-extensions/password-s
     RestorePasswordComponent,
     RestorePasswordConfirmationComponent,
     GoogleAuthenticatorComponent,
-    ResetAdminPasswordComponent,
     SignOutComponent,
     AuthComponent,
     RestorePasswordConfirmationComponent

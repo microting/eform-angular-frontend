@@ -41,7 +41,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Abstractions;
+using Abstractions.Security;
 using Hosting.Helpers.DbOptions;
+using Hosting.Security;
 using Infrastructure.Models.Settings;
 using Infrastructure.Models.Settings.User;
 using Infrastructure.Models.Users;
@@ -64,7 +66,10 @@ public class AccountService(
     IDbOptions<ApplicationSettings> appSettings,
     ILocalizationService localizationService,
     BaseDbContext context,
-    IEmailService emailService)
+    IEmailService emailService,
+    IHttpContextAccessor httpContextAccessor,
+    IWorkerAccountLookup workerAccountLookup,
+    IClaimsService claimsService)
     : IAccountService
 {
     public async Task<UserInfoViewModel> GetUserInfo()
@@ -195,6 +200,61 @@ public class AccountService(
     public async Task<OperationResult> AdminChangePassword(ChangePasswordAdminModel model)
     {
         var user = await userService.GetByUsernameAsync(model.Email);
+        if (user == null)
+        {
+            return new OperationResult(false, localizationService.GetString("UserNotFound"));
+        }
+
+        // Every rule below needs the caller's principal; read it once and fail closed
+        // immediately when there isn't one, rather than letting a later rule dereference
+        // a missing HttpContext.
+        var caller = httpContextAccessor.HttpContext?.User;
+        if (caller == null)
+        {
+            return new OperationResult(false, localizationService.GetString("YouMayOnlySetPasswordsForWorkers"));
+        }
+
+        // Who may be TARGETED. Who may CALL is the SetOtherUsersPassword policy on the
+        // action. The primary-admin guard and the no-admin-target rule mirror
+        // AdminService.Update, so editing a user and resetting their password follow
+        // one rule.
+        if (user.Id == 1 && userService.UserId != 1)
+        {
+            return new OperationResult(false, localizationService.GetString("CantEditPrimaryAdminUser"));
+        }
+
+        var callerIsAdmin = caller.IsInRole(EformRole.Admin);
+        if (!callerIsAdmin && await userManager.IsInRoleAsync(user, EformRole.Admin))
+        {
+            return new OperationResult(false, localizationService.GetString("YouCantViewChangeOrDeleteAdmin"));
+        }
+
+        // A non-admin changes their own password through change-password, which requires
+        // the current one; this route would skip that check.
+        if (!callerIsAdmin && user.Id == userService.UserId)
+        {
+            return new OperationResult(false, localizationService.GetString("UseChangePasswordForYourOwnAccount"));
+        }
+
+        // A caller who reached this route on device_users_update alone manages property
+        // workers, so they may reset only a live worker's account. Being a worker is not
+        // the same as holding only a worker's rights — a user manager who also logs time
+        // is a live worker — so the target must also hold no permission the caller itself
+        // lacks, or resetting their password would hand the caller rights it does not have.
+        if (!AccountPolicies.MayResetAnyNonAdmin(caller))
+        {
+            if (!await workerAccountLookup.IsLiveWorkerAsync(user.Email))
+            {
+                return new OperationResult(false, localizationService.GetString("YouMayOnlySetPasswordsForWorkers"));
+            }
+
+            var targetClaims = await claimsService.GetUserClaims(user.Id);
+            if (targetClaims.Any(claim => !caller.HasClaim(claim.Type, AuthConsts.ClaimDefaultValue)))
+            {
+                return new OperationResult(false,
+                    localizationService.GetString("YouCantSetPasswordForMorePrivilegedAccount"));
+            }
+        }
 
         await userManager.RemovePasswordAsync(user);
         var result = await userManager.AddPasswordAsync(user, model.NewPassword);
@@ -260,50 +320,6 @@ public class AccountService(
         return new OperationResult(true);
     }
 
-
-    [HttpGet]
-    [AllowAnonymous]
-    [Route("reset-admin-password")]
-    public async Task<OperationResult> ResetAdminPassword(string code)
-    {
-        var securityCode = appSettings.Value.SecurityCode;
-        if (string.IsNullOrEmpty(securityCode))
-        {
-            return new OperationResult(false, localizationService.GetString("PleaseSetupSecurityCode"));
-        }
-
-        var defaultPassword = appSettings.Value.DefaultPassword;
-        if (code != securityCode)
-        {
-            return new OperationResult(false, localizationService.GetString("InvalidSecurityCode"));
-        }
-
-        var users = await userManager.GetUsersInRoleAsync(EformRole.Admin);
-        var user = users.FirstOrDefault();
-
-        if (user == null)
-        {
-            return new OperationResult(false, localizationService.GetString("AdminUserNotFound"));
-        }
-
-        var removeResult = await userManager.RemovePasswordAsync(user);
-        if (!removeResult.Succeeded)
-        {
-            return new OperationResult(false,
-                localizationService.GetString("ErrorWhileRemovingOldPassword") + ". \n" +
-                string.Join(" ", removeResult.Errors.Select(x=>x.Description).ToArray()));
-        }
-
-        var addPasswordResult = await userManager.AddPasswordAsync(user, defaultPassword);
-        if (!addPasswordResult.Succeeded)
-        {
-            return new OperationResult(false,
-                localizationService.GetString("ErrorWhileAddNewPassword") + ". \n" +
-                string.Join(" ", addPasswordResult.Errors.Select(x=>x.Description).ToArray()));
-        }
-
-        return new OperationResult(true, localizationService.GetStringWithFormat("YourEmailPasswordHasBeenReset", user.Email));
-    }
 
     public async Task<OperationResult> ResetPassword(Infrastructure.Models.ResetPasswordModel model)
     {

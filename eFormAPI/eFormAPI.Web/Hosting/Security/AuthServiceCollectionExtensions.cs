@@ -177,6 +177,10 @@ public static class AuthServiceCollectionExtensions
             options.AddPolicy(AuthConsts.EformPolicies.UserManagement.Delete,
                 policy => policy.RequireClaim(AuthConsts.EformClaims.UserManagementClaims.Delete,
                     AuthConsts.ClaimDefaultValue));
+            // Setting another account's password: admin, or a user or device-user manager.
+            options.AddPolicy(AccountPolicies.SetOtherUsersPassword,
+                policy => policy.RequireAssertion(
+                    context => AccountPolicies.MaySetOtherUsersPassword(context.User)));
             // Entity Select
             options.AddPolicy(AuthConsts.EformPolicies.Units.Update,
                 policy => policy.RequireClaim(AuthConsts.EformClaims.UnitsClaims.Update,

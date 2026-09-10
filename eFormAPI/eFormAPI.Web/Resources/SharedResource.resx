@@ -591,6 +591,21 @@
   <data name="CantEditPrimaryAdminUser" xml:space="preserve">
     <value>You can't view, change or delete primary admin</value>
   </data>
+  <data name="UseChangePasswordForYourOwnAccount" xml:space="preserve">
+    <value>Use Change password to change your own password</value>
+  </data>
+  <data name="YouMayOnlySetPasswordsForWorkers" xml:space="preserve">
+    <value>You may only set passwords for property workers</value>
+  </data>
+  <data name="OnlyAdminsCanAssignTheAdminRole" xml:space="preserve">
+    <value>Only an administrator can assign the administrator role</value>
+  </data>
+  <data name="YouCantChangeYourOwnPasswordOrGroupHere" xml:space="preserve">
+    <value>You can't set your own password or change your own security group here</value>
+  </data>
+  <data name="YouCantSetPasswordForMorePrivilegedAccount" xml:space="preserve">
+    <value>You can't set the password of an account with rights you don't have</value>
+  </data>
   <data name="CantUpdateRoleForPrimaryAdminUser" xml:space="preserve">
     <value>It's not possible to change role for primary admin</value>
   </data>
