@@ -356,7 +356,7 @@ export const huHU = {
   'Security groups': 'Biztonsági csoportok',
   Custom: 'Egyedi',
   Add: 'Hozzáadás',
-  'Generate report': '{{érték}} jelentés létrehozása',
+  'Generate report': '{{value}} jelentés létrehozása',
   'Select date range': 'Válassza ki a dátumtartományt',
   'Edit headers': 'Szerkessze a fejléceket',
   'Text (TextSingleLine)': 'Szöveg egysoros',
