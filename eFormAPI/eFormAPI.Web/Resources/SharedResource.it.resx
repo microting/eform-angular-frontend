@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>L'utente del dispositivo "{0}" è stato eliminato correttamente</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Solo il primo utente può eliminare i lavoratori</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Utente del dispositivo aggiornato correttamente</value>
     </data>

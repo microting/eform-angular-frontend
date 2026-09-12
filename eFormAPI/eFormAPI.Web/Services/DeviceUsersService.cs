@@ -45,6 +45,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 public class DeviceUsersService(
     ILocalizationService localizationService,
     IEFormCoreService coreHelper,
+    IUserService userService,
     ILogger<DeviceUsersService> logger)
     : IDeviceUsersService
 {
@@ -272,6 +273,14 @@ public class DeviceUsersService(
 
     public async Task<OperationResult> Delete(int id)
     {
+        // Only the first user (lowest AspNetUsers Id) may delete a device user; everyone
+        // else, admins included, is refused before the SDK is touched.
+        if (userService.UserId != await userService.GetFirstUserIdInDb())
+        {
+            return new OperationResult(false,
+                localizationService.GetString("OnlyTheFirstUserCanDeleteWorkers"));
+        }
+
         try
         {
             var core = await coreHelper.GetCore();

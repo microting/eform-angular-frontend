@@ -137,6 +137,9 @@
   <data name="DeviceUserParamDeletedSuccessfully" xml:space="preserve">
     <value>Пристрій користувача "{0}" успішно видалений</value>
   </data>
+  <data name="OnlyTheFirstUserCanDeleteWorkers" xml:space="preserve">
+    <value>Лише перший користувач може видаляти працівників</value>
+  </data>
   <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
     <value>Пристрій користувача успішно оновлено</value>
   </data>

@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>„{0}” eszközfelhasználó sikeresen törölve</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Csak az első felhasználó törölhet dolgozókat</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Az eszközfelhasználó sikeresen frissítve</value>
     </data>

@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Enhetsbruker «{0}» ble slettet</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Bare den første brukeren kan slette arbeidere</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Enhetsbruker er oppdatert</value>
     </data>

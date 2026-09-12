@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Apparaatgebruiker "{0}" is succesvol verwijderd</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Alleen de eerste gebruiker kan medewerkers verwijderen</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Apparaatgebruiker succesvol bijgewerkt</value>
     </data>
