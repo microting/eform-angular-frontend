@@ -260,6 +260,11 @@ public class EFormFilesController(
     [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
     public async Task<OperationResult> AddNewImage([FromForm] int fieldId, [FromForm] int caseId)
     {
+        // Temp files are tracked outside the try so they are always removed in
+        // finally, on success and on failure alike.
+        string filePath = null;
+        string smallTempPath = null;
+        string bigTempPath = null;
         try
         {
             var newFile = HttpContext.Request.Form.Files.Last();
@@ -279,7 +284,12 @@ public class EFormFilesController(
             var folder = Path.Combine(Path.GetTempPath(), "cases-temp-files");
             Directory.CreateDirectory(folder);
 
-            var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}.{newFile.FileName.Split(".").Last()}");
+            // Collision-free temp stem (concurrent uploads within the same tick
+            // would otherwise share names). Temp names never reach storage keys
+            // or the DB.
+            var stem = Guid.NewGuid().ToString("N");
+            var ext = newFile.FileName.Split(".").Last();
+            filePath = Path.Combine(folder, $"{stem}.{ext}");
             string hash;
             using (var md5 = MD5.Create())
             {
@@ -297,71 +307,138 @@ public class EFormFilesController(
                 }
             }
 
-            var newUploadData = new Microting.eForm.Infrastructure.Data.Entities.UploadedData
+            // Idempotency guard: the same file already attached to this
+            // (case, field) is a no-op success. Both "not removed" conditions
+            // are load-bearing — DeleteImage soft-deletes only the
+            // UploadedData, so a delete-then-reupload must create a new row.
+            var alreadyAttached = await sdkDbContext.FieldValues
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Where(x => x.CaseId == caseDb.Id)
+                .Where(x => x.FieldId == field.Id)
+                .Where(x => x.UploadedDataId != null)
+                .AnyAsync(x => x.UploadedData.WorkflowState != Constants.WorkflowStates.Removed
+                               && x.UploadedData.Checksum == hash);
+            if (alreadyAttached)
             {
-                Checksum = hash,
-                FileName = $"{hash}.{newFile.FileName.Split(".").Last()}",
-                FileLocation = filePath,
-                Extension = newFile.FileName.Split(".").Last()
-            };
-            await newUploadData.Create(sdkDbContext);
-            newUploadData.FileName =  $"{newUploadData.Id}_{newUploadData.FileName}";
-            await newUploadData.Update(sdkDbContext);
-
-            await core.PutFileToStorageSystem(filePath, newUploadData.FileName);
-            var fieldValue = new Microting.eForm.Infrastructure.Data.Entities.FieldValue
-            {
-                FieldId = field.Id,
-                CaseId = caseDb.Id,
-                CheckListId = field.CheckListId,
-                WorkerId = caseDb.WorkerId,
-                DoneAt = DateTime.UtcNow,
-                UploadedDataId = newUploadData.Id
-            };
-
-            await fieldValue.Create(sdkDbContext);
-            string smallFilename = $"{newUploadData.Id}_300_{newUploadData.Checksum}{newUploadData.Extension}"; //uploadedDataObj.Id + "_300_" + uploadedDataObj.Checksum;
-            string bigFilename = $"{newUploadData.Id}_700_{newUploadData.Checksum}{newUploadData.Extension}";//uploadedDataObj.Id + "_700_" + urlStr.Remove(0, index);
-            System.IO.File.Copy(filePath, Path.Combine(Path.GetTempPath(), smallFilename));
-            System.IO.File.Copy(filePath, Path.Combine(Path.GetTempPath(), bigFilename));
-            string filePathResized = Path.Combine(Path.GetTempPath(), smallFilename);
-            using (var image = new MagickImage(filePathResized))
-            {
-                decimal currentRation = image.Height / (decimal) image.Width;
-                int newWidth = 300;
-                int newHeight = (int) Math.Round((currentRation * newWidth));
-
-                image.Resize((uint)newWidth, (uint)newHeight);
-                image.Crop((uint)newWidth, (uint)newHeight);
-                await image.WriteAsync(filePathResized);
-                image.Dispose();
-                await core.PutFileToStorageSystem(Path.Combine(Path.GetTempPath(), filePathResized), smallFilename);
-
+                return new OperationResult(true, localizationService.GetString("ImageUpdatedSuccessfully"));
             }
-            System.IO.File.Delete(filePathResized);
-            filePathResized = Path.Combine(Path.GetTempPath(), bigFilename);
-            using (var image = new MagickImage(filePathResized))
-            {
-                decimal currentRation = image.Height / (decimal) image.Width;
-                int newWidth = 700;
-                int newHeight = (int) Math.Round((currentRation * newWidth));
 
-                image.Resize((uint)newWidth, (uint)newHeight);
-                image.Crop((uint)newWidth, (uint)newHeight);
-                await image.WriteAsync(filePathResized);
-                image.Dispose();
-                await core.PutFileToStorageSystem(Path.Combine(Path.GetTempPath(), filePathResized), bigFilename);
-            }
-            System.IO.File.Delete(filePathResized);
+            // Derive the 300/700 thumbnails to temp names BEFORE opening the
+            // transaction: this is the failure-prone step (MagickImage), and
+            // failing here leaves no rows behind. The id-based storage keys
+            // are applied at upload time below.
+            smallTempPath = Path.Combine(folder, $"{stem}_300.{ext}");
+            bigTempPath = Path.Combine(folder, $"{stem}_700.{ext}");
+            await ResizeToWidth(filePath, smallTempPath, 300);
+            await ResizeToWidth(filePath, bigTempPath, 700);
+
+            // Everything that persists rows runs inside one transaction on the
+            // same sdkDbContext (PnBase.Create/Update call SaveChangesAsync on
+            // the passed context, so they join it). The storage keys embed the
+            // row id, so the rows cannot be created after the uploads.
+            //
+            // The SDK's MicrotingDbContextFactory configures EnableRetryOnFailure,
+            // i.e. a retrying execution strategy. With such a strategy EF Core
+            // rejects a user-initiated BeginTransactionAsync at the first
+            // SaveChangesAsync ("does not support user-initiated transactions"),
+            // so the whole unit must run through CreateExecutionStrategy().
+            // The delegate may be re-executed on a transient failure, so it
+            // must be re-runnable: the entities are constructed inside it
+            // (re-adding an already-tracked instance would misbehave), the
+            // change tracker is cleared on entry so a previous attempt's
+            // entity left tracked as Added by a failed SaveChangesAsync is not
+            // re-inserted, and the storage uploads are overwrite-idempotent
+            // (an orphaned object from an aborted attempt is harmless).
+            // `await using` on the transaction rolls back on dispose when
+            // CommitAsync was not reached.
+            var strategy = sdkDbContext.Database.CreateExecutionStrategy();
+            await strategy.ExecuteAsync(async () =>
+            {
+                // A retried attempt must not re-insert the previous attempt's entity: a
+                // failed SaveChangesAsync leaves it tracked as Added. caseDb/field become
+                // detached, which is fine — only their scalar values are used below.
+                sdkDbContext.ChangeTracker.Clear();
+
+                await using var tx = await sdkDbContext.Database.BeginTransactionAsync();
+
+                var newUploadData = new Microting.eForm.Infrastructure.Data.Entities.UploadedData
+                {
+                    Checksum = hash,
+                    FileName = $"{hash}.{ext}",
+                    FileLocation = filePath,
+                    // Stored WITH the leading dot, matching the SDK device path and
+                    // the plugin upload path, so the derived thumbnail names
+                    // {id}_300_{md5}{Extension} / {id}_700_{md5}{Extension} match
+                    // the get-image/{fileName}.{ext} route.
+                    Extension = $".{ext}"
+                };
+                await newUploadData.Create(sdkDbContext);
+                newUploadData.FileName = $"{newUploadData.Id}_{newUploadData.FileName}";
+                await newUploadData.Update(sdkDbContext);
+
+                var fieldValue = new Microting.eForm.Infrastructure.Data.Entities.FieldValue
+                {
+                    FieldId = field.Id,
+                    CaseId = caseDb.Id,
+                    CheckListId = field.CheckListId,
+                    WorkerId = caseDb.WorkerId,
+                    DoneAt = DateTime.UtcNow,
+                    UploadedDataId = newUploadData.Id
+                };
+                await fieldValue.Create(sdkDbContext);
+
+                string smallFilename = $"{newUploadData.Id}_300_{newUploadData.Checksum}{newUploadData.Extension}";
+                string bigFilename = $"{newUploadData.Id}_700_{newUploadData.Checksum}{newUploadData.Extension}";
+                await core.PutFileToStorageSystem(filePath, newUploadData.FileName);
+                await core.PutFileToStorageSystem(smallTempPath, smallFilename);
+                await core.PutFileToStorageSystem(bigTempPath, bigFilename);
+
+                await tx.CommitAsync();
+            });
 
             return new OperationResult(true, localizationService.GetString("ImageUpdatedSuccessfully"));
         }
         catch (Exception e)
         {
             SentrySdk.CaptureException(e);
-            logger.LogError(e.Message);
-            logger.LogTrace(e.StackTrace);
+            logger.LogError(e, "AddNewImage failed for case {CaseId} field {FieldId}", caseId, fieldId);
             return new OperationResult(false, localizationService.GetString("ErrorWhileUpdateImage"));
+        }
+        finally
+        {
+            TryDeleteTempFile(filePath);
+            TryDeleteTempFile(smallTempPath);
+            TryDeleteTempFile(bigTempPath);
+        }
+    }
+
+    private static async Task ResizeToWidth(string sourcePath, string targetPath, int newWidth)
+    {
+        using var image = new MagickImage(sourcePath);
+        decimal currentRation = image.Height / (decimal) image.Width;
+        int newHeight = (int) Math.Round((currentRation * newWidth));
+
+        image.Resize((uint)newWidth, (uint)newHeight);
+        image.Crop((uint)newWidth, (uint)newHeight);
+        await image.WriteAsync(targetPath);
+    }
+
+    private void TryDeleteTempFile(string path)
+    {
+        if (string.IsNullOrEmpty(path))
+        {
+            return;
+        }
+        try
+        {
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+        }
+        catch (Exception e)
+        {
+            logger.LogWarning(e, "Could not delete temp file {Path}", path);
         }
     }
 

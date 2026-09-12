@@ -137,6 +137,9 @@
   <data name="DeviceUserParamDeletedSuccessfully" xml:space="preserve">
     <value>Medarbejder "{0}" slettet</value>
   </data>
+  <data name="OnlyTheFirstUserCanDeleteWorkers" xml:space="preserve">
+    <value>Kun den første bruger kan slette mobilbrugere</value>
+  </data>
   <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
     <value>Medarbejder opdateret</value>
   </data>
@@ -688,6 +691,12 @@
   </data>
   <data name="ImageUpdatedSuccessfully" xml:space="preserve">
     <value>Nyt billede tilføjet</value>
+  </data>
+  <data name="ErrorWhileUpdateImage" xml:space="preserve">
+    <value>Fejl under upload af billede</value>
+  </data>
+  <data name="ImageNotFound" xml:space="preserve">
+    <value>Billedet blev ikke fundet</value>
   </data>
   <data name="Folders" xml:space="preserve">
     <value>Mapper</value>

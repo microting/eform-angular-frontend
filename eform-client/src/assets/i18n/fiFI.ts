@@ -356,7 +356,7 @@ export const fiFI = {
   'Security groups': 'Turvaryhmät',
   Custom: 'Mukautettu',
   Add: 'Lisätä',
-  'Generate report': 'Luo {{arvo}} raportti',
+  'Generate report': 'Luo {{value}} raportti',
   'Select date range': 'Valitse ajanjakso',
   'Edit headers': 'Muokkaa otsikoita',
   'Text (TextSingleLine)': 'Teksti yksirivinen',

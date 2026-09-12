@@ -44,6 +44,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
         {
             _localizationService = Substitute.For<ILocalizationService>();
             _coreHelper = Substitute.For<IEFormCoreService>();
+            var userService = Substitute.For<IUserService>();
             _logger = Substitute.For<ILogger<DeviceUsersService>>();
 
             _localizationService.GetString(Arg.Any<string>())
@@ -52,6 +53,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
             _deviceUsersService = new DeviceUsersService(
                 _localizationService,
                 _coreHelper,
+                userService,
                 _logger);
         }
 

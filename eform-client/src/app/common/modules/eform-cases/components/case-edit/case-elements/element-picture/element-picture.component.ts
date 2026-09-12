@@ -168,15 +168,43 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
     }
   }
 
+  /**
+   * Uploads the picked file. The host's buttons and the dialog's Save are
+   * locked for the whole request so a fast double-click, or a click after an
+   * error, can never re-POST the same File while one is in flight; the lock is
+   * released on failure so the user can retry, and on success the dialog
+   * closes and the host reloads its pictures.
+   */
   addPicture(newImage: File, modalId: string) {
+    if (this.buttonsLocked) {
+      return;
+    }
     const fieldId = this.fieldId;
+    const dialogRef = this.dialog.getDialogById(modalId) as MatDialogRef<AddPictureDialogComponent> | undefined;
+    const dialogComponent = dialogRef?.componentInstance;
+    const release = () => {
+      this.buttonsLocked = false;
+      if (dialogComponent) {
+        dialogComponent.saving = false;
+      }
+    };
+    this.buttonsLocked = true;
+    if (dialogComponent) {
+      dialogComponent.saving = true;
+    }
     this.addImageSub$ = this.imageService
       .addNewImage(fieldId, this.resolvedCaseId, newImage)
-      .subscribe(data => {
-        if (data && data.success) {
-          this.dialog.getDialogById(modalId).close();
-          this.pictureUpdated.emit();// fetch the new image
-        }
+      .subscribe({
+        next: data => {
+          if (data && data.success) {
+            this.buttonsLocked = false;
+            dialogRef?.close();
+            this.pictureUpdated.emit();// fetch the new image
+          } else {
+            release();
+          }
+        },
+        error: () => release(),
       });
   }
 
@@ -230,17 +258,17 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
     </div>
     <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-24">
       <button
-        class="btn-primary btn-primary--icon-left"
-        (click)="onAddPicture()"
-        [disabled]="!image"
-      >
-        {{ 'Save' | translate }}
-      </button>
-      <button
         class="btn-cancel"
         (click)="hide()"
       >
         {{ 'Cancel' | translate }}
+      </button>
+      <button
+        class="btn-primary btn-primary--icon-left"
+        (click)="onAddPicture()"
+        [disabled]="!image || saving"
+      >
+        {{ 'Save' | translate }}
       </button>
     </div>`,
     standalone: false
@@ -250,9 +278,19 @@ export class AddPictureDialogComponent {
 
   addedPicture: EventEmitter<File> = new EventEmitter<File>();
   image: File;
+  /**
+   * True while the host is uploading the picked file. Set and cleared by the
+   * host (ElementPictureComponent.addPicture); disables Save so the same File
+   * cannot be submitted twice, and is cleared again on failure so the user can
+   * retry.
+   */
+  saving = false;
 
   onAddPicture() {
-    this.addedPicture.emit(this.image)
+    if (!this.image || this.saving) {
+      return;
+    }
+    this.addedPicture.emit(this.image);
   }
 
 

@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Používateľ zariadenia „{0}“ bol úspešne odstránený</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Iba prvý používateľ môže odstraňovať používateľov zariadenia</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Používateľ zariadenia bol úspešne aktualizovaný</value>
     </data>
