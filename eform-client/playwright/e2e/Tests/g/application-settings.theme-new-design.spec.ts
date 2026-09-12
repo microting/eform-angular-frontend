@@ -60,8 +60,13 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     await loginPage.open('/');
     await loginPage.login();
     // A device user owns a site, so this guarantees a non-locked Sites row.
-    await deviceUsersPage.createDeviceUserFromScratch(firstName, lastName);
+    // Not createDeviceUserFromScratch(): it counts rows a fixed 500 ms after
+    // saving, which races the list refresh on this shard's fresh database.
+    await myEformsPage.Navbar.goToDeviceUsersPage();
+    await deviceUsersPage.newDeviceUserBtn().waitFor({ state: 'visible', timeout: 40000 });
+    await deviceUsersPage.createNewDeviceUser(firstName, lastName);
     deviceUserCreated = true;
+    await expect(page.locator('tbody > tr', { hasText: firstName })).toBeVisible({ timeout: 40000 });
     await myEformsPage.Navbar.goToSites();
     await siteRow().waitFor({ state: 'visible', timeout: 40000 });
   });
@@ -72,10 +77,20 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     }
     try {
       if (deviceUserCreated) {
-        // A failed menu test can leave the mat-menu backdrop blocking the navbar.
-        await page.keyboard.press('Escape');
+        // A failed test can leave a menu or dialog backdrop blocking the
+        // navbar. Only press Escape then: otherwise focus sits in the side
+        // drawer (after a nav click) and Escape closes the drawer instead.
+        if (await page.locator('.cdk-overlay-backdrop').first().isVisible()) {
+          await page.keyboard.press('Escape');
+        }
         await myEformsPage.Navbar.goToDeviceUsersPage();
         await deviceUsersPage.newDeviceUserBtn().waitFor({ state: 'visible', timeout: 40000 });
+        // Let the list load before looking the user up; if its creation never
+        // completed there is no row, and the lookup below finds nothing to delete.
+        await page
+          .locator('tbody > tr', { hasText: firstName })
+          .waitFor({ state: 'visible', timeout: 40000 })
+          .catch(() => undefined);
         const deviceUser = await deviceUsersPage.getDeviceUserByName(firstName);
         await deviceUser?.delete();
       }
