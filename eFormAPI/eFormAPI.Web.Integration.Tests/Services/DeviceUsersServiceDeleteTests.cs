@@ -22,45 +22,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Threading.Tasks;
 using NUnit.Framework;
 using eFormAPI.Web.Services;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Microting.eFormApi.BasePn.Abstractions;
-using eFormAPI.Web.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Integration.Tests.Services
 {
+    /// <summary>
+    /// The first-user delete rule on DELETE api/device-users/delete/{id}.
+    /// </summary>
     [TestFixture]
-    public class SitesServiceTests : DbTestFixture
+    public class DeviceUsersServiceDeleteTests : FirstUserOnlyDeleteTestsBase
     {
-        private IEFormCoreService _coreHelper;
-        private ILocalizationService _localizationService;
-        private ILogger<SitesService> _logger;
-        private SitesService _sitesService;
+        protected override Task<OperationResult> DeleteAsync(int id) =>
+            new DeviceUsersService(
+                LocalizationService,
+                CoreHelper,
+                UserService,
+                Substitute.For<ILogger<DeviceUsersService>>()).Delete(id);
 
-        public override void DoSetup()
-        {
-            _coreHelper = Substitute.For<IEFormCoreService>();
-            _localizationService = Substitute.For<ILocalizationService>();
-            var userService = Substitute.For<IUserService>();
-            _logger = Substitute.For<ILogger<SitesService>>();
-
-            _localizationService.GetString(Arg.Any<string>())
-                .Returns(args => args.Arg<string>());
-
-            _sitesService = new SitesService(
-                _coreHelper,
-                _localizationService,
-                userService,
-                _logger);
-        }
-
-        [Test]
-        public void SitesService_InitializesCorrectly()
-        {
-            // Assert
-            Assert.That(_sitesService, Is.Not.Null);
-        }
+        protected override string SdkFailureMessageKey => "DeviceUserParamCouldNotBeDeleted";
     }
 }

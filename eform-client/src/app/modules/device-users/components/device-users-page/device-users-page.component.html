@@ -91,7 +91,7 @@
   <ng-container *ngIf="!row.unitId"> N/A</ng-container>
 </ng-template>
 <ng-template #actionsTpl let-row let-i="index">
-  <div class="device-user-actions" id="action-items-{{i}}" *ngIf="(selectCurrentUserClaimsDeviceUsersUpdate$ | async) || (selectCurrentUserClaimsDeviceUsersDelete$ | async)">
+  <div class="device-user-actions" id="action-items-{{i}}" *ngIf="!row.isLocked && ((selectCurrentUserClaimsDeviceUsersUpdate$ | async) || (selectCurrentUserCanDeleteDeviceUsers$ | async))">
     <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -100,7 +100,7 @@
       <button
         mat-menu-item
         id="editDeviceUserBtn{{i}}"
-        *ngIf="(selectCurrentUserClaimsDeviceUsersUpdate$ | async) && !row.isLocked"
+        *ngIf="selectCurrentUserClaimsDeviceUsersUpdate$ | async"
         (click)="openEditModal(row)"
       >
         <mat-icon>edit</mat-icon>
@@ -111,7 +111,7 @@
         mat-menu-item
         id="deleteDeviceUserBtn{{i}}"
         class="btn-delete-menu"
-        *ngIf="(selectCurrentUserClaimsDeviceUsersDelete$ | async) && !row.isLocked"
+        *ngIf="selectCurrentUserCanDeleteDeviceUsers$ | async"
         (click)="openDeleteDeviceUserModal(row)"
       >
         <mat-icon color="warn">delete</mat-icon>

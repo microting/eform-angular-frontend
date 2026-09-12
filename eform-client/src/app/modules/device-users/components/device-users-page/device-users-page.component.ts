@@ -10,13 +10,19 @@ import {
   EditCreateUserModalComponent,
   NewOtpModalComponent
 } from '../';
-import {Subscription, zip} from 'rxjs';
+import {combineLatest, Subscription, zip} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {TranslateService} from '@ngx-translate/core';
 import {DeleteModalSettingModel, SiteDto} from 'src/app/common/models';
 import {DeleteModalComponent} from 'src/app/common/modules/eform-shared/components';
 import {Store} from '@ngrx/store';
-import {selectCurrentUserClaimsDeviceUsersCreate} from 'src/app/state/auth/auth.selector';
+import {
+  selectCurrentUserClaimsDeviceUsersCreate,
+  selectCurrentUserClaimsDeviceUsersDelete,
+  selectCurrentUserClaimsDeviceUsersUpdate,
+  selectCurrentUserIsFirstUser
+} from 'src/app/state/auth/auth.selector';
 import {selectDeviceUsersFilters, selectDeviceUsersNameFilter} from "src/app/state/device-user/device-user.selector";
 
 @AutoUnsubscribe()
@@ -51,18 +57,23 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   ];
   editCreateUserModalComponentAfterClosedSub$: Subscription;
   newOtpModalComponentAfterClosedSub$: Subscription;
-  getCurrentUserClaimsAsyncSub$: Subscription;
   deviceUserDeletedSub$: Subscription;
+  deviceUsersUpdateClaimSub$: Subscription;
+  canDeleteDeviceUsersSub$: Subscription;
   translatesSub$: Subscription;
   public selectCurrentUserClaimsDeviceUsersCreate$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
-  public selectCurrentUserClaimsDeviceUsersUpdate$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
-  public selectCurrentUserClaimsDeviceUsersDelete$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
+  public selectCurrentUserClaimsDeviceUsersUpdate$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersUpdate);
+  // Only the first user may delete a device user, and only while also holding the delete claim.
+  public selectCurrentUserCanDeleteDeviceUsers$ = combineLatest([
+    this.authStore.select(selectCurrentUserIsFirstUser),
+    this.authStore.select(selectCurrentUserClaimsDeviceUsersDelete),
+  ]).pipe(map(([isFirstUser, deleteClaim]) => isFirstUser && deleteClaim));
   public selectDeviceUsersNameFilter$ = this.authStore.select(selectDeviceUsersNameFilter);
 
   ngOnInit() {
     this.getDeviceUsersFiltered();
     let actionsEnabled = false;
-    this.selectCurrentUserClaimsDeviceUsersUpdate$.subscribe(x => {
+    this.deviceUsersUpdateClaimSub$ = this.selectCurrentUserClaimsDeviceUsersUpdate$.subscribe(x => {
       if(x) {
         actionsEnabled = true;
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
@@ -74,7 +85,7 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
         ];
       }
     });
-    this.selectCurrentUserClaimsDeviceUsersDelete$.subscribe(x => {
+    this.canDeleteDeviceUsersSub$ = this.selectCurrentUserCanDeleteDeviceUsers$.subscribe(x => {
       if(x && !actionsEnabled) {
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {
@@ -85,16 +96,6 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
         ];
       }
     });
-    // this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
-    //   if (x.deviceUsersDelete || x.deviceUsersUpdate) {
-    //     this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
-    //       {
-    //         header: this.translateService.stream('Actions'),
-    //         field: 'actions',
-    //       },
-    //     ];
-    //   }
-    // });
   }
 
   openEditModal(simpleSiteDto: SiteDto) {

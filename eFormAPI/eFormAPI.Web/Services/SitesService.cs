@@ -34,6 +34,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abstractions;
 using Abstractions.Advanced;
+using Infrastructure.Helpers;
 using Infrastructure.Models.Sites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -45,6 +46,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 public class SitesService(
     IEFormCoreService coreHelper,
     ILocalizationService localizationService,
+    IUserService userService,
     ILogger<SitesService> logger)
     : ISitesService
 {
@@ -240,6 +242,13 @@ public class SitesService(
 
     public async Task<OperationResult> Delete(int id)
     {
+        // Only the first user may delete a site (a device user); everyone else is refused before the SDK.
+        if (!await userService.IsFirstUserAsync())
+        {
+            return new OperationResult(false,
+                localizationService.GetString("OnlyTheFirstUserCanDeleteWorkers"));
+        }
+
         try
         {
             var core = await coreHelper.GetCore();

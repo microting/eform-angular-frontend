@@ -13,9 +13,14 @@ import {Overlay} from '@angular/cdk/overlay';
 import {SiteDeleteComponent, SiteEditComponent} from 'src/app/modules/advanced/components';
 import {TranslateService} from '@ngx-translate/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {Subscription} from 'rxjs';
+import {combineLatest, Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
-import {selectCurrentUserClaimsSitesDelete, selectCurrentUserClaimsSitesUpdate} from 'src/app/state/auth/auth.selector';
+import {
+  selectCurrentUserClaimsSitesDelete,
+  selectCurrentUserClaimsSitesUpdate,
+  selectCurrentUserIsFirstUser
+} from 'src/app/state/auth/auth.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -33,12 +38,18 @@ export class SitesComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);
 
   private selectCurrentUserClaimsSitesUpdate$ = this.authStore.select(selectCurrentUserClaimsSitesUpdate);
-  private selectCurrentUserClaimsSitesDelete$ = this.authStore.select(selectCurrentUserClaimsSitesDelete);
+  // Only the first user may delete a site (a device user), and only while also holding the delete claim.
+  public selectCurrentUserCanDeleteSites$ = combineLatest([
+    this.authStore.select(selectCurrentUserIsFirstUser),
+    this.authStore.select(selectCurrentUserClaimsSitesDelete),
+  ]).pipe(map(([isFirstUser, deleteClaim]) => isFirstUser && deleteClaim));
 
   @ViewChild('modalTags', {static: true}) modalSiteTags: EformsTagsComponent;
   sitesDto: Array<SiteNameDto> = [];
   availableTags: Array<CommonDictionaryModel> = [];
   siteEditComponentAfterClosedSub$: Subscription;
+  sitesUpdateClaimSub$: Subscription;
+  canDeleteSitesSub$: Subscription;
   getCurrentUserClaimsAsyncSub$: Subscription;
 
   tableHeaders: MtxGridColumn[] = [
@@ -56,7 +67,7 @@ export class SitesComponent implements OnInit, OnDestroy {
     // this.loadAllSites();
     this.loadAllTags();
     let actionsAdded = false;
-    this.selectCurrentUserClaimsSitesUpdate$.subscribe(x => {
+    this.sitesUpdateClaimSub$ = this.selectCurrentUserClaimsSitesUpdate$.subscribe(x => {
       if (x) {
         actionsAdded = true;
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
@@ -68,7 +79,7 @@ export class SitesComponent implements OnInit, OnDestroy {
         ];
       }
     });
-    this.selectCurrentUserClaimsSitesDelete$.subscribe(x => {
+    this.canDeleteSitesSub$ = this.selectCurrentUserCanDeleteSites$.subscribe(x => {
       if (x && !actionsAdded) {
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {

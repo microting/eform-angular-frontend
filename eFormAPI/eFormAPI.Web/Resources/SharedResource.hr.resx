@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Korisnik uređaja "{0}" uspješno je izbrisan</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Samo prvi korisnik može brisati korisnike uređaja</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Korisnik uređaja je uspješno ažuriran</value>
     </data>

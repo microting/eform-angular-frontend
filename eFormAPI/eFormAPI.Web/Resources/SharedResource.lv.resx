@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Ierīces lietotājs “{0}” ir veiksmīgi izdzēsts</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Tikai pirmais lietotājs var dzēst ierīces lietotājus</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Ierīces lietotājs ir veiksmīgi atjaunināts</value>
     </data>
