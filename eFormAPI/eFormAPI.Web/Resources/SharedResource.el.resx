@@ -79,7 +79,7 @@
         <value>Ο χρήστης συσκευής "{0}" διαγράφηκε με επιτυχία</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Μόνο ο πρώτος χρήστης μπορεί να διαγράψει εργαζόμενους</value>
+        <value>Μόνο ο πρώτος χρήστης μπορεί να διαγράψει χρήστες συσκευής</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Ο χρήστης συσκευής ενημερώθηκε με επιτυχία</value>

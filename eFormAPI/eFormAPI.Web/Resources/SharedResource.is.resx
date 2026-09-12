@@ -79,7 +79,7 @@
         <value>Tækjanotandanum "{0}" var eytt</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Aðeins fyrsti notandinn getur eytt starfsmönnum</value>
+        <value>Aðeins fyrsti notandinn getur eytt tækjanotendum</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Tækjanotandi uppfærður</value>

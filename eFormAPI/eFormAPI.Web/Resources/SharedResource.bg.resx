@@ -79,7 +79,7 @@
         <value>Потребителят на устройството „{0}“ е изтрит успешно</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Само първият потребител може да изтрива работници</value>
+        <value>Само първият потребител може да изтрива потребители на устройства</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Потребителят на устройството е актуализиран успешно</value>

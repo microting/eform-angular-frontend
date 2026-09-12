@@ -100,7 +100,7 @@
       <button
         mat-menu-item
         id="editDeviceUserBtn{{i}}"
-        *ngIf="(selectCurrentUserClaimsDeviceUsersUpdate$ | async) && !row.isLocked"
+        *ngIf="selectCurrentUserClaimsDeviceUsersUpdate$ | async"
         (click)="openEditModal(row)"
       >
         <mat-icon>edit</mat-icon>
@@ -111,7 +111,7 @@
         mat-menu-item
         id="deleteDeviceUserBtn{{i}}"
         class="btn-delete-menu"
-        *ngIf="(selectCurrentUserCanDeleteDeviceUsers$ | async) && !row.isLocked"
+        *ngIf="selectCurrentUserCanDeleteDeviceUsers$ | async"
         (click)="openDeleteDeviceUserModal(row)"
       >
         <mat-icon color="warn">delete</mat-icon>

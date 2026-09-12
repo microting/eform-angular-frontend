@@ -196,7 +196,7 @@
     <value>Device User "{0}" deleted successfully</value>
   </data>
   <data name="OnlyTheFirstUserCanDeleteWorkers" xml:space="preserve">
-    <value>Only the first user can delete workers</value>
+    <value>Only the first user can delete device users</value>
   </data>
   <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
     <value>Device User updated successfully</value>

@@ -79,7 +79,7 @@
         <value>Enhetsanvändaren "{0}" har tagits bort</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Endast den första användaren kan ta bort arbetare</value>
+        <value>Endast den första användaren kan ta bort enhetsanvändare</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Enhetsanvändaren har uppdaterats</value>

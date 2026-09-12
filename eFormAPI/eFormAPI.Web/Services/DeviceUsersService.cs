@@ -34,6 +34,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abstractions;
 using Abstractions.Advanced;
+using Infrastructure.Helpers;
 using Infrastructure.Models;
 using Infrastructure.Models.DeviceUsers;
 using Microsoft.EntityFrameworkCore;
@@ -273,10 +274,8 @@ public class DeviceUsersService(
 
     public async Task<OperationResult> Delete(int id)
     {
-        // Only the first user (lowest AspNetUsers Id) may delete a device user; everyone
-        // else, admins included, is refused before the SDK is touched. A caller without a
-        // user id is refused outright, so an empty users table (first id 0) cannot match.
-        if (userService.UserId <= 0 || userService.UserId != await userService.GetFirstUserIdInDb())
+        // Only the first user may delete a device user; everyone else is refused before the SDK.
+        if (!await userService.IsFirstUserAsync())
         {
             return new OperationResult(false,
                 localizationService.GetString("OnlyTheFirstUserCanDeleteWorkers"));

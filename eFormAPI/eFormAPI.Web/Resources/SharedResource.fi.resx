@@ -79,7 +79,7 @@
         <value>Laitteen käyttäjän "{0}" poistaminen onnistui</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Vain ensimmäinen käyttäjä voi poistaa työntekijöitä</value>
+        <value>Vain ensimmäinen käyttäjä voi poistaa laitteen käyttäjiä</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Laitteen käyttäjän päivitys onnistui</value>

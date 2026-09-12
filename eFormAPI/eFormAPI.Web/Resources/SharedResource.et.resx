@@ -79,7 +79,7 @@
         <value>Seadme kasutaja "{0}" kustutamine õnnestus</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Ainult esimene kasutaja saab töötajaid kustutada</value>
+        <value>Ainult esimene kasutaja saab seadme kasutajaid kustutada</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Seadme kasutaja värskendamine õnnestus</value>

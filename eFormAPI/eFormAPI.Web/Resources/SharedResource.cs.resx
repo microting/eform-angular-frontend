@@ -79,7 +79,7 @@
         <value>Uživatel zařízení „{0}“ byl úspěšně smazán</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Pouze první uživatel může mazat pracovníky</value>
+        <value>Pouze první uživatel může mazat uživatele zařízení</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Uživatel zařízení byl úspěšně aktualizován</value>

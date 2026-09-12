@@ -79,7 +79,7 @@
         <value>Uporabnik naprave »{0}« je bil uspešno izbrisan</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Samo prvi uporabnik lahko briše delavce</value>
+        <value>Samo prvi uporabnik lahko briše uporabnike naprave</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Uporabnik naprave je uspešno posodobljen</value>

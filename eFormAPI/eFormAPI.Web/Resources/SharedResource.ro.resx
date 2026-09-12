@@ -79,7 +79,7 @@
         <value>Utilizatorul dispozitivului „{0}” a fost șters cu succes</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Doar primul utilizator poate șterge lucrători</value>
+        <value>Doar primul utilizator poate șterge utilizatorii dispozitivului</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Utilizatorul dispozitivului a fost actualizat cu succes</value>

@@ -20,6 +20,7 @@ import {Store} from '@ngrx/store';
 import {
   selectCurrentUserClaimsDeviceUsersCreate,
   selectCurrentUserClaimsDeviceUsersDelete,
+  selectCurrentUserClaimsDeviceUsersUpdate,
   selectCurrentUserIsFirstUser
 } from 'src/app/state/auth/auth.selector';
 import {selectDeviceUsersFilters, selectDeviceUsersNameFilter} from "src/app/state/device-user/device-user.selector";
@@ -57,9 +58,11 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   editCreateUserModalComponentAfterClosedSub$: Subscription;
   newOtpModalComponentAfterClosedSub$: Subscription;
   deviceUserDeletedSub$: Subscription;
+  deviceUsersUpdateClaimSub$: Subscription;
+  canDeleteDeviceUsersSub$: Subscription;
   translatesSub$: Subscription;
   public selectCurrentUserClaimsDeviceUsersCreate$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
-  public selectCurrentUserClaimsDeviceUsersUpdate$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersCreate);
+  public selectCurrentUserClaimsDeviceUsersUpdate$ = this.authStore.select(selectCurrentUserClaimsDeviceUsersUpdate);
   // Only the first user may delete a device user, and only while also holding the delete claim.
   public selectCurrentUserCanDeleteDeviceUsers$ = combineLatest([
     this.authStore.select(selectCurrentUserIsFirstUser),
@@ -70,7 +73,7 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getDeviceUsersFiltered();
     let actionsEnabled = false;
-    this.selectCurrentUserClaimsDeviceUsersUpdate$.subscribe(x => {
+    this.deviceUsersUpdateClaimSub$ = this.selectCurrentUserClaimsDeviceUsersUpdate$.subscribe(x => {
       if(x) {
         actionsEnabled = true;
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
@@ -82,7 +85,7 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
         ];
       }
     });
-    this.selectCurrentUserCanDeleteDeviceUsers$.subscribe(x => {
+    this.canDeleteDeviceUsersSub$ = this.selectCurrentUserCanDeleteDeviceUsers$.subscribe(x => {
       if(x && !actionsEnabled) {
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {

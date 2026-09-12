@@ -138,7 +138,7 @@
     <value>Gerätebenutzer "{0}" wurde erfolgreich gelöscht</value>
   </data>
   <data name="OnlyTheFirstUserCanDeleteWorkers" xml:space="preserve">
-    <value>Nur der erste Benutzer kann Mitarbeiter löschen</value>
+    <value>Nur der erste Benutzer kann Gerätebenutzer löschen</value>
   </data>
   <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
     <value>Gerätebenutzer erfolgreich aktualisiert</value>

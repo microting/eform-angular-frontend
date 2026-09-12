@@ -79,7 +79,7 @@
         <value>Apparaatgebruiker "{0}" is succesvol verwijderd</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Alleen de eerste gebruiker kan medewerkers verwijderen</value>
+        <value>Alleen de eerste gebruiker kan apparaatgebruikers verwijderen</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Apparaatgebruiker succesvol bijgewerkt</value>

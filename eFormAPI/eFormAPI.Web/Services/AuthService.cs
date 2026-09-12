@@ -185,6 +185,8 @@ public class AuthService(
                 $"Role for user {userService.UserId} not found");
         }
 
+        var firstUserIdInDb = await userService.GetFirstUserIdInDb();
+
         return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
         {
             Id = user.Id,
@@ -194,6 +196,7 @@ public class AuthService(
             ExpiresIn = token.expireIn,
             FirstName = user.FirstName,
             LastName = user.LastName,
+            IsFirstUser = user.Id == firstUserIdInDb,
             AvatarUrl = user.ProfilePictureSnapshot != null
                 ? $"api/images/login-page-images?fileName={user.ProfilePictureSnapshot}"
                 : $"https://www.gravatar.com/avatar/{user.EmailSha256}?s=32&d=identicon"

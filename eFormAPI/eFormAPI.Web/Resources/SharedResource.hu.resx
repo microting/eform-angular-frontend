@@ -79,7 +79,7 @@
         <value>„{0}” eszközfelhasználó sikeresen törölve</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Csak az első felhasználó törölhet dolgozókat</value>
+        <value>Csak az első felhasználó törölhet eszközfelhasználókat</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Az eszközfelhasználó sikeresen frissítve</value>

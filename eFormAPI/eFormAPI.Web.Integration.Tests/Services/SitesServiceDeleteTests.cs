@@ -34,12 +34,12 @@ using eFormAPI.Web.Abstractions;
 namespace eFormAPI.Web.Integration.Tests.Services
 {
     /// <summary>
-    /// Only the first user (lowest AspNetUsers Id) may delete a device user; everyone
-    /// else, admins included, is refused before the SDK is touched. These tests never
-    /// touch the database, so they avoid <c>DbTestFixture</c>.
+    /// Only the first user (lowest AspNetUsers Id) may delete a site (a device user) from
+    /// Advanced &gt; Sites; everyone else, admins included, is refused before the SDK is
+    /// touched. These tests never touch the database, so they avoid <c>DbTestFixture</c>.
     /// </summary>
     [TestFixture]
-    public class DeviceUsersServiceDeleteTests
+    public class SitesServiceDeleteTests
     {
         private const int FirstUserId = 1;
         private const int OtherUserId = 2;
@@ -48,7 +48,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
         private ILocalizationService _localizationService;
         private IEFormCoreService _coreHelper;
         private IUserService _userService;
-        private DeviceUsersService _deviceUsersService;
+        private SitesService _sitesService;
 
         [SetUp]
         public void Setup()
@@ -69,11 +69,11 @@ namespace eFormAPI.Web.Integration.Tests.Services
             _coreHelper.GetCore()
                 .Returns<eFormCore.Core>(_ => throw new InvalidOperationException("SDK reached"));
 
-            _deviceUsersService = new DeviceUsersService(
-                _localizationService,
+            _sitesService = new SitesService(
                 _coreHelper,
+                _localizationService,
                 _userService,
-                Substitute.For<ILogger<DeviceUsersService>>());
+                Substitute.For<ILogger<SitesService>>());
         }
 
         [Test]
@@ -85,12 +85,12 @@ namespace eFormAPI.Web.Integration.Tests.Services
             _userService.IsAdmin().Returns(true);
 
             // Act
-            var result = await _deviceUsersService.Delete(SiteId);
+            var result = await _sitesService.Delete(SiteId);
 
             // Assert
             Assert.That(result.Success, Is.False);
             Assert.That(result.Message, Is.EqualTo("OnlyTheFirstUserCanDeleteWorkers"));
-            // Advanced_SiteItemRead and SiteDelete are only reachable through GetCore.
+            // Advanced_SiteItemDelete is only reachable through GetCore.
             await _coreHelper.DidNotReceive().GetCore();
         }
 
@@ -102,7 +102,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
             _userService.GetFirstUserIdInDb().Returns(0);
 
             // Act
-            var result = await _deviceUsersService.Delete(SiteId);
+            var result = await _sitesService.Delete(SiteId);
 
             // Assert
             Assert.That(result.Success, Is.False);
@@ -117,14 +117,14 @@ namespace eFormAPI.Web.Integration.Tests.Services
             _userService.UserId.Returns(FirstUserId);
 
             // Act
-            var result = await _deviceUsersService.Delete(SiteId);
+            var result = await _sitesService.Delete(SiteId);
 
             // Assert
             await _userService.Received(1).GetFirstUserIdInDb();
             await _coreHelper.Received(1).GetCore();
             // The faked SDK fails, so the result is the SDK-failure message, not the refusal.
             Assert.That(result.Success, Is.False);
-            Assert.That(result.Message, Is.EqualTo("DeviceUserParamCouldNotBeDeleted"));
+            Assert.That(result.Message, Is.EqualTo("SiteParamCouldNotBeDeleted"));
         }
     }
 }

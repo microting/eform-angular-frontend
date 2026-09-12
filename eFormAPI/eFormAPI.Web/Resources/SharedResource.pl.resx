@@ -79,7 +79,7 @@
         <value>Użytkownik urządzenia „{0}” został pomyślnie usunięty</value>
     </data>
     <data name="OnlyTheFirstUserCanDeleteWorkers">
-        <value>Tylko pierwszy użytkownik może usuwać pracowników</value>
+        <value>Tylko pierwszy użytkownik może usuwać użytkowników urządzenia</value>
     </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Użytkownik urządzenia został pomyślnie zaktualizowany</value>
