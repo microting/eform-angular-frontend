@@ -472,6 +472,85 @@ body.theme-workspace {
   }
 
   // ---------------------------------------------------------------------------
+  // 3d. Page gutter
+  // ---------------------------------------------------------------------------
+  // The content card is the page's only horizontal inset: 8px top, 24px
+  // sides, 24px bottom, so a page title and the table under it both sit 24px
+  // from the card edges. border-box keeps the padding inside the card's
+  // `min-height: calc(100% - 2 * margin)` (full-layout.component.scss);
+  // content-box would make short pages 32px taller than the drawer content
+  // and scroll it. Simple-layout routes (auth, landing, connection-string)
+  // render no .content-card and are unaffected.
+  // ---------------------------------------------------------------------------
+
+  mat-drawer-container .content-card {
+    box-sizing: border-box;
+    padding: 8px 24px 24px;
+  }
+
+  // Full-bleed views size themselves to the viewport (calc(100vh - 64px))
+  // and scroll internally; card padding would push them past the card and
+  // add an outer scrollbar, and their toolbars' border-bottom is meant to run
+  // edge to edge. Keep the card flush for them, as before.
+  //   .calendar-shell  — backend-configuration calendar (sidebar + week grid)
+  //   .board-view      — kanban board (horizontally scrolling columns)
+  //   .gantt-container — kanban gantt
+  $full-bleed-views: '.calendar-shell, .board-view, .gantt-container';
+
+  mat-drawer-container .content-card:has(#{$full-bleed-views}) {
+    padding: 0;
+  }
+
+  // _table.scss caps grids at var(--mtx-grid-max-height, 78.5vh); take back
+  // the card's 32px of vertical padding so a grid at its cap still fits
+  // without an outer scrollbar. Set as the hook, not max-height itself, so
+  // pages that size their own grid (component max-height) still win.
+  mat-drawer-container .content-card:not(:has(#{$full-bleed-views})) {
+    --mtx-grid-max-height: calc(78.5vh - 32px);
+  }
+
+  // The sub-header's `.p-3` utility (padding: 1rem !important, from
+  // utilities/_spacing.scss) inset the title 16px inside the old zero-padding
+  // card. The card now supplies the gutter, so drop the horizontal part —
+  // keeping the 16px top/bottom and the mb-3 — and the title lines up with the
+  // table's left edge. !important is needed to beat the utility's own.
+  .eform-sub-header {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  // Wrappers that follow a sub-header used `.px-3` to line up with the title's
+  // old 16px inset; with that inset gone they would sit 16px right of the
+  // title and table. Only the sub-header's siblings, or their direct children,
+  // are touched — never inside a card, where px-3 is real card padding.
+  // Limited to div/mat-card wrappers so a stray px-3 button keeps its padding.
+  // Hits: navigation-menu-page, admin-settings, items-planning
+  // plannings-header, backend-configuration statistics + task-tracker.
+  eform-new-subheader ~ :is(div, mat-card).px-3,
+  eform-new-subheader ~ :not(.mat-mdc-card) > :is(div, mat-card).px-3,
+  .eform-sub-header ~ :is(div, mat-card).px-3,
+  .eform-sub-header ~ :not(.mat-mdc-card) > :is(div, mat-card).px-3 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  // Plugin pages whose routed root adds its own all-round padding, doubling the
+  // gutter (24px + 24px). `router-outlet + *` is the routed component's host,
+  // so these class names only match at page-root level. Horizontal only; the
+  // top/bottom spacing is part of those pages' own layout.
+  //   kanban: board list, sprint panel, board settings, reports, statistics
+  //   time-planning: pay rule sets
+  .content-card router-outlet + * > .board-list-container,
+  .content-card router-outlet + * > .sprint-panel,
+  .content-card router-outlet + * > .board-settings,
+  .content-card router-outlet + * > .reports-container,
+  .content-card router-outlet + * > .statistics-container,
+  .content-card router-outlet + * > .pay-rule-sets-container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // ---------------------------------------------------------------------------
   // 4. Filter panel — right-edge mirror of the drawer
   // ---------------------------------------------------------------------------
 

@@ -931,14 +931,26 @@ body.theme-workspace {
   // =========================================================================
   // Tables (mat-mdc-table family)
   // =========================================================================
-  // Matches medarbejdertabel.html design reference:
-  // - Outer container has 1px --md-surface-variant border + 4px radius
-  // - Header uses subtle box-shadow for divider (looks crisper than border)
-  // - Row hover uses color-mix(--md-primary 10%, transparent) — the
-  //   distinctive light-blue tint from the design spec
-  // - Last row drops its bottom border so the bottom edge looks clean
+  // One look for every data table (mtx-grid, standalone mat-table; native
+  // <table>s mirror it in _workspace-utilities.scss §8):
+  // - Frame: 1px --md-surface-variant border, 8px radius, surface-container
+  // - Header: muted uppercase 12px label on the --bg tint, sticky
+  // - Body: 12px/16px cells, content-height rows, surface-variant separators,
+  //   no separator under the last row
+  // - Row hover --ws-table-row-hover; a row stays lit while its menu is open
+  // - Row-action icon buttons shrink to 32px inside cells
 
-  // Wrap the table area with a border (the design's .table-scroll equivalent).
+  // --table-row-hover equals --md-surface-container in dark (#1e1f20), so a
+  // hover on it would be invisible; dark mode gets a 4% on-surface lift.
+  // Also read by the native-table rules in _workspace-utilities.scss.
+  & {
+    --ws-table-row-hover: var(--table-row-hover);
+  }
+
+  &.theme-dark {
+    --ws-table-row-hover: color-mix(in srgb, var(--md-on-surface) 4%, var(--md-surface-container));
+  }
+
   // mtx-grid renders <mtx-grid> → div.mtx-grid-content → mat-table inside.
   // Host is a flex column so the inner layout chain (set up in
   // `_table.scss`) can shrink to fit max-height and let
@@ -946,10 +958,14 @@ body.theme-workspace {
   // full content height.
   mtx-grid,
   .mtx-grid {
+    // _table.scss and styles.scss draw the host frame from these hooks with
+    // !important; re-point the hooks instead of out-shouting those rules.
+    --mtx-grid-border: 1px solid var(--md-surface-variant);
+    --mtx-grid-radius: 8px;
+    // mtx-grid's own [rowHover] rule out-specifies ours; feed it our colour.
+    --mtx-grid-table-row-hover-background-color: var(--ws-table-row-hover);
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--md-surface-variant);
-    border-radius: var(--radius-sm, 4px);
     background: var(--md-surface-container);
     overflow: hidden;
 
@@ -960,18 +976,47 @@ body.theme-workspace {
     }
   }
 
+  // Content-height rows. Set on the rows rather than via Material's
+  // --mat-table-*-container-height tokens: mtx-grid also does arithmetic
+  // with the row token (expansion-row padding), which `auto` would break.
+  .mat-mdc-header-row,
+  .mat-mdc-row {
+    height: auto;
+  }
+
   .mat-mdc-table {
+    // Cell separators (Material and mtx-grid both read this token).
+    --mat-table-row-item-outline-color: var(--md-surface-variant);
     background-color: var(--md-surface-container);
     font-family: var(--font-family);
     color: var(--md-on-surface);
-    border: none;
   }
 
+  // A standalone mat-table is its own frame. `clip` (not `hidden`) rounds
+  // the corners without making the table a scroll container, so the
+  // sticky header still sticks to the real scroller.
+  .mat-mdc-table:not(.mtx-grid .mat-mdc-table) {
+    border: 1px solid var(--md-surface-variant);
+    border-radius: 8px;
+    overflow: clip;
+  }
+
+  // Inside mtx-grid the host draws the frame. styles.scss (unscoped,
+  // !important) adds a --border line under the table, doubling the frame's
+  // bottom edge, and recolours every cell border to --border.
+  .mtx-grid .mat-mdc-table {
+    border: none !important;
+  }
+
+  .mtx-grid .mat-mdc-header-cell,
+  .mtx-grid .mat-mdc-cell {
+    border-bottom-color: var(--md-surface-variant) !important;
+  }
+
+  // The divider under the header is the header cells' own bottom border,
+  // so it moves with them while sticky.
   .mat-mdc-header-row {
-    background-color: var(--md-surface-container);
-    height: 44px;
-    border-bottom: none;
-    box-shadow: 0 1px 0 var(--md-surface-variant);
+    background-color: var(--bg);
     position: sticky;
     top: 0;
     // 11 lets the sticky header out-stack in-table content like the
@@ -981,73 +1026,126 @@ body.theme-workspace {
     z-index: 11;
   }
 
-  .mat-mdc-header-cell {
-    color: var(--md-on-surface);
-    font-size: 14px;
-    font-weight: 600;
+  // Row-qualified to out-specify styles.scss's unscoped
+  // `.mtx-grid .mat-mdc-table thead tr th` (text colour, size, line-height).
+  .mat-mdc-header-row .mat-mdc-header-cell {
+    padding: 12px 16px;
     font-family: var(--font-family);
-    background-color: var(--md-surface-container);
-    padding: 10px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-quaternary);
+    background-color: var(--bg);
   }
 
   .mat-mdc-row {
-    height: 44px;
     background-color: var(--md-surface-container);
-    border-bottom: 1px solid var(--md-surface-variant);
     transition: background-color 0.12s ease;
 
-    // Opaque blend with surface-container so a horizontally-sticky cell
-    // can inherit the same color and hide scrolling content underneath.
-    &:hover {
-      background-color: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface-container));
-    }
-
-    // Clean bottom edge — last row's border merges with the container border
-    &:last-child {
-      border-bottom: none;
+    // The open menu's overlay steals :hover, so keep the row lit while
+    // one of its menu triggers is expanded.
+    &:hover,
+    &:has(.mat-mdc-menu-trigger[aria-expanded="true"]) {
+      background-color: var(--ws-table-row-hover);
     }
   }
 
+  // Keep at (0,2,1): the calendar grid's own `td.mat-mdc-cell`
+  // vertical-align: top ties with this and wins on source order.
   .mat-mdc-cell {
+    padding: 12px 16px;
+    font-family: var(--font-family);
     font-size: 14px;
     font-weight: 400;
+    line-height: 1.45;
     color: var(--md-on-surface);
-    font-family: var(--font-family);
     background-color: transparent;
-    padding: 10px 8px;
-    vertical-align: top;
+    vertical-align: middle;
   }
 
-  // Sticky actions column — drop the legacy left-border + shadow but keep
-  // an OPAQUE background that mirrors the row state. The cell stays
-  // sticky during horizontal scroll, so a transparent bg would let other
-  // cells show through underneath. Transition matches the row's so the
-  // hover color flows across the whole row without the actions cell
-  // lagging behind.
+  // mtx-grid's selection checkbox column keeps its own narrow 10px sides.
+  .mat-mdc-header-row .mtx-grid-checkbox-cell,
+  .mat-mdc-row .mtx-grid-checkbox-cell {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  // The calendar week-grid's header shows large day numbers, not labels.
+  .mtx-grid.calendar-grid .mat-mdc-header-row .mat-mdc-header-cell {
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  // time-planning break-policy rules: the table now draws its own frame, so
+  // drop the wrapper's to avoid a double border. !important: the component's
+  // emulated-encapsulation rule (an _ngcontent attribute on both parts,
+  // 0,4,0) out-specifies any theme-scoped selector.
+  .break-policy-rules-list .rules-table-container {
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  // Sticky (pinned) columns must stay opaque over horizontally scrolled
+  // cells. Header cells take the header tint; body cells inherit the row's
+  // background, so hover, menu-open, selected and status-coloured rows all
+  // carry across without per-state rules. !important beats styles.scss's
+  // unscoped `.mtx-grid .mat-table-sticky-left` background.
+  th.mat-table-sticky-left,
+  th.mat-table-sticky-right,
+  th.mat-mdc-table-sticky-border-elem-right {
+    background-color: var(--bg) !important;
+  }
+
+  td.mat-table-sticky-left,
+  td.mat-table-sticky-right,
+  td.mat-mdc-table-sticky-border-elem-right {
+    background-color: inherit !important;
+  }
+
+  // Right-pinned actions column: drop the legacy left border + shadow.
   th.mat-table-sticky-right,
   td.mat-table-sticky-right,
   th.mat-mdc-table-sticky-border-elem-right,
   td.mat-mdc-table-sticky-border-elem-right {
     border-left: none !important;
     box-shadow: none !important;
-    background-color: var(--md-surface-container) !important;
-    transition: background-color 0.12s ease;
   }
 
-  // Row hover — sticky cell follows the row's hover blend
-  .mat-mdc-row:hover td.mat-table-sticky-right,
-  .mat-mdc-row:hover td.mat-mdc-table-sticky-border-elem-right {
-    background-color: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface-container)) !important;
+  // Row-action icon buttons inside body cells (mat and native tables):
+  // compact 32px target with a 20px glyph. Icon buttons elsewhere keep the
+  // 42px default above, and the no-halo tokens carry over from it.
+  // .small-icon-btn (shared-tags) sizes itself to 28px; leave it alone.
+  td .mat-mdc-icon-button:not(.small-icon-btn),
+  .mat-mdc-cell .mat-mdc-icon-button:not(.small-icon-btn) {
+    --mdc-icon-button-state-layer-size: 32px;
+    --mat-icon-button-state-layer-size: 32px;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+
+    .mat-mdc-button-touch-target {
+      width: 32px;
+      height: 32px;
+    }
+
+    .mat-icon,
+    .material-symbols-outlined {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+    }
   }
 
-  // Selected row — sticky cell uses primary-container too
-  .mat-mdc-row.selected td.mat-table-sticky-right,
-  .mat-mdc-row[aria-selected="true"] td.mat-table-sticky-right,
-  .mat-mdc-row.row-selected td.mat-table-sticky-right,
-  .mat-mdc-row.selected td.mat-mdc-table-sticky-border-elem-right,
-  .mat-mdc-row[aria-selected="true"] td.mat-mdc-table-sticky-border-elem-right,
-  .mat-mdc-row.row-selected td.mat-mdc-table-sticky-border-elem-right {
-    background-color: var(--md-primary-container) !important;
+  // The trigger whose menu is open wears the primary colour.
+  td .mat-mdc-menu-trigger[aria-expanded="true"],
+  .mat-mdc-cell .mat-mdc-menu-trigger[aria-expanded="true"] {
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-primary);
+    }
   }
 
   // Selected row — primary-container highlight (matches design system)
@@ -1056,7 +1154,10 @@ body.theme-workspace {
   .mat-mdc-row.row-selected {
     background-color: var(--md-primary-container);
 
-    &:hover {
+    // Menu-open variant listed so a selected row keeps its own tint
+    // rather than falling back to the plain row hover.
+    &:hover,
+    &:has(.mat-mdc-menu-trigger[aria-expanded="true"]) {
       background-color: color-mix(in srgb, var(--md-on-surface) 4%, var(--md-primary-container));
     }
 
@@ -1071,22 +1172,22 @@ body.theme-workspace {
   // data view). The design manual's tables use uniform rows with a single
   // tinted hover state, so neutralize the striping by pointing mtx-grid's
   // striping variable at the same surface-container even rows already use,
-  // and re-assert the tinted hover blend at higher specificity than
-  // mtx-grid's static `.mat-row-odd` rule.
+  // and re-assert the hover at higher specificity than mtx-grid's static
+  // `.mat-row-odd` rule.
   .mat-mdc-table.mat-table-striped {
     --mtx-grid-table-row-striped-background-color: var(--md-surface-container);
 
     .mat-row-odd:hover,
     .mat-row-even:hover {
-      background-color: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface-container));
+      background-color: var(--ws-table-row-hover);
     }
   }
 
   // The calendar week-grid renders as a single mat-mdc-row that spans the
   // full 1248 px-tall canvas (events absolutely positioned inside each
-  // day's column). Two workspace rules paint that row blue on hover:
-  //   .mat-mdc-row:hover                            (line ~1000, every row)
-  //   .mat-row-odd:hover / .mat-row-even:hover      (line ~1078, striping)
+  // day's column). Two workspace rules tint that row on hover:
+  //   .mat-mdc-row:hover                            (every row)
+  //   .mat-row-odd:hover / .mat-row-even:hover      (striping)
   // Both bleed through the transparent cells onto the calendar canvas.
   // Neutralize them just for .calendar-grid; other tables keep their hover.
   .mtx-grid.calendar-grid .mat-mdc-table .mat-mdc-row:hover,
@@ -1104,9 +1205,11 @@ body.theme-workspace {
   //   - ascending  → primary color, full opacity, no rotation
   //   - descending → primary color, full opacity, rotated 180° (flip)
 
+  // Inherit the header cell's muted colour so sortable and plain columns
+  // read the same; hover still darkens.
   .mat-sort-header-container {
     cursor: pointer;
-    color: var(--md-on-surface-variant);
+    color: inherit;
 
     &:hover {
       color: var(--md-on-surface);

@@ -626,45 +626,95 @@ body.theme-workspace {
   // 8. Data table — .table-example > .table-scroll > table. Row action menu
   //    is hidden by default; JS adds `.menu-open` on `.actions-cell` and sets
   //    inline top/left for viewport-clamped positioning.
+  //
+  //    Native data tables mirror the mat-table look in
+  //    _workspace-mat-overrides.scss (Tables): the DS hooks, Bootstrap
+  //    `.table`, hand-written `table.mat-table` markup (legacy classes the
+  //    .mat-mdc-* rules miss) and plugin `table.data`. Row-action icon
+  //    button sizing and the open-menu trigger colour live there too.
+  //    Deliberately not matched: mat-datepicker's `.mat-calendar-table` and
+  //    key/value layout tables such as `.summary-table`.
+  $native-data-tables: "table.table, table.mat-table, table.data, .table-example table, .table-scroll table";
+
   .table-example {
     margin-top: 18px;
     &:first-of-type {
       margin-top: var(--spacing-sm, 8px);
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: var(--font-family);
-    }
-    th,
-    td {
-      text-align: left;
-      padding: var(--spacing-sm, 10px) var(--spacing-sm, 8px);
-      border-bottom: 1px solid var(--md-surface-variant);
-      color: var(--md-on-surface);
-    }
   }
+  // Scroll wrapper doubles as the frame for its table.
   .table-scroll {
     max-height: 220px;
     overflow: auto;
     border: 1px solid var(--md-surface-variant);
-    border-radius: var(--radius-sm, 4px);
+    border-radius: 8px;
     background: var(--md-surface-container);
     table {
       margin: 0;
     }
+  }
+  #{$native-data-tables} {
+    width: 100%;
+    // separate + zero spacing: rounded corners and cell borders that move
+    // with the sticky header (neither works with `collapse`).
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: var(--font-family);
+    color: var(--md-on-surface);
+    background: var(--md-surface-container);
+
+    // Frame the table itself unless a wrapper (mtx-grid host, .table-scroll)
+    // already draws one. `clip` keeps the sticky header working.
+    &:not(.mtx-grid table):not(.table-scroll table) {
+      border: 1px solid var(--md-surface-variant);
+      border-radius: 8px;
+      overflow: clip;
+    }
+
+    th,
+    td {
+      text-align: left;
+      border-bottom: 1px solid;
+      // Only the colour is !important: styles.scss's unscoped
+      // `.mtx-grid tbody tr td` forces --border (legacy tables sit inside a
+      // div.mtx-grid), while the last-row `border-bottom: none` must still win.
+      border-bottom-color: var(--md-surface-variant) !important;
+    }
+
     thead th {
       position: sticky;
       top: 0;
       z-index: 2;
-      background: var(--md-surface-container);
-      box-shadow: 0 1px 0 var(--md-surface-variant);
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.45;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-quaternary);
+      background: var(--bg);
     }
-    tbody tr:hover {
-      background: color-mix(in srgb, var(--md-primary) 10%, transparent);
+
+    td {
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.45;
+      vertical-align: middle;
+      color: var(--md-on-surface);
+      transition: background-color 0.12s ease;
     }
+
     tbody tr:last-child td {
       border-bottom: none;
+    }
+
+    // Paint the cells, not the row, so a component's own `tr:hover` can't
+    // show through. The open menu's overlay steals :hover, so the row also
+    // stays lit while one of its menu triggers is expanded.
+    tbody tr:hover > td,
+    tbody tr:has(.mat-mdc-menu-trigger[aria-expanded="true"]) > td {
+      background-color: var(--ws-table-row-hover);
     }
   }
   .table-sort-btn {
