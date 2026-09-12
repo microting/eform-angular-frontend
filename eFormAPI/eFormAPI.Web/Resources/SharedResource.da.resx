@@ -138,7 +138,7 @@
     <value>Medarbejder "{0}" slettet</value>
   </data>
   <data name="OnlyTheFirstUserCanDeleteWorkers" xml:space="preserve">
-    <value>Kun den første bruger kan slette medarbejdere</value>
+    <value>Kun den første bruger kan slette mobilbrugere</value>
   </data>
   <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
     <value>Medarbejder opdateret</value>

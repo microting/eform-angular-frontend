@@ -14,7 +14,7 @@ import {
   selectCurrentUserClaimsSitesUpdate,
   selectCurrentUserIsFirstUser,
 } from 'src/app/state/auth/auth.selector';
-import { MockMatMenuComponent, MockMtxGridComponent, MockTranslatePipe } from 'src/test-helpers';
+import { MockMatMenuComponent, MockMtxGridComponent, MockTranslatePipe, mockStoreSelectFrom } from 'src/test-helpers';
 
 // Only the first user may delete a site (a device user), and only while also holding the delete claim.
 describe('SitesComponent', () => {
@@ -51,12 +51,11 @@ describe('SitesComponent', () => {
     auth: { isFirstUser: boolean; deleteClaim: boolean; updateClaim?: boolean },
     rows: Partial<SiteNameDto>[] = [],
   ): ComponentFixture<SitesComponent> {
-    const selected = new Map<unknown, unknown>([
+    mockStoreSelectFrom(mockStore, [
       [selectCurrentUserIsFirstUser, auth.isFirstUser],
       [selectCurrentUserClaimsSitesDelete, auth.deleteClaim],
       [selectCurrentUserClaimsSitesUpdate, auth.updateClaim ?? false],
     ]);
-    mockStore.select.mockImplementation((selector: unknown) => of(selected.get(selector)));
     mockSitesService.getAllSites.mockReturnValue(of({ success: true, model: rows }));
 
     const fixture = TestBed.createComponent(SitesComponent);

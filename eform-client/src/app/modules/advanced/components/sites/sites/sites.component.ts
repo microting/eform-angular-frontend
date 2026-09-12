@@ -48,6 +48,8 @@ export class SitesComponent implements OnInit, OnDestroy {
   sitesDto: Array<SiteNameDto> = [];
   availableTags: Array<CommonDictionaryModel> = [];
   siteEditComponentAfterClosedSub$: Subscription;
+  sitesUpdateClaimSub$: Subscription;
+  canDeleteSitesSub$: Subscription;
   getCurrentUserClaimsAsyncSub$: Subscription;
 
   tableHeaders: MtxGridColumn[] = [
@@ -65,7 +67,7 @@ export class SitesComponent implements OnInit, OnDestroy {
     // this.loadAllSites();
     this.loadAllTags();
     let actionsAdded = false;
-    this.selectCurrentUserClaimsSitesUpdate$.subscribe(x => {
+    this.sitesUpdateClaimSub$ = this.selectCurrentUserClaimsSitesUpdate$.subscribe(x => {
       if (x) {
         actionsAdded = true;
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
@@ -77,7 +79,7 @@ export class SitesComponent implements OnInit, OnDestroy {
         ];
       }
     });
-    this.selectCurrentUserCanDeleteSites$.subscribe(x => {
+    this.canDeleteSitesSub$ = this.selectCurrentUserCanDeleteSites$.subscribe(x => {
       if (x && !actionsAdded) {
         this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
           {

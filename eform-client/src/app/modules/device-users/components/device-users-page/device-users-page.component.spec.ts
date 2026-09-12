@@ -15,7 +15,7 @@ import {
   selectCurrentUserClaimsDeviceUsersUpdate,
   selectCurrentUserIsFirstUser,
 } from 'src/app/state/auth/auth.selector';
-import { MockMatMenuComponent, MockMtxGridComponent, MockTranslatePipe } from 'src/test-helpers';
+import { MockMatMenuComponent, MockMtxGridComponent, MockTranslatePipe, mockStoreSelectFrom } from 'src/test-helpers';
 
 interface AuthFixture {
   isFirstUser: boolean;
@@ -55,13 +55,12 @@ describe('DeviceUsersPageComponent', () => {
   // The component reads the store in its field initialisers, so the auth state has to be
   // in place before the component is created.
   function render(auth: AuthFixture, rows: Partial<SiteDto>[] = []): ComponentFixture<DeviceUsersPageComponent> {
-    const selected = new Map<unknown, unknown>([
+    mockStoreSelectFrom(mockStore, [
       [selectCurrentUserIsFirstUser, auth.isFirstUser],
       [selectCurrentUserClaimsDeviceUsersDelete, auth.deleteClaim],
       [selectCurrentUserClaimsDeviceUsersUpdate, auth.updateClaim ?? false],
       [selectCurrentUserClaimsDeviceUsersCreate, false],
     ]);
-    mockStore.select.mockImplementation((selector: unknown) => of(selected.get(selector)));
     mockDeviceUsersStateService.getDeviceUsersFiltered.mockReturnValue(of({ success: true, model: rows }));
 
     const fixture = TestBed.createComponent(DeviceUsersPageComponent);
