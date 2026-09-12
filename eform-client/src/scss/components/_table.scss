@@ -2,7 +2,8 @@
 @use '@angular/material' as mat;
 
 .mtx-grid {
-  max-height: 78.5vh;
+  // Hook: the new design's padded content card lowers it (_workspace-patterns.scss).
+  max-height: var(--mtx-grid-max-height, 78.5vh);
   border: var(--mtx-grid-border, 0) !important;
   border-radius: var(--mtx-grid-radius, 0) !important;
   outline: 1px solid rgba(255, 255, 255, 0.2);
