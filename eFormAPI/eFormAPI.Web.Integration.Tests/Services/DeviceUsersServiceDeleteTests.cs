@@ -94,6 +94,22 @@ namespace eFormAPI.Web.Integration.Tests.Services
         }
 
         [Test]
+        public async Task Delete_WithoutAUserIdAgainstAnEmptyUsersTable_IsRefusedWithoutReachingTheSdk()
+        {
+            // Arrange: no signed-in user (UserId 0) and no users, so GetFirstUserIdInDb is 0 too.
+            _userService.UserId.Returns(0);
+            _userService.GetFirstUserIdInDb().Returns(0);
+
+            // Act
+            var result = await _deviceUsersService.Delete(SiteId);
+
+            // Assert
+            Assert.That(result.Success, Is.False);
+            Assert.That(result.Message, Is.EqualTo("OnlyTheFirstUserCanDeleteWorkers"));
+            await _coreHelper.DidNotReceive().GetCore();
+        }
+
+        [Test]
         public async Task Delete_ByTheFirstUser_PassesTheCheckAndReachesTheSdk()
         {
             // Arrange

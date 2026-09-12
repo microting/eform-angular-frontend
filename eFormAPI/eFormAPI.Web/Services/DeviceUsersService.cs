@@ -274,8 +274,9 @@ public class DeviceUsersService(
     public async Task<OperationResult> Delete(int id)
     {
         // Only the first user (lowest AspNetUsers Id) may delete a device user; everyone
-        // else, admins included, is refused before the SDK is touched.
-        if (userService.UserId != await userService.GetFirstUserIdInDb())
+        // else, admins included, is refused before the SDK is touched. A caller without a
+        // user id is refused outright, so an empty users table (first id 0) cannot match.
+        if (userService.UserId <= 0 || userService.UserId != await userService.GetFirstUserIdInDb())
         {
             return new OperationResult(false,
                 localizationService.GetString("OnlyTheFirstUserCanDeleteWorkers"));
