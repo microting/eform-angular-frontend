@@ -39,8 +39,7 @@ export class AuthComponent implements OnInit {
   }
 
   private updateForgotPasswordFlag() {
-    this.onForgotPasswordPage = this.router.url.includes('reset-admin-password') ||
-      this.router.url.includes('restore-password-confirmation') ||
+    this.onForgotPasswordPage = this.router.url.includes('restore-password-confirmation') ||
       this.router.url.includes('restore-password');
   }
 

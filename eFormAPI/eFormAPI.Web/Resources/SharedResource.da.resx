@@ -533,6 +533,21 @@
   <data name="CantEditPrimaryAdminUser" xml:space="preserve">
     <value>Du kan ikke se, ændre eller slette primæradministrator</value>
   </data>
+  <data name="UseChangePasswordForYourOwnAccount" xml:space="preserve">
+    <value>Brug Skift adgangskode til at ændre din egen adgangskode</value>
+  </data>
+  <data name="YouMayOnlySetPasswordsForWorkers" xml:space="preserve">
+    <value>Du kan kun angive adgangskoder for medarbejdere</value>
+  </data>
+  <data name="OnlyAdminsCanAssignTheAdminRole" xml:space="preserve">
+    <value>Kun en administrator kan tildele administratorrollen</value>
+  </data>
+  <data name="YouCantChangeYourOwnPasswordOrGroupHere" xml:space="preserve">
+    <value>Du kan ikke angive din egen adgangskode eller ændre din egen sikkerhedsgruppe her</value>
+  </data>
+  <data name="YouCantSetPasswordForMorePrivilegedAccount" xml:space="preserve">
+    <value>Du kan ikke angive adgangskoden for en konto med rettigheder, du ikke selv har</value>
+  </data>
   <data name="CantUpdateRoleForPrimaryAdminUser" xml:space="preserve">
     <value>Det er ikke muligt at skifte rolle for primæradministrator</value>
   </data>

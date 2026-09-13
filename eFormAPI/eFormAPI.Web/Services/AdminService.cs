@@ -189,6 +189,13 @@ public class AdminService(
     {
         try
         {
+            // Only an admin may create an admin. Checked before any SDK or Identity work,
+            // so a refused request changes nothing.
+            if (userRegisterModel.Role == EformRole.Admin && !userService.IsAdmin())
+            {
+                return new OperationResult(false, localizationService.GetString("OnlyAdminsCanAssignTheAdminRole"));
+            }
+
             var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             if (userRegisterModel.Role != EformRole.Admin && userRegisterModel.Role != EformRole.User)
@@ -348,6 +355,32 @@ public class AdminService(
     {
         try
         {
+            // Only an admin may promote to admin — including promoting themselves.
+            var callerIsAdmin = userService.IsAdmin();
+            if (userRegisterModel.Role == EformRole.Admin && !callerIsAdmin)
+            {
+                return new OperationResult(false, localizationService.GetString("OnlyAdminsCanAssignTheAdminRole"));
+            }
+
+            // A non-admin editing their own account may change their profile, but not set a
+            // password without the current one, nor move themselves into another group.
+            if (!callerIsAdmin && userRegisterModel.Id == userService.UserId)
+            {
+                var settingPassword = !string.IsNullOrEmpty(userRegisterModel.Password)
+                                      && userRegisterModel.Password != " ";
+                var currentGroupId = await dbContext.SecurityGroupUsers
+                    .Where(x => x.EformUserId == userRegisterModel.Id)
+                    .Select(x => (int?)x.SecurityGroupId)
+                    .FirstOrDefaultAsync();
+                var changingGroup = userRegisterModel.GroupId.HasValue
+                                    && userRegisterModel.GroupId != currentGroupId;
+                if (settingPassword || changingGroup)
+                {
+                    return new OperationResult(false,
+                        localizationService.GetString("YouCantChangeYourOwnPasswordOrGroupHere"));
+                }
+            }
+
             var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             if (userRegisterModel.Id == 1 && userService.UserId != 1)
