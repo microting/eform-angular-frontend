@@ -28,6 +28,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Security;
 using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Infrastructure.Models.Settings;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
@@ -169,6 +170,7 @@ public class AccountController(
 
     [HttpPost]
     [Route("api/account/change-password-admin")]
+    [Authorize(Policy = AccountPolicies.SetOtherUsersPassword)]
     public async Task<OperationResult> ChangePasswordAdmin([FromBody] ChangePasswordAdminModel model)
     {
         if (!ModelState.IsValid)
@@ -194,14 +196,6 @@ public class AccountController(
         return new OperationResult(false);
     }
 
-
-    [HttpGet]
-    [AllowAnonymous]
-    [Route("api/account/reset-admin-password")]
-    public async Task<OperationResult> ResetAdminPassword(string code)
-    {
-        return await accountService.ResetAdminPassword(code);
-    }
 
     // POST: /account/reset-password
     [HttpPost]

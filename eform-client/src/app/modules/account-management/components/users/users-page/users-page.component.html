@@ -103,6 +103,7 @@
         <button
           mat-menu-item
           id="userAdministrationResetPasswordBtn-{{i}}"
+          *ngIf="selectCurrentUserClaimsUsersUpdate$ | async"
           (click)="openSetPasswordModal(row)"
         >
           <mat-icon color="primary">vpn_key</mat-icon>
