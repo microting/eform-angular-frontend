@@ -51,6 +51,27 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     });
   const siteRowFirstCell = () => siteRow().locator('td.mat-mdc-cell').first();
   const siteRowActionBtn = () => siteRow().locator('[id^="action-items-"] #actionMenu');
+  // The Device Users row of the user created in beforeAll.
+  const deviceUserRow = () => page.locator('tbody > tr', { hasText: firstName });
+
+  // Appends stand-in markup to the content card while `assertions` run, then
+  // removes it, so fixtures never leak into later tests.
+  const withContentCardFixture = async (html: string, assertions: () => Promise<void>) => {
+    await page.evaluate((markup) => {
+      const template = document.createElement('template');
+      template.innerHTML = markup;
+      Array.from(template.content.children).forEach((el) => el.setAttribute('data-e2e-fixture', ''));
+      document.querySelector('.content-card')?.append(template.content);
+    }, html);
+    try {
+      await assertions();
+    } finally {
+      await page.evaluate(() => document.querySelectorAll('[data-e2e-fixture]').forEach((el) => el.remove()));
+    }
+  };
+  // A hand-written one-row table (no .mdc-data-table__row), like the legacy grids.
+  const matTable = (cells: string) =>
+    `<table class="mat-mdc-table"><tbody><tr class="mat-mdc-row">${cells}</tr></tbody></table>`;
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
@@ -66,7 +87,7 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     await deviceUsersPage.newDeviceUserBtn().waitFor({ state: 'visible', timeout: 40000 });
     await deviceUsersPage.createNewDeviceUser(firstName, lastName);
     deviceUserCreated = true;
-    await expect(page.locator('tbody > tr', { hasText: firstName })).toBeVisible({ timeout: 40000 });
+    await expect(deviceUserRow()).toBeVisible({ timeout: 40000 });
     await myEformsPage.Navbar.goToSites();
     await siteRow().waitFor({ state: 'visible', timeout: 40000 });
   });
@@ -87,8 +108,7 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
         await deviceUsersPage.newDeviceUserBtn().waitFor({ state: 'visible', timeout: 40000 });
         // Let the list load before looking the user up; if its creation never
         // completed there is no row, and the lookup below finds nothing to delete.
-        await page
-          .locator('tbody > tr', { hasText: firstName })
+        await deviceUserRow()
           .waitFor({ state: 'visible', timeout: 40000 })
           .catch(() => undefined);
         const deviceUser = await deviceUsersPage.getDeviceUserByName(firstName);
@@ -132,7 +152,33 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     await expect(td).toHaveCSS('padding-left', '16px');
     await expect(td).toHaveCSS('vertical-align', 'middle');
 
+    // The frame's bottom edge is the only line under the last row.
+    const lastRowFirstCell = grid().locator('tbody > tr').last().locator('td').first();
+    await expect(lastRowFirstCell).toHaveCSS('border-bottom-style', 'none');
+
     await expect(grid()).toHaveCSS('border-top-left-radius', '8px');
+    // width: 100% + the 1px frame must not overflow the container.
+    await expect(grid()).toHaveCSS('box-sizing', 'border-box');
+
+    // The right-pinned actions header keeps the --bg header tint (#f8fafd),
+    // even against a plugin-style `:host ::ng-deep … th` paint (0,3,1).
+    const pinnedActionsHeader = grid().locator('thead tr th').last();
+    await expect(pinnedActionsHeader).toHaveClass(/\bmat-table-sticky-right\b/);
+    await expect(pinnedActionsHeader).toHaveCSS('background-color', 'rgb(248, 250, 253)');
+    const pluginPaintSelector = '.mtx-grid .mat-mdc-header-row th.mat-table-sticky-right';
+    await page.evaluate((selector) => {
+      const style = document.createElement('style');
+      style.id = 'e2e-plugin-pinned-paint';
+      style.textContent = `${selector} { background: rgb(255, 0, 0) !important; }`;
+      document.head.appendChild(style);
+    }, pluginPaintSelector);
+    try {
+      // Positive control: the injected paint really targets this cell.
+      expect(await pinnedActionsHeader.evaluate((el, s) => el.matches(s), pluginPaintSelector)).toBe(true);
+      await expect(pinnedActionsHeader).toHaveCSS('background-color', 'rgb(248, 250, 253)');
+    } finally {
+      await page.evaluate(() => document.getElementById('e2e-plugin-pinned-paint')?.remove());
+    }
   });
 
   test('new design lays out the content card and sub-header', async () => {
@@ -140,6 +186,51 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     await expect(contentCard).toHaveCSS('padding-left', '24px');
     await expect(contentCard).toHaveCSS('padding-right', '24px');
     await expect(page.locator('app-sites .eform-sub-header')).toHaveCSS('padding-left', '0px');
+  });
+
+  test('new design keeps the content card flush around full-bleed views', async () => {
+    const contentCard = page.locator('.content-card').first();
+    // Stand-in for the backend-configuration calendar's root.
+    await withContentCardFixture('<div class="calendar-shell"></div>', async () => {
+      await expect(contentCard).toHaveCSS('padding-left', '0px');
+      await expect(contentCard).toHaveCSS('padding-top', '0px');
+    });
+    await expect(contentCard).toHaveCSS('padding-left', '24px');
+  });
+
+  test('new design keeps time-planning grid dividers off the frame edges', async () => {
+    // Stand-in for the time-planning week grid: day cells carry the status
+    // classes that styles.scss gives !important right/bottom borders.
+    const dayCell = '<td class="mat-mdc-cell white-background">day</td>';
+    await withContentCardFixture(
+      `<div class="mtx-grid time-dashboard" id="e2e-time-dashboard">${matTable(dayCell + dayCell)}</div>`,
+      async () => {
+        const cells = page.locator('#e2e-time-dashboard td');
+        // Day divider between cells, in the row-separator colour.
+        await expect(cells.first()).toHaveCSS('border-right-style', 'solid');
+        await expect(cells.first()).toHaveCSS('border-right-color', 'rgb(225, 231, 239)');
+        // None against the frame's right and bottom edges.
+        await expect(cells.last()).toHaveCSS('border-right-style', 'none');
+        await expect(cells.last()).toHaveCSS('border-bottom-style', 'none');
+      }
+    );
+  });
+
+  test('new design drops mtx dividers after left-pinned columns except on the time-planning grid', async () => {
+    // Stand-ins for a grid with left-pinned columns (compliance report,
+    // working hours) and the time-planning week grid. mtx-grid's global
+    // styles are loaded by the Sites grid on this page.
+    const pinnedCells = matTable(
+      '<td class="mat-mdc-cell mat-table-sticky-left">a</td><td class="mat-mdc-cell">b</td>'
+    );
+    await withContentCardFixture(
+      `<div class="mtx-grid" id="e2e-pinned-left">${pinnedCells}</div>` +
+        `<div class="mtx-grid time-dashboard" id="e2e-pinned-left-tp">${pinnedCells}</div>`,
+      async () => {
+        await expect(page.locator('#e2e-pinned-left td').first()).toHaveCSS('border-right-style', 'none');
+        await expect(page.locator('#e2e-pinned-left-tp td').first()).toHaveCSS('border-right-style', 'solid');
+      }
+    );
   });
 
   test('new design uses a compact row action button and keeps the row lit while its menu is open', async () => {

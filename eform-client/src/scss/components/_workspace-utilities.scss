@@ -630,7 +630,7 @@ body.theme-workspace {
   //    Native data tables mirror the mat-table look in
   //    _workspace-mat-overrides.scss (Tables): the DS hooks, Bootstrap
   //    `.table`, hand-written `table.mat-table` markup (legacy classes the
-  //    .mat-mdc-* rules miss) and plugin `table.data`. Row-action icon
+  //    .mat-mdc-* rules miss) and plugin `table.data`. Body-cell icon
   //    button sizing and the open-menu trigger colour live there too.
   //    Deliberately not matched: mat-datepicker's `.mat-calendar-table` and
   //    key/value layout tables such as `.summary-table`.
@@ -647,7 +647,7 @@ body.theme-workspace {
     max-height: 220px;
     overflow: auto;
     border: 1px solid var(--md-surface-variant);
-    border-radius: 8px;
+    border-radius: var(--radius-lg, 8px);
     background: var(--md-surface-container);
     table {
       margin: 0;
@@ -667,7 +667,7 @@ body.theme-workspace {
     // already draws one. `clip` keeps the sticky header working.
     &:not(.mtx-grid table):not(.table-scroll table) {
       border: 1px solid var(--md-surface-variant);
-      border-radius: 8px;
+      border-radius: var(--radius-lg, 8px);
       overflow: clip;
     }
 
