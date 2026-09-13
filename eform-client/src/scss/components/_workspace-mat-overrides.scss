@@ -938,7 +938,7 @@ body.theme-workspace {
   // - Body: 12px/16px cells, content-height rows, surface-variant separators,
   //   no separator under the last row
   // - Row hover --ws-table-row-hover; a row stays lit while its menu is open
-  // - Row-action icon buttons shrink to 32px inside cells
+  // - Icon buttons inside body cells shrink to 32px
 
   // --table-row-hover equals --md-surface-container in dark (#1e1f20), so a
   // hover on it would be invisible; dark mode gets a 4% on-surface lift.
@@ -961,11 +961,14 @@ body.theme-workspace {
     // _table.scss and styles.scss draw the host frame from these hooks with
     // !important; re-point the hooks instead of out-shouting those rules.
     --mtx-grid-border: 1px solid var(--md-surface-variant);
-    --mtx-grid-radius: 8px;
+    --mtx-grid-radius: var(--radius-lg, 8px);
     // mtx-grid's own [rowHover] rule out-specifies ours; feed it our colour.
     --mtx-grid-table-row-hover-background-color: var(--ws-table-row-hover);
     display: flex;
     flex-direction: column;
+    // mtx sets the host `width: 100%`; content-box would add the frame's
+    // 2px on top, and an `overflow: hidden` parent clips the right edge.
+    box-sizing: border-box;
     background: var(--md-surface-container);
     overflow: hidden;
 
@@ -974,6 +977,15 @@ body.theme-workspace {
       border-bottom: 1px solid var(--md-surface-variant);
       background: var(--md-surface-container);
     }
+  }
+
+  // The grid's scroller gets a thin themed scrollbar. Setting scrollbar-color
+  // makes Chrome 121+ skip the global black-track ::-webkit-scrollbar
+  // (styles.scss). scrollbar-color inherits (scrollbar-width doesn't), so
+  // scroll areas inside cells get the themed colours at default width.
+  .mtx-grid .mat-table-container {
+    scrollbar-width: thin;
+    scrollbar-color: var(--state-scrollbar-thumb) transparent;
   }
 
   // Content-height rows. Set on the rows rather than via Material's
@@ -997,7 +1009,7 @@ body.theme-workspace {
   // sticky header still sticks to the real scroller.
   .mat-mdc-table:not(.mtx-grid .mat-mdc-table) {
     border: 1px solid var(--md-surface-variant);
-    border-radius: 8px;
+    border-radius: var(--radius-lg, 8px);
     overflow: clip;
   }
 
@@ -1011,6 +1023,13 @@ body.theme-workspace {
   .mtx-grid .mat-mdc-header-cell,
   .mtx-grid .mat-mdc-cell {
     border-bottom-color: var(--md-surface-variant) !important;
+  }
+
+  // Material drops the last row's separator only on `.mdc-data-table__row`;
+  // hand-written mat-mdc-table markup (property-areas-edit modal) lacks that
+  // class. The !important rules above set the colour only, so `none` wins.
+  .mat-mdc-table tbody > tr:last-child > .mat-mdc-cell {
+    border-bottom: none;
   }
 
   // The divider under the header is the header cells' own bottom border,
@@ -1078,6 +1097,34 @@ body.theme-workspace {
     text-transform: none;
   }
 
+  // Time-planning planning grid. Its ViewEncapsulation.None component styles
+  // box every header cell (`.time-dashboard table tr th`, 0,1,3) and draw
+  // --tp-border day dividers; styles.scss and mtx-grid's pinned-column rule
+  // recolour them. Header: tint + the bottom line only. Body: keep the day
+  // dividers in the row-separator colour, none against the frame's edges.
+  // !important where styles.scss's unscoped rules use it: the border colour,
+  // and the day cells' `.white-/.grey-/.green-/.red-background` classes, which
+  // force border-right and border-bottom.
+  .mtx-grid.time-dashboard {
+    .mat-mdc-header-row .mat-mdc-header-cell {
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    .mat-mdc-cell {
+      border-right-color: var(--md-surface-variant) !important;
+    }
+
+    .mat-mdc-cell:last-child {
+      border-right: none !important;
+    }
+
+    tbody > tr:last-child > .mat-mdc-cell {
+      border-bottom: none !important;
+    }
+  }
+
   // time-planning break-policy rules: the table now draws its own frame, so
   // drop the wrapper's to avoid a double border. !important: the component's
   // emulated-encapsulation rule (an _ngcontent attribute on both parts,
@@ -1091,10 +1138,15 @@ body.theme-workspace {
   // cells. Header cells take the header tint; body cells inherit the row's
   // background, so hover, menu-open, selected and status-coloured rows all
   // carry across without per-state rules. !important beats styles.scss's
-  // unscoped `.mtx-grid .mat-table-sticky-left` background.
-  th.mat-table-sticky-left,
-  th.mat-table-sticky-right,
-  th.mat-mdc-table-sticky-border-elem-right {
+  // unscoped `.mtx-grid .mat-table-sticky-left` background. The header
+  // selector is row-qualified (0,4,2) so a plugin's `:host ::ng-deep … th`
+  // paint (0,3,1) can't un-tint it; the body rule stays low on purpose —
+  // plugin row states like `tr.highlighted > td` rely on beating it.
+  .mat-mdc-table .mat-mdc-header-row > th:is(
+    .mat-table-sticky-left,
+    .mat-table-sticky-right,
+    .mat-mdc-table-sticky-border-elem-right
+  ) {
     background-color: var(--bg) !important;
   }
 
@@ -1102,6 +1154,13 @@ body.theme-workspace {
   td.mat-table-sticky-right,
   td.mat-mdc-table-sticky-border-elem-right {
     background-color: inherit !important;
+  }
+
+  // mtx draws a divider after every left-pinned column; the new design has
+  // no vertical dividers. The time-planning week grid keeps its pale one
+  // (recoloured in the .time-dashboard block above).
+  .mtx-grid:not(.time-dashboard) .mat-table-sticky-left {
+    border-right: none;
   }
 
   // Right-pinned actions column: drop the legacy left border + shadow.
@@ -1113,9 +1172,10 @@ body.theme-workspace {
     box-shadow: none !important;
   }
 
-  // Row-action icon buttons inside body cells (mat and native tables):
-  // compact 32px target with a 20px glyph. Icon buttons elsewhere keep the
-  // 42px default above, and the no-halo tokens carry over from it.
+  // Every icon button inside a body cell (mat and native tables), not only
+  // row actions: compact 32px target with a 20px glyph. Icon buttons
+  // elsewhere keep the 42px default above, and the no-halo tokens carry over
+  // from it.
   // .small-icon-btn (shared-tags) sizes itself to 28px; leave it alone.
   td .mat-mdc-icon-button:not(.small-icon-btn),
   .mat-mdc-cell .mat-mdc-icon-button:not(.small-icon-btn) {
