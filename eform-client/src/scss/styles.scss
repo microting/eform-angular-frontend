@@ -357,6 +357,355 @@ body.theme-eform {
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Time planning: reconciled ("Afstemt") day lock. Plugin templates:
+   time-plannings-table, time-plannings-container, workday-entity-dialog.
+
+   Four independent channels carry the state (texture, glyph, cursor and tooltip
+   text), so colour is never load-bearing. The 3px right border on a reconciled
+   cell draws the staircase boundary down the grid.
+
+   Theme-agnostic on purpose: body.theme-eform rules do not apply under
+   body.theme-workspace, and these must read on both. Dark mode in this app is the
+   body.theme-dark class (full-layout.component.ts), not an OS/media-query signal.
+   Palette: no yellow outline (.highlight-cell) and no blue (.setting-ico.active).
+
+   F20: an older sealed day (reconciled === true but date < lockedThrough) gets
+   `.locked-background` (hatch, dim, cursor not-allowed) plus a `.tp-seal` icon
+   placed in `.plan-icons` — never `.reconciled-background`, which is reserved for
+   the single boundary day (date === lockedThrough) and is what draws the 3px
+   border. The two classes are independent: `.locked-background` never adds a
+   border, and `.tp-seal`'s filled-icon rule is unscoped, so the seal renders the
+   same whether the cell is locked-only or the boundary. No extra class was needed
+   to express "locked with a seal, no border".
+   --------------------------------------------------------------------------- */
+:root {
+  --tp-locked-bg: #E4E7E4;
+  --tp-locked-hatch: rgba(22, 33, 30, 0.055);
+  --tp-preview-hatch: rgba(47, 93, 80, 0.16);
+  --tp-seal-ink: #2F5D50;
+}
+
+body.theme-dark {
+  --tp-locked-bg: #262B29;
+  --tp-locked-hatch: rgba(230, 234, 232, 0.06);
+  --tp-preview-hatch: rgba(127, 209, 185, 0.18);
+  --tp-seal-ink: #7FD1B9;
+}
+
+// A mixin, not a custom property holding the gradient. A custom property that
+// contains var() is resolved where it is declared (:root), so the body.theme-dark
+// hatch override would never reach it.
+@mixin tp-locked-texture {
+  background: repeating-linear-gradient(135deg,
+      var(--tp-locked-hatch) 0 2px, transparent 2px 6px),
+      var(--tp-locked-bg) !important;
+}
+
+// Shared by every quiet seal-coloured icon (.tp-lock-legend__swatch,
+// .tp-reconcile-scope, .tp-footer-status): undo .neutral-icon's own
+// `position: relative; top: 5px` baseline nudge (:678, still !important there)
+// and tint the glyph in the seal ink instead of its usual colour.
+@mixin tp-seal-neutral-icon {
+  top: 0 !important;
+  color: var(--tp-seal-ink) !important;
+}
+
+/* Fix-round 1 (reviewer): Task 9's getCellClass returns "<base> locked-background"
+   / "<base> reconciled-background", so BOTH land on the same <td> as the four
+   existing state classes (.grey-/.white-/.green-/.red-background, bare rules at
+   :196-211/:239-254/:280-295/:320-335). Those bare rules paint the <td>'s own
+   background, 5px padding and border-radius, not just .plan-container — without a
+   matching bare rule here, the state colour keeps showing through the padding
+   ring around every locked/reconciled cell, which makes colour load-bearing again.
+   Same specificity (0,1,0) as the four bare rules and placed after them in the
+   file, so with matching !important these win the cascade on every property they
+   touch, on the same <td>. */
+.locked-background {
+  @include tp-locked-texture;
+  padding: 5px !important;
+  border-radius: var(--rounded-2, 2px) !important;
+}
+
+.reconciled-background {
+  background: var(--tp-locked-bg) !important;
+  padding: 5px !important;
+  border-radius: var(--rounded-2, 2px) !important;
+  /* The seal's 3px line lives solely on .plan-container below, so this cell must
+     draw NO border-right of its own — otherwise the four bare rules' own
+     `border-right: 1px solid var(--border) !important` (:200/:245/:284/:325)
+     would still paint a second, thinner line at the td's outer edge. `style: none`
+     always suppresses rendering regardless of colour, so this is safe even where
+     theme-workspace's `.mtx-grid.time-dashboard .mat-mdc-cell { border-right-color:
+     var(--md-surface-variant) !important }` (_workspace-mat-overrides.scss, higher
+     specificity at 0,4,1) wins the color longhand: it never gets a style to paint. */
+  border-right: none !important;
+}
+
+.locked-background .plan-container {
+  @include tp-locked-texture;
+  /* Beats the shared `.plan-container, .progress-container { cursor: pointer }`
+     rule by specificity. Scoped by .locked-background, so the avatar and progress
+     circle are unaffected. */
+  cursor: not-allowed !important;
+}
+
+.reconciled-background .plan-container {
+  background: var(--tp-locked-bg) !important;
+  /* No competing border-right targets .plan-container anywhere in styles.scss or
+     _workspace-mat-overrides.scss (checked by grep) — only the <td>-level bare
+     rules above and the .mat-mdc-cell rule do, and neither reaches this element —
+     so no !important is needed to win here. */
+  border-right: 3px solid var(--tp-seal-ink);
+  cursor: default !important;
+}
+
+/* The state classes (green, red, grey, white) hard-code a text colour for their own
+   light grounds, on .plan-text and on the container itself, which .comment
+   inherits. On the neutral lock ground that colour is decoration, and in dark mode
+   #0F1316 on --tp-locked-bg cannot be read. Same specificity as the state rules and
+   later in the file, so these win. */
+.locked-background .plan-container,
+.reconciled-background .plan-container {
+  color: var(--tp-text) !important;
+
+  .plan-text,
+  .plan-text strong,
+  .plan-text span,
+  .plan-text mat-icon,
+  .comment {
+    color: var(--tp-text) !important;
+  }
+}
+
+/* Dimmed, not hidden: people read closed days constantly. The glyph is excluded,
+   so the one element that explains the dimming is not dimmed with it. */
+.locked-background .plan-content > :not(.tp-day-glyph) {
+  opacity: 0.72;
+}
+
+/* Glyphs (9A). The lock is the last child of .plan-content; a flex column plus
+   margin-top:auto puts it bottom-left. The seal is the last .plan-icons item,
+   top-right. Neither is absolutely positioned: .neutral-icon forces
+   position:relative and top:5px with !important. */
+.locked-background .plan-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.tp-day-glyph {
+  display: inline-flex;
+  align-self: flex-start;
+
+  mat-icon {
+    color: var(--tp-seal-ink) !important;
+  }
+}
+
+.tp-day-glyph--lock {
+  margin-top: auto;
+}
+
+/* The filled seal, on every theme. Outlined is loaded with FILL fixed at 0
+   (index.html), and body.theme-workspace forces every .mat-icon onto Outlined with
+   !important (_workspace-mat-overrides.scss). At (0,4,1) this beats that rule's
+   (0,3,1) whatever the source order. */
+body .mat-icon.material-symbols-rounded.filled.tp-seal {
+  font-family: 'Material Symbols Rounded' !important;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24 !important;
+}
+
+/* Legend under the grid (9A). Shown only while a locked day is on screen. */
+.tp-lock-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 8px;
+  padding: 8px 4px;
+  color: var(--tp-text);
+  font-size: 13px;
+}
+
+.tp-lock-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tp-lock-legend__swatch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 22px;
+  border: 1px solid var(--tp-border);
+  border-radius: 3px;
+
+  .neutral-icon {
+    @include tp-seal-neutral-icon;
+    font-size: 16px !important;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.tp-lock-legend__swatch--locked {
+  @include tp-locked-texture;
+}
+
+.tp-lock-legend__swatch--reconciled {
+  background: var(--tp-locked-bg);
+  box-shadow: inset -3px 0 0 var(--tp-seal-ink);
+}
+
+/* Clickable header of a past day column (12A). It only starts a preview, so the
+   affordance stays quiet: a dotted underline on hover or keyboard focus. */
+.tp-day-header-btn {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline dotted transparent;
+  text-underline-offset: 3px;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration-color: var(--tp-seal-ink);
+  }
+}
+
+/* Bulk reconcile preview (12A): what WILL lock, drawn in place before the commit.
+   Dashed because it is not true yet. It is layered over the cell's own state colour
+   (background-image only), so the day stays recognisable underneath. Same
+   specificity as `.X-background .plan-container`, placed later, so it wins. */
+.plan-container.tp-preview-lock {
+  background-image: repeating-linear-gradient(135deg,
+      var(--tp-preview-hatch) 0 2px, transparent 2px 6px) !important;
+  outline: 2px dashed var(--tp-seal-ink);
+  outline-offset: -3px;
+}
+
+.plan-container.tp-preview-boundary {
+  box-shadow: inset -3px 0 0 var(--tp-seal-ink);
+}
+
+.plan-container.tp-preview-skip {
+  opacity: 0.55;
+}
+
+.tp-preview-skip-label {
+  display: inline-block;
+  margin-top: 2px;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: var(--tp-locked-bg);
+  color: var(--tp-text);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Bulk reconcile scope bar (12A), between the toolbar and the grid. */
+.tp-reconcile-scope {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--tp-border);
+  border-left: 3px solid var(--tp-seal-ink);
+  border-radius: 8px;
+  background: var(--tp-td-bg);
+  color: var(--tp-text);
+
+  .neutral-icon {
+    @include tp-seal-neutral-icon;
+  }
+}
+
+.tp-reconcile-scope__text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Bulk selection column (12A). mtx-grid puts its checkbox column in front of the
+   pinned Name column but never makes it sticky, so on a sideways scroll the
+   checkboxes would slide under Name. Pin it too, and move Name right by its width.
+   Unpinning Name instead was rejected: in a wide grid, Name is the only thing that
+   says whose row a cell belongs to. */
+.time-dashboard {
+  --tp-select-col-width: 60px; /* mtx-grid's own .mtx-grid-checkbox-cell width */
+
+  th.mtx-grid-checkbox-cell,
+  td.mtx-grid-checkbox-cell {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    box-sizing: border-box;
+    width: var(--tp-select-col-width);
+    min-width: var(--tp-select-col-width);
+    max-width: var(--tp-select-col-width);
+    background: var(--tp-td-bg, #FFF);
+  }
+
+  /* CDK and mtx-grid write an inline left:0 on the sticky Name cells. A stylesheet
+     !important beats a non-important inline style. */
+  .mat-column-siteName.mat-table-sticky-left {
+    left: var(--tp-select-col-width) !important;
+  }
+}
+
+/* Day dialog footer (11A, 11B). It morphs in place between modes. */
+.tp-dialog-footer {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tp-footer-status,
+.tp-footer-confirm,
+.tp-footer-note {
+  flex: 1 1 auto;
+  color: var(--tp-text);
+}
+
+.tp-footer-status {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .neutral-icon {
+    @include tp-seal-neutral-icon;
+  }
+}
+
+.tp-footer-note {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.tp-unlock-word {
+  width: 12ch;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--tp-border);
+  border-radius: var(--rounded-full);
+  background: var(--tp-td-bg);
+  color: var(--tp-text);
+  font: inherit;
+  letter-spacing: 0.08em;
+  text-transform: uppercase; /* display only; the comparison ignores case */
+}
+
 .plan-container, .progress-container {
   cursor: pointer !important;
 }
