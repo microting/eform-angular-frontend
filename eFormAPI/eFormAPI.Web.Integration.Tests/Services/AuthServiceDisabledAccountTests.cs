@@ -84,8 +84,8 @@ namespace eFormAPI.Web.Integration.Tests.Services
             // The substitute echoes the key back, so an assertion naming the key proves the
             // localised resource is used rather than a hard-coded literal.
             localizationService.GetString(Arg.Any<string>()).Returns(args => args.Arg<string>());
-            // A signing key so the "not refused" test can get as far as minting a token;
-            // the value is irrelevant, only that token generation does not throw.
+            // A signing key, so the successful-login test can get as far as minting a
+            // token. The value is irrelevant, only that token generation does not throw.
             tokenOptions.Value.Returns(new EformTokenOptions
             {
                 SigningKey = "test-signing-key-that-is-long-enough-for-hmac-sha256",

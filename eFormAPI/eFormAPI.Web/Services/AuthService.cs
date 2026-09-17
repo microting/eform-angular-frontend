@@ -74,7 +74,9 @@ public class AuthService(
         var user = await userService.GetByUsernameAsync(model.Username);
 
         if (user == null)
+        {
             return InvalidCredentialsResult<EformAuthorizeResult>();
+        }
 
         var signInResult =
             await signInManager.CheckPasswordSignInAsync(user, model.Password, true);
@@ -85,7 +87,9 @@ public class AuthService(
         // wrong password takes tens of milliseconds - a timing oracle. It also keeps
         // lockout counting identical for disabled accounts; see InvalidCredentialsResult.
         if (!user.IsActive)
+        {
             return InvalidCredentialsResult<EformAuthorizeResult>();
+        }
 
         if (!signInResult.Succeeded && !signInResult.RequiresTwoFactor)
         {
@@ -179,7 +183,9 @@ public class AuthService(
         // 24h token from any still-valid one, so without the IsActive check a disabled
         // account could roll its session forward indefinitely.
         if (user == null || !user.IsActive)
+        {
             return InvalidCredentialsResult<EformAuthorizeResult>();
+        }
 
         var token = await GenerateToken(user);
         var roleList = await userManager.GetRolesAsync(user);
