@@ -183,16 +183,20 @@ namespace eFormAPI.Web.Integration.Tests.Services
         }
 
         [Test]
-        public async Task AuthenticateUser_LockedOut_KeepsItsOwnMessage()
+        public async Task AuthenticateUser_LockedOut_GivesTheSameAnswerAsAnUnknownAccount()
         {
             GivenUser(User(isActive: true));
             GivenSignInResult(SignInResult.LockedOut);
+            var lockedOut = await _authService.AuthenticateUser(Login());
 
-            var result = await _authService.AuthenticateUser(Login());
+            GivenUser(null);
+            var unknown = await _authService.AuthenticateUser(Login());
 
-            Assert.That(result.Success, Is.False);
-            Assert.That(result.Message, Is.Not.EqualTo(GenericMessageKey),
-                "lockout is temporary and self-resolving, so it keeps a message users can act on");
+            // Only an existing, active account can reach lockout, so a distinct message
+            // here would tell an anonymous caller that an address has a live account.
+            Assert.That(lockedOut.Message, Is.EqualTo(unknown.Message),
+                "a locked-out account must not be distinguishable from one that does not exist");
+            Assert.That(lockedOut.Message, Is.EqualTo(GenericMessageKey));
         }
 
         [Test]
@@ -211,13 +215,17 @@ namespace eFormAPI.Web.Integration.Tests.Services
         }
 
         [Test]
-        public async Task AuthenticateUser_DisabledAccount_IsRefusedBeforeThePasswordIsChecked()
+        public async Task AuthenticateUser_DisabledAccount_StillVerifiesThePasswordFirst()
         {
             GivenUser(User(isActive: false));
+            GivenSignInResult(SignInResult.Success);
 
             await _authService.AuthenticateUser(Login());
 
-            await _signInManager.DidNotReceive().CheckPasswordSignInAsync(
+            // Refusing before the hash would answer faster than a wrong password does,
+            // which is a timing oracle, and would also exempt disabled accounts from
+            // lockout counting.
+            await _signInManager.Received().CheckPasswordSignInAsync(
                 Arg.Any<EformUser>(), Arg.Any<string>(), Arg.Any<bool>());
         }
 
