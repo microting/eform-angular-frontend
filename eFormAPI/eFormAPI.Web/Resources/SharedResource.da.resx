@@ -324,7 +324,7 @@
     <value>Fejl under oprettelse af enhed</value>
   </data>
   <data name="UserNameOrPasswordIncorrect" xml:space="preserve">
-    <value>Brugernavn eller adgangskode er forkert</value>
+    <value>Du har indtastet et ugyldigt brugernavn eller adgangskode</value>
   </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>Bruger ikke fundet</value>
