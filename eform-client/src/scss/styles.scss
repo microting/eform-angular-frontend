@@ -634,9 +634,14 @@ body .mat-icon.material-symbols-rounded.filled.tp-seal {
 
 /* Bulk selection column (12A). mtx-grid puts its checkbox column in front of the
    pinned Name column but never makes it sticky, so on a sideways scroll the
-   checkboxes would slide under Name. Pin it too, and move Name right by its width.
+   checkboxes would slide under Name. Pin it too, and move Name right by its width
+   when that column is present (see below — it is rendered only for some users).
    Unpinning Name instead was rejected: in a wide grid, Name is the only thing that
-   says whose row a cell belongs to. */
+   says whose row a cell belongs to.
+
+   The checkbox rule below needs no such guard: it targets the checkbox cell itself,
+   so when the column is absent it simply matches nothing. Only the Name offset needed
+   one, because it targets a different element than the one whose existence is in doubt. */
 .time-dashboard {
   --tp-select-col-width: 60px; /* mtx-grid's own .mtx-grid-checkbox-cell width */
 
@@ -652,9 +657,26 @@ body .mat-icon.material-symbols-rounded.filled.tp-seal {
     background: var(--tp-td-bg, #FFF);
   }
 
-  /* CDK and mtx-grid write an inline left:0 on the sticky Name cells. A stylesheet
-     !important beats a non-important inline style. */
-  .mat-column-siteName.mat-table-sticky-left {
+  /* Offset Name by the checkbox column's width — but ONLY in rows that actually have
+     a checkbox cell. mtx-grid renders that column when rowSelectable is true and
+     hideRowSelectionCheckbox is not set; the timeplanning plugin binds rowSelectable
+     to isFirstUser, so every other user gets no checkbox cell. Offsetting regardless
+     left those users a 60px strip at the left edge that scrolled cells slid through.
+
+     The :has() is the condition itself — this row has a checkbox cell — rather than a
+     proxy for it, and it is scoped to the row so it cannot be satisfied by some other
+     grid on the page. Header, body and footer rows are all covered: the checkbox
+     column renders a th/td/td and the data columns render alongside it in the same row.
+
+     Both the CDK's StickyStyler and mtx-grid write a non-important inline left:0 here,
+     because neither counts the checkbox column — it is never marked [sticky], so the
+     CDK skips its width and mtx-grid's own _countPinnedPosition never sees it at all.
+     A stylesheet !important beats both. (mat-table-sticky-left is mtx-grid's own class
+     despite the mat- prefix; the CDK's is cdk-table-sticky.)
+
+     siteName is the only pinned-left column today. A second one would land 60px too
+     far left for the same reason and would need the same override. */
+  tr:has(> .mtx-grid-checkbox-cell) > .mat-column-siteName.mat-table-sticky-left {
     left: var(--tp-select-col-width) !important;
   }
 }
