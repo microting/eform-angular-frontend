@@ -382,7 +382,7 @@
     <value>Error while creating unit</value>
   </data>
   <data name="UserNameOrPasswordIncorrect" xml:space="preserve">
-    <value>Username or password is incorrect</value>
+    <value>You have entered an invalid username or password</value>
   </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>User not found</value>

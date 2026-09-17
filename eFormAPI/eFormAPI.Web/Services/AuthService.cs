@@ -72,23 +72,26 @@ public class AuthService(
             return new OperationDataResult<EformAuthorizeResult>(false, "Empty username or password");
 
         var user = await userService.GetByUsernameAsync(model.Username);
-        if (user == null)
-            return new OperationDataResult<EformAuthorizeResult>(false,
-                $"User with username {model.Username} not found");
+
+        // A disabled account is refused exactly like one that does not exist - see
+        // InvalidCredentialsResult.
+        if (user == null || !user.IsActive)
+            return InvalidCredentialsResult<EformAuthorizeResult>();
 
         var signInResult =
             await signInManager.CheckPasswordSignInAsync(user, model.Password, true);
 
         if (!signInResult.Succeeded && !signInResult.RequiresTwoFactor)
         {
+            // Lockout keeps its own message: it is temporary and self-resolving, so the user
+            // needs to know to come back, and it reveals nothing the generic message hides.
             if (signInResult.IsLockedOut)
             {
                 return new OperationDataResult<EformAuthorizeResult>(false,
                     "Locked Out. Please, try again after 10 min");
             }
 
-            // Credentials are invalid, or account doesn't exist
-            return new OperationDataResult<EformAuthorizeResult>(false, "Incorrect password.");
+            return InvalidCredentialsResult<EformAuthorizeResult>();
         }
 
         // Confirmed email check
@@ -173,9 +176,12 @@ public class AuthService(
     public async Task<OperationDataResult<EformAuthorizeResult>> RefreshToken()
     {
         var user = await userService.GetByIdAsync(userService.UserId);
-        if (user == null)
-            return new OperationDataResult<EformAuthorizeResult>(false,
-                $"User with id {userService.UserId} not found");
+
+        // Refusing here matters as much as refusing at login: this endpoint mints a fresh
+        // 24h token from any still-valid one, so without the IsActive check a disabled
+        // account could roll its session forward indefinitely.
+        if (user == null || !user.IsActive)
+            return InvalidCredentialsResult<EformAuthorizeResult>();
 
         var token = await GenerateToken(user);
         var roleList = await userManager.GetRolesAsync(user);
@@ -409,10 +415,12 @@ public class AuthService(
     {
         // try to sign in with user credentials
         var user = await userManager.FindByNameAsync(loginModel.Username);
-        if (user == null)
+
+        // This endpoint is anonymous and confirms a username/password pair, so a disabled
+        // account has to be refused here too, or it stays a working credential oracle.
+        if (user == null || !user.IsActive)
         {
-            return new OperationDataResult<GoogleAuthenticatorModel>(false,
-                localizationService.GetString("UserNameOrPasswordIncorrect"));
+            return InvalidCredentialsResult<GoogleAuthenticatorModel>();
         }
 
         var signInResult =
@@ -426,9 +434,7 @@ public class AuthService(
                     "Locked Out. Please, try again after 10 min");
             }
 
-            // Credentials are invalid, or account doesn't exist
-            return new OperationDataResult<GoogleAuthenticatorModel>(false,
-                localizationService.GetString("UserNameOrPasswordIncorrect"));
+            return InvalidCredentialsResult<GoogleAuthenticatorModel>();
         }
 
         // check if two factor is enabled
@@ -463,4 +469,15 @@ public class AuthService(
         // return
         return new OperationDataResult<GoogleAuthenticatorModel>(true, model);
     }
+
+    /// <summary>
+    /// The single answer every credential failure gives: account unknown, password wrong,
+    /// or account disabled. They must answer with the same message - telling them apart is
+    /// what turns a login box into a list of which emails have accounts. (Only the message
+    /// is the same: an unknown or disabled account answers before the password is verified,
+    /// so it answers faster.)
+    /// </summary>
+    private OperationDataResult<T> InvalidCredentialsResult<T>() =>
+        new(false, localizationService.GetString("UserNameOrPasswordIncorrect"));
+
 }
