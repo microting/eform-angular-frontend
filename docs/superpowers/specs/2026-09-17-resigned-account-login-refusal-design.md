@@ -66,16 +66,43 @@ existing rows to `true`. Copy the pattern from the most recent one,
 `20260411082732_AddThemeVariantToUser.cs` — note it confirms the table is literally named
 `Users`, not `AspNetUsers`.
 
-**Keep the `= true` initializer and the mapping's default in the same change.** For a
-non-nullable `bool`, EF Core omits the column from INSERT whenever the value equals the
-CLR sentinel (`false`); the initializer is what makes EF Core infer `true` as the sentinel
-instead. Getting this half-right fails silently in the insecure direction — an account
-created disabled comes back enabled.
+**Keep the `= true` initializer and the mapping's default in the same change.** The
+mapping declares `HasDefaultValue(true)`, and that is what makes `true` this property's
+sentinel; EF Core omits a sentinel-valued column from the INSERT so the store default
+applies. Without the initializer a freshly constructed `EformUser` holds `false`, EF Core
+writes it explicitly, and **every new account is created disabled** — fail-closed, a
+lockout of all new users. Verified against EF Core 10.0.12, the pinned version.
 
-A shadow property (the route the codebase took for `ExternalLoginEnabled`,
-`BaseDbContext.cs:301-304`) would have confined this to one repo and one release. It was
-considered and rejected on 2026-09-17 in favour of a real property that code can read and
-query directly; the cost is the release chain and deploy order in **Rollout order** below.
+The same trap is already sprung on `ExternalLoginEnabled` (`BaseDbContext.cs:301-304`): it
+is a *shadow* bool with `HasDefaultValue(true)`, and a shadow property cannot carry an
+initializer, so every user created since `20250904105541_AddOAuthLoginSupport` has it set
+to `0` despite the declared default. Dormant only because the property is dead code — and
+the reason this design uses a real property rather than a shadow one.
+
+Two prerequisites for this step:
+
+- `Microting.EformAngularFrontendBase.csproj:14` pins BasePn **10.0.30**; bump it to the
+  release from step 1 or `dotnet ef migrations add` will not see `IsActive` and scaffolds
+  nothing.
+- Write the column default explicitly, copying `20250904105541_AddOAuthLoginSupport.cs:41-46`:
+  `AddColumn<bool>(name: "IsActive", table: "Users", type: "tinyint(1)", nullable: false,
+  defaultValue: true)`. A naively scaffolded `defaultValue: false` disables **every
+  existing account** on migrate.
+
+Two cheaper routes were considered and rejected on 2026-09-17:
+
+- **A shadow property**, as the codebase did for `ExternalLoginEnabled` — one repo, one
+  release, no deploy-order risk. Rejected in favour of a real property that code can read
+  and query directly, and because a shadow property cannot carry the initializer the
+  sentinel behaviour above requires.
+- **`SetLockoutEndDateAsync(user, DateTimeOffset.MaxValue)`**, the stock Identity way to
+  disable an account — no column, no migration, no release chain at all. Rejected because
+  it collides with the brute-force lockout that already owns those fields: the two become
+  indistinguishable in the data, and a disabled account would report the temporary
+  "try again after 10 min" message rather than a refusal. A distinct flag also gives
+  support the "disable this account" primitive the platform lacks.
+
+The cost of a real property is the release chain and deploy order in **Rollout order**.
 
 `IsActive` rather than `IsResigned` deliberately: this is an account-state flag, and it
 gives support the "disable this account" primitive the platform does not have today —
