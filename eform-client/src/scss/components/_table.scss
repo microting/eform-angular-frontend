@@ -193,3 +193,46 @@
     @include typography($theme);
   }
 }
+
+// Shared "briefly highlight a table row" state (plugins set `row-highlight-flash`
+// on an mtx-grid / mat-table <tr> for ~3 s via rowClassFormatter, then remove
+// it). Deliberately a new class, not `highlight-row`: several existing plugin
+// tables already use `highlight-row` with their own component-scoped fade, and
+// they must keep their current look.
+// Visually matches the task tracker's `.highlighted` fade: a 4px blue inset
+// outline plus a powder tint, held for 70% of the run, then faded out.
+//
+// The tint is painted with `background-image`, not the task tracker's inset
+// `box-shadow`, because theme-workspace forces `box-shadow: none !important`
+// on right-pinned cells and both themes force `background-color` on pinned
+// cells — an !important declaration beats animated values, so either would
+// leave the actions column unhighlighted. Nothing sets `background-image` or
+// `outline` on table cells with !important, so this reaches pinned cells too.
+// The colour runs through a registered custom property so it interpolates;
+// `--surface-powder` is theme- and mode-aware (#b3d3ea in theme-eform light,
+// which is the task tracker's exact tint; darker blues in both dark modes).
+// Keyframes name is distinct from the component-scoped `highlightFade` copies.
+@property --highlight-row-tint {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}
+
+@keyframes highlightRowFade {
+  0%,
+  70% {
+    outline-color: #1e88e5;
+    --highlight-row-tint: color-mix(in srgb, var(--surface-powder, #b3d3ea) 50%, transparent);
+  }
+  100% {
+    outline-color: transparent;
+    --highlight-row-tint: transparent;
+  }
+}
+
+tr.row-highlight-flash > td {
+  outline: 4px solid transparent;
+  outline-offset: -4px;
+  background-image: linear-gradient(var(--highlight-row-tint), var(--highlight-row-tint));
+  animation: highlightRowFade 3s ease-out;
+}
