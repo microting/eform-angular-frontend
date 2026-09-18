@@ -57,6 +57,63 @@ export class BackendConfigurationCalendarPage extends BasePage {
     await firstOption.click();
   }
 
+  /**
+   * Pick a WORKER in the #calendarEventAssignee select — never a team.
+   *
+   * The assignee select may render a grouped list (teams first, then
+   * workers). ng-select renders the options as a flat list of siblings: a
+   * group header is `.ng-optgroup` (it does not get `.ng-option`), and the
+   * options that follow it, up to the next header, belong to that group.
+   * Teams are always the FIRST group and workers the LAST (the Teams group is
+   * omitted when the property has no teams), so only options after the last
+   * header are considered. Header text is not matched because it is
+   * translated (da: "Hold"). Without groups the first option is picked, as
+   * before.
+   *
+   * When `workerName` is given, the option whose label is exactly that name
+   * (whitespace-trimmed) is picked instead of the first worker.
+   */
+  private async pickAssigneeWorker(workerName?: string) {
+    await this.page.locator('#calendarEventAssignee').click();
+    await this.page
+      .locator('ng-dropdown-panel .ng-option')
+      .first()
+      .waitFor({ state: 'visible', timeout: 20000 });
+    const handle = await this.page.waitForFunction(
+      (name: string | null) => {
+        const panel = document.querySelector('ng-dropdown-panel');
+        if (!panel) {
+          return null;
+        }
+        // querySelectorAll returns document order, so headers and options
+        // come back interleaved exactly as rendered.
+        const nodes = Array.from(panel.querySelectorAll('.ng-optgroup, .ng-option'));
+        let lastHeader = -1;
+        nodes.forEach((el, i) => {
+          if (el.classList.contains('ng-optgroup')) {
+            lastHeader = i;
+          }
+        });
+        // Only options after the last group header are workers; with no
+        // groups, lastHeader stays -1 and every option is considered.
+        for (const el of nodes.slice(lastHeader + 1)) {
+          if (el.classList.contains('ng-option-disabled')) {
+            continue;
+          }
+          const label = (el.querySelector('.ng-option-label') ?? el).textContent?.trim() ?? '';
+          if (name === null || label === name.trim()) {
+            return el.id || null;
+          }
+        }
+        return null;
+      },
+      workerName ?? null,
+      { timeout: 20000 },
+    );
+    const optionId = (await handle.jsonValue()) as string;
+    await this.page.locator(`ng-dropdown-panel [id="${optionId}"]`).click();
+  }
+
   /** Select the repeat option whose label contains the given text (e.g. "Ugentlig"). */
   private async pickRepeatContaining(text: string) {
     await this.page.locator('#calendarEventRepeat').click();
@@ -69,13 +126,22 @@ export class BackendConfigurationCalendarPage extends BasePage {
    * Create a weekly-recurring event on the given day. This is the exact shape
    * that triggered the disappear bug: a weekly task whose start lands on a
    * (trailing-Sunday) day, persisted with a multi-day weekday CSV.
+   *
+   * `workerName` picks that worker as assignee; omitted, the first worker
+   * (never a team) is picked.
    */
-  async createWeeklyEvent(dayIndex: number, hour: number, title: string, repeatLabel: string) {
+  async createWeeklyEvent(
+    dayIndex: number,
+    hour: number,
+    title: string,
+    repeatLabel: string,
+    workerName?: string,
+  ) {
     await this.openCreateModalOnDay(dayIndex, hour);
     await this.page.locator('#calendarEventTitle').fill(title);
     await this.pickRepeatContaining(repeatLabel);
     // At least one worker must be assigned or the backend rejects the create.
-    await this.pickFirstOption('#calendarEventAssignee');
+    await this.pickAssigneeWorker(workerName);
     // A report headline (itemPlanningTag) is also required on create.
     await this.pickFirstOption('#calendarEventPlanningTag');
     await this.save();
