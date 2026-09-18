@@ -629,3 +629,21 @@ body {
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-child:has(.eform-worker-option-label) {
   padding-left: 32px;
 }
+
+// Calendar task modal — group icon on selected TEAM chips (#calendarEventAssignee).
+// A bare mat-icon keeps its 24x24 box, which makes team chips taller than
+// worker chips. Size it to the chip's text line instead. Specificity (0,4,0)
+// outranks `.mat-icon.material-{icons,symbols-*}.md-18` (0,3,0) from _icon.scss
+// regardless of source order. No colour is set: the icon inherits the chip
+// text colour under both theme-eform and theme-workspace, light and dark.
+// theme-workspace lays the chip out as inline-flex (the × moves to the end via
+// `order: 2`); theme-eform keeps it inline, hence vertical-align.
+.ng-select .ng-value .mat-icon.calendar-assignee-team-icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  line-height: 16px;
+  vertical-align: middle;
+  margin-right: 2px;
+  flex-shrink: 0;
+}
