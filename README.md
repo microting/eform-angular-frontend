@@ -2,6 +2,7 @@
 
 [![Master/Stable](https://github.com/microting/eform-angular-frontend/actions/workflows/dotnet-core-master.yml/badge.svg?branch=stable)](https://github.com/microting/eform-angular-frontend/actions/workflows/dotnet-core-master.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/383f012a79c7bea1101e/maintainability)](https://codeclimate.com/github/microting/eform-angular-frontend/maintainability)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmicroting%2Feform-angular-frontend.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmicroting%2Feform-angular-frontend?ref=badge_shield)
 
 eForm Backend is created using Angular 19 and C\# .Net Core 9
 
@@ -121,3 +122,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmicroting%2Feform-angular-frontend.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmicroting%2Feform-angular-frontend?ref=badge_large)
