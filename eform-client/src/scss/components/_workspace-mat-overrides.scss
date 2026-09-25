@@ -319,8 +319,11 @@ body.theme-workspace {
   // `align-items: end`. The 10px margin-bottom above would lift fields above
   // sibling buttons (the flex box's bottom edge sits 10px below the visible
   // field). Strip it back to 0 inside toolbars so fields and buttons share
-  // the same baseline.
-  .eform-sub-header .mat-mdc-form-field {
+  // the same baseline. The backend-configuration compliance filter row
+  // (.compliance-filters) centres fields and buttons instead, where the
+  // margin would lift the visible outline ~5px above the buttons.
+  .eform-sub-header .mat-mdc-form-field,
+  .compliance-filters .mat-mdc-form-field {
     margin-bottom: 0;
   }
 
