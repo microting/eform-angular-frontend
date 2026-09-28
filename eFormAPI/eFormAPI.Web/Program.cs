@@ -438,8 +438,9 @@ public class Program
         }
     }
 
-    // Command-line args carry the API key, the service-account key and the
-    // connection string (with its password); log their names, never their values.
+    // Command-line args carry secrets (API key, service-account key, setup token
+    // and password, connection string); any arg whose name looks secret is logged
+    // by name only, never by value.
     // Both "name=value" and "--name value" forms are accepted by AddCommandLine.
     public static IEnumerable<string> RedactSecretArgs(string[] args)
     {
@@ -467,6 +468,8 @@ public class Program
     private static bool IsSecretArgName(string name)
         => name.Contains("key", StringComparison.OrdinalIgnoreCase)
            || name.Contains("password", StringComparison.OrdinalIgnoreCase)
+           || name.Contains("token", StringComparison.OrdinalIgnoreCase)
+           || name.Contains("secret", StringComparison.OrdinalIgnoreCase)
            || name.Contains("connectionstring", StringComparison.OrdinalIgnoreCase);
 
     private static IHost BuildWebHost(string[] args)

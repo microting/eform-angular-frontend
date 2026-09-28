@@ -34,6 +34,9 @@ namespace eFormAPI.Web.Integration.Tests.Controllers
         [TestCase("/api-key=x", "/api-key=***")]
         [TestCase("--private_key=x", "--private_key=***")]
         [TestCase("/ConnectionString=host=db;port=3306;", "/ConnectionString=***")]
+        [TestCase("/Token=x", "/Token=***")]
+        [TestCase("/Password=x", "/Password=***")]
+        [TestCase("--client_secret=x", "--client_secret=***")]
         [TestCase("--port=5000", "--port=5000")]
         [TestCase("no-separator", "no-separator")]
         public void RedactSecretArgs_HidesSecretValues(string arg, string expected)
