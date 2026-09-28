@@ -8,7 +8,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers;
 
-//[Authorize]
+[Authorize]
 public class TranslationController(ITranslationService translationService, IOptions<GoogleTranslateOptions> options)
     : Controller
 {

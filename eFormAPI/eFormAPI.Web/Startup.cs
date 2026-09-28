@@ -309,7 +309,7 @@ public class Startup(IConfiguration configuration)
         {
             Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate");
             var apiKey = Environment.GetEnvironmentVariable("API_KEY");
-            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate: " + apiKey);
+            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate: API key configured: " + !string.IsNullOrEmpty(apiKey));
             services.Configure(new Action<GoogleTranslateOptions>(options =>
             {
                 options.ApiKey = apiKey;
