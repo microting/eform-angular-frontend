@@ -150,7 +150,7 @@ public class SettingsService(
 
         try
         {
-            Log.LogEvent($"SettingsService.ConnectionStringExist: connection string is {sdkSetupConnectionString}");
+            Log.LogEvent("SettingsService.UpdateConnectionString: setting up the SDK database");
             var adminTools = new AdminTools(sdkSetupConnectionString);
             //                 Setup SDK DB
             await adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
