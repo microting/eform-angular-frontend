@@ -34,6 +34,8 @@ namespace eFormAPI.Web.Integration.Tests.Controllers
         [TestCase("/api-key=x", "/api-key=***")]
         [TestCase("--private_key=x", "--private_key=***")]
         [TestCase("/ConnectionString=host=db;port=3306;", "/ConnectionString=***")]
+        [TestCase("--connection-string=host=db;port=3306;", "--connection-string=***")]
+        [TestCase("--connection_string=host=db;port=3306;", "--connection_string=***")]
         [TestCase("/Token=x", "/Token=***")]
         [TestCase("/Password=x", "/Password=***")]
         [TestCase("--client_secret=x", "--client_secret=***")]
@@ -47,10 +49,10 @@ namespace eFormAPI.Web.Integration.Tests.Controllers
         [Test]
         public void RedactSecretArgs_HidesValuePassedAsSeparateToken()
         {
-            string[] args = ["--api-key", "x", "--ConnectionString", "host=db;port=3306;", "--port", "5000"];
+            string[] args = ["--api-key", "x", "--connection-string", "host=db;port=3306;", "--port", "5000"];
 
             Assert.That(Program.RedactSecretArgs(args),
-                Is.EqualTo(new[] { "--api-key", "***", "--ConnectionString", "***", "--port", "5000" }));
+                Is.EqualTo(new[] { "--api-key", "***", "--connection-string", "***", "--port", "5000" }));
         }
     }
 }

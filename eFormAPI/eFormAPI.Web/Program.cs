@@ -466,11 +466,15 @@ public class Program
     }
 
     private static bool IsSecretArgName(string name)
-        => name.Contains("key", StringComparison.OrdinalIgnoreCase)
-           || name.Contains("password", StringComparison.OrdinalIgnoreCase)
-           || name.Contains("token", StringComparison.OrdinalIgnoreCase)
-           || name.Contains("secret", StringComparison.OrdinalIgnoreCase)
-           || name.Contains("connectionstring", StringComparison.OrdinalIgnoreCase);
+    {
+        // "--connection-string" and "--connection_string" must match too.
+        var normalized = name.Replace("-", "").Replace("_", "");
+        return normalized.Contains("key", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("password", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("token", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("secret", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("connectionstring", StringComparison.OrdinalIgnoreCase);
+    }
 
     private static IHost BuildWebHost(string[] args)
     {
