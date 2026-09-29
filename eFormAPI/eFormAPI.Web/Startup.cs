@@ -107,7 +107,7 @@ public class Startup(IConfiguration configuration)
         });
         if (!string.IsNullOrEmpty(Configuration["ConnectionString"]))
         {
-            Log.LogEvent($"We do have a ConnectionString {Configuration["ConnectionString"]}");
+            Log.LogEvent("We do have a ConnectionString");
             services.AddEntityFrameworkMySql()
                 .AddDbContextPool<BaseDbContext>(o => o.UseMySql(
                     Configuration["ConnectionString"], new MariaDbServerVersion(
@@ -159,7 +159,7 @@ public class Startup(IConfiguration configuration)
                 Log.LogEvent($"We don't have a ConnectionString, so using default");
                 if (Configuration.MyConnectionString() != "...")
                 {
-                    Log.LogEvent($"ConnectionString is {Configuration.MyConnectionString()}");
+                    Log.LogEvent("Using the DefaultConnection ConnectionString");
                     services.AddEntityFrameworkMySql()
                         .AddDbContextPool<BaseDbContext>(o => o.UseMySql(
                             Configuration.MyConnectionString(), new MariaDbServerVersion(
@@ -309,7 +309,7 @@ public class Startup(IConfiguration configuration)
         {
             Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate");
             var apiKey = Environment.GetEnvironmentVariable("API_KEY");
-            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate: " + apiKey);
+            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate: API key configured: " + !string.IsNullOrEmpty(apiKey));
             services.Configure(new Action<GoogleTranslateOptions>(options =>
             {
                 options.ApiKey = apiKey;

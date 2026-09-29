@@ -67,7 +67,7 @@ public static class PluginHelper
 
     public static List<IEformPlugin> GetPlugins(string connectionString)
     {
-        Log.LogEvent($"PluginHelper.GetPlugins with connectionString {connectionString}");
+        Log.LogEvent("PluginHelper.GetPlugins");
         // Load info from database
         List<EformPlugin> eformPlugins = null;
         var plugins = new List<IEformPlugin>();

@@ -438,10 +438,47 @@ public class Program
         }
     }
 
+    // Command-line args carry secrets (API key, service-account key, setup token
+    // and password, connection string); any arg whose name looks secret is logged
+    // by name only, never by value.
+    // Both "name=value" and "--name value" forms are accepted by AddCommandLine.
+    public static IEnumerable<string> RedactSecretArgs(string[] args)
+    {
+        for (var i = 0; i < args.Length; i++)
+        {
+            var arg = args[i];
+            var separator = arg.IndexOf('=');
+            if (i > 0 && !args[i - 1].Contains('=') && IsSecretArgName(args[i - 1]))
+            {
+                // Value of a "--name value" pair; it may itself contain '='.
+                yield return "***";
+            }
+            else if (separator >= 0)
+            {
+                var name = arg[..separator];
+                yield return IsSecretArgName(name) ? name + "=***" : arg;
+            }
+            else
+            {
+                yield return arg;
+            }
+        }
+    }
+
+    private static bool IsSecretArgName(string name)
+    {
+        // "--connection-string" and "--connection_string" must match too.
+        var normalized = name.Replace("-", "").Replace("_", "");
+        return normalized.Contains("key", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("password", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("token", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("secret", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("connectionstring", StringComparison.OrdinalIgnoreCase);
+    }
+
     private static IHost BuildWebHost(string[] args)
     {
-        // print all args
-        foreach (var arg in args)
+        foreach (var arg in RedactSecretArgs(args))
         {
             Console.WriteLine("info: arg: " + arg);
         }
@@ -451,7 +488,7 @@ public class Program
             .Build();
 
         Environment.SetEnvironmentVariable("API_KEY", defaultConfig["api-key"]);
-        Console.WriteLine("info: API_KEY: " + defaultConfig["api-key"]);
+        Console.WriteLine("info: API_KEY configured: " + !string.IsNullOrEmpty(defaultConfig["api-key"]));
 
         var port = defaultConfig.GetValue("port", 5000);
         var connectionString = defaultConfig.GetValue("ConnectionString", "");
@@ -502,9 +539,9 @@ public class Program
         Environment.SetEnvironmentVariable("CLIENT_EMAIL", clientEmail);
         Console.WriteLine("info: CLIENT_EMAIL: " + clientEmail);
         Environment.SetEnvironmentVariable("PRIVATE_KEY_ID", privateKeyId);
-        Console.WriteLine("info: PRIVATE_KEY_ID: " + privateKeyId);
+        Console.WriteLine("info: PRIVATE_KEY_ID configured: " + !string.IsNullOrEmpty(privateKeyId));
         Environment.SetEnvironmentVariable("PRIVATE_KEY", privateKey);
-        Console.WriteLine("info: PRIVATE_KEY: " + privateKey);
+        Console.WriteLine("info: PRIVATE_KEY configured: " + !string.IsNullOrEmpty(privateKey));
         Environment.SetEnvironmentVariable("CLIENT_ID", clientId);
         Console.WriteLine("info: CLIENT_ID: " + clientId);
         Environment.SetEnvironmentVariable("PROJECT_ID", projectId);
@@ -547,7 +584,7 @@ public class Program
 
                     if (!string.IsNullOrEmpty(connectionString))
                     {
-                        Log.LogEvent($"Creating ConnectionString file with the ConnectionString: {connectionString}");
+                        Log.LogEvent("Creating ConnectionString file from the ConnectionString argument");
                         ConnectionStringManager.CreateWithConnectionString(filePath, connectionString);
                     }
 
