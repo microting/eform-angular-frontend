@@ -28,8 +28,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 namespace eFormAPI.Web.Abstractions;
 
-using Infrastructure.Models.Settings.Admin;
-
 public interface IAdminService
 {
     Task<OperationDataResult<Paged<UserInfoViewModel>>> Index(UserInfoRequest paginationModel);
@@ -47,8 +45,4 @@ public interface IAdminService
     Task<OperationResult> DisableTwoFactorAuthForce();
 
     Task<OperationResult> EnableTwoFactorAuthForce();
-
-    Task<OperationResult> UpdateUserbackWidget(bool isEnableWidget);
-
-    Task<OperationDataResult<UserbackWidgetModel>> GetUserbackWidget();
 }

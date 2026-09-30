@@ -56,7 +56,6 @@
     "@sentry/cli": "^2.56.1",
     "@swimlane/ngx-charts": "23.1.0",
     "@types/ramda": "^0.31.1",
-    "@userback/widget": "^0.3.11",
     "core-js": "3.47.0",
     "d3": "7.9.0",
     "date-fns": "4.1.0",

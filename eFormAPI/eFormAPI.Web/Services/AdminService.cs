@@ -37,7 +37,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abstractions;
 using Hosting.Helpers.DbOptions;
-using Infrastructure.Models.Settings.Admin;
 using Infrastructure.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -627,41 +626,5 @@ public class AdminService(
         }
 
         return new OperationResult(true);
-    }
-
-    public async Task<OperationResult> UpdateUserbackWidget(bool isEnableWidget)
-    {
-        try
-        {
-            await appSettings.UpdateDb((options) => { options.IsUserbackWidgetEnabled = isEnableWidget; }, dbContext);
-        }
-        catch (Exception e)
-        {
-            SentrySdk.CaptureException(e);
-            logger.LogError(e.Message);
-            logger.LogTrace(e.StackTrace);
-            return new OperationResult(false);
-        }
-
-        return new OperationResult(true);
-    }
-
-#pragma warning disable CS1998
-    public async Task<OperationDataResult<UserbackWidgetModel>> GetUserbackWidget()
-#pragma warning restore CS1998
-    {
-        try
-        {
-            var userbackWidgetModel = new UserbackWidgetModel { IsUserbackWidgetEnabled = appSettings.Value.IsUserbackWidgetEnabled, UserbackToken = appSettings.Value.UserbackToken };
-
-            return new OperationDataResult<UserbackWidgetModel>(true, userbackWidgetModel);
-        }
-        catch (Exception e)
-        {
-            SentrySdk.CaptureException(e);
-            logger.LogError(e.Message);
-            logger.LogTrace(e.StackTrace);
-            return new OperationDataResult<UserbackWidgetModel>(false);
-        }
     }
 }

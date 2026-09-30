@@ -37,7 +37,6 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   loginPageImageLink: string;
   latestVersion: string;
   adminSettingsModel: AdminSettingsModel = new AdminSettingsModel();
-  othersSettings: { isEnableWidget: boolean } = {isEnableWidget: false};
   languagesModel: LanguagesModel = new LanguagesModel();
   previousAdminSettings: AdminSettingsModel;
   private selectBearerToken$ = this.authStore.select(selectBearerToken);
@@ -114,15 +113,10 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   getSettings() {
     zip(
       this.service.getAdminSettings(),
-      this.service.getUserbackWidgetIsEnabled(),
       this.service.getLanguages())
-      .pipe(tap((
-        [adminSettings,
-          othersSettings,
-          languages]) => {
+      .pipe(tap(([adminSettings, languages]) => {
         this.adminSettingsModel = JSON.parse(JSON.stringify(adminSettings.model));
         this.previousAdminSettings = JSON.parse(JSON.stringify(adminSettings.model));
-        this.othersSettings.isEnableWidget = othersSettings.model.isUserbackWidgetEnabled;
         this.languagesModel = languages.model;
       }))
       .subscribe();
@@ -147,7 +141,6 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
     //     allSettings.adminSettingsModel.headerSettingsModel.secondaryTextVisible;
     //   this.adminSettingsModel.headerSettingsModel.imageLink = allSettings.adminSettingsModel.headerSettingsModel.imageLink;
     //   this.adminSettingsModel.headerSettingsModel.imageLinkVisible = allSettings.adminSettingsModel.headerSettingsModel.imageLinkVisible;
-    //   this.othersSettings.isEnableWidget = allSettings.othersSettings.isUserbackWidgetEnabled;
     //   this.languagesModel.languages = [];
     //   allSettings.languagesModel.languages.forEach((language) => {
     //     this.languagesModel.languages.push(
@@ -155,7 +148,6 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
     //   });
     //   this.previousAdminSettings = this.adminSettingsModel;
     //   const adminSettings = allSettings.adminSettingsModel;
-    //   const othersSettings = allSettings.othersSettings;
     this.initializeUploaders();
     this.getLatestVersion();
     //   if (adminSettings) {
@@ -177,9 +169,6 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
     } else {
       this.loginPageImageLink = '../../../assets/images/eform-phone.jpg';
     }
-    //   }
-    //   if (othersSettings) {
-    //     this.othersSettings = {...this.othersSettings, isEnableWidget: othersSettings.isUserbackWidgetEnabled};
     //   }
     //   this.languagesModel = allSettings.languagesModel;
     //}).unsubscribe();
@@ -207,17 +196,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
         });
     }
 
-    this.updateOtherSettings();
     this.updateLanguages();
-  }
-
-  updateOtherSettings() {
-    this.appSettingsStateService.updateUserbackWidgetIsEnabled(this.othersSettings.isEnableWidget)
-      .subscribe((operation) => {
-        if (operation && operation.success) {
-          //
-        }
-      });
   }
 
   resetLoginPageSettings() {

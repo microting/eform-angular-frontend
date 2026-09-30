@@ -4822,11 +4822,6 @@
   resolved "https://registry.yarnpkg.com/@unrs/resolver-binding-win32-x64-msvc/-/resolver-binding-win32-x64-msvc-1.11.1.tgz#538b1e103bf8d9864e7b85cc96fa8d6fb6c40777"
   integrity sha512-lrW200hZdbfRtztbygyaq/6jP6AKE8qQN2KvPcJ+x7wiD038YtnYtZ82IMNJ69GJibV7bwL3y9FgK+5w/pYt6g==
 
-"@userback/widget@^0.3.11":
-  version "0.3.12"
-  resolved "https://registry.yarnpkg.com/@userback/widget/-/widget-0.3.12.tgz#285c34976fef8bd007706b3b89b05dac2e07895c"
-  integrity sha512-68YihQblx1+4kFpd7e4nDBSV6ljSY0+hzIHHgbxgbJPJIhNgN4lyvOjcDbCrEb9qh6yXx5W6HBLKTMJD4hLXGg==
-
 "@vitejs/plugin-basic-ssl@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-basic-ssl/-/plugin-basic-ssl-2.1.0.tgz#c70d2a922bc437f154089d7ef0505db4b383eb7b"

@@ -2,31 +2,23 @@ import {
   AdminSettingsModel,
   HeaderSettingsModel,
   LanguagesModel,
-  LoginPageSettingsModel,
-  UserbackWidgetSettingModel
+  LoginPageSettingsModel
 } from 'src/app/common/models';
 import {createReducer, on} from '@ngrx/store';
 import {
   resetHeaderSettings,
   resetLoginPageSettings,
   updateAdminSettings,
-  updateLanguages,
-  updateOthersSettings,
-  updateUserbackWidgetSetting
+  updateLanguages
 } from './';
 
 export interface AppSettingsState {
   adminSettingsModel: AdminSettingsModel;
-  othersSettings: UserbackWidgetSettingModel;
   languagesModel: LanguagesModel;
 }
 
 export const appSettingsInitialState: AppSettingsState = {
   adminSettingsModel: new AdminSettingsModel(),
-  othersSettings: {
-    isUserbackWidgetEnabled: false,
-    userbackToken: ''
-  },
   languagesModel: new LanguagesModel(),
 };
 
@@ -53,23 +45,9 @@ const _appSettingsReducer = createReducer(
       },
     })
   ),
-  on(updateOthersSettings, (state, {payload}) => ({
-      ...state,
-      othersSettings: payload,
-    }
-  )),
   on(updateLanguages, (state, {payload}) => ({
       ...state,
       languagesModel: payload,
-    })
-  ),
-  on(updateUserbackWidgetSetting, (state, {payload}) => ({
-      ...state,
-      othersSettings: {
-        ...state.othersSettings,
-        isUserbackWidgetEnabled: payload.isUserbackWidgetEnabled,
-        userbackToken: payload.userbackToken,
-      },
     })
   ),
 );
