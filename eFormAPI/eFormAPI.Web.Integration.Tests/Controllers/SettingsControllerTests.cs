@@ -33,12 +33,10 @@ namespace eFormAPI.Web.Integration.Tests.Controllers
     public class SettingsControllerTests : DbTestFixture
     {
         private ISettingsService _settingsService;
-        private IAdminService _adminService;
 
         public override void DoSetup()
         {
             _settingsService = Substitute.For<ISettingsService>();
-            _adminService = Substitute.For<IAdminService>();
         }
 
         [Test]
@@ -49,7 +47,6 @@ namespace eFormAPI.Web.Integration.Tests.Controllers
 
             // Assert
             Assert.That(_settingsService, Is.Not.Null);
-            Assert.That(_adminService, Is.Not.Null);
             await Task.CompletedTask;
         }
 

@@ -9,7 +9,6 @@ import {
   PaginationPnComponent,
   PellPnComponent,
   SubheaderPnComponent,
-  UserbackWidgetComponent,
 } from './components';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -32,14 +31,12 @@ import {
     SubheaderPnComponent,
     PellPnComponent,
     PageSizePnComponent,
-    UserbackWidgetComponent
   ],
   exports: [
     PaginationPnComponent,
     SubheaderPnComponent,
     PellPnComponent,
     PageSizePnComponent,
-    UserbackWidgetComponent
   ],
   providers: [
     SharedPnService,

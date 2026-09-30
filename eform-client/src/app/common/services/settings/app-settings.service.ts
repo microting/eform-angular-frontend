@@ -5,7 +5,7 @@ import {
   HeaderSettingsModel,
   LoginPageSettingsModel,
   OperationDataResult,
-  OperationResult, UserbackWidgetSettingModel,
+  OperationResult,
 } from 'src/app/common/models';
 import { SettingsModel } from 'src/app/common/models/settings';
 import { ApiBaseService } from 'src/app/common/services';
@@ -24,7 +24,6 @@ const SettingsMethods = {
   GetHeaderSettings: '/api/settings/page-header',
   GetAnonymousImage: 'api/images/login-page-images',
   GetAuthorizedImage: 'api/images/eform-images',
-  UserbackWidget: 'api/settings/userback-widget',
   GetLanguages: 'api/settings/languages',
   UpdateLanguages: 'api/settings/languages',
 };
@@ -88,14 +87,6 @@ export class AppSettingsService {
 
   getLatestVersion(): Observable<OperationDataResult<string>> {
     return this.apiBaseService.get<string>(SettingsMethods.GetLatestVersion);
-  }
-
-  getUserbackWidgetIsEnabled(): Observable<OperationDataResult<UserbackWidgetSettingModel>> {
-    return this.apiBaseService.getNoToast(SettingsMethods.UserbackWidget);
-  }
-
-  updateUserbackWidgetIsEnabled(isEnableWidget: boolean): Observable<OperationResult> {
-    return this.apiBaseService.put(SettingsMethods.UserbackWidget, isEnableWidget);
   }
 
   getLanguages(): Observable<OperationDataResult<LanguagesModel>> {
