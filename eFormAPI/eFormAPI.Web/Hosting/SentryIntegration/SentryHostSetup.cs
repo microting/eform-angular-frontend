@@ -254,9 +254,15 @@ public static class SentryHostSetup
     }
 
     // The SDK attaches the request with all its headers; removes the credentials from it (the bearer
-    // token, cookies and the token some file routes carry in the URL). Fails closed.
+    // token, cookies and the token some file routes carry in the URL). Fails closed; null-safe for
+    // captures outside HTTP.
     private static void RedactRequest(SentryRequest request)
     {
+        if (request == null)
+        {
+            return;
+        }
+
         try
         {
             foreach (var header in request.Headers.Keys

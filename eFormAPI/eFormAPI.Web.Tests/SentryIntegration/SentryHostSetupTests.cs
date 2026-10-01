@@ -285,6 +285,26 @@ public class SentryHostSetupTests
     }
 
     [Test]
+    public async Task EventAndTransactionOutsideAnyHttpRequest_AreDelivered()
+    {
+        // Background work: no HTTP request, so the request data is empty and IsTraced(null) is true.
+        SentrySdk.CaptureMessage("captured outside a request");
+        var transaction = SentrySdk.StartTransaction(
+            new TransactionContext("background work outside a request", "task", isSampled: true));
+        transaction.Finish();
+        await SentrySdk.FlushAsync(TimeSpan.FromSeconds(5));
+
+        var events = _hostTransport.Events
+            .Where(x => x.Body.Get("logentry", "message") == "captured outside a request").ToList();
+        var transactions = TransactionsNamed("background work outside a request");
+        Assert.That(events, Has.Count.EqualTo(1));
+        Assert.That(transactions, Has.Count.EqualTo(1));
+        // A throwing BeforeSend does not drop the item: the SDK sends it unredacted with a breadcrumb.
+        Assert.That(events.Concat(transactions).Select(x => x.Body.GetRawText()),
+            Has.None.Contains("callback failed"));
+    }
+
+    [Test]
     public async Task Credentials_AreRedactedFromEverythingThatIsSent()
     {
         await Get("/api/host/unhandled?token=" + Secret + "&page=1");
