@@ -446,4 +446,5 @@ export const huHU = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Hiba bejelentése',
 };

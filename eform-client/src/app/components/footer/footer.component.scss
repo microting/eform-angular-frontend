@@ -175,7 +175,17 @@ body, .theme-dark {
 
 }
 
-a {
+// Menu entries that act instead of navigate: a <button> with the look of the links below.
+button.profile-menu-action {
+  width: 100%;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+a, .profile-menu-action {
   display: flex;
   padding: var(--28-px, 8px) var(--416-px, 16px);
   align-items: center;

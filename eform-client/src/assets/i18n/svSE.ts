@@ -446,4 +446,5 @@ export const svSE = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Rapportera ett fel',
 };

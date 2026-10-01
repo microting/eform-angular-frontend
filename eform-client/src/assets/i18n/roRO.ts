@@ -446,4 +446,5 @@ export const roRO = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Raportează o eroare',
 };

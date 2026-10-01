@@ -445,4 +445,5 @@ export const noNO = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Rapporter en feil',
 };

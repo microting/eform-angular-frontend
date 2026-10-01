@@ -446,4 +446,5 @@ export const ltLT = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Pranešti apie klaidą',
 };

@@ -446,4 +446,5 @@ export const csCZ = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Nahlásit chybu',
 };

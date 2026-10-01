@@ -445,4 +445,5 @@ export const nlNL = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Een fout melden',
 };

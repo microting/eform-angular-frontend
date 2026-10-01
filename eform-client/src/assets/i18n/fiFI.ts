@@ -446,4 +446,5 @@ export const fiFI = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Ilmoita virheestä',
 };

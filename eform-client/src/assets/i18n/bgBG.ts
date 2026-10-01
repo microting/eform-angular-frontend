@@ -446,4 +446,5 @@ export const bgBG = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Докладвай за грешка',
 };

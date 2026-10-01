@@ -446,4 +446,5 @@ export const frFR = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Signaler un bug',
 };

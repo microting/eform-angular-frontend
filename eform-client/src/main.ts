@@ -62,12 +62,33 @@ registerLocaleData(localeUk);
 if (environment.enableSentry) {
   Sentry.init({
     dsn: 'https://38b1e86a3c4d2532158903ab783bfe5e@o4506241219428352.ingest.sentry.io/4506268847112192',
-    integrations: [Sentry.browserTracingIntegration()],
+    environment: environment.production ? 'production' : 'development',
+    // No `release`: the build has no reliable frontend version source, and the sourcemap
+    // upload (`sentry-cli sourcemaps inject`) matches bundles by debug ID, not by release.
+    integrations: [
+      Sentry.browserTracingIntegration(),
+      // Buffer mode (see the replay sample rates below): nothing is sent until an error
+      // or a feedback report needs a replay attached. Default masking is kept.
+      Sentry.replayIntegration(),
+      // No floating widget (autoInject: false) - the form is opened from the profile menu
+      // through SentryFeedbackService. Name/email are prefilled from Sentry.setUser()
+      // (SDK default `useSentryUser`: name <- username, email <- email).
+      Sentry.feedbackIntegration({
+        autoInject: false,
+        showBranding: false,
+        colorScheme: 'system',
+        enableScreenshot: true,
+        showName: true,
+        showEmail: true,
+      }),
+      Sentry.consoleLoggingIntegration({levels: ['warn', 'error']}),
+    ],
+    enableLogs: true,
     // Performance Monitoring
-    tracesSampleRate: 1.0, // Capture 100% of the transactions
+    tracesSampleRate: 0.2, // Capture 20% of the transactions
     // Session Replay
-    replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
-    replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
+    replaysSessionSampleRate: 0, // Never record a whole session on its own
+    replaysOnErrorSampleRate: 1.0, // Always attach the buffered replay when an error occurs
   });
 }
 

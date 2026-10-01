@@ -456,4 +456,5 @@ export const enUS = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Report a bug',
 };

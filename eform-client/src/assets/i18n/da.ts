@@ -487,4 +487,5 @@ export const da = {
   Showing: 'Viser',
   of: 'af',
   packages: 'pakker',
+  'Report a bug': 'Rapportér en fejl',
 };

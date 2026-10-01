@@ -446,4 +446,5 @@ export const ptPT = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Comunicar um erro',
 };
