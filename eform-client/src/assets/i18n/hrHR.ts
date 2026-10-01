@@ -446,4 +446,5 @@ export const hrHR = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Prijavi pogrešku',
 };

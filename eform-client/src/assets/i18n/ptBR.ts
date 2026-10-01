@@ -446,4 +446,5 @@ export const ptBR = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Relatar um erro',
 };

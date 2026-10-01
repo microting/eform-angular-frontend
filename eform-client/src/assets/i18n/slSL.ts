@@ -446,4 +446,5 @@ export const slSL = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Prijavi napako',
 };

@@ -446,4 +446,5 @@ export const ukUA = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Повідомити про помилку',
 };

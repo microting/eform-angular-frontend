@@ -446,4 +446,5 @@ export const plPL = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Zgłoś błąd',
 };

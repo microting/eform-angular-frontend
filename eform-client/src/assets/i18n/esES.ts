@@ -446,4 +446,5 @@ export const esES = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Informar de un error',
 };

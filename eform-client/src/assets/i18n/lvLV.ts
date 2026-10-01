@@ -446,4 +446,5 @@ export const lvLV = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Ziņot par kļūdu',
 };

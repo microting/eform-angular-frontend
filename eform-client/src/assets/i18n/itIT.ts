@@ -446,4 +446,5 @@ export const itIT = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Segnala un bug',
 };

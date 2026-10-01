@@ -446,4 +446,5 @@ export const isIS = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Tilkynna villu',
 };

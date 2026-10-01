@@ -12,6 +12,13 @@ import {ToastrService} from 'ngx-toastr';
 import {HttpErrorInterceptor} from './http-error.interceptor';
 import {AuthStateService} from 'src/app/common/store';
 import {LoaderService} from 'src/app/common/services';
+import * as Sentry from '@sentry/angular';
+
+// Sentry is off in the default (dev) environment; switch it on so the reporting rules run.
+jest.mock('../../../environments/environment', () => ({
+  environment: {production: false, enableSentry: true},
+}));
+jest.mock('@sentry/angular', () => ({captureException: jest.fn()}));
 
 /**
  * Hand-rolled HttpHandler: every call to handle() shifts one scripted outcome off the
@@ -50,6 +57,7 @@ describe('HttpErrorInterceptor', () => {
   });
 
   beforeEach(() => {
+    (Sentry.captureException as jest.Mock).mockClear();
     authStateService = {
       refreshToken: jest.fn(),
       logout: jest.fn(),
@@ -158,5 +166,38 @@ describe('HttpErrorInterceptor', () => {
 
     expect(authStateService.refreshToken).not.toHaveBeenCalled();
     expect(authStateService.logout).not.toHaveBeenCalled();
+  });
+
+  describe('Sentry reporting', () => {
+    const run = (handler: ScriptedHandler) =>
+      interceptor.intercept(request, handler).subscribe({next: () => {}, error: () => {}});
+
+    it.each([
+      ['network failure / aborted request', 0],
+      ['unauthorized', 401],
+    ])('does not report a %s (%i)', (_name, status) => {
+      run(new ScriptedHandler([() => httpError(status, url), () => okResponse()]));
+
+      expect(Sentry.captureException).not.toHaveBeenCalled();
+    });
+
+    it('does not report a forbidden response (403)', () => {
+      authStateService.refreshToken.mockReturnValue(
+        of({success: true, model: {accessToken: 'new-token'}})
+      );
+
+      run(new ScriptedHandler([() => httpError(403, url), () => okResponse()]));
+
+      expect(Sentry.captureException).not.toHaveBeenCalled();
+    });
+
+    it.each([400, 404, 500])('reports a %i response', (status) => {
+      run(new ScriptedHandler([() => httpError(status, url), () => okResponse()]));
+
+      expect(Sentry.captureException).toHaveBeenCalledTimes(1);
+      const reported = (Sentry.captureException as jest.Mock).mock.calls[0][0];
+      expect(reported).toBeInstanceOf(HttpErrorResponse);
+      expect(reported.status).toBe(status);
+    });
   });
 });

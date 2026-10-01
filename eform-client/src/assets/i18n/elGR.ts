@@ -446,4 +446,5 @@ export const elGR = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Αναφορά σφάλματος',
 };

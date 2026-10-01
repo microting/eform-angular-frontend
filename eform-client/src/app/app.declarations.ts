@@ -43,6 +43,7 @@ import {
   UnitsService,
   WorkersService,
   TitleService,
+  SentryUserService,
 } from 'src/app/common/services';
 import {AuthService} from 'src/app/common/services/auth/auth.service';
 import {UserSettingsService} from 'src/app/common/services/auth/user-settings.service';
@@ -141,6 +142,12 @@ export let providers = [
       provide: APP_INITIALIZER,
       useFactory: () => () => {},
       deps: [Sentry.TraceService],
+      multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (sentryUserService: SentryUserService) => () => sentryUserService.init(),
+      deps: [SentryUserService],
       multi: true,
     }
   ] : []),

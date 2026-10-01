@@ -22,6 +22,11 @@ import {AuthResponseModel, OperationDataResult} from 'src/app/common/models';
 import * as Sentry from '@sentry/angular';
 import {environment} from '../../../environments/environment';
 
+/**
+ * Statuses that are expected noise rather than bugs: 0 (network down / request aborted),
+ * 401 and 403 (expired session, token refresh, missing permission).
+ */
+const SENTRY_IGNORED_STATUSES: readonly number[] = [0, 401, 403];
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -46,7 +51,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       // Handle 400 - Bad Request
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (environment.enableSentry) {
+        if (environment.enableSentry && !SENTRY_IGNORED_STATUSES.includes(error.status)) {
           Sentry.captureException(error); // Log to Sentry only if enabled
         }
         switch (error.status) {

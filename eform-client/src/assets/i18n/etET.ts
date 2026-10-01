@@ -446,4 +446,5 @@ export const etET = {
   Showing: 'Showing',
   of: 'of',
   packages: 'packages',
+  'Report a bug': 'Teata veast',
 };
