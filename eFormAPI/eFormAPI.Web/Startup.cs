@@ -41,6 +41,7 @@ using Abstractions.Security;
 using Hosting;
 using Hosting.Extensions;
 using Hosting.Security;
+using Hosting.SentryIntegration;
 using Microsoft.AspNetCore.Routing;
 using Infrastructure.Models.Settings.Plugins;
 using Services;
@@ -367,6 +368,7 @@ public class Startup(IConfiguration configuration)
         app.UseDefaultFiles();
         app.UseStaticFiles();
         app.UseAuthentication();
+        app.UseSentryHost();
         // Plugins
         app.UseEFormLocalization();
         // MVC
