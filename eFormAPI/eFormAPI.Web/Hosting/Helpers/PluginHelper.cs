@@ -32,6 +32,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Amazon.S3;
@@ -56,6 +57,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormApi.BasePn.Services;
+using Sentry;
+using SentryIntegration;
 
 public static class PluginHelper
 {
@@ -64,6 +67,28 @@ public static class PluginHelper
     // Activator.CreateInstance cascade being triggered once per enabled plugin on every login.
     private static readonly Lazy<List<IEformPlugin>> _allPluginsCache =
         new(LoadAllPluginsFromDisk, LazyThreadSafetyMode.ExecutionAndPublication);
+
+    // Sharing the host's Sentry assembly puts the plugins' static SentrySdk calls on the host hub,
+    // where they get the request's trace, user and tags and are routed by SentryPluginRouter. A
+    // plugin with a private copy has a separate SDK the host cannot see. With DISABLE_SENTRY the
+    // private copies are kept, so that setting changes nothing for the plugins.
+    private static Type[] SentrySharedTypes =>
+        SentryHostSetup.IsDisabled() ? [] : [typeof(SentrySdk)];
+
+    // The plugin loader silently falls back to the plugin's private Sentry copy when the plugin
+    // references a newer Sentry than the host has; the plugin then bypasses the host hub.
+    private static void WarnIfSentryIsNotShared(Assembly pluginAssembly)
+    {
+        var hostVersion = typeof(SentrySdk).Assembly.GetName().Version;
+        var pluginVersion = pluginAssembly.GetReferencedAssemblies()
+            .FirstOrDefault(x => x.Name == "Sentry")?.Version;
+        if (!SentryHostSetup.IsDisabled() && pluginVersion > hostVersion)
+        {
+            Log.LogException($"Sentry: plugin {pluginAssembly.GetName().Name} references Sentry {pluginVersion}, " +
+                             $"newer than the host's {hostVersion}; it uses a private copy, so its events " +
+                             "carry no trace or user and are not routed by the host");
+        }
+    }
 
     public static List<IEformPlugin> GetPlugins(string connectionString)
     {
@@ -345,11 +370,11 @@ public static class PluginHelper
                         typeof(Core),
                         typeof(GetObjectResponse),
                         typeof(AmazonS3Client)
-                    });
+                    }.Concat(SentrySharedTypes).ToArray());
 
-                var types = loader
-                    .LoadDefaultAssembly()
-                    .GetTypes();
+                var pluginAssembly = loader.LoadDefaultAssembly();
+                WarnIfSentryIsNotShared(pluginAssembly);
+                var types = pluginAssembly.GetTypes();
 
                 foreach (var type in types
                              .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))

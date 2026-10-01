@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Runtime.InteropServices;
 using System.Text;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 
@@ -42,6 +41,7 @@ using eFormCore;
 using Hosting.Enums;
 using Hosting.Helpers;
 using Hosting.Helpers.DbOptions;
+using Hosting.SentryIntegration;
 using Hosting.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -61,7 +61,6 @@ using Microting.eForm.Dto;
 using Newtonsoft.Json;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
-using Sentry;
 
 public class Program
 {
@@ -73,37 +72,6 @@ public class Program
 
     public static void Main(string[] args)
     {
-        var disableSentry = Environment.GetEnvironmentVariable("DISABLE_SENTRY");
-        var sentryDisabled = !string.IsNullOrEmpty(disableSentry) &&
-                            (disableSentry.ToLower() == "true" || disableSentry == "1");
-
-        if (!sentryDisabled)
-        {
-            SentrySdk.Init(options =>
-            {
-                // A Sentry Data Source Name (DSN) is required.
-                // See https://docs.sentry.io/product/sentry-basics/dsn-explainer/
-                // You can set it in the SENTRY_DSN environment variable, or you can set it in code here.
-                options.Dsn = "https://a20910d51f605d94e956163ffbf9dd5a@o4506241219428352.ingest.sentry.io/4506279162019840";
-
-                // When debug is enabled, the Sentry client will emit detailed debugging information to the console.
-                // This might be helpful, or might interfere with the normal operation of your application.
-                // We enable it here for demonstration purposes when first trying Sentry.
-                // You shouldn't do this in your applications unless you're troubleshooting issues with Sentry.
-                options.Debug = false;
-
-                // This option is recommended. It enables Sentry's "Release Health" feature.
-                options.AutoSessionTracking = true;
-
-                // This option is recommended for client applications only. It ensures all threads use the same global scope.
-                // If you're writing a background service of any kind, you should remove this.
-                options.IsGlobalModeEnabled = false;
-
-                // This option will enable Sentry's tracing features. You still need to start transactions and spans.
-                //options.EnableTracing = true;
-            });
-        }
-
         var host = BuildWebHost(args);
         InitializeSettings(host, args).Wait();
 
@@ -346,6 +314,7 @@ public class Program
 
                 EnabledPlugins = PluginHelper.GetPlugins(_defaultConnectionString);
                 DisabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
+                SentryHostSetup.RegisterPlugins(EnabledPlugins.Select(x => x.GetType().Assembly));
 
                 // Enable plugins
                 foreach (var pluginId in startup.PluginsList)
@@ -478,6 +447,20 @@ public class Program
 
     private static IHost BuildWebHost(string[] args)
     {
+        try
+        {
+            return BuildWebHostCore(args);
+        }
+        catch (Exception e)
+        {
+            // No host hub yet that would report the crash.
+            SentryHostSetup.ReportStartupCrash(e, _defaultConnectionString);
+            throw;
+        }
+    }
+
+    private static IHost BuildWebHostCore(string[] args)
+    {
         foreach (var arg in RedactSecretArgs(args))
         {
             Console.WriteLine("info: arg: " + arg);
@@ -550,6 +533,13 @@ public class Program
         return Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
+                if (!SentryHostSetup.IsDisabled())
+                {
+                    // The options are materialized by DI after ConfigureAppConfiguration below has run,
+                    // so the connection string (customer number) is known by then.
+                    webBuilder.UseSentry(options => SentryHostSetup.Configure(options, _defaultConnectionString));
+                }
+
                 webBuilder.ConfigureKestrel(serverOptions =>
                 {
                     serverOptions.Limits.MaxRequestBodySize = 100 * 1024 * 1024;// 100Mb
@@ -594,36 +584,11 @@ public class Program
                     config.AddEfConfiguration(_defaultConnectionString);
                     EnabledPlugins = PluginHelper.GetPlugins(_defaultConnectionString);
                     DisabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
+                    SentryHostSetup.RegisterPlugins(EnabledPlugins.Select(x => x.GetType().Assembly));
 
                     var contextFactory = new BaseDbContextFactory();
                     if (_defaultConnectionString != "...")
                     {
-                        string pattern = @"Database=(\d+)_Angular;";
-                        Match match = Regex.Match(_defaultConnectionString!, pattern);
-
-                        if (match.Success)
-                        {
-                            string numberString = match.Groups[1].Value;
-                            int number = int.Parse(numberString);
-                            var disableSentry = Environment.GetEnvironmentVariable("DISABLE_SENTRY");
-                            var sentryDisabled = !string.IsNullOrEmpty(disableSentry) &&
-                                                (disableSentry.ToLower() == "true" || disableSentry == "1");
-                            if (!sentryDisabled)
-                            {
-                                SentrySdk.ConfigureScope(scope =>
-                                {
-                                    scope.SetTag("customerNo", number.ToString());
-                                    Console.WriteLine("info: customerNo: " + number);
-                                    scope.SetTag("osVersion", Environment.OSVersion.ToString());
-                                    Console.WriteLine("info: osVersion: " + Environment.OSVersion);
-                                    scope.SetTag("osArchitecture", RuntimeInformation.OSArchitecture.ToString());
-                                    Console.WriteLine("info: osArchitecture: " + RuntimeInformation.OSArchitecture);
-                                    scope.SetTag("osName", RuntimeInformation.OSDescription);
-                                    Console.WriteLine("info: osName: " + RuntimeInformation.OSDescription);
-                                });
-                            }
-                        }
-
                         using var dbContext = contextFactory.CreateDbContext([_defaultConnectionString]);
                         foreach (var plugin in EnabledPlugins)
                         {
