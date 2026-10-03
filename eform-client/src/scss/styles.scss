@@ -1254,13 +1254,16 @@ body.theme-eform {
 // Legacy eform-variant nav-header. Workspace overrides this in
 // _workspace-patterns.scss to the tinted color-mix(--md-primary 10%,
 // --md-surface-container) per Design Manual §app-bar.
+// Horizontal padding is a page-gutter token (components/_page-gutter.scss):
+// page content lines up with the burger glyph this padding positions. No
+// bottom border — the bar runs straight into the page (#8102).
 body.theme-eform .nav-header {
   display: flex;
   width: 1920px;
-  padding: var(--520-px, 20px);
+  padding: var(--520-px, 20px) var(--app-bar-padding-x);
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--border, #EBEFF2);
+  border-bottom: none;
   background: var(--bg) !important;
 }
 

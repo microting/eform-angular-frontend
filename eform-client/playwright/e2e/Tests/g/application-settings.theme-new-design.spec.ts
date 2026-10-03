@@ -26,11 +26,55 @@ async function applyNewDesignTheme(page: Page) {
   await expect(page.locator('body')).toHaveClass(/\btheme-light\b/);
 }
 
+const UI_TIMEOUT = 15_000;
+
 function computedStyle(locator: Locator, property: string): Promise<string> {
   return locator.evaluate(
     (el, prop) => getComputedStyle(el).getPropertyValue(prop),
     property
   );
+}
+
+// #8102, both themes: no line under the top bar, no separate sub-header bar,
+// and the page starts right under the top bar, in line with the burger glyph.
+// The left edge is compared as an offset — content from the content area's
+// left edge vs the burger icon from the top bar's — which holds with the side
+// drawer open (content area starts at the drawer edge) and closed, so the
+// shared page's drawer state is never touched.
+async function expectPageFlushUnderTopBar(page: Page, subHeader: Locator, content: Locator[]) {
+  const topBar = page.locator('mat-toolbar.nav-header');
+  await expect(topBar).toHaveCSS('border-bottom-style', 'none');
+  await expect(subHeader).toHaveCSS('border-top-style', 'none');
+  await expect(subHeader).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+
+  // Offsets in px; polled so a layout still settling after the theme switch
+  // is waited out rather than read once.
+  const offsets = () =>
+    page.evaluate(() => {
+      const rect = (el: Element) => el.getBoundingClientRect();
+      const topBar = rect(document.querySelector('mat-toolbar.nav-header')!);
+      return {
+        topBarBottom: topBar.bottom,
+        burger: rect(document.querySelector('mat-toolbar.nav-header button mat-icon')!).left - topBar.left,
+        contentArea: rect(document.querySelector('mat-drawer-container .mat-drawer-content')!).left,
+      };
+    });
+  await expect
+    .poll(async () => {
+      const layout = await offsets();
+      const top = await subHeader.evaluate((el) => el.getBoundingClientRect().top);
+      return Math.abs(top - layout.topBarBottom);
+    }, { timeout: UI_TIMEOUT, message: 'sub-header top vs top bar bottom (px)' })
+    .toBeLessThanOrEqual(1);
+  for (const locator of content) {
+    await expect
+      .poll(async () => {
+        const layout = await offsets();
+        const left = await locator.evaluate((el) => el.getBoundingClientRect().left);
+        return Math.abs(left - layout.contentArea - layout.burger);
+      }, { timeout: UI_TIMEOUT, message: 'content left edge vs burger icon (px)' })
+      .toBeLessThanOrEqual(1);
+  }
 }
 
 test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
@@ -131,6 +175,23 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     await expect(firstHeaderCell()).not.toHaveCSS('text-transform', 'uppercase');
   });
 
+  test('eForm Classic theme starts the page flush under the top bar, in line with the burger', async () => {
+    await expect(page.locator('body')).toHaveClass(/\btheme-eform\b/);
+    const subHeader = page.locator('app-sites .eform-sub-header');
+    await expectPageFlushUnderTopBar(page, subHeader, [subHeader.locator('h2'), grid()]);
+  });
+
+  test('eForm Classic theme keeps the content card flush around full-bleed views', async () => {
+    const contentCard = page.locator('.content-card').first();
+    // Stand-in for the backend-configuration calendar's root.
+    await withContentCardFixture('<div class="calendar-shell"></div>', async () => {
+      await expect(contentCard).toHaveCSS('padding-left', '0px');
+      await expect(contentCard).toHaveCSS('padding-right', '0px');
+    });
+    // 20px top-bar padding + 2px burger inset around its 24px icon (28px button).
+    await expect(contentCard).toHaveCSS('padding-left', '22px');
+  });
+
   test('new design uses Nunito Sans as the body font', async () => {
     await applyNewDesignTheme(page);
     await expect(page.locator('body')).toHaveCSS('font-family', /^["']?Nunito Sans\b/);
@@ -183,9 +244,20 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
 
   test('new design lays out the content card and sub-header', async () => {
     const contentCard = page.locator('.content-card').first();
-    await expect(contentCard).toHaveCSS('padding-left', '24px');
-    await expect(contentCard).toHaveCSS('padding-right', '24px');
+    // 20px top-bar padding + 9px burger inset around its 24px icon (42px button).
+    await expect(contentCard).toHaveCSS('padding-left', '29px');
+    await expect(contentCard).toHaveCSS('padding-right', '29px');
+    await expect(contentCard).toHaveCSS('padding-top', '0px');
+    await expect(contentCard).toHaveCSS('margin-top', '0px');
+    await expect(contentCard).toHaveCSS('padding-bottom', '24px');
     await expect(page.locator('app-sites .eform-sub-header')).toHaveCSS('padding-left', '0px');
+  });
+
+  test('new design starts the page flush under the top bar, in line with the burger', async () => {
+    // The side drawer keeps its edge (border + shadow) — only the bar's line goes.
+    await expect(page.locator('mat-drawer')).toHaveCSS('border-right-style', 'solid');
+    const subHeader = page.locator('app-sites .eform-sub-header');
+    await expectPageFlushUnderTopBar(page, subHeader, [subHeader.locator('h2'), grid()]);
   });
 
   test('new design keeps the content card flush around full-bleed views', async () => {
@@ -193,9 +265,10 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     // Stand-in for the backend-configuration calendar's root.
     await withContentCardFixture('<div class="calendar-shell"></div>', async () => {
       await expect(contentCard).toHaveCSS('padding-left', '0px');
-      await expect(contentCard).toHaveCSS('padding-top', '0px');
+      await expect(contentCard).toHaveCSS('padding-bottom', '0px');
     });
-    await expect(contentCard).toHaveCSS('padding-left', '24px');
+    await expect(contentCard).toHaveCSS('padding-left', '29px');
+    await expect(contentCard).toHaveCSS('padding-bottom', '24px');
   });
 
   test('new design keeps time-planning grid dividers off the frame edges', async () => {
