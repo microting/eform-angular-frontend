@@ -37,6 +37,7 @@ using eFormAPI.Web.Services.Mailing.EmailService;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -137,7 +138,8 @@ namespace eFormAPI.Web.Integration.Tests.Services
                 Substitute.For<IEmailService>(),
                 _httpContextAccessor,
                 Substitute.For<IWorkerAccountLookup>(),
-                claimsService);
+                claimsService,
+                Substitute.For<ILogger<AccountService>>());
 
             _authService = new AuthService(
                 Options.Create(new EformTokenOptions
@@ -212,8 +214,10 @@ namespace eFormAPI.Web.Integration.Tests.Services
         /// </summary>
         private async Task AssertLockoutLiftedAndCanLogIn(EformUser user, string newPassword)
         {
-            var stored = await _userManager.FindByIdAsync(user.Id.ToString());
-            Assert.That(stored!.LockoutEnd, Is.Null, "the password change must end the lockout");
+            // Read past the change tracker: the shared DbContext already tracks this user, so
+            // a tracked lookup would return the in-memory entity, not what was saved.
+            var stored = await DbContext.Users.AsNoTracking().SingleAsync(x => x.Id == user.Id);
+            Assert.That(stored.LockoutEnd, Is.Null, "the password change must end the lockout");
             Assert.That(stored.AccessFailedCount, Is.Zero, "the password change must zero the failed attempts");
 
             var login = await _authService.AuthenticateUser(

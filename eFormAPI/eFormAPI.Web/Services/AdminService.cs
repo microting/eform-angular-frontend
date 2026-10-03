@@ -459,7 +459,7 @@ public class AdminService(
             // password
             if (!string.IsNullOrEmpty(userRegisterModel.Password) && userRegisterModel.Password != " ")
             {
-                await userManager.ReplacePasswordAsync(user, userRegisterModel.Password);
+                await userManager.ReplacePasswordAsync(user, userRegisterModel.Password, logger);
             }
 
             // change role
