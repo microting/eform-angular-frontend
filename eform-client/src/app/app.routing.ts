@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {IsAuthGuard} from 'src/app/common/guards';
-import {FullLayoutComponent, SimpleLayoutComponent, ConnectionSetupComponent} from './components';
+import {FullLayoutComponent, SimpleLayoutComponent, ConnectionSetupComponent, NotFoundComponent} from './components';
 import {UserClaimsEnum} from 'src/app/common/const';
 
 export const routes: Routes = [
@@ -126,8 +126,21 @@ export const routes: Routes = [
       }
     ],
   },
-  // otherwise redirect to home
-  {path: '**', redirectTo: ''},
+  // Anything else: a not-found page that keeps the URL, instead of silently
+  // redirecting to My eForms (#8103). It must stay the last app route —
+  // PluginsModule is also imported eagerly by AppModule, so the plugin routes
+  // are appended after it at root level, where nothing can reach them.
+  {
+    path: '**',
+    component: FullLayoutComponent,
+    children: [
+      {
+        path: '',
+        canActivate: [IsAuthGuard],
+        component: NotFoundComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({

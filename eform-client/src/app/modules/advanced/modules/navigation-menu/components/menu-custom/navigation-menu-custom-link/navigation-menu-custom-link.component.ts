@@ -5,6 +5,7 @@ import {
 } from 'src/app/common/const';
 import {CommonDictionaryModel, NavigationMenuItemModel,} from 'src/app/common/models';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MenuLinkRouteService} from '../../../menu-link-route.service';
 
 @Component({
     selector: 'app-navigation-menu-custom-link',
@@ -15,11 +16,16 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 export class NavigationMenuCustomLinkComponent implements OnInit {
   dialogRef = inject<MatDialogRef<NavigationMenuCustomLinkComponent>>(MatDialogRef);
   availableSecurityGroups = inject(MAT_DIALOG_DATA) ?? [];
+  private menuLinkRouteService = inject(MenuLinkRouteService);
 
   customLinkModel: NavigationMenuItemModel = new NavigationMenuItemModel();
 
   ngOnInit(): void {
     this.customLinkModel = this.generateLanguages(new NavigationMenuItemModel());}
+
+  get linkHasNoRoute(): boolean {
+    return this.menuLinkRouteService.hasNoRoute(this.customLinkModel, []);
+  }
 
   addCustomLink() {
     const link = {

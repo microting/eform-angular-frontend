@@ -447,4 +447,9 @@ export const csCZ = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Nahlásit chybu',
+  'Page not found': 'Stránka nebyla nalezena',
+  'No page exists at this address': 'Na této adrese žádná stránka neexistuje',
+  'Go to the start page': 'Přejít na úvodní stránku',
+  'This link matches no page in the app': 'Tento odkaz nevede na žádnou stránku aplikace',
+  'Restore default link': 'Obnovit výchozí odkaz',
 };

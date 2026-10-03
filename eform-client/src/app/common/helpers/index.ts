@@ -15,3 +15,4 @@ export * from './fix-translations.helper';
 export * from './math.helper';
 export * from './dialog-config.helper';
 export * from './array.helper';
+export * from './route-match.helper';

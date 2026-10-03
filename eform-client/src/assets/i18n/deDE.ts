@@ -447,4 +447,9 @@ export const deDE = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Fehler melden',
+  'Page not found': 'Seite nicht gefunden',
+  'No page exists at this address': 'Unter dieser Adresse gibt es keine Seite',
+  'Go to the start page': 'Zur Startseite',
+  'This link matches no page in the app': 'Dieser Link führt zu keiner Seite der Anwendung',
+  'Restore default link': 'Standardlink wiederherstellen',
 };

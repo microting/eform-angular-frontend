@@ -447,4 +447,9 @@ export const bgBG = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Докладвай за грешка',
+  'Page not found': 'Страницата не е намерена',
+  'No page exists at this address': 'На този адрес няма страница',
+  'Go to the start page': 'Към началната страница',
+  'This link matches no page in the app': 'Тази връзка не води до страница в приложението',
+  'Restore default link': 'Възстанови връзката по подразбиране',
 };

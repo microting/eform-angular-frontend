@@ -447,4 +447,9 @@ export const elGR = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Αναφορά σφάλματος',
+  'Page not found': 'Η σελίδα δεν βρέθηκε',
+  'No page exists at this address': 'Δεν υπάρχει σελίδα σε αυτή τη διεύθυνση',
+  'Go to the start page': 'Μετάβαση στην αρχική σελίδα',
+  'This link matches no page in the app': 'Αυτός ο σύνδεσμος δεν οδηγεί σε σελίδα της εφαρμογής',
+  'Restore default link': 'Επαναφορά προεπιλεγμένου συνδέσμου',
 };

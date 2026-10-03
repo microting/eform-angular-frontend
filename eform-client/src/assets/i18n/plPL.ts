@@ -447,4 +447,9 @@ export const plPL = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Zgłoś błąd',
+  'Page not found': 'Nie znaleziono strony',
+  'No page exists at this address': 'Pod tym adresem nie ma strony',
+  'Go to the start page': 'Przejdź do strony startowej',
+  'This link matches no page in the app': 'Ten link nie prowadzi do żadnej strony aplikacji',
+  'Restore default link': 'Przywróć domyślny link',
 };

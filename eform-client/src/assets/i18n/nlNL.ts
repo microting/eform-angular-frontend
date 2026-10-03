@@ -446,4 +446,9 @@ export const nlNL = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Een fout melden',
+  'Page not found': 'Pagina niet gevonden',
+  'No page exists at this address': 'Op dit adres bestaat geen pagina',
+  'Go to the start page': 'Naar de startpagina',
+  'This link matches no page in the app': 'Deze link verwijst naar geen enkele pagina in de app',
+  'Restore default link': 'Standaardlink herstellen',
 };
