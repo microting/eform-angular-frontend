@@ -43,6 +43,7 @@ using eFormAPI.Web.Services.Mailing.EmailService;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace eFormAPI.Web.Integration.Tests.Services
 {
@@ -91,7 +92,8 @@ namespace eFormAPI.Web.Integration.Tests.Services
                 _emailService,
                 _httpContextAccessor,
                 _workerAccountLookup,
-                _claimsService);
+                _claimsService,
+                Substitute.For<ILogger<AccountService>>());
         }
 
         [Test]
@@ -238,6 +240,9 @@ namespace eFormAPI.Web.Integration.Tests.Services
             _userManager.IsInRoleAsync(target, EformRole.Admin).Returns(isAdmin);
             _userManager.RemovePasswordAsync(target).Returns(IdentityResult.Success);
             _userManager.AddPasswordAsync(target, Arg.Any<string>()).Returns(IdentityResult.Success);
+            // Successful resets now lift the lockout; an unstubbed Task<IdentityResult> on the
+            // substitute yields a null result, which LiftLockoutAsync would dereference.
+            _userManager.ResetAccessFailedCountAsync(target).Returns(IdentityResult.Success);
             _workerAccountLookup.IsLiveWorkerAsync(email).Returns(isLiveWorker);
             // Explicit, not NSubstitute's auto-value: an unconfigured Returns<List<T>> comes
             // back null, not a real empty instance, so leaving this out would NRE rather than

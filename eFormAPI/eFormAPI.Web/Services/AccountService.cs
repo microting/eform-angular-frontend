@@ -30,6 +30,7 @@ using eFormAPI.Web.Infrastructure.Models.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 namespace eFormAPI.Web.Services;
@@ -69,7 +70,8 @@ public class AccountService(
     IEmailService emailService,
     IHttpContextAccessor httpContextAccessor,
     IWorkerAccountLookup workerAccountLookup,
-    IClaimsService claimsService)
+    IClaimsService claimsService,
+    ILogger<AccountService> logger)
     : IAccountService
 {
     public async Task<UserInfoViewModel> GetUserInfo()
@@ -194,6 +196,7 @@ public class AccountService(
             return new OperationResult(false, string.Join(" ", errors));
         }
 
+        await userManager.LiftLockoutAsync(user, logger);
         return new OperationResult(true, localizationService.GetString("PasswordSuccessfullyUpdated"));
     }
 
@@ -256,8 +259,7 @@ public class AccountService(
             }
         }
 
-        await userManager.RemovePasswordAsync(user);
-        var result = await userManager.AddPasswordAsync(user, model.NewPassword);
+        var result = await userManager.ReplacePasswordAsync(user, model.NewPassword, logger);
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(x => x.Description).ToArray();
@@ -332,6 +334,7 @@ public class AccountService(
         var result = await userManager.ResetPasswordAsync(user, model.Code, model.NewPassword);
         if (result.Succeeded)
         {
+            await userManager.LiftLockoutAsync(user, logger);
             return new OperationResult(true);
         }
 
