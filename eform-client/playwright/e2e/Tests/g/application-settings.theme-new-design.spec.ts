@@ -204,12 +204,15 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     // time-planning's Download excel "Tags" field, whose label the chip used
     // to cover (#8101). Material's form-field and ng-select styles are already
     // loaded (login page, sites grid), so the label and chip lay out as real.
+    // A no-label field renders no <label> at all, as Material does.
     const mtxField = (id: string, wrapperClasses: string) =>
       `<div id="${id}" class="mat-mdc-form-field mat-mdc-form-field-type-mtx-select">` +
       `<div class="mat-mdc-text-field-wrapper mdc-text-field ${wrapperClasses}">` +
       '<div class="mat-mdc-form-field-flex"><div class="mat-mdc-form-field-infix">' +
-      '<label class="mdc-floating-label mat-mdc-floating-label mdc-floating-label--float-above">' +
-      '<mat-label>Tags</mat-label></label>' +
+      (wrapperClasses.includes('mdc-text-field--no-label')
+        ? ''
+        : '<label class="mdc-floating-label mat-mdc-floating-label mdc-floating-label--float-above">' +
+          '<mat-label>Tags</mat-label></label>') +
       '<mtx-select><div class="ng-select ng-select-multiple"><div class="ng-select-container">' +
       '<div class="ng-value-container"><div class="ng-value"><span class="ng-value-label">Team A</span></div></div>' +
       '</div></div></mtx-select>' +
