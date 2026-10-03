@@ -60,6 +60,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Localization;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Abstractions.Translation;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Localization;
@@ -448,7 +449,7 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IEformCaseReportService, EformCaseReportService>();
         services.AddScoped<IWordService, WordService>();
         services.AddScoped<ITemplateVisualEditorService, EFormVisualEditorService>();
-        services.AddScoped<ITranslationService, TranslationService>();
+        services.AddSingleton<ITranslationService, TranslationService>();
         services.AddScoped<ICmsService, CmsService>();
     }
 
