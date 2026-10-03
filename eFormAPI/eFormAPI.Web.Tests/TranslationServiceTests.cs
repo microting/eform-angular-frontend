@@ -1,4 +1,7 @@
 using System.Net.Http;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using eFormAPI.Web.Infrastructure.Models;
 using NUnit.Framework;
 using eFormAPI.Web.Services;
 
@@ -22,5 +25,24 @@ public class TranslationServiceTests
         var encoded = new FormUrlEncodedContent(form).ReadAsStringAsync().Result;
         Assert.That(encoded, Does.Contain("q=Tank+4"));
         Assert.That(encoded, Does.Contain("target=de"));
+    }
+
+    [TestCase(null)]
+    [TestCase("")]
+    public async Task TranslateText_WithoutApiKey_IsNotConfigured_AndFailsWithoutCallingGoogle(string apiKey)
+    {
+        var service = new TranslationService(Options.Create(new GoogleTranslateOptions { ApiKey = apiKey }));
+
+        Assert.That(service.IsConfigured, Is.False);
+        var result = await service.TranslateText("Tank 4", "da", "en-US");
+        Assert.That(result.Success, Is.False);
+    }
+
+    [Test]
+    public void IsConfigured_WithApiKey_IsTrue()
+    {
+        var service = new TranslationService(Options.Create(new GoogleTranslateOptions { ApiKey = "realkey" }));
+
+        Assert.That(service.IsConfigured, Is.True);
     }
 }
