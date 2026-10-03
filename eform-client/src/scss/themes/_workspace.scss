@@ -210,8 +210,9 @@ $workspace-tokens: (
       mtx-grid-border: 1px solid #c4c7c5,
       mtx-grid-radius: 4px,
       content-card-bg: #ffffff,
-      content-card-radius: 10px,
-      content-card-margin: 16px,
+      // Flush: page content starts right under the top bar (#8102).
+      content-card-radius: 0,
+      content-card-margin: 0px,
       table-row-hover: #f8fafd,
       sort-indicator-bg: #d3e3fd,
       sort-indicator-arrow: #0b57d0,
@@ -358,8 +359,9 @@ $workspace-tokens: (
       mtx-grid-border: 1px solid #c4c7c5,
       mtx-grid-radius: 4px,
       content-card-bg: #1e1f20,
-      content-card-radius: 10px,
-      content-card-margin: 16px,
+      // Flush: page content starts right under the top bar (#8102).
+      content-card-radius: 0,
+      content-card-margin: 0px,
       table-row-hover: #1e1f20,
       sort-indicator-bg: #0842a0,
       sort-indicator-arrow: #a8c7fa,
