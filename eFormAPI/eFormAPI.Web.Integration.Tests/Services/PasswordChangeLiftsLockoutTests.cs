@@ -244,8 +244,8 @@ namespace eFormAPI.Web.Integration.Tests.Services
             await AssertLockoutLiftedAndCanLogIn(user, newPassword);
         }
 
-        // The lockout is lifted only because the reset proved the right to set the password;
-        // a reset that fails proves nothing and must leave it in place.
+        // The lockout is lifted only because the reset proved the right to set the password.
+        // A reset that fails proves nothing and must leave it in place.
         [Test]
         public async Task ResetPassword_WithAnInvalidToken_KeepsTheLockout()
         {
