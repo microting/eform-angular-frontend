@@ -488,4 +488,9 @@ export const da = {
   of: 'af',
   packages: 'pakker',
   'Report a bug': 'Rapportér en fejl',
+  'Page not found': 'Siden blev ikke fundet',
+  'No page exists at this address': 'Der findes ingen side på denne adresse',
+  'Go to the start page': 'Gå til startsiden',
+  'This link matches no page in the app': 'Linket peger ikke på en side i systemet',
+  'Restore default link': 'Gendan standardlink',
 };

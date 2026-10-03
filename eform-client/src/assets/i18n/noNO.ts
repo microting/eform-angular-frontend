@@ -446,4 +446,9 @@ export const noNO = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Rapporter en feil',
+  'Page not found': 'Siden ble ikke funnet',
+  'No page exists at this address': 'Det finnes ingen side på denne adressen',
+  'Go to the start page': 'Gå til startsiden',
+  'This link matches no page in the app': 'Lenken peker ikke til en side i systemet',
+  'Restore default link': 'Gjenopprett standardlenke',
 };

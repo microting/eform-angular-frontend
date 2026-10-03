@@ -26,6 +26,7 @@ import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Store} from '@ngrx/store';
 import {loadAppMenu, selectCurrentUserLocale} from 'src/app/state';
+import {MenuLinkRouteService} from '../../menu-link-route.service';
 
 @AutoUnsubscribe()
 @Component({
@@ -44,6 +45,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private store = inject(Store);
+  private menuLinkRouteService = inject(MenuLinkRouteService);
 
 
   @ViewChild('resetMenuModal')
@@ -154,7 +156,10 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     secondLevelIndex?: number | null
   ) {
     const modalId = this.dialog.open(NavigationMenuItemEditComponent,
-      dialogConfigHelper(this.overlay, {model, firstLevelIndex, secondLevelIndex, securityGroups: this.securityGroups})).id;
+      dialogConfigHelper(this.overlay, {
+        model, firstLevelIndex, secondLevelIndex, securityGroups: this.securityGroups,
+        menuTemplates: this.navigationMenuModel.menuTemplates,
+      })).id;
     this.itemEditConfirmSub$ = this.dialog.getDialogById(modalId).componentInstance.itemEditConfirm
       .subscribe(x => this.onItemEditConfirm(x, modalId));
   }
@@ -229,6 +234,10 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
 
   menuItemModelChange($event: any[]) {
     this.navigationMenuModel.actualMenu = [...$event];
+  }
+
+  linkHasNoRoute(item: NavigationMenuItemModel): boolean {
+    return this.menuLinkRouteService.hasNoRoute(item, this.navigationMenuModel.menuTemplates);
   }
 
   getSecurityGroupNames(ids: number[]): string[] {

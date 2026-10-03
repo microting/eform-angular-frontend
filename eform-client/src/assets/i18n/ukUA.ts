@@ -447,4 +447,9 @@ export const ukUA = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Повідомити про помилку',
+  'Page not found': 'Сторінку не знайдено',
+  'No page exists at this address': 'За цією адресою немає сторінки',
+  'Go to the start page': 'Перейти на початкову сторінку',
+  'This link matches no page in the app': 'Це посилання не веде на жодну сторінку застосунку',
+  'Restore default link': 'Відновити типове посилання',
 };

@@ -447,4 +447,9 @@ export const svSE = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Rapportera ett fel',
+  'Page not found': 'Sidan hittades inte',
+  'No page exists at this address': 'Det finns ingen sida på den här adressen',
+  'Go to the start page': 'Gå till startsidan',
+  'This link matches no page in the app': 'Länken leder inte till någon sida i systemet',
+  'Restore default link': 'Återställ standardlänk',
 };

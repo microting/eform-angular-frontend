@@ -447,4 +447,9 @@ export const esES = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Informar de un error',
+  'Page not found': 'Página no encontrada',
+  'No page exists at this address': 'No existe ninguna página en esta dirección',
+  'Go to the start page': 'Ir a la página de inicio',
+  'This link matches no page in the app': 'Este enlace no lleva a ninguna página de la aplicación',
+  'Restore default link': 'Restaurar enlace predeterminado',
 };

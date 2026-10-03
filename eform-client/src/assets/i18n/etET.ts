@@ -447,4 +447,9 @@ export const etET = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Teata veast',
+  'Page not found': 'Lehte ei leitud',
+  'No page exists at this address': 'Sellel aadressil lehte ei ole',
+  'Go to the start page': 'Mine avalehele',
+  'This link matches no page in the app': 'See link ei vii ühelegi rakenduse lehele',
+  'Restore default link': 'Taasta vaikelink',
 };

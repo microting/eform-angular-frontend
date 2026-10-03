@@ -83,6 +83,11 @@
             <ng-container *ngIf="menuItem.securityGroupsIds ">
               <span class="microting-uid" *ngIf="menuItem.securityGroupsIds.length > 0">{{' (' + getSecurityGroupNames(menuItem.securityGroupsIds).join(', ')+')' }}</span>
             </ng-container>
+            <mat-icon
+              *ngIf="linkHasNoRoute(menuItem)"
+              class="text-warning ml-2 menu-item-no-route"
+              [matTooltip]="'This link matches no page in the app' | translate"
+            >warning</mat-icon>
             <div class="spacer"></div>
             <button mat-icon-button (click)="onItemEdit(menuItem, firstLevelIndex)" id="editBtn" color="accent">
               <mat-icon>edit</mat-icon>
@@ -108,6 +113,7 @@
               (itemDelete)="onItemDelete($event, firstLevelIndex, secondLevelIndex)"
               (itemEdit)="onItemEdit($event, firstLevelIndex, secondLevelIndex)"
               [item]="menuItemChild"
+              [linkHasNoRoute]="linkHasNoRoute(menuItemChild)"
               [firstLevelIndex]="firstLevelIndex"
               [secondLevelIndex]="secondLevelIndex"
             ></app-navigation-menu-item>

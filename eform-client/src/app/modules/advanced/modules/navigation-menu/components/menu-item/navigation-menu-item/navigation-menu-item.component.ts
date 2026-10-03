@@ -19,6 +19,7 @@ export class NavigationMenuItemComponent implements OnInit {
   @Input() item: NavigationMenuItemModel = new NavigationMenuItemModel();
   @Input() firstLevelIndex: number;
   @Input() secondLevelIndex: number | null;
+  @Input() linkHasNoRoute = false;
   @Output()
   itemDelete: EventEmitter<NavigationMenuItemModel> = new EventEmitter<NavigationMenuItemModel>();
   @Output()
