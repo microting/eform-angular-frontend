@@ -11,6 +11,9 @@
     <mat-icon
       *ngIf="linkHasNoRoute"
       class="text-warning ml-2 menu-item-no-route"
+      role="img"
+      aria-hidden="false"
+      [attr.aria-label]="'This link matches no page in the app' | translate"
       [matTooltip]="'This link matches no page in the app' | translate"
     >warning</mat-icon>
     <div class="spacer"></div>
