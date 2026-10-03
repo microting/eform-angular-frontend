@@ -194,6 +194,7 @@ public class AccountService(
             return new OperationResult(false, string.Join(" ", errors));
         }
 
+        await userManager.LiftLockoutAsync(user);
         return new OperationResult(true, localizationService.GetString("PasswordSuccessfullyUpdated"));
     }
 
@@ -256,8 +257,7 @@ public class AccountService(
             }
         }
 
-        await userManager.RemovePasswordAsync(user);
-        var result = await userManager.AddPasswordAsync(user, model.NewPassword);
+        var result = await userManager.ReplacePasswordAsync(user, model.NewPassword);
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(x => x.Description).ToArray();
@@ -332,6 +332,7 @@ public class AccountService(
         var result = await userManager.ResetPasswordAsync(user, model.Code, model.NewPassword);
         if (result.Succeeded)
         {
+            await userManager.LiftLockoutAsync(user);
             return new OperationResult(true);
         }
 

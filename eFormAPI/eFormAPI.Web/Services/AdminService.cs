@@ -37,6 +37,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abstractions;
 using Hosting.Helpers.DbOptions;
+using Hosting.Security;
 using Infrastructure.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -458,8 +459,7 @@ public class AdminService(
             // password
             if (!string.IsNullOrEmpty(userRegisterModel.Password) && userRegisterModel.Password != " ")
             {
-                await userManager.RemovePasswordAsync(user);
-                await userManager.AddPasswordAsync(user, userRegisterModel.Password);
+                await userManager.ReplacePasswordAsync(user, userRegisterModel.Password);
             }
 
             // change role
