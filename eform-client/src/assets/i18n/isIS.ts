@@ -447,4 +447,9 @@ export const isIS = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Tilkynna villu',
+  'Page not found': 'Síða fannst ekki',
+  'No page exists at this address': 'Engin síða er á þessu vistfangi',
+  'Go to the start page': 'Fara á upphafssíðu',
+  'This link matches no page in the app': 'Þessi tengill vísar ekki á neina síðu í kerfinu',
+  'Restore default link': 'Endurheimta sjálfgefinn tengil',
 };

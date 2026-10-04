@@ -447,4 +447,9 @@ export const frFR = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Signaler un bug',
+  'Page not found': 'Page introuvable',
+  'No page exists at this address': 'Aucune page n\'existe à cette adresse',
+  'Go to the start page': 'Aller à la page d\'accueil',
+  'This link matches no page in the app': 'Ce lien ne mène à aucune page de l\'application',
+  'Restore default link': 'Restaurer le lien par défaut',
 };

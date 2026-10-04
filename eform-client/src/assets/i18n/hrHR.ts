@@ -447,4 +447,9 @@ export const hrHR = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Prijavi pogrešku',
+  'Page not found': 'Stranica nije pronađena',
+  'No page exists at this address': 'Na ovoj adresi ne postoji stranica',
+  'Go to the start page': 'Idi na početnu stranicu',
+  'This link matches no page in the app': 'Ova poveznica ne vodi ni na jednu stranicu aplikacije',
+  'Restore default link': 'Vrati zadanu poveznicu',
 };

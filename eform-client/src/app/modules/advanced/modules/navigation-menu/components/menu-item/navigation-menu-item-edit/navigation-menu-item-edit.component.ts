@@ -2,11 +2,14 @@ import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
+  NavigationMenuTemplateItemModel,
+  NavigationMenuTemplateModel,
 } from 'src/app/common/models/navigation-menu';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import { CommonDictionaryModel } from 'src/app/common/models';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MenuLinkRouteService} from '../../../menu-link-route.service';
 
 @Component({
     selector: 'app-navigation-menu-item-edit',
@@ -16,6 +19,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 })
 export class NavigationMenuItemEditComponent implements OnInit {
   dialogRef = inject<MatDialogRef<NavigationMenuItemEditComponent>>(MatDialogRef);
+  private menuLinkRouteService = inject(MenuLinkRouteService);
 
   availableSecurityGroups: CommonDictionaryModel[] = [];
   itemEditConfirm: EventEmitter<
@@ -25,6 +29,9 @@ export class NavigationMenuItemEditComponent implements OnInit {
   firstLevelIndex: number;
   secondLevelIndex: number | null;
   translationsArray: FormArray = new FormArray([]);
+  menuTemplates: NavigationMenuTemplateModel[] = [];
+  /** The plugin template item this entry came from, if any: its link is the default. */
+  defaultLinkItem: NavigationMenuTemplateItemModel | null = null;
 
   get menuItemType() {
     return NavigationMenuItemTypeEnum;
@@ -37,6 +44,7 @@ export class NavigationMenuItemEditComponent implements OnInit {
     secondLevelIndex?: number;
     securityGroups: [
     ];
+    menuTemplates?: NavigationMenuTemplateModel[];
 }>(MAT_DIALOG_DATA);
 
     this.availableSecurityGroups = model.securityGroups;
@@ -54,6 +62,17 @@ export class NavigationMenuItemEditComponent implements OnInit {
     }
     this.firstLevelIndex = model.firstLevelIndex;
     this.secondLevelIndex = model.secondLevelIndex;
+    this.menuTemplates = model.menuTemplates ?? [];
+    this.defaultLinkItem = this.menuLinkRouteService.pluginTemplateItem(this.item, this.menuTemplates);
+  }
+
+  get linkHasNoRoute(): boolean {
+    return this.menuLinkRouteService.hasNoRoute(this.item, this.menuTemplates);
+  }
+
+  restoreDefaultLink() {
+    this.item.link = this.defaultLinkItem.link;
+    this.item.isInternalLink = true;
   }
 
   ngOnInit(): void {}

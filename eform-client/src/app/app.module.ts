@@ -24,6 +24,7 @@ import {
   SimpleLayoutComponent,
   SpinnerComponent,
   ConnectionSetupComponent,
+  NotFoundComponent,
 } from './components';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {EformSharedModule} from './common/modules/eform-shared/eform-shared.module';
@@ -91,6 +92,7 @@ export function initLocaleFactory(authStateService: AuthStateService) {
     NavigationComponent,
     SpinnerComponent,
     ConnectionSetupComponent,
+    NotFoundComponent,
   ],
   imports: [
     NgxMaterialTimepickerModule,

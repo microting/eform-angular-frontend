@@ -457,4 +457,9 @@ export const enUS = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Report a bug',
+  'Page not found': 'Page not found',
+  'No page exists at this address': 'No page exists at this address',
+  'Go to the start page': 'Go to the start page',
+  'This link matches no page in the app': 'This link matches no page in the app',
+  'Restore default link': 'Restore default link',
 };
