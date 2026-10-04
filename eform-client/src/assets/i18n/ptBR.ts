@@ -447,4 +447,9 @@ export const ptBR = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Relatar um erro',
+  'Page not found': 'Página não encontrada',
+  'No page exists at this address': 'Não existe nenhuma página neste endereço',
+  'Go to the start page': 'Ir para a página inicial',
+  'This link matches no page in the app': 'Este link não leva a nenhuma página do aplicativo',
+  'Restore default link': 'Restaurar link padrão',
 };

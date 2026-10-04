@@ -447,4 +447,9 @@ export const itIT = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Segnala un bug',
+  'Page not found': 'Pagina non trovata',
+  'No page exists at this address': 'Non esiste alcuna pagina a questo indirizzo',
+  'Go to the start page': 'Vai alla pagina iniziale',
+  'This link matches no page in the app': 'Questo link non porta a nessuna pagina dell\'applicazione',
+  'Restore default link': 'Ripristina link predefinito',
 };

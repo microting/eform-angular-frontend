@@ -447,4 +447,9 @@ export const fiFI = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Ilmoita virheestä',
+  'Page not found': 'Sivua ei löytynyt',
+  'No page exists at this address': 'Tässä osoitteessa ei ole sivua',
+  'Go to the start page': 'Siirry aloitussivulle',
+  'This link matches no page in the app': 'Tämä linkki ei johda millekään sovelluksen sivulle',
+  'Restore default link': 'Palauta oletuslinkki',
 };

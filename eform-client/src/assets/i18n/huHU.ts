@@ -447,4 +447,9 @@ export const huHU = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Hiba bejelentése',
+  'Page not found': 'Az oldal nem található',
+  'No page exists at this address': 'Ezen a címen nincs oldal',
+  'Go to the start page': 'Ugrás a kezdőlapra',
+  'This link matches no page in the app': 'Ez a hivatkozás nem vezet az alkalmazás egyik oldalára sem',
+  'Restore default link': 'Alapértelmezett hivatkozás visszaállítása',
 };

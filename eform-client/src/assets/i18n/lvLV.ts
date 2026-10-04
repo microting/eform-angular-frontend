@@ -447,4 +447,9 @@ export const lvLV = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Ziņot par kļūdu',
+  'Page not found': 'Lapa nav atrasta',
+  'No page exists at this address': 'Šajā adresē nav nevienas lapas',
+  'Go to the start page': 'Doties uz sākumlapu',
+  'This link matches no page in the app': 'Šī saite neved uz nevienu lietotnes lapu',
+  'Restore default link': 'Atjaunot noklusējuma saiti',
 };

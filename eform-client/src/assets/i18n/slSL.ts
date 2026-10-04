@@ -447,4 +447,9 @@ export const slSL = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Prijavi napako',
+  'Page not found': 'Strani ni mogoče najti',
+  'No page exists at this address': 'Na tem naslovu ni strani',
+  'Go to the start page': 'Pojdi na začetno stran',
+  'This link matches no page in the app': 'Ta povezava ne vodi na nobeno stran aplikacije',
+  'Restore default link': 'Obnovi privzeto povezavo',
 };

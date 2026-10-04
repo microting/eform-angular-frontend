@@ -55,4 +55,48 @@ describe('NavigationMenuItemEditComponent', () => {
     
     expect(iconPreview).toBeFalsy();
   });
+
+  describe('link checks (#8103)', () => {
+    // The TestBed router has no routes, so every internal link matches none.
+    beforeEach(() => {
+      component.item = {...component.item, type: component.menuItemType.Link, isInternalLink: true};
+    });
+
+    it('warns about an internal link that matches no route', () => {
+      component.item.link = '/no-such-page';
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('#editLinkNoRouteWarning')).toBeTruthy();
+    });
+
+    it('does not check an external link', () => {
+      component.item.link = 'https://example.com';
+      component.item.isInternalLink = false;
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('#editLinkNoRouteWarning')).toBeFalsy();
+    });
+
+    it('does not warn about a menu template\'s default link', () => {
+      component.item.link = '/plugins/example-pn/overview';
+      component.menuTemplates = [
+        {id: 1, name: 'Main application', collapsed: false, items: []},
+        {id: 7, name: 'Example plugin', collapsed: false, items: [
+          {id: 42, name: 'Overview', link: '/plugins/example-pn/overview', collapsed: false, translations: []},
+        ]},
+      ];
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('#editLinkNoRouteWarning')).toBeFalsy();
+    });
+
+    it('restores the default link of the plugin template item', () => {
+      component.item.link = 'example-pn/overview';
+      component.defaultLinkItem = {id: 42, name: 'Overview', link: '/plugins/example-pn/overview', collapsed: false, translations: []};
+      fixture.detectChanges();
+      const restoreBtn: HTMLButtonElement = fixture.nativeElement.querySelector('#editLinkRestoreDefaultBtn');
+      expect(restoreBtn).toBeTruthy();
+      restoreBtn.click();
+      fixture.detectChanges();
+      expect(component.item.link).toBe('/plugins/example-pn/overview');
+      expect(fixture.nativeElement.querySelector('#editLinkRestoreDefaultBtn')).toBeFalsy();
+    });
+  });
 });
