@@ -23,6 +23,9 @@
           name="customLinkLink"
           [(ngModel)]="customLinkModel.link"
         >
+        <mat-hint id="customLinkNoRouteWarning" class="text-warning" *ngIf="linkHasNoRoute">
+          {{ 'This link matches no page in the app' | translate }}
+        </mat-hint>
       </mat-form-field>
       <mat-checkbox
         id="customLinkIsInternalLink"

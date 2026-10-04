@@ -1966,6 +1966,25 @@ body.theme-workspace {
     }
   }
 
+  // A FILLED mtx-select field with a <mat-label> outside a toolbar — plugin
+  // dialogs and forms whose module drops the app's `appearance: 'outline'`
+  // default (e.g. time-planning's Download excel "Tags"). A filled label
+  // floats to the top of the infix, not into an outline notch, so the zero
+  // top padding above leaves the selected chips on top of it. Give the
+  // floated label (≈14px at 11px) its own row and shrink the ng-select row
+  // to 32px, so the field grows by 6px instead of 14px. Toolbar filters
+  // (.text-field--rounded, .eform-sub-header) stay compact at 40px.
+  .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select:not(.text-field--rounded *):not(.eform-sub-header *)
+    .mdc-text-field--filled:not(.mdc-text-field--no-label) {
+    .mat-mdc-form-field-infix {
+      padding-top: 14px !important;
+    }
+
+    mtx-select .ng-select .ng-select-container {
+      min-height: 32px;
+    }
+  }
+
   // Outer ng-select container — transparent so the form-field's floating
   // label and bg remain visible. The mat-form-field wrapper paints the
   // outlined border and surface around us.

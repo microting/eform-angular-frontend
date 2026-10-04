@@ -447,4 +447,9 @@ export const ptPT = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Comunicar um erro',
+  'Page not found': 'Página não encontrada',
+  'No page exists at this address': 'Não existe nenhuma página neste endereço',
+  'Go to the start page': 'Ir para a página inicial',
+  'This link matches no page in the app': 'Esta ligação não leva a nenhuma página da aplicação',
+  'Restore default link': 'Repor a ligação predefinida',
 };

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EformsPageComponent } from './components/index';
+import { eformsChildRoutePaths } from './eforms-route-paths';
 
 const routes: Routes = [
   {
@@ -8,21 +9,21 @@ const routes: Routes = [
     component: EformsPageComponent,
   },
   {
-    path: 'docx-report',
+    path: eformsChildRoutePaths.docxReport,
     loadChildren: () =>
       import('./eform-docx-report/eform-docx-report.module').then(
         (m) => m.EformDocxReportModule
       ),
   },
   {
-    path: 'xlsx-report',
+    path: eformsChildRoutePaths.xlsxReport,
     loadChildren: () =>
       import('./eform-xlsx-report/eform-xlsx-report.module').then(
         (m) => m.EformXlsxReportModule
       ),
   },
   {
-    path: 'visual-editor',
+    path: eformsChildRoutePaths.visualEditor,
     loadChildren: () =>
       import('./eform-visual-editor/eform-visual-editor.module').then(
         (m) => m.EformVisualEditorModule

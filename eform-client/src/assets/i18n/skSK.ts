@@ -447,4 +447,9 @@ export const skSK = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Nahlásiť chybu',
+  'Page not found': 'Stránka sa nenašla',
+  'No page exists at this address': 'Na tejto adrese neexistuje žiadna stránka',
+  'Go to the start page': 'Prejsť na úvodnú stránku',
+  'This link matches no page in the app': 'Tento odkaz nevedie na žiadnu stránku aplikácie',
+  'Restore default link': 'Obnoviť predvolený odkaz',
 };

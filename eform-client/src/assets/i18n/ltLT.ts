@@ -447,4 +447,9 @@ export const ltLT = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Pranešti apie klaidą',
+  'Page not found': 'Puslapis nerastas',
+  'No page exists at this address': 'Šiuo adresu puslapio nėra',
+  'Go to the start page': 'Eiti į pradžios puslapį',
+  'This link matches no page in the app': 'Ši nuoroda neveda į jokį programos puslapį',
+  'Restore default link': 'Atkurti numatytąją nuorodą',
 };

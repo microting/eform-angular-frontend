@@ -447,4 +447,9 @@ export const roRO = {
   of: 'of',
   packages: 'packages',
   'Report a bug': 'Raportează o eroare',
+  'Page not found': 'Pagina nu a fost găsită',
+  'No page exists at this address': 'La această adresă nu există nicio pagină',
+  'Go to the start page': 'Mergi la pagina de start',
+  'This link matches no page in the app': 'Acest link nu duce la nicio pagină din aplicație',
+  'Restore default link': 'Restabilește linkul implicit',
 };
