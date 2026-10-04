@@ -1,0 +1,111 @@
+// =============================================================================
+// Page gutter — both themes (eForm Classic and eForm new design)
+// -----------------------------------------------------------------------------
+// Page content starts directly under the top bar and in line with the burger
+// glyph in it (#8102).
+// The glyph sits at the toolbar's horizontal padding plus the icon button's
+// inset around its 24px icon, so the content card's horizontal padding is
+// built from the same two tokens the toolbar uses — change one and the page
+// gutter follows. The content card has no margin (--content-card-margin is 0
+// in both themes) and no top padding, so this padding is the page's only
+// inset.
+// The drawer, when open in side mode, pushes the card; the gutter is then
+// measured from the drawer edge instead of the viewport edge.
+// =============================================================================
+
+// Full-bleed views size themselves to the viewport (calc(100vh - 64px)) and
+// scroll internally; card padding would push them past the card and add an
+// outer scrollbar, and their toolbars' border-bottom is meant to run edge to
+// edge. The card stays flush around them.
+//   .calendar-shell  — backend-configuration calendar (sidebar + week grid)
+//   .board-view      — kanban board (horizontally scrolling columns)
+//   .gantt-container — kanban gantt
+$full-bleed-views: '.calendar-shell, .board-view, .gantt-container';
+
+body {
+  --app-bar-padding-x: var(--spacing-2xl);
+  --page-gutter-x: calc(var(--app-bar-padding-x) + var(--app-bar-icon-inset));
+}
+
+// Icon inset = (icon button size − 24px icon) / 2, per theme:
+//   new design: 42px button (_workspace-mat-overrides.scss "Icon button")
+//   Classic:    28px button (libs/theme.scss, body.theme-eform .mat-mdc-icon-button)
+body.theme-workspace {
+  --app-bar-icon-inset: 9px;
+}
+
+body.theme-eform {
+  --app-bar-icon-inset: 2px;
+}
+
+// Scoped to the two theme classes (one of which is always on <body>) so the
+// rules keep the specificity they had as workspace-only rules and still beat
+// plugin component styles on the page roots below.
+body:is(.theme-eform, .theme-workspace) {
+  mat-drawer-container .content-card {
+    box-sizing: border-box;
+    padding-left: var(--page-gutter-x);
+    padding-right: var(--page-gutter-x);
+  }
+
+  mat-drawer-container .content-card:has(#{$full-bleed-views}) {
+    padding: 0;
+  }
+
+  // The page starts directly under the top bar: no line, no gap, no separate
+  // sub-header "bar". The sub-header is flat — no card border (Classic paints
+  // one on every .mat-mdc-card), no tint, no radius — and drops the
+  // horizontal part of its `.p-3` (padding: 1rem !important), so its title
+  // lines up with the burger and the table under it; the 16px top/bottom and
+  // the mb-3 stay. !important beats the utility's and the card rules' own.
+  // Scoped to the content card: the simple-layout connection-setup page
+  // (div.p-3 > eform-new-subheader) has no gutter and keeps its inset.
+  mat-drawer-container .content-card .eform-sub-header {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  // Wrappers that follow a sub-header used `.px-3` to line up with the title's
+  // old 16px inset; with that inset gone they would sit 16px right of the
+  // title and table. Only the sub-header's siblings, or their direct children,
+  // are touched — never inside a card, where px-3 is real card padding.
+  // Limited to div/mat-card wrappers so a stray px-3 button keeps its padding.
+  // Hits: navigation-menu-page, admin-settings, items-planning
+  // plannings-header, backend-configuration statistics + task-tracker.
+  mat-drawer-container .content-card eform-new-subheader ~ :is(div, mat-card).px-3,
+  mat-drawer-container .content-card eform-new-subheader ~ :not(.mat-mdc-card) > :is(div, mat-card).px-3,
+  mat-drawer-container .content-card .eform-sub-header ~ :is(div, mat-card).px-3,
+  mat-drawer-container .content-card .eform-sub-header ~ :not(.mat-mdc-card) > :is(div, mat-card).px-3 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  // Plugin pages whose routed root adds its own all-round padding, which would
+  // double the gutter. `router-outlet + *` is the routed component's host, so
+  // these class names only match at page-root level. Horizontal only; the
+  // top/bottom spacing is part of those pages' own layout.
+  //   kanban: board list, sprint panel, board settings, reports, statistics
+  //   time-planning: pay rule sets
+  .content-card router-outlet + * > :is(
+    .board-list-container,
+    .sprint-panel,
+    .board-settings,
+    .reports-container,
+    .statistics-container,
+    .pay-rule-sets-container
+  ) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // backend-configuration case page: its root is `div.d-grid.p-4`, the only
+  // routed page root using the p-4 utility. !important beats the utility's
+  // own (padding: 1.5rem !important).
+  .content-card router-outlet + * > div.p-4 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

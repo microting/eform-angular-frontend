@@ -43,7 +43,9 @@
 .content-card {
   background-color: var(--content-card-bg);
   border-radius: var(--content-card-radius);
-  margin: var(--content-card-margin);
+  // No horizontal margin: the card's padding is the page gutter
+  // (scss/components/_page-gutter.scss).
+  margin: var(--content-card-margin) 0;
   min-height: calc(100% - 2 * var(--content-card-margin, 0px));
   overflow: auto;
 }

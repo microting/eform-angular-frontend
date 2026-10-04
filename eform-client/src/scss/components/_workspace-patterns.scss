@@ -16,6 +16,8 @@
 //   6. Dashboard executive card (.card.dashboard-exec, .dashboard-traffic, etc.)
 // =============================================================================
 
+@use 'page-gutter' as gutter;
+
 body.theme-workspace {
   // ---------------------------------------------------------------------------
   // 1. Top app bar
@@ -32,10 +34,13 @@ body.theme-workspace {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-md) var(--spacing-2xl);
+    // Horizontal padding is a page-gutter token (_page-gutter.scss): page
+    // content lines up with the burger glyph this padding positions. No
+    // bottom border — the bar runs straight into the page (#8102).
+    padding: var(--spacing-md) var(--app-bar-padding-x);
     background: var(--md-surface-container);
     color: var(--md-on-surface);
-    border-bottom: 1px solid var(--md-surface-variant);
+    border-bottom: none;
     box-shadow: none;
     font-family: var(--font-family);
     min-height: 56px;
@@ -474,93 +479,19 @@ body.theme-workspace {
   // ---------------------------------------------------------------------------
   // 3d. Page gutter
   // ---------------------------------------------------------------------------
-  // The content card is the page's only horizontal inset: 8px top, 24px
-  // sides, 24px bottom, so a page title and the table under it both sit 24px
-  // from the card edges. border-box keeps the padding inside the card's
-  // `min-height: calc(100% - 2 * margin)` (full-layout.component.scss);
-  // content-box would make short pages 32px taller than the drawer content
-  // and scroll it. Every rule here is scoped to the content card, so
-  // simple-layout routes (auth, landing, connection-setup), which render
-  // none, keep their own padding.
+  // The page gutter, the flat sub-header and the full-bleed exceptions are
+  // shared with eForm Classic: _page-gutter.scss. This theme only adds the
+  // 24px bottom padding. border-box (set there) keeps it inside the card's
+  // `min-height: calc(100% - 2 * margin)` (full-layout.component.scss).
   // ---------------------------------------------------------------------------
 
-  mat-drawer-container .content-card {
-    box-sizing: border-box;
-    padding: 8px 24px 24px;
-  }
-
-  // Full-bleed views size themselves to the viewport (calc(100vh - 64px))
-  // and scroll internally; card padding would push them past the card and
-  // add an outer scrollbar, and their toolbars' border-bottom is meant to run
-  // edge to edge. Keep the card flush for them, as before.
-  //   .calendar-shell  — backend-configuration calendar (sidebar + week grid)
-  //   .board-view      — kanban board (horizontally scrolling columns)
-  //   .gantt-container — kanban gantt
-  $full-bleed-views: '.calendar-shell, .board-view, .gantt-container';
-
-  mat-drawer-container .content-card:has(#{$full-bleed-views}) {
-    padding: 0;
-  }
-
-  // _table.scss caps grids at var(--mtx-grid-max-height, 78.5vh); take back
-  // the card's 32px of vertical padding so a grid at its cap still fits
-  // without an outer scrollbar. Set as the hook, not max-height itself, so
-  // pages that size their own grid (component max-height) still win.
-  mat-drawer-container .content-card:not(:has(#{$full-bleed-views})) {
-    --mtx-grid-max-height: calc(78.5vh - 32px);
-  }
-
-  // The sub-header's `.p-3` utility (padding: 1rem !important, from
-  // utilities/_spacing.scss) inset the title 16px inside the old zero-padding
-  // card. The card now supplies the gutter, so drop the horizontal part —
-  // keeping the 16px top/bottom and the mb-3 — and the title lines up with the
-  // table's left edge. !important is needed to beat the utility's own.
-  // The simple-layout connection-setup page (div.p-3 > eform-new-subheader)
-  // has no card gutter, so it keeps the inset.
-  mat-drawer-container .content-card .eform-sub-header {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  // Wrappers that follow a sub-header used `.px-3` to line up with the title's
-  // old 16px inset; with that inset gone they would sit 16px right of the
-  // title and table. Only the sub-header's siblings, or their direct children,
-  // are touched — never inside a card, where px-3 is real card padding.
-  // Limited to div/mat-card wrappers so a stray px-3 button keeps its padding.
-  // Hits: navigation-menu-page, admin-settings, items-planning
-  // plannings-header, backend-configuration statistics + task-tracker.
-  mat-drawer-container .content-card eform-new-subheader ~ :is(div, mat-card).px-3,
-  mat-drawer-container .content-card eform-new-subheader ~ :not(.mat-mdc-card) > :is(div, mat-card).px-3,
-  mat-drawer-container .content-card .eform-sub-header ~ :is(div, mat-card).px-3,
-  mat-drawer-container .content-card .eform-sub-header ~ :not(.mat-mdc-card) > :is(div, mat-card).px-3 {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  // Plugin pages whose routed root adds its own all-round padding, doubling the
-  // gutter (24px + 24px). `router-outlet + *` is the routed component's host,
-  // so these class names only match at page-root level. Horizontal only; the
-  // top/bottom spacing is part of those pages' own layout.
-  //   kanban: board list, sprint panel, board settings, reports, statistics
-  //   time-planning: pay rule sets
-  .content-card router-outlet + * > :is(
-    .board-list-container,
-    .sprint-panel,
-    .board-settings,
-    .reports-container,
-    .statistics-container,
-    .pay-rule-sets-container
-  ) {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  // backend-configuration case page: its root is `div.d-grid.p-4`, the only
-  // routed page root using the p-4 utility. !important beats the utility's
-  // own (padding: 1.5rem !important).
-  .content-card router-outlet + * > div.p-4 {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  mat-drawer-container .content-card:not(:has(#{gutter.$full-bleed-views})) {
+    padding-bottom: 24px;
+    // _table.scss caps grids at var(--mtx-grid-max-height, 78.5vh); take back
+    // the card's 24px of bottom padding so a grid at its cap still fits
+    // without an outer scrollbar. Set as the hook, not max-height itself, so
+    // pages that size their own grid (component max-height) still win.
+    --mtx-grid-max-height: calc(78.5vh - 24px);
   }
 
   // ---------------------------------------------------------------------------
