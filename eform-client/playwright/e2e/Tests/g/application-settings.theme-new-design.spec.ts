@@ -198,6 +198,56 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     await expect(contentCard).toHaveCSS('padding-left', '24px');
   });
 
+  test('new design gives a filled mtx-select label its own row, toolbar filters stay compact', async () => {
+    // Stand-ins for mat-form-field's DOM around a multiple mtx-select with a
+    // floated <mat-label> and one selected chip. The filled one is
+    // time-planning's Download excel "Tags" field, whose label the chip used
+    // to cover (#8101). Material's form-field and ng-select styles are already
+    // loaded (login page, sites grid), so the label and chip lay out as real.
+    // A no-label field renders no <label> at all, as Material does.
+    const mtxField = (id: string, wrapperClasses: string) =>
+      `<div id="${id}" class="mat-mdc-form-field mat-mdc-form-field-type-mtx-select">` +
+      `<div class="mat-mdc-text-field-wrapper mdc-text-field ${wrapperClasses}">` +
+      '<div class="mat-mdc-form-field-flex"><div class="mat-mdc-form-field-infix">' +
+      (wrapperClasses.includes('mdc-text-field--no-label')
+        ? ''
+        : '<label class="mdc-floating-label mat-mdc-floating-label mdc-floating-label--float-above">' +
+          '<mat-label>Tags</mat-label></label>') +
+      '<mtx-select><div class="ng-select ng-select-multiple"><div class="ng-select-container">' +
+      '<div class="ng-value-container"><div class="ng-value"><span class="ng-value-label">Team A</span></div></div>' +
+      '</div></div></mtx-select>' +
+      '</div></div></div></div>';
+    await withContentCardFixture(
+      mtxField('e2e-mtx-filled-label', 'mdc-text-field--filled') +
+        mtxField('e2e-mtx-filled-no-label', 'mdc-text-field--filled mdc-text-field--no-label') +
+        mtxField('e2e-mtx-outlined-label', 'mdc-text-field--outlined') +
+        `<div class="text-field--rounded">${mtxField('e2e-mtx-toolbar', 'mdc-text-field--filled')}</div>` +
+        `<div class="eform-sub-header">${mtxField('e2e-mtx-sub-header', 'mdc-text-field--filled')}</div>`,
+      async () => {
+        const infix = (id: string) => page.locator(`#${id} .mat-mdc-form-field-infix`);
+        const container = (id: string) => page.locator(`#${id} .ng-select-container`);
+
+        // The filled label's floated box ends above the chip.
+        const label = await page.locator('#e2e-mtx-filled-label mat-label').boundingBox();
+        const chip = await page.locator('#e2e-mtx-filled-label .ng-value').boundingBox();
+        expect(label).not.toBeNull();
+        expect(chip).not.toBeNull();
+        expect(label!.y + label!.height).toBeLessThanOrEqual(chip!.y);
+        await expect(infix('e2e-mtx-filled-label')).toHaveCSS('padding-top', '14px');
+        await expect(container('e2e-mtx-filled-label')).toHaveCSS('min-height', '32px');
+
+        // An outlined label floats into the outline notch, so it needs no row.
+        await expect(infix('e2e-mtx-outlined-label')).toHaveCSS('padding-top', '0px');
+        await expect(infix('e2e-mtx-filled-no-label')).toHaveCSS('padding-top', '0px');
+        // Toolbar filters stay compact at 40px.
+        for (const id of ['e2e-mtx-toolbar', 'e2e-mtx-sub-header']) {
+          await expect(infix(id)).toHaveCSS('padding-top', '0px');
+          await expect(container(id)).toHaveCSS('min-height', '40px');
+        }
+      }
+    );
+  });
+
   test('new design keeps time-planning grid dividers off the frame edges', async () => {
     // Stand-in for the time-planning week grid: day cells carry the status
     // classes that styles.scss gives !important right/bottom borders.
