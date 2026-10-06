@@ -44,7 +44,8 @@ export async function selectValueInNgSelector(
 ) {
   const ngSelector = page.locator(selector);
   await ngSelector.waitFor({ state: 'visible', timeout: 40000 });
-  await ngSelector.click();
+  // Click the arrow, not the centre: an empty select's unfloated label can cover its centre.
+  await ngSelector.locator('.ng-arrow-wrapper').click();
   await page.waitForTimeout(300);
   if (intercept) {
     await Promise.all([
