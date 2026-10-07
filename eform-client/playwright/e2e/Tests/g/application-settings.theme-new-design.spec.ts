@@ -91,6 +91,7 @@ async function expectPageFlushUnderTopBar(page: Page, subHeader: Locator, conten
 //   compliance report: main.compliance-page { padding: var(--spacing-2xl) }
 //   task list / calendar task list: bare <mat-card><mat-card-content> root
 //   core CMS: the same bare root with a <mat-card-header> above the content
+//   folders page: a card next to a sub-header is a real card and stays framed
 const pluginPageRootsFixture = `
   <style>.compliance-page[data-e2e-plugin-root] { padding: var(--spacing-2xl); }</style>
   <router-outlet></router-outlet>
@@ -117,6 +118,11 @@ const pluginPageRootsFixture = `
         <div id="e2eCmsContent">Settings</div>
       </mat-card-content>
     </mat-card>
+  </div>
+  <router-outlet></router-outlet>
+  <div>
+    <eform-new-subheader></eform-new-subheader>
+    <mat-card class="mat-mdc-card mdc-card" id="e2eFramedCard"></mat-card>
   </div>`;
 
 test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
@@ -156,12 +162,14 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     }
   };
   // Plugin page roots with their own side padding still start in line with
-  // the burger; the bare page-root mat-card is flat, like the sub-header.
+  // the burger; the bare page-root mat-card is flat, like the sub-header,
+  // while a card next to a sub-header keeps its surface.
   const expectPluginPageRootsInLineWithBurger = () =>
     withContentCardFixture(pluginPageRootsFixture, async () => {
       const card = page.locator('#e2eTaskListCard');
       await expect(card).toHaveCSS('border-top-style', 'none');
       await expect(card).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+      await expect(page.locator('#e2eFramedCard')).not.toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
       await expectInLineWithBurger(page, [
         page.locator('#e2eComplianceTitle'),
         page.locator('#e2eTaskListTitle'),
