@@ -35,47 +35,89 @@ function computedStyle(locator: Locator, property: string): Promise<string> {
   );
 }
 
+// Offsets in px, read fresh on every poll.
+function layoutOffsets(page: Page) {
+  return page.evaluate(() => {
+    const rect = (el: Element) => el.getBoundingClientRect();
+    const topBar = rect(document.querySelector('mat-toolbar.nav-header')!);
+    return {
+      topBarBottom: topBar.bottom,
+      burger: rect(document.querySelector('mat-toolbar.nav-header button mat-icon')!).left - topBar.left,
+      contentArea: rect(document.querySelector('mat-drawer-container .mat-drawer-content')!).left,
+    };
+  });
+}
+
 // #8102, both themes: no line under the top bar, no separate sub-header bar,
 // and the page starts right under the top bar, in line with the burger glyph.
 // The left edge is compared as an offset — content from the content area's
 // left edge vs the burger icon from the top bar's — which holds with the side
 // drawer open (content area starts at the drawer edge) and closed, so the
 // shared page's drawer state is never touched.
-async function expectPageFlushUnderTopBar(page: Page, subHeader: Locator, content: Locator[]) {
-  const topBar = page.locator('mat-toolbar.nav-header');
-  await expect(topBar).toHaveCSS('border-bottom-style', 'none');
-  await expect(subHeader).toHaveCSS('border-top-style', 'none');
-  await expect(subHeader).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-
-  // Offsets in px; polled so a layout still settling after the theme switch
-  // is waited out rather than read once.
-  const offsets = () =>
-    page.evaluate(() => {
-      const rect = (el: Element) => el.getBoundingClientRect();
-      const topBar = rect(document.querySelector('mat-toolbar.nav-header')!);
-      return {
-        topBarBottom: topBar.bottom,
-        burger: rect(document.querySelector('mat-toolbar.nav-header button mat-icon')!).left - topBar.left,
-        contentArea: rect(document.querySelector('mat-drawer-container .mat-drawer-content')!).left,
-      };
-    });
-  await expect
-    .poll(async () => {
-      const layout = await offsets();
-      const top = await subHeader.evaluate((el) => el.getBoundingClientRect().top);
-      return Math.abs(top - layout.topBarBottom);
-    }, { timeout: UI_TIMEOUT, message: 'sub-header top vs top bar bottom (px)' })
-    .toBeLessThanOrEqual(1);
+// Polled so a layout still settling after the theme switch is waited out
+// rather than read once.
+async function expectInLineWithBurger(page: Page, content: Locator[]) {
   for (const locator of content) {
     await expect
       .poll(async () => {
-        const layout = await offsets();
+        const layout = await layoutOffsets(page);
         const left = await locator.evaluate((el) => el.getBoundingClientRect().left);
         return Math.abs(left - layout.contentArea - layout.burger);
       }, { timeout: UI_TIMEOUT, message: 'content left edge vs burger icon (px)' })
       .toBeLessThanOrEqual(1);
   }
 }
+
+async function expectPageFlushUnderTopBar(page: Page, subHeader: Locator, content: Locator[]) {
+  const topBar = page.locator('mat-toolbar.nav-header');
+  await expect(topBar).toHaveCSS('border-bottom-style', 'none');
+  await expect(subHeader).toHaveCSS('border-top-style', 'none');
+  await expect(subHeader).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+
+  await expect
+    .poll(async () => {
+      const layout = await layoutOffsets(page);
+      const top = await subHeader.evaluate((el) => el.getBoundingClientRect().top);
+      return Math.abs(top - layout.topBarBottom);
+    }, { timeout: UI_TIMEOUT, message: 'sub-header top vs top bar bottom (px)' })
+    .toBeLessThanOrEqual(1);
+  await expectInLineWithBurger(page, content);
+}
+
+// Stand-ins for plugin page roots that bring their own side padding, each
+// mounted where a routed page sits (the element after a <router-outlet>).
+// The <style> mirrors the plugin's component style at the same specificity
+// as Angular's emulated encapsulation (class + attribute).
+//   compliance report: main.compliance-page { padding: var(--spacing-2xl) }
+//   task list / calendar task list: bare <mat-card><mat-card-content> root
+//   core CMS: the same bare root with a <mat-card-header> above the content
+const pluginPageRootsFixture = `
+  <style>.compliance-page[data-e2e-plugin-root] { padding: var(--spacing-2xl); }</style>
+  <router-outlet></router-outlet>
+  <div>
+    <main class="compliance-page" data-e2e-plugin-root>
+      <h2 id="e2eComplianceTitle">Compliance</h2>
+    </main>
+  </div>
+  <router-outlet></router-outlet>
+  <div>
+    <mat-card class="mat-mdc-card mdc-card" id="e2eTaskListCard">
+      <mat-card-content class="mat-mdc-card-content">
+        <h1 id="e2eTaskListTitle">Tasks and actions</h1>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <router-outlet></router-outlet>
+  <div>
+    <mat-card class="mat-mdc-card mdc-card">
+      <mat-card-header class="mat-mdc-card-header">
+        <mat-card-title class="mat-mdc-card-title" id="e2eCmsTitle">CMS</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="mat-mdc-card-content">
+        <div id="e2eCmsContent">Settings</div>
+      </mat-card-content>
+    </mat-card>
+  </div>`;
 
 test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
   test.describe.configure({ timeout: 240_000 });
@@ -113,6 +155,20 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
       await page.evaluate(() => document.querySelectorAll('[data-e2e-fixture]').forEach((el) => el.remove()));
     }
   };
+  // Plugin page roots with their own side padding still start in line with
+  // the burger; the bare page-root mat-card is flat, like the sub-header.
+  const expectPluginPageRootsInLineWithBurger = () =>
+    withContentCardFixture(pluginPageRootsFixture, async () => {
+      const card = page.locator('#e2eTaskListCard');
+      await expect(card).toHaveCSS('border-top-style', 'none');
+      await expect(card).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+      await expectInLineWithBurger(page, [
+        page.locator('#e2eComplianceTitle'),
+        page.locator('#e2eTaskListTitle'),
+        page.locator('#e2eCmsTitle'),
+        page.locator('#e2eCmsContent'),
+      ]);
+    });
   // A hand-written one-row table (no .mdc-data-table__row), like the legacy grids.
   const matTable = (cells: string) =>
     `<table class="mat-mdc-table"><tbody><tr class="mat-mdc-row">${cells}</tr></tbody></table>`;
@@ -179,6 +235,11 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     await expect(page.locator('body')).toHaveClass(/\btheme-eform\b/);
     const subHeader = page.locator('app-sites .eform-sub-header');
     await expectPageFlushUnderTopBar(page, subHeader, [subHeader.locator('h2'), grid()]);
+  });
+
+  test('eForm Classic theme lines plugin page roots up with the burger', async () => {
+    await expect(page.locator('body')).toHaveClass(/\btheme-eform\b/);
+    await expectPluginPageRootsInLineWithBurger();
   });
 
   test('eForm Classic theme keeps the content card flush around full-bleed views', async () => {
@@ -258,6 +319,10 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
     await expect(page.locator('mat-drawer')).toHaveCSS('border-right-style', 'solid');
     const subHeader = page.locator('app-sites .eform-sub-header');
     await expectPageFlushUnderTopBar(page, subHeader, [subHeader.locator('h2'), grid()]);
+  });
+
+  test('new design lines plugin page roots up with the burger', async () => {
+    await expectPluginPageRootsInLineWithBurger();
   });
 
   test('new design keeps the content card flush around full-bleed views', async () => {

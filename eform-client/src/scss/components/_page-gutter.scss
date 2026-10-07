@@ -89,16 +89,36 @@ body:is(.theme-eform, .theme-workspace) {
   // top/bottom spacing is part of those pages' own layout.
   //   kanban: board list, sprint panel, board settings, reports, statistics
   //   time-planning: pay rule sets
+  //   backend-configuration: compliance report (main.compliance-page)
   .content-card router-outlet + * > :is(
     .board-list-container,
     .sprint-panel,
     .board-settings,
     .reports-container,
     .statistics-container,
-    .pay-rule-sets-container
+    .pay-rule-sets-container,
+    .compliance-page
   ) {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  // Pages whose routed root is one bare mat-card wrapping the whole page
+  // (backend-configuration task list and calendar task list, core CMS). The
+  // 16px side padding of its mat-card-header and mat-card-content would push
+  // the page right of the burger, and a framed card around the page is the
+  // separate "bar" #8102 removed. Flattened like the sub-header, with that
+  // side padding dropped. A sub-header card (.eform-sub-header) is handled
+  // above.
+  .content-card router-outlet + * > mat-card:not(.eform-sub-header) {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+
+    > :is(.mat-mdc-card-header, .mat-mdc-card-content) {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 
   // backend-configuration case page: its root is `div.d-grid.p-4`, the only
