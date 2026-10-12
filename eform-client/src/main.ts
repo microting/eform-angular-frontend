@@ -65,6 +65,11 @@ if (environment.enableSentry) {
     environment: environment.production ? 'production' : 'development',
     // No `release`: the build has no reliable frontend version source, and the sourcemap
     // upload (`sentry-cli sourcemaps inject`) matches bundles by debug ID, not by release.
+    // No performance data (#8115): neither `tracesSampleRate` nor `tracesSampler` is set, so the
+    // SDK runs as "tracing without performance" - every span is non-recording and no transaction
+    // is sent. browserTracingIntegration is still needed: it alone attaches `sentry-trace`/`baggage`
+    // to same-origin fetch/XHR (the API continues the trace on errors and logs), and with
+    // TraceService it starts a new trace id and transaction name per route.
     integrations: [
       Sentry.browserTracingIntegration(),
       // Buffer mode (see the replay sample rates below): nothing is sent until an error
@@ -84,8 +89,6 @@ if (environment.enableSentry) {
       Sentry.consoleLoggingIntegration({levels: ['warn', 'error']}),
     ],
     enableLogs: true,
-    // Performance Monitoring
-    tracesSampleRate: 0.2, // Capture 20% of the transactions
     // Session Replay
     replaysSessionSampleRate: 0, // Never record a whole session on its own
     replaysOnErrorSampleRate: 1.0, // Always attach the buffered replay when an error occurs
