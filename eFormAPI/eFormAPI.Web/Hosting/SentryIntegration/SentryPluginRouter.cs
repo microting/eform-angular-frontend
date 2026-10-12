@@ -40,7 +40,7 @@ using Sentry;
 /// the request the Angular frontend started. A plugin still wants its errors in its own project, so
 /// it publishes its DSN as <c>[assembly: AssemblyMetadata("SentryDsn", "...")]</c> and the host's
 /// <c>BeforeSend</c> hands the finished event to a client bound to that DSN instead of sending it to
-/// the host project. Transactions, sessions and structured logs stay in the host project.
+/// the host project. Sessions and structured logs stay in the host project (the host sends no transactions).
 /// </para>
 /// </summary>
 public static class SentryPluginRouter

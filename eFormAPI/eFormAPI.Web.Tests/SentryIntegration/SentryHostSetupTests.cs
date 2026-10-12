@@ -18,7 +18,8 @@ namespace eFormAPI.Web.Tests.SentryIntegration;
 
 /// <summary>
 /// Runs the host's Sentry setup in a real Kestrel pipeline (no database) and records what would be
-/// sent. Like Startup, the pipeline has no UseRouting in front of the handlers.
+/// sent. Like Startup, the pipeline has no UseRouting in front of the handlers (for the endpoints behind
+/// UseRouting see <see cref="SentryEndpointRoutingTests"/>).
 /// </summary>
 [TestFixture]
 public class SentryHostSetupTests
@@ -96,6 +97,7 @@ public class SentryHostSetupTests
                     break;
                 case "/api/host/unhandled":
                 case "/api/anonymous/unhandled":
+                case "/api/files/report.png&token=" + Secret:
                     throw new InvalidOperationException("boom in host");
                 case "/api/plugin/unhandled":
                     _plugin.Fail();
@@ -130,15 +132,22 @@ public class SentryHostSetupTests
         Environment.SetEnvironmentVariable("DISABLE_SENTRY", _disableSentry);
     }
 
-    /// <summary>Sends a request the way the Angular frontend does: with its trace headers.</summary>
-    private async Task Get(string path)
+    /// <summary>
+    /// Sends a request the way the Angular frontend does: with its trace headers, which mark the trace
+    /// as sampled (the worst case - a frontend that still records spans).
+    /// </summary>
+    private async Task Get(string path, bool withTraceHeaders = true)
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, path);
         request.Headers.Add("Authorization", "Bearer " + Secret);
         request.Headers.Add("Cookie", "session=" + Secret);
-        request.Headers.Add("sentry-trace", TraceId + "-b72fa28504b07285-1");
-        request.Headers.Add("baggage",
-            $"sentry-trace_id={TraceId},sentry-public_key=frontendkey,sentry-sample_rate=1,sentry-sampled=true");
+        if (withTraceHeaders)
+        {
+            request.Headers.Add("sentry-trace", TraceId + "-b72fa28504b07285-1");
+            request.Headers.Add("baggage",
+                $"sentry-trace_id={TraceId},sentry-public_key=frontendkey,sentry-sample_rate=1,sentry-sampled=true");
+        }
+
         using var response = await _http.SendAsync(request);
         await SentrySdk.FlushAsync(TimeSpan.FromSeconds(5));
         await SentryPluginRouter.FlushAsync(TimeSpan.FromSeconds(5));
@@ -188,48 +197,42 @@ public class SentryHostSetupTests
         Assert.That(ForPath(_hostTransport.Events, EventUrl, "/api/plugin/unhandled"), Is.Empty);
     }
 
-    private List<RecordingSentryTransport.Item> TransactionsNamed(string part) =>
-        _hostTransport.Transactions.Where(x => x.Body.Get("transaction")?.Contains(part) == true).ToList();
-
-    [Test]
-    public async Task ApiRequest_WithoutEndpointRouting_GetsATransactionThatContinuesTheFrontendTrace()
-    {
-        await Get("/api/transaction");
-
-        var transactions = TransactionsNamed("/api/transaction");
-        Assert.That(transactions, Has.Count.EqualTo(1), "the browser's sampled=1 decision must be honoured");
-        AssertTraceUserAndHostTags(transactions[0]);
-    }
-
+    [TestCase("/api/sites/index")]
     [TestCase("/healtz")]
-    [TestCase("/index.html")]
     [TestCase("/some/spa/route")]
-    public async Task LivenessAndSpaRequests_AreNeverTraced_EvenWhenTheBrowserSampled(string path)
+    public async Task Request_RecordsNoTransaction_EvenWhenTheFrontendSampledTheTrace(string path)
     {
         await Get(path);
 
-        Assert.That(TransactionsNamed(path), Is.Empty);
+        // Not filtered by path: no test of this fixture may produce a transaction.
+        Assert.That(_hostTransport.Transactions, Is.Empty);
     }
 
     [Test]
-    public void IsTraced_CoversRestAndGrpcOnly()
+    public async Task RequestWithoutTraceHeaders_RecordsNoTransaction_AndItsErrorGetsATraceOfItsOwn()
     {
-        static HttpRequest Request(string path, string contentType = null)
-        {
-            var context = new DefaultHttpContext();
-            context.Request.Path = path;
-            context.Request.ContentType = contentType;
-            return context.Request;
-        }
+        await Get("/api/host/unhandled?without-trace-headers=1", withTraceHeaders: false);
 
+        var hostEvent = _hostTransport.Events
+            .Single(x => x.Body.Get("request", "query_string")?.Contains("without-trace-headers") == true);
+        Assert.That(hostEvent.Body.Get("contexts", "trace", "trace_id"), Is.Not.Empty.And.Not.EqualTo(TraceId));
+        Assert.That(_hostTransport.Transactions, Is.Empty);
+    }
+
+    [Test]
+    public async Task SampledFrontendTrace_IsContinuedOnErrorsAndLogs_WithoutATransaction()
+    {
+        await Get("/api/host/unhandled?continued=1");
+        await Get("/api/log?continued=1");
+
+        var hostEvent = _hostTransport.Events
+            .Single(x => x.Body.Get("request", "query_string")?.Contains("continued") == true);
         Assert.Multiple(() =>
         {
-            Assert.That(SentryHostSetup.IsTraced(Request("/api/sites/index")), Is.True);
-            Assert.That(SentryHostSetup.IsTraced(Request("/auth.Auth/Login", "application/grpc")), Is.True);
-            Assert.That(SentryHostSetup.IsTraced(Request("/healtz")), Is.False);
-            Assert.That(SentryHostSetup.IsTraced(Request("/apiary")), Is.False);
-            Assert.That(SentryHostSetup.IsTraced(Request("/")), Is.False);
-            Assert.That(SentryHostSetup.IsTraced(null), Is.True, "a transaction that is not an HTTP request");
+            Assert.That(hostEvent.Body.Get("contexts", "trace", "trace_id"), Is.EqualTo(TraceId));
+            Assert.That(_hostTransport.Logs.Where(x => x.Get("body") == "host error").Select(x => x.Get("trace_id")),
+                Has.Some.EqualTo(TraceId));
+            Assert.That(_hostTransport.Transactions, Is.Empty);
         });
     }
 
@@ -285,23 +288,24 @@ public class SentryHostSetupTests
     }
 
     [Test]
-    public async Task EventAndTransactionOutsideAnyHttpRequest_AreDelivered()
+    public async Task OutsideAnyHttpRequest_EventIsDelivered_ButAnExplicitlySampledTransactionIsNot()
     {
-        // Background work: no HTTP request, so the request data is empty and IsTraced(null) is true.
+        // Background work: no HTTP request, so the request data is empty. A plugin starting a
+        // transaction itself, even one marked as sampled, must not send it.
         SentrySdk.CaptureMessage("captured outside a request");
         var transaction = SentrySdk.StartTransaction(
             new TransactionContext("background work outside a request", "task", isSampled: true));
+        transaction.StartChild("db.query").Finish();
         transaction.Finish();
         await SentrySdk.FlushAsync(TimeSpan.FromSeconds(5));
 
         var events = _hostTransport.Events
             .Where(x => x.Body.Get("logentry", "message") == "captured outside a request").ToList();
-        var transactions = TransactionsNamed("background work outside a request");
         Assert.That(events, Has.Count.EqualTo(1));
-        Assert.That(transactions, Has.Count.EqualTo(1));
         // A throwing BeforeSend does not drop the item: the SDK sends it unredacted with a breadcrumb.
-        Assert.That(events.Concat(transactions).Select(x => x.Body.GetRawText()),
-            Has.None.Contains("callback failed"));
+        Assert.That(events[0].Body.GetRawText(), Does.Not.Contain("callback failed"));
+        Assert.That(transaction.IsSampled, Is.False);
+        Assert.That(_hostTransport.Transactions, Is.Empty);
     }
 
     [Test]
@@ -313,15 +317,15 @@ public class SentryHostSetupTests
         await Get("/api/files/report.png&token=" + Secret);
         await Get("/api/log?token=" + Secret);
 
-        var sent = _hostTransport.Events.Concat(_hostTransport.Transactions).Concat(_pluginTransport.Events)
+        var sent = _hostTransport.Events.Concat(_pluginTransport.Events)
             .Select(x => x.Body.GetRawText())
             .Concat(_hostTransport.Logs.Select(x => x.GetRawText()))
             .ToList();
-        Assert.That(sent, Has.Count.GreaterThanOrEqualTo(8));
+        Assert.That(sent, Has.Count.GreaterThanOrEqualTo(6));
         Assert.That(sent, Has.None.Contains(Secret));
         Assert.That(_hostTransport.Events.Select(x => x.Body.Get("request", "query_string")),
             Has.Some.EqualTo("?token=***&page=1"), "only the token value is removed");
-        Assert.That(TransactionsNamed("/api/files/report.png&token=***"), Has.Count.EqualTo(1));
+        Assert.That(_hostTransport.Events.Select(EventUrl), Has.Some.EndsWith("/api/files/report.png&token=***"));
     }
 
     [Test]

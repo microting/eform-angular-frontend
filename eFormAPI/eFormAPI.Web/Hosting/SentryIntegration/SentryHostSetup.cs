@@ -42,7 +42,8 @@ using Sentry.Extensions.Logging;
 /// <summary>
 /// Sentry setup of the API host. The host owns the single hub (Sentry.AspNetCore), so the
 /// <c>sentry-trace</c>/<c>baggage</c> headers sent by the Angular frontend are continued and backend
-/// errors and ILogger logs carry the frontend's trace id.
+/// errors and ILogger logs carry the frontend's trace id. No performance data (transactions, spans,
+/// profiles) is recorded or sent (#8115).
 /// <para>
 /// Plugins are loaded with the host's Sentry assembly (see PluginHelper), so their static
 /// <c>SentrySdk</c> calls land on the host hub and <see cref="SentryPluginRouter"/> forwards their
@@ -62,8 +63,8 @@ using Sentry.Extensions.Logging;
 /// Known limitations:
 /// <list type="bullet">
 /// <item>Exception messages and log template parameters are forwarded unredacted.</item>
-/// <item>Outgoing HttpClient calls are instrumented: spans and breadcrumbs contain their URLs, and
-/// the trace headers are sent to third-party hosts.</item>
+/// <item>Outgoing HttpClient calls are instrumented: breadcrumbs contain their URLs, and the trace
+/// headers are sent to third-party hosts.</item>
 /// <item>For an event routed to a plugin project SentrySdk.CaptureException returns SentryId.Empty,
 /// LastEventId is empty and the host project records a before_send discard.</item>
 /// </list>
@@ -137,23 +138,22 @@ public static class SentryHostSetup
             Console.WriteLine($"info: {tag.Key}: {tag.Value}");
         }
 
-        // Tracing. Returning null leaves the decision to the browser's (sentry-trace) or, without
-        // one, to the rate. The liveness probe and the SPA fallback are never traced.
-        options.TracesSampleRate = 0.2;
-        options.TracesSampler = context => IsTraced(context.TryGetHttpContext()?.Request) ? null : 0;
-        // Names a transaction that matched no route; the SDK would use the raw path.
-        options.TransactionNameProvider = context => RedactToken(context.Request.Path.Value);
+        // No performance data (#8115). Leaving TracesSampleRate unset is not enough: without a sampler
+        // the SDK takes the caller's decision first (context.IsSampled ?? rate), so a browser sending
+        // "sampled=1" would still record a transaction. The sampler is consulted before that decision.
+        // Trace continuation does not depend on transactions: SentryMiddleware continues the incoming
+        // sentry-trace/baggage for every request, and errors and logs take the trace id from there.
+        options.TracesSampler = _ => 0;
+        // And no per-request transaction at all: the SDK would add its tracing middleware after UseRouting.
+        options.AutoRegisterTracing = false;
+        // With no transactions the EF Core / SqlClient span listener only does wasted work per command.
+        options.DisableDiagnosticSourceIntegration();
 
         // Redaction, then routing of plugin events to their own project.
         options.SetBeforeSend((sentryEvent, hint) =>
         {
             RedactRequest(sentryEvent.Request);
             return SentryPluginRouter.BeforeSend(sentryEvent, hint);
-        });
-        options.SetBeforeSendTransaction(transaction =>
-        {
-            RedactRequest(transaction.Request);
-            return transaction;
         });
 
         // Logs. The services call SentrySdk.CaptureException(e) and then logger.LogError(e.Message).
@@ -187,12 +187,6 @@ public static class SentryHostSetup
         return tags;
     }
 
-    /// <summary>Only the API (REST under /api, and gRPC) is traced; null is a non-HTTP transaction.</summary>
-    public static bool IsTraced(HttpRequest request) =>
-        request == null ||
-        request.Path.StartsWithSegments("/api") ||
-        request.ContentType?.StartsWith("application/grpc", StringComparison.OrdinalIgnoreCase) == true;
-
     /// <summary>
     /// Registers the plugins' own Sentry projects with <see cref="SentryPluginRouter"/>, which logs
     /// for each plugin whether it is routed.
@@ -225,17 +219,13 @@ public static class SentryHostSetup
         app.ApplicationServices.GetRequiredService<IHostApplicationLifetime>().ApplicationStopped
             .Register(() => SentryPluginRouter.FlushAsync(FlushTimeout).Wait(FlushTimeout));
 
-        // The SDK resolves the user lazily, when an event is captured. Structured logs and
-        // transactions never trigger that, so set the user as soon as authentication has run.
-        app.Use(async (context, next) =>
+        // The SDK resolves the user lazily, when an event is captured. Structured logs never
+        // trigger that, so set the user as soon as authentication has run.
+        return app.Use(async (context, next) =>
         {
             SetUser(context);
             await next();
         });
-
-        // The SDK adds its tracing middleware by itself after UseRouting, but the API controllers are
-        // served by the legacy UseMvc that runs before it and would get no transaction.
-        return app.UseSentryTracing();
     }
 
     private static void SetUser(HttpContext context)
@@ -295,7 +285,7 @@ public static class SentryHostSetup
         NoisyLogCategories.Any(x => category.StartsWith(x, StringComparison.Ordinal));
 
     // Drops framework logs below Warning and stamps the customer number on the rest (DefaultTags only
-    // apply to events and transactions).
+    // apply to events).
     private static SentryLog BeforeSendLog(SentryLog log, string customerNo)
     {
         if (log.Level < SentryLogLevel.Warning &&
