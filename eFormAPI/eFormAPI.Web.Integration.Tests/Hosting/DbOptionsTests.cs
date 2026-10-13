@@ -44,33 +44,54 @@ namespace eFormAPI.Web.Integration.Tests.Hosting
         public async Task UpdateDb_WithANullStringSetting_SavesTheOtherSettings()
         {
             const string key = "ApplicationSettings:DefaultLocale";
+            // ClearDb does not reset ConfigurationValues, so the row is put back afterwards.
+            var original = await DbContext.ConfigurationValues.AsNoTracking()
+                .SingleOrDefaultAsync(x => x.Id == key);
+            await SetRow(key, "en-US");
+            try
+            {
+                var monitor = Substitute.For<IOptionsMonitor<ApplicationSettings>>();
+                monitor.CurrentValue.Returns(new ApplicationSettings
+                {
+                    DefaultLocale = "en-US",
+                    SiteLink = "",
+                    SecurityCode = "",
+                    DefaultPassword = "",
+                    UserbackToken = null
+                });
+                var options = new DbOptions<ApplicationSettings>(monitor);
+
+                await options.UpdateDb(x => x.DefaultLocale = "da-DK", DbContext);
+
+                var saved = await DbContext.ConfigurationValues.AsNoTracking()
+                    .SingleAsync(x => x.Id == key);
+                Assert.That(saved.Value, Is.EqualTo("da-DK"));
+            }
+            finally
+            {
+                if (original == null)
+                {
+                    await DbContext.ConfigurationValues.Where(x => x.Id == key).ExecuteDeleteAsync();
+                }
+                else
+                {
+                    await SetRow(key, original.Value);
+                }
+            }
+        }
+
+        private async Task SetRow(string key, string value)
+        {
             var row = await DbContext.ConfigurationValues.SingleOrDefaultAsync(x => x.Id == key);
             if (row == null)
             {
-                DbContext.ConfigurationValues.Add(new EformConfigurationValue { Id = key, Value = "en-US" });
+                DbContext.ConfigurationValues.Add(new EformConfigurationValue { Id = key, Value = value });
             }
             else
             {
-                row.Value = "en-US";
+                row.Value = value;
             }
             await DbContext.SaveChangesAsync();
-
-            var monitor = Substitute.For<IOptionsMonitor<ApplicationSettings>>();
-            monitor.CurrentValue.Returns(new ApplicationSettings
-            {
-                DefaultLocale = "en-US",
-                SiteLink = "",
-                SecurityCode = "",
-                DefaultPassword = "",
-                UserbackToken = null
-            });
-            var options = new DbOptions<ApplicationSettings>(monitor);
-
-            await options.UpdateDb(x => x.DefaultLocale = "da-DK", DbContext);
-
-            var saved = await DbContext.ConfigurationValues.AsNoTracking()
-                .SingleAsync(x => x.Id == key);
-            Assert.That(saved.Value, Is.EqualTo("da-DK"));
         }
     }
 }
