@@ -108,6 +108,14 @@ public class DbOptions<T> : IDbOptions<T> where T : class, new()
             if (property.MemberType == MemberTypes.Property)
             {
                 var value = property.GetValue(currentObject, null);
+                // A setting whose configuration row no longer exists (e.g. the
+                // Userback rows removed by EformAngularFrontendBase 10.0.41) binds
+                // as null. UpdateConfig only writes existing rows, so skip it.
+                if (value == null)
+                {
+                    continue;
+                }
+
                 var type = value.GetType();
                 if (types.Contains(type))
                 {
