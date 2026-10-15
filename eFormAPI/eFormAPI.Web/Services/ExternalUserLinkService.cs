@@ -45,14 +45,35 @@ public class ExternalUserLinkService(
     /// FullName is left as the raw concatenation here and trimmed by the caller: the
     /// trim is a presentation detail and not worth a server-side TRIM.
     ///
+    /// Pass <paramref name="providerKey"/> to read ONE row: it is the other half of the
+    /// (LoginProvider, ProviderKey) primary key, and it is applied in SQL for the same
+    /// reason the provider filter is. GetLinkByKey is on the hot path — every
+    /// link-targeted password change resolves its row through it — so filtering after the
+    /// fact would load every link on the tenant to return one.
+    /// ExternalUserLinkServiceTests.GetLinkByKey_FiltersByTheKeyInTheDatabase pins it.
+    ///
     /// Public rather than private only so the test assembly can read its SQL; the project
     /// has no InternalsVisibleTo. It takes its context as a parameter so it stays a pure
     /// query description with no instance state.
     /// </summary>
-    public static IQueryable<ExternalUserLinkRow> LinkRowQuery(BaseDbContext context)
-        => context.Set<IdentityUserLogin<int>>()
+    public static IQueryable<ExternalUserLinkRow> LinkRowQuery(
+        BaseDbContext context, string providerKey = null)
+    {
+        var logins = context.Set<IdentityUserLogin<int>>()
             // Compared against the CONSTANT, never the caller's spelling.
-            .Where(login => login.LoginProvider == ExternalLoginProviders.MyMicroting)
+            .Where(login => login.LoginProvider == ExternalLoginProviders.MyMicroting);
+
+        // Half of the composite primary key, applied in SQL when the caller wants one
+        // row. Composed BEFORE the join and the projection so it lands in the same WHERE
+        // clause as the provider filter rather than wrapping the whole query in a
+        // subquery, and so the keyed read is an index seek on the primary key instead of
+        // a whole-tenant scan.
+        if (providerKey != null)
+        {
+            logins = logins.Where(login => login.ProviderKey == providerKey);
+        }
+
+        return logins
             .Join(context.Users,
                 login => login.UserId,
                 user => user.Id,
@@ -71,6 +92,7 @@ public class ExternalUserLinkService(
                 IsPrimaryAdmin = x.user.Id == 1
             })
             .AsNoTracking();
+    }
 
     public async Task<OperationDataResult<List<ExternalUserLinkRow>>> GetLinks(string loginProvider)
     {
@@ -104,20 +126,23 @@ public class ExternalUserLinkService(
                 localizationService.GetString("ExternalLinkProviderKeyRequired"));
         }
 
-        var all = await GetLinks(ExternalLoginProviders.MyMicroting);
-        if (!all.Success)
-        {
-            return new OperationDataResult<ExternalUserLinkRow>(false, all.Message);
-        }
-
-        // Ordinal comparison here, not the column's case-insensitive collation: the row
-        // we return must be the one the caller named, and a key is a decimal id.
-        var row = all.Model.FirstOrDefault(x => x.ProviderKey == providerKey);
+        // Keyed in SQL, not filtered out of the whole-tenant list. The comparison is
+        // therefore the COLUMN's collation (utf8mb4_uca1400_ai_ci, case- and
+        // accent-insensitive) rather than an ordinal one — which is the right semantics
+        // here and not merely a tolerable side effect: UserManager.FindByLoginAsync, the
+        // only way the set-password path ever resolves a target, reads the same column
+        // through the same collation. A case variant that the password path WOULD resolve
+        // must not read as "no such link" here, or the two would disagree about which
+        // account a key names. Keys are decimal ids in practice, so no live row is
+        // affected either way.
+        var row = await LinkRowQuery(context, providerKey).FirstOrDefaultAsync();
         if (row == null)
         {
             return new OperationDataResult<ExternalUserLinkRow>(false,
                 localizationService.GetString("ExternalLinkNotFound"));
         }
+
+        row.FullName = row.FullName?.Trim();
 
         return new OperationDataResult<ExternalUserLinkRow>(true, row);
     }

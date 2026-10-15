@@ -107,6 +107,56 @@ public class ExternalUserLinkServiceTests : DbTestFixture
         Assert.That(sql, Does.Not.Contain("Google"));
     }
 
+    /// <summary>
+    /// And the KEYED read must be keyed in the database too. GetLinkByKey is on the hot
+    /// path — every link-targeted password change resolves its row through it — so an
+    /// in-memory FirstOrDefault over the whole-tenant list would pass
+    /// CreateLink_ThenReadByKey_RoundTripsTheRow above while loading every link on the
+    /// installation to return one row. The key is half the composite primary key, so in
+    /// SQL it is an index seek.
+    /// </summary>
+    [Test]
+    public void GetLinkByKey_FiltersByTheKeyInTheDatabase()
+    {
+        var sql = ExternalUserLinkService.LinkRowQuery(DbContext, "4821").ToQueryString();
+
+        Assert.That(sql, Does.Contain("ProviderKey"),
+            "the key must appear in the generated SQL, not be applied after the rows land");
+        Assert.That(sql, Does.Contain("4821"));
+        // And the provider filter is still there: a keyed read that dropped it could
+        // return a Google row that happened to share the key.
+        Assert.That(sql, Does.Contain(Provider));
+
+        // The unkeyed overload must NOT carry the key filter, or GetLinks would silently
+        // return one row.
+        Assert.That(ExternalUserLinkService.LinkRowQuery(DbContext).ToQueryString(),
+            Does.Not.Contain("4821"));
+    }
+
+    /// <summary>
+    /// The collation consequence of keying in SQL, asserted rather than assumed: the
+    /// UserLogins primary key collates utf8mb4_uca1400_ai_ci, so a case variant of a key
+    /// is the SAME key. That has to agree with UserManager.FindByLoginAsync, which is the
+    /// only way the set-password path ever resolves a target — if one of the two found a
+    /// row the other did not, they would disagree about which account a key names.
+    /// </summary>
+    [Test]
+    public async Task GetLinkByKey_AgreesWithFindByLoginAsyncOnACaseVariantOfTheKey()
+    {
+        await using var host = new IdentityTestHost(DbContext);
+        var user = await host.CreateUserAsync("correct-horse");
+        var service = BuildService(host);
+        Assert.That((await service.CreateLink(Create(user.Id, "KEY-4821"))).Success, Is.True);
+
+        var resolvedByIdentity = await host.UserManager.FindByLoginAsync(Provider, "key-4821");
+        var read = await service.GetLinkByKey(Provider, "key-4821");
+
+        Assert.That(resolvedByIdentity?.Id, Is.EqualTo(user.Id),
+            "precondition: the column's collation makes a case variant the same key");
+        Assert.That(read.Success, Is.True, read.Message);
+        Assert.That(read.Model.UserId, Is.EqualTo(resolvedByIdentity!.Id));
+    }
+
     // Decision D-1: the set-password path can never reach user Id 1, so a link to it
     // would be a lie. Refuse at creation rather than create a link that reports
     // RefusedPrimaryAdmin forever.

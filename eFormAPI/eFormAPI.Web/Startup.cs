@@ -427,6 +427,7 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<ICasesService, CasesService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IExternalUserLinkService, ExternalUserLinkService>();
         services.AddScoped<IWorkerAccountLookup, WorkerAccountLookup>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IAdminService, AdminService>();
