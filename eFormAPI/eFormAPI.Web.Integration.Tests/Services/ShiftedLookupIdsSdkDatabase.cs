@@ -14,9 +14,9 @@ namespace eFormAPI.Web.Integration.Tests.Services;
 /// </summary>
 public static class ShiftedLookupIdsSdkDatabase
 {
-    public const int DanishLanguageId = 3;
-    public const int EnglishLanguageId = 6;
-    public const int GermanLanguageId = 9;
+    public static int DanishLanguageId => 3;
+    public static int EnglishLanguageId => 6;
+    public static int GermanLanguageId => 9;
 
     // Same order the SDK seeds them in, so the DB id is (index + 1) * 3.
     public static readonly string[] FieldTypeNamesInSeedOrder =

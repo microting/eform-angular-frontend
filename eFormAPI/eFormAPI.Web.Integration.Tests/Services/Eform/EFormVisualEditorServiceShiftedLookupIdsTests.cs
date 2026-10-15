@@ -41,7 +41,7 @@ public class EFormVisualEditorServiceShiftedLookupIdsTests
     private const int CommentDbId = 27;
     private const int TextDbId = 3;
     private const int FieldGroupDbId = 51;
-    private const int DanishDbId = ShiftedLookupIdsSdkDatabase.DanishLanguageId;
+    private static readonly int DanishDbId = ShiftedLookupIdsSdkDatabase.DanishLanguageId;
 
     private MicrotingDbContext _sdkDbContext;
     private EFormVisualEditorService _service;
