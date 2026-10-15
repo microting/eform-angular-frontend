@@ -75,6 +75,22 @@ public class AccountPoliciesTests
             "an [AllowAnonymous] on the controller class would bypass the policy on every action");
     }
 
+    // The new route must carry the SAME policy as change-password-admin: it is narrower
+    // in reach, never broader in who may call it. A broader policy here would hand the
+    // cross-tenant fan-out a bigger caller set than the route it replaces.
+    [Test]
+    public void SetLinkedAccountPassword_RequiresTheSameSetOtherUsersPasswordPolicy()
+    {
+        var action = typeof(AccountController)
+            .GetMethod(nameof(AccountController.SetLinkedAccountPassword))!;
+
+        Assert.That(action.GetCustomAttributes<AuthorizeAttribute>().Select(a => a.Policy),
+            Does.Contain(AccountPolicies.SetOtherUsersPassword));
+        Assert.That(action.GetCustomAttribute<AllowAnonymousAttribute>(), Is.Null,
+            "an [AllowAnonymous] here would silently bypass the policy — and would break "
+            + "Part 3's capability probe on every tenant");
+    }
+
     // Registration is what makes the name resolve at runtime: a policy name that
     // is never registered throws instead of authorising. Evaluate it end to end.
     [Test]
