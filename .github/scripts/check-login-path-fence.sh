@@ -99,7 +99,19 @@ if git rev-parse --verify --quiet "$BASE" >/dev/null; then
       status=1
     fi
   done
+elif [ -n "${CI:-}" ]; then
+  # In CI an unresolvable base ref is a DROPPED GATE, not a degraded convenience: a
+  # checkout without fetch-depth: 0, or a renamed base branch, would otherwise let a
+  # change to the pure login-path files ride through on a green tick, because the only
+  # sub-gate that reads the base would simply not run. Fail loudly instead.
+  echo "FENCE VIOLATION: $BASE could not be resolved, so the byte-unchanged gate on the" >&2
+  echo "  pure login-path files did not run." >&2
+  echo "  Fetch the base ref (actions/checkout with fetch-depth: 0) or pass a resolvable" >&2
+  echo "  base as \$1. A skipped gate is not a passed gate." >&2
+  status=1
 else
+  # Local runs only. The grep gate and the frozen-hash gate are base-independent, so a
+  # developer with no origin/master still gets both of them; CI gets all three.
   echo "FENCE NOTE: $BASE is not available; ran the grep fence only." >&2
 fi
 
@@ -114,11 +126,34 @@ if [ ! -f "$ACCOUNT_SERVICE" ]; then
   echo "FENCE ERROR: $ACCOUNT_SERVICE is missing from the tree" >&2
   status=1
 else
+  # The anchor line is deliberately DUPLICATED in this file: the byte-frozen copy in
+  # AdminChangePassword, and the link path's own copy of the same rules in
+  # EvaluateLinkedTargetGuards. Assert the count, so a third paste or a deleted copy
+  # fails on its own terms instead of silently changing which block gets hashed.
+  anchors="$(grep -cE '^        if \(user\.Id == 1 && userService\.UserId != 1\)$' "$ACCOUNT_SERVICE" || true)"
+  if [ "$anchors" -ne 2 ]; then
+    echo "FENCE VIOLATION: expected exactly 2 target-guard anchor lines in" >&2
+    echo "  $ACCOUNT_SERVICE, found $anchors." >&2
+    echo "  One is the byte-frozen copy in AdminChangePassword, the other is the" >&2
+    echo "  link-targeted path's own copy in EvaluateLinkedTargetGuards. Neither may be" >&2
+    echo "  removed, and a third copy of these rules must not exist." >&2
+    status=1
+  fi
+
   block="$(
     awk '
-      /^        if \(user\.Id == 1 && userService\.UserId != 1\)$/ { inblock = 1 }
+      # Gate the anchor on the signature of AdminChangePassword, which occurs exactly
+      # once, so the extraction can only ever start at the FROZEN copy no matter how the
+      # members are ordered. Without this, moving EvaluateLinkedTargetGuards above
+      # AdminChangePassword would start the extraction at the wrong anchor.
+      /public async Task<OperationResult> AdminChangePassword/ { inmethod = 1 }
+      inmethod && /^        if \(user\.Id == 1 && userService\.UserId != 1\)$/ { inblock = 1 }
       inblock { print }
-      /YouCantSetPasswordForMorePrivilegedAccount/ { tail = 1 }
+      # Scoped to the block. Unscoped, ANY line of the file naming this key - a comment
+      # above the block included - set the tail flag early and collapsed the extraction
+      # to a few lines, reporting a byte-identical block as changed and telling the
+      # maintainer to revert something that never moved.
+      inblock && /YouCantSetPasswordForMorePrivilegedAccount/ { tail = 1 }
       inblock && tail && /^        \}$/ { exit }
     ' "$ACCOUNT_SERVICE"
   )"

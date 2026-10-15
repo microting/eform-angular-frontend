@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
 using eFormAPI.Web.Integration.Tests.Identity;
@@ -7,6 +8,7 @@ using eFormAPI.Web.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -330,5 +332,50 @@ public class ExternalUserLinkServiceTests : DbTestFixture
 
         Assert.That(result.Success, Is.False);
         Assert.That(result.Message, Is.EqualTo("ExternalLinkProviderKeyRequired"));
+    }
+
+    // A write failure that is NOT a duplicate key must surface as a failure, not as
+    // "that key is already used". The concrete case: ProviderKey is varchar(255), and a
+    // longer value raises MariaDB 1406 / SQLSTATE 22001 under STRICT_TRANS_TABLES.
+    // Reported as a conflict, it named a holder that does not exist (a null id and a null
+    // email) and sent the operator looking for one.
+    //
+    // SetLinkedAccountPasswordModel and CreateExternalUserLinkModel now refuse an
+    // over-long key at the model layer, so this is the service's behaviour if anything
+    // ever reaches it past that — belt and braces, which is the point: the catch must not
+    // relabel failures it does not understand.
+    [Test]
+    public async Task CreateLink_WithAProviderKeyLongerThanTheColumn_FailsLoudlyRatherThanClaimingTheKeyIsTaken()
+    {
+        await using var host = new IdentityTestHost(DbContext);
+        var user = await host.CreateUserAsync("correct-horse");
+        var service = BuildService(host);
+        var tooLong = new string('9', 300);
+
+        DbUpdateException thrown = null;
+        OperationResult swallowed = null;
+        try
+        {
+            swallowed = await service.CreateLink(Create(user.Id, tooLong));
+        }
+        catch (DbUpdateException ex)
+        {
+            thrown = ex;
+        }
+
+        Assert.That(thrown, Is.Not.Null,
+            "the write failure must reach the caller; instead it was reported as "
+            + $"'{swallowed?.Message}'");
+        Assert.That(thrown.GetBaseException().Message, Does.Contain("ProviderKey"),
+            "the real cause must reach the caller, not be replaced by a conflict message");
+        Assert.That(await host.UserManager.FindByLoginAsync(Provider, tooLong), Is.Null,
+            "nothing may be written for a failed create");
+
+        // The failed insert is still tracked on this shared context; leaving it would make
+        // the host's own cleanup SaveChanges retry it and throw again.
+        foreach (var entry in DbContext.ChangeTracker.Entries<IdentityUserLogin<int>>().ToList())
+        {
+            entry.State = EntityState.Detached;
+        }
     }
 }

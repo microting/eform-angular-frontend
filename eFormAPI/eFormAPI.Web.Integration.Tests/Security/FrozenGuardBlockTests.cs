@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
 
 namespace eFormAPI.Web.Integration.Tests.Security;
@@ -112,6 +113,29 @@ public class FrozenGuardBlockTests
         // identical paste is a sign the new path is returning the wrong shape.
         Assert.That(occurrences, Is.EqualTo(1),
             "the frozen block must appear exactly once in AccountService.cs");
+    }
+
+    // The same invariant the CI fence asserts, stated on this leg too.
+    //
+    // The block's FIRST line is duplicated by design: once in the frozen copy, once in
+    // EvaluateLinkedTargetGuards, whose own rules start with the identical condition. The
+    // fence locates the frozen block by that line, so the count is load-bearing — a third
+    // paste, or a deleted copy, would change which block the fence hashes. The fence also
+    // gates its anchor on the AdminChangePassword signature, so it lands on the frozen
+    // copy whatever the member order; this test pins the count the fence relies on.
+    [Test]
+    public void TheGuardAnchorLineAppearsExactlyTwice()
+    {
+        var lines = AccountServiceSource().Replace("\r\n", "\n").Split('\n');
+
+        var anchors = lines.Count(line =>
+            line == "        if (user.Id == 1 && userService.UserId != 1)");
+
+        Assert.That(anchors, Is.EqualTo(2),
+            "exactly two copies of the target rules may exist: the byte-frozen one in "
+            + "AdminChangePassword and the link-targeted path's own in "
+            + "EvaluateLinkedTargetGuards. A third copy, or a removed copy, changes which "
+            + "block .github/scripts/check-login-path-fence.sh hashes.");
     }
 
     // The frozen block is reached only after the caller-principal check immediately above

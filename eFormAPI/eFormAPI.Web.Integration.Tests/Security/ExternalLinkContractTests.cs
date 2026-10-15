@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
@@ -60,6 +62,93 @@ public class ExternalLinkContractTests
         Assert.That(properties, Has.None.Contains("Email"));
         Assert.That(properties, Has.None.Contains("UserId"));
     }
+
+    // The UserLogins.ProviderKey column is varchar(255) with the PAD SPACE,
+    // accent-insensitive utf8mb4_uca1400_ai_ci collation, so "4821 " compares EQUAL to
+    // "4821" in the database. That resolves to the RIGHT row today, because the key is a
+    // decimal portal user id — but the correctness of the lookup must not rest on a
+    // collation detail. These cases are refused at the model layer instead, before any
+    // lookup happens.
+    [TestCase("4821", true, TestName = "ProviderKeyValidation_PlainDecimalKeyIsAccepted")]
+    [TestCase("1", true, TestName = "ProviderKeyValidation_SingleDigitIsAccepted")]
+    [TestCase("4821 ", false, TestName = "ProviderKeyValidation_TrailingSpaceIsRefused")]
+    [TestCase(" 4821", false, TestName = "ProviderKeyValidation_LeadingSpaceIsRefused")]
+    [TestCase("48 21", false, TestName = "ProviderKeyValidation_InnerSpaceIsRefused")]
+    [TestCase("ABC", false, TestName = "ProviderKeyValidation_LettersAreRefused")]
+    [TestCase("48-21", false, TestName = "ProviderKeyValidation_PunctuationIsRefused")]
+    [TestCase("", false, TestName = "ProviderKeyValidation_EmptyIsRefused")]
+    [TestCase("   ", false, TestName = "ProviderKeyValidation_WhitespaceIsRefused")]
+    [TestCase(null, false, TestName = "ProviderKeyValidation_NullIsRefused")]
+    public void TheProviderKeyIsBoundedAndDecimalOnTheWritingModels(string providerKey, bool valid)
+    {
+        var setPassword = new SetLinkedAccountPasswordModel
+        {
+            LoginProvider = ExternalLoginProviders.MyMicroting,
+            ProviderKey = providerKey,
+            NewPassword = "correct-horse"
+        };
+        var create = new CreateExternalUserLinkModel
+        {
+            LoginProvider = ExternalLoginProviders.MyMicroting,
+            ProviderKey = providerKey,
+            TargetUserId = 7
+        };
+
+        Assert.That(IsValid(setPassword), Is.EqualTo(valid),
+            $"SetLinkedAccountPasswordModel must {(valid ? "accept" : "refuse")} '{providerKey}'");
+        Assert.That(IsValid(create), Is.EqualTo(valid),
+            $"CreateExternalUserLinkModel must {(valid ? "accept" : "refuse")} '{providerKey}'");
+    }
+
+    // The column is varchar(255), and a longer value is not a conflict, a miss or a
+    // refusal — under STRICT_TRANS_TABLES it is MariaDB error 1406 at insert time. Refuse
+    // it at the model layer so the write is never attempted.
+    [Test]
+    public void AProviderKeyLongerThanTheColumnIsRefusedOnEveryModel()
+    {
+        var tooLong = new string('9', 256);
+        var atTheLimit = new string('9', 255);
+
+        Assert.That(IsValid(new SetLinkedAccountPasswordModel
+        {
+            LoginProvider = ExternalLoginProviders.MyMicroting,
+            ProviderKey = tooLong,
+            NewPassword = "correct-horse"
+        }), Is.False);
+        Assert.That(IsValid(new CreateExternalUserLinkModel
+        {
+            LoginProvider = ExternalLoginProviders.MyMicroting,
+            ProviderKey = tooLong,
+            TargetUserId = 7
+        }), Is.False);
+        Assert.That(IsValid(new DeleteExternalUserLinkModel
+        {
+            LoginProvider = ExternalLoginProviders.MyMicroting,
+            ProviderKey = tooLong
+        }), Is.False);
+
+        Assert.That(IsValid(new DeleteExternalUserLinkModel
+        {
+            LoginProvider = ExternalLoginProviders.MyMicroting,
+            ProviderKey = atTheLimit
+        }), Is.True, "255 characters is the column width, not one over it");
+    }
+
+    // Delete is bounded but deliberately NOT shaped: a row written out of band, or before
+    // the decimal rule existed, must still be removable. Unlinking is the operation that
+    // may never require anyone's cooperation, so it may not be the one validation blocks.
+    [Test]
+    public void DeleteAcceptsANonDecimalKeySoAStrayRowCanAlwaysBeDetached()
+        => Assert.That(IsValid(new DeleteExternalUserLinkModel
+        {
+            LoginProvider = ExternalLoginProviders.MyMicroting,
+            ProviderKey = "legacy-key-ABC"
+        }), Is.True);
+
+    private static bool IsValid(object model)
+        => Validator.TryValidateObject(
+            model, new ValidationContext(model), new List<ValidationResult>(),
+            validateAllProperties: true);
 
     [Test]
     public void TheResultModelCarriesTheResolvedTarget()

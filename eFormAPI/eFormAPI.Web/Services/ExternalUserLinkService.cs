@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
@@ -226,14 +228,42 @@ public class ExternalUserLinkService(
                     string.Join(" ", result.Errors.Select(x => x.Description)));
             }
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
             // Two concurrent creates for the same key: the primary key refuses the
             // second. Re-read to name who won, rather than reporting a database error.
+            //
+            // Narrowed to that case on purpose. Unconditionally, this catch reported
+            // EVERY write failure as "that key is already used" with a null holder id and
+            // a null holder email, sending an operator to look for a holder that does not
+            // exist. A ProviderKey longer than the varchar(255) column is the concrete
+            // case: MariaDB raises 1406 / SQLSTATE 22001 under STRICT_TRANS_TABLES, and
+            // that is a genuine failure, not a conflict.
+            //
+            // Two conditions, both required, so the conflict message is only ever
+            // produced when it is true:
+            //   1. the failure is an integrity-constraint violation at all — SQLSTATE
+            //      class 23. Anything else (22001 above included) rethrows without so
+            //      much as a second query; and
+            //   2. a re-read names an actual holder. SQLSTATE 23000 is ALSO what a
+            //      foreign-key violation raises, so the class alone cannot tell a
+            //      duplicate key from a vanished target user; a named holder can, on any
+            //      provider and without a vendor error number. No holder, no claim that
+            //      the key is held.
+            if (!IsIntegrityConstraintViolation(ex))
+            {
+                throw;
+            }
+
             var winner = await userManager.FindByLoginAsync(
                 ExternalLoginProviders.MyMicroting, model.ProviderKey);
+            if (winner == null)
+            {
+                throw;
+            }
+
             return new OperationResult(false, localizationService.GetStringWithFormat(
-                "ExternalLinkKeyAlreadyUsed", model.ProviderKey, winner?.Id, winner?.Email));
+                "ExternalLinkKeyAlreadyUsed", model.ProviderKey, winner.Id, winner.Email));
         }
 
         // The only record a local admin has that a link now exists, so it names the
@@ -283,5 +313,29 @@ public class ExternalUserLinkService(
             userService.UserId, ExternalLoginProviders.MyMicroting, model.ProviderKey, user.Id);
 
         return new OperationResult(true, localizationService.GetString("ExternalLinkRemoved"));
+    }
+
+    /// <summary>
+    /// Whether a failed write was an integrity-constraint violation rather than some
+    /// other write failure. SQLSTATE class 23 is "integrity constraint violation" in the
+    /// SQL standard, read off the ADO-level <see cref="DbException"/> base class, so this
+    /// needs no direct dependency on the MySQL provider package and no hardcoded vendor
+    /// error number. It is a necessary but NOT a sufficient test for a duplicate key —
+    /// 23000 also covers a foreign-key violation — which is why the caller additionally
+    /// requires a named holder. The inner chain is walked because a provider is free to
+    /// wrap its own exception.
+    /// </summary>
+    private static bool IsIntegrityConstraintViolation(Exception ex)
+    {
+        for (var inner = ex.InnerException; inner != null; inner = inner.InnerException)
+        {
+            if (inner is DbException { SqlState: { } sqlState }
+                && sqlState.StartsWith("23", StringComparison.Ordinal))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

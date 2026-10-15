@@ -35,7 +35,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          # The fence compares the pure login-path files against the merge base.
+          # The fence compares the pure login-path files against the merge base, and in
+          # CI an unresolvable base is a hard failure rather than a FENCE NOTE - a gate
+          # that did not run is not a gate that passed. fetch-depth: 0 is what makes the
+          # base ref resolvable, so it is load-bearing, not an optimisation.
           fetch-depth: 0
       # No install needed — the fence is dependency-free bash.
       - name: Login path and frozen guard block
