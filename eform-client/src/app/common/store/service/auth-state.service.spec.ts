@@ -4,7 +4,7 @@ import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {TranslateService} from '@ngx-translate/core';
 import {provideMockStore} from '@ngrx/store/testing';
 import {BehaviorSubject} from 'rxjs';
-import {de, enUS} from 'date-fns/locale';
+import {de, enUS, pt} from 'date-fns/locale';
 import {AuthStateService} from './auth-state.service';
 import {AppSettingsService, AuthService, LocaleService, UserSettingsService} from 'src/app/common/services';
 import {customDaLocale} from 'src/app/common/const';
@@ -57,5 +57,22 @@ describe('AuthStateService.dateFnsLocale (shifted Languages ids, #8141)', () => 
 
   it('uses the German date locale for a German user whose language row has id 9', () => {
     expect(serviceFor({locale: 'de-DE', languageId: 9}).dateFnsLocale).toBe(de);
+  });
+
+  // updateUserLocale / updateCurrentUserLocaleAndDarkTheme store the region-less code.
+  it('uses the German date locale when the stored locale is the shortened "de"', () => {
+    expect(serviceFor({locale: 'de', languageId: 3}).dateFnsLocale).toBe(de);
+  });
+
+  it('uses the English date locale when the stored locale is the shortened "en"', () => {
+    expect(serviceFor({locale: 'en', languageId: 2}).dateFnsLocale).toBe(enUS);
+  });
+
+  it('falls back to the language prefix for a regional code that is not an application locale', () => {
+    expect(serviceFor({locale: 'de-AT', languageId: 9}).dateFnsLocale).toBe(de);
+  });
+
+  it('keeps a full regional code such as "pt-PT" as is', () => {
+    expect(serviceFor({locale: 'pt-PT', languageId: 13}).dateFnsLocale).toBe(pt);
   });
 });

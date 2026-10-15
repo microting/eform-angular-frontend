@@ -265,8 +265,20 @@ export class AuthStateService {
     this.dateLocale.next(this.dateFnsLocale);
   }
 
+  // The store holds either the full code from user settings ('de-DE') or the
+  // region-less one set by updateUserLocale ('de'); resolve both to an application locale,
+  // falling back to the language prefix for regional codes we do not ship ('de-AT').
+  private get applicationLocale(): string {
+    const locale = this.currentLocale;
+    if (!locale || applicationLanguages.some(x => x.locale === locale)) {
+      return locale;
+    }
+    const language = locale.split('-')[0];
+    return applicationLanguages.find(x => x.locale.split('-')[0] === language)?.locale ?? locale;
+  }
+
   get dateFnsLocale(): Locale {
-    switch (this.currentLocale) {
+    switch (this.applicationLocale) {
       case 'da': {
         return customDaLocale;
       }
