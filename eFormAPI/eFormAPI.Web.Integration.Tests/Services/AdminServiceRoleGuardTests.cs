@@ -77,11 +77,16 @@ public class AdminServiceRoleGuardTests : DbTestFixture
     {
         if (!await DbContext.Users.AnyAsync(x => x.Id == userId))
         {
+            // SecurityStamp is seeded deliberately: UserManager.CreateAsync would set one,
+            // and ReplacePasswordAsync's null-stamp backfill calls UpdateSecurityStampAsync,
+            // which on this substituted UserManager returns a null IdentityResult and would
+            // NullReferenceException. A success-path test added here needs a stamp present.
             DbContext.Users.Add(new EformUser
             {
                 Id = userId,
                 Email = $"user-{userId}@example.com",
                 UserName = $"user-{userId}@example.com",
+                SecurityStamp = Guid.NewGuid().ToString("N"),
             });
             await DbContext.SaveChangesAsync();
         }
@@ -118,14 +123,21 @@ public class AdminServiceRoleGuardTests : DbTestFixture
         Assert.That(result.Success, Is.False);
         Assert.That(result.Message, Is.EqualTo(expectedKey));
         await _coreHelper.DidNotReceive().GetCore();
+        // Covers both shapes of the password write, so the fence catches a leak under
+        // either implementation: ReplacePasswordAsync used to be RemovePasswordAsync +
+        // AddPasswordAsync and now backfills the stamp and does a token reset. Listing only
+        // the retired pair would let a password write slip past this guard unnoticed.
         var identityWrites = new[]
         {
             nameof(UserManager<EformUser>.CreateAsync), nameof(UserManager<EformUser>.UpdateAsync),
             nameof(UserManager<EformUser>.AddToRoleAsync), nameof(UserManager<EformUser>.RemoveFromRoleAsync),
             nameof(UserManager<EformUser>.RemovePasswordAsync), nameof(UserManager<EformUser>.AddPasswordAsync),
+            nameof(UserManager<EformUser>.UpdateSecurityStampAsync),
+            nameof(UserManager<EformUser>.GeneratePasswordResetTokenAsync),
+            nameof(UserManager<EformUser>.ResetPasswordAsync),
         };
         Assert.That(_userManager.ReceivedCalls().Select(c => c.GetMethodInfo().Name),
-            Has.None.AnyOf(identityWrites));
+            Has.None.AnyOf(identityWrites), "no identity write may happen before the guard refuses");
     }
 
     private async Task AssertPassedTheGuard() => await _coreHelper.Received(1).GetCore();
