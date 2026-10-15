@@ -11,7 +11,6 @@ import {Store} from '@ngrx/store';
 import {
   selectAuthIsAuth,
   selectConnectionStringExists, selectCurrentUserClaims,
-  selectCurrentUserLanguageId,
   selectCurrentUserLocale
 } from 'src/app/state/auth/auth.selector';
 import {selectIsCmsEnabled} from 'src/app/state/cms';
@@ -42,7 +41,8 @@ export class AuthStateService {
   private dateLocale = inject<BehaviorSubject<string | Locale | null>>(MAT_DATE_LOCALE);
 
   private isRefreshing = false;
-  private currentLanguageId = 1;
+  // Locale code (LanguageCode), not the Languages DB id: ids are not stable across installs (#8141).
+  private currentLocale = 'da';
   private claims: UserClaimsModel;
   private localeIsInited = false;
   private defaultLocale = applicationLanguages[1];
@@ -50,7 +50,7 @@ export class AuthStateService {
 
   constructor() {
     this.platformInfo = this.getPlatformInfo();
-    this.selectCurrentUserLanguageId$.subscribe((languageId) => this.currentLanguageId = languageId);
+    this.selectCurrentUserLocale$.subscribe((locale) => this.currentLocale = locale);
     this.selectCurrentUserClaims$.subscribe((claims) => this.claims = claims);
   }
 
@@ -59,7 +59,6 @@ export class AuthStateService {
   private selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
   private selectConnectionStringExists$ = this.authStore.select(selectConnectionStringExists);
   private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
-  private selectCurrentUserLanguageId$ = this.authStore.select(selectCurrentUserLanguageId);
   private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
 
   login(loginInfo: LoginRequestModel) {
@@ -267,47 +266,47 @@ export class AuthStateService {
   }
 
   get dateFnsLocale(): Locale {
-    switch (this.currentLanguageId) {
-      case 1: {
+    switch (this.currentLocale) {
+      case 'da': {
         return customDaLocale;
       }
-      case 2: {
+      case 'en-US': {
         return enUS;
       }
-      case 3: {
+      case 'de-DE': {
         return de;
       }
-      case 4: {
+      case 'uk-UA': {
         return uk;
       }
-      case 5: {
+      case 'pl-PL': {
         return pl;
       }
-      case 6: {
+      case 'no-NO': {
         return nb; // it's (Bokmål) maybe need nn (Nynorsk)
       }
-      case 7: {
+      case 'sv-SE': {
         return sv;
       }
-      case 8: {
+      case 'es-ES': {
         return es;
       }
-      case 9: {
+      case 'fr-FR': {
         return fr;
       }
-      case 10: {
+      case 'it-IT': {
         return it;
       }
-      case 11: {
+      case 'nl-NL': {
         return nl;
       }
-      case 12: {
+      case 'pt-BR': {
         return ptBR;
       }
-      case 13: {
+      case 'pt-PT': {
         return pt;
       }
-      case 14: {
+      case 'fi-FI': {
         return fi;
       }
       default: {

@@ -5,22 +5,13 @@ import {
 } from 'src/app/common/models';
 import {TranslateService} from '@ngx-translate/core';
 
+// Ids are EformFieldTypesEnum values, never FieldTypes DB ids: the backend maps the
+// enum to the tenant's DB ids by name (DB ids are not stable across installs, #8141).
 export function getTranslatedTypes(
-  translateService: TranslateService,
-  dbFieldTypes?: {id: number; type: string}[]
+  translateService: TranslateService
 ): EformVisualEditorFieldTypeModel[] {
-  let types = [...eformVisualEditorElementTypes];
-
-  if (dbFieldTypes && dbFieldTypes.length > 0) {
-    types = types.map(t => {
-      const enumName = EformFieldTypesEnum[t.id];
-      const dbEntry = dbFieldTypes.find(db => db.type.toLowerCase() === (enumName || '').toLowerCase());
-      return dbEntry ? {...t, id: dbEntry.id} : t;
-    });
-  }
-
   let translatedTypes: EformVisualEditorFieldTypeModel[] = [];
-  types.map((x) => {
+  eformVisualEditorElementTypes.map((x) => {
     translateService.get(x.name).
     subscribe(y => translatedTypes = [...translatedTypes, {...x, name: y}]);
   });

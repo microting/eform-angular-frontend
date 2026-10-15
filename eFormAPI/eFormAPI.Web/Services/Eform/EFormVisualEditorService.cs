@@ -45,6 +45,43 @@ public class EFormVisualEditorService(
     ILocalizationService localizationService)
     : ITemplateVisualEditorService
 {
+    /// <summary>
+    /// The visual editor API speaks the client's positional field-type enum
+    /// (eform-client EformFieldTypesEnum: Text = 1 ... ShowPicture = 20). FieldTypes DB ids are
+    /// AUTO_INCREMENT-seeded and differ per tenant (e.g. 3, 6, 9, ... on Galera), so translate by
+    /// FieldType.Type name at this boundary and never assume the two line up.
+    /// </summary>
+    private static readonly string[] ClientFieldTypeOrder =
+    [
+        Constants.FieldTypes.Text, Constants.FieldTypes.Number, Constants.FieldTypes.None,
+        Constants.FieldTypes.CheckBox, Constants.FieldTypes.Picture, Constants.FieldTypes.Audio,
+        Constants.FieldTypes.Movie, Constants.FieldTypes.SingleSelect, Constants.FieldTypes.Comment,
+        Constants.FieldTypes.MultiSelect, Constants.FieldTypes.Date, Constants.FieldTypes.Signature,
+        Constants.FieldTypes.Timer, Constants.FieldTypes.EntitySearch, Constants.FieldTypes.EntitySelect,
+        Constants.FieldTypes.ShowPdf, Constants.FieldTypes.FieldGroup, Constants.FieldTypes.SaveButton,
+        Constants.FieldTypes.NumberStepper, Constants.FieldTypes.ShowPicture
+    ];
+
+    private static int ToClientFieldType(string fieldTypeName) =>
+        Array.IndexOf(ClientFieldTypeOrder, fieldTypeName) + 1;
+
+    private static string ToFieldTypeName(int clientFieldType)
+    {
+        if (clientFieldType < 1 || clientFieldType > ClientFieldTypeOrder.Length)
+        {
+            throw new ArgumentOutOfRangeException(nameof(clientFieldType), clientFieldType,
+                "Unknown visual editor field type");
+        }
+
+        return ClientFieldTypeOrder[clientFieldType - 1];
+    }
+
+    private static Task<int> FindFieldTypeId(MicrotingDbContext sdkDbContext, string fieldTypeName) =>
+        sdkDbContext.FieldTypes
+            .Where(x => x.Type == fieldTypeName)
+            .Select(x => x.Id)
+            .FirstAsync();
+
     public async Task<OperationDataResult<EformVisualEditorModel>> ReadVisualTemplate(int id)
     {
         try
@@ -484,7 +521,6 @@ public class EFormVisualEditorService(
     private static async Task UpdateChecklist(List<EformVisualEditorModel> checklistForUpdate,
         MicrotingDbContext sdkDbContext)
     {
-        var saveButtonFieldTypeid = sdkDbContext.FieldTypes.First(x => x.Type == Constants.FieldTypes.SaveButton).Id;
         foreach (var visualEditorModel in checklistForUpdate)
         {
             var eform = await sdkDbContext.CheckLists
@@ -546,7 +582,7 @@ public class EFormVisualEditorService(
                 .FirstAsync();
 
             fieldFromDb.Color = fieldForUpdate.Color;
-            fieldFromDb.FieldTypeId = fieldForUpdate.FieldType;
+            fieldFromDb.FieldTypeId = await FindFieldTypeId(sdkDbContext, ToFieldTypeName(fieldForUpdate.FieldType));
             fieldFromDb.Mandatory = Convert.ToInt16(fieldForUpdate.Mandatory);
             fieldFromDb.DecimalCount = fieldForUpdate.DecimalCount;
             fieldFromDb.DisplayIndex = fieldForUpdate.Position;
@@ -960,8 +996,7 @@ public class EFormVisualEditorService(
             {
                 Id = field.Id,
                 Color = field.Color,
-                // ReSharper disable once PossibleInvalidOperationException
-                FieldType = (int)field.FieldTypeId,
+                FieldType = ToClientFieldType(field.FieldType.Type),
                 // ReSharper disable once PossibleInvalidOperationException
                 Position = (int)field.DisplayIndex,
                 Translations = field.Translations.Select(x =>
@@ -1179,11 +1214,12 @@ public class EFormVisualEditorService(
                         parentFieldId = parentField.Id;
                     }
 
+                    var fieldType = ToFieldTypeName(field.FieldType);
                     var dbField = new Field
                     {
                         CheckListId = eformId,
                         Color = field.Color,
-                        FieldTypeId = field.FieldType,
+                        FieldTypeId = await FindFieldTypeId(sdkDbContext, fieldType),
                         DecimalCount = field.DecimalCount,
                         DisplayIndex = field.Position,
                         MaxValue = field.MaxValue ?? null,
@@ -1193,10 +1229,6 @@ public class EFormVisualEditorService(
                     };
                     await dbField.Create(sdkDbContext);
 
-                    var fieldType = await sdkDbContext.FieldTypes
-                        .Where(x => x.Id == field.FieldType)
-                        .Select(x => x.Type)
-                        .FirstAsync();
                     var hashAndLanguageIdList = new List<KeyValuePair<string, int>>();
 
                     switch (fieldType)
@@ -1394,11 +1426,12 @@ public class EFormVisualEditorService(
                 }
                 else
                 {
+                    var fieldType = ToFieldTypeName(field.FieldType);
                     var dbField = new Field
                     {
                         CheckListId = eformId,
                         Color = field.Color,
-                        FieldTypeId = field.FieldType,
+                        FieldTypeId = await FindFieldTypeId(sdkDbContext, fieldType),
                         DecimalCount = field.DecimalCount,
                         DisplayIndex = field.Position,
                         MaxValue = field.MaxValue ?? null,
@@ -1408,10 +1441,6 @@ public class EFormVisualEditorService(
                     };
                     await dbField.Create(sdkDbContext);
 
-                    var fieldType = await sdkDbContext.FieldTypes
-                        .Where(x => x.Id == field.FieldType)
-                        .Select(x => x.Type)
-                        .FirstAsync();
                     var hashAndLanguageIdList = new List<KeyValuePair<string, int>>();
 
                     switch (fieldType)
@@ -1744,12 +1773,11 @@ public class EFormVisualEditorService(
     private static async Task CreateWhenUpdateFields(int eformId, MicrotingDbContext sdkDbContext,
         EformVisualEditorUpdateModel model, Core core)
     {
-        var fieldTypeGroup =
-            await sdkDbContext.FieldTypes
-                .FirstAsync(x => x.Type == Constants.FieldTypes.FieldGroup);
+        var fieldGroupClientType = ToClientFieldType(Constants.FieldTypes.FieldGroup);
+        var fieldGroupTypeId = await FindFieldTypeId(sdkDbContext, Constants.FieldTypes.FieldGroup);
 
         var fieldGroups = model.FieldForCreate
-            .Where(x => x.FieldType == fieldTypeGroup.Id)
+            .Where(x => x.FieldType == fieldGroupClientType)
             .Where(x => x.ParentFieldId == null)
             .ToList();
 
@@ -1759,7 +1787,7 @@ public class EFormVisualEditorService(
             {
                 CheckListId = eformId,
                 Color = fieldGroup.Color,
-                FieldTypeId = fieldGroup.FieldType,
+                FieldTypeId = fieldGroupTypeId,
                 DecimalCount = fieldGroup.DecimalCount,
                 DisplayIndex = fieldGroup.Position,
                 MaxValue = fieldGroup.MaxValue,

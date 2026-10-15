@@ -38,7 +38,6 @@ export class VisualEditorFieldModalComponent implements OnInit {
   fieldTypes: EformVisualEditorFieldTypeModel[];
   appLanguages: LanguagesModel = new LanguagesModel();
   translationPossible = false;
-  private dbFieldTypes: {id: number; type: string}[] = [];
   public selectCurrentUserIsAdmin$ = this.authStore.select(selectCurrentUserIsAdmin);
 
   get languages() {
@@ -51,18 +50,11 @@ export class VisualEditorFieldModalComponent implements OnInit {
   }
 
   setFieldTypes() {
-    const db = this.dbFieldTypes.length > 0 ? this.dbFieldTypes : undefined;
-    const allTypes = getTranslatedTypes(this.translateService, db);
-
-    const fieldGroupId = db
-      ? db.find(ft => ft.type === 'FieldGroup')?.id ?? EformFieldTypesEnum.FieldGroup
-      : EformFieldTypesEnum.FieldGroup;
-    const adminOnlyIds = db
-      ? db.filter(ft => ['Audio', 'Movie', 'NumberStepper'].includes(ft.type)).map(ft => ft.id)
-      : [EformFieldTypesEnum.Audio, EformFieldTypesEnum.Movie, EformFieldTypesEnum.NumberStepper];
+    const allTypes = getTranslatedTypes(this.translateService);
+    const adminOnlyIds = [EformFieldTypesEnum.Audio, EformFieldTypesEnum.Movie, EformFieldTypesEnum.NumberStepper];
 
     if (this.recursionModel.fieldIsNested) {
-      this.fieldTypes = allTypes.filter(x => x.id !== fieldGroupId);
+      this.fieldTypes = allTypes.filter(x => x.id !== EformFieldTypesEnum.FieldGroup);
     } else {
       this.fieldTypes = [...allTypes];
     }
@@ -105,13 +97,11 @@ export class VisualEditorFieldModalComponent implements OnInit {
     model?: EformVisualEditorRecursionFieldModel;
     appLanguages: LanguagesModel;
     translationPossible: boolean;
-    dbFieldTypes?: {id: number; type: string}[];
 }>(MAT_DIALOG_DATA);
 
     this.translationPossible = model.translationPossible;
     this.selectedLanguages = model.selectedLanguages;
     this.appLanguages = model.appLanguages;
-    this.dbFieldTypes = model.dbFieldTypes ?? [];
     // this.setSelectedLanguage();
     if (model.model) {
       this.recursionModel = R.clone(model.model);

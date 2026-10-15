@@ -163,6 +163,15 @@ public class SitesService(
         }
     }
 
+    /// <summary>The site's language; legacy sites without one (LanguageId 0) fall back to Danish.</summary>
+    public static async Task<Language> FindSiteLanguage(Microting.eForm.Infrastructure.MicrotingDbContext dbContext, int siteLanguageId)
+    {
+        // By LanguageCode, not id 1: Languages ids are not stable across installs (#8141).
+        return siteLanguageId == 0
+            ? await dbContext.Languages.FirstAsync(x => x.LanguageCode == "da")
+            : await dbContext.Languages.SingleAsync(x => x.Id == siteLanguageId);
+    }
+
     public async Task<OperationResult> Update(SiteUpdateModel updateModel)
     {
         try
@@ -182,8 +191,7 @@ public class SitesService(
                     localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
             }
 
-            var language = await dbContext.Languages.SingleAsync(x => x.Id ==
-                                                                      (site.LanguageId == 0 ? 1 : site.LanguageId));
+            var language = await FindSiteLanguage(dbContext, site.LanguageId);
 
             await core.Advanced_SiteItemUpdate((int)site.MicrotingUid, updateModel.SiteName, language.LanguageCode);
 
