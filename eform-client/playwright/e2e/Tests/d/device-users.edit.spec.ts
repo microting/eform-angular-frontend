@@ -30,7 +30,9 @@ test.describe('Device users page', () => {
 
   test('should change first name', async () => {
     const newName = Guid.create().toString();
-    await page.locator('#deviceUserFirstName').waitFor({ state: 'visible', timeout: 40000 });
+    // #deviceUserFirstName is rendered once per grid row, and locator.waitFor is strict -
+    // without .first() this throws as soon as the grid holds more than one device user.
+    await page.locator('#deviceUserFirstName').first().waitFor({ state: 'visible', timeout: 40000 });
     const lastDeviceUserBeforeEdit = await deviceUsersPage.getDeviceUser(
       await deviceUsersPage.rowNum()
     );
@@ -46,7 +48,7 @@ test.describe('Device users page', () => {
 
   test('should change last name', async () => {
     const newSurname = Guid.create().toString();
-    await page.locator('#deviceUserFirstName').waitFor({ state: 'visible', timeout: 40000 });
+    await page.locator('#deviceUserFirstName').first().waitFor({ state: 'visible', timeout: 40000 });
     const lastDeviceUserBeforeEdit = await deviceUsersPage.getDeviceUser(
       await deviceUsersPage.rowNum()
     );
@@ -63,7 +65,7 @@ test.describe('Device users page', () => {
   test('should change first name and last name', async () => {
     const newName = Guid.create().toString();
     const newSurname = Guid.create().toString();
-    await page.locator('#deviceUserFirstName').waitFor({ state: 'visible', timeout: 40000 });
+    await page.locator('#deviceUserFirstName').first().waitFor({ state: 'visible', timeout: 40000 });
     const lastDeviceUserBeforeEdit = await deviceUsersPage.getDeviceUser(
       await deviceUsersPage.rowNum()
     );
