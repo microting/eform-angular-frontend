@@ -57,7 +57,7 @@ app-archive-document-panel {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--text-quaternary);
+  color: var(--text-tertiary);
 }
 
 .archive-rail__foot {
@@ -96,7 +96,7 @@ app-archive-document-panel {
 .archive-folder-row--selected,
 .archive-folder-row--selected:hover {
   background: var(--md-primary-container);
-  color: var(--md-primary);
+  color: var(--md-on-surface);
 }
 
 .archive-folder-row--drop {
@@ -107,7 +107,6 @@ app-archive-document-panel {
 .archive-folder-row--empty .archive-folder-row__name,
 .archive-folder-row--empty .archive-folder-row__count {
   color: var(--md-on-surface-variant);
-  opacity: 0.7;
 }
 
 .archive-folder-row__toggle {
@@ -359,7 +358,7 @@ span.archive-folder-row__toggle {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--text-quaternary);
+  color: var(--text-tertiary);
 }
 
 .archive-panel__suggestion {
