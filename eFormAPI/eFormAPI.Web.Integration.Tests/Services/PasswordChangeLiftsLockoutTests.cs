@@ -95,6 +95,11 @@ namespace eFormAPI.Web.Integration.Tests.Services
                 .Build();
 
             // Same registrations, in the same order, as Startup.
+            //
+            // Identity/IdentityTestHost holds a SECOND copy of these eight registrations —
+            // it was added alongside, not shared, because this fixture also needs the scope's
+            // SignInManager and its own token issuer/key. Change Startup's Identity wiring and
+            // BOTH copies have to follow, or one fixture quietly stops mirroring production.
             var services = new ServiceCollection();
             services.AddLogging();
             services.AddSingleton(DbContext);

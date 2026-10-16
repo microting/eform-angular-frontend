@@ -235,11 +235,20 @@ namespace eFormAPI.Web.Integration.Tests.Services
             params string[] grantedClaims)
         {
             var email = $"target-{id}@example.com";
-            var target = new EformUser { Id = id, Email = email, UserName = email };
+            // A non-empty SecurityStamp, as every UserManager.CreateAsync-made row has:
+            // the null-stamp backfill branch is covered by ReplacePasswordAtomicityTests.
+            var target = new EformUser
+            {
+                Id = id, Email = email, UserName = email,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
             _userService.GetByUsernameAsync(email).Returns(target);
             _userManager.IsInRoleAsync(target, EformRole.Admin).Returns(isAdmin);
-            _userManager.RemovePasswordAsync(target).Returns(IdentityResult.Success);
-            _userManager.AddPasswordAsync(target, Arg.Any<string>()).Returns(IdentityResult.Success);
+            // ReplacePasswordAsync now uses Identity's atomic reset: one generated-and-
+            // consumed token, one ResetPasswordAsync, instead of Remove-then-Add.
+            _userManager.GeneratePasswordResetTokenAsync(target).Returns("in-process-reset-token");
+            _userManager.ResetPasswordAsync(target, "in-process-reset-token", Arg.Any<string>())
+                .Returns(IdentityResult.Success);
             // Successful resets now lift the lockout; an unstubbed Task<IdentityResult> on the
             // substitute yields a null result, which LiftLockoutAsync would dereference.
             _userManager.ResetAccessFailedCountAsync(target).Returns(IdentityResult.Success);
@@ -265,6 +274,8 @@ namespace eFormAPI.Web.Integration.Tests.Services
             nameof(UserManager<EformUser>.ResetPasswordAsync),
             nameof(UserManager<EformUser>.ChangePasswordAsync),
             nameof(UserManager<EformUser>.UpdateAsync),
+            nameof(UserManager<EformUser>.UpdateSecurityStampAsync),
+            nameof(UserManager<EformUser>.GeneratePasswordResetTokenAsync),
         };
 
         private void AssertRefused(OperationResult result, string expectedKey)
@@ -279,7 +290,13 @@ namespace eFormAPI.Web.Integration.Tests.Services
         private async Task AssertReset(OperationResult result, EformUser target)
         {
             Assert.That(result.Success, Is.True, result.Message);
-            await _userManager.Received(1).AddPasswordAsync(target, _newPassword);
+            // Exactly one atomic reset, with the password that was asked for.
+            // RemovePasswordAsync must not be reachable at all any more: it is what left
+            // accounts blank.
+            await _userManager.Received(1)
+                .ResetPasswordAsync(target, "in-process-reset-token", _newPassword);
+            await _userManager.DidNotReceive().RemovePasswordAsync(Arg.Any<EformUser>());
+            await _userManager.DidNotReceive().AddPasswordAsync(Arg.Any<EformUser>(), Arg.Any<string>());
         }
 
         [Test]
