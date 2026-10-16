@@ -43,6 +43,16 @@ public class UserInfoViewModel
     public string ThemeVariant { get; set; }
     public bool IsDeviceUser { get; set; }
     public bool EmailConfirmed { get; set; }
+
+    /// <summary>
+    /// Whether this account may log in at all. Checked by AuthService's authenticate path, so
+    /// a false value means the account exists and is administrable but cannot sign in.
+    ///
+    /// Exposed for the my.microting.com link dialog, which otherwise walks an administrator
+    /// through a full identity confirmation against an account that can never use the
+    /// password it is about to be given.
+    /// </summary>
+    public bool IsActive { get; set; }
     public string ArchiveSoftwareVersion { get; set; }
     public string ArchiveModel { get; set; }
     public string ArchiveManufacturer { get; set; }
