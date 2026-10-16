@@ -42,7 +42,6 @@ public class SetLinkedAccountPasswordTests : DbTestFixture
     private const string Provider = "my.microting.com";
     private const string OldPassword = "old-password";
 
-    private IUserService _userService;
     private IWorkerAccountLookup _workerAccountLookup;
     private IClaimsService _claimsService;
 
@@ -50,9 +49,11 @@ public class SetLinkedAccountPasswordTests : DbTestFixture
     private AccountService BuildService(IdentityTestHost host, int callerId, bool callerIsAdmin,
         params string[] grantedClaims)
     {
-        _userService = Substitute.For<IUserService>();
-        _userService.UserId.Returns(callerId);
-        _userService.IsAdmin().Returns(callerIsAdmin);
+        // A local, not a field: no test reads the caller substitute back, so a field
+        // would only be a longer-lived copy of it (SonarC# S1450).
+        var userService = Substitute.For<IUserService>();
+        userService.UserId.Returns(callerId);
+        userService.IsAdmin().Returns(callerIsAdmin);
 
         var claims = new List<Claim>();
         foreach (var granted in grantedClaims)
@@ -83,7 +84,7 @@ public class SetLinkedAccountPasswordTests : DbTestFixture
         return new AccountService(
             Substitute.For<IEFormCoreService>(),
             host.UserManager,
-            _userService,
+            userService,
             Substitute.For<IDbOptions<ApplicationSettings>>(),
             localizationService,
             host.DbContext,

@@ -58,8 +58,18 @@ public class ExternalUserLinkService(
     /// has no InternalsVisibleTo. It takes its context as a parameter so it stays a pure
     /// query description with no instance state.
     /// </summary>
+    public static IQueryable<ExternalUserLinkRow> LinkRowQuery(BaseDbContext context)
+        => LinkRowQuery(context, providerKey: null);
+
+    /// <inheritdoc cref="LinkRowQuery(BaseDbContext)"/>
+    /// <param name="context">The context the query is described against.</param>
+    /// <param name="providerKey">
+    /// The other half of the (LoginProvider, ProviderKey) primary key, applied in SQL;
+    /// null reads the whole installation. Two overloads rather than one optional
+    /// parameter because SonarC# S2360 is on in CI.
+    /// </param>
     public static IQueryable<ExternalUserLinkRow> LinkRowQuery(
-        BaseDbContext context, string providerKey = null)
+        BaseDbContext context, string providerKey)
     {
         var logins = context.Set<IdentityUserLogin<int>>()
             // Compared against the CONSTANT, never the caller's spelling.

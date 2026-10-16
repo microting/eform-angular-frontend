@@ -18,8 +18,14 @@ public static class ExternalLoginProviders
     ///
     /// The plugin holds a byte-identical copy of this literal (MyMicrotingLinkProvider.Name).
     /// Changing it orphans every link row already written on every tenant.
+    ///
+    /// static readonly rather than const, for SonarC# S2339: a public const is baked into
+    /// every referencing assembly at compile time. EF Core still folds a static readonly
+    /// into the generated SQL as a literal rather than a parameter, so
+    /// ExternalUserLinkServiceTests.GetLinks_FiltersByProviderInTheDatabase keeps
+    /// asserting the value in the WHERE clause itself.
     /// </summary>
-    public const string MyMicroting = "my.microting.com";
+    public static readonly string MyMicroting = "my.microting.com";
 
     /// <summary>
     /// Whether <paramref name="loginProvider"/> is the one supported provider.

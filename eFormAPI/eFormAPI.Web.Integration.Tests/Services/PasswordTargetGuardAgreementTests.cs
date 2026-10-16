@@ -335,8 +335,8 @@ public class PasswordTargetGuardAgreementTests : DbTestFixture
             "the password is valid under the production policy, so a rejection here would "
             + "mean the harness, not a target rule, refused");
 
-        // RefusedPrimaryAdmin and RefusedByPolicy both carry the refusal key in Detail;
-        // the key is what the frozen path can be compared on.
+        // RefusedPrimaryAdmin and RefusedByPolicy both carry the refusal key in Detail,
+        // and the key is what the frozen path can be compared on.
         var permitted = result.Model.Outcome == SetLinkedPasswordOutcome.Changed;
         return new Verdict(permitted, permitted ? null : result.Model.Detail);
     }
