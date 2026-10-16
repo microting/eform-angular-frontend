@@ -45,6 +45,9 @@ namespace eFormAPI.Web.Integration.Tests.Identity;
 /// </summary>
 public sealed class IdentityTestHost : IAsyncDisposable
 {
+    /// <summary>The production lockout threshold (IdentityOptions.Lockout.MaxFailedAccessAttempts).</summary>
+    private const int DefaultAccessFailedCount = 10;
+
     private readonly ServiceProvider _provider;
     private readonly IServiceScope _scope;
     private readonly List<int> _createdUserIds = new();
@@ -162,7 +165,16 @@ public sealed class IdentityTestHost : IAsyncDisposable
     /// right for a test ABOUT lockout; these tests only need an account that IS locked
     /// out, so they set it and skip ten failed logins.
     /// </summary>
-    public async Task LockOutAsync(int userId, int accessFailedCount = 10)
+    public Task LockOutAsync(int userId) => LockOutAsync(userId, DefaultAccessFailedCount);
+
+    /// <inheritdoc cref="LockOutAsync(int)"/>
+    /// <param name="userId">The account to lock out.</param>
+    /// <param name="accessFailedCount">
+    /// The stored failure count. Overloads rather than an optional parameter because
+    /// SonarC# S2360 is on in CI; the single-argument form carries the production
+    /// threshold, which is what every caller so far wants.
+    /// </param>
+    public async Task LockOutAsync(int userId, int accessFailedCount)
     {
         var user = await DbContext.Users.FirstAsync(u => u.Id == userId);
         user.LockoutEnd = DateTimeOffset.UtcNow.AddMinutes(10);
@@ -182,8 +194,19 @@ public sealed class IdentityTestHost : IAsyncDisposable
 
     /// <summary>Writes one UserLogins row. Used to build the link fixtures; the production
     /// write goes through UserManager.AddLoginAsync.</summary>
+    public Task AddLinkAsync(int userId, string loginProvider, string providerKey)
+        => AddLinkAsync(userId, loginProvider, providerKey, providerDisplayName: null);
+
+    /// <inheritdoc cref="AddLinkAsync(int, string, string)"/>
+    /// <param name="userId">The account the link belongs to.</param>
+    /// <param name="loginProvider">First half of the UserLogins composite key.</param>
+    /// <param name="providerKey">Second half of the UserLogins composite key.</param>
+    /// <param name="providerDisplayName">
+    /// The display name column. Overloads rather than an optional parameter because
+    /// SonarC# S2360 is on in CI.
+    /// </param>
     public async Task AddLinkAsync(int userId, string loginProvider, string providerKey,
-        string providerDisplayName = null)
+        string providerDisplayName)
     {
         DbContext.Set<IdentityUserLogin<int>>().Add(new IdentityUserLogin<int>
         {
