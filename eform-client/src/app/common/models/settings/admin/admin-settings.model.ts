@@ -18,6 +18,7 @@ export class AdminSettingsModel {
   sdkSettingsModel: SdkSettingsModel;
   siteLink: string;
   assemblyVersion: string;
+  themeVariant: 'eform' | 'workspace' = 'eform';
 
   constructor() {
     this.loginPageSettingsModel = new LoginPageSettingsModel();

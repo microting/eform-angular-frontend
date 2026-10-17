@@ -5,6 +5,13 @@
     "logLevel": "debug",
     "proxyTimeout": 3600000
   },
+  "/hub/**":{
+    "target": "http://0.0.0.0:5000",
+    "secure": false,
+    "ws": true,
+    "logLevel": "debug",
+    "proxyTimeout": 3600000
+  },
   "/output/**":{
     "target": "http://0.0.0.0:5000",
     "secure": false,

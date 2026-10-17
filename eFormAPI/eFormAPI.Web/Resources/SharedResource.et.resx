@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Seadme kasutaja "{0}" kustutamine õnnestus</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Ainult esimene kasutaja saab seadme kasutajaid kustutada</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Seadme kasutaja värskendamine õnnestus</value>
     </data>
@@ -152,6 +155,12 @@
     </data>
     <data name="ErrorWhileUpdatingUser">
         <value>Viga kasutaja värskendamisel</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>Email confirmed</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Error while confirming email</value>
     </data>
     <data name="FileNotFound">
         <value>Faili ei leitud</value>

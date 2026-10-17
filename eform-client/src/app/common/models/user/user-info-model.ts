@@ -3,11 +3,13 @@ export class UserInfoModel {
   createdAt?: Date;
   updatedAt?: Date;
   email: string;
+  emailConfirmed?: boolean;
   firstName: string;
   lastName: string;
   fullName: string;
   role: string;
   darkTheme: boolean;
+  themeVariant?: string;
   isDeviceUser: boolean;
   language: string;
   timeZone: string;
@@ -31,11 +33,13 @@ export class UserInfoModel {
       this.createdAt = data.createdAt;
       this.updatedAt = data.updatedAt;
       this.email = data.email;
+      this.emailConfirmed = data.emailConfirmed;
       this.firstName = data.firstName;
       this.lastName = data.lastName;
       this.fullName = data.fullName;
       this.role = data.role;
       this.darkTheme = data.darkTheme;
+      this.themeVariant = data.themeVariant;
       this.isDeviceUser = data.isDeviceUser;
       this.language = data.language;
       this.timeZone = data.timeZone;

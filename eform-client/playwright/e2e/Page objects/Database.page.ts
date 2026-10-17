@@ -57,8 +57,7 @@ export class DatabasePage extends BasePage {
 
   public async selectLanguage(language: string) {
     await this.languageDropdown().click();
-    const ele = this.page.locator(`//*[@class="ng-dropdown-panel ng-star-inserted ng-select-top"]//*[text()="${language}"]`).locator('..').locator('..');
-    await ele.click();
+    await this.page.locator('ng-dropdown-panel .ng-option').filter({ hasText: language }).first().click();
   }
 
   public async configure(language: string) {

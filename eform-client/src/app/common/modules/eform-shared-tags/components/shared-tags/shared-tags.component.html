@@ -2,6 +2,7 @@
 
 <div mat-dialog-content style="min-width: 420px; overflow-x: hidden">
 
+  <!-- pageSize: mtx-grid caches the initial value, so a constant larger than any realistic row count is the simplest way to keep refreshed [data] from being clipped. Paginator is hidden. -->
   <mtx-grid
     [data]="availableTags"
     [columns]="tableHeaders"
@@ -9,7 +10,7 @@
     [rowStriped]="false"
     [showPaginator]="false"
     [showToolbar]="false"
-    [pageSize]="availableTags.length"
+    [pageSize]="1000"
   >
   </mtx-grid>
 
@@ -17,7 +18,7 @@
   <div class="d-flex flex-row justify-content-start align-items-center gap-12 py-2">
     <button
       *ngIf="showMultipleCreateBtn"
-      mat-button
+      mat-stroked-button
       color="primary"
       id="newTagsBtn"
       (click)="showMultipleCreateTagModal()"
@@ -26,7 +27,7 @@
       <span>{{ 'Add bulk' | translate }}</span>
     </button>
     <button
-      mat-button
+      mat-flat-button
       color="primary"
       id="newTagBtn"
       (click)="showCreateTagModal()"
@@ -44,7 +45,7 @@
 </ng-template>
 
 <ng-template #actionsTpl let-row>
-  <div>
+  <div class="table-actions">
     <button
       *ngIf="!row.isLocked"
       mat-icon-button

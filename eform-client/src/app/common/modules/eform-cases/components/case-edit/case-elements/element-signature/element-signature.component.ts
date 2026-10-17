@@ -15,7 +15,6 @@ import { AuthImagePipe } from 'src/app/common/pipes';
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-signature',
     templateUrl: './element-signature.component.html',
-    styleUrls: ['./element-signature.component.scss'],
     imports: [NgFor, MatCard, MatCardContent, MatCardImage, AuthImagePipe, AsyncPipe]
 })
 export class ElementSignatureComponent implements OnChanges, OnDestroy {

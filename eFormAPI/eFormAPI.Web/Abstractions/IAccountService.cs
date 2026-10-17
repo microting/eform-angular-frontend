@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models.Auth;
+using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
 using eFormAPI.Web.Infrastructure.Models.Settings;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.Users;
@@ -40,10 +41,16 @@ public interface IAccountService
     Task<OperationResult> ForgotPassword(ForgotPasswordModel model);
     Task<UserInfoViewModel> GetUserInfo();
     Task<OperationDataResult<UserSettingsModel>> GetUserSettings();
-    Task<OperationResult> ResetAdminPassword(string code);
     Task<OperationResult> ResetPassword(Infrastructure.Models.ResetPasswordModel model);
     Task<OperationResult> UpdateUserSettings(UserSettingsModel model);
     OperationDataResult<TimeZonesModel> AllTimeZones();
     Task<OperationResult> AdminChangePassword(ChangePasswordAdminModel model);
     Task<OperationResult> ProfilePictureDelete();
+
+    /// <summary>
+    /// Sets the password of the account linked to (loginProvider, providerKey) - and of
+    /// no other account. Takes no email and no user id, by design.
+    /// </summary>
+    Task<OperationDataResult<SetLinkedPasswordResult>> SetLinkedAccountPassword(
+        SetLinkedAccountPasswordModel model);
 }

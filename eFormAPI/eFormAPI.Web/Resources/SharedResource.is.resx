@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Tækjanotandanum "{0}" var eytt</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Aðeins fyrsti notandinn getur eytt tækjanotendum</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Tækjanotandi uppfærður</value>
     </data>
@@ -152,6 +155,12 @@
     </data>
     <data name="ErrorWhileUpdatingUser">
         <value>Villa við að uppfæra notanda</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>Email confirmed</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Error while confirming email</value>
     </data>
     <data name="FileNotFound">
         <value>Skjal finnst ekki</value>

@@ -28,7 +28,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Security;
 using eFormAPI.Web.Infrastructure.Models.Auth;
+using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
 using eFormAPI.Web.Infrastructure.Models.Settings;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.Users;
@@ -169,6 +171,7 @@ public class AccountController(
 
     [HttpPost]
     [Route("api/account/change-password-admin")]
+    [Authorize(Policy = AccountPolicies.SetOtherUsersPassword)]
     public async Task<OperationResult> ChangePasswordAdmin([FromBody] ChangePasswordAdminModel model)
     {
         if (!ModelState.IsValid)
@@ -178,6 +181,33 @@ public class AccountController(
         }
 
         return await accountService.AdminChangePassword(model);
+    }
+
+    // POST api/account/set-linked-account-password
+    //
+    // Deliberately cannot name a user: a (loginProvider, providerKey) pair only, resolved
+    // with UserManager.FindByLoginAsync against a link an administrator created
+    // explicitly. Strictly NARROWER than change-password-admin, which the same principal
+    // can already call with an arbitrary email - it subtracts the caller's ability to
+    // choose a target and adds no reach. Same policy, same target rules, same atomic set.
+    //
+    // Part 3's capability probe reads this route's response shape too: once deployed it
+    // answers 401/403 unauthorised and 200 application/json authorised, never HTML, so a
+    // caller can tell it apart from the un-upgraded case (404, or 200 text/html via
+    // UseAngularMiddleware). Do not add [AllowAnonymous] or change the route template.
+    [HttpPost]
+    [Route("api/account/set-linked-account-password")]
+    [Authorize(Policy = AccountPolicies.SetOtherUsersPassword)]
+    public async Task<OperationDataResult<SetLinkedPasswordResult>> SetLinkedAccountPassword(
+        [FromBody] SetLinkedAccountPasswordModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            var allErrors = ModelState.Values.SelectMany(v => v.Errors).Select(x => x.ErrorMessage);
+            return new OperationDataResult<SetLinkedPasswordResult>(false, string.Join(" ", allErrors));
+        }
+
+        return await accountService.SetLinkedAccountPassword(model);
     }
 
     // POST: /account/forgot-password
@@ -194,14 +224,6 @@ public class AccountController(
         return new OperationResult(false);
     }
 
-
-    [HttpGet]
-    [AllowAnonymous]
-    [Route("api/account/reset-admin-password")]
-    public async Task<OperationResult> ResetAdminPassword(string code)
-    {
-        return await accountService.ResetAdminPassword(code);
-    }
 
     // POST: /account/reset-password
     [HttpPost]

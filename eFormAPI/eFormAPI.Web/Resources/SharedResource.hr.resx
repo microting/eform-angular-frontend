@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Korisnik uređaja "{0}" uspješno je izbrisan</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Samo prvi korisnik može brisati korisnike uređaja</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Korisnik uređaja je uspješno ažuriran</value>
     </data>
@@ -152,6 +155,12 @@
     </data>
     <data name="ErrorWhileUpdatingUser">
         <value>Pogreška prilikom ažuriranja korisnika</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>Email confirmed</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Error while confirming email</value>
     </data>
     <data name="FileNotFound">
         <value>Datoteka nije pronađena</value>

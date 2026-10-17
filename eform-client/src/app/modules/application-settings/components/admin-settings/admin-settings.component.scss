@@ -1,3 +1,77 @@
+.theme-picker-label {
+  margin: 0 0 12px;
+  font-weight: 500;
+  color: var(--text-body);
+}
+
+.theme-picker {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  min-width: 160px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+
+  input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:hover {
+    background: var(--hover-surface, var(--table-row-hover));
+  }
+
+  &--selected {
+    border-color: var(--primary);
+    background: var(--selected-surface, var(--card));
+  }
+}
+
+.theme-swatch {
+  display: flex;
+  width: 120px;
+  height: 72px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+
+  .swatch-primary {
+    flex: 0 0 40%;
+  }
+
+  .swatch-surface {
+    flex: 1;
+  }
+
+  &--eform {
+    .swatch-primary { background: #009688; }
+    .swatch-surface { background: #fafafa; }
+  }
+
+  &--workspace {
+    .swatch-primary { background: #0b57d0; }
+    .swatch-surface { background: #f0f4f9; }
+  }
+}
+
+.theme-option-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-header);
+}
+
 .input-invisible {
   visibility: hidden;
   width: 0;

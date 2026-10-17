@@ -4,7 +4,7 @@ import {
   selectCurrentUserFullName,
   selectCurrentUserName,
   selectCurrentUserAvatarUrl,
-  leftAppMenus, selectCurrentUserClaims, rightAppMenus
+  leftAppMenus, selectCurrentUserClaims, rightAppMenus, selectAuthIsAdmin
 } from 'src/app/state';
 
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
@@ -15,6 +15,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {snakeToCamel} from "src/app/common/helpers";
+import {TranslatePipe} from '@ngx-translate/core';
+import {SentryFeedbackService} from 'src/app/common/services';
 
 @Component({
   selector: 'app-footer',
@@ -28,13 +30,15 @@ import {snakeToCamel} from "src/app/common/helpers";
     RouterLink,
     AsyncPipe,
     NgIf,
-    NgForOf
+    NgForOf,
+    TranslatePipe
   ]
 })
 export class FooterComponent implements OnInit {
   private store = inject(Store);
   private authStore = inject(Store);
   private destroyRef = inject(DestroyRef);
+  private sentryFeedbackService = inject(SentryFeedbackService);
   private selectCurrentUserClaims$ = this.authStore.select(selectCurrentUserClaims);
 
   fullName = '';
@@ -42,6 +46,9 @@ export class FooterComponent implements OnInit {
   avatarUrl = '';
 
   public allAppMenus$ = this.store.select(rightAppMenus);
+  // "Report a bug" is admin-only for now, and only exists where Sentry is running.
+  public showReportBug$: Observable<boolean> = this.store.select(selectAuthIsAdmin)
+    .pipe(map(isAdmin => isAdmin && this.sentryFeedbackService.isEnabled));
 
   ngOnInit() {
     this.store.select(selectCurrentUserFullName)
@@ -69,6 +76,10 @@ export class FooterComponent implements OnInit {
       }
       return false;
     }));
+  }
+
+  reportBug() {
+    void this.sentryFeedbackService.openForm();
   }
 
   logout() {

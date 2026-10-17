@@ -38,8 +38,11 @@ using Abstractions;
 using Abstractions.Advanced;
 using Abstractions.Eforms;
 using Abstractions.Security;
+using Hosting;
 using Hosting.Extensions;
 using Hosting.Security;
+using Hosting.SentryIntegration;
+using Microsoft.AspNetCore.Routing;
 using Infrastructure.Models.Settings.Plugins;
 using Services;
 using Services.Security;
@@ -57,6 +60,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Localization;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Abstractions.Translation;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Localization;
@@ -105,9 +109,9 @@ public class Startup(IConfiguration configuration)
         });
         if (!string.IsNullOrEmpty(Configuration["ConnectionString"]))
         {
-            Log.LogEvent($"We do have a ConnectionString {Configuration["ConnectionString"]}");
+            Log.LogEvent("We do have a ConnectionString");
             services.AddEntityFrameworkMySql()
-                .AddDbContext<BaseDbContext>(o => o.UseMySql(
+                .AddDbContextPool<BaseDbContext>(o => o.UseMySql(
                     Configuration["ConnectionString"], new MariaDbServerVersion(
                         ServerVersion.AutoDetect(Configuration["ConnectinString"])), mySqlOptionsAction: builder =>
                     {
@@ -157,9 +161,9 @@ public class Startup(IConfiguration configuration)
                 Log.LogEvent($"We don't have a ConnectionString, so using default");
                 if (Configuration.MyConnectionString() != "...")
                 {
-                    Log.LogEvent($"ConnectionString is {Configuration.MyConnectionString()}");
+                    Log.LogEvent("Using the DefaultConnection ConnectionString");
                     services.AddEntityFrameworkMySql()
-                        .AddDbContext<BaseDbContext>(o => o.UseMySql(
+                        .AddDbContextPool<BaseDbContext>(o => o.UseMySql(
                             Configuration.MyConnectionString(), new MariaDbServerVersion(
                                 ServerVersion.AutoDetect(Configuration.MyConnectionString())), mySqlOptionsAction: builder =>
                             {
@@ -208,7 +212,7 @@ public class Startup(IConfiguration configuration)
                     // We use this hack to get the project started and we actually don't use this connection, but it's needed for the service to start.
                     // Once we have the correct connectionstring in the connection.json, we restart the server and the above method is used.
                     services.AddEntityFrameworkMySql()
-                        .AddDbContext<BaseDbContext>(o => o.UseMySql(
+                        .AddDbContextPool<BaseDbContext>(o => o.UseMySql(
                             "server=localhost;", new MariaDbServerVersion(
                                 new Version(10, 4, 0)), mySqlOptionsAction: builder =>
                             {
@@ -241,6 +245,8 @@ public class Startup(IConfiguration configuration)
         services.ConfigureDbOptions<EmailSettings>(Configuration.GetSection("EmailSettings"));
         services.ConfigureDbOptions<LoginPageSettings>(Configuration.GetSection("LoginPageSettings"));
         services.ConfigureDbOptions<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
+        services.ConfigureDbOptions<eFormAPI.Web.Infrastructure.Models.Settings.Admin.AppearanceSettings>(
+            Configuration.GetSection("AppearanceSettings"));
         var configurationSection = Configuration.GetSection("ConnectionStringsSdk");
         if (Configuration.MyConnectionString().Contains("127.0.0.1"))
         {
@@ -305,7 +311,7 @@ public class Startup(IConfiguration configuration)
         {
             Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate");
             var apiKey = Environment.GetEnvironmentVariable("API_KEY");
-            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate: " + apiKey);
+            Console.WriteLine("info: Startup.ConfigureServices: GoogleTranslate: API key configured: " + !string.IsNullOrEmpty(apiKey));
             services.Configure(new Action<GoogleTranslateOptions>(options =>
             {
                 options.ApiKey = apiKey;
@@ -317,6 +323,14 @@ public class Startup(IConfiguration configuration)
             Log.LogException(ex.Message);
         }
         ConnectServices(services);
+
+        // gRPC
+        services.AddGrpc();
+
+        // Each plugin's AddGrpc() call registers a duplicate "Unimplemented service"
+        // fallback endpoint. Multiple duplicates cause AmbiguousMatchException on any
+        // unmapped gRPC route. This policy keeps a single fallback at routing time.
+        services.AddSingleton<MatcherPolicy, DeduplicateUnimplementedGrpcMatcherPolicy>();
 
         // plugins
         services.AddEFormPlugins(Program.EnabledPlugins);
@@ -355,6 +369,7 @@ public class Startup(IConfiguration configuration)
         app.UseDefaultFiles();
         app.UseStaticFiles();
         app.UseAuthentication();
+        app.UseSentryHost();
         // Plugins
         app.UseEFormLocalization();
         // MVC
@@ -379,8 +394,14 @@ public class Startup(IConfiguration configuration)
             });
         }
 
-        // Plugins
+        // gRPC + Plugins
+        app.UseRouting();
         app.UseEFormPlugins(Program.EnabledPlugins);
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapGrpcService<Services.GrpcServices.EformAuthGrpcService>();
+        });
+
         // Route all unknown requests to app root
         app.UseAngularMiddleware(env);
         FixUserToWorkerLinks();
@@ -406,6 +427,8 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<ICasesService, CasesService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IExternalUserLinkService, ExternalUserLinkService>();
+        services.AddScoped<IWorkerAccountLookup, WorkerAccountLookup>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IAdminService, AdminService>();
         services.AddScoped<ISettingsService, SettingsService>();
@@ -427,7 +450,7 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IEformCaseReportService, EformCaseReportService>();
         services.AddScoped<IWordService, WordService>();
         services.AddScoped<ITemplateVisualEditorService, EFormVisualEditorService>();
-        services.AddScoped<ITranslationService, TranslationService>();
+        services.AddSingleton<ITranslationService, TranslationService>();
         services.AddScoped<ICmsService, CmsService>();
     }
 

@@ -1,0 +1,39 @@
+<h3 mat-dialog-title>{{'Confirm email' | translate}}</h3>
+<div mat-dialog-content>
+  <p>
+    {{ 'Are you sure you want to confirm the email for' | translate }}
+    <strong>{{ selectedUser.firstName }} {{ selectedUser.lastName }}</strong>?
+  </p>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>ID</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{selectedUser.id}}</strong>
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-column">
+      <p>{{'Email' | translate}}</p>
+    </div>
+    <div class="d-flex flex-column">
+      <strong>{{ selectedUser.email }}</strong>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    class="btn-cancel"
+    id="userConfirmEmailCancelBtn"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
+  <button
+    class="btn-primary"
+    id="userConfirmEmailBtn"
+    (click)="confirmEmail()"
+  >
+    {{'Confirm' | translate}}
+  </button>
+</div>

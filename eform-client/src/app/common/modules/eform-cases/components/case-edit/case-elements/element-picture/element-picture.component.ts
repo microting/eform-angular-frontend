@@ -12,7 +12,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatDialogTitle, MatDialogActi
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
 import { MatCard, MatCardContent, MatCardImage, MatCardFooter } from '@angular/material/card';
@@ -25,8 +25,7 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-picture',
     templateUrl: './element-picture.component.html',
-    styleUrls: ['./element-picture.component.scss'],
-    imports: [NgIf, MatIconButton, MatTooltip, MatIcon, NgFor, MatCard, MatCardContent, MatCardImage, MatCardFooter, TranslatePipe, AuthImagePipe, AsyncPipe]
+    imports: [NgIf, MatTooltip, MatIcon, NgFor, MatCard, MatCardContent, MatCardImage, MatCardFooter, TranslatePipe, AuthImagePipe, AsyncPipe]
 })
 export class ElementPictureComponent implements OnChanges, OnDestroy {
   private activateRoute = inject(ActivatedRoute);
@@ -38,12 +37,20 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
 
   @Input() fieldValues: Array<FieldValueDto> = [];
   @Input() fieldId: number;
+  /**
+   * Case id supplied by the host component. It takes precedence over the route
+   * params below: inside a MatDialog the injected ActivatedRoute is the route
+   * the dialog was opened from, which carries neither ':id' nor ':sdkCaseId',
+   * so the fallback would resolve to NaN and the upload would fail with
+   * CaseNotFound. Routed case pages may keep omitting it.
+   */
+  @Input() caseId?: number;
   @Output() pictureUpdated: EventEmitter<void> = new EventEmitter<void>();
   buttonsLocked = false;
   geoObjects = [];
   images = [];
   galleryImages: GalleryItem[] = [];
-  caseId: number;
+  private routeCaseId: number;
 
   imageSub$: Subscription;
   rotateImageSub$: Subscription;
@@ -57,12 +64,14 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.fieldValues) {
       this.images = [];
-      this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
-        this.caseId = +params['id'];
-        if (isNaN(this.caseId)) {
-          this.caseId = +params['sdkCaseId'];
-        }
-      });
+      if (!this.hasCaseIdInput) {
+        this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
+          this.routeCaseId = +params['id'];
+          if (isNaN(this.routeCaseId)) {
+            this.routeCaseId = +params['sdkCaseId'];
+          }
+        });
+      }
       this.fieldValues.forEach(value => {
         if (value.uploadedDataObj) {
           this.geoObjects.push({
@@ -90,6 +99,21 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
         this.updateGallery();
       }
     }
+  }
+
+  /**
+   * True when the host explicitly bound a usable case id.
+   */
+  private get hasCaseIdInput(): boolean {
+    return Number.isFinite(this.caseId) && this.caseId > 0;
+  }
+
+  /**
+   * The bound input always wins; the route params are only a fallback for the
+   * routed case pages that do not pass the id down.
+   */
+  private get resolvedCaseId(): number {
+    return this.hasCaseIdInput ? this.caseId : this.routeCaseId;
   }
 
   updateGallery() {
@@ -152,15 +176,43 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
     }
   }
 
+  /**
+   * Uploads the picked file. The host's buttons and the dialog's Save are
+   * locked for the whole request so a fast double-click, or a click after an
+   * error, can never re-POST the same File while one is in flight; the lock is
+   * released on failure so the user can retry, and on success the dialog
+   * closes and the host reloads its pictures.
+   */
   addPicture(newImage: File, modalId: string) {
+    if (this.buttonsLocked) {
+      return;
+    }
     const fieldId = this.fieldId;
+    const dialogRef = this.dialog.getDialogById(modalId) as MatDialogRef<AddPictureDialogComponent> | undefined;
+    const dialogComponent = dialogRef?.componentInstance;
+    const release = () => {
+      this.buttonsLocked = false;
+      if (dialogComponent) {
+        dialogComponent.saving = false;
+      }
+    };
+    this.buttonsLocked = true;
+    if (dialogComponent) {
+      dialogComponent.saving = true;
+    }
     this.addImageSub$ = this.imageService
-      .addNewImage(fieldId, this.caseId, newImage)
-      .subscribe(data => {
-        if (data && data.success) {
-          this.dialog.getDialogById(modalId).close();
-          this.pictureUpdated.emit();// fetch the new image
-        }
+      .addNewImage(fieldId, this.resolvedCaseId, newImage)
+      .subscribe({
+        next: data => {
+          if (data && data.success) {
+            this.buttonsLocked = false;
+            dialogRef?.close();
+            this.pictureUpdated.emit();// fetch the new image
+          } else {
+            release();
+          }
+        },
+        error: () => release(),
       });
   }
 
@@ -214,17 +266,17 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
     </div>
     <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-24">
       <button
-        class="btn-primary btn-primary--icon-left"
-        (click)="onAddPicture()"
-        [disabled]="!image"
-      >
-        {{ 'Save' | translate }}
-      </button>
-      <button
         class="btn-cancel"
         (click)="hide()"
       >
         {{ 'Cancel' | translate }}
+      </button>
+      <button
+        class="btn-primary btn-primary--icon-left"
+        (click)="onAddPicture()"
+        [disabled]="!image || saving"
+      >
+        {{ 'Save' | translate }}
       </button>
     </div>`,
     imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatButton, MatDialogActions, TranslatePipe]
@@ -234,9 +286,19 @@ export class AddPictureDialogComponent {
 
   addedPicture: EventEmitter<File> = new EventEmitter<File>();
   image: File;
+  /**
+   * True while the host is uploading the picked file. Set and cleared by the
+   * host (ElementPictureComponent.addPicture); disables Save so the same File
+   * cannot be submitted twice, and is cleared again on failure so the user can
+   * retry.
+   */
+  saving = false;
 
   onAddPicture() {
-    this.addedPicture.emit(this.image)
+    if (!this.image || this.saving) {
+      return;
+    }
+    this.addedPicture.emit(this.image);
   }
 
 

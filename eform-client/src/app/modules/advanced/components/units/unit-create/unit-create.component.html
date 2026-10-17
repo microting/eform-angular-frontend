@@ -21,19 +21,18 @@
 
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-cancel"
+    id="workerSaveCancelBtn"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
+  <button
+    class="btn-primary"
     (click)="createUnit()"
     [disabled]="!unitModel.siteId"
     id="workerSaveBtn"
   >
     {{'Create' | translate}}
-  </button>
-  <button
-    mat-raised-button
-    id="workerSaveCancelBtn"
-    (click)="hide()"
-  >
-    {{'Cancel' | translate}}
   </button>
 </div>

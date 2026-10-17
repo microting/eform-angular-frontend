@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package eform;
+
+option csharp_namespace = "eFormAPI.Web.Grpc";
+
+message AuthenticateUserRequest {
+  string username = 1;
+  string password = 2;
+  string grant_type = 3;
+}
+
+message AuthenticateUserResponse {
+  bool success = 1;
+  string message = 2;
+  AuthUserModel model = 3;
+}
+
+message AuthUserModel {
+  string access_token = 1;
+  string first_name = 2;
+  string last_name = 3;
+}
+
+message RefreshTokenRequest {}
+
+message RefreshTokenResponse {
+  bool success = 1;
+  string message = 2;
+  AuthUserModel model = 3;
+}
+
+service EformAuthService {
+  rpc AuthenticateUser(AuthenticateUserRequest) returns (AuthenticateUserResponse);
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+}

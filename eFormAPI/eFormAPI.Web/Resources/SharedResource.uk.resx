@@ -137,6 +137,9 @@
   <data name="DeviceUserParamDeletedSuccessfully" xml:space="preserve">
     <value>Пристрій користувача "{0}" успішно видалений</value>
   </data>
+  <data name="OnlyTheFirstUserCanDeleteWorkers" xml:space="preserve">
+    <value>Лише перший користувач може видаляти користувачів пристрою</value>
+  </data>
   <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
     <value>Пристрій користувача успішно оновлено</value>
   </data>
@@ -211,6 +214,12 @@
   </data>
   <data name="ErrorWhileUpdatingUser" xml:space="preserve">
     <value>Помилка при оновленні користувача</value>
+  </data>
+  <data name="EmailConfirmed" xml:space="preserve">
+    <value>Email confirmed</value>
+  </data>
+  <data name="ErrorWhileConfirmingEmail" xml:space="preserve">
+    <value>Error while confirming email</value>
   </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>Файл не знайдено</value>

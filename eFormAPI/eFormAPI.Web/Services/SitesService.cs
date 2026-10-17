@@ -34,6 +34,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abstractions;
 using Abstractions.Advanced;
+using Infrastructure.Helpers;
 using Infrastructure.Models.Sites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -45,6 +46,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 public class SitesService(
     IEFormCoreService coreHelper,
     ILocalizationService localizationService,
+    IUserService userService,
     ILogger<SitesService> logger)
     : ISitesService
 {
@@ -161,6 +163,15 @@ public class SitesService(
         }
     }
 
+    /// <summary>The site's language; legacy sites without one (LanguageId 0) fall back to Danish.</summary>
+    public static async Task<Language> FindSiteLanguage(Microting.eForm.Infrastructure.MicrotingDbContext dbContext, int siteLanguageId)
+    {
+        // By LanguageCode, not id 1: Languages ids are not stable across installs (#8141).
+        return siteLanguageId == 0
+            ? await dbContext.Languages.FirstAsync(x => x.LanguageCode == "da")
+            : await dbContext.Languages.SingleAsync(x => x.Id == siteLanguageId);
+    }
+
     public async Task<OperationResult> Update(SiteUpdateModel updateModel)
     {
         try
@@ -180,8 +191,7 @@ public class SitesService(
                     localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
             }
 
-            var language = await dbContext.Languages.SingleAsync(x => x.Id ==
-                                                                      (site.LanguageId == 0 ? 1 : site.LanguageId));
+            var language = await FindSiteLanguage(dbContext, site.LanguageId);
 
             await core.Advanced_SiteItemUpdate((int)site.MicrotingUid, updateModel.SiteName, language.LanguageCode);
 
@@ -240,6 +250,13 @@ public class SitesService(
 
     public async Task<OperationResult> Delete(int id)
     {
+        // Only the first user may delete a site (a device user); everyone else is refused before the SDK.
+        if (!await userService.IsFirstUserAsync())
+        {
+            return new OperationResult(false,
+                localizationService.GetString("OnlyTheFirstUserCanDeleteWorkers"));
+        }
+
         try
         {
             var core = await coreHelper.GetCore();

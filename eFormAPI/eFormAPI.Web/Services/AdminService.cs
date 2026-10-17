@@ -37,7 +37,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abstractions;
 using Hosting.Helpers.DbOptions;
-using Infrastructure.Models.Settings.Admin;
+using Hosting.Security;
 using Infrastructure.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -79,10 +79,12 @@ public class AdminService(
                         x.user.UserRoles,
                         x.user.UserName,
                         x.user.Email,
+                        x.user.EmailConfirmed,
                         x.user.Locale,
                         x.user.TimeZone,
                         x.user.Formats,
                         x.user.DarkTheme,
+                        x.user.ThemeVariant,
                         x.user.ArchiveModel,
                         x.user.ArchiveManufacturer,
                         x.user.ArchiveOsVersion,
@@ -115,7 +117,9 @@ public class AdminService(
                 Id = x.Id,
                 UserName = x.UserName,
                 Email = x.Email,
+                EmailConfirmed = x.EmailConfirmed,
                 DarkTheme = x.DarkTheme,
+                ThemeVariant = x.ThemeVariant,
                 Language = x.Locale,
                 TimeZone = x.TimeZone,
                 Formats = x.Formats,
@@ -185,6 +189,13 @@ public class AdminService(
     {
         try
         {
+            // Only an admin may create an admin. Checked before any SDK or Identity work,
+            // so a refused request changes nothing.
+            if (userRegisterModel.Role == EformRole.Admin && !userService.IsAdmin())
+            {
+                return new OperationResult(false, localizationService.GetString("OnlyAdminsCanAssignTheAdminRole"));
+            }
+
             var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             if (userRegisterModel.Role != EformRole.Admin && userRegisterModel.Role != EformRole.User)
@@ -344,6 +355,32 @@ public class AdminService(
     {
         try
         {
+            // Only an admin may promote to admin — including promoting themselves.
+            var callerIsAdmin = userService.IsAdmin();
+            if (userRegisterModel.Role == EformRole.Admin && !callerIsAdmin)
+            {
+                return new OperationResult(false, localizationService.GetString("OnlyAdminsCanAssignTheAdminRole"));
+            }
+
+            // A non-admin editing their own account may change their profile, but not set a
+            // password without the current one, nor move themselves into another group.
+            if (!callerIsAdmin && userRegisterModel.Id == userService.UserId)
+            {
+                var settingPassword = !string.IsNullOrEmpty(userRegisterModel.Password)
+                                      && userRegisterModel.Password != " ";
+                var currentGroupId = await dbContext.SecurityGroupUsers
+                    .Where(x => x.EformUserId == userRegisterModel.Id)
+                    .Select(x => (int?)x.SecurityGroupId)
+                    .FirstOrDefaultAsync();
+                var changingGroup = userRegisterModel.GroupId.HasValue
+                                    && userRegisterModel.GroupId != currentGroupId;
+                if (settingPassword || changingGroup)
+                {
+                    return new OperationResult(false,
+                        localizationService.GetString("YouCantChangeYourOwnPasswordOrGroupHere"));
+                }
+            }
+
             var core = await coreHelper.GetCore();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             if (userRegisterModel.Id == 1 && userService.UserId != 1)
@@ -422,8 +459,7 @@ public class AdminService(
             // password
             if (!string.IsNullOrEmpty(userRegisterModel.Password) && userRegisterModel.Password != " ")
             {
-                await userManager.RemovePasswordAsync(user);
-                await userManager.AddPasswordAsync(user, userRegisterModel.Password);
+                await userManager.ReplacePasswordAsync(user, userRegisterModel.Password, logger);
             }
 
             // change role
@@ -520,6 +556,44 @@ public class AdminService(
         }
     }
 
+    public async Task<OperationResult> ConfirmEmail(int userId)
+    {
+        try
+        {
+            var user = await userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                return new OperationResult(false,
+                    localizationService.GetString("UserNotFound"));
+            }
+
+            if (user.EmailConfirmed)
+            {
+                return new OperationResult(true,
+                    localizationService.GetString("EmailConfirmed"));
+            }
+
+            user.EmailConfirmed = true;
+            var result = await userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                return new OperationResult(false,
+                    string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
+            }
+
+            return new OperationResult(true,
+                localizationService.GetString("EmailConfirmed"));
+        }
+        catch (Exception e)
+        {
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationResult(false,
+                localizationService.GetString("ErrorWhileConfirmingEmail"));
+        }
+    }
+
     public async Task<OperationResult> EnableTwoFactorAuthForce()
     {
         try
@@ -552,41 +626,5 @@ public class AdminService(
         }
 
         return new OperationResult(true);
-    }
-
-    public async Task<OperationResult> UpdateUserbackWidget(bool isEnableWidget)
-    {
-        try
-        {
-            await appSettings.UpdateDb((options) => { options.IsUserbackWidgetEnabled = isEnableWidget; }, dbContext);
-        }
-        catch (Exception e)
-        {
-            SentrySdk.CaptureException(e);
-            logger.LogError(e.Message);
-            logger.LogTrace(e.StackTrace);
-            return new OperationResult(false);
-        }
-
-        return new OperationResult(true);
-    }
-
-#pragma warning disable CS1998
-    public async Task<OperationDataResult<UserbackWidgetModel>> GetUserbackWidget()
-#pragma warning restore CS1998
-    {
-        try
-        {
-            var userbackWidgetModel = new UserbackWidgetModel { IsUserbackWidgetEnabled = appSettings.Value.IsUserbackWidgetEnabled, UserbackToken = appSettings.Value.UserbackToken };
-
-            return new OperationDataResult<UserbackWidgetModel>(true, userbackWidgetModel);
-        }
-        catch (Exception e)
-        {
-            SentrySdk.CaptureException(e);
-            logger.LogError(e.Message);
-            logger.LogTrace(e.StackTrace);
-            return new OperationDataResult<UserbackWidgetModel>(false);
-        }
     }
 }

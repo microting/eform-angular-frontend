@@ -94,6 +94,13 @@ export class ApiBaseService {
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
+  public postNoToast<T>(method: string, body: any): Observable<any> {
+    const model = JSON.stringify(body);
+    return this.http
+      .post(method, model, {headers: this.setHeaders()})
+      .pipe(map((response) => this.extractDataNoToast<T>(response)));
+  }
+
   public postUrlEncoded<T>(method: string, body: any): Observable<any> {
     return this.http
       .post(method, body.toString(), {
@@ -129,11 +136,27 @@ export class ApiBaseService {
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
+  public deleteNoToast<T>(method: string, params?: any): Observable<any> {
+    return this.http
+      .delete(method, {
+        headers: this.setHeaders(),
+        params: ApiBaseService.setParams(params),
+      })
+      .pipe(map((response) => this.extractDataNoToast<T>(response)));
+  }
+
   public put<T>(method: string, body: any): Observable<any> {
     const model = JSON.stringify(body);
     return this.http
       .put(method, model, {headers: this.setHeaders()})
       .pipe(map((response) => this.extractData<T>(response)));
+  }
+
+  public putNoToast<T>(method: string, body: any): Observable<any> {
+    const model = JSON.stringify(body);
+    return this.http
+      .put(method, model, {headers: this.setHeaders()})
+      .pipe(map((response) => this.extractDataNoToast<T>(response)));
   }
 
   public getBlobData<T>(method: string, params?: any): Observable<any> {

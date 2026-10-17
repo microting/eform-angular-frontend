@@ -195,6 +195,9 @@
   <data name="DeviceUserParamDeletedSuccessfully" xml:space="preserve">
     <value>Device User "{0}" deleted successfully</value>
   </data>
+  <data name="OnlyTheFirstUserCanDeleteWorkers" xml:space="preserve">
+    <value>Only the first user can delete device users</value>
+  </data>
   <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
     <value>Device User updated successfully</value>
   </data>
@@ -269,6 +272,12 @@
   </data>
   <data name="ErrorWhileUpdatingUser" xml:space="preserve">
     <value>Error when updating user</value>
+  </data>
+  <data name="EmailConfirmed" xml:space="preserve">
+    <value>Email confirmed</value>
+  </data>
+  <data name="ErrorWhileConfirmingEmail" xml:space="preserve">
+    <value>Error while confirming email</value>
   </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>File not found</value>
@@ -373,7 +382,7 @@
     <value>Error while creating unit</value>
   </data>
   <data name="UserNameOrPasswordIncorrect" xml:space="preserve">
-    <value>Username or password is incorrect</value>
+    <value>You have entered an invalid username or password</value>
   </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>User not found</value>
@@ -582,6 +591,51 @@
   <data name="CantEditPrimaryAdminUser" xml:space="preserve">
     <value>You can't view, change or delete primary admin</value>
   </data>
+  <data name="UseChangePasswordForYourOwnAccount" xml:space="preserve">
+    <value>Use Change password to change your own password</value>
+  </data>
+  <data name="UnsupportedExternalLoginProvider" xml:space="preserve">
+    <value>Unsupported external login provider</value>
+  </data>
+  <data name="ExternalLinkProviderKeyRequired" xml:space="preserve">
+    <value>A provider key is required</value>
+  </data>
+  <data name="PrimaryAdminCannotBeLinked" xml:space="preserve">
+    <value>The primary administrator cannot be linked — this account can only change its own password. Select or create another administrator account.</value>
+  </data>
+  <data name="ExternalLinkKeyAlreadyUsed" xml:space="preserve">
+    <value>my.microting.com user {0} is already linked to user #{1} ({2}).</value>
+  </data>
+  <data name="ExternalLinkUserAlreadyLinked" xml:space="preserve">
+    <value>User #{0} is already linked to my.microting.com user {1}.</value>
+  </data>
+  <data name="ExternalLinkCreated" xml:space="preserve">
+    <value>Account link created</value>
+  </data>
+  <data name="ExternalLinkRemoved" xml:space="preserve">
+    <value>Account link removed</value>
+  </data>
+  <data name="ExternalLinkNotFound" xml:space="preserve">
+    <value>No account link found for that provider key</value>
+  </data>
+  <data name="NoLinkedAccountForProviderKey" xml:space="preserve">
+    <value>No account on this installation is linked to that my.microting.com user</value>
+  </data>
+  <data name="AmbiguousExternalLink" xml:space="preserve">
+    <value>This account carries more than one my.microting.com link; its password was not changed</value>
+  </data>
+  <data name="YouMayOnlySetPasswordsForWorkers" xml:space="preserve">
+    <value>You may only set passwords for property workers</value>
+  </data>
+  <data name="OnlyAdminsCanAssignTheAdminRole" xml:space="preserve">
+    <value>Only an administrator can assign the administrator role</value>
+  </data>
+  <data name="YouCantChangeYourOwnPasswordOrGroupHere" xml:space="preserve">
+    <value>You can't set your own password or change your own security group here</value>
+  </data>
+  <data name="YouCantSetPasswordForMorePrivilegedAccount" xml:space="preserve">
+    <value>You can't set the password of an account with rights you don't have</value>
+  </data>
   <data name="CantUpdateRoleForPrimaryAdminUser" xml:space="preserve">
     <value>It's not possible to change role for primary admin</value>
   </data>
@@ -740,6 +794,12 @@
   </data>
   <data name="ImageUpdatedSuccessfully" xml:space="preserve">
     <value>Image updated successfully</value>
+  </data>
+  <data name="ErrorWhileUpdateImage" xml:space="preserve">
+    <value>Error while uploading image</value>
+  </data>
+  <data name="ImageNotFound" xml:space="preserve">
+    <value>Image not found</value>
   </data>
   <data name="Folders" xml:space="preserve">
     <value>Folders</value>

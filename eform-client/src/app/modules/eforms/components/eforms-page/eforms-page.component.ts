@@ -40,13 +40,15 @@ import {
   selectEformAllowManagingEformTags
 } from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import {Router} from '@angular/router';
+import {AppMenuStateService} from 'src/app/common/store';
 import {
   selectEformsIsSortDsc,
   selectEformsNameFilter,
   selectEformsSort,
   selectEformsTagIds
 } from 'src/app/state/eform/eform.selector';
-import { EformNewSubheaderComponent } from '../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatCard } from '@angular/material/card';
 import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -67,7 +69,7 @@ import { EformsTagsComponent as EformsTagsComponent_1 } from '../../../../common
     selector: 'app-eform-page',
     templateUrl: './eforms-page.component.html',
     styleUrls: ['./eforms-page.component.scss'],
-    imports: [EformNewSubheaderComponent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MatIcon, MatSuffix, NgIf, MatTooltip, AppIconComponent, RouterLink, MtxSelect, MtxGrid, DateFormatterComponent, MatIconButton, EformTagComponent, MatMenuTrigger, MatMenu, MatMenuItem, EformsTagsComponent_1, AsyncPipe, TranslatePipe]
+    imports: [MatCard, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MatIcon, MatSuffix, NgIf, MatTooltip, AppIconComponent, RouterLink, MtxSelect, MtxGrid, DateFormatterComponent, MatIconButton, EformTagComponent, MatMenuTrigger, MatMenu, MatMenuItem, EformsTagsComponent_1, AsyncPipe, TranslatePipe]
 })
 export class EformsPageComponent implements OnInit, OnDestroy {
   private store = inject(Store);
@@ -78,6 +80,13 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private translateService = inject(TranslateService);
+  private router = inject(Router);
+  private appMenuStateService = inject(AppMenuStateService);
+
+  // Resolved once in ngOnInit — getTitleByUrl subscribes to the menu store
+  // internally without unsubscribing, so calling it from the template would
+  // leak one subscription per change-detection tick.
+  public pageTitle: string = '';
 
   @ViewChild('modalTags', {static: true}) modalTags: EformsTagsComponent;
 
@@ -103,6 +112,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   eformColumnsModalComponentAfterClosedSub$: Subscription;
   eformEditParingModalComponentAfterClosedSub$: Subscription;
   eformRemoveEformModalComponentAfterClosedSub$: Subscription;
+  titleSub$: Subscription;
   private selectCurrentUserClaims$ = this.store.select(selectCurrentUserClaims);
   public selectEformAllowManagingEformTags$ = this.store.select(selectEformAllowManagingEformTags)
   public selectCurrentUserClaimsEformsCreate$ = this.store.select(selectCurrentUserClaimsEformsCreate);
@@ -152,6 +162,12 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // Resolve the page title once menus hydrate; recompute when they emit.
+    // getTitleByUrl reads from the menu store internally — we drive it from
+    // the menu emission instead of calling it per template change-detection.
+    this.titleSub$ = this.appMenuStateService.leftAppMenus$.subscribe(() => {
+      this.pageTitle = this.appMenuStateService.getTitleByUrl(this.router.url);
+    });
     this.loadEformsPermissions();
   }
 
@@ -169,19 +185,13 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   loadAllTags() {
     // load tags after call load templates (not know why)
-    //if (this.userClaims.eformsReadTags) {
-      //debugger;
-      this.getAvailableTagsSub$ = this.eFormTagService.getAvailableTags()
-        .subscribe((data) => {
-          if (data && data.success) {
-            this.availableTags = data.model;
-            this.loadSelectedUserTags();
-          }
-        });
-    // } else {
-    //   debugger;
-    //   this.loadAllTemplates();
-    // }
+    this.getAvailableTagsSub$ = this.eFormTagService.getAvailableTags()
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.availableTags = data.model;
+          this.loadSelectedUserTags();
+        }
+      });
   }
 
   saveTag(e: CommonDictionaryModel) {

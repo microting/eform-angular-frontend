@@ -14,6 +14,7 @@ export const CMS_REDUCER_NODE = 'cms';
 export interface CmsState {
   isCmsEnabled: boolean;
   isMenuSticky: boolean;
+  themeVariant: 'eform' | 'workspace';
   landingPage: CmsPublicLandingModel | null;
   isLoading: boolean;
   isLoaded: boolean;
@@ -22,6 +23,7 @@ export interface CmsState {
 export const cmsInitialState: CmsState = {
   isCmsEnabled: false,
   isMenuSticky: false,
+  themeVariant: 'eform',
   landingPage: null,
   isLoading: false,
   isLoaded: false,
@@ -34,6 +36,7 @@ const _cmsReducer = createReducer(
     ...state,
     isCmsEnabled: payload.isCmsEnabled,
     isMenuSticky: payload.isMenuSticky,
+    themeVariant: payload.themeVariant ?? 'eform',
     isLoading: false,
     isLoaded: true,
   })),

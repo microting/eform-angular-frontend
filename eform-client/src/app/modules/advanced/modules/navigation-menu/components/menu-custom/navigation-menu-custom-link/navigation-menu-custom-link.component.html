@@ -23,6 +23,9 @@
           name="customLinkLink"
           [(ngModel)]="customLinkModel.link"
         >
+        <mat-hint id="customLinkNoRouteWarning" class="text-warning" *ngIf="linkHasNoRoute">
+          {{ 'This link matches no page in the app' | translate }}
+        </mat-hint>
       </mat-form-field>
       <mat-checkbox
         id="customLinkIsInternalLink"
@@ -49,18 +52,18 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
-    class="btn-primary btn-primary--icon-left"
-    id="customLinkCreateBtn"
-    (click)="addCustomLink()"
-  >
-    {{ 'Add' | translate }}
-  </button>
-  <button
     class="btn-cancel"
     (click)="hide()"
     type="button"
     id="customLinkCancelCreateBtn"
   >
     {{ 'Cancel' | translate }}
+  </button>
+  <button
+    class="btn-primary btn-primary--icon-left"
+    id="customLinkCreateBtn"
+    (click)="addCustomLink()"
+  >
+    {{ 'Add' | translate }}
   </button>
 </div>

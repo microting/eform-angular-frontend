@@ -317,8 +317,11 @@ export class Navbar {
   }
 
   public async goToPluginsPage() {
-    await this.advancedDropdownClick();
+    if (!await this.page.locator(`#plugins-settings`).isVisible()) {
+      await this.advancedDropdownClick();
+    }
     await (await this.waitForPluginsBtn()).click();
+    await this.page.waitForTimeout(500);
   }
 
   public async goToMenuEditorPage() {

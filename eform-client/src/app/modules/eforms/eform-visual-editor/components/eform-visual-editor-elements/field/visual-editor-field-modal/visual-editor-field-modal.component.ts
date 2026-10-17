@@ -71,24 +71,18 @@ export class VisualEditorFieldModalComponent implements OnInit {
   }
 
   setFieldTypes() {
-    const typesForAdminOnly = [
-      EformFieldTypesEnum.Audio,
-      EformFieldTypesEnum.Movie,
-      EformFieldTypesEnum.NumberStepper,
-    ];
+    const allTypes = getTranslatedTypes(this.translateService);
+    const adminOnlyIds = [EformFieldTypesEnum.Audio, EformFieldTypesEnum.Movie, EformFieldTypesEnum.NumberStepper];
+
     if (this.recursionModel.fieldIsNested) {
-      this.fieldTypes = [
-        ...getTranslatedTypes(this.translateService).filter(
-          (x) => x.id !== EformFieldTypesEnum.FieldGroup
-        ),
-      ];
+      this.fieldTypes = allTypes.filter(x => x.id !== EformFieldTypesEnum.FieldGroup);
     } else {
-      this.fieldTypes = [...getTranslatedTypes(this.translateService)];
+      this.fieldTypes = [...allTypes];
     }
     this.selectCurrentUserIsAdmin$.subscribe((isAdmin) => {
       if (isAdmin) {
-        this.fieldTypes = [...this.fieldTypes, ...getTranslatedTypes(this.translateService).filter(
-          (x) => typesForAdminOnly.includes(x.id)
+        this.fieldTypes = [...this.fieldTypes, ...allTypes.filter(
+          (x) => adminOnlyIds.includes(x.id)
         )];
       }
     });

@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Runtime.InteropServices;
 using System.Text;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 
@@ -42,6 +41,7 @@ using eFormCore;
 using Hosting.Enums;
 using Hosting.Helpers;
 using Hosting.Helpers.DbOptions;
+using Hosting.SentryIntegration;
 using Hosting.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -55,11 +55,12 @@ using Infrastructure.Models;
 using Infrastructure.Models.Settings.Admin;
 using Infrastructure.Models.Settings.Initial;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microting.eForm.Dto;
 using Newtonsoft.Json;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
-using Sentry;
 
 public class Program
 {
@@ -71,37 +72,6 @@ public class Program
 
     public static void Main(string[] args)
     {
-        var disableSentry = Environment.GetEnvironmentVariable("DISABLE_SENTRY");
-        var sentryDisabled = !string.IsNullOrEmpty(disableSentry) &&
-                            (disableSentry.ToLower() == "true" || disableSentry == "1");
-
-        if (!sentryDisabled)
-        {
-            SentrySdk.Init(options =>
-            {
-                // A Sentry Data Source Name (DSN) is required.
-                // See https://docs.sentry.io/product/sentry-basics/dsn-explainer/
-                // You can set it in the SENTRY_DSN environment variable, or you can set it in code here.
-                options.Dsn = "https://a20910d51f605d94e956163ffbf9dd5a@o4506241219428352.ingest.sentry.io/4506279162019840";
-
-                // When debug is enabled, the Sentry client will emit detailed debugging information to the console.
-                // This might be helpful, or might interfere with the normal operation of your application.
-                // We enable it here for demonstration purposes when first trying Sentry.
-                // You shouldn't do this in your applications unless you're troubleshooting issues with Sentry.
-                options.Debug = false;
-
-                // This option is recommended. It enables Sentry's "Release Health" feature.
-                options.AutoSessionTracking = true;
-
-                // This option is recommended for client applications only. It ensures all threads use the same global scope.
-                // If you're writing a background service of any kind, you should remove this.
-                options.IsGlobalModeEnabled = false;
-
-                // This option will enable Sentry's tracing features. You still need to start transactions and spans.
-                //options.EnableTracing = true;
-            });
-        }
-
         var host = BuildWebHost(args);
         InitializeSettings(host, args).Wait();
 
@@ -198,14 +168,19 @@ public class Program
         if (dbContext != null)
         {
             using var service = dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
+
             try
             {
                 var connectionStrings =
                     scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
-                if (connectionStrings.Value.DefaultConnection != "..." && dbContext.Database.GetPendingMigrations().Any())
+                if (connectionStrings.Value.DefaultConnection != "...")
                 {
-                    Log.LogEvent("Migrating Angular DB");
-                    dbContext.Database.Migrate();
+                    var historyRepo = dbContext.GetService<IHistoryRepository>();
+                    if (!historyRepo.Exists() || dbContext.Database.GetPendingMigrations().Any())
+                    {
+                        Log.LogEvent("Migrating Angular DB");
+                        dbContext.Database.Migrate();
+                    }
                 }
             }
             catch (Exception e)
@@ -213,7 +188,6 @@ public class Program
                 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                 logger.LogError(e, "Error while migrating db");
             }
-
 
             try
             {
@@ -272,6 +246,30 @@ public class Program
                 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                 logger.LogError(e, "Error while adding missing admin settings to all menu items");
             }
+
+            try
+            {
+                var connectionStrings =
+                    scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
+                if (connectionStrings.Value.DefaultConnection != "...")
+                {
+                    const string key = "AppearanceSettings:ThemeVariant";
+                    if (!dbContext.ConfigurationValues.Any(x => x.Id == key))
+                    {
+                        dbContext.ConfigurationValues.Add(new Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.EformConfigurationValue
+                        {
+                            Id = key,
+                            Value = "eform"
+                        });
+                        dbContext.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                logger.LogError(e, "Error while seeding AppearanceSettings:ThemeVariant");
+            }
         }
     }
 
@@ -316,6 +314,7 @@ public class Program
 
                 EnabledPlugins = PluginHelper.GetPlugins(_defaultConnectionString);
                 DisabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
+                SentryHostSetup.RegisterPlugins(EnabledPlugins.Select(x => x.GetType().Assembly));
 
                 // Enable plugins
                 foreach (var pluginId in startup.PluginsList)
@@ -408,10 +407,61 @@ public class Program
         }
     }
 
+    // Command-line args carry secrets (API key, service-account key, setup token
+    // and password, connection string); any arg whose name looks secret is logged
+    // by name only, never by value.
+    // Both "name=value" and "--name value" forms are accepted by AddCommandLine.
+    public static IEnumerable<string> RedactSecretArgs(string[] args)
+    {
+        for (var i = 0; i < args.Length; i++)
+        {
+            var arg = args[i];
+            var separator = arg.IndexOf('=');
+            if (i > 0 && !args[i - 1].Contains('=') && IsSecretArgName(args[i - 1]))
+            {
+                // Value of a "--name value" pair; it may itself contain '='.
+                yield return "***";
+            }
+            else if (separator >= 0)
+            {
+                var name = arg[..separator];
+                yield return IsSecretArgName(name) ? name + "=***" : arg;
+            }
+            else
+            {
+                yield return arg;
+            }
+        }
+    }
+
+    private static bool IsSecretArgName(string name)
+    {
+        // "--connection-string" and "--connection_string" must match too.
+        var normalized = name.Replace("-", "").Replace("_", "");
+        return normalized.Contains("key", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("password", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("token", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("secret", StringComparison.OrdinalIgnoreCase)
+               || normalized.Contains("connectionstring", StringComparison.OrdinalIgnoreCase);
+    }
+
     private static IHost BuildWebHost(string[] args)
     {
-        // print all args
-        foreach (var arg in args)
+        try
+        {
+            return BuildWebHostCore(args);
+        }
+        catch (Exception e)
+        {
+            // No host hub yet that would report the crash.
+            SentryHostSetup.ReportStartupCrash(e, _defaultConnectionString);
+            throw;
+        }
+    }
+
+    private static IHost BuildWebHostCore(string[] args)
+    {
+        foreach (var arg in RedactSecretArgs(args))
         {
             Console.WriteLine("info: arg: " + arg);
         }
@@ -421,7 +471,7 @@ public class Program
             .Build();
 
         Environment.SetEnvironmentVariable("API_KEY", defaultConfig["api-key"]);
-        Console.WriteLine("info: API_KEY: " + defaultConfig["api-key"]);
+        Console.WriteLine("info: API_KEY configured: " + !string.IsNullOrEmpty(defaultConfig["api-key"]));
 
         var port = defaultConfig.GetValue("port", 5000);
         var connectionString = defaultConfig.GetValue("ConnectionString", "");
@@ -472,9 +522,9 @@ public class Program
         Environment.SetEnvironmentVariable("CLIENT_EMAIL", clientEmail);
         Console.WriteLine("info: CLIENT_EMAIL: " + clientEmail);
         Environment.SetEnvironmentVariable("PRIVATE_KEY_ID", privateKeyId);
-        Console.WriteLine("info: PRIVATE_KEY_ID: " + privateKeyId);
+        Console.WriteLine("info: PRIVATE_KEY_ID configured: " + !string.IsNullOrEmpty(privateKeyId));
         Environment.SetEnvironmentVariable("PRIVATE_KEY", privateKey);
-        Console.WriteLine("info: PRIVATE_KEY: " + privateKey);
+        Console.WriteLine("info: PRIVATE_KEY configured: " + !string.IsNullOrEmpty(privateKey));
         Environment.SetEnvironmentVariable("CLIENT_ID", clientId);
         Console.WriteLine("info: CLIENT_ID: " + clientId);
         Environment.SetEnvironmentVariable("PROJECT_ID", projectId);
@@ -483,11 +533,29 @@ public class Program
         return Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
+                if (!SentryHostSetup.IsDisabled())
+                {
+                    // The options are materialized by DI after ConfigureAppConfiguration below has run,
+                    // so the connection string (customer number) is known by then.
+                    webBuilder.UseSentry(options => SentryHostSetup.Configure(options, _defaultConnectionString));
+                }
+
                 webBuilder.ConfigureKestrel(serverOptions =>
                 {
                     serverOptions.Limits.MaxRequestBodySize = 100 * 1024 * 1024;// 100Mb
+                    var restPort = port;
+                    var grpcPort = port + 1;
+                    // REST + web: HTTP/1.1 and HTTP/2
+                    serverOptions.ListenAnyIP(restPort, listenOptions =>
+                    {
+                        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2;
+                    });
+                    // gRPC: HTTP/2 only (h2c — cleartext HTTP/2)
+                    serverOptions.ListenAnyIP(grpcPort, listenOptions =>
+                    {
+                        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+                    });
                 })
-                .UseUrls($"http://0.0.0.0:{port}")
                 // .UseIISIntegration()
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
@@ -506,7 +574,7 @@ public class Program
 
                     if (!string.IsNullOrEmpty(connectionString))
                     {
-                        Log.LogEvent($"Creating ConnectionString file with the ConnectionString: {connectionString}");
+                        Log.LogEvent("Creating ConnectionString file from the ConnectionString argument");
                         ConnectionStringManager.CreateWithConnectionString(filePath, connectionString);
                     }
 
@@ -516,36 +584,11 @@ public class Program
                     config.AddEfConfiguration(_defaultConnectionString);
                     EnabledPlugins = PluginHelper.GetPlugins(_defaultConnectionString);
                     DisabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
+                    SentryHostSetup.RegisterPlugins(EnabledPlugins.Select(x => x.GetType().Assembly));
 
                     var contextFactory = new BaseDbContextFactory();
                     if (_defaultConnectionString != "...")
                     {
-                        string pattern = @"Database=(\d+)_Angular;";
-                        Match match = Regex.Match(_defaultConnectionString!, pattern);
-
-                        if (match.Success)
-                        {
-                            string numberString = match.Groups[1].Value;
-                            int number = int.Parse(numberString);
-                            var disableSentry = Environment.GetEnvironmentVariable("DISABLE_SENTRY");
-                            var sentryDisabled = !string.IsNullOrEmpty(disableSentry) &&
-                                                (disableSentry.ToLower() == "true" || disableSentry == "1");
-                            if (!sentryDisabled)
-                            {
-                                SentrySdk.ConfigureScope(scope =>
-                                {
-                                    scope.SetTag("customerNo", number.ToString());
-                                    Console.WriteLine("info: customerNo: " + number);
-                                    scope.SetTag("osVersion", Environment.OSVersion.ToString());
-                                    Console.WriteLine("info: osVersion: " + Environment.OSVersion);
-                                    scope.SetTag("osArchitecture", RuntimeInformation.OSArchitecture.ToString());
-                                    Console.WriteLine("info: osArchitecture: " + RuntimeInformation.OSArchitecture);
-                                    scope.SetTag("osName", RuntimeInformation.OSDescription);
-                                    Console.WriteLine("info: osName: " + RuntimeInformation.OSDescription);
-                                });
-                            }
-                        }
-
                         using var dbContext = contextFactory.CreateDbContext([_defaultConnectionString]);
                         foreach (var plugin in EnabledPlugins)
                         {

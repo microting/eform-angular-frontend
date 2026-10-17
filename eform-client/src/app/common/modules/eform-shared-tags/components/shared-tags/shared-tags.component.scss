@@ -36,15 +36,15 @@ body, .theme-dark {
 }
 
 .small-icon-btn {
-  width: 28px;
-  height: 28px;
-  line-height: 28px;
+  width: var(--icon-btn-size, 28px);
+  height: var(--icon-btn-size, 28px);
+  line-height: var(--icon-btn-size, 28px);
   padding: 0;
 }
 
 .small-icon-btn mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-  line-height: 18px;
+  font-size: var(--icon-size, 18px);
+  width: var(--icon-size, 18px);
+  height: var(--icon-size, 18px);
+  line-height: var(--icon-size, 18px);
 }

@@ -82,13 +82,11 @@ export class VisualEditorAdditionalFieldPdfComponent
   }
 
   getFileNameByLanguage(languageId: number): string {
-    if (this.field.pdfFiles[languageId - 1].id) {
-      return this.field.pdfFiles[languageId - 1].name;
-    } else {
-      const file = this.field.pdfFiles[languageId - 1].file;
-      if (file) {
-        return file.name;
-      }
+    // Look up by languageId: Languages ids are not contiguous on every install (#8141).
+    const entry = this.field.pdfFiles.find((x) => x.languageId === languageId);
+    if (!entry) {
+      return undefined;
     }
+    return entry.id ? entry.name : entry.file?.name;
   }
 }

@@ -79,6 +79,14 @@ public class AdminController(IAdminService adminService) : Controller
     }
 
     [HttpGet]
+    [Route("confirm-email/{userId}")]
+    [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Update)]
+    public Task<OperationResult> ConfirmEmail(int userId)
+    {
+        return adminService.ConfirmEmail(userId);
+    }
+
+    [HttpGet]
     [Route("enable-two-factor")]
     [Authorize(Roles = EformRole.Admin)]
     public Task<OperationResult> EnableTwoFactorAuthForce()

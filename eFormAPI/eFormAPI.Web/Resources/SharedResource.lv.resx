@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Ierīces lietotājs “{0}” ir veiksmīgi izdzēsts</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Tikai pirmais lietotājs var dzēst ierīces lietotājus</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Ierīces lietotājs ir veiksmīgi atjaunināts</value>
     </data>
@@ -152,6 +155,12 @@
     </data>
     <data name="ErrorWhileUpdatingUser">
         <value>Kļūda, atjauninot lietotāju</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>Email confirmed</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Error while confirming email</value>
     </data>
     <data name="FileNotFound">
         <value>Fails nav atrasts</value>

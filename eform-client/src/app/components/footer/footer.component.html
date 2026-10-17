@@ -29,6 +29,15 @@
         </a>
       </ng-container>
     </ng-container>
+    <ng-container *ngIf="showReportBug$ | async">
+      <button type="button"
+              class="profile-menu-action"
+              id="report-bug-btn"
+              (click)="reportBug()"
+      >
+        {{ 'Report a bug' | translate }}
+      </button>
+    </ng-container>
     <div class="legal-links">
       <a href="https://www.microting.com/terms-of-service" target="_blank">Terms</a>
       <span>|</span>
