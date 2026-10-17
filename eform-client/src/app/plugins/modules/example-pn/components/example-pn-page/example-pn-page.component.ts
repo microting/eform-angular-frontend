@@ -1,9 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 // import {LocaleService} from 'app/services';
 
 @Component({
-  standalone: false,
+  imports: [TranslatePipe],
   selector: 'app-example-pn-page',
   templateUrl: './example-pn-page.component.html'
 })
