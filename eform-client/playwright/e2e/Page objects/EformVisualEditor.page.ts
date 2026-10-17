@@ -1,6 +1,6 @@
 // noinspection JSIgnoredPromiseFromCall, ES6PreferShortImport
 
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import {
   applicationLanguagesTranslated,
@@ -38,6 +38,27 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
 
   manageTags(): Locator {
     return this.page.locator('#manageTags');
+  }
+
+  /**
+   * Every open Angular Material dialog, including ones that are mid-teardown.
+   * `MatDialogRef.close()` detaches the backdrop (and drops its pointer-events)
+   * at the *start* of the exit animation, while the `mat-dialog-container` host
+   * stays in the DOM until the animation finishes. Anything that is already true
+   * at that point -- `#manageTags` being visible, for one: it is visible the whole
+   * time, because a dialog only marks the page behind it `aria-hidden`, which
+   * Playwright's visibility check ignores -- is useless as a "dialog is closed"
+   * signal, and lets the next click open a second dialog while the first is still
+   * attached. Two live copies of the same modal then break every by-id locator
+   * inside it with a strict mode violation.
+   */
+  openDialogs(): Locator {
+    return this.page.locator('mat-dialog-container');
+  }
+
+  /** Waits until no dialog is attached any more -- false until teardown is done. */
+  async waitForAllDialogsClosed(timeout = 40000) {
+    await expect(this.openDialogs()).toHaveCount(0, { timeout });
   }
 
   saveCreateEformBtn(): Locator {
@@ -101,11 +122,11 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
   }
 
   changeChecklistSaveCancelBtn(): Locator {
-    return this.page.locator('#changeChecklistSaveCancelBtn').last();
+    return this.page.locator('#changeChecklistSaveCancelBtn');
   }
 
   changeChecklistSaveBtn(): Locator {
-    return this.page.locator('#changeChecklistSaveBtn').last();
+    return this.page.locator('#changeChecklistSaveBtn');
   }
 
   async selectedLanguages(): Promise<number[]> {
@@ -179,7 +200,7 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
         }
       }
       await this.changeChecklistSaveBtn().click();
-      await this.manageTags().waitFor({ state: 'visible', timeout: 40000 });
+      await this.waitForAllDialogsClosed();
       if (checklist.fields) {
         for (let i = 0; i < checklist.fields.length; i++) {
           await this.createVisualTemplateField(
@@ -282,7 +303,7 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
     } else {
       await this.changeFieldSaveBtn().click();
     }
-    await this.manageTags().waitFor({ state: 'visible', timeout: 40000 });
+    await this.waitForAllDialogsClosed();
   }
 
   async clickSave() {
@@ -563,7 +584,7 @@ export class ChecklistFieldRowObj {
     } else {
       await this.eformVisualEditorPage.fieldDeleteDeleteBtn().click();
     }
-    await this.eformVisualEditorPage.manageTags().waitFor({ state: 'visible', timeout: 40000 });
+    await this.eformVisualEditorPage.waitForAllDialogsClosed();
   }
 
   async edit(field: ChecklistFieldObj, clickCancel = false) {
@@ -584,7 +605,7 @@ export class ChecklistFieldRowObj {
     } else {
       await this.eformVisualEditorPage.changeFieldSaveBtn().click();
     }
-    await this.eformVisualEditorPage.manageTags().waitFor({ state: 'visible', timeout: 40000 });
+    await this.eformVisualEditorPage.waitForAllDialogsClosed();
   }
 
   async changePosition(targetField: ChecklistFieldRowObj) {
@@ -670,7 +691,7 @@ export class ChecklistRowObj {
     } else {
       await this.eformVisualEditorPage.checklistDeleteDeleteBtn().click();
     }
-    await this.eformVisualEditorPage.manageTags().waitFor({ state: 'visible', timeout: 40000 });
+    await this.eformVisualEditorPage.waitForAllDialogsClosed();
   }
 
   async edit(translations?: CommonTranslationsModel[], clickCancel = false) {
@@ -700,7 +721,7 @@ export class ChecklistRowObj {
     } else {
       await this.eformVisualEditorPage.changeChecklistSaveBtn().click();
     }
-    await this.eformVisualEditorPage.manageTags().waitFor({ state: 'visible', timeout: 40000 });
+    await this.eformVisualEditorPage.waitForAllDialogsClosed();
   }
 }
 
