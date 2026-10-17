@@ -110,7 +110,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
         {
             // EformUser.IsActive gates login in AuthService's authenticate path, so a false
             // value means the account exists and is administrable but cannot sign in. The
-            // my-microting link dialog reads this payload to warn about exactly that;
+            // my-microting link dialog reads this payload to warn about exactly that.
             // without the property it links deactivated accounts silently.
             //
             // The property is non-nullable here because the entity always has a value,
