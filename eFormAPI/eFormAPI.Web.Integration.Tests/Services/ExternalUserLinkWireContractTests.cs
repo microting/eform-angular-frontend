@@ -113,9 +113,10 @@ namespace eFormAPI.Web.Integration.Tests.Services
             // my-microting link dialog reads this payload to warn about exactly that;
             // without the property it links deactivated accounts silently.
             //
-            // Non-nullable here (the entity always has a value) and serialized as "isActive".
-            // The plugin reads it as bool? because an OLDER tenant omits the property
-            // entirely, and absent must mean unknown — never deactivated.
+            // The property is non-nullable here because the entity always has a value,
+            // and on the wire it serializes as isActive.
+            // The plugin reads it as bool? because an older tenant omits the property
+            // entirely, and absent must mean unknown, never deactivated.
             var property = FindType("UserInfoViewModel").GetProperty("IsActive");
 
             Assert.That(property, Is.Not.Null,
