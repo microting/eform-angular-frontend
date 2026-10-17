@@ -158,7 +158,7 @@ jobs:
       run: corepack enable
     - name: Install dependencies
       run: cd eform-client && yarn install --immutable
-    - name: Run Jest unit tests
+    - name: Run unit tests
       run: cd eform-client && npm run test:ci
   test-dotnet:
     runs-on: ubuntu-latest
