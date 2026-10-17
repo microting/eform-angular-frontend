@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import {NO_ERRORS_SCHEMA, SimpleChange, Type} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {TranslateModule} from '@ngx-translate/core';
@@ -45,13 +46,15 @@ describe.each(pickers)('%s file picker (shifted Languages ids, #8141)', (_, comp
   function selectFile(languageId: number, fileName: string) {
     const file = new File(['x'], fileName);
     component.onFileSelected({target: {files: [file]}} as unknown as Event, languageId);
+    // Called directly rather than through the (change) listener, so nothing marked the view
+    // dirty; the zoneless fixture would otherwise skip it and then fail its no-changes check.
+    fixture.componentRef.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [componentType],
-      imports: [TranslateModule.forRoot()],
+      imports: [componentType, TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });

@@ -1,13 +1,22 @@
 import {Component, Inject, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CmsPageListModel, CmsMenuItemSaveModel} from 'src/app/common/models';
+import {NgFor, NgIf} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatChipListbox, MatChipOption} from '@angular/material/chips';
+import {MatSelect} from '@angular/material/select';
+import {MatOption} from '@angular/material/core';
+import {MatButton} from '@angular/material/button';
 
 export interface MenuItemDialogData {
   pages: CmsPageListModel[];
 }
 
 @Component({
-  standalone: false,
+  imports: [NgIf, NgFor, FormsModule, MatDialogTitle, MatDialogContent, MatDialogActions, MatFormField, MatLabel, MatInput, MatChipListbox, MatChipOption, MatSelect, MatOption, MatButton],
   selector: 'app-cms-menu-item-dialog',
   template: `
     <h2 mat-dialog-title>Add menu item</h2>

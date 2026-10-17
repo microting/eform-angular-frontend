@@ -39,8 +39,7 @@ describe('UnitCreateComponent', () => {
         };
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, UnitCreateComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, UnitCreateComponent],
     providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },

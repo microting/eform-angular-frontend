@@ -4,9 +4,9 @@ import { PellComponent } from './pell.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    PellComponent
   ],
-  declarations: [PellComponent],
   exports: [PellComponent]
 })
 export class PellModule { }

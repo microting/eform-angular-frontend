@@ -33,15 +33,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    CmsContainerComponent,
-    CmsSettingsComponent,
-    CmsPagesListComponent,
-    CmsPageEditComponent,
-    CmsMenusListComponent,
-    CmsMenuEditComponent,
-    CmsMenuItemDialogComponent,
-  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -61,6 +52,13 @@ const routes: Routes = [
     MatDialogModule,
     MatChipsModule,
     MatTooltipModule,
+    CmsContainerComponent,
+    CmsSettingsComponent,
+    CmsPagesListComponent,
+    CmsPageEditComponent,
+    CmsMenusListComponent,
+    CmsMenuEditComponent,
+    CmsMenuItemDialogComponent,
   ],
   providers: [
     CmsService,

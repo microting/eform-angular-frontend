@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import {Component} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
@@ -42,7 +43,7 @@ import {ElementSingleselectComponent} from './element-singleselect/element-singl
     <element-number-stepper [fieldValue]="fieldValue"></element-number-stepper>
     <element-date [fieldValue]="fieldValue"></element-date>
   `,
-  standalone: false,
+  imports: [ElementTextComponent, ElementNumberComponent, ElementNumberStepperComponent, ElementDateComponent],
 })
 class PlaceholderLabelHostComponent {
   fieldValue: any = {id: 1, fieldId: 1, value: '', valueReadable: '', mandatory: false};
@@ -50,7 +51,7 @@ class PlaceholderLabelHostComponent {
 
 @Component({
   template: `<element-singleselect [fieldValue]="fieldValue"></element-singleselect>`,
-  standalone: false,
+  imports: [ElementSingleselectComponent],
 })
 class SelectHostComponent {
   fieldValue: any = {
@@ -68,16 +69,9 @@ class SelectHostComponent {
 describe('case-elements — floating label policy', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ElementTextComponent,
-        ElementNumberComponent,
-        ElementNumberStepperComponent,
-        ElementDateComponent,
-        ElementSingleselectComponent,
+      imports: [
         PlaceholderLabelHostComponent,
         SelectHostComponent,
-      ],
-      imports: [
         FormsModule,
         NoopAnimationsModule,
         MatFormFieldModule,

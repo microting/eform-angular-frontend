@@ -3,9 +3,17 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {CmsMenuModel} from 'src/app/common/models';
 import {CmsService} from 'src/app/common/services/cms';
+import {NgFor, NgIf} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
-  standalone: false,
+  imports: [NgIf, NgFor, FormsModule, MatButton, MatIconButton, MatIcon, MatFormField, MatLabel, MatInput, MatCard, MatCardContent, MatTooltip],
   selector: 'app-cms-menus-list',
   templateUrl: './cms-menus-list.component.html',
 })

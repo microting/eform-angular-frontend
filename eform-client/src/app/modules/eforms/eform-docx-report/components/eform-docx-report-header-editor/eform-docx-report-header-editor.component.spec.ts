@@ -27,8 +27,7 @@ describe('EformDocxReportHeaderEditorComponent', () => {
     };
     
     await TestBed.configureTestingModule({
-    imports: [FormsModule, EformDocxReportHeaderEditorComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, EformDocxReportHeaderEditorComponent],
     providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: {} },

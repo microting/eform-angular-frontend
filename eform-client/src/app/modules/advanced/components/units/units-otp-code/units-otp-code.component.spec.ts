@@ -36,8 +36,7 @@ describe('UnitsOtpCodeComponent', () => {
     mockDialogData = { id: 1, microtingUid: 12345, siteName: 'Test Site' } as UnitDto;
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, UnitsOtpCodeComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, UnitsOtpCodeComponent],
     providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: MatDialogRef, useValue: mockDialogRef },

@@ -1,23 +1,32 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import type { Mock } from 'vitest';
 import {TestBed} from '@angular/core/testing';
 import {TranslateService} from '@ngx-translate/core';
 import * as Sentry from '@sentry/angular';
 import {SentryFeedbackService} from './sentry-feedback.service';
+import {environment} from 'src/environments/environment';
 
-// Sentry is off in the default (dev) environment; switch it on so the service does its work.
-jest.mock('src/environments/environment', () => ({
-  environment: {production: false, enableSentry: true},
-}));
-jest.mock('@sentry/angular', () => ({getFeedback: jest.fn(), captureException: jest.fn()}));
+vi.mock('@sentry/angular', () => ({getFeedback: vi.fn(), captureException: vi.fn()}));
 
 describe('SentryFeedbackService', () => {
   let service: SentryFeedbackService;
-  let dialog: {appendToDom: jest.Mock; open: jest.Mock; removeFromDom: jest.Mock};
-  let createForm: jest.Mock;
-  const getFeedback = Sentry.getFeedback as jest.Mock;
+  let dialog: {appendToDom: Mock; open: Mock; removeFromDom: Mock};
+  let createForm: Mock;
+  const getFeedback = Sentry.getFeedback as Mock;
+
+  // Sentry is off in the default (dev) environment; switch it on so the service does its work.
+  // The environment file is bundled with the spec by the Angular test builder, so it cannot be
+  // replaced with vi.mock; flip the flag on the shared object instead and restore it afterwards.
+  const sentryWasEnabled = environment.enableSentry;
+  afterEach(() => {
+    environment.enableSentry = sentryWasEnabled;
+  });
 
   beforeEach(() => {
-    dialog = {appendToDom: jest.fn(), open: jest.fn(), removeFromDom: jest.fn()};
-    createForm = jest.fn().mockResolvedValue(dialog);
+    // Read by the service when it is constructed, so set it before TestBed.inject.
+    environment.enableSentry = true;
+    dialog = {appendToDom: vi.fn(), open: vi.fn(), removeFromDom: vi.fn()};
+    createForm = vi.fn().mockResolvedValue(dialog);
     getFeedback.mockReset().mockReturnValue({createForm});
 
     TestBed.configureTestingModule({

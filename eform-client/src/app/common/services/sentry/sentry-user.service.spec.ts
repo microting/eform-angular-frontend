@@ -1,3 +1,5 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import type { Mock } from 'vitest';
 import {TestBed} from '@angular/core/testing';
 import {Store} from '@ngrx/store';
 import {BehaviorSubject} from 'rxjs';
@@ -6,7 +8,7 @@ import {AuthState, authInitialState} from 'src/app/state/auth/auth.recuder';
 import {selectAuth} from 'src/app/state/auth/auth.selector';
 import {SentryUserService} from './sentry-user.service';
 
-jest.mock('@sentry/angular', () => ({setUser: jest.fn()}));
+vi.mock('@sentry/angular', () => ({setUser: vi.fn()}));
 
 const signedIn = (overrides: Partial<AuthState['currentUser']> = {}): AuthState => ({
   ...authInitialState,
@@ -24,13 +26,13 @@ const signedIn = (overrides: Partial<AuthState['currentUser']> = {}): AuthState 
 describe('SentryUserService', () => {
   let service: SentryUserService;
   let auth$: BehaviorSubject<AuthState>;
-  const setUser = Sentry.setUser as jest.Mock;
+  const setUser = Sentry.setUser as Mock;
 
   beforeEach(() => {
     setUser.mockClear();
     auth$ = new BehaviorSubject<AuthState>(authInitialState);
     const store = {
-      select: jest.fn((selector: unknown) => {
+      select: vi.fn((selector: unknown) => {
         if (selector !== selectAuth) {
           throw new Error('Unexpected selector');
         }

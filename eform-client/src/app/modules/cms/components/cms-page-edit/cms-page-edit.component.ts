@@ -3,9 +3,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {CmsPageModel} from 'src/app/common/models';
 import {CmsService} from 'src/app/common/services/cms';
+import {FormsModule} from '@angular/forms';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {MatButton} from '@angular/material/button';
+import {FormattingTextEditorComponent} from 'src/app/common/modules/eform-imported/formatting-text-editor/formatting-text-editor.component';
 
 @Component({
-  standalone: false,
+  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatSlideToggle, MatButton, FormattingTextEditorComponent],
   selector: 'app-cms-page-edit',
   templateUrl: './cms-page-edit.component.html',
 })

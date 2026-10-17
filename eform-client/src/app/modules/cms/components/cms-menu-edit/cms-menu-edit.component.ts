@@ -1,18 +1,22 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
 import {ToastrService} from 'ngx-toastr';
 import {CmsMenuModel, CmsPageListModel, CmsMenuItemSaveModel} from 'src/app/common/models';
 import {CmsService} from 'src/app/common/services/cms';
 import {CmsMenuItemDialogComponent} from './cms-menu-item-dialog.component';
+import {NgFor, NgIf} from '@angular/common';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatTooltip} from '@angular/material/tooltip';
 
 export interface FlatMenuItem extends CmsMenuItemSaveModel {
   indentLevel: number;
 }
 
 @Component({
-  standalone: false,
+  imports: [NgFor, NgIf, CdkDropList, CdkDrag, CdkDragHandle, MatButton, MatIconButton, MatIcon, MatTooltip],
   selector: 'app-cms-menu-edit',
   templateUrl: './cms-menu-edit.component.html',
   styleUrls: ['./cms-menu-edit.component.scss'],

@@ -1,8 +1,16 @@
-import {Component, Input, NO_ERRORS_SCHEMA} from '@angular/core';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import {Component, Input, NO_ERRORS_SCHEMA, Sanitizer} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
 import {By} from '@angular/platform-browser';
 import {CaseEditSwitchComponent} from './case-edit-switch.component';
 import {DataItemDto} from 'src/app/common/models';
+
+// ng-gallery's partially compiled bundle references GalleryItemComponent before defining it,
+// which throws when the Angular test builder loads the package unlinked. The gallery is not
+// under test here, so stand it in with empty classes.
+vi.mock('ng-gallery', () => ({Gallery: class {}, GalleryModule: class {}, ImageItem: class {}, GALLERY_CONFIG: 'GALLERY_CONFIG'}));
+vi.mock('ng-gallery/lightbox', () => ({Lightbox: class {}, LightboxModule: class {}}));
 
 /**
  * Structural contract of the redesigned eForm question block.
@@ -13,7 +21,7 @@ import {DataItemDto} from 'src/app/common/models';
  * references a case-elements id or mat-card-header.
  */
 
-@Component({selector: 'element-picture', template: '', standalone: false})
+@Component({selector: 'element-picture', template: ''})
 class StubPictureComponent {
   @Input() fieldValues: any;
   @Input() fieldId: any;
@@ -38,12 +46,23 @@ describe('CaseEditSwitchComponent', () => {
   let component: CaseEditSwitchComponent;
 
   beforeEach(async () => {
+    // CaseEditSwitchComponent is deliberately not listed in `imports`: TestBed would then walk
+    // its real dependency graph, which is circular (element-container renders the switch again).
     await TestBed.configureTestingModule({
-      declarations: [CaseEditSwitchComponent, StubPictureComponent],
+      // happy-dom's DOMParser nests the parsed <body>, so Angular's HTML sanitizer returns ''
+      // for every [innerHtml] binding in this test DOM. Pass the (trusted, test-only) markup
+      // through unchanged so the description assertions see what a browser renders.
+      providers: [{provide: Sanitizer, useValue: {sanitize: (_: unknown, value: string) => value}}],
+    })
       // Every other leaf component is an unknown element here; we assert on the
       // block around them, not on their internals.
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+      .overrideComponent(CaseEditSwitchComponent, {
+        set: {
+          imports: [NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, StubPictureComponent],
+          schemas: [NO_ERRORS_SCHEMA],
+        },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(CaseEditSwitchComponent);
     component = fixture.componentInstance;
@@ -147,7 +166,7 @@ describe('CaseEditSwitchComponent', () => {
   });
 
   it('emits needUpdate when a picture reports an update', () => {
-    const spy = jest.fn();
+    const spy = vi.fn();
     component.needUpdate.subscribe(spy);
     component.emitNeedUpdate();
     expect(spy).toHaveBeenCalledTimes(1);

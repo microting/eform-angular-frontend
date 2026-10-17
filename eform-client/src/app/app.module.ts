@@ -1,6 +1,6 @@
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {OVERLAY_DEFAULT_CONFIG} from '@angular/cdk/overlay';
 import {GalleryModule} from 'ng-gallery';
@@ -153,7 +153,6 @@ export function initLocaleFactory(authStateService: AuthStateService) {
         ConnectionSetupComponent,
         NotFoundComponent,
     ],
-    schemas: [NO_ERRORS_SCHEMA],
     providers: [
         providers,
         {

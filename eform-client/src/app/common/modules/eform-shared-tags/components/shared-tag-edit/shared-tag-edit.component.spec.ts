@@ -28,8 +28,7 @@ describe('EmailRecipientTagEditComponent', () => {
     };
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, SharedTagEditComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, SharedTagEditComponent],
     providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: {} },

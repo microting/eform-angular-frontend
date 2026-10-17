@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
@@ -5,6 +6,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TranslateModule} from '@ngx-translate/core';
 import {provideMockStore} from '@ngrx/store/testing';
 import {VisualEditorFieldModalComponent} from './visual-editor-field-modal.component';
+import {FormattingTextEditorComponent} from 'src/app/common/modules/eform-imported/formatting-text-editor/formatting-text-editor.component';
 import {AuthStateService} from 'src/app/common/store';
 import {TranslationService} from 'src/app/common/services';
 import {selectCurrentUserIsAdmin} from 'src/app/state/auth/auth.selector';
@@ -37,13 +39,12 @@ describe('VisualEditorFieldModalComponent (shifted DB lookup ids, #8141)', () =>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [VisualEditorFieldModalComponent],
-      imports: [TranslateModule.forRoot()],
+      imports: [VisualEditorFieldModalComponent, TranslateModule.forRoot()],
       providers: [
         provideMockStore({selectors: [{selector: selectCurrentUserIsAdmin, value: false}]}),
         {provide: AuthStateService, useValue: {}},
         {provide: TranslationService, useValue: {}},
-        {provide: MatDialogRef, useValue: {close: jest.fn()}},
+        {provide: MatDialogRef, useValue: {close: vi.fn()}},
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
@@ -55,8 +56,14 @@ describe('VisualEditorFieldModalComponent (shifted DB lookup ids, #8141)', () =>
           },
         },
       ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    })
+      // The rich-text editor (ProseMirror) needs a full MutationObserver, which the test DOM
+      // lacks; it is not under test, so leave <formatting-text-editor> an unknown element.
+      .overrideComponent(VisualEditorFieldModalComponent, {
+        remove: {imports: [FormattingTextEditorComponent]},
+        add: {schemas: [NO_ERRORS_SCHEMA]},
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(VisualEditorFieldModalComponent);
     component = fixture.componentInstance;

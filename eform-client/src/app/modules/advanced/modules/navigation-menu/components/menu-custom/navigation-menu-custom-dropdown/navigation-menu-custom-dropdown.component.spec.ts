@@ -28,8 +28,7 @@ describe('NavigationMenuCustomDropdownComponent', () => {
     };
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, NavigationMenuCustomDropdownComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, NavigationMenuCustomDropdownComponent],
     providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: [] },

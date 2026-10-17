@@ -41,8 +41,7 @@ describe('WorkerEditCreateComponent', () => {
     };
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, WorkerEditCreateComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, WorkerEditCreateComponent],
     providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },
@@ -88,8 +87,7 @@ describe('WorkerEditCreateComponent', () => {
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-    imports: [FormsModule, WorkerEditCreateComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, WorkerEditCreateComponent],
     providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: DeviceUserService, useValue: mockDeviceUserService },

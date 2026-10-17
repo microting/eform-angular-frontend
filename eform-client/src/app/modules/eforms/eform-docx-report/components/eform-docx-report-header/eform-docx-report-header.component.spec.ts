@@ -24,8 +24,7 @@ describe('EformDocxReportHeaderComponent', () => {
     mockTranslateService.stream.mockReturnValue(of('Test'));
     
     TestBed.configureTestingModule({
-    imports: [FormsModule, EformDocxReportHeaderComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, EformDocxReportHeaderComponent],
     providers: [
         provideNativeDateAdapter(),
         { provide: TranslateService, useValue: mockTranslateService }

@@ -28,8 +28,7 @@ describe('NavigationMenuItemDeleteComponent', () => {
     };
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, NavigationMenuItemDeleteComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, NavigationMenuItemDeleteComponent],
     providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: { model: {}, firstLevelIndex: 0 } },

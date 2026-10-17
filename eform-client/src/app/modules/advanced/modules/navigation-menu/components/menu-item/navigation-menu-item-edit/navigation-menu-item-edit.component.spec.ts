@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MockTranslatePipe } from 'src/test-helpers';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 import { NavigationMenuItemEditComponent } from './navigation-menu-item-edit.component';
 
-describe.skip('NavigationMenuItemEditComponent', () => {
+describe('NavigationMenuItemEditComponent', () => {
   let component: NavigationMenuItemEditComponent;
   let fixture: ComponentFixture<NavigationMenuItemEditComponent>;
 
@@ -28,8 +28,7 @@ describe.skip('NavigationMenuItemEditComponent', () => {
     };
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, NavigationMenuItemEditComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, NavigationMenuItemEditComponent],
     providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: { model: { translations: [] }, firstLevelIndex: 0, securityGroups: [] } },
@@ -37,6 +36,11 @@ describe.skip('NavigationMenuItemEditComponent', () => {
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })
+    // The real TranslatePipe needs a full TranslateService; use the pass-through stand-in.
+    .overrideComponent(NavigationMenuItemEditComponent, {
+      remove: { imports: [TranslatePipe] },
+      add: { imports: [MockTranslatePipe] },
+    })
     .compileComponents();
   });
 

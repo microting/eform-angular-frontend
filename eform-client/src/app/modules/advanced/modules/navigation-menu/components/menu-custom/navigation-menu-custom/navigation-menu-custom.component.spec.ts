@@ -23,8 +23,7 @@ describe('NavigationMenuCustomComponent', () => {
     mockTranslateService.stream.mockReturnValue(of('Test'));
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, NavigationMenuCustomComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, NavigationMenuCustomComponent],
     providers: [
         { provide: TranslateService, useValue: mockTranslateService }
     ],

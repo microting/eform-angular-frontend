@@ -26,8 +26,7 @@ describe('EformDocxReportTableComponent', () => {
     };
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, EformDocxReportTableComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, EformDocxReportTableComponent],
     providers: [
         { provide: Router, useValue: mockRouter },
         { provide: TranslateService, useValue: mockTranslateService }

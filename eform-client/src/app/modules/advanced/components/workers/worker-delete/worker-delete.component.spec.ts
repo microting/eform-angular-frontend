@@ -36,8 +36,7 @@ describe.skip('WorkerDeleteComponent', () => {
     mockDialogData = { workerUId: 123, firstName: 'John', lastName: 'Doe' } as WorkerDto;
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, WorkerDeleteComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, WorkerDeleteComponent],
     providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: MatDialogRef, useValue: mockDialogRef },

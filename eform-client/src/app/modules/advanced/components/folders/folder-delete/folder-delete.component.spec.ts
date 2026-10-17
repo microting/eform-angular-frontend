@@ -36,8 +36,7 @@ describe('FolderDeleteComponent', () => {
     mockDialogData = { id: 1, name: 'Test Folder' } as FolderDto;
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, FolderDeleteComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, FolderDeleteComponent],
     providers: [
         { provide: FoldersService, useValue: mockFoldersService },
         { provide: MatDialogRef, useValue: mockDialogRef },
