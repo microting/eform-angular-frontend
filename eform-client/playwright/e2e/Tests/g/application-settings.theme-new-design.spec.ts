@@ -139,10 +139,10 @@ test.describe.serial('Theme "eForm new design" (workspace variant)', () => {
   // unlocked, so it renders the row action menu.
   const siteRow = () =>
     grid().locator('tbody > tr').filter({
-      has: page.locator('#siteName', { hasText: siteName }),
+      has: page.locator('[id^="siteName-"]', { hasText: siteName }),
     });
   const siteRowFirstCell = () => siteRow().locator('td.mat-mdc-cell').first();
-  const siteRowActionBtn = () => siteRow().locator('[id^="action-items-"] #actionMenu');
+  const siteRowActionBtn = () => siteRow().locator('[id^="action-items-"] [id^="actionMenu"]');
   // The Device Users row of the user created in beforeAll.
   const deviceUserRow = () => page.locator('tbody > tr', { hasText: firstName });
 
