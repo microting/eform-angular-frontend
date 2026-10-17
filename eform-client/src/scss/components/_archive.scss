@@ -232,6 +232,14 @@ span.archive-folder-row__toggle {
   background: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface));
 }
 
+// The table keeps its full width (its chips do not wrap) and scrolls sideways inside its own frame, so
+// a narrow list column never pushes the content card, the folder pane or the document panel aside.
+app-files-table {
+  display: block;
+  min-width: 0;
+  overflow-x: auto;
+}
+
 .archive-table tbody tr.archive-file-row {
   cursor: pointer;
 }
