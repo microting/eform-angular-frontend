@@ -15,7 +15,22 @@ import { TranslatePipe } from '@ngx-translate/core';
 @Component({
     selector: 'app-user-set-password',
     templateUrl: './user-set-password.component.html',
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSuffix, NgIf, MatError, MatPasswordStrengthModule, MatDialogActions, TranslatePipe]
+    imports: [
+        MatDialogTitle,
+        CdkScrollable,
+        MatDialogContent,
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        MatInput,
+        MatIcon,
+        MatSuffix,
+        NgIf,
+        MatError,
+        MatPasswordStrengthModule,
+        MatDialogActions,
+        TranslatePipe
+    ]
 })
 export class UserSetPasswordComponent implements OnInit {
   private authService = inject(AuthService);

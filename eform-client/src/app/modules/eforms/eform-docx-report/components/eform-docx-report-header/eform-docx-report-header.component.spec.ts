@@ -22,7 +22,7 @@ describe('EformDocxReportHeaderComponent', () => {
       stream: vi.fn()
     };
     mockTranslateService.stream.mockReturnValue(of('Test'));
-    
+
     TestBed.configureTestingModule({
     imports: [MockTranslatePipe, FormsModule, EformDocxReportHeaderComponent],
     providers: [
