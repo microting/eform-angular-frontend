@@ -30,6 +30,23 @@ jobs:
       # No install needed — the checker is dependency-free Node.
       - name: Button conventions
         run: cd eform-client && node scripts/check-button-conventions.js src/app
+  login-path-fence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      # No install needed - the fence is dependency-free bash.
+      #
+      # The same gate as on pull requests, so the fence cannot be skipped by pushing
+      # straight to a protected branch. The base is HEAD on purpose: a push has no merge
+      # base, so the byte-unchanged sub-gate on the pure login-path files is a documented
+      # no-op on this trigger rather than a silently dropped gate. What bites here is the
+      # grep fence (no login-path file may mention the link API) and the frozen
+      # guard-block hash - both base-independent, and both the gates that matter if the
+      # change never went through a pull request at all.
+      - name: Login path and frozen guard block
+        run: bash .github/scripts/check-login-path-fence.sh HEAD
   playwright-test:
     needs: build
     runs-on: ubuntu-latest

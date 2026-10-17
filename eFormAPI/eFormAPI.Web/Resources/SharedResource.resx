@@ -594,6 +594,36 @@
   <data name="UseChangePasswordForYourOwnAccount" xml:space="preserve">
     <value>Use Change password to change your own password</value>
   </data>
+  <data name="UnsupportedExternalLoginProvider" xml:space="preserve">
+    <value>Unsupported external login provider</value>
+  </data>
+  <data name="ExternalLinkProviderKeyRequired" xml:space="preserve">
+    <value>A provider key is required</value>
+  </data>
+  <data name="PrimaryAdminCannotBeLinked" xml:space="preserve">
+    <value>The primary administrator cannot be linked — this account can only change its own password. Select or create another administrator account.</value>
+  </data>
+  <data name="ExternalLinkKeyAlreadyUsed" xml:space="preserve">
+    <value>my.microting.com user {0} is already linked to user #{1} ({2}).</value>
+  </data>
+  <data name="ExternalLinkUserAlreadyLinked" xml:space="preserve">
+    <value>User #{0} is already linked to my.microting.com user {1}.</value>
+  </data>
+  <data name="ExternalLinkCreated" xml:space="preserve">
+    <value>Account link created</value>
+  </data>
+  <data name="ExternalLinkRemoved" xml:space="preserve">
+    <value>Account link removed</value>
+  </data>
+  <data name="ExternalLinkNotFound" xml:space="preserve">
+    <value>No account link found for that provider key</value>
+  </data>
+  <data name="NoLinkedAccountForProviderKey" xml:space="preserve">
+    <value>No account on this installation is linked to that my.microting.com user</value>
+  </data>
+  <data name="AmbiguousExternalLink" xml:space="preserve">
+    <value>This account carries more than one my.microting.com link; its password was not changed</value>
+  </data>
   <data name="YouMayOnlySetPasswordsForWorkers" xml:space="preserve">
     <value>You may only set passwords for property workers</value>
   </data>

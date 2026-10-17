@@ -536,6 +536,36 @@
   <data name="UseChangePasswordForYourOwnAccount" xml:space="preserve">
     <value>Brug Skift adgangskode til at ændre din egen adgangskode</value>
   </data>
+  <data name="UnsupportedExternalLoginProvider" xml:space="preserve">
+    <value>Ikke-understøttet ekstern login-udbyder</value>
+  </data>
+  <data name="ExternalLinkProviderKeyRequired" xml:space="preserve">
+    <value>Der kræves en udbydernøgle</value>
+  </data>
+  <data name="PrimaryAdminCannotBeLinked" xml:space="preserve">
+    <value>Primær administrator kan ikke tilknyttes — denne konto kan kun ændre sin egen adgangskode. Vælg eller opret en anden administratorkonto hos kunden.</value>
+  </data>
+  <data name="ExternalLinkKeyAlreadyUsed" xml:space="preserve">
+    <value>my.microting.com-bruger {0} er allerede tilknyttet bruger #{1} ({2}).</value>
+  </data>
+  <data name="ExternalLinkUserAlreadyLinked" xml:space="preserve">
+    <value>Bruger #{0} er allerede tilknyttet my.microting.com-bruger {1}.</value>
+  </data>
+  <data name="ExternalLinkCreated" xml:space="preserve">
+    <value>Tilknytning oprettet</value>
+  </data>
+  <data name="ExternalLinkRemoved" xml:space="preserve">
+    <value>Tilknytning fjernet</value>
+  </data>
+  <data name="ExternalLinkNotFound" xml:space="preserve">
+    <value>Ingen tilknytning fundet for den udbydernøgle</value>
+  </data>
+  <data name="NoLinkedAccountForProviderKey" xml:space="preserve">
+    <value>Ingen konto på denne installation er tilknyttet den my.microting.com-bruger</value>
+  </data>
+  <data name="AmbiguousExternalLink" xml:space="preserve">
+    <value>Denne konto har mere end én my.microting.com-tilknytning; adgangskoden blev ikke ændret</value>
+  </data>
   <data name="YouMayOnlySetPasswordsForWorkers" xml:space="preserve">
     <value>Du kan kun angive adgangskoder for medarbejdere</value>
   </data>

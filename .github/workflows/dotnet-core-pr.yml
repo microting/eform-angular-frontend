@@ -30,6 +30,19 @@ jobs:
       # No install needed — the checker is dependency-free Node.
       - name: Button conventions
         run: cd eform-client && node scripts/check-button-conventions.js src/app
+  login-path-fence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # The fence compares the pure login-path files against the merge base, and in
+          # CI an unresolvable base is a hard failure rather than a FENCE NOTE - a gate
+          # that did not run is not a gate that passed. fetch-depth: 0 is what makes the
+          # base ref resolvable, so it is load-bearing, not an optimisation.
+          fetch-depth: 0
+      # No install needed — the fence is dependency-free bash.
+      - name: Login path and frozen guard block
+        run: bash .github/scripts/check-login-path-fence.sh origin/${{ github.base_ref }}
   playwright-test:
     needs: build
     runs-on: ubuntu-latest
