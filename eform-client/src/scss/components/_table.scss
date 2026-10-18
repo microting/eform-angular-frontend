@@ -70,7 +70,7 @@
       td.mat-table-sticky-right {
         background-color: $background-yellow-color !important;
 
-        #actionMenu {
+        [id^="actionMenu"] {
           .mat-icon {
             color: #0F1316 !important;
           }
@@ -97,7 +97,7 @@
       td.mat-table-sticky-right {
         background-color: $background-red-light-color !important;
 
-        #actionMenu {
+        [id^="actionMenu"] {
           .mat-icon {
             color: #0F1316 !important;
           }
@@ -124,7 +124,7 @@
       td.mat-table-sticky-right {
         background-color: $background-red-dark-color !important;
 
-        #actionMenu {
+        [id^="actionMenu"] {
           .mat-icon {
             color: #0F1316 !important;
           }
@@ -151,7 +151,7 @@
       td.mat-table-sticky-right {
         background-color: $background-powder-color !important;
 
-        #actionMenu {
+        [id^="actionMenu"] {
           .mat-icon {
             color: #0F1316 !important;
           }
