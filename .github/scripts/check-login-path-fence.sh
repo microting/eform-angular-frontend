@@ -91,9 +91,25 @@ for file in "${FENCED[@]}"; do
   fi
 done
 
+# A pull request into any base other than master (angular19, where the next Angular major
+# is prepared, or stable) brings master in by MERGE, and with it every login-path change
+# master already holds. Against that base it reads as a change; against master it is
+# none. So a frozen file that differs from $BASE still passes when it is byte-identical to
+# $MASTER_REF — the trust is in master's content, not in how it got there. Any edit the
+# pull request makes on top of master fails as before, and an unresolvable $MASTER_REF
+# falls through to the violation: the exception fails closed.
+MASTER_REF="origin/master"
+
 if git rev-parse --verify --quiet "$BASE" >/dev/null; then
   for file in "${FROZEN[@]}"; do
     if ! git diff --quiet "$BASE" -- "$file"; then
+      if [ "$BASE" != "$MASTER_REF" ] \
+        && git rev-parse --verify --quiet "$MASTER_REF" >/dev/null \
+        && git diff --quiet "$MASTER_REF" -- "$file"; then
+        echo "FENCE NOTE: $file changed against $BASE but is byte-identical to $MASTER_REF;" >&2
+        echo "  this is master's already-fenced login path arriving by merge." >&2
+        continue
+      fi
       echo "FENCE VIOLATION: $file changed against $BASE." >&2
       echo "  The login path needs no change for this feature. See the design's requirement 1." >&2
       status=1
