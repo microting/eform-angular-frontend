@@ -1,6 +1,6 @@
 // noinspection JSIgnoredPromiseFromCall, ES6PreferShortImport
 
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import {
   applicationLanguagesTranslated,
@@ -282,6 +282,10 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
     } else {
       await this.changeFieldSaveBtn().click();
     }
+    // #manageTags sits behind the dialog, so it is visible at once. Wait for
+    // the dialog to leave the DOM (end of its close animation); otherwise the
+    // next "add field" click opens a second dialog beside the closing one.
+    await expect(this.changeFieldSaveCancelBtn()).toHaveCount(0, { timeout: 40000 });
     await this.manageTags().waitFor({ state: 'visible', timeout: 40000 });
   }
 
@@ -580,12 +584,7 @@ export class ChecklistFieldRowObj {
   }
 
   async closeEditModal(clickCancel = false) {
-    if (clickCancel) {
-      await this.eformVisualEditorPage.changeFieldSaveCancelBtn().click();
-    } else {
-      await this.eformVisualEditorPage.changeFieldSaveBtn().click();
-    }
-    await this.eformVisualEditorPage.manageTags().waitFor({ state: 'visible', timeout: 40000 });
+    await this.eformVisualEditorPage.closeVisualTemplateFieldCreateModal(clickCancel);
   }
 
   async changePosition(targetField: ChecklistFieldRowObj) {
