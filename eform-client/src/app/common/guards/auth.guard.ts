@@ -6,7 +6,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import {Store} from '@ngrx/store';
-import {combineLatest, Observable, of} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 import {catchError, filter, map, take, timeout} from 'rxjs/operators';
 import {
   selectAuthIsAuth,
@@ -54,10 +54,15 @@ export class AuthGuard {
         }
         return true;
       }),
-      catchError(() => {
-        // CMS config failed to load in time — fall back to standard auth
-        return of(this.router.createUrlTree(['/auth']));
-      })
+      catchError(() =>
+        // CMS config failed to load in time. Signed-in users don't need it, so
+        // let them through; sending them to /auth would bounce them straight
+        // back here and loop. Everyone else falls back to standard auth.
+        this.isAuth$.pipe(
+          take(1),
+          map(isAuth => isAuth ? true : this.router.createUrlTree(['/auth']))
+        )
+      )
     );
   }
 }

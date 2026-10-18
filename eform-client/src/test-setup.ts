@@ -25,7 +25,7 @@ Object.defineProperty(window, 'getComputedStyle', {
 });
 
 Object.defineProperty(document, 'doctype', {
-  value: '<!DOCTYPE html}'
+  value: '<!DOCTYPE html>'
 });
 
 Object.defineProperty(document.body.style, 'transform', {
