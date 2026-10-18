@@ -25,7 +25,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Abstractions;
+using Hosting.Helpers.DbOptions;
 using Infrastructure.Models.Cms;
+using Infrastructure.Models.Settings.Admin;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
@@ -34,6 +36,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 public class CmsService(
     ILogger<CmsService> logger,
+    IDbOptions<AppearanceSettings> appearanceSettings,
     BaseDbContext dbContext) : ICmsService
 {
     // ── Pages ────────────────────────────────────────────────────────────────
@@ -351,7 +354,10 @@ public class CmsService(
             return new OperationDataResult<CmsPublicConfigModel>(true, new CmsPublicConfigModel
             {
                 IsCmsEnabled = settings?.IsCmsEnabled ?? false,
-                IsMenuSticky = settings?.IsMenuSticky ?? false
+                IsMenuSticky = settings?.IsMenuSticky ?? false,
+                ThemeVariant = string.IsNullOrEmpty(appearanceSettings.Value.ThemeVariant)
+                    ? "eform"
+                    : appearanceSettings.Value.ThemeVariant
             });
         }
         catch (Exception ex)

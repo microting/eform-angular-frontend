@@ -39,6 +39,9 @@
           name="editLinkInput"
           [(ngModel)]="item.link"
         >
+        <mat-hint id="editLinkNoRouteWarning" class="text-warning" *ngIf="linkHasNoRoute">
+          {{ 'This link matches no page in the app' | translate }}
+        </mat-hint>
       </mat-form-field>
       <mat-checkbox
         id="editLinkIsInternalLink"
@@ -48,6 +51,16 @@
       >
         {{ 'Is internal link' | translate }}
       </mat-checkbox>
+    </div>
+    <div class="mb-3" *ngIf="defaultLinkItem && item.link !== defaultLinkItem.link">
+      <button
+        class="btn-quiet"
+        id="editLinkRestoreDefaultBtn"
+        [matTooltip]="defaultLinkItem.link"
+        (click)="restoreDefaultLink()"
+      >
+        {{ 'Restore default link' | translate }}
+      </button>
     </div>
     <mat-form-field *ngFor="
               let translationControls of translationsArray.controls;
@@ -68,17 +81,17 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
-    class="btn-primary btn-primary--icon-left"
-    id="editItemSaveBtn"
-    (click)="updateItem()"
-  >
-    {{'Save' | translate}}
-  </button>
-  <button
     class="btn-cancel"
     id="editItemSaveCancelBtn"
     (click)="hide()"
   >
     {{'Cancel' | translate}}
+  </button>
+  <button
+    class="btn-primary btn-primary--icon-left"
+    id="editItemSaveBtn"
+    (click)="updateItem()"
+  >
+    {{'Save' | translate}}
   </button>
 </div>

@@ -36,14 +36,29 @@ ng-dropdown-panel, .ng-dropdown-panel {
   will-change: auto !important;
 }
 
+// Ensure expanded mat-expansion-panel content and child tree nodes are visible
+// Angular Material/CDK 21 applies visibility: hidden to collapsed tree nodes
+// and expansion panel content. Override when expanded.
+// (Kept at top level, outside master's body.theme-eform scope, so it applies to every theme.)
+.mat-expansion-panel.mat-expanded > .mat-expansion-panel-content {
+  visibility: visible !important;
+}
+
+.mat-expansion-panel.mat-expanded .mat-tree-node,
+.mat-expansion-panel.mat-expanded .cdk-tree-node,
+.mat-expansion-panel.mat-expanded mat-tree-node {
+  visibility: visible !important;
+}
+
 $eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
+$eform-font-family-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
 // h-100 for base elements
 html, body {
   height: 100vh;
   font-size: 14px;
   margin: 0;
   --theme-body-font-color: var(--black-800);
-  font-family: $eform-font-family;
+  font-family: var(--font-family, #{$eform-font-family});
 
   .mat-mdc-option {
     font-size: unset !important;
@@ -83,6 +98,7 @@ h2 {
 :root {
   --rounded-full: #{$border-rounded-full};
   --font-family: #{$eform-font-family};
+  --font-family-mono: #{$eform-font-family-mono};
 }
 
 
@@ -162,22 +178,24 @@ a {
   color: green !important;
 }
 
-.status-active {
-  background-color: #4caf50 !important; /* green */
-  color: #fff !important;
-}
+body.theme-eform {
+  .status-active {
+    background-color: #4caf50 !important; /* green */
+    color: #fff !important;
+  }
 
-.status-inactive {
-  background-color: #f44336 !important; /* red */
-  color: #fff !important;
-}
+  .status-inactive {
+    background-color: #f44336 !important; /* red */
+    color: #fff !important;
+  }
 
-.status-active span {
-  color: #fff !important;
-}
+  .status-active span {
+    color: #fff !important;
+  }
 
-.status-inactive span {
-  color: #fff !important;
+  .status-inactive span {
+    color: #fff !important;
+  }
 }
 
 .priority-green {
@@ -386,6 +404,377 @@ a {
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Time planning: reconciled ("Afstemt") day lock. Plugin templates:
+   time-plannings-table, time-plannings-container, workday-entity-dialog.
+
+   Four independent channels carry the state (texture, glyph, cursor and tooltip
+   text), so colour is never load-bearing. The 3px right border on a reconciled
+   cell draws the staircase boundary down the grid.
+
+   Theme-agnostic on purpose: body.theme-eform rules do not apply under
+   body.theme-workspace, and these must read on both. Dark mode in this app is the
+   body.theme-dark class (full-layout.component.ts), not an OS/media-query signal.
+   Palette: no yellow outline (.highlight-cell) and no blue (.setting-ico.active).
+
+   F20: an older sealed day (reconciled === true but date < lockedThrough) gets
+   `.locked-background` (hatch, dim, cursor not-allowed) plus a `.tp-seal` icon
+   placed in `.plan-icons` — never `.reconciled-background`, which is reserved for
+   the single boundary day (date === lockedThrough) and is what draws the 3px
+   border. The two classes are independent: `.locked-background` never adds a
+   border, and `.tp-seal`'s filled-icon rule is unscoped, so the seal renders the
+   same whether the cell is locked-only or the boundary. No extra class was needed
+   to express "locked with a seal, no border".
+   --------------------------------------------------------------------------- */
+:root {
+  --tp-locked-bg: #E4E7E4;
+  --tp-locked-hatch: rgba(22, 33, 30, 0.055);
+  --tp-preview-hatch: rgba(47, 93, 80, 0.16);
+  --tp-seal-ink: #2F5D50;
+}
+
+body.theme-dark {
+  --tp-locked-bg: #262B29;
+  --tp-locked-hatch: rgba(230, 234, 232, 0.06);
+  --tp-preview-hatch: rgba(127, 209, 185, 0.18);
+  --tp-seal-ink: #7FD1B9;
+}
+
+// A mixin, not a custom property holding the gradient. A custom property that
+// contains var() is resolved where it is declared (:root), so the body.theme-dark
+// hatch override would never reach it.
+@mixin tp-locked-texture {
+  background: repeating-linear-gradient(135deg,
+      var(--tp-locked-hatch) 0 2px, transparent 2px 6px),
+      var(--tp-locked-bg) !important;
+}
+
+// Shared by every quiet seal-coloured icon (.tp-lock-legend__swatch,
+// .tp-reconcile-scope, .tp-footer-status): undo .neutral-icon's own
+// `position: relative; top: 5px` baseline nudge (:678, still !important there)
+// and tint the glyph in the seal ink instead of its usual colour.
+@mixin tp-seal-neutral-icon {
+  top: 0 !important;
+  color: var(--tp-seal-ink) !important;
+}
+
+/* Fix-round 1 (reviewer): Task 9's getCellClass returns "<base> locked-background"
+   / "<base> reconciled-background", so BOTH land on the same <td> as the four
+   existing state classes (.grey-/.white-/.green-/.red-background, bare rules at
+   :196-211/:239-254/:280-295/:320-335). Those bare rules paint the <td>'s own
+   background, 5px padding and border-radius, not just .plan-container — without a
+   matching bare rule here, the state colour keeps showing through the padding
+   ring around every locked/reconciled cell, which makes colour load-bearing again.
+   Same specificity (0,1,0) as the four bare rules and placed after them in the
+   file, so with matching !important these win the cascade on every property they
+   touch, on the same <td>. */
+.locked-background {
+  @include tp-locked-texture;
+  padding: 5px !important;
+  border-radius: var(--rounded-2, 2px) !important;
+}
+
+.reconciled-background {
+  background: var(--tp-locked-bg) !important;
+  padding: 5px !important;
+  border-radius: var(--rounded-2, 2px) !important;
+  /* The seal's 3px line lives solely on .plan-container below, so this cell must
+     draw NO border-right of its own — otherwise the four bare rules' own
+     `border-right: 1px solid var(--border) !important` (:200/:245/:284/:325)
+     would still paint a second, thinner line at the td's outer edge. `style: none`
+     always suppresses rendering regardless of colour, so this is safe even where
+     theme-workspace's `.mtx-grid.time-dashboard .mat-mdc-cell { border-right-color:
+     var(--md-surface-variant) !important }` (_workspace-mat-overrides.scss, higher
+     specificity at 0,4,1) wins the color longhand: it never gets a style to paint. */
+  border-right: none !important;
+}
+
+.locked-background .plan-container {
+  @include tp-locked-texture;
+  /* Beats the shared `.plan-container, .progress-container { cursor: pointer }`
+     rule by specificity. Scoped by .locked-background, so the avatar and progress
+     circle are unaffected. */
+  cursor: not-allowed !important;
+}
+
+.reconciled-background .plan-container {
+  background: var(--tp-locked-bg) !important;
+  /* No competing border-right targets .plan-container anywhere in styles.scss or
+     _workspace-mat-overrides.scss (checked by grep) — only the <td>-level bare
+     rules above and the .mat-mdc-cell rule do, and neither reaches this element —
+     so no !important is needed to win here. */
+  border-right: 3px solid var(--tp-seal-ink);
+  cursor: default !important;
+}
+
+/* The state classes (green, red, grey, white) hard-code a text colour for their own
+   light grounds, on .plan-text and on the container itself, which .comment
+   inherits. On the neutral lock ground that colour is decoration, and in dark mode
+   #0F1316 on --tp-locked-bg cannot be read. Same specificity as the state rules and
+   later in the file, so these win. */
+.locked-background .plan-container,
+.reconciled-background .plan-container {
+  color: var(--tp-text) !important;
+
+  .plan-text,
+  .plan-text strong,
+  .plan-text span,
+  .plan-text mat-icon,
+  .comment {
+    color: var(--tp-text) !important;
+  }
+}
+
+/* Dimmed, not hidden: people read closed days constantly. The glyph is excluded,
+   so the one element that explains the dimming is not dimmed with it. */
+.locked-background .plan-content > :not(.tp-day-glyph) {
+  opacity: 0.72;
+}
+
+/* Glyphs (9A). The lock is the last child of .plan-content; a flex column plus
+   margin-top:auto puts it bottom-left. The seal is the last .plan-icons item,
+   top-right. Neither is absolutely positioned: .neutral-icon forces
+   position:relative and top:5px with !important. */
+.locked-background .plan-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.tp-day-glyph {
+  display: inline-flex;
+  align-self: flex-start;
+
+  mat-icon {
+    color: var(--tp-seal-ink) !important;
+  }
+}
+
+.tp-day-glyph--lock {
+  margin-top: auto;
+}
+
+/* The filled seal, on every theme. Outlined is loaded with FILL fixed at 0
+   (index.html), and body.theme-workspace forces every .mat-icon onto Outlined with
+   !important (_workspace-mat-overrides.scss). At (0,4,1) this beats that rule's
+   (0,3,1) whatever the source order. */
+body .mat-icon.material-symbols-rounded.filled.tp-seal {
+  font-family: 'Material Symbols Rounded' !important;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24 !important;
+}
+
+/* Legend under the grid (9A). Shown only while a locked day is on screen. */
+.tp-lock-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 8px;
+  padding: 8px 4px;
+  color: var(--tp-text);
+  font-size: 13px;
+}
+
+.tp-lock-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tp-lock-legend__swatch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 22px;
+  border: 1px solid var(--tp-border);
+  border-radius: 3px;
+
+  .neutral-icon {
+    @include tp-seal-neutral-icon;
+    font-size: 16px !important;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.tp-lock-legend__swatch--locked {
+  @include tp-locked-texture;
+}
+
+.tp-lock-legend__swatch--reconciled {
+  background: var(--tp-locked-bg);
+  box-shadow: inset -3px 0 0 var(--tp-seal-ink);
+}
+
+/* Clickable header of a past day column (12A). It only starts a preview, so the
+   affordance stays quiet: a dotted underline on hover or keyboard focus. */
+.tp-day-header-btn {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline dotted transparent;
+  text-underline-offset: 3px;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration-color: var(--tp-seal-ink);
+  }
+}
+
+/* Bulk reconcile preview (12A): what WILL lock, drawn in place before the commit.
+   Dashed because it is not true yet. It is layered over the cell's own state colour
+   (background-image only), so the day stays recognisable underneath. Same
+   specificity as `.X-background .plan-container`, placed later, so it wins. */
+.plan-container.tp-preview-lock {
+  background-image: repeating-linear-gradient(135deg,
+      var(--tp-preview-hatch) 0 2px, transparent 2px 6px) !important;
+  outline: 2px dashed var(--tp-seal-ink);
+  outline-offset: -3px;
+}
+
+.plan-container.tp-preview-boundary {
+  box-shadow: inset -3px 0 0 var(--tp-seal-ink);
+}
+
+.plan-container.tp-preview-skip {
+  opacity: 0.55;
+}
+
+.tp-preview-skip-label {
+  display: inline-block;
+  margin-top: 2px;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: var(--tp-locked-bg);
+  color: var(--tp-text);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Bulk reconcile scope bar (12A), between the toolbar and the grid. */
+.tp-reconcile-scope {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--tp-border);
+  border-left: 3px solid var(--tp-seal-ink);
+  border-radius: 8px;
+  background: var(--tp-td-bg);
+  color: var(--tp-text);
+
+  .neutral-icon {
+    @include tp-seal-neutral-icon;
+  }
+}
+
+.tp-reconcile-scope__text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Bulk selection column (12A). mtx-grid puts its checkbox column in front of the
+   pinned Name column but never makes it sticky, so on a sideways scroll the
+   checkboxes would slide under Name. Pin it too, and move Name right by its width
+   when that column is present (see below — it is rendered only for some users).
+   Unpinning Name instead was rejected: in a wide grid, Name is the only thing that
+   says whose row a cell belongs to.
+
+   The checkbox rule below needs no such guard: it targets the checkbox cell itself,
+   so when the column is absent it simply matches nothing. Only the Name offset needed
+   one, because it targets a different element than the one whose existence is in doubt. */
+.time-dashboard {
+  --tp-select-col-width: 60px; /* mtx-grid's own .mtx-grid-checkbox-cell width */
+
+  th.mtx-grid-checkbox-cell,
+  td.mtx-grid-checkbox-cell {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    box-sizing: border-box;
+    width: var(--tp-select-col-width);
+    min-width: var(--tp-select-col-width);
+    max-width: var(--tp-select-col-width);
+    background: var(--tp-td-bg, #FFF);
+  }
+
+  /* Offset Name by the checkbox column's width — but ONLY in rows that actually have
+     a checkbox cell. mtx-grid renders that column when rowSelectable is true and
+     hideRowSelectionCheckbox is not set; the timeplanning plugin binds rowSelectable
+     to isFirstUser, so every other user gets no checkbox cell. Offsetting regardless
+     left those users a 60px strip at the left edge that scrolled cells slid through.
+
+     The :has() is the condition itself — this row has a checkbox cell — rather than a
+     proxy for it, and it is scoped to the row so it cannot be satisfied by some other
+     grid on the page. Header, body and footer rows are all covered: the checkbox
+     column renders a th/td/td and the data columns render alongside it in the same row.
+
+     Both the CDK's StickyStyler and mtx-grid write a non-important inline left:0 here,
+     because neither counts the checkbox column — it is never marked [sticky], so the
+     CDK skips its width and mtx-grid's own _countPinnedPosition never sees it at all.
+     A stylesheet !important beats both. (mat-table-sticky-left is mtx-grid's own class
+     despite the mat- prefix; the CDK's is cdk-table-sticky.)
+
+     siteName is the only pinned-left column today. A second one would land 60px too
+     far left for the same reason and would need the same override. */
+  tr:has(> .mtx-grid-checkbox-cell) > .mat-column-siteName.mat-table-sticky-left {
+    left: var(--tp-select-col-width) !important;
+  }
+}
+
+/* Day dialog footer (11A, 11B). It morphs in place between modes. */
+.tp-dialog-footer {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tp-footer-status,
+.tp-footer-confirm,
+.tp-footer-note {
+  flex: 1 1 auto;
+  color: var(--tp-text);
+}
+
+.tp-footer-status {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .neutral-icon {
+    @include tp-seal-neutral-icon;
+  }
+}
+
+.tp-footer-note {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.tp-unlock-word {
+  width: 12ch;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--tp-border);
+  border-radius: var(--rounded-full);
+  background: var(--tp-td-bg);
+  color: var(--tp-text);
+  font: inherit;
+  letter-spacing: 0.08em;
+  text-transform: uppercase; /* display only; the comparison ignores case */
+}
+
 .plan-container, .progress-container {
   cursor: pointer !important;
 }
@@ -562,11 +951,34 @@ ngx-material-timepicker-container {
 
 .line-vert {
   width: 1px;
-  height: 20px;
+  // 40px matches the canonical toolbar-control height so the divider
+  // sits flush with sibling search inputs and buttons in bottom-aligned
+  // (align-items: end) toolbar rows. The previous 20px sat at the bottom
+  // half of the row and looked dropped.
+  height: 40px;
   background: var(--border);
 }
 
 .btn-primary {
+  font-family: var(--font-family, #{$eform-font-family});
+  // The base class is complete on its own. It used to declare only colour,
+  // radius and height, leaving padding, display, the border reset and the
+  // entire type treatment to the --icon-left modifier — and the type rule was
+  // scoped to a child <span>. A class that needs a modifier AND a wrapper
+  // element to render correctly drifts no matter how careful callers are:
+  // an audit found ~86 buttons subtly wrong across folders that disagreed
+  // with themselves. --icon-left now means only what its name says.
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--156-px, 6px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
+  border: none;
+  box-shadow: none;
+  font-size: var(--Text-size-sm, 14px);
+  font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px);
+
   border-radius: var(--rounded-full);
   background-color: var(--mdc-theme-primary) !important;
   color: var(--mdc-theme-on-primary) !important;
@@ -619,6 +1031,18 @@ ngx-material-timepicker-container {
 }
 
 .btn-secondary {
+  // Same completeness fix as .btn-primary above. Bare .btn-secondary used to
+  // inherit the browser's `border: 2px outset` and a 13.33px label, which is
+  // what the --icon-left comment below was written to work around.
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--156-px, 6px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
+  border: 1px solid var(--border);
+  font-size: var(--Text-size-sm, 14px);
+  font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px);
 
   background: unset;
   cursor: pointer;
@@ -645,6 +1069,42 @@ ngx-material-timepicker-container {
     border: 1px solid var(--border);
   }
 
+  // Outlined sibling of .btn-primary--icon-left. Without this variant
+  // declared, the button falls back to the browser default
+  // `border: 2px outset black`, which is heavy and inconsistent with the
+  // surrounding filled primaries. Same geometry as the primary, but
+  // transparent background and a 1px primary-color outline.
+  &--icon-left {
+    display: inline-flex;
+    height: 48px;
+    padding: var(--312-px, 12px) var(--520-px, 20px);
+    justify-content: center;
+    align-items: center;
+    gap: var(--156-px, 6px);
+    flex-shrink: 0;
+    box-shadow: none !important;
+    background: transparent;
+    color: var(--mdc-theme-primary) !important;
+    border: 1px solid var(--mdc-theme-primary);
+
+    .mat-icon {
+      display: flex;
+      width: 20px;
+      height: 20px;
+      padding: 3.332px 3.333px 3.335px 3.333px;
+      justify-content: center;
+      align-items: center;
+      color: var(--mdc-theme-primary);
+    }
+
+    span {
+      font-size: var(--Text-size-sm, 14px);
+      font-style: normal;
+      font-weight: 600;
+      line-height: var(--Text-line-height-sm, 22px);
+    }
+  }
+
   &--icon-square-border {
     border-radius: 4px !important;
     display: flex;
@@ -662,9 +1122,10 @@ ngx-material-timepicker-container {
 }
 
 .btn-cancel {
-  display: flex;
+  font-family: var(--font-family, #{$eform-font-family});
+  display: inline-flex;
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
@@ -692,9 +1153,9 @@ ngx-material-timepicker-container {
 
 
 .btn-warning {
-  display: flex;
+  display: inline-flex;
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
@@ -719,10 +1180,47 @@ ngx-material-timepicker-container {
   }
 }
 
-.btn-delete {
-  display: flex;
+// Low-emphasis action — the fourth and last role in the button vocabulary
+// (.btn-primary filled, .btn-cancel outlined, .btn-delete destructive,
+// .btn-quiet text). It exists so there is a supported answer for the cases
+// that used to reach for `mat-button`, whose theme override targets
+// .mat-mdc-text-button — a class Angular Material 20 never emits, leaving a
+// pill in the wrong colour.
+.btn-quiet {
+  font-family: var(--font-family, #{$eform-font-family});
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--156-px, 6px);
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
+  border: none;
+  border-radius: var(--rounded-full);
+  background: transparent;
+  color: var(--mdc-theme-primary) !important;
+  cursor: pointer;
+  font-size: var(--Text-size-sm, 14px);
+  font-weight: 600;
+  line-height: var(--Text-line-height-sm, 22px);
+
+  &:hover:not(:disabled):not([disabled]) {
+    background-color: color-mix(in srgb, var(--mdc-theme-primary) 8%, transparent);
+  }
+
+  &:disabled,
+  &[disabled] {
+    color: var(--tp-text) !important;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    pointer-events: none;
+  }
+}
+
+.btn-delete {
+  font-family: var(--font-family, #{$eform-font-family});
+  display: inline-flex;
+  height: 48px;
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
@@ -750,7 +1248,7 @@ ngx-material-timepicker-container {
 .warning-btn {
   display: flex;
   height: 48px;
-  padding: var(--312-px, 12px) var(--832-px, 32px);
+  padding: var(--312-px, 12px) var(--520-px, 20px);
   justify-content: center;
   align-items: center;
   gap: var(--156-px, 6px);
@@ -794,17 +1292,25 @@ ngx-material-timepicker-container {
   }
 }
 
-.mat-app-background {
-  background: var(--bg) !important;
+body.theme-eform {
+  .mat-app-background {
+    background: var(--bg) !important;
+  }
 }
 
-.nav-header {
+// Legacy eform-variant nav-header. Workspace overrides this in
+// _workspace-patterns.scss to the tinted color-mix(--md-primary 10%,
+// --md-surface-container) per Design Manual §app-bar.
+// Horizontal padding is a page-gutter token (components/_page-gutter.scss):
+// page content lines up with the burger glyph this padding positions. No
+// bottom border — the bar runs straight into the page (#8102).
+body.theme-eform .nav-header {
   display: flex;
   width: 1920px;
-  padding: var(--520-px, 20px);
+  padding: var(--520-px, 20px) var(--app-bar-padding-x);
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--border, #EBEFF2);
+  border-bottom: none;
   background: var(--bg) !important;
 }
 
@@ -830,7 +1336,13 @@ formatting-text-editor {
 }
 
 
-.text-field {
+// Legacy eform-variant `.text-field--rounded` pill pattern. The workspace
+// theme paints these fields with the canonical 40px outlined-rect look via
+// _workspace-mat-overrides.scss, so this legacy chain must NOT apply on
+// `body.theme-workspace` — its `top: calc(48px/2)` on the floating-label
+// overrides the workspace `top: 0` rule and traps the label inside the
+// wrapper. Scope to eform only.
+body.theme-eform .text-field {
   &--rounded {
     .mat-mdc-text-field-wrapper {
       padding-left: 16px !important;
@@ -868,7 +1380,7 @@ formatting-text-editor {
       .mdc-text-field {
         height: 48px !important;
         border: 1px solid var(--border);
-        border-radius: var(--rounded-full, 9999px) !important;
+        border-radius: var(--search-field-radius, var(--rounded-full, 9999px)) !important;
 
         background-color: var(--bg) !important;
 
@@ -910,122 +1422,111 @@ formatting-text-editor {
 }
 
 
-.mat-mdc-form-field {
+body.theme-eform {
+  .mat-mdc-form-field {
 
-  .mat-mdc-floating-label {
-    color: var(--text-body) !important;
+    .mat-mdc-floating-label {
+      color: var(--text-body) !important;
+    }
+
+    .mat-mdc-form-field-focus-overlay {
+      background: unset !important;
+    }
+
+    .mdc-text-field {
+      border: 1px solid var(--border);
+      border-radius: 4px !important;
+
+      background-color: var(--bg) !important;
+
+      &__ripple {
+        ::before {
+          background-color: var(--bg) !important;
+        }
+
+        ::after {
+          background-color: var(--bg) !important;
+        }
+      }
+
+      &__input {
+        background-color: var(--bg) !important;
+      }
+
+      &--filled:not(.mdc-text-field--disabled) {
+        background-color: var(--bg) !important;
+
+        .mdc-line-ripple {
+          &::before {
+            border-bottom: unset !important;
+          }
+
+          &::after {
+            border-bottom-color: var(--bg) !important;
+          }
+        }
+
+        .mat-mdc-floating-label {
+          color: var(--text-body) !important;
+        }
+      }
+    }
   }
 
-  .mat-mdc-form-field-focus-overlay {
-    background: unset !important;
-  }
 
-  .mdc-text-field {
-    border: 1px solid var(--border);
-    border-radius: 4px !important;
-
+  .mat-tree {
     background-color: var(--bg) !important;
-
-    &__ripple {
-      ::before {
-        background-color: var(--bg) !important;
-      }
-
-      ::after {
-        background-color: var(--bg) !important;
-      }
-    }
-
-    &__input {
-      background-color: var(--bg) !important;
-    }
-
-    &--filled:not(.mdc-text-field--disabled) {
-      background-color: var(--bg) !important;
-
-      .mdc-line-ripple {
-        &::before {
-          border-bottom: unset !important;
-        }
-
-        &::after {
-          border-bottom-color: var(--bg) !important;
-        }
-      }
-
-      .mat-mdc-floating-label {
-        color: var(--text-body) !important;
-      }
-    }
   }
-}
 
-
-.mat-tree {
-  background-color: var(--bg) !important;
-}
-
-// Ensure expanded mat-expansion-panel content and child tree nodes are visible
-// Angular Material/CDK 21 applies visibility: hidden to collapsed tree nodes
-// and expansion panel content. Override when expanded.
-.mat-expansion-panel.mat-expanded > .mat-expansion-panel-content {
-  visibility: visible !important;
-}
-
-.mat-expansion-panel.mat-expanded .mat-tree-node,
-.mat-expansion-panel.mat-expanded .cdk-tree-node,
-.mat-expansion-panel.mat-expanded mat-tree-node {
-  visibility: visible !important;
-}
-
-.mat-drawer-inner-container {
-  background: var(--bg) !important;
-
-  .mat-tree, .mat-expansion-panel {
+  .mat-drawer-inner-container {
     background: var(--bg) !important;
 
-    a {
-      color: var(--text-header, #0F1316);
-      font-size: var(--Text-size-sm, 14px);
-      font-style: normal;
-      font-weight: 600;
-      line-height: var(--Text-line-height-sm, 22px);
-    }
+    .mat-tree, .mat-expansion-panel {
+      background: var(--bg) !important;
 
-    .nav-link {
-      color: var(--text-header, #0F1316);
-      font-size: var(--Text-size-sm, 14px);
-      font-style: normal;
-      font-weight: 600;
-      line-height: var(--Text-line-height-sm, 22px);
-    }
+      a {
+        color: var(--text-header, #0F1316);
+        font-size: var(--Text-size-sm, 14px);
+        font-style: normal;
+        font-weight: 600;
+        line-height: var(--Text-line-height-sm, 22px);
+      }
 
-    .mat-nested-tree-node {
-      mat-accordion {
-        mat-expansion-panel {
-          .mat-expansion-panel-header {
-            &:hover {
-              .mat-expansion-indicator {
-                svg {
-                  fill: var(--mdc-theme-on-primary) !important;
+      .nav-link {
+        color: var(--text-header, #0F1316);
+        font-size: var(--Text-size-sm, 14px);
+        font-style: normal;
+        font-weight: 600;
+        line-height: var(--Text-line-height-sm, 22px);
+      }
+
+      .mat-nested-tree-node {
+        mat-accordion {
+          mat-expansion-panel {
+            .mat-expansion-panel-header {
+              &:hover {
+                .mat-expansion-indicator {
+                  svg {
+                    fill: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
+                  }
                 }
               }
             }
           }
         }
-      }
 
+      }
     }
   }
-}
 
-.mat-drawer-side {
-  background: var(--bg) !important;
-  border-right-color: var(--border) !important;
-}
+  .mat-drawer-side {
+    background: var(--bg) !important;
+    border-right-color: var(--border) !important;
+  }
 
-.mat-mdc-cell {
-  border-bottom-color: var(--border) !important;
+  .mat-mdc-cell {
+    border-bottom-color: var(--border) !important;
+  }
 }
 
 .mtx-grid-toolbar {
@@ -1034,11 +1535,14 @@ formatting-text-editor {
 
 .mtx-grid {
   border-color: var(--border) !important;
-  border: unset !important;
+  border: var(--mtx-grid-border, unset) !important;
+  border-radius: var(--mtx-grid-radius, 0) !important;
   outline: unset !important;
+  overflow: hidden;
+  background: var(--md-surface-container, var(--card)) !important;
 
   .mat-mdc-table {
-    background: var(--bg) !important;
+    background: var(--md-surface-container, var(--card)) !important;
     border-bottom: 1px solid var(--border) !important;
     border-color: var(--border) !important;
 
@@ -1084,42 +1588,44 @@ formatting-text-editor {
 
 }
 
-.mat-mdc-paginator-outer-container, .mat-mdc-paginator-outer-container, .mat-mdc-paginator {
-  background: var(--bg) !important;
-  border: unset !important;
-}
-
-.mat-mdc-paginator-container, .mat-mdc-select-value-text, .mat-mdc-select-arrow svg {
-  color: var(--text-header, #0F1316);
-  font-size: var(--Text-size-sm, 14px);
-  font-style: normal;
-  font-weight: 500;
-  line-height: var(--Text-line-height-sm, 22px);
-
-  .mat-mdc-form-field .mdc-text-field {
-    border-radius: var(--rounded-full, 9999px) !important;
-    border: 1px solid var(--border, #EBEFF2) !important;
-    background: var(--bg, #FFF) !important;
-  }
-
-  .mdc-notched-outline__leading, .mdc-notched-outline__notch, .mdc-notched-outline__trailing {
+body.theme-eform {
+  .mat-mdc-paginator-outer-container, .mat-mdc-paginator-outer-container, .mat-mdc-paginator {
+    background: var(--bg) !important;
     border: unset !important;
-    outline: unset !important;
   }
-}
 
-.mat-mdc-dialog-actions {
-  gap: 10px;
-}
+  .mat-mdc-paginator-container, .mat-mdc-select-value-text, .mat-mdc-select-arrow svg {
+    color: var(--text-header, #0F1316);
+    font-size: var(--Text-size-sm, 14px);
+    font-style: normal;
+    font-weight: 500;
+    line-height: var(--Text-line-height-sm, 22px);
 
-.mat-mdc-dialog-surface {
-  background-color: var(--bg) !important;
-  border-radius: var(--rounded-20, 20px);
-  display: flex;
-  padding: 0px;
-  //flex-direction: column;
-  //align-items: center;
-  gap: 24px;
+    .mat-mdc-form-field .mdc-text-field {
+      border-radius: var(--rounded-full, 9999px) !important;
+      border: 1px solid var(--border, #EBEFF2) !important;
+      background: var(--bg, #FFF) !important;
+    }
+
+    .mdc-notched-outline__leading, .mdc-notched-outline__notch, .mdc-notched-outline__trailing {
+      border: unset !important;
+      outline: unset !important;
+    }
+  }
+
+  .mat-mdc-dialog-actions {
+    gap: 10px;
+  }
+
+  .mat-mdc-dialog-surface {
+    background-color: var(--bg) !important;
+    border-radius: var(--rounded-20, 20px);
+    display: flex;
+    padding: 0px;
+    //flex-direction: column;
+    //align-items: center;
+    gap: 24px;
+  }
 }
 
 eform-new-subheader {
@@ -1129,92 +1635,308 @@ eform-new-subheader {
   }
 }
 
-.mat-mdc-card {
-  box-shadow: unset !important;
-  border: 1px solid var(--border) !important;
-  //border-color: var(--border) !important;
-}
+body.theme-eform {
+  .mat-mdc-card {
+    box-shadow: unset !important;
+    border: 1px solid var(--border) !important;
+    //border-color: var(--border) !important;
+  }
 
-div.mat-mdc-select-panel {
-  overflow: hidden !important;
-}
+  // Mirror of the workspace-theme rule at _workspace-mat-overrides.scss:1771.
+  // An mtx-select inside a mat-form-field has no intrinsic width, so it
+  // stretches to the parent's full width in a flex row, pushing other
+  // controls (search inputs, buttons) onto new rows. Cap it at 320px so
+  // toolbar rows like /plugins/backend-configuration-pn/property-workers
+  // stay on a single row, matching the workspace layout.
+  .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
+    width: 100%;
+    max-width: 320px;
+  }
 
-.mat-mdc-menu-panel {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  border-radius: var(--rounded-8, 8px);
-  border: 1px solid var(--border, #EBEFF2) !important;
-  background: var(--bg, #FFF) !important;
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10);
+  // Force every mat-form-field inside an .eform-sub-header toolbar to the
+  // 48px pill height used by .text-field--rounded. Without this, bare
+  // mat-form-fields (mtx-select / date pickers / plain mat-input) render
+  // at the Material default ~58px and sit above sibling rounded pills.
+  // Scoped to the toolbar so other contexts (dialogs, settings forms)
+  // keep their natural heights.
+  .eform-sub-header .mat-mdc-form-field {
+    .mat-mdc-text-field-wrapper {
+      height: 48px !important;
+      min-height: 48px !important;
+    }
+    .mat-mdc-form-field-flex {
+      height: 48px;
+      align-items: center;
+    }
+    .mat-mdc-form-field-infix {
+      min-height: 48px !important;
+    }
+  }
 
-  .mat-mdc-menu-content {
+  // The legacy .text-field--rounded wrappers in subheader templates carry
+  // an .mt-4 utility class (margin-top: 24px) that was meant to reserve
+  // space for a floating label above the input. In .text-field--rounded
+  // the label is positioned INSIDE the wrapper, so the mt-4 is dead
+  // space at the top of the toolbar row — it makes the row 69px tall
+  // even though every visible control is 48px, and that pushes the
+  // align-self: center mat-slide-toggle ~10px above the field midline.
+  // Drop the mt-4 inside the toolbar so the row collapses to the
+  // 48px control height and the toggle centers on the same midline.
+  .eform-sub-header .text-field--rounded.mt-4 {
+    margin-top: 0 !important;
+  }
+
+  // The toolbar row uses align-items: end so all 48px pills/buttons share
+  // a baseline. mat-slide-toggle is intrinsically ~32px and would sit
+  // flush with the bottom of the 48px controls. Override to center it
+  // vertically against the row so it reads as part of the same baseline.
+  // margin-top: 0 cancels the .mt-2 utility class applied in templates.
+  .eform-sub-header mat-slide-toggle {
+    align-self: center;
+    margin-top: 0 !important;
+  }
+
+  // Mirror of the workspace-theme rule at _workspace-mat-overrides.scss:447.
+  // Collapse the empty subscript wrapper (hint/error area) when no hint or
+  // error is present. Without this the form-field box keeps a 20px tail
+  // below the visible pill, dropping the pill above sibling buttons in
+  // bottom-aligned toolbar rows.
+  .mat-mdc-form-field-subscript-wrapper {
+    padding: 0 !important;
+    margin-top: 4px;
+
+    &:not(:has(mat-error, mat-hint, .mat-mdc-form-field-error, .mat-mdc-form-field-hint)) {
+      display: none !important;
+    }
+  }
+
+  div.mat-mdc-select-panel {
+    overflow: hidden !important;
+  }
+
+  .mat-mdc-menu-panel {
     display: inline-flex;
-    padding: var(--28-px, 8px);
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--14-px, 4px);
+    border-radius: var(--rounded-8, 8px);
+    border: 1px solid var(--border, #EBEFF2) !important;
+    background: var(--bg, #FFF) !important;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10);
+
+    .mat-mdc-menu-content {
+      display: inline-flex;
+      padding: var(--28-px, 8px);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--14-px, 4px);
 
 
-    button {
-      display: flex;
-      height: 40px;
-      padding: var(--28-px, 8px) var(--416-px, 16px);
-      align-items: center;
-      gap: var(--28-px, 8px);
-      align-self: stretch;
+      button {
+        display: flex;
+        height: 40px;
+        padding: var(--28-px, 8px) var(--416-px, 16px);
+        align-items: center;
+        gap: var(--28-px, 8px);
+        align-self: stretch;
 
-      .mat-icon {
-        margin: 0 !important;
+        .mat-icon {
+          margin: 0 !important;
+        }
+
+        span {
+          color: var(--text-header, #0F1316) !important;
+          font-family: var(--font-family, "Nunito Sans");
+          font-size: var(--Text-size-sm, 14px);
+          font-style: normal;
+          font-weight: 600;
+          line-height: var(--Text-line-height-sm, 22px);
+        }
+
+        &[aria-disabled="true"] {
+          cursor: not-allowed !important;
+        }
       }
 
-      span {
-        color: var(--text-header, #0F1316) !important;
-        font-family: var(--font-family, "Nunito Sans");
-        font-size: var(--Text-size-sm, 14px);
-        font-style: normal;
-        font-weight: 600;
-        line-height: var(--Text-line-height-sm, 22px);
-      }
-
-      &[aria-disabled="true"] {
-        cursor: not-allowed !important;
-      }
-    }
-
-    .btn-delete-menu {
-      color: var(---error) !important;
-
-      span, mat-icon, .mat-mdc-menu-item-text {
+      .btn-delete-menu {
         color: var(--error) !important;
-      }
-
-      &:hover {
-        background: var(--error) !important;
 
         span, mat-icon, .mat-mdc-menu-item-text {
-          color: var(--btn-delete-text) !important;
+          color: var(--error) !important;
+        }
+
+        &:hover {
+          background: var(--error) !important;
+
+          span, mat-icon, .mat-mdc-menu-item-text {
+            color: var(--btn-delete-text) !important;
+          }
+        }
+      }
+
+      .mat-mdc-menu-item {
+        display: flex;
+        height: 40px;
+        padding: var(--28-px, 8px) var(--416-px, 16px);
+        align-items: flex-start;
+        gap: var(--28-px, 8px);
+        align-self: stretch;
+        min-height: unset !important;
+
+        .mat-mdc-menu-item-text {
+          color: var(--text-header, #0F1316) !important;
+          font-family: var(--font-family, "Nunito Sans");
+          font-size: var(--Text-size-sm, 14px) !important;
+          font-style: normal !important;
+          font-weight: 600 !important;
+          line-height: var(--Text-line-height-sm, 22px) !important;
         }
       }
     }
+  }
+}
 
-    .mat-mdc-menu-item {
-      display: flex;
-      height: 40px;
-      padding: var(--28-px, 8px) var(--416-px, 16px);
-      align-items: flex-start;
-      gap: var(--28-px, 8px);
-      align-self: stretch;
-      min-height: unset !important;
+// ---------------------------------------------------------------------------
+// eForm fill layout (.eform-section / .eform-field)
+//
+// One rendered eForm question: a bold label, an optional muted description, then
+// the control — no card, no tinted header bar. Shared by every screen that fills
+// an eForm (calendar complete modal, cases page, compliance case page + modal,
+// backend-configuration case page) via case-edit-element / case-edit-switch.
+//
+// Global rather than component-scoped on purpose: the controls live in the
+// element-* child components, so emulated encapsulation would stop a
+// case-edit-switch stylesheet from reaching them.
+//
+// Only tokens defined by BOTH themes are used here (theme-eform and
+// theme-workspace disagree on every literal value), so the block inherits
+// whichever field chrome the active theme paints.
+// ---------------------------------------------------------------------------
+.eform-section {
+  display: block;
+  // Sibling sections are separate <app-case-edit-element> hosts, so a
+  // descendant rule cannot separate them — the margin has to sit on the
+  // section itself.
+  margin-bottom: 32px;
 
-      .mat-mdc-menu-item-text {
-        color: var(--text-header, #0F1316) !important;
-        font-family: var(--font-family, "Nunito Sans");
-        font-size: var(--Text-size-sm, 14px) !important;
-        font-style: normal !important;
-        font-weight: 600 !important;
-        line-height: var(--Text-line-height-sm, 22px) !important;
-      }
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__title {
+    margin: 0 0 24px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-header);
+  }
+}
+
+.eform-field {
+  position: relative;
+  // No :last-child reset here: the last question of a section IS the last
+  // child of app-case-edit-switch, and resetting it would butt that question
+  // against the next section's heading or the extra-fields block.
+  margin: 0 0 32px;
+
+  // The leaf field components are custom elements, which default to
+  // display: inline — without this every vertical margin below them is inert.
+  > element-audio,
+  > element-checkbox,
+  > element-comment,
+  > element-container,
+  > element-date,
+  > element-entitysearch,
+  > element-entityselect,
+  > element-multiselect,
+  > element-number,
+  > element-number-stepper,
+  > element-pdf,
+  > element-picture,
+  > element-signature,
+  > element-singleselect,
+  > element-text,
+  > element-timer {
+    display: block;
+  }
+
+  &__label {
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-header);
+  }
+
+  // With no description the label would sit 4px off the control, which is too
+  // tight; the description normally supplies that breathing room.
+  &:not(:has(.eform-field__desc)) &__label {
+    margin-bottom: 10px;
+  }
+
+  &__desc {
+    margin: 0 0 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--md-on-surface-variant);
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // dataItem.color, carried through as --eform-field-accent. Absent colour means
+  // no bar and no indent, so uncoloured fields stay flush left.
+  &--accented {
+    padding-left: 14px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      bottom: 2px;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--eform-field-accent, transparent);
+    }
+  }
+
+  // Validation text lives outside mat-form-field: theme-workspace hides
+  // .mat-mdc-form-field-error-wrapper outright, so an in-field mat-error would
+  // never be seen.
+  &__error {
+    margin: 4px 0 0;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--md-alert);
+  }
+}
+
+// Section jump-links beside a multi-section eForm (app-case-edit-nav), and the
+// nav column of the screens that host one.
+.eform-nav {
+  &__group {
+    // Nested sections indent under their parent.
+    .eform-nav__group {
+      padding-left: 12px;
+    }
+  }
+
+  &__link {
+    display: block;
+    padding: 8px 12px;
+    border-left: 2px solid transparent;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text-header);
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      border-left-color: var(--primary);
+      color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 6%, transparent);
     }
   }
 }
@@ -1269,9 +1991,11 @@ div.mat-mdc-select-panel {
   }
 }
 
-.mat-accordion, .mat-expansion-panel {
-  background: var(--bg, #FFF) !important;
-  box-shadow: unset !important;
+body.theme-eform {
+  .mat-accordion, .mat-expansion-panel {
+    background: var(--bg, #FFF) !important;
+    box-shadow: unset !important;
+  }
 }
 
 .authentication-page {
@@ -1280,17 +2004,19 @@ div.mat-mdc-select-panel {
   justify-content: center;
   align-items: center;
   gap: var(--624-px, 24px);
-  background: var(--card, #F7F9FA) !important;
+  background: var(--md-surface, #f8fafd) !important;
 }
 
 .auth-card {
   display: flex;
-  padding: var(--832-px, 32px);
+  padding: 24px;
   flex-direction: column;
   align-items: center;
-  gap: var(--624-px, 24px);
-  border-radius: var(--rounded-16, 16px) !important;
-  background: var(--bg, #FFF) !important;
+  gap: 12px;
+  border: none !important;
+  border-radius: var(--md-radius, 10px) !important;
+  background: var(--md-surface-container, #ffffff) !important;
+  box-shadow: var(--md-shadow, 0 1px 2px rgba(60, 64, 67, 0.15), 0 2px 6px rgba(60, 64, 67, 0.1)) !important;
   min-width: 20vw;
 
   #loginMainText {
@@ -1310,98 +2036,111 @@ div.mat-mdc-select-panel {
   }
 }
 
+// Pinned-left column must be OPAQUE on ALL themes (theme-eform, theme-workspace, dark, …),
+// otherwise the horizontally-scrolled cell content shows through the sticky first column
+// (the CDK positions it sticky but never paints a background). Use --tp-td-bg — the table cell
+// background (white; same token wired to --mat-table-background-color) — so the pinned column
+// matches the data cells exactly, rather than the tinted page background (--bg is #f8fafd on
+// theme-workspace, which read as a grey tint).
+// NB: the right-pinned rule below is theme-eform-scoped and has the same latent gap on other themes.
 .mtx-grid .mat-table-sticky-left {
-  border-right: 1px solid var(--border, #EBEFF2) !important;
+  background: var(--tp-td-bg, #FFF) !important;
 }
 
-.mat-mdc-slide-toggle {
-  .mdc-form-field {
-    display: flex;
-    padding: 0 var(--00-px, 0) !important;
-    align-items: center;
-    gap: 8px !important;
-    white-space: nowrap;
-
-    .mdc-label {
-      color: var(--text-header, #0F1316) !important;
-      font-family: var(--font-family, "Nunito Sans") !important;
-      font-size: var(--Text-size-sm, 14px) !important;
-      font-style: normal;
-      font-weight: 500 !important;
-      line-height: var(--Text-line-height-sm, 22px);
-      padding-left: 0 !important;
-    }
-  }
-}
-
-.mdc-switch {
-  &__track {
-
-    &::before {
-      border: 2px solid var(--border, #EBEFF2) !important;
-      background: var(--card, #F7F9FA) !important;
-    }
-
-    &::after {
-      background: var(--primary, #289694) !important;
-    }
+body.theme-eform {
+  .mtx-grid .mat-table-sticky-left {
+    border-right: 1px solid var(--border, #EBEFF2) !important;
   }
 
-  &--unselected .mdc-switch__icon {
-    fill: var(--text-placeholder, #B3B9BF) !important;
-  }
+  .mat-mdc-slide-toggle {
+    .mdc-form-field {
+      display: flex;
+      padding: 0 var(--00-px, 0) !important;
+      align-items: center;
+      gap: 8px !important;
+      white-space: nowrap;
 
-  &--selected .mdc-switch__track {
-    &::after {
-      border-color: var(--primary, #289694) !important;
-    }
-  }
-
-  &--unselected {
-    &:enabled .mdc-switch__handle {
-      &::after {
-        background: var(--text-placeholder, #B3B9BF) !important;
+      .mdc-label {
+        color: var(--text-header, #0F1316) !important;
+        font-family: var(--font-family, "Nunito Sans") !important;
+        font-size: var(--Text-size-sm, 14px) !important;
+        font-style: normal;
+        font-weight: 500 !important;
+        line-height: var(--Text-line-height-sm, 22px);
+        padding-left: 0 !important;
       }
     }
   }
 
-  &--selected {
-    &:enabled .mdc-switch__handle {
-      &::after {
-        background: var(--white, #FFF) !important;
+  .mdc-switch {
+    &__track {
 
-        &:hover, &:focus {
-          background: var(--white, #FFF) !important;
+      &::before {
+        border: 2px solid var(--border, #EBEFF2) !important;
+        background: var(--card, #F7F9FA) !important;
+      }
+
+      &::after {
+        background: var(--primary, #289694) !important;
+      }
+    }
+
+    &--unselected .mdc-switch__icon {
+      fill: var(--text-placeholder, #B3B9BF) !important;
+    }
+
+    &--selected .mdc-switch__track {
+      &::after {
+        border-color: var(--primary, #289694) !important;
+      }
+    }
+
+    &--unselected {
+      &:enabled .mdc-switch__handle {
+        &::after {
+          background: var(--text-placeholder, #B3B9BF) !important;
         }
       }
     }
-  }
 
+    &--selected {
+      &:enabled .mdc-switch__handle {
+        &::after {
+          background: var(--white, #FFF) !important;
 
-  &__handle {
-    &::before, .mdc-switch__handle::after {
-      border: 1px solid var(--text-placeholder, #B3B9BF) !important;
+          &:hover, &:focus {
+            background: var(--white, #FFF) !important;
+          }
+        }
+      }
     }
-  }
 
-  &--selected .mdc-switch__icon {
-    fill: var(--white, #FFF) !important;
 
-    &:hover {
+    &__handle {
+      &::before, .mdc-switch__handle::after {
+        border: 1px solid var(--text-placeholder, #B3B9BF) !important;
+      }
+    }
+
+    &--selected .mdc-switch__icon {
       fill: var(--white, #FFF) !important;
+
+      &:hover {
+        fill: var(--white, #FFF) !important;
+      }
     }
   }
-}
 
-.mat-mdc-form-field {
-  color: var(--text-header, #0F1316) !important;
+  .mat-mdc-form-field {
+    color: var(--text-header, #0F1316) !important;
 
-  /* Text/sm/Medium */
-  font-family: var(--font-family, "Nunito Sans") !important;
-  font-size: var(--Text-size-sm, 14px);
-  font-style: normal;
-  font-weight: 600 !important;
-  line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
+    /* Text/sm/Medium */
+    font-family: var(--font-family, "Nunito Sans") !important;
+    font-size: var(--Text-size-sm, 14px);
+    font-style: normal;
+    font-weight: 600 !important;
+    line-height: var(--Text-line-height-sm, 22px); /* 157.143% */
+  }
 }
 
 .ng-dropdown-panel {
@@ -1415,24 +2154,6 @@ div.mat-mdc-select-panel {
     font-weight: 600 !important;
   }
 
-
-  .ng-option {
-    &:hover {
-      .ng-option-label {
-        color: var(--mdc-theme-on-primary) !important;
-      }
-
-      background-color: var(--mdc-theme-primary-dark, #00695C) !important;
-    }
-
-    &[aria-selected="true"] {
-      background: var(--primary, #289694) !important;
-
-      .ng-option-label {
-        color: var(--btn-delete-text) !important;
-      }
-    }
-  }
 
 }
 
@@ -1451,15 +2172,17 @@ div.mat-mdc-select-panel {
   }
 }
 
-th.mat-table-sticky-right {
-  border-left: 1px solid var(--border, #EBEFF2) !important;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05) !important;
-}
+body.theme-eform {
+  th.mat-table-sticky-right {
+    border-left: 1px solid var(--border, #EBEFF2) !important;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05) !important;
+  }
 
-td.mat-table-sticky-right {
-  border-left: 1px solid var(--border, #EBEFF2) !important;
-  background: var(--bg, #FFF) !important;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05) !important;
+  td.mat-table-sticky-right {
+    border-left: 1px solid var(--border, #EBEFF2) !important;
+    background: var(--bg, #FFF) !important;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05) !important;
+  }
 }
 
 
@@ -1490,50 +2213,54 @@ td.mat-table-sticky-right {
   }
 }
 
-.mat-mdc-chip {
-  border-radius: var(--rounded-full, 9999px) !important;
-}
+body.theme-eform {
+  .mat-mdc-chip {
+    border-radius: var(--rounded-full, 9999px) !important;
+  }
 
-.mdc-evolution-chip__action {
-  &--primary {
-    &::before {
-      border: var(--border) !important;
-      border-radius: var(--rounded-full, 9999px) !important;
+  .mdc-evolution-chip__action {
+    &--primary {
+      &::before {
+        border: var(--border) !important;
+        border-radius: var(--rounded-full, 9999px) !important;
+      }
     }
   }
-}
 
-.status-active {
-  background-color: var(--success, #28A745) !important;
-}
-
-.status-inactive {
-  background-color: var(--Priority-Red-500, #DC3545) !important;
-}
-
-.mat-calendar-body-in-range::before {
-  background-color: rgba(157, 255, 255, 0.25) !important;
-}
-
-.mat-calendar-body-selected {
-  background-color: var(--primary, #28A745) !important;
-}
-
-.mdc-line-ripple {
-  &::after {
-    border-bottom-width: 0 !important;
+  .status-active {
+    background-color: var(--success, #28A745) !important;
   }
 
-  &::before {
-    border-bottom-width: 0 !important;
+  .status-inactive {
+    background-color: var(--Priority-Red-500, #DC3545) !important;
   }
 }
 
-.mat-calendar {
-  border-radius: var(--rounded-8, 8px) !important;
-  border: 1px solid var(--border, #EBEFF2) !important;
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10) !important;
-  background: var(--bg, #FFF) !important;
+body.theme-eform {
+  .mat-calendar-body-in-range::before {
+    background-color: rgba(157, 255, 255, 0.25) !important;
+  }
+
+  .mat-calendar-body-selected {
+    background-color: var(--primary, #28A745) !important;
+  }
+
+  .mdc-line-ripple {
+    &::after {
+      border-bottom-width: 0 !important;
+    }
+
+    &::before {
+      border-bottom-width: 0 !important;
+    }
+  }
+
+  .mat-calendar {
+    border-radius: var(--rounded-8, 8px) !important;
+    border: 1px solid var(--border, #EBEFF2) !important;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10) !important;
+    background: var(--bg, #FFF) !important;
+  }
 }
 
 .timer {
@@ -1566,51 +2293,53 @@ app-footer {
   color: var(--text-body, #7F868D) !important;
 }
 
-.mdc-text-field__input {
-  background-color: var(--bg, #7F868D) !important;;
-}
-
-.mdc-tab {
-  background: var(--card, #F7F9FA) !important;
-
-  &__text-label {
-    color: var(--text-header, #0F1316);
-    font-family: var(--font-family, "Nunito Sans");
-    font-size: var(--Text-size-sm, 14px);
-    font-style: normal;
-    font-weight: 600;
-    line-height: var(--Text-line-height-sm, 22px);
+body.theme-eform {
+  .mdc-text-field__input {
+    background-color: var(--bg, #7F868D) !important;;
   }
 
-  &--active {
-    background: var(--primary, #289694) !important;
+  .mdc-tab {
+    background: var(--card, #F7F9FA) !important;
 
-    .mdc-tab__text-label {
-      color: white !important;
+    &__text-label {
+      color: var(--text-header, #0F1316);
+      font-family: var(--font-family, "Nunito Sans");
+      font-size: var(--Text-size-sm, 14px);
+      font-style: normal;
+      font-weight: 600;
+      line-height: var(--Text-line-height-sm, 22px);
     }
+
+    &--active {
+      background: var(--primary, #289694) !important;
+
+      .mdc-tab__text-label {
+        color: white !important;
+      }
+    }
+
+    &:first-child {
+      border-top-left-radius: 4px !important;
+      border-bottom-left-radius: 4px !important;
+    }
+
+    &:last-child {
+      border-top-right-radius: 4px !important;
+      border-bottom-right-radius: 4px !important;
+    }
+
   }
 
-  &:first-child {
-    border-top-left-radius: 4px !important;
-    border-bottom-left-radius: 4px !important;
+  .mat-mdc-tab .mdc-tab-indicator__content--underline {
+    border: none !important;
+    border-color: unset !important;
   }
 
-  &:last-child {
-    border-top-right-radius: 4px !important;
-    border-bottom-right-radius: 4px !important;
+  .mat-mdc-tab-labels {
+    border-radius: 4px !important;
+    border: none !important;
+
   }
-
-}
-
-.mat-mdc-tab .mdc-tab-indicator__content--underline {
-  border: none !important;
-  border-color: unset !important;
-}
-
-.mat-mdc-tab-labels {
-  border-radius: 4px !important;
-  border: none !important;
-
 }
 
 .modal-header, .mat-mdc-dialog-title{
@@ -1651,16 +2380,18 @@ app-footer {
   }
 }
 
-.mat-mdc-menu-content {
-  button {
-    &:hover {
-      background-color: var(--mdc-theme-primary-dark, #00695C) !important;
+body.theme-eform {
+  .mat-mdc-menu-content {
+    button {
+      &:hover {
+        background-color: var(--mdc-theme-primary-dark, #00695C) !important;
 
-      mat-icon, span {
-        color: var(--mdc-theme-on-primary) !important;
+        mat-icon, span {
+          color: var(--mdc-theme-on-primary) !important;
+        }
+
+        border-radius: var(--rounded-full, 9999px);
       }
-
-      border-radius: var(--rounded-full, 9999px);
     }
   }
 }

@@ -24,4 +24,5 @@ public class CmsPublicConfigModel
 {
     public bool IsCmsEnabled { get; set; }
     public bool IsMenuSticky { get; set; }
+    public string ThemeVariant { get; set; } = "eform";
 }

@@ -4645,16 +4645,6 @@
       "npmUrl": "https://registry.npmjs.org/%40unrs%2Fresolver-binding-win32-x64-msvc"
     },
     {
-      "name": "@userback/widget",
-      "version": "0.3.11",
-      "license": "MIT",
-      "repository": "https://github.com/userback/widget-js",
-      "isDirect": true,
-      "isNuGet": false,
-      "licenseUrl": "https://raw.githubusercontent.com/userback/widget-js/main/LICENSE",
-      "npmUrl": "https://registry.npmjs.org/%40userback%2Fwidget"
-    },
-    {
       "name": "@vitejs/plugin-basic-ssl",
       "version": "2.1.0",
       "license": "MIT",

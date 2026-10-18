@@ -29,12 +29,16 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl implements OnDestro
       'PAGINATOR.ITEMS_PER_PAGE',
       'PAGINATOR.NEXT_PAGE',
       'PAGINATOR.PREVIOUS_PAGE',
+      'PAGINATOR.FIRST_PAGE',
+      'PAGINATOR.LAST_PAGE',
       'PAGINATOR.OF_LABEL',
     ]).subscribe(translation => {
       this.PAGE = translation['PAGINATOR.PAGE'];
       this.itemsPerPageLabel = translation['PAGINATOR.ITEMS_PER_PAGE'];
       this.nextPageLabel = translation['PAGINATOR.NEXT_PAGE'];
       this.previousPageLabel = translation['PAGINATOR.PREVIOUS_PAGE'];
+      this.firstPageLabel = translation['PAGINATOR.FIRST_PAGE'];
+      this.lastPageLabel = translation['PAGINATOR.LAST_PAGE'];
       this.OF_LABEL = translation['PAGINATOR.OF_LABEL'];
       this.changes.next();
     });

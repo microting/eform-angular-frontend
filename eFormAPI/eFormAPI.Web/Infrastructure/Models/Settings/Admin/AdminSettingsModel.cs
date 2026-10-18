@@ -34,4 +34,5 @@ public class AdminSettingsModel
     public SendGridSettingsModel SendGridSettingsModel { get; set; }
     public string SiteLink { get; set; }
     public string AssemblyVersion { get; set; }
+    public string ThemeVariant { get; set; } = "eform";
 }

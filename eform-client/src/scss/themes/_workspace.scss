@@ -1,0 +1,370 @@
+@use 'sass:map';
+
+// ---------------------------------------------------------------------------
+// Workspace Design Tokens (eForm Design System)
+// ---------------------------------------------------------------------------
+// Implements the design system documented in
+//   new_theme/design_handoff_design_system/README.md
+// Applied via body.theme-workspace.{theme-light|theme-dark} selectors.
+//
+// Mirrors the full key set from _eform.scss; every key in $eform-tokens MUST
+// exist here or the theme mixin breaks. New tokens introduced by the design
+// system (md-*, status-aktiv/afventer/inaktiv-*) also exist in _eform.scss
+// with teal-palette equivalents.
+// ---------------------------------------------------------------------------
+
+$workspace-tokens: (
+  // ===== Typography =====
+  font-family: #{"Nunito Sans", Roboto, "Helvetica Neue", sans-serif},
+  font-family-mono: #{"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace},
+  font-size-base: 14px,
+  font-size-body: 16px,
+  font-size-table-header: 14px,
+  font-size-button: 14px,
+  font-size-plan-title: 20px,
+  font-size-plan-warning: 17px,
+  font-weight-light: 400,
+  font-weight-normal: 400,
+  font-weight-medium: 500,
+  font-weight-semibold: 500,
+  font-weight-bold: 700,
+
+  // ===== Shape (border-radius) =====
+  radius-sm: 4px,
+  radius-md: 6px,
+  radius-lg: 8px,
+  radius-xl: 10px,
+  radius-full: 50%,
+  radius-dialog: 10px,
+  radius-rounded-full: 9999px,
+  radius-checkbox: 0.125em,
+  radius-tag: 999px,
+  md-radius: 10px,
+
+  // ===== Sizing =====
+  icon-btn-size: 28px,
+  icon-size: 18px,
+  calendar-btn-size: 40px,
+  progress-circle-size: 50px,
+  progress-avatar-size: 35px,
+  warning-icon-size: 19px,
+  scrollbar-size: 8px,
+
+  // ===== Spacing =====
+  spacing-xs: 4px,
+  spacing-sm: 6px,
+  spacing-md: 8px,
+  spacing-lg: 12px,
+  spacing-xl: 16px,
+  spacing-2xl: 20px,
+  chip-padding-top: 3px,
+
+  // ===== Elevation (mode-independent) =====
+  elevation-dropdown: #{0 8px 24px rgba(11, 87, 208, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08)},
+  elevation-dropdown-up: #{0 -8px 24px rgba(11, 87, 208, 0.18), 0 -2px 6px rgba(0, 0, 0, 0.08)},
+  elevation-scrollbar: #{inset 0 0 6px rgba(0, 0, 0, 0.1)},
+
+  // ===== Colors =====
+  colors: (
+    // ----- Light mode -----
+    light: (
+      // Canonical design system tokens
+      md-primary: #0b57d0,
+      md-on-primary: #ffffff,
+      md-primary-container: #d3e3fd,
+      md-secondary-container: #dfe2eb,
+      md-surface: #ffffff,
+      md-surface-container: #ffffff,
+      md-surface-variant: #e1e7ef,
+      md-on-surface: #1f1f1f,
+      md-on-surface-variant: #444746,
+      md-outline: #c4c7c5,
+      md-alert: #b3261e,
+      md-shadow: #{0 1px 2px rgba(60, 64, 67, 0.15), 0 2px 6px rgba(60, 64, 67, 0.1)},
+
+      // Status chips (aktiv/afventer/inaktiv)
+      status-aktiv-bg: #1b5e20,
+      status-aktiv-fg: #ffffff,
+      status-afventer-bg: #f9a825,
+      status-afventer-fg: #1f1f1f,
+      status-inaktiv-bg: #c62828,
+      status-inaktiv-fg: #ffffff,
+
+      // Legacy token aliases — every value below is the new design system
+      // mapped onto a name the rest of the app already reads. Adjust values
+      // here, not in component SCSS.
+      primary: #0b57d0,
+      primary-light: #d3e3fd,
+      warning: #f9a825,
+      error: #b3261e,
+      border: #c4c7c5,
+      icon-secondary: #444746,
+      bg: #f8fafd,
+      text-header: #1f1f1f,
+      text-body: #444746,
+      card: #ffffff,
+      btn-delete-text: #ffffff,
+      mdc-theme-primary: #0b57d0,
+      mdc-theme-primary-dark: #0842a0,
+      tp-td-bg: #ffffff,
+      tp-th-bg: #ffffff,
+      tp-border: #c4c7c5,
+      tp-text: #1f1f1f,
+      tp-white-text: #1f1f1f,
+      black-800: #1f1f1f,
+      blue-600: #0b57d0,
+
+      brand-teal: #0b57d0,
+      brand-teal-dark: #0842a0,
+      brand-teal-light: #d3e3fd,
+
+      surface-elevated: #ffffff,
+      surface-subtle: #e1e7ef,
+      surface-muted: #dfe2eb,
+      surface-powder: #d3e3fd,
+      surface-success-light: #d4edda,
+      surface-danger-light: #f8d7da,
+      surface-warning-light: #fef3c7,
+      surface-info-light: #d3e3fd,
+      surface-purple-light: #f3e5f5,
+      surface-yellow: #f9a825,
+      surface-red-dark: #f5a5a8,
+
+      text-primary: #1f1f1f,
+      text-secondary: #444746,
+      text-tertiary: #444746,
+      text-quaternary: #5f6368,
+      text-placeholder: #5f6368,
+      text-on-dark: #ffffff,
+      text-error: #b3261e,
+      link: #0b57d0,
+      text-warning-dark: #92400e,
+
+      state-highlight-yellow: #f9a825,
+      state-highlight-overlay: #{rgba(249, 168, 37, 0.2)},
+      state-scrollbar-thumb: #c4c7c5,
+
+      border-primary: #c4c7c5,
+      border-secondary: #c4c7c5,
+      border-muted: #c4c7c5,
+      border-lighter: #e1e7ef,
+      border-dashed: #c4c7c5,
+      border-separator: #e1e7ef,
+      border-input: #c4c7c5,
+
+      status-success: #1b5e20,
+      status-error-icon: #b3261e,
+      status-error-strong: #b3261e,
+      status-warning-orange: #f9a825,
+      status-error-reject: #c62828,
+      status-danger-high: #c62828,
+      status-danger-medium: #f5a5a8,
+      status-safe: #1b5e20,
+      status-bar-0: #c4c7c5,
+      status-bar-33: #5f6368,
+      status-bar-66: #f9a825,
+      status-bar-70: #f9a825,
+      status-bar-77: #0b57d0,
+      status-bar-100: #1b5e20,
+      status-bar-110: #c62828,
+      status-bar-track: #e1e7ef,
+
+      text-black: #{rgba(0, 0, 0, 0.87)},
+      text-white: #ffffff,
+      text-muted: #{rgba(0, 0, 0, 0.6)},
+      text-child-muted: #5f6368,
+      text-error-message: #b3261e,
+
+      surface-subheader: #ffffff,
+      surface-error-message: #fde8e7,
+
+      spinner-overlay-bg: #{rgba(0, 0, 0, 0.3)},
+      scrollbar-bg: #e1e7ef,
+      pell-actionbar-bg: #ffffff,
+      progress-fill: #1b5e20,
+      progress-track: #e1e7ef,
+      tag-fallback-bg: #dfe2eb,
+
+      badge-type-text: #0b57d0,
+      badge-dependency-text: #7b1fa2,
+
+      breadcrumb-link: #0b57d0,
+
+      status-green-text: #1b5e20,
+
+      elevation-card: #{0 1px 2px rgba(60, 64, 67, 0.15), 0 2px 6px rgba(60, 64, 67, 0.1)},
+      elevation-panel: #{0 1px 2px rgba(60, 64, 67, 0.15), 0 2px 6px rgba(60, 64, 67, 0.1)},
+
+      input-fill: transparent,
+      input-focus-underline: #0b57d0,
+      nav-selected-surface: #d3e3fd,
+      nav-selected-text: #0b57d0,
+      nav-hover-surface: #e1e7ef,
+      nav-hover-text: #1f1f1f,
+      // DM "Sidebar with icon rail": icon stays primary across rest+hover
+      // (text follows --nav-hover-text). Workspace primary, light theme.
+      nav-hover-icon: #0b57d0,
+      nav-item-height: 40px,
+      nav-item-radius: 8px,
+      search-field-radius: 4px,
+      mtx-grid-border: 1px solid #c4c7c5,
+      mtx-grid-radius: 4px,
+      content-card-bg: #ffffff,
+      // Flush: page content starts right under the top bar (#8102).
+      content-card-radius: 0,
+      content-card-margin: 0px,
+      table-row-hover: #f8fafd,
+      sort-indicator-bg: #d3e3fd,
+      sort-indicator-arrow: #0b57d0,
+    ),
+
+    // ----- Dark mode -----
+    dark: (
+      // Canonical design system tokens
+      md-primary: #a8c7fa,
+      md-on-primary: #062e6f,
+      md-primary-container: #0842a0,
+      md-secondary-container: #3f4756,
+      md-surface: #131314,
+      md-surface-container: #1e1f20,
+      md-surface-variant: #444746,
+      md-on-surface: #e3e3e3,
+      md-on-surface-variant: #c4c7c5,
+      md-outline: #8e918f,
+      md-alert: #f2b8b5,
+      md-shadow: #{0 2px 12px rgba(0, 0, 0, 0.35)},
+
+      // Status chips (aktiv/afventer/inaktiv)
+      status-aktiv-bg: #2e7d32,
+      status-aktiv-fg: #ffffff,
+      status-afventer-bg: #f9a825,
+      status-afventer-fg: #1f1f1f,
+      status-inaktiv-bg: #c62828,
+      status-inaktiv-fg: #ffffff,
+
+      // Legacy token aliases (mapped to design system equivalents)
+      primary: #a8c7fa,
+      primary-light: #0842a0,
+      warning: #f9a825,
+      error: #f2b8b5,
+      border: #8e918f,
+      icon-secondary: #c4c7c5,
+      bg: #131314,
+      text-header: #e3e3e3,
+      text-body: #c4c7c5,
+      card: #1e1f20,
+      btn-delete-text: #ffffff,
+      mdc-theme-primary: #a8c7fa,
+      mdc-theme-primary-dark: #c2d7fc,
+      tp-td-bg: #1e1f20,
+      tp-th-bg: #1e1f20,
+      tp-border: #8e918f,
+      tp-text: #e3e3e3,
+      tp-white-text: #e3e3e3,
+      black-800: #1f1f1f,
+      blue-600: #a8c7fa,
+
+      brand-teal: #a8c7fa,
+      brand-teal-dark: #c2d7fc,
+      brand-teal-light: #0842a0,
+
+      surface-elevated: #1e1f20,
+      surface-subtle: #444746,
+      surface-muted: #3f4756,
+      surface-powder: #0842a0,
+      surface-success-light: #1a3a2a,
+      surface-danger-light: #3d2022,
+      surface-warning-light: #3d3520,
+      surface-info-light: #0842a0,
+      surface-purple-light: #2d1f3d,
+      surface-yellow: #7e6f3a,
+      surface-red-dark: #f5a5a8,
+
+      text-primary: #e3e3e3,
+      text-secondary: #c4c7c5,
+      text-tertiary: #c4c7c5,
+      text-quaternary: #9aa0a6,
+      text-placeholder: #9aa0a6,
+      text-on-dark: #e3e3e3,
+      text-error: #f2b8b5,
+      link: #a8c7fa,
+      text-warning-dark: #f9a825,
+
+      state-highlight-yellow: #f9a825,
+      state-highlight-overlay: #{rgba(249, 168, 37, 0.2)},
+      state-scrollbar-thumb: #8e918f,
+
+      border-primary: #8e918f,
+      border-secondary: #8e918f,
+      border-muted: #8e918f,
+      border-lighter: #444746,
+      border-dashed: #8e918f,
+      border-separator: #444746,
+      border-input: #8e918f,
+
+      status-success: #2e7d32,
+      status-error-icon: #f2b8b5,
+      status-error-strong: #f2b8b5,
+      status-warning-orange: #f9a825,
+      status-error-reject: #c62828,
+      status-danger-high: #c62828,
+      status-danger-medium: #f2b8b5,
+      status-safe: #2e7d32,
+      status-bar-0: #8e918f,
+      status-bar-33: #c4c7c5,
+      status-bar-66: #f9a825,
+      status-bar-70: #f9a825,
+      status-bar-77: #a8c7fa,
+      status-bar-100: #2e7d32,
+      status-bar-110: #c62828,
+      status-bar-track: #444746,
+
+      text-black: #{rgba(255, 255, 255, 0.87)},
+      text-white: #ffffff,
+      text-muted: #{rgba(255, 255, 255, 0.7)},
+      text-child-muted: #c4c7c5,
+      text-error-message: #f2b8b5,
+
+      surface-subheader: #131314,
+      surface-error-message: #{rgba(178, 38, 30, 0.2)},
+
+      spinner-overlay-bg: #{rgba(0, 0, 0, 0.5)},
+      scrollbar-bg: #1e1f20,
+      pell-actionbar-bg: #1e1f20,
+      progress-fill: #2e7d32,
+      progress-track: #444746,
+      tag-fallback-bg: #3f4756,
+
+      badge-type-text: #a8c7fa,
+      badge-dependency-text: #ce93d8,
+
+      breadcrumb-link: #a8c7fa,
+
+      status-green-text: #2e7d32,
+
+      elevation-card: #{0 2px 12px rgba(0, 0, 0, 0.35)},
+      elevation-panel: #{0 2px 12px rgba(0, 0, 0, 0.35)},
+
+      input-fill: transparent,
+      input-focus-underline: #a8c7fa,
+      nav-selected-surface: #0842a0,
+      nav-selected-text: #a8c7fa,
+      nav-hover-surface: #444746,
+      nav-hover-text: #e3e3e3,
+      // DM dark theme: icon stays primary across rest+hover.
+      nav-hover-icon: #a8c7fa,
+      nav-item-height: 40px,
+      nav-item-radius: 8px,
+      search-field-radius: 4px,
+      mtx-grid-border: 1px solid #c4c7c5,
+      mtx-grid-radius: 4px,
+      content-card-bg: #1e1f20,
+      // Flush: page content starts right under the top bar (#8102).
+      content-card-radius: 0,
+      content-card-margin: 0px,
+      table-row-hover: #1e1f20,
+      sort-indicator-bg: #0842a0,
+      sort-indicator-arrow: #a8c7fa,
+    ),
+  ),
+);

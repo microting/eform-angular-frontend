@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, inject} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, OnInit, inject} from '@angular/core';
 import {NgIf} from '@angular/common';
 import {
   CommonDictionaryModel,
@@ -30,6 +30,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 })
 export class SharedTagsComponent implements OnInit {
   dialogRef = inject<MatDialogRef<SharedTagsComponent>>(MatDialogRef);
+  private cdr = inject(ChangeDetectorRef);
 
   public availableTags: SharedTagModel[] = [];
   public showMultipleCreateBtn: boolean = false;
@@ -79,5 +80,10 @@ export class SharedTagsComponent implements OnInit {
 
   showMultipleCreateTagModal() {
     this.showMultipleCreateTag.emit();
+  }
+
+  setAvailableTags(tags: SharedTagModel[]): void {
+    this.availableTags = [...tags];
+    this.cdr.detectChanges();
   }
 }

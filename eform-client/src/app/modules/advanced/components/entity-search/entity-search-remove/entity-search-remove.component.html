@@ -27,18 +27,18 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end align-items-center gap-12">
   <button
+    class="btn-cancel"
+    id="entitySearchDeleteCancelBtn"
+    (click)="hide()"
+  >
+    {{'Cancel' | translate}}
+  </button>
+  <button
     class="btn-delete"
     color="warn"
     id="entitySearchDeleteDeleteBtn"
     (click)="deleteSelectedAdvEntitySearchableGroup()"
   >
     {{'Delete' | translate}}
-  </button>
-  <button
-    class="btn-cancel"
-    id="entitySearchDeleteCancelBtn"
-    (click)="hide()"
-  >
-    {{'Cancel' | translate}}
   </button>
 </div>

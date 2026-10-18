@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Ο χρήστης συσκευής "{0}" διαγράφηκε με επιτυχία</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Μόνο ο πρώτος χρήστης μπορεί να διαγράψει χρήστες συσκευής</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Ο χρήστης συσκευής ενημερώθηκε με επιτυχία</value>
     </data>
@@ -152,6 +155,12 @@
     </data>
     <data name="ErrorWhileUpdatingUser">
         <value>Σφάλμα κατά την ενημέρωση του χρήστη</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>Email confirmed</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Error while confirming email</value>
     </data>
     <data name="FileNotFound">
         <value>Το αρχείο δε βρέθηκε</value>

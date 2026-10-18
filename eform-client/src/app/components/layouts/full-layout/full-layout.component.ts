@@ -26,7 +26,6 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { FooterComponent } from '../../footer/footer.component';
-import { UserbackWidgetComponent } from '../../../plugins/modules/shared/components/userback-widget/userback-widget.component';
 import { SimpleLayoutComponent } from '../simple-layout/simple-layout.component';
 import { AuthImagePipe } from 'src/app/common/pipes';
 
@@ -35,7 +34,7 @@ import { AuthImagePipe } from 'src/app/common/pipes';
     selector: 'app-full-layout-root',
     templateUrl: `./full-layout.component.html`,
     styleUrls: ['./full-layout.component.scss'],
-    imports: [NgIf, MatToolbar, MatIconButton, MatIcon, MatDrawerContainer, MatDrawer, NavigationComponent, FooterComponent, UserbackWidgetComponent, RouterOutlet, SimpleLayoutComponent, AsyncPipe, AuthImagePipe]
+    imports: [NgIf, MatToolbar, MatIconButton, MatIcon, MatDrawerContainer, MatDrawer, NavigationComponent, FooterComponent, RouterOutlet, SimpleLayoutComponent, AsyncPipe, AuthImagePipe]
 })
 export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   authStateService = inject(AuthStateService);

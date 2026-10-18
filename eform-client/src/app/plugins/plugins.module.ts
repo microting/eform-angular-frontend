@@ -4,6 +4,5 @@ import { PluginsRouting } from './plugins.routing';
 
 @NgModule({
   imports: [CommonModule, PluginsRouting],
-  declarations: [],
 })
 export class PluginsModule {}

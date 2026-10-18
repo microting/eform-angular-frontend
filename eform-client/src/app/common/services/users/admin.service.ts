@@ -17,6 +17,7 @@ const AdminMethods = {
   DeleteUser: '/api/admin/delete-user',
   CreateUser: '/api/admin/create-user',
   UpdateUser: '/api/admin/update-user',
+  ConfirmEmail: '/api/admin/confirm-email',
   EnableTwoFactorAuth: 'api/admin/enable-two-factor',
   DisableTwoFactorAuth: 'api/admin/disable-two-factor',
 };
@@ -61,6 +62,10 @@ export class AdminService {
 
   deleteUser(userId: number): Observable<OperationResult> {
     return this.apiBaseService.get(AdminMethods.DeleteUser + '/' + userId);
+  }
+
+  confirmEmail(userId: number): Observable<OperationResult> {
+    return this.apiBaseService.get(AdminMethods.ConfirmEmail + '/' + userId);
   }
 
   enableTwoFactorAuth(): Observable<OperationResult> {

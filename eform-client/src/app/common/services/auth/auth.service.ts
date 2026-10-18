@@ -25,7 +25,6 @@ export let AuthMethods = {
   ChangePasswordAdmin: 'api/account/change-password-admin',
   RestoreUserPassword: '/api/account/reset-password',
   EmailRecoveryLink: '/api/account/forgot-password',
-  ResetAdminPassword: '/api/account/reset-admin-password',
 };
 
 @Injectable()
@@ -52,19 +51,6 @@ export class AuthService {
   restorePassword(model: PasswordRestoreModel): Observable<any> {
     return this.apiBaseService
       .post(AuthMethods.RestoreUserPassword, model)
-      .pipe(
-        map((result) => {
-          return result;
-        })
-      );
-  }
-
-  resetAdminPassword(code: string): Observable<any> {
-    const paramsObject = {
-      code: code,
-    };
-    return this.apiBaseService
-      .get(AuthMethods.ResetAdminPassword, paramsObject)
       .pipe(
         map((result) => {
           return result;

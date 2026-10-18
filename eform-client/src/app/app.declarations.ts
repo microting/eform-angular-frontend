@@ -43,6 +43,7 @@ import {
   UnitsService,
   WorkersService,
   TitleService,
+  SentryUserService,
 } from 'src/app/common/services';
 import {AuthService} from 'src/app/common/services/auth/auth.service';
 import {UserSettingsService} from 'src/app/common/services/auth/user-settings.service';
@@ -142,6 +143,12 @@ export let providers = [
       useFactory: () => () => {},
       deps: [Sentry.TraceService],
       multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (sentryUserService: SentryUserService) => () => sentryUserService.init(),
+      deps: [SentryUserService],
+      multi: true,
     }
   ] : []),
   AuthStateService,
@@ -158,6 +165,10 @@ export let providers = [
   {
     provide: MatPaginatorIntl,
     useClass: CustomMatPaginatorIntl,
+  },
+  {
+    provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    useValue: { appearance: 'outline' },
   },
   provideNgxMask(),
 ];

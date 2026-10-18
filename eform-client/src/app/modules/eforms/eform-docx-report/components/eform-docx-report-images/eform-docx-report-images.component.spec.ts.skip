@@ -38,8 +38,7 @@ describe.skip('EformDocxReportImagesComponent', () => {
     };
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, EformDocxReportImagesComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, EformDocxReportImagesComponent],
     providers: [
         { provide: Gallery, useValue: mockGallery },
         { provide: Lightbox, useValue: mockLightbox },

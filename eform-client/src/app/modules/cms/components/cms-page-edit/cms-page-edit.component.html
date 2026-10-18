@@ -19,10 +19,10 @@
   </div>
 
   <div style="margin-bottom: 16px">
-    <editor
-      [init]="tinymceConfig"
-      [(ngModel)]="page.body">
-    </editor>
+    <formatting-text-editor
+      id="cmsPageBodyEditor"
+      [(value)]="page.body">
+    </formatting-text-editor>
   </div>
 
   <div style="display: flex; gap: 8px">

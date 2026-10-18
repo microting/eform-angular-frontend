@@ -4,13 +4,13 @@ import { MyEformsPage } from '../../Page objects/MyEforms.page';
 import { ProfileSettingsPage } from '../../Page objects/ProfileSettings.page';
 
 const translationsEFormsPageEng: Array<{ key: string; value: string }> = [
-  { key: 'eform-new-subheader h2', value: 'My eForms' },
+  { key: 'mat-card.eform-sub-header h2', value: 'My eForms' },
 ];
 const translationsEFormsPageGer: Array<{ key: string; value: string }> = [
-  { key: 'eform-new-subheader h2', value: 'Meine eForms' },
+  { key: 'mat-card.eform-sub-header h2', value: 'Meine eForms' },
 ];
 const translationsEFormsPageDan: Array<{ key: string; value: string }> = [
-  { key: 'eform-new-subheader h2', value: 'Mine eForms' },
+  { key: 'mat-card.eform-sub-header h2', value: 'Mine eForms' },
 ];
 
 test.describe('Profile settings', () => {

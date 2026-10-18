@@ -14,3 +14,4 @@ export * from './apiBase.service';
 export * from './title.service';
 export * from './translation.service';
 export * from './cms';
+export * from './sentry';

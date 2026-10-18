@@ -3,9 +3,17 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {CmsPageListModel} from 'src/app/common/models';
 import {CmsService} from 'src/app/common/services/cms';
+import {DatePipe, NgIf} from '@angular/common';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {
+  MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable,
+} from '@angular/material/table';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
-  standalone: false,
+  imports: [NgIf, DatePipe, MatButton, MatIconButton, MatIcon, MatTable, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatCell, MatCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTooltip],
   selector: 'app-cms-pages-list',
   templateUrl: './cms-pages-list.component.html',
 })

@@ -14,7 +14,13 @@ test.describe('Main Page', () => {
   });
 
   test.afterAll(async () => {
-    await page.close();
+    if (page && !page.isClosed()) await page.close();
+  });
+
+  // Stop cascade: if a previous test killed the shared page, skip the rest
+  // instead of waiting 120s on a dead beforeAll.
+  test.beforeEach(async () => {
+    test.skip(!page || page.isClosed(), 'Shared page closed by earlier failure');
   });
 
   test('should create eform', async () => {

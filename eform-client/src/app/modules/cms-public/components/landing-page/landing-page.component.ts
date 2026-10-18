@@ -3,9 +3,12 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {CmsPublicLandingModel} from 'src/app/common/models';
 import {loadCmsLanding, selectCmsLandingPage, selectIsMenuSticky} from 'src/app/state/cms';
+import {AsyncPipe, NgIf} from '@angular/common';
+import {CmsHeaderComponent} from '../cms-header/cms-header.component';
+import {SafeHtmlPipe} from '../../pipes/safe-html.pipe';
 
 @Component({
-  standalone: false,
+  imports: [NgIf, AsyncPipe, CmsHeaderComponent, SafeHtmlPipe],
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss'],

@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microsoft.Extensions.Options;
+using eFormAPI.Web.Infrastructure.Models;
 using NUnit.Framework;
 using eFormAPI.Web.Services;
 
@@ -34,7 +36,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
 
         public override void DoSetup()
         {
-            _translationService = new TranslationService();
+            _translationService = new TranslationService(Options.Create(new GoogleTranslateOptions()));
         }
 
         [Test]

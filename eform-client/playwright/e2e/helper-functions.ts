@@ -44,7 +44,8 @@ export async function selectValueInNgSelector(
 ) {
   const ngSelector = page.locator(selector);
   await ngSelector.waitFor({ state: 'visible', timeout: 40000 });
-  await ngSelector.click();
+  // Click the arrow, not the centre: an empty select's unfloated label can cover its centre.
+  await ngSelector.locator('.ng-arrow-wrapper').click();
   await page.waitForTimeout(300);
   if (intercept) {
     await Promise.all([
@@ -59,6 +60,17 @@ export async function selectValueInNgSelector(
   const dropdownPanel = page.locator('ng-dropdown-panel');
   await dropdownPanel.waitFor({ state: 'visible', timeout: 40000 });
   const option = dropdownPanel.locator('.ng-option').filter({ hasText: value }).first();
+  await option.scrollIntoViewIfNeeded();
+  await option.click();
+  await page.waitForTimeout(500);
+}
+
+export async function selectValueInNgSelectorNoSelector(
+  page: Page,
+  value: string,
+) {
+  const option = page.locator('.ng-option').filter({ hasText: value }).first();
+  await option.waitFor({ state: 'visible', timeout: 40000 });
   await option.scrollIntoViewIfNeeded();
   await option.click();
   await page.waitForTimeout(500);
@@ -102,7 +114,7 @@ export async function testSorting(
   const elementsBefore = await getCells();
 
   for (let i = 0; i < 2; i++) {
-    await page.locator(selectorTableHeader).locator('.mat-sort-header-icon').click({ force: true });
+    await page.locator(selectorTableHeader).locator('.mat-sort-header-container').click({ force: true });
     await page.waitForTimeout(500);
 
     const ariaSort = await page.locator(selectorTableHeader).getAttribute('aria-sort') ?? '';

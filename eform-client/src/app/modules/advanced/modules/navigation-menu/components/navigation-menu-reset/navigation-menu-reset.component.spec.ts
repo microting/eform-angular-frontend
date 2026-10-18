@@ -28,8 +28,7 @@ describe('NavigationMenuResetComponent', () => {
         };
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, NavigationMenuResetComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, NavigationMenuResetComponent],
     providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: TranslateService, useValue: mockTranslateService }

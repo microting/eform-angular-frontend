@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Používateľ zariadenia „{0}“ bol úspešne odstránený</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Iba prvý používateľ môže odstraňovať používateľov zariadenia</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Používateľ zariadenia bol úspešne aktualizovaný</value>
     </data>
@@ -152,6 +155,12 @@
     </data>
     <data name="ErrorWhileUpdatingUser">
         <value>Chyba pri aktualizácii používateľa</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>Email confirmed</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Error while confirming email</value>
     </data>
     <data name="FileNotFound">
         <value>Súbor nenájdený</value>

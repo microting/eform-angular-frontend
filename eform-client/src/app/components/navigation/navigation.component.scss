@@ -11,7 +11,7 @@ mat-tree {
     .nav-link {
       width: 100%;
       text-align: inherit;
-      min-height: 48px;
+      min-height: var(--nav-item-height, 48px);
       display: flex;
       align-items: center;
       justify-content: start;
@@ -22,40 +22,47 @@ mat-tree {
       }
 
       &:hover {
-        border-radius: var(--rounded-full) !important;
-        background-color: var(--mdc-theme-primary-dark, #00695C) !important;
-        color: var(--mdc-theme-on-primary) !important;
+        border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
+        background-color: var(--nav-hover-surface, var(--mdc-theme-primary-dark, #00695C)) !important;
+        color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
         .mat-icon{
-          color: var(--mdc-theme-on-primary) !important;
+          // DM "Sidebar with icon rail": icon stays primary on hover even
+          // though row text uses --nav-hover-text. Fallback to --nav-hover-text
+          // keeps legacy theme behavior (icon follows text) unchanged.
+          color: var(--nav-hover-icon, var(--nav-hover-text, var(--mdc-theme-on-primary))) !important;
         }
         svg{
-          fill: var(--mdc-theme-on-primary) !important;
+          fill: var(--nav-hover-icon, var(--nav-hover-text, var(--mdc-theme-on-primary))) !important;
         }
       }
 
       //&:focus {
       //  background-color: var(--mdc-theme-primary-dark, #00695C) !important;
-      //  border-radius: var(--rounded-full) !important;
+      //  border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
       //  color: var(--mdc-theme-on-primary) !important;
       //}
     }
 
 
     .selected-node {
-      background-color: var(--mdc-theme-primary) !important;
-      color: var(--mdc-theme-on-primary) !important;
-      border-radius: var(--rounded-full);
+      background-color: var(--nav-selected-surface, var(--mdc-theme-primary)) !important;
+      color: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
+      border-radius: var(--nav-item-radius, var(--rounded-full));
+
+      .mat-icon {
+        color: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
+      }
 
       &:hover {
-        background-color: var(--mdc-theme-primary-dark) !important;
-        color: var(--mdc-theme-on-primary) !important;
+        background-color: var(--nav-selected-surface, var(--mdc-theme-primary-dark)) !important;
+        color: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
 
         .mat-icon {
-          color: var(--mdc-theme-on-primary) !important;
+          color: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
         }
 
         svg {
-          fill: var(--mdc-theme-on-primary) !important;
+          fill: var(--nav-selected-text, var(--mdc-theme-on-primary)) !important;
         }
       }
     }
@@ -71,26 +78,29 @@ mat-tree {
 
         .mat-expansion-panel-header {
           padding-left: 1rem;
+          --mat-expansion-header-indicator-color: var(--icon-secondary, #444746);
+
+          // Align expansion header icon with regular nav-link icons
+          // (regular .mat-icon gets margin-left: -4px from Material button styles)
+          .mat-icon {
+            margin-left: -4px;
+          }
 
           &:hover {
-            background-color: var(--mdc-theme-primary-dark) !important;
-            color: var(--mdc-theme-on-primary) !important;
-            border-radius: var(--rounded-full);
-
-            .mat-expansion-indicator{
-              background: red!important;
-              svg{
-                fill: red!important;
-              }
-            }
+            background-color: var(--nav-hover-surface, var(--mdc-theme-primary-dark)) !important;
+            color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
+            border-radius: var(--nav-item-radius, var(--rounded-full));
+            --mat-expansion-header-indicator-color: var(--icon-secondary, #444746);
 
             a {
               span {
-                color: var(--mdc-theme-on-primary) !important;
+                color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
               }
             }
             .mat-icon{
-              color: var(--mdc-theme-on-primary) !important;
+              // DM: icon stays primary on hover; falls back to text colour
+              // for legacy theme parity.
+              color: var(--nav-hover-icon, var(--nav-hover-text, var(--mdc-theme-on-primary))) !important;
             }
           }
         }
@@ -112,9 +122,9 @@ mat-tree {
           .nav-link {
             &:hover {
               width: calc(100% - 20px) !important;
-              border-radius: var(--rounded-full) !important;
-              background-color: var(--mdc-theme-primary-dark, #00695C) !important;
-              color: var(--mdc-theme-on-primary) !important;
+              border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
+              background-color: var(--nav-hover-surface, var(--mdc-theme-primary-dark, #00695C)) !important;
+              color: var(--nav-hover-text, var(--mdc-theme-on-primary)) !important;
             }
           }
 
@@ -148,6 +158,6 @@ mat-tree {
 
 
 mat-tree-node a.mat-mdc-button-base.nav-link {
-  border-radius: var(--rounded-full) !important;
+  border-radius: var(--nav-item-radius, var(--rounded-full)) !important;
   overflow: hidden !important;
 }

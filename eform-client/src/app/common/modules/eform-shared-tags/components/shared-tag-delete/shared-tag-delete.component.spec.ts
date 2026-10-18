@@ -28,8 +28,7 @@ describe('EmailRecipientTagDeleteComponent', () => {
     };
     
     TestBed.configureTestingModule({
-    imports: [FormsModule, SharedTagDeleteComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, SharedTagDeleteComponent],
     providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: {} },

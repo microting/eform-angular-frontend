@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Enhetsanvändaren "{0}" har tagits bort</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Endast den första användaren kan ta bort enhetsanvändare</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Enhetsanvändaren har uppdaterats</value>
     </data>
@@ -152,6 +155,12 @@
     </data>
     <data name="ErrorWhileUpdatingUser">
         <value>Fel vid uppdatering av användare</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>E-post bekräftad</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Fel vid bekräftelse av e-post</value>
     </data>
     <data name="FileNotFound">
         <value>Filen hittades inte</value>

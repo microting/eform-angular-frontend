@@ -34,15 +34,17 @@ import { NavigationMenuTemplateItemComponent } from '../menu-item/navigation-men
 import { NavigationMenuCustomComponent } from '../menu-custom/navigation-menu-custom/navigation-menu-custom.component';
 import { MatCard } from '@angular/material/card';
 import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 import { NavigationMenuItemComponent } from '../menu-item/navigation-menu-item/navigation-menu-item.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import {MenuLinkRouteService} from '../../menu-link-route.service';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-navigation-menu-page',
     templateUrl: './navigation-menu-page.component.html',
     styleUrls: ['./navigation-menu-page.component.scss'],
-    imports: [EformNewSubheaderComponent, MatIcon, MatAccordion, NgFor, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, DragulaModule, NavigationMenuTemplateItemComponent, NavigationMenuCustomComponent, MatCard, NgIf, MatIconButton, NavigationMenuItemComponent, TranslatePipe]
+    imports: [EformNewSubheaderComponent, MatIcon, MatAccordion, NgFor, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, DragulaModule, NavigationMenuTemplateItemComponent, NavigationMenuCustomComponent, MatCard, NgIf, MatIconButton, MatTooltip, NavigationMenuItemComponent, TranslatePipe]
 })
 export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   private authStore = inject(Store);
@@ -54,6 +56,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private store = inject(Store);
+  private menuLinkRouteService = inject(MenuLinkRouteService);
 
 
   @ViewChild('resetMenuModal')
@@ -164,7 +167,10 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     secondLevelIndex?: number | null
   ) {
     const modalId = this.dialog.open(NavigationMenuItemEditComponent,
-      dialogConfigHelper(this.overlay, {model, firstLevelIndex, secondLevelIndex, securityGroups: this.securityGroups})).id;
+      dialogConfigHelper(this.overlay, {
+        model, firstLevelIndex, secondLevelIndex, securityGroups: this.securityGroups,
+        menuTemplates: this.navigationMenuModel.menuTemplates,
+      })).id;
     this.itemEditConfirmSub$ = this.dialog.getDialogById(modalId).componentInstance.itemEditConfirm
       .subscribe(x => this.onItemEditConfirm(x, modalId));
   }
@@ -239,6 +245,10 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
 
   menuItemModelChange($event: any[]) {
     this.navigationMenuModel.actualMenu = [...$event];
+  }
+
+  linkHasNoRoute(item: NavigationMenuItemModel): boolean {
+    return this.menuLinkRouteService.hasNoRoute(item, this.navigationMenuModel.menuTemplates);
   }
 
   getSecurityGroupNames(ids: number[]): string[] {

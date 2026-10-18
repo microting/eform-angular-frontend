@@ -3,9 +3,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {CmsPageModel} from 'src/app/common/models';
 import {CmsService} from 'src/app/common/services/cms';
+import {FormsModule} from '@angular/forms';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {MatButton} from '@angular/material/button';
+import {FormattingTextEditorComponent} from 'src/app/common/modules/eform-imported/formatting-text-editor/formatting-text-editor.component';
 
 @Component({
-  standalone: false,
+  imports: [FormsModule, MatFormField, MatLabel, MatInput, MatSlideToggle, MatButton, FormattingTextEditorComponent],
   selector: 'app-cms-page-edit',
   templateUrl: './cms-page-edit.component.html',
 })
@@ -17,33 +23,6 @@ export class CmsPageEditComponent implements OnInit {
 
   pageId: number | null = null;
   page: CmsPageModel = {title: '', body: '', slug: '', isLandingPage: false, isPublished: false};
-
-  tinymceConfig = {
-    base_url: '/tinymce',
-    suffix: '.min',
-    plugins: [
-      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
-      'preview', 'anchor', 'searchreplace', 'visualblocks',
-      'code', 'fullscreen', 'insertdatetime', 'media', 'table',
-      'help', 'wordcount', 'emoticons', 'codesample'
-    ],
-    toolbar:
-      'undo redo | styles | bold italic underline strikethrough | ' +
-      'alignleft aligncenter alignright alignjustify | ' +
-      'bullist numlist outdent indent | link image media table | ' +
-      'forecolor backcolor | codesample emoticons charmap | ' +
-      'fullscreen preview | code',
-    height: 700,
-    menubar: true,
-    resize: true,
-    image_advtab: true,
-    image_caption: true,
-    table_responsive_width: true,
-    code_dialog_height: 500,
-    code_dialog_width: 900,
-    content_style:
-      "body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; max-width: 900px; margin: 1rem auto; }",
-  };
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

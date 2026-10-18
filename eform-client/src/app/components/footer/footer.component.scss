@@ -175,7 +175,17 @@ body, .theme-dark {
 
 }
 
-a {
+// Menu entries that act instead of navigate: a <button> with the look of the links below.
+button.profile-menu-action {
+  width: 100%;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+a, .profile-menu-action {
   display: flex;
   padding: var(--28-px, 8px) var(--416-px, 16px);
   align-items: center;
@@ -205,7 +215,7 @@ a {
   border-radius: var(--rounded-8, 8px);
   border: 1px solid var(--border, #EBEFF2);
   background: var(--bg, #FFF);
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10);
+  box-shadow: var(--elevation-card, 0 4px 20px 0 rgba(0, 0, 0, 0.10));
 
   button {
     &:hover {

@@ -10,6 +10,9 @@
 //@use '../libs/ng-datepicker/ng-datepicker' as ng-datepicker;
 @use '../components/tag' as tag;
 @use '../utilities/colors' as *;
+@use '../themes/eform' as eform;
+@use '../themes/workspace' as workspace;
+@use '../themes/theme-mixin' as themeMixin;
 @include mat.core();
 
 $letter-spacing: normal;
@@ -172,7 +175,9 @@ body {
   position: relative;
   top: -1px;
 }
-.mat-mdc-icon-button {
+// Legacy eform-variant icon-button sizing. The workspace variant overrides
+// this in _workspace-mat-overrides.scss to 42×42 per Design Manual §buttons.
+body.theme-eform .mat-mdc-icon-button {
   padding: 0 !important;
   width: 28px !important;
   height: 28px !important;
@@ -224,9 +229,7 @@ a.mat-mdc-raised-button,
 button.mat-mdc-unelevated-button,
 a.mat-mdc-unelevated-button,
 button.mat-mdc-outlined-button,
-a.mat-mdc-outlined-button,
-button.mat-mdc-text-button,
-a.mat-mdc-text-button {
+a.mat-mdc-outlined-button {
   border-radius: 20px;
 }
 /* Icon buttons */
@@ -241,17 +244,35 @@ button.mat-mdc-mini-fab,
 a.mat-mdc-mini-fab {
   border-radius: 20px;
 }
-body, .theme-light {
+body.theme-light {
   --mdc-theme-primary: #{$primary};
   --mdc-theme-on-primary: #{$on-primary};
   --mdc-theme-primary-dark: #{$primary-dark-light-mode};
   --mdc-theme-on-primary-dark: #{$on-primary-dark};
   --mat-app-background-color: #{$bg-light}
 }
-body, .theme-dark {
+body.theme-dark {
   --mdc-theme-primary: #{$primary-dark};
   --mdc-theme-on-primary: #{$on-primary-dark};
   --mdc-theme-primary-dark: #{$primary-dark-dark-mode};
   --mdc-theme-on-primary-dark: #{$on-primary-dark};
   --mat-app-background-color: #{$bg-dark}
+}
+
+body.theme-eform {
+  &.theme-light {
+    @include themeMixin.eform-theme(eform.$eform-tokens, 'light');
+  }
+  &.theme-dark {
+    @include themeMixin.eform-theme(eform.$eform-tokens, 'dark');
+  }
+}
+
+body.theme-workspace {
+  &.theme-light {
+    @include themeMixin.eform-theme(workspace.$workspace-tokens, 'light');
+  }
+  &.theme-dark {
+    @include themeMixin.eform-theme(workspace.$workspace-tokens, 'dark');
+  }
 }

@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Usuário do dispositivo "{0}" excluído com sucesso</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Apenas o primeiro usuário pode excluir usuários do dispositivo</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Usuário do dispositivo atualizado com sucesso</value>
     </data>
@@ -152,6 +155,12 @@
     </data>
     <data name="ErrorWhileUpdatingUser">
         <value>Erro ao atualizar usuário</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>E-mail confirmado</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Erro ao confirmar e-mail</value>
     </data>
     <data name="FileNotFound">
         <value>Arquivo não encontrado</value>

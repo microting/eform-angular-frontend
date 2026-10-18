@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {
   GoogleAuthenticatorModel,
   LoginRequestModel,
@@ -9,19 +9,18 @@ import {AuthStateService} from 'src/app/common/store';
 import {filter} from 'rxjs/operators';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription, take} from 'rxjs';
-import {TitleService, GoogleAuthService} from 'src/app/common/services';
+import {TitleService, GoogleAuthService, AppSettingsService} from 'src/app/common/services';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth} from 'src/app/state';
 import {applicationLanguages} from "src/app/common/const";
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, TranslatePipe]
+    imports: [ReactiveFormsModule, NgIf, RouterLink, TranslatePipe]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private router = inject(Router);
@@ -31,6 +30,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);
   private store = inject(Store);
   private fb = inject(FormBuilder);
+  private settingsService = inject(AppSettingsService);
+
+  get showForgotPasswordLink(): boolean {
+    return !!this.settingsService.loginPageSettingsModel?.isSendGridExists;
+  }
 
   formLogin: FormGroup;
   googleAuthenticatorModel: GoogleAuthenticatorModel = new GoogleAuthenticatorModel();

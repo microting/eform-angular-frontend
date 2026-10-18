@@ -42,8 +42,7 @@ describe.skip('EformDocxReportContainerComponent', () => {
     };
     
     TestBed.configureTestingModule({
-    imports: [FormsModule, EformDocxReportContainerComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, EformDocxReportContainerComponent],
     providers: [
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: EmailRecipientsService, useValue: mockEmailRecipientsService },

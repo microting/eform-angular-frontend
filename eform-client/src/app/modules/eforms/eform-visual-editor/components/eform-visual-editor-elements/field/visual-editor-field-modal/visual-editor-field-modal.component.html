@@ -164,18 +164,18 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end gap-12">
   <button
+    class="btn-cancel"
+    (click)="hide()"
+    id="changeFieldSaveCancelBtn"
+  >
+    {{'Cancel' | translate}}
+  </button>
+  <button
     class="btn-primary btn-primary--icon-left"
     color="accent"
     (click)="isFieldSelected ? onUpdateField() : onCreateField()"
     id="changeFieldSaveBtn"
   >
     <span>{{'Save' | translate}}</span>
-  </button>
-  <button
-    class="btn-cancel"
-    (click)="hide()"
-    id="changeFieldSaveCancelBtn"
-  >
-    {{'Cancel' | translate}}
   </button>
 </div>

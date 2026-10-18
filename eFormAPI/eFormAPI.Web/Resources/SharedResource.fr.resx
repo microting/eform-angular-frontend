@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>L'utilisateur de l'appareil "{0}" a été supprimé avec succès</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Seul le premier utilisateur peut supprimer des utilisateurs de l'appareil</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>L'utilisateur de l'appareil a été mis à jour avec succès</value>
     </data>
@@ -152,6 +155,12 @@
     </data>
     <data name="ErrorWhileUpdatingUser">
         <value>Erreur lors de la mise à jour de l'utilisateur</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>E-mail confirmé</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Erreur lors de la confirmation de l'e-mail</value>
     </data>
     <data name="FileNotFound">
         <value>Fichier introuvable</value>

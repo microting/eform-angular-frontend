@@ -10,6 +10,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
+import {finalize} from 'rxjs/operators';
 
 @Component({
     selector: 'app-eform-create-modal',
@@ -31,11 +32,23 @@ export class EformCreateModalComponent implements OnInit {
     if (!this.eFormCreateModel.newTag) {
       delete this.eFormCreateModel.newTag;
     }
-    this.eFormService.createSingle(this.eFormCreateModel).subscribe((operation => {
-      if (operation && operation.success) {
-        this.hide(true);
-      }
-    }));
+    // Close the dialog regardless of outcome — `finalize` covers all paths
+    // including the global HttpErrorInterceptor's EMPTY return for 401/403/5xx
+    // (where neither `next` nor `error` would fire and the modal would hang).
+    // Errors are surfaced by the interceptor's toast; the caller distinguishes
+    // success/failure via the dialogRef result.
+    let success = false;
+    this.eFormService
+      .createSingle(this.eFormCreateModel)
+      .pipe(finalize(() => this.hide(success)))
+      .subscribe({
+        next: (operation) => {
+          success = !!(operation && operation.success);
+        },
+        error: () => {
+          /* toast surfaced by interceptor; finalize closes the dialog */
+        },
+      });
   }
 
   hide(result = false) {

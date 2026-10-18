@@ -63,6 +63,16 @@
 
   <ng-template #actionsTpl let-row let-i="index">
     <div class="user-actions" id="action-items-{{i}}">
+      <button
+        mat-icon-button
+        id="userAdministrationConfirmEmailBtn-{{i}}"
+        *ngIf="!row.emailConfirmed && (selectCurrentUserClaimsUsersUpdate$ | async)"
+        matTooltip="{{ 'Confirm email' | translate }}"
+        (click)="openConfirmEmailModal(row)"
+      >
+        <mat-icon color="warn">mark_email_read</mat-icon>
+      </button>
+
       <button id="actionMenu{{i}}" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -93,6 +103,7 @@
         <button
           mat-menu-item
           id="userAdministrationResetPasswordBtn-{{i}}"
+          *ngIf="selectCurrentUserClaimsUsersUpdate$ | async"
           (click)="openSetPasswordModal(row)"
         >
           <mat-icon color="primary">vpn_key</mat-icon>

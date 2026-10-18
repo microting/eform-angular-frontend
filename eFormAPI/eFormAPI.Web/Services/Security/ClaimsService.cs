@@ -135,6 +135,7 @@ public class ClaimsService(
                 var claimNames = dbContext.GroupPermissions
                     .Where(x => groups.Contains(x.SecurityGroupId))
                     .Select(x => x.Permission.ClaimName)
+                    .Distinct()
                     .ToList();
                 claimNames.ForEach(claimName =>
                 {
@@ -144,7 +145,10 @@ public class ClaimsService(
                 claims.AddRange(await GetPluginGroupClaims(groups));
             }
 
-            return claims;
+            return claims
+                .GroupBy(c => c.Type)
+                .Select(g => g.First())
+                .ToList();
         }
         catch (Exception e)
         {

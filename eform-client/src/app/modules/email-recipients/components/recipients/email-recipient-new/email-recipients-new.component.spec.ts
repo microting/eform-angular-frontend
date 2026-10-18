@@ -37,8 +37,7 @@ describe('EmailRecipientCreateComponent', () => {
         };
     
     TestBed.configureTestingModule({
-    imports: [FormsModule, EmailRecipientsNewComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, EmailRecipientsNewComponent],
     providers: [
         { provide: EmailRecipientsService, useValue: mockEmailRecipientsService },
         { provide: ToastrService, useValue: mockToastrService },

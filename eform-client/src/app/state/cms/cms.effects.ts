@@ -24,7 +24,7 @@ export class CmsEffects {
         this.cmsService.getPublicConfig().pipe(
           map((result) =>
             result.success
-              ? loadCmsConfigSuccess({isCmsEnabled: result.model.isCmsEnabled, isMenuSticky: result.model.isMenuSticky})
+              ? loadCmsConfigSuccess({isCmsEnabled: result.model.isCmsEnabled, isMenuSticky: result.model.isMenuSticky, themeVariant: result.model.themeVariant})
               : loadCmsConfigFailure({error: result.message})
           ),
           catchError((err) => of(loadCmsConfigFailure({error: err.message})))

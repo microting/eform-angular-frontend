@@ -9,9 +9,9 @@ import {ExamplePnRoutingModule} from './example-pn.routing.module';
   imports: [
     CommonModule,
     ExamplePnRoutingModule,
-    TranslateModule
+    TranslateModule,
+    ExamplePnPageComponent
   ],
-  declarations: [ExamplePnPageComponent],
   providers: []
 })
 export class ExamplePnModule { }

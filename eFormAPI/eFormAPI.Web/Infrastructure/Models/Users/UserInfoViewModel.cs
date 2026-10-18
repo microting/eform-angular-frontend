@@ -40,7 +40,9 @@ public class UserInfoViewModel
     public string Formats { get; set; }
     public string TimeZone { get; set; }
     public bool DarkTheme { get; set; }
+    public string ThemeVariant { get; set; }
     public bool IsDeviceUser { get; set; }
+    public bool EmailConfirmed { get; set; }
     public string ArchiveSoftwareVersion { get; set; }
     public string ArchiveModel { get; set; }
     public string ArchiveManufacturer { get; set; }

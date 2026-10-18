@@ -31,6 +31,11 @@ export const updateDarkTheme = createAction(
   (payload: boolean) => ({payload})
 );
 
+export const updateThemeVariant = createAction(
+  '[Auth] Update Theme Variant',
+  (payload: string) => ({payload})
+);
+
 export const updateUserInfo = createAction(
   '[Auth] Update User Info',
   (payload: { userSettings: OperationDataResult<UserSettingsModel>, userClaims: UserClaimsModel }) => ({payload})

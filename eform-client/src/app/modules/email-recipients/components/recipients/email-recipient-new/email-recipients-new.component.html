@@ -37,17 +37,17 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end gap-12">
   <button
-    class="btn-primary btn-primary--icon-left"
-    (click)="createEmailRecipients(textAreaData)"
-    id="emailRecipientsCreateSaveBtn"
-  >
-    {{'Save' | translate}}
-  </button>
-  <button
     class="btn-cancel"
     id="emailRecipientsSaveCancelBtn"
     (click)="hide()"
   >
     {{'Cancel' | translate}}
+  </button>
+  <button
+    class="btn-primary btn-primary--icon-left"
+    (click)="createEmailRecipients(textAreaData)"
+    id="emailRecipientsCreateSaveBtn"
+  >
+    {{'Save' | translate}}
   </button>
 </div>

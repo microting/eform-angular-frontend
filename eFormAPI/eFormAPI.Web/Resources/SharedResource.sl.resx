@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Uporabnik naprave »{0}« je bil uspešno izbrisan</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Samo prvi uporabnik lahko briše uporabnike naprave</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Uporabnik naprave je uspešno posodobljen</value>
     </data>
@@ -152,6 +155,12 @@
     </data>
     <data name="ErrorWhileUpdatingUser">
         <value>Napaka pri posodabljanju uporabnika</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>Email confirmed</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Error while confirming email</value>
     </data>
     <data name="FileNotFound">
         <value>Datoteka ni najdena</value>

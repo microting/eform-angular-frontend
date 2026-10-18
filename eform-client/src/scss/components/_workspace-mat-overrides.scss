@@ -1,0 +1,2117 @@
+// ---------------------------------------------------------------------------
+// Workspace Material overrides — Phase 4 (Components)
+// ---------------------------------------------------------------------------
+// Maps Angular Material 20 DOM (.mat-mdc-*) onto the design system tokens
+// defined in `body.theme-workspace.theme-{light|dark}`. Every selector lives
+// under `body.theme-workspace` so the legacy eform theme is untouched.
+//
+// Scope (DOM overrides only):
+//   - Buttons (raised / unelevated / outlined / text / icon / fab)
+//   - Form fields (mdc-text-field outlined + filled), inputs, textareas
+//   - Selects (mat-mdc-select) and the panel
+//   - Autocomplete panel
+//   - Checkboxes, radios, slide toggles
+//   - Chips (mat-mdc-standard-chip)
+//   - Tables (mat-mdc-table family) and sort headers
+//   - Menus (mat-mdc-menu)
+//   - Dialogs (mat-mdc-dialog)
+//   - Tabs (mat-mdc-tab-group)
+//   - Paginator
+//   - Tooltip
+//   - Snackbar
+//
+// Out of scope: pattern selectors (app bar, drawer, dashboard cards) and
+// design-system class hooks (.btn-filled etc.) — those live in sibling files.
+// ---------------------------------------------------------------------------
+
+body.theme-workspace {
+
+  // =========================================================================
+  // Material Symbols Outlined — global icon font (Phase 3 spec)
+  // FILL 0, wght 500, opsz 24 — matches the design system's canonical variation.
+  // Swaps Material Icons rendering for legacy <mat-icon> elements without
+  // requiring template changes (197 existing <mat-icon> instances).
+  // =========================================================================
+
+  .mat-icon,
+  .material-icons,
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined' !important;
+    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24 !important;
+
+    &.filled,
+    &.material-symbols-filled {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24 !important;
+    }
+  }
+
+  // =========================================================================
+  // Buttons
+  // =========================================================================
+  // Override the legacy 20px pill radius from libs/theme.scss with the design
+  // system's 4px on filled/tonal/outlined/text and 50% on icon-button.
+
+  // --- Filled (raised + unelevated) ---
+  .mat-mdc-raised-button,
+  .mat-mdc-unelevated-button {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+    box-shadow: none;
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      background-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+  }
+
+  // --- Tonal variant — opt-in via mat-button color="accent" or .mat-tonal hook ---
+  .mat-mdc-unelevated-button.mat-accent,
+  .mat-mdc-raised-button.mat-accent {
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-surface);
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-surface);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-secondary-container));
+    }
+  }
+
+  // --- Outlined ---
+  .mat-mdc-outlined-button {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: transparent;
+    color: var(--md-primary);
+    border: 1px solid var(--md-outline);
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-primary);
+    }
+
+    .mdc-button__label {
+      color: var(--md-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+      border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
+    }
+  }
+
+  // --- Text ---
+  // `.mat-mdc-button` — NOT `.mat-mdc-text-button`, which this block targeted
+  // for as long as it has existed. Angular Material maps the `mat-button`
+  // directive to `.mat-mdc-button` (button.mjs: ['text', ['mat-mdc-button']]);
+  // `.mat-mdc-text-button` is emitted by nothing, so every `mat-button` in the
+  // app fell through to Material's own defaults — a 9999px pill in
+  // --mat-sys-primary teal — and looked broken next to its .btn-primary
+  // sibling. Dialog actions must still use .btn-quiet (the gate enforces it);
+  // this exists so the remaining navigation-style `mat-button`s are themed.
+  .mat-mdc-button {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: transparent;
+    color: var(--md-primary);
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+
+    .mdc-button__label,
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+  }
+
+  // --- Icon button (42px square, circular hit area) ---
+  .mat-mdc-icon-button {
+    --mdc-icon-button-state-layer-size: 42px;
+    width: 42px;
+    height: 42px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    color: var(--md-on-surface-variant);
+    line-height: 42px;
+
+    // Design manual: no halo. Suppress M3 state-layer + CDK ripple.
+    // Icon-button has its OWN ripple color token (separate from the
+    // generic --mat-ripple-color) — Material paints the CDK ripple
+    // element bg via --mat-icon-button-ripple-color, so we set both.
+    --mat-icon-button-state-layer-color: transparent;
+    --mat-icon-button-ripple-color: transparent;
+    --mat-icon-button-hover-state-layer-opacity: 0;
+    --mat-icon-button-focus-state-layer-opacity: 0;
+    --mat-icon-button-pressed-state-layer-opacity: 0;
+    --mat-ripple-color: transparent;
+
+    .mat-mdc-button-touch-target {
+      width: 42px;
+      height: 42px;
+    }
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-surface-variant);
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &.mat-mdc-button-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+  }
+
+  // --- FAB (56px) ---
+  .mat-mdc-fab {
+    border-radius: var(--radius-rounded-full, 999px) !important;
+    width: 56px;
+    height: 56px;
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    box-shadow: var(--md-shadow);
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+    }
+  }
+
+  // --- Mini FAB (40px) ---
+  .mat-mdc-mini-fab {
+    border-radius: var(--radius-rounded-full, 999px) !important;
+    width: 40px;
+    height: 40px;
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    box-shadow: var(--md-shadow);
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+    }
+  }
+
+  // =========================================================================
+  // Form fields (mat-mdc-form-field)
+  // =========================================================================
+  // Material's mdc-text-field uses three sub-elements for the outline:
+  // .mdc-notched-outline__leading, __notch, __trailing. We must paint all
+  // three to get a complete border.
+
+  // DM v2 floating-label outlined fields (fields-v2.css): label rests inside
+  // the field at rest and floats up to notch the outline on focus/fill.
+  // Outline colours per state live on the `.mdc-text-field--outlined` block
+  // below to avoid a duplicate-declaration source-order trap.
+  .mat-mdc-form-field {
+    font-family: var(--font-family);
+
+    // DM v2 dense variant (`--ff-h: 40px`): matches the workspace-wide 40px
+    // control density used by buttons and the toolbar pills. Populated-label
+    // size drops from 0.78 to 0.75 (11px) to fit the dense container.
+    --mat-form-field-container-height: 40px;
+    --mat-form-field-container-vertical-padding: 8px;
+    --mat-form-field-outlined-label-text-populated-size: 11px;
+
+    // Design manual has no hover halo on form fields; suppress M3's
+    // focus-overlay fade-in (focus opacity is already 0 by default) and
+    // any CDK ripple the inner trigger might fire on click.
+    --mat-form-field-hover-state-layer-opacity: 0;
+    --mat-ripple-color: transparent;
+
+    // Vertical breathing room between stacked fields. The subscript wrapper
+    // collapses to display:none in the no-hint case (see below), so without
+    // this fields would touch — 10px gives a clear separation that doesn't
+    // double up when a hint IS rendered (the hint adds its own height).
+    margin-bottom: 10px;
+
+    // Floating label colors.
+    .mdc-floating-label {
+      color: var(--md-on-surface-variant);
+      font-family: var(--font-family);
+    }
+
+    &.mat-focused .mdc-floating-label,
+    .mdc-text-field--focused .mdc-floating-label {
+      color: var(--md-primary);
+    }
+
+    // Input text + caret
+    .mat-mdc-input-element,
+    input.mat-mdc-input-element,
+    textarea.mat-mdc-input-element {
+      color: var(--md-on-surface);
+      caret-color: var(--md-primary);
+      font-family: var(--font-family);
+    }
+
+    // Placeholder
+    .mat-mdc-input-element::placeholder {
+      color: var(--md-on-surface-variant);
+    }
+  }
+
+  // Toolbar rows (.eform-sub-header) align everything to the row's end via
+  // `align-items: end`. The 10px margin-bottom above would lift fields above
+  // sibling buttons (the flex box's bottom edge sits 10px below the visible
+  // field). Strip it back to 0 inside toolbars so fields and buttons share
+  // the same baseline. The backend-configuration compliance filter row
+  // (.compliance-filters) centres fields and buttons instead, where the
+  // margin would lift the visible outline ~5px above the buttons.
+  .eform-sub-header .mat-mdc-form-field,
+  .compliance-filters .mat-mdc-form-field {
+    margin-bottom: 0;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Calendar event modal (.gcal-*) — host-side overrides for the v1→v2 field
+  // layout shift. Lives here, not in the plugin component SCSS, because the
+  // dev-server file-watcher for that plugin's component CSS has been
+  // unreliable. Flag for review if/when the calendar plugin owns these.
+  // ---------------------------------------------------------------------------
+  // Toggle stacks (Aktiv/Inaktiv, Vis/Skjul overskredet): default 4px row
+  // margin is too tight before the next form-field row — slide-toggles are
+  // intrinsically shorter than mat-form-field rows. Lifted to 14px.
+  .gcal-toggle-stack {
+    margin-bottom: 14px;
+  }
+
+  // Left-rail icons: the component SCSS sets margin-top: 30px for the v1
+  // "label above the input" layout. v2 puts the input across the whole row,
+  // so re-center: (40px field − 20px icon) / 2 = 10px to the field midline.
+  .gcal-icon:not(.gcal-icon--hidden) {
+    margin-top: 10px;
+  }
+
+  // Toggle rows don't carry a semantically-useful icon — hide the eye /
+  // schedule icon but keep the column width so toggle rows still align with
+  // the rest of the modal. `.gcal-toggle-stack` is a compound class ON
+  // `.gcal-row-content` itself, not a child of it.
+  .gcal-row:has(> .gcal-row-content.gcal-toggle-stack) > .gcal-icon {
+    visibility: hidden;
+  }
+
+  // Attachment rows: hide the 80×80 red "PDF" preview tile beside non-image
+  // attachments — filename + size + Drive badge + trash button suffice.
+  .gcal-attachment-icon {
+    display: none;
+  }
+
+  // -------------------------------------------------------------------------
+  // Residual shared rules (input typography, subscript collapse,
+  // prefix/suffix icon spacing). Outlined focus/error/disabled borders are
+  // painted on the .mdc-notched-outline pieces below; fill-variant active
+  // indicator stays stock.
+  // -------------------------------------------------------------------------
+  .mat-mdc-form-field,
+  .mat-form-field-appearance-fill,
+  .mat-form-field-appearance-outline {
+    // Native input/textarea inside the infix.
+    input.mat-mdc-input-element,
+    textarea.mat-mdc-input-element,
+    .mat-mdc-input-element {
+      color: var(--md-on-surface) !important;
+      font-family: var(--font-family) !important;
+      font-size: 14px !important;
+      line-height: 1.4 !important;
+      background: transparent !important;
+    }
+
+    // Subscript — workspace pattern: validation feedback is the field's red
+    // border + red label + red asterisk, not a text message below. Hide the
+    // error wrapper entirely and collapse the subscript unless a hint is set.
+    .mat-mdc-form-field-subscript-wrapper {
+      padding: 0 !important;
+      margin-top: 4px;
+
+      .mat-mdc-form-field-hint-wrapper {
+        padding: 0 !important;
+      }
+
+      .mat-mdc-form-field-error-wrapper {
+        display: none !important;
+      }
+
+      &:not(:has(mat-hint, .mat-mdc-form-field-hint)) {
+        display: none !important;
+      }
+    }
+
+    // Suffix / prefix icon spacing (search icons, clear buttons, etc).
+    .mat-mdc-form-field-icon-suffix,
+    .mat-mdc-form-field-icon-prefix {
+      color: var(--md-on-surface-variant);
+      padding: 0 4px;
+    }
+  }
+
+  // --- Outlined appearance ---
+  .mdc-text-field--outlined {
+    --mdc-outlined-text-field-outline-color: var(--md-outline);
+    // Design manual specifies no hover state on form fields — keep the hover
+    // outline color identical to the idle color so the field looks static
+    // until focused.
+    --mdc-outlined-text-field-hover-outline-color: var(--md-outline);
+    --mdc-outlined-text-field-focus-outline-color: var(--md-primary);
+    --mdc-outlined-text-field-disabled-outline-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    --mdc-outlined-text-field-error-outline-color: var(--md-alert);
+    --mdc-outlined-text-field-error-hover-outline-color: var(--md-alert);
+    --mdc-outlined-text-field-error-focus-outline-color: var(--md-alert);
+    --mdc-outlined-text-field-container-shape: var(--radius-sm, 4px);
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--md-outline);
+    }
+
+    &.mdc-text-field--focused {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--md-primary);
+        border-width: 2px;
+      }
+    }
+
+    &.mdc-text-field--invalid {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--md-alert);
+      }
+    }
+  }
+
+  // --- Filled appearance ---
+  .mdc-text-field--filled {
+    --mdc-filled-text-field-container-color: var(--md-surface-container);
+    --mdc-filled-text-field-disabled-container-color: var(--md-surface-container);
+    --mdc-filled-text-field-active-indicator-color: var(--md-outline);
+    --mdc-filled-text-field-hover-active-indicator-color: var(--md-outline);
+    --mdc-filled-text-field-focus-active-indicator-color: var(--md-primary);
+    --mdc-filled-text-field-error-active-indicator-color: var(--md-alert);
+    --mdc-filled-text-field-container-shape: var(--radius-sm, 4px);
+    background-color: var(--md-surface-container);
+
+    // Disabled keeps the same bg — see the outlined-disabled rule above
+    // for the rationale.
+    &.mdc-text-field--disabled {
+      background-color: var(--md-surface-container);
+    }
+  }
+
+  // =========================================================================
+  // Select (mat-mdc-select) — uses mdc-text-field outline + arrow
+  // =========================================================================
+
+  .mat-mdc-select {
+    font-family: var(--font-family);
+    color: var(--md-on-surface);
+    font-size: 14px;
+    min-height: 24px;
+    line-height: 24px;
+
+    .mat-mdc-select-value,
+    .mat-mdc-select-trigger {
+      color: var(--md-on-surface);
+      min-height: 24px;
+      line-height: 24px;
+    }
+
+    .mat-mdc-select-placeholder {
+      color: var(--md-on-surface-variant);
+    }
+
+    .mat-mdc-select-arrow {
+      color: var(--md-on-surface-variant);
+
+      svg {
+        fill: currentColor;
+      }
+    }
+  }
+
+  // Panel that appears on click — surface-container with shadow
+  .mat-mdc-select-panel {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--radius-sm, 4px) !important;
+    box-shadow: var(--md-shadow) !important;
+    padding: var(--spacing-xs, 4px) 0;
+  }
+
+  // =========================================================================
+  // Autocomplete panel (shares mat-mdc-option styling)
+  // =========================================================================
+
+  .mat-mdc-autocomplete-panel {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--radius-sm, 4px) !important;
+    box-shadow: var(--md-shadow) !important;
+    padding: var(--spacing-xs, 4px) 0;
+  }
+
+  // Options — used by both select + autocomplete
+  .mat-mdc-option {
+    font-family: var(--font-family);
+    color: var(--md-on-surface);
+    min-height: 40px;
+
+    .mdc-list-item__primary-text {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+
+    &:hover:not(.mdc-list-item--disabled),
+    &.mat-mdc-option-active,
+    &.mdc-list-item--selected:not(.mat-mdc-option-multiple) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+
+      .mdc-list-item__primary-text {
+        color: var(--md-on-surface);
+      }
+    }
+
+    &.mdc-list-item--selected .mdc-list-item__primary-text {
+      color: var(--md-primary);
+    }
+  }
+
+  // =========================================================================
+  // Checkbox (mat-mdc-checkbox)
+  // =========================================================================
+
+  .mat-mdc-checkbox {
+    // Angular Material 18+ M3 reads --mat-checkbox-*-icon-color for the
+    // visible box border/fill colors. Without these, the unselected box
+    // resolves to M3's default mid-gray (#3f4948) and the selected box to
+    // the accent-palette teal (#006a6a). Design manual uses the native
+    // input's accent-color: var(--md-primary) — mirror that with primary
+    // fill on selected + --md-outline border on unselected.
+    --mat-checkbox-unselected-icon-color: var(--md-outline);
+    --mat-checkbox-unselected-hover-icon-color: var(--md-outline);
+    --mat-checkbox-unselected-focus-icon-color: var(--md-outline);
+    --mat-checkbox-selected-icon-color: var(--md-primary);
+    --mat-checkbox-selected-hover-icon-color: var(--md-primary);
+    --mat-checkbox-selected-focus-icon-color: var(--md-primary);
+    --mat-checkbox-selected-pressed-icon-color: var(--md-primary);
+    --mat-checkbox-selected-checkmark-color: var(--md-on-primary);
+    --mat-checkbox-disabled-selected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    --mat-checkbox-disabled-unselected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    --mat-checkbox-label-text-color: var(--md-on-surface);
+    --mat-checkbox-label-text-font: var(--font-family);
+    --mat-checkbox-disabled-label-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+
+    // Suppress M3's state-layer halo (greyish/teal disc behind the box on
+    // hover/focus/press) AND the CDK click ripple. Design manual checkboxes
+    // have no halo — native `accent-color` with no rippled state surface.
+    // Zeroing opacity only hides the static `.mdc-checkbox__ripple` disc;
+    // the CDK `.mat-ripple-element` injected on mousedown has its opacity
+    // animated from 0 → ~0.16 by JS and its bg painted via the
+    // state-layer-COLOR tokens (a higher-specificity Material rule than
+    // `--mat-ripple-color`). Set the colors to transparent so any ripple
+    // CDK draws paints invisible regardless of the opacity animation.
+    --mat-checkbox-unselected-hover-state-layer-opacity: 0;
+    --mat-checkbox-unselected-focus-state-layer-opacity: 0;
+    --mat-checkbox-unselected-pressed-state-layer-opacity: 0;
+    --mat-checkbox-selected-hover-state-layer-opacity: 0;
+    --mat-checkbox-selected-focus-state-layer-opacity: 0;
+    --mat-checkbox-selected-pressed-state-layer-opacity: 0;
+    --mat-checkbox-unselected-hover-state-layer-color: transparent;
+    --mat-checkbox-unselected-focus-state-layer-color: transparent;
+    --mat-checkbox-unselected-pressed-state-layer-color: transparent;
+    --mat-checkbox-selected-hover-state-layer-color: transparent;
+    --mat-checkbox-selected-focus-state-layer-color: transparent;
+    --mat-checkbox-selected-pressed-state-layer-color: transparent;
+    --mat-ripple-color: transparent;
+
+    // Defensive --mdc- fallback (kept for older internal MDC paths; M3 18+
+    // ignores most of these in favor of the --mat-* namespace above).
+    --mdc-checkbox-unselected-icon-color: var(--md-outline);
+    --mdc-checkbox-selected-icon-color: var(--md-primary);
+    --mdc-checkbox-selected-checkmark-color: var(--md-on-primary);
+
+    .mdc-form-field {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+
+    .mdc-checkbox__background {
+      border-radius: 2px;
+    }
+  }
+
+  // =========================================================================
+  // Radio (mat-mdc-radio-button)
+  // =========================================================================
+
+  .mat-mdc-radio-button {
+    // Same M3 namespace shift as checkbox: Angular Material 18+ reads
+    // --mat-radio-*-icon-color, not --mdc-radio-*. Without these the
+    // unselected dot resolves to the M3 default mid-gray and the selected
+    // dot to the accent-palette teal. Radio's M3 map has all four
+    // unselected states (icon + hover + focus + pressed), unlike checkbox.
+    --mat-radio-unselected-icon-color: var(--md-outline);
+    --mat-radio-unselected-hover-icon-color: var(--md-outline);
+    --mat-radio-unselected-focus-icon-color: var(--md-outline);
+    --mat-radio-unselected-pressed-icon-color: var(--md-outline);
+    --mat-radio-selected-icon-color: var(--md-primary);
+    --mat-radio-selected-hover-icon-color: var(--md-primary);
+    --mat-radio-selected-focus-icon-color: var(--md-primary);
+    --mat-radio-selected-pressed-icon-color: var(--md-primary);
+    --mat-radio-disabled-selected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    --mat-radio-disabled-unselected-icon-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    --mat-radio-label-text-color: var(--md-on-surface);
+    --mat-radio-label-text-font: var(--font-family);
+    --mat-radio-disabled-label-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+
+    // Defensive --mdc- fallback (kept for older internal MDC paths).
+    --mdc-radio-unselected-icon-color: var(--md-outline);
+    --mdc-radio-selected-icon-color: var(--md-primary);
+
+    .mdc-form-field {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+  }
+
+  // =========================================================================
+  // Slide toggle (mat-mdc-slide-toggle) — used as switches
+  // =========================================================================
+
+  .mat-mdc-slide-toggle {
+    // Angular Material 18+ M3 reads --mat-slide-toggle-* custom properties
+    // for the visible colors. The older --mdc-switch-* tokens below are
+    // kept as a defensive fallback for any internal MDC paths that may
+    // still read them, but --mat-slide-toggle-* is the canonical surface.
+    --mat-slide-toggle-unselected-track-color: var(--md-surface-variant);
+    --mat-slide-toggle-unselected-hover-track-color: var(--md-surface-variant);
+    --mat-slide-toggle-unselected-focus-track-color: var(--md-surface-variant);
+    --mat-slide-toggle-unselected-pressed-track-color: var(--md-surface-variant);
+    --mat-slide-toggle-selected-track-color: var(--md-primary);
+    --mat-slide-toggle-selected-hover-track-color: var(--md-primary);
+    --mat-slide-toggle-selected-focus-track-color: var(--md-primary);
+    --mat-slide-toggle-selected-pressed-track-color: var(--md-primary);
+    --mat-slide-toggle-unselected-handle-color: #ffffff;
+    --mat-slide-toggle-unselected-hover-handle-color: #ffffff;
+    --mat-slide-toggle-unselected-focus-handle-color: #ffffff;
+    --mat-slide-toggle-unselected-pressed-handle-color: #ffffff;
+    --mat-slide-toggle-selected-handle-color: #ffffff;
+    --mat-slide-toggle-selected-hover-handle-color: #ffffff;
+    --mat-slide-toggle-selected-focus-handle-color: #ffffff;
+    --mat-slide-toggle-selected-pressed-handle-color: #ffffff;
+    --mat-slide-toggle-selected-icon-color: var(--md-primary);
+    --mat-slide-toggle-unselected-icon-color: var(--md-on-surface-variant);
+    --mat-slide-toggle-disabled-selected-track-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    --mat-slide-toggle-disabled-unselected-track-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    // Design manual: no halo on hover or active. Suppress the M3
+    // state-layer + the CDK click ripple by zeroing opacities AND setting
+    // colors to transparent (some Material rules paint the ripple element
+    // bg via the state-layer-color token directly, bypassing opacity).
+    --mat-slide-toggle-selected-hover-state-layer-color: transparent;
+    --mat-slide-toggle-selected-focus-state-layer-color: transparent;
+    --mat-slide-toggle-selected-pressed-state-layer-color: transparent;
+    --mat-slide-toggle-unselected-hover-state-layer-color: transparent;
+    --mat-slide-toggle-unselected-focus-state-layer-color: transparent;
+    --mat-slide-toggle-unselected-pressed-state-layer-color: transparent;
+    --mat-slide-toggle-selected-hover-state-layer-opacity: 0;
+    --mat-slide-toggle-selected-focus-state-layer-opacity: 0;
+    --mat-slide-toggle-selected-pressed-state-layer-opacity: 0;
+    --mat-slide-toggle-unselected-hover-state-layer-opacity: 0;
+    --mat-slide-toggle-unselected-focus-state-layer-opacity: 0;
+    --mat-slide-toggle-unselected-pressed-state-layer-opacity: 0;
+    --mat-ripple-color: transparent;
+
+    // Legacy MDC namespace tokens kept as fallback (no-op on M3 18+, but
+    // harmless and may help if a future Material rev reverts to reading them).
+    --mdc-switch-selected-track-color: var(--md-primary);
+    --mdc-switch-unselected-track-color: var(--md-surface-variant);
+    --mdc-switch-selected-handle-color: #ffffff;
+    --mdc-switch-unselected-handle-color: #ffffff;
+
+    // Spec dimensions (Design Manual: 42x24 rounded-rect track + 18x18 thumb).
+    // Override Material M3's 52x32 full-pill defaults.
+    --mdc-switch-track-width: 42px;
+    --mdc-switch-track-height: 24px;
+    --mdc-switch-track-shape: 6px;
+    --mdc-switch-handle-width: 18px;
+    --mdc-switch-handle-height: 18px;
+    --mdc-switch-handle-shape: 4px;
+    --mdc-switch-state-layer-size: 24px;
+
+    // Direct selectors as a safety net for M3 internals that hard-code sizes.
+    .mdc-switch {
+      width: 42px;
+      height: 24px;
+    }
+    .mdc-switch__track {
+      border-radius: 6px;
+      height: 24px;
+    }
+    .mdc-switch__handle {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+    }
+    // M3 paints the track fill via the `::before` (unselected) and `::after`
+    // (selected) pseudo-elements on `.mdc-switch__track`, and ignores our
+    // `--mat-slide-toggle-*-track-color` tokens for the unselected pseudo.
+    // Match the DM .switch spec directly: solid --md-outline gray for off,
+    // --md-primary for on.
+    .mdc-switch__track::before {
+      background: var(--md-outline) !important;
+    }
+    .mdc-switch__track::after {
+      background: var(--md-primary) !important;
+    }
+    // Hide the centered icon (check/cross) — the spec switch is icon-less.
+    .mdc-switch__icons {
+      display: none;
+    }
+
+    .mdc-form-field {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+    }
+  }
+
+  // Slide toggles inside an .eform-sub-header toolbar are 24px tall sitting
+  // in a row with align-items: end against 40px form-field pills / buttons.
+  // Default bottom-alignment leaves the toggle midpoint 8px BELOW the field
+  // midline. Lift it by (40 − 24) / 2 = 8px so its midpoint matches the
+  // visible pill midline. Also cancel the .mt-2 utility some templates
+  // apply to the toggle, which would otherwise nudge it down within its
+  // own flex item box.
+  .eform-sub-header mat-slide-toggle {
+    margin-top: 0 !important;
+    margin-bottom: 8px;
+  }
+
+  // =========================================================================
+  // Progress spinner (mat-mdc-progress-spinner) — force workspace primary blue
+  // Material 18+ M3 ships the spinner with the accent palette (cyan) by
+  // default. Same `--mat-*` token pattern as slide-toggle: the canonical
+  // surface is --mat-progress-spinner-*; --mdc-circular-progress-* is kept
+  // as a defensive fallback.
+  // =========================================================================
+
+  .mat-mdc-progress-spinner {
+    --mat-progress-spinner-active-indicator-color: var(--md-primary);
+    --mdc-circular-progress-active-indicator-color: var(--md-primary);
+  }
+
+  // =========================================================================
+  // Status chips on data tables (.status-active / .status-inactive)
+  // Wire the existing legacy chip classes to the workspace status tokens so
+  // they pick up the dark-mode swap. Legacy styles.scss now scopes its own
+  // hardcoded greens/reds under body.theme-eform, leaving these as the
+  // active rule under workspace.
+  // =========================================================================
+
+  // DM .status-chip spec: weight 600 (heavier than the tag chip's 500).
+  // Bump specificity to .mat-mdc-chip.status-X so the rule beats the
+  // generic chip block below on source-order ties.
+  .mat-mdc-chip.status-active,
+  .mat-mdc-chip.status-inactive {
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      font-weight: 600;
+    }
+  }
+
+  .status-active {
+    background-color: var(--status-aktiv-bg) !important;
+    color: var(--status-aktiv-fg) !important;
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: var(--status-aktiv-fg) !important;
+    }
+  }
+
+  .status-inactive {
+    background-color: var(--status-inaktiv-bg) !important;
+    color: var(--status-inaktiv-fg) !important;
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: var(--status-inaktiv-fg) !important;
+    }
+  }
+
+  // =========================================================================
+  // DM "A) Status tags" — `.tag.tag-{success|warning|error}` (eform-style.css
+  // lines 2164-2188). Used on the medarbejdertabel boolean columns
+  // (eForm / Ad hoc / Time / Arkiv) to show Ja / Nej. Lighter tint than
+  // the heavy filled `.status-active` / `.status-inactive` — green/amber
+  // background at 14-20% mix into --md-surface, darker text.
+  // =========================================================================
+
+  // The generic chip block below sets `color: var(--md-on-surface)` directly
+  // on `.mdc-evolution-chip__text-label` and `.mat-mdc-chip-action-label` —
+  // a more specific rule than `color` inherited from `.mat-mdc-chip.tag-X`,
+  // so the inner override paints the actual label.
+  .mat-mdc-chip.tag-success {
+    background-color: color-mix(in srgb, #2e7d32 14%, var(--md-surface)) !important;
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: #1b5e20 !important;
+    }
+  }
+
+  .mat-mdc-chip.tag-warning {
+    background-color: color-mix(in srgb, #f9a825 20%, var(--md-surface)) !important;
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: #8d6e00 !important;
+    }
+  }
+
+  .mat-mdc-chip.tag-error {
+    background-color: color-mix(in srgb, var(--md-alert) 14%, var(--md-surface)) !important;
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: var(--md-alert) !important;
+    }
+  }
+
+  // =========================================================================
+  // Chips (mat-mdc-standard-chip)
+  // =========================================================================
+
+  .mat-mdc-chip,
+  .mat-mdc-standard-chip {
+    // Design manual `.ejendom-chip` / `.status-chip` spec: 4px rounded
+    // rectangle (not full pill), surface-variant fill, no border, 0.8rem
+    // text, weight 500. Material 18+ M3 reads the --mat-chip-* namespace
+    // — the legacy --mdc-chip-* tokens are ignored, which is why the
+    // pseudo-element border (`.mdc-evolution-chip__action--primary::before`)
+    // was still painting the M3 default outline grey.
+    --mat-chip-container-shape-radius: var(--radius-sm, 4px);
+    --mat-chip-outline-width: 0;
+    --mat-chip-outline-color: transparent;
+    --mat-chip-focus-outline-color: transparent;
+    --mat-chip-disabled-outline-color: transparent;
+    --mat-chip-flat-selected-outline-width: 0;
+    --mat-chip-elevated-container-color: var(--md-surface-variant);
+    --mat-chip-elevated-selected-container-color: var(--md-primary-container);
+    --mat-chip-elevated-disabled-container-color:
+      color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    --mat-chip-label-text-color: var(--md-on-surface);
+    --mat-chip-selected-label-text-color: var(--md-primary);
+    --mat-chip-disabled-label-text-color:
+      color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    --mat-chip-with-icon-icon-color: var(--md-on-surface-variant);
+    --mat-chip-with-icon-selected-icon-color: var(--md-primary);
+    --mat-chip-label-text-size: 0.8rem;
+    --mat-chip-label-text-weight: 500;
+    --mat-chip-label-text-font: var(--font-family);
+
+    // Defensive --mdc- fallback (M3 18+ ignores most of these in favor of
+    // the --mat-* namespace above).
+    --mdc-chip-container-shape-radius: var(--radius-sm, 4px);
+    --mdc-chip-elevated-container-color: var(--md-surface-variant);
+    --mdc-chip-label-text-color: var(--md-on-surface);
+    --mdc-chip-outline-color: transparent;
+
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: var(--md-surface-variant);
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    // Hover overlay
+    &:hover:not(.mdc-evolution-chip--disabled) {
+      background-color:
+        color-mix(in srgb, var(--md-on-surface) 8%, var(--md-surface-variant));
+    }
+
+    // Selected state — primary-container fill
+    &.mdc-evolution-chip--selected,
+    &.mat-mdc-chip-selected {
+      background-color: var(--md-primary-container);
+      color: var(--md-primary);
+
+      .mdc-evolution-chip__text-label,
+      .mat-mdc-chip-action-label {
+        color: var(--md-primary);
+      }
+    }
+
+    // Remove icon (chip-removable)
+    .mat-mdc-chip-remove {
+      color: var(--md-on-surface-variant);
+
+      &:hover {
+        color: var(--md-on-surface);
+      }
+    }
+  }
+
+  // =========================================================================
+  // Tables (mat-mdc-table family)
+  // =========================================================================
+  // One look for every data table (mtx-grid, standalone mat-table; native
+  // <table>s mirror it in _workspace-utilities.scss §8):
+  // - Frame: 1px --md-surface-variant border, 8px radius, surface-container
+  // - Header: muted uppercase 12px label on the --bg tint, sticky
+  // - Body: 12px/16px cells, content-height rows, surface-variant separators,
+  //   no separator under the last row
+  // - Row hover --ws-table-row-hover; a row stays lit while its menu is open
+  // - Icon buttons inside body cells shrink to 32px
+
+  // --table-row-hover equals --md-surface-container in dark (#1e1f20), so a
+  // hover on it would be invisible; dark mode gets a 4% on-surface lift.
+  // Also read by the native-table rules in _workspace-utilities.scss.
+  & {
+    --ws-table-row-hover: var(--table-row-hover);
+  }
+
+  &.theme-dark {
+    --ws-table-row-hover: color-mix(in srgb, var(--md-on-surface) 4%, var(--md-surface-container));
+  }
+
+  // mtx-grid renders <mtx-grid> → div.mtx-grid-content → mat-table inside.
+  // Host is a flex column so the inner layout chain (set up in
+  // `_table.scss`) can shrink to fit max-height and let
+  // `.mat-table-container` scroll instead of every container growing to
+  // full content height.
+  mtx-grid,
+  .mtx-grid {
+    // _table.scss and styles.scss draw the host frame from these hooks with
+    // !important; re-point the hooks instead of out-shouting those rules.
+    --mtx-grid-border: 1px solid var(--md-surface-variant);
+    --mtx-grid-radius: var(--radius-lg, 8px);
+    // mtx-grid's own [rowHover] rule out-specifies ours; feed it our colour.
+    --mtx-grid-table-row-hover-background-color: var(--ws-table-row-hover);
+    display: flex;
+    flex-direction: column;
+    // mtx sets the host `width: 100%`; content-box would add the frame's
+    // 2px on top, and an `overflow: hidden` parent clips the right edge.
+    box-sizing: border-box;
+    background: var(--md-surface-container);
+    overflow: hidden;
+
+    // The toolbar above the table sits outside the border visually
+    .mtx-grid-toolbar {
+      border-bottom: 1px solid var(--md-surface-variant);
+      background: var(--md-surface-container);
+    }
+  }
+
+  // The grid's scroller gets a thin themed scrollbar. Setting scrollbar-color
+  // makes Chrome 121+ skip the global black-track ::-webkit-scrollbar
+  // (styles.scss). scrollbar-color inherits (scrollbar-width doesn't), so
+  // scroll areas inside cells get the themed colours at default width.
+  .mtx-grid .mat-table-container {
+    scrollbar-width: thin;
+    scrollbar-color: var(--state-scrollbar-thumb) transparent;
+  }
+
+  // Content-height rows. Set on the rows rather than via Material's
+  // --mat-table-*-container-height tokens: mtx-grid also does arithmetic
+  // with the row token (expansion-row padding), which `auto` would break.
+  .mat-mdc-header-row,
+  .mat-mdc-row {
+    height: auto;
+  }
+
+  .mat-mdc-table {
+    // Cell separators (Material and mtx-grid both read this token).
+    --mat-table-row-item-outline-color: var(--md-surface-variant);
+    background-color: var(--md-surface-container);
+    font-family: var(--font-family);
+    color: var(--md-on-surface);
+  }
+
+  // A standalone mat-table is its own frame. `clip` (not `hidden`) rounds
+  // the corners without making the table a scroll container, so the
+  // sticky header still sticks to the real scroller.
+  .mat-mdc-table:not(.mtx-grid .mat-mdc-table) {
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--radius-lg, 8px);
+    overflow: clip;
+  }
+
+  // Inside mtx-grid the host draws the frame. styles.scss (unscoped,
+  // !important) adds a --border line under the table, doubling the frame's
+  // bottom edge, and recolours every cell border to --border.
+  .mtx-grid .mat-mdc-table {
+    border: none !important;
+  }
+
+  .mtx-grid .mat-mdc-header-cell,
+  .mtx-grid .mat-mdc-cell {
+    border-bottom-color: var(--md-surface-variant) !important;
+  }
+
+  // Material drops the last row's separator only on `.mdc-data-table__row`;
+  // hand-written mat-mdc-table markup (property-areas-edit modal) lacks that
+  // class. The !important rules above set the colour only, so `none` wins.
+  .mat-mdc-table tbody > tr:last-child > .mat-mdc-cell {
+    border-bottom: none;
+  }
+
+  // The divider under the header is the header cells' own bottom border,
+  // so it moves with them while sticky.
+  .mat-mdc-header-row {
+    background-color: var(--bg);
+    position: sticky;
+    top: 0;
+    // 11 lets the sticky header out-stack in-table content like the
+    // calendar's task blocks (z 2/3/4) and now-line indicator (z 10).
+    // Drag-ghost-task (z 20) and the time-axis corner cell (z 100 via
+    // .mat-mdc-table-sticky) intentionally remain above the header.
+    z-index: 11;
+  }
+
+  // Row-qualified to out-specify styles.scss's unscoped
+  // `.mtx-grid .mat-mdc-table thead tr th` (text colour, size, line-height).
+  .mat-mdc-header-row .mat-mdc-header-cell {
+    padding: 12px 16px;
+    font-family: var(--font-family);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-quaternary);
+    background-color: var(--bg);
+  }
+
+  .mat-mdc-row {
+    background-color: var(--md-surface-container);
+    transition: background-color 0.12s ease;
+
+    // The open menu's overlay steals :hover, so keep the row lit while
+    // one of its menu triggers is expanded.
+    &:hover,
+    &:has(.mat-mdc-menu-trigger[aria-expanded="true"]) {
+      background-color: var(--ws-table-row-hover);
+    }
+  }
+
+  // Keep at (0,2,1): the calendar grid's own `td.mat-mdc-cell`
+  // vertical-align: top ties with this and wins on source order.
+  .mat-mdc-cell {
+    padding: 12px 16px;
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--md-on-surface);
+    background-color: transparent;
+    vertical-align: middle;
+  }
+
+  // mtx-grid's selection checkbox column keeps its own narrow 10px sides.
+  .mat-mdc-header-row .mtx-grid-checkbox-cell,
+  .mat-mdc-row .mtx-grid-checkbox-cell {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  // The calendar week-grid's header shows large day numbers, not labels.
+  .mtx-grid.calendar-grid .mat-mdc-header-row .mat-mdc-header-cell {
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  // Time-planning planning grid. Its ViewEncapsulation.None component styles
+  // box every header cell (`.time-dashboard table tr th`, 0,1,3) and draw
+  // --tp-border day dividers; styles.scss and mtx-grid's pinned-column rule
+  // recolour them. Header: tint + the bottom line only. Body: keep the day
+  // dividers in the row-separator colour, none against the frame's edges.
+  // !important where styles.scss's unscoped rules use it: the border colour,
+  // and the day cells' `.white-/.grey-/.green-/.red-background` classes, which
+  // force border-right and border-bottom.
+  .mtx-grid.time-dashboard {
+    .mat-mdc-header-row .mat-mdc-header-cell {
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    .mat-mdc-cell {
+      border-right-color: var(--md-surface-variant) !important;
+    }
+
+    .mat-mdc-cell:last-child {
+      border-right: none !important;
+    }
+
+    tbody > tr:last-child > .mat-mdc-cell {
+      border-bottom: none !important;
+    }
+  }
+
+  // time-planning break-policy rules: the table now draws its own frame, so
+  // drop the wrapper's to avoid a double border. !important: the component's
+  // emulated-encapsulation rule (an _ngcontent attribute on both parts,
+  // 0,4,0) out-specifies any theme-scoped selector.
+  .break-policy-rules-list .rules-table-container {
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  // Sticky (pinned) columns must stay opaque over horizontally scrolled
+  // cells. Header cells take the header tint; body cells inherit the row's
+  // background, so hover, menu-open, selected and status-coloured rows all
+  // carry across without per-state rules. !important beats styles.scss's
+  // unscoped `.mtx-grid .mat-table-sticky-left` background. The header
+  // selector is row-qualified (0,4,2) so a plugin's `:host ::ng-deep … th`
+  // paint (0,3,1) can't un-tint it; the body rule stays low on purpose —
+  // plugin row states like `tr.highlighted > td` rely on beating it.
+  .mat-mdc-table .mat-mdc-header-row > th:is(
+    .mat-table-sticky-left,
+    .mat-table-sticky-right,
+    .mat-mdc-table-sticky-border-elem-right
+  ) {
+    background-color: var(--bg) !important;
+  }
+
+  td.mat-table-sticky-left,
+  td.mat-table-sticky-right,
+  td.mat-mdc-table-sticky-border-elem-right {
+    background-color: inherit !important;
+  }
+
+  // mtx draws a divider after every left-pinned column; the new design has
+  // no vertical dividers. The time-planning week grid keeps its pale one
+  // (recoloured in the .time-dashboard block above).
+  .mtx-grid:not(.time-dashboard) .mat-table-sticky-left {
+    border-right: none;
+  }
+
+  // Right-pinned actions column: drop the legacy left border + shadow.
+  th.mat-table-sticky-right,
+  td.mat-table-sticky-right,
+  th.mat-mdc-table-sticky-border-elem-right,
+  td.mat-mdc-table-sticky-border-elem-right {
+    border-left: none !important;
+    box-shadow: none !important;
+  }
+
+  // Every icon button inside a body cell (mat and native tables), not only
+  // row actions: compact 32px target with a 20px glyph. Icon buttons
+  // elsewhere keep the 42px default above, and the no-halo tokens carry over
+  // from it.
+  // .small-icon-btn (shared-tags) sizes itself to 28px; leave it alone.
+  td .mat-mdc-icon-button:not(.small-icon-btn),
+  .mat-mdc-cell .mat-mdc-icon-button:not(.small-icon-btn) {
+    --mdc-icon-button-state-layer-size: 32px;
+    --mat-icon-button-state-layer-size: 32px;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+
+    .mat-mdc-button-touch-target {
+      width: 32px;
+      height: 32px;
+    }
+
+    .mat-icon,
+    .material-symbols-outlined {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+    }
+  }
+
+  // The trigger whose menu is open wears the primary colour.
+  td .mat-mdc-menu-trigger[aria-expanded="true"],
+  .mat-mdc-cell .mat-mdc-menu-trigger[aria-expanded="true"] {
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-primary);
+    }
+  }
+
+  // Selected row — primary-container highlight (matches design system)
+  .mat-mdc-row.selected,
+  .mat-mdc-row[aria-selected="true"],
+  .mat-mdc-row.row-selected {
+    background-color: var(--md-primary-container);
+
+    // Menu-open variant listed so a selected row keeps its own tint
+    // rather than falling back to the plain row hover.
+    &:hover,
+    &:has(.mat-mdc-menu-trigger[aria-expanded="true"]) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 4%, var(--md-primary-container));
+    }
+
+    .mat-mdc-cell {
+      color: var(--md-primary);
+    }
+  }
+
+  // ngx-mat-grid (mtx-grid) ships `.mat-table-striped` enabled by default,
+  // and the same class is hand-applied to several non-mtx tables (edit-paring
+  // modal, area-rule-plan modal, property-areas-edit modal, dashboard chart
+  // data view). The design manual's tables use uniform rows with a single
+  // tinted hover state, so neutralize the striping by pointing mtx-grid's
+  // striping variable at the same surface-container even rows already use,
+  // and re-assert the hover at higher specificity than mtx-grid's static
+  // `.mat-row-odd` rule.
+  .mat-mdc-table.mat-table-striped {
+    --mtx-grid-table-row-striped-background-color: var(--md-surface-container);
+
+    .mat-row-odd:hover,
+    .mat-row-even:hover {
+      background-color: var(--ws-table-row-hover);
+    }
+  }
+
+  // The calendar week-grid renders as a single mat-mdc-row that spans the
+  // full 1248 px-tall canvas (events absolutely positioned inside each
+  // day's column). Two workspace rules tint that row on hover:
+  //   .mat-mdc-row:hover                            (every row)
+  //   .mat-row-odd:hover / .mat-row-even:hover      (striping)
+  // Both bleed through the transparent cells onto the calendar canvas.
+  // Neutralize them just for .calendar-grid; other tables keep their hover.
+  .mtx-grid.calendar-grid .mat-mdc-table .mat-mdc-row:hover,
+  .mtx-grid.calendar-grid .mat-mdc-table .mat-row-odd:hover,
+  .mtx-grid.calendar-grid .mat-mdc-table .mat-row-even:hover {
+    background-color: var(--md-surface-container);
+  }
+
+  // =========================================================================
+  // Sort header (mat-sort-header)
+  // =========================================================================
+  // Hide Material's up/down arrow entirely. Keep mtx-grid's "lines" icon as
+  // the only sort indicator; restyle it based on aria-sort state:
+  //   - none       → muted color, full opacity, no rotation
+  //   - ascending  → primary color, full opacity, no rotation
+  //   - descending → primary color, full opacity, rotated 180° (flip)
+
+  // Inherit the header cell's muted colour so sortable and plain columns
+  // read the same; hover still darkens.
+  .mat-sort-header-container {
+    cursor: pointer;
+    color: inherit;
+
+    &:hover {
+      color: var(--md-on-surface);
+    }
+  }
+
+  // Material's arrow indicator — never show under workspace.
+  .mat-sort-header-arrow {
+    display: none !important;
+  }
+
+  // mtx-grid's "sort" lines icon — primary indicator.
+  // Match on .mat-sort-header-icon only — the svg.mtx-grid-icon qualifier
+  // bumps base specificity above the sorted/aria-sort rules below, so keep
+  // selectors balanced.
+  .mat-sort-header-icon {
+    color: var(--md-on-surface-variant);
+    opacity: 0.6;
+    width: 18px;
+    height: 18px;
+    transition: color 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
+    margin-left: var(--spacing-xs, 4px);
+  }
+
+  .mat-sort-header:hover .mat-sort-header-icon,
+  .mat-sort-header-container:hover .mat-sort-header-icon {
+    opacity: 1;
+    color: var(--md-on-surface);
+  }
+
+  // Active sort — primary color, full opacity.
+  .mat-sort-header-sorted .mat-sort-header-icon,
+  [aria-sort="ascending"] .mat-sort-header-icon,
+  [aria-sort="descending"] .mat-sort-header-icon {
+    color: var(--md-primary);
+    opacity: 1;
+  }
+
+  // Descending — flip the lines vertically so the longest line is at the
+  // bottom (visually mirrors the ascending state).
+  //
+  // IMPORTANT: only use aria-sort here. Angular Material puts the class
+  // .mat-sort-header-descending on EVERY column to indicate that column's
+  // default direction — it's not a live state. aria-sort is the only
+  // attribute that actually flips on the active column.
+  [aria-sort="descending"] .mat-sort-header-icon {
+    transform: rotate(180deg);
+  }
+
+  // =========================================================================
+  // Menu (mat-mdc-menu)
+  // =========================================================================
+
+  .mat-mdc-menu-panel {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--radius-sm, 4px) !important;
+    box-shadow: var(--md-shadow) !important;
+    min-width: 200px;
+  }
+
+  // Beat the legacy `.mat-mdc-menu-panel .mat-mdc-menu-content` rule that
+  // sets display: inline-flex + padding: 8px — that inset the content area
+  // by 8px on every side, so menu items couldn't fill the panel edge to edge.
+  .mat-mdc-menu-panel .mat-mdc-menu-content,
+  .mat-mdc-menu-content {
+    display: flex !important;
+    flex-direction: column;
+    padding: var(--spacing-xs, 4px) 0 !important;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+  }
+
+  .mat-mdc-menu-panel .mat-mdc-menu-content button.mat-mdc-menu-item,
+  .mat-mdc-menu-item {
+    width: 100% !important;
+    box-sizing: border-box;
+    height: 40px;
+    min-height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 0 !important;
+    padding: 0 var(--spacing-md, 12px) !important;
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 400;
+
+    .mat-mdc-menu-item-text {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .mat-icon,
+    .material-symbols-outlined {
+      color: var(--md-on-surface-variant);
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      margin-right: var(--spacing-md, 12px);
+    }
+
+    &:hover:not(:disabled),
+    &.cdk-keyboard-focused,
+    &.cdk-program-focused {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+    }
+
+    &:disabled,
+    &.mat-mdc-menu-item-disabled {
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+    }
+  }
+
+  // =========================================================================
+  // Dialog (mat-mdc-dialog)
+  // =========================================================================
+
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-color: var(--md-surface-container);
+    --mdc-dialog-subhead-color: var(--md-on-surface);
+    --mdc-dialog-supporting-text-color: var(--md-on-surface-variant);
+    --mdc-dialog-container-shape: var(--md-radius, 10px);
+  }
+
+  .mat-mdc-dialog-surface,
+  .mdc-dialog__surface {
+    background-color: var(--md-surface-container) !important;
+    border-radius: var(--md-radius, 10px) !important;
+    box-shadow:
+      0 8px 24px color-mix(in srgb, var(--md-primary) 18%, transparent),
+      0 2px 6px color-mix(in srgb, var(--md-on-surface) 8%, transparent) !important;
+    color: var(--md-on-surface);
+  }
+
+  .mat-mdc-dialog-title,
+  .mdc-dialog__title {
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: var(--spacing-xl, 16px) var(--spacing-xl, 16px) 0;
+  }
+
+  .mat-mdc-dialog-content,
+  .mdc-dialog__content {
+    color: var(--md-on-surface);
+    font-family: var(--font-family);
+    padding: var(--spacing-md, 12px) var(--spacing-xl, 16px);
+  }
+
+  .mat-mdc-dialog-actions,
+  .mdc-dialog__actions {
+    padding: var(--spacing-xl, 16px);
+    gap: var(--spacing-sm, 8px);
+    justify-content: flex-end;
+  }
+
+  // =========================================================================
+  // Tabs (mat-mdc-tab-group)
+  // =========================================================================
+
+  .mat-mdc-tab-group {
+    --mat-tab-header-active-label-text-color: var(--md-primary);
+    --mat-tab-header-active-focus-label-text-color: var(--md-primary);
+    --mat-tab-header-active-hover-label-text-color: var(--md-primary);
+    --mat-tab-header-inactive-label-text-color: var(--md-on-surface-variant);
+    --mat-tab-header-inactive-focus-label-text-color: var(--md-on-surface);
+    --mat-tab-header-inactive-hover-label-text-color: var(--md-on-surface);
+    --mat-tab-header-active-ripple-color: var(--md-primary);
+    --mat-tab-header-inactive-ripple-color: var(--md-on-surface-variant);
+    --mdc-tab-indicator-active-indicator-color: var(--md-primary);
+    --mdc-secondary-navigation-tab-container-height: 48px;
+    font-family: var(--font-family);
+  }
+
+  .mat-mdc-tab-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--md-surface-variant);
+  }
+
+  .mat-mdc-tab .mdc-tab__text-label {
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: var(--md-primary);
+  }
+
+  .mat-mdc-tab .mdc-tab-indicator__content--underline {
+    border-color: var(--md-primary);
+    border-top-width: 2px;
+  }
+
+  // =========================================================================
+  // Paginator (mat-mdc-paginator)
+  // =========================================================================
+  // Matches the design reference's pagination row: outlined nav buttons on
+  // the left, range/page-size labels in muted color, all driven by tokens.
+
+  .mat-mdc-paginator {
+    background-color: transparent !important;
+    color: var(--md-on-surface-variant);
+    font-family: var(--font-family);
+    font-size: 14px;
+    border-top: 1px solid var(--md-surface-variant);
+
+    .mat-mdc-paginator-outer-container {
+      background-color: transparent !important;
+    }
+
+    .mat-mdc-paginator-container {
+      color: var(--md-on-surface-variant);
+      font-family: var(--font-family);
+      min-height: 56px;
+      padding: 8px 12px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .mat-mdc-paginator-range-actions {
+      gap: 6px;
+      order: 1;
+    }
+
+    .mat-mdc-paginator-page-size {
+      order: 2;
+      align-items: center;
+    }
+
+    .mat-mdc-paginator-range-label,
+    .mat-mdc-paginator-page-size-label {
+      color: var(--md-on-surface-variant);
+      font-family: var(--font-family);
+      font-size: 14px;
+      margin: 0 12px;
+    }
+
+    // Outlined nav buttons (first / previous / next / last). Replace the
+    // icon-only treatment with text labels rendered from the button's
+    // aria-label (which CustomMatPaginatorIntl translates to Første /
+    // Forrige / Næste / Sidste).
+    .mat-mdc-icon-button {
+      width: auto !important;
+      height: 36px !important;
+      min-width: 64px;
+      padding: 0 14px !important;
+      border-radius: var(--radius-sm, 4px) !important;
+      border: 1px solid var(--md-outline);
+      background: transparent;
+      color: var(--md-primary);
+      font-family: var(--font-family);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+
+      // Hide Material's built-in SVG icons
+      .mat-mdc-paginator-icon,
+      svg,
+      .mat-icon,
+      .material-symbols-outlined {
+        display: none !important;
+      }
+
+      // Render the aria-label as visible text
+      &::before {
+        content: attr(aria-label);
+        color: var(--md-primary);
+      }
+
+      &:hover:not(:disabled) {
+        background: var(--md-primary-container);
+        border-color: var(--md-primary);
+      }
+
+      &:disabled {
+        color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+        border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+
+        &::before {
+          color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+        }
+      }
+    }
+
+    // "Vis alle" button — injected by MatPaginatorShowAllDirective.
+    // Filled variant of the same outlined button family to highlight
+    // "show all" as the most prominent affordance.
+    .mat-mdc-paginator-show-all {
+      height: 36px;
+      min-width: 64px;
+      padding: 0 14px;
+      margin-left: 8px;
+      border-radius: var(--radius-sm, 4px);
+      border: 1px solid var(--md-primary);
+      background: var(--md-primary);
+      color: var(--md-on-primary);
+      font-family: var(--font-family);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+
+      &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+      }
+
+      &:disabled {
+        background: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+        color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+        border-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+        cursor: not-allowed;
+      }
+    }
+
+    // The page-size dropdown — match the design's .field + <select> pattern:
+    // outlined rectangle, 4px radius, --md-outline border, no floating label.
+    .mat-mdc-paginator-page-size-select {
+      margin: 0 8px 0 4px;
+      width: 100px;
+
+      .mat-mdc-text-field-wrapper {
+        // Paginator is intentionally 36px (compact) — overrides the global
+        // 48px MD3 form-field height so the select aligns with the sibling
+        // 36px paginator buttons. !important defends against Material's own.
+        background: var(--md-surface) !important;
+        border: 1px solid var(--md-outline) !important;
+        border-radius: var(--radius-sm, 4px) !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        padding: 0 4px 0 12px !important;
+      }
+
+      .mat-mdc-form-field-flex {
+        // 34px = 36px wrapper - 2 * 1px border (wrapper uses border-box).
+        // Matching the inner content area keeps the select baseline aligned
+        // with sibling 36px buttons instead of sliding 1px lower.
+        height: 34px;
+        align-items: center;
+        // Paginator's page-size select stays inline (row layout) — undo the
+        // global column override.
+        flex-direction: row !important;
+      }
+
+      .mat-mdc-form-field-infix {
+        min-height: 34px !important;
+        padding: 0 !important;
+        display: flex;
+        align-items: center;
+      }
+
+      // Hide Material's notched-outline pieces — we paint the border on
+      // the wrapper above.
+      .mdc-notched-outline,
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border: none !important;
+      }
+
+      .mat-mdc-select {
+        font-family: var(--font-family);
+        font-size: 14px;
+        color: var(--md-on-surface);
+      }
+
+      .mat-mdc-select-arrow {
+        color: var(--md-on-surface-variant);
+      }
+    }
+  }
+
+  // =========================================================================
+  // Tooltip (mat-mdc-tooltip)
+  // =========================================================================
+
+  .mat-mdc-tooltip {
+    --mdc-plain-tooltip-container-color: var(--md-on-surface);
+    --mdc-plain-tooltip-supporting-text-color: var(--md-surface-container);
+
+    .mdc-tooltip__surface {
+      background-color: var(--md-on-surface);
+      color: var(--md-surface-container);
+      border-radius: var(--radius-sm, 4px);
+      font-family: var(--font-family);
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+
+  // =========================================================================
+  // Snackbar (mat-mdc-snack-bar-container)
+  // =========================================================================
+
+  .mat-mdc-snack-bar-container {
+    --mdc-snackbar-container-color: var(--md-on-surface);
+    --mdc-snackbar-supporting-text-color: var(--md-surface-container);
+    --mat-snack-bar-button-color: var(--md-primary-container);
+
+    .mdc-snackbar__surface {
+      background-color: var(--md-on-surface) !important;
+      color: var(--md-surface-container) !important;
+      border-radius: var(--radius-sm, 4px) !important;
+      box-shadow: var(--md-shadow);
+    }
+
+    .mdc-snackbar__label {
+      color: var(--md-surface-container);
+      font-family: var(--font-family);
+      font-size: 14px;
+    }
+
+    .mat-mdc-snack-bar-action,
+    .mdc-button {
+      color: var(--md-primary-container);
+
+      .mdc-button__label {
+        color: var(--md-primary-container);
+      }
+    }
+  }
+
+  // =========================================================================
+  // App-specific accent / link utility classes
+  // The legacy app uses .text-accent for links; it picks up Angular Material's
+  // M3 accent palette (cyan) which is wrong for the workspace variant. Force
+  // .text-accent and bare <a> links to use the design-system primary color.
+  // =========================================================================
+
+  .text-accent,
+  .text-primary,
+  a:not(.mat-mdc-button):not(.mat-mdc-icon-button):not(.mat-mdc-tab-link):not([class*="btn-"]) {
+    color: var(--md-primary);
+  }
+
+  a:not(.mat-mdc-button):not(.mat-mdc-icon-button):not(.mat-mdc-tab-link):not([class*="btn-"]):hover {
+    color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary));
+  }
+
+  // =========================================================================
+  // App-specific custom button classes (.btn-primary, .btn-cancel, etc.)
+  // These are non-Material classes defined globally in styles.scss; the new
+  // design replaces the pill radius (9999px) with 4px and removes ad-hoc
+  // heights/spacing so they match the design-system button spec.
+  // =========================================================================
+
+  .btn-primary,
+  button.btn-primary,
+  a.btn-primary {
+    border-radius: var(--radius-sm, 4px) !important;
+    background-color: var(--md-primary) !important;
+    color: var(--md-on-primary) !important;
+    height: 40px;
+    box-shadow: none !important;
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0;
+
+    // Complete on its own — see the matching comment in styles.scss. Padding
+    // and font-size used to live only in --icon-left, and the font-size only
+    // on a child <span>, so a button written without both rendered at 13.33px
+    // with no horizontal padding.
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 16px;
+    border: none;
+    font-size: 14px;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-primary)) !important;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &[disabled] {
+      background-color: color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
+      color: color-mix(in srgb, var(--md-on-surface) 38%, transparent) !important;
+    }
+
+    &--icon-left {
+      height: 40px;
+      padding: 0 16px;
+      gap: 8px;
+
+      .mat-icon,
+      .material-symbols-outlined {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1;
+      }
+    }
+  }
+
+  .btn-secondary,
+  button.btn-secondary,
+  a.btn-secondary {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: transparent;
+    color: var(--md-primary) !important;
+    height: 40px;
+    font-family: var(--font-family);
+    font-weight: 500;
+
+    // Complete on its own; without this a bare .btn-secondary took the
+    // browser's `border: 2px outset` and a 13.33px label.
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 16px;
+    border: 1px solid var(--md-outline);
+    font-size: 14px;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+
+    &--icon-rounded-border {
+      border-radius: var(--radius-sm, 4px) !important;
+      padding: 0 16px;
+      border: 1px solid var(--md-outline);
+    }
+
+    &--icon-square-border {
+      border-radius: var(--radius-sm, 4px) !important;
+      padding: 0 16px;
+      border: 1px solid var(--md-outline);
+      height: 40px !important;
+    }
+
+    // Outlined icon-left variant — mirror of .btn-primary--icon-left
+    // for secondary actions that need both an icon and a visible label
+    // (e.g. spec medarbejdertabel Tags button).
+    &--icon-left {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 16px;
+      gap: 8px;
+      border-radius: var(--radius-sm, 4px) !important;
+      border: 1px solid var(--md-outline);
+
+      .mat-icon,
+      .material-symbols-outlined {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1;
+      }
+    }
+  }
+
+  // Text button for the workspace theme — 40px like its siblings, 4px radius,
+  // no border. Replaces `mat-button`, which never picked up a theme.
+  .btn-quiet,
+  button.btn-quiet,
+  a.btn-quiet {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: transparent;
+    color: var(--md-primary) !important;
+    height: 40px;
+    padding: 0 16px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+  }
+
+  .btn-cancel,
+  button.btn-cancel,
+  a.btn-cancel {
+    border-radius: var(--radius-sm, 4px) !important;
+    border: 1px solid var(--md-outline);
+    background: transparent;
+    color: var(--md-primary);
+    height: 40px;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-primary) 8%, transparent);
+    }
+  }
+
+  .btn-warning,
+  button.btn-warning,
+  a.btn-warning {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: var(--md-secondary-container);
+    color: var(--md-on-surface);
+    height: 40px;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-weight: 500;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-secondary-container));
+    }
+  }
+
+  .btn-delete,
+  button.btn-delete,
+  a.btn-delete {
+    border-radius: var(--radius-sm, 4px) !important;
+    background: var(--md-alert);
+    color: var(--md-on-primary);
+    height: 40px;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-weight: 500;
+
+    &:hover:not(:disabled):not([disabled]) {
+      background-color: color-mix(in srgb, var(--md-on-surface) 8%, var(--md-alert));
+    }
+  }
+
+  // =========================================================================
+  // Multiselect (mtx-select / ng-select) — table-toolbar tag filter
+  // =========================================================================
+  // The toolbar's "Etiketter" picker wraps an ng-select inside a mat-form-field.
+  // Compact it (no longer span the full width), restyle the outlined container
+  // with --md-outline, and paint selected tag chips with --md-secondary-container.
+
+  // Defaults for EVERY mat-form-field containing an mtx-select.
+  // width: 100% lets the field fill its flex parent. max-width: 320px
+  // keeps it from stretching to the FULL parent width in header rows
+  // with multiple inline fields (property-workers, calendar-header,
+  // planning filters, etc.) — without the cap, a single mtx-select
+  // takes the whole row and pushes neighbors to wrap onto new lines.
+  // Compact use cases (e.g. the calendar event modal's 90 px time-
+  // pickers) override with their own width via !important on a
+  // dedicated child class.
+  // The inner overrides force the row layout mtx-select's ng-select content
+  // needs to render chips inline. Heights match the global 40px MD3 dense
+  // form-field height so mtx-select rows visually align with sibling
+  // matInput fields and the workspace's 40px buttons.
+  .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select {
+    width: 100%;
+    max-width: 320px;
+
+    .mat-mdc-form-field-flex {
+      flex-direction: row !important;
+      align-items: center !important;
+    }
+
+    .mat-mdc-form-field-infix {
+      min-height: 40px !important;
+      padding: 0 !important;
+    }
+
+    .mat-mdc-text-field-wrapper {
+      height: auto !important;
+      min-height: 40px !important;
+      padding: 0 12px !important;
+    }
+  }
+
+  // A FILLED mtx-select field with a <mat-label> outside a toolbar — plugin
+  // dialogs and forms whose module drops the app's `appearance: 'outline'`
+  // default (e.g. time-planning's Download excel "Tags"). A filled label
+  // floats to the top of the infix, not into an outline notch, so the zero
+  // top padding above leaves the selected chips on top of it. Give the
+  // floated label (≈14px at 11px) its own row and shrink the ng-select row
+  // to 32px, so the field grows by 6px instead of 14px. Toolbar filters
+  // (.text-field--rounded, .eform-sub-header) stay compact at 40px.
+  .mat-mdc-form-field.mat-mdc-form-field-type-mtx-select:not(.text-field--rounded *):not(.eform-sub-header *)
+    .mdc-text-field--filled:not(.mdc-text-field--no-label) {
+    .mat-mdc-form-field-infix {
+      padding-top: 14px !important;
+    }
+
+    mtx-select .ng-select .ng-select-container {
+      min-height: 32px;
+    }
+  }
+
+  // Outer ng-select container — transparent so the form-field's floating
+  // label and bg remain visible. The mat-form-field wrapper paints the
+  // outlined border and surface around us.
+  mtx-select .ng-select {
+    .ng-select-container {
+      min-height: 40px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      transition: none;
+    }
+
+    &.ng-select-focused .ng-select-container,
+    &.ng-select-opened .ng-select-container {
+      border: none;
+      box-shadow: none;
+    }
+
+    &:hover:not(.ng-select-focused):not(.ng-select-opened) .ng-select-container {
+      border: none;
+    }
+
+    .ng-placeholder {
+      color: var(--md-on-surface-variant);
+      font-size: 14px;
+    }
+
+    .ng-input > input {
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+      font-size: 14px;
+    }
+
+    // Multi-select chips — DM .multiselect__chip spec (rectangular,
+    // primary-container fill, 18px circular remove). Single-select
+    // .ng-value falls back to plain text via ng-select defaults — matches
+    // the DM native `<select>` aesthetic. The full path through
+    // .ng-select-container .ng-value-container is required to outrank
+    // ng-select's own multi-value rule which uses 5 classes.
+    &.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+      background: var(--md-primary-container);
+      color: var(--md-on-surface);
+      border-radius: 4px;
+      padding: 2px 2px 2px 8px;
+      margin: 4px 4px 4px 0;
+      font-size: 0.82rem;
+      line-height: 1.4;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      border: none;
+      max-width: 100%;
+      min-width: 0;
+
+      .ng-value-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .ng-value-icon {
+        order: 2;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: inline-grid;
+        place-items: center;
+        padding: 0;
+        color: var(--md-on-surface-variant);
+        border-left: none;
+        flex-shrink: 0;
+        font-size: 14px;
+
+        &:hover {
+          background: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+          color: var(--md-on-surface);
+        }
+      }
+    }
+
+    .ng-arrow-wrapper {
+      .ng-arrow {
+        border-color: var(--md-on-surface-variant) transparent transparent;
+      }
+    }
+
+    .ng-clear-wrapper {
+      color: var(--md-on-surface-variant);
+
+      &:hover {
+        color: var(--md-on-surface);
+      }
+    }
+  }
+
+  // Dropdown panel — portaled to body. ng-select sets the panel's inline
+  // `left` and `width` to match the trigger, so horizontal margins would
+  // push it off-axis. Only the 4px DM gap below the trigger is needed.
+  .ng-dropdown-panel {
+    background: var(--md-surface-container);
+    border: 1px solid var(--md-outline);
+    border-radius: var(--radius-sm, 4px);
+    box-shadow: var(--md-shadow);
+    overflow: hidden;
+    margin-top: 4px;
+
+    .ng-dropdown-panel-items .ng-option {
+      background: transparent;
+      color: var(--md-on-surface);
+      font-family: var(--font-family);
+      font-size: 14px;
+      padding: 8px 12px;
+
+      // Hover per DM .multiselect__option:hover — surface-variant fill.
+      // Only :hover, NOT .ng-option-marked: ng-select auto-marks the
+      // selected option when the panel opens, which would make the
+      // selected option look identically hovered. The DM doesn't have a
+      // "marked" state; only mouse hover gets bg.
+      &:hover {
+        background: var(--md-surface-variant);
+      }
+
+      &.ng-option-disabled {
+        color: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+      }
+    }
+  }
+}

@@ -56,9 +56,25 @@ export class DeviceUsersPage extends PageWithNavbarPage {
     return this.page.locator('#cancelDeleteBtn');
   }
 
+  public rows(): Locator {
+    return this.page.locator('tbody > tr');
+  }
+
   public async rowNum(): Promise<number> {
     await this.page.waitForTimeout(500);
-    return await this.page.locator('tbody > tr').count();
+    return await this.rows().count();
+  }
+
+  // The grid is only reloaded once a dialog's afterClosed() fires, so the row count
+  // is the first observable proof that a create/delete round trip is really done.
+  public async waitForRowCount(expected: number, timeout = 40000): Promise<void> {
+    await expect(this.rows()).toHaveCount(expected, { timeout });
+  }
+
+  // #newDeviceUserBtn lives in the subheader and stays visible *behind* the Material
+  // dialog overlay, so waiting for it proves nothing. The dialog body detaching does.
+  public async waitForUserDialogClosed(timeout = 40000): Promise<void> {
+    await this.page.locator('#firstName').waitFor({ state: 'detached', timeout });
   }
 
   async getDeviceUser(num: number): Promise<DeviceUsersRowObject> {
@@ -89,20 +105,14 @@ export class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   public async createNewDeviceUser(firstName: string, lastName: string) {
+    const rowsBeforeCreate = await this.rows().count();
     await this.newDeviceUserBtn().click();
-    await this.page.waitForTimeout(500);
     await this.createFirstNameInput().waitFor({ state: 'visible', timeout: 40000 });
     await this.createFirstNameInput().fill(firstName);
-    await this.page.waitForTimeout(500);
     await this.createLastNameInput().fill(lastName);
-    await this.page.waitForTimeout(500);
-    const [response] = await Promise.all([
-      this.page.waitForResponse(resp => resp.url().includes('/api/device-users') && resp.status() === 200, { timeout: 40000 }),
-      this.saveCreateBtn().click(),
-    ]);
-    await this.newDeviceUserBtn().waitFor({ state: 'visible', timeout: 40000 });
-    await this.waitForSpinnerHide();
-    await this.page.waitForTimeout(500);
+    await this.saveCreateBtn().click();
+    await this.waitForUserDialogClosed();
+    await this.waitForRowCount(rowsBeforeCreate + 1);
   }
 
   public async createDeviceUserFromScratch(name: string, surname: string) {
@@ -149,7 +159,7 @@ export class DeviceUsersPage extends PageWithNavbarPage {
       await this.editLastNameInput().fill(surname);
     }
     await this.saveEditBtn().click();
-    await this.newDeviceUserBtn().waitFor({ state: 'visible', timeout: 40000 });
+    await this.waitForUserDialogClosed();
   }
 }
 
@@ -196,12 +206,15 @@ export class DeviceUsersRowObject {
 
   async delete() {
     const index = this.index - 1;
+    const rowsBeforeDelete = await this.deviceUsersPage.rows().count();
     await this.openRowMenu();
     const deleteBtn = this.page.locator(`#deleteDeviceUserBtn${index}`);
     await deleteBtn.waitFor({ state: 'visible', timeout: 40000 });
     await deleteBtn.click();
     await this.deviceUsersPage.saveDeleteBtn().waitFor({ state: 'visible', timeout: 40000 });
     await this.deviceUsersPage.saveDeleteBtn().click();
-    await this.deviceUsersPage.newDeviceUserBtn().waitFor({ state: 'visible' });
+    // The modal is closed by the component only after the DELETE call succeeded.
+    await this.deviceUsersPage.saveDeleteBtn().waitFor({ state: 'detached', timeout: 40000 });
+    await this.deviceUsersPage.waitForRowCount(rowsBeforeDelete - 1);
   }
 }

@@ -1,6 +1,6 @@
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {OVERLAY_DEFAULT_CONFIG} from '@angular/cdk/overlay';
 import {GalleryModule} from 'ng-gallery';
@@ -25,6 +25,7 @@ import {
   SimpleLayoutComponent,
   SpinnerComponent,
   ConnectionSetupComponent,
+  NotFoundComponent,
 } from './components';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {EformSharedModule} from './common/modules/eform-shared/eform-shared.module';
@@ -67,7 +68,6 @@ import {
   usersReducer,
 } from './state';
 import {cmsReducer, CmsEffects} from './state/cms';
-import {CmsService} from './common/services/cms';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { AuthStateService } from './common/store/service/auth-state.service';
@@ -150,8 +150,8 @@ export function initLocaleFactory(authStateService: AuthStateService) {
         NavigationComponent,
         SpinnerComponent,
         ConnectionSetupComponent,
+        NotFoundComponent,
     ],
-    schemas: [NO_ERRORS_SCHEMA],
     providers: [
         providers,
         {

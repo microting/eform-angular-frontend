@@ -3,7 +3,7 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Observable, Subscription} from 'rxjs';
 import { MatTreeNestedDataSource, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, MatNestedTreeNode, MatTreeNodeToggle, MatTreeNodeOutlet } from '@angular/material/tree';
 import {NestedTreeControl} from '@angular/cdk/tree';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth, selectCurrentUserClaims, leftAppMenus, loadAppMenu} from 'src/app/state';
@@ -29,7 +29,7 @@ interface MenuNode {
     selector: 'app-navigation',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
-    imports: [NgIf, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, MatButton, RouterLink, MatIcon, MatNestedTreeNode, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatTreeNodeToggle, MatTreeNodeOutlet, AsyncPipe]
+    imports: [NgIf, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, MatButton, RouterLink, RouterLinkActive, MatIcon, MatNestedTreeNode, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatTreeNodeToggle, MatTreeNodeOutlet, AsyncPipe]
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   router = inject(Router);

@@ -28,8 +28,7 @@ describe('NavigationMenuCustomLinkComponent', () => {
     };
 
     TestBed.configureTestingModule({
-    imports: [FormsModule, NavigationMenuCustomLinkComponent],
-    declarations: [MockTranslatePipe],
+    imports: [MockTranslatePipe, FormsModule, NavigationMenuCustomLinkComponent],
     providers: [
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: [] },

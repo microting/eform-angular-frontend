@@ -571,3 +571,79 @@ body {
     z-index: 100000;
   }
 }
+
+// Task-list batch-action dropdown (backend-configuration task-list page).
+// The mtx-select panel is appended to <body> (mtx-select appendTo defaults to
+// 'body'), so these rules must be global; they are scoped by classes emitted
+// ONLY by that dropdown's ng-optgroup-tmp / ng-option-tmp templates and cannot
+// affect any other dropdown. Typography matches the mockup's native <select>
+// conventions (opgaveliste.html #opgavelisteFilterHandling): bold optgroup
+// headers (font-weight 700), regular-weight options, and clearly gray disabled
+// options (the native GrayText system color, vs the subtle theme disabled token).
+.ng-dropdown-panel .tl-batch-action-group-label {
+  font-weight: 700;
+}
+
+.ng-dropdown-panel .tl-batch-action-option-label {
+  font-weight: 400;
+  // Options indent relative to their flush-left group headers, matching the
+  // mockup's native <select> optgroup rendering.
+  padding-left: 12px;
+}
+
+.ng-dropdown-panel .ng-option-disabled .tl-batch-action-option-label {
+  color: GrayText;
+}
+
+// Calendar complete modal — grouped worker picker.
+// Same intent as the tl-batch-action-* rules above: mimic a native <select>
+// with <optgroup>, where the group header is bold and flush and its options are
+// indented and regular weight. ng-select renders neither convention on its own,
+// and the dropdown panel is appended to <body>, so a component stylesheet
+// cannot reach these nodes — hence global rules scoped by a unique class.
+.ng-dropdown-panel .eform-worker-group-label {
+  font-weight: 700;
+  color: var(--text-header);
+}
+
+.ng-dropdown-panel .eform-worker-option-label {
+  font-weight: 400;
+  // Match the group label, which sets this explicitly. Left to inherit, the
+  // colour would come from mtx's --mat-sys-on-surface, which this bundle never
+  // emits, so the two labels in one list would derive colour differently.
+  color: var(--text-header);
+}
+
+// The indent goes on the ROW, not the label, because mtx-select already ships
+//   .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-child
+//     { padding-left: 32px }
+// in its own ViewEncapsulation.None styles. theme-workspace overrides the row
+// padding to 12px and cancels it; theme-eform (the DEFAULT) does not. Padding
+// the label instead therefore double-counts under eform — measured 36px of
+// indent there versus 16px under workspace.
+//
+// Setting the row to a flat 32px lands both themes on the same 16px indent
+// relative to the 16px optgroup row. Scoped with :has() so only this dropdown
+// is affected, and specificity (0,5,0) to outrank theme-workspace's
+// `body.theme-workspace … .ng-option` (0,4,1).
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-child:has(.eform-worker-option-label) {
+  padding-left: 32px;
+}
+
+// Calendar task modal — group icon on selected TEAM chips (#calendarEventAssignee).
+// A bare mat-icon keeps its 24x24 box, which makes team chips taller than
+// worker chips. Size it to the chip's text line instead. Specificity (0,4,0)
+// outranks `.mat-icon.material-{icons,symbols-*}.md-18` (0,3,0) from _icon.scss
+// regardless of source order. No colour is set: the icon inherits the chip
+// text colour under both theme-eform and theme-workspace, light and dark.
+// theme-workspace lays the chip out as inline-flex (the × moves to the end via
+// `order: 2`); theme-eform keeps it inline, hence vertical-align.
+.ng-select .ng-value .mat-icon.calendar-assignee-team-icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  line-height: 16px;
+  vertical-align: middle;
+  margin-right: 2px;
+  flex-shrink: 0;
+}

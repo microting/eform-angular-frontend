@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2, inject } from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {AuthService, TitleService, UserSettingsService} from 'src/app/common/services';
 import { Router, RouterOutlet } from '@angular/router';
@@ -9,9 +9,11 @@ import {
   AuthSyncStorageService,
   updateUserInfo,
 } from 'src/app/state';
+import {loadCmsConfig, selectCmsThemeVariant} from 'src/app/state/cms';
 import {AuthStateService} from 'src/app/common/store';
 import {TranslateService} from '@ngx-translate/core';
 import { SpinnerComponent } from './eform-spinner/spinner.component';
+import {MatPaginatorShowAllService} from 'src/app/common/modules/eform-shared/components/eform-pagination/mat_paginator_show_all.service';
 
 @Component({
     selector: 'app-root',
@@ -28,11 +30,19 @@ export class AppComponent implements OnInit, OnDestroy {
   private ngTitle = inject(Title);
   private titleService = inject(TitleService);
   private authSyncStorageService = inject(AuthSyncStorageService);
+  private renderer = inject(Renderer2);
+  private paginatorShowAllService = inject(MatPaginatorShowAllService);
 
   public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
+  private selectCmsThemeVariant$ = this.authStore.select(selectCmsThemeVariant);
 
   ngOnInit(): void {
     this.authSyncStorageService.init();
+    this.paginatorShowAllService.start();
+    this.authStore.dispatch(loadCmsConfig());
+    this.selectCmsThemeVariant$.subscribe((variant) => {
+      this.applyThemeVariant(variant ?? 'eform');
+    });
     this.selectIsAuth$.pipe(debounceTime(1000), take(1)).subscribe((isAuth) => {
       if (isAuth) {
         zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
@@ -49,8 +59,7 @@ export class AppComponent implements OnInit, OnDestroy {
             }
           });
       } else {
-        if (this.router.url.includes('reset-admin-password') ||
-          this.router.url.includes('restore-password-confirmation') ||
+        if (this.router.url.includes('restore-password-confirmation') ||
           this.router.url.includes('restore-password')) {} else {
           this.authStateService.logout();
         }
@@ -69,6 +78,19 @@ export class AppComponent implements OnInit, OnDestroy {
         this.ngTitle.setTitle(defaultTitle);
       }
     });
+  }
+
+  private applyThemeVariant(variant: 'eform' | 'workspace') {
+    const body = document.body;
+    this.renderer.removeClass(body, 'theme-eform');
+    this.renderer.removeClass(body, 'theme-workspace');
+    this.renderer.addClass(body, `theme-${variant}`);
+    // Ensure a mode class exists so theme.scss selectors like
+    // body.theme-eform.theme-light apply. Layout components
+    // (SimpleLayout/FullLayout) manage light/dark switching later.
+    if (!body.classList.contains('theme-light') && !body.classList.contains('theme-dark')) {
+      this.renderer.addClass(body, 'theme-light');
+    }
   }
 
   ngOnDestroy(): void {

@@ -34,6 +34,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abstractions;
 using Abstractions.Advanced;
+using Infrastructure.Helpers;
 using Infrastructure.Models;
 using Infrastructure.Models.DeviceUsers;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +46,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 public class DeviceUsersService(
     ILocalizationService localizationService,
     IEFormCoreService coreHelper,
+    IUserService userService,
     ILogger<DeviceUsersService> logger)
     : IDeviceUsersService
 {
@@ -272,6 +274,13 @@ public class DeviceUsersService(
 
     public async Task<OperationResult> Delete(int id)
     {
+        // Only the first user may delete a device user; everyone else is refused before the SDK.
+        if (!await userService.IsFirstUserAsync())
+        {
+            return new OperationResult(false,
+                localizationService.GetString("OnlyTheFirstUserCanDeleteWorkers"));
+        }
+
         try
         {
             var core = await coreHelper.GetCore();

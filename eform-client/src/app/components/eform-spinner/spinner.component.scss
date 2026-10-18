@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--spinner-overlay-bg, rgba(0, 0, 0, 0.5));
   width: 100vw !important;
   height: 100vh !important;
 }

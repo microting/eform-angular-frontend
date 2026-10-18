@@ -38,7 +38,7 @@ namespace eFormAPI.Web.Controllers;
 
 [Authorize]
 [Route("api/settings")]
-public class SettingsController(ISettingsService settingsService, IAdminService adminService)
+public class SettingsController(ISettingsService settingsService)
     : Controller
 {
     [AllowAnonymous]
@@ -149,22 +149,6 @@ public class SettingsController(ISettingsService settingsService, IAdminService 
     public async Task<OperationResult> IntegrityCheck()
     {
         return await settingsService.IntegrityCheck();
-    }
-
-    [HttpPut]
-    [Route("userback-widget")]
-    [Authorize(Roles = EformRole.Admin)]
-    public Task<OperationResult> UpdateUserbackWidget([FromBody] bool isEnableWidget)
-    {
-        return adminService.UpdateUserbackWidget(isEnableWidget);
-    }
-
-    [HttpGet]
-    [Route("userback-widget")]
-    //[Authorize(Roles = EformRole.Admin)]
-    public Task<OperationDataResult<UserbackWidgetModel>> IsUserbackWidget()
-    {
-        return adminService.GetUserbackWidget();
     }
 
     [HttpGet]

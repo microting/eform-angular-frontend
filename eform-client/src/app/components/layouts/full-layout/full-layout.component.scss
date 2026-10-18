@@ -17,6 +17,11 @@
   justify-content: space-between;
 }
 
+:host ::ng-deep .mat-drawer-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .tag {
   width: $icon-size + $icon-size + $icon-size;
   justify-content: space-between;
@@ -33,4 +38,14 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.content-card {
+  background-color: var(--content-card-bg);
+  border-radius: var(--content-card-radius);
+  // No horizontal margin: the card's padding is the page gutter
+  // (scss/components/_page-gutter.scss).
+  margin: var(--content-card-margin) 0;
+  min-height: calc(100% - 2 * var(--content-card-margin, 0px));
+  overflow: auto;
 }

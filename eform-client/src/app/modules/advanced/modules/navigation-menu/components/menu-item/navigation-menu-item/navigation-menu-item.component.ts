@@ -9,12 +9,15 @@ import {Store} from '@ngrx/store';
 import { MatCard, MatCardHeader } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
+import { NgIf } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-navigation-menu-item',
     templateUrl: './navigation-menu-item.component.html',
     styleUrls: ['./navigation-menu-item.component.scss'],
-    imports: [MatCard, MatCardHeader, MatIcon, MatIconButton]
+    imports: [MatCard, MatCardHeader, MatIcon, MatIconButton, NgIf, MatTooltip, TranslatePipe]
 })
 export class NavigationMenuItemComponent implements OnInit {
   private authStore = inject(Store);
@@ -22,6 +25,7 @@ export class NavigationMenuItemComponent implements OnInit {
   @Input() item: NavigationMenuItemModel = new NavigationMenuItemModel();
   @Input() firstLevelIndex: number;
   @Input() secondLevelIndex: number | null;
+  @Input() linkHasNoRoute = false;
   @Output()
   itemDelete: EventEmitter<NavigationMenuItemModel> = new EventEmitter<NavigationMenuItemModel>();
   @Output()

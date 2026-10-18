@@ -78,6 +78,9 @@
     <data name="DeviceUserParamDeletedSuccessfully">
         <value>Utilizatorul dispozitivului „{0}” a fost șters cu succes</value>
     </data>
+    <data name="OnlyTheFirstUserCanDeleteWorkers">
+        <value>Doar primul utilizator poate șterge utilizatorii dispozitivului</value>
+    </data>
     <data name="DeviceUserUpdatedSuccessfully">
         <value>Utilizatorul dispozitivului a fost actualizat cu succes</value>
     </data>
@@ -152,6 +155,12 @@
     </data>
     <data name="ErrorWhileUpdatingUser">
         <value>Eroare la actualizarea utilizatorului</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>Email confirmed</value>
+    </data>
+    <data name="ErrorWhileConfirmingEmail">
+        <value>Error while confirming email</value>
     </data>
     <data name="FileNotFound">
         <value>Fișierul nu a fost găsit</value>
