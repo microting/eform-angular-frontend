@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {DataItemDto} from 'src/app/common/models';
 import { NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { ElementPictureComponent } from '../case-elements/element-picture/element-picture.component';
@@ -22,7 +22,10 @@ import { ElementAudioComponent } from '../case-elements/element-audio/element-au
 @Component({
     selector: 'app-case-edit-switch',
     templateUrl: './case-edit-switch.component.html',
-    imports: [NgIf, NgFor, NgSwitch, NgSwitchCase, ElementPictureComponent, ElementCheckboxComponent, ElementNumberComponent, ElementNumberStepperComponent, ElementCommentComponent, ElementTextComponent, ElementDateComponent, ElementSingleselectComponent, ElementMultiselectComponent, ElementPdfComponent, ElementInfoboxComponent, ElementTimerComponent, ElementSignatureComponent, ElementContainerComponent, ElementEntitysearchComponent, ElementEntityselectComponent, ElementAudioComponent, NgSwitchDefault]
+    imports: [NgIf, NgFor, NgSwitch, NgSwitchCase, ElementPictureComponent, ElementCheckboxComponent, ElementNumberComponent, ElementNumberStepperComponent, ElementCommentComponent, ElementTextComponent, ElementDateComponent, ElementSingleselectComponent, ElementMultiselectComponent, ElementPdfComponent, ElementInfoboxComponent, ElementTimerComponent, ElementSignatureComponent,
+      // ElementContainerComponent imports this component back; forwardRef makes the
+      // compiler emit a lazy dependency list so neither side captures `undefined`.
+      forwardRef(() => ElementContainerComponent), ElementEntitysearchComponent, ElementEntityselectComponent, ElementAudioComponent, NgSwitchDefault]
 })
 export class CaseEditSwitchComponent implements OnInit {
   @Input() dataItemList: Array<DataItemDto> = [];

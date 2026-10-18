@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output} from '@angular/core';
 import { DataItemDto } from 'src/app/common/models';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
@@ -10,7 +10,9 @@ import { CaseEditSwitchComponent } from '../../case-edit-switch/case-edit-switch
     selector: 'element-container',
     templateUrl: './element-container.component.html',
     styleUrls: ['./element-container.component.scss'],
-    imports: [MatCard, MatCardHeader, MatIcon, MatCardContent, NgClass, CaseEditSwitchComponent]
+    imports: [MatCard, MatCardHeader, MatIcon, MatCardContent, NgClass,
+      // CaseEditSwitchComponent imports this component back (runtime cycle).
+      forwardRef(() => CaseEditSwitchComponent)]
 })
 export class ElementContainerComponent {
   dataItemList: Array<DataItemDto> = [];
