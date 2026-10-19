@@ -23,28 +23,28 @@
   [showColumnMenuButton]="false">
 </mtx-grid>
 <ng-template #siteUIdTpl let-row let-i="index">
-  <div class="siteUUId" id="siteUUId">{{row.siteUId}}</div>
+  <div class="siteUUId" id="siteUUId-{{i}}">{{row.siteUId}}</div>
 </ng-template>
 <ng-template #siteNameTpl let-row let-i="index">
-  <div class="siteName" id="siteName">{{row.siteName}}</div>
+  <div class="siteName" id="siteName-{{i}}">{{row.siteName}}</div>
 </ng-template>
-<ng-template #unitsTpl let-row>
+<ng-template #unitsTpl let-row let-i="index">
   <div
     class="paragraph-sm"
-    id="units"
+    id="units-{{i}}-{{unit.microtingUid}}"
     *ngFor="let unit of row.units"
   >
     {{ unit.microtingUid }}&nbsp;
   </div>
 </ng-template>
-<ng-template #tagsTpl let-row>
-  <div id="tags">
+<ng-template #tagsTpl let-row let-i="index">
+  <div id="tags-{{i}}">
     <app-eform-tag [tags]="getTagsBySiteDto(row)"/>
   </div>
 </ng-template>
 <ng-template #actionsTpl let-row let-i="index">
   <div class="site-actions" id="action-items-{{i}}" *ngIf="!row.isLocked && ((selectCurrentUserCanDeleteSites$ | async) || (selectCurrentUserClaimsSitesUpdate$ | async))">
-    <button id="actionMenu" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
+    <button id="actionMenu{{i}}" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="{{ 'Actions' | translate }}">
       <mat-icon>more_vert</mat-icon>
     </button>
 

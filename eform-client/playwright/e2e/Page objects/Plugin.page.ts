@@ -115,7 +115,7 @@ export class PluginRowObject {
 
   private async clickActionsMenu() {
     await this.page.waitForTimeout(1000);
-    await this.page.locator('#actionMenu').nth(this.rowNumber).click();
+    await this.page.locator(`#actionMenu${this.rowNumber}`).click();
     await this.page.waitForTimeout(1000);
   }
 }

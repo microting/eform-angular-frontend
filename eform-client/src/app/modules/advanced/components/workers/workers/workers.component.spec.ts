@@ -1,4 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { WorkersComponent } from './workers.component';
 import { WorkersService } from 'src/app/common/services';
@@ -8,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { WorkerDto, OperationDataResult } from 'src/app/common/models';
+import { AppMenuStateService } from 'src/app/common/store';
 
 describe('WorkersComponent', () => {
   let component: WorkersComponent;
@@ -17,37 +20,47 @@ describe('WorkersComponent', () => {
   let mockStore: any;
   let mockTranslateService: any;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn()
+    };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
+    const mockAppMenuStateService = {
+      updateState: vi.fn(),
+      loadMobileMenuItems: vi.fn()
+    };
     mockWorkersService = {
-          getAllWorkers: jest.fn(),
+          getAllWorkers: vi.fn(),
         };
     mockDialog = {
-          open: jest.fn(),
+          open: vi.fn(),
         };
     mockStore = {
-          select: jest.fn(),
-          dispatch: jest.fn(),
+          select: vi.fn(),
+          dispatch: vi.fn(),
         };
-    mockTranslateService = {
-          stream: jest.fn(),
-        };
-    mockTranslateService.stream.mockReturnValue(of('Test'));
 
     // Setup store select to return observables
     mockStore.select.mockReturnValue(of(true));
 
     TestBed.configureTestingModule({
-      declarations: [WorkersComponent],
-      providers: [
+    imports: [FormsModule, WorkersComponent],
+    providers: [
         { provide: WorkersService, useValue: mockWorkersService },
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
         { provide: TranslateService, useValue: mockTranslateService },
+        { provide: AppMenuStateService, useValue: mockAppMenuStateService },
         { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
-  }));
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkersComponent);

@@ -1,5 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
+import {TranslatePipe} from '@ngx-translate/core';
+import {EformNewSubheaderComponent} from '../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
 
 /**
  * Shown for a URL that matches no route (#8103), instead of silently
@@ -9,7 +11,7 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-not-found',
   templateUrl: './not-found.component.html',
-  standalone: false,
+  imports: [EformNewSubheaderComponent, TranslatePipe],
 })
 export class NotFoundComponent {
   private router = inject(Router);

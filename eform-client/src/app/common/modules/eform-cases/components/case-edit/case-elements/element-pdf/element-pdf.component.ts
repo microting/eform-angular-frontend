@@ -3,6 +3,9 @@ import {DataItemDto} from 'src/app/common/models';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {TemplateFilesService} from 'src/app/common/services';
 import {Subscription} from 'rxjs';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -10,7 +13,7 @@ import {Subscription} from 'rxjs';
     selector: 'element-pdf',
     templateUrl: './element-pdf.component.html',
     styleUrls: ['./element-pdf.component.scss'],
-    standalone: false
+    imports: [MatButton, MatIcon, TranslatePipe]
 })
 export class ElementPdfComponent implements OnDestroy {
   private templateFilesService = inject(TemplateFilesService);

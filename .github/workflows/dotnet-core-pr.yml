@@ -70,6 +70,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 22
+    - name: Enable Corepack
+      run: corepack enable
     - name: yarn install
       run: cd eform-client && yarn install
     - name: Install Playwright browsers
@@ -148,9 +150,11 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 22
+    - name: Enable Corepack
+      run: corepack enable
     - name: Install dependencies
-      run: cd eform-client && yarn install --frozen-lockfile
-    - name: Run Jest unit tests
+      run: cd eform-client && yarn install --immutable
+    - name: Run unit tests
       run: cd eform-client && npm run test:ci
   test-dotnet:
     runs-on: ubuntu-latest

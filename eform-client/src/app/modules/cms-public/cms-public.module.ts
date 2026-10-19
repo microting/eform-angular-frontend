@@ -19,13 +19,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    LandingPageComponent,
-    CmsHeaderComponent,
-    CmsMenuItemComponent,
-    CmsPageViewComponent,
-    SafeHtmlPipe,
-  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -35,6 +28,11 @@ const routes: Routes = [
     MatSidenavModule,
     MatListModule,
     MatMenuModule,
+    LandingPageComponent,
+    CmsHeaderComponent,
+    CmsMenuItemComponent,
+    CmsPageViewComponent,
+    SafeHtmlPipe,
   ],
 })
 export class CmsPublicModule {}

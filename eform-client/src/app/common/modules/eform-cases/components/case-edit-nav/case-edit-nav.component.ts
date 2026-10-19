@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ElementDto} from 'src/app/common/models';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-case-edit-nav',
     templateUrl: './case-edit-nav.component.html',
-    standalone: false
+    imports: [NgFor, NgIf]
 })
 export class CaseEditNavComponent implements OnInit {
   @Input() element: ElementDto = new ElementDto();

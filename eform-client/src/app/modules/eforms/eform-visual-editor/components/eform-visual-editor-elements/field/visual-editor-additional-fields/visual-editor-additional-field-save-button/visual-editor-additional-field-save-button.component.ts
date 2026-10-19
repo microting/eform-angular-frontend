@@ -1,12 +1,20 @@
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import {EformVisualEditorFieldModel, LanguagesModel} from 'src/app/common/models';
 import {TranslationRequestModel, TranslationService} from 'src/app/common/services';
+import { NgFor, NgIf } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-visual-editor-additional-field-save-button',
     templateUrl: './visual-editor-additional-field-save-button.component.html',
     styleUrls: ['./visual-editor-additional-field-save-button.component.scss'],
-    standalone: false
+    imports: [NgFor, NgIf, MatCard, MatCardHeader, MatCardContent, MatIconButton, MatIcon, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, TranslatePipe]
 })
 export class VisualEditorAdditionalFieldSaveButtonComponent
   implements OnInit, OnDestroy {

@@ -4,15 +4,33 @@ import {
   PluginGroupPermissionsUpdateModel,
   SecurityGroupModel,
 } from 'src/app/common/models';
-import {FormBuilder, FormGroup, FormControl} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import {PluginPermissionsService} from 'src/app/common/services';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgIf, NgFor } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-installed-plugin-permissions',
-  templateUrl: './installed-plugin-permissions.component.html',
-  styleUrls: ['./installed-plugin-permissions.component.scss'],
-  standalone: false,
+    selector: 'app-installed-plugin-permissions',
+    templateUrl: './installed-plugin-permissions.component.html',
+    styleUrls: ['./installed-plugin-permissions.component.scss'],
+    imports: [
+        MatDialogTitle,
+        CdkScrollable,
+        MatDialogContent,
+        ReactiveFormsModule,
+        NgIf,
+        NgFor,
+        MatCard,
+        MatCardHeader,
+        MatCardContent,
+        MatCheckbox,
+        MatDialogActions,
+        TranslatePipe,
+    ],
 })
 
 export class InstalledPluginPermissionsComponent implements OnInit {

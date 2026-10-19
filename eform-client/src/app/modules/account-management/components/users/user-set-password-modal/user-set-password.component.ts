@@ -1,30 +1,36 @@
 import {Component, EventEmitter, OnInit, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import {UserInfoModel} from 'src/app/common/models';
-import {FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import {AuthService} from 'src/app/common/services';
 import {ChangePasswordAdminModel} from 'src/app/common/models/user/change-password-admin.model';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
-import {MatPasswordStrengthModule} from '@angular-material-extensions/password-strength';
-import {TranslateModule} from '@ngx-translate/core';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-user-set-password',
-  templateUrl: './user-set-password.component.html',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatPasswordStrengthModule,
-    TranslateModule,
-  ],
+    selector: 'app-user-set-password',
+    templateUrl: './user-set-password.component.html',
+    imports: [
+        MatDialogTitle,
+        CdkScrollable,
+        MatDialogContent,
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        MatInput,
+        MatIcon,
+        MatSuffix,
+        NgIf,
+        MatError,
+        MatPasswordStrengthModule,
+        MatDialogActions,
+        TranslatePipe
+    ]
 })
 export class UserSetPasswordComponent implements OnInit {
   private authService = inject(AuthService);

@@ -337,7 +337,7 @@ export class MyEformsRowObject {
     }
     try {
       const val = this.page.locator('#eform-label-' + (this.currentPosition)).first();
-      this.eFormName = await val.textContent();
+      this.eFormName = (await val.textContent())?.trim();
     } catch (e) {
     }
     this.tags = this.element.locator('.mat-column-tags mat-chip span span span.mat-mdc-chip-action-label');
@@ -364,7 +364,7 @@ export class MyEformsRowObject {
 
   private async clickActionsMenu() {
     await this.page.waitForTimeout(1000);
-    await this.page.locator('#actionMenu').nth(this.currentPosition).click();
+    await this.page.locator(`#actionMenu${this.currentPosition}`).click();
     await this.page.waitForTimeout(1000);
   }
 

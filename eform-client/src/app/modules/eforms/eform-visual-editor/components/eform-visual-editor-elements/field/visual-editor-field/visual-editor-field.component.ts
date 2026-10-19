@@ -12,16 +12,21 @@ import {
   getTranslatedTypes
 } from '../../../../const';
 import { LocaleService } from 'src/app/common/services';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {getRandomInt} from 'src/app/common/helpers';
 import {selectCurrentUserLanguageId} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import { NgIf, NgStyle, NgFor, NgClass } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatMiniFabButton, MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { DragulaModule } from 'ng2-dragula';
 
 @Component({
     selector: 'app-visual-editor-field',
     templateUrl: './visual-editor-field.component.html',
     styleUrls: ['./visual-editor-field.component.scss'],
-    standalone: false
+    imports: [NgIf, NgStyle, MatIcon, NgFor, MatMiniFabButton, MatTooltip, MatIconButton, DragulaModule, NgClass, TranslatePipe]
 })
 export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   private authStore = inject(Store);

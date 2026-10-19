@@ -1,4 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UnitsComponent } from './units.component';
 import { UnitsService } from 'src/app/common/services';
@@ -17,34 +19,39 @@ describe('UnitsComponent', () => {
   let mockStore: any;
   let mockTranslateService: any;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn()
+    };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
     mockUnitsService = {
-          getAllUnits: jest.fn(),
+          getAllUnits: vi.fn(),
         };
     mockDialog = {
-          open: jest.fn(),
+          open: vi.fn(),
         };
     mockStore = {
-          select: jest.fn(),
-          dispatch: jest.fn(),
+          select: vi.fn(),
+          dispatch: vi.fn(),
         };
-    mockTranslateService = {
-          stream: jest.fn(),
-        };
-    mockTranslateService.stream.mockReturnValue(of('Test'));
 
     TestBed.configureTestingModule({
-      declarations: [UnitsComponent],
-      providers: [
+    imports: [FormsModule, UnitsComponent],
+    providers: [
         { provide: UnitsService, useValue: mockUnitsService },
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
-  }));
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UnitsComponent);

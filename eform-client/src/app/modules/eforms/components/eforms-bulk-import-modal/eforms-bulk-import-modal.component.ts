@@ -1,19 +1,22 @@
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
-import {FileUploader} from 'ng2-file-upload';
+import { FileUploader, FileUploadModule } from 'ng2-file-upload';
 import {ToastrService} from 'ngx-toastr';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {LoaderService} from 'src/app/common/services/loader.service';
 import {AuthStateService} from 'src/app/common/store';
-import {MatDialogRef} from '@angular/material/dialog';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import {selectBearerToken, selectConnectionStringExists} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-eforms-bulk-import-modal',
     templateUrl: './eforms-bulk-import-modal.component.html',
     styleUrls: ['./eforms-bulk-import-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgIf, MatIcon, FileUploadModule, MtxGrid, MatDialogActions, AsyncPipe, TranslatePipe]
 })
 export class EformsBulkImportModalComponent implements OnInit {
   private toastrService = inject(ToastrService);

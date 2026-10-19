@@ -165,25 +165,26 @@ export class WorkersRowObject {
 
   getRow(rowNum: number) {
     this.index = rowNum;
+    const i = rowNum - 1;
     // @ts-ignore
-    if (cy.get('#workerUID').eq(rowNum - 1).should('exist')) {
+    if (cy.get(`#workerUID-${i}`).should('exist')) {
       // @ts-ignore
-      this.siteId = +(cy.get('#workerUID').eq(rowNum - 1).invoke('text'));
+      this.siteId = +(cy.get(`#workerUID-${i}`).invoke('text'));
       // @ts-ignore
-      this.firstName = cy.get('#workerFirstName').eq(rowNum - 1).invoke('text').catch(() => '');
+      this.firstName = cy.get(`#workerFirstName-${i}`).invoke('text').catch(() => '');
       // @ts-ignore
-      this.lastName = cy.get('#workerLastName').eq(rowNum - 1).invoke('text').catch(() => '');
+      this.lastName = cy.get(`#workerLastName-${i}`).invoke('text').catch(() => '');
       // @ts-ignore
-      this.editBtn = cy.get('[id^=workerEditBtn]').eq(rowNum - 1);
+      this.editBtn = cy.get('[id^=workerEditBtn]').eq(i);
       // @ts-ignore
-      this.deleteBtn = cy.get('[id^=workerDeleteBtn]').eq(rowNum - 1);
+      this.deleteBtn = cy.get('[id^=workerDeleteBtn]').eq(i);
     }
     return this;
   }
 
   openRowMenu() {
     const index = this.index - 1;
-    cy.get(`#action-items-${index} #actionMenu`).should('be.visible').click();
+    cy.get(`#actionMenu${index}`).should('be.visible').click();
     cy.wait(200);
   }
 }

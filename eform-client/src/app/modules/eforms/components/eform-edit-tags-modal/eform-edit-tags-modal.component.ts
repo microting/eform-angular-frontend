@@ -1,13 +1,18 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { EformTagService } from 'src/app/common/services/eform';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import {CommonDictionaryModel, TemplateDto, TemplateTagsUpdateModel} from 'src/app/common/models';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-eform-edit-tags-modal',
     templateUrl: './eform-edit-tags-modal.component.html',
     styleUrls: ['./eform-edit-tags-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MtxSelect, ReactiveFormsModule, FormsModule, MatDialogActions, TranslatePipe]
 })
 export class EformEditTagsModalComponent implements OnInit {
   private eFormTagService = inject(EformTagService);

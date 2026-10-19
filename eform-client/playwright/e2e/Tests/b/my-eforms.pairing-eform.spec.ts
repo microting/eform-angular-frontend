@@ -28,8 +28,12 @@ test.describe.serial('Main page', () => {
     // Create 2 device users
     await deviceUsersPage.createNewDeviceUser('testName1', 'testLastName1');
     await deviceUsersPage.createNewDeviceUser('testName2', 'testLastName2');
-    users.push(await deviceUsersPage.getDeviceUserByName('testName1'));
-    users.push(await deviceUsersPage.getDeviceUserByName('testName2'));
+    const user1 = await deviceUsersPage.getDeviceUserByName('testName1');
+    expect(user1).not.toBeNull();
+    users.push(user1);
+    const user2 = await deviceUsersPage.getDeviceUserByName('testName2');
+    expect(user2).not.toBeNull();
+    users.push(user2);
     await myEformsPage.Navbar.goToFolderPage();
     // Create folder
     await foldersPage.createNewFolder('test folder', 'desc');
@@ -49,16 +53,22 @@ test.describe.serial('Main page', () => {
     if (!page || page.isClosed()) return;
     await page.waitForTimeout(1000);
     const eform = await myEformsPage.getEformsRowObjByNameEForm('test Eform');
-    if (eform) {
+    if (eform != null) {
       await eform.deleteEForm();
     }
     await myEformsPage.Navbar.goToDeviceUsersPage();
     for (let i = 0; i < users.length; i++) {
-      await (await deviceUsersPage.getDeviceUserByName(users[i].firstName)).delete();
+      const user = await deviceUsersPage.getDeviceUserByName(users[i].firstName);
+      if (user != null) {
+        await user.delete();
+      }
     }
     await myEformsPage.Navbar.goToFolderPage();
     for (let i = 0; i < folders.length; i++) {
-      await (await foldersPage.getFolderByName(folders[i].name)).delete();
+      const folder = await foldersPage.getFolderByName(folders[i].name);
+      if (folder != null) {
+        await folder.delete();
+      }
     }
     await page.close();
   });
@@ -78,7 +88,7 @@ test.describe.serial('Main page', () => {
     expect(
       await page.locator('mat-tree-node > .selected-folder > div').textContent()
     ).toContain(`${folders[0].name}`);
-    const siteIds = await page.locator('#microtingId').all();
+    const siteIds = await page.locator('[id^="microtingId-"]').all();
     for (let i = 0; i < siteIds.length; i++) {
       const siteIdText = await siteIds[i].textContent();
       const index = users.findIndex(
@@ -98,7 +108,7 @@ test.describe.serial('Main page', () => {
     await page.waitForTimeout(1000);
     (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
     await loginPage.waitForSpinnerHide(40000);
-    const siteIds = await page.locator('#microtingId').all();
+    const siteIds = await page.locator('[id^="microtingId-"]').all();
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +(await siteIds[i].textContent())) {
         expect(

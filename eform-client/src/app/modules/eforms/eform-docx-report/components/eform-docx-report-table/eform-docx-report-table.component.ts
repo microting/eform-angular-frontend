@@ -1,16 +1,19 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild, inject } from '@angular/core';
 import { EformDocxReportItemModel } from 'src/app/common/models';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import * as R from 'ramda';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
+import { DateFormatterComponent } from '../../../../../common/modules/eform-shared/components/date-formatter/date-formatter.component';
+import { NgIf } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-eform-docx-report-table',
     templateUrl: './eform-docx-report-table.component.html',
     styleUrls: ['./eform-docx-report-table.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MtxGrid, DateFormatterComponent, NgIf, MatIcon]
 })
 export class EformDocxReportTableComponent implements OnInit, OnChanges {
   private router = inject(Router);

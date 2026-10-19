@@ -1,16 +1,19 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {EventType, NavigationEnd, Router} from '@angular/router';
+import { EventType, NavigationEnd, Router, RouterOutlet, RouterLink } from '@angular/router';
 import {LoginPageSettingsModel} from 'src/app/common/models';
 import {AppSettingsService} from 'src/app/common/services';
 import {GoogleAuthService} from 'src/app/common/services';
 import {take} from 'rxjs';
 import {filter} from 'rxjs/operators';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { NgIf } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-auth',
     styleUrls: ['./auth.component.scss'],
     templateUrl: './auth.component.html',
-    standalone: false
+    imports: [MatCard, MatCardHeader, NgIf, MatCardContent, RouterOutlet, RouterLink, TranslatePipe]
 })
 export class AuthComponent implements OnInit {
   private router = inject(Router);

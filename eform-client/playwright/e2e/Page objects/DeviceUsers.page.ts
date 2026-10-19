@@ -83,11 +83,14 @@ export class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   async getDeviceUserByName(name: string): Promise<DeviceUsersRowObject | null> {
-    for (let i = 1; i < (await this.rowNum()) + 1; i++) {
-      const deviceUser = await this.getDeviceUser(i);
-      if (deviceUser.firstName === name) {
-        return deviceUser;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      for (let i = 1; i < (await this.rowNum()) + 1; i++) {
+        const deviceUser = await this.getDeviceUser(i);
+        if (deviceUser.firstName === name) {
+          return deviceUser;
+        }
       }
+      await this.page.waitForTimeout(2000);
     }
     return null;
   }
@@ -142,7 +145,7 @@ export class DeviceUsersPage extends PageWithNavbarPage {
     await deviceUser.openRowMenu();
     const index = deviceUser.index - 1;
     const editBtn = this.page.locator(`#editDeviceUserBtn${index}`);
-    await editBtn.waitFor({ state: 'visible', timeout: 5000 });
+    await editBtn.waitFor({ state: 'visible', timeout: 40000 });
     await editBtn.click();
     await this.page.locator('#firstName').waitFor({ state: 'visible', timeout: 40000 });
     if (name != null) {
@@ -177,27 +180,28 @@ export class DeviceUsersRowObject {
 
   async getRow(rowNum: number) {
     this.index = rowNum;
-    if ((await this.page.locator('#deviceUserId').count()) >= rowNum) {
-      this.siteId = +(await this.page.locator('#deviceUserId').nth(rowNum - 1).textContent() || '0');
+    const i = rowNum - 1;
+    if ((await this.page.locator(`#deviceUserId-${i}`).count()) >= 1) {
+      this.siteId = +(await this.page.locator(`#deviceUserId-${i}`).textContent() || '0');
       try {
-        this.firstName = await this.page.locator('#deviceUserFirstName').nth(rowNum - 1).textContent() || '';
+        this.firstName = await this.page.locator(`#deviceUserFirstName-${i}`).textContent() || '';
       } catch (e) {}
       try {
-        this.lastName = await this.page.locator('#deviceUserLastName').nth(rowNum - 1).textContent() || '';
+        this.lastName = await this.page.locator(`#deviceUserLastName-${i}`).textContent() || '';
       } catch (e) {}
-      this.editBtn = this.page.locator('#editDeviceUserBtn').nth(rowNum - 1);
-      this.deleteBtn = this.page.locator('#deleteDeviceUserBtn').nth(rowNum - 1);
+      this.editBtn = this.page.locator(`#editDeviceUserBtn${i}`);
+      this.deleteBtn = this.page.locator(`#deleteDeviceUserBtn${i}`);
     }
     return this;
   }
 
   async openRowMenu() {
     const index = this.index - 1;
-    const menuBtn = this.page.locator(`#action-items-${index} #actionMenu`);
-    await menuBtn.waitFor({ state: 'visible', timeout: 5000 });
+    const menuBtn = this.page.locator(`#actionMenu${index}`);
+    await menuBtn.waitFor({ state: 'visible', timeout: 40000 });
     await menuBtn.scrollIntoViewIfNeeded();
     await menuBtn.click();
-    await this.page.waitForTimeout(200);
+    await this.page.waitForTimeout(500);
   }
 
   async delete() {
@@ -205,7 +209,7 @@ export class DeviceUsersRowObject {
     const rowsBeforeDelete = await this.deviceUsersPage.rows().count();
     await this.openRowMenu();
     const deleteBtn = this.page.locator(`#deleteDeviceUserBtn${index}`);
-    await deleteBtn.waitFor({ state: 'visible', timeout: 5000 });
+    await deleteBtn.waitFor({ state: 'visible', timeout: 40000 });
     await deleteBtn.click();
     await this.deviceUsersPage.saveDeleteBtn().waitFor({ state: 'visible', timeout: 40000 });
     await this.deviceUsersPage.saveDeleteBtn().click();

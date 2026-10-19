@@ -7,15 +7,24 @@ import {
 } from 'src/app/common/models/navigation-menu';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import { CommonDictionaryModel } from 'src/app/common/models';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgFor } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslatePipe } from '@ngx-translate/core';
 import {MenuLinkRouteService} from '../../../menu-link-route.service';
 
 @Component({
     selector: 'app-navigation-menu-item-edit',
     templateUrl: './navigation-menu-item-edit.component.html',
     styleUrls: ['./navigation-menu-item-edit.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatHint, MtxSelect, ReactiveFormsModule, FormsModule, MatInput, NgIf, MatIcon, MatCheckbox, MatTooltip, NgFor, MatDialogActions, TranslatePipe]
 })
 export class NavigationMenuItemEditComponent implements OnInit {
   dialogRef = inject<MatDialogRef<NavigationMenuItemEditComponent>>(MatDialogRef);

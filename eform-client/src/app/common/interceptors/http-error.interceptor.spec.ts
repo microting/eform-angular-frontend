@@ -1,3 +1,5 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import type { Mock } from 'vitest';
 import {TestBed} from '@angular/core/testing';
 import {
   HttpErrorResponse,
@@ -13,12 +15,9 @@ import {HttpErrorInterceptor} from './http-error.interceptor';
 import {AuthStateService} from 'src/app/common/store';
 import {LoaderService} from 'src/app/common/services';
 import * as Sentry from '@sentry/angular';
+import {environment} from 'src/environments/environment';
 
-// Sentry is off in the default (dev) environment; switch it on so the reporting rules run.
-jest.mock('../../../environments/environment', () => ({
-  environment: {production: false, enableSentry: true},
-}));
-jest.mock('@sentry/angular', () => ({captureException: jest.fn()}));
+vi.mock('@sentry/angular', () => ({captureException: vi.fn()}));
 
 /**
  * Hand-rolled HttpHandler: every call to handle() shifts one scripted outcome off the
@@ -47,23 +46,32 @@ const okResponse = (body: any = {ok: true}) =>
 
 describe('HttpErrorInterceptor', () => {
   let interceptor: HttpErrorInterceptor;
-  let authStateService: {refreshToken: jest.Mock; logout: jest.Mock};
-  let loaderService: {setLoading: jest.Mock};
-  let toastrService: {error: jest.Mock; warning: jest.Mock};
+  let authStateService: {refreshToken: Mock; logout: Mock};
+  let loaderService: {setLoading: Mock};
+  let toastrService: {error: Mock; warning: Mock};
 
   const url = '/api/templates/index';
   const request = new HttpRequest('GET', url, {
     headers: new HttpHeaders({Authorization: 'Bearer old-token'}),
   });
 
+  // Sentry is off in the default (dev) environment; switch it on so the reporting rules run.
+  // The environment file is bundled with the spec by the Angular test builder, so it cannot be
+  // replaced with vi.mock; flip the flag on the shared object instead and restore it afterwards.
+  const sentryWasEnabled = environment.enableSentry;
+  afterEach(() => {
+    environment.enableSentry = sentryWasEnabled;
+  });
+
   beforeEach(() => {
-    (Sentry.captureException as jest.Mock).mockClear();
+    environment.enableSentry = true;
+    (Sentry.captureException as Mock).mockClear();
     authStateService = {
-      refreshToken: jest.fn(),
-      logout: jest.fn(),
+      refreshToken: vi.fn(),
+      logout: vi.fn(),
     };
-    loaderService = {setLoading: jest.fn()};
-    toastrService = {error: jest.fn(), warning: jest.fn()};
+    loaderService = {setLoading: vi.fn()};
+    toastrService = {error: vi.fn(), warning: vi.fn()};
 
     TestBed.configureTestingModule({
       providers: [
@@ -195,7 +203,7 @@ describe('HttpErrorInterceptor', () => {
       run(new ScriptedHandler([() => httpError(status, url), () => okResponse()]));
 
       expect(Sentry.captureException).toHaveBeenCalledTimes(1);
-      const reported = (Sentry.captureException as jest.Mock).mock.calls[0][0];
+      const reported = (Sentry.captureException as Mock).mock.calls[0][0];
       expect(reported).toBeInstanceOf(HttpErrorResponse);
       expect(reported.status).toBe(status);
     });

@@ -1,12 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CaseStatusEnum } from 'src/app/common/const';
 import { StatusBarModel} from '../../../../models/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'status-bar-compact',
     templateUrl: './status-bar-compact.component.html',
     styleUrls: ['./status-bar-compact.component.scss'],
-    standalone: false
+    imports: [TranslatePipe]
 })
 export class StatusBarCompactComponent implements OnInit {
   statusBar: StatusBarModel = new StatusBarModel();

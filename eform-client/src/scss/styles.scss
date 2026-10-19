@@ -3,6 +3,53 @@
 @use "utilities" as *;
 @use "libs/index" as libs;
 
+// Fix Angular Material 21: mat-form-field subscript and bottom-align wrappers
+// can extend beyond the field's visual bounds and intercept pointer events
+// on adjacent elements (dialog buttons, overlapping siblings).
+.mat-mdc-form-field-subscript-wrapper,
+.mat-mdc-form-field-bottom-align {
+  pointer-events: none;
+}
+
+// Ensure dialog action buttons are always clickable above form fields
+[mat-dialog-actions], .mat-mdc-dialog-actions {
+  position: relative;
+  z-index: 1;
+}
+
+// Fix ng-select dropdown panels (appended to body by mtx-select) being hidden
+// behind CDK overlay container (z-index: 1000) when used inside dialogs.
+// Use z-index higher than cdk-overlay-container (1000) and cdk-overlay-pane (1000).
+ng-dropdown-panel, .ng-dropdown-panel {
+  z-index: 1100 !important;
+}
+
+// Prevent mat-form-field from creating a stacking context that intercepts
+// clicks on ng-select/mtx-select dropdown panels appended to body.
+// The .mdc-text-field has will-change: opacity, transform, color which creates
+// a stacking context; this must be removed so the dropdown panel (z-index: 1100)
+// renders above the form field.
+.mat-mdc-form-field.mat-focused {
+  z-index: auto !important;
+}
+.mdc-text-field {
+  will-change: auto !important;
+}
+
+// Ensure expanded mat-expansion-panel content and child tree nodes are visible
+// Angular Material/CDK 21 applies visibility: hidden to collapsed tree nodes
+// and expansion panel content. Override when expanded.
+// (Kept at top level, outside master's body.theme-eform scope, so it applies to every theme.)
+.mat-expansion-panel.mat-expanded > .mat-expansion-panel-content {
+  visibility: visible !important;
+}
+
+.mat-expansion-panel.mat-expanded .mat-tree-node,
+.mat-expansion-panel.mat-expanded .cdk-tree-node,
+.mat-expansion-panel.mat-expanded mat-tree-node {
+  visibility: visible !important;
+}
+
 $eform-font-family: "Nunito Sans", Roboto, "Helvetica Neue", sans-serif;
 $eform-font-family-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
 // h-100 for base elements
@@ -879,7 +926,7 @@ ngx-material-timepicker-container {
 }
 
 .cdk-overlay-backdrop {
-  background-color: rgba(0, 0, 0, 1) !important;
+  background-color: rgba(0, 0, 0, 0.32) !important;
 }
 
 

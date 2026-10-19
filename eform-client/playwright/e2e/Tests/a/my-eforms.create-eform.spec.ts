@@ -32,6 +32,7 @@ test.describe.serial('My eforms', () => {
     const newEformLabel = Guid.create().toString();
     await myEformsPage.createNewEform(newEformLabel);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    expect(eform).not.toBeNull();
     expect(await eform.tags.count()).toBe(0);
     const countBeforeDelete = await myEformsPage.rowNum();
     await eform.deleteEForm();
@@ -46,6 +47,7 @@ test.describe.serial('My eforms', () => {
     await myEformsPage.createNewEform(newEformLabel, [createdTag]);
     arrayNamesTag.push(createdTag);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    expect(eform).not.toBeNull();
     expect(await eform.tags.count()).toBe(1);
     expect((await eform.tags.first().textContent())?.trim()).toBe(createdTag);
     const countBeforeDelete = await myEformsPage.rowNum();
@@ -61,6 +63,7 @@ test.describe.serial('My eforms', () => {
     await myEformsPage.createNewEform(newEformLabel, createdTags);
     arrayNamesTag = [...arrayNamesTag, ...createdTags];
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    expect(eform).not.toBeNull();
     const tagCount = await eform.tags.count();
     let tagsTexts = [];
     for (let i = 0; i < tagCount; i++) {
@@ -81,6 +84,7 @@ test.describe.serial('My eforms', () => {
     const addedAndSelectedTags = await myEformsPage.createNewEform(newEformLabel, createdTags, tagAddedNum);
     arrayNamesTag = [...arrayNamesTag, ...createdTags];
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    expect(eform).not.toBeNull();
     const tagCount = await eform.tags.count();
     let tagsTexts = [];
     for (let i = 0; i < tagCount; i++) {
@@ -100,6 +104,7 @@ test.describe.serial('My eforms', () => {
     const tagAddedNum = 1;
     const addedAndSelectedTags = await myEformsPage.createNewEform(newEformLabel, [], tagAddedNum);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    expect(eform).not.toBeNull();
     const tagCount = await eform.tags.count();
     let tagsTexts = [];
     for (let i = 0; i < tagCount; i++) {
@@ -118,6 +123,7 @@ test.describe.serial('My eforms', () => {
     const tagAddedNum = 2;
     const addedAndSelectedTags = await myEformsPage.createNewEform(newEformLabel, [], tagAddedNum);
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
+    expect(eform).not.toBeNull();
     const tagCount = await eform.tags.count();
     let tagsTexts = [];
     for (let i = 0; i < tagCount; i++) {

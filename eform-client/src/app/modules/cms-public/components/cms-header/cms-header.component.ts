@@ -4,9 +4,15 @@ import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {CmsMenuItemModel, CmsMenuModel} from 'src/app/common/models';
+import {AsyncPipe, NgFor, NgIf} from '@angular/common';
+import {MatToolbar} from '@angular/material/toolbar';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatListItem, MatNavList} from '@angular/material/list';
 
 @Component({
-  standalone: false,
+  imports: [NgIf, NgFor, AsyncPipe, MatToolbar, MatButton, MatIconButton, MatIcon, MatMenu, MatMenuItem, MatMenuTrigger, MatNavList, MatListItem],
   selector: 'app-cms-header',
   templateUrl: './cms-header.component.html',
   styleUrls: ['./cms-header.component.scss'],

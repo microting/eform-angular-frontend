@@ -6,12 +6,18 @@ import {
 import {take} from 'rxjs';
 import {selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
 import {Store} from '@ngrx/store';
+import { MatCard, MatCardHeader } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { NgIf } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-navigation-menu-item',
     templateUrl: './navigation-menu-item.component.html',
     styleUrls: ['./navigation-menu-item.component.scss'],
-    standalone: false
+    imports: [MatCard, MatCardHeader, MatIcon, MatIconButton, NgIf, MatTooltip, TranslatePipe]
 })
 export class NavigationMenuItemComponent implements OnInit {
   private authStore = inject(Store);

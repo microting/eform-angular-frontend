@@ -1,12 +1,17 @@
 import { Component, OnInit, EventEmitter, inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import {DeleteModalSettingModel} from 'src/app/common/models';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, DatePipe } from '@angular/common';
+import { DateFormatterComponent } from '../date-formatter/date-formatter.component';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-delete-modal',
     templateUrl: './delete-modal.component.html',
     styleUrls: ['./delete-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, NgFor, NgSwitch, NgSwitchCase, DateFormatterComponent, NgSwitchDefault, MatDialogActions, MatButton, DatePipe, TranslatePipe]
 })
 export class DeleteModalComponent implements OnInit {
   dialogRef = inject<MatDialogRef<DeleteModalComponent>>(MatDialogRef);

@@ -1,13 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {MarketplacePluginModel} from 'src/app/common/models';
 import {PluginsManagementService} from 'src/app/common/services';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-plugins-marketplace-install',
     templateUrl: './marketplace-plugin-install.component.html',
     styleUrls: ['./marketplace-plugin-install.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, TranslatePipe]
 })
 export class MarketplacePluginInstallComponent implements OnInit {
   private pluginManagementService = inject(PluginsManagementService);

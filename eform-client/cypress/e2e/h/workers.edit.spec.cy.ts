@@ -50,12 +50,12 @@ describe('Workers page - Edit worker', function () {
     const newFirstName = 'Foo';
     const newLastName = 'Bar';
 
-    cy.get('#workerFirstName').should('be.visible');
+    cy.get('[id^="workerFirstName-"]').should('be.visible');
 
     // Get last worker data before edit
-    cy.get('#workerFirstName').last().invoke('text').then((oldFirstName) => {
+    cy.get('[id^="workerFirstName-"]').last().invoke('text').then((oldFirstName) => {
       // Open action menu and click edit button on last row
-      cy.get('[id^=action-items-] #actionMenu').last().should('be.visible').click();
+      cy.get('[id^=action-items-] [id^=actionMenu]').last().should('be.visible').click();
       cy.wait(200);
       cy.get('[id^=workerEditBtn]').last().should('be.visible').click();
       cy.get('#firstName').should('be.visible');
@@ -71,8 +71,8 @@ describe('Workers page - Edit worker', function () {
       cy.get('#workerCreateBtn').should('be.visible');
 
       // Verify changes
-      cy.get('#workerFirstName').last().should('have.text', newFirstName);
-      cy.get('#workerLastName').last().should('have.text', newLastName);
+      cy.get('[id^="workerFirstName-"]').last().should('have.text', newFirstName);
+      cy.get('[id^="workerLastName-"]').last().should('have.text', newLastName);
     });
   });
 
@@ -80,10 +80,10 @@ describe('Workers page - Edit worker', function () {
     const newFirstName = 'tóíǻøæ';
     const newLastName = '¡@£$½';
 
-    cy.get('#workerFirstName').should('be.visible');
+    cy.get('[id^="workerFirstName-"]').should('be.visible');
 
     // Open action menu and click edit button on last row
-    cy.get('[id^=action-items-] #actionMenu').last().should('be.visible').click();
+    cy.get('[id^=action-items-] [id^=actionMenu]').last().should('be.visible').click();
     cy.wait(200);
     cy.get('[id^=workerEditBtn]').last().should('be.visible').click();
     cy.get('#firstName').should('be.visible');
@@ -99,8 +99,8 @@ describe('Workers page - Edit worker', function () {
     cy.get('#workerCreateBtn').should('be.visible');
 
     // Verify changes
-    cy.get('#workerFirstName').last().should('have.text', newFirstName);
-    cy.get('#workerLastName').last().should('have.text', newLastName);
+    cy.get('[id^="workerFirstName-"]').last().should('have.text', newFirstName);
+    cy.get('[id^="workerLastName-"]').last().should('have.text', newLastName);
   });
 
   it('should not change worker if cancel was clicked', () => {
@@ -109,11 +109,11 @@ describe('Workers page - Edit worker', function () {
 
     // Get count and data before edit
     workersPage.rowNum().then((rowNumBeforeEdit) => {
-      cy.get('#workerFirstName').last().invoke('text').then((oldFirstName) => {
-        cy.get('#workerLastName').last().invoke('text').then((oldLastName) => {
+      cy.get('[id^="workerFirstName-"]').last().invoke('text').then((oldFirstName) => {
+        cy.get('[id^="workerLastName-"]').last().invoke('text').then((oldLastName) => {
 
           // Open action menu and click edit button on last row
-          cy.get('[id^=action-items-] #actionMenu').last().should('be.visible').click();
+          cy.get('[id^=action-items-] [id^=actionMenu]').last().should('be.visible').click();
           cy.wait(200);
           cy.get('[id^=workerEditBtn]').last().should('be.visible').click();
           cy.get('#firstName').should('be.visible');
@@ -130,8 +130,8 @@ describe('Workers page - Edit worker', function () {
             expect(rowNumBeforeEdit).to.equal(rowNumAfterEdit);
           });
 
-          cy.get('#workerFirstName').last().should('have.text', oldFirstName);
-          cy.get('#workerLastName').last().should('have.text', oldLastName);
+          cy.get('[id^="workerFirstName-"]').last().should('have.text', oldFirstName);
+          cy.get('[id^="workerLastName-"]').last().should('have.text', oldLastName);
         });
       });
     });
@@ -140,7 +140,7 @@ describe('Workers page - Edit worker', function () {
   after(() => {
     // Clean up: Delete the test worker - open action menu first
     cy.intercept('POST', '**/api/workers/delete').as('deleteWorker');
-    cy.get('[id^=action-items-] #actionMenu').last().should('be.visible').click();
+    cy.get('[id^=action-items-] [id^=actionMenu]').last().should('be.visible').click();
     cy.wait(200);
     cy.get('[id^=workerDeleteBtn]').last().should('be.visible').click();
     cy.get('#deleteWorkerDeleteBtn').should('be.visible').click();
@@ -151,10 +151,10 @@ describe('Workers page - Edit worker', function () {
     deviceUsersPage.Navbar.goToDeviceUsersPage();
     cy.get('#newDeviceUserBtn').should('be.visible');
     
-    cy.get('#deviceUserFirstName').each(($el, index) => {
+    cy.get('[id^="deviceUserFirstName-"]').each(($el, index) => {
       if ($el.text() === deviceUserFirstName) {
         cy.intercept('POST', '**/api/device-users/delete').as('deleteUser');
-        cy.get(`#action-items-${index} #actionMenu`).should('be.visible').click();
+        cy.get(`#action-items-${index} [id^=actionMenu]`).should('be.visible').click();
         cy.wait(200);
         cy.get(`#deleteDeviceUserBtn${index}`).should('be.visible').click();
         cy.get('#saveDeleteBtn').should('be.visible').click();

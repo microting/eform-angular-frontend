@@ -22,8 +22,7 @@ import * as pell from './pell-pn';
              padding: 0;
            }
          `,
-    ],
-    standalone: false
+    ]
 })
 export class PellPnComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() actions: Array<Object> = [];

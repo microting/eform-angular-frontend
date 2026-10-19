@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
-import {FormattingTextEditorModule} from 'src/app/common/modules/eform-imported/formatting-text-editor/formatting-text-editor.module';
+import {FormattingTextEditorComponent} from 'src/app/common/modules/eform-imported/formatting-text-editor/formatting-text-editor.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
@@ -33,21 +33,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    CmsContainerComponent,
-    CmsSettingsComponent,
-    CmsPagesListComponent,
-    CmsPageEditComponent,
-    CmsMenusListComponent,
-    CmsMenuEditComponent,
-    CmsMenuItemDialogComponent,
-  ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    FormattingTextEditorModule,
+    FormattingTextEditorComponent,
     DragDropModule,
     MatTabsModule,
     MatTableModule,
@@ -61,6 +52,13 @@ const routes: Routes = [
     MatDialogModule,
     MatChipsModule,
     MatTooltipModule,
+    CmsContainerComponent,
+    CmsSettingsComponent,
+    CmsPagesListComponent,
+    CmsPageEditComponent,
+    CmsMenusListComponent,
+    CmsMenuEditComponent,
+    CmsMenuItemDialogComponent,
   ],
   providers: [
     CmsService,

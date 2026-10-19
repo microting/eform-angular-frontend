@@ -5,13 +5,16 @@ import {
 } from 'src/app/common/models';
 import { InstalledPluginStatusEnum } from 'src/app/common/const';
 import { PluginsManagementService } from 'src/app/common/services';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-installed-plugin-modal',
     templateUrl: './installed-plugin-modal.component.html',
     styleUrls: ['./installed-plugin-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, TranslatePipe]
 })
 export class InstalledPluginModalComponent implements OnInit {
   private pluginManagementService = inject(PluginsManagementService);

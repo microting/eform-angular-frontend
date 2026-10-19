@@ -133,12 +133,12 @@ export class SitesRowObject {
     this.index = rowNum;
     this.element = this.page.locator('tbody > tr').nth(rowNum - 1);
     if ((await this.page.locator('tbody > tr').count()) >= rowNum) {
-      this.siteId = +(await this.element.locator('#siteUUId').first().textContent() || '0');
-      this.units = await this.element.locator('#units').first().textContent() || '';
-      this.siteName = await this.element.locator('#siteName').first().textContent() || '';
+      this.siteId = +(await this.page.locator(`#siteUUId-${rowNum - 1}`).textContent() || '0');
+      this.units = await this.page.locator(`[id^="units-${rowNum - 1}-"]`).first().textContent() || '';
+      this.siteName = await this.page.locator(`#siteName-${rowNum - 1}`).textContent() || '';
       let list: Locator | null = null;
       try {
-        list = this.element.locator('#tags').locator('span');
+        list = this.page.locator(`#tags-${rowNum - 1}`).locator('span');
       } catch (e) {
       }
       if (list) {
@@ -157,7 +157,7 @@ export class SitesRowObject {
 
   async openRowMenu() {
     const index = this.index - 1;
-    const menuBtn = this.page.locator(`#action-items-${index} #actionMenu`);
+    const menuBtn = this.page.locator(`#actionMenu${index}`);
     await menuBtn.waitFor({ state: 'visible', timeout: 5000 });
     await menuBtn.scrollIntoViewIfNeeded();
     await menuBtn.click();

@@ -22,7 +22,7 @@ const CmsMethods = {
   Menus: 'api/cms/menus',
 };
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CmsService {
   private apiBaseService = inject(ApiBaseService);
 

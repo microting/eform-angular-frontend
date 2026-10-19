@@ -50,8 +50,7 @@ test.describe('Device users page', () => {
 
   test('should not delete if cancel was clicked', async () => {
     await page
-      .locator('#deviceUserId')
-      .first()
+      .locator('#deviceUserId-0')
       .waitFor({ state: 'visible', timeout: 40000 });
     const rowNumBeforeDelete = await deviceUsersPage.rowNum();
     const lastDeviceUser = await deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
@@ -71,8 +70,7 @@ test.describe('Device users page', () => {
 
   test('should delete user', async () => {
     await page
-      .locator('#deviceUserId')
-      .first()
+      .locator('#deviceUserId-0')
       .waitFor({ state: 'visible', timeout: 40000 });
     const rowNumBeforeDelete = await deviceUsersPage.rowNum();
     const lastDeviceUser = await deviceUsersPage.getDeviceUser(rowNumBeforeDelete);

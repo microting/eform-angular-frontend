@@ -1,11 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  AbstractControl, FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import {Router} from '@angular/router';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {Router, RouterLink} from '@angular/router';
 import {
   GoogleAuthenticatorModel,
   LoginRequestModel,
@@ -15,16 +10,17 @@ import {filter} from 'rxjs/operators';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription, take} from 'rxjs';
 import {TitleService, GoogleAuthService, AppSettingsService} from 'src/app/common/services';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth} from 'src/app/state';
 import {applicationLanguages} from "src/app/common/const";
+import { NgIf } from '@angular/common';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    standalone: false
+    imports: [ReactiveFormsModule, NgIf, RouterLink, TranslatePipe]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private router = inject(Router);

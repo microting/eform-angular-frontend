@@ -1,16 +1,22 @@
 import {Component, EventEmitter, Input, OnInit, Output, inject} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {Paged} from 'src/app/common/models/common';
 import {SecurityGroupModel} from 'src/app/common/models/security';
 import {UserRegisterModel} from 'src/app/common/models/user';
 import {AdminService} from 'src/app/common/services/users';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-user-modal',
-  templateUrl: './user-modal.component.html',
-  styleUrls: ['./user-modal.component.scss'],
-  standalone: false
+    selector: 'app-user-modal',
+    templateUrl: './user-modal.component.html',
+    styleUrls: ['./user-modal.component.scss'],
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, NgIf, MtxSelect, MatDialogActions, TranslatePipe]
 })
 export class UserModalComponent implements OnInit {
   private fb = inject(FormBuilder);

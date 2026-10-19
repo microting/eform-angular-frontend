@@ -197,8 +197,10 @@ test.describe.serial('Visual editor page', () => {
       ],
     };
     await eformVisualEditorPage.createVisualTemplate(checklist);
+    await page.locator('[id*=field_]').first().waitFor({ state: 'visible', timeout: 40000 });
     let mainCheckListRowObj = new MainCheckListRowObj(page, eformVisualEditorPage);
     await mainCheckListRowObj.getAllFields();
+    expect(mainCheckListRowObj.fields.length).toBeGreaterThan(0);
     await mainCheckListRowObj.fields[0].changeColor('red');
     // Reload data after changeColor to ensure DOM is synchronized before saving
     mainCheckListRowObj = new MainCheckListRowObj(page, eformVisualEditorPage);

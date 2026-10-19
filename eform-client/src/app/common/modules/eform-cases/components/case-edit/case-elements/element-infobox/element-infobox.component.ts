@@ -4,8 +4,7 @@ import {FieldValueDto} from 'src/app/common/models';
 @Component({
     selector: 'element-infobox',
     templateUrl: './element-infobox.component.html',
-    styleUrls: ['./element-infobox.component.scss'],
-    standalone: false
+    styleUrls: ['./element-infobox.component.scss']
 })
 export class ElementInfoboxComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();

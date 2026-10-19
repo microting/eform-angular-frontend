@@ -1,8 +1,10 @@
 import {Component, Input} from '@angular/core';
 import {CmsMenuItemModel} from 'src/app/common/models';
+import {NgFor} from '@angular/common';
+import {MatListItem} from '@angular/material/list';
 
 @Component({
-  standalone: false,
+  imports: [NgFor, MatListItem],
   selector: 'app-cms-menu-item',
   template: `
     <mat-list-item (click)="navigate(item)">{{ item.title }}</mat-list-item>

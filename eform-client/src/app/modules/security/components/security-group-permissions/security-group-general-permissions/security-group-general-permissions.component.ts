@@ -6,12 +6,19 @@ import {
   SecurityGroupGeneralPermissionsUpdateModel,
 } from 'src/app/common/models/security/group-permissions/general';
 import { SecurityGroupGeneralPermissionsService } from 'src/app/common/services/security';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgFor, NgClass, NgStyle } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-security-group-general-permissions',
     templateUrl: './security-group-general-permissions.component.html',
     styleUrls: ['./security-group-general-permissions.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatTooltip, NgFor, NgClass, MatCard, MatCardHeader, MatCardContent, NgStyle, MatCheckbox, ReactiveFormsModule, FormsModule, TranslatePipe]
 })
 export class SecurityGroupGeneralPermissionsComponent implements OnInit {
   private securityGroupGeneralPermissionsService = inject(SecurityGroupGeneralPermissionsService);

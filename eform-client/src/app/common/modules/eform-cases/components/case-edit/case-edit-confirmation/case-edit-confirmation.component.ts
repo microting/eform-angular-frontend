@@ -1,12 +1,14 @@
 import { Component, EventEmitter, OnInit, inject } from '@angular/core';
 import {Subject} from 'rxjs';
-import {MatDialogRef} from '@angular/material/dialog';
+import { MatDialogRef, MatDialogTitle, MatDialogActions } from '@angular/material/dialog';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-case-edit-confirmation',
     templateUrl: './case-edit-confirmation.component.html',
     styleUrls: ['./case-edit-confirmation.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, MatDialogActions, MatButton, TranslatePipe]
 })
 export class CaseEditConfirmationComponent implements OnInit {
   dialogRef = inject<MatDialogRef<CaseEditConfirmationComponent>>(MatDialogRef);

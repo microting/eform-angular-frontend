@@ -6,14 +6,14 @@ import {
 } from 'src/app/common/models';
 import {EntitySelectStateService} from '../store';
 import {Sort} from '@angular/material/sort';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {EntitySelectRemoveComponent} from '../';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {
   selectCurrentUserClaimsEntitySelectCreate,
@@ -25,13 +25,24 @@ import {
   selectEntitySelectSort,
   updateEntitySelectTotal
 } from 'src/app/state';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { EformPaginationComponent } from '../../../../../common/modules/eform-shared/components/eform-pagination/eform-pagination.component';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-selectable-list',
     templateUrl: './entity-select.component.html',
     styleUrls: ['./entity-select.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MatIcon, MatSuffix, NgIf, MatTooltip, RouterLink, MtxGrid, MatIconButton, MatMenuTrigger, MatMenu, MatMenuItem, EformPaginationComponent, AsyncPipe, TranslatePipe]
 })
 export class EntitySelectComponent implements OnInit, OnDestroy {
   private store = inject(Store);

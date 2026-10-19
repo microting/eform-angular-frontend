@@ -29,10 +29,10 @@ describe('Device users page - Delete device user', function () {
     cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
 
     deviceUsersPage.rowNum().then((rowNumBeforeDelete) => {
-      cy.get('#deviceUserId').should('be.visible');
+      cy.get('[id^="deviceUserId-"]').should('be.visible');
 
       // Click delete button on last row
-      cy.get('#deleteDeviceUserBtn').last().should('be.visible').click();
+      cy.get('[id^="deleteDeviceUserBtn"]').last().should('be.visible').click();
       cy.get('#cancelDeleteBtn').should('be.visible').click();
 
       // Ensure table is visible before counting rows
@@ -49,12 +49,12 @@ describe('Device users page - Delete device user', function () {
     cy.get('tbody > tr', { timeout: 10000 }).should('have.length.gt', 0);
 
     deviceUsersPage.rowNum().then((rowNumBeforeDelete) => {
-      cy.get('#deviceUserId').should('be.visible');
+      cy.get('[id^="deviceUserId-"]').should('be.visible');
 
       // Click delete button on last row
       cy.intercept('DELETE', '**/api/device-users/delete/*').as('deleteUser');
       cy.intercept('POST', '**/api/device-users/index').as('reloadAfterDelete');
-      cy.get('#deleteDeviceUserBtn').last().should('be.visible').click();
+      cy.get('[id^="deleteDeviceUserBtn"]').last().should('be.visible').click();
       cy.get('#saveDeleteBtn').should('be.visible').click();
       cy.wait('@deleteUser', { timeout: 30000 });
       cy.wait('@reloadAfterDelete', { timeout: 30000 });

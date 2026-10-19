@@ -9,6 +9,7 @@ import {
   RemoveUserModalComponent,
   ConfirmEmailModalComponent,
   UsersPageComponent,
+  UserSetPasswordComponent,
 } from './components';
 import {AccountManagementRouting} from './account-management.routing';
 import {TranslateModule} from '@ngx-translate/core';
@@ -51,13 +52,12 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
         MatMenu,
         MatMenuItem,
         MatMenuTrigger,
-    ],
-    declarations: [
         ChangePasswordComponent,
         ProfileSettingsComponent,
         UsersPageComponent,
         UserModalComponent,
         RemoveUserModalComponent,
+        UserSetPasswordComponent,
         ConfirmEmailModalComponent,
     ],
 })

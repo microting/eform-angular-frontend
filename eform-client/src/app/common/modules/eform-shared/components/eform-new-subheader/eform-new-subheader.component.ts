@@ -1,10 +1,12 @@
 import { Component, Input, OnInit, OnDestroy, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { AppMenuStateService } from 'src/app/common/store';
 import {TitleService} from 'src/app/common/services';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
+import { MatCard } from '@angular/material/card';
+import { NgIf, NgFor } from '@angular/common';
 
 @AutoUnsubscribe()
 @Component({
@@ -12,7 +14,7 @@ import {Subscription} from 'rxjs';
     selector: 'eform-new-subheader',
     templateUrl: './eform-new-subheader.component.html',
     styleUrls: ['./eform-new-subheader.component.scss'],
-    standalone: false
+    imports: [MatCard, NgIf, NgFor, RouterLink, TranslatePipe]
 })
 export class EformNewSubheaderComponent implements OnInit, OnDestroy {
   private router = inject(Router);

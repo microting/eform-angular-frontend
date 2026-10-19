@@ -6,9 +6,12 @@ import {map, catchError} from 'rxjs/operators';
 import {CmsPublicLandingModel} from 'src/app/common/models';
 import {CmsService} from 'src/app/common/services/cms/cms.service';
 import {selectIsMenuSticky} from 'src/app/state/cms';
+import {AsyncPipe, NgIf} from '@angular/common';
+import {CmsHeaderComponent} from '../cms-header/cms-header.component';
+import {SafeHtmlPipe} from '../../pipes/safe-html.pipe';
 
 @Component({
-  standalone: false,
+  imports: [NgIf, AsyncPipe, CmsHeaderComponent, SafeHtmlPipe],
   selector: 'app-cms-page-view',
   templateUrl: './cms-page-view.component.html',
   styleUrls: ['./cms-page-view.component.scss'],

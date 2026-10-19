@@ -5,6 +5,9 @@ import {FieldValueDto} from 'src/app/common/models';
 import {TemplateFilesService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { MatCard, MatCardContent, MatCardImage } from '@angular/material/card';
+import { AuthImagePipe } from 'src/app/common/pipes';
 
 
 @AutoUnsubscribe()
@@ -12,7 +15,7 @@ import {Subscription} from 'rxjs';
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-signature',
     templateUrl: './element-signature.component.html',
-    standalone: false
+    imports: [NgFor, MatCard, MatCardContent, MatCardImage, AuthImagePipe, AsyncPipe]
 })
 export class ElementSignatureComponent implements OnChanges, OnDestroy {
   gallery = inject(Gallery);

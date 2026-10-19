@@ -1,7 +1,9 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { firstValueFrom, of } from 'rxjs';
@@ -21,29 +23,37 @@ describe('SitesComponent', () => {
   let mockStore: any;
   let mockSitesService: any;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     mockStore = {
-      select: jest.fn(),
-      dispatch: jest.fn(),
+      select: vi.fn(),
+      dispatch: vi.fn(),
     };
     mockSitesService = {
-      getAllSites: jest.fn(),
+      getAllSites: vi.fn(),
     };
 
-    TestBed.configureTestingModule({
-      declarations: [SitesComponent, MockTranslatePipe, MockMtxGridComponent, MockMatMenuComponent],
+    await TestBed.configureTestingModule({
+      imports: [SitesComponent],
       providers: [
         { provide: Store, useValue: mockStore },
         { provide: SitesService, useValue: mockSitesService },
         { provide: AuthStateService, useValue: {} },
-        { provide: EformTagService, useValue: { getAvailableTags: jest.fn().mockReturnValue(of({ success: true, model: [] })) } },
-        { provide: MatDialog, useValue: { open: jest.fn() } },
-        { provide: TranslateService, useValue: { stream: jest.fn().mockReturnValue(of('Test')) } },
+        { provide: EformTagService, useValue: { getAvailableTags: vi.fn().mockReturnValue(of({ success: true, model: [] })) } },
+        { provide: MatDialog, useValue: { open: vi.fn() } },
+        { provide: TranslateService, useValue: { stream: vi.fn().mockReturnValue(of('Test')) } },
         { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } },
       ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
-  }));
+    })
+      // Only the stand-ins from test-helpers plus the common directives; every other child
+      // stays an unknown element, as it did before the component went standalone.
+      .overrideComponent(SitesComponent, {
+        set: {
+          imports: [NgFor, NgIf, AsyncPipe, MockMtxGridComponent, MockMatMenuComponent, MockTranslatePipe],
+          schemas: [NO_ERRORS_SCHEMA],
+        },
+      })
+      .compileComponents();
+  });
 
   // The component reads the store in its field initialisers, so the auth state has to be
   // in place before the component is created.

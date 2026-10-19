@@ -42,6 +42,7 @@ test.describe('Application settings page - site header section', () => {
   });
 
   test('should change secondary text', async () => {
+    await loginPage.open('/auth');
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
     await loginPage.waitForSpinnerHide(40000);
@@ -61,6 +62,7 @@ test.describe('Application settings page - site header section', () => {
   });
 
   test('should hide main text', async () => {
+    await loginPage.open('/auth');
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
     await loginPage.waitForSpinnerHide(40000);
@@ -78,6 +80,7 @@ test.describe('Application settings page - site header section', () => {
   });
 
   test('should hide secondary text', async () => {
+    await loginPage.open('/auth');
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
     await loginPage.waitForSpinnerHide(40000);
@@ -95,6 +98,7 @@ test.describe('Application settings page - site header section', () => {
   });
 
   test('should hide image', async () => {
+    await loginPage.open('/auth');
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
     await loginPage.waitForSpinnerHide(40000);
@@ -112,6 +116,7 @@ test.describe('Application settings page - site header section', () => {
   });
 
   test('should reset main text', async () => {
+    await loginPage.open('/auth');
     await loginPage.login();
     await myEformsPage.Navbar.goToApplicationSettings();
     await loginPage.waitForSpinnerHide(40000);

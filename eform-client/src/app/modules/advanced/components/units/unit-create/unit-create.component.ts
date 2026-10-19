@@ -3,13 +3,19 @@ import {SiteDto, UnitModel} from 'src/app/common/models';
 import {UnitsService} from 'src/app/common/services';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 import {DeviceUserRequestModel} from 'src/app/common/models';
-import {MatDialogRef} from '@angular/material/dialog';
+import { MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-unit-create',
     templateUrl: './unit-create.component.html',
     styleUrls: ['./unit-create.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MtxSelect, ReactiveFormsModule, FormsModule, MatDialogActions, MatButton, TranslatePipe]
 })
 export class UnitCreateComponent implements OnInit {
   private simpleSitesService = inject(DeviceUserService);

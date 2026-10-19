@@ -2,20 +2,26 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {UnitDto} from 'src/app/common/models';
 import {UnitsService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import {Subscription} from 'rxjs';
 import {UnitCreateComponent, UnitMoveComponent, UnitsOtpCodeComponent} from './';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {selectCurrentUserClaimsSitesCreate} from 'src/app/state/auth/auth.selector';
+import { NgIf } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 
 @Component({
     selector: 'app-units',
     templateUrl: './units.component.html',
-    standalone: false
+    imports: [MtxGrid, NgIf, MatIconButton, MatTooltip, MatIcon, MatSlideToggle, MatMenuTrigger, MatMenu, MatMenuItem, TranslatePipe]
 })
 export class UnitsComponent implements OnInit {
   private authStore = inject(Store);

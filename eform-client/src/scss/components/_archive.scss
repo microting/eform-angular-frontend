@@ -1,0 +1,431 @@
+// =============================================================================
+// Archive — backend-configuration "Arkiv" page, layout W1
+// -----------------------------------------------------------------------------
+// Folder tree | document table | document panel. Below 1100 px the plugin adds
+// `.archive-panel--drawer` (BreakpointObserver), so the panel slides over the
+// page instead of taking a column. Tokens only — every token used here exists
+// in both _workspace.scss and _eform.scss, so the page works in both themes and
+// both modes without a theme-scoped copy. Reused, not redefined here: `.table`,
+// `.chip`/`.chip-selected`, `.tag`, `.ejendom-chip(s)`, `.status-chip--*`,
+// `.helper-text`, `tr.row-highlight-flash`.
+// =============================================================================
+
+// The component hosts take no box of their own: their single root element is
+// the grid item, so the panel can be a column or a fixed drawer.
+app-archive-folder-tree,
+app-archive-document-panel {
+  display: contents;
+}
+
+.archive-workspace {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: var(--spacing-xl, 16px);
+  align-items: start;
+}
+
+.archive-workspace--with-panel {
+  grid-template-columns: 260px minmax(0, 1fr) 360px;
+}
+
+@media (max-width: 767.98px) {
+  .archive-workspace,
+  .archive-workspace--with-panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+// ---- Folder tree -------------------------------------------------------------
+.archive-rail {
+  position: sticky;
+  top: var(--spacing-md, 8px);
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding: var(--spacing-md, 8px);
+  border: 1px solid var(--md-surface-variant);
+  border-radius: var(--radius-lg, 8px);
+  background: var(--md-surface-container);
+  color: var(--md-on-surface);
+}
+
+.archive-rail__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.archive-rail__foot {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 12px 8px 4px;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--md-on-surface-variant);
+}
+
+.archive-folder-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 36px;
+  border-radius: var(--radius-lg, 8px);
+
+  &:hover {
+    background: var(--table-row-hover);
+  }
+
+  .mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.archive-folder-children .archive-folder-row,
+.archive-folder-row--child {
+  padding-left: 20px;
+}
+
+.archive-folder-row--selected,
+.archive-folder-row--selected:hover {
+  background: var(--md-primary-container);
+  color: var(--md-on-surface);
+}
+
+.archive-folder-row--drop {
+  outline: 2px dashed var(--md-primary);
+  outline-offset: -2px;
+}
+
+.archive-folder-row--empty .archive-folder-row__name,
+.archive-folder-row--empty .archive-folder-row__count {
+  color: var(--md-on-surface-variant);
+}
+
+.archive-folder-row__toggle {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+span.archive-folder-row__toggle {
+  cursor: default;
+}
+
+.archive-folder-row__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 4px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.archive-folder-row__name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.archive-folder-row__std {
+  padding: 1px 6px;
+  border-radius: var(--radius-sm, 4px);
+  background: var(--md-surface-variant);
+  color: var(--md-on-surface-variant);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.archive-folder-row__count {
+  font-size: 0.8rem;
+  color: var(--md-on-surface-variant);
+  font-variant-numeric: tabular-nums;
+}
+
+.archive-lock.mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--md-on-surface-variant);
+}
+
+// A disabled ⋮ item says why ("Højst 2 niveauer").
+.archive-menu-reason {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  white-space: normal;
+  color: var(--md-on-surface-variant);
+}
+
+// ---- Centre column -----------------------------------------------------------
+.archive-center {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg, 12px);
+}
+
+.archive-crumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.archive-crumb__parent {
+  color: var(--md-on-surface-variant);
+}
+
+.archive-crumb__access {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--md-on-surface-variant);
+}
+
+.archive-subfolders {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md, 8px);
+}
+
+.archive-chip-count {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.archive-selbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md, 8px);
+  padding: 6px 12px;
+  border-radius: var(--radius-lg, 8px);
+  background: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface));
+}
+
+// The table keeps its full width (its chips do not wrap) and scrolls sideways inside its own frame, so
+// a narrow list column never pushes the content card, the folder pane or the document panel aside.
+app-files-table {
+  display: block;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.archive-table tbody tr.archive-file-row {
+  cursor: pointer;
+}
+
+.archive-table tbody tr.archive-file-row--current > td {
+  background-color: color-mix(in srgb, var(--md-primary) 8%, var(--md-surface-container));
+}
+
+.archive-table__select {
+  width: 48px;
+}
+
+.archive-table__actions {
+  width: 56px;
+  text-align: right;
+}
+
+.archive-doc-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+
+  .mat-icon {
+    flex: 0 0 auto;
+    color: var(--md-on-surface-variant);
+  }
+}
+
+.archive-doc-path {
+  margin-left: 32px;
+}
+
+.archive-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+
+  .mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.archive-date--suggested {
+  padding: 2px 8px;
+  border-radius: var(--radius-sm, 4px);
+  background: var(--status-afventer-bg);
+  color: var(--status-afventer-fg);
+  font-weight: 500;
+}
+
+.archive-access {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.archive-access--own .mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.archive-access__struck {
+  font-size: 0.875rem;
+  color: var(--md-on-surface-variant);
+}
+
+// ---- Document panel ----------------------------------------------------------
+.archive-panel {
+  position: sticky;
+  top: var(--spacing-md, 8px);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 120px);
+  border: 1px solid var(--md-surface-variant);
+  border-radius: var(--radius-xl, 10px);
+  background: var(--md-surface-container);
+  color: var(--md-on-surface);
+}
+
+.archive-panel__top {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 8px 8px 16px;
+  border-bottom: 1px solid var(--md-surface-variant);
+}
+
+.archive-panel__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.archive-panel__body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg, 12px);
+  padding: 12px 16px;
+}
+
+.archive-panel__preview {
+  display: block;
+  height: 220px;
+  overflow: hidden;
+  border: 1px solid var(--md-surface-variant);
+  border-radius: var(--radius-md, 6px);
+  background: var(--bg);
+}
+
+.archive-panel__label {
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.archive-panel__suggestion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md, 6px);
+  background: color-mix(in srgb, var(--status-afventer-bg) 20%, var(--md-surface));
+}
+
+.archive-panel__foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--spacing-md, 8px);
+  padding: 10px 16px;
+  border-top: 1px solid var(--md-surface-variant);
+
+  .helper-text {
+    margin-right: auto;
+  }
+}
+
+// Below 1100 px (the plugin decides, see the header comment). Under the CDK
+// overlay (z-index 1000) so dialogs opened from the drawer stay on top.
+.archive-panel--drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(400px, 100vw);
+  max-height: none;
+  border-radius: 0;
+  box-shadow: var(--md-shadow);
+  z-index: 990;
+}
+
+.archive-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 989;
+  background: color-mix(in srgb, var(--md-on-surface) 32%, transparent);
+}
+
+// ---- Folder picker options (mtx-select) -------------------------------------
+.archive-folder-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  .mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.archive-folder-option--child {
+  padding-left: 20px;
+}

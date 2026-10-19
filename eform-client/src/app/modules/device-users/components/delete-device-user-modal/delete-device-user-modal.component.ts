@@ -1,13 +1,15 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {SiteDto} from 'src/app/common/models/dto';
 import {DeviceUserService} from 'src/app/common/services/device-users';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-delete-device-user-modal',
     templateUrl: './delete-device-user-modal.component.html',
     styleUrls: ['./delete-device-user-modal.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, TranslatePipe]
 })
 export class DeleteDeviceUserModalComponent implements OnInit {
   private deviceUserService = inject(DeviceUserService);

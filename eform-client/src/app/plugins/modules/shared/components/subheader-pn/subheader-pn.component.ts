@@ -2,6 +2,8 @@ import { Component, ElementRef, Input, OnInit, ViewChild, OnDestroy, inject } fr
 import { Router } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { AppMenuStateService } from 'src/app/common/store';
+import { NgIf } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -9,7 +11,7 @@ import { AppMenuStateService } from 'src/app/common/store';
     selector: 'subheader-pn',
     templateUrl: './subheader-pn.component.html',
     styleUrls: ['./subheader-pn.component.scss'],
-    standalone: false
+    imports: [NgIf, TranslatePipe]
 })
 export class SubheaderPnComponent implements OnInit, OnDestroy {
   private router = inject(Router);

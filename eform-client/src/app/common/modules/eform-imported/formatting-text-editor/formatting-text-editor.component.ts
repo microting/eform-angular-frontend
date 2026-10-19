@@ -10,11 +10,8 @@ import {
 } from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
 import schema from './schema.const';
-import {Editor, toDoc, toHTML, Toolbar} from 'ngx-editor';
-import {
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { Editor, toDoc, toHTML, Toolbar, NgxEditorModule } from 'ngx-editor';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 
@@ -25,7 +22,7 @@ import {Subscription} from 'rxjs';
     templateUrl: './formatting-text-editor.component.html',
     styleUrls: ['./formatting-text-editor.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [ReactiveFormsModule, NgxEditorModule]
 })
 export class FormattingTextEditorComponent implements OnInit, OnDestroy, OnChanges {
   @Input() toolbar?: Toolbar = [['bold', 'italic', 'underline', 'strike']];

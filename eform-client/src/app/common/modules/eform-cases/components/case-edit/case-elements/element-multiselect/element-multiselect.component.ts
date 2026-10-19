@@ -1,12 +1,15 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FieldValueDto} from 'src/app/common/models';
+import { NgFor } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-multiselect',
     templateUrl: './element-multiselect.component.html',
     styleUrls: ['./element-multiselect.component.scss'],
-    standalone: false
+    imports: [NgFor, MatCheckbox, ReactiveFormsModule, FormsModule]
 })
 export class ElementMultiselectComponent implements OnInit {
   fieldValueObj: FieldValueDto = new FieldValueDto();

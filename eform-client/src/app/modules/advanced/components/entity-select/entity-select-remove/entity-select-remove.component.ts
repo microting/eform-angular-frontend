@@ -1,13 +1,17 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {EntityGroupModel} from 'src/app/common/models';
 import {EntitySelectService} from 'src/app/common/services';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { DateFormatterComponent } from '../../../../../common/modules/eform-shared/components/date-formatter/date-formatter.component';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-entity-select-remove',
     templateUrl: './entity-select-remove.component.html',
     styleUrls: ['./entity-select-remove.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, DateFormatterComponent, MatDialogActions, MatButton, TranslatePipe]
 })
 export class EntitySelectRemoveComponent implements OnInit {
   private entitySelectService = inject(EntitySelectService);

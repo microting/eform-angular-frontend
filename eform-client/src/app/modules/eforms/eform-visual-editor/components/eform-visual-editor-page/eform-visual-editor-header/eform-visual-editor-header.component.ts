@@ -5,12 +5,24 @@ import {
 } from 'src/app/common/models';
 import {AuthStateService} from 'src/app/common/store';
 import {TranslationRequestModel, TranslationService} from 'src/app/common/services/translation.service';
+import { MatCardContent, MatCard, MatCardHeader } from '@angular/material/card';
+import { NgFor, NgIf } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { FormattingTextEditorComponent } from '../../../../../../common/modules/eform-imported/formatting-text-editor/formatting-text-editor.component';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-eform-visual-editor-header',
     templateUrl: './eform-visual-editor-header.component.html',
     styleUrls: ['./eform-visual-editor-header.component.scss'],
-    standalone: false
+    imports: [MatCardContent, NgFor, NgIf, MatCheckbox, ReactiveFormsModule, FormsModule, MatCard, MatCardHeader, MatIconButton, MatIcon, MatFormField, MatLabel, MatInput, FormattingTextEditorComponent, MtxSelect, MatSlideToggle, TranslatePipe]
 })
 export class EformVisualEditorHeaderComponent implements OnInit {
   private authStateService = inject(AuthStateService);

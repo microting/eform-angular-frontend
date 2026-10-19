@@ -39,14 +39,14 @@ test.describe('My eforms', () => {
     }
     const nameEFormForFiltering = namesEForms[1];
     countRowsBeforeFiltering = await myEformsPage.rowNum();
-    expect(countRowsBeforeFiltering).toBe(3);
+    expect(countRowsBeforeFiltering).toBe(countCreateEForm);
     await (await myEformsPage.eformFilter()).fill(nameEFormForFiltering);
     await loginPage.waitForSpinnerHide();
     await page.waitForTimeout(2000);
-    const eform = myEformsPage.getEformsRowObjByNameEForm(
+    const eform = await myEformsPage.getEformsRowObjByNameEForm(
       nameEFormForFiltering
     );
-    expect(eform).not.toBe(null);
+    expect(eform).not.toBeNull();
   });
 
   test('should be able to see all eforms by leaving label input empty', async () => {
@@ -54,14 +54,16 @@ test.describe('My eforms', () => {
     await page.keyboard.press('Control+a');
     await page.keyboard.press('Delete');
     await page.waitForTimeout(2000);
-    expect(await myEformsPage.rowNum()).toBe(3);
+    expect(await myEformsPage.rowNum()).toBe(countCreateEForm);
   });
 
   test('should be able to filter using 1 tag', async () => {
     await myEformsPage.createNewTags([testTag1, testTag2]);
     let form = await myEformsPage.getEformsRowObjByNameEForm(namesEForms[1]);
+    expect(form).not.toBeNull();
     await form.addTag(testTag2);
     form = await myEformsPage.getEformsRowObjByNameEForm(namesEForms[2]);
+    expect(form).not.toBeNull();
     await form.addTag(testTag1);
     await myEformsPage.enterTagFilter(testTag1);
     expect(form.eFormName).toBe((await myEformsPage.getFirstMyEformsRowObj()).eFormName);

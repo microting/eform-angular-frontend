@@ -6,7 +6,7 @@ import {
 import {
   EntitySearchService, EntitySelectService,
 } from 'src/app/common/services';
-import { Location } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
 import {EntityImportListComponent, EntityItemEditNameComponent} from 'src/app/common/modules/eform-shared/components';
 import {dialogConfigHelper, getRandomInt} from 'src/app/common/helpers';
 import {ActivatedRoute} from '@angular/router';
@@ -14,13 +14,21 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
+import { EformNewSubheaderComponent } from '../eform-new-subheader/eform-new-subheader.component';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+import { EntityListElementsComponent } from '../entity-list-elements/entity-list-elements.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-entity-edit-create',
     templateUrl: './entity-edit-create.component.html',
     styleUrls: ['./entity-edit-create.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, NgIf, MatCard, MatCardContent, MatFormField, MatLabel, MatInput, ReactiveFormsModule, FormsModule, MatIcon, EntityListElementsComponent, TranslatePipe]
 })
 export class EntityEditCreateComponent implements OnInit, OnDestroy{
   private activateRoute = inject(ActivatedRoute);

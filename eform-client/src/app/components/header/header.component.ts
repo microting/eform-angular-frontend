@@ -3,12 +3,14 @@ import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {HeaderSettingsModel} from 'src/app/common/models/settings';
 import {AppSettingsService} from 'src/app/common/services/settings';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { AuthImagePipe } from 'src/app/common/pipes';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    standalone: false
+    imports: [NgIf, AsyncPipe, AuthImagePipe]
 })
 export class HeaderComponent implements OnInit {
   private eventBrokerService = inject(EventBrokerService);

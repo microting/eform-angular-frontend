@@ -1,4 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync  } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { ComponentFixture, TestBed  } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FoldersComponent } from './folders.component';
 import { FoldersService } from 'src/app/common/services';
@@ -7,6 +9,8 @@ import { Overlay } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { FolderDto, OperationDataResult } from 'src/app/common/models';
+import { TranslateService } from '@ngx-translate/core';
+import { AppMenuStateService } from 'src/app/common/store';
 
 describe('FoldersComponent', () => {
   let component: FoldersComponent;
@@ -15,31 +19,46 @@ describe('FoldersComponent', () => {
   let mockDialog: any;
   let mockStore: any;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
+    const mockTranslateService = {
+      instant: vi.fn((key: string) => key),
+      get: vi.fn((key: string) => of(key)),
+      use: vi.fn(),
+      setDefaultLang: vi.fn(),
+      currentLang: 'en',
+      stream: vi.fn()
+    };
+    mockTranslateService.stream.mockReturnValue(of('Test'));
+    const mockAppMenuStateService = {
+      updateState: vi.fn(),
+      loadMobileMenuItems: vi.fn()
+    };
     mockFoldersService = {
-          getAllFolders: jest.fn(),
-          getAllFoldersList: jest.fn(),
+          getAllFolders: vi.fn(),
+          getAllFoldersList: vi.fn(),
         };
     mockDialog = {
-          open: jest.fn(),
+          open: vi.fn(),
         };
     mockStore = {
-          select: jest.fn(),
-          dispatch: jest.fn(),
+          select: vi.fn(),
+          dispatch: vi.fn(),
         };
     mockStore.select.mockReturnValue(of(true));
 
     TestBed.configureTestingModule({
-      declarations: [FoldersComponent],
-      providers: [
+    imports: [FormsModule, FoldersComponent],
+    providers: [
         { provide: FoldersService, useValue: mockFoldersService },
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
+        { provide: TranslateService, useValue: mockTranslateService },
+        { provide: AppMenuStateService, useValue: mockAppMenuStateService },
         { provide: Overlay, useValue: { scrollStrategies: { reposition: () => ({}) } } }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
-  }));
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FoldersComponent);

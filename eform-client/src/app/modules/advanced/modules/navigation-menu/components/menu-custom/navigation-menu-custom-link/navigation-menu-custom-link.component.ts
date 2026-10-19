@@ -4,14 +4,22 @@ import {
   applicationLanguagesTranslated,
 } from 'src/app/common/const';
 import {CommonDictionaryModel, NavigationMenuItemModel,} from 'src/app/common/models';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { NgFor, NgIf } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import {MenuLinkRouteService} from '../../../menu-link-route.service';
 
 @Component({
     selector: 'app-navigation-menu-custom-link',
     templateUrl: './navigation-menu-custom-link.component.html',
     styleUrls: ['./navigation-menu-custom-link.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatHint, MtxSelect, ReactiveFormsModule, FormsModule, MatInput, MatCheckbox, NgFor, NgIf, MatDialogActions, TranslatePipe]
 })
 export class NavigationMenuCustomLinkComponent implements OnInit {
   dialogRef = inject<MatDialogRef<NavigationMenuCustomLinkComponent>>(MatDialogRef);

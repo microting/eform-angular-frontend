@@ -2,9 +2,16 @@ import {Component, OnInit, inject} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {CmsMenuModel, CmsSettingsModel} from 'src/app/common/models';
 import {CmsService} from 'src/app/common/services/cms';
+import {NgFor} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatSelect} from '@angular/material/select';
+import {MatOption} from '@angular/material/core';
+import {MatButton} from '@angular/material/button';
 
 @Component({
-  standalone: false,
+  imports: [NgFor, FormsModule, MatSlideToggle, MatFormField, MatLabel, MatSelect, MatOption, MatButton],
   selector: 'app-cms-settings',
   templateUrl: './cms-settings.component.html',
 })

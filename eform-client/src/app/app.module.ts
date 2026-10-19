@@ -1,7 +1,8 @@
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {OVERLAY_DEFAULT_CONFIG} from '@angular/cdk/overlay';
 import {GalleryModule} from 'ng-gallery';
 import {TranslateModule} from '@ngx-translate/core';
 import {LightboxModule} from 'ng-gallery/lightbox';
@@ -67,7 +68,6 @@ import {
   usersReducer,
 } from './state';
 import {cmsReducer, CmsEffects} from './state/cms';
-import {CmsService} from './common/services/cms';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { AuthStateService } from './common/store/service/auth-state.service';
@@ -82,97 +82,96 @@ export function initLocaleFactory(authStateService: AuthStateService) {
 }
 
 @NgModule({
-  declarations: [
-    // Layouts
-    SimpleLayoutComponent,
-    FullLayoutComponent,
-    // Components
-    AppComponent,
-    HeaderComponent,
-    NavigationComponent,
-    SpinnerComponent,
-    ConnectionSetupComponent,
-    NotFoundComponent,
-  ],
-  imports: [
-    NgxMaterialTimepickerModule,
-    NgxMaskDirective, NgxMaskPipe,
-    // Libs
-    BrowserModule,
-    HttpClientModule,
-    StoreModule.forRoot({
-      appMenus: appMenuReducer,
-      appSettings: appSettingsReducer,
-      auth: authReducer,
-      cases: casesReducer,
-      deviceUsers: deviceUsersReducer,
-      eforms: eformReducer,
-      emailRecipients: emailRecipientsReducer,
-      entitySearch: entitySearchReducer,
-      entitySelect: entitySelectReducer,
-      plugins: pluginsReducer,
-      security: securityReducer,
-      users: usersReducer,
-      cms: cmsReducer,
-    }),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
-    }),
-    EffectsModule.forRoot([AppMenuEffects, CmsEffects]),
-    AppRoutingModule,
-    TranslateModule.forRoot(translateConfig),
-    BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      autoDismiss: true,
-      timeOut: 3000,
-      preventDuplicates: true,
-      positionClass: 'toast-bottom-right',
-    }),
-    // TODO fix ngx-mask
-    // NgxMaskModule.forRoot(),
-    GalleryModule,
-    LightboxModule,
-    NgxChartsModule,
-    SharedPnModule,
-    MatSidenavModule,
-    MatButtonModule,
-    MatTreeModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatExpansionModule,
-    MtxSelectModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatInputModule,
-    // Modules
-    PluginsModule,
-    EformSharedModule,
-    MatProgressSpinnerModule,
-    // EformDateFnsDateModule,
-    EformMatDateFnsDateModule,
-    AppIconComponent, FooterComponent,
-  ],
-  schemas: [NO_ERRORS_SCHEMA],
-  providers: [
-    providers,
-    CmsService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: registerIconsFactory,
-      deps: [IconService],
-      multi: true
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initLocaleFactory,
-      deps: [AuthStateService],
-      multi: true,
-    },
-  ],
-  bootstrap: [AppComponent],
+    imports: [
+        AppComponent,
+        NgxMaterialTimepickerModule,
+        NgxMaskDirective, NgxMaskPipe,
+        // Libs
+        BrowserModule,
+        HttpClientModule,
+        StoreModule.forRoot({
+            appMenus: appMenuReducer,
+            appSettings: appSettingsReducer,
+            auth: authReducer,
+            cases: casesReducer,
+            deviceUsers: deviceUsersReducer,
+            eforms: eformReducer,
+            emailRecipients: emailRecipientsReducer,
+            entitySearch: entitySearchReducer,
+            entitySelect: entitySelectReducer,
+            plugins: pluginsReducer,
+            security: securityReducer,
+            users: usersReducer,
+            cms: cmsReducer,
+        }),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25, // Retains last 25 states
+            logOnly: environment.production, // Restrict extension to log-only mode
+        }),
+        EffectsModule.forRoot(AppMenuEffects, CmsEffects),
+        AppRoutingModule,
+        TranslateModule.forRoot(translateConfig),
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+            autoDismiss: true,
+            timeOut: 3000,
+            preventDuplicates: true,
+            positionClass: 'toast-bottom-right',
+        }),
+        // TODO fix ngx-mask
+        // NgxMaskModule.forRoot(),
+        GalleryModule,
+        LightboxModule,
+        NgxChartsModule,
+        SharedPnModule,
+        MatSidenavModule,
+        MatButtonModule,
+        MatTreeModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatExpansionModule,
+        MtxSelectModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatCardModule,
+        MatInputModule,
+        // Modules
+        PluginsModule,
+        EformSharedModule,
+        MatProgressSpinnerModule,
+        // EformDateFnsDateModule,
+        EformMatDateFnsDateModule,
+        AppIconComponent, FooterComponent,
+        // Layouts
+        SimpleLayoutComponent,
+        FullLayoutComponent,
+        HeaderComponent,
+        NavigationComponent,
+        SpinnerComponent,
+        ConnectionSetupComponent,
+        NotFoundComponent,
+    ],
+    providers: [
+        providers,
+        {
+            provide: OVERLAY_DEFAULT_CONFIG,
+            useValue: { usePopover: false },
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: registerIconsFactory,
+            deps: [IconService],
+            multi: true
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initLocaleFactory,
+            deps: [AuthStateService],
+            multi: true,
+        },
+    ],
+    bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(

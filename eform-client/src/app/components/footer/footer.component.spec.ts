@@ -1,3 +1,5 @@
+import { describe, it, expect, afterEach, vi } from 'vitest';
+import type { Mock } from 'vitest';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -14,12 +16,12 @@ import {SentryFeedbackService} from 'src/app/common/services';
 describe('FooterComponent - "Report a bug" menu item', () => {
   let fixture: ComponentFixture<FooterComponent>;
   let overlayElement: HTMLElement;
-  let sentryFeedbackService: {isEnabled: boolean; openForm: jest.Mock};
+  let sentryFeedbackService: {isEnabled: boolean; openForm: Mock};
 
   const setup = (isAdmin: boolean, sentryEnabled: boolean) => {
-    sentryFeedbackService = {isEnabled: sentryEnabled, openForm: jest.fn().mockResolvedValue(undefined)};
+    sentryFeedbackService = {isEnabled: sentryEnabled, openForm: vi.fn().mockResolvedValue(undefined)};
     const store = {
-      select: jest.fn((selector: unknown) => of(selector === selectAuthIsAdmin ? isAdmin : [])),
+      select: vi.fn((selector: unknown) => of(selector === selectAuthIsAdmin ? isAdmin : [])),
     };
 
     TestBed.configureTestingModule({

@@ -8,16 +8,24 @@ import {Subscription} from 'rxjs';
 import * as R from 'ramda';
 import {ActivatedRoute} from '@angular/router';
 import {catchError} from 'rxjs/operators';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogContent } from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import {dialogConfigHelper} from 'src/app/common/helpers';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { MatCard, MatCardContent, MatCardImage, MatCardFooter } from '@angular/material/card';
+import { TranslatePipe } from '@ngx-translate/core';
+import { AuthImagePipe } from 'src/app/common/pipes';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 
 @AutoUnsubscribe()
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-picture',
     templateUrl: './element-picture.component.html',
-    standalone: false
+    imports: [NgIf, MatTooltip, MatIcon, NgFor, MatCard, MatCardContent, MatCardImage, MatCardFooter, TranslatePipe, AuthImagePipe, AsyncPipe]
 })
 export class ElementPictureComponent implements OnChanges, OnDestroy {
   private activateRoute = inject(ActivatedRoute);
@@ -271,7 +279,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
         {{ 'Save' | translate }}
       </button>
     </div>`,
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatButton, MatDialogActions, TranslatePipe]
 })
 export class AddPictureDialogComponent {
   dialogRef = inject<MatDialogRef<AddPictureDialogComponent>>(MatDialogRef);
@@ -324,7 +332,7 @@ export class AddPictureDialogComponent {
         {{ 'Cancel' | translate }}
       </button>
     </div>`,
-    standalone: false
+    imports: [MatDialogTitle, MatDialogActions, MatButton, TranslatePipe]
 })
 export class DeletePictureDialogComponent {
   dialogRef = inject<MatDialogRef<DeletePictureDialogComponent>>(MatDialogRef);

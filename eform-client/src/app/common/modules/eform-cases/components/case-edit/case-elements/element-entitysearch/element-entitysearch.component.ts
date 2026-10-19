@@ -3,13 +3,15 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 import { FieldValueDto } from 'src/app/common/models';
 import { CommonDictionaryTextModel } from 'src/app/common/models/common';
 import { EntitySearchService } from 'src/app/common/services/advanced';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-entitysearch',
     templateUrl: './element-entitysearch.component.html',
     styleUrls: ['./element-entitysearch.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatLabel, MtxSelect]
 })
 export class ElementEntitysearchComponent implements AfterViewInit {
   private entitySearchService = inject(EntitySearchService);

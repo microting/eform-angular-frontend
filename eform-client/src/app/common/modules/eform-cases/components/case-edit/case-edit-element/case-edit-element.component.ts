@@ -6,11 +6,18 @@ import {
   CaseEditRequestFieldValue,
   ElementDto
 } from 'src/app/common/models';
+import { NgIf, NgFor } from '@angular/common';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CaseEditSwitchComponent } from '../case-edit-switch/case-edit-switch.component';
+import { ElementCommentComponent } from '../case-elements/element-comment/element-comment.component';
+import { ElementPictureComponent } from '../case-elements/element-picture/element-picture.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-case-edit-element',
     templateUrl: './case-edit-element.component.html',
-    standalone: false
+    imports: [NgIf, MatRadioGroup, ReactiveFormsModule, FormsModule, MatRadioButton, CaseEditSwitchComponent, NgFor, ElementCommentComponent, ElementPictureComponent, TranslatePipe]
 })
 export class CaseEditElementComponent implements OnInit {
   @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;

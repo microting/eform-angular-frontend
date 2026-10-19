@@ -118,7 +118,9 @@ test.describe('Device users page should not add new device user', () => {
   });
 
   test('should clean up', async () => {
-    await (await deviceUsersPage.getDeviceUserByName(nameDeviceUser)).delete();
+    const deviceUser = await deviceUsersPage.getDeviceUserByName(nameDeviceUser);
+    expect(deviceUser).not.toBeNull();
+    await deviceUser.delete();
     expect(await deviceUsersPage.rowNum()).toBe(countDeviceUsersBeforeCreating);
   });
 });

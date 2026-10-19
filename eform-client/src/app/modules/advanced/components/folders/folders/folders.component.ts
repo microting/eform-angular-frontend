@@ -10,11 +10,17 @@ import {Overlay} from '@angular/cdk/overlay';
 import { Subscription } from 'rxjs';
 import {Store} from "@ngrx/store";
 import {selectCurrentUserClaimsWorkersCreate} from 'src/app/state/auth/auth.selector';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { EformTreeViewPickerComponent } from '../../../../../common/modules/eform-shared/components/eform-tree-view-picker/eform-tree-view-picker.component';
+import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-folders',
     templateUrl: './folders.component.html',
-    standalone: false
+    imports: [EformNewSubheaderComponent, MatCard, MatCardContent, NgIf, EformTreeViewPickerComponent, MatIcon, AsyncPipe, TranslatePipe]
 })
 export class FoldersComponent implements OnInit {
   private authStore = inject(Store);

@@ -1,24 +1,25 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  AbstractControl, FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PasswordRestoreModel } from 'src/app/common/models/auth';
 import { AppSettingsService, AuthService } from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {AuthStateService} from 'src/app/common/store';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {applicationLanguages} from "src/app/common/const";
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { MatButton } from '@angular/material/button';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-restore-password-confirmation',
     templateUrl: './restore-password-confirmation.component.html',
-    standalone: false
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSuffix, NgIf, MatError, MatPasswordStrengthModule, MatButton, RouterLink, TranslatePipe]
 })
 export class RestorePasswordConfirmationComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);

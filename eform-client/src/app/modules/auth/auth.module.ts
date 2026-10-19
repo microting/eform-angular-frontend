@@ -23,31 +23,29 @@ import {MatPasswordStrengthModule} from '@angular-material-extensions/password-s
 
 
 @NgModule({
-  imports: [
-    FormsModule,
-    TranslateModule,
-    CommonModule,
-    AuthRouting,
-    ReactiveFormsModule,
-    EformSharedModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MtxSelectModule,
-    MatPasswordStrengthModule,
-  ],
-  declarations: [
-    LoginComponent,
-    RestorePasswordComponent,
-    RestorePasswordConfirmationComponent,
-    GoogleAuthenticatorComponent,
-    SignOutComponent,
-    AuthComponent,
-    RestorePasswordConfirmationComponent
-  ]
+    imports: [
+        FormsModule,
+        TranslateModule,
+        CommonModule,
+        AuthRouting,
+        ReactiveFormsModule,
+        EformSharedModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatTooltipModule,
+        MtxSelectModule,
+        MatPasswordStrengthModule,
+        LoginComponent,
+        RestorePasswordComponent,
+        RestorePasswordConfirmationComponent,
+        GoogleAuthenticatorComponent,
+        SignOutComponent,
+        AuthComponent,
+        RestorePasswordConfirmationComponent,
+    ]
 })
 export class AuthModule {
 }

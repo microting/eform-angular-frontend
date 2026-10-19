@@ -1,11 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import {LoaderService} from 'src/app/common/services';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'app-eform-spinner',
     templateUrl: './spinner.component.html',
     styleUrls: ['./spinner.component.scss'],
-    standalone: false
+    imports: [MatProgressSpinner]
 })
 export class SpinnerComponent implements OnInit {
   loaderService = inject(LoaderService);

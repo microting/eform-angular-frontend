@@ -7,6 +7,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY eform-client ./
 RUN apt-get update
 RUN apt-get -y -q install ca-certificates
+RUN corepack enable
 RUN yarn install
 RUN yarn build
 RUN if [ -n "$SENTRY_AUTH_TOKEN" ] && [ "$DISABLE_SENTRY" != "true" ]; then yarn sentrysourcemap; else echo "Sentry sourcemap upload skipped (DISABLE_SENTRY=$DISABLE_SENTRY)"; fi

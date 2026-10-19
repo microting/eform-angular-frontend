@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { GoogleAuthInfoModel } from 'src/app/common/models/auth';
 import { UserSettingsModel } from 'src/app/common/models/settings';
 import {
@@ -15,22 +15,32 @@ import {Subscription} from 'rxjs';
 import {AppSettingsStateService} from 'src/app/modules/application-settings/components/store';
 import {LanguagesModel} from 'src/app/common/models';
 import {Store} from '@ngrx/store';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {
   loadAppMenu,
   selectBearerToken,
   selectCurrentUserIsAdmin,
   updateCurrentUserLocaleAndDarkTheme
 } from 'src/app/state';
-import {FileItem, FileUploader, FileUploaderOptions} from 'ng2-file-upload';
+import { FileItem, FileUploader, FileUploaderOptions, FileUploadModule } from 'ng2-file-upload';
 import {v4 as uuid} from 'uuid';
 import * as R from 'ramda';
+import { EformNewSubheaderComponent } from '../../../../../common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import { MatCard } from '@angular/material/card';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MtxSelect } from '@ng-matero/extensions/select';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { AuthImagePipe } from 'src/app/common/pipes';
 
 @Component({
     selector: 'app-profile-settings',
     templateUrl: './profile-settings.component.html',
     styleUrls: ['./profile-settings.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, ReactiveFormsModule, MatCard, NgIf, MatIcon, FileUploadModule, MatTooltip, MatFormField, MatLabel, MtxSelect, MatCheckbox, MatButton, AsyncPipe, AuthImagePipe, TranslatePipe]
 })
 export class ProfileSettingsComponent implements OnInit {
   private fb = inject(FormBuilder);

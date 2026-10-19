@@ -1,13 +1,14 @@
 import { Component, Input, Pipe, PipeTransform, TemplateRef } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { of } from 'rxjs';
+import type { Mock } from 'vitest';
 
 /**
  * Mock TranslatePipe for testing
  * Returns the key as-is or a simple transformed version
  */
-@Pipe({ 
+@Pipe({
   name: 'translate',
-  standalone: false
 })
 export class MockTranslatePipe implements PipeTransform {
   transform(value: any): any {
@@ -30,7 +31,7 @@ export class MockTranslatePipe implements PipeTransform {
       }
     }
   `,
-  standalone: false
+  imports: [NgTemplateOutlet],
 })
 export class MockMtxGridComponent {
   @Input() data: any[];
@@ -56,7 +57,6 @@ export class MockMtxGridComponent {
   selector: 'mat-menu',
   exportAs: 'matMenu',
   template: '<ng-content></ng-content>',
-  standalone: false
 })
 export class MockMatMenuComponent {}
 
@@ -64,7 +64,7 @@ export class MockMatMenuComponent {}
  * Makes a mocked Store's `select` emit the value paired with each selector, and undefined
  * for any other selector.
  */
-export function mockStoreSelectFrom(mockStore: { select: jest.Mock }, selections: Array<[unknown, unknown]>): void {
+export function mockStoreSelectFrom(mockStore: { select: Mock }, selections: Array<[unknown, unknown]>): void {
   const values = new Map<unknown, unknown>(selections);
   mockStore.select.mockImplementation((selector: unknown) => of(values.get(selector)));
 }

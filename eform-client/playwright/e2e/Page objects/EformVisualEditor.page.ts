@@ -1,6 +1,6 @@
 // noinspection JSIgnoredPromiseFromCall, ES6PreferShortImport
 
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import {
   applicationLanguagesTranslated,
@@ -282,6 +282,10 @@ export class EformVisualEditorPage extends PageWithNavbarPage {
     } else {
       await this.changeFieldSaveBtn().click();
     }
+    // #manageTags sits behind the dialog, so it is visible at once. Wait for
+    // the dialog to leave the DOM (end of its close animation); otherwise the
+    // next "add field" click opens a second dialog beside the closing one.
+    await expect(this.changeFieldSaveCancelBtn()).toHaveCount(0, { timeout: 40000 });
     await this.manageTags().waitFor({ state: 'visible', timeout: 40000 });
   }
 
@@ -483,13 +487,13 @@ export class ChecklistFieldRowObj {
         (el) => getComputedStyle(el).backgroundColor
       );
       // Convert rgb to hex
-      const hex = backgroundColor
-        .match(/\d+/g)!
-        .map((x: string) => parseInt(x).toString(16).padStart(2, '0'))
-        .join('');
+      const rgbValues = backgroundColor.match(/\d+/g);
+      const hex = rgbValues
+        ? rgbValues.map((x: string) => parseInt(x).toString(16).padStart(2, '0')).join('')
+        : 'e8eaf6'; // default color
       this.color = eformVisualEditorElementColors.find(
         (x) => x.name === hex
-      )!;
+      ) || { name: hex, description: 'Unknown' };
       const colorMas = this.element.locator('#colors >*');
       this.colorsBtn = {
         standard: colorMas.nth(0),
@@ -516,16 +520,17 @@ export class ChecklistFieldRowObj {
   async changeColor(colorName: string) {
     while (this.color.description.toLowerCase() !== colorName) {
       await this.colorsBtn[colorName as keyof typeof this.colorsBtn].click();
+      await this.page.waitForTimeout(300);
       const backgroundColor = await this.element.locator('div>div>div').first().evaluate(
         (el) => getComputedStyle(el).backgroundColor
       );
-      const hex = backgroundColor
-        .match(/\d+/g)!
-        .map((x: string) => parseInt(x).toString(16).padStart(2, '0'))
-        .join('');
+      const rgbValues = backgroundColor.match(/\d+/g);
+      const hex = rgbValues
+        ? rgbValues.map((x: string) => parseInt(x).toString(16).padStart(2, '0')).join('')
+        : 'e8eaf6';
       this.color = eformVisualEditorElementColors.find(
         (x) => x.name === hex
-      )!;
+      ) || { name: hex, description: 'Unknown' };
     }
   }
 
@@ -579,12 +584,7 @@ export class ChecklistFieldRowObj {
   }
 
   async closeEditModal(clickCancel = false) {
-    if (clickCancel) {
-      await this.eformVisualEditorPage.changeFieldSaveCancelBtn().click();
-    } else {
-      await this.eformVisualEditorPage.changeFieldSaveBtn().click();
-    }
-    await this.eformVisualEditorPage.manageTags().waitFor({ state: 'visible', timeout: 40000 });
+    await this.eformVisualEditorPage.closeVisualTemplateFieldCreateModal(clickCancel);
   }
 
   async changePosition(targetField: ChecklistFieldRowObj) {
