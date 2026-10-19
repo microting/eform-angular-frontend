@@ -137,7 +137,7 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "5.9.3",
     "vite": "^7.3.1",
-    "vitest": "^4.0.0",
+    "vitest": "^4.1.11",
     "xlsx": "^0.18.5"
   },
   "packageManager": "yarn@4.13.0"
