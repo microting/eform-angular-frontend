@@ -836,17 +836,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/router@npm:21.1.0":
-  version: 21.1.0
-  resolution: "@angular/router@npm:21.1.0"
+"@angular/router@npm:21.2.24":
+  version: 21.2.24
+  resolution: "@angular/router@npm:21.2.24"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
-    "@angular/common": 21.1.0
-    "@angular/core": 21.1.0
-    "@angular/platform-browser": 21.1.0
+    "@angular/common": 21.2.24
+    "@angular/core": 21.2.24
+    "@angular/platform-browser": 21.2.24
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: 10c0/c0d9228ad80c5f3a9f16b2db1dc686219b3167a1ea1184b06c334ddaffc6804887728c3600b1bc8543f6a6b8f47777c96e5b5ebd60a71426e4934f467250500a
+  checksum: 10c0/d5806a4c16e8f16693ce49021e88175c1680eb693e28d24b9c87d652061a7b3cbd494add449c8beed56fb3015b7917021f2eb201899198af86254d23a02a9062
   languageName: node
   linkType: hard
 
@@ -8462,7 +8462,7 @@ __metadata:
     "@angular/material": "npm:21.1.0"
     "@angular/platform-browser": "npm:21.1.0"
     "@angular/platform-browser-dynamic": "npm:21.1.0"
-    "@angular/router": "npm:21.1.0"
+    "@angular/router": "npm:21.2.24"
     "@microsoft/signalr": "npm:^10.0.0"
     "@ng-matero/extensions": "npm:21.1.3"
     "@ngrx/effects": "npm:21.1.0"
