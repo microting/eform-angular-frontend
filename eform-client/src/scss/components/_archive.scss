@@ -360,6 +360,20 @@ app-files-table {
   background: var(--bg);
 }
 
+// An archived jpg/png is shown whole inside the preview box.
+img.archive-panel__preview {
+  width: 100%;
+  object-fit: contain;
+}
+
+// The upload page's card for a selected jpg/png, sized like its pdf-viewer.
+.file-create-image-preview {
+  display: block;
+  width: 90%;
+  height: 325px;
+  object-fit: contain;
+}
+
 .archive-panel__label {
   margin-bottom: 4px;
   font-size: 12px;
