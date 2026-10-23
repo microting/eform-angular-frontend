@@ -188,9 +188,9 @@ public class AccountService(
     {
         var user = await userService.GetCurrentUserAsync();
 
-        if (user.PasswordHash is null)
+        if (await userManager.IsDelegatedPrincipalAsync(user))
         {
-            logger.LogWarning("Refused to change the password of user {UserId}: the account has no password",
+            logger.LogWarning("Refused to change the password of user {UserId}: the account is a delegated principal",
                 user.Id);
             return new OperationResult(false, UserManagerLockoutExtensions.CredentialLessAccountResult()
                 .Errors.First().Description);
@@ -622,9 +622,9 @@ public class AccountService(
             return new OperationResult(false);
         }
 
-        if (user.PasswordHash is null)
+        if (await userManager.IsDelegatedPrincipalAsync(user))
         {
-            logger.LogWarning("Refused to reset the password of user {UserId}: the account has no password",
+            logger.LogWarning("Refused to reset the password of user {UserId}: the account is a delegated principal",
                 user.Id);
             return new OperationResult(false, UserManagerLockoutExtensions.CredentialLessAccountResult()
                 .Errors.First().Description);

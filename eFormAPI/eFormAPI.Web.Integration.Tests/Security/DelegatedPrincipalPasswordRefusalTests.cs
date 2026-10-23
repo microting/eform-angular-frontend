@@ -6,6 +6,7 @@ using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using eFormAPI.Web.Hosting.Security;
+using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
 using eFormAPI.Web.Integration.Tests.Identity;
 using eFormAPI.Web.Services;
 using eFormAPI.Web.Services.Mailing.EmailService;
@@ -22,13 +23,14 @@ using NUnit.Framework;
 namespace eFormAPI.Web.Integration.Tests.Security;
 
 /// <summary>
-/// An account with no password hash is credential-less on purpose (a delegated principal);
-/// no password route may give it one. Every refusal is asserted on the STORED hash.
+/// A delegated principal (a UserLogins row for the delegated provider) is credential-less
+/// on purpose; no password route may give it one. A password-less user WITHOUT that row is
+/// ordinary (AdminService sets the initial password that way) and must still receive one. Every refusal is asserted on the STORED hash.
 /// </summary>
 [TestFixture]
-public class NullHashPasswordRefusalTests : DbTestFixture
+public class DelegatedPrincipalPasswordRefusalTests : DbTestFixture
 {
-    private static async Task<EformUser> CreateNullHashUserAsync(IdentityTestHost host)
+    private static async Task<EformUser> CreateNullHashUserAsync(IdentityTestHost host, bool delegated)
     {
         var email = $"nullhash-{Guid.NewGuid():N}@example.test";
         var user = new EformUser
@@ -46,6 +48,11 @@ public class NullHashPasswordRefusalTests : DbTestFixture
         Assert.That(created.Succeeded, Is.True, string.Join(" ", created.Errors.Select(e => e.Description)));
         host.TrackForCleanup(user.Id);
         Assert.That(user.PasswordHash, Is.Null);
+        if (delegated)
+        {
+            await host.AddLinkAsync(user.Id, ExternalLoginProviders.MyMicrotingDelegated, Guid.NewGuid().ToString("N"));
+        }
+
         return user;
     }
 
@@ -77,16 +84,28 @@ public class NullHashPasswordRefusalTests : DbTestFixture
             .Select(u => u.PasswordHash).SingleAsync();
 
     [Test]
-    public async Task ReplacePasswordAsync_NullHashUser_Refuses()
+    public async Task ReplacePasswordAsync_DelegatedUser_Refuses()
     {
         await using var host = new IdentityTestHost(DbContext);
-        var user = await CreateNullHashUserAsync(host);
+        var user = await CreateNullHashUserAsync(host, delegated: true);
 
         var result = await host.UserManager.ReplacePasswordAsync(user, "Secret123!", host.Logger);
 
         Assert.That(result.Succeeded, Is.False);
         Assert.That(result.Errors.Any(e => e.Code == "CredentialLessAccount"), Is.True);
         Assert.That(await StoredHashAsync(host, user.Id), Is.Null);
+    }
+
+    [Test]
+    public async Task ReplacePasswordAsync_PasswordlessNonDelegatedUser_StillGetsInitialPassword()
+    {
+        await using var host = new IdentityTestHost(DbContext);
+        var user = await CreateNullHashUserAsync(host, delegated: false);
+
+        var result = await host.UserManager.ReplacePasswordAsync(user, "Secret123!", host.Logger);
+
+        Assert.That(result.Succeeded, Is.True, string.Join(" ", result.Errors.Select(e => e.Description)));
+        Assert.That(await StoredHashAsync(host, user.Id), Is.Not.Null);
     }
 
     [Test]
@@ -108,10 +127,10 @@ public class NullHashPasswordRefusalTests : DbTestFixture
     }
 
     [Test]
-    public async Task ResetPassword_NullHashUser_Refuses()
+    public async Task ResetPassword_DelegatedUser_Refuses()
     {
         await using var host = new IdentityTestHost(DbContext);
-        var user = await CreateNullHashUserAsync(host);
+        var user = await CreateNullHashUserAsync(host, delegated: true);
         var token = await host.UserManager.GeneratePasswordResetTokenAsync(user);
         var service = BuildService(host, user);
 
@@ -127,10 +146,10 @@ public class NullHashPasswordRefusalTests : DbTestFixture
     }
 
     [Test]
-    public async Task ChangePassword_NullHashUser_Refuses()
+    public async Task ChangePassword_DelegatedUser_Refuses()
     {
         await using var host = new IdentityTestHost(DbContext);
-        var user = await CreateNullHashUserAsync(host);
+        var user = await CreateNullHashUserAsync(host, delegated: true);
         var service = BuildService(host, user);
 
         var result = await service.ChangePassword(new ChangePasswordModel

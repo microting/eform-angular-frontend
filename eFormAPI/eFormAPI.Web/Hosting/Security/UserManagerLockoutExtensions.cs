@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
@@ -72,12 +73,12 @@ public static class UserManagerLockoutExtensions
     public static async Task<IdentityResult> ReplacePasswordAsync(this UserManager<EformUser> userManager,
         EformUser user, string newPassword, ILogger logger)
     {
-        // An account with no password hash is credential-less on purpose (a delegated,
-        // portal-federated principal). The API must never be the way it acquires one.
-        if (user.PasswordHash is null)
+        // A delegated (portal-federated) principal is credential-less on purpose. The API
+        // must never be the way it acquires a password.
+        if (await userManager.IsDelegatedPrincipalAsync(user))
         {
             logger.LogWarning(
-                "Refused to set a password on user {UserId}: the account has no password",
+                "Refused to set a password on user {UserId}: it is a delegated principal",
                 user.Id);
             return CredentialLessAccountResult();
         }
@@ -111,11 +112,21 @@ public static class UserManagerLockoutExtensions
         return result;
     }
 
+    /// <summary>True when the user holds a UserLogins row for the delegated provider. A
+    /// null login list (a substituted UserManager) counts as no logins.</summary>
+    public static async Task<bool> IsDelegatedPrincipalAsync(this UserManager<EformUser> userManager,
+        EformUser user)
+    {
+        var logins = await userManager.GetLoginsAsync(user);
+        return logins != null && logins.Any(l =>
+            l.LoginProvider == ExternalLoginProviders.MyMicrotingDelegated);
+    }
+
     /// <summary>The Identity error code returned when a password is refused on a
-    /// credential-less account.</summary>
+    /// delegated principal.</summary>
     public const string CredentialLessAccountCode = "CredentialLessAccount";
 
-    /// <summary>The failed result for a refused password set on a credential-less account.</summary>
+    /// <summary>The failed result for a refused password set on a delegated principal.</summary>
     public static IdentityResult CredentialLessAccountResult() => IdentityResult.Failed(new IdentityError
     {
         Code = CredentialLessAccountCode,
