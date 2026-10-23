@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Security.Cryptography;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -6,7 +9,9 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Controllers;
 using eFormAPI.Web.Infrastructure.Models.DelegatedAccess;
-using Microsoft.AspNetCore.Authentication;
+using eFormAPI.Web.Hosting.Security;
+using Microsoft.Extensions.Configuration;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,13 +23,12 @@ using Microsoft.Extensions.Options;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using NSubstitute;
 using NUnit.Framework;
-using System.Text.Encodings.Web;
 
 namespace eFormAPI.Web.Integration.Tests.Security;
 
 /// <summary>
 /// The delegated sign-in route through the real MVC pipeline (legacy routing, as Startup
-/// sets EnableEndpointRouting=false) with a deny-by-default authentication scheme, so
+/// sets EnableEndpointRouting=false) with the real AddEFormAuth registration, so
 /// [Authorize]/[AllowAnonymous], verb routing and JSON binding are exercised for real.
 /// The validator and sign-in service are substitutes; everything else is the actual stack.
 /// </summary>
@@ -48,8 +52,20 @@ public class DelegatedSignInPipelineTests
                 .ConfigureServices(services =>
                 {
                     services.AddLogging();
-                    services.AddAuthentication("Deny").AddScheme<AuthenticationSchemeOptions, DenyHandler>("Deny", _ => { });
-                    services.AddAuthorization();
+                    // The real auth registration (schemes, claims transformer, every policy), so
+                    // hosting the whole controller assembly does not trip over a missing policy.
+                    services.AddHttpContextAccessor();
+                    services.AddEFormAuth(
+                        new ConfigurationBuilder()
+                            .AddInMemoryCollection(new Dictionary<string, string>
+                            {
+                                ["EformTokenOptions:Issuer"] = "delegated-pipeline-test",
+                                // Random per run: a literal signing key would read as a committed secret.
+                                ["EformTokenOptions:SigningKey"] =
+                                    Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)),
+                            })
+                            .Build(),
+                        new List<PluginPermissionModel>());
                     services.AddMvc(o => o.EnableEndpointRouting = false)
                         .AddApplicationPart(typeof(DelegatedSignInController).Assembly)
                         .AddControllersAsServices();
@@ -102,13 +118,5 @@ public class DelegatedSignInPipelineTests
         public DelegatedAccessOptions CurrentValue => value;
         public DelegatedAccessOptions Get(string name) => value;
         public System.IDisposable OnChange(System.Action<DelegatedAccessOptions, string> listener) => null;
-    }
-
-    private sealed class DenyHandler(
-        IOptionsMonitor<AuthenticationSchemeOptions> o, ILoggerFactory l, UrlEncoder e)
-        : AuthenticationHandler<AuthenticationSchemeOptions>(o, l, e)
-    {
-        protected override Task<AuthenticateResult> HandleAuthenticateAsync()
-            => Task.FromResult(AuthenticateResult.NoResult());
     }
 }
