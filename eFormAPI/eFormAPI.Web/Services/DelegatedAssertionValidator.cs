@@ -41,7 +41,7 @@ namespace eFormAPI.Web.Services;
 /// which part of a forgery to fix next. The specific reason is logged, never returned.
 /// </summary>
 public sealed class DelegatedAssertionValidator(
-    IOptions<DelegatedAccessOptions> options,
+    IOptionsMonitor<DelegatedAccessOptions> options,
     IHttpClientFactory httpClientFactory,
     IMemoryCache cache,
     ILogger<DelegatedAssertionValidator> logger) : IDelegatedAssertionValidator
@@ -140,7 +140,9 @@ public sealed class DelegatedAssertionValidator(
 
     private async Task<OperationDataResult<DelegatedAssertion>> ValidateCoreAsync(string rawToken, CancellationToken ct)
     {
-        var opts = options.Value;
+        // Read per request, never captured: Enabled/Issuer/JwksUri/Audience must follow the DB
+        // without a restart. The JWKS cache key includes JwksUri, so a changed URI misses the old keys.
+        var opts = options.CurrentValue;
 
         if (!opts.Enabled)
         {

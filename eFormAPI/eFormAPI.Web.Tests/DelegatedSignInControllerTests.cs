@@ -23,6 +23,7 @@ public class DelegatedSignInControllerTests
     private IDelegatedAssertionValidator _validator;
     private IDelegatedSignInService _signIn;
     private DelegatedAccessOptions _options;
+    private IOptionsMonitor<DelegatedAccessOptions> _monitor;
     private DelegatedSignInController _controller;
 
     private static readonly DelegatedAssertion Assertion =
@@ -34,7 +35,9 @@ public class DelegatedSignInControllerTests
         _validator = Substitute.For<IDelegatedAssertionValidator>();
         _signIn = Substitute.For<IDelegatedSignInService>();
         _options = new DelegatedAccessOptions { Enabled = true };
-        _controller = new DelegatedSignInController(Options.Create(_options), _validator, _signIn);
+        _monitor = Substitute.For<IOptionsMonitor<DelegatedAccessOptions>>();
+        _monitor.CurrentValue.Returns(_ => _options);
+        _controller = new DelegatedSignInController(_monitor, _validator, _signIn);
     }
 
     [TearDown]
@@ -54,6 +57,23 @@ public class DelegatedSignInControllerTests
         Assert.That(Status(result), Is.EqualTo(401));
         await _validator.DidNotReceiveWithAnyArgs().ValidateAsync(default!, default);
         await _signIn.DidNotReceiveWithAnyArgs().SignInAsync(default!, default);
+    }
+
+    [Test]
+    public async Task Post_EnabledFlippedAtRuntime_TakesEffectOnTheNextRequest()
+    {
+        _validator.ValidateAsync("good", Arg.Any<CancellationToken>())
+            .Returns(new OperationDataResult<DelegatedAssertion>(true, "ok", Assertion));
+        _signIn.SignInAsync(Assertion, Arg.Any<CancellationToken>())
+            .Returns(new OperationDataResult<EformAuthorizeResult>(true, "ok", new EformAuthorizeResult()));
+        var model = new DelegatedSignInModel { Assertion = "good" };
+
+        var before = await _controller.SignInDelegated(model, CancellationToken.None);
+        _options.Enabled = false;
+        var after = await _controller.SignInDelegated(model, CancellationToken.None);
+
+        Assert.That(before, Is.TypeOf<OkObjectResult>());
+        Assert.That(Status(after), Is.EqualTo(401));
     }
 
     [Test]

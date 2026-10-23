@@ -16,7 +16,7 @@ namespace eFormAPI.Web.Controllers;
 /// </summary>
 [Authorize]
 public class DelegatedSignInController(
-    IOptions<DelegatedAccessOptions> options,
+    IOptionsMonitor<DelegatedAccessOptions> options,
     IDelegatedAssertionValidator validator,
     IDelegatedSignInService signInService)
     : Controller
@@ -30,7 +30,7 @@ public class DelegatedSignInController(
     public async Task<IActionResult> SignInDelegated([FromBody] DelegatedSignInModel model, CancellationToken ct)
     {
         // The opt-out gate runs before anything else: no validation, no user lookup.
-        if (!options.Value.Enabled)
+        if (!options.CurrentValue.Enabled)
         {
             return Refused();
         }

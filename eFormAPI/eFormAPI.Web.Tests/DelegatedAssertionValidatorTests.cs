@@ -81,8 +81,15 @@ public class DelegatedAssertionValidatorTests
         _rsa.Dispose();
     }
 
+    private IOptionsMonitor<DelegatedAccessOptions> Monitor()
+    {
+        var monitor = Substitute.For<IOptionsMonitor<DelegatedAccessOptions>>();
+        monitor.CurrentValue.Returns(_ => _options);
+        return monitor;
+    }
+
     private DelegatedAssertionValidator CreateValidator(ILogger<DelegatedAssertionValidator> logger = null) => new(
-        Options.Create(_options),
+        Monitor(),
         _httpClientFactory,
         _cache,
         logger ?? NullLogger<DelegatedAssertionValidator>.Instance);
@@ -539,6 +546,32 @@ public class DelegatedAssertionValidatorTests
     }
 
     // ----------------------------------------------------------------- configuration gates
+
+    [Test]
+    public async Task ValidateAsync_EnabledFlippedAtRuntime_TakesEffectWithoutRebuildingTheValidator()
+    {
+        var validator = CreateValidator();
+        var first = await validator.ValidateAsync(MintToken(), CancellationToken.None);
+        Assert.That(first.Success, Is.True);
+
+        _options.Enabled = false;
+        var second = await validator.ValidateAsync(MintToken(), CancellationToken.None);
+
+        AssertRefused(second);
+    }
+
+    [Test]
+    public async Task ValidateAsync_JwksUriChangedAtRuntime_DoesNotServeKeysFetchedFromTheOldUri()
+    {
+        var validator = CreateValidator();
+        await validator.ValidateAsync(MintToken(), CancellationToken.None);
+        var before = _handler.RequestCount;
+
+        _options.JwksUri = "https://my.microting.com/.well-known/other.json";
+        await validator.ValidateAsync(MintToken(), CancellationToken.None);
+
+        Assert.That(_handler.RequestCount, Is.EqualTo(before + 1));
+    }
 
     [Test]
     public async Task ValidateAsync_DelegatedAccessDisabled_FailsWithoutFetchingTheJwks()
