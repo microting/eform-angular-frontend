@@ -188,6 +188,14 @@ public class AccountService(
     {
         var user = await userService.GetCurrentUserAsync();
 
+        if (user.PasswordHash is null)
+        {
+            logger.LogWarning("Refused to change the password of user {UserId}: the account has no password",
+                user.Id);
+            return new OperationResult(false, UserManagerLockoutExtensions.CredentialLessAccountResult()
+                .Errors.First().Description);
+        }
+
         var result = await userManager.ChangePasswordAsync(
             user,
             model.OldPassword,
@@ -612,6 +620,14 @@ public class AccountService(
         if (user == null)
         {
             return new OperationResult(false);
+        }
+
+        if (user.PasswordHash is null)
+        {
+            logger.LogWarning("Refused to reset the password of user {UserId}: the account has no password",
+                user.Id);
+            return new OperationResult(false, UserManagerLockoutExtensions.CredentialLessAccountResult()
+                .Errors.First().Description);
         }
 
         var result = await userManager.ResetPasswordAsync(user, model.Code, model.NewPassword);

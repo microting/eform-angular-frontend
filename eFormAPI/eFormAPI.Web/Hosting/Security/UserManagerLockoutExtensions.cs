@@ -72,6 +72,16 @@ public static class UserManagerLockoutExtensions
     public static async Task<IdentityResult> ReplacePasswordAsync(this UserManager<EformUser> userManager,
         EformUser user, string newPassword, ILogger logger)
     {
+        // An account with no password hash is credential-less on purpose (a delegated,
+        // portal-federated principal). The API must never be the way it acquires one.
+        if (user.PasswordHash is null)
+        {
+            logger.LogWarning(
+                "Refused to set a password on user {UserId}: the account has no password",
+                user.Id);
+            return CredentialLessAccountResult();
+        }
+
         // UserManager.GetSecurityStampAsync THROWS InvalidOperationException when the
         // stored stamp is null, and the reset-token provider reads it — so a row written
         // straight through BaseDbContext (never through UserManager.CreateAsync) would
@@ -100,4 +110,15 @@ public static class UserManagerLockoutExtensions
 
         return result;
     }
+
+    /// <summary>The Identity error code returned when a password is refused on a
+    /// credential-less account.</summary>
+    public const string CredentialLessAccountCode = "CredentialLessAccount";
+
+    /// <summary>The failed result for a refused password set on a credential-less account.</summary>
+    public static IdentityResult CredentialLessAccountResult() => IdentityResult.Failed(new IdentityError
+    {
+        Code = CredentialLessAccountCode,
+        Description = "An account with no password cannot be given one through the API."
+    });
 }
