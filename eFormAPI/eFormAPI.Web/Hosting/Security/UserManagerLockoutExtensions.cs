@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
@@ -72,6 +73,16 @@ public static class UserManagerLockoutExtensions
     public static async Task<IdentityResult> ReplacePasswordAsync(this UserManager<EformUser> userManager,
         EformUser user, string newPassword, ILogger logger)
     {
+        // A delegated (portal-federated) principal is credential-less on purpose. The API
+        // must never be the way it acquires a password.
+        if (await userManager.IsDelegatedPrincipalAsync(user))
+        {
+            logger.LogWarning(
+                "Refused to set a password on user {UserId}: it is a delegated principal",
+                user.Id);
+            return CredentialLessAccountResult();
+        }
+
         // UserManager.GetSecurityStampAsync THROWS InvalidOperationException when the
         // stored stamp is null, and the reset-token provider reads it — so a row written
         // straight through BaseDbContext (never through UserManager.CreateAsync) would
@@ -100,4 +111,30 @@ public static class UserManagerLockoutExtensions
 
         return result;
     }
+
+    /// <summary>True when the user holds a UserLogins row for the delegated provider. A
+    /// null login list (a substituted UserManager) counts as no logins.
+    ///
+    /// This is a deliberate, allowlisted use of the link API (see
+    /// NoRuntimeBindingSourceTests.TheExternalLoginApiIsCalledOnlyFromTheFourAllowlistedFiles). It is on
+    /// the password-WRITE path, not the login path: a link is consulted only to REFUSE a
+    /// write, so it can never grant authentication to anyone.</summary>
+    public static async Task<bool> IsDelegatedPrincipalAsync(this UserManager<EformUser> userManager,
+        EformUser user)
+    {
+        var logins = await userManager.GetLoginsAsync(user);
+        return logins != null && logins.Any(l =>
+            l.LoginProvider == ExternalLoginProviders.MyMicrotingDelegated);
+    }
+
+    /// <summary>The Identity error code returned when a password is refused on a
+    /// delegated principal.</summary>
+    public const string CredentialLessAccountCode = "CredentialLessAccount";
+
+    /// <summary>The failed result for a refused password set on a delegated principal.</summary>
+    public static IdentityResult CredentialLessAccountResult() => IdentityResult.Failed(new IdentityError
+    {
+        Code = CredentialLessAccountCode,
+        Description = "An account with no password cannot be given one through the API."
+    });
 }

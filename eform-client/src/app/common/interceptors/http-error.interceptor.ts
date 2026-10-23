@@ -28,6 +28,18 @@ import {environment} from '../../../environments/environment';
  */
 const SENTRY_IGNORED_STATUSES: readonly number[] = [0, 401, 403];
 
+/** Exact-path match (query/fragment/trailing slash ignored), so sibling paths never match. */
+function isDelegatedSignInUrl(url: string): boolean {
+  let path: string;
+  try {
+    path = new URL(url, 'http://localhost').pathname.replace(/\/+$/, '');
+  } catch {
+    // An unparseable URL is simply not the delegated endpoint; the normal error handling proceeds.
+    return false;
+  }
+  return path === `/${AuthMethods.Delegated}`;
+}
+
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
   private loaderService = inject(LoaderService);
@@ -50,6 +62,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       retry(retryConfig),
       // Handle 400 - Bad Request
       catchError((error: HttpErrorResponse) => {
+        // A delegated sign-in assertion is single-use: a failure must reach the landing page
+        // untouched - no logout, no refresh, no automatic retry.
+        if (isDelegatedSignInUrl(request.url)) {
+          return throwError(() => error);
+        }
         let errorMessage = '';
         if (environment.enableSentry && !SENTRY_IGNORED_STATUSES.includes(error.status)) {
           Sentry.captureException(error); // Log to Sentry only if enabled

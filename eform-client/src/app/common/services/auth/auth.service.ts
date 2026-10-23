@@ -16,6 +16,7 @@ import {ChangePasswordAdminModel} from '../../models/user/change-password-admin.
 
 export let AuthMethods = {
   Login: 'api/auth/token',
+  Delegated: 'api/auth/delegated',
   RefreshToken: 'api/auth/token/refresh',
   Logout: 'api/auth/logout',
   Claims: 'api/auth/claims',
@@ -46,6 +47,18 @@ export class AuthService {
         return result.model;
       })
     );
+  }
+
+  /**
+   * Exchanges a portal-issued delegated-access assertion for a session token.
+   * JSON body only - the assertion is credential-equivalent and must never be in a URL.
+   * Errors are deliberately NOT swallowed here: the HTTP error interceptor lets this call's
+   * failures through so the landing page can show the refusal.
+   */
+  loginDelegated(assertion: string): Observable<AuthResponseModel> {
+    return this.apiBaseService
+      .postNoToast(AuthMethods.Delegated, {assertion})
+      .pipe(map((result) => (result?.success ? result.model : null)));
   }
 
   restorePassword(model: PasswordRestoreModel): Observable<any> {

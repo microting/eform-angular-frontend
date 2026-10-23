@@ -515,15 +515,35 @@ public class NoRuntimeBindingSourceTests
     private static readonly string[] LinkApis =
         { "FindByLoginAsync", "GetLoginsAsync", "AddLoginAsync", "RemoveLoginAsync" };
 
-    // Check 4: the external-login API is CALLED from exactly two places. Any later change
+    // Check 4: the external-login API is CALLED only from the four allowlisted files. Any later change
     // to the login path to "look up the link" is a violation by construction.
+    //
+    // The allowlist has FOUR entries and that is not a looser rule. UserManagerLockoutExtensions
+    // is on the PASSWORD-WRITE path, not the login path: it reads a link only to REFUSE a
+    // password write for a delegated principal (GetLoginsAsync in IsDelegatedPrincipalAsync),
+    // so it can never grant authentication to anyone. It sits at the shared
+    // ReplacePasswordAsync chokepoint on purpose; moving the check into each caller would put
+    // the link API into AdminService and scatter a security check across call sites.
+    //
+    // DelegatedSignInService is the DELEGATED SIGN-IN path. It is the one place that
+    // CREATES a link (AddLoginAsync) and reads one (FindByLoginAsync), because a link is
+    // the only thing that resolves an advisor's credential-less principal — but it can
+    // never set a credential: it creates the principal with Identity's no-password
+    // overload and never calls a password API at all. It is also a SEPARATE provider
+    // namespace ("my.microting.com/delegated"), so nothing it writes is visible to the
+    // password paths, which resolve their targets under the P1 constant.
+    //
+    // The login-path guarantee is carried by the CI fence (AuthService, UserService and
+    // ClaimsTransformer byte-pinned and grep-clean) and by the login-path test below.
     [Test]
-    public void TheExternalLoginApiIsCalledFromExactlyTwoFiles()
+    public void TheExternalLoginApiIsCalledOnlyFromTheFourAllowlistedFiles()
     {
         string[] allowed =
         {
             Path.Combine("Services", "AccountService.cs"),
-            Path.Combine("Services", "ExternalUserLinkService.cs")
+            Path.Combine("Services", "ExternalUserLinkService.cs"),
+            Path.Combine("Hosting", "Security", "UserManagerLockoutExtensions.cs"),
+            Path.Combine("Services", "DelegatedSignInService.cs")
         };
 
         var callers = new List<string>();
@@ -544,8 +564,9 @@ public class NoRuntimeBindingSourceTests
             .ToList();
 
         Assert.That(offenders, Is.Empty,
-            "the link API belongs to the external-link service and the link-targeted "
-            + "set-password service, and nowhere else");
+            "the link API belongs to the external-link service, the link-targeted "
+            + "set-password service, the password-write refusal guard and the delegated "
+            + "sign-in path, and nowhere else");
 
         // Both directions: a check that can only ever report "no offenders" would also pass
         // if the feature were renamed out from under it.
