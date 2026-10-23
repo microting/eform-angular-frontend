@@ -646,6 +646,24 @@ public class DelegatedAssertionValidatorTests
         Assert.That(capture.Messages.Any(m => m.Contains('\n') || m.Contains('\r')), Is.False);
     }
 
+    [Test]
+    public async Task ValidateAsync_HostileIssuerOrAudience_CannotInjectLogLines()
+    {
+        // IdentityModel's IDX10205 / IDX10214 messages embed the token's raw iss / aud, and
+        // the validator logs the exception message on a refusal. This endpoint is anonymous.
+        var capture = new CapturingLogger();
+        var validator = CreateValidator(capture);
+
+        AssertRefused(await validator.ValidateAsync(
+            MintToken(issuer: "https://evil.example.com\nWARN: forged-iss-line"), CancellationToken.None));
+        AssertRefused(await validator.ValidateAsync(
+            MintToken(audience: "1054\r\nWARN: forged-aud-line"), CancellationToken.None));
+
+        Assert.That(capture.Messages.Any(m => m.Contains("forged-iss-line")), Is.True,
+            "the issuer must still reach the log, just neutered");
+        Assert.That(capture.Messages.Any(m => m.Contains('\n') || m.Contains('\r')), Is.False);
+    }
+
     // ----------------------------------------------------------------- helpers
 
     private static void AssertRefused(OperationDataResult<DelegatedAssertion> result)

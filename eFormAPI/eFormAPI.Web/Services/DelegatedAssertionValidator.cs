@@ -187,7 +187,8 @@ public sealed class DelegatedAssertionValidator(
         }
         catch (Exception e)
         {
-            logger.LogDebug(e, "Delegated assertion refused: unparseable token.");
+            // e.Message can quote the raw token segment, so it is sanitised and the exception object is not logged.
+            logger.LogDebug("Delegated assertion refused: unparseable token: {Reason}", ForLog(e.Message));
             return Rejected();
         }
 
@@ -240,7 +241,7 @@ public sealed class DelegatedAssertionValidator(
         catch (Exception e)
         {
             // Signature, issuer, audience, lifetime and algorithm failures all land here.
-            logger.LogWarning("Delegated assertion refused: {Reason}", e.Message);
+            logger.LogWarning("Delegated assertion refused: {Reason}", ForLog(e.Message));
             return Rejected();
         }
 

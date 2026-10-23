@@ -236,4 +236,14 @@ describe('HttpErrorInterceptor', () => {
     expect(err!.status).toBe(401);
     expect(authStateService.logout).not.toHaveBeenCalled();
   });
+
+  it('treats an unparseable URL as not the delegated endpoint and handles the error as before', () => {
+    const badUrl = 'http://[bad';
+    const handler = new ScriptedHandler([() => httpError(401, 'x')]);
+    expect(() => new URL(badUrl, 'http://localhost')).toThrow();
+    expect(() =>
+      interceptor.intercept(new HttpRequest('POST', badUrl, {}), handler).subscribe({})
+    ).not.toThrow();
+    expect(authStateService.logout).toHaveBeenCalled();
+  });
 });

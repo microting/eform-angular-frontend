@@ -30,7 +30,13 @@ const SENTRY_IGNORED_STATUSES: readonly number[] = [0, 401, 403];
 
 /** Exact-path match (query/fragment/trailing slash ignored), so sibling paths never match. */
 function isDelegatedSignInUrl(url: string): boolean {
-  const path = new URL(url, 'http://localhost').pathname.replace(/\/+$/, '');
+  let path: string;
+  try {
+    path = new URL(url, 'http://localhost').pathname.replace(/\/+$/, '');
+  } catch {
+    // An unparseable URL is simply not the delegated endpoint; the normal error handling proceeds.
+    return false;
+  }
   return path === `/${AuthMethods.Delegated}`;
 }
 

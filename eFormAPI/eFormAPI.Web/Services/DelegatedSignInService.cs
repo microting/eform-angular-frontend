@@ -57,7 +57,7 @@ using Infrastructure.Models.Auth;
 /// window that opens whenever provisioning fails would be a worse bargain than a retry.
 ///
 /// This file is the fourth entry on
-/// <c>NoRuntimeBindingSourceTests.TheExternalLoginApiIsCalledFromExactlyTwoFiles</c>'s
+/// <c>NoRuntimeBindingSourceTests.TheExternalLoginApiIsCalledOnlyFromTheFourAllowlistedFiles</c>'s
 /// allowlist. It is the delegated SIGN-IN path: it creates and reads links, and can never
 /// set a credential. The rule that allowlist protects — that the PASSWORD login path
 /// (<c>AuthService</c>, <c>UserService</c>, <c>ClaimsTransformer</c>) never consults a
