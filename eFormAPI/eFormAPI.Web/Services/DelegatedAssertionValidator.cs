@@ -599,12 +599,17 @@ public sealed class DelegatedAssertionValidator(
     /// <summary>
     /// Renders an attacker-chosen value safe to put in a log line.
     ///
+    /// <c>internal</c> rather than <c>private</c> so DelegatedSignInService logs the same
+    /// <c>sub</c> and <c>jti</c> through the same sanitiser: a second copy would be a
+    /// second thing to forget to fix. Assembly-internal, so it widens nothing outside
+    /// eFormAPI.Web.
+    ///
     /// A <c>jti</c>, <c>kid</c> or <c>alg</c> comes straight off the wire, and a newline in
     /// one of them forges a whole extra log entry in any line-oriented sink — which is how
     /// an audit trail stops being evidence. Control characters become U+FFFD and the value
     /// is truncated, so a megabyte claim cannot flood the log either.
     /// </summary>
-    private static string ForLog(string value)
+    internal static string ForLog(string value)
     {
         if (string.IsNullOrEmpty(value))
         {
