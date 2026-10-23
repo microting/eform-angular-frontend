@@ -20,8 +20,13 @@ namespace eFormAPI.Web.Infrastructure.Models.DelegatedAccess;
 /// <param name="JwtId">The assertion's unique id (<c>jti</c>), already consumed by the
 /// replay cache at the moment this record was produced.</param>
 /// <param name="ExpiresAt">The assertion's own expiry (<c>exp</c>).</param>
+/// <param name="State">The opaque value the TENANT generated before it sent the browser to
+/// the portal, echoed back by the portal (<c>state</c>). Never empty: it is what makes the
+/// flow tenant-initiated, so an assertion that omits it is one no browser on this tenant
+/// can have asked for.</param>
 public sealed record DelegatedAssertion(
-    string Subject, string DisplayName, string RoleTemplate, string JwtId, DateTimeOffset ExpiresAt);
+    string Subject, string DisplayName, string RoleTemplate, string JwtId, DateTimeOffset ExpiresAt,
+    string State);
 
 /// <summary>
 /// The claim names the portal mints and this tenant reads. The portal lives in another
@@ -49,4 +54,21 @@ public static class DelegatedAssertionClaims
     /// integration sign-in rather than degrade to "" and be read as a default.
     /// </summary>
     public const string RoleTemplate = "role_template";
+
+    /// <summary>
+    /// The tenant's own single-use value, echoed back by the portal. REQUIRED.
+    ///
+    /// This is the login-CSRF defence, and the reason the flow is tenant-initiated: the
+    /// browser generates the value on THIS origin, keeps it there, sends only its copy to
+    /// the portal, and refuses an assertion that does not echo it. An attacker who mints
+    /// nothing and merely replays a link to a victim cannot know the victim's value,
+    /// because it never left the victim's origin.
+    ///
+    /// Requiring it SERVER-side as well is deliberate. The comparison itself can only
+    /// happen in the browser that holds the value, but this endpoint is public, so an
+    /// assertion that carries no state at all must die here rather than rely on a client
+    /// to notice. The portal mints this as a raw short claim name and the validator reads
+    /// raw claim names (MapInboundClaims = false), so no claim-type mapping is involved.
+    /// </summary>
+    public const string State = "state";
 }

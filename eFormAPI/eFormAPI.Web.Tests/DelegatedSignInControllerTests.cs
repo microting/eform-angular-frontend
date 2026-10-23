@@ -27,7 +27,7 @@ public class DelegatedSignInControllerTests
     private DelegatedSignInController _controller;
 
     private static readonly DelegatedAssertion Assertion =
-        new("advisor-1", "Advisor", "advisor", "jti-1", DateTimeOffset.UtcNow.AddMinutes(1));
+        new("advisor-1", "Advisor", "advisor", "jti-1", DateTimeOffset.UtcNow.AddMinutes(1), "state-1");
 
     [SetUp]
     public void SetUp()

@@ -4,6 +4,7 @@ export const enUS = {
   'Delegated sign-in refused': 'Sign-in from the portal was refused. Return to the portal and select the customer again.',
   'Delegated sign-in missing assertion': 'The portal sign-in is missing its credential. Return to the portal and select the customer again.',
   'Delegated sign-in failed': 'Sign-in from the portal failed. Return to the portal and select the customer again.',
+  'Delegated sign-in unavailable': 'This address cannot start a sign-in from the portal. Return to the portal and select the customer again.',
   Settings: 'Settings',
   Save: 'Save',
   'Login Page': 'Login Page',

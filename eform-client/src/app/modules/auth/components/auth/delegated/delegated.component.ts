@@ -7,6 +7,7 @@ import {AuthStateService} from 'src/app/common/store';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth} from 'src/app/state/auth/auth.selector';
 import {takeDelegatedAssertion} from '../../../delegated-assertion';
+import {readAssertionState, takeDelegatedState} from '../../../delegated-state';
 import {take} from 'rxjs';
 
 /**
@@ -17,6 +18,12 @@ import {take} from 'rxjs';
  * URL before Sentry initialises (see delegated-assertion.ts); this component reads the
  * in-memory value. A `?assertion=` query parameter is ignored. If a session already exists the
  * route refuses rather than replacing it.
+ *
+ * The flow is tenant-initiated, so this route is NOT reachable on its own terms: it only
+ * accepts an assertion echoing the `state` that /auth/delegated/start left on this origin
+ * before the portal was ever contacted. An assertion arriving at a browser that holds no
+ * state — the link an attacker mails to a victim — is refused without being posted. That is
+ * the login-CSRF defence; delegated-state.ts explains why it holds.
  *
  * A refused assertion is spent: no automatic retry; the advisor must click through again.
  */
@@ -36,6 +43,10 @@ export class DelegatedComponent implements OnInit {
 
   ngOnInit(): void {
     const assertion = takeDelegatedAssertion();
+    // Taken, and so cleared, unconditionally and before any branch below: a state is good
+    // for exactly one attempt, and no refusal path may leave a usable one behind for a
+    // second one to spend.
+    const expectedState = takeDelegatedState();
     let alreadySignedIn = false;
     this.store.select(selectAuthIsAuth).pipe(take(1)).subscribe((isAuth) => (alreadySignedIn = isAuth));
     if (alreadySignedIn) {
@@ -45,6 +56,13 @@ export class DelegatedComponent implements OnInit {
     }
     if (!assertion) {
       this.errorKey = 'Delegated sign-in missing assertion';
+      return;
+    }
+    // LOGIN CSRF. expectedState is null when this browser never started a sign-in here, so
+    // an assertion mailed to a victim fails on its first condition and is never posted. The
+    // message is the ordinary refusal: it says nothing about which condition failed.
+    if (!expectedState || readAssertionState(assertion) !== expectedState) {
+      this.errorKey = 'Delegated sign-in refused';
       return;
     }
     const sub = this.authService.loginDelegated(assertion).subscribe({

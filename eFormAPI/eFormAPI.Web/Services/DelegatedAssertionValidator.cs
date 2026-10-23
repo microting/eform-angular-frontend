@@ -299,6 +299,20 @@ public sealed class DelegatedAssertionValidator(
             return Rejected();
         }
 
+        var state = ClaimOrEmpty(jwt, DelegatedAssertionClaims.State);
+        if (string.IsNullOrWhiteSpace(state))
+        {
+            // REQUIRED, and for the same reason jti is: without it there is no defence at
+            // all against a link an attacker simply sends to a victim. The value is the
+            // tenant's own, generated in the browser before the portal was contacted, so
+            // only a browser that ASKED for this sign-in can echo it. The comparison itself
+            // necessarily happens there, but the check that one exists belongs here too:
+            // this endpoint is public, and "the client will check it" is not a defence a
+            // server gets to rely on.
+            logger.LogWarning("Delegated assertion refused: no state claim.");
+            return Rejected();
+        }
+
         if (jwt.ValidTo == DateTime.MinValue)
         {
             logger.LogWarning("Delegated assertion refused: no exp claim.");
@@ -328,7 +342,8 @@ public sealed class DelegatedAssertionValidator(
             ClaimOrEmpty(jwt, DelegatedAssertionClaims.DisplayName),
             roleTemplate,
             jwtId,
-            expiresAt);
+            expiresAt,
+            state);
 
         logger.LogInformation(
             "Delegated assertion accepted for subject {Subject} (jti {JwtId}, expires {ExpiresAt:o}).",

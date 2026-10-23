@@ -56,7 +56,8 @@ public class DelegatedSignInServiceTests : DbTestFixture
     /// optional parameter because SonarC# S2360 is on in CI.</param>
     private static DelegatedAssertion Assertion(string subject, string displayName)
         => new(subject, displayName, DelegatedSignInService.AdvisorRoleTemplate,
-            $"jti-{Guid.NewGuid():N}", DateTimeOffset.UtcNow.AddMinutes(2));
+            $"jti-{Guid.NewGuid():N}", DateTimeOffset.UtcNow.AddMinutes(2),
+            $"state-{Guid.NewGuid():N}");
 
     /// <summary>
     /// The service under test, wired to a REAL AuthService so the token it returns is the
@@ -441,7 +442,8 @@ public class DelegatedSignInServiceTests : DbTestFixture
 
         var result = await service.SignInAsync(
             new DelegatedAssertion(subject, "Jane Advisor", "administrator",
-                $"jti-{Guid.NewGuid():N}", DateTimeOffset.UtcNow.AddMinutes(2)),
+                $"jti-{Guid.NewGuid():N}", DateTimeOffset.UtcNow.AddMinutes(2),
+                $"state-{Guid.NewGuid():N}"),
             CancellationToken.None);
 
         Assert.That(result.Success, Is.False,

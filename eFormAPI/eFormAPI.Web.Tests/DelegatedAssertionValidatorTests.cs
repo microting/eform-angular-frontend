@@ -247,6 +247,34 @@ public class DelegatedAssertionValidatorTests
         AssertRefused(result);
     }
 
+    [TestCase(null)]
+    [TestCase("")]
+    [TestCase("   ")]
+    public async Task ValidateAsync_MissingOrEmptyStateClaim_Fails(string state)
+    {
+        // The state is the tenant's own CSRF binding: the browser generated it, kept it on
+        // this origin and compares it before posting. An assertion that carries no state is
+        // one nothing on this tenant can have asked for, so it is refused here too rather
+        // than left for the browser to catch - the endpoint is public, and "the client will
+        // check it" is not a defence a server may rely on.
+        var token = MintToken(state: state);
+
+        var result = await CreateValidator().ValidateAsync(token, CancellationToken.None);
+
+        AssertRefused(result);
+    }
+
+    [Test]
+    public async Task ValidateAsync_WellFormedAssertion_CarriesTheStateThrough()
+    {
+        var token = MintToken(state: "tenant-nonce-42");
+
+        var result = await CreateValidator().ValidateAsync(token, CancellationToken.None);
+
+        Assert.That(result.Success, Is.True);
+        Assert.That(result.Model.State, Is.EqualTo("tenant-nonce-42"));
+    }
+
     [Test]
     public async Task ValidateAsync_MissingNameClaim_StillSucceedsWithAnEmptyDisplayName()
     {
@@ -680,6 +708,7 @@ public class DelegatedAssertionValidatorTests
         string jti = null,
         string displayName = "Rikke Advisor",
         string roleTemplate = "partner-advisor",
+        string state = "tenant-nonce-1",
         DateTime? notBefore = null,
         DateTime? expires = null,
         SigningCredentials credentials = null,
@@ -704,6 +733,11 @@ public class DelegatedAssertionValidatorTests
         if (roleTemplate != null)
         {
             claims.Add(new Claim("role_template", roleTemplate));
+        }
+
+        if (state != null)
+        {
+            claims.Add(new Claim("state", state));
         }
 
         foreach (var extra in extraAudiences ?? [])

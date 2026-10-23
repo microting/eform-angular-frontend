@@ -1,0 +1,8 @@
+<div class="d-flex flex-column align-items-center" id="delegatedStart">
+  @if (errorKey) {
+    <p id="delegatedStartError" class="text-center" role="alert">{{ errorKey | translate }}</p>
+    <a class="ds-btn ds-btn--text w-100" [routerLink]="['/auth']">&lt; {{ 'Back to login' | translate }}</a>
+  } @else {
+    <p id="delegatedStartProgress" class="text-center">{{ 'Delegated sign-in in progress' | translate }}</p>
+  }
+</div>
