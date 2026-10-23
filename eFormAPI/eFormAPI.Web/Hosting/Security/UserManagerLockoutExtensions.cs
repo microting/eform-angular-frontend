@@ -113,7 +113,12 @@ public static class UserManagerLockoutExtensions
     }
 
     /// <summary>True when the user holds a UserLogins row for the delegated provider. A
-    /// null login list (a substituted UserManager) counts as no logins.</summary>
+    /// null login list (a substituted UserManager) counts as no logins.
+    ///
+    /// This is a deliberate, allowlisted use of the link API (see
+    /// NoRuntimeBindingSourceTests.TheExternalLoginApiIsCalledFromExactlyTwoFiles). It is on
+    /// the password-WRITE path, not the login path: a link is consulted only to REFUSE a
+    /// write, so it can never grant authentication to anyone.</summary>
     public static async Task<bool> IsDelegatedPrincipalAsync(this UserManager<EformUser> userManager,
         EformUser user)
     {

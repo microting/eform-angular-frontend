@@ -517,13 +517,23 @@ public class NoRuntimeBindingSourceTests
 
     // Check 4: the external-login API is CALLED from exactly two places. Any later change
     // to the login path to "look up the link" is a violation by construction.
+    //
+    // The allowlist has THREE entries and that is not a looser rule. UserManagerLockoutExtensions
+    // is on the PASSWORD-WRITE path, not the login path: it reads a link only to REFUSE a
+    // password write for a delegated principal (GetLoginsAsync in IsDelegatedPrincipalAsync),
+    // so it can never grant authentication to anyone. It sits at the shared
+    // ReplacePasswordAsync chokepoint on purpose; moving the check into each caller would put
+    // the link API into AdminService and scatter a security check across call sites. The
+    // login-path guarantee is carried by the CI fence (AuthService, UserService and
+    // ClaimsTransformer byte-pinned and grep-clean) and by the login-path test below.
     [Test]
     public void TheExternalLoginApiIsCalledFromExactlyTwoFiles()
     {
         string[] allowed =
         {
             Path.Combine("Services", "AccountService.cs"),
-            Path.Combine("Services", "ExternalUserLinkService.cs")
+            Path.Combine("Services", "ExternalUserLinkService.cs"),
+            Path.Combine("Hosting", "Security", "UserManagerLockoutExtensions.cs")
         };
 
         var callers = new List<string>();
@@ -544,8 +554,8 @@ public class NoRuntimeBindingSourceTests
             .ToList();
 
         Assert.That(offenders, Is.Empty,
-            "the link API belongs to the external-link service and the link-targeted "
-            + "set-password service, and nowhere else");
+            "the link API belongs to the external-link service, the link-targeted "
+            + "set-password service and the password-write refusal guard, and nowhere else");
 
         // Both directions: a check that can only ever report "no offenders" would also pass
         // if the feature were renamed out from under it.
