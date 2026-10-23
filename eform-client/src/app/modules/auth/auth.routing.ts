@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {
   AuthComponent,
+  DelegatedComponent,
   GoogleAuthenticatorComponent,
   LoginComponent,
   RestorePasswordComponent,
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: '',
         component: LoginComponent,
+      },
+      {
+        path: 'delegated',
+        component: DelegatedComponent
       },
       {
         path: 'restore-password',

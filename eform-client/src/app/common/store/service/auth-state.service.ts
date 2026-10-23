@@ -65,59 +65,65 @@ export class AuthStateService {
     this.service.login(loginInfo)
       .pipe(
         filter(x => !!x),
-        tap((response) => {
-          this.authStore.dispatch(loadAuthSuccess({
-              token: {
-                accessToken: response.accessToken,
-                tokenType: response.tokenType,
-                expiresIn: response.expiresIn,
-                role: response.role
-              },
-              currentUser: {
-                firstName: response.firstName,
-                lastName: response.lastName,
-                userName: response.userName,
-                id: response.id,
-                isFirstUser: response.isFirstUser,
-                avatarUrl: response.avatarUrl,
-              },
-              count: 2
-            })
-          );
-          this.authStore.dispatch(updateSideMenuOpened({sideMenuIsOpened: !this.isMobilePlatform()}));
-          this.selectIsAuth$.pipe( // run after update auth info in store
-            filter(x => x === true),
-            take(1),
-            tap(() => {
-              zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
-                .pipe(
-                  take(1),
-                  tap(([userSettings, userClaims]) => {
-                    if (userClaims === null) {
-                      this.logout();
-                    } else {
-                      this.authStore.dispatch(updateUserInfo({userSettings: userSettings, userClaims: userClaims}));
-                      this.translateService.use(userSettings.model.locale);
-                      this.localeService.initCookies(userSettings.model.locale);
-                      if (userSettings.model.loginRedirectUrl != null) {
-                        this.router
-                          .navigate([
-                            `/${userSettings.model.loginRedirectUrl}`,
-                          ]).then();
-                      } else {
-                        this.router
-                          .navigate(['/']).then();
-                      }
-                    }
-                  }),
-                )
-                .subscribe();
-            }),
-          ).subscribe();
-        }),
+        tap((response) => this.completeLogin(response)),
         take(1),
       )
       .subscribe();
+  }
+
+  /**
+   * Stores an issued token and finishes the sign-in (user settings, claims, redirect).
+   * Shared by the password login and the delegated (portal-federated) sign-in.
+   */
+  completeLogin(response: AuthResponseModel) {
+    this.authStore.dispatch(loadAuthSuccess({
+        token: {
+          accessToken: response.accessToken,
+          tokenType: response.tokenType,
+          expiresIn: response.expiresIn,
+          role: response.role
+        },
+        currentUser: {
+          firstName: response.firstName,
+          lastName: response.lastName,
+          userName: response.userName,
+          id: response.id,
+          isFirstUser: response.isFirstUser,
+          avatarUrl: response.avatarUrl,
+        },
+        count: 2
+      })
+    );
+    this.authStore.dispatch(updateSideMenuOpened({sideMenuIsOpened: !this.isMobilePlatform()}));
+    this.selectIsAuth$.pipe( // run after update auth info in store
+      filter(x => x === true),
+      take(1),
+      tap(() => {
+        zip(this.userSettings.getUserSettings(), this.service.obtainUserClaims())
+          .pipe(
+            take(1),
+            tap(([userSettings, userClaims]) => {
+              if (userClaims === null) {
+                this.logout();
+              } else {
+                this.authStore.dispatch(updateUserInfo({userSettings: userSettings, userClaims: userClaims}));
+                this.translateService.use(userSettings.model.locale);
+                this.localeService.initCookies(userSettings.model.locale);
+                if (userSettings.model.loginRedirectUrl != null) {
+                  this.router
+                    .navigate([
+                      `/${userSettings.model.loginRedirectUrl}`,
+                    ]).then();
+                } else {
+                  this.router
+                    .navigate(['/']).then();
+                }
+              }
+            }),
+          )
+          .subscribe();
+      }),
+    ).subscribe();
   }
 
   initLocale() {

@@ -50,6 +50,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       retry(retryConfig),
       // Handle 400 - Bad Request
       catchError((error: HttpErrorResponse) => {
+        // A delegated sign-in assertion is single-use: a failure must reach the landing page
+        // untouched - no logout, no refresh, no automatic retry.
+        if (request.url.includes(AuthMethods.Delegated)) {
+          return throwError(() => error);
+        }
         let errorMessage = '';
         if (environment.enableSentry && !SENTRY_IGNORED_STATUSES.includes(error.status)) {
           Sentry.captureException(error); // Log to Sentry only if enabled

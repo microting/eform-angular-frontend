@@ -208,4 +208,17 @@ describe('HttpErrorInterceptor', () => {
       expect(reported.status).toBe(status);
     });
   });
+
+  it.each([401, 500])('passes a %i from the delegated sign-in through: no logout, no retry', (status) => {
+    const delegatedUrl = '/api/auth/delegated';
+    const handler = new ScriptedHandler([() => httpError(status, delegatedUrl), () => okResponse()]);
+    let receivedError: HttpErrorResponse | null = null;
+    interceptor.intercept(new HttpRequest('POST', delegatedUrl, {assertion: 'x'}), handler).subscribe({
+      error: (error) => (receivedError = error),
+    });
+
+    expect(handler.requests.length).toBe(1);
+    expect(authStateService.logout).not.toHaveBeenCalled();
+    expect(receivedError!.status).toBe(status);
+  });
 });
