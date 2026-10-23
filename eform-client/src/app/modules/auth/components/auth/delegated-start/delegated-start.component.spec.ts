@@ -64,6 +64,27 @@ describe('DelegatedStartComponent', () => {
     expect(fixture.componentInstance.errorKey).toBe('Delegated sign-in unavailable');
   });
 
+  it('start route refuses when the browser has no CSPRNG to draw a state from', () => {
+    // Removing the function, not stubbing it: a stub is still a function and would take the
+    // happy path. The real module is exercised, so this covers generateDelegatedState's null
+    // branch end to end rather than a mock of it.
+    const own = Object.getOwnPropertyDescriptor(crypto, 'getRandomValues');
+    Object.defineProperty(crypto, 'getRandomValues', {value: undefined, configurable: true, writable: true});
+    try {
+      const {fixture, assign} = create('950.microting.com');
+
+      expect(assign).not.toHaveBeenCalled();
+      expect(sessionStorage.getItem(DELEGATED_STATE_STORAGE_KEY)).toBeNull();
+      expect(fixture.componentInstance.errorKey).toBe('Delegated sign-in unavailable');
+    } finally {
+      if (own) {
+        Object.defineProperty(crypto, 'getRandomValues', own);
+      } else {
+        delete (crypto as unknown as Record<string, unknown>)['getRandomValues'];
+      }
+    }
+  });
+
   it('start route refuses rather than leave without a state it can check on the way back', () => {
     // The instance, not Storage.prototype: happy-dom's sessionStorage carries its own
     // methods, so a prototype spy never fires.

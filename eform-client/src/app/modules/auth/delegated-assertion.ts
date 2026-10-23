@@ -8,7 +8,18 @@
  */
 let pendingAssertion: string | null = null;
 
-const ASSERTION_IN_URL = /([#&?]assertion=)[^&#\s"']*/gi;
+/**
+ * Both halves of the handshake, as they appear in a URL.
+ *
+ * `assertion=` is the credential itself. `state=` is here because the same bundle serves the
+ * PORTAL origin, where the authorize bridge page carries `?state=` in the address bar, and
+ * `replaysOnErrorSampleRate: 1.0` ships the buffered replay — URL bar included — on any
+ * error. A state is not a credential, but unlike OAuth the portal echoes whatever state the
+ * caller supplies and mints for the CALLER's own advisor identity, so someone who read one in
+ * flight could mint an assertion echoing it and race the victim's round trip. It is one token
+ * in the regex, so it costs nothing to close.
+ */
+const ASSERTION_IN_URL = /([#&?](?:assertion|state)=)[^&#\s"']*/gi;
 
 /** Reads `#assertion=` from the fragment, stores it in memory and strips the fragment. */
 export function captureDelegatedAssertion(win: Window | undefined = typeof window === 'undefined' ? undefined : window): void {
@@ -34,7 +45,7 @@ export function takeDelegatedAssertion(): string | null {
   return value;
 }
 
-/** Redacts any `assertion=` value in a string (URLs in telemetry payloads). */
+/** Redacts any `assertion=` or `state=` value in a string (URLs in telemetry payloads). */
 export function scrubAssertion(text: string): string {
   return text.replace(ASSERTION_IN_URL, '$1[Filtered]');
 }

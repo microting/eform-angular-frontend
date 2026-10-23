@@ -154,6 +154,8 @@ export function readAssertionState(assertion: string | null | undefined): string
   }
 }
 
+// Not `JwtHelper`/`jwt-decode`: this must answer null for arbitrary attacker-supplied input
+// rather than throw, since reaching it at all is the refusal path.
 function decodeBase64Url(segment: string): string {
   const base64 = segment.replace(/-/g, '+').replace(/_/g, '/');
   const padded = base64 + '='.repeat((4 - (base64.length % 4)) % 4);

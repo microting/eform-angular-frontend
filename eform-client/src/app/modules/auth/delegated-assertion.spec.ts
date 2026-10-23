@@ -33,6 +33,22 @@ describe('delegated-assertion', () => {
     expect(takeDelegatedAssertion()).toBeNull();
   });
 
+  it('scrubs the portal state from telemetry payloads too', () => {
+    // The same bundle serves my.microting.com, whose authorize bridge page carries ?state= in
+    // the address bar, and the buffered replay ships the URL bar on any error.
+    expect(scrubAssertion('https://my.microting.com/plugins/my-microting-pn/delegated/authorize?customerNo=950&state=sekrit-nonce'))
+      .toBe('https://my.microting.com/plugins/my-microting-pn/delegated/authorize?customerNo=950&state=[Filtered]');
+    expect(scrubAssertion('/auth/delegated#assertion=abc.def&state=sekrit-nonce'))
+      .toBe('/auth/delegated#assertion=[Filtered]&state=[Filtered]');
+    const event = scrubAssertionDeep({
+      request: {url: 'https://my.microting.com/x?state=sekrit-nonce'},
+      crumbs: [{to: '/plugins/my-microting-pn/delegated/authorize?state=sekrit-nonce&customerNo=950'}],
+    });
+    expect(JSON.stringify(event)).not.toMatch(/sekrit-nonce/);
+    // customerNo is not a secret and stays legible, so a scrubbed replay is still readable.
+    expect(JSON.stringify(event)).toContain('customerNo=950');
+  });
+
   it('scrubs assertions from telemetry payloads', () => {
     expect(scrubAssertion('https://t/auth/delegated#assertion=abc.def&a=1')).toBe('https://t/auth/delegated#assertion=[Filtered]&a=1');
     const event = scrubAssertionDeep({request: {url: 'https://t/auth/delegated#assertion=abc.def'}, crumbs: [{to: '/auth/delegated?assertion=zzz'}]});

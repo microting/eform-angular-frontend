@@ -1,4 +1,4 @@
-import {describe, it, expect, beforeEach} from 'vitest';
+import {describe, it, expect, beforeEach, afterEach, vi} from 'vitest';
 import {
   DELEGATED_STATE_STORAGE_KEY,
   PORTAL_AUTHORIZE_PATH,
@@ -23,6 +23,7 @@ function tokenWith(payload: unknown): string {
 
 describe('delegated-state', () => {
   beforeEach(() => sessionStorage.clear());
+  afterEach(() => vi.restoreAllMocks());
 
   it('generates a state the portal will accept: unreserved characters only, at most 128', () => {
     for (let i = 0; i < 50; i++) {
@@ -33,6 +34,69 @@ describe('delegated-state', () => {
       // RFC 3986 unreserved, exactly the set DelegatedAuthorizeService.IsAcceptableState allows.
       expect(state!).toMatch(/^[A-Za-z0-9\-._~]+$/);
     }
+  });
+
+  it('draws every byte of the state from crypto.getRandomValues, never Math.random', () => {
+    // The ONE load-bearing property of the whole defence, and the one a well-meaning "add a
+    // fallback for old browsers" refactor would quietly remove: a guessable state is not a
+    // weaker version of this, it is the absence of it. The charset and uniqueness tests above
+    // are both satisfied by Math.random, and even by a counter, so they cannot pin this.
+    // Asserted two ways: the CSPRNG must be CALLED, and the output must be exactly what those
+    // bytes map to, so no second source can be mixed in.
+    const getRandomValues = vi.spyOn(crypto, 'getRandomValues').mockImplementation((buffer) => {
+      const bytes = buffer as Uint8Array;
+      for (let i = 0; i < bytes.length; i++) {
+        bytes[i] = i;
+      }
+      return buffer;
+    });
+
+    const state = generateDelegatedState();
+
+    expect(getRandomValues).toHaveBeenCalledTimes(1);
+    const filled = getRandomValues.mock.calls[0][0] as Uint8Array;
+    expect(filled).toBeInstanceOf(Uint8Array);
+    expect(filled.length).toBe(32);
+    // Bytes 0..31 against 'A-Z a-z 0-9 - _', in that order.
+    expect(state).toBe('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef');
+  });
+
+  it('maps a random byte to a character without bias: 256 is an exact multiple of the alphabet', () => {
+    // b and b+64 must land on the same character, which is only true if the alphabet is
+    // exactly 64 symbols. Widening it to 65 would reintroduce modulo bias.
+    const stateFor = (seed: number) => {
+      vi.spyOn(crypto, 'getRandomValues').mockImplementation((buffer) => {
+        const bytes = buffer as Uint8Array;
+        for (let i = 0; i < bytes.length; i++) {
+          bytes[i] = (seed + i * 64) % 256;
+        }
+        return buffer;
+      });
+      return generateDelegatedState();
+    };
+
+    const first = stateFor(7);
+    expect(first).not.toBeNull();
+    // Every fourth byte differs by 256, i.e. is the same byte, so the whole string is one
+    // character repeated.
+    expect(new Set(first!.split('')).size).toBe(1);
+  });
+
+  it('refuses to invent a state when the browser has no CSPRNG', () => {
+    // The refusal branch: null, never a Math.random fallback. Removing the function rather
+    // than stubbing it, because a stub is still a function and would take the happy path.
+    const own = Object.getOwnPropertyDescriptor(crypto, 'getRandomValues');
+    Object.defineProperty(crypto, 'getRandomValues', {value: undefined, configurable: true, writable: true});
+    try {
+      expect(generateDelegatedState()).toBeNull();
+    } finally {
+      if (own) {
+        Object.defineProperty(crypto, 'getRandomValues', own);
+      } else {
+        delete (crypto as unknown as Record<string, unknown>)['getRandomValues'];
+      }
+    }
+    expect(typeof crypto.getRandomValues).toBe('function');
   });
 
   it('never returns the same state twice', () => {
