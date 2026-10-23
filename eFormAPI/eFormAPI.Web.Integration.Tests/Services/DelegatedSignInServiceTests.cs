@@ -351,9 +351,18 @@ public class DelegatedSignInServiceTests : DbTestFixture
             first.SignInAsync(Assertion(subject), CancellationToken.None),
             second.SignInAsync(Assertion(subject), CancellationToken.None));
 
+        // Registered BEFORE the first assert, and by address rather than by result: this
+        // test is the one that can leave a second row behind, ClearDb() truncates a schema
+        // this project does not use, and a failing assert must not leak a row into a
+        // database every later run shares.
+        var localPart = LocalPartOf(DelegatedSignInService.SyntheticAddressFor(subject));
+        foreach (var id in await IdsOfUsersStartingWithAsync(localPart))
+        {
+            host.TrackForCleanup(id);
+        }
+
         Assert.That(results[0].Success, Is.True, results[0].Message);
         Assert.That(results[1].Success, Is.True, results[1].Message);
-        host.TrackForCleanup(results[0].Model.Id);
 
         Assert.That(results[1].Model.Id, Is.EqualTo(results[0].Model.Id),
             "both requests must land on the same local principal");
@@ -363,7 +372,6 @@ public class DelegatedSignInServiceTests : DbTestFixture
 
         // The loser's user row must not survive as an orphan either: nothing could ever
         // resolve it, and it would sit in the customer's user list forever.
-        var localPart = LocalPartOf(DelegatedSignInService.SyntheticAddressFor(subject));
         Assert.That(await CountUsersStartingWithAsync(localPart), Is.EqualTo(1));
     }
 
@@ -449,6 +457,12 @@ public class DelegatedSignInServiceTests : DbTestFixture
 
     private Task<int> CountUsersStartingWithAsync(string emailPrefix)
         => DbContext.Users.AsNoTracking().CountAsync(x => x.Email.StartsWith(emailPrefix));
+
+    private Task<List<int>> IdsOfUsersStartingWithAsync(string emailPrefix)
+        => DbContext.Users.AsNoTracking()
+            .Where(x => x.Email.StartsWith(emailPrefix))
+            .Select(x => x.Id)
+            .ToListAsync();
 
     /// <summary>
     /// Records what was logged. ILogger's extension methods format through the interface,

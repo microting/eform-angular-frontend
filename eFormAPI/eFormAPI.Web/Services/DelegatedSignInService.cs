@@ -363,6 +363,28 @@ public sealed class DelegatedSignInService(
                 continue;
             }
 
+            // ORDERING INVARIANT, and the reason this is not the obvious order: the link
+            // is the DISCOVERY key, so it is written LAST. A concurrent request can only
+            // adopt a principal it can find, and it can only find one that already has
+            // its role — otherwise the adopter reads an empty role list and refuses a
+            // sign-in that is merely a few milliseconds early. Writing the role first
+            // costs nothing and closes that window by construction rather than by
+            // retrying. (The role row commits before the link row, so any reader that
+            // sees the link sees the role: a snapshot new enough to include the later
+            // write includes the earlier one.)
+            //
+            // The role is added ONCE, at creation, and never re-asserted on a later
+            // sign-in: re-adding it would quietly undo a customer who stripped it, which
+            // is the revocation lever the spec gives them (§8.7).
+            if (!await AddRoleAsync(user, roleName, assertion))
+            {
+                // No link has been written, so nothing can ever resolve this row. Leaving
+                // it would also park the deterministic address on an unusable account and
+                // push every later attempt onto a disambiguated one.
+                await DeleteOrphanAsync(user, assertion);
+                return (null, false);
+            }
+
             var linked = await LinkAsync(user, assertion);
             if (linked.Winner != null)
             {
@@ -371,22 +393,20 @@ public sealed class DelegatedSignInService(
 
             if (!linked.Succeeded)
             {
-                return (null, false);
-            }
-
-            // The role is added ONCE, at creation, and never re-asserted on a later
-            // sign-in: re-adding it would quietly undo a customer who stripped it, which
-            // is the revocation lever the spec gives them (§8.7).
-            if (!await AddRoleAsync(user, roleName, assertion))
-            {
-                return (null, false);
+                // Winner is null here, because a named winner returned above: the key was
+                // refused and yet a re-read named no holder, so the row that held it was
+                // rolled back in the gap between the two reads. Retry rather than refuse
+                // an advisor over a collision that no longer exists — our own row is
+                // already deleted and the loop is bounded.
+                continue;
             }
 
             return (user, true);
         }
 
         logger.LogError(
-            "Delegated sign-in: no free local address after {Attempts} attempts (jti {JwtId}).",
+            "Delegated sign-in: could not provision a local principal after {Attempts} "
+            + "attempts (jti {JwtId}).",
             MaxCreateAttempts, DelegatedAssertionValidator.ForLog(assertion.JwtId));
         return (null, false);
     }
@@ -410,10 +430,24 @@ public sealed class DelegatedSignInService(
                 return (true, null);
             }
 
-            logger.LogError(
-                "Delegated sign-in: could not link local user {UserId} (jti {JwtId}): {Errors}",
-                user.Id, DelegatedAssertionValidator.ForLog(assertion.JwtId),
-                string.Join(" ", result.Errors.Select(e => e.Description)));
+            if (IsLoginAlreadyAssociated(result))
+            {
+                // The USUAL shape of a lost race, and the reason this branch exists at
+                // all: UserManager.AddLoginAsync re-reads the key with FindByLoginAsync
+                // before it writes, so when the other request got there first this comes
+                // back as an IdentityResult and the database is never asked. It is a
+                // benign, expected outcome — two tabs, or two advisors arriving together
+                // — so it is logged at information level beside the violation path below.
+                // Logging it as an error would page somebody for a working sign-in.
+                LogLostRace(assertion);
+            }
+            else
+            {
+                logger.LogError(
+                    "Delegated sign-in: could not link local user {UserId} (jti {JwtId}): {Errors}",
+                    user.Id, DelegatedAssertionValidator.ForLog(assertion.JwtId),
+                    string.Join(" ", result.Errors.Select(e => e.Description)));
+            }
         }
         catch (DbUpdateException ex) when (IsIntegrityConstraintViolation(ex))
         {
@@ -426,10 +460,7 @@ public sealed class DelegatedSignInService(
             // before the rollback below, or the rollback's save would retry it and throw
             // the same violation again.
             DiscardPendingInserts();
-            logger.LogInformation(
-                "Delegated sign-in: lost the first-sign-in race for jti {JwtId}; "
-                + "adopting the principal the other request created.",
-                DelegatedAssertionValidator.ForLog(assertion.JwtId));
+            LogLostRace(assertion);
         }
 
         var winner = await userManager.FindByLoginAsync(
@@ -437,7 +468,8 @@ public sealed class DelegatedSignInService(
 
         // Our own row is unreachable now — nothing can ever resolve a principal with no
         // link — so it is deleted rather than left as a permanent orphan in the customer's
-        // user list. It has no password and no role, so there is nothing to lose with it.
+        // user list. It has no password and nothing has ever used it, so there is nothing
+        // to lose with it; its role row goes with it by cascade.
         await DeleteOrphanAsync(user, assertion);
 
         return (false, winner);
@@ -463,9 +495,8 @@ public sealed class DelegatedSignInService(
         {
             // AddToRoleAsync throws when the role row does not exist. Every tenant is
             // seeded with it (SeedAdminHelper), so this is a broken installation rather
-            // than a user error — and the principal is left in place deliberately: the
-            // next sign-in reuses it and refuses again for the same visible reason,
-            // instead of churning a new user row per attempt.
+            // than a user error. The caller then deletes the half-built row: it has no
+            // link, so no later sign-in could ever find it.
             logger.LogError(ex,
                 "Delegated sign-in: role {Role} does not exist on this tenant.", roleName);
         }
@@ -589,6 +620,24 @@ public sealed class DelegatedSignInService(
         var suffix = Guid.NewGuid().ToString("N")[..8];
         return $"{baseAddress[..at]}-{suffix}@{baseAddress[(at + 1)..]}";
     }
+
+    /// <summary>
+    /// The one log line for a lost first-sign-in race, whichever shape it arrived in.
+    /// Information, not error: the advisor is about to be signed in on the principal the
+    /// other request created, which is the designed outcome and not an incident.
+    /// </summary>
+    private void LogLostRace(DelegatedAssertion assertion)
+        => logger.LogInformation(
+            "Delegated sign-in: lost the first-sign-in race for jti {JwtId}; "
+            + "adopting the principal the other request created.",
+            DelegatedAssertionValidator.ForLog(assertion.JwtId));
+
+    /// <summary>Whether Identity refused the link because the key is already held — the
+    /// non-throwing half of the lost race. The code comes from the configured describer
+    /// rather than a literal, so a renamed error cannot silently stop matching.</summary>
+    private bool IsLoginAlreadyAssociated(IdentityResult result)
+        => result.Errors.Any(e =>
+            e.Code == userManager.ErrorDescriber.LoginAlreadyAssociated().Code);
 
     /// <summary>Whether Identity refused the insert because the name or address is
     /// taken — the only failure this path retries with a different address.</summary>
