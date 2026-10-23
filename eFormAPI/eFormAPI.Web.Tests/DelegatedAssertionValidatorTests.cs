@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models.DelegatedAccess;
 using eFormAPI.Web.Services;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -80,11 +81,11 @@ public class DelegatedAssertionValidatorTests
         _rsa.Dispose();
     }
 
-    private DelegatedAssertionValidator CreateValidator() => new(
+    private DelegatedAssertionValidator CreateValidator(ILogger<DelegatedAssertionValidator> logger = null) => new(
         Options.Create(_options),
         _httpClientFactory,
         _cache,
-        NullLogger<DelegatedAssertionValidator>.Instance);
+        logger ?? NullLogger<DelegatedAssertionValidator>.Instance);
 
     // ----------------------------------------------------------------- happy paths
 
@@ -223,6 +224,32 @@ public class DelegatedAssertionValidatorTests
         var result = await CreateValidator().ValidateAsync(token, CancellationToken.None);
 
         AssertRefused(result);
+    }
+
+    [TestCase(null)]
+    [TestCase("")]
+    [TestCase("   ")]
+    public async Task ValidateAsync_MissingOrEmptyRoleTemplateClaim_Fails(string roleTemplate)
+    {
+        // The claim names are this repo's invention and the portal lives elsewhere, so a
+        // mismatch must fail loudly rather than hand Task 5 an empty template to default.
+        var token = MintToken(roleTemplate: roleTemplate);
+
+        var result = await CreateValidator().ValidateAsync(token, CancellationToken.None);
+
+        AssertRefused(result);
+    }
+
+    [Test]
+    public async Task ValidateAsync_MissingNameClaim_StillSucceedsWithAnEmptyDisplayName()
+    {
+        // name is audit-only and never an identifier, so a missing one is a poorer audit
+        // line, not a security decision taken on a guess.
+        var result = await CreateValidator().ValidateAsync(
+            MintToken(displayName: null), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True);
+        Assert.That(result.Model.DisplayName, Is.Empty);
     }
 
     [Test]
@@ -451,17 +478,64 @@ public class DelegatedAssertionValidatorTests
     }
 
     [Test]
-    public async Task ValidateAsync_JwksFailureIsNotCached_SoARecoveredPortalWorks()
+    public async Task ValidateAsync_PortalUnreachable_AttemptsTheFetchOnlyOnceWithinTheCooldown()
     {
+        // While the portal is down, one outbound attempt per inbound token — each holding
+        // a 10s timeout — is an amplification any anonymous caller can drive just by
+        // posting repeatedly. The cooldown is written BEFORE the attempt, so a failure
+        // costs the next caller its attempt exactly as a success would.
         var validator = CreateValidator();
         _handler.Thrower = () => throw new HttpRequestException("the portal is down");
 
-        AssertRefused(await validator.ValidateAsync(MintToken(), CancellationToken.None));
+        for (var i = 0; i < 10; i++)
+        {
+            AssertRefused(await validator.ValidateAsync(MintToken(), CancellationToken.None));
+        }
 
-        _handler.Thrower = null;
-        var result = await validator.ValidateAsync(MintToken(), CancellationToken.None);
+        Assert.That(_handler.RequestCount, Is.EqualTo(1));
+    }
 
-        Assert.That(result.Success, Is.True);
+    [Test]
+    public async Task ValidateAsync_PortalUnreachableConcurrently_AttemptsTheFetchOnlyOnce()
+    {
+        // The cooldown alone only binds SEQUENTIAL callers: concurrent ones all read it
+        // before any of them writes it. The in-flight gate is what makes this hold.
+        var validator = CreateValidator();
+        _handler.Thrower = () => throw new HttpRequestException("the portal is down");
+
+        var results = await Task.WhenAll(Enumerable.Range(0, 24)
+            .Select(_ => Task.Run(() => validator.ValidateAsync(MintToken(), CancellationToken.None))));
+
+        foreach (var result in results)
+        {
+            AssertRefused(result);
+        }
+
+        Assert.That(_handler.RequestCount, Is.EqualTo(1));
+    }
+
+    [Test]
+    public async Task ValidateAsync_ConcurrentUnknownKids_RefetchTheJwksOnlyOnce()
+    {
+        var validator = CreateValidator();
+        Assert.That((await validator.ValidateAsync(MintToken(), CancellationToken.None)).Success, Is.True);
+
+        using var attackerKey = RSA.Create(2048);
+        var tokens = Enumerable.Range(0, 24)
+            .Select(i => MintToken(credentials: new SigningCredentials(
+                new RsaSecurityKey(attackerKey) { KeyId = "attacker-key-" + i }, SecurityAlgorithms.RsaSha256)))
+            .ToArray();
+
+        var results = await Task.WhenAll(tokens
+            .Select(t => Task.Run(() => validator.ValidateAsync(t, CancellationToken.None))));
+
+        foreach (var result in results)
+        {
+            AssertRefused(result);
+        }
+
+        // One priming fetch plus ONE refetch for all 24 concurrent unknown kids.
+        Assert.That(_handler.RequestCount, Is.EqualTo(2));
     }
 
     // ----------------------------------------------------------------- configuration gates
@@ -504,6 +578,41 @@ public class DelegatedAssertionValidatorTests
         Assert.That(_handler.RequestCount, Is.Zero);
     }
 
+    // ----------------------------------------------------------------- logging
+
+    [Test]
+    public async Task ValidateAsync_AttackerControlledClaims_CannotInjectLogLines()
+    {
+        // jti, kid and alg come straight off the wire. A newline in one of them forges a
+        // whole extra entry in any line-oriented sink, which is how an audit trail stops
+        // being evidence.
+        var capture = new CapturingLogger();
+        var validator = CreateValidator(capture);
+        var token = MintToken(jti: "legit\nWARN: nothing to see here", subject: "advisor\r\nadmin");
+
+        Assert.That((await validator.ValidateAsync(token, CancellationToken.None)).Success, Is.True);
+        AssertRefused(await validator.ValidateAsync(token, CancellationToken.None));
+
+        Assert.That(capture.Messages, Is.Not.Empty);
+        Assert.That(capture.Messages.Any(m => m.Contains("nothing to see here")), Is.True,
+            "the value must still be logged, just neutered");
+        Assert.That(capture.Messages.Any(m => m.Contains('\n') || m.Contains('\r')), Is.False);
+    }
+
+    [Test]
+    public async Task ValidateAsync_AttackerControlledAlgAndKid_CannotInjectLogLines()
+    {
+        var capture = new CapturingLogger();
+
+        var header = "{\"alg\":\"no\\nne\",\"typ\":\"JWT\",\"kid\":\"a\\nb\"}";
+        var payload = JsonSerializer.Serialize(new Dictionary<string, object> { ["sub"] = "x" });
+        var forged = Base64UrlEncoder.Encode(header) + "." + Base64UrlEncoder.Encode(payload) + ".";
+
+        AssertRefused(await CreateValidator(capture).ValidateAsync(forged, CancellationToken.None));
+
+        Assert.That(capture.Messages.Any(m => m.Contains('\n') || m.Contains('\r')), Is.False);
+    }
+
     // ----------------------------------------------------------------- helpers
 
     private static void AssertRefused(OperationDataResult<DelegatedAssertion> result)
@@ -536,8 +645,15 @@ public class DelegatedAssertionValidatorTests
         {
             claims.Add(new Claim("jti", jti ?? Guid.NewGuid().ToString()));
         }
-        claims.Add(new Claim("name", displayName));
-        claims.Add(new Claim("role_template", roleTemplate));
+        if (displayName != null)
+        {
+            claims.Add(new Claim("name", displayName));
+        }
+
+        if (roleTemplate != null)
+        {
+            claims.Add(new Claim("role_template", roleTemplate));
+        }
 
         foreach (var extra in extraAudiences ?? [])
         {
@@ -576,6 +692,36 @@ public class DelegatedAssertionValidatorTests
                 }
             }
         });
+    }
+
+    /// <summary>Keeps every formatted log message so a test can inspect it.</summary>
+    private sealed class CapturingLogger : ILogger<DelegatedAssertionValidator>
+    {
+        private readonly List<string> _messages = [];
+
+        public List<string> Messages
+        {
+            get
+            {
+                lock (_messages)
+                {
+                    return [.._messages];
+                }
+            }
+        }
+
+        public IDisposable BeginScope<TState>(TState state) where TState : notnull => null;
+
+        public bool IsEnabled(LogLevel logLevel) => true;
+
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
+            Func<TState, Exception, string> formatter)
+        {
+            lock (_messages)
+            {
+                _messages.Add(formatter(state, exception));
+            }
+        }
     }
 
     /// <summary>Serves the JWKS in-process and counts how often it was asked.</summary>
