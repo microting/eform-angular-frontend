@@ -1,4 +1,5 @@
 export const enUS = {
+  'Delegated sign-in session exists': 'You are already signed in. Sign out, then select the customer in the portal again.',
   'Delegated sign-in in progress': 'Signing in...',
   'Delegated sign-in refused': 'Sign-in from the portal was refused. Return to the portal and select the customer again.',
   'Delegated sign-in missing assertion': 'The portal sign-in is missing its credential. Return to the portal and select the customer again.',

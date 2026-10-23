@@ -28,6 +28,12 @@ import {environment} from '../../../environments/environment';
  */
 const SENTRY_IGNORED_STATUSES: readonly number[] = [0, 401, 403];
 
+/** Exact-path match (query/fragment/trailing slash ignored), so sibling paths never match. */
+function isDelegatedSignInUrl(url: string): boolean {
+  const path = new URL(url, 'http://localhost').pathname.replace(/\/+$/, '');
+  return path === `/${AuthMethods.Delegated}`;
+}
+
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
   private loaderService = inject(LoaderService);
@@ -52,7 +58,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         // A delegated sign-in assertion is single-use: a failure must reach the landing page
         // untouched - no logout, no refresh, no automatic retry.
-        if (request.url.includes(AuthMethods.Delegated)) {
+        if (isDelegatedSignInUrl(request.url)) {
           return throwError(() => error);
         }
         let errorMessage = '';

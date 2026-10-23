@@ -221,4 +221,19 @@ describe('HttpErrorInterceptor', () => {
     expect(authStateService.logout).not.toHaveBeenCalled();
     expect(receivedError!.status).toBe(status);
   });
+
+  it('does not bypass the interceptor for a sibling path such as api/auth/delegated-other', () => {
+    const handler = new ScriptedHandler([() => httpError(401, '/api/auth/delegated-other')]);
+    interceptor.intercept(new HttpRequest('POST', '/api/auth/delegated-other', {}), handler).subscribe({});
+    expect(authStateService.logout).toHaveBeenCalled();
+  });
+
+  it('matches the delegated path with a leading slash or query string', () => {
+    const handler = new ScriptedHandler([() => httpError(401, 'x')]);
+    let err: HttpErrorResponse | null = null;
+    interceptor.intercept(new HttpRequest('POST', 'https://t.example/api/auth/delegated?x=1', {}), handler)
+      .subscribe({error: (e) => (err = e)});
+    expect(err!.status).toBe(401);
+    expect(authStateService.logout).not.toHaveBeenCalled();
+  });
 });

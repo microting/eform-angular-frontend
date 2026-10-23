@@ -1,18 +1,22 @@
 import {Component, DestroyRef, OnInit, inject} from '@angular/core';
-import {DOCUMENT} from '@angular/common';
 import {HttpErrorResponse} from '@angular/common/http';
 import {RouterLink} from '@angular/router';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AuthService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
+import {Store} from '@ngrx/store';
+import {selectAuthIsAuth} from 'src/app/state/auth/auth.selector';
+import {takeDelegatedAssertion} from '../../../delegated-assertion';
+import {take} from 'rxjs';
 
 /**
  * Landing route for a partner advisor arriving from my.microting.com.
  *
  * The portal redirects to `/auth/delegated#assertion=<jwt>`. The assertion is
- * credential-equivalent, so it travels in the URL FRAGMENT only: a fragment is never sent to
- * the server, never appears in Referer and stays out of access/proxy logs. It is read once and
- * wiped from the address bar before any HTTP call. A `?assertion=` query parameter is ignored.
+ * credential-equivalent, so it travels in the URL FRAGMENT only. main.ts lifts it out of the
+ * URL before Sentry initialises (see delegated-assertion.ts); this component reads the
+ * in-memory value. A `?assertion=` query parameter is ignored. If a session already exists the
+ * route refuses rather than replacing it.
  *
  * A refused assertion is spent: no automatic retry; the advisor must click through again.
  */
@@ -22,7 +26,7 @@ import {AuthStateService} from 'src/app/common/store';
   imports: [RouterLink, TranslatePipe],
 })
 export class DelegatedComponent implements OnInit {
-  private document = inject(DOCUMENT);
+  private store = inject(Store);
   private authService = inject(AuthService);
   private authStateService = inject(AuthStateService);
   private destroyRef = inject(DestroyRef);
@@ -31,7 +35,14 @@ export class DelegatedComponent implements OnInit {
   errorKey: string | null = null;
 
   ngOnInit(): void {
-    const assertion = this.takeAssertionFromFragment();
+    const assertion = takeDelegatedAssertion();
+    let alreadySignedIn = false;
+    this.store.select(selectAuthIsAuth).pipe(take(1)).subscribe((isAuth) => (alreadySignedIn = isAuth));
+    if (alreadySignedIn) {
+      // Never silently swap a live session (login CSRF): the assertion is dropped unused.
+      this.errorKey = 'Delegated sign-in session exists';
+      return;
+    }
     if (!assertion) {
       this.errorKey = 'Delegated sign-in missing assertion';
       return;
@@ -57,19 +68,5 @@ export class DelegatedComponent implements OnInit {
       return 'Delegated sign-in refused';
     }
     return 'Delegated sign-in failed';
-  }
-
-  private takeAssertionFromFragment(): string | null {
-    const win = this.document.defaultView;
-    if (!win) {
-      return null;
-    }
-    const hash = win.location.hash;
-    const assertion = new URLSearchParams(hash.startsWith('#') ? hash.slice(1) : hash).get('assertion');
-    if (hash) {
-      // replaceState drops the fragment entirely (no stray '#', no extra history entry).
-      win.history.replaceState(win.history.state, '', win.location.pathname + win.location.search);
-    }
-    return assertion;
   }
 }
