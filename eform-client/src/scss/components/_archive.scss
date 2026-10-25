@@ -1,9 +1,10 @@
 // =============================================================================
 // Archive — backend-configuration "Arkiv" page, layout W1
 // -----------------------------------------------------------------------------
-// Folder tree | document table | document panel. Below 1100 px the plugin adds
-// `.archive-panel--drawer` (BreakpointObserver), so the panel slides over the
-// page instead of taking a column. Tokens only — every token used here exists
+// Folder tree | document table. An open document (`.archive-workspace--viewing`)
+// covers both: the rail and the table stay in the DOM but are hidden, and the
+// large document view (`.archive-view`: preview left, fields right) takes the
+// whole width. Below 860 px the view stacks preview over fields. Tokens only — every token used here exists
 // in both _workspace.scss and _eform.scss, so the page works in both themes and
 // both modes without a theme-scoped copy. Reused, not redefined here: `.table`,
 // `.chip`/`.chip-selected`, `.tag`, `.ejendom-chip(s)`, `.status-chip--*`,
@@ -24,8 +25,20 @@ app-archive-document-panel {
   align-items: start;
 }
 
+// Pre-large-view plugin releases; remove once every tenant runs the large view.
 .archive-workspace--with-panel {
   grid-template-columns: 260px minmax(0, 1fr) 360px;
+}
+
+// A document is open: one column, rail and table hidden but kept alive (their
+// state — selection, scroll, expanded folders — survives going back).
+.archive-workspace--viewing {
+  grid-template-columns: minmax(0, 1fr);
+
+  .archive-rail,
+  .archive-center {
+    display: none;
+  }
 }
 
 @media (max-width: 767.98px) {
@@ -269,8 +282,46 @@ app-files-table {
   }
 }
 
+// Pre-large-view plugin releases; remove once every tenant runs the large view.
 .archive-doc-path {
   margin-left: 32px;
+}
+
+// "Mappe" column: the folder a document lives in, parent muted, leaf bold.
+.archive-folder-path {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  max-width: 220px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm, 4px);
+  background: color-mix(in srgb, var(--md-primary) 7%, var(--md-surface));
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+
+  .mat-icon {
+    flex: none;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: var(--md-primary);
+  }
+}
+
+.archive-folder-path__parent {
+  flex: none;
+  font-weight: 400;
+  color: var(--md-on-surface-variant);
+}
+
+.archive-folder-path__leaf {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 700;
 }
 
 .archive-date {
@@ -313,6 +364,9 @@ app-files-table {
 }
 
 // ---- Document panel ----------------------------------------------------------
+// Everything `.archive-panel*` and `.archive-panel-backdrop` below is for
+// pre-large-view plugin releases; remove once every tenant runs the large view.
+// `__field`, `__label` and `__suggestion` are still used inside `.archive-view`.
 .archive-panel {
   position: sticky;
   top: var(--spacing-md, 8px);
@@ -425,6 +479,149 @@ img.archive-panel__preview {
   inset: 0;
   z-index: 989;
   background: color-mix(in srgb, var(--md-on-surface) 32%, transparent);
+}
+
+// ---- Large document view -----------------------------------------------------
+// Replaces the side panel: a direct grid item of `.archive-workspace--viewing`.
+// 56 px bar on top, below it the preview (left) and the fields panel (right).
+.archive-view {
+  display: grid;
+  grid-template-rows: 56px minmax(0, 1fr);
+  height: calc(100vh - 120px);
+  min-height: 480px;
+  border: 1px solid var(--md-surface-variant);
+  border-radius: var(--radius-xl, 10px);
+  overflow: hidden;
+  background: var(--md-surface-container);
+  color: var(--md-on-surface);
+}
+
+.archive-view__bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 56px;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--md-surface-variant);
+}
+
+.archive-view__title {
+  flex: 1 1 auto;
+  min-width: 0;
+
+  > span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+}
+
+.archive-view__path {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--md-on-surface-variant);
+}
+
+// "2 af 4" (or "1 af 2 valgte") before the prev/next buttons.
+.archive-view__pos {
+  padding: 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--md-on-surface-variant);
+}
+
+.archive-view__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  min-height: 0;
+}
+
+.archive-view__preview {
+  // Positioning context for the pdf-viewer (see `__pdf`).
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  min-height: 0;
+  overflow: auto;
+  padding: 24px;
+  background: color-mix(in srgb, var(--md-on-surface) 6%, var(--bg));
+}
+
+// ng2-pdf-viewer draws into an absolutely positioned inner container, so a host
+// without a height collapses to 0. Pinning the host to the preview's padding box
+// (absolute + inset) gives it a definite size and lets the viewer's own container
+// do the scrolling; a percentage height would depend on the grid track instead.
+pdf-viewer.archive-view__pdf {
+  display: block;
+  position: absolute;
+  inset: 24px;
+  width: auto;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+img.archive-view__image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: var(--md-surface);
+  box-shadow: var(--md-shadow);
+}
+
+.archive-view__panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-left: 1px solid var(--md-surface-variant);
+}
+
+.archive-view__fields {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl, 16px);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.archive-view__foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--spacing-md, 8px);
+  padding: 10px 16px;
+  border-top: 1px solid var(--md-surface-variant);
+}
+
+// Narrow: preview over fields, the page scrolls instead of the view.
+@media (max-width: 859.98px) {
+  .archive-view {
+    height: auto;
+  }
+
+  .archive-view__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // The pdf-viewer is absolutely positioned, so the preview needs a fixed height.
+  .archive-view__preview {
+    height: 320px;
+  }
+
+  .archive-view__panel {
+    border-left: 0;
+    border-top: 1px solid var(--md-surface-variant);
+  }
 }
 
 // ---- Folder picker options (mtx-select) -------------------------------------
