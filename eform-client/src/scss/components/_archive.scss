@@ -311,8 +311,14 @@ app-files-table {
   }
 }
 
+// The parent truncates first and never takes more than half the chip, so a long
+// parent name cannot push the leaf (the folder the document is in) out of view.
 .archive-folder-path__parent {
-  flex: none;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: 400;
   color: var(--md-on-surface-variant);
 }
