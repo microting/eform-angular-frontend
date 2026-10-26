@@ -3,6 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule, registerIconsFactory } from './app/app.module';
 import { environment } from './environments/environment';
 import * as Sentry from '@sentry/angular';
+import { captureDelegatedAssertion, scrubAssertionDeep } from './app/modules/auth/delegated-assertion';
 import { OVERLAY_DEFAULT_CONFIG } from '@angular/cdk/overlay';
 import { registerLocaleData } from '@angular/common';
 import localeBg from '@angular/common/locales/bg';
@@ -100,6 +101,10 @@ registerLocaleData(localeTr);
 registerLocaleData(localeUk);
 
 
+// Must run before Sentry.init: tracing and replay record the URL bar, and a delegated
+// sign-in assertion in the fragment is a bearer credential.
+captureDelegatedAssertion();
+
 if (environment.enableSentry) {
   Sentry.init({
     dsn: 'https://38b1e86a3c4d2532158903ab783bfe5e@o4506241219428352.ingest.sentry.io/4506268847112192',
@@ -130,6 +135,10 @@ if (environment.enableSentry) {
       Sentry.consoleLoggingIntegration({levels: ['warn', 'error']}),
     ],
     enableLogs: true,
+    // Belt and braces: the fragment is already gone, but never ship an assertion to Sentry.
+    beforeBreadcrumb: (breadcrumb) => scrubAssertionDeep(breadcrumb),
+    beforeSend: (event) => scrubAssertionDeep(event),
+    beforeSendTransaction: (event) => scrubAssertionDeep(event),
     // Session Replay
     replaysSessionSampleRate: 0, // Never record a whole session on its own
     replaysOnErrorSampleRate: 1.0, // Always attach the buffered replay when an error occurs

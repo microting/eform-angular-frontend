@@ -39,6 +39,27 @@ public class ExternalLinkContractTests
         Assert.That(ExternalLoginProviders.IsSupported(null), Is.False);
     }
 
+    // The delegated provider is a separate value so P3's password fan-out, which resolves
+    // (MyMicroting, providerKey), can never select a credential-less advisor row.
+    [Test]
+    public void MyMicrotingDelegated_HasTheExactValue()
+        => Assert.That(ExternalLoginProviders.MyMicrotingDelegated, Is.EqualTo("my.microting.com/delegated"));
+
+    // The link API validates with IsSupported, so a delegated row must be unwritable
+    // through it, in any case.
+    [Test]
+    public void IsSupported_RejectsTheDelegatedProvider()
+        => Assert.That(ExternalLoginProviders.IsSupported(ExternalLoginProviders.MyMicrotingDelegated), Is.False);
+
+    [Test]
+    public void IsSupported_RejectsDelegatedProvider_CaseInsensitively()
+        => Assert.That(ExternalLoginProviders.IsSupported("My.Microting.Com/Delegated"), Is.False);
+
+    [Test]
+    public void TheTwoProviders_AreDifferent()
+        => Assert.That(ExternalLoginProviders.MyMicrotingDelegated,
+            Is.Not.EqualTo(ExternalLoginProviders.MyMicroting));
+
     // The plugin maps these six names onto its own TenantPasswordResult.Outcome. Adding,
     // renaming or reordering one needs a matching plugin change.
     [Test]

@@ -21,7 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+using System;
 using System.Threading.Tasks;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
@@ -33,6 +35,23 @@ using Infrastructure.Models.Auth;
 public interface IAuthService
 {
     Task<OperationDataResult<EformAuthorizeResult>> AuthenticateUser(LoginModel model);
+
+    /// <summary>
+    /// Mints this tenant's own JWT for <paramref name="user"/>, with the claims, the
+    /// in-memory permission cache entry and the 24-hour lifetime a password login
+    /// produces.
+    ///
+    /// The method is already <c>public</c> on <c>AuthService</c>
+    /// (<c>Services/AuthService.cs:216</c>) and was merely absent from this interface.
+    /// Declaring it here lets delegated sign-in mint a session through the SAME
+    /// implementation instead of a second copy of the claims logic — a second copy is how
+    /// one path quietly stops adding a role claim. <c>AuthService.cs</c> is byte-pinned by
+    /// the CI login-path fence and is NOT touched by this addition.
+    ///
+    /// It verifies nothing. The caller must already have decided this user may sign in.
+    /// </summary>
+    Task<(string token, DateTime expireIn)> GenerateToken(EformUser user);
+
     Task<OperationDataResult<EformAuthorizeResult>> RefreshToken();
     Task<OperationResult> DeleteGoogleAuthenticatorInfo();
     Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel);

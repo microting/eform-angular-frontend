@@ -1,4 +1,10 @@
 export const da = {
+  'Delegated sign-in session exists': 'Du er allerede logget ind. Log ud, og vælg derefter kunden i portalen igen.',
+  'Delegated sign-in in progress': 'Logger ind...',
+  'Delegated sign-in refused': 'Log ind fra portalen blev afvist. Gå tilbage til portalen og vælg kunden igen.',
+  'Delegated sign-in missing assertion': 'Log ind fra portalen mangler sin adgangsbillet. Gå tilbage til portalen og vælg kunden igen.',
+  'Delegated sign-in failed': 'Log ind fra portalen mislykkedes. Gå tilbage til portalen og vælg kunden igen.',
+  'Delegated sign-in unavailable': 'Denne adresse kan ikke starte et log ind fra portalen. Gå tilbage til portalen og vælg kunden igen.',
   Settings: 'Indstillinger',
   Save: 'Gem',
   'Login Page': 'Login side',

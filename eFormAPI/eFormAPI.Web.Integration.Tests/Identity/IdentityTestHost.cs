@@ -144,6 +144,9 @@ public sealed class IdentityTestHost : IAsyncDisposable
         return user;
     }
 
+    /// <summary>Registers a user created outside this host so DisposeAsync deletes it.</summary>
+    public void TrackForCleanup(int userId) => _createdUserIds.Add(userId);
+
     public Task<string> StoredHashAsync(int userId)
         => DbContext.Users.AsNoTracking().Where(u => u.Id == userId)
             .Select(u => u.PasswordHash).SingleAsync();
