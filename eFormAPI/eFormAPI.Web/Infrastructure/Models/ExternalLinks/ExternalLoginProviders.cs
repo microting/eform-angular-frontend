@@ -28,6 +28,20 @@ public static class ExternalLoginProviders
     public static readonly string MyMicroting = "my.microting.com";
 
     /// <summary>
+    /// The provider for partner-federated (delegated) sign-in. Deliberately distinct from
+    /// <see cref="MyMicroting"/>: P3's password fan-out resolves its target by
+    /// (MyMicroting, providerKey), so a delegated row under the same provider would be a
+    /// valid fan-out target and would be given a password. Keeping it separate means the
+    /// fan-out can never reach a credential-less advisor principal.
+    ///
+    /// IsSupported deliberately does NOT accept this value, so the existing link API can
+    /// never write a delegated row.
+    ///
+    /// static readonly for the same SonarC# S2339 reason as <see cref="MyMicroting"/>.
+    /// </summary>
+    public static readonly string MyMicrotingDelegated = "my.microting.com/delegated";
+
+    /// <summary>
     /// Whether <paramref name="loginProvider"/> is the one supported provider.
     ///
     /// Case-insensitive, because the UserLogins primary key collates

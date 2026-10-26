@@ -44,6 +44,7 @@ using Hosting.Security;
 using Hosting.SentryIntegration;
 using Microsoft.AspNetCore.Routing;
 using Infrastructure.Models.Settings.Plugins;
+using Infrastructure.Models.DelegatedAccess;
 using Services;
 using Services.Security;
 using Microsoft.AspNetCore.Builder;
@@ -256,6 +257,7 @@ public class Startup(IConfiguration configuration)
         }
         services.ConfigureDbOptions<ConnectionStringsSdk>(configurationSection);
         services.ConfigureDbOptions<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
+        services.ConfigureDbOptions<DelegatedAccessOptions>(Configuration.GetSection("DelegatedAccess"));
         services.ConfigureDbOptions<PluginStoreSettings>(Configuration.GetSection("PluginStoreSettings"));
         // Database plugins options
         foreach (var plugin in Program.EnabledPlugins)
@@ -430,6 +432,8 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IExternalUserLinkService, ExternalUserLinkService>();
         services.AddScoped<IWorkerAccountLookup, WorkerAccountLookup>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IDelegatedAssertionValidator, DelegatedAssertionValidator>();
+        services.AddScoped<IDelegatedSignInService, DelegatedSignInService>();
         services.AddScoped<IAdminService, AdminService>();
         services.AddScoped<ISettingsService, SettingsService>();
         services.AddScoped<ITemplatesService, EFormService>();

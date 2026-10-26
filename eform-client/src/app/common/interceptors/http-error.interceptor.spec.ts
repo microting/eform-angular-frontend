@@ -208,4 +208,42 @@ describe('HttpErrorInterceptor', () => {
       expect(reported.status).toBe(status);
     });
   });
+
+  it.each([401, 500])('passes a %i from the delegated sign-in through: no logout, no retry', (status) => {
+    const delegatedUrl = '/api/auth/delegated';
+    const handler = new ScriptedHandler([() => httpError(status, delegatedUrl), () => okResponse()]);
+    let receivedError: HttpErrorResponse | null = null;
+    interceptor.intercept(new HttpRequest('POST', delegatedUrl, {assertion: 'x'}), handler).subscribe({
+      error: (error) => (receivedError = error),
+    });
+
+    expect(handler.requests.length).toBe(1);
+    expect(authStateService.logout).not.toHaveBeenCalled();
+    expect(receivedError!.status).toBe(status);
+  });
+
+  it('does not bypass the interceptor for a sibling path such as api/auth/delegated-other', () => {
+    const handler = new ScriptedHandler([() => httpError(401, '/api/auth/delegated-other')]);
+    interceptor.intercept(new HttpRequest('POST', '/api/auth/delegated-other', {}), handler).subscribe({});
+    expect(authStateService.logout).toHaveBeenCalled();
+  });
+
+  it('matches the delegated path with a leading slash or query string', () => {
+    const handler = new ScriptedHandler([() => httpError(401, 'x')]);
+    let err: HttpErrorResponse | null = null;
+    interceptor.intercept(new HttpRequest('POST', 'https://t.example/api/auth/delegated?x=1', {}), handler)
+      .subscribe({error: (e) => (err = e)});
+    expect(err!.status).toBe(401);
+    expect(authStateService.logout).not.toHaveBeenCalled();
+  });
+
+  it('treats an unparseable URL as not the delegated endpoint and handles the error as before', () => {
+    const badUrl = 'http://[bad';
+    const handler = new ScriptedHandler([() => httpError(401, 'x')]);
+    expect(() => new URL(badUrl, 'http://localhost')).toThrow();
+    expect(() =>
+      interceptor.intercept(new HttpRequest('POST', badUrl, {}), handler).subscribe({})
+    ).not.toThrow();
+    expect(authStateService.logout).toHaveBeenCalled();
+  });
 });
