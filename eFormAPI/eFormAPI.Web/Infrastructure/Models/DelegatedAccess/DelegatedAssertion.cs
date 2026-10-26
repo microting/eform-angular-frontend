@@ -32,20 +32,23 @@ public sealed record DelegatedAssertion(
 /// The claim names the portal mints and this tenant reads. The portal lives in another
 /// repository, so these names are a wire contract: changing one here without changing it
 /// there breaks every delegated sign-in in the fleet.
+///
+/// static readonly rather than const, for SonarC# S2339: a public const is baked into
+/// every referencing assembly at compile time. Nothing needs these at compile time.
 /// </summary>
 public static class DelegatedAssertionClaims
 {
     /// <summary>Stable advisor identifier. Required.</summary>
-    public const string Subject = "sub";
+    public static readonly string Subject = "sub";
 
     /// <summary>Unique assertion id, the replay key. Required — without it there is no
     /// replay defence at all, so an assertion that omits it is refused.</summary>
-    public const string JwtId = "jti";
+    public static readonly string JwtId = "jti";
 
     /// <summary>Advisor display name, for audit attribution. Optional, and deliberately
     /// so: it is never an identifier and never drives a permission, so a missing one is a
     /// poorer audit line rather than a security decision made on a guess.</summary>
-    public const string DisplayName = "name";
+    public static readonly string DisplayName = "name";
 
     /// <summary>
     /// The asserted role template. REQUIRED. These names are this repository's unilateral
@@ -53,7 +56,7 @@ public static class DelegatedAssertionClaims
     /// — <c>role</c>, <c>roleTemplate</c>, a typo — must fail loudly at the first
     /// integration sign-in rather than degrade to "" and be read as a default.
     /// </summary>
-    public const string RoleTemplate = "role_template";
+    public static readonly string RoleTemplate = "role_template";
 
     /// <summary>
     /// The tenant's own single-use value, echoed back by the portal. REQUIRED.
@@ -70,5 +73,5 @@ public static class DelegatedAssertionClaims
     /// to notice. The portal mints this as a raw short claim name and the validator reads
     /// raw claim names (MapInboundClaims = false), so no claim-type mapping is involved.
     /// </summary>
-    public const string State = "state";
+    public static readonly string State = "state";
 }

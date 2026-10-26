@@ -33,7 +33,7 @@ namespace eFormAPI.Web.Tests;
 /// <see cref="JwtSecurityTokenHandler"/>. Nothing touches the network or a database.
 /// </summary>
 [TestFixture]
-public class DelegatedAssertionValidatorTests
+public sealed class DelegatedAssertionValidatorTests : IDisposable
 {
     private const string Issuer = "https://my.microting.com";
     private const string JwksUri = "https://my.microting.com/.well-known/jwks.json";
@@ -74,11 +74,19 @@ public class DelegatedAssertionValidatorTests
     }
 
     [TearDown]
-    public void TearDown()
+    public void TearDown() => Dispose();
+
+    /// <summary>
+    /// The per-test fields are disposed in <see cref="TearDown"/>; this exists so the
+    /// fixture itself is disposable, which is what SonarC# S2931 asks of a class holding
+    /// IDisposable members. Every one of these Dispose calls is idempotent, so the extra
+    /// call NUnit makes when it disposes the fixture is a no-op.
+    /// </summary>
+    public void Dispose()
     {
-        _cache.Dispose();
-        _handler.Dispose();
-        _rsa.Dispose();
+        _cache?.Dispose();
+        _handler?.Dispose();
+        _rsa?.Dispose();
     }
 
     private IOptionsMonitor<DelegatedAccessOptions> Monitor()
@@ -655,9 +663,9 @@ public class DelegatedAssertionValidatorTests
         AssertRefused(await validator.ValidateAsync(token, CancellationToken.None));
 
         Assert.That(capture.Messages, Is.Not.Empty);
-        Assert.That(capture.Messages.Any(m => m.Contains("nothing to see here")), Is.True,
+        Assert.That(capture.Messages.Exists(m => m.Contains("nothing to see here")), Is.True,
             "the value must still be logged, just neutered");
-        Assert.That(capture.Messages.Any(m => m.Contains('\n') || m.Contains('\r')), Is.False);
+        Assert.That(capture.Messages.Exists(m => m.Contains('\n') || m.Contains('\r')), Is.False);
     }
 
     [Test]
@@ -671,7 +679,7 @@ public class DelegatedAssertionValidatorTests
 
         AssertRefused(await CreateValidator(capture).ValidateAsync(forged, CancellationToken.None));
 
-        Assert.That(capture.Messages.Any(m => m.Contains('\n') || m.Contains('\r')), Is.False);
+        Assert.That(capture.Messages.Exists(m => m.Contains('\n') || m.Contains('\r')), Is.False);
     }
 
     [Test]
@@ -687,9 +695,9 @@ public class DelegatedAssertionValidatorTests
         AssertRefused(await validator.ValidateAsync(
             MintToken(audience: "1054\r\nWARN: forged-aud-line"), CancellationToken.None));
 
-        Assert.That(capture.Messages.Any(m => m.Contains("forged-iss-line")), Is.True,
+        Assert.That(capture.Messages.Exists(m => m.Contains("forged-iss-line")), Is.True,
             "the issuer must still reach the log, just neutered");
-        Assert.That(capture.Messages.Any(m => m.Contains('\n') || m.Contains('\r')), Is.False);
+        Assert.That(capture.Messages.Exists(m => m.Contains('\n') || m.Contains('\r')), Is.False);
     }
 
     // ----------------------------------------------------------------- helpers

@@ -10,7 +10,6 @@ using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Models.DelegatedAccess;
 using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
@@ -84,13 +83,17 @@ public sealed class DelegatedSignInService(
     /// a template this tenant does not know is REFUSED rather than defaulted, so a
     /// mismatch fails loudly at the first integration sign-in instead of silently handing
     /// somebody the default permission set on a customer's tenant.
+    ///
+    /// static readonly rather than const, for SonarC# S2339. It is declared above
+    /// <see cref="RolesByTemplate"/> on purpose: static field initialisers run in textual
+    /// order, so the dictionary below sees the value, not null.
     /// </summary>
-    public const string AdvisorRoleTemplate = "advisor";
+    public static readonly string AdvisorRoleTemplate = "advisor";
 
     /// <summary>Domain for the synthetic address. <c>.invalid</c> is reserved by RFC 2606
     /// and resolves nowhere, so the row can never be mailed, and a human reading the user
     /// list can see at a glance that the address is not a real one.</summary>
-    public const string SyntheticAddressDomain = "delegated.invalid";
+    public static readonly string SyntheticAddressDomain = "delegated.invalid";
 
     private const string SyntheticAddressPrefix = "delegated-";
 

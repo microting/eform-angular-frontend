@@ -18,7 +18,7 @@ using NUnit.Framework;
 namespace eFormAPI.Web.Tests;
 
 [TestFixture]
-public class DelegatedSignInControllerTests
+public sealed class DelegatedSignInControllerTests : IDisposable
 {
     private IDelegatedAssertionValidator _validator;
     private IDelegatedSignInService _signIn;
@@ -41,7 +41,15 @@ public class DelegatedSignInControllerTests
     }
 
     [TearDown]
-    public void TearDown() => _controller.Dispose();
+    public void TearDown() => Dispose();
+
+    /// <summary>
+    /// The controller is disposed in <see cref="TearDown"/>; this exists so the fixture
+    /// itself is disposable, which is what SonarC# S2931 asks of a class holding an
+    /// IDisposable member. Controller.Dispose is idempotent, so the extra call NUnit makes
+    /// when it disposes the fixture is a no-op.
+    /// </summary>
+    public void Dispose() => _controller?.Dispose();
 
     private static int? Status(IActionResult r) => (r as ObjectResult)?.StatusCode;
 
@@ -178,6 +186,15 @@ public class DelegatedSignInControllerTests
         Assert.That(modelParam.GetCustomAttributes().OfType<IBindingSourceMetadata>()
             .Select(a => a.BindingSource), Is.EqualTo(new[] { BindingSource.Body }));
         Assert.That(method.GetCustomAttribute<AllowAnonymousAttribute>(), Is.Not.Null);
-        Assert.That(method.GetCustomAttribute<RouteAttribute>()!.Template, Is.EqualTo("api/auth/delegated"));
+
+        // The route template lives on the controller (SonarC# S6934 wants it there) and the
+        // action declares none of its own, so the URL is exactly the controller template.
+        Assert.That(typeof(DelegatedSignInController).GetCustomAttribute<RouteAttribute>()!.Template,
+            Is.EqualTo("api/auth/delegated"));
+        Assert.That(method.GetCustomAttributes<RouteAttribute>(true), Is.Empty);
+        Assert.That(
+            method.GetCustomAttributes<Microsoft.AspNetCore.Mvc.Routing.HttpMethodAttribute>(true)
+                .Select(a => a.Template),
+            Is.All.Null);
     }
 }
