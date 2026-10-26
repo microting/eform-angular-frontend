@@ -430,7 +430,7 @@ public class DelegatedSignInServiceTests : DbTestFixture
 
         var second = await service.SignInAsync(Assertion(subject), CancellationToken.None);
         Assert.That(second.Success, Is.True, second.Message);
-        Assert.That(logger.Entries.Any(x => x.Message.Contains("principal=reused")), Is.True);
+        Assert.That(logger.Entries.Exists(x => x.Message.Contains("principal=reused")), Is.True);
     }
 
     [Test]
