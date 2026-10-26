@@ -129,7 +129,7 @@ public static class UserManagerLockoutExtensions
 
     /// <summary>The Identity error code returned when a password is refused on a
     /// delegated principal.</summary>
-    public const string CredentialLessAccountCode = "CredentialLessAccount";
+    public static readonly string CredentialLessAccountCode = "CredentialLessAccount";
 
     /// <summary>The failed result for a refused password set on a delegated principal.</summary>
     public static IdentityResult CredentialLessAccountResult() => IdentityResult.Failed(new IdentityError
