@@ -12,7 +12,9 @@ using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Permissions;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -67,6 +69,7 @@ public sealed class DelegatedSignInService(
     BaseDbContext dbContext,
     IAuthService authService,
     IUserService userService,
+    IOptionsMonitor<DelegatedAccessOptions> options,
     ILogger<DelegatedSignInService> logger)
     : IDelegatedSignInService
 {
@@ -207,6 +210,21 @@ public sealed class DelegatedSignInService(
             return Refused();
         }
 
+        // ORDERING INVARIANT, and the whole point of this call site. GenerateToken reads
+        // SecurityGroupUsers -> GroupPermissions -> Permission.ClaimName through
+        // ClaimsService and freezes the result into the session's auth cache entry. A
+        // membership written AFTER this line would leave the first delegated session with
+        // an empty claim set -- an empty left menu and "No records found" -- and only the
+        // NEXT sign-in would work. So the row is committed first, unconditionally, and
+        // the token is minted from a database that already has it.
+        //
+        // It runs on every sign-in, not only at creation, for two reasons: principals
+        // provisioned before this existed hold no membership and must heal on their next
+        // visit, and a membership a human removed by hand is not the revocation lever --
+        // the ROLE is (spec 8.7), and an advisor whose role was stripped was already
+        // refused a dozen lines above.
+        await EnsureSecurityGroupMembershipAsync(user, assertion);
+
         var token = await authService.GenerateToken(user);
         var firstUserIdInDb = await userService.GetFirstUserIdInDb();
 
@@ -237,6 +255,97 @@ public sealed class DelegatedSignInService(
                 ? $"api/images/login-page-images?fileName={user.ProfilePictureSnapshot}"
                 : $"https://www.gravatar.com/avatar/{user.EmailSha256}?s=32&d=identicon"
         });
+    }
+
+    /// <summary>
+    /// Puts the principal in the tenant's advisor security group, which is where its
+    /// permissions -- and therefore its menu and its data -- come from. Idempotent: it is
+    /// called on every sign-in and writes at most one row per (group, user) ever.
+    ///
+    /// A MISSING GROUP IS A WARNING, NEVER A REFUSAL. Both halves of that matter:
+    /// <list type="bullet">
+    /// <item>Loud, because the failure this fixes -- a signed-in advisor staring at an
+    /// empty menu with not one line in the log to say why -- cost a day to diagnose. The
+    /// line names the group it looked for and the customer number, so the next person
+    /// reads the fix straight off it.</item>
+    /// <item>Not fatal, because the two outcomes are not symmetric. Signing in with no
+    /// permissions is recoverable in a minute by an administrator who creates or renames
+    /// the group; throwing here is a 500 in the middle of a redirect the advisor cannot
+    /// retry their way out of, on a path that has already validated a legitimate
+    /// assertion.</item>
+    /// </list>
+    /// </summary>
+    private async Task EnsureSecurityGroupMembershipAsync(
+        EformUser user, DelegatedAssertion assertion)
+    {
+        var opts = options.CurrentValue;
+
+        // An unset or blank key is the normal case and means the default. Trimmed because
+        // a trailing space in a configuration value must not cost an advisor their menu.
+        var groupName = string.IsNullOrWhiteSpace(opts?.SecurityGroup)
+            ? DelegatedAccessOptions.DefaultSecurityGroup
+            : opts.SecurityGroup.Trim();
+
+        // Matched on the name as configured. The comparison is sent to the database, so it
+        // is the tenant's own collation that decides, which on MariaDB is case-insensitive
+        // -- deliberately not fought: "eForm Users" typed by an administrator is the group
+        // they meant. OrderBy(Id) keeps the choice deterministic if a case-insensitive
+        // collation makes two rows match.
+        var groupId = await dbContext.SecurityGroups
+            .Where(x => x.Name == groupName)
+            .OrderBy(x => x.Id)
+            .Select(x => (int?)x.Id)
+            .FirstOrDefaultAsync();
+
+        if (groupId == null)
+        {
+            logger.LogWarning(
+                "Delegated sign-in: local user {UserId} was signed in with NO permissions: "
+                + "this tenant has no security group named '{SecurityGroup}' "
+                + "(customerNo {CustomerNo}, jti {JwtId}). The advisor will see an empty "
+                + "menu until that group exists, or until DelegatedAccess:SecurityGroup "
+                + "names one that does.",
+                user.Id,
+                DelegatedAssertionValidator.ForLog(groupName),
+                DelegatedAssertionValidator.ForLog(opts?.Audience),
+                DelegatedAssertionValidator.ForLog(assertion.JwtId));
+            return;
+        }
+
+        // The idempotence check, and it covers a membership a HUMAN added just as well as
+        // one an earlier sign-in added: this path owns no row, it only ensures one exists.
+        var alreadyMember = await dbContext.SecurityGroupUsers
+            .AnyAsync(x => x.SecurityGroupId == groupId.Value && x.EformUserId == user.Id);
+        if (alreadyMember)
+        {
+            return;
+        }
+
+        var membership = dbContext.SecurityGroupUsers.Add(new SecurityGroupUser
+        {
+            SecurityGroupId = groupId.Value,
+            EformUserId = user.Id
+        });
+
+        try
+        {
+            await dbContext.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex)
+        {
+            // Two concurrent first sign-ins can both pass the check above, and whatever
+            // the database then says, the answer is the same: detach the pending insert so
+            // the next save on this scoped context does not retry it, and carry on. A
+            // duplicate membership is harmless -- the claim query is Distinct -- and a
+            // genuine write failure is still not worth a 500 mid-redirect: it costs the
+            // advisor their menu, which is exactly what the warning above describes.
+            membership.State = EntityState.Detached;
+            logger.LogWarning(ex,
+                "Delegated sign-in: could not add local user {UserId} to security group "
+                + "{SecurityGroupId} (jti {JwtId}).",
+                user.Id, groupId.Value,
+                DelegatedAssertionValidator.ForLog(assertion.JwtId));
+        }
     }
 
     /// <summary>
