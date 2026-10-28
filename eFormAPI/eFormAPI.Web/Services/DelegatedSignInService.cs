@@ -330,12 +330,13 @@ public sealed class DelegatedSignInService(
         }
         catch (DbUpdateException ex)
         {
-            // Two concurrent first sign-ins can both pass the check above, and whatever
-            // the database then says, the answer is the same: detach the pending insert so
-            // the next save on this scoped context does not retry it, and carry on. A
-            // duplicate membership is harmless -- the claim query is Distinct -- and a
-            // genuine write failure is still not worth a 500 mid-redirect: it costs the
-            // advisor their menu, which is exactly what the warning above describes.
+            // SecurityGroupUsers carries a UNIQUE index on (EformUserId, SecurityGroupId),
+            // so two concurrent first sign-ins that both pass the check above end here
+            // with a duplicate-key violation -- and the row we wanted exists, which is
+            // the outcome we wanted. Either way: detach the pending insert, so the next
+            // save on this scoped context does not retry it, and carry on. A genuine
+            // write failure is still not worth a 500 mid-redirect; it costs the advisor
+            // their menu, which is exactly what the warning above describes.
             membership.State = EntityState.Detached;
             logger.LogWarning(ex,
                 "Delegated sign-in: could not add local user {UserId} to security group "
