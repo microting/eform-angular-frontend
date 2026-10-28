@@ -12,7 +12,9 @@ using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Permissions;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -67,6 +69,7 @@ public sealed class DelegatedSignInService(
     BaseDbContext dbContext,
     IAuthService authService,
     IUserService userService,
+    IOptionsMonitor<DelegatedAccessOptions> options,
     ILogger<DelegatedSignInService> logger)
     : IDelegatedSignInService
 {
@@ -207,6 +210,12 @@ public sealed class DelegatedSignInService(
             return Refused();
         }
 
+        // GenerateToken reads SecurityGroupUsers -> GroupPermissions ->
+        // Permission.ClaimName through ClaimsService and freezes the result into this
+        // session's auth cache entry. Nothing touches group membership from here on: a
+        // newly provisioned principal got its group inside ProvisionAsync, which
+        // committed long before this line, so the FIRST session is already populated. An
+        // existing principal's membership is whatever the customer has left it as.
         var token = await authService.GenerateToken(user);
         var firstUserIdInDb = await userService.GetFirstUserIdInDb();
 
@@ -237,6 +246,104 @@ public sealed class DelegatedSignInService(
                 ? $"api/images/login-page-images?fileName={user.ProfilePictureSnapshot}"
                 : $"https://www.gravatar.com/avatar/{user.EmailSha256}?s=32&d=identicon"
         });
+    }
+
+    /// <summary>
+    /// Puts a NEWLY PROVISIONED principal in the tenant's advisor security group, which is
+    /// where its permissions -- and therefore its menu and its data -- come from.
+    ///
+    /// Called from <see cref="ProvisionAsync"/> and from nowhere else, so an advisor the
+    /// customer has taken out of the group stays out of it. Still written to be
+    /// idempotent -- it checks before it writes and tolerates a duplicate -- because the
+    /// cost is two lines and the cost of being wrong is a duplicate row in a customer's
+    /// database.
+    ///
+    /// A MISSING GROUP IS A WARNING, NEVER A REFUSAL. Both halves of that matter:
+    /// <list type="bullet">
+    /// <item>Loud, because the failure this fixes -- a signed-in advisor staring at an
+    /// empty menu with not one line in the log to say why -- cost a day to diagnose. The
+    /// line names the group it looked for and the customer number, so the next person
+    /// reads the fix straight off it.</item>
+    /// <item>Not fatal, because the two outcomes are not symmetric. Signing in with no
+    /// permissions is recoverable in a minute by an administrator who creates or renames
+    /// the group; throwing here is a 500 in the middle of a redirect the advisor cannot
+    /// retry their way out of, on a path that has already validated a legitimate
+    /// assertion.</item>
+    /// </list>
+    /// </summary>
+    private async Task AddToSecurityGroupAsync(
+        EformUser user, DelegatedAssertion assertion)
+    {
+        var opts = options.CurrentValue;
+
+        // An unset or blank key is the normal case and means the default. Trimmed because
+        // a trailing space in a configuration value must not cost an advisor their menu.
+        var groupName = string.IsNullOrWhiteSpace(opts?.SecurityGroup)
+            ? DelegatedAccessOptions.DefaultSecurityGroup
+            : opts.SecurityGroup.Trim();
+
+        // Matched on the name as configured. The comparison is sent to the database, so it
+        // is the tenant's own collation that decides, which on MariaDB is case-insensitive
+        // -- deliberately not fought: "eForm Users" typed by an administrator is the group
+        // they meant. OrderBy(Id) keeps the choice deterministic if a case-insensitive
+        // collation makes two rows match.
+        var groupId = await dbContext.SecurityGroups
+            .Where(x => x.Name == groupName)
+            .OrderBy(x => x.Id)
+            .Select(x => (int?)x.Id)
+            .FirstOrDefaultAsync();
+
+        if (groupId == null)
+        {
+            logger.LogWarning(
+                "Delegated sign-in: local user {UserId} was signed in with NO permissions: "
+                + "this tenant has no security group named '{SecurityGroup}' "
+                + "(customerNo {CustomerNo}, jti {JwtId}). The advisor will see an empty "
+                + "menu until that group exists, or until DelegatedAccess:SecurityGroup "
+                + "names one that does.",
+                user.Id,
+                DelegatedAssertionValidator.ForLog(groupName),
+                DelegatedAssertionValidator.ForLog(opts?.Audience),
+                DelegatedAssertionValidator.ForLog(assertion.JwtId));
+            return;
+        }
+
+        // Belt and braces on a brand-new row: this runs during provisioning, so there is
+        // nothing to find yet unless a concurrent request got there first. Cheap, and it
+        // keeps the method correct if it is ever called from somewhere less pristine.
+        var alreadyMember = await dbContext.SecurityGroupUsers
+            .AnyAsync(x => x.SecurityGroupId == groupId.Value && x.EformUserId == user.Id);
+        if (alreadyMember)
+        {
+            return;
+        }
+
+        var membership = dbContext.SecurityGroupUsers.Add(new SecurityGroupUser
+        {
+            SecurityGroupId = groupId.Value,
+            EformUserId = user.Id
+        });
+
+        try
+        {
+            await dbContext.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex)
+        {
+            // SecurityGroupUsers carries a UNIQUE index on (EformUserId, SecurityGroupId),
+            // so two concurrent first sign-ins that both pass the check above end here
+            // with a duplicate-key violation -- and the row we wanted exists, which is
+            // the outcome we wanted. Either way: detach the pending insert, so the next
+            // save on this scoped context does not retry it, and carry on. A genuine
+            // write failure is still not worth a 500 mid-redirect; it costs the advisor
+            // their menu, which is exactly what the warning above describes.
+            membership.State = EntityState.Detached;
+            logger.LogWarning(ex,
+                "Delegated sign-in: could not add local user {UserId} to security group "
+                + "{SecurityGroupId} (jti {JwtId}).",
+                user.Id, groupId.Value,
+                DelegatedAssertionValidator.ForLog(assertion.JwtId));
+        }
     }
 
     /// <summary>
@@ -387,6 +494,25 @@ public sealed class DelegatedSignInService(
                 await DeleteOrphanAsync(user, assertion);
                 return (null, false);
             }
+
+            // Granted ONCE, at creation, for exactly the reason the role above is: taking
+            // an advisor out of the group is how a customer restricts them on their own
+            // tenant, and a later sign-in that quietly put them back would make that
+            // lever a lie. A sign-in for a principal that already exists never touches
+            // membership at all.
+            //
+            // It sits here, BEFORE the link, so the ordering invariant above covers it
+            // too. Two things follow. The claim set is computed in GenerateToken, long
+            // after this has committed, so the first delegated session is already
+            // populated -- a membership written later would leave that session with an
+            // empty claim set, an empty left menu and "No records found", and only the
+            // NEXT sign-in would work. And a concurrent request that adopts this
+            // principal by its link necessarily sees the membership as well, because the
+            // link is written after it.
+            //
+            // Unlike the role, a failure here does NOT abandon the principal: an advisor
+            // with no permissions is a recoverable afternoon, and the method says why.
+            await AddToSecurityGroupAsync(user, assertion);
 
             var linked = await LinkAsync(user, assertion);
             if (linked.Winner != null)

@@ -10,14 +10,17 @@ using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using eFormAPI.Web.Infrastructure.Models.DelegatedAccess;
 using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
 using eFormAPI.Web.Integration.Tests.Identity;
+using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Services;
 using eFormAPI.Web.Services.Cache.AuthCache;
+using eFormAPI.Web.Services.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Permissions;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
@@ -46,6 +49,19 @@ public class DelegatedSignInServiceTests : DbTestFixture
 {
     private const string TenantIssuer = "tenant-under-test";
 
+    /// <summary>This tenant's customerNo, as the options carry it. The missing-group
+    /// warning has to name it, so the test needs a value it can look for.</summary>
+    private const string TenantCustomerNo = "1043";
+
+    /// <summary>Groups, permission types and permissions this test created and must take
+    /// away again. DbTestFixture.ClearDb() truncates a schema this project does not use,
+    /// so nothing else will.</summary>
+    private readonly List<int> _groupsToDelete = new();
+
+    private readonly List<int> _permissionsToDelete = new();
+
+    private readonly List<int> _permissionTypesToDelete = new();
+
     private static string Subject() => $"portal-sub-{Guid.NewGuid():N}";
 
     private static DelegatedAssertion Assertion(string subject)
@@ -67,6 +83,29 @@ public class DelegatedSignInServiceTests : DbTestFixture
     private static DelegatedSignInService BuildService(IdentityTestHost host,
         CapturingLogger<DelegatedSignInService> logger)
     {
+        // The permission set is not what these tests are about, so it is stubbed empty —
+        // which also keeps them honest: nothing below may depend on a claim.
+        var claimsService = Substitute.For<IClaimsService>();
+        claimsService.GetUserPermissions(Arg.Any<int>(), Arg.Any<bool>())
+            .Returns(new List<System.Security.Claims.Claim>());
+
+        return BuildService(host, logger, DelegatedAccessOptions.DefaultSecurityGroup,
+            claimsService, new RecordingAuthCache());
+    }
+
+    /// <inheritdoc cref="BuildService(IdentityTestHost, CapturingLogger{DelegatedSignInService})"/>
+    /// <param name="host">The real Identity store.</param>
+    /// <param name="logger">Captures what the service logged.</param>
+    /// <param name="securityGroupName">The configured DelegatedAccess:SecurityGroup.</param>
+    /// <param name="claimsService">
+    /// The REAL ClaimsService for the tests about permissions, so the claim set is the one
+    /// the database produces; a substitute for the tests that are about something else.
+    /// </param>
+    /// <param name="authCache">Records the AuthItem the session was issued with.</param>
+    private static DelegatedSignInService BuildService(IdentityTestHost host,
+        CapturingLogger<DelegatedSignInService> logger, string securityGroupName,
+        IClaimsService claimsService, RecordingAuthCache authCache)
+    {
         var tokenOptions = Substitute.For<IOptions<EformTokenOptions>>();
         tokenOptions.Value.Returns(new EformTokenOptions
         {
@@ -76,10 +115,6 @@ public class DelegatedSignInServiceTests : DbTestFixture
 
         var appSettings = Substitute.For<IDbOptions<ApplicationSettings>>();
         appSettings.Value.Returns(new ApplicationSettings());
-
-        var claimsService = Substitute.For<IClaimsService>();
-        claimsService.GetUserPermissions(Arg.Any<int>(), Arg.Any<bool>())
-            .Returns(new List<System.Security.Claims.Claim>());
 
         var userService = Substitute.For<IUserService>();
         userService.GetFirstUserIdInDb().Returns(1);
@@ -99,11 +134,27 @@ public class DelegatedSignInServiceTests : DbTestFixture
             userService,
             Substitute.For<ILocalizationService>(),
             claimsService,
-            Substitute.For<IAuthCacheService>());
+            authCache);
+
+        var options = Substitute.For<IOptionsMonitor<DelegatedAccessOptions>>();
+        options.CurrentValue.Returns(new DelegatedAccessOptions
+        {
+            Enabled = true,
+            Audience = TenantCustomerNo,
+            SecurityGroup = securityGroupName
+        });
 
         return new DelegatedSignInService(
-            host.UserManager, host.DbContext, authService, userService, logger);
+            host.UserManager, host.DbContext, authService, userService, options, logger);
     }
+
+    /// <summary>
+    /// The real claims pipeline, over the test database. The ordering test is worthless
+    /// without it: a substitute would return whatever it was told to, whether or not the
+    /// membership row existed when the token was minted.
+    /// </summary>
+    private IClaimsService RealClaimsService(RecordingAuthCache authCache)
+        => new ClaimsService(DbContext, authCache, Substitute.For<ILogger<ClaimsService>>());
 
     private async Task<IdentityTestHost> NewHostAsync()
     {
@@ -169,7 +220,7 @@ public class DelegatedSignInServiceTests : DbTestFixture
     }
 
     [Test]
-    public async Task SignInAsync_FirstTime_PutsThePrincipalInTheEformUsersGroup()
+    public async Task SignInAsync_FirstTime_PutsThePrincipalInTheUserRole()
     {
         await using var host = await NewHostAsync();
         var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
@@ -452,6 +503,342 @@ public class DelegatedSignInServiceTests : DbTestFixture
 
         var localPart = LocalPartOf(DelegatedSignInService.SyntheticAddressFor(subject));
         Assert.That(await CountUsersStartingWithAsync(localPart), Is.Zero);
+    }
+
+    [Test]
+    public async Task SignInAsync_FirstSignIn_IssuesASessionWhoseClaimsAreNotEmpty()
+    {
+        // THE ORDERING PIN, and the reason this file has a real ClaimsService in it.
+        //
+        // "A row exists in SecurityGroupUsers afterwards" is NOT the property that was
+        // broken: a membership written after the token was minted would satisfy that and
+        // still leave the advisor looking at an empty menu until they signed in a second
+        // time. What has to hold is that the claim set computed DURING this very sign-in
+        // is non-empty, so this asserts on the AuthItem the session was issued with.
+        await using var host = await NewHostAsync();
+        var group = await EnsureGroupAsync(DelegatedAccessOptions.DefaultSecurityGroup);
+        var authCache = new RecordingAuthCache();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>(),
+            DelegatedAccessOptions.DefaultSecurityGroup, RealClaimsService(authCache),
+            authCache);
+
+        var result = await service.SignInAsync(Assertion(Subject()), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+
+        var issued = authCache.TryGetValue(result.Model.Id);
+        Assert.That(issued, Is.Not.Null,
+            "the sign-in must have put an auth item in the cache for this session");
+        Assert.That(issued.Claims, Is.Not.Empty,
+            "the FIRST delegated session must already carry the group's permissions; "
+            + "an empty claim set here is the empty menu the fix exists to stop");
+        Assert.That(issued.Claims.Exists(c => c.Type == group.ClaimName),
+            Is.True, $"the session must carry {group.ClaimName}, from the group it was put in");
+    }
+
+    [Test]
+    public async Task SignInAsync_CreatesTheMembershipRow_AndASecondSignInDoesNotDuplicateIt()
+    {
+        await using var host = await NewHostAsync();
+        var group = await EnsureGroupAsync(DelegatedAccessOptions.DefaultSecurityGroup);
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+        var subject = Subject();
+
+        var first = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        var afterFirst = await MembershipsAsync(first.Model.Id);
+        Assert.That(afterFirst, Has.Count.EqualTo(1));
+
+        var second = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        Assert.That(second.Model.Id, Is.EqualTo(first.Model.Id));
+
+        var memberships = await MembershipsAsync(first.Model.Id);
+        Assert.That(memberships, Has.Count.EqualTo(1),
+            "signing in again must not add a second membership row");
+        Assert.That(memberships[0].Id, Is.EqualTo(afterFirst[0].Id),
+            "and must not have replaced the first one either");
+        Assert.That(memberships[0].SecurityGroupId, Is.EqualTo(group.Id));
+    }
+
+    [Test]
+    public async Task SignInAsync_CustomerRemovedThePrincipalFromTheGroup_DoesNotPutItBack()
+    {
+        // THE REVOCATION PROPERTY, and the one a future refactor is most likely to break:
+        // "ensure the advisor is in the group on every sign-in" is the obvious shape of
+        // this code and it is wrong. Taking an advisor out of "eForm users" is how a
+        // customer restricts them on their own tenant without involving the portal. If a
+        // later sign-in quietly re-adds the membership, that lever silently does nothing.
+        await using var host = await NewHostAsync();
+        await EnsureGroupAsync(DelegatedAccessOptions.DefaultSecurityGroup);
+        var authCache = new RecordingAuthCache();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>(),
+            DelegatedAccessOptions.DefaultSecurityGroup, RealClaimsService(authCache),
+            authCache);
+        var subject = Subject();
+
+        var first = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+        Assert.That(await MembershipsAsync(first.Model.Id), Is.Not.Empty,
+            "the principal has to be IN the group before its removal can mean anything");
+
+        // The customer's administrator takes the advisor out of the group.
+        await RemoveFromAllGroupsAsync(first.Model.Id);
+
+        var second = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        Assert.That(second.Model.Id, Is.EqualTo(first.Model.Id));
+        Assert.That(await MembershipsAsync(first.Model.Id), Is.Empty,
+            "the group is granted at provisioning only; a customer's removal must stick");
+        Assert.That(authCache.TryGetValue(second.Model.Id).Claims, Is.Empty,
+            "and the session it issues carries no permissions, which is the whole point");
+    }
+
+    [Test]
+    public async Task SignInAsync_MembershipAlreadyExists_LeavesItAloneAndStillWorks()
+    {
+        await using var host = await NewHostAsync();
+        var group = await EnsureGroupAsync(DelegatedAccessOptions.DefaultSecurityGroup);
+        var authCache = new RecordingAuthCache();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>(),
+            DelegatedAccessOptions.DefaultSecurityGroup, RealClaimsService(authCache),
+            authCache);
+        var subject = Subject();
+
+        var first = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        // Stand in for the membership a human added through the admin UI: a row this path
+        // did not write, under an Id it has never seen, which it must leave exactly where
+        // it is.
+        await ReplaceMembershipByHandAsync(first.Model.Id, group.Id);
+        var handWritten = (await MembershipsAsync(first.Model.Id)).Single();
+
+        var second = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+
+        var memberships = await MembershipsAsync(first.Model.Id);
+        Assert.That(memberships, Has.Count.EqualTo(1));
+        Assert.That(memberships[0].Id, Is.EqualTo(handWritten.Id),
+            "an existing membership is left alone, never deleted and rewritten");
+
+        var issued = authCache.TryGetValue(second.Model.Id);
+        Assert.That(issued.Claims, Is.Not.Empty,
+            "and the session it was already a member for still carries its permissions");
+    }
+
+    [Test]
+    public async Task SignInAsync_TenantHasNoSuchGroup_SignsInAnywayAndWarnsNamingTheGroup()
+    {
+        await using var host = await NewHostAsync();
+        var logger = new CapturingLogger<DelegatedSignInService>();
+        var authCache = new RecordingAuthCache();
+
+        // A name no tenant has. Deliberately not the default: the test database is seeded
+        // with "eForm users", so asserting on its absence would assert on the seed.
+        var missingGroup = $"absent-group-{Guid.NewGuid():N}";
+        var service = BuildService(host, logger, missingGroup,
+            RealClaimsService(authCache), authCache);
+
+        var result = await service.SignInAsync(Assertion(Subject()), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True,
+            "a missing group costs the advisor their menu, never their sign-in: "
+            + result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        Assert.That(result.Model.AccessToken, Is.Not.Null.And.Not.Empty);
+
+        var warning = logger.Entries.Single(x =>
+            x.Level == LogLevel.Warning && x.Message.Contains(missingGroup));
+        Assert.That(warning.Message, Does.Contain(TenantCustomerNo),
+            "the line has to name the customer whose tenant is missing the group");
+        Assert.That(warning.Message, Does.Contain($"{result.Model.Id}"));
+
+        Assert.That(await MembershipsAsync(result.Model.Id), Is.Empty);
+    }
+
+    [Test]
+    public async Task SignInAsync_ConfiguredNonDefaultGroup_IsHonoured()
+    {
+        await using var host = await NewHostAsync();
+        var configured = await EnsureGroupAsync($"advisors-{Guid.NewGuid():N}");
+        var theDefault = await EnsureGroupAsync(DelegatedAccessOptions.DefaultSecurityGroup);
+        var authCache = new RecordingAuthCache();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>(),
+            configured.Name, RealClaimsService(authCache), authCache);
+
+        var result = await service.SignInAsync(Assertion(Subject()), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+
+        var memberships = await MembershipsAsync(result.Model.Id);
+        Assert.That(memberships, Has.Count.EqualTo(1));
+        Assert.That(memberships[0].SecurityGroupId, Is.EqualTo(configured.Id));
+        Assert.That(memberships[0].SecurityGroupId, Is.Not.EqualTo(theDefault.Id),
+            "the configured name wins; the default is not also applied");
+        Assert.That(authCache.TryGetValue(result.Model.Id).Claims, Is.Not.Empty);
+    }
+
+    /// <summary>
+    /// A security group with that exact name, with at least one permission hanging off it
+    /// so a member of it ends up with a non-empty claim set. Finds one before it creates
+    /// one: the test database is migrated, and the base package's seed may well already
+    /// have put "eForm users" there. Only what this created is torn down again.
+    /// </summary>
+    private async Task<GroupFixture> EnsureGroupAsync(string name)
+    {
+        var group = await DbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Name == name);
+        if (group == null)
+        {
+            group = new SecurityGroup { Name = name };
+            DbContext.SecurityGroups.Add(group);
+            await DbContext.SaveChangesAsync();
+            _groupsToDelete.Add(group.Id);
+        }
+
+        var claimName = await DbContext.GroupPermissions
+            .Where(x => x.SecurityGroupId == group.Id)
+            .Select(x => x.Permission.ClaimName)
+            .FirstOrDefaultAsync();
+
+        if (claimName == null)
+        {
+            claimName = $"delegated_test_claim_{Guid.NewGuid():N}";
+            var permissionType = new PermissionType { Name = $"delegated-test-{Guid.NewGuid():N}" };
+            DbContext.PermissionTypes.Add(permissionType);
+            await DbContext.SaveChangesAsync();
+            _permissionTypesToDelete.Add(permissionType.Id);
+
+            var permission = new Permission
+            {
+                PermissionName = $"Delegated test {Guid.NewGuid():N}",
+                ClaimName = claimName,
+                PermissionTypeId = permissionType.Id
+            };
+            DbContext.Permissions.Add(permission);
+            await DbContext.SaveChangesAsync();
+            _permissionsToDelete.Add(permission.Id);
+
+            DbContext.GroupPermissions.Add(new GroupPermission
+            {
+                SecurityGroupId = group.Id,
+                PermissionId = permission.Id
+            });
+            await DbContext.SaveChangesAsync();
+        }
+
+        return new GroupFixture(group.Id, group.Name, claimName);
+    }
+
+    /// <summary>What a customer's administrator does to restrict an advisor: takes them
+    /// out of every security group they are in.</summary>
+    private async Task RemoveFromAllGroupsAsync(int userId)
+    {
+        DbContext.SecurityGroupUsers.RemoveRange(
+            await DbContext.SecurityGroupUsers.Where(x => x.EformUserId == userId)
+                .ToListAsync());
+        await DbContext.SaveChangesAsync();
+    }
+
+    /// <summary>Deletes the membership the service wrote and puts an equivalent one back
+    /// under a fresh Id, so a later assertion can tell "left alone" from "rewritten".</summary>
+    private async Task ReplaceMembershipByHandAsync(int userId, int groupId)
+    {
+        var existing = await DbContext.SecurityGroupUsers
+            .Where(x => x.EformUserId == userId)
+            .ToListAsync();
+        DbContext.SecurityGroupUsers.RemoveRange(existing);
+        await DbContext.SaveChangesAsync();
+
+        DbContext.SecurityGroupUsers.Add(new SecurityGroupUser
+        {
+            EformUserId = userId,
+            SecurityGroupId = groupId
+        });
+        await DbContext.SaveChangesAsync();
+    }
+
+    private Task<List<SecurityGroupUser>> MembershipsAsync(int userId)
+        => DbContext.SecurityGroupUsers.AsNoTracking()
+            .Where(x => x.EformUserId == userId)
+            .OrderBy(x => x.Id)
+            .ToListAsync();
+
+    /// <summary>
+    /// Takes away the groups and permissions this fixture created. Runs BEFORE
+    /// DbTestFixture's own TearDown — NUnit tears down derived first — so the context is
+    /// still alive, and it has to exist at all because ClearDb() truncates the
+    /// "eformsdk-tests" schema while this project connects to "angular-tests".
+    /// </summary>
+    [TearDown]
+    public async Task RemoveCreatedSecurityFixtures()
+    {
+        if (_groupsToDelete.Count == 0
+            && _permissionsToDelete.Count == 0
+            && _permissionTypesToDelete.Count == 0)
+        {
+            return;
+        }
+
+        // Children first: a group still referenced by a membership or a permission row
+        // cannot be deleted. Memberships normally go with their user already (the FK from
+        // SecurityGroupUsers to Users cascades), but a user whose delete failed must not
+        // then take the whole teardown down with it.
+        DbContext.SecurityGroupUsers.RemoveRange(
+            await DbContext.SecurityGroupUsers
+                .Where(x => _groupsToDelete.Contains(x.SecurityGroupId)).ToListAsync());
+        DbContext.GroupPermissions.RemoveRange(
+            await DbContext.GroupPermissions
+                .Where(x => _groupsToDelete.Contains(x.SecurityGroupId)
+                            || _permissionsToDelete.Contains(x.PermissionId))
+                .ToListAsync());
+        await DbContext.SaveChangesAsync();
+
+        DbContext.SecurityGroups.RemoveRange(
+            await DbContext.SecurityGroups
+                .Where(x => _groupsToDelete.Contains(x.Id)).ToListAsync());
+        DbContext.Permissions.RemoveRange(
+            await DbContext.Permissions
+                .Where(x => _permissionsToDelete.Contains(x.Id)).ToListAsync());
+        await DbContext.SaveChangesAsync();
+
+        DbContext.PermissionTypes.RemoveRange(
+            await DbContext.PermissionTypes
+                .Where(x => _permissionTypesToDelete.Contains(x.Id)).ToListAsync());
+        await DbContext.SaveChangesAsync();
+
+        _groupsToDelete.Clear();
+        _permissionsToDelete.Clear();
+        _permissionTypesToDelete.Clear();
+    }
+
+    /// <summary>What a test needs to know about the group it signed an advisor into.</summary>
+    private sealed record GroupFixture(int Id, string Name, string ClaimName);
+
+    /// <summary>
+    /// The auth cache, recording what went into it. AuthService puts the claim set it
+    /// computed for a session here, which is the only place the FIRST session's claims
+    /// can be read back from — the JWT itself carries the role, not the permissions.
+    /// </summary>
+    private sealed class RecordingAuthCache : IAuthCacheService
+    {
+        private readonly Dictionary<int, AuthItem> _items = new();
+
+        public AuthItem TryGetValue(int userId)
+            => _items.TryGetValue(userId, out var item) ? item : null;
+
+        public void Set(AuthItem authItem, int userId) => _items[userId] = authItem;
+
+        public void Remove(int userId) => _items.Remove(userId);
     }
 
     private static string LocalPartOf(string address)
