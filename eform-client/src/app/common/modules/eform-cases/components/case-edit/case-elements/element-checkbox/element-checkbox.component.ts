@@ -1,6 +1,20 @@
 import { Component, Input} from '@angular/core';
 import { FieldValueDto } from 'src/app/common/models';
 
+export function isCheckboxValueChecked(fieldValue: FieldValueDto): boolean {
+  return !!fieldValue && (fieldValue.value === 'checked' || fieldValue.value === '1');
+}
+
+/**
+ * Flips a CheckBox field value between '1' and '0'. Used by the box itself and
+ * by the surrounding field, so a click anywhere in the field toggles the tick.
+ */
+export function toggleCheckboxValue(fieldValue: FieldValueDto) {
+  if (fieldValue) {
+    fieldValue.value = isCheckboxValueChecked(fieldValue) ? '0' : '1';
+  }
+}
+
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'element-checkbox',
@@ -9,7 +23,8 @@ import { FieldValueDto } from 'src/app/common/models';
 })
 export class ElementCheckboxComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();
-  isChecked: boolean;
+  /** Id of the field's title, so the input is announced with it. */
+  @Input() labelledBy?: string;
 
   @Input()
   get fieldValue() {
@@ -18,25 +33,22 @@ export class ElementCheckboxComponent {
 
   set fieldValue(val) {
     this.fieldValueObj = val;
-    if (val) {
-      this.isChecked = val.value === 'checked' || val.value === '1';
-    } else {
-      this.isChecked = false;
-    }
+  }
+
+  // Derived from the value, so a toggle from the surrounding field shows here too.
+  get isChecked(): boolean {
+    return isCheckboxValueChecked(this.fieldValueObj);
   }
 
   constructor() {}
 
   checkBoxChanged(e: any) {
-    if (e.target && e.target.checked) {
-      this.isChecked = true;
-      this.fieldValueObj.value = '1';
-    } else if (e.target && !e.target.checked) {
-      this.isChecked = false;
-      this.fieldValueObj.value = '0';
-    } else {
-      return;
+    if (e.target && e.target.checked !== this.isChecked) {
+      this.toggle();
     }
-    this.fieldValue = this.fieldValueObj;
+  }
+
+  toggle() {
+    toggleCheckboxValue(this.fieldValueObj);
   }
 }

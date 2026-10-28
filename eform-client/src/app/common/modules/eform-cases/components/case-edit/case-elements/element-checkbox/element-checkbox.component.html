@@ -1,5 +1,5 @@
 <label class="md-checkbox">
-  <input (click)="checkBoxChanged($event)" [checked]="isChecked" value="{{isChecked}}" type="checkbox"/>
+  <input (click)="checkBoxChanged($event)" [checked]="isChecked" value="{{isChecked}}" type="checkbox" [attr.aria-labelledby]="labelledBy || null"/>
   <span class="md-checkbox--fake"></span>
   <div></div>
 </label>

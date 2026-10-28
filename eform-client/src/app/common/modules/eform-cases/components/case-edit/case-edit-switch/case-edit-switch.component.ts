@@ -2,7 +2,7 @@ import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angul
 import {DataItemDto} from 'src/app/common/models';
 import { NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { ElementPictureComponent } from '../case-elements/element-picture/element-picture.component';
-import { ElementCheckboxComponent } from '../case-elements/element-checkbox/element-checkbox.component';
+import { ElementCheckboxComponent, toggleCheckboxValue } from '../case-elements/element-checkbox/element-checkbox.component';
 import { ElementNumberComponent } from '../case-elements/element-number/element-number.component';
 import { ElementNumberStepperComponent } from '../case-elements/element-number-stepper/element-number-stepper.component';
 import { ElementCommentComponent } from '../case-elements/element-comment/element-comment.component';
@@ -49,6 +49,22 @@ export class CaseEditSwitchComponent implements OnInit {
    */
   isAccented(dataItem: DataItemDto): boolean {
     return dataItem.fieldType !== 'FieldContainer' && !!dataItem.color;
+  }
+
+  /**
+   * A click anywhere in a CheckBox field (title, description, frame) toggles the
+   * tick. Clicks inside element-checkbox are left to the box itself, so a click
+   * on the box toggles once; links in the description keep working.
+   */
+  onFieldClick(event: MouseEvent, dataItem: DataItemDto) {
+    if (dataItem.fieldType !== 'CheckBox' || !dataItem.fieldValues?.length) {
+      return;
+    }
+    const target = event.target as HTMLElement;
+    if (target?.closest?.('element-checkbox, a')) {
+      return;
+    }
+    toggleCheckboxValue(dataItem.fieldValues[0]);
   }
 
   emitNeedUpdate() {
