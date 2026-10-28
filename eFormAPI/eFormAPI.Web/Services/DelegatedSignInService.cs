@@ -210,21 +210,12 @@ public sealed class DelegatedSignInService(
             return Refused();
         }
 
-        // ORDERING INVARIANT, and the whole point of this call site. GenerateToken reads
-        // SecurityGroupUsers -> GroupPermissions -> Permission.ClaimName through
-        // ClaimsService and freezes the result into the session's auth cache entry. A
-        // membership written AFTER this line would leave the first delegated session with
-        // an empty claim set -- an empty left menu and "No records found" -- and only the
-        // NEXT sign-in would work. So the row is committed first, unconditionally, and
-        // the token is minted from a database that already has it.
-        //
-        // It runs on every sign-in, not only at creation, for two reasons: principals
-        // provisioned before this existed hold no membership and must heal on their next
-        // visit, and a membership a human removed by hand is not the revocation lever --
-        // the ROLE is (spec 8.7), and an advisor whose role was stripped was already
-        // refused a dozen lines above.
-        await EnsureSecurityGroupMembershipAsync(user, assertion);
-
+        // GenerateToken reads SecurityGroupUsers -> GroupPermissions ->
+        // Permission.ClaimName through ClaimsService and freezes the result into this
+        // session's auth cache entry. Nothing touches group membership from here on: a
+        // newly provisioned principal got its group inside ProvisionAsync, which
+        // committed long before this line, so the FIRST session is already populated. An
+        // existing principal's membership is whatever the customer has left it as.
         var token = await authService.GenerateToken(user);
         var firstUserIdInDb = await userService.GetFirstUserIdInDb();
 
@@ -258,9 +249,14 @@ public sealed class DelegatedSignInService(
     }
 
     /// <summary>
-    /// Puts the principal in the tenant's advisor security group, which is where its
-    /// permissions -- and therefore its menu and its data -- come from. Idempotent: it is
-    /// called on every sign-in and writes at most one row per (group, user) ever.
+    /// Puts a NEWLY PROVISIONED principal in the tenant's advisor security group, which is
+    /// where its permissions -- and therefore its menu and its data -- come from.
+    ///
+    /// Called from <see cref="ProvisionAsync"/> and from nowhere else, so an advisor the
+    /// customer has taken out of the group stays out of it. Still written to be
+    /// idempotent -- it checks before it writes and tolerates a duplicate -- because the
+    /// cost is two lines and the cost of being wrong is a duplicate row in a customer's
+    /// database.
     ///
     /// A MISSING GROUP IS A WARNING, NEVER A REFUSAL. Both halves of that matter:
     /// <list type="bullet">
@@ -275,7 +271,7 @@ public sealed class DelegatedSignInService(
     /// assertion.</item>
     /// </list>
     /// </summary>
-    private async Task EnsureSecurityGroupMembershipAsync(
+    private async Task AddToSecurityGroupAsync(
         EformUser user, DelegatedAssertion assertion)
     {
         var opts = options.CurrentValue;
@@ -312,8 +308,9 @@ public sealed class DelegatedSignInService(
             return;
         }
 
-        // The idempotence check, and it covers a membership a HUMAN added just as well as
-        // one an earlier sign-in added: this path owns no row, it only ensures one exists.
+        // Belt and braces on a brand-new row: this runs during provisioning, so there is
+        // nothing to find yet unless a concurrent request got there first. Cheap, and it
+        // keeps the method correct if it is ever called from somewhere less pristine.
         var alreadyMember = await dbContext.SecurityGroupUsers
             .AnyAsync(x => x.SecurityGroupId == groupId.Value && x.EformUserId == user.Id);
         if (alreadyMember)
@@ -496,6 +493,25 @@ public sealed class DelegatedSignInService(
                 await DeleteOrphanAsync(user, assertion);
                 return (null, false);
             }
+
+            // Granted ONCE, at creation, for exactly the reason the role above is: taking
+            // an advisor out of the group is how a customer restricts them on their own
+            // tenant, and a later sign-in that quietly put them back would make that
+            // lever a lie. A sign-in for a principal that already exists never touches
+            // membership at all.
+            //
+            // It sits here, BEFORE the link, so the ordering invariant above covers it
+            // too. Two things follow. The claim set is computed in GenerateToken, long
+            // after this has committed, so the first delegated session is already
+            // populated -- a membership written later would leave that session with an
+            // empty claim set, an empty left menu and "No records found", and only the
+            // NEXT sign-in would work. And a concurrent request that adopts this
+            // principal by its link necessarily sees the membership as well, because the
+            // link is written after it.
+            //
+            // Unlike the role, a failure here does NOT abandon the principal: an advisor
+            // with no permissions is a recoverable afternoon, and the method says why.
+            await AddToSecurityGroupAsync(user, assertion);
 
             var linked = await LinkAsync(user, assertion);
             if (linked.Winner != null)

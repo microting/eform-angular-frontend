@@ -549,7 +549,8 @@ public class DelegatedSignInServiceTests : DbTestFixture
         Assert.That(first.Success, Is.True, first.Message);
         host.TrackForCleanup(first.Model.Id);
 
-        Assert.That(await MembershipsAsync(first.Model.Id), Has.Count.EqualTo(1));
+        var afterFirst = await MembershipsAsync(first.Model.Id);
+        Assert.That(afterFirst, Has.Count.EqualTo(1));
 
         var second = await service.SignInAsync(Assertion(subject), CancellationToken.None);
 
@@ -559,7 +560,44 @@ public class DelegatedSignInServiceTests : DbTestFixture
         var memberships = await MembershipsAsync(first.Model.Id);
         Assert.That(memberships, Has.Count.EqualTo(1),
             "signing in again must not add a second membership row");
+        Assert.That(memberships[0].Id, Is.EqualTo(afterFirst[0].Id),
+            "and must not have replaced the first one either");
         Assert.That(memberships[0].SecurityGroupId, Is.EqualTo(group.Id));
+    }
+
+    [Test]
+    public async Task SignInAsync_CustomerRemovedThePrincipalFromTheGroup_DoesNotPutItBack()
+    {
+        // THE REVOCATION PROPERTY, and the one a future refactor is most likely to break:
+        // "ensure the advisor is in the group on every sign-in" is the obvious shape of
+        // this code and it is wrong. Taking an advisor out of "eForm users" is how a
+        // customer restricts them on their own tenant without involving the portal. If a
+        // later sign-in quietly re-adds the membership, that lever silently does nothing.
+        await using var host = await NewHostAsync();
+        await EnsureGroupAsync(DelegatedAccessOptions.DefaultSecurityGroup);
+        var authCache = new RecordingAuthCache();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>(),
+            DelegatedAccessOptions.DefaultSecurityGroup, RealClaimsService(authCache),
+            authCache);
+        var subject = Subject();
+
+        var first = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+        Assert.That(await MembershipsAsync(first.Model.Id), Is.Not.Empty,
+            "the principal has to be IN the group before its removal can mean anything");
+
+        // The customer's administrator takes the advisor out of the group.
+        await RemoveFromAllGroupsAsync(first.Model.Id);
+
+        var second = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        Assert.That(second.Model.Id, Is.EqualTo(first.Model.Id));
+        Assert.That(await MembershipsAsync(first.Model.Id), Is.Empty,
+            "the group is granted at provisioning only; a customer's removal must stick");
+        Assert.That(authCache.TryGetValue(second.Model.Id).Claims, Is.Empty,
+            "and the session it issues carries no permissions, which is the whole point");
     }
 
     [Test]
@@ -578,7 +616,8 @@ public class DelegatedSignInServiceTests : DbTestFixture
         host.TrackForCleanup(first.Model.Id);
 
         // Stand in for the membership a human added through the admin UI: a row this path
-        // did not write, which it must therefore leave exactly where it is.
+        // did not write, under an Id it has never seen, which it must leave exactly where
+        // it is.
         await ReplaceMembershipByHandAsync(first.Model.Id, group.Id);
         var handWritten = (await MembershipsAsync(first.Model.Id)).Single();
 
@@ -698,6 +737,16 @@ public class DelegatedSignInServiceTests : DbTestFixture
         }
 
         return new GroupFixture(group.Id, group.Name, claimName);
+    }
+
+    /// <summary>What a customer's administrator does to restrict an advisor: takes them
+    /// out of every security group they are in.</summary>
+    private async Task RemoveFromAllGroupsAsync(int userId)
+    {
+        DbContext.SecurityGroupUsers.RemoveRange(
+            await DbContext.SecurityGroupUsers.Where(x => x.EformUserId == userId)
+                .ToListAsync());
+        await DbContext.SaveChangesAsync();
     }
 
     /// <summary>Deletes the membership the service wrote and puts an equivalent one back
