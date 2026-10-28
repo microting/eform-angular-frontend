@@ -3,6 +3,8 @@
     <div
       class="eform-field"
       [class.eform-field--accented]="isAccented(dataItem)"
+      [class.eform-field--clickable]="dataItem.fieldType == 'CheckBox'"
+      (click)="onFieldClick($event, dataItem)"
       [style.--eform-field-accent]="isAccented(dataItem) ? '#' + dataItem.color : null"
       *ngIf="dataItem.fieldType != 'SaveButton'"
       role="group"
@@ -21,7 +23,7 @@
           <element-picture [fieldValues]="dataItem.fieldValues" [fieldId]="dataItem.id" [caseId]="caseId" (pictureUpdated)="emitNeedUpdate()"></element-picture>
         </ng-container>
         <ng-container *ngSwitchCase="'CheckBox'">
-          <element-checkbox [fieldValue]="dataItem.fieldValues[0]"></element-checkbox>
+          <element-checkbox [fieldValue]="dataItem.fieldValues[0]" [labelledBy]="'eformFieldLabel' + dataItem.id"></element-checkbox>
         </ng-container>
         <ng-container *ngSwitchCase="'Number'">
           <element-number [fieldValue]="dataItem.fieldValues[0]"></element-number>
