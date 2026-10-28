@@ -53,7 +53,7 @@ export class CaseEditSwitchComponent implements OnInit {
 
   /**
    * A click anywhere in a CheckBox field (title, description, frame) toggles the
-   * tick. Clicks inside element-checkbox are left to the box itself, so a click
+   * tick. Clicks on the box's own label/input are left to the box, so a click
    * on the box toggles once; links in the description keep working.
    */
   onFieldClick(event: MouseEvent, dataItem: DataItemDto) {
@@ -61,7 +61,7 @@ export class CaseEditSwitchComponent implements OnInit {
       return;
     }
     const target = event.target as HTMLElement;
-    if (target?.closest?.('element-checkbox, a')) {
+    if (target?.closest?.('element-checkbox label, element-checkbox input, a')) {
       return;
     }
     toggleCheckboxValue(dataItem.fieldValues[0]);

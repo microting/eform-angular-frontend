@@ -212,6 +212,13 @@ describe('CaseEditSwitchComponent', () => {
       expect(item.fieldValues[0].value).toBe('0');
     });
 
+    it('toggles the value when the empty space beside the box is clicked', () => {
+      const item = renderCheckBox('0');
+      click('element-checkbox');
+      expect(item.fieldValues[0].value).toBe('1');
+      expect(input().checked).toBe(true);
+    });
+
     it('toggles exactly once when the box itself is clicked', () => {
       const item = renderCheckBox('0');
       click('element-checkbox input[type="checkbox"]');
