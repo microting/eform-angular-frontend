@@ -4,6 +4,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
 import {By} from '@angular/platform-browser';
 import {CaseEditSwitchComponent} from './case-edit-switch.component';
+import {ElementCheckboxComponent} from '../case-elements/element-checkbox/element-checkbox.component';
 import {DataItemDto} from 'src/app/common/models';
 
 // ng-gallery's partially compiled bundle references GalleryItemComponent before defining it,
@@ -58,7 +59,7 @@ describe('CaseEditSwitchComponent', () => {
       // block around them, not on their internals.
       .overrideComponent(CaseEditSwitchComponent, {
         set: {
-          imports: [NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, StubPictureComponent],
+          imports: [NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, StubPictureComponent, ElementCheckboxComponent],
           schemas: [NO_ERRORS_SCHEMA],
         },
       })
@@ -163,6 +164,77 @@ describe('CaseEditSwitchComponent', () => {
   it.each(CASES)('renders %s as <%s>', (fieldType, selector) => {
     render([makeDataItem({fieldType})]);
     expect(fixture.debugElement.query(By.css(selector))).toBeTruthy();
+  });
+
+  // The whole CheckBox field toggles the tick, not only the small box.
+  describe('CheckBox field click area', () => {
+    function renderCheckBox(value: string) {
+      const item = makeDataItem({
+        fieldType: 'CheckBox',
+        label: 'Kontrol OK',
+        description: {inderValue: 'Sæt flueben, når kontrollen er udført'} as any,
+        fieldValues: [{id: 10, fieldId: 1, value, valueReadable: ''}] as any,
+      });
+      render([item]);
+      return item;
+    }
+
+    function click(selector: string) {
+      fixture.debugElement.query(By.css(selector)).nativeElement.click();
+      fixture.detectChanges();
+    }
+
+    function input(): HTMLInputElement {
+      return fixture.debugElement.query(By.css('element-checkbox input[type="checkbox"]')).nativeElement;
+    }
+
+    it('toggles the value when the title is clicked', () => {
+      const item = renderCheckBox('0');
+      click('.eform-field__label');
+      expect(item.fieldValues[0].value).toBe('1');
+      expect(input().checked).toBe(true);
+      click('.eform-field__label');
+      expect(item.fieldValues[0].value).toBe('0');
+      expect(input().checked).toBe(false);
+    });
+
+    it('toggles the value when the description is clicked', () => {
+      const item = renderCheckBox('0');
+      click('.eform-field__desc');
+      expect(item.fieldValues[0].value).toBe('1');
+    });
+
+    it('toggles the value when the field itself is clicked', () => {
+      const item = renderCheckBox('0');
+      click('.eform-field');
+      expect(item.fieldValues[0].value).toBe('1');
+      click('.eform-field');
+      expect(item.fieldValues[0].value).toBe('0');
+    });
+
+    it('toggles the value when the empty space beside the box is clicked', () => {
+      const item = renderCheckBox('0');
+      click('element-checkbox');
+      expect(item.fieldValues[0].value).toBe('1');
+      expect(input().checked).toBe(true);
+    });
+
+    it('toggles exactly once when the box itself is clicked', () => {
+      const item = renderCheckBox('0');
+      click('element-checkbox input[type="checkbox"]');
+      expect(item.fieldValues[0].value).toBe('1');
+      expect(input().checked).toBe(true);
+      click('element-checkbox input[type="checkbox"]');
+      expect(item.fieldValues[0].value).toBe('0');
+      expect(input().checked).toBe(false);
+    });
+
+    it('does not change another field type when its title is clicked', () => {
+      const item = makeDataItem({fieldType: 'Text', fieldValues: [{id: 10, fieldId: 1, value: '0', valueReadable: ''}] as any});
+      render([item]);
+      click('.eform-field__label');
+      expect(item.fieldValues[0].value).toBe('0');
+    });
   });
 
   it('emits needUpdate when a picture reports an update', () => {

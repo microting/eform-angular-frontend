@@ -1884,6 +1884,12 @@ body.theme-eform {
     }
   }
 
+  // A CheckBox field toggles on a click anywhere in it, not only on the box.
+  &--clickable {
+    cursor: pointer;
+    user-select: none;
+  }
+
   // dataItem.color, carried through as --eform-field-accent. Absent colour means
   // no bar and no indent, so uncoloured fields stay flush left.
   &--accented {
