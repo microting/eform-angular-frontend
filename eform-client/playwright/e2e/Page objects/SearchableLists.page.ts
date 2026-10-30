@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 
 export class SearchableListsPage extends PageWithNavbarPage {
@@ -194,6 +194,20 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await this.page.waitForTimeout(2000);
   }
 
+  /**
+   * Types a name into the item dialog and checks it stuck. The input is bound
+   * with [(ngModel)], whose first write of the model's value can land after
+   * text typed while the dialog is still opening and wipe it, which saved the
+   * item with an empty name.
+   */
+  private async fillItemName(name: string) {
+    const dialog = this.page.locator('mat-dialog-container.mdc-dialog--open:not(.mdc-dialog--opening)');
+    await dialog.waitFor({ state: 'visible', timeout: 15000 });
+    const box = dialog.locator('#entityItemEditNameBox');
+    await box.fill(name);
+    await expect(box, 'the item name typed into the dialog').toHaveValue(name, { timeout: 5000 });
+  }
+
   public async createSearchableList_OneItem(name: string, itemName: string) {
     await this.createEntitySearchBtn().click();
     await this.page.locator('#editName').waitFor({ state: 'visible', timeout: 4000000 });
@@ -202,9 +216,9 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await this.entitySearchCreateSingleItemBtn().click();
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateSingleItemEditBtn().click();
-    await this.entitySearchCreateItemNameBox().fill(itemName);
+    await this.fillItemName(itemName);
     await this.entitySearchCreateItemSaveBtn().click();
-    await this.page.waitForTimeout(250);
+    await expect(this.firstEntityItemName(), 'the saved item shows its name').toHaveText(itemName, { timeout: 15000 });
     await Promise.all([
       this.page.waitForResponse(resp => resp.url().includes('/api/searchable-groups') && resp.status() === 200, { timeout: 4000000 }),
       this.entitySearchCreateSaveBtn().click(),
@@ -256,9 +270,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     await this.entitySearchCreateSingleItemBtn().click();
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateSingleItemEditBtn().click();
-    await this.page.waitForTimeout(250);
-    await this.entitySearchCreateItemNameBox().fill(itemName);
-    await this.page.waitForTimeout(250);
+    await this.fillItemName(itemName);
     await this.entitySearchCreateItemSaveBtn().click();
     await this.page.waitForTimeout(250);
     await this.entitySearchCreateCancelBtn().click();
@@ -437,19 +449,14 @@ export class SearchableListsPage extends PageWithNavbarPage {
 
   public async editItemName(newItemName: string) {
     await this.entitySearchItemEditBtn().click();
-    await this.entitySearchEditItemNameBox().clear();
-    await this.page.waitForTimeout(250);
-    await this.entitySearchEditItemNameBox().fill(newItemName);
+    await this.fillItemName(newItemName);
     await this.entitySearchEditItemSaveBtn().click();
   }
 
   public async editItemName_Cancels(newItemName: string) {
     const firstItem = await this.getFirstItemObject();
     await firstItem.editBtn.click();
-    await this.page.locator('#entityItemEditNameBox').waitFor({ state: 'visible', timeout: 40000 });
-    await this.entitySearchEditItemNameBox().clear();
-    await this.page.waitForTimeout(250);
-    await this.entitySearchEditItemNameBox().fill(newItemName);
+    await this.fillItemName(newItemName);
     await this.entitySearchEditItemSaveBtn().click();
   }
 
