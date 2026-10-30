@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using eFormAPI.Web.Services;
 using Microsoft.Extensions.Logging;
@@ -55,6 +57,21 @@ namespace eFormAPI.Web.Integration.Tests.Services
                 _coreHelper,
                 userService,
                 _logger);
+        }
+
+        [Test]
+        public async Task SkipCloudDeploy_WhenTheSettingCannotBeRead_ReturnsFalseSoTheColumnShows()
+        {
+            // Arrange: the SDK core is a concrete class, so the read failure is the path that can be stubbed.
+            _coreHelper.GetCore()
+                .Returns<eFormCore.Core>(_ => throw new InvalidOperationException("SDK unavailable"));
+
+            // Act
+            var result = await _deviceUsersService.SkipCloudDeploy();
+
+            // Assert
+            Assert.That(result.Success, Is.False);
+            Assert.That(result.Model, Is.False);
         }
 
         [Test]

@@ -49,6 +49,8 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);
 
   sitesDto: Array<SiteDto>;
+  // True when the SDK setting skipCloudDeploy is "true": customer no / OTP have no function then.
+  skipCloudDeploy = false;
 
   tableHeaders: MtxGridColumn[] = [
     {header: this.translateService.stream('Site ID'), field: 'siteUid'},
@@ -67,6 +69,7 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
   editCreateUserModalComponentAfterClosedSub$: Subscription;
   newOtpModalComponentAfterClosedSub$: Subscription;
   deviceUserDeletedSub$: Subscription;
+  skipCloudDeploySub$: Subscription;
   deviceUsersUpdateClaimSub$: Subscription;
   canDeleteDeviceUsersSub$: Subscription;
   translatesSub$: Subscription;
@@ -81,30 +84,36 @@ export class DeviceUsersPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getDeviceUsersFiltered();
+    this.skipCloudDeploySub$ = this.deviceUsersService.getSkipCloudDeploy().subscribe(x => {
+      this.skipCloudDeploy = !!(x && x.success && x.model);
+      this.tableHeaders = this.withoutHiddenColumns(this.tableHeaders);
+    });
     let actionsEnabled = false;
     this.deviceUsersUpdateClaimSub$ = this.selectCurrentUserClaimsDeviceUsersUpdate$.subscribe(x => {
       if(x) {
         actionsEnabled = true;
-        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
-          {
-            pinned: 'right',
-            header: this.translateService.stream('Actions'),
-            field: 'actions',
-          },
-        ];
+        this.addActionsColumn();
       }
     });
     this.canDeleteDeviceUsersSub$ = this.selectCurrentUserCanDeleteDeviceUsers$.subscribe(x => {
       if(x && !actionsEnabled) {
-        this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
-          {
-            pinned: 'right',
-            header: this.translateService.stream('Actions'),
-            field: 'actions',
-          },
-        ];
+        this.addActionsColumn();
       }
     });
+  }
+
+  private addActionsColumn() {
+    this.tableHeaders = this.withoutHiddenColumns([...this.tableHeaders.filter(x => x.field !== 'actions'),
+      {
+        pinned: 'right',
+        header: this.translateService.stream('Actions'),
+        field: 'actions',
+      },
+    ]);
+  }
+
+  private withoutHiddenColumns(headers: MtxGridColumn[]): MtxGridColumn[] {
+    return this.skipCloudDeploy ? headers.filter(x => x.field !== 'otpCode') : headers;
   }
 
   openEditModal(simpleSiteDto: SiteDto) {

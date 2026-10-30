@@ -43,4 +43,6 @@ public interface IDeviceUsersService
     Task<OperationResult> Delete(int id);
 
     Task<OperationDataResult<List<CommonDictionaryModel>>> ReadCommonDictionary();
+
+    Task<OperationDataResult<bool>> SkipCloudDeploy();
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {UnitDto} from 'src/app/common/models';
-import {UnitsService} from 'src/app/common/services';
+import {DeviceUserService, UnitsService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
 import { MtxGridColumn, MtxGrid } from '@ng-matero/extensions/grid';
 import {Subscription} from 'rxjs';
@@ -26,6 +26,7 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 export class UnitsComponent implements OnInit {
   private authStore = inject(Store);
   private unitsService = inject(UnitsService);
+  private deviceUserService = inject(DeviceUserService);
   dialog = inject(MatDialog);
   private overlay = inject(Overlay);
   private translateService = inject(TranslateService);
@@ -48,9 +49,16 @@ export class UnitsComponent implements OnInit {
 
   unitCreateComponentAfterClosedSub$: Subscription;
   unitsOtpCodeComponentAfterClosedSub$: Subscription;
+  skipCloudDeploySub$: Subscription;
 
   ngOnInit() {
     this.loadAllUnits();
+    // Customer no & OTP have no function when cloud deploy is skipped.
+    this.skipCloudDeploySub$ = this.deviceUserService.getSkipCloudDeploy().subscribe(x => {
+      if (x && x.success && x.model) {
+        this.tableHeaders = this.tableHeaders.filter(h => h.field !== 'otpCode');
+      }
+    });
     // this.getCurrentUserClaimsAsyncSub$ = this.authStateService.currentUserClaimsAsync.subscribe(x => {
     //   if(x.sitesDelete || x.sitesUpdate) {
     //     this.tableHeaders = [...this.tableHeaders.filter(x => x.field !== 'actions'),
