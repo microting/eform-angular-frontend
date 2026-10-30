@@ -20,12 +20,21 @@ test.describe('Device users page should add new device user', () => {
     deviceUsersPage = new DeviceUsersPage(page);
     await loginPage.open('/');
     await loginPage.login();
+    // The page asks for skipCloudDeploy on open; wait for it so the column check sees the final headers.
+    const skipCloudDeployLoaded = page.waitForResponse(
+      r => r.url().includes('/api/device-users/skip-cloud-deploy'), { timeout: 30000 });
     await myEformsPage.Navbar.goToDeviceUsersPage();
+    await skipCloudDeployLoaded;
     await page.locator('#newDeviceUserBtn').waitFor({ state: 'visible', timeout: 41000 });
   });
 
   test.afterAll(async () => {
     await page.close();
+  });
+
+  // skipCloudDeploy is unset in CI, so the customer no & OTP column must be shown.
+  test('shows the customer no & OTP column when cloud deploy is not skipped', async () => {
+    await expect(page.locator('th.mat-column-otpCode')).toBeVisible({ timeout: 15000 });
   });
 
   test('with first name and last name', async () => {

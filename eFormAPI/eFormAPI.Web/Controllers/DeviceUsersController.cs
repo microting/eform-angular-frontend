@@ -94,4 +94,11 @@ public class DeviceUsersController(
     {
         return await deviceUsersService.ReadCommonDictionary();
     }
+
+    [HttpGet]
+    [Route("skip-cloud-deploy")]
+    public async Task<OperationDataResult<bool>> SkipCloudDeploy()
+    {
+        return await deviceUsersService.SkipCloudDeploy();
+    }
 }

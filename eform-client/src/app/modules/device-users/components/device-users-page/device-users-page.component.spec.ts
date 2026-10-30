@@ -29,6 +29,7 @@ interface AuthFixture {
 describe('DeviceUsersPageComponent', () => {
   let mockStore: any;
   let mockDeviceUsersStateService: any;
+  let mockDeviceUserService: any;
 
   beforeEach(async () => {
     mockStore = {
@@ -40,11 +41,16 @@ describe('DeviceUsersPageComponent', () => {
       updateNameFilter: vi.fn(),
     };
 
+    mockDeviceUserService = {
+      deleteSingleDeviceUser: vi.fn(),
+      getSkipCloudDeploy: vi.fn().mockReturnValue(of({ success: true, message: '', model: false })),
+    };
+
     await TestBed.configureTestingModule({
       imports: [DeviceUsersPageComponent],
       providers: [
         { provide: Store, useValue: mockStore },
-        { provide: DeviceUserService, useValue: { deleteSingleDeviceUser: vi.fn() } },
+        { provide: DeviceUserService, useValue: mockDeviceUserService },
         { provide: DeviceUsersStateService, useValue: mockDeviceUsersStateService },
         { provide: MatDialog, useValue: { open: vi.fn() } },
         { provide: TranslateService, useValue: { stream: vi.fn().mockReturnValue(of('Test')) } },
@@ -110,5 +116,24 @@ describe('DeviceUsersPageComponent', () => {
 
     expect(fixture.componentInstance.tableHeaders.some(h => h.field === 'actions')).toBe(false);
     expect(fixture.nativeElement.querySelector('#action-items-0')).toBeNull();
+  });
+
+  describe('skipCloudDeploy', () => {
+    const auth = { isFirstUser: true, deleteClaim: true, updateClaim: true };
+
+    it('shows the otpCode column by default', () => {
+      const fixture = render(auth);
+
+      expect(fixture.componentInstance.tableHeaders.some(h => h.field === 'otpCode')).toBe(true);
+    });
+
+    it('hides the otpCode column, and keeps it hidden after the actions column is rebuilt', () => {
+      mockDeviceUserService.getSkipCloudDeploy.mockReturnValue(of({ success: true, message: '', model: true }));
+      const fixture = render(auth);
+      const fields = fixture.componentInstance.tableHeaders.map(h => h.field);
+
+      expect(fields).not.toContain('otpCode');
+      expect(fields).toContain('actions');
+    });
   });
 });

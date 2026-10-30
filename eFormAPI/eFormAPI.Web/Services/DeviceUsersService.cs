@@ -38,6 +38,7 @@ using Infrastructure.Helpers;
 using Infrastructure.Models;
 using Infrastructure.Models.DeviceUsers;
 using Microsoft.EntityFrameworkCore;
+using Microting.eForm.Dto;
 using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -330,6 +331,25 @@ public class DeviceUsersService(
             logger.LogTrace(e.StackTrace);
             return new OperationDataResult<List<CommonDictionaryModel>>(false,
                 localizationService.GetStringWithFormat("ErrorWhileGetDeviceUsers") + " " + e.Message);
+        }
+    }
+
+    public async Task<OperationDataResult<bool>> SkipCloudDeploy()
+    {
+        try
+        {
+            var core = await coreHelper.GetCore();
+            var value = await core.GetSdkSetting(Settings.skipCloudDeploy);
+            return new OperationDataResult<bool>(true,
+                string.Equals(value?.Trim(), "true", StringComparison.OrdinalIgnoreCase));
+        }
+        catch (Exception e)
+        {
+            // Failing open: the OTP column stays visible when the setting cannot be read.
+            SentrySdk.CaptureException(e);
+            logger.LogError(e.Message);
+            logger.LogTrace(e.StackTrace);
+            return new OperationDataResult<bool>(false, false);
         }
     }
 }

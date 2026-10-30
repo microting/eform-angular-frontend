@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed  } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UnitsComponent } from './units.component';
-import { UnitsService } from 'src/app/common/services';
+import { DeviceUserService, UnitsService } from 'src/app/common/services';
 import { MatDialog } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,6 +15,7 @@ describe('UnitsComponent', () => {
   let component: UnitsComponent;
   let fixture: ComponentFixture<UnitsComponent>;
   let mockUnitsService: any;
+  let mockDeviceUserService: any;
   let mockDialog: any;
   let mockStore: any;
   let mockTranslateService: any;
@@ -32,6 +33,9 @@ describe('UnitsComponent', () => {
     mockUnitsService = {
           getAllUnits: vi.fn(),
         };
+    mockDeviceUserService = {
+          getSkipCloudDeploy: vi.fn().mockReturnValue(of({ success: true, message: '', model: false })),
+        };
     mockDialog = {
           open: vi.fn(),
         };
@@ -44,6 +48,7 @@ describe('UnitsComponent', () => {
     imports: [FormsModule, UnitsComponent],
     providers: [
         { provide: UnitsService, useValue: mockUnitsService },
+        { provide: DeviceUserService, useValue: mockDeviceUserService },
         { provide: MatDialog, useValue: mockDialog },
         { provide: Store, useValue: mockStore },
         { provide: TranslateService, useValue: mockTranslateService },
@@ -73,6 +78,23 @@ describe('UnitsComponent', () => {
       component.ngOnInit();
 
       expect(mockUnitsService.getAllUnits).toHaveBeenCalled();
+    });
+  });
+
+  describe('skipCloudDeploy', () => {
+    beforeEach(() => {
+      mockUnitsService.getAllUnits.mockReturnValue(of({ success: true, message: '', model: [] }));
+    });
+
+    it('should keep the otpCode column by default', () => {
+      component.ngOnInit();
+      expect(component.tableHeaders.some(h => h.field === 'otpCode')).toBe(true);
+    });
+
+    it('should drop the otpCode column when skipCloudDeploy is true', () => {
+      mockDeviceUserService.getSkipCloudDeploy.mockReturnValue(of({ success: true, message: '', model: true }));
+      component.ngOnInit();
+      expect(component.tableHeaders.some(h => h.field === 'otpCode')).toBe(false);
     });
   });
 

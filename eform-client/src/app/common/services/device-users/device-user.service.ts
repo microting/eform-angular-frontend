@@ -17,12 +17,17 @@ const DeviceUsersMethods = {
   DeleteSingle: '/api/device-users/delete',
   CreateSingle: '/api/device-users/create',
   CommonDictionary: '/api/device-users/common-dictionary',
+  SkipCloudDeploy: '/api/device-users/skip-cloud-deploy',
 };
 
 @Injectable()
 export class DeviceUserService {
   private apiBaseService = inject(ApiBaseService);
 
+
+  getSkipCloudDeploy(): Observable<OperationDataResult<boolean>> {
+    return this.apiBaseService.get<boolean>(DeviceUsersMethods.SkipCloudDeploy);
+  }
 
   getAllDeviceUsers(): Observable<OperationDataResult<Array<SiteDto>>> {
     return this.apiBaseService.get<Array<SiteDto>>(DeviceUsersMethods.GetAll);
