@@ -363,6 +363,37 @@ public class LoginRateLimitTests
     }
 
     [Test]
+    public async Task KeysOnTheConnectionAsItArrived_NotAsUseForwardedHeadersRewroteIt()
+    {
+        // Development runs UseForwardedHeaders (ForwardLimit 2) before the brake. Behind a loopback proxy it moves
+        // 10.0.0.5 into RemoteIpAddress and leaves only the client-forged "6.6.6.6" in the header, which would then
+        // pick the bucket. The capture middleware runs first, so the brake still sees peer 127.0.0.1 + the full header.
+        string key = null;
+        var forwardedHeaders = new Microsoft.AspNetCore.HttpOverrides.ForwardedHeadersMiddleware(
+            c =>
+            {
+                key = _limit.ClientKey(c);
+                return Task.CompletedTask;
+            },
+            Microsoft.Extensions.Logging.Abstractions.NullLoggerFactory.Instance,
+            Options.Create(new Microsoft.AspNetCore.Builder.ForwardedHeadersOptions
+            {
+                ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor,
+                ForwardLimit = 2,
+            }));
+
+        var ctx = Request("127.0.0.1", "6.6.6.6, 10.0.0.5");
+        await LoginRateLimit.CaptureOriginalConnection(ctx, forwardedHeaders.Invoke);
+
+        Assert.That(ctx.Connection.RemoteIpAddress.ToString(), Is.EqualTo("10.0.0.5"), "UseForwardedHeaders did rewrite it");
+        Assert.That(key, Is.EqualTo("10.0.0.5"), "the entry the loopback proxy wrote, not the forged one");
+
+        // Without the capture the forged entry would be the key.
+        var uncaptured = Request("10.0.0.5", "6.6.6.6");
+        Assert.That(_limit.ClientKey(uncaptured), Is.EqualTo("6.6.6.6"));
+    }
+
+    [Test]
     public void UnparsableEntry_StopsAtTheNearestKnownHop()
     {
         Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "not-an-ip"), DefaultTrusted), Is.EqualTo(Ingress));

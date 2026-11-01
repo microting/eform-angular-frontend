@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
+import { TestBed } from '@angular/core/testing';
+import { provideRouter, Router, UrlTree } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { firstValueFrom, isObservable, of } from 'rxjs';
+import { selectAuthToken } from 'src/app/state';
 import {
+  NotPluginOnlyGuard,
   isPluginOnlyRole,
   isPluginOnlyRoles,
   isPluginOnlyToken,
@@ -78,5 +84,31 @@ describe('pluginOnlyLandingUrl', () => {
     expect(pluginOnlyLandingUrl('advanced/sites')).toBe(PLUGIN_ONLY_FALLBACK_URL);
     expect(pluginOnlyLandingUrl('auth')).toBe(PLUGIN_ONLY_FALLBACK_URL);
     expect(pluginOnlyLandingUrl('pluginsX/evil')).toBe(PLUGIN_ONLY_FALLBACK_URL);
+  });
+});
+
+describe('NotPluginOnlyGuard', () => {
+  const run = async (token: object, redirect: string) => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter([]),
+        { provide: Store, useValue: { select: (s: unknown) => of(s === selectAuthToken ? token : redirect) } },
+      ],
+    });
+    const result = TestBed.runInInjectionContext(() => NotPluginOnlyGuard({} as any, { url: '/' } as any));
+    const value = isObservable(result) ? await firstValueFrom(result) : await result;
+    return value instanceof UrlTree ? TestBed.inject(Router).serializeUrl(value) : value;
+  };
+
+  it('sends a plugin-only user whose redirect is auth to the account page instead of looping', async () => {
+    expect(await run({ role: 'kanban', accessToken: jwt({ [ROLE]: 'kanban' }) }, 'auth')).toBe(PLUGIN_ONLY_FALLBACK_URL);
+  });
+  it('sends a plugin-only user to their plugin redirect', async () => {
+    expect(await run({ role: 'kanban', accessToken: jwt({ [ROLE]: 'kanban' }) }, 'plugins/kanban-pn')).toBe('/plugins/kanban-pn');
+  });
+  it('lets other users and signed-out visitors through', async () => {
+    expect(await run({ role: 'kanban', accessToken: jwt({ [ROLE]: ['kanban', 'user'] }) }, 'auth')).toBe(true);
+    expect(await run({ role: '', accessToken: '' }, '')).toBe(true);
   });
 });

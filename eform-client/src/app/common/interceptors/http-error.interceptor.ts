@@ -20,6 +20,7 @@ import { Injectable, inject } from '@angular/core';
 import {AuthMethods, LoaderService} from 'src/app/common/services';
 import {AuthResponseModel, OperationDataResult} from 'src/app/common/models';
 import * as Sentry from '@sentry/angular';
+import {TranslateService} from '@ngx-translate/core';
 import {environment} from '../../../environments/environment';
 
 /**
@@ -40,11 +41,36 @@ function isDelegatedSignInUrl(url: string): boolean {
   return path === `/${AuthMethods.Delegated}`;
 }
 
+/** The anonymous password checks the backend's login brake answers with 429 (LoginRateLimit). */
+const LOGIN_RATE_LIMITED_PATHS: readonly string[] = ['/api/auth/token', '/api/auth/google-auth-key'];
+
+/** Exact-path match (query/fragment/trailing slash and case ignored). */
+export function isLoginRateLimitedUrl(url: string): boolean {
+  let path: string;
+  try {
+    path = new URL(url, 'http://localhost').pathname.replace(/\/+$/, '').toLowerCase();
+  } catch {
+    return false;
+  }
+  return LOGIN_RATE_LIMITED_PATHS.includes(path);
+}
+
+/** Seconds to wait from a Retry-After header (delta-seconds or an HTTP date); 60 when absent or unreadable. */
+export function retryAfterSeconds(retryAfter: string | null | undefined, now = Date.now()): number {
+  const value = (retryAfter ?? '').trim();
+  if (/^\d+$/.test(value)) {
+    return Math.max(1, parseInt(value, 10));
+  }
+  const date = Date.parse(value);
+  return isNaN(date) ? 60 : Math.max(1, Math.ceil((date - now) / 1000));
+}
+
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
   private loaderService = inject(LoaderService);
   private toastrService = inject(ToastrService);
   private authStateService = inject(AuthStateService);
+  private translateService = inject(TranslateService);
 
 
   intercept(
@@ -65,6 +91,18 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         // A delegated sign-in assertion is single-use: a failure must reach the landing page
         // untouched - no logout, no refresh, no automatic retry.
         if (isDelegatedSignInUrl(request.url)) {
+          return throwError(() => error);
+        }
+        // The login brake: tell the user how long to wait. Never replay the request (each replay would be
+        // rejected again, or count as another attempt), and let the caller see the error so its spinner stops.
+        if (error.status === 429 && isLoginRateLimitedUrl(request.url)) {
+          this.loaderService.setLoading(false);
+          const seconds = retryAfterSeconds(error.headers?.get('Retry-After'));
+          this.toastrService.error(
+            this.translateService.instant('Too many failed sign-in attempts. Try again in {{seconds}} seconds.', {seconds}),
+            this.translateService.instant('Too many failed sign-ins'),
+            {timeOut: 10000},
+          );
           return throwError(() => error);
         }
         let errorMessage = '';

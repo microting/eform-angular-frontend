@@ -69,6 +69,7 @@ public sealed class LoginRateLimit : IMiddleware
     public static int DefaultMaxTrackedClients => 50_000;
 
     private const string FailedItemKey = "eFormAPI.LoginRateLimit.Failed";
+    private const string OriginalConnectionItemKey = "eFormAPI.LoginRateLimit.OriginalConnection";
     private static readonly TimeSpan Window = TimeSpan.FromMinutes(1);
     private static readonly TimeSpan MinSweepInterval = TimeSpan.FromSeconds(1);
 
@@ -275,13 +276,13 @@ public sealed class LoginRateLimit : IMiddleware
     public static string ClientKey(HttpContext ctx, IReadOnlyList<IPNetwork> trustedProxies, int forwardLimit,
         bool exemptLoopback)
     {
-        var peer = Normalise(ctx.Connection.RemoteIpAddress);
+        var (rawPeer, forwarded) = OriginalConnection(ctx);
+        var peer = Normalise(rawPeer);
         if (peer == null)
         {
             return null;
         }
 
-        var forwarded = ctx.Request.Headers["X-Forwarded-For"].ToString();
         if (string.IsNullOrWhiteSpace(forwarded))
         {
             return exemptLoopback && IPAddress.IsLoopback(peer) ? null : Key(peer);
@@ -324,9 +325,29 @@ public sealed class LoginRateLimit : IMiddleware
         _logger.LogWarning("Login rate-limit table full; new clients are not limited");
     }
 
-    private static bool IsDirectLoopback(HttpContext ctx) =>
-        Normalise(ctx.Connection.RemoteIpAddress) is { } peer && IPAddress.IsLoopback(peer)
-        && string.IsNullOrWhiteSpace(ctx.Request.Headers["X-Forwarded-For"].ToString());
+    private static bool IsDirectLoopback(HttpContext ctx)
+    {
+        var (peer, forwarded) = OriginalConnection(ctx);
+        return Normalise(peer) is { } p && IPAddress.IsLoopback(p) && string.IsNullOrWhiteSpace(forwarded);
+    }
+
+    /// <summary>Stores the TCP peer and the X-Forwarded-For header as they arrived. Must run before anything that
+    /// rewrites them (UseForwardedHeaders in Development replaces RemoteIpAddress and consumes header entries),
+    /// so the brake keys on what the connection really carried. Registered as the first middleware.</summary>
+    public static Task CaptureOriginalConnection(HttpContext context, RequestDelegate next)
+    {
+        context.Items[OriginalConnectionItemKey] = new CapturedConnection(
+            context.Connection.RemoteIpAddress, context.Request.Headers["X-Forwarded-For"].ToString());
+        return next(context);
+    }
+
+    /// <summary>The captured TCP peer and X-Forwarded-For, or the current ones when nothing was captured.</summary>
+    private static (IPAddress Peer, string ForwardedFor) OriginalConnection(HttpContext ctx) =>
+        ctx.Items.TryGetValue(OriginalConnectionItemKey, out var value) && value is CapturedConnection original
+            ? (original.Peer, original.ForwardedFor)
+            : (ctx.Connection.RemoteIpAddress, ctx.Request.Headers["X-Forwarded-For"].ToString());
+
+    private sealed record CapturedConnection(IPAddress Peer, string ForwardedFor);
 
     private static bool IsTrusted(IPAddress ip, IReadOnlyList<IPNetwork> trustedProxies) =>
         trustedProxies.Any(n => n.Contains(ip));

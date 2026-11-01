@@ -14,7 +14,10 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        canActivate: [IsAuthGuard, NotPluginOnlyGuard],
+        // NotPluginOnlyGuard first: guards resolve in order, and IsAuthGuard redirects '/' to the user's
+        // loginRedirectUrl, which for a plugin-only user can be 'auth' (a loop). It lets signed-out visitors
+        // through, so IsAuthGuard still sends them to /auth or /landing.
+        canActivate: [NotPluginOnlyGuard, IsAuthGuard],
         loadChildren: () =>
           import('./modules/eforms/eforms.module').then((m) => m.EFormsModule),
       },

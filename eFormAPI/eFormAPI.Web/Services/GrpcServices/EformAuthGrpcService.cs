@@ -37,7 +37,9 @@ public class EformAuthGrpcService : Grpc.EformAuthService.EformAuthServiceBase
         try
         {
             var response = await Authenticate(request, context.CancellationToken);
-            failed = response.failed;
+            // IAuthService does not take the call's token (AuthService.cs is frozen), so a client that went away
+            // still gets an ordinary result here; it never sees the answer, so it is not counted.
+            failed = response.failed && !context.CancellationToken.IsCancellationRequested;
             return response.response;
         }
         finally

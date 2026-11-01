@@ -206,4 +206,24 @@ public class EformAuthGrpcServiceTests
         Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5"))).Success, Is.True,
             "not throttled: cancelled calls were not failures");
     }
+
+    [Test]
+    public async Task AuthenticateUser_FailedResultAfterTheClientCancelled_IsNotCounted()
+    {
+        // AuthService ignores the call's token, so it returns an ordinary failure after the client went away.
+        using var cancelled = new System.Threading.CancellationTokenSource();
+        cancelled.Cancel();
+        _authService.AuthenticateUser(Arg.Any<LoginModel>())
+            .Returns(new OperationDataResult<EformAuthorizeResult>(false, "Invalid credentials"));
+
+        for (var i = 0; i < 10; i++)
+        {
+            Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5", cancelled.Token))).Success,
+                Is.False);
+        }
+
+        _authService.AuthenticateUser(Arg.Any<LoginModel>())
+            .Returns(new OperationDataResult<EformAuthorizeResult>(true, "OK", new EformAuthorizeResult()));
+        Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5"))).Success, Is.True);
+    }
 }

@@ -499,4 +499,6 @@ export const da = {
   'Go to the start page': 'Gå til startsiden',
   'This link matches no page in the app': 'Linket peger ikke på en side i systemet',
   'Restore default link': 'Gendan standardlink',
+  'Too many failed sign-ins': 'For mange mislykkede logins',
+  'Too many failed sign-in attempts. Try again in {{seconds}} seconds.': 'For mange mislykkede loginforsøg. Prøv igen om {{seconds}} sekunder.',
 };

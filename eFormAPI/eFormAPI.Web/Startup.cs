@@ -343,6 +343,9 @@ public class Startup(IConfiguration configuration)
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        // First: the login brake keys on the TCP peer and X-Forwarded-For as they arrived, before
+        // UseForwardedHeaders (Development) rewrites them.
+        app.Use(LoginRateLimit.CaptureOriginalConnection);
         if (env.IsDevelopment())
         {
             app.UseForwardedHeaders(new ForwardedHeadersOptions
