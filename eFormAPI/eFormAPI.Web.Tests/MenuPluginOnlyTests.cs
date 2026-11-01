@@ -1,5 +1,8 @@
 using System.Linq;
 using eFormAPI.Web.Services;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using NSubstitute;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 using NUnit.Framework;
 
@@ -31,5 +34,23 @@ public class MenuPluginOnlyTests
         var kept = MenuService.KeepPluginItemsOnly([myEforms, boards]);
 
         Assert.That(kept.Select(i => i.Id), Is.EquivalentTo(new[] { 2 }));
+    }
+
+    private static IUserService User(string role)
+    {
+        var user = Substitute.For<IUserService>();
+        user.Role.Returns(role);
+        user.IsInRole(Arg.Any<string>()).Returns(ci => role != null && ci.Arg<string>() == role);
+        return user;
+    }
+
+    [TestCase("kanban", true)]
+    [TestCase(EformRole.Admin, false)]
+    [TestCase(EformRole.User, false)]
+    [TestCase(null, false)] // a roleless user keeps the full menu, as before
+    [TestCase("", false)]
+    public void IsPluginOnly_NeedsARoleThatIsNeitherAdminNorUser(string role, bool expected)
+    {
+        Assert.That(MenuService.IsPluginOnly(User(role)), Is.EqualTo(expected));
     }
 }

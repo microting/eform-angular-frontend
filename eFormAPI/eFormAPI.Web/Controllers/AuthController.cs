@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -47,7 +48,12 @@ public class AuthController(
     public async Task<OperationResult> AuthenticateUser(LoginModel model)
     {
         Log.LogEvent("api/auth/token called");
-        return await authService.AuthenticateUser(model);
+        var result = await authService.AuthenticateUser(model);
+        if (!result.Success)
+        {
+            LoginRateLimit.MarkFailed(HttpContext);
+        }
+        return result;
     }
 
     [HttpGet]

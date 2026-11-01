@@ -270,8 +270,8 @@ public class MenuService(
                 menuItemsForFilter = FilterMenuForUser(menuItemsForFilter, userClaims);
             }
 
-            // Plugin-only accounts (neither admin nor user, e.g. the kanban plugin's "kanban" role) see only plugin pages.
-            if (!userService.IsInRole(EformRole.Admin) && !userService.IsInRole(EformRole.User))
+            // Plugin-only accounts (a role, but neither admin nor user, e.g. the kanban plugin's "kanban" role) see only plugin pages.
+            if (IsPluginOnly(userService))
             {
                 menuItemsForFilter = KeepPluginItemsOnly(menuItemsForFilter);
             }
@@ -506,6 +506,11 @@ public class MenuService(
         }
 
     }
+
+    /// <summary>A plugin-only account has at least one role and neither the admin nor the user role.
+    /// A user without any role keeps the full (claim-filtered) menu, exactly as before.</summary>
+    public static bool IsPluginOnly(IUserService user) =>
+        !string.IsNullOrEmpty(user.Role) && !user.IsInRole(EformRole.Admin) && !user.IsInRole(EformRole.User);
 
     /// <summary>Plugin menu items, plus the top-level dropdowns that hold one; everything of the main application is dropped.</summary>
     public static List<MenuItem> KeepPluginItemsOnly(List<MenuItem> items)
