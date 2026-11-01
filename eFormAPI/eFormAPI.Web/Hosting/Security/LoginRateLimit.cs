@@ -163,12 +163,17 @@ public sealed class LoginRateLimit : IMiddleware
             await next(context);
             threw = false;
         }
+        catch (OperationCanceledException) when (context.RequestAborted.IsCancellationRequested)
+        {
+            // The client went away and the endpoint ended before producing a result: not a guess.
+            threw = false;
+            throw;
+        }
         finally
         {
-            // A client that went away never sees the answer, so it is not a guess — even if the endpoint
-            // already marked the login failed (the same rule as the gRPC login).
-            attempt.End(!context.RequestAborted.IsCancellationRequested
-                         && (threw || context.Items.ContainsKey(FailedItemKey)));
+            // A failed result counts even if the client aborted afterwards: otherwise aborting every request
+            // would buy unlimited password hashing, which the brake also exists to bound.
+            attempt.End(threw || context.Items.ContainsKey(FailedItemKey));
         }
     }
 

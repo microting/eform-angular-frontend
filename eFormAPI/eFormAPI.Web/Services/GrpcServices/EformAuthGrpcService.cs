@@ -40,9 +40,9 @@ public class EformAuthGrpcService : Grpc.EformAuthService.EformAuthServiceBase
         try
         {
             var response = await Authenticate(request, context.CancellationToken);
-            // IAuthService does not take the call's token (AuthService.cs is frozen), so a client that went away
-            // still gets an ordinary result here; it never sees the answer, so it is not counted.
-            failed = response.failed && !context.CancellationToken.IsCancellationRequested;
+            // A returned failed result counts even if the client cancelled afterwards: the password was checked,
+            // and not counting it would let a client buy unlimited password hashing by cancelling every call.
+            failed = response.failed;
             return response.response;
         }
         finally
@@ -96,13 +96,14 @@ public class EformAuthGrpcService : Grpc.EformAuthService.EformAuthServiceBase
         }
         catch (Exception ex)
         {
-            // Counted: the service may have checked the password before it threw — unless the client cancelled
-            // the call (it went away; not a guess), as on the REST path.
+            // Counted: the service may have checked the password before it threw — unless the call was cancelled
+            // and ended before any result existed (it went away; not a guess), as on the REST path.
+            var cancelledBeforeAResult = ex is OperationCanceledException && callCancelled.IsCancellationRequested;
             return (new AuthenticateUserResponse
             {
                 Success = false,
                 Message = ex.Message
-            }, !callCancelled.IsCancellationRequested);
+            }, !cancelledBeforeAResult);
         }
     }
 

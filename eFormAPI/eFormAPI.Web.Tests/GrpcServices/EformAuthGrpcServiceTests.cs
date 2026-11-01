@@ -209,22 +209,40 @@ public class EformAuthGrpcServiceTests
     }
 
     [Test]
-    public async Task AuthenticateUser_FailedResultAfterTheClientCancelled_IsNotCounted()
+    public async Task AuthenticateUser_FailedResultAfterTheClientCancelled_IsCounted()
     {
-        // AuthService ignores the call's token, so it returns an ordinary failure after the client went away.
+        // AuthService ignores the call's token and returns an ordinary failure: the password was checked, so it
+        // counts — cancelling every call must not buy unlimited password hashing.
         using var cancelled = new System.Threading.CancellationTokenSource();
         cancelled.Cancel();
         _authService.AuthenticateUser(Arg.Any<LoginModel>())
             .Returns(new OperationDataResult<EformAuthorizeResult>(false, "Invalid credentials"));
 
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 3; i++)
         {
             Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5", cancelled.Token))).Success,
                 Is.False);
         }
 
-        _authService.AuthenticateUser(Arg.Any<LoginModel>())
-            .Returns(new OperationDataResult<EformAuthorizeResult>(true, "OK", new EformAuthorizeResult()));
-        Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5"))).Success, Is.True);
+        var ex = await Assert.ThrowsAsync<RpcException>(() => _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5")));
+        Assert.That(ex!.StatusCode, Is.EqualTo(StatusCode.ResourceExhausted));
+    }
+
+    [Test]
+    public async Task AuthenticateUser_OtherExceptionWhileCancelled_IsCounted()
+    {
+        // Only an OperationCanceledException ends the call "before a result"; anything else may follow the check.
+        using var cancelled = new System.Threading.CancellationTokenSource();
+        cancelled.Cancel();
+        _authService.AuthenticateUser(Arg.Any<LoginModel>()).Returns<OperationDataResult<EformAuthorizeResult>>(
+            _ => throw new InvalidOperationException("db down"));
+
+        for (var i = 0; i < 3; i++)
+        {
+            await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5", cancelled.Token));
+        }
+
+        var ex = await Assert.ThrowsAsync<RpcException>(() => _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5")));
+        Assert.That(ex!.StatusCode, Is.EqualTo(StatusCode.ResourceExhausted));
     }
 }

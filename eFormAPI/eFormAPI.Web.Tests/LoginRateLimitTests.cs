@@ -246,10 +246,10 @@ public class LoginRateLimitTests
     }
 
     [Test]
-    public async Task AClientThatAbortsAfterTheLoginWasMarkedFailed_IsNotCounted()
+    public async Task AClientThatAbortsAfterTheLoginWasMarkedFailed_IsCounted()
     {
-        // The client never receives the answer, so it learns nothing: not a guess (same rule as gRPC).
-        for (var i = 0; i < Limit * 2; i++)
+        // The password was checked: aborting every request must not buy unlimited password hashing.
+        for (var i = 0; i < Limit; i++)
         {
             var ctx = Request();
             using var aborted = new CancellationTokenSource();
@@ -261,7 +261,25 @@ public class LoginRateLimitTests
                 return Task.CompletedTask;
             });
         }
-        Assert.That(await Send(Request(), loginFails: false), Is.EqualTo(200));
+        Assert.That(await Send(Request(), loginFails: false), Is.EqualTo(429));
+    }
+
+    [Test]
+    public async Task AnAbortThrownAfterTheLoginWasMarkedFailed_IsCounted()
+    {
+        for (var i = 0; i < Limit; i++)
+        {
+            var ctx = Request();
+            using var aborted = new CancellationTokenSource();
+            ctx.RequestAborted = aborted.Token;
+            await Assert.ThrowsAsync<OperationCanceledException>(() => _limit.InvokeAsync(ctx, c =>
+            {
+                LoginRateLimit.MarkFailed(c);
+                aborted.Cancel();
+                throw new OperationCanceledException(aborted.Token);
+            }));
+        }
+        Assert.That(await Send(Request(), loginFails: false), Is.EqualTo(429));
     }
 
     [Test]
