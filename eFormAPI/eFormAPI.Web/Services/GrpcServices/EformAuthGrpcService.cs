@@ -29,8 +29,11 @@ public class EformAuthGrpcService : Grpc.EformAuthService.EformAuthServiceBase
         var key = httpContext == null ? null : _loginRateLimit.ClientKey(httpContext);
         if (!_loginRateLimit.TryBegin(key, out var attempt, out var retryAfter))
         {
-            throw new RpcException(new Status(StatusCode.ResourceExhausted,
-                $"Too many failed logins; try again in {(int)Math.Ceiling(retryAfter.TotalSeconds)} seconds"));
+            var seconds = (int)Math.Ceiling(retryAfter.TotalSeconds);
+            // retry-after (seconds) in the trailers, like the REST Retry-After header.
+            throw new RpcException(
+                new Status(StatusCode.ResourceExhausted, $"Too many failed logins; try again in {seconds} seconds"),
+                new Metadata { { "retry-after", seconds.ToString() } });
         }
 
         var failed = true; // unless the call completes with a non-failure

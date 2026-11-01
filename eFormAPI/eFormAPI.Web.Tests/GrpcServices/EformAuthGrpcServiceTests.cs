@@ -145,6 +145,7 @@ public class EformAuthGrpcServiceTests
 
         var ex = await Assert.ThrowsAsync<RpcException>(() => _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5")));
         Assert.That(ex!.StatusCode, Is.EqualTo(StatusCode.ResourceExhausted));
+        Assert.That(ex.Trailers.GetValue("retry-after"), Is.EqualTo("60"), "like the REST Retry-After header");
         await _authService.Received(3).AuthenticateUser(Arg.Any<LoginModel>());
 
         // Another client is not affected.

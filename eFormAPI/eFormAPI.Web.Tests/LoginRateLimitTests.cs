@@ -246,6 +246,25 @@ public class LoginRateLimitTests
     }
 
     [Test]
+    public async Task AClientThatAbortsAfterTheLoginWasMarkedFailed_IsNotCounted()
+    {
+        // The client never receives the answer, so it learns nothing: not a guess (same rule as gRPC).
+        for (var i = 0; i < Limit * 2; i++)
+        {
+            var ctx = Request();
+            using var aborted = new CancellationTokenSource();
+            ctx.RequestAborted = aborted.Token;
+            await _limit.InvokeAsync(ctx, c =>
+            {
+                LoginRateLimit.MarkFailed(c);
+                aborted.Cancel();
+                return Task.CompletedTask;
+            });
+        }
+        Assert.That(await Send(Request(), loginFails: false), Is.EqualTo(200));
+    }
+
+    [Test]
     public async Task AClientThatAborts_IsNotCountedAsAFailure()
     {
         for (var i = 0; i < Limit * 2; i++)
@@ -549,13 +568,41 @@ public class LoginRateLimitTests
         public Microsoft.Extensions.FileProviders.IFileProvider ContentRootFileProvider { get; set; }
     }
 
-    private static IServiceProvider Services(Dictionary<string, string> settings, string environment = "Production")
+    private static IServiceProvider Services(Dictionary<string, string> settings, string environment = "Production",
+        ListLogger logger = null)
     {
         var services = new ServiceCollection();
         services.AddLogging();
+        if (logger != null)
+        {
+            services.AddSingleton<Microsoft.Extensions.Logging.ILogger<LoginRateLimit>>(logger);
+        }
         services.AddSingleton<Microsoft.Extensions.Hosting.IHostEnvironment>(new Env(environment));
         LoginRateLimit.Register(services, new ConfigurationBuilder().AddInMemoryCollection(settings).Build());
         return services.BuildServiceProvider();
+    }
+
+    [TestCase("Production", "true", true)]
+    [TestCase("Staging", "true", true)]
+    [TestCase("Development", "true", false)]
+    [TestCase("Production", null, false)]
+    [TestCase("Production", "false", false)]
+    public void ExplicitLoopbackExemptionOutsideDevelopment_IsWarnedOnceAtCreation(string environment, string configured,
+        bool warned)
+    {
+        var settings = new Dictionary<string, string>();
+        if (configured != null)
+        {
+            settings["LoginRateLimit:ExemptLoopback"] = configured;
+        }
+        var logger = new ListLogger();
+        var sp = Services(settings, environment, logger);
+
+        sp.GetRequiredService<LoginRateLimit>();
+        sp.GetRequiredService<LoginRateLimit>();
+
+        Assert.That(logger.Warnings.Count(w => w.Contains("ExemptLoopback is true outside Development")),
+            Is.EqualTo(warned ? 1 : 0));
     }
 
     [TestCase("Production", null, false)]

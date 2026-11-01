@@ -122,9 +122,29 @@ public sealed class LoginRateLimit : IMiddleware
             .Validate(o => o.EffectiveTrustedProxies.All(c => c != null && IPNetwork.TryParse(c.Trim(), out _)),
                 "LoginRateLimit:TrustedProxies must be CIDRs such as 10.0.0.0/8")
             .ValidateOnStart();
-        services.AddSingleton(sp => new LoginRateLimit(
-            sp.GetRequiredService<IOptions<LoginRateLimitOptions>>(), TimeProvider.System,
-            sp.GetRequiredService<ILogger<LoginRateLimit>>()));
+        services.AddSingleton(sp =>
+        {
+            var options = sp.GetRequiredService<IOptions<LoginRateLimitOptions>>();
+            var logger = sp.GetRequiredService<ILogger<LoginRateLimit>>();
+            WarnIfLoopbackExemptOutsideDevelopment(options.Value, sp.GetService<IHostEnvironment>(), logger);
+            return new LoginRateLimit(options, TimeProvider.System, logger);
+        });
+    }
+
+    /// <summary>An explicit <c>ExemptLoopback = true</c> outside Development switches the brake off for every login
+    /// that reaches the host from localhost without X-Forwarded-For (e.g. a local reverse proxy). Logged once, when
+    /// the singleton is created at startup, so the misconfiguration is visible. Returns whether it warned.</summary>
+    public static bool WarnIfLoopbackExemptOutsideDevelopment(LoginRateLimitOptions options, IHostEnvironment env,
+        ILogger logger)
+    {
+        if (options.ExemptLoopback != true || env?.IsDevelopment() == true)
+        {
+            return false;
+        }
+        logger.LogWarning(
+            "SECURITY: LoginRateLimit:ExemptLoopback is true outside Development. Logins from loopback without " +
+            "X-Forwarded-For are NOT rate limited; unset it unless this host only serves local test runs");
+        return true;
     }
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
@@ -137,20 +157,18 @@ public sealed class LoginRateLimit : IMiddleware
             return;
         }
 
-        var failed = true; // an endpoint that throws may have checked the password first
+        var threw = true; // an endpoint that throws may have checked the password first
         try
         {
             await next(context);
-            failed = false;
-        }
-        catch (OperationCanceledException) when (context.RequestAborted.IsCancellationRequested)
-        {
-            failed = false; // the client went away: not a guess
-            throw;
+            threw = false;
         }
         finally
         {
-            attempt.End(failed || context.Items.ContainsKey(FailedItemKey));
+            // A client that went away never sees the answer, so it is not a guess — even if the endpoint
+            // already marked the login failed (the same rule as the gRPC login).
+            attempt.End(!context.RequestAborted.IsCancellationRequested
+                         && (threw || context.Items.ContainsKey(FailedItemKey)));
         }
     }
 

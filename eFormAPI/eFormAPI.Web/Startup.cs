@@ -376,6 +376,8 @@ public class Startup(IConfiguration configuration)
         app.UseDefaultFiles();
         app.UseStaticFiles();
         app.UseAuthentication();
+        // Resolved here so its configuration warnings are logged at startup, not at the first login.
+        app.ApplicationServices.GetRequiredService<LoginRateLimit>();
         app.UseMiddleware<LoginRateLimit>();
         app.UseSentryHost();
         // Plugins
