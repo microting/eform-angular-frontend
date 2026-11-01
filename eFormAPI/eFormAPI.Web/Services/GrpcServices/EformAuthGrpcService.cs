@@ -32,7 +32,7 @@ public class EformAuthGrpcService : Grpc.EformAuthService.EformAuthServiceBase
                 $"Too many failed logins; try again in {(int)Math.Ceiling(retryAfter.TotalSeconds)} seconds"));
         }
 
-        var failed = false;
+        var failed = true; // unless the call completes with a non-failure
         try
         {
             var response = await Authenticate(request);
@@ -89,11 +89,12 @@ public class EformAuthGrpcService : Grpc.EformAuthService.EformAuthServiceBase
         }
         catch (Exception ex)
         {
+            // Counted: the service may have checked the password before it threw.
             return (new AuthenticateUserResponse
             {
                 Success = false,
                 Message = ex.Message
-            }, false);
+            }, true);
         }
     }
 

@@ -165,11 +165,17 @@ public class EformAuthGrpcServiceTests
     }
 
     [Test]
-    public async Task AuthenticateUser_ExceptionInTheService_IsNotCounted_AndReleasesTheSlot()
+    public async Task AuthenticateUser_ExceptionInTheService_IsCounted_AndReleasesTheSlot()
     {
+        // The service may have checked the password before it threw.
         _authService.AuthenticateUser(Arg.Any<LoginModel>()).Returns<OperationDataResult<EformAuthorizeResult>>(
             _ => throw new InvalidOperationException("db down"));
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 3; i++)
             Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5"))).Message, Is.EqualTo("db down"));
+
+        var ex = await Assert.ThrowsAsync<RpcException>(() => _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5")));
+        Assert.That(ex!.StatusCode, Is.EqualTo(StatusCode.ResourceExhausted));
+        Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.6"))).Message, Is.EqualTo("db down"),
+            "slots were released; another client is not affected");
     }
 }

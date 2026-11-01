@@ -152,15 +152,67 @@ public class LoginRateLimitTests
     }
 
     [Test]
-    public async Task AnEndpointThatThrows_ReleasesItsSlot_AndIsNotAFailure()
+    public async Task AnEndpointThatThrows_ReleasesItsSlot_AndCountsAsAFailure()
     {
-        for (var i = 0; i < Limit * 2; i++)
+        // It may have checked the password before throwing.
+        for (var i = 0; i < Limit; i++)
         {
             var ctx = Request();
             await Assert.ThrowsAsync<InvalidOperationException>(() =>
                 _limit.InvokeAsync(ctx, _ => throw new InvalidOperationException()));
         }
-        Assert.That(await Send(Request(), loginFails: false), Is.EqualTo(200));
+        Assert.That(await Send(Request(), loginFails: false), Is.EqualTo(429));
+        Assert.That(await Send(Request("203.0.113.6"), loginFails: false), Is.EqualTo(200), "the slots were released");
+    }
+
+    [Test]
+    public async Task TheFailureFlagIsRead_AfterTheEndpointFinished()
+    {
+        // The endpoint marks the failure after an await (as MVC does); the flag must still be seen.
+        for (var i = 0; i < Limit; i++)
+        {
+            var ctx = Request();
+            await _limit.InvokeAsync(ctx, async c =>
+            {
+                await Task.Yield();
+                LoginRateLimit.MarkFailed(c);
+            });
+        }
+        Assert.That(await Send(Request(), loginFails: false), Is.EqualTo(429));
+    }
+
+    [Test]
+    public async Task AtTheKeyCap_NewClientsAreRejected_KnownClientsAndLaterClientsAreNot()
+    {
+        var limit = new LoginRateLimit(Options.Create(new LoginRateLimitOptions { FailedAttemptsPerMinute = Limit }),
+            _time, maxTrackedClients: 5);
+        for (var i = 1; i <= 5; i++)
+            Assert.That(await Send(limit, Request($"203.0.113.{i}"), loginFails: true), Is.EqualTo(200));
+
+        var rejected = Request("203.0.113.99");
+        Assert.That(await Send(limit, rejected, loginFails: false), Is.EqualTo(429), "the table does not grow");
+        Assert.That(limit.TrackedClients, Is.EqualTo(5));
+        Assert.That(await Send(limit, Request("203.0.113.1"), loginFails: false), Is.EqualTo(200), "known client");
+
+        _time.Now += TimeSpan.FromMinutes(1);
+        Assert.That(await Send(limit, Request("203.0.113.99"), loginFails: false), Is.EqualTo(200),
+            "expired windows were evicted");
+        Assert.That(limit.TrackedClients, Is.EqualTo(1));
+    }
+
+    [Test]
+    public async Task AtTheKeyCap_LiveWindowsAreNotEvicted()
+    {
+        var limit = new LoginRateLimit(Options.Create(new LoginRateLimitOptions { FailedAttemptsPerMinute = 2 }),
+            _time, maxTrackedClients: 2);
+        await Send(limit, Request("203.0.113.1"), loginFails: true);
+        await Send(limit, Request("203.0.113.1"), loginFails: true);
+        await Send(limit, Request("203.0.113.2"), loginFails: true);
+
+        _time.Now += TimeSpan.FromSeconds(30);
+        Assert.That(await Send(limit, Request("203.0.113.3"), loginFails: false), Is.EqualTo(429));
+        // The throttled client keeps its count instead of being evicted to make room.
+        Assert.That(await Send(limit, Request("203.0.113.1"), loginFails: false), Is.EqualTo(429));
     }
 
     [Test]
@@ -224,23 +276,45 @@ public class LoginRateLimitTests
     {
         Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "1.1.1.1, 2.2.2.2"), DefaultTrusted), Is.EqualTo("2.2.2.2"));
         Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "2.2.2.2:4711"), DefaultTrusted), Is.EqualTo("2.2.2.2"));
-        // Two trusted hops (e.g. load balancer + ingress) in front of the client.
-        Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "6.6.6.6, 2.2.2.2, 10.0.0.5, 192.168.1.9"), DefaultTrusted),
-            Is.EqualTo("2.2.2.2"));
     }
 
     [Test]
-    public void AllTrustedChain_TheLeftmostIsTheClient()
+    public async Task ForgedLeftmostEntriesBehindOneTrustedProxy_AreIgnored()
     {
+        // The client sends its own X-Forwarded-For; the ingress appends the real address. Only that entry counts,
+        // even when the forged entries are private (trusted-looking) addresses.
+        Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "6.6.6.6, 2.2.2.2"), DefaultTrusted), Is.EqualTo("2.2.2.2"));
         Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "192.168.1.20, 10.0.0.5"), DefaultTrusted),
-            Is.EqualTo("192.168.1.20"));
+            Is.EqualTo("10.0.0.5"), "never the leftmost");
+
+        for (var i = 0; i < Limit; i++)
+            Assert.That(await Send(Request(Ingress, $"10.9.9.{i}, 198.51.100.7"), loginFails: true), Is.EqualTo(200));
+        Assert.That(await Send(Request(Ingress, "10.9.9.200, 198.51.100.7"), loginFails: true), Is.EqualTo(429));
+    }
+
+    [Test]
+    public void ForwardLimit2_TwoTrustedHops()
+    {
+        // Load balancer (10.0.0.5) + ingress (peer): the load balancer's entry is the client.
+        Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "6.6.6.6, 2.2.2.2, 10.0.0.5"), DefaultTrusted, forwardLimit: 2),
+            Is.EqualTo("2.2.2.2"));
+        // The walk stops at the limit and keys on the last hop examined, never further left.
+        Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "6.6.6.6, 192.168.1.9, 10.0.0.5"), DefaultTrusted, forwardLimit: 2),
+            Is.EqualTo("192.168.1.9"));
+        // A hop that is not a trusted proxy ends the walk early.
+        Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "6.6.6.6, 2.2.2.2"), DefaultTrusted, forwardLimit: 2),
+            Is.EqualTo("2.2.2.2"));
+        // Configured on the instance.
+        var limit = New(new LoginRateLimitOptions { ForwardLimit = 2 });
+        Assert.That(limit.ClientKey(Request(Ingress, "6.6.6.6, 2.2.2.2, 10.0.0.5")), Is.EqualTo("2.2.2.2"));
+        Assert.That(_limit.ClientKey(Request(Ingress, "6.6.6.6, 2.2.2.2, 10.0.0.5")), Is.EqualTo("10.0.0.5"), "default 1");
     }
 
     [Test]
     public void UnparsableEntry_StopsAtTheNearestKnownHop()
     {
         Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "not-an-ip"), DefaultTrusted), Is.EqualTo(Ingress));
-        Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "2.2.2.2, garbage, 10.0.0.5"), DefaultTrusted),
+        Assert.That(LoginRateLimit.ClientKey(Request(Ingress, "2.2.2.2, garbage, 10.0.0.5"), DefaultTrusted, forwardLimit: 3),
             Is.EqualTo("10.0.0.5"));
     }
 
@@ -274,12 +348,52 @@ public class LoginRateLimitTests
     [TestCase("127.0.0.1")]
     [TestCase("::1")]
     [TestCase("::ffff:127.0.0.1")]
-    public async Task DirectLoopbackPeerWithoutForwardedFor_IsNotLimited(string ip)
+    public async Task DirectLoopbackPeerWithoutForwardedFor_IsNotLimited_WhenExempt(string ip)
     {
-        // Host and plugin Playwright CI log in from loopback many times a minute.
-        Assert.That(LoginRateLimit.ClientKey(Request(ip), DefaultTrusted), Is.Null);
+        // Development (local test runs) exempts loopback by default.
+        var limit = New(new LoginRateLimitOptions { ExemptLoopback = true });
+        Assert.That(LoginRateLimit.ClientKey(Request(ip), DefaultTrusted, exemptLoopback: true), Is.Null);
         for (var i = 0; i < Limit * 3; i++)
-            Assert.That(await Send(Request(ip), loginFails: true), Is.EqualTo(200));
+            Assert.That(await Send(limit, Request(ip), loginFails: true), Is.EqualTo(200));
+    }
+
+    [TestCase("127.0.0.1", "127.0.0.1")]
+    [TestCase("::1", "::1")]
+    [TestCase("::ffff:127.0.0.1", "127.0.0.1")]
+    public async Task DirectLoopbackPeerWithoutForwardedFor_IsLimited_ByDefault_AndWarnsOnce(string ip, string key)
+    {
+        var logger = new ListLogger();
+        var limit = new LoginRateLimit(Options.Create(new LoginRateLimitOptions { FailedAttemptsPerMinute = Limit }),
+            _time, logger);
+        Assert.That(limit.ClientKey(Request(ip)), Is.EqualTo(key));
+
+        for (var i = 0; i < Limit; i++)
+            Assert.That(await Send(limit, Request(ip), loginFails: true), Is.EqualTo(200));
+        Assert.That(await Send(limit, Request(ip), loginFails: true), Is.EqualTo(429));
+
+        Assert.That(logger.Warnings, Has.Count.EqualTo(1), "one warning per process");
+        Assert.That(logger.Warnings[0], Does.Contain("loopback").And.Not.Contain("127.0.0.1"), "no addresses in the log");
+    }
+
+    [Test]
+    public void LoopbackPeerWithForwardedFor_DoesNotWarn()
+    {
+        var logger = new ListLogger();
+        var limit = new LoginRateLimit(Options.Create(new LoginRateLimitOptions()), _time, logger);
+        limit.ClientKey(Request("127.0.0.1", "198.51.100.9"));
+        Assert.That(logger.Warnings, Is.Empty);
+    }
+
+    private sealed class ListLogger : Microsoft.Extensions.Logging.ILogger<LoginRateLimit>
+    {
+        public readonly List<string> Warnings = [];
+        public IDisposable BeginScope<TState>(TState state) where TState : notnull => null;
+        public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel) => true;
+        public void Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, Microsoft.Extensions.Logging.EventId eventId,
+            TState state, Exception exception, Func<TState, Exception, string> formatter)
+        {
+            if (logLevel == Microsoft.Extensions.Logging.LogLevel.Warning) Warnings.Add(formatter(state, exception));
+        }
     }
 
     [Test]
@@ -331,11 +445,35 @@ public class LoginRateLimitTests
         Assert.That(limit.ClientKey(Request(Ingress, "2.2.2.2")), Is.EqualTo(Ingress));
     }
 
-    private static IServiceProvider Services(Dictionary<string, string> settings)
+    private sealed class Env(string name) : Microsoft.Extensions.Hosting.IHostEnvironment
+    {
+        public string EnvironmentName { get; set; } = name;
+        public string ApplicationName { get; set; } = "eFormAPI.Web";
+        public string ContentRootPath { get; set; } = "/";
+        public Microsoft.Extensions.FileProviders.IFileProvider ContentRootFileProvider { get; set; }
+    }
+
+    private static IServiceProvider Services(Dictionary<string, string> settings, string environment = "Production")
     {
         var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddSingleton<Microsoft.Extensions.Hosting.IHostEnvironment>(new Env(environment));
         LoginRateLimit.Register(services, new ConfigurationBuilder().AddInMemoryCollection(settings).Build());
         return services.BuildServiceProvider();
+    }
+
+    [TestCase("Production", null, false)]
+    [TestCase("Development", null, true)]
+    [TestCase("Development", "false", false)]
+    [TestCase("Production", "true", true)]
+    public void ExemptLoopback_DefaultsToDevelopmentOnly(string environment, string configured, bool expected)
+    {
+        var settings = new Dictionary<string, string>();
+        if (configured != null) settings["LoginRateLimit:ExemptLoopback"] = configured;
+        var sp = Services(settings, environment);
+        Assert.That(sp.GetRequiredService<IOptions<LoginRateLimitOptions>>().Value.ExemptLoopback, Is.EqualTo(expected));
+        Assert.That(sp.GetRequiredService<LoginRateLimit>().ClientKey(Request("127.0.0.1")),
+            expected ? Is.Null : Is.EqualTo("127.0.0.1"));
     }
 
     [Test]
@@ -349,6 +487,7 @@ public class LoginRateLimitTests
         sp.GetRequiredService<IStartupValidator>().Validate();
         var options = sp.GetRequiredService<IOptions<LoginRateLimitOptions>>().Value;
         Assert.That(options.FailedAttemptsPerMinute, Is.EqualTo(3));
+        Assert.That(options.ForwardLimit, Is.EqualTo(1), "default");
         Assert.That(options.EffectiveTrustedProxies, Is.EqualTo(new[] { "203.0.113.0/24" }));
         Assert.That(sp.GetRequiredService<LoginRateLimit>(), Is.Not.Null);
     }
@@ -363,6 +502,7 @@ public class LoginRateLimitTests
     }
 
     [TestCase("LoginRateLimit:FailedAttemptsPerMinute", "0")]
+    [TestCase("LoginRateLimit:ForwardLimit", "0")]
     [TestCase("LoginRateLimit:TrustedProxies:0", "not-a-cidr")]
     public void InvalidSettings_FailStartupValidation(string key, string value)
     {
